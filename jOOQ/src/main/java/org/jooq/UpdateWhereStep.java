@@ -95,7 +95,7 @@ public interface UpdateWhereStep<R extends Record> extends UpdateFinalStep<R>, U
         name = "WHERE",
         args = "Condition+"
     )
-    UpdateConditionStep<R> where(Collection<Condition> conditions);
+    UpdateConditionStep<R> where(Collection<? extends Condition> conditions);
 
     /**
      * Add conditions to the query

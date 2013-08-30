@@ -97,7 +97,7 @@ class DeleteImpl<R extends Record>
     }
 
     @Override
-    public final DeleteImpl<R> where(Collection<Condition> conditions) {
+    public final DeleteImpl<R> where(Collection<? extends Condition> conditions) {
         getDelegate().addConditions(conditions);
         return this;
     }

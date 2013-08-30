@@ -120,7 +120,7 @@ class GroupConcat extends AbstractFunction<String> implements GroupConcatOrderBy
     }
 
     @Override
-    public final WindowBeforeOverStep<String> keepDenseRankFirstOrderBy(Collection<SortField<?>> fields) {
+    public final WindowBeforeOverStep<String> keepDenseRankFirstOrderBy(Collection<? extends SortField<?>> fields) {
         throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
     }
 
@@ -135,7 +135,7 @@ class GroupConcat extends AbstractFunction<String> implements GroupConcatOrderBy
     }
 
     @Override
-    public final WindowBeforeOverStep<String> keepDenseRankLastOrderBy(Collection<SortField<?>> fields) {
+    public final WindowBeforeOverStep<String> keepDenseRankLastOrderBy(Collection<? extends SortField<?>> fields) {
         throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
     }
 
@@ -163,7 +163,7 @@ class GroupConcat extends AbstractFunction<String> implements GroupConcatOrderBy
     }
 
     @Override
-    public final GroupConcatSeparatorStep orderBy(Collection<SortField<?>> fields) {
+    public final GroupConcatSeparatorStep orderBy(Collection<? extends SortField<?>> fields) {
         orderBy.addAll(fields);
         return this;
     }

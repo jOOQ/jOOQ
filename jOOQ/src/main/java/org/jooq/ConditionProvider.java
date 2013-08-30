@@ -83,7 +83,7 @@ public interface ConditionProvider {
      * @param conditions The condition
      */
     @Support
-    void addConditions(Collection<Condition> conditions);
+    void addConditions(Collection<? extends Condition> conditions);
 
     /**
      * Adds new conditions to the query, connecting them to existing
@@ -101,6 +101,6 @@ public interface ConditionProvider {
      * @param conditions The condition
      */
     @Support
-    void addConditions(Operator operator, Collection<Condition> conditions);
+    void addConditions(Operator operator, Collection<? extends Condition> conditions);
 
 }

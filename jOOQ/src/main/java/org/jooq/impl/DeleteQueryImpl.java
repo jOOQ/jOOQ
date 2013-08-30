@@ -101,7 +101,7 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
     }
 
     @Override
-    public final void addConditions(Collection<Condition> conditions) {
+    public final void addConditions(Collection<? extends Condition> conditions) {
         condition.addConditions(conditions);
     }
 
@@ -116,7 +116,7 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
     }
 
     @Override
-    public final void addConditions(Operator operator, Collection<Condition> conditions) {
+    public final void addConditions(Operator operator, Collection<? extends Condition> conditions) {
         condition.addConditions(operator, conditions);
     }
 

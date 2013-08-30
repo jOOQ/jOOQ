@@ -148,7 +148,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
         name = "KEEP DENSE_RANK FIRST ORDER BY",
         args = "SortField+"
     )
-    WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Collection<SortField<?>> fields);
+    WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Collection<? extends SortField<?>> fields);
 
     /**
      * Restrict this aggregate function to <code>FIRST</code> values
@@ -199,5 +199,5 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
         name = "KEEP DENSE_RANK LAST ORDER BY",
         args = "SortField+"
     )
-    WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Collection<SortField<?>> fields);
+    WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Collection<? extends SortField<?>> fields);
 }

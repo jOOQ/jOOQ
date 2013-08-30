@@ -112,5 +112,5 @@ public interface WindowOrderByStep<T> extends WindowFinalStep<T> {
         name = "ORDER BY",
         args = "SortField+"
     )
-    WindowRowsStep<T> orderBy(Collection<SortField<?>> fields);
+    WindowRowsStep<T> orderBy(Collection<? extends SortField<?>> fields);
 }

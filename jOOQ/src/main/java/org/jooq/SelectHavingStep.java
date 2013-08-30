@@ -122,7 +122,7 @@ public interface SelectHavingStep<R extends Record> extends SelectOrderByStep<R>
         name = "HAVING",
         args = "Condition+"
     )
-    SelectHavingConditionStep<R> having(Collection<Condition> conditions);
+    SelectHavingConditionStep<R> having(Collection<? extends Condition> conditions);
 
     /**
      * Add a <code>HAVING</code> clause to the query.

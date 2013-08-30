@@ -93,7 +93,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R> {
         name = "WHERE",
         args = "Condition+"
     )
-    DeleteConditionStep<R> where(Collection<Condition> conditions);
+    DeleteConditionStep<R> where(Collection<? extends Condition> conditions);
 
     /**
      * Add conditions to the query.

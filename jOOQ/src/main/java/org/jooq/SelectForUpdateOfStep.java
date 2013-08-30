@@ -139,7 +139,7 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
         name = "OF",
         args = "Field+"
     )
-    SelectForUpdateWaitStep<R> of(Collection<Field<?>> fields);
+    SelectForUpdateWaitStep<R> of(Collection<? extends Field<?>> fields);
 
     /**
      * Add an <code>OF</code> clause to the <code>FOR UPDATE</code> clause at

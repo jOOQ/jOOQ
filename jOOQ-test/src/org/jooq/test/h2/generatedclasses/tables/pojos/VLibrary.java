@@ -6,7 +6,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary implements org.jooq.test.h2.generatedclasses.tables.interfaces.IVLibrary {
 
-	private static final long serialVersionUID = 804953092;
+	private static final long serialVersionUID = 1960870285;
 
 	private java.lang.String author;
 	private java.lang.String title;
@@ -52,4 +52,6 @@ public class VLibrary implements org.jooq.test.h2.generatedclasses.tables.interf
 		into.from(this);
 		return into;
 	}
+
+	// Here, a toString() method could be generated
 }

@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = 634673066;
+	private static final long serialVersionUID = -848640077;
 
 	private java.lang.Integer  id;
 	private java.lang.Integer  authorId;
@@ -162,4 +162,6 @@ public class TBook implements org.jooq.test.h2.generatedclasses.tables.interface
 		into.from(this);
 		return into;
 	}
+
+	// Here, a toString() method could be generated
 }

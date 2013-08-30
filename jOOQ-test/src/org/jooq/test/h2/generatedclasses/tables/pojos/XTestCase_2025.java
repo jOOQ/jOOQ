@@ -6,7 +6,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_2025 {
 
-	private static final long serialVersionUID = -220502124;
+	private static final long serialVersionUID = 244926749;
 
 	private java.lang.Integer refId;
 	private java.lang.String  refName;
@@ -52,4 +52,6 @@ public class XTestCase_2025 implements org.jooq.test.h2.generatedclasses.tables.
 		into.from(this);
 		return into;
 	}
+
+	// Here, a toString() method could be generated
 }

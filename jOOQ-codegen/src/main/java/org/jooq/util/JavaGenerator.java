@@ -636,10 +636,18 @@ public class JavaGenerator extends AbstractGenerator {
 
         out.tab(1).println("}");
 
-
+        generateRecordClassFooter(table, out);
         out.println("}");
         out.close();
     }
+
+    /**
+     * Subclasses may override this method to provide record class footer code.
+     *
+     * @param table The table
+     * @param out The writer
+     */
+    protected void generateRecordClassFooter(TableDefinition table, JavaWriter out) {}
 
     private final String getRowType(Collection<? extends ColumnDefinition> columns) {
         StringBuilder result = new StringBuilder();
@@ -707,9 +715,20 @@ public class JavaGenerator extends AbstractGenerator {
 
         out.tab(1).javadoc("Copy data into another generated Record/POJO implementing the common interface %s", local);
         out.tab(1).println("public <E extends %s> E into(E into);", qualified);
+
+        generateInterfaceClassFooter(table, out);
         out.println("}");
         out.close();
     }
+
+    /**
+     * Subclasses may override this method to provide interface class footer
+     * code.
+     *
+     * @param table The table
+     * @param out The writer
+     */
+    protected void generateInterfaceClassFooter(TableDefinition table, JavaWriter out) {}
 
     protected void generateUDTs(SchemaDefinition schema) {
         log.info("Generating UDTs");
@@ -795,9 +814,18 @@ public class JavaGenerator extends AbstractGenerator {
         out.tab(2).println("getDataType();");
         out.tab(1).println("}");
 
+        generateUDTClassFooter(udt, out);
         out.println("}");
         out.close();
     }
+
+    /**
+     * Subclasses may override this method to provide udt class footer code.
+     *
+     * @param udt The udt
+     * @param out The writer
+     */
+    protected void generateUDTClassFooter(UDTDefinition udt, JavaWriter out) {}
 
     /**
      * Generating UDT record classes
@@ -881,9 +909,18 @@ public class JavaGenerator extends AbstractGenerator {
         out.tab(2).println("super(%s);", udtId);
         out.tab(1).println("}");
 
+        generateUDTRecordClassFooter(udt, out);
         out.println("}");
         out.close();
     }
+
+    /**
+     * Subclasses may override this method to provide udt record class footer code.
+     *
+     * @param udt The udt
+     * @param out The writer
+     */
+    protected void generateUDTRecordClassFooter(UDTDefinition udt, JavaWriter out) {}
 
     protected void generateUDTRoutines(SchemaDefinition schema) {
         for (UDTDefinition udt : database.getUDTs(schema)) {
@@ -981,9 +1018,18 @@ public class JavaGenerator extends AbstractGenerator {
         out.tab(2).println("setList(list);");
         out.tab(1).println("}");
 
+        generateArrayClassFooter(array, out);
         out.println("}");
         out.close();
     }
+
+    /**
+     * Subclasses may override this method to provide array class footer code.
+     *
+     * @param array The array
+     * @param out The writer
+     */
+    protected void generateArrayClassFooter(ArrayDefinition array, JavaWriter out) {}
 
     protected void generateEnums(SchemaDefinition schema) {
         log.info("Generating ENUMs");
@@ -1048,9 +1094,18 @@ public class JavaGenerator extends AbstractGenerator {
         out.tab(2).println("return literal;");
         out.tab(1).println("}");
 
+        generateEnumClassFooter(e, out);
         out.println("}");
         out.close();
     }
+
+    /**
+     * Subclasses may override this method to provide enum class footer code.
+     *
+     * @param e The enum
+     * @param out The writer
+     */
+    protected void generateEnumClassFooter(EnumDefinition e, JavaWriter out) {}
 
     protected void generateRoutines(SchemaDefinition schema) {
         log.info("Generating routines");
@@ -1140,10 +1195,19 @@ public class JavaGenerator extends AbstractGenerator {
         out.tab(1).println("private %s() {", className);
         out.tab(2).println("super(\"%s\", %s);", pkg.getOutputName(), schemaIdentifier);
         out.tab(1).println("}");
-        out.println("}");
 
+        generatePackageClassFooter(pkg, out);
+        out.println("}");
         out.close();
     }
+
+    /**
+     * Subclasses may override this method to provide package class footer code.
+     *
+     * @param pkg The package
+     * @param out The writer
+     */
+    protected void generatePackageClassFooter(PackageDefinition pkg, JavaWriter out) {}
 
     /**
      * Generating central static table access
@@ -1276,9 +1340,18 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
+        generateDaoClassFooter(table, out);
         out.println("}");
         out.close();
     }
+
+    /**
+     * Subclasses may override this method to provide dao class footer code.
+     *
+     * @param table The table
+     * @param out The writer
+     */
+    protected void generateDaoClassFooter(TableDefinition table, JavaWriter out) {}
 
     protected void generatePojos(SchemaDefinition schema) {
         log.info("Generating table POJOs");
@@ -1383,9 +1456,18 @@ public class JavaGenerator extends AbstractGenerator {
             printFromAndInto(out, table);
         }
 
+        generatePojoClassFooter(table, out);
         out.println("}");
         out.close();
     }
+
+    /**
+     * Subclasses may override this method to provide POJO class footer code.
+     *
+     * @param table The table
+     * @param out The writer
+     */
+    protected void generatePojoClassFooter(TableDefinition table, JavaWriter out) {}
 
     protected void generateTables(SchemaDefinition schema) {
         log.info("Generating tables");
@@ -1568,9 +1650,18 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("}");
         }
 
+        generateTableClassFooter(table, out);
         out.println("}");
         out.close();
     }
+
+    /**
+     * Subclasses may override this method to provide table class footer code.
+     *
+     * @param table The table
+     * @param out The writer
+     */
+    protected void generateTableClassFooter(TableDefinition table, JavaWriter out) {}
 
     protected void generateSequences(SchemaDefinition schema) {
         log.info("Generating sequences");
@@ -1628,9 +1719,18 @@ public class JavaGenerator extends AbstractGenerator {
         printSchemaReferences(out, database.getTables(schema), Table.class, true);
         printSchemaReferences(out, database.getUDTs(schema), UDT.class, true);
 
+        generateSchemaClassFooter(schema, out);
         out.println("}");
         out.close();
     }
+
+    /**
+     * Subclasses may override this method to provide schema class footer code.
+     *
+     * @param schema The schema
+     * @param out The writer
+     */
+    protected void generateSchemaClassFooter(SchemaDefinition schema, JavaWriter out) {}
 
     protected void printFromAndInto(JavaWriter out, TableDefinition table) {
         String qualified = getStrategy().getFullJavaClassName(table, Mode.INTERFACE);
@@ -1903,9 +2003,18 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
+        generateRoutineClassFooter(routine, out);
         out.println("}");
         out.close();
     }
+
+    /**
+     * Subclasses may override this method to provide routine class footer code.
+     *
+     * @param routine The routine
+     * @param out The writer
+     */
+    protected void generateRoutineClassFooter(RoutineDefinition routine, JavaWriter out) {}
 
     protected void printConvenienceMethodFunctionAsField(JavaWriter out, RoutineDefinition function, boolean parametersAsField) {
         // [#281] - Java can't handle more than 255 method parameters

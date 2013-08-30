@@ -1,19 +1,3 @@
-/*
- * Copyright (c) 2013 by Data Geekery GmbH
- *
- * This program is free software: you can redistribute it and/or modify it 
- * under the terms of the GNU Affero General Public License as published by 
- * the Free Software Foundation, either version 3 of the License, or (at your 
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for 
- * more details.
- *
- * You should have received a copy of the GNU Affero General Public License 
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package org.jooq.test.h2.generatedclasses;
 
 /**
@@ -22,7 +6,7 @@ package org.jooq.test.h2.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1750505245;
+	private static final long serialVersionUID = -1390298949;
 
 	/**
 	 * The singleton instance of <code>PUBLIC</code>
@@ -69,6 +53,7 @@ public class Public extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.h2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST,
 			org.jooq.test.h2.generatedclasses.tables.T_785.T_785,
 			org.jooq.test.h2.generatedclasses.tables.T_877.T_877,
+			org.jooq.test.h2.generatedclasses.tables.T_2718.T_2718,
 			org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR,
 			org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK,
 			org.jooq.test.h2.generatedclasses.tables.TBookStore.T_BOOK_STORE,

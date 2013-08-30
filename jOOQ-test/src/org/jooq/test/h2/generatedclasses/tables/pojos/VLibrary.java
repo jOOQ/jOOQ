@@ -1,19 +1,3 @@
-/*
- * Copyright (c) 2013 by Data Geekery GmbH
- *
- * This program is free software: you can redistribute it and/or modify it 
- * under the terms of the GNU Affero General Public License as published by 
- * the Free Software Foundation, either version 3 of the License, or (at your 
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for 
- * more details.
- *
- * You should have received a copy of the GNU Affero General Public License 
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
 /**
@@ -22,7 +6,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary implements org.jooq.test.h2.generatedclasses.tables.interfaces.IVLibrary {
 
-	private static final long serialVersionUID = -816132284;
+	private static final long serialVersionUID = 804953092;
 
 	private java.lang.String author;
 	private java.lang.String title;

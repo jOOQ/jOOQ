@@ -9098,8 +9098,7 @@ Finishing                : Total: 4.814ms, +3.375ms
            Use the pipe to separate several expressions) Watch out for
            case-sensitivity. Depending on your database, this might be
            important! You can create case-insensitive regular expressions
-           using this syntax: (?i:expr)A comma-separated list of regular
-           expressions -->
+           using this syntax: (?i:expr) -->
       <includes>.*</includes>
 
       <!-- All elements that are excluded from your schema (A Java regular expression. 

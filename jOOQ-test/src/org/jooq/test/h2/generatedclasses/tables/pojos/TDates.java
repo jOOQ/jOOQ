@@ -6,7 +6,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITDates {
 
-	private static final long serialVersionUID = -298872027;
+	private static final long serialVersionUID = -1397191058;
 
 	private java.lang.Integer  id;
 	private java.sql.Date      d;
@@ -100,4 +100,6 @@ public class TDates implements org.jooq.test.h2.generatedclasses.tables.interfac
 		into.from(this);
 		return into;
 	}
+
+	// Here, a toString() method could be generated
 }

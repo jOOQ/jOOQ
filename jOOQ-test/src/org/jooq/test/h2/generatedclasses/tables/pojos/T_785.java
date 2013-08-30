@@ -6,7 +6,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_785 {
 
-	private static final long serialVersionUID = 1147839239;
+	private static final long serialVersionUID = 633479632;
 
 	private java.lang.Integer id;
 	private java.lang.String  name;
@@ -64,4 +64,6 @@ public class T_785 implements org.jooq.test.h2.generatedclasses.tables.interface
 		into.from(this);
 		return into;
 	}
+
+	// Here, a toString() method could be generated
 }

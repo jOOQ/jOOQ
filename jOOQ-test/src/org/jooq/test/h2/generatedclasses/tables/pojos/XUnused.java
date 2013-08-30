@@ -6,7 +6,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = -93166680;
+	private static final long serialVersionUID = -52979663;
 
 	private java.lang.Integer    id;
 	private java.lang.String     name;
@@ -220,4 +220,6 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 		into.from(this);
 		return into;
 	}
+
+	// Here, a toString() method could be generated
 }

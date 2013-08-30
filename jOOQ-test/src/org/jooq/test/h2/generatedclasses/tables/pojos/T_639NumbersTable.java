@@ -6,7 +6,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable {
 
-	private static final long serialVersionUID = -55578048;
+	private static final long serialVersionUID = -621850423;
 
 	private java.lang.Integer    id;
 	private java.lang.Byte       byte_;
@@ -184,4 +184,6 @@ public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tabl
 		into.from(this);
 		return into;
 	}
+
+	// Here, a toString() method could be generated
 }

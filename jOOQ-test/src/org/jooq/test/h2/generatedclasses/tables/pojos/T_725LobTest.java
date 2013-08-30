@@ -6,7 +6,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_725LobTest {
 
-	private static final long serialVersionUID = -541177175;
+	private static final long serialVersionUID = 617012466;
 
 	private java.lang.Integer id;
 	private byte[]            lob;
@@ -52,4 +52,6 @@ public class T_725LobTest implements org.jooq.test.h2.generatedclasses.tables.in
 		into.from(this);
 		return into;
 	}
+
+	// Here, a toString() method could be generated
 }

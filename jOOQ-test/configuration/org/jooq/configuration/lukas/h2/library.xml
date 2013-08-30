@@ -7,7 +7,7 @@
         <password></password>
     </jdbc>
     <generator>
-        <name>org.jooq.util.DefaultGenerator</name>
+        <name>org.jooq.test.h2.H2Generator</name>
         <database>
             <name>org.jooq.util.h2.H2Database</name>
             <includes>.*</includes>

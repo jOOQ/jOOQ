@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITLanguage {
 
-	private static final long serialVersionUID = 408621939;
+	private static final long serialVersionUID = 2036801340;
 
 	private java.lang.String  cd;
 	private java.lang.String  description;
@@ -78,4 +78,6 @@ public class TLanguage implements org.jooq.test.h2.generatedclasses.tables.inter
 		into.from(this);
 		return into;
 	}
+
+	// Here, a toString() method could be generated
 }

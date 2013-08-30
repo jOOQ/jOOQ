@@ -6,7 +6,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITExoticTypes {
 
-	private static final long serialVersionUID = -64848177;
+	private static final long serialVersionUID = 685538200;
 
 	private java.lang.Integer id;
 	private java.util.UUID    uu;
@@ -52,4 +52,6 @@ public class TExoticTypes implements org.jooq.test.h2.generatedclasses.tables.in
 		into.from(this);
 		return into;
 	}
+
+	// Here, a toString() method could be generated
 }

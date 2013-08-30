@@ -6,7 +6,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsigned implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITUnsigned {
 
-	private static final long serialVersionUID = -962592678;
+	private static final long serialVersionUID = -1063197597;
 
 	private org.jooq.types.UByte    uByte;
 	private org.jooq.types.UShort   uShort;
@@ -76,4 +76,6 @@ public class TUnsigned implements org.jooq.test.h2.generatedclasses.tables.inter
 		into.from(this);
 		return into;
 	}
+
+	// Here, a toString() method could be generated
 }

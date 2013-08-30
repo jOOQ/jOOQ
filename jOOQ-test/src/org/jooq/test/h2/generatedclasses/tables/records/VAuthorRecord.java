@@ -1,19 +1,3 @@
-/*
- * Copyright (c) 2013 by Data Geekery GmbH
- *
- * This program is free software: you can redistribute it and/or modify it 
- * under the terms of the GNU Affero General Public License as published by 
- * the Free Software Foundation, either version 3 of the License, or (at your 
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for 
- * more details.
- *
- * You should have received a copy of the GNU Affero General Public License 
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package org.jooq.test.h2.generatedclasses.tables.records;
 
 /**
@@ -22,7 +6,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor {
 
-	private static final long serialVersionUID = 441350294;
+	private static final long serialVersionUID = -857156266;
 
 	/**
 	 * Setter for <code>PUBLIC.V_AUTHOR.ID</code>. 

@@ -1,19 +1,3 @@
-/*
- * Copyright (c) 2013 by Data Geekery GmbH
- *
- * This program is free software: you can redistribute it and/or modify it 
- * under the terms of the GNU Affero General Public License as published by 
- * the Free Software Foundation, either version 3 of the License, or (at your 
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for 
- * more details.
- *
- * You should have received a copy of the GNU Affero General Public License 
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package org.jooq.test.h2.generatedclasses.tables;
 
 /**
@@ -22,7 +6,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 164801838;
+	private static final long serialVersionUID = 153077870;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_639_NUMBERS_TABLE</code>

@@ -78,6 +78,14 @@ public class DefaultRelations implements Relations {
     private transient Map<TableDefinition, List<CheckConstraintDefinition>> checkConstraintsByTable;
 
     public void addPrimaryKey(String keyName, ColumnDefinition column) {
+
+        // [#2718] Column exclusions may hit primary key references. Ignore
+        // such primary keys
+        if (column == null) {
+            log.info("Ignoring primary key", keyName + "(column unavailable)");
+            return;
+        }
+
 	    if (log.isDebugEnabled()) {
 	        log.debug("Adding primary key", keyName + " (" + column + ")");
 	    }
@@ -87,6 +95,14 @@ public class DefaultRelations implements Relations {
 	}
 
     public void addUniqueKey(String keyName, ColumnDefinition column) {
+
+        // [#2718] Column exclusions may hit unique key references. Ignore
+        // such unique keys
+        if (column == null) {
+            log.info("Ignoring unique key", keyName + "(column unavailable)");
+            return;
+        }
+
         if (log.isDebugEnabled()) {
             log.debug("Adding unique key", keyName + " (" + column + ")");
         }
@@ -116,10 +132,18 @@ public class DefaultRelations implements Relations {
             ColumnDefinition foreignKeyColumn,
             SchemaDefinition uniqueKeySchema) {
 
+
+        // [#2718] Column exclusions may hit foreign key references. Ignore
+        // such foreign keys
+        if (foreignKeyColumn == null) {
+            log.info("Ignoring foreign key", foreignKeyColumn + "(column unavailable)");
+            return;
+        }
+
         // [#1134] Prevent NPE's when a foreign key references a unique key
         // from another schema
         if (uniqueKeySchema == null) {
-            log.warn("Unused foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName + " references a schema out of scope for jooq-meta");
+            log.warn("Ignoring foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName + " references a schema out of scope for jooq-meta");
             return;
         }
 

@@ -129,6 +129,13 @@ public class LoggerListener extends DefaultExecuteListener {
         }
     }
 
+    @Override
+    public void executeEnd(ExecuteContext ctx) {
+        if (log.isDebugEnabled() && ctx.rows() >= 0) {
+            log.debug("Affected row(s)", ctx.rows());
+        }
+    }
+
     private void logMultiline(String comment, String message, Level level) {
         for (String line : message.split("\n")) {
             if (level == Level.FINE) {

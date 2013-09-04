@@ -113,6 +113,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
     private transient CursorResultSet rs;
     private transient Iterator<R>     iterator;
+    private transient int             rows;
 
     @SuppressWarnings("unchecked")
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet) {
@@ -437,8 +438,8 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         }
 
         @Override
-        public final boolean relative(int rows) throws SQLException {
-            return ctx.resultSet().relative(rows);
+        public final boolean relative(int r) throws SQLException {
+            return ctx.resultSet().relative(r);
         }
 
         @Override
@@ -453,6 +454,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
         @Override
         public final void close() throws SQLException {
+            ctx.rows(rows);
             listener.fetchEnd(ctx);
 
             // [#1868] If this Result / Cursor was "kept" through a lazy
@@ -1422,6 +1424,8 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
                     record = Utils.newRecord((Class<AbstractRecord>) type, fields, ctx.configuration())
                                   .operate(initialiser);
+
+                    rows++;
                 }
             }
             catch (SQLException e) {

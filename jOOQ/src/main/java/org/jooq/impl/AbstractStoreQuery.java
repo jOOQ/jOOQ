@@ -274,6 +274,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 case SQLITE: {
                     listener.executeStart(ctx);
                     result = ctx.statement().executeUpdate();
+                    ctx.rows(result);
                     listener.executeEnd(ctx);
 
                     DSLContext create = DSL.using(ctx.configuration());
@@ -294,6 +295,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 case SYBASE: {
                     listener.executeStart(ctx);
                     result = ctx.statement().executeUpdate();
+                    ctx.rows(result);
                     listener.executeEnd(ctx);
 
                     selectReturning(ctx.configuration(), create(ctx.configuration()).lastID());
@@ -312,6 +314,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 case SQLSERVER: {
                     listener.executeStart(ctx);
                     result = ctx.statement().executeUpdate();
+                    ctx.rows(result);
                     listener.executeEnd(ctx);
 
                     rs = ctx.statement().getGeneratedKeys();
@@ -354,6 +357,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 default: {
                     listener.executeStart(ctx);
                     result = ctx.statement().executeUpdate();
+                    ctx.rows(result);
                     listener.executeEnd(ctx);
 
                     rs = ctx.statement().getGeneratedKeys();

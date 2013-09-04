@@ -97,6 +97,7 @@ class DefaultExecuteContext implements ExecuteContext {
 
     private final Query[]                        batchQueries;
     private final String[]                       batchSQL;
+    private final int[]                          batchRows;
 
     // Transient attributes (created afresh per execution)
     private transient ConnectionProvider         connectionProvider;
@@ -105,6 +106,7 @@ class DefaultExecuteContext implements ExecuteContext {
     private transient ResultSet                  resultSet;
     private transient Record                     record;
     private transient Result<?>                  result;
+    private transient int                        rows  = -1;
     private transient SQLException               sqlException;
     private transient RuntimeException           exception;
 
@@ -249,12 +251,18 @@ class DefaultExecuteContext implements ExecuteContext {
 
         if (this.batchQueries.length > 0) {
             this.batchSQL = new String[this.batchQueries.length];
+            this.batchRows = new int[this.batchQueries.length];
+
+            for (int i = 0; i < this.batchQueries.length; i++)
+                this.batchRows[i] = -1;
         }
         else if (routine != null) {
             this.batchSQL = new String[1];
+            this.batchRows = new int[] { -1 };
         }
         else {
             this.batchSQL = new String[0];
+            this.batchRows = new int[0];
         }
 
         clean();
@@ -447,6 +455,26 @@ class DefaultExecuteContext implements ExecuteContext {
     @Override
     public final Record record() {
         return record;
+    }
+
+    @Override
+    public final int rows() {
+        return rows;
+    }
+
+    @Override
+    public final void rows(int r) {
+        this.rows = r;
+
+        // If this isn't a batch query
+        if (batchRows.length == 1) {
+            batchRows[0] = r;
+        }
+    }
+
+    @Override
+    public final int[] batchRows() {
+        return batchRows;
     }
 
     @Override

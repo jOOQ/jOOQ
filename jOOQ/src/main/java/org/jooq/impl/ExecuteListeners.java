@@ -97,10 +97,10 @@ class ExecuteListeners implements ExecuteListener {
      */
     private static List<ExecuteListener> listeners(ExecuteContext ctx) {
         List<ExecuteListener> result = new ArrayList<ExecuteListener>();
-        
+
         if (!FALSE.equals(ctx.configuration().settings().isExecuteLogging())) {
-            result.add(new StopWatchListener());
             result.add(new LoggerListener());
+            result.add(new StopWatchListener());
         }
 
         for (ExecuteListenerProvider provider : ctx.configuration().executeListenerProviders()) {

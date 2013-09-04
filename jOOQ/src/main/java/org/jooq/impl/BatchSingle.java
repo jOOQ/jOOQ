@@ -165,8 +165,12 @@ class BatchSingle implements BatchBindStep {
 
             listener.executeStart(ctx);
             int[] result = ctx.statement().executeBatch();
-            listener.executeEnd(ctx);
 
+            int[] batchRows = ctx.batchRows();
+            for (int i = 0; i < batchRows.length && i < result.length; i++)
+                batchRows[i] = result[i];
+
+            listener.executeEnd(ctx);
             return result;
         }
         catch (SQLException e) {

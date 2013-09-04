@@ -2244,6 +2244,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testExecuteListenerRows() throws Exception {
+        new ExecuteListenerTests(this).testExecuteListenerRows();
+    }
+
+    @Test
     public void testExecuteListenerOnResultQuery() throws Exception {
         new ExecuteListenerTests(this).testExecuteListenerOnResultQuery();
     }

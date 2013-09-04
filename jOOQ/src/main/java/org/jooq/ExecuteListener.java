@@ -581,6 +581,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
      * is about to be fetched or <code>null</code>, if the <code>Query</code>
      * returns no result set, or if a <code>Routine</code> is being executed.</li>
+     * <li> {@link ExecuteContext#rows()}: The number of affected rows if
+     * applicable. In case a {@link ResultSet} is fetched, this number is only
+     * available at the {@link #fetchEnd(ExecuteContext)} event.</li>
      * </ul>
      * <p>
      * Overridable attributes in <code>ExecuteContext</code>:
@@ -850,6 +853,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * Note that the <code>Statement</code> is already closed!</li>
      * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
      * was fetched. Note that the <code>ResultSet</code> is already closed!</li>
+     * <li> {@link ExecuteContext#rows()}: The number of affected rows if
+     * applicable.</li>
      * <li> {@link ExecuteContext#record()}: The last <code>Record</code> that
      * was fetched.</li>
      * <li> {@link ExecuteContext#result()}: The last set of records that were
@@ -899,6 +904,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
      * was fetched or <code>null</code>, if no result set was fetched. Note that
      * the <code>ResultSet</code> may already be closed!</li>
+     * <li> {@link ExecuteContext#rows()}: The number of affected rows if
+     * applicable.</li>
      * <li> {@link ExecuteContext#record()}: The last <code>Record</code> that
      * was fetched or null if no records were fetched.</li>
      * <li> {@link ExecuteContext#result()}: The last set of records that were
@@ -942,6 +949,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
      * was fetched or <code>null</code>, if no result set was fetched. Note that
      * the <code>ResultSet</code> may already be closed!</li>
+     * <li> {@link ExecuteContext#rows()}: The number of affected rows if
+     * applicable.</li>
      * <li> {@link ExecuteContext#record()}: The last <code>Record</code> that
      * was fetched or null if no records were fetched.</li>
      * <li> {@link ExecuteContext#result()}: The last set of records that were

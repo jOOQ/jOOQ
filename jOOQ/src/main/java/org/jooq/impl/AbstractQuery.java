@@ -370,6 +370,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
         if (!ctx.statement().execute()) {
             result = ctx.statement().getUpdateCount();
+            ctx.rows(result);
         }
 
         listener.executeEnd(ctx);

@@ -279,6 +279,36 @@ public interface ExecuteContext {
     void record(Record record);
 
     /**
+     * The number of rows that were affected by the last statement.
+     * <p>
+     * This returns <code>-1</code> if the number of affected rows is not yet
+     * available, or if affected rows are not applicable for the given
+     * statement.
+     */
+    int rows();
+
+    /**
+     * Calling this has no effect. It is used by jOOQ internally.
+     */
+    void rows(int rows);
+
+    /**
+     * The number of rows that were affected by the last statement executed in
+     * batch mode.
+     * <p>
+     * If a single <code>Query</code> is executed in non-batch mode, this will
+     * return an array of length <code>1</code>, containing {@link #rows()}
+     * <p>
+     * This returns <code>-1</code> values if the number of affected rows is not
+     * yet available, or if affected rows are not applicable for a given
+     * statement.
+     *
+     * @see #rows()
+     * @return The affected rows. This is never <code>null</code>
+     */
+    int[] batchRows();
+
+    /**
      * The last result that was fetched from the result set, or
      * <code>null</code> if no result has been fetched.
      */

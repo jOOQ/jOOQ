@@ -61,6 +61,7 @@ import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
+import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.param;
 import static org.jooq.impl.DSL.val;
 
@@ -116,6 +117,40 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public ExecuteListenerTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
         super(delegate);
+    }
+
+    @Test
+    public void testExecuteListenerRows() throws Exception {
+        RowsListener listener1 = new RowsListener();
+        DSLContext create1 = create(listener1);
+
+        create1.selectFrom(TBook()).fetch();
+        assertEquals(-1, listener1.executeRows);
+        assertEquals(4, listener1.fetchRows);
+
+
+        RowsListener listener2 = new RowsListener();
+        DSLContext create2 = create(listener2);
+
+        create2.update(TBook()).set(TBook_TITLE(), "abc").where(falseCondition()).execute();
+        assertEquals(0, listener2.executeRows);
+        assertEquals(-2, listener2.fetchRows);
+    }
+
+    public static class RowsListener extends DefaultExecuteListener {
+
+        int executeRows = -2;
+        int fetchRows = -2;
+
+        @Override
+        public void executeEnd(ExecuteContext ctx) {
+            executeRows = ctx.rows();
+        }
+
+        @Override
+        public void fetchEnd(ExecuteContext ctx) {
+            fetchRows = ctx.rows();
+        }
     }
 
     @Test

@@ -218,6 +218,17 @@ Read this book when writing SQL with jOOQ!
 </table>
 </td>
 </tr>
+<tr>
+<td>
+<h2>Further readings</h2>
+<ul>
+<li><a href="http://tech.pro/tutorial/1555/10-easy-steps-to-a-complete-understanding-of-sql">10 Easy Steps to a Complete Understanding of SQL</a></li>
+<li><a href="http://blog.jooq.org/2013/07/30/10-common-mistakes-java-developers-make-when-writing-sql/">10 Common Mistakes Java Developers Make When Writing SQL</a></li>
+<li><a href="http://blog.jooq.org/2013/08/12/10-more-common-mistakes-java-developers-make-when-writing-sql/">10 More Common Mistakes Java Developers Make When Writing SQL</a></li>
+<li><a href="http://blog.jooq.org/2012/01/05/the-java-fluent-api-designer-crash-course/">The Java Fluent API Designer Crash Course</a></li>
+</ul>
+</td>
+</tr>
 </table>
 </td>
 </tr>

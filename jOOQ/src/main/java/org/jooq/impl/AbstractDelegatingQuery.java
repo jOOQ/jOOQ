@@ -144,6 +144,11 @@ abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPar
     }
 
     @Override
+    public final void detach() {
+        delegate.detach();
+    }
+
+    @Override
     public final int execute() {
         return delegate.execute();
     }

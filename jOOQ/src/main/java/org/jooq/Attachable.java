@@ -80,11 +80,18 @@ import javax.sql.DataSource;
 public interface Attachable extends Serializable {
 
     /**
-     * Attach this object to a new {@link Configuration}
+     * Attach this object to a new {@link Configuration}.
      *
      * @param configuration A configuration or <code>null</code>, if you wish to
      *            detach this <code>Attachable</code> from its previous
      *            configuration.
      */
     void attach(Configuration configuration);
+
+    /**
+     * Detach this object from its current {@link Configuration}.
+     * <p>
+     * This is the same as calling <code>attach(null)</code>.
+     */
+    void detach();
 }

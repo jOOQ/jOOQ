@@ -147,6 +147,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final void detach() {
+        attach(null);
+    }
+
+    @Override
     public final Configuration configuration() {
         return configuration;
     }

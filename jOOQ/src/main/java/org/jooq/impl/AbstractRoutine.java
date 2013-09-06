@@ -210,6 +210,11 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     @Override
+    public final void detach() {
+        attach(null);
+    }
+
+    @Override
     public final Configuration configuration() {
         return configuration;
     }

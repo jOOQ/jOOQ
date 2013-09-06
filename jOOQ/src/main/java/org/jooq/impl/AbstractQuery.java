@@ -108,6 +108,11 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     }
 
     @Override
+    public final void detach() {
+        attach(null);
+    }
+
+    @Override
     public final Configuration configuration() {
         return configuration;
     }

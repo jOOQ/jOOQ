@@ -864,6 +864,12 @@ public interface Field<T> extends GroupField {
      * Create a condition to check if this field is <code>DISTINCT</code> from
      * another value.
      * <p>
+     * In {@link SQLDialect#MYSQL} and {@link SQLDialect#MARIADB}, this can be
+     * emulated through <code><pre>not([this] &lt;=> [value])</pre></code>
+     * <p>
+     * In {@link SQLDialect#SQLITE}, this can be emulated through
+     * <code><pre>[this] IS NOT [value]</pre></code>
+     * <p>
      * If this is not supported by the underlying database, jOOQ will render
      * this instead: <code><pre>
      * CASE WHEN [this] IS     NULL AND [value] IS     NULL THEN FALSE
@@ -885,6 +891,12 @@ public interface Field<T> extends GroupField {
     /**
      * Create a condition to check if this field is <code>DISTINCT</code> from
      * another field.
+     * <p>
+     * In {@link SQLDialect#MYSQL} and {@link SQLDialect#MARIADB}, this can be
+     * emulated through <code><pre>not([this] &lt;=> [value])</pre></code>
+     * <p>
+     * In {@link SQLDialect#SQLITE}, this can be emulated through
+     * <code><pre>[this] IS NOT [value]</pre></code>
      * <p>
      * If this is not supported by the underlying database, jOOQ will render
      * this instead: <code><pre>
@@ -908,6 +920,12 @@ public interface Field<T> extends GroupField {
      * Create a condition to check if this field is <code>NOT DISTINCT</code>
      * from another value.
      * <p>
+     * In {@link SQLDialect#MYSQL} and {@link SQLDialect#MARIADB}, this can be
+     * emulated through <code><pre>[this] &lt;=> [value]</pre></code>
+     * <p>
+     * In {@link SQLDialect#SQLITE}, this can be emulated through
+     * <code><pre>[this] IS [value]</pre></code>
+     * <p>
      * If this is not supported by the underlying database, jOOQ will render
      * this instead: <code><pre>
      * CASE WHEN [this] IS     NULL AND [value] IS     NULL THEN TRUE
@@ -929,6 +947,12 @@ public interface Field<T> extends GroupField {
     /**
      * Create a condition to check if this field is <code>NOT DISTINCT</code>
      * from another field.
+     * <p>
+     * In {@link SQLDialect#MYSQL} and {@link SQLDialect#MARIADB}, this can be
+     * emulated through <code><pre>[this] &lt;=> [value]</pre></code>
+     * <p>
+     * In {@link SQLDialect#SQLITE}, this can be emulated through
+     * <code><pre>[this] IS [value]</pre></code>
      * <p>
      * If this is not supported by the underlying database, jOOQ will render
      * this instead: <code><pre>

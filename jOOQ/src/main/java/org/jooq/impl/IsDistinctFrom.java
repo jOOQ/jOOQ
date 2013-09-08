@@ -77,6 +77,7 @@ class IsDistinctFrom<T> extends AbstractCondition {
     private final Comparator            comparator;
 
     private transient QueryPartInternal mySQLCondition;
+    private transient QueryPartInternal sqliteCondition;
     private transient QueryPartInternal compareCondition;
     private transient QueryPartInternal caseExpression;
 
@@ -108,8 +109,8 @@ class IsDistinctFrom<T> extends AbstractCondition {
      */
     private final QueryPartInternal delegate(Configuration configuration) {
 
-        // These dialects need to simulate the IS DISTINCT FROM operator
-        if (asList(ASE, CUBRID, DB2, DERBY, INGRES, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(configuration.dialect().family())) {
+        // These dialects need to simulate the IS DISTINCT FROM predicate
+        if (asList(ASE, CUBRID, DB2, DERBY, INGRES, ORACLE, SQLSERVER, SYBASE).contains(configuration.dialect().family())) {
             if (caseExpression == null) {
                 if (comparator == Comparator.IS_DISTINCT_FROM) {
                     caseExpression = (QueryPartInternal) decode()
@@ -138,7 +139,7 @@ class IsDistinctFrom<T> extends AbstractCondition {
         else if (asList(MARIADB, MYSQL).contains(configuration.dialect())) {
             if (mySQLCondition == null) {
                 if (comparator == Comparator.IS_DISTINCT_FROM) {
-                    mySQLCondition = (QueryPartInternal) condition("not({0} <=> {1})", lhs, rhs);
+                    mySQLCondition = (QueryPartInternal) condition("{not}({0} <=> {1})", lhs, rhs);
                 }
                 else {
                     mySQLCondition = (QueryPartInternal) condition("{0} <=> {1}", lhs, rhs);
@@ -148,7 +149,21 @@ class IsDistinctFrom<T> extends AbstractCondition {
             return mySQLCondition;
         }
 
-        // These dialects natively support the IS DISTINCT FROM operator:
+        // SQLite knows the IS / IS NOT predicate
+        else if (SQLITE == configuration.dialect()) {
+            if (sqliteCondition == null) {
+                if (comparator == Comparator.IS_DISTINCT_FROM) {
+                    sqliteCondition = (QueryPartInternal) condition("{0} {is not} {1}", lhs, rhs);
+                }
+                else {
+                    sqliteCondition = (QueryPartInternal) condition("{0} {is} {1}", lhs, rhs);
+                }
+            }
+
+            return sqliteCondition;
+        }
+
+        // These dialects natively support the IS DISTINCT FROM predicate:
         // H2, Postgres
         else {
             if (compareCondition == null) {

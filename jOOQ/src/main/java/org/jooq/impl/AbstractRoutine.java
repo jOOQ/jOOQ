@@ -223,8 +223,14 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     public final int execute(Configuration c) {
 
         // Ensure that all depending Attachables are attached
-        attach(c);
-        return execute();
+        Configuration previous = configuration();
+        try {
+            attach(c);
+            return execute();
+        }
+        finally {
+            attach(previous);
+        }
     }
 
     @Override

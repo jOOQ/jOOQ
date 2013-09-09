@@ -108,6 +108,7 @@
             <generatedAnnotation>false</generatedAnnotation>
             <records>true</records>
             <immutablePojos>true</immutablePojos>
+            <interfaces>true</interfaces>
             <jpaAnnotations>false</jpaAnnotations>
         </generate>
         <target>

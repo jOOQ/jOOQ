@@ -178,6 +178,14 @@ public class JavaGenerator extends AbstractGenerator {
             + ((!generateRelations && generateDaos) ? " (forced to true because of <daos/>)" : ""));
         log.info("  global references", generateGlobalObjectReferences());
         log.info("----------------------------------------------------------");
+        log.info("");
+        log.info("Generation remarks");
+        log.info("----------------------------------------------------------");
+
+        if (generateImmutablePojos && generateInterfaces)
+            log.info("  immutable pojos", "Immutable POJOs do not have any setters. Hence, setters are also missing from interfaces");
+
+        log.info("----------------------------------------------------------");
 
         String targetPackage = getTargetPackage();
         File targetPackageDir = new File(getTargetDirectory() + File.separator + targetPackage.replace('.', File.separatorChar));
@@ -533,7 +541,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String name = column.getQualifiedOutputName();
 
             out.tab(1).javadoc("Setter for <code>%s</code>. %s", name, comment);
-            out.tab(1).overrideIf(generateInterfaces());
+            out.tab(1).overrideIf(generateInterfaces() && !generateImmutablePojos());
             out.tab(1).println("public void %s(%s value) {", setter, type);
             out.tab(2).println("setValue(%s, value);", i);
             out.tab(1).println("}");
@@ -603,7 +611,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        if (generateInterfaces()) {
+        if (generateInterfaces() && !generateImmutablePojos()) {
             printFromAndInto(out, table);
         }
 
@@ -697,8 +705,10 @@ public class JavaGenerator extends AbstractGenerator {
             final String type = getJavaType((column).getType());
             final String name = column.getQualifiedOutputName();
 
-            out.tab(1).javadoc("Setter for <code>%s</code>. %s", name, comment);
-            out.tab(1).println("public void %s(%s value);", setter, type);
+            if (!generateImmutablePojos()) {
+                out.tab(1).javadoc("Setter for <code>%s</code>. %s", name, comment);
+                out.tab(1).println("public void %s(%s value);", setter, type);
+            }
 
             out.tab(1).javadoc("Getter for <code>%s</code>. %s", name, comment);
             printColumnJPAAnnotation(out, column);
@@ -706,15 +716,18 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("public %s %s();", type, getter);
         }
 
-        String local = getStrategy().getJavaClassName(table, Mode.INTERFACE);
-        String qualified = getStrategy().getFullJavaClassName(table, Mode.INTERFACE);
+        if (!generateImmutablePojos()) {
+            String local = getStrategy().getJavaClassName(table, Mode.INTERFACE);
+            String qualified = getStrategy().getFullJavaClassName(table, Mode.INTERFACE);
 
-        out.tab(1).header("FROM and INTO");
-        out.tab(1).javadoc("Load data from another generated Record/POJO implementing the common interface %s", local);
-        out.tab(1).println("public void from(%s from);", qualified);
+            out.tab(1).header("FROM and INTO");
 
-        out.tab(1).javadoc("Copy data into another generated Record/POJO implementing the common interface %s", local);
-        out.tab(1).println("public <E extends %s> E into(E into);", qualified);
+            out.tab(1).javadoc("Load data from another generated Record/POJO implementing the common interface %s", local);
+            out.tab(1).println("public void from(%s from);", qualified);
+
+            out.tab(1).javadoc("Copy data into another generated Record/POJO implementing the common interface %s", local);
+            out.tab(1).println("public <E extends %s> E into(E into);", qualified);
+        }
 
         generateInterfaceClassFooter(table, out);
         out.println("}");
@@ -1452,7 +1465,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        if (generateInterfaces()) {
+        if (generateInterfaces() && !generateImmutablePojos()) {
             printFromAndInto(out, table);
         }
 

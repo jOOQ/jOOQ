@@ -1628,7 +1628,7 @@ public abstract class jOOQAbstractTest<
         new InsertUpdateTests(this).testInsertReturning();
     }
 
-    // @Test
+    // @Test [#2374]
     public void testInsertReturningWithPlainSQL() throws Exception {
         new InsertUpdateTests(this).testInsertReturningWithPlainSQL();
     }

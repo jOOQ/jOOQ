@@ -36,12 +36,15 @@
 
 package org.jooq.util;
 
+import static org.jooq.impl.DSL.falseCondition;
+
 import java.io.IOException;
 import java.io.StringReader;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -49,6 +52,8 @@ import java.util.Map;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
+import org.jooq.Table;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.SQLDataType;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -119,6 +124,13 @@ public abstract class AbstractDatabase implements Database {
     private transient Map<SchemaDefinition, List<RoutineDefinition>>         routinesBySchema;
     private transient Map<SchemaDefinition, List<PackageDefinition>>         packagesBySchema;
 
+    // Other caches
+    private final Map<Table<?>, Boolean>                                     exists;
+
+    protected AbstractDatabase() {
+        exists = new HashMap<Table<?>, Boolean>();
+    }
+
     @Override
     public final SQLDialect getDialect() {
         if (dialect == null) {
@@ -145,6 +157,25 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return create;
+    }
+
+    @Override
+    public final boolean exists(Table<?> table) {
+        Boolean result = exists.get(table);
+
+        if (result == null) {
+            try {
+                create().selectOne().from(table).where(falseCondition()).fetch();
+                result = true;
+            }
+            catch (DataAccessException e) {
+                result = false;
+            }
+
+            exists.put(table, result);
+        }
+
+        return result;
     }
 
     @Override

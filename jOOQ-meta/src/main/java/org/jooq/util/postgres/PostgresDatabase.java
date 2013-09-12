@@ -38,7 +38,6 @@ package org.jooq.util.postgres;
 
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.decode;
-import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
@@ -307,49 +306,52 @@ public class PostgresDatabase extends AbstractDatabase {
     protected List<EnumDefinition> getEnums0() throws SQLException {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
 
-        // [#2707] Fetch all enum type names first, in order to be able to
-        // perform enumlabel::[typname] casts in the subsequent query for
-        // cross-version compatible enum literal ordering
-        Result<Record2<String, String>> types = create()
-            .select(
-                PG_NAMESPACE.NSPNAME,
-                PG_TYPE.TYPNAME)
-            .from(PG_TYPE)
-            .join(PG_NAMESPACE).on("pg_type.typnamespace = pg_namespace.oid")
-            .where(PG_NAMESPACE.NSPNAME.in(getInputSchemata()))
-            .and(field("pg_type.oid", Long.class).in(select(PG_ENUM.ENUMTYPID).from(PG_ENUM)))
-            .orderBy(
-                PG_NAMESPACE.NSPNAME,
-                PG_TYPE.TYPNAME)
-            .fetch();
+        // [#2736] This table is unavailable in Amazon Redshift
+        if (exists(PG_ENUM)) {
 
-        for (Record2<String, String> type : types) {
-            String nspname = type.getValue(PG_NAMESPACE.NSPNAME);
-            String typname = type.getValue(PG_TYPE.TYPNAME);
-
-            List<String> labels = create()
-                .select(PG_ENUM.ENUMLABEL)
-                .from(PG_ENUM)
-                .join(PG_TYPE).on("pg_enum.enumtypid = pg_type.oid")
+            // [#2707] Fetch all enum type names first, in order to be able to
+            // perform enumlabel::[typname] casts in the subsequent query for
+            // cross-version compatible enum literal ordering
+            Result<Record2<String, String>> types = create()
+                .select(
+                    PG_NAMESPACE.NSPNAME,
+                    PG_TYPE.TYPNAME)
+                .from(PG_TYPE)
                 .join(PG_NAMESPACE).on("pg_type.typnamespace = pg_namespace.oid")
-                .where(PG_NAMESPACE.NSPNAME.eq(nspname))
-                .and(PG_TYPE.TYPNAME.eq(typname))
-                .orderBy(field("{0}::{1}", PG_ENUM.ENUMLABEL, name(nspname, typname)))
-                .fetch(PG_ENUM.ENUMLABEL);
+                .where(PG_NAMESPACE.NSPNAME.in(getInputSchemata()))
+                .and(field("pg_type.oid", Long.class).in(select(PG_ENUM.ENUMTYPID).from(PG_ENUM)))
+                .orderBy(
+                    PG_NAMESPACE.NSPNAME,
+                    PG_TYPE.TYPNAME)
+                .fetch();
 
-            DefaultEnumDefinition definition = null;
-            for (String label : labels) {
-                SchemaDefinition schema = getSchema(nspname);
-                String typeName = String.valueOf(typname);
+            for (Record2<String, String> type : types) {
+                String nspname = type.getValue(PG_NAMESPACE.NSPNAME);
+                String typname = type.getValue(PG_TYPE.TYPNAME);
 
-                if (definition == null || !definition.getName().equals(typeName)) {
-                    definition = new DefaultEnumDefinition(schema, typeName, null);
-                    result.add(definition);
+                List<String> labels = create()
+                    .select(PG_ENUM.ENUMLABEL)
+                    .from(PG_ENUM)
+                    .join(PG_TYPE).on("pg_enum.enumtypid = pg_type.oid")
+                    .join(PG_NAMESPACE).on("pg_type.typnamespace = pg_namespace.oid")
+                    .where(PG_NAMESPACE.NSPNAME.eq(nspname))
+                    .and(PG_TYPE.TYPNAME.eq(typname))
+                    .orderBy(field("{0}::{1}", PG_ENUM.ENUMLABEL, name(nspname, typname)))
+                    .fetch(PG_ENUM.ENUMLABEL);
+
+                DefaultEnumDefinition definition = null;
+                for (String label : labels) {
+                    SchemaDefinition schema = getSchema(nspname);
+                    String typeName = String.valueOf(typname);
+
+                    if (definition == null || !definition.getName().equals(typeName)) {
+                        definition = new DefaultEnumDefinition(schema, typeName, null);
+                        result.add(definition);
+                    }
+
+                    definition.addLiteral(label);
                 }
-
-                definition.addLiteral(label);
             }
-
         }
 
         return result;
@@ -359,21 +361,24 @@ public class PostgresDatabase extends AbstractDatabase {
     protected List<UDTDefinition> getUDTs0() throws SQLException {
         List<UDTDefinition> result = new ArrayList<UDTDefinition>();
 
-        for (Record record : create()
-                .selectDistinct(
-                    ATTRIBUTES.UDT_SCHEMA,
-                    ATTRIBUTES.UDT_NAME)
-                .from(ATTRIBUTES)
-                .where(ATTRIBUTES.UDT_SCHEMA.in(getInputSchemata()))
-                .orderBy(
-                    ATTRIBUTES.UDT_SCHEMA,
-                    ATTRIBUTES.UDT_NAME)
-                .fetch()) {
+        // [#2736] This table is unavailable in Amazon Redshift
+        if (exists(ATTRIBUTES)) {
+            for (Record record : create()
+                    .selectDistinct(
+                        ATTRIBUTES.UDT_SCHEMA,
+                        ATTRIBUTES.UDT_NAME)
+                    .from(ATTRIBUTES)
+                    .where(ATTRIBUTES.UDT_SCHEMA.in(getInputSchemata()))
+                    .orderBy(
+                        ATTRIBUTES.UDT_SCHEMA,
+                        ATTRIBUTES.UDT_NAME)
+                    .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(ATTRIBUTES.UDT_SCHEMA));
-            String name = record.getValue(ATTRIBUTES.UDT_NAME);
+                SchemaDefinition schema = getSchema(record.getValue(ATTRIBUTES.UDT_SCHEMA));
+                String name = record.getValue(ATTRIBUTES.UDT_NAME);
 
-            result.add(new PostgresUDTDefinition(schema, name, null));
+                result.add(new PostgresUDTDefinition(schema, name, null));
+            }
         }
 
         return result;
@@ -399,7 +404,7 @@ public class PostgresDatabase extends AbstractDatabase {
 
                 // Ignore the data type when there is at least one out parameter
                 decode()
-                    .when(exists(
+                    .when(DSL.exists(
                         selectOne()
                         .from(PARAMETERS)
                         .where(PARAMETERS.SPECIFIC_SCHEMA.equal(r1.SPECIFIC_SCHEMA))
@@ -414,7 +419,7 @@ public class PostgresDatabase extends AbstractDatabase {
 
                 // Calculate overload index if applicable
                 decode().when(
-                exists(
+                DSL.exists(
                     selectOne()
                     .from(r2)
                     .where(r2.ROUTINE_SCHEMA.in(getInputSchemata()))

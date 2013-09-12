@@ -41,6 +41,7 @@ import java.util.List;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
+import org.jooq.Table;
 import org.jooq.util.jaxb.CustomType;
 import org.jooq.util.jaxb.EnumType;
 import org.jooq.util.jaxb.ForcedType;
@@ -334,4 +335,9 @@ public interface Database {
      * Whether DATE columns should be treated as TIMESTAMP columns.
      */
     boolean dateAsTimestamp();
+
+    /**
+     * Check for the existence of a table in the dictionary views.
+     */
+    boolean exists(Table<?> table);
 }

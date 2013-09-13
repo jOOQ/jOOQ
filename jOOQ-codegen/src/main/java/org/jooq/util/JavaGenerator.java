@@ -1413,32 +1413,40 @@ public class JavaGenerator extends AbstractGenerator {
                 getStrategy().getJavaMemberName(column, Mode.POJO));
         }
 
-        // Constructor
-        if (generateImmutablePojos()) {
+        // Constructors
+        // ---------------------------------------------------------------------
+
+        // Default constructor
+        if (!generateImmutablePojos()) {
             out.println();
-            out.tab(1).print("public %s(", className);
-
-            String separator1 = "";
-            for (ColumnDefinition column : table.getColumns()) {
-                out.println(separator1);
-
-                out.tab(2).print("%s %s",
-                    StringUtils.rightPad(getJavaType(column.getType()), maxLength),
-                    getStrategy().getJavaMemberName(column, Mode.POJO));
-                separator1 = ",";
-            }
-
+            out.tab(1).print("public %s() {}", className);
             out.println();
-            out.tab(1).println(") {");
-
-            for (ColumnDefinition column : table.getColumns()) {
-                final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
-
-                out.tab(2).println("this.%s = %s;", columnMember, columnMember);
-            }
-
-            out.tab(1).println("}");
         }
+
+        // Multi-constructor
+        out.println();
+        out.tab(1).print("public %s(", className);
+
+        String separator1 = "";
+        for (ColumnDefinition column : table.getColumns()) {
+            out.println(separator1);
+
+            out.tab(2).print("%s %s",
+                StringUtils.rightPad(getJavaType(column.getType()), maxLength),
+                getStrategy().getJavaMemberName(column, Mode.POJO));
+            separator1 = ",";
+        }
+
+        out.println();
+        out.tab(1).println(") {");
+
+        for (ColumnDefinition column : table.getColumns()) {
+            final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+
+            out.tab(2).println("this.%s = %s;", columnMember, columnMember);
+        }
+
+        out.tab(1).println("}");
 
         for (ColumnDefinition column : table.getColumns()) {
             final String columnType = getJavaType(column.getType());

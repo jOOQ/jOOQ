@@ -6,10 +6,20 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_2025 {
 
-	private static final long serialVersionUID = 244926749;
+	private static final long serialVersionUID = 1947664142;
 
 	private java.lang.Integer refId;
 	private java.lang.String  refName;
+
+	public XTestCase_2025() {}
+
+	public XTestCase_2025(
+		java.lang.Integer refId,
+		java.lang.String  refName
+	) {
+		this.refId = refId;
+		this.refName = refName;
+	}
 
 	@Override
 	public java.lang.Integer getRefId() {

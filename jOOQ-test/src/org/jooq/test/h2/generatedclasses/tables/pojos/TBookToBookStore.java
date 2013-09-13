@@ -8,11 +8,23 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = -1491359677;
+	private static final long serialVersionUID = 1672774159;
 
 	private java.lang.String  bookStoreName;
 	private java.lang.Integer bookId;
 	private java.lang.Integer stock;
+
+	public TBookToBookStore() {}
+
+	public TBookToBookStore(
+		java.lang.String  bookStoreName,
+		java.lang.Integer bookId,
+		java.lang.Integer stock
+	) {
+		this.bookStoreName = bookStoreName;
+		this.bookId = bookId;
+		this.stock = stock;
+	}
 
 	@Override
 	public java.lang.String getBookStoreName() {

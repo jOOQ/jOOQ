@@ -6,12 +6,26 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsigned implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITUnsigned {
 
-	private static final long serialVersionUID = -1063197597;
+	private static final long serialVersionUID = -447813874;
 
 	private org.jooq.types.UByte    uByte;
 	private org.jooq.types.UShort   uShort;
 	private org.jooq.types.UInteger uInt;
 	private org.jooq.types.ULong    uLong;
+
+	public TUnsigned() {}
+
+	public TUnsigned(
+		org.jooq.types.UByte    uByte,
+		org.jooq.types.UShort   uShort,
+		org.jooq.types.UInteger uInt,
+		org.jooq.types.ULong    uLong
+	) {
+		this.uByte = uByte;
+		this.uShort = uShort;
+		this.uInt = uInt;
+		this.uLong = uLong;
+	}
 
 	@Override
 	public org.jooq.types.UByte getUByte() {

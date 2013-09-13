@@ -6,10 +6,20 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentity implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentity {
 
-	private static final long serialVersionUID = 672641516;
+	private static final long serialVersionUID = 2086544064;
 
 	private java.lang.Integer id;
 	private java.lang.Integer val;
+
+	public TIdentity() {}
+
+	public TIdentity(
+		java.lang.Integer id,
+		java.lang.Integer val
+	) {
+		this.id = id;
+		this.val = val;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

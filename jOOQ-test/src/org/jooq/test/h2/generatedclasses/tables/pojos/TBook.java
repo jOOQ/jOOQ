@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = -848640077;
+	private static final long serialVersionUID = -189306872;
 
 	private java.lang.Integer  id;
 	private java.lang.Integer  authorId;
@@ -21,6 +21,34 @@ public class TBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	private byte[]             contentPdf;
 	private java.lang.Integer  recVersion;
 	private java.sql.Timestamp recTimestamp;
+
+	public TBook() {}
+
+	public TBook(
+		java.lang.Integer  id,
+		java.lang.Integer  authorId,
+		java.lang.Integer  coAuthorId,
+		java.lang.Integer  detailsId,
+		java.lang.String   title,
+		java.lang.Integer  publishedIn,
+		java.lang.Integer  languageId,
+		java.lang.String   contentText,
+		byte[]             contentPdf,
+		java.lang.Integer  recVersion,
+		java.sql.Timestamp recTimestamp
+	) {
+		this.id = id;
+		this.authorId = authorId;
+		this.coAuthorId = coAuthorId;
+		this.detailsId = detailsId;
+		this.title = title;
+		this.publishedIn = publishedIn;
+		this.languageId = languageId;
+		this.contentText = contentText;
+		this.contentPdf = contentPdf;
+		this.recVersion = recVersion;
+		this.recTimestamp = recTimestamp;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

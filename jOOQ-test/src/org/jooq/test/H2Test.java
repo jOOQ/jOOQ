@@ -58,6 +58,8 @@ import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.test.h2.generatedclasses.Tables.T_2698;
+import static org.jooq.test.h2.generatedclasses.Tables.T_785;
 import static org.jooq.test.h2.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.h2.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.h2.generatedclasses.Tables.T_DATES;
@@ -119,7 +121,6 @@ import org.jooq.test.h2.generatedclasses.tables.TTriggers;
 import org.jooq.test.h2.generatedclasses.tables.TUnsigned;
 import org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.h2.generatedclasses.tables.T_725LobTest;
-import org.jooq.test.h2.generatedclasses.tables.T_785;
 import org.jooq.test.h2.generatedclasses.tables.VLibrary;
 import org.jooq.test.h2.generatedclasses.tables.daos.TAuthorDao;
 import org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord;
@@ -134,6 +135,7 @@ import org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TUnsignedRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.T_2698Record;
 import org.jooq.test.h2.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_785Record;
@@ -916,5 +918,14 @@ public class H2Test extends jOOQAbstractTest<
 
         assertEquals(4, r.size());
         assertEquals(asList(1, 2, 3, 4), asList(r.intoArray()));
+    }
+
+    @Test
+    public void testH2T2698InsertDefault() throws Exception {
+        T_2698Record record = create().newRecord(T_2698);
+        record.setId(1);
+        assertEquals(1, record.store());
+        record.refresh();
+        assertEquals(-1, (int) record.getXx());
     }
 }

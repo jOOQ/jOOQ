@@ -6,10 +6,20 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2698 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2698 {
 
-	private static final long serialVersionUID = 1689728813;
+	private static final long serialVersionUID = 1562117348;
 
 	private java.lang.Integer id;
 	private java.lang.Integer xx;
+
+	public T_2698() {}
+
+	public T_2698(
+		java.lang.Integer id,
+		java.lang.Integer xx
+	) {
+		this.id = id;
+		this.xx = xx;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

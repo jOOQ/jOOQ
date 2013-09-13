@@ -6,7 +6,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans {
 
-	private static final long serialVersionUID = 706647213;
+	private static final long serialVersionUID = 165342311;
 
 	private java.lang.Integer                            id;
 	private org.jooq.test._.converters.Boolean_10        oneZero;
@@ -19,6 +19,34 @@ public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.inter
 	private java.lang.Boolean                            vcBoolean;
 	private java.lang.Boolean                            cBoolean;
 	private java.lang.Boolean                            nBoolean;
+
+	public TBooleans() {}
+
+	public TBooleans(
+		java.lang.Integer                            id,
+		org.jooq.test._.converters.Boolean_10        oneZero,
+		org.jooq.test._.converters.Boolean_TF_LC     trueFalseLc,
+		org.jooq.test._.converters.Boolean_TF_UC     trueFalseUc,
+		org.jooq.test._.converters.Boolean_YES_NO_LC yesNoLc,
+		org.jooq.test._.converters.Boolean_YES_NO_UC yesNoUc,
+		org.jooq.test._.converters.Boolean_YN_LC     yNLc,
+		org.jooq.test._.converters.Boolean_YN_UC     yNUc,
+		java.lang.Boolean                            vcBoolean,
+		java.lang.Boolean                            cBoolean,
+		java.lang.Boolean                            nBoolean
+	) {
+		this.id = id;
+		this.oneZero = oneZero;
+		this.trueFalseLc = trueFalseLc;
+		this.trueFalseUc = trueFalseUc;
+		this.yesNoLc = yesNoLc;
+		this.yesNoUc = yesNoUc;
+		this.yNLc = yNLc;
+		this.yNUc = yNUc;
+		this.vcBoolean = vcBoolean;
+		this.cBoolean = cBoolean;
+		this.nBoolean = nBoolean;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

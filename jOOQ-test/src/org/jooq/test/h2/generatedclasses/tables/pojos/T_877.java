@@ -6,9 +6,17 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_877 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_877 {
 
-	private static final long serialVersionUID = -1991302772;
+	private static final long serialVersionUID = 19085875;
 
 	private java.lang.Integer id;
+
+	public T_877() {}
+
+	public T_877(
+		java.lang.Integer id
+	) {
+		this.id = id;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

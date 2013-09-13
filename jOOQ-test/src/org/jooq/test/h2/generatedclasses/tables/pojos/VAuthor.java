@@ -6,7 +6,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthor implements org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor {
 
-	private static final long serialVersionUID = -1759840967;
+	private static final long serialVersionUID = 502641504;
 
 	private java.lang.Integer id;
 	private java.lang.String  firstName;
@@ -14,6 +14,24 @@ public class VAuthor implements org.jooq.test.h2.generatedclasses.tables.interfa
 	private java.sql.Date     dateOfBirth;
 	private java.lang.Integer yearOfBirth;
 	private java.lang.String  address;
+
+	public VAuthor() {}
+
+	public VAuthor(
+		java.lang.Integer id,
+		java.lang.String  firstName,
+		java.lang.String  lastName,
+		java.sql.Date     dateOfBirth,
+		java.lang.Integer yearOfBirth,
+		java.lang.String  address
+	) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dateOfBirth = dateOfBirth;
+		this.yearOfBirth = yearOfBirth;
+		this.address = address;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

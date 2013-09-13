@@ -6,12 +6,26 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArrays implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITArrays {
 
-	private static final long serialVersionUID = 2111903865;
+	private static final long serialVersionUID = 422753604;
 
 	private java.lang.Integer  id;
 	private java.lang.Object[] stringArray;
 	private java.lang.Object[] numberArray;
 	private java.lang.Object[] dateArray;
+
+	public TArrays() {}
+
+	public TArrays(
+		java.lang.Integer  id,
+		java.lang.Object[] stringArray,
+		java.lang.Object[] numberArray,
+		java.lang.Object[] dateArray
+	) {
+		this.id = id;
+		this.stringArray = stringArray;
+		this.numberArray = numberArray;
+		this.dateArray = dateArray;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

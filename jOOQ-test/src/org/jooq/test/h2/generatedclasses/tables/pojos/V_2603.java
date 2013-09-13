@@ -6,10 +6,20 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class V_2603 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IV_2603 {
 
-	private static final long serialVersionUID = 1195394063;
+	private static final long serialVersionUID = 2049904704;
 
 	private java.lang.Integer col1;
 	private java.lang.Integer col4;
+
+	public V_2603() {}
+
+	public V_2603(
+		java.lang.Integer col1,
+		java.lang.Integer col4
+	) {
+		this.col1 = col1;
+		this.col4 = col4;
+	}
 
 	@Override
 	public java.lang.Integer getCol1() {

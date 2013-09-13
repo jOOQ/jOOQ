@@ -6,10 +6,20 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary implements org.jooq.test.h2.generatedclasses.tables.interfaces.IVLibrary {
 
-	private static final long serialVersionUID = 1960870285;
+	private static final long serialVersionUID = 1528453256;
 
 	private java.lang.String author;
 	private java.lang.String title;
+
+	public VLibrary() {}
+
+	public VLibrary(
+		java.lang.String author,
+		java.lang.String title
+	) {
+		this.author = author;
+		this.title = title;
+	}
 
 	@Override
 	public java.lang.String getAuthor() {

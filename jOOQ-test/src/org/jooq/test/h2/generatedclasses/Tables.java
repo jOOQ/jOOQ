@@ -64,6 +64,11 @@ public class Tables {
 	public static final org.jooq.test.h2.generatedclasses.tables.T_877 T_877 = org.jooq.test.h2.generatedclasses.tables.T_877.T_877;
 
 	/**
+	 * The table PUBLIC.T_2698
+	 */
+	public static final org.jooq.test.h2.generatedclasses.tables.T_2698 T_2698 = org.jooq.test.h2.generatedclasses.tables.T_2698.T_2698;
+
+	/**
 	 * The table PUBLIC.T_2718
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.T_2718 T_2718 = org.jooq.test.h2.generatedclasses.tables.T_2718.T_2718;

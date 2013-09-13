@@ -81,6 +81,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
@@ -123,6 +124,8 @@ import org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.h2.generatedclasses.tables.T_725LobTest;
 import org.jooq.test.h2.generatedclasses.tables.VLibrary;
 import org.jooq.test.h2.generatedclasses.tables.daos.TAuthorDao;
+import org.jooq.test.h2.generatedclasses.tables.daos.T_2698Dao;
+import org.jooq.test.h2.generatedclasses.tables.pojos.T_2698;
 import org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TBookRecord;
@@ -921,11 +924,25 @@ public class H2Test extends jOOQAbstractTest<
     }
 
     @Test
-    public void testH2T2698InsertDefault() throws Exception {
+    public void testH2T2698InsertRecordWithDefault() throws Exception {
+        jOOQAbstractTest.reset = false;
+
         T_2698Record record = create().newRecord(T_2698);
         record.setId(1);
         assertEquals(1, record.store());
         record.refresh();
         assertEquals(-1, (int) record.getXx());
+    }
+
+    @Test
+    public void testH2T2698InsertPojoThroughDaoWithDefault() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        T_2698Dao dao = new T_2698Dao(create().configuration());
+        dao.insert(new T_2698(1, null));
+        List<T_2698> list = dao.fetchById(1);
+        assertEquals(1, list.size());
+        assertEquals(1, (int) list.get(0).getId());
+        assertEquals(-1, (int) list.get(0).getXx());
     }
 }

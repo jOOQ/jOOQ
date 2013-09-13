@@ -11,6 +11,7 @@ DELETE FROM t_dates/
 DELETE FROM t_identity/
 DELETE FROM t_identity_pk/
 DELETE FROM t_triggers/
+DELETE FROM t_2698/
 
 DROP SEQUENCE IF EXISTS s_author_id;/
 CREATE SEQUENCE s_author_id START WITH 1;/

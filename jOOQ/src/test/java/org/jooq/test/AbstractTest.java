@@ -104,7 +104,7 @@ public abstract class AbstractTest {
     public void setUp() throws Exception {
         context = new Mockery();
         statement = context.mock(PreparedStatement.class);
-        create = DSL.using(SQLDialect.ORACLE);
+        create = DSL.using(SQLDialect.MYSQL);
 
         resultEmpty = create.newResult(TABLE1);
 

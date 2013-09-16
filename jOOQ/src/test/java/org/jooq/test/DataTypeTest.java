@@ -93,7 +93,7 @@ public class DataTypeTest extends AbstractTest {
         // ---------------------------------------------
         {
             Condition int_int = integer.eq(1);
-            assertEquals("\"TABLE1\".\"ID1\" = 1", r_refI().render(int_int));
+            assertEquals("`TABLE1`.`ID1` = 1", r_refI().render(int_int));
             context.checking(new Expectations() {{
                 oneOf(statement).setInt(1, 1);
             }});
@@ -104,7 +104,7 @@ public class DataTypeTest extends AbstractTest {
 
         {
             Condition string_string = string.eq("1");
-            assertEquals("\"TABLE1\".\"NAME1\" = '1'", r_refI().render(string_string));
+            assertEquals("`TABLE1`.`NAME1` = '1'", r_refI().render(string_string));
             context.checking(new Expectations() {{
                 oneOf(statement).setString(1, "1");
             }});
@@ -117,7 +117,7 @@ public class DataTypeTest extends AbstractTest {
         // -------------------------------------------------
         {
             Condition int_string = integer.eq("1");
-            assertEquals("\"TABLE1\".\"ID1\" = 1", r_refI().render(int_string));
+            assertEquals("`TABLE1`.`ID1` = 1", r_refI().render(int_string));
             context.checking(new Expectations() {{
                 oneOf(statement).setInt(1, 1);
             }});
@@ -126,7 +126,7 @@ public class DataTypeTest extends AbstractTest {
             context.assertIsSatisfied();
 
             Condition string_int = string.eq(1);
-            assertEquals("\"TABLE1\".\"NAME1\" = '1'", r_refI().render(string_int));
+            assertEquals("`TABLE1`.`NAME1` = '1'", r_refI().render(string_int));
             context.checking(new Expectations() {{
                 oneOf(statement).setString(1, "1");
             }});
@@ -139,7 +139,7 @@ public class DataTypeTest extends AbstractTest {
         // ------------
         {
             Condition object_int = object.eq(1);
-            assertEquals("\"ANY\" = 1", r_refI().render(object_int));
+            assertEquals("`ANY` = 1", r_refI().render(object_int));
             context.checking(new Expectations() {{
                 oneOf(statement).setInt(1, 1);
             }});
@@ -150,7 +150,7 @@ public class DataTypeTest extends AbstractTest {
 
         {
             Condition object_string = object.eq("1");
-            assertEquals("\"ANY\" = '1'", r_refI().render(object_string));
+            assertEquals("`ANY` = '1'", r_refI().render(object_string));
             context.checking(new Expectations() {{
                 oneOf(statement).setString(1, "1");
             }});
@@ -161,7 +161,7 @@ public class DataTypeTest extends AbstractTest {
 
         {
             Condition object_date = object.eq(Timestamp.valueOf("2012-12-21 15:30:00.0"));
-            assertEquals("\"ANY\" = timestamp '2012-12-21 15:30:00.0'", r_refI().render(object_date));
+            assertEquals("`ANY` = timestamp '2012-12-21 15:30:00.0'", r_refI().render(object_date));
             context.checking(new Expectations() {{
                 oneOf(statement).setTimestamp(1, Timestamp.valueOf("2012-12-21 15:30:00.0"));
             }});
@@ -185,7 +185,7 @@ public class DataTypeTest extends AbstractTest {
         // ---------------------------------------------
         {
             Condition int_int = integer.in(1);
-            assertEquals("\"TABLE1\".\"ID1\" in (1)", r_refI().render(int_int));
+            assertEquals("`TABLE1`.`ID1` in (1)", r_refI().render(int_int));
             context.checking(new Expectations() {{
                 oneOf(statement).setInt(1, 1);
             }});
@@ -196,7 +196,7 @@ public class DataTypeTest extends AbstractTest {
 
         {
             Condition string_string = string.in("1");
-            assertEquals("\"TABLE1\".\"NAME1\" in ('1')", r_refI().render(string_string));
+            assertEquals("`TABLE1`.`NAME1` in ('1')", r_refI().render(string_string));
             context.checking(new Expectations() {{
                 oneOf(statement).setString(1, "1");
             }});
@@ -209,7 +209,7 @@ public class DataTypeTest extends AbstractTest {
         // -------------------------------------------------
         {
             Condition int_string = integer.in("1");
-            assertEquals("\"TABLE1\".\"ID1\" in (1)", r_refI().render(int_string));
+            assertEquals("`TABLE1`.`ID1` in (1)", r_refI().render(int_string));
             context.checking(new Expectations() {{
                 oneOf(statement).setInt(1, 1);
             }});
@@ -218,7 +218,7 @@ public class DataTypeTest extends AbstractTest {
             context.assertIsSatisfied();
 
             Condition string_int = string.in(1);
-            assertEquals("\"TABLE1\".\"NAME1\" in ('1')", r_refI().render(string_int));
+            assertEquals("`TABLE1`.`NAME1` in ('1')", r_refI().render(string_int));
             context.checking(new Expectations() {{
                 oneOf(statement).setString(1, "1");
             }});
@@ -231,7 +231,7 @@ public class DataTypeTest extends AbstractTest {
         // ------------
         {
             Condition object_int = object.in(1);
-            assertEquals("\"ANY\" in (1)", r_refI().render(object_int));
+            assertEquals("`ANY` in (1)", r_refI().render(object_int));
             context.checking(new Expectations() {{
                 oneOf(statement).setInt(1, 1);
             }});
@@ -242,7 +242,7 @@ public class DataTypeTest extends AbstractTest {
 
         {
             Condition object_string = object.in("1");
-            assertEquals("\"ANY\" in ('1')", r_refI().render(object_string));
+            assertEquals("`ANY` in ('1')", r_refI().render(object_string));
             context.checking(new Expectations() {{
                 oneOf(statement).setString(1, "1");
             }});

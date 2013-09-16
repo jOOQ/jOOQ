@@ -71,7 +71,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.test.data.Table1Record;
-import org.jooq.util.oracle.OracleDataType;
+import org.jooq.util.mysql.MySQLDataType;
 
 import org.jmock.Mockery;
 import org.junit.After;
@@ -97,7 +97,7 @@ public abstract class AbstractTest {
 
         // [#650] Due to a lacking data type registry, the types need to be
         // loaded statically
-        Class.forName(OracleDataType.class.getName());
+        Class.forName(MySQLDataType.class.getName());
     }
 
     @Before

@@ -150,17 +150,6 @@ button a:active {
     text-shadow: 0 1px 2px #333333;
 }
 
-
-a, 
-a:link, 
-a:visited, 
-a:hover, 
-a:active {
-    color: #000000;
-    text-decoration: none;
-    text-shadow: 0 1px 2px #333333;
-}
-
 a:hover {
     text-decoration: underline;
 }

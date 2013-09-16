@@ -102,7 +102,7 @@ public class MockTest extends AbstractTest {
     @BeforeClass
     public static void before() throws Exception {
         File file = new File(MockTest.class.getResource("/org/jooq/test/data/db.txt").toURI());
-        MOCK = DSL.using(new MockConnection(new MockFileDatabase(file)), SQLDialect.ORACLE);
+        MOCK = DSL.using(new MockConnection(new MockFileDatabase(file)), SQLDialect.POSTGRES);
     }
 
     @Test
@@ -309,7 +309,7 @@ public class MockTest extends AbstractTest {
     public void testInsertReturning() {
 
         // Note: INSERT .. RETURNING is hard to mock for all dialects...
-        DSLContext e = DSL.using(new MockConnection(new InsertReturning()), SQLDialect.ORACLE);
+        DSLContext e = DSL.using(new MockConnection(new InsertReturning()), SQLDialect.POSTGRES);
 
         InsertResultStep<Table1Record> query = e
             .insertInto(TABLE1, FIELD_ID1)
@@ -340,8 +340,8 @@ public class MockTest extends AbstractTest {
 
     @Test
     public void testFileDatabase_SELECT_A_FROM_DUAL() throws Exception {
-        Result<Record> r1 = MOCK.fetch("select 'A' from dual");
-        Result<Record> r2 = MOCK.fetch("select ? from dual", "A");
+        Result<Record> r1 = MOCK.fetch("select 'A'");
+        Result<Record> r2 = MOCK.fetch("select ?", "A");
         Result<Record1<String>> r3 = MOCK.select(val("A")).fetch();
 
         assertEquals(1, r1.size());

@@ -119,6 +119,7 @@ import static org.jooq.Clause.UPDATE_SET;
 import static org.jooq.Clause.UPDATE_SET_ASSIGNMENT;
 import static org.jooq.Clause.UPDATE_UPDATE;
 import static org.jooq.Clause.UPDATE_WHERE;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.exists;
@@ -404,7 +405,8 @@ public class VisitContextTest extends AbstractTest {
     @Test
     public void test_INSERT_VALUES_multiple_emulated() {
 
-        // Oracle emulates multi-record inserts through INSERT .. SELECT
+        // Firebird emulates multi-record inserts through INSERT .. SELECT
+        ctx.configuration().set(FIREBIRD);
 
         assertEvents(asList(
             asList(INSERT),

@@ -70,8 +70,8 @@ public class CastTest extends AbstractTest {
 
     @Test
     public void testCastDecimal() {
-        assertEquals("cast(\"TABLE1\".\"ID1\" as decimal)", create.render(FIELD_ID1.cast(SQLDataType.DECIMAL)));
-        assertEquals("cast(\"TABLE1\".\"ID1\" as decimal(2))", create.render(FIELD_ID1.cast(SQLDataType.DECIMAL.precision(2))));
-        assertEquals("cast(\"TABLE1\".\"ID1\" as decimal(2, 1))", create.render(FIELD_ID1.cast(SQLDataType.DECIMAL.precision(2, 1))));
+        assertEquals("cast(`TABLE1`.`ID1` as decimal)", create.render(FIELD_ID1.cast(SQLDataType.DECIMAL)));
+        assertEquals("cast(`TABLE1`.`ID1` as decimal(2))", create.render(FIELD_ID1.cast(SQLDataType.DECIMAL.precision(2))));
+        assertEquals("cast(`TABLE1`.`ID1` as decimal(2, 1))", create.render(FIELD_ID1.cast(SQLDataType.DECIMAL.precision(2, 1))));
     }
 }

@@ -1,12 +1,12 @@
 # This is a sample test database for MockFileDatabase
 # Its syntax is inspired from H2's test script files
-select 'A' from dual;
+select 'A';
 > A
 > -
 > A
 @ rows: 1
 
-select 'A', 'B' from dual;
+select 'A', 'B';
 > A B
 > - -
 > A B

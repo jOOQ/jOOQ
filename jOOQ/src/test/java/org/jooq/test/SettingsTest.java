@@ -106,23 +106,23 @@ public class SettingsTest {
         Schema schema = new SchemaImpl("S");
         Table<?> table = new TableImpl<Record>("T", schema);
 
-        DSLContext create0 = DSL.using(SQLDialect.ORACLE);
+        DSLContext create0 = DSL.using(SQLDialect.POSTGRES);
         assertEquals("\"S\".\"T\"", create0.render(table));
 
-        DSLContext create1 = DSL.using(SQLDialect.ORACLE, new Settings().withRenderSchema(false));
+        DSLContext create1 = DSL.using(SQLDialect.POSTGRES, new Settings().withRenderSchema(false));
         assertEquals("\"T\"", create1.render(table));
 
-        DSLContext create2 = DSL.using(SQLDialect.ORACLE);
+        DSLContext create2 = DSL.using(SQLDialect.POSTGRES);
         create2.configuration().settings().setRenderSchema(false);
         assertEquals("\"T\"", create2.render(table));
     }
 
     @Test
     public void testRenderMapping() {
-        DSLContext create1 = DSL.using(SQLDialect.ORACLE, new Settings().withRenderMapping(mapping()));
+        DSLContext create1 = DSL.using(SQLDialect.POSTGRES, new Settings().withRenderMapping(mapping()));
         assertEquals("\"TABLEX\"", create1.render(TABLE1));
 
-        DSLContext create2 = DSL.using(SQLDialect.ORACLE);
+        DSLContext create2 = DSL.using(SQLDialect.POSTGRES);
         create2.configuration().settings().setRenderMapping(mapping());
         assertEquals("\"TABLEX\"", create2.render(TABLE1));
     }

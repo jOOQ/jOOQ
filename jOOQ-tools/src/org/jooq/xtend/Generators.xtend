@@ -73,15 +73,17 @@ abstract class Generators {
 	}
 	
 	def read(String className) {
-		val file = file(className)
-		
-		try {
-			val f = new RandomAccessFile(file, "r");
-			val contents = Util::newByteArray(f.length);
-			f.readFully(contents);
-			return new String(contents);
-		}
-		catch (IOException e) {
+		return read(file(className))
+	}
+	
+	def read(File file) {
+	    try {
+            val f = new RandomAccessFile(file, "r");
+            val contents = Util::newByteArray(f.length);
+            f.readFully(contents);
+            return new String(contents);
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
 	}
@@ -99,17 +101,25 @@ abstract class Generators {
 		
 		write(className, result, section);
 	}
-	
+
 	def write(String className, CharSequence contents) {
 		write(className, contents, null);
 	}
 	
     def write(String className, CharSequence contents, String section) {
         val file = file(className);
+        write(file, contents, section);
+    }
+        
+    def write(File file, CharSequence contents) {
+        write(file, contents, null);
+    }
+    
+    def write(File file, CharSequence contents, String section) {
         file.getParentFile().mkdirs();
     
         try {
-            System::out.println("Generating " + file + (if (section != null) (" (section: " + section + ")") else ""));
+            System::out.println("Writing " + file + (if (section != null) (" (section: " + section + ")") else ""));
             val fw = new FileWriter(file);
             fw.append(contents);
             fw.flush();

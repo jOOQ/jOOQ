@@ -226,9 +226,11 @@ class Function<T> extends AbstractField<T> implements
         else if (term == LIST_AGG && asList(POSTGRES, SYBASE).contains(context.configuration().dialect())) {
             toSQLStringAgg(context);
         }
+        /* [com] */
         else if (term == LIST_AGG && asList(DB2).contains(context.configuration().dialect())) {
             toSQLXMLAGG(context);
         }
+        /* [/com] */
         else {
             toSQLArguments(context);
             toSQLKeepDenseRankOrderByClause(context);
@@ -237,6 +239,7 @@ class Function<T> extends AbstractField<T> implements
         }
     }
 
+    /* [com] */
     /**
      * [#1276] <code>LIST_AGG</code> simulation for DB2
      */
@@ -284,6 +287,7 @@ class Function<T> extends AbstractField<T> implements
         }
     }
 
+    /* [/com] */
     /**
      * [#1275] <code>LIST_AGG</code> simulation for Postgres, Sybase
      */
@@ -441,18 +445,24 @@ class Function<T> extends AbstractField<T> implements
         }
 
         if (ignoreNulls) {
+            /* [com] */
             if (context.configuration().dialect() == SQLDialect.DB2) {
                 context.sql(", 'IGNORE NULLS'");
             }
-            else {
+            else
+            /* [/com] */
+            {
                 context.sql(" ").keyword("ignore nulls");
             }
         }
         else if (respectNulls) {
+            /* [com] */
             if (context.configuration().dialect() == SQLDialect.DB2) {
                 context.sql(", 'RESPECT NULLS'");
             }
-            else {
+            else
+            /* [/com] */
+            {
                 context.sql(" ").keyword("respect nulls");
             }
         }

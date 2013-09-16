@@ -93,12 +93,14 @@ enum CombineOperator {
     }
 
     public String toSQL(SQLDialect dialect) {
+        /* [com] */
         if (this == EXCEPT) {
             if (dialect.family() == SQLDialect.ORACLE) {
                 return "minus";
             }
         }
 
+        /* [/com] */
         return sql;
     }
 }

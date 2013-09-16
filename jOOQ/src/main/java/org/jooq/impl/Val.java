@@ -165,7 +165,9 @@ class Val<T> extends AbstractParam<T> {
                 switch (context.configuration().dialect()) {
 
                     // These dialects can hardly detect the type of a bound constant.
+                    /* [com] */
                     case DB2:
+                    /* [/com] */
                     case DERBY:
                     case FIREBIRD:
 
@@ -179,8 +181,10 @@ class Val<T> extends AbstractParam<T> {
 
                     // [#1029] Postgres and [#632] Sybase need explicit casting
                     // in very rare cases.
-                    case POSTGRES:
-                    case SYBASE: {
+                    /* [com] */
+                    case SYBASE:
+                    /* [/com] */
+                    case POSTGRES: {
                         return true;
                     }
                 }
@@ -192,7 +196,9 @@ class Val<T> extends AbstractParam<T> {
         // them
         if (getDataType().isInterval()) {
             switch (context.configuration().dialect().family()) {
+                /* [com] */
                 case ORACLE:
+                /* [/com] */
                 case POSTGRES:
                     return true;
             }
@@ -370,12 +376,14 @@ class Val<T> extends AbstractParam<T> {
                     context.sql("0x")
                            .sql(convertBytesToHex(binary));
                 }
+                /* [com] */
                 else if (family == DB2) {
                     context.keyword("blob")
                            .sql("(X'")
                            .sql(convertBytesToHex(binary))
                            .sql("')");
                 }
+                /* [/com] */
                 else if (asList(DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE).contains(family)) {
                     context.sql("X'")
                            .sql(convertBytesToHex(binary))
@@ -468,11 +476,13 @@ class Val<T> extends AbstractParam<T> {
                     context.keyword("time").sql("('").sql(escape(val)).sql("')");
                 }
 
+                /* [com] */
                 // [#1253] Oracle doesn't know time literals
                 else if (family == ORACLE) {
                     context.keyword("timestamp").sql(" '1970-01-01 ").sql(escape(val)).sql("'");
                 }
 
+                /* [/com] */
                 // Most dialects implement SQL standard time literals
                 else {
                     context.keyword("time").sql(" '").sql(escape(val)).sql("'");

@@ -109,6 +109,7 @@ class Round<T extends Number> extends AbstractFunction<T> {
                 }
             }
 
+            /* [com] */
             // These dialects have a mandatory decimals argument
             case ASE:
             case INGRES:
@@ -117,6 +118,7 @@ class Round<T extends Number> extends AbstractFunction<T> {
                 return function("round", getDataType(), argument, val(decimals));
             }
 
+            /* [/com] */
             // There's no function round(double precision, integer) in Postgres
             case POSTGRES: {
                 if (decimals == 0) {

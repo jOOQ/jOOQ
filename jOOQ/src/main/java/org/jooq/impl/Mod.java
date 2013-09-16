@@ -82,9 +82,11 @@ class Mod<T> extends AbstractFunction<T> {
     @Override
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
+            /* [com] */
             case ASE:
-            case SQLITE:
             case SQLSERVER:
+            /* [/com] */
+            case SQLITE:
                 return new Expression<T>(MODULO, arg1, arg2);
         }
 

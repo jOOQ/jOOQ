@@ -126,14 +126,8 @@ public class JDBCUtils {
 
         // The below list might not be accurate or complete. Feel free to
         // contribute fixes related to new / different JDBC driver configuraitons
-        if (url.startsWith("jdbc:jtds:sybase:")) {
-            return ASE;
-        }
-        else if (url.startsWith("jdbc:cubrid:")) {
+        if (url.startsWith("jdbc:cubrid:")) {
             return CUBRID;
-        }
-        else if (url.startsWith("jdbc:db2:")) {
-            return DB2;
         }
         else if (url.startsWith("jdbc:derby:")) {
             return DERBY;
@@ -147,9 +141,6 @@ public class JDBCUtils {
         else if (url.startsWith("jdbc:hsqldb:")) {
             return HSQLDB;
         }
-        else if (url.startsWith("jdbc:ingres:")) {
-            return INGRES;
-        }
         else if (url.startsWith("jdbc:mariadb:")) {
             return MARIADB;
         }
@@ -157,15 +148,26 @@ public class JDBCUtils {
               || url.startsWith("jdbc:google:")) {
             return MYSQL;
         }
-        else if (url.startsWith("jdbc:oracle:")
-              || url.startsWith("jdbc:oracle:oci")) {
-            return ORACLE;
-        }
         else if (url.startsWith("jdbc:postgresql:")) {
             return POSTGRES;
         }
         else if (url.startsWith("jdbc:sqlite:")) {
             return SQLITE;
+        }
+
+        /* [com] */
+        else if (url.startsWith("jdbc:jtds:sybase:")) {
+            return ASE;
+        }
+        else if (url.startsWith("jdbc:db2:")) {
+            return DB2;
+        }
+        else if (url.startsWith("jdbc:ingres:")) {
+            return INGRES;
+        }
+        else if (url.startsWith("jdbc:oracle:")
+              || url.startsWith("jdbc:oracle:oci")) {
+            return ORACLE;
         }
         else if (url.startsWith("jdbc:sqlserver:")
               || url.startsWith("jdbc:jtds:sqlserver:")
@@ -176,6 +178,7 @@ public class JDBCUtils {
         else if (url.startsWith("jdbc:sybase:")) {
             return SYBASE;
         }
+        /* [/com] */
 
         return SQLDialect.SQL99;
     }

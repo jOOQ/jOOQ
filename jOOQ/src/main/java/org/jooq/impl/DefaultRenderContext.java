@@ -544,6 +544,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     sql("`").sql(StringUtils.replace(literal, "`", "``")).sql("`");
                     break;
 
+                /* [com] */
                 // T-SQL databases use brackets
                 case ASE:
                 case SQLSERVER:
@@ -551,17 +552,20 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     sql("[").sql(StringUtils.replace(literal, "]", "]]")).sql("]");
                     break;
 
+                /* [/com] */
                 // Most dialects implement the SQL standard, using double quotes
-                case SQLITE:
-                case CUBRID:
+                /* [com] */
                 case DB2:
+                case INGRES:
+                case ORACLE:
+                /* [/com] */
+                case CUBRID:
                 case DERBY:
                 case FIREBIRD:
                 case H2:
                 case HSQLDB:
-                case INGRES:
-                case ORACLE:
                 case POSTGRES:
+                case SQLITE:
                 default:
                     sql('"').sql(StringUtils.replace(literal, "\"", "\"\"")).sql('"');
                     break;
@@ -592,6 +596,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 return;
 
             switch (configuration().dialect().family()) {
+                /* [com] */
                 case ASE:
                     checkForceInline(2000);
                     return;
@@ -600,12 +605,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     checkForceInline(1024);
                     return;
 
-                case SQLITE:
-                    checkForceInline(999);
-                    return;
-
                 case SQLSERVER:
                     checkForceInline(2100);
+                    return;
+
+                /* [/com] */
+                case SQLITE:
+                    checkForceInline(999);
                     return;
 
                 default:

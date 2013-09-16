@@ -81,10 +81,12 @@ class Cot extends AbstractFunction<BigDecimal> {
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
+            /* [com] */
             case INGRES:
             case ORACLE:
                 return DSL.cos(argument).div(DSL.sin(argument));
 
+            /* [/com] */
             default:
                 return function("cot", SQLDataType.NUMERIC, argument);
         }

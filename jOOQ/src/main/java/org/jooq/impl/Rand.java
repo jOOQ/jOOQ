@@ -78,14 +78,16 @@ class Rand extends AbstractFunction<BigDecimal> {
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            case DERBY:
+            /* [com] */
+            case ORACLE:
+                return field("dbms_random.random", BigDecimal.class);
+
             case INGRES:
+            /* [/com] */
+            case DERBY:
             case POSTGRES:
             case SQLITE:
                 return function("random", SQLDataType.NUMERIC);
-
-            case ORACLE:
-                return field("dbms_random.random", BigDecimal.class);
         }
 
         return function("rand", SQLDataType.NUMERIC);

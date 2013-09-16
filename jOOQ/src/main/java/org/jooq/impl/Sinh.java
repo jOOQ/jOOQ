@@ -83,15 +83,17 @@ class Sinh extends AbstractFunction<BigDecimal> {
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
+            /* [com] */
             case ASE:
+            case INGRES:
+            case SQLSERVER:
+            case SYBASE:
+            /* [/com] */
             case CUBRID:
             case HSQLDB:
-            case INGRES:
             case MARIADB:
             case MYSQL:
             case POSTGRES:
-            case SQLSERVER:
-            case SYBASE:
                 return DSL.exp(argument.mul(two())).sub(one()).div(DSL.exp(argument).mul(two()));
 
             default:

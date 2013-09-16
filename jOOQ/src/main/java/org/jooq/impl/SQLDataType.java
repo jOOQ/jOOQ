@@ -334,21 +334,23 @@ public final class SQLDataType {
         // TODO [#650] Make this more reliable using a data type registry
 
         try {
+            /* [com] */
             Class.forName(ASEDataType.class.getName());
-            Class.forName(CUBRIDDataType.class.getName());
             Class.forName(DB2DataType.class.getName());
+            Class.forName(IngresDataType.class.getName());
+            Class.forName(OracleDataType.class.getName());
+            Class.forName(SQLServerDataType.class.getName());
+            Class.forName(SybaseDataType.class.getName());
+            /* [/com] */
+            Class.forName(CUBRIDDataType.class.getName());
             Class.forName(DerbyDataType.class.getName());
             Class.forName(FirebirdDataType.class.getName());
             Class.forName(H2DataType.class.getName());
             Class.forName(HSQLDBDataType.class.getName());
-            Class.forName(IngresDataType.class.getName());
             Class.forName(MariaDBDataType.class.getName());
             Class.forName(MySQLDataType.class.getName());
-            Class.forName(OracleDataType.class.getName());
             Class.forName(PostgresDataType.class.getName());
             Class.forName(SQLiteDataType.class.getName());
-            Class.forName(SQLServerDataType.class.getName());
-            Class.forName(SybaseDataType.class.getName());
         } catch (Exception ignore) {}
     }
 

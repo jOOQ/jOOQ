@@ -201,6 +201,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
     protected final void prepare(ExecuteContext ctx) throws SQLException {
         Connection connection = ctx.connection();
 
+        /* [com] */
         // Just in case, always set Sybase ASE statement mode to return
         // Generated keys if client code wants to SELECT @@identity afterwards
         if (ctx.configuration().dialect() == SQLDialect.ASE) {
@@ -209,7 +210,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         }
 
         // Normal statement preparing if no values should be returned
-        else if (returning.isEmpty()) {
+        else /* [/com] */if (returning.isEmpty()) {
             super.prepare(ctx);
             return;
         }
@@ -225,27 +226,34 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 case SQLITE:
                 // Sybase will select @@identity after the INSERT
                 case CUBRID:
+                /* [com] */
                 case SYBASE:
+                /* [/com] */
+
                     super.prepare(ctx);
                     return;
 
                 // Some dialects can only return AUTO_INCREMENT values
                 // Other values have to be fetched in a second step
                 // [#1260] TODO CUBRID supports this, but there's a JDBC bug
+                /* [com] */
                 case ASE:
+                case INGRES:
+                case SQLSERVER:
+                /* [/com] */
                 case DERBY:
                 case H2:
-                case INGRES:
                 case MARIADB:
                 case MYSQL:
-                case SQLSERVER:
                     ctx.statement(connection.prepareStatement(ctx.sql(), Statement.RETURN_GENERATED_KEYS));
                     return;
 
                 // The default is to return all requested fields directly
+                /* [com] */
                 case DB2:
-                case HSQLDB:
                 case ORACLE:
+                /* [/com] */
+                case HSQLDB:
                 default: {
                     List<String> names = new ArrayList<String>();
 
@@ -291,8 +299,10 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 // TODO [#832] Fix this. This might be a driver issue. JDBC
                 // Generated keys don't work with jconn3, but they seem to work
                 // with jTDS (which is used for Sybase ASE integration)
-                case CUBRID:
-                case SYBASE: {
+                /* [com] */
+                case SYBASE:
+                /* [/com] */
+                case CUBRID: {
                     listener.executeStart(ctx);
                     result = ctx.statement().executeUpdate();
                     ctx.rows(result);
@@ -305,13 +315,15 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 // Some dialects can only retrieve "identity" (AUTO_INCREMENT) values
                 // Additional values have to be fetched explicitly
                 // [#1260] TODO CUBRID supports this, but there's a JDBC bug
+                /* [com] */
                 case ASE:
+                case INGRES:
+                case SQLSERVER:
+                /* [/com] */
                 case DERBY:
                 case H2:
-                case INGRES:
                 case MARIADB:
-                case MYSQL:
-                case SQLSERVER: {
+                case MYSQL: {
                     listener.executeStart(ctx);
                     result = ctx.statement().executeUpdate();
                     ctx.rows(result);
@@ -351,9 +363,11 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 }
 
                 // These dialects have full JDBC support
+                /* [com] */
                 case DB2:
-                case HSQLDB:
                 case ORACLE:
+                /* [/com] */
+                case HSQLDB:
                 default: {
                     listener.executeStart(ctx);
                     result = ctx.statement().executeUpdate();

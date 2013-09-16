@@ -107,12 +107,14 @@ class Values<R extends Record> extends AbstractTable<R> {
 
             // [#915] Simulate VALUES(..) with SELECT .. UNION ALL SELECT ..
             // for those dialects that do not support a VALUES() constructor
+            /* [com] */
+            case ORACLE:
+            case SYBASE:
+            /* [/com] */
             case FIREBIRD:
             case MARIADB:
             case MYSQL:
-            case ORACLE:
             case SQLITE:
-            case SYBASE:
 
             // [#1801] H2 knows a native VALUES(..) constructor, but doesn't
             // have any means to rename it using derived column lists
@@ -146,12 +148,14 @@ class Values<R extends Record> extends AbstractTable<R> {
             case DERBY:
             case HSQLDB:
             case POSTGRES:
+            /* [com] */
             case SQLSERVER:
 
             // TODO to be verified
             case ASE:
             case DB2:
             case INGRES:
+            /* [/com] */
             default: {
                 context.start(TABLE_VALUES)
                        .keyword("values")

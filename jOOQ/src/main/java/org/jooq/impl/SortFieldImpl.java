@@ -111,18 +111,22 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
         if (nullsFirst || nullsLast) {
             switch (context.configuration().dialect().family()) {
 
+                /* [com] */
                 // DB2 supports NULLS FIRST/LAST only in OLAP (window) functions
                 case DB2:
 
-                // These dialects don't support this syntax at all
+                // These commercial dialects don't support this syntax at all
                 case ASE:
-                case CUBRID:
                 case INGRES:
+                case SQLSERVER:
+                case SYBASE:
+                /* [/com] */
+
+                // These OSS dialects don't support this syntax at all
+                case CUBRID:
                 case MARIADB:
                 case MYSQL:
-                case SQLITE:
-                case SQLSERVER:
-                case SYBASE: {
+                case SQLITE: {
                     Field<Integer> ifNull = nullsFirst ? zero() : one();
                     Field<Integer> ifNotNull = nullsFirst ? one() : zero();
 
@@ -166,15 +170,17 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
         // will need to bind the sort field twice
         if (nullsFirst || nullsLast) {
             switch (context.configuration().dialect().family()) {
-                case DB2:
+                /* [com] */
                 case ASE:
-                case CUBRID:
+                case DB2:
                 case INGRES:
+                case SQLSERVER:
+                case SYBASE:
+                /* [/com] */
+                case CUBRID:
                 case MARIADB:
                 case MYSQL:
-                case SQLITE:
-                case SQLSERVER:
-                case SYBASE: {
+                case SQLITE: {
                     context.visit(field);
                 }
             }

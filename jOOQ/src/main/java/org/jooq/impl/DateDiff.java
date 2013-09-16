@@ -84,18 +84,9 @@ class DateDiff extends AbstractFunction<Integer> {
     @Override
     final Field<Integer> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            case ASE:
-            case SQLSERVER:
-            case SYBASE:
-                return field("{datediff}(day, {0}, {1})", getDataType(), date2, date1);
-
             case MARIADB:
             case MYSQL:
                 return function("datediff", getDataType(), date1, date2);
-
-            case DB2:
-                return function("days", getDataType(), date1).sub(
-                       function("days", getDataType(), date2));
 
             case DERBY:
                 return field("{fn {timestampdiff}({sql_tsi_day}, {0}, {1}) }", getDataType(), date2, date1);
@@ -110,13 +101,26 @@ class DateDiff extends AbstractFunction<Integer> {
             case SQLITE:
                 return field("({strftime}('%s', {0}) - {strftime}('%s', {1})) / 86400", getDataType(), date1, date2);
 
-            case CUBRID:
+            /* [com] */
             case ORACLE:
+            /* [/com] */
+            case CUBRID:
             case POSTGRES:
                 return field("{0} - {1}", getDataType(), date1, date2);
 
+            /* [com] */
+            case ASE:
+            case SQLSERVER:
+            case SYBASE:
+                return field("{datediff}(day, {0}, {1})", getDataType(), date2, date1);
+
+            case DB2:
+                return function("days", getDataType(), date1).sub(
+                       function("days", getDataType(), date2));
+
             // Fall through to default
             case INGRES:
+            /* [/com] */
         }
 
         // Default implementation for equals() and hashCode()

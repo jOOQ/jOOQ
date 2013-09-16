@@ -83,9 +83,11 @@ class Radians extends AbstractFunction<BigDecimal> {
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            case FIREBIRD:
+            /* [com] */
             case INGRES:
             case ORACLE:
+            /* [/com] */
+            case FIREBIRD:
             case SQLITE:
                 return argument.cast(BigDecimal.class).mul(pi()).div(inline(180));
 

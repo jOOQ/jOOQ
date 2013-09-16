@@ -78,14 +78,15 @@ class Trim extends AbstractFunction<String> {
 
     @Override
     final Field<String> getFunction0(Configuration configuration) {
+        /* [com] */
         switch (configuration.dialect().family()) {
             case ASE:
             case INGRES:
             case SQLSERVER:
                 return DSL.ltrim(DSL.rtrim(argument));
-
-            default:
-                return function("trim", SQLDataType.VARCHAR, argument);
         }
+
+        /* [/com] */
+        return function("trim", SQLDataType.VARCHAR, argument);
     }
 }

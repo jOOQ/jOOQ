@@ -124,6 +124,7 @@ implements
     private Table<?> pivot(Configuration configuration) {
         switch (configuration.dialect()) {
 
+            /* [com] */
             // Oracle has native support for the PIVOT clause
             case ORACLE:
             case ORACLE11G:
@@ -131,6 +132,7 @@ implements
                 return new OraclePivotTable();
             }
 
+            /* [/com] */
             // Some other dialects can simulate it. This implementation is
             // EXPERIMENTAL and not officially supported
             default: {
@@ -230,6 +232,7 @@ implements
         }
     }
 
+    /* [com] */
     /**
      * The Oracle-specific <code>PIVOT</code> implementation
      */
@@ -280,6 +283,7 @@ implements
                    .declareTables(declareTables);
         }
     }
+    /* [/com] */
 
     /**
      * A base class for dialect-specific implementations of the pivot table

@@ -330,6 +330,17 @@ final class Utils {
     }
 
     /**
+     * Extract the configuration from an attachable.
+     */
+    static final Configuration getConfiguration(Attachable attachable) {
+        if (attachable instanceof AttachableInternal) {
+            return ((AttachableInternal) attachable).configuration();
+        }
+
+        return null;
+    }
+
+    /**
      * Get an attachable's configuration or a new {@link DefaultConfiguration}
      * if <code>null</code>.
      */

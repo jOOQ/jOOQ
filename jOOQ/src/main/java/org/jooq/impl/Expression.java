@@ -169,11 +169,13 @@ class Expression<T> extends AbstractFunction<T> {
             return function("bin_or", getDataType(), getArguments());
         }
 
+        /* [com] */
         // Oracle has to simulate or/xor
         else if (BIT_OR == operator && ORACLE == family) {
             return lhs.sub(bitAnd(lhsAsNumber(), rhsAsNumber())).add(rhsAsNumber());
         }
 
+        /* [/com] */
         // ~(a & b) & (a | b)
         else if (BIT_XOR == operator && asList(ORACLE, SQLITE).contains(family)) {
             return (Field<T>) bitAnd(
@@ -306,31 +308,6 @@ class Expression<T> extends AbstractFunction<T> {
             int sign = (operator == ADD) ? 1 : -1;
 
             switch (dialect.family()) {
-                case ASE:
-                case SYBASE:
-                case SQLSERVER: {
-                    if (rhs.get(0).getType() == YearToMonth.class) {
-                        return field("{dateadd}(mm, {0}, {1})", getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
-                    }
-                    else {
-                        // SQL Server needs this cast.
-                        Field<Timestamp> lhsAsTS = lhs.cast(Timestamp.class);
-                        DayToSecond interval = rhsAsDTS();
-
-                        // Be careful with 32-bit INT arithmetic. Sybase ASE
-                        // may fatally overflow when using micro-second precision
-                        if (interval.getNano() != 0) {
-                            return field("{dateadd}(ss, {0}, {dateadd}(us, {1}, {2}))", getDataType(),
-                                val(sign * (long) interval.getTotalSeconds()),
-                                val(sign * interval.getMicro()),
-                                lhsAsTS);
-                        }
-                        else {
-                            return field("{dateadd}(ss, {0}, {1})", getDataType(), val(sign * (long) interval.getTotalSeconds()), lhsAsTS);
-                        }
-                    }
-                }
-
                 case CUBRID:
                 case MARIADB:
                 case MYSQL: {
@@ -349,32 +326,6 @@ class Expression<T> extends AbstractFunction<T> {
                         }
                         else {
                             return field("{date_add}({0}, {interval} {1} {day_microsecond})", getDataType(), lhs, Utils.field(interval, String.class));
-                        }
-                    }
-                }
-
-                case DB2: {
-                    if (rhs.get(0).getType() == YearToMonth.class) {
-                        if (operator == ADD) {
-                            return lhs.add(field("{0} month", val(rhsAsYTM().intValue())));
-                        }
-                        else {
-                            return lhs.sub(field("{0} month", val(rhsAsYTM().intValue())));
-                        }
-                    }
-                    else {
-                        // DB2 needs this cast if lhs is of type DATE.
-                        DataType<T> type = lhs.getDataType();
-
-                        if (operator == ADD) {
-                            return lhs.cast(Timestamp.class)
-                                .add(field("{0} microseconds", val(rhsAsDTS().getTotalMicro())))
-                                .cast(type);
-                        }
-                        else {
-                            return lhs.cast(Timestamp.class)
-                                .sub(field("{0} microseconds", val(rhsAsDTS().getTotalMicro())))
-                                .cast(type);
                         }
                     }
                 }
@@ -415,10 +366,6 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
-                case INGRES: {
-                    throw new SQLDialectNotSupportedException("Date time arithmetic not supported in Ingres. Contributions welcome!");
-                }
-
                 case SQLITE: {
                     boolean ytm = rhs.get(0).getType() == YearToMonth.class;
                     Field<?> interval = val(ytm ? rhsAsYTM().intValue() : rhsAsDTS().getTotalSeconds());
@@ -431,7 +378,64 @@ class Expression<T> extends AbstractFunction<T> {
                     return field("{datetime}({0}, {1})", getDataType(), lhs, interval);
                 }
 
+                /* [com] */
+                case ASE:
+                case SYBASE:
+                case SQLSERVER: {
+                    if (rhs.get(0).getType() == YearToMonth.class) {
+                        return field("{dateadd}(mm, {0}, {1})", getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
+                    }
+                    else {
+                        // SQL Server needs this cast.
+                        Field<Timestamp> lhsAsTS = lhs.cast(Timestamp.class);
+                        DayToSecond interval = rhsAsDTS();
+
+                        // Be careful with 32-bit INT arithmetic. Sybase ASE
+                        // may fatally overflow when using micro-second precision
+                        if (interval.getNano() != 0) {
+                            return field("{dateadd}(ss, {0}, {dateadd}(us, {1}, {2}))", getDataType(),
+                                val(sign * (long) interval.getTotalSeconds()),
+                                val(sign * interval.getMicro()),
+                                lhsAsTS);
+                        }
+                        else {
+                            return field("{dateadd}(ss, {0}, {1})", getDataType(), val(sign * (long) interval.getTotalSeconds()), lhsAsTS);
+                        }
+                    }
+                }
+
+                case DB2: {
+                    if (rhs.get(0).getType() == YearToMonth.class) {
+                        if (operator == ADD) {
+                            return lhs.add(field("{0} month", val(rhsAsYTM().intValue())));
+                        }
+                        else {
+                            return lhs.sub(field("{0} month", val(rhsAsYTM().intValue())));
+                        }
+                    }
+                    else {
+                        // DB2 needs this cast if lhs is of type DATE.
+                        DataType<T> type = lhs.getDataType();
+
+                        if (operator == ADD) {
+                            return lhs.cast(Timestamp.class)
+                                .add(field("{0} microseconds", val(rhsAsDTS().getTotalMicro())))
+                                .cast(type);
+                        }
+                        else {
+                            return lhs.cast(Timestamp.class)
+                                .sub(field("{0} microseconds", val(rhsAsDTS().getTotalMicro())))
+                                .cast(type);
+                        }
+                    }
+                }
+
+                case INGRES: {
+                    throw new SQLDialectNotSupportedException("Date time arithmetic not supported in Ingres. Contributions welcome!");
+                }
+
                 case ORACLE:
+                /* [/com] */
                 case POSTGRES:
                 default:
                     return new DefaultExpression();
@@ -455,10 +459,12 @@ class Expression<T> extends AbstractFunction<T> {
          */
         private final Field<T> getNumberExpression(Configuration configuration) {
             switch (configuration.dialect().family()) {
+                /* [com] */
                 case ASE:
-                case FIREBIRD:
                 case SQLSERVER:
-                case SYBASE: {
+                case SYBASE:
+                /* [/com] */
+                case FIREBIRD: {
                     if (operator == ADD) {
                         return field("{dateadd}(day, {0}, {1})", getDataType(), rhsAsNumber(), lhs);
                     }
@@ -467,7 +473,9 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
+                /* [com] */
                 case DB2:
+                /* [/com] */
                 case HSQLDB: {
                     if (operator == ADD) {
                         return lhs.add(field("{0} day", rhsAsNumber()));
@@ -503,6 +511,7 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
+                /* [com] */
                 // Ingres is not working yet
                 case INGRES: {
                     if (operator == ADD) {
@@ -513,6 +522,7 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
+                /* [/com] */
                 case POSTGRES: {
 
                     // This seems to be the most reliable way to avoid issues
@@ -535,8 +545,10 @@ class Expression<T> extends AbstractFunction<T> {
                     }
 
                 // These dialects can add / subtract days using +/- operators
-                case H2:
+                /* [com] */
                 case ORACLE:
+                /* [/com] */
+                case H2:
                 default:
                     return new DefaultExpression();
             }

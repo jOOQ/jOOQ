@@ -1457,11 +1457,6 @@ public class DefaultDSLContext implements DSLContext, Serializable {
                 return select(field).fetchOne(field);
             }
 
-            case INGRES: {
-                Field<BigInteger> field = field("last_identity()", BigInteger.class);
-                return select(field).fetchOne(field);
-            }
-
             case CUBRID:
             case MARIADB:
             case MYSQL: {
@@ -1474,6 +1469,12 @@ public class DefaultDSLContext implements DSLContext, Serializable {
                 return select(field).fetchOne(field);
             }
 
+            /* [com] */
+            case INGRES: {
+                Field<BigInteger> field = field("last_identity()", BigInteger.class);
+                return select(field).fetchOne(field);
+            }
+
             case ASE:
             case SQLSERVER:
             case SYBASE: {
@@ -1481,6 +1482,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
                 return select(field).fetchOne(field);
             }
 
+            /* [/com] */
             default:
                 throw new SQLDialectNotSupportedException("identity functionality not supported by " + configuration.dialect());
         }

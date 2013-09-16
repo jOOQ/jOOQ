@@ -166,6 +166,7 @@ class DefaultBindContext extends AbstractBindContext {
                 stmt.setNull(nextIndex(), sqlType);
             }
 
+            /* [com] */
             // [#725] For SQL Server, unknown types should be set to null
             // explicitly, too
             else if (configuration.dialect().family() == SQLSERVER) {
@@ -177,6 +178,7 @@ class DefaultBindContext extends AbstractBindContext {
                 stmt.setNull(nextIndex(), Types.VARCHAR);
             }
 
+            /* [/com] */
             // [#729] In the absence of the correct JDBC type, try setObject
             else {
                 stmt.setObject(nextIndex(), null);
@@ -299,11 +301,13 @@ class DefaultBindContext extends AbstractBindContext {
                     break;
                 }
 
+                /* [com] */
                 // Other SQL dialects deal with UUIDs as if they were CHAR(36)
                 // even if they explicitly support them (UNIQUEIDENTIFIER)
                 case SQLSERVER:
                 case SYBASE:
 
+                /* [/com] */
                 // Most databases don't have such a type. In this case, jOOQ
                 // simulates the type
                 default: {

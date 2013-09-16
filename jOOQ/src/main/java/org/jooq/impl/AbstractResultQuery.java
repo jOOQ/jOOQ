@@ -258,13 +258,14 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
         // JTDS doesn't seem to implement PreparedStatement.execute()
         // correctly, at least not for sp_help
+        /* [com] */
         if (ctx.configuration().dialect() == ASE) {
             ctx.resultSet(ctx.statement().executeQuery());
         }
 
         // [#1232] Avoid executeQuery() in order to handle queries that may
         // not return a ResultSet, e.g. SQLite's pragma foreign_key_list(table)
-        else if (ctx.statement().execute()) {
+        else /* [/com] */if (ctx.statement().execute()) {
             ctx.resultSet(ctx.statement().getResultSet());
         }
 

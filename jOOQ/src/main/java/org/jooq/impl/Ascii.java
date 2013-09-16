@@ -83,8 +83,10 @@ class Ascii extends AbstractFunction<Integer> {
                 return function("ascii_val", SQLDataType.INTEGER, string);
 
             // TODO [#862] [#864] simulate this for some dialects
-            case DERBY:
+            /* [com] */
             case INGRES:
+            /* [/com] */
+            case DERBY:
             case SQLITE:
 
             default:

@@ -141,6 +141,7 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
             SQLDialect family = configuration.dialect().family();
 
             switch (family) {
+                /* [com] */
                 case DB2:
                 case INGRES:
                 case ORACLE:
@@ -149,16 +150,19 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
                     return field(field, getDataType());
                 }
 
+                /* [/com] */
                 case H2:
                 case POSTGRES: {
                     String field = method + "('" + getQualifiedName(configuration) + "')";
                     return field(field, getDataType());
                 }
 
+                /* [com] */
+                case SQLSERVER:
+                /* [/com] */
                 case FIREBIRD:
                 case DERBY:
-                case HSQLDB:
-                case SQLSERVER: {
+                case HSQLDB: {
                     if ("nextval".equals(method)) {
                         String field = "next value for " + getQualifiedName(configuration);
                         return field(field, getDataType());
@@ -166,6 +170,7 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
                     else if (family == FIREBIRD) {
                         return field("gen_id(" + getQualifiedName(configuration) + ", 0)", getDataType());
                     }
+                    /* [com] */
                     else if (family == SQLSERVER) {
                         return select(field("current_value"))
                                .from("sys.sequences sq")
@@ -176,6 +181,7 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
                                .asField()
                                .cast(type);
                     }
+                    /* [/com] */
                     else {
                         throw new SQLDialectNotSupportedException("The sequence's current value functionality is not supported for the " + family + " dialect.");
                     }

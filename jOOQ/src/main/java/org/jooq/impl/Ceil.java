@@ -84,9 +84,11 @@ class Ceil<T extends Number> extends AbstractFunction<T> {
             case SQLITE:
                 return DSL.round(argument.add(0.499999999999999));
 
+            /* [com] */
             case ASE:
-            case H2:
             case SQLSERVER:
+            /* [/com] */
+            case H2:
                 return function("ceiling", getDataType(), argument);
 
             default:

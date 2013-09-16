@@ -66,12 +66,14 @@ enum Term {
     ATAN2 {
         @Override
         public String translate(SQLDialect dialect) {
+            /* [com] */
             switch (dialect.family()) {
                 case ASE:
                 case SQLSERVER:
                     return "atn2";
             }
 
+            /* [/com] */
             return "atan2";
         }
     },
@@ -79,21 +81,23 @@ enum Term {
         @Override
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
+                /* [com] */
                 case ASE:
                     return "8 * datalength";
-
-                case DB2:
-                case DERBY:
-                case INGRES:
-                case SQLITE:
-                case SYBASE:
-                    return "8 * length";
 
                 case SQLSERVER:
                     return "8 * len";
 
                 case ORACLE:
                     return "8 * lengthb";
+
+                case DB2:
+                case INGRES:
+                case SYBASE:
+                /* [/com] */
+                case DERBY:
+                case SQLITE:
+                    return "8 * length";
             }
 
             return "bit_length";
@@ -103,16 +107,18 @@ enum Term {
         @Override
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
-                case DB2:
-                case DERBY:
-                case INGRES:
-                case ORACLE:
-                case SQLITE:
-                case SYBASE:
-                    return "length";
-
+                /* [com] */
                 case SQLSERVER:
                     return "len";
+
+                case DB2:
+                case INGRES:
+                case ORACLE:
+                case SYBASE:
+                /* [/com] */
+                case DERBY:
+                case SQLITE:
+                    return "length";
             }
 
             return "char_length";
@@ -122,13 +128,7 @@ enum Term {
         @Override
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
-                case CUBRID:
-                case H2:
-                case HSQLDB:
-                case MARIADB:
-                case MYSQL:
-                    return "group_concat";
-
+                /* [com] */
                 // DB2 needs to do some rather complex XML manipulation to
                 // achieve the same results. XMLAGG() itself cannot do it
                 case DB2:
@@ -137,11 +137,19 @@ enum Term {
                 case ORACLE:
                     return "listagg";
 
-                case POSTGRES:
-                    return "string_agg";
-
                 case SYBASE:
                     return "list";
+
+                /* [/com] */
+                case CUBRID:
+                case H2:
+                case HSQLDB:
+                case MARIADB:
+                case MYSQL:
+                    return "group_concat";
+
+                case POSTGRES:
+                    return "string_agg";
             }
 
             return "listagg";
@@ -151,18 +159,20 @@ enum Term {
         @Override
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
-                case DB2:
-                case DERBY:
-                case INGRES:
-                case SQLITE:
-                case SYBASE:
-                    return "length";
-
+                /* [com] */
                 case SQLSERVER:
                     return "len";
 
                 case ORACLE:
                     return "lengthb";
+
+                case DB2:
+                case INGRES:
+                case SYBASE:
+                /* [/com] */
+                case DERBY:
+                case SQLITE:
+                    return "length";
             }
 
             return "octet_length";
@@ -182,6 +192,7 @@ enum Term {
     STDDEV_POP {
         @Override
         public String translate(SQLDialect dialect) {
+            /* [com] */
             switch (dialect.family()) {
                 case DB2:
                     return "stddev";
@@ -190,12 +201,14 @@ enum Term {
                     return "stdevp";
             }
 
+            /* [/com] */
             return "stddev_pop";
         }
     },
     STDDEV_SAMP {
         @Override
         public String translate(SQLDialect dialect) {
+            /* [com] */
             switch (dialect.family()) {
                 case DB2:
                     return "stddev";
@@ -204,12 +217,14 @@ enum Term {
                     return "stdev";
             }
 
+            /* [/com] */
             return "stddev_samp";
         }
     },
     VAR_POP {
         @Override
         public String translate(SQLDialect dialect) {
+            /* [com] */
             switch (dialect.family()) {
                 case DB2:
                     return "variance";
@@ -218,12 +233,14 @@ enum Term {
                     return "varp";
             }
 
+            /* [/com] */
             return "var_pop";
         }
     },
     VAR_SAMP {
         @Override
         public String translate(SQLDialect dialect) {
+            /* [com] */
             switch (dialect.family()) {
                 case DB2:
                     return "variance";
@@ -232,6 +249,7 @@ enum Term {
                     return "var";
             }
 
+            /* [/com] */
             return "var_samp";
         }
     },

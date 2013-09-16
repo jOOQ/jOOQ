@@ -80,6 +80,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
     public final void toSQL(RenderContext context) {
         switch (context.configuration().dialect().family()) {
 
+            /* [com] */
             // Oracle supports java.sql.SQLData, hence the record can be bound
             // to the CallableStatement directly
             case ORACLE: {
@@ -89,13 +90,6 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
                     context.sql("?");
                 }
 
-                return;
-            }
-
-            // Due to lack of UDT support in the Postgres JDBC drivers, all UDT's
-            // have to be inlined
-            case POSTGRES: {
-                toSQLInline(context);
                 return;
             }
 
@@ -115,6 +109,14 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
                     context.sql(")");
                 }
 
+                return;
+            }
+
+            /* [/com] */
+            // Due to lack of UDT support in the Postgres JDBC drivers, all UDT's
+            // have to be inlined
+            case POSTGRES: {
+                toSQLInline(context);
                 return;
             }
 
@@ -145,8 +147,10 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             case POSTGRES:
                 return "ROW";
 
+            /* [com] */
             case ORACLE:
             case DB2:
+            /* [/com] */
 
             // Assume default behaviour if dialect is not available
             default: {
@@ -167,6 +171,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
     public final void bind(BindContext context) {
         switch (context.configuration().dialect().family()) {
 
+            /* [com] */
             // Oracle supports java.sql.SQLData, hence the record can be bound
             // to the CallableStatement directly
             case ORACLE:
@@ -176,6 +181,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             // Is the DB2 case correct? Should it be inlined like the Postgres case?
             case DB2:
 
+            /* [/com] */
             // Postgres cannot bind a complete structured type. The type is
             // inlined instead: ROW(.., .., ..)
             case POSTGRES: {

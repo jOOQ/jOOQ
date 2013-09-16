@@ -86,10 +86,12 @@ class Least<T> extends AbstractFunction<T> {
             // This implementation has O(2^n) complexity. Better implementations
             // are very welcome
 
+            /* [com] */
             case ASE:
-            case DERBY:
             case SQLSERVER:
-            case SYBASE: {
+            case SYBASE:
+            /* [/com] */
+            case DERBY: {
                 Field<T> first = (Field<T>) getArguments()[0];
                 Field<T> other = (Field<T>) getArguments()[1];
 

@@ -78,24 +78,26 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
     @Override
     final Field<Timestamp> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
+            /* [com] */
             case ASE:
                 return function("current_bigdatetime", SQLDataType.TIMESTAMP);
 
             case ORACLE:
                 return field("sysdate", SQLDataType.TIMESTAMP);
 
+            case SYBASE:
+                return field("current timestamp", SQLDataType.TIMESTAMP);
+
             case DB2:
+            case INGRES:
+            case SQLSERVER:
+            /* [/com] */
             case DERBY:
             case FIREBIRD:
             case HSQLDB:
-            case INGRES:
             case POSTGRES:
             case SQLITE:
-            case SQLSERVER:
                 return field("current_timestamp", SQLDataType.TIMESTAMP);
-
-            case SYBASE:
-                return field("current timestamp", SQLDataType.TIMESTAMP);
         }
 
         return function("current_timestamp", SQLDataType.TIMESTAMP);

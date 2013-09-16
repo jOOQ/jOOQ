@@ -188,11 +188,13 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
                 // Some databases allow for simulating this clause using a
                 // MERGE statement
+                /* [com] */
                 case DB2:
-                case HSQLDB:
                 case ORACLE:
                 case SQLSERVER:
-                case SYBASE: {
+                case SYBASE:
+                /* [/com] */
+                case HSQLDB: {
                     context.visit(toMerge(context.configuration()));
                     break;
                 }
@@ -241,11 +243,13 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
                 // Some databases allow for simulating this clause using a
                 // MERGE statement
+                /* [com] */
                 case DB2:
-                case HSQLDB:
                 case ORACLE:
                 case SQLSERVER:
-                case SYBASE: {
+                case SYBASE:
+                /* [/com] */
+                case HSQLDB: {
                     context.visit(toMerge(context.configuration()));
                     break;
                 }
@@ -292,11 +296,13 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
                 // Some databases allow for simulating this clause using a
                 // MERGE statement
+                /* [com] */
                 case DB2:
-                case HSQLDB:
                 case ORACLE:
                 case SQLSERVER:
-                case SYBASE: {
+                case SYBASE:
+                /* [/com] */
+                case HSQLDB: {
                     context.visit(toMerge(context.configuration()));
                     break;
                 }
@@ -332,11 +338,13 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
                 // Some databases allow for simulating this clause using a
                 // MERGE statement
+                /* [com] */
                 case DB2:
-                case HSQLDB:
                 case ORACLE:
                 case SQLSERVER:
-                case SYBASE: {
+                case SYBASE:
+                /* [/com] */
+                case HSQLDB: {
                     context.visit(toMerge(context.configuration()));
                     break;
                 }

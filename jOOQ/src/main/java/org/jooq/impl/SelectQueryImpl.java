@@ -227,6 +227,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         if (getLimit().isApplicable()) {
             switch (context.configuration().dialect()) {
 
+                /* [com] */
                 // Oracle knows the ROWNUM pseudo-column. That makes things simple
                 case ORACLE:
                 case ORACLE10G:
@@ -287,6 +288,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                     break;
                 }
 
+                /* [/com] */
                 // By default, render the dialect's limit clause
                 default: {
                     toSQLReferenceLimitDefault(context);
@@ -316,10 +318,12 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
                     // Some dialects don't allow for an OF [table-names] clause
                     // It can be simulated by listing the table's fields, though
+                    /* [com] */
                     case DB2:
-                    case DERBY:
                     case INGRES:
-                    case ORACLE: {
+                    case ORACLE:
+                    /* [/com] */
+                    case DERBY: {
                         forUpdateOfTables.toSQLFieldNames(context);
                         break;
                     }
@@ -493,6 +497,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             context.keyword("distinct").sql(" ");
         }
 
+        /* [com] */
         // Sybase and SQL Server have leading TOP clauses
         switch (dialect.family()) {
             case ASE:
@@ -534,6 +539,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             case INGRES: {
             }
         }
+        /* [/com] */
 
         context.declareFields(true);
 

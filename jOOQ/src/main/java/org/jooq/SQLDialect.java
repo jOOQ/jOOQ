@@ -76,123 +76,146 @@ public enum SQLDialect {
      *             unit testing
      */
     @Deprecated
-    SQL99(null),
+    SQL99(null, false),
 
-//  /**
-//   * The MS Access SQL dialect family. ACCESS support will be added in jOOQ 3.3
-//   */
-//  ACCESS("Access"),
-
-    /**
-     * The Sybase Adaptive Server SQL dialect family.
-     */
-    ASE("ASE"),
+    // -------------------------------------------------------------------------
+    // SQL dialects for free usage
+    // -------------------------------------------------------------------------
 
     /**
      * The CUBRID SQL dialect family.
      */
-    CUBRID("CUBRID"),
-
-    /**
-     * The IBM DB2 SQL dialect family.
-     */
-    DB2("DB2"),
+    CUBRID("CUBRID", false),
 
     /**
      * The Apache Derby SQL dialect family.
      */
-    DERBY("Derby"),
+    DERBY("Derby", false),
 
     /**
      * The Firebird SQL dialect family.
      */
-    FIREBIRD("Firebird"),
+    FIREBIRD("Firebird", false),
 
     /**
      * The H2 SQL dialect family.
      */
-    H2("H2"),
+    H2("H2", false),
 
     /**
      * The Hypersonic SQL dialect family.
      */
-    HSQLDB("HSQLDB"),
-
-    /**
-     * The Ingres dialect family.
-     */
-    INGRES("Ingres"),
+    HSQLDB("HSQLDB", false),
 
     /**
      * The MariaDB dialect family.
      */
-    MARIADB("MariaDB"),
+    MARIADB("MariaDB", false),
 
     /**
      * The MySQL dialect family.
      */
-    MYSQL("MySQL"),
-
-    /**
-     * The Oracle dialect family.
-     */
-    ORACLE("Oracle"),
-
-    /**
-     * The Oracle 10g dialect.
-     */
-    ORACLE10G("Oracle", ORACLE),
-
-    /**
-     * The Oracle 11g dialect.
-     */
-    ORACLE11G("Oracle", ORACLE),
-
-    /**
-     * The Oracle 12c dialect.
-     */
-    ORACLE12C("Oracle", ORACLE),
+    MYSQL("MySQL", false),
 
     /**
      * The PostgreSQL dialect family.
      */
-    POSTGRES("Postgres"),
+    POSTGRES("Postgres", false),
 
     /**
      * The SQLite dialect family.
      */
-    SQLITE("SQLite"),
+    SQLITE("SQLite", false),
+
+    // -------------------------------------------------------------------------
+    // SQL dialects for commercial usage
+    // -------------------------------------------------------------------------
+
+    /* [com] */
+
+//  /**
+//   * The MS Access SQL dialect family. ACCESS support will be added in jOOQ 3.3
+//   */
+//  ACCESS("Access", true),
+
+    /**
+     * The Sybase Adaptive Server SQL dialect family.
+     */
+    ASE("ASE", true),
+
+    /**
+     * The IBM DB2 SQL dialect family.
+     */
+    DB2("DB2", true),
+
+    /**
+     * The Ingres dialect family.
+     */
+    INGRES("Ingres", true),
+
+    /**
+     * The Oracle dialect family.
+     */
+    ORACLE("Oracle", true),
+
+    /**
+     * The Oracle 10g dialect.
+     */
+    ORACLE10G("Oracle", true, ORACLE),
+
+    /**
+     * The Oracle 11g dialect.
+     */
+    ORACLE11G("Oracle", true, ORACLE),
+
+    /**
+     * The Oracle 12c dialect.
+     */
+    ORACLE12C("Oracle", true, ORACLE),
 
     /**
      * The SQL Server dialect family.
      */
-    SQLSERVER("SQLServer"),
+    SQLSERVER("SQLServer", true),
 
     /**
      * The SQL Server 2008 dialect.
      */
-    SQLSERVER2008("SQLServer", SQLSERVER),
+    SQLSERVER2008("SQLServer", true, SQLSERVER),
 
     /**
      * The SQL Server 2012 dialect.
      */
-    SQLSERVER2012("SQLServer", SQLSERVER),
+    SQLSERVER2012("SQLServer", true, SQLSERVER),
 
     /**
      * The Sybase SQL Anywhere dialect family.
      */
-    SYBASE("Sybase");
+    SYBASE("Sybase", true),
+
+    /* [/com] */
+
+    ;
 
     private final String     name;
+    private final boolean    commercial;
     private final SQLDialect family;
 
-    private SQLDialect(String name) {
-        this(name, null);
+    private SQLDialect(String name, boolean commercial) {
+        this(name, commercial, null);
     }
 
-    private SQLDialect(String name, SQLDialect family) {
+    private SQLDialect(String name, boolean commercial, SQLDialect family) {
         this.name = name;
+        this.commercial = commercial;
         this.family = family;
+    }
+
+    /**
+     * Whether this dialect is supported with the jOOQ commercial license only.
+     */
+    public final boolean commercial() {
+        return commercial;
     }
 
     /**

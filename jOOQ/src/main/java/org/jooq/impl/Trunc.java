@@ -103,7 +103,9 @@ class Trunc<T> extends AbstractFunction<T> {
 
     private final Field<T> getNumericFunction(Configuration configuration) {
         switch (configuration.dialect().family()) {
+            /* [com] */
             case ASE:
+            /* [/com] */
             case DERBY: {
                 Field<BigDecimal> power;
 
@@ -129,6 +131,12 @@ class Trunc<T> extends AbstractFunction<T> {
             case MYSQL:
                 return field("{truncate}({0}, {1})", field.getDataType(), field, decimals);
 
+            // Postgres TRUNC() only takes NUMERIC arguments, no
+            // DOUBLE PRECISION ones
+            case POSTGRES:
+                return field("{trunc}({0}, {1})", SQLDataType.NUMERIC, field.cast(BigDecimal.class), decimals).cast(field.getDataType());
+
+            /* [com] */
             // SQL Server's round function can be used to truncate.
             case SQLSERVER:
                 return field("{round}({0}, {1}, {2})", field.getDataType(), field, decimals, one());
@@ -136,19 +144,14 @@ class Trunc<T> extends AbstractFunction<T> {
             case SYBASE:
                 return field("{truncnum}({0}, {1})", field.getDataType(), field, decimals);
 
-            // Postgres TRUNC() only takes NUMERIC arguments, no
-            // DOUBLE PRECISION ones
-            case POSTGRES:
-                return field("{trunc}({0}, {1})", SQLDataType.NUMERIC, field.cast(BigDecimal.class), decimals).cast(field.getDataType());
-
-            case CUBRID:
-            case DB2:
-            case HSQLDB:
-
             // Ingres ships with the TRUNC function, but it seems that it is not
             // implemented correctly in the database engine...
+            case DB2:
             case INGRES:
             case ORACLE:
+            /* [/com] */
+            case CUBRID:
+            case HSQLDB:
             default:
                 return field("{trunc}({0}, {1})", field.getDataType(), field, decimals);
         }

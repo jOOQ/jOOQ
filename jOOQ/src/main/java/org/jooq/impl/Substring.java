@@ -80,6 +80,17 @@ class Substring extends AbstractFunction<String> {
 
         switch (configuration.dialect().family()) {
 
+            // [#430] Firebird has its own syntax
+            case FIREBIRD: {
+                if (getArguments().length == 2) {
+                    return field("{substring}({0} {from} {1})", SQLDataType.VARCHAR, getArguments());
+                }
+                else {
+                    return field("{substring}({0} {from} {1} {for} {2})", SQLDataType.VARCHAR, getArguments());
+                }
+            }
+
+            /* [com] */
             // Sybase ASE and SQL Server requires 3 arguments
             case ASE:
             case SQLSERVER: {
@@ -93,16 +104,6 @@ class Substring extends AbstractFunction<String> {
                 // Default behaviour
                 else {
                     break;
-                }
-            }
-
-            // [#430] Firebird has its own syntax
-            case FIREBIRD: {
-                if (getArguments().length == 2) {
-                    return field("{substring}({0} {from} {1})", SQLDataType.VARCHAR, getArguments());
-                }
-                else {
-                    return field("{substring}({0} {from} {1} {for} {2})", SQLDataType.VARCHAR, getArguments());
                 }
             }
 
@@ -121,8 +122,9 @@ class Substring extends AbstractFunction<String> {
             }
 
             case DB2:
-            case DERBY:
             case ORACLE:
+            /* [/com] */
+            case DERBY:
             case SQLITE:
                 functionName = "substr";
                 break;

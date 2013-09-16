@@ -256,11 +256,13 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                     else {
                     }
 
-                case DB2:
                 case H2:
+                /* [com] */
+                case DB2:
 
                 // Sybase CallableStatement.wasNull() doesn't work :-(
                 case SYBASE:
+                /* [/com] */
                     return executeSelect();
 
                 // [#773] If JDBC escape syntax is available for functions, use
@@ -411,6 +413,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     private final void toSQLEnd(RenderContext context) {
         switch (context.configuration().dialect().family()) {
+            /* [com] */
             case ORACLE:
                 context.sql(";")
                        .formatIndentEnd()
@@ -418,6 +421,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                        .keyword("end;");
                 break;
 
+            /* [/com] */
             default:
                 context.sql(" }");
                 break;
@@ -426,12 +430,14 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     private final void toSQLBegin(RenderContext context) {
         switch (context.configuration().dialect().family()) {
+            /* [com] */
             case ORACLE:
                 context.keyword("begin")
                        .formatIndentStart()
                        .formatSeparator();
                 break;
 
+            /* [/com] */
             default:
                 context.sql("{ ");
                 break;
@@ -440,10 +446,12 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     private final void toSQLAssign(RenderContext context) {
         switch (context.configuration().dialect().family()) {
+            /* [com] */
             case ORACLE:
                 context.sql("? := ");
                 break;
 
+            /* [/com] */
             default:
                 context.sql("? = ");
                 break;
@@ -452,9 +460,11 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     private final void toSQLCall(RenderContext context) {
         switch (context.configuration().dialect().family()) {
+            /* [com] */
             case ORACLE:
                 break;
 
+            /* [/com] */
             default:
                 context.sql("call ");
                 break;
@@ -464,30 +474,28 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLOutParam(RenderContext context, Parameter<?> parameter) {
+        /* [com] */
         switch (context.configuration().dialect().family()) {
             case ORACLE:
                 context.visit(parameter);
                 context.sql(" => ");
                 break;
-
-            default:
-                break;
         }
 
+        /* [/com] */
         context.sql("?");
     }
 
     private final void toSQLInParam(RenderContext context, Parameter<?> parameter, Field<?> value) {
+        /* [com] */
         switch (context.configuration().dialect().family()) {
             case ORACLE:
                 context.visit(parameter);
                 context.sql(" => ");
                 break;
-
-            default:
-                break;
         }
 
+        /* [/com] */
         context.visit(value);
     }
 
@@ -500,12 +508,14 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                 context.sql(".");
             }
 
+            /* [com] */
             // [#2569] In SQL Server, routines always have to be fully qualified
             else if (getSchema() != null && context.configuration().dialect().family() == SQLSERVER) {
                 context.visit(getSchema());
                 context.sql(".");
             }
 
+            /* [/com] */
             if (getPackage() != null) {
                 context.visit(getPackage());
                 context.sql(".");
@@ -539,6 +549,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                 int sqlType = parameter.getDataType().getDataType(c).getSQLType();
 
                 switch (c.dialect().family()) {
+                    /* [com] */
 
                     // For some user defined types Oracle needs to bind
                     // also the type name
@@ -565,6 +576,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                         break;
                     }
 
+                    /* [/com] */
                     default: {
                         statement.registerOutParameter(index, sqlType);
                         break;

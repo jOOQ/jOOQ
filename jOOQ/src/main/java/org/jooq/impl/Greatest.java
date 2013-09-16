@@ -87,10 +87,12 @@ class Greatest<T> extends AbstractFunction<T> {
             // are very welcome
             // [#1049] TODO Fix this!
 
+            /* [com] */
             case ASE:
-            case DERBY:
             case SQLSERVER:
-            case SYBASE: {
+            case SYBASE:
+            /* [/com] */
+            case DERBY: {
                 Field<T> first = (Field<T>) getArguments()[0];
                 Field<T> other = (Field<T>) getArguments()[1];
 

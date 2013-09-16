@@ -81,9 +81,11 @@ class Repeat extends AbstractFunction<String> {
     @Override
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            case FIREBIRD:
+            /* [com] */
             case INGRES:
             case ORACLE:
+            /* [/com] */
+            case FIREBIRD:
                 return DSL.rpad(string, DSL.length(string).mul(count), string);
 
             // Simulation of REPEAT() for SQLite currently cannot be achieved
@@ -93,10 +95,12 @@ class Repeat extends AbstractFunction<String> {
             case SQLITE:
                 return DSL.field("replace(substr(quote(zeroblob(({0} + 1) / 2)), 3, {0}), '0', {1})", String.class, count, string);
 
+            /* [com] */
             case ASE:
             case SQLSERVER:
                 return function("replicate", SQLDataType.VARCHAR, string, count);
 
+            /* [/com] */
             default:
                 return function("repeat", SQLDataType.VARCHAR, string, count);
         }

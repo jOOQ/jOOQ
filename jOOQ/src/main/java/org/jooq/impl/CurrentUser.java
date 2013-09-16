@@ -76,19 +76,21 @@ class CurrentUser extends AbstractFunction<String> {
     @Override
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
+            /* [com] */
             case ASE:
             case ORACLE:
                 return field("user", SQLDataType.VARCHAR);
 
             case DB2:
+            case INGRES:
+            case SQLSERVER:
+            case SYBASE:
+            /* [/com] */
             case DERBY:
             case FIREBIRD:
             case HSQLDB:
-            case INGRES:
             case POSTGRES:
-            case SQLSERVER:
             case SQLITE:
-            case SYBASE:
                 return field("current_user", String.class);
         }
 

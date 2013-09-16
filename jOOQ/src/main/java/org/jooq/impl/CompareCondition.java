@@ -136,7 +136,12 @@ class CompareCondition extends AbstractCondition {
         // [#1131] Some weird DB2 issue stops "LIKE" from working with a
         // concatenated search expression, if the expression is more than 4000
         // characters long
-        boolean castRhs = (dialect == DB2 && rhs instanceof Concat);
+        boolean castRhs = false;
+
+        /* [com] */
+        if (dialect == DB2 && rhs instanceof Concat)
+            castRhs = true;
+        /* [/com] */
 
                      context.keyword(op.toSQL()).sql(" ");
         if (castRhs) context.keyword("cast").sql("(");

@@ -53,7 +53,7 @@
  */
 package org.jooq.test;
 
-import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
@@ -99,7 +99,7 @@ public class RenderTest extends AbstractTest {
     @Test
     public void testGetSQLWithParamTypeINDEXED() {
         Query q =
-        DSL.using(SQLDialect.ORACLE, new Settings().withParamType(INDEXED))
+        DSL.using(SQLDialect.MYSQL, new Settings().withParamType(INDEXED))
            .select(val(1), val("A"));
 
         testGetSQL0(q, "select ?, ? from dual");
@@ -108,7 +108,7 @@ public class RenderTest extends AbstractTest {
     @Test
     public void testGetSQLWithParamTypeINDEXEDandStatementTypeSTATIC() {
         Query q =
-        DSL.using(SQLDialect.ORACLE, new Settings().withParamType(INDEXED)
+        DSL.using(SQLDialect.MYSQL, new Settings().withParamType(INDEXED)
                                                    .withStatementType(STATIC_STATEMENT))
            .select(val(1), val("A"));
 
@@ -118,7 +118,7 @@ public class RenderTest extends AbstractTest {
     @Test
     public void testGetSQLWithParamTypeNAMED() {
         Query q =
-        DSL.using(SQLDialect.ORACLE, new Settings().withParamType(NAMED))
+        DSL.using(SQLDialect.MYSQL, new Settings().withParamType(NAMED))
            .select(val(1), val("A"));
 
         testGetSQL0(q, "select :1, :2 from dual");
@@ -127,7 +127,7 @@ public class RenderTest extends AbstractTest {
     @Test
     public void testGetSQLWithParamTypeNAMEDandStatementTypeSTATIC() {
         Query q =
-        DSL.using(SQLDialect.ORACLE, new Settings().withParamType(NAMED)
+        DSL.using(SQLDialect.MYSQL, new Settings().withParamType(NAMED)
                                                    .withStatementType(STATIC_STATEMENT))
            .select(val(1), val("A"));
 
@@ -137,7 +137,7 @@ public class RenderTest extends AbstractTest {
     @Test
     public void testGetSQLWithParamTypeINLINED() {
         Query q =
-        DSL.using(SQLDialect.ORACLE, new Settings().withParamType(INLINED))
+        DSL.using(SQLDialect.MYSQL, new Settings().withParamType(INLINED))
            .select(val(1), val("A"));
 
         testGetSQL0(q, "select 1, 'A' from dual");
@@ -146,7 +146,7 @@ public class RenderTest extends AbstractTest {
     @Test
     public void testGetSQLWithParamTypeINLINEDandStatementTypeSTATIC() {
         Query q =
-        DSL.using(SQLDialect.ORACLE, new Settings().withParamType(INLINED)
+        DSL.using(SQLDialect.MYSQL, new Settings().withParamType(INLINED)
                                                    .withStatementType(STATIC_STATEMENT))
            .select(val(1), val("A"));
 
@@ -158,9 +158,9 @@ public class RenderTest extends AbstractTest {
         Keyword keyword = DSL.keyword("Abc");
         Field<?> f = DSL.field("{0} Untouched {Xx} Untouched {1}", keyword, keyword);
 
-        DSLContext def = DSL.using(ORACLE);
-        DSLContext lower = DSL.using(ORACLE, new Settings().withRenderKeywordStyle(LOWER));
-        DSLContext upper = DSL.using(ORACLE, new Settings().withRenderKeywordStyle(UPPER));
+        DSLContext def = DSL.using(MYSQL);
+        DSLContext lower = DSL.using(MYSQL, new Settings().withRenderKeywordStyle(LOWER));
+        DSLContext upper = DSL.using(MYSQL, new Settings().withRenderKeywordStyle(UPPER));
 
         assertEquals("abc Untouched xx Untouched abc", def.render(f));
         assertEquals("abc Untouched xx Untouched abc", lower.render(f));

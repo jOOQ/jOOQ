@@ -68,10 +68,22 @@ class OSS extends Generators {
         val oss = new OSS();
         
         val workspace = new File("..");
-        val inRoot = new File(workspace, "jOOQ");
-        val outRoot = new File(workspace, "OSS-jOOQ");
         
-        oss.transform(inRoot, outRoot, inRoot);
+        val in1 = new File(workspace, "jOOQ");
+        val out1 = new File(workspace, "OSS-jOOQ");
+        oss.transform(in1, out1, in1);
+        
+        val in2 = new File(workspace, "jOOQ-codegen");
+        val out2 = new File(workspace, "OSS-jOOQ-codegen");
+        oss.transform(in2, out2, in2);
+        
+        val in3 = new File(workspace, "jOOQ-codegen-maven");
+        val out3 = new File(workspace, "OSS-jOOQ-codegen-maven");
+        oss.transform(in3, out3, in3);
+        
+        val in4 = new File(workspace, "jOOQ-meta");
+        val out4 = new File(workspace, "OSS-jOOQ-meta");
+        oss.transform(in4, out4, in4);
     }
 
     def transform(File inRoot, File outRoot, File in) {

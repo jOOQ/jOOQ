@@ -64,14 +64,17 @@ abstract class Generators {
 	}
 	
 	def read(File file) {
+        val f = new RandomAccessFile(file, "r");
 	    try {
-            val f = new RandomAccessFile(file, "r");
             val contents = Util::newByteArray(f.length);
             f.readFully(contents);
             return new String(contents);
         }
         catch (IOException e) {
             e.printStackTrace();
+        }
+        finally {
+            f.close;
         }
 	}
 	

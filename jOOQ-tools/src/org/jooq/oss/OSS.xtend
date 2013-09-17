@@ -56,7 +56,7 @@ class OSS extends Generators {
     static ExecutorService ex;
     
     def static void main(String[] args) {
-        ex = Executors::newFixedThreadPool(4);
+        ex = Executors::newFixedThreadPool(8);
         
         val oss = new OSS();
         
@@ -68,6 +68,8 @@ class OSS extends Generators {
             val out = new File(workspaceOut, project.name);
             oss.transform(in, out, in);
         }
+        
+        ex.shutdown;
     }
 
     def transform(File inRoot, File outRoot, File in) {
@@ -80,11 +82,10 @@ class OSS extends Generators {
                 && !path.canonicalPath.endsWith(".git")
                 && !path.canonicalPath.endsWith(".jar")
                 && !path.canonicalPath.endsWith(".pdf")
-                && !path.canonicalPath.endsWith(".project")
                 && !path.canonicalPath.endsWith(".zip")
                 && !path.canonicalPath.endsWith("._trace")
+                && !path.canonicalPath.endsWith("jOOQ-tools")
                 && !path.canonicalPath.endsWith("jOOQ-website")
-                && !path.canonicalPath.endsWith("pom.xml")
                 && !path.canonicalPath.contains("\\access")
                 && !path.canonicalPath.contains("\\ase")
                 && !path.canonicalPath.contains("\\db2")

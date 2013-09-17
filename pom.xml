@@ -131,16 +131,13 @@
             <roles>
                 <role>firebird-support</role>
             </roles>    
-           </contributor>
+        </contributor>
     </contributors>
 
     <modules>
         <module>jOOQ</module>
         <module>jOOQ-codegen</module>
         <module>jOOQ-codegen-maven</module>
-        <module>jOOQ-codegen-gradle</module>
-        <!--<module>jOOQ-codegen-maven-example</module>-->
-        <!--<module>jOOQ-console</module>-->
         <module>jOOQ-meta</module>
         <module>jOOQ-scala</module>
     </modules>
@@ -165,11 +162,6 @@
             <dependency>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jooq</groupId>
-                <artifactId>jooq-codegen-gradle</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

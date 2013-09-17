@@ -48,29 +48,26 @@ import java.util.regex.Pattern
 import org.apache.commons.lang3.tuple.ImmutablePair
 import org.jooq.SQLDialect
 import org.jooq.xtend.Generators
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class OSS extends Generators {
     
+    static ExecutorService ex;
+    
     def static void main(String[] args) {
+        ex = Executors::newFixedThreadPool(4);
+        
         val oss = new OSS();
         
-        val workspace = new File("..");
+        val workspaceIn = new File("../..").canonicalFile;
+        val workspaceOut = new File(workspaceIn.canonicalPath + "/../workspace-jooq-oss").canonicalFile;
         
-        val in1 = new File(workspace, "jOOQ");
-        val out1 = new File(workspace, "OSS-jOOQ");
-        oss.transform(in1, out1, in1);
-        
-        val in2 = new File(workspace, "jOOQ-codegen");
-        val out2 = new File(workspace, "OSS-jOOQ-codegen");
-        oss.transform(in2, out2, in2);
-        
-        val in3 = new File(workspace, "jOOQ-codegen-maven");
-        val out3 = new File(workspace, "OSS-jOOQ-codegen-maven");
-        oss.transform(in3, out3, in3);
-        
-        val in4 = new File(workspace, "jOOQ-meta");
-        val out4 = new File(workspace, "OSS-jOOQ-meta");
-        oss.transform(in4, out4, in4);
+        for (project : workspaceIn.listFiles[f | f.name.startsWith("jOOQ")]) {
+            val in = new File(workspaceIn, project.name);
+            val out = new File(workspaceOut, project.name);
+            oss.transform(in, out, in);
+        }
     }
 
     def transform(File inRoot, File outRoot, File in) {
@@ -79,16 +76,23 @@ class OSS extends Generators {
         if (in.directory) {
             val files = in.listFiles[path | 
                    !path.canonicalPath.endsWith(".class") 
+                && !path.canonicalPath.endsWith(".dat")
+                && !path.canonicalPath.endsWith(".git")
+                && !path.canonicalPath.endsWith(".jar")
+                && !path.canonicalPath.endsWith(".pdf")
                 && !path.canonicalPath.endsWith(".project")
+                && !path.canonicalPath.endsWith(".zip")
+                && !path.canonicalPath.endsWith("._trace")
+                && !path.canonicalPath.endsWith("jOOQ-website")
                 && !path.canonicalPath.endsWith("pom.xml")
-                && !path.canonicalPath.contains("\\org\\jooq\\util\\access")
-                && !path.canonicalPath.contains("\\org\\jooq\\util\\ase")
-                && !path.canonicalPath.contains("\\org\\jooq\\util\\db2")
-                && !path.canonicalPath.contains("\\org\\jooq\\util\\ingres")
-                && !path.canonicalPath.contains("\\org\\jooq\\util\\oracle")
-                && !path.canonicalPath.contains("\\org\\jooq\\util\\sqlserver")
-                && !path.canonicalPath.contains("\\org\\jooq\\util\\sybase")
-                && !path.canonicalPath.contains("\\target\\")
+                && !path.canonicalPath.contains("\\access")
+                && !path.canonicalPath.contains("\\ase")
+                && !path.canonicalPath.contains("\\db2")
+                && !path.canonicalPath.contains("\\ingres")
+                && !path.canonicalPath.contains("\\oracle")
+                && !path.canonicalPath.contains("\\sqlserver")
+                && !path.canonicalPath.contains("\\sybase")
+                && !path.canonicalPath.contains("\\target")
             ];
 
             for (file : files) {
@@ -96,13 +100,15 @@ class OSS extends Generators {
             }            
         }
         else {
-            var content = read(in);
-
-            for (pair : patterns) {
-                content = pair.left.matcher(content).replaceAll(pair.right);
-            }
-            
-            write(out, content);
+            ex.submit[ | 
+                var content = read(in);
+    
+                for (pair : patterns) {
+                    content = pair.left.matcher(content).replaceAll(pair.right);
+                }
+                
+                write(out, content);
+            ];
         }
     }
     

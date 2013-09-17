@@ -24,6 +24,21 @@
 
     <url>http://www.jooq.org</url>
 
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.jooq.org/inc/LICENSE.txt</url>
+            <distribution>repo</distribution>
+        </license>
+        <!-- [com] -->
+        <license>
+            <name>jOOQ License and Maintenance Agreement</name>
+            <url>http://www.jooq.org/eula</url>
+            <distribution>repo</distribution>
+        </license>
+        <!-- [/com] -->
+    </licenses>
+
     <scm>
         <developerConnection>https://github.com/jOOQ/jOOQ.git</developerConnection>
         <url>https://github.com/jOOQ/jOOQ.git</url>

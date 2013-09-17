@@ -55,6 +55,7 @@ import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.prior;
+import static org.jooq.impl.DSL.rownum;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.sum;
@@ -63,7 +64,6 @@ import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.two;
 import static org.jooq.impl.DSL.val;
-import static org.jooq.util.oracle.OracleDSL.rownum;
 
 import java.sql.Date;
 import java.util.Arrays;
@@ -114,17 +114,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testTableWithHint() throws Exception {
         switch (dialect().family()) {
+            /* [com] */
             case ASE:
-            case CUBRID:
             case DB2:
+            case INGRES:
+            case ORACLE:
+            /* [/com] */
+            case CUBRID:
             case DERBY:
             case FIREBIRD:
             case H2:
             case HSQLDB:
-            case INGRES:
             case MARIADB:
             case MYSQL:
-            case ORACLE:
             case POSTGRES:
             case SQLITE:
                 log.info("SKIPPING", "[ table ] WITH [ hint ] tests");
@@ -149,20 +151,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testPivotClause() throws Exception {
         switch (dialect().family()) {
+            /* [com] */
             case ASE:
-            case CUBRID:
             case DB2:
+            case INGRES:
+            case SQLSERVER:
+            case SYBASE:
+            /* [/com] */
+            case CUBRID:
             case DERBY:
             case FIREBIRD:
             case H2:
             case HSQLDB:
-            case INGRES:
             case MARIADB:
             case MYSQL:
             case POSTGRES:
             case SQLITE:
-            case SQLSERVER:
-            case SYBASE:
                 log.info("SKIPPING", "PIVOT clause tests");
                 return;
         }
@@ -281,20 +285,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testAliasingPivot() throws Exception {
         switch (dialect().family()) {
+            /* [com] */
             case ASE:
-            case CUBRID:
             case DB2:
+            case INGRES:
+            case SQLSERVER:
+            case SYBASE:
+            /* [/com] */
+            case CUBRID:
             case DERBY:
             case FIREBIRD:
             case H2:
             case HSQLDB:
-            case INGRES:
             case MARIADB:
             case MYSQL:
             case POSTGRES:
             case SQLITE:
-            case SQLSERVER:
-            case SYBASE:
                 log.info("SKIPPING", "PIVOT clause tests");
                 return;
         }
@@ -399,19 +405,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testConnectBySimple() throws Exception {
         switch (dialect().family()) {
+            /* [com] */
             case ASE:
             case DB2:
+            case INGRES:
+            case SQLSERVER:
+            case SYBASE:
+            /* [/com] */
             case DERBY:
             case FIREBIRD:
             case H2:
             case HSQLDB:
-            case INGRES:
             case MARIADB:
             case MYSQL:
             case POSTGRES:
             case SQLITE:
-            case SQLSERVER:
-            case SYBASE:
                 log.info("SKIPPING", "Connect by tests");
                 return;
         }
@@ -459,19 +467,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testConnectByDirectory() throws Exception {
         switch (dialect().family()) {
+            /* [com] */
             case ASE:
             case DB2:
+            case INGRES:
+            case SQLSERVER:
+            case SYBASE:
+            /* [/com] */
             case DERBY:
             case FIREBIRD:
             case H2:
             case HSQLDB:
-            case INGRES:
             case MARIADB:
             case MYSQL:
             case POSTGRES:
             case SQLITE:
-            case SQLSERVER:
-            case SYBASE:
                 log.info("SKIPPING", "Connect by tests");
                 return;
         }

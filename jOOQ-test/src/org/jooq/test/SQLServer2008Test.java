@@ -41,6 +41,8 @@
 
 package org.jooq.test;
 
+/* [com] */
+
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
@@ -56,3 +58,5 @@ public class SQLServer2008Test extends SQLServerTest {
         return DSL.using(getConnection(), SQLDialect.SQLSERVER2008, settings);
     }
 }
+
+/* [/com] */

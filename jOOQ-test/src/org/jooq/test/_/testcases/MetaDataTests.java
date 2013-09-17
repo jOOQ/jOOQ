@@ -116,8 +116,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 sequences++;
 
                 // DB2 has an additional sequence for the T_TRIGGERS table
-                if (dialect().family() == DB2 ||
-                    dialect().family() == H2) {
+                if (/* [com] */dialect().family() == DB2 ||
+                    /* [/com] */dialect().family() == H2) {
 
                     sequences++;
                 }
@@ -127,10 +127,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     sequences += 3;
                 }
 
+                /* [com] */
                 // Oracle has additional sequences for [#961]
                 else if (dialect().family() == ORACLE) {
                     sequences += 5;
                 }
+                /* [/com] */
             }
 
             assertEquals(sequences, schema.getSequences().size());
@@ -179,11 +181,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             if (cUAddressType() == null) {
                 assertEquals(0, schema.getUDTs().size());
             }
+            /* [com] */
             // [#643] The U_INVALID types are only available in Oracle
             // [#799] The member procedure UDT's too
             else if (dialect().family() == ORACLE) {
                 assertEquals(7, schema.getUDTs().size());
             }
+            /* [/com] */
             else {
                 assertEquals(3, schema.getUDTs().size());
             }
@@ -335,10 +339,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // [#745] TODO: Unify distinction between NUMERIC and DECIMAL
             else if ("BIG_DECIMAL".equalsIgnoreCase(field.getName())
+                    /* [com] */
                     && dialect().family() != SQLDialect.ORACLE
+                    && dialect().family() != SQLDialect.SQLSERVER
+                    /* [/com] */
                     && dialect().family() != SQLDialect.POSTGRES
-                    && dialect().family() != SQLDialect.SQLITE
-                    && dialect().family() != SQLDialect.SQLSERVER) {
+                    && dialect().family() != SQLDialect.SQLITE) {
 
                 assertEquals(BigDecimal.class, field.getType());
                 assertEquals(SQLDataType.DECIMAL.getType(), field.getDataType().getType());
@@ -362,8 +368,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     && dialect() != SQLDialect.HSQLDB
                     && dialect() != SQLDialect.MARIADB
                     && dialect() != SQLDialect.MYSQL
-                    && dialect() != SQLDialect.SYBASE) {
-
+                    /* [com] */
+                    && dialect() != SQLDialect.SYBASE
+                    /* [/com] */
+            ) {
                 assertEquals(Float.class, field.getType());
                 assertEquals(SQLDataType.REAL, field.getDataType());
                 assertEquals(0, field.getDataType().length());
@@ -371,8 +379,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             else if ("FLOAT".equalsIgnoreCase(field.getName())
                     && dialect() != SQLDialect.MARIADB
                     && dialect() != SQLDialect.MYSQL
-                    && dialect() != SQLDialect.SYBASE) {
-
+                    /* [com] */
+                    && dialect() != SQLDialect.SYBASE
+                    /* [/com] */
+            ) {
                 assertEquals(Double.class, field.getType());
                 assertEquals(SQLDataType.DOUBLE, field.getDataType());
                 assertEquals(0, field.getDataType().length());
@@ -385,8 +395,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // [#746] TODO: Fix this, too
             else if ("DOUBLE".equalsIgnoreCase(field.getName())
+                    /* [com] */
                     && dialect().family() != SQLDialect.SQLSERVER
-                    && dialect() != SQLDialect.ASE) {
+                    && dialect() != SQLDialect.ASE
+                    /* [/com] */
+            ) {
 
                 assertEquals(Double.class, field.getType());
                 assertEquals(SQLDataType.DOUBLE, field.getDataType());

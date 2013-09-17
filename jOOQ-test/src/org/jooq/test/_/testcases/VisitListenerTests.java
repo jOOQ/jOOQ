@@ -247,7 +247,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
            .where(TBook_TITLE().eq("changed"))
         ));
 
-
+        /* [com] */
         if (dialect().family() == ORACLE) {
 
             // Cannot insert books for author_id = 2
@@ -296,6 +296,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     expected.getMessage().toUpperCase().contains("ORA-01402"));
             }
         }
+        /* [/com] */
     }
 
     // -------------------------------------------------------------------------
@@ -517,11 +518,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             if (context.renderContext() == null)
                 return;
 
+            /* [com] */
             // Add Oracle CHECK OPTIONs to INSERT statements, if applicable
             if (context.configuration().dialect().family() == ORACLE) {
                 patchCheckOption(context, TBook(), TBook_AUTHOR_ID(), 1);
                 patchCheckOption(context, TAuthor(), TAuthor_ID(), 1);
             }
+            /* [/com] */
         }
 
         @Override
@@ -548,6 +551,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             }
         }
 
+        /* [com] */
         private <E> void patchCheckOption(
                 final VisitContext context,
                 final Table<?> table,
@@ -582,6 +586,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             }
         }
 
+        /* [/com] */
         private <E> void pushConditions(VisitContext context, Table<?> table, Field<E> field, E... values) {
 
             // Check if we're visiting the given table

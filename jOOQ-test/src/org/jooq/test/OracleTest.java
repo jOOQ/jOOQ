@@ -41,6 +41,8 @@
 
 package org.jooq.test;
 
+/* [com] */
+
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static junit.framework.Assert.assertEquals;
@@ -1436,3 +1438,5 @@ public class OracleTest extends jOOQAbstractTest<
                 .fetch();
     }
 }
+
+/* [/com] */

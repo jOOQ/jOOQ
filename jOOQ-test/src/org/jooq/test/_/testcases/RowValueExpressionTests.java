@@ -404,10 +404,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // SQL standard (DATE, INTERVAL) OVERLAPS (DATE, INTERVAL) predicate
         // -----------------------------------------------------------------
+        /* [com] */
         if (asList(INGRES).contains(dialect())) {
             log.info("SKIPPING", "Ingres INTERVAL OVERLAPS tests");
         }
-        else {
+        else
+        /* [/com] */
+        {
             assertEquals(1, (int)
             create().selectOne()
                     .where(row(new Date(now), new DayToSecond(3))

@@ -41,6 +41,8 @@
 
 package org.jooq.test;
 
+/* [com] */
+
 import static org.jooq.test.ingres.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.ingres.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.ingres.generatedclasses.Tables.T_DATES;
@@ -790,3 +792,5 @@ public class IngresTest extends jOOQAbstractTest<
         };
     }
 }
+
+/* [/com] */

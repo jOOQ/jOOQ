@@ -41,6 +41,8 @@
 
 package org.jooq.test;
 
+/* [com] */
+
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
@@ -61,3 +63,5 @@ public class OracleTestInline extends OracleTest {
         return DSL.using(getConnection(), SQLDialect.ORACLE, settings);
     }
 }
+
+/* [/com] */

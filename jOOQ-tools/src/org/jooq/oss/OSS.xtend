@@ -56,7 +56,7 @@ class OSS extends Generators {
     static ExecutorService ex;
     
     def static void main(String[] args) {
-        ex = Executors::newFixedThreadPool(8);
+        ex = Executors::newFixedThreadPool(4);
         
         val oss = new OSS();
         

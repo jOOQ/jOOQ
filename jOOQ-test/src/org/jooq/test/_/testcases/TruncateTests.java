@@ -111,20 +111,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testTruncateCascade() throws Exception {
         switch (dialect().family()) {
+            /* [com] */
             case ASE:
-            case CUBRID:
             case DB2:
+            case INGRES:
+            case ORACLE:
+            case SQLSERVER:
+            case SYBASE:
+            /* [/com] */
+            case CUBRID:
             case DERBY:
             case FIREBIRD:
             case H2:
             case HSQLDB:
-            case INGRES:
             case MARIADB:
             case MYSQL:
-            case ORACLE:
             case SQLITE:
-            case SQLSERVER:
-            case SYBASE:
                 log.info("SKIPPING", "TRUNCATE CASCADE tests");
                 return;
         }
@@ -150,19 +152,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testTruncateRestartIdentity() throws Exception {
         switch (dialect().family()) {
+            /* [com] */
             case ASE:
-            case CUBRID:
             case DB2:
+            case INGRES:
+            case ORACLE:
+            case SQLSERVER:
+            case SYBASE:
+            /* [/com] */
+            case CUBRID:
             case DERBY:
             case FIREBIRD:
             case H2:
-            case INGRES:
             case MARIADB:
             case MYSQL:
-            case ORACLE:
             case SQLITE:
-            case SQLSERVER:
-            case SYBASE:
                 log.info("SKIPPING", "RESTART IDENTITY tests");
                 return;
         }

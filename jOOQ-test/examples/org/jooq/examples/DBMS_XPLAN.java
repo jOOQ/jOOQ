@@ -40,6 +40,8 @@
  */
 package org.jooq.examples;
 
+/* [com] */
+
 import static org.jooq.impl.DSL.table;
 
 import java.sql.Connection;
@@ -76,5 +78,6 @@ public class DBMS_XPLAN {
             System.out.println(row);
         }
     }
-
 }
+
+/* [/com] */

@@ -73,7 +73,7 @@ public class OracleDSL extends DSL {
      */
     @Support(ORACLE)
     public static Field<Integer> rownum() {
-        return field("rownum", Integer.class);
+        return DSL.rownum();
     }
 
     /**

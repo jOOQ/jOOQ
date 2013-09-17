@@ -221,11 +221,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(2, loader.stored());
         assertEquals(0, loader.ignored());
         assertEquals(0, loader.errors().size());
+
+
+        boolean oracle = false;
+        /* [com] */
+        if (dialect().family() == ORACLE)
+            oracle = true;
+        /* [/com] */
+
         assertEquals(2, (int) create().select(count)
                                       .from(TAuthor())
                                       .where(TAuthor_ID().in(3, 4))
                                       .and(TAuthor_LAST_NAME().in("Hesse", "Frisch"))
-                                      .and(dialect().family() == ORACLE ?
+                                      .and(oracle ?
                                            TAuthor_FIRST_NAME().isNull() :
                                            TAuthor_FIRST_NAME().equal(""))
                                       .fetchOne(count));
@@ -262,17 +270,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Hesse", result.getValue(0, TAuthor_LAST_NAME()));
         assertEquals("Frisch", result.getValue(1, TAuthor_LAST_NAME()));
         assertEquals(null, result.getValue(0, TAuthor_FIRST_NAME()));
-        assertEquals(dialect().family() == ORACLE ? null : "", result.getValue(1, TAuthor_FIRST_NAME()));
+        assertEquals(oracle ? null : "", result.getValue(1, TAuthor_FIRST_NAME()));
 
         assertEquals(2, create().delete(TAuthor()).where(TAuthor_ID().in(5, 6)).execute());
 
         // Update duplicate records
         // ------------------------
         switch (dialect()) {
+            /* [com] */
             case ASE:
+            case INGRES:
+            /* [/com] */
             case DERBY:
             case H2:
-            case INGRES:
             case POSTGRES:
             case SQLITE:
                 // TODO [#558] Simulate this

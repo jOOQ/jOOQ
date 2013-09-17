@@ -41,6 +41,8 @@
 
 package org.jooq.test;
 
+/* [com] */
+
 import static org.jooq.test.sybase.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_725_LOB_TEST;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_785;
@@ -778,3 +780,5 @@ public class SybaseTest extends jOOQAbstractTest<
         };
     }
 }
+
+/* [/com] */

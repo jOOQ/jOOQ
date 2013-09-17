@@ -180,7 +180,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // TODO: [#459] Sybase messes up IN/OUT parameter orders.
             // Check back on this, when this is fixed.
-            if (dialect() != SQLDialect.SYBASE) {
+            if (true/* [com] */ && dialect() != SQLDialect.SYBASE/* [/com] */) {
                 Object p391b = invoke(cRoutines(), "p391", create().configuration(), null, 2, DUMMY_OUT_INT, DUMMY_OUT_INT, 3, null);
                 assertEquals(null, invoke(p391b, "getIo1"));
                 assertEquals("2", "" + invoke(p391b, "getO1"));
@@ -197,6 +197,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // F378, which is a stored function with OUT parameters
         // ---------------------------------------------------------------------
+        /* [com] */
         switch (dialect().family()) {
 
             // Currently, this is only supported for oracle
@@ -232,6 +233,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 assertEquals("3", "" + invoke(result3b, "getReturnValue"));
                 break;
         }
+        /* [/com] */
     }
 
     @Test
@@ -1213,9 +1215,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testStoredProceduresWithCursorParameters() throws Exception {
         switch (dialect().family()) {
+            /* [com] */
+            case ORACLE:
+            /* [/com] */
             case H2:
             case HSQLDB:
-            case ORACLE:
             case POSTGRES:
                 break;
 

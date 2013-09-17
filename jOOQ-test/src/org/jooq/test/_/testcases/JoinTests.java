@@ -307,11 +307,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testNaturalJoin() throws Exception {
+        boolean unqualified = false;
+        /* [com] */
+        if (dialect().family() == SQLDialect.ORACLE)
+            unqualified = true;
+        /* [/com] */
+
         Result<Record2<String, String>> result =
         create().select(TAuthor_LAST_NAME(), TBook_TITLE())
                 .from(TBook())
                 .naturalJoin(TAuthor())
-                .orderBy(dialect().family() == SQLDialect.ORACLE
+                .orderBy(unqualified
                         ? field("id")
                         : TBook_ID())
                 .fetch();
@@ -329,7 +335,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create().select(TAuthor_LAST_NAME(), TBook_TITLE())
                 .from(TBook())
                 .naturalLeftOuterJoin(TAuthor())
-                .orderBy(dialect().family() == SQLDialect.ORACLE
+                .orderBy(unqualified
                     ? field("id")
                     : TBook_ID())
                 .fetch();
@@ -348,12 +354,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testJoinUsing() throws Exception {
+        boolean unqualified = false;
+        /* [com] */
+        if (dialect().family() == SQLDialect.ORACLE)
+            unqualified = true;
+        /* [/com] */
+
         Result<Record2<String, String>> result =
         create().select(TAuthor_LAST_NAME(), TBook_TITLE())
                 .from(TAuthor())
                 .join(TBook())
                 .using(TAuthor_ID())
-                .orderBy(dialect().family() == SQLDialect.ORACLE
+                .orderBy(unqualified
                         ? field("id")
                         : TBook_ID())
                 .fetch();
@@ -372,7 +384,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .from(TBook())
                 .leftOuterJoin(TAuthor())
                 .using(TAuthor_ID())
-                .orderBy(dialect().family() == SQLDialect.ORACLE
+                .orderBy(unqualified
                     ? field("id")
                     : TBook_ID())
                 .fetch();
@@ -615,7 +627,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // --------------------
 
         switch (dialect()) {
+            /* [com] */
             case ASE:
+            /* [/com] */
             case CUBRID:
             case DERBY:
             case H2:

@@ -455,11 +455,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Check again with limit / offset clauses
         // ---------------------------------------
         switch (dialect().family()) {
+            /* [com] */
             case INGRES:
             case ORACLE:
                 log.info("SKIPPING", "LIMIT .. OFFSET .. FOR UPDATE");
                 break;
 
+            /* [/com] */
             default: {
                 Result<Record1<Integer>> result3 = create()
                     .select(TAuthor_ID())
@@ -479,21 +481,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         switch (dialect().family()) {
+            /* [com] */
             case ASE:
             case DB2:
+            case INGRES:
+            case SYBASE:
+            /* [/com] */
             case DERBY:
             case FIREBIRD:
             case HSQLDB:
             case H2:
-            case INGRES:
             case MARIADB:
             case MYSQL:
-            case SYBASE:
                 log.info("SKIPPING", "FOR UPDATE .. WAIT/NOWAIT tests");
                 break;
 
-            case POSTGRES:
+            /* [com] */
             case ORACLE:
+            /* [/com] */
+            case POSTGRES:
             default: {
                 Result<Record1<Integer>> r1a = create()
                     .select(TAuthor_ID())
@@ -503,6 +509,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .fetch();
                 assertEquals(2, r1a.size());
 
+                /* [com] */
                 if (dialect().family() == ORACLE) {
                     Result<Record1<Integer>> r2a = create()
                         .select(TAuthor_ID())
@@ -538,6 +545,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                             .fetch();
                     assertEquals(2, r3b.size());
                 }
+                /* [/com] */
             }
         }
 
@@ -577,7 +585,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         switch (dialect()) {
+            /* [com] */
             case ASE: // This should normally work. Why doesn't it?
+            /* [/com] */
             case MARIADB:
             case MYSQL:
                 log.info("SKIPPING", "FOR UPDATE OF tests");

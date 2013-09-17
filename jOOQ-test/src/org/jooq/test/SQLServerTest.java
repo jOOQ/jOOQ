@@ -41,6 +41,8 @@
 
 package org.jooq.test;
 
+/* [com] */
+
 import static junit.framework.Assert.assertEquals;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_725_LOB_TEST;
@@ -777,3 +779,5 @@ public class SQLServerTest extends jOOQAbstractTest<
             .size());
     }
 }
+
+/* [/com] */

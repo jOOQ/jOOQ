@@ -9764,6 +9764,18 @@ public class DSL {
     }
 
     // -------------------------------------------------------------------------
+    // Other pseudo-fields and functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * Retrieve the Oracle-specific <code>ROWNUM</code> pseudo-field.
+     */
+    @Support({ CUBRID, ORACLE })
+    public static Field<Integer> rownum() {
+        return field("rownum", Integer.class);
+    }
+
+    // -------------------------------------------------------------------------
     // XXX Aggregate functions
     // -------------------------------------------------------------------------
 

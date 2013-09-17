@@ -419,9 +419,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testFetchMany() throws Exception {
         switch (dialect().family()) {
+            /* [com] */
             case ORACLE:
-            case SQLITE:
             case SYBASE:
+            /* [/com] */
+            case SQLITE:
                 log.info("SKIPPING", "Fetch Many tests");
                 return;
         }
@@ -437,12 +439,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testFetchWithoutResults() throws Exception {
+        /* [com] */
         switch (dialect()) {
             case ASE:
                 log.info("SKIPPING", "Fetch without results tests");
                 return;
         }
 
+        /* [/com] */
         Result<Record> result =
         create().fetch(
             create().update(TAuthor())
@@ -469,9 +473,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFetchIntoWithAnnotations() throws Exception {
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
+            /* [com] */
             case ASE:
-            case CUBRID:
             case INGRES:
+            /* [/com] */
+            case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
                 return;
@@ -647,9 +653,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFetchIntoWithoutAnnotations() throws Exception {
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
+            /* [com] */
             case ASE:
-            case CUBRID:
             case INGRES:
+            /* [/com] */
+            case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
                 return;
@@ -733,9 +741,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
+            /* [com] */
             case ASE:
-            case CUBRID:
             case INGRES:
+            /* [/com] */
+            case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
                 return;
@@ -775,9 +785,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
+            /* [com] */
             case ASE:
-            case CUBRID:
             case INGRES:
+            /* [/com] */
+            case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
                 return;
@@ -840,9 +852,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
+            /* [com] */
             case ASE:
-            case CUBRID:
             case INGRES:
+            /* [/com] */
+            case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "testRecordFromUpdatePK() tests");
                 return;
@@ -936,9 +950,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
+            /* [com] */
             case ASE:
-            case CUBRID:
             case INGRES:
+            /* [/com] */
+            case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
                 return;
@@ -999,9 +1015,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
+            /* [com] */
             case ASE:
-            case CUBRID:
             case INGRES:
+            /* [/com] */
+            case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
                 return;
@@ -1099,9 +1117,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
+            /* [com] */
             case ASE:
-            case CUBRID:
             case INGRES:
+            /* [/com] */
+            case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
                 return;
@@ -1290,9 +1310,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
+            /* [com] */
             case ASE:
-            case CUBRID:
             case INGRES:
+            /* [/com] */
+            case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
                 return;
@@ -2152,11 +2174,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(r2.get(0).getValue(TBook_TITLE()), r2.get(1).getValue(TBook_TITLE()));
         assertEquals(r3.get(0).getValue(TBook_TITLE()), r3.get(1).getValue(TBook_TITLE()));
 
+        /* [com] */
         // Some JDBC drivers already perform string interning...
         if (dialect().family() == ORACLE) {
             Assert.assertNotSame(r1.get(0).getValue(TBook_TITLE()), r1.get(1).getValue(TBook_TITLE()));
         }
 
+        /* [/com] */
         Assert.assertSame(r2.get(0).getValue(TBook_TITLE()), r2.get(1).getValue(TBook_TITLE()));
         Assert.assertSame(r3.get(0).getValue(TBook_TITLE()), r3.get(1).getValue(TBook_TITLE()));
 

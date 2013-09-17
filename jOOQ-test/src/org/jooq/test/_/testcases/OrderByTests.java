@@ -105,6 +105,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testOrderByInSubquery() throws Exception {
+        /* [com] */
         // TODO: [#780] Fix this for Ingres and Sybase ASE
         switch (dialect()) {
             case ASE:
@@ -113,6 +114,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 return;
         }
 
+        /* [/com] */
         // Some RDBMS don't accept ORDER BY clauses in subqueries without
         // TOP clause (e.g. SQL Server). jOOQ will synthetically add a
         // TOP 100 PERCENT clause, if necessary
@@ -286,11 +288,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 create().select().from(TBook()).limit(i).fetch().size());
         }
 
+        /* [com] */
         if (dialect() == SQLDialect.ASE) {
             log.info("SKIPPING", "LIMIT .. OFFSET tests");
             return;
         }
 
+        /* [/com] */
         for (int i = 1; i < 6; i++) {
             assertEquals(Math.min(i, 3),
                 create().selectFrom(TBook()).limit(1, i).fetch().size());
@@ -314,11 +318,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testLimitAliased() throws Exception {
+        /* [com] */
         if (asList(ASE, SQLSERVER).contains(dialect().family())) {
             log.info("SKIPPING", "LIMIT .. OFFSET tests");
             return;
         }
 
+        /* [/com] */
         // [#2080] Some databases generate ORDER BY clauses within their ranking
         // functions. There are some syntax problems, when selectable columns
         // have aliases
@@ -380,11 +386,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testLimitNamedParams() throws Exception {
+        /* [com] */
         if (asList(ASE, INGRES).contains(dialect())) {
             log.info("SKIPPING", "Parameterised LIMIT .. OFFSET tests");
             return;
         }
 
+        /* [/com] */
         // Some dialects don't support LIMIT 0 / TOP 0
         for (int i = 1; i < 6; i++) {
             Select<?> s1 = create().selectFrom(TBook()).limit(param("limit", i));
@@ -448,6 +456,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testLimitNested() throws Exception {
+        /* [com] */
         // TODO [#780] This is not supported in Ingres
         if (dialect() == SQLDialect.INGRES ||
             dialect() == SQLDialect.ASE) {
@@ -456,6 +465,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             return;
         }
 
+        /* [/com] */
         Table<B> nested = table(create()
             .selectFrom(TBook())
             .orderBy(TBook_ID().desc())

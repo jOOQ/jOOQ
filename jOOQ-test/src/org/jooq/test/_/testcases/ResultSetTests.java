@@ -154,9 +154,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testResultSetConcurrency() throws Exception {
         switch (dialect()) {
+            /* [com] */
+            case SYBASE:
+            /* [/com] */
             case MARIADB:
             case SQLITE:
-            case SYBASE:
                 log.info("SKIPPING", "ResultSet concurrency tests");
                 return;
         }

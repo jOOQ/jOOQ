@@ -15,15 +15,17 @@
 
     <licenses>
         <license>
-            <name>GNU Affero General Public License v3</name>
-            <url>http://www.fsf.org/licensing/licenses/agpl-3.0.html</url>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.jooq.org/inc/LICENSE.txt</url>
             <distribution>repo</distribution>
         </license>
+        <!-- [com] -->
         <license>
-            <name>jOOQ EULA</name>
+            <name>jOOQ License and Maintenance Agreement</name>
             <url>http://www.jooq.org/eula</url>
             <distribution>repo</distribution>
         </license>
+        <!-- [/com] -->
     </licenses>
 
     <build>

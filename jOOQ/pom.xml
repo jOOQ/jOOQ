@@ -16,15 +16,17 @@
 
     <licenses>
         <license>
-            <name>LGPL 2.1 license</name>
-            <url>http://www.opensource.org/licenses/lgpl-2.1.php</url>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.jooq.org/inc/LICENSE.txt</url>
             <distribution>repo</distribution>
         </license>
+        <!-- [com] -->
         <license>
-            <name>jOOQ EULA</name>
+            <name>jOOQ License and Maintenance Agreement</name>
             <url>http://www.jooq.org/eula</url>
             <distribution>repo</distribution>
         </license>
+        <!-- [/com] -->
     </licenses>
 
     <build>

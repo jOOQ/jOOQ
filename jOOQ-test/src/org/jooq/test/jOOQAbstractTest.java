@@ -739,10 +739,12 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<X, Integer[]> TArrays_NUMBER();
     protected abstract TableField<X, Date[]> TArrays_DATE();
     protected abstract TableField<X, ? extends UDTRecord<?>[]> TArrays_UDT();
+    /* [pro] */
     protected abstract TableField<X, ? extends ArrayRecord<String>> TArrays_STRING_R();
     protected abstract TableField<X, ? extends ArrayRecord<Integer>> TArrays_NUMBER_R();
     protected abstract TableField<X, ? extends ArrayRecord<Long>> TArrays_NUMBER_LONG_R();
     protected abstract TableField<X, ? extends ArrayRecord<Date>> TArrays_DATE_R();
+    /* [/pro] */
 
     protected DAO<A, AP, Integer> TAuthorDao() {
         return null;
@@ -883,9 +885,11 @@ public abstract class jOOQAbstractTest<
     protected abstract Field<Integer[]> FArrays1Field(Field<Integer[]> array);
     protected abstract Field<Long[]> FArrays2Field(Field<Long[]> array);
     protected abstract Field<String[]> FArrays3Field(Field<String[]> array);
+    /* [pro] */
     protected abstract <Z extends ArrayRecord<Integer>> Field<Z> FArrays1Field_R(Field<Z> array);
     protected abstract <Z extends ArrayRecord<Long>> Field<Z> FArrays2Field_R(Field<Z> array);
     protected abstract <Z extends ArrayRecord<String>> Field<Z> FArrays3Field_R(Field<Z> array);
+    /* [/pro] */
 
     protected abstract boolean supportsOUTParameters();
     protected abstract boolean supportsReferences();

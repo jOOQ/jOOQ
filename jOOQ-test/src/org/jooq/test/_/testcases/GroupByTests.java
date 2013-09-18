@@ -228,13 +228,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             return;
         }
 
+        /* [pro] */
         // ROLLUP clause
         // -------------
         Field<Integer> groupingId = groupingId(TBook_ID(), TBook_AUTHOR_ID());
-        /* [pro] */
         if (asList(DB2, SYBASE).contains(dialect()))
             groupingId = one();
-        /* [/pro] */
 
         Result<Record4<Integer, Integer, Integer, Integer>> result2 = create()
                 .select(
@@ -255,9 +254,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Arrays.asList(null, null, 1, null, 1, null, 2, null, 2), result2.getValues(1));
         assertEquals(Arrays.asList(1, 0, 0, 0, 0, 0, 0, 0, 0), result2.getValues(2));
 
-        /* [pro] */
         if (!asList(DB2, SYBASE).contains(dialect()))
-        /* [/pro] */
             assertEquals(Arrays.asList(3, 1, 0, 1, 0, 1, 0, 1, 0), result2.getValues(3));
 
         // CUBE clause
@@ -280,9 +277,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Arrays.asList(null, 1, 2, null, 1, null, 1, null, 2, null, 2), result3.getValues(1));
         assertEquals(Arrays.asList(1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0), result3.getValues(2));
 
-        /* [pro] */
         if (!asList(DB2, SYBASE).contains(dialect()))
-        /* [/pro] */
             assertEquals(Arrays.asList(3, 2, 2, 1, 0, 1, 0, 1, 0, 1, 0), result3.getValues(3));
 
         // GROUPING SETS clause
@@ -307,10 +302,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Arrays.asList(null, null, 1, 2, 2, 1, 1, 2, 2), result4.getValues(1));
         assertEquals(Arrays.asList(1, 1, 1, 1, 1, 0, 0, 0, 0), result4.getValues(2));
 
-        /* [pro] */
         if (!asList(DB2, SYBASE).contains(dialect()))
-        /* [/pro] */
             assertEquals(Arrays.asList(3, 3, 2, 2, 2, 0, 0, 0, 0), result4.getValues(3));
+        /* [/pro] */
     }
 
     @Test

@@ -40,6 +40,8 @@
  */
 package org.jooq.impl;
 
+/* [pro] */
+
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.val;
 
@@ -175,3 +177,4 @@ implements VersionsBetweenAndStep<R, T> {
         SCN, TIMESTAMP;
     }
 }
+/* [/pro] */

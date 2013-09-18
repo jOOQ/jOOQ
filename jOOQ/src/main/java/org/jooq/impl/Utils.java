@@ -245,6 +245,7 @@ final class Utils {
     // XXX: Record constructors and related methods
     // ------------------------------------------------------------------------
 
+    /* [pro] */
     /**
      * Create a new Oracle-style VARRAY {@link ArrayRecord}
      */
@@ -260,6 +261,7 @@ final class Utils {
         }
     }
 
+    /* [/pro] */
     /**
      * Create a new record
      */
@@ -1694,9 +1696,11 @@ final class Utils {
             Array result = stream.readArray();
             return (T) (result == null ? null : result.getArray());
         }
+        /* [pro] */
         else if (ArrayRecord.class.isAssignableFrom(type)) {
             return (T) getArrayRecord(configuration, stream.readArray(), (Class<? extends ArrayRecord<?>>) type);
         }
+        /* [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
             return getEnumType(type, stream.readString());
         }
@@ -1822,6 +1826,7 @@ final class Utils {
         else if (type == UUID.class) {
             stream.writeString(value.toString());
         }
+        /* [pro] */
         else if (ArrayRecord.class.isAssignableFrom(type)) {
 
             // [#1544] We can safely assume that localConfiguration has been
@@ -1829,6 +1834,7 @@ final class Utils {
             ArrayRecord<?> arrayRecord = (ArrayRecord<?>) value;
             stream.writeArray(on(localConnection()).call("createARRAY", arrayRecord.getName(), arrayRecord.get()).<Array>get());
         }
+        /* [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
             stream.writeString(((EnumType) value).getLiteral());
         }
@@ -1993,9 +1999,11 @@ final class Utils {
                     return (T) convertArray(rs.getArray(index), (Class<? extends Object[]>) type);
             }
         }
+        /* [pro] */
         else if (ArrayRecord.class.isAssignableFrom(type)) {
             return (T) getArrayRecord(ctx.configuration(), rs.getArray(index), (Class<? extends ArrayRecord<?>>) type);
         }
+        /* [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
             return getEnumType(type, rs.getString(index));
         }
@@ -2016,6 +2024,7 @@ final class Utils {
         }
     }
 
+    /* [pro] */
     private static final ArrayRecord<?> getArrayRecord(Configuration configuration, Array array, Class<? extends ArrayRecord<?>> type) throws SQLException {
         if (array == null) {
             return null;
@@ -2028,6 +2037,7 @@ final class Utils {
         }
     }
 
+    /* [/pro] */
     private static final Object[] convertArray(Object array, Class<? extends Object[]> type) throws SQLException {
         if (array instanceof Object[]) {
             return Convert.convert(array, type);
@@ -2287,9 +2297,11 @@ final class Utils {
         else if (type.isArray()) {
             return (T) convertArray(stmt.getObject(index), (Class<? extends Object[]>)type);
         }
+        /* [pro] */
         else if (ArrayRecord.class.isAssignableFrom(type)) {
             return (T) getArrayRecord(ctx.configuration(), stmt.getArray(index), (Class<? extends ArrayRecord<?>>) type);
         }
+        /* [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
             return getEnumType(type, stmt.getString(index));
         }
@@ -2390,9 +2402,11 @@ final class Utils {
         else if (type.isArray()) {
             return (T) pgNewArray(type, string);
         }
+        /* [pro] */
         else if (ArrayRecord.class.isAssignableFrom(type)) {
             // Not supported
         }
+        /* [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
             return getEnumType(type, string);
         }

@@ -128,6 +128,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support
     void addJoin(TableLike<?> table, JoinType type, Condition... conditions);
 
+    /* [pro] */
     /**
      * Joins the existing table product to a new table using a condition
      * <p>
@@ -143,6 +144,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support(ORACLE)
     void addJoin(TableLike<?> table, JoinType type, Condition[] conditions, Field<?>[] partitionBy);
 
+    /* [/pro] */
     /**
      * Joins the existing table product to a new table with a <code>USING</code>
      * clause
@@ -665,6 +667,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, ORACLE, SYBASE })
     void setForUpdateOf(Table<?>... tables);
 
+    /* [pro] */
     /**
      * Some RDBMS allow for specifying the locking mode for the applied
      * <code>FOR UPDATE</code> clause. In this case, the session will wait for
@@ -684,6 +687,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support(ORACLE)
     void setForUpdateWait(int seconds);
 
+    /* [/pro] */
     /**
      * Some RDBMS allow for specifying the locking mode for the applied
      * <code>FOR UPDATE</code> clause. In this case, the session will not wait
@@ -700,6 +704,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support({ ORACLE, POSTGRES })
     void setForUpdateNoWait();
 
+    /* [pro] */
     /**
      * Some RDBMS allow for specifying the locking mode for the applied
      * <code>FOR UPDATE</code> clause. In this case, the session will skip all
@@ -716,6 +721,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support(ORACLE)
     void setForUpdateSkipLocked();
 
+    /* [/pro] */
     /**
      * Sets the "FOR SHARE" flag onto the query
      * <p>

@@ -387,6 +387,7 @@ public abstract class BaseTest<
         return delegate.TArrays_UDT();
     }
 
+    /* [pro] */
     protected TableField<X, ? extends ArrayRecord<String>> TArrays_STRING_R() {
         return delegate.TArrays_STRING_R();
     }
@@ -403,6 +404,7 @@ public abstract class BaseTest<
         return delegate.TArrays_DATE_R();
     }
 
+    /* [/pro] */
     protected DAO<A, AP, Integer> TAuthorDao() {
         return delegate.TAuthorDao();
     }
@@ -680,6 +682,7 @@ public abstract class BaseTest<
         return delegate.FArrays3Field(array);
     }
 
+    /* [pro] */
     protected <Z extends ArrayRecord<Integer>> Field<Z> FArrays1Field_R(Field<Z> array) {
         return delegate.FArrays1Field_R(array);
     }
@@ -691,6 +694,7 @@ public abstract class BaseTest<
     protected <Z extends ArrayRecord<String>> Field<Z> FArrays3Field_R(Field<Z> array) {
         return delegate.FArrays3Field_R(array);
     }
+    /* [/pro] */
 
     protected boolean supportsOUTParameters() {
         return delegate.supportsOUTParameters();

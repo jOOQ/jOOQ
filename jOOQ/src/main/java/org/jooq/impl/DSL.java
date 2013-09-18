@@ -4505,6 +4505,7 @@ public class DSL {
         return table(val(array));
     }
 
+    /* [pro] */
     /**
      * A synonym for {@link #unnest(ArrayRecord)}.
      *
@@ -4520,6 +4521,7 @@ public class DSL {
         return table(val(array));
     }
 
+    /* [/pro] */
     /**
      * A synonym for {@link #unnest(Field)}.
      *
@@ -4579,6 +4581,7 @@ public class DSL {
         return unnest(val(array));
     }
 
+    /* [pro] */
     /**
      * Create a table from an array of values.
      * <p>
@@ -4595,6 +4598,7 @@ public class DSL {
         return unnest(val(array));
     }
 
+    /* [/pro] */
     /**
      * Create a table from a field.
      * <p>
@@ -4633,6 +4637,7 @@ public class DSL {
             return new FunctionTable<Record>(cursor);
         }
 
+        /* [pro] */
         // The field is an Oracle-style VARRAY constant
         else if (ArrayConstant.class.isAssignableFrom(cursor.getClass())) {
             return new ArrayTable(cursor);
@@ -4643,6 +4648,7 @@ public class DSL {
             return new ArrayTable(cursor);
         }
 
+        /* [/pro] */
         // The field is a regular array
         else if (cursor.getType().isArray() && cursor.getType() != byte[].class) {
             return new ArrayTable(cursor);
@@ -7636,6 +7642,7 @@ public class DSL {
         return new Rollup(nullSafe(fields));
     }
 
+    /* [pro] */
     /**
      * Create a CUBE(field1, field2, .., fieldn) grouping field.
      * <p>
@@ -7831,6 +7838,7 @@ public class DSL {
         return function("grouping_id", Integer.class, nullSafe(fields));
     }
 
+    /* [/pro] */
     // ------------------------------------------------------------------------
     // XXX Bitwise operations
     // ------------------------------------------------------------------------
@@ -10908,10 +10916,12 @@ public class DSL {
         if (value instanceof UDTRecord) {
             return new UDTConstant((UDTRecord) value);
         }
+        /* [pro] */
         else if (value instanceof ArrayRecord) {
             return new ArrayConstant((ArrayRecord) value);
         }
 
+        /* [/pro] */
         // The default behaviour
         else {
             T converted = type.convert(value);

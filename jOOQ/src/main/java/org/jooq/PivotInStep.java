@@ -59,6 +59,7 @@ import org.jooq.api.annotation.Transition;
 )
 public interface PivotInStep<T> {
 
+    /* [pro] */
     /**
      * Specify the acceptable values for pivoting
      *
@@ -98,4 +99,5 @@ public interface PivotInStep<T> {
      */
     @Support({ ORACLE11G, ORACLE12C })
     Table<Record> in(Collection<? extends Field<T>> fields);
+    /* [/pro] */
 }

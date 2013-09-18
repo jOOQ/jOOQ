@@ -40,6 +40,8 @@
  */
 package org.jooq.impl;
 
+/* [pro] */
+
 import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -225,3 +227,4 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
         return getList().iterator();
     }
 }
+/* [/pro] */

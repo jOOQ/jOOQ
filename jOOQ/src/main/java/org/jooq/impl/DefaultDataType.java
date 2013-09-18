@@ -485,9 +485,11 @@ public class DefaultDataType<T> implements DataType<T> {
         else if (type.isArray()) {
             return Types.ARRAY;
         }
+        /* [pro] */
         else if (ArrayRecord.class.isAssignableFrom(type)) {
             return Types.ARRAY;
         }
+        /* [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
             return Types.VARCHAR;
         }
@@ -560,11 +562,13 @@ public class DefaultDataType<T> implements DataType<T> {
         return new ArrayDataType<T>(this);
     }
 
+    /* [pro] */
     @Override
     public final <A extends ArrayRecord<T>> DataType<A> asArrayDataType(Class<A> arrayDataType) {
         return new DefaultDataType<A>(dialect, arrayDataType, typeName, castTypeName);
     }
 
+    /* [/pro] */
     @Override
     public final <E extends EnumType> DataType<E> asEnumDataType(Class<E> enumDataType) {
         return new DefaultDataType<E>(dialect, enumDataType, typeName, castTypeName);
@@ -656,9 +660,12 @@ public class DefaultDataType<T> implements DataType<T> {
             if (result == null) {
 
                 // jOOQ data types are handled here
-                if (EnumType.class.isAssignableFrom(type) ||
-                    UDTRecord.class.isAssignableFrom(type) ||
-                    ArrayRecord.class.isAssignableFrom(type)) {
+                if (EnumType.class.isAssignableFrom(type)
+                     || UDTRecord.class.isAssignableFrom(type)
+                     /* [pro] */
+                     || ArrayRecord.class.isAssignableFrom(type)
+                     /* [/pro] */
+                ) {
 
                     for (SQLDialect d : SQLDialect.values()) {
                         result = TYPES_BY_TYPE[d.ordinal()].get(type);
@@ -728,8 +735,8 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean isArray() {
-        return ArrayRecord.class.isAssignableFrom(type)
-            || (!isBinary() && type.isArray());
+        return /* [pro] */ArrayRecord.class.isAssignableFrom(type) || /* [/pro] */
+            (!isBinary() && type.isArray());
     }
 
     // ------------------------------------------------------------------------

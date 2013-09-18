@@ -91,6 +91,7 @@ import org.jooq.api.annotation.State;
 @State
 public interface SelectJoinPartitionByStep<R extends Record> extends SelectOnStep<R> {
 
+    /* [pro] */
     /**
      * Add a <code>PARTITION BY</code> clause to the right hand side of the
      * <code>OUTER JOIN</code> keywords
@@ -108,5 +109,5 @@ public interface SelectJoinPartitionByStep<R extends Record> extends SelectOnSte
      */
     @Support(ORACLE)
     SelectOnStep<R> partitionBy(Collection<? extends Field<?>> fields);
-
+    /* [/pro] */
 }

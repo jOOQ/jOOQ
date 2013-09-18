@@ -63,6 +63,7 @@ import org.jooq.api.annotation.Transition;
 @State
 public interface TablePartitionByStep extends TableOnStep {
 
+    /* [pro] */
     /**
      * Add a <code>PARTITION BY</code> clause to the right hand side of the
      * <code>OUTER JOIN</code> keywords
@@ -84,4 +85,5 @@ public interface TablePartitionByStep extends TableOnStep {
         args = "Field+"
     )
     TableOnStep partitionBy(Collection<? extends Field<?>> fields);
+    /* [/pro] */
 }

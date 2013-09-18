@@ -479,6 +479,7 @@ public class CUBRIDTest extends jOOQAbstractTest<
         return null;
     }
 
+    /* [pro] */
     @Override
     protected TableField<XUnusedRecord, ArrayRecord<String>> TArrays_STRING_R() {
         return null;
@@ -499,6 +500,7 @@ public class CUBRIDTest extends jOOQAbstractTest<
         return null;
     }
 
+    /* [/pro] */
     @Override
     protected TableField<TBookRecord, Integer> TBook_LANGUAGE_ID() {
         return TBook.LANGUAGE_ID;
@@ -675,37 +677,33 @@ public class CUBRIDTest extends jOOQAbstractTest<
         return null;
     }
 
-
     @Override
     protected Field<Long[]> FArrays2Field(Field<Long[]> array) {
         return null;
     }
-
 
     @Override
     protected Field<String[]> FArrays3Field(Field<String[]> array) {
         return null;
     }
 
-
+    /* [pro] */
     @Override
     protected <T extends ArrayRecord<Integer>> Field<T> FArrays1Field_R(Field<T> array) {
         return null;
     }
-
 
     @Override
     protected <T extends ArrayRecord<Long>> Field<T> FArrays2Field_R(Field<T> array) {
         return null;
     }
 
-
     @Override
     protected <T extends ArrayRecord<String>> Field<T> FArrays3Field_R(Field<T> array) {
         return null;
     }
 
-
+    /* [/pro] */
     @Override
     protected Class<? extends UDTRecord<?>> cUAddressType() {
         return null;

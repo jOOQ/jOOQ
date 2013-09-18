@@ -127,14 +127,17 @@ class DefaultBindContext extends AbstractBindContext {
         if (value == null) {
             int sqlType = DefaultDataType.getDataType(dialect, type).getSQLType();
 
+            /* [pro] */
             // Oracle-style ARRAY types need to be bound with their type name
             if (ArrayRecord.class.isAssignableFrom(type)) {
                 String typeName = Utils.newArrayRecord((Class<ArrayRecord<?>>) type, configuration).getName();
                 stmt.setNull(nextIndex(), sqlType, typeName);
             }
 
+            else
+            /* [/pro] */
             // [#1126] Oracle's UDTs need to be bound with their type name
-            else if (UDTRecord.class.isAssignableFrom(type)) {
+            if (UDTRecord.class.isAssignableFrom(type)) {
                 String typeName = Utils.newRecord((Class<UDTRecord<?>>) type)
                                        .<RuntimeException>operate(null)
                                        .getUDT()
@@ -333,10 +336,12 @@ class DefaultBindContext extends AbstractBindContext {
                     throw new SQLDialectNotSupportedException("Cannot bind ARRAY types in dialect " + dialect);
             }
         }
+        /* [pro] */
         else if (ArrayRecord.class.isAssignableFrom(type)) {
             ArrayRecord<?> arrayRecord = (ArrayRecord<?>) value;
             stmt.setArray(nextIndex(), on(localConnection()).call("createARRAY", arrayRecord.getName(), arrayRecord.get()).<Array>get());
         }
+        /* [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
             stmt.setString(nextIndex(), ((EnumType) value).getLiteral());
         }

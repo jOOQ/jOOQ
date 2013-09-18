@@ -912,6 +912,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     // XXX: Exotic and vendor-specific clauses on tables
     // -------------------------------------------------------------------------
 
+    /* [pro] */
     /**
      * Specify a SQL Server style table hint for query optimisation
      * <p>
@@ -980,6 +981,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     )
     PivotForStep pivot(Collection<? extends Field<?>> aggregateFunctions);
 
+    /* [/pro] */
     /**
      * Create a new <code>TABLE</code> reference from this table, applying
      * relational division.
@@ -1039,6 +1041,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     )
     DivideByOnStep divideBy(Table<?> divisor);
 
+    /* [pro] */
     /**
      * Create an {@link SQLDialect#ORACLE} flashback versions query clause from
      * this table.
@@ -1146,4 +1149,5 @@ public interface Table<R extends Record> extends TableLike<R> {
         args = "Field"
     )
     Table<R> asOfTimestamp(Field<Timestamp> timestamp);
+    /* [/pro] */
 }

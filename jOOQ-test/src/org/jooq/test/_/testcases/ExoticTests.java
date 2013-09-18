@@ -113,13 +113,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testTableWithHint() throws Exception {
+        /* [pro] */
         switch (dialect().family()) {
-            /* [pro] */
             case ASE:
             case DB2:
             case INGRES:
             case ORACLE:
-            /* [/pro] */
             case CUBRID:
             case DERBY:
             case FIREBIRD:
@@ -146,18 +145,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals(4, result.size());
         assertEquals(BOOK_IDS, result.getValues(TBook_ID()));
+        /* [/pro] */
     }
 
     @Test
     public void testPivotClause() throws Exception {
+        /* [pro] */
         switch (dialect().family()) {
-            /* [pro] */
             case ASE:
             case DB2:
             case INGRES:
             case SQLSERVER:
             case SYBASE:
-            /* [/pro] */
             case CUBRID:
             case DERBY:
             case FIREBIRD:
@@ -280,18 +279,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(
             asList(1, 2, 0, 0, 0),
             asList(result3.get(0).into(Integer[].class)));
+        /* [/pro] */
     }
 
     @Test
     public void testAliasingPivot() throws Exception {
+        /* [pro] */
         switch (dialect().family()) {
-            /* [pro] */
             case ASE:
             case DB2:
             case INGRES:
             case SQLSERVER:
             case SYBASE:
-            /* [/pro] */
             case CUBRID:
             case DERBY:
             case FIREBIRD:
@@ -346,6 +345,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(3, (int) r2.get(0).getValue("c", Integer.class));
         assertEquals(4, (int) r2.get(0).getValue("d", Integer.class));
         assertEquals(5, (int) r2.get(0).getValue("e", Integer.class));
+        /* [/pro] */
     }
 
     @Test

@@ -94,6 +94,7 @@ class OSS extends Generators {
                 && !path.canonicalPath.contains("\\sqlserver")
                 && !path.canonicalPath.contains("\\sybase")
                 && !path.canonicalPath.contains("\\target")
+                && !path.canonicalPath.contains("\\bin")
             ];
 
             for (file : files) {
@@ -159,6 +160,10 @@ For more information, please visit: http://www.jooq.org/licenses''');
     val replaceFirst = new ArrayList<ImmutablePair<Pattern, String>>();
     
     new() {
+        
+        // Replace a couple of imports
+        replaceFirst.add(new ImmutablePair(compile('''import org\.jooq\.(ArrayConstant|ArrayRecord|impl\.ArrayRecordImpl|impl\.FlashbackTable.*?);'''), "// ..."));
+        replaceFirst.add(new ImmutablePair(compile('''import static org\.jooq\.impl\.DSL\.(cube|grouping|groupingId|groupingSets);'''), "// ..."));
         
         // Replace the Java / Scala / Xtend license header
         replaceFirst.add(new ImmutablePair(compile('''(?s:/\*\*[\r\n] \* Copyright.*?eula[\r\n] \*/)'''), '''

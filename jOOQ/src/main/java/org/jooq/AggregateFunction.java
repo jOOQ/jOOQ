@@ -86,6 +86,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
     )
     WindowPartitionByStep<T> over();
 
+    /* [pro] */
     /**
      * Restrict this aggregate function to <code>FIRST</code> values
      * <p>
@@ -187,4 +188,5 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
         args = "SortField+"
     )
     WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Collection<? extends SortField<?>> fields);
+    /* [/pro] */
 }

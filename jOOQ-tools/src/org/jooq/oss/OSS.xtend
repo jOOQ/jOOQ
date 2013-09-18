@@ -131,7 +131,21 @@ For more information, please visit: http://www.jooq.org/licenses''');
             ex.submit[ | 
                 var content = read(in);
     
-                for (pair : patterns) {
+                for (pattern : translateAll) {
+                    val m = pattern.matcher(content);
+                    
+                    while (m.find) {
+                        content = content.substring(0, m.start)
+                                + m.group(1)
+                                + m.group(2).replaceAll("\\S", "x")
+                                + m.group(3)
+                                + content.substring(m.end);
+                    }
+                }
+                for (pair : replaceFirst) {
+                    content = pair.left.matcher(content).replaceAll(pair.right);
+                }
+                for (pair : replaceAll) {
                     content = pair.left.matcher(content).replaceAll(pair.right);
                 }
                 
@@ -140,12 +154,14 @@ For more information, please visit: http://www.jooq.org/licenses''');
         }
     }
     
-    val patterns = new ArrayList<ImmutablePair<Pattern, String>>();
+    val translateAll = new ArrayList<Pattern>();
+    val replaceAll = new ArrayList<ImmutablePair<Pattern, String>>();
+    val replaceFirst = new ArrayList<ImmutablePair<Pattern, String>>();
     
     new() {
         
         // Replace the Java / Scala / Xtend license header
-        patterns.add(new ImmutablePair(compile('''(?s:/\*\*[\r\n] \* Copyright.*?eula[\r\n] \*/)'''), '''
+        replaceFirst.add(new ImmutablePair(compile('''(?s:/\*\*[\r\n] \* Copyright.*?eula[\r\n] \*/)'''), '''
 /**
  * Copyright (c) 2009-2013, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
@@ -172,27 +188,24 @@ For more information, please visit: http://www.jooq.org/licenses''');
  */'''));
         
         // Remove sections of commercial code
-        patterns.add(new ImmutablePair(compile('''(?s:[ \t]+«quote("/* [com] */")»[ \t]*[\r\n]{0,2}.*?«quote("/* [/com] */")»[ \t]*[\r\n]{0,2})'''), ""));
-        patterns.add(new ImmutablePair(compile('''(?s:«quote("/* [com] */")».*?«quote("/* [/com] */")»)'''), ""));
-        
-        patterns.add(new ImmutablePair(compile('''(?s:[ \t]+«quote("<!-- [com] -->")»[ \t]*[\r\n]{0,2}.*?«quote("<!-- [/com] -->")»[ \t]*[\r\n]{0,2})'''), ""));
-        patterns.add(new ImmutablePair(compile('''(?s:«quote("<!-- [com] -->")».*?«quote("<!-- [/com] -->")»)'''), ""));
+        translateAll.add(compile('''(?s:(/\* \[com\])( \*.*?/\* )(\[/com\] \*/))'''));
+        translateAll.add(compile('''(?s:(<!-- \[com\])( -->.*?<!-- )(\[/com\] -->))'''));
         
         for (d : SQLDialect::values.filter[d | d.commercial]) {
             
             // Remove commercial dialects from @Support annotations
-            patterns.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?),\s*\b«d.name»\b([^\)]*?\)))'''), "$1$2"));
-            patterns.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?)\b«d.name»\b,\s*([^\)]*?\)))'''), "$1$2"));
-            patterns.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?)\s*\b«d.name»\b\s*([^\)]*?\)))'''), "$1$2"));
+            replaceAll.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?),\s*\b«d.name»\b([^\)]*?\)))'''), "$1$2"));
+            replaceAll.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?)\b«d.name»\b,\s*([^\)]*?\)))'''), "$1$2"));
+            replaceAll.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?)\s*\b«d.name»\b\s*([^\)]*?\)))'''), "$1$2"));
             
             // Remove commercial dialects from Arrays.asList() expressions
-            patterns.add(new ImmutablePair(compile('''(asList\([^\)]*?),\s*\b«d.name»\b([^\)]*?\))'''), "$1$2"));
-            patterns.add(new ImmutablePair(compile('''(asList\([^\)]*?)\b«d.name»\b,\s*([^\)]*?\))'''), "$1$2"));
-            patterns.add(new ImmutablePair(compile('''(asList\([^\)]*?)\s*\b«d.name»\b\s*([^\)]*?\))'''), "$1$2"));
+            replaceAll.add(new ImmutablePair(compile('''(asList\([^\)]*?),\s*\b«d.name»\b([^\)]*?\))'''), "$1$2"));
+            replaceAll.add(new ImmutablePair(compile('''(asList\([^\)]*?)\b«d.name»\b,\s*([^\)]*?\))'''), "$1$2"));
+            replaceAll.add(new ImmutablePair(compile('''(asList\([^\)]*?)\s*\b«d.name»\b\s*([^\)]*?\))'''), "$1$2"));
             
             // Remove commercial dialects from imports
-            patterns.add(new ImmutablePair(compile('''import (static )?org\.jooq\.SQLDialect\.«d.name»;[\r\n]{0,2}'''), ""));
-            patterns.add(new ImmutablePair(compile('''import (static )?org\.jooq\.util\.«d.name.toLowerCase»\..*?;[\r\n]{0,2}'''), ""));
+            replaceAll.add(new ImmutablePair(compile('''import (static )?org\.jooq\.SQLDialect\.«d.name»;[\r\n]{0,2}'''), ""));
+            replaceAll.add(new ImmutablePair(compile('''import (static )?org\.jooq\.util\.«d.name.toLowerCase»\..*?;[\r\n]{0,2}'''), ""));
         }
     }
 }

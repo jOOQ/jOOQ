@@ -1657,6 +1657,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testCurrentDate() throws Exception {
+        new DataTypeTests(this).testCurrentDate();
+    }
+
+    @Test
     public void testManager() throws Exception {
         new CRUDTests(this).testManager();
     }

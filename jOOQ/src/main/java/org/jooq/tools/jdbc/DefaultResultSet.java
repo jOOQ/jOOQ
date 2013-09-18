@@ -1028,15 +1028,4 @@ public class DefaultResultSet extends JDBC41ResultSet implements ResultSet {
     public void updateNClob(String columnLabel, Reader reader) throws SQLException {
         delegate.updateNClob(columnLabel, reader);
     }
-
-    @Override
-    public <T> T getObject(int columnIndex, Class<T> type) throws SQLException {
-        return delegate.getObject(columnIndex, type);
-    }
-
-    @Override
-    public <T> T getObject(String columnLabel, Class<T> type) throws SQLException {
-        return delegate.getObject(columnLabel, type);
-    }
-
 }

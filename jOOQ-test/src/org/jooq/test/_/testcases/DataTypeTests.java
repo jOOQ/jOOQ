@@ -60,6 +60,7 @@ import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.castNull;
+import static org.jooq.impl.DSL.currentDate;
 import static org.jooq.impl.DSL.dateAdd;
 import static org.jooq.impl.DSL.dateDiff;
 import static org.jooq.impl.DSL.field;
@@ -1587,6 +1588,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(-3600000);
         return cal;
+    }
+
+    @Test
+    public void testCurrentDate() throws Exception {
+        Field<Timestamp> ts = currentDate().cast(Timestamp.class).as("ts");
+        Field<Date> d = currentDate().as("d");
+
+        Record2<Date, Timestamp> record =
+        create().select(d, ts)
+                .fetchOne();
+
+        assertEquals(record.value1().getTime(), record.value2().getTime());
     }
 
     @Test

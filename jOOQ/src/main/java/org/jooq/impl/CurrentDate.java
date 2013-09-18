@@ -67,7 +67,7 @@ class CurrentDate extends AbstractFunction<Date> {
         switch (configuration.dialect().family()) {
             /* [pro] */
             case ORACLE:
-                return field("sysdate", SQLDataType.DATE);
+                return field("{trunc}({sysdate})", SQLDataType.DATE);
 
             case DB2:
             case INGRES:

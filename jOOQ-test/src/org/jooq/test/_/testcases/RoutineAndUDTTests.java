@@ -406,6 +406,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         jOOQAbstractTest.reset = false;
 
+        /* [pro] */
         if (TArrays_STRING_R() != null) {
             Result<?> arrays = create().select(
                 TArrays_STRING_R(),
@@ -479,6 +480,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(Arrays.asList(3, 2, 1), Arrays.asList(array.getValue(TArrays_NUMBER_R()).get()));
             assertEquals("[1970-01-03, 1970-01-02, 1970-01-01]", Arrays.asList(array.getValue(TArrays_DATE_R()).get()).toString());
         }
+        /* [/pro] */
 
         if (TArrays_STRING() != null) {
             Result<?> arrays = create().select(
@@ -674,6 +676,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         jOOQAbstractTest.reset = false;
 
+        /* [pro] */
         if (TArrays_STRING_R() != null) {
             ArrayRecord<Integer> i;
             ArrayRecord<Long> l;
@@ -763,6 +766,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 Arrays.asList("1", "2"),
                 Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays3", create().configuration(), s)).get()));
         }
+        /* [/pro] */
 
         if (TArrays_STRING() != null) {
             if (supportsOUTParameters()) {
@@ -843,6 +847,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
+    /* [pro] */
     private ArrayRecord<Integer> newNUMBER_R() throws Exception {
         ArrayRecord<Integer> result = TArrays_NUMBER_R().getType().getConstructor(Configuration.class).newInstance(create().configuration());
         return result;
@@ -858,6 +863,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         return result;
     }
 
+    /* [/pro] */
     @Test
     public void testUDTs() throws Exception {
         if (TAuthor_ADDRESS() == null) {
@@ -881,9 +887,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(null, on(a1).call("getCode").get());
         assertTrue(Arrays.equals(new byte[] { 0x71, 0x71 }, on(a1).call("getF_1323").<byte[]>get()));
 
+        /* [pro] */
         if (TArrays_NUMBER_R() != null) {
             assertEquals(Arrays.asList(1, 2, 3), invoke(invoke(street1, "getFloors"), "getList"));
         }
+        /* [/pro] */
         if (TArrays_NUMBER() != null) {
             assertEquals(Arrays.asList(1, 2, 3), Arrays.asList((Object[]) invoke(street1, "getFloors")));
         }
@@ -898,9 +906,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(2, on(a2).call("getCode").get());
         assertEquals(null, on(a2).call("getF_1323").<byte[]>get());
 
+        /* [pro] */
         if (TArrays_NUMBER_R() != null) {
             assertEquals(null, invoke(street2, "getFloors"));
         }
+        /* [/pro] */
         if (TArrays_NUMBER() != null) {
             assertEquals(null, invoke(street2, "getFloors"));
         }
@@ -940,9 +950,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Parliament Hill", invoke(street, "getStreet"));
         assertEquals("77", invoke(street, "getNo"));
 
+        /* [pro] */
         if (TArrays_NUMBER_R() != null) {
             assertEquals(Arrays.asList(1, 2, 3), invoke(invoke(street, "getFloors"), "getList"));
         }
+        /* [/pro] */
         if (TArrays_NUMBER() != null) {
             assertEquals(Arrays.asList(1, 2, 3), Arrays.asList((Object[]) invoke(street, "getFloors")));
         }
@@ -956,6 +968,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testArrayTables() throws Exception {
+        /* [pro] */
         if (TArrays_NUMBER_R() != null) {
             Result<?> result;
 
@@ -1067,7 +1080,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(null, result.getValue(2, 0));
             assertEquals("2", "" + result.getValue(3, 0));
         }
-        else if (TArrays_NUMBER() != null) {
+        else
+        /* [/pro] */
+        if (TArrays_NUMBER() != null) {
             Result<?> result;
             Table<?> table;
             Integer[] array;
@@ -1252,12 +1267,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
                 // Get a filled cursor
                 // -------------------
+                /* [pro] */
                 if (TArrays_STRING_R() != null) {
                     ArrayRecord<Integer> i = newNUMBER_R();
                     i.set(1, 2, 4, 6);
                     integerArray = i;
                 }
-                else if (TArrays_STRING() != null) {
+                else
+                /* [/pro] */
+                if (TArrays_STRING() != null) {
                     integerArray = new Integer[] { 1, 2, 4, 6 };
                 }
 
@@ -1349,12 +1367,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
                 // Get a filled cursor
                 // -------------------
+                /* [pro] */
                 if (TArrays_STRING_R() != null) {
                     ArrayRecord<Integer> i = newNUMBER_R();
                     i.set(1, 2, 4, 6);
                     integerArray = i;
                 }
-                else if (TArrays_STRING() != null) {
+                else
+                /* [/pro] */
+                if (TArrays_STRING() != null) {
                     integerArray = new Integer[] { 1, 2, 4, 6 };
                 }
 

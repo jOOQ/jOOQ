@@ -987,6 +987,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateArray(SchemaDefinition schema, ArrayDefinition array) {
         log.info("Generating ARRAY", getStrategy().getFileName(array, Mode.RECORD));
 
+        /* [pro] */
         final String className = getStrategy().getJavaClassName(array, Mode.RECORD);
         final String elementType = getJavaType(array.getElementType());
         final String elementTypeRef = getJavaTypeReference(database, array.getElementType());
@@ -1021,6 +1022,7 @@ public class JavaGenerator extends AbstractGenerator {
         generateArrayClassFooter(array, out);
         out.println("}");
         out.close();
+        /* [/pro] */
     }
 
     /**

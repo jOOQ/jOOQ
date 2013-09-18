@@ -524,6 +524,7 @@ public class H2Test extends jOOQAbstractTest<
         return null;
     }
 
+    /* [pro] */
     @Override
     protected TableField<TArraysRecord, ArrayRecord<String>> TArrays_STRING_R() {
         return null;
@@ -544,6 +545,7 @@ public class H2Test extends jOOQAbstractTest<
         return null;
     }
 
+    /* [/pro] */
     @Override
     protected TableField<TBookRecord, Integer> TBook_LANGUAGE_ID() {
         return TBook.LANGUAGE_ID;
@@ -735,6 +737,7 @@ public class H2Test extends jOOQAbstractTest<
         return (Field) Routines.fArrays3((Field)array);
     }
 
+    /* [pro] */
     @Override
     protected <T extends ArrayRecord<Integer>> Field<T> FArrays1Field_R(Field<T> array) {
         return null;
@@ -750,6 +753,7 @@ public class H2Test extends jOOQAbstractTest<
         return null;
     }
 
+    /* [/pro] */
     @Override
     protected Class<? extends UDTRecord<?>> cUAddressType() {
         return null;

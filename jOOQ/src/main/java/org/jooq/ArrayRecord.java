@@ -40,6 +40,8 @@
  */
 package org.jooq;
 
+/* [pro] */
+
 import java.sql.Array;
 import java.sql.SQLException;
 import java.util.List;
@@ -93,3 +95,4 @@ public interface ArrayRecord<E> extends Attachable, Iterable<E> {
      */
     DataType<E> getDataType();
 }
+/* [/pro] */

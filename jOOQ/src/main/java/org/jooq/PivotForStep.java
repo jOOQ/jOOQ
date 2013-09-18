@@ -57,6 +57,7 @@ import org.jooq.api.annotation.Transition;
 )
 public interface PivotForStep {
 
+    /* [pro] */
     /**
      * Add a list of fields to the <code>PIVOT</code> clause. Normally, the
      * keyword used here would be <code>FOR</code>, but <code>for</code> is a
@@ -72,4 +73,5 @@ public interface PivotForStep {
         args = "Field"
     )
     <T> PivotInStep<T> on(Field<T> field);
+    /* [/pro] */
 }

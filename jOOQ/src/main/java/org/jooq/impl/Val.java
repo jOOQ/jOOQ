@@ -505,9 +505,11 @@ class Val<T> extends AbstractParam<T> {
                     context.sql("]");
                 }
             }
+            /* [pro] */
             else if (ArrayRecord.class.isAssignableFrom(type)) {
                 context.sql(val.toString(), true);
             }
+            /* [/pro] */
             else if (EnumType.class.isAssignableFrom(type)) {
                 toSQL(context, ((EnumType) val).getLiteral());
             }

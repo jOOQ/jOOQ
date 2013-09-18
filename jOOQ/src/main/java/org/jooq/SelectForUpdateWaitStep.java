@@ -91,6 +91,7 @@ import org.jooq.api.annotation.Transition;
 @State
 public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionStep<R> {
 
+    /* [pro] */
     /**
      * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
      * the end of the query.
@@ -105,6 +106,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
         args = "Integer"
     )
     SelectOptionStep<R> wait(int seconds);
+    /* [/pro] */
 
     /**
      * Add a <code>NOWAIT</code> clause to the <code>FOR UPDATE</code> clause at
@@ -118,6 +120,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
     )
     SelectOptionStep<R> noWait();
 
+    /* [pro] */
     /**
      * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
      * the end of the query.
@@ -130,4 +133,5 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
         name = "SKIP LOCKED"
     )
     SelectOptionStep<R> skipLocked();
+    /* [/pro] */
 }

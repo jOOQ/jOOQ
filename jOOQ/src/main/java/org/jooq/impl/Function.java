@@ -497,6 +497,7 @@ class Function<T> extends AbstractField<T> implements
         return arguments;
     }
 
+    /* [pro] */
     @Override
     public final AggregateFunction<T> withinGroupOrderBy(Field<?>... fields) {
         withinGroupOrderBy.addAll(fields);
@@ -551,12 +552,14 @@ class Function<T> extends AbstractField<T> implements
         return this;
     }
 
+    /* [/pro] */
     @Override
     public final WindowPartitionByStep<T> over() {
         over = true;
         return this;
     }
 
+    /* [pro] */
     @Override
     public final WindowOverStep<T> ignoreNulls() {
         ignoreNulls = true;
@@ -571,6 +574,7 @@ class Function<T> extends AbstractField<T> implements
         return this;
     }
 
+    /* [/pro] */
     @Override
     public final WindowOrderByStep<T> partitionBy(Field<?>... fields) {
         partitionBy.addAll(Arrays.asList(fields));

@@ -620,24 +620,28 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
         return this;
     }
 
+    /* [pro] */
     @Override
     public final SelectImpl<R> wait(int seconds) {
         getQuery().setForUpdateWait(seconds);
         return this;
     }
 
+    /* [/pro] */
     @Override
     public final SelectImpl<R> noWait() {
         getQuery().setForUpdateNoWait();
         return this;
     }
 
+    /* [pro] */
     @Override
     public final SelectImpl<R> skipLocked() {
         getQuery().setForUpdateSkipLocked();
         return this;
     }
 
+    /* [/pro] */
     @Override
     public final SelectImpl<R> forShare() {
         getQuery().setForShare(true);
@@ -962,6 +966,7 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
         return naturalRightOuterJoin(table(sql, parts));
     }
 
+    /* [pro] */
     @Override
     public final SelectImpl<R> partitionBy(Field<?>... fields) {
         joinPartitionBy = fields;
@@ -973,6 +978,7 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
         return partitionBy(fields.toArray(new Field[fields.size()]));
     }
 
+    /* [/pro] */
     @Override
     public final ResultQuery<R> maxRows(int rows) {
         return getDelegate().maxRows(rows);

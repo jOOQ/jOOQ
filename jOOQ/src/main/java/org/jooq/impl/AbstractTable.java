@@ -303,6 +303,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         return tableField;
     }
 
+    /* [pro] */
     // ------------------------------------------------------------------------
     // XXX: Other API
     // ------------------------------------------------------------------------
@@ -380,6 +381,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         return new FlashbackTable<R, Timestamp>(this, timestamp, null, FlashbackType.TIMESTAMP);
     }
 
+    /* [/pro] */
     // ------------------------------------------------------------------------
     // XXX: DIVISION API
     // ------------------------------------------------------------------------

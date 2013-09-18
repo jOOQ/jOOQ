@@ -738,10 +738,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(Integer.valueOf(3), result.getValue(3, column));
         }
 
+        /* [pro] */
         switch (dialect().family()) {
-            /* [pro] */
             case SQLSERVER:
-            /* [/pro] */
             case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "FIRST_VALUE(... IGNORE NULLS) window function test");
@@ -772,6 +771,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 break;
             }
         }
+        /* [/pro] */
 
         switch (dialect()) {
             /* [pro] */

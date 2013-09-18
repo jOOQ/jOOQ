@@ -90,6 +90,7 @@ class ArrayTable extends AbstractTable<Record> {
             arrayType = array.getDataType().getType().getComponentType();
         }
 
+        /* [pro] */
         // [#1110] Keep track of element type information of Oracle VARRAY / TABLE types
         else if (array instanceof ArrayConstant) {
             arrayType = array.getDataType().getType();
@@ -103,6 +104,7 @@ class ArrayTable extends AbstractTable<Record> {
             arrayType = dummy.getDataType().getType();
         }
 
+        /* [/pro] */
         // Is this case possible?
         else {
             arrayType = Object.class;

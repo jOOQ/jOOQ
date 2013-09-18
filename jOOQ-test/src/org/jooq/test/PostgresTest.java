@@ -499,6 +499,7 @@ public class PostgresTest extends jOOQAbstractTest<
         return T_ARRAYS.UDT_ARRAY;
     }
 
+    /* [pro] */
     @Override
     protected TableField<TArraysRecord, ArrayRecord<String>> TArrays_STRING_R() {
         return null;
@@ -519,6 +520,7 @@ public class PostgresTest extends jOOQAbstractTest<
         return null;
     }
 
+    /* [/pro] */
     @Override
     protected TableField<TBookRecord, Integer> TBook_LANGUAGE_ID() {
         return T_BOOK.LANGUAGE_ID;
@@ -707,6 +709,7 @@ public class PostgresTest extends jOOQAbstractTest<
         return Routines.fArrays3(array);
     }
 
+    /* [pro] */
     @Override
     protected <T extends ArrayRecord<Integer>> Field<T> FArrays1Field_R(Field<T> array) {
         return null;
@@ -722,6 +725,7 @@ public class PostgresTest extends jOOQAbstractTest<
         return null;
     }
 
+    /* [/pro] */
     @Override
     protected Class<? extends UDTRecord<?>> cUAddressType() {
         return UAddressType.U_ADDRESS_TYPE.getRecordType();

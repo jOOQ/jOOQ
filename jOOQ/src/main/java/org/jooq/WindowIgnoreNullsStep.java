@@ -66,6 +66,7 @@ import org.jooq.api.annotation.Transition;
 @State
 public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
 
+    /* [pro] */
     /**
      * Add an <code>IGNORE NULLS</code> clause to the window function. This
      * might not be supported by all dialects.
@@ -85,4 +86,5 @@ public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
         name = "RESPECT NULLS"
     )
     WindowOverStep<T> respectNulls();
+    /* [/pro] */
 }

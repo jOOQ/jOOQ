@@ -40,6 +40,8 @@
  */
 package org.jooq;
 
+/* [pro] */
+
 import static org.jooq.SQLDialect.ORACLE;
 
 import org.jooq.api.annotation.State;
@@ -86,3 +88,4 @@ public interface VersionsBetweenAndStep<R extends Record, T> {
     )
     Table<R> andMaxvalue();
 }
+/* [/pro] */

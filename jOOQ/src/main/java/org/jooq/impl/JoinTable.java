@@ -388,6 +388,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     // Join API
     // ------------------------------------------------------------------------
 
+    /* [pro] */
     @Override
     public final TableOnStep partitionBy(Field<?>... fields) {
         return partitionBy(Utils.list(fields));
@@ -399,6 +400,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         return this;
     }
 
+    /* [/pro] */
     @Override
     public final JoinTable on(Condition... conditions) {
         condition.addConditions(conditions);

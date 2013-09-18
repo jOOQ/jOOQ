@@ -473,6 +473,7 @@ public class SQLiteTest extends jOOQAbstractTest<
         return null;
     }
 
+    /* [pro] */
     @Override
     protected TableField<XUnusedRecord, ArrayRecord<String>> TArrays_STRING_R() {
         return null;
@@ -493,6 +494,7 @@ public class SQLiteTest extends jOOQAbstractTest<
         return null;
     }
 
+    /* [/pro] */
     @Override
     protected TableField<TBookRecord, Integer> TBook_LANGUAGE_ID() {
         return TBook.LANGUAGE_ID;
@@ -693,6 +695,7 @@ public class SQLiteTest extends jOOQAbstractTest<
         return null;
     }
 
+    /* [pro] */
     @Override
     protected <T extends ArrayRecord<Integer>> Field<T> FArrays1Field_R(Field<T> array) {
         return null;
@@ -708,6 +711,7 @@ public class SQLiteTest extends jOOQAbstractTest<
         return null;
     }
 
+    /* [/pro] */
     @Override
     protected Class<? extends UDTRecord<?>> cUAddressType() {
         return null;

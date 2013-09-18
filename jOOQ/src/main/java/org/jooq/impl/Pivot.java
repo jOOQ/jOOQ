@@ -345,6 +345,7 @@ implements
     // XXX: Pivot API
     // ------------------------------------------------------------------------
 
+    /* [pro] */
     @SuppressWarnings("unchecked")
     @Override
     public final <Z> Pivot<Z> on(Field<Z> field) {
@@ -368,4 +369,5 @@ implements
     public final Table<Record> in(Collection<? extends Field<T>> f) {
         return in(f.toArray(new Field[0]));
     }
+    /* [/pro] */
 }

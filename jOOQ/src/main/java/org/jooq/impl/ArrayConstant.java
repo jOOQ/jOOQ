@@ -40,6 +40,8 @@
  */
 package org.jooq.impl;
 
+/* [pro] */
+
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.val;
 
@@ -89,3 +91,4 @@ class ArrayConstant<R extends ArrayRecord<?>> extends AbstractParam<R> {
         context.bindValues(array);
     }
 }
+/* [/pro] */

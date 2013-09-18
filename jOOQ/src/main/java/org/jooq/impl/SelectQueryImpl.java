@@ -371,6 +371,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         context.visit(getLimit());
     }
 
+    /* [com] */
     /**
      * Simulate the LIMIT / OFFSET clause in the {@link SQLDialect#DB2},
      * {@link SQLDialect#SQLSERVER2008} and {@link SQLDialect#SYBASE} dialects
@@ -453,6 +454,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                .sql(" > ")
                .visit(getLimit().getLowerRownum());
     }
+    /* [/com] */
 
     /**
      * This method renders the main part of a query without the LIMIT clause.

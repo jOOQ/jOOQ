@@ -188,8 +188,8 @@ For more information, please visit: http://www.jooq.org/licenses''');
  */'''));
         
         // Remove sections of commercial code
-        translateAll.add(compile('''(?s:(/\* \[com\])( \*.*?/\* )(\[/com\] \*/))'''));
-        translateAll.add(compile('''(?s:(<!-- \[com\])( -->.*?<!-- )(\[/com\] -->))'''));
+        translateAll.add(compile('''(?s:(/\* \[pro\])( \*.*?/\* )(\[/pro\] \*/))'''));
+        translateAll.add(compile('''(?s:(<!-- \[pro\])( -->.*?<!-- )(\[/pro\] -->))'''));
         
         for (d : SQLDialect::values.filter[d | d.commercial]) {
             

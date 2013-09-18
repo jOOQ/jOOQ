@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_EXOTIC_TYPES extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 951214691;
+	private static final long serialVersionUID = 1224026690;
 
 	/**
 	 * The singleton instance of <code>T_EXOTIC_TYPES</code>
@@ -27,7 +27,7 @@ public class T_EXOTIC_TYPES extends org.jooq.impl.TableImpl<org.jooq.test.oracle
 	/**
 	 * The column <code>T_EXOTIC_TYPES.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>T_EXOTIC_TYPES.UU</code>. 

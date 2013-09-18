@@ -13,10 +13,20 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "M_LIBRARY", schema = "TEST")
 public class MLibrary implements java.io.Serializable {
 
-	private static final long serialVersionUID = 456514634;
+	private static final long serialVersionUID = 509764965;
 
 	private java.lang.String author;
 	private java.lang.String title;
+
+	public MLibrary() {}
+
+	public MLibrary(
+		java.lang.String author,
+		java.lang.String title
+	) {
+		this.author = author;
+		this.title = title;
+	}
 
 	@javax.persistence.Column(name = "AUTHOR", length = 101)
 	@javax.validation.constraints.Size(max = 101)

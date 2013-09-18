@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_ARRAYS")
 public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_ARRAYS> implements java.lang.Cloneable, org.jooq.Record5<java.lang.Integer, org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY, org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_ARRAYS_INTERFACE {
 
-	private static final long serialVersionUID = 784505160;
+	private static final long serialVersionUID = -230389627;
 
 	/**
 	 * Setter for <code>T_ARRAYS.ID</code>. 
@@ -245,5 +245,18 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 */
 	public T_ARRAYS() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS.T_ARRAYS);
+	}
+
+	/**
+	 * Create a detached, initialised T_ARRAYS
+	 */
+	public T_ARRAYS(java.lang.Integer ID, org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY STRING_ARRAY, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY NUMBER_ARRAY, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY NUMBER_LONG_ARRAY, org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY DATE_ARRAY) {
+		super(org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS.T_ARRAYS);
+
+		setValue(0, ID);
+		setValue(1, STRING_ARRAY);
+		setValue(2, NUMBER_ARRAY);
+		setValue(3, NUMBER_LONG_ARRAY);
+		setValue(4, DATE_ARRAY);
 	}
 }

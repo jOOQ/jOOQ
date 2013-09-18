@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_639_NUMBERS_TABLE", schema = "TEST")
 public class T_639NumbersTable implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1813697257;
+	private static final long serialVersionUID = -154395933;
 
 	private java.lang.Integer    id;
 	private java.lang.Byte       byte_;
@@ -24,6 +24,34 @@ public class T_639NumbersTable implements java.io.Serializable {
 	private java.lang.Long       longDecimal;
 	private java.math.BigInteger bigInteger;
 	private java.math.BigDecimal bigDecimal;
+
+	public T_639NumbersTable() {}
+
+	public T_639NumbersTable(
+		java.lang.Integer    id,
+		java.lang.Byte       byte_,
+		java.lang.Short      short_,
+		java.lang.Integer    integer,
+		java.lang.Long       long_,
+		java.lang.Byte       byteDecimal,
+		java.lang.Short      shortDecimal,
+		java.lang.Integer    integerDecimal,
+		java.lang.Long       longDecimal,
+		java.math.BigInteger bigInteger,
+		java.math.BigDecimal bigDecimal
+	) {
+		this.id = id;
+		this.byte_ = byte_;
+		this.short_ = short_;
+		this.integer = integer;
+		this.long_ = long_;
+		this.byteDecimal = byteDecimal;
+		this.shortDecimal = shortDecimal;
+		this.integerDecimal = integerDecimal;
+		this.longDecimal = longDecimal;
+		this.bigInteger = bigInteger;
+		this.bigDecimal = bigDecimal;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)

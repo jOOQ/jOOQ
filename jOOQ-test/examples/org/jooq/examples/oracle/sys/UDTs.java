@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys;
  *
  * Convenience access to all UDTs in SYS
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UDTs {
 
 	/**

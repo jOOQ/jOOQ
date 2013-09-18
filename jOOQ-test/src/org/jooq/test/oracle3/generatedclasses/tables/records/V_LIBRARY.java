@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_LIBRARY")
 public class V_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_LIBRARY> implements java.io.Serializable, java.lang.Cloneable, org.jooq.Record2<java.lang.String, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_LIBRARY_INTERFACE {
 
-	private static final long serialVersionUID = -700873210;
+	private static final long serialVersionUID = -976453305;
 
 	/**
 	 * Setter for <code>V_LIBRARY.AUTHOR</code>. 
@@ -130,5 +130,15 @@ public class V_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	 */
 	public V_LIBRARY() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.V_LIBRARY.V_LIBRARY);
+	}
+
+	/**
+	 * Create a detached, initialised V_LIBRARY
+	 */
+	public V_LIBRARY(java.lang.String AUTHOR, java.lang.String TITLE) {
+		super(org.jooq.test.oracle3.generatedclasses.tables.V_LIBRARY.V_LIBRARY);
+
+		setValue(0, AUTHOR);
+		setValue(1, TITLE);
 	}
 }

@@ -13,7 +13,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_BOOK")
 public class T_BOOK_POJO extends java.lang.Object implements java.io.Serializable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = -1911872271;
+	private static final long serialVersionUID = -65609516;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer AUTHOR_ID;
@@ -24,6 +24,30 @@ public class T_BOOK_POJO extends java.lang.Object implements java.io.Serializabl
 	private java.lang.Integer LANGUAGE_ID;
 	private java.lang.String  CONTENT_TEXT;
 	private byte[]            CONTENT_PDF;
+
+	public T_BOOK_POJO() {}
+
+	public T_BOOK_POJO(
+		java.lang.Integer ID,
+		java.lang.Integer AUTHOR_ID,
+		java.lang.Integer CO_AUTHOR_ID,
+		java.lang.Integer DETAILS_ID,
+		java.lang.String  TITLE,
+		java.lang.Integer PUBLISHED_IN,
+		java.lang.Integer LANGUAGE_ID,
+		java.lang.String  CONTENT_TEXT,
+		byte[]            CONTENT_PDF
+	) {
+		this.ID = ID;
+		this.AUTHOR_ID = AUTHOR_ID;
+		this.CO_AUTHOR_ID = CO_AUTHOR_ID;
+		this.DETAILS_ID = DETAILS_ID;
+		this.TITLE = TITLE;
+		this.PUBLISHED_IN = PUBLISHED_IN;
+		this.LANGUAGE_ID = LANGUAGE_ID;
+		this.CONTENT_TEXT = CONTENT_TEXT;
+		this.CONTENT_PDF = CONTENT_PDF;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)

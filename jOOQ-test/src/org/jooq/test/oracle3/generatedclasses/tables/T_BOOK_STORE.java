@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_BOOK_STORE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 568384895;
+	private static final long serialVersionUID = -1337457314;
 
 	/**
 	 * The singleton instance of <code>T_BOOK_STORE</code>
@@ -29,7 +29,7 @@ public class T_BOOK_STORE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.
 	/**
 	 * The column <code>T_BOOK_STORE.NAME</code>. The books store name
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
 
 	/**
 	 * Create a <code>T_BOOK_STORE</code> table reference

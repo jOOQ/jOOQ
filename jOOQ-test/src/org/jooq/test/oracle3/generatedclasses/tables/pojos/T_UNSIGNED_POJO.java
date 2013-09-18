@@ -11,12 +11,26 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_UNSIGNED")
 public class T_UNSIGNED_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_UNSIGNED_INTERFACE {
 
-	private static final long serialVersionUID = -565187797;
+	private static final long serialVersionUID = -1552148118;
 
 	private java.lang.Short      U_BYTE;
 	private java.lang.Integer    U_SHORT;
 	private java.lang.Long       U_INT;
 	private java.math.BigInteger U_LONG;
+
+	public T_UNSIGNED_POJO() {}
+
+	public T_UNSIGNED_POJO(
+		java.lang.Short      U_BYTE,
+		java.lang.Integer    U_SHORT,
+		java.lang.Long       U_INT,
+		java.math.BigInteger U_LONG
+	) {
+		this.U_BYTE = U_BYTE;
+		this.U_SHORT = U_SHORT;
+		this.U_INT = U_INT;
+		this.U_LONG = U_LONG;
+	}
 
 	@javax.persistence.Column(name = "U_BYTE", precision = 3)
 	@Override

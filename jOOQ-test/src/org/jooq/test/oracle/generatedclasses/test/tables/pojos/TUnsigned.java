@@ -11,12 +11,26 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_UNSIGNED", schema = "TEST")
 public class TUnsigned implements java.io.Serializable {
 
-	private static final long serialVersionUID = 708508878;
+	private static final long serialVersionUID = 751163095;
 
 	private org.jooq.types.UByte    uByte;
 	private org.jooq.types.UShort   uShort;
 	private org.jooq.types.UInteger uInt;
 	private org.jooq.types.ULong    uLong;
+
+	public TUnsigned() {}
+
+	public TUnsigned(
+		org.jooq.types.UByte    uByte,
+		org.jooq.types.UShort   uShort,
+		org.jooq.types.UInteger uInt,
+		org.jooq.types.ULong    uLong
+	) {
+		this.uByte = uByte;
+		this.uShort = uShort;
+		this.uInt = uInt;
+		this.uLong = uLong;
+	}
 
 	@javax.persistence.Column(name = "U_BYTE", precision = 3)
 	public org.jooq.types.UByte getUByte() {

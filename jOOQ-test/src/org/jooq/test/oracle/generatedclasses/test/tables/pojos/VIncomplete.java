@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "V_INCOMPLETE", schema = "TEST")
 public class VIncomplete implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1088758383;
+	private static final long serialVersionUID = -1787683761;
 
 	private java.lang.Object id;
 	private java.lang.Object authorId;
@@ -22,6 +22,30 @@ public class VIncomplete implements java.io.Serializable {
 	private java.lang.Object languageId;
 	private java.lang.Object contentText;
 	private java.lang.Object contentPdf;
+
+	public VIncomplete() {}
+
+	public VIncomplete(
+		java.lang.Object id,
+		java.lang.Object authorId,
+		java.lang.Object coAuthorId,
+		java.lang.Object detailsId,
+		java.lang.Object title,
+		java.lang.Object publishedIn,
+		java.lang.Object languageId,
+		java.lang.Object contentText,
+		java.lang.Object contentPdf
+	) {
+		this.id = id;
+		this.authorId = authorId;
+		this.coAuthorId = coAuthorId;
+		this.detailsId = detailsId;
+		this.title = title;
+		this.publishedIn = publishedIn;
+		this.languageId = languageId;
+		this.contentText = contentText;
+		this.contentPdf = contentPdf;
+	}
 
 	@javax.persistence.Column(name = "ID")
 	public java.lang.Object getId() {

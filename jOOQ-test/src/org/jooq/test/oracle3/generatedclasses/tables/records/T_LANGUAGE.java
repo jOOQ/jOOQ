@@ -13,7 +13,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_LANGUAGE")
 public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> implements java.lang.Cloneable, org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE {
 
-	private static final long serialVersionUID = -526157220;
+	private static final long serialVersionUID = 2111173071;
 
 	/**
 	 * Setter for <code>T_LANGUAGE.CD</code>. The language ISO code
@@ -213,5 +213,17 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 */
 	public T_LANGUAGE() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE);
+	}
+
+	/**
+	 * Create a detached, initialised T_LANGUAGE
+	 */
+	public T_LANGUAGE(java.lang.String CD, java.lang.String DESCRIPTION, java.lang.String DESCRIPTION_ENGLISH, java.lang.Integer ID) {
+		super(org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE);
+
+		setValue(0, CD);
+		setValue(1, DESCRIPTION);
+		setValue(2, DESCRIPTION_ENGLISH);
+		setValue(3, ID);
 	}
 }

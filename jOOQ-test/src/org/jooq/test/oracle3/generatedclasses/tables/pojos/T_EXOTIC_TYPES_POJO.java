@@ -11,10 +11,20 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_EXOTIC_TYPES")
 public class T_EXOTIC_TYPES_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_EXOTIC_TYPES_INTERFACE {
 
-	private static final long serialVersionUID = -2079720234;
+	private static final long serialVersionUID = -831376790;
 
 	private java.lang.Integer ID;
 	private java.lang.String  UU;
+
+	public T_EXOTIC_TYPES_POJO() {}
+
+	public T_EXOTIC_TYPES_POJO(
+		java.lang.Integer ID,
+		java.lang.String  UU
+	) {
+		this.ID = ID;
+		this.UU = UU;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)

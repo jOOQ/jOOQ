@@ -11,11 +11,23 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_785")
 public class T_785_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_785_INTERFACE {
 
-	private static final long serialVersionUID = -1413340905;
+	private static final long serialVersionUID = 1814280144;
 
 	private java.lang.Integer ID;
 	private java.lang.String  NAME;
 	private java.lang.String  VALUE;
+
+	public T_785_POJO() {}
+
+	public T_785_POJO(
+		java.lang.Integer ID,
+		java.lang.String  NAME,
+		java.lang.String  VALUE
+	) {
+		this.ID = ID;
+		this.NAME = NAME;
+		this.VALUE = VALUE;
+	}
 
 	@javax.persistence.Column(name = "ID", precision = 7)
 	@Override

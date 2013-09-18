@@ -11,13 +11,29 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_ARRAYS", schema = "TEST")
 public class TArrays implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1216438567;
+	private static final long serialVersionUID = 1537205820;
 
 	private java.lang.Integer                                                             id;
 	private org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord     stringArray;
 	private org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord     numberArray;
 	private org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord numberLongArray;
 	private org.jooq.test.oracle.generatedclasses.test.udt.records.UDateArrayRecord       dateArray;
+
+	public TArrays() {}
+
+	public TArrays(
+		java.lang.Integer                                                             id,
+		org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord     stringArray,
+		org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord     numberArray,
+		org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord numberLongArray,
+		org.jooq.test.oracle.generatedclasses.test.udt.records.UDateArrayRecord       dateArray
+	) {
+		this.id = id;
+		this.stringArray = stringArray;
+		this.numberArray = numberArray;
+		this.numberLongArray = numberLongArray;
+		this.dateArray = dateArray;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)

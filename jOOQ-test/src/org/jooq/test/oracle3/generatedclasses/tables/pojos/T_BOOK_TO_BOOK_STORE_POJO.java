@@ -15,11 +15,23 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 })
 public class T_BOOK_TO_BOOK_STORE_POJO extends java.lang.Object implements java.io.Serializable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_STORE_INTERFACE {
 
-	private static final long serialVersionUID = 369513695;
+	private static final long serialVersionUID = -1077157260;
 
 	private java.lang.String  BOOK_STORE_NAME;
 	private java.lang.Integer BOOK_ID;
 	private java.lang.Integer STOCK;
+
+	public T_BOOK_TO_BOOK_STORE_POJO() {}
+
+	public T_BOOK_TO_BOOK_STORE_POJO(
+		java.lang.String  BOOK_STORE_NAME,
+		java.lang.Integer BOOK_ID,
+		java.lang.Integer STOCK
+	) {
+		this.BOOK_STORE_NAME = BOOK_STORE_NAME;
+		this.BOOK_ID = BOOK_ID;
+		this.STOCK = STOCK;
+	}
 
 	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
 	@Override

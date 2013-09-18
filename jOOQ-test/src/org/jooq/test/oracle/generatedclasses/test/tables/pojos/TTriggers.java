@@ -11,11 +11,23 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_TRIGGERS", schema = "TEST")
 public class TTriggers implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1931569759;
+	private static final long serialVersionUID = -17200148;
 
 	private java.lang.Integer idGenerated;
 	private java.lang.Integer id;
 	private java.lang.Integer counter;
+
+	public TTriggers() {}
+
+	public TTriggers(
+		java.lang.Integer idGenerated,
+		java.lang.Integer id,
+		java.lang.Integer counter
+	) {
+		this.idGenerated = idGenerated;
+		this.id = id;
+		this.counter = counter;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID_GENERATED", unique = true, nullable = false, precision = 7)

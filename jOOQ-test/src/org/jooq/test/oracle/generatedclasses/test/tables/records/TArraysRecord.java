@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_ARRAYS", schema = "TEST")
 public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord> implements org.jooq.Record5<java.lang.Integer, org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord, org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord, org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord, org.jooq.test.oracle.generatedclasses.test.udt.records.UDateArrayRecord> {
 
-	private static final long serialVersionUID = 1168417101;
+	private static final long serialVersionUID = -1941444477;
 
 	/**
 	 * Setter for <code>TEST.T_ARRAYS.ID</code>. 
@@ -211,5 +211,18 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	public TArraysRecord() {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TArrays.T_ARRAYS);
+	}
+
+	/**
+	 * Create a detached, initialised TArraysRecord
+	 */
+	public TArraysRecord(java.lang.Integer id, org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord stringArray, org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord numberArray, org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord numberLongArray, org.jooq.test.oracle.generatedclasses.test.udt.records.UDateArrayRecord dateArray) {
+		super(org.jooq.test.oracle.generatedclasses.test.tables.TArrays.T_ARRAYS);
+
+		setValue(0, id);
+		setValue(1, stringArray);
+		setValue(2, numberArray);
+		setValue(3, numberLongArray);
+		setValue(4, dateArray);
 	}
 }

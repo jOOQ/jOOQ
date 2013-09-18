@@ -15,11 +15,23 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 })
 public class TBookToBookStore implements java.io.Serializable {
 
-	private static final long serialVersionUID = 2112278255;
+	private static final long serialVersionUID = -1348170393;
 
 	private java.lang.String  bookStoreName;
 	private java.lang.Integer bookId;
 	private java.lang.Integer stock;
+
+	public TBookToBookStore() {}
+
+	public TBookToBookStore(
+		java.lang.String  bookStoreName,
+		java.lang.Integer bookId,
+		java.lang.Integer stock
+	) {
+		this.bookStoreName = bookStoreName;
+		this.bookId = bookId;
+		this.stock = stock;
+	}
 
 	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
 	@javax.validation.constraints.NotNull

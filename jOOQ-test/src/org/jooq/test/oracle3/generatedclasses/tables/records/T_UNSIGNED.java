@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_UNSIGNED")
 public class T_UNSIGNED extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_UNSIGNED> implements java.lang.Cloneable, org.jooq.Record4<java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_UNSIGNED_INTERFACE {
 
-	private static final long serialVersionUID = -573170471;
+	private static final long serialVersionUID = -1053503735;
 
 	/**
 	 * Setter for <code>T_UNSIGNED.U_BYTE</code>. 
@@ -198,5 +198,17 @@ public class T_UNSIGNED extends org.jooq.impl.TableRecordImpl<org.jooq.test.orac
 	 */
 	public T_UNSIGNED() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_UNSIGNED.T_UNSIGNED);
+	}
+
+	/**
+	 * Create a detached, initialised T_UNSIGNED
+	 */
+	public T_UNSIGNED(java.lang.Short U_BYTE, java.lang.Integer U_SHORT, java.lang.Long U_INT, java.math.BigInteger U_LONG) {
+		super(org.jooq.test.oracle3.generatedclasses.tables.T_UNSIGNED.T_UNSIGNED);
+
+		setValue(0, U_BYTE);
+		setValue(1, U_SHORT);
+		setValue(2, U_INT);
+		setValue(3, U_LONG);
 	}
 }

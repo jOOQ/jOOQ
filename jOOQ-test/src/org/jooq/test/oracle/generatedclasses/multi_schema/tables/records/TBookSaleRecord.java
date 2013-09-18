@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @javax.persistence.Table(name = "T_BOOK_SALE", schema = "MULTI_SCHEMA")
 public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> implements org.jooq.Record5<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Date, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -22352785;
+	private static final long serialVersionUID = -92060978;
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>. 
@@ -216,5 +216,18 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	public TBookSaleRecord() {
 		super(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE);
+	}
+
+	/**
+	 * Create a detached, initialised TBookSaleRecord
+	 */
+	public TBookSaleRecord(java.lang.Integer id, java.lang.Integer bookId, java.lang.String bookStoreName, java.sql.Date soldAt, java.math.BigDecimal soldFor) {
+		super(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE);
+
+		setValue(0, id);
+		setValue(1, bookId);
+		setValue(2, bookStoreName);
+		setValue(3, soldAt);
+		setValue(4, soldFor);
 	}
 }

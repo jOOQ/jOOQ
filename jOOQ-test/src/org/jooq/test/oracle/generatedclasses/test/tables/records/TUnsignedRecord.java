@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_UNSIGNED", schema = "TEST")
 public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TUnsignedRecord> implements org.jooq.Record4<org.jooq.types.UByte, org.jooq.types.UShort, org.jooq.types.UInteger, org.jooq.types.ULong> {
 
-	private static final long serialVersionUID = -821082455;
+	private static final long serialVersionUID = -1066820515;
 
 	/**
 	 * Setter for <code>TEST.T_UNSIGNED.U_BYTE</code>. 
@@ -166,5 +166,17 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 */
 	public TUnsignedRecord() {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TUnsigned.T_UNSIGNED);
+	}
+
+	/**
+	 * Create a detached, initialised TUnsignedRecord
+	 */
+	public TUnsignedRecord(org.jooq.types.UByte uByte, org.jooq.types.UShort uShort, org.jooq.types.UInteger uInt, org.jooq.types.ULong uLong) {
+		super(org.jooq.test.oracle.generatedclasses.test.tables.TUnsigned.T_UNSIGNED);
+
+		setValue(0, uByte);
+		setValue(1, uShort);
+		setValue(2, uInt);
+		setValue(3, uLong);
 	}
 }

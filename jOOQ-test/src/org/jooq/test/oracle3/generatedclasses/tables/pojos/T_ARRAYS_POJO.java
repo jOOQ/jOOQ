@@ -11,13 +11,29 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_ARRAYS")
 public class T_ARRAYS_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_ARRAYS_INTERFACE {
 
-	private static final long serialVersionUID = -299195944;
+	private static final long serialVersionUID = -181342733;
 
 	private java.lang.Integer                                                      ID;
 	private org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY      STRING_ARRAY;
 	private org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY      NUMBER_ARRAY;
 	private org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY NUMBER_LONG_ARRAY;
 	private org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY        DATE_ARRAY;
+
+	public T_ARRAYS_POJO() {}
+
+	public T_ARRAYS_POJO(
+		java.lang.Integer                                                      ID,
+		org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY      STRING_ARRAY,
+		org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY      NUMBER_ARRAY,
+		org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY NUMBER_LONG_ARRAY,
+		org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY        DATE_ARRAY
+	) {
+		this.ID = ID;
+		this.STRING_ARRAY = STRING_ARRAY;
+		this.NUMBER_ARRAY = NUMBER_ARRAY;
+		this.NUMBER_LONG_ARRAY = NUMBER_LONG_ARRAY;
+		this.DATE_ARRAY = DATE_ARRAY;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)

@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_DIRECTORY")
 public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY> implements java.lang.Cloneable, org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DIRECTORY_INTERFACE {
 
-	private static final long serialVersionUID = 571148890;
+	private static final long serialVersionUID = -941210161;
 
 	/**
 	 * Setter for <code>T_DIRECTORY.ID</code>. 
@@ -211,5 +211,17 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	public T_DIRECTORY() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY);
+	}
+
+	/**
+	 * Create a detached, initialised T_DIRECTORY
+	 */
+	public T_DIRECTORY(java.lang.Integer ID, java.lang.Integer PARENT_ID, java.lang.Integer IS_DIRECTORY, java.lang.String name) {
+		super(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY);
+
+		setValue(0, ID);
+		setValue(1, PARENT_ID);
+		setValue(2, IS_DIRECTORY);
+		setValue(3, name);
 	}
 }

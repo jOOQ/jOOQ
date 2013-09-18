@@ -11,13 +11,29 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.pojos;
 @javax.persistence.Table(name = "T_BOOK_SALE", schema = "MULTI_SCHEMA")
 public class TBookSale implements java.io.Serializable {
 
-	private static final long serialVersionUID = 868272131;
+	private static final long serialVersionUID = 1809262381;
 
 	private java.lang.Integer    id;
 	private java.lang.Integer    bookId;
 	private java.lang.String     bookStoreName;
 	private java.sql.Date        soldAt;
 	private java.math.BigDecimal soldFor;
+
+	public TBookSale() {}
+
+	public TBookSale(
+		java.lang.Integer    id,
+		java.lang.Integer    bookId,
+		java.lang.String     bookStoreName,
+		java.sql.Date        soldAt,
+		java.math.BigDecimal soldFor
+	) {
+		this.id = id;
+		this.bookId = bookId;
+		this.bookStoreName = bookStoreName;
+		this.soldAt = soldAt;
+		this.soldFor = soldFor;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)

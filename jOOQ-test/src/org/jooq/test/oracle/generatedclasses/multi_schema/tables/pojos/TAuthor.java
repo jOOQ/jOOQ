@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.pojos;
 @javax.persistence.Table(name = "T_AUTHOR", schema = "MULTI_SCHEMA")
 public class TAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1372916091;
+	private static final long serialVersionUID = -456865220;
 
 	private java.lang.Integer id;
 	private java.lang.String  firstName;
@@ -19,6 +19,24 @@ public class TAuthor implements java.io.Serializable {
 	private java.sql.Date     dateOfBirth;
 	private java.lang.Integer yearOfBirth;
 	private java.lang.Object  address;
+
+	public TAuthor() {}
+
+	public TAuthor(
+		java.lang.Integer id,
+		java.lang.String  firstName,
+		java.lang.String  lastName,
+		java.sql.Date     dateOfBirth,
+		java.lang.Integer yearOfBirth,
+		java.lang.Object  address
+	) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dateOfBirth = dateOfBirth;
+		this.yearOfBirth = yearOfBirth;
+		this.address = address;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)

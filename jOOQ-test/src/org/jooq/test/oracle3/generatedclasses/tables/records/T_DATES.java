@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_DATES")
 public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES> implements java.lang.Cloneable, org.jooq.Record8<java.lang.Integer, java.sql.Date, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Long, org.jooq.types.YearToMonth, org.jooq.types.DayToSecond>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DATES_INTERFACE {
 
-	private static final long serialVersionUID = 1468611207;
+	private static final long serialVersionUID = -1197747422;
 
 	/**
 	 * Setter for <code>T_DATES.ID</code>. 
@@ -347,5 +347,21 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	 */
 	public T_DATES() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES);
+	}
+
+	/**
+	 * Create a detached, initialised T_DATES
+	 */
+	public T_DATES(java.lang.Integer ID, java.sql.Date D, java.sql.Timestamp T, java.sql.Timestamp TS, java.lang.Integer D_INT, java.lang.Long TS_BIGINT, org.jooq.types.YearToMonth I_Y, org.jooq.types.DayToSecond I_D) {
+		super(org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES);
+
+		setValue(0, ID);
+		setValue(1, D);
+		setValue(2, T);
+		setValue(3, TS);
+		setValue(4, D_INT);
+		setValue(5, TS_BIGINT);
+		setValue(6, I_Y);
+		setValue(7, I_D);
 	}
 }

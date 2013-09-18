@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "V_AUTHOR")
 public class V_AUTHOR_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_AUTHOR_INTERFACE {
 
-	private static final long serialVersionUID = 54019288;
+	private static final long serialVersionUID = 1588169401;
 
 	private java.lang.Integer                                                 ID;
 	private java.lang.String                                                  FIRST_NAME;
@@ -19,6 +19,24 @@ public class V_AUTHOR_POJO extends java.lang.ThreadDeath implements java.lang.Cl
 	private java.sql.Date                                                     DATE_OF_BIRTH;
 	private java.lang.Integer                                                 YEAR_OF_BIRTH;
 	private org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE ADDRESS;
+
+	public V_AUTHOR_POJO() {}
+
+	public V_AUTHOR_POJO(
+		java.lang.Integer                                                 ID,
+		java.lang.String                                                  FIRST_NAME,
+		java.lang.String                                                  LAST_NAME,
+		java.sql.Date                                                     DATE_OF_BIRTH,
+		java.lang.Integer                                                 YEAR_OF_BIRTH,
+		org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE ADDRESS
+	) {
+		this.ID = ID;
+		this.FIRST_NAME = FIRST_NAME;
+		this.LAST_NAME = LAST_NAME;
+		this.DATE_OF_BIRTH = DATE_OF_BIRTH;
+		this.YEAR_OF_BIRTH = YEAR_OF_BIRTH;
+		this.ADDRESS = ADDRESS;
+	}
 
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	@Override

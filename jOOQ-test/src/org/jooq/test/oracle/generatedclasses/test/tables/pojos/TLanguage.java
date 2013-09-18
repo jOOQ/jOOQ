@@ -13,12 +13,26 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_LANGUAGE", schema = "TEST")
 public class TLanguage implements java.io.Serializable {
 
-	private static final long serialVersionUID = -444961953;
+	private static final long serialVersionUID = 719222064;
 
 	private java.lang.String  cd;
 	private java.lang.String  description;
 	private java.lang.String  descriptionEnglish;
 	private java.lang.Integer id;
+
+	public TLanguage() {}
+
+	public TLanguage(
+		java.lang.String  cd,
+		java.lang.String  description,
+		java.lang.String  descriptionEnglish,
+		java.lang.Integer id
+	) {
+		this.cd = cd;
+		this.description = description;
+		this.descriptionEnglish = descriptionEnglish;
+		this.id = id;
+	}
 
 	@javax.persistence.Column(name = "CD", nullable = false, length = 2)
 	@javax.validation.constraints.NotNull

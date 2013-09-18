@@ -9,7 +9,7 @@ package org.jooq.test.oracle2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DateAsTimestampT_976Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> implements org.jooq.Record4<java.lang.Integer, java.sql.Timestamp, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord> {
 
-	private static final long serialVersionUID = -1321705974;
+	private static final long serialVersionUID = 2039534026;
 
 	/**
 	 * Setter for <code>TEST.T_976.ID</code>. 
@@ -172,5 +172,17 @@ public class DateAsTimestampT_976Record extends org.jooq.impl.UpdatableRecordImp
 	 */
 	public DateAsTimestampT_976Record() {
 		super(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976);
+	}
+
+	/**
+	 * Create a detached, initialised DateAsTimestampT_976Record
+	 */
+	public DateAsTimestampT_976Record(java.lang.Integer dateAsTimestampid, java.sql.Timestamp dateAsTimestampd, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord dateAsTimestampt, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord dateAsTimestampo) {
+		super(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976);
+
+		setValue(0, dateAsTimestampid);
+		setValue(1, dateAsTimestampd);
+		setValue(2, dateAsTimestampt);
+		setValue(3, dateAsTimestampo);
 	}
 }

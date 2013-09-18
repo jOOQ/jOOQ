@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_ARRAYS extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_ARRAYS> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -958373053;
+	private static final long serialVersionUID = -154995550;
 
 	/**
 	 * The singleton instance of <code>T_ARRAYS</code>
@@ -27,7 +27,7 @@ public class T_ARRAYS extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.gene
 	/**
 	 * The column <code>T_ARRAYS.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_ARRAYS, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_ARRAYS, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>T_ARRAYS.STRING_ARRAY</code>. 

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_TRIGGERS", schema = "TEST")
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 2128878908;
+	private static final long serialVersionUID = 1503199224;
 
 	/**
 	 * Setter for <code>TEST.T_TRIGGERS.ID_GENERATED</code>. 
@@ -151,5 +151,16 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	public TTriggersRecord() {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS);
+	}
+
+	/**
+	 * Create a detached, initialised TTriggersRecord
+	 */
+	public TTriggersRecord(java.lang.Integer idGenerated, java.lang.Integer id, java.lang.Integer counter) {
+		super(org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS);
+
+		setValue(0, idGenerated);
+		setValue(1, id);
+		setValue(2, counter);
 	}
 }

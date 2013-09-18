@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_785")
 public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_785> implements java.lang.Cloneable, org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_785_INTERFACE {
 
-	private static final long serialVersionUID = 978717666;
+	private static final long serialVersionUID = -521969512;
 
 	/**
 	 * Setter for <code>T_785.ID</code>. 
@@ -164,5 +164,16 @@ public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.g
 	 */
 	public T_785() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_785.T_785);
+	}
+
+	/**
+	 * Create a detached, initialised T_785
+	 */
+	public T_785(java.lang.Integer ID, java.lang.String NAME, java.lang.String VALUE) {
+		super(org.jooq.test.oracle3.generatedclasses.tables.T_785.T_785);
+
+		setValue(0, ID);
+		setValue(1, NAME);
+		setValue(2, VALUE);
 	}
 }

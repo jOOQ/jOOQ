@@ -9,7 +9,7 @@ package org.jooq.test.oracle2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DateAsTimestampTDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord> implements org.jooq.Record8<java.lang.Integer, java.util.GregorianCalendar, java.util.GregorianCalendar, java.util.GregorianCalendar, java.lang.Integer, java.lang.Long, org.jooq.types.YearToMonth, org.jooq.types.DayToSecond> {
 
-	private static final long serialVersionUID = 2128670099;
+	private static final long serialVersionUID = -1960716147;
 
 	/**
 	 * Setter for <code>TEST.T_DATES.ID</code>. 
@@ -292,5 +292,21 @@ public class DateAsTimestampTDatesRecord extends org.jooq.impl.UpdatableRecordIm
 	 */
 	public DateAsTimestampTDatesRecord() {
 		super(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampTDates.DATE_AS_TIMESTAMP_T_DATES);
+	}
+
+	/**
+	 * Create a detached, initialised DateAsTimestampTDatesRecord
+	 */
+	public DateAsTimestampTDatesRecord(java.lang.Integer dateAsTimestampid, java.util.GregorianCalendar dateAsTimestampd, java.util.GregorianCalendar dateAsTimestampt, java.util.GregorianCalendar dateAsTimestampts, java.lang.Integer dateAsTimestampdInt, java.lang.Long dateAsTimestamptsBigint, org.jooq.types.YearToMonth dateAsTimestampiY, org.jooq.types.DayToSecond dateAsTimestampiD) {
+		super(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampTDates.DATE_AS_TIMESTAMP_T_DATES);
+
+		setValue(0, dateAsTimestampid);
+		setValue(1, dateAsTimestampd);
+		setValue(2, dateAsTimestampt);
+		setValue(3, dateAsTimestampts);
+		setValue(4, dateAsTimestampdInt);
+		setValue(5, dateAsTimestamptsBigint);
+		setValue(6, dateAsTimestampiY);
+		setValue(7, dateAsTimestampiD);
 	}
 }

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_639_NUMBERS_TABLE", schema = "TEST")
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 222198290;
+	private static final long serialVersionUID = -1031449743;
 
 	/**
 	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.ID</code>. 
@@ -397,5 +397,24 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	public T_639NumbersTableRecord() {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE);
+	}
+
+	/**
+	 * Create a detached, initialised T_639NumbersTableRecord
+	 */
+	public T_639NumbersTableRecord(java.lang.Integer id, java.lang.Byte byte_, java.lang.Short short_, java.lang.Integer integer, java.lang.Long long_, java.lang.Byte byteDecimal, java.lang.Short shortDecimal, java.lang.Integer integerDecimal, java.lang.Long longDecimal, java.math.BigInteger bigInteger, java.math.BigDecimal bigDecimal) {
+		super(org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE);
+
+		setValue(0, id);
+		setValue(1, byte_);
+		setValue(2, short_);
+		setValue(3, integer);
+		setValue(4, long_);
+		setValue(5, byteDecimal);
+		setValue(6, shortDecimal);
+		setValue(7, integerDecimal);
+		setValue(8, longDecimal);
+		setValue(9, bigInteger);
+		setValue(10, bigDecimal);
 	}
 }

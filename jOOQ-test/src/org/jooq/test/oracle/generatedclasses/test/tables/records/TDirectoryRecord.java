@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_DIRECTORY", schema = "TEST")
 public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -885686068;
+	private static final long serialVersionUID = 1591302885;
 
 	/**
 	 * Setter for <code>TEST.T_DIRECTORY.ID</code>. 
@@ -181,5 +181,17 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	public TDirectoryRecord() {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY);
+	}
+
+	/**
+	 * Create a detached, initialised TDirectoryRecord
+	 */
+	public TDirectoryRecord(java.lang.Integer id, java.lang.Integer parentId, java.lang.Integer isDirectory, java.lang.String name) {
+		super(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY);
+
+		setValue(0, id);
+		setValue(1, parentId);
+		setValue(2, isDirectory);
+		setValue(3, name);
 	}
 }

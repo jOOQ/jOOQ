@@ -185,6 +185,22 @@ For more information, please visit: http://www.jooq.org/licenses''');
  * database integrations.
  *
  * For more information, please visit: http://www.jooq.org/licenses
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
  */'''));
         
         // Remove sections of commercial code
@@ -204,8 +220,8 @@ For more information, please visit: http://www.jooq.org/licenses''');
             replaceAll.add(new ImmutablePair(compile('''(asList\([^\)]*?)\s*\b«d.name»\b\s*([^\)]*?\))'''), "$1$2"));
             
             // Remove commercial dialects from imports
-            replaceAll.add(new ImmutablePair(compile('''import (static )?org\.jooq\.SQLDialect\.«d.name»;[\r\n]{0,2}'''), ""));
-            replaceAll.add(new ImmutablePair(compile('''import (static )?org\.jooq\.util\.«d.name.toLowerCase»\..*?;[\r\n]{0,2}'''), ""));
+            replaceAll.add(new ImmutablePair(compile('''import (static )?org\.jooq\.SQLDialect\.«d.name»;'''), "// ..."));
+            replaceAll.add(new ImmutablePair(compile('''import (static )?org\.jooq\.util\.«d.name.toLowerCase»\..*?;'''), "// ..."));
         }
     }
 }

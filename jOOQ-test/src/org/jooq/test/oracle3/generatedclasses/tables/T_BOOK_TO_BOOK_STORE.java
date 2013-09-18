@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_TO_BOOK_STORE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1757829765;
+	private static final long serialVersionUID = -1515230171;
 
 	/**
 	 * The singleton instance of <code>T_BOOK_TO_BOOK_STORE</code>
@@ -29,12 +29,12 @@ public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.TableImpl<org.jooq.test.
 	/**
 	 * The column <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_TO_BOOK_STORE, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_TO_BOOK_STORE, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
 
 	/**
 	 * The column <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_TO_BOOK_STORE, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_TO_BOOK_STORE, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock

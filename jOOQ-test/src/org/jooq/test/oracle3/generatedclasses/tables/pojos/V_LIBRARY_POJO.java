@@ -11,10 +11,20 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "V_LIBRARY")
 public class V_LIBRARY_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_LIBRARY_INTERFACE {
 
-	private static final long serialVersionUID = -726786147;
+	private static final long serialVersionUID = 1552424866;
 
 	private java.lang.String AUTHOR;
 	private java.lang.String TITLE;
+
+	public V_LIBRARY_POJO() {}
+
+	public V_LIBRARY_POJO(
+		java.lang.String AUTHOR,
+		java.lang.String TITLE
+	) {
+		this.AUTHOR = AUTHOR;
+		this.TITLE = TITLE;
+	}
 
 	@javax.persistence.Column(name = "AUTHOR", length = 101)
 	@Override

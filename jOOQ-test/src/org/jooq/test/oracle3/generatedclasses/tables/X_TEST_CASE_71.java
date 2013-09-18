@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class X_TEST_CASE_71 extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_71> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -626197905;
+	private static final long serialVersionUID = 1220627312;
 
 	/**
 	 * The singleton instance of <code>X_TEST_CASE_71</code>
@@ -27,7 +27,7 @@ public class X_TEST_CASE_71 extends org.jooq.impl.TableImpl<org.jooq.test.oracle
 	/**
 	 * The column <code>X_TEST_CASE_71.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_71, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_71, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 

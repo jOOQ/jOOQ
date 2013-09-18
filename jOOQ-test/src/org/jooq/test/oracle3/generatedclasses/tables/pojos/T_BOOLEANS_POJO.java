@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_BOOLEANS")
 public class T_BOOLEANS_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOLEANS_INTERFACE {
 
-	private static final long serialVersionUID = 188044060;
+	private static final long serialVersionUID = -314211158;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer ONE_ZERO;
@@ -24,6 +24,34 @@ public class T_BOOLEANS_POJO extends java.lang.ThreadDeath implements java.lang.
 	private java.lang.String  VC_BOOLEAN;
 	private java.lang.String  C_BOOLEAN;
 	private java.lang.Integer N_BOOLEAN;
+
+	public T_BOOLEANS_POJO() {}
+
+	public T_BOOLEANS_POJO(
+		java.lang.Integer ID,
+		java.lang.Integer ONE_ZERO,
+		java.lang.String  TRUE_FALSE_LC,
+		java.lang.String  TRUE_FALSE_UC,
+		java.lang.String  YES_NO_LC,
+		java.lang.String  YES_NO_UC,
+		java.lang.String  Y_N_LC,
+		java.lang.String  Y_N_UC,
+		java.lang.String  VC_BOOLEAN,
+		java.lang.String  C_BOOLEAN,
+		java.lang.Integer N_BOOLEAN
+	) {
+		this.ID = ID;
+		this.ONE_ZERO = ONE_ZERO;
+		this.TRUE_FALSE_LC = TRUE_FALSE_LC;
+		this.TRUE_FALSE_UC = TRUE_FALSE_UC;
+		this.YES_NO_LC = YES_NO_LC;
+		this.YES_NO_UC = YES_NO_UC;
+		this.Y_N_LC = Y_N_LC;
+		this.Y_N_UC = Y_N_UC;
+		this.VC_BOOLEAN = VC_BOOLEAN;
+		this.C_BOOLEAN = C_BOOLEAN;
+		this.N_BOOLEAN = N_BOOLEAN;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)

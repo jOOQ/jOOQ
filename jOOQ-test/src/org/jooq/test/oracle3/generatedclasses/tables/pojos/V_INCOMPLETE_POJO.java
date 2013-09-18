@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "V_INCOMPLETE")
 public class V_INCOMPLETE_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INTERFACE {
 
-	private static final long serialVersionUID = -1160449486;
+	private static final long serialVersionUID = 948534078;
 
 	private java.lang.Object ID;
 	private java.lang.Object AUTHOR_ID;
@@ -22,6 +22,30 @@ public class V_INCOMPLETE_POJO extends java.lang.ThreadDeath implements java.lan
 	private java.lang.Object LANGUAGE_ID;
 	private java.lang.Object CONTENT_TEXT;
 	private java.lang.Object CONTENT_PDF;
+
+	public V_INCOMPLETE_POJO() {}
+
+	public V_INCOMPLETE_POJO(
+		java.lang.Object ID,
+		java.lang.Object AUTHOR_ID,
+		java.lang.Object CO_AUTHOR_ID,
+		java.lang.Object DETAILS_ID,
+		java.lang.Object TITLE,
+		java.lang.Object PUBLISHED_IN,
+		java.lang.Object LANGUAGE_ID,
+		java.lang.Object CONTENT_TEXT,
+		java.lang.Object CONTENT_PDF
+	) {
+		this.ID = ID;
+		this.AUTHOR_ID = AUTHOR_ID;
+		this.CO_AUTHOR_ID = CO_AUTHOR_ID;
+		this.DETAILS_ID = DETAILS_ID;
+		this.TITLE = TITLE;
+		this.PUBLISHED_IN = PUBLISHED_IN;
+		this.LANGUAGE_ID = LANGUAGE_ID;
+		this.CONTENT_TEXT = CONTENT_TEXT;
+		this.CONTENT_PDF = CONTENT_PDF;
+	}
 
 	@javax.persistence.Column(name = "ID")
 	@Override

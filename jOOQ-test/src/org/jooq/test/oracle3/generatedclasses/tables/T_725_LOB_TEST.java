@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725_LOB_TEST extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -780379478;
+	private static final long serialVersionUID = -1730319287;
 
 	/**
 	 * The singleton instance of <code>T_725_LOB_TEST</code>
@@ -27,7 +27,7 @@ public class T_725_LOB_TEST extends org.jooq.impl.TableImpl<org.jooq.test.oracle
 	/**
 	 * The column <code>T_725_LOB_TEST.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>T_725_LOB_TEST.LOB</code>. 

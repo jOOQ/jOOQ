@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_639_NUMBERS_TABLE")
 public class T_639_NUMBERS_TABLE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_639_NUMBERS_TABLE> implements java.lang.Cloneable, org.jooq.Record11<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_639_NUMBERS_TABLE_INTERFACE {
 
-	private static final long serialVersionUID = -720306230;
+	private static final long serialVersionUID = 2134674726;
 
 	/**
 	 * Setter for <code>T_639_NUMBERS_TABLE.ID</code>. 
@@ -449,5 +449,24 @@ public class T_639_NUMBERS_TABLE extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 */
 	public T_639_NUMBERS_TABLE() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE);
+	}
+
+	/**
+	 * Create a detached, initialised T_639_NUMBERS_TABLE
+	 */
+	public T_639_NUMBERS_TABLE(java.lang.Integer ID, java.lang.Byte BYTE, java.lang.Short SHORT, java.lang.Integer INTEGER, java.lang.Long LONG, java.lang.Byte BYTE_DECIMAL, java.lang.Short SHORT_DECIMAL, java.lang.Integer INTEGER_DECIMAL, java.lang.Long LONG_DECIMAL, java.math.BigInteger BIG_INTEGER, java.math.BigDecimal BIG_DECIMAL) {
+		super(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE);
+
+		setValue(0, ID);
+		setValue(1, BYTE);
+		setValue(2, SHORT);
+		setValue(3, INTEGER);
+		setValue(4, LONG);
+		setValue(5, BYTE_DECIMAL);
+		setValue(6, SHORT_DECIMAL);
+		setValue(7, INTEGER_DECIMAL);
+		setValue(8, LONG_DECIMAL);
+		setValue(9, BIG_INTEGER);
+		setValue(10, BIG_DECIMAL);
 	}
 }

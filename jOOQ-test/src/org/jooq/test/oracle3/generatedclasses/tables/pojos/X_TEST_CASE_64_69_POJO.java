@@ -11,10 +11,20 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "X_TEST_CASE_64_69")
 public class X_TEST_CASE_64_69_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_64_69_INTERFACE {
 
-	private static final long serialVersionUID = -105027233;
+	private static final long serialVersionUID = -1636904262;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer UNUSED_ID;
+
+	public X_TEST_CASE_64_69_POJO() {}
+
+	public X_TEST_CASE_64_69_POJO(
+		java.lang.Integer ID,
+		java.lang.Integer UNUSED_ID
+	) {
+		this.ID = ID;
+		this.UNUSED_ID = UNUSED_ID;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)

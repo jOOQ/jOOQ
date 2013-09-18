@@ -13,7 +13,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_AUTHOR")
 public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR> implements java.lang.Cloneable, org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_AUTHOR_INTERFACE {
 
-	private static final long serialVersionUID = 1264728861;
+	private static final long serialVersionUID = 1270784345;
 
 	/**
 	 * Setter for <code>T_AUTHOR.ID</code>. The author ID
@@ -281,5 +281,19 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 */
 	public T_AUTHOR() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR);
+	}
+
+	/**
+	 * Create a detached, initialised T_AUTHOR
+	 */
+	public T_AUTHOR(java.lang.Integer ID, java.lang.String FIRST_NAME, java.lang.String LAST_NAME, java.sql.Date DATE_OF_BIRTH, java.lang.Integer YEAR_OF_BIRTH, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE ADDRESS) {
+		super(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR);
+
+		setValue(0, ID);
+		setValue(1, FIRST_NAME);
+		setValue(2, LAST_NAME);
+		setValue(3, DATE_OF_BIRTH);
+		setValue(4, YEAR_OF_BIRTH);
+		setValue(5, ADDRESS);
 	}
 }

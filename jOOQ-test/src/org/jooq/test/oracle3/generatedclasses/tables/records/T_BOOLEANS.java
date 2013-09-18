@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_BOOLEANS")
 public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOLEANS> implements java.lang.Cloneable, org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOLEANS_INTERFACE {
 
-	private static final long serialVersionUID = -855116946;
+	private static final long serialVersionUID = 972082719;
 
 	/**
 	 * Setter for <code>T_BOOLEANS.ID</code>. 
@@ -449,5 +449,24 @@ public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 */
 	public T_BOOLEANS() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS);
+	}
+
+	/**
+	 * Create a detached, initialised T_BOOLEANS
+	 */
+	public T_BOOLEANS(java.lang.Integer ID, java.lang.Integer ONE_ZERO, java.lang.String TRUE_FALSE_LC, java.lang.String TRUE_FALSE_UC, java.lang.String YES_NO_LC, java.lang.String YES_NO_UC, java.lang.String Y_N_LC, java.lang.String Y_N_UC, java.lang.String VC_BOOLEAN, java.lang.String C_BOOLEAN, java.lang.Integer N_BOOLEAN) {
+		super(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS);
+
+		setValue(0, ID);
+		setValue(1, ONE_ZERO);
+		setValue(2, TRUE_FALSE_LC);
+		setValue(3, TRUE_FALSE_UC);
+		setValue(4, YES_NO_LC);
+		setValue(5, YES_NO_UC);
+		setValue(6, Y_N_LC);
+		setValue(7, Y_N_UC);
+		setValue(8, VC_BOOLEAN);
+		setValue(9, C_BOOLEAN);
+		setValue(10, N_BOOLEAN);
 	}
 }

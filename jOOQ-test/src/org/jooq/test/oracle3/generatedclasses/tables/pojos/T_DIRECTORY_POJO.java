@@ -11,12 +11,26 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_DIRECTORY")
 public class T_DIRECTORY_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DIRECTORY_INTERFACE {
 
-	private static final long serialVersionUID = 2033194609;
+	private static final long serialVersionUID = 1130212526;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer PARENT_ID;
 	private java.lang.Integer IS_DIRECTORY;
 	private java.lang.String  name;
+
+	public T_DIRECTORY_POJO() {}
+
+	public T_DIRECTORY_POJO(
+		java.lang.Integer ID,
+		java.lang.Integer PARENT_ID,
+		java.lang.Integer IS_DIRECTORY,
+		java.lang.String  name
+	) {
+		this.ID = ID;
+		this.PARENT_ID = PARENT_ID;
+		this.IS_DIRECTORY = IS_DIRECTORY;
+		this.name = name;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)

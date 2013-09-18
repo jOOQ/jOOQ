@@ -15,7 +15,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 })
 public class X_UNUSED_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_UNUSED_INTERFACE {
 
-	private static final long serialVersionUID = -1081703897;
+	private static final long serialVersionUID = 1109323177;
 
 	private java.lang.Integer    ID;
 	private java.lang.String     NAME;
@@ -33,6 +33,44 @@ public class X_UNUSED_POJO extends java.lang.ThreadDeath implements java.lang.Cl
 	private java.math.BigDecimal FIELD_737;
 	private java.lang.Integer    MS_UNUSED_ID_REF;
 	private java.lang.String     MS_UNUSED_NAME_REF;
+
+	public X_UNUSED_POJO() {}
+
+	public X_UNUSED_POJO(
+		java.lang.Integer    ID,
+		java.lang.String     NAME,
+		java.math.BigInteger BIG_INTEGER,
+		java.lang.Integer    ID_REF,
+		java.lang.Integer    CLASS,
+		java.lang.Integer    FIELDS,
+		java.lang.Integer    CONFIGURATION,
+		java.lang.Integer    U_D_T,
+		java.lang.Integer    META_DATA,
+		java.lang.Integer    TYPE0,
+		java.lang.Integer    PRIMARY_KEY,
+		java.lang.Integer    PRIMARYKEY,
+		java.lang.String     NAME_REF,
+		java.math.BigDecimal FIELD_737,
+		java.lang.Integer    MS_UNUSED_ID_REF,
+		java.lang.String     MS_UNUSED_NAME_REF
+	) {
+		this.ID = ID;
+		this.NAME = NAME;
+		this.BIG_INTEGER = BIG_INTEGER;
+		this.ID_REF = ID_REF;
+		this.CLASS = CLASS;
+		this.FIELDS = FIELDS;
+		this.CONFIGURATION = CONFIGURATION;
+		this.U_D_T = U_D_T;
+		this.META_DATA = META_DATA;
+		this.TYPE0 = TYPE0;
+		this.PRIMARY_KEY = PRIMARY_KEY;
+		this.PRIMARYKEY = PRIMARYKEY;
+		this.NAME_REF = NAME_REF;
+		this.FIELD_737 = FIELD_737;
+		this.MS_UNUSED_ID_REF = MS_UNUSED_ID_REF;
+		this.MS_UNUSED_NAME_REF = MS_UNUSED_NAME_REF;
+	}
 
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	@Override

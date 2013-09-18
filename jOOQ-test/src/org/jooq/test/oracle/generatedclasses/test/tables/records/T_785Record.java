@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_785", schema = "TEST")
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 453798932;
+	private static final long serialVersionUID = 955632367;
 
 	/**
 	 * Setter for <code>TEST.T_785.ID</code>. 
@@ -137,5 +137,16 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	 */
 	public T_785Record() {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.T_785.T_785);
+	}
+
+	/**
+	 * Create a detached, initialised T_785Record
+	 */
+	public T_785Record(java.lang.Integer id, java.lang.String name, java.lang.String value) {
+		super(org.jooq.test.oracle.generatedclasses.test.tables.T_785.T_785);
+
+		setValue(0, id);
+		setValue(1, name);
+		setValue(2, value);
 	}
 }

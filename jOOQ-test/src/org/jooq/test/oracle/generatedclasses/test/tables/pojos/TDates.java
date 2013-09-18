@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_DATES", schema = "TEST")
 public class TDates implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1214863639;
+	private static final long serialVersionUID = -2000608648;
 
 	private java.lang.Integer          id;
 	private java.sql.Date              d;
@@ -21,6 +21,28 @@ public class TDates implements java.io.Serializable {
 	private java.lang.Long             tsBigint;
 	private org.jooq.types.YearToMonth iY;
 	private org.jooq.types.DayToSecond iD;
+
+	public TDates() {}
+
+	public TDates(
+		java.lang.Integer          id,
+		java.sql.Date              d,
+		java.sql.Timestamp         t,
+		java.sql.Timestamp         ts,
+		java.lang.Integer          dInt,
+		java.lang.Long             tsBigint,
+		org.jooq.types.YearToMonth iY,
+		org.jooq.types.DayToSecond iD
+	) {
+		this.id = id;
+		this.d = d;
+		this.t = t;
+		this.ts = ts;
+		this.dInt = dInt;
+		this.tsBigint = tsBigint;
+		this.iY = iY;
+		this.iD = iD;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)

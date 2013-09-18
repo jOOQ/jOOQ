@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_DATES", schema = "TEST")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> implements org.jooq.Record8<java.lang.Integer, java.sql.Date, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Long, org.jooq.types.YearToMonth, org.jooq.types.DayToSecond> {
 
-	private static final long serialVersionUID = -1205824975;
+	private static final long serialVersionUID = 658144016;
 
 	/**
 	 * Setter for <code>TEST.T_DATES.ID</code>. 
@@ -304,5 +304,21 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	public TDatesRecord() {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES);
+	}
+
+	/**
+	 * Create a detached, initialised TDatesRecord
+	 */
+	public TDatesRecord(java.lang.Integer id, java.sql.Date d, java.sql.Timestamp t, java.sql.Timestamp ts, java.lang.Integer dInt, java.lang.Long tsBigint, org.jooq.types.YearToMonth iY, org.jooq.types.DayToSecond iD) {
+		super(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES);
+
+		setValue(0, id);
+		setValue(1, d);
+		setValue(2, t);
+		setValue(3, ts);
+		setValue(4, dInt);
+		setValue(5, tsBigint);
+		setValue(6, iY);
+		setValue(7, iD);
 	}
 }

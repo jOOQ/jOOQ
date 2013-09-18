@@ -13,7 +13,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_BOOK")
 public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> implements java.lang.Cloneable, org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = 409530879;
+	private static final long serialVersionUID = 1440273798;
 
 	/**
 	 * Setter for <code>T_BOOK.ID</code>. The book ID
@@ -383,5 +383,22 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 */
 	public T_BOOK() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK);
+	}
+
+	/**
+	 * Create a detached, initialised T_BOOK
+	 */
+	public T_BOOK(java.lang.Integer ID, java.lang.Integer AUTHOR_ID, java.lang.Integer CO_AUTHOR_ID, java.lang.Integer DETAILS_ID, java.lang.String TITLE, java.lang.Integer PUBLISHED_IN, java.lang.Integer LANGUAGE_ID, java.lang.String CONTENT_TEXT, byte[] CONTENT_PDF) {
+		super(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK);
+
+		setValue(0, ID);
+		setValue(1, AUTHOR_ID);
+		setValue(2, CO_AUTHOR_ID);
+		setValue(3, DETAILS_ID);
+		setValue(4, TITLE);
+		setValue(5, PUBLISHED_IN);
+		setValue(6, LANGUAGE_ID);
+		setValue(7, CONTENT_TEXT);
+		setValue(8, CONTENT_PDF);
 	}
 }

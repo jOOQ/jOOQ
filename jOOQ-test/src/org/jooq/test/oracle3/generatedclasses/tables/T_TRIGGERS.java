@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_TRIGGERS extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -694167521;
+	private static final long serialVersionUID = -1226054306;
 
 	/**
 	 * The singleton instance of <code>T_TRIGGERS</code>
@@ -27,17 +27,17 @@ public class T_TRIGGERS extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.ge
 	/**
 	 * The column <code>T_TRIGGERS.ID_GENERATED</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>T_TRIGGERS.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>T_TRIGGERS.COUNTER</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS, java.lang.Integer> COUNTER = createField("COUNTER", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS, java.lang.Integer> COUNTER = createField("COUNTER", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * Create a <code>T_TRIGGERS</code> table reference

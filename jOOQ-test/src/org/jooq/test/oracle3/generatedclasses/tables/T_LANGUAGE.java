@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_LANGUAGE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -499003477;
+	private static final long serialVersionUID = -1298341719;
 
 	/**
 	 * The singleton instance of <code>T_LANGUAGE</code>
@@ -29,7 +29,7 @@ public class T_LANGUAGE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.ge
 	/**
 	 * The column <code>T_LANGUAGE.CD</code>. The language ISO code
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2).nullable(false), this);
 
 	/**
 	 * The column <code>T_LANGUAGE.DESCRIPTION</code>. The language description
@@ -44,7 +44,7 @@ public class T_LANGUAGE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.ge
 	/**
 	 * The column <code>T_LANGUAGE.ID</code>. The language ID
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * Create a <code>T_LANGUAGE</code> table reference

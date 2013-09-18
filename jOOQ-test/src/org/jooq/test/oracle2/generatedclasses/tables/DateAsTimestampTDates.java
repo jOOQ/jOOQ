@@ -9,7 +9,7 @@ package org.jooq.test.oracle2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DateAsTimestampTDates extends org.jooq.impl.TableImpl<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord> {
 
-	private static final long serialVersionUID = -277934348;
+	private static final long serialVersionUID = 946543123;
 
 	/**
 	 * The singleton instance of <code>TEST.T_DATES</code>
@@ -27,7 +27,7 @@ public class DateAsTimestampTDates extends org.jooq.impl.TableImpl<org.jooq.test
 	/**
 	 * The column <code>TEST.T_DATES.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord, java.lang.Integer> DATE_AS_TIMESTAMP_ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord, java.lang.Integer> DATE_AS_TIMESTAMP_ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>TEST.T_DATES.D</code>. 

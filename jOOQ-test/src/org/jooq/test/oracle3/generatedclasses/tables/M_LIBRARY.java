@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class M_LIBRARY extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY> implements java.io.Serializable, java.lang.Cloneable {
 
-	private static final long serialVersionUID = -751982799;
+	private static final long serialVersionUID = 1589697168;
 
 	/**
 	 * The singleton instance of <code>M_LIBRARY</code>
@@ -34,7 +34,7 @@ public class M_LIBRARY extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.gen
 	/**
 	 * The column <code>M_LIBRARY.TITLE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
 
 	/**
 	 * Create a <code>M_LIBRARY</code> table reference

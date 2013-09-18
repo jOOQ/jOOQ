@@ -11,10 +11,20 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_725_LOB_TEST", schema = "TEST")
 public class T_725LobTest implements java.io.Serializable {
 
-	private static final long serialVersionUID = 618825864;
+	private static final long serialVersionUID = 922365824;
 
 	private java.lang.Integer id;
 	private byte[]            lob;
+
+	public T_725LobTest() {}
+
+	public T_725LobTest(
+		java.lang.Integer id,
+		byte[]            lob
+	) {
+		this.id = id;
+		this.lob = lob;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)

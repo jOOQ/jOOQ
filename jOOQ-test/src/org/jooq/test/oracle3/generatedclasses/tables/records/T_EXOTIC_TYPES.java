@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_EXOTIC_TYPES")
 public class T_EXOTIC_TYPES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_EXOTIC_TYPES_INTERFACE {
 
-	private static final long serialVersionUID = -2000301413;
+	private static final long serialVersionUID = -1789828837;
 
 	/**
 	 * Setter for <code>T_EXOTIC_TYPES.ID</code>. 
@@ -143,5 +143,15 @@ public class T_EXOTIC_TYPES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	 */
 	public T_EXOTIC_TYPES() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES.T_EXOTIC_TYPES);
+	}
+
+	/**
+	 * Create a detached, initialised T_EXOTIC_TYPES
+	 */
+	public T_EXOTIC_TYPES(java.lang.Integer ID, java.lang.String UU) {
+		super(org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES.T_EXOTIC_TYPES);
+
+		setValue(0, ID);
+		setValue(1, UU);
 	}
 }

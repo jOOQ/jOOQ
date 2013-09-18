@@ -15,7 +15,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 })
 public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_TO_BOOK_STORE> implements java.lang.Cloneable, org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_STORE_INTERFACE {
 
-	private static final long serialVersionUID = 1089895268;
+	private static final long serialVersionUID = -2104961837;
 
 	/**
 	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
@@ -180,5 +180,16 @@ public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.
 	 */
 	public T_BOOK_TO_BOOK_STORE() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE);
+	}
+
+	/**
+	 * Create a detached, initialised T_BOOK_TO_BOOK_STORE
+	 */
+	public T_BOOK_TO_BOOK_STORE(java.lang.String BOOK_STORE_NAME, java.lang.Integer BOOK_ID, java.lang.Integer STOCK) {
+		super(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE);
+
+		setValue(0, BOOK_STORE_NAME);
+		setValue(1, BOOK_ID);
+		setValue(2, STOCK);
 	}
 }

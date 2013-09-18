@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_INCOMPLETE")
 public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE> implements java.lang.Cloneable, org.jooq.Record9<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INTERFACE {
 
-	private static final long serialVersionUID = 1614528402;
+	private static final long serialVersionUID = 1975003404;
 
 	/**
 	 * Setter for <code>V_INCOMPLETE.ID</code>. 
@@ -368,5 +368,22 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	 */
 	public V_INCOMPLETE() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.V_INCOMPLETE.V_INCOMPLETE);
+	}
+
+	/**
+	 * Create a detached, initialised V_INCOMPLETE
+	 */
+	public V_INCOMPLETE(java.lang.Object ID, java.lang.Object AUTHOR_ID, java.lang.Object CO_AUTHOR_ID, java.lang.Object DETAILS_ID, java.lang.Object TITLE, java.lang.Object PUBLISHED_IN, java.lang.Object LANGUAGE_ID, java.lang.Object CONTENT_TEXT, java.lang.Object CONTENT_PDF) {
+		super(org.jooq.test.oracle3.generatedclasses.tables.V_INCOMPLETE.V_INCOMPLETE);
+
+		setValue(0, ID);
+		setValue(1, AUTHOR_ID);
+		setValue(2, CO_AUTHOR_ID);
+		setValue(3, DETAILS_ID);
+		setValue(4, TITLE);
+		setValue(5, PUBLISHED_IN);
+		setValue(6, LANGUAGE_ID);
+		setValue(7, CONTENT_TEXT);
+		setValue(8, CONTENT_PDF);
 	}
 }

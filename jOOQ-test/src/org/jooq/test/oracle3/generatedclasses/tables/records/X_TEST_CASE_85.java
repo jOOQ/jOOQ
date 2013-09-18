@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_85")
 public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_85> implements java.lang.Cloneable, org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_85_INTERFACE {
 
-	private static final long serialVersionUID = -734363733;
+	private static final long serialVersionUID = 707229792;
 
 	/**
 	 * Setter for <code>X_TEST_CASE_85.ID</code>. 
@@ -177,5 +177,16 @@ public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	 */
 	public X_TEST_CASE_85() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85);
+	}
+
+	/**
+	 * Create a detached, initialised X_TEST_CASE_85
+	 */
+	public X_TEST_CASE_85(java.lang.Integer ID, java.lang.Integer X_UNUSED_ID, java.lang.String X_UNUSED_NAME) {
+		super(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85);
+
+		setValue(0, ID);
+		setValue(1, X_UNUSED_ID);
+		setValue(2, X_UNUSED_NAME);
 	}
 }

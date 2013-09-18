@@ -13,7 +13,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "M_LIBRARY")
 public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY> implements java.io.Serializable, java.lang.Cloneable, org.jooq.Record2<java.lang.String, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERFACE {
 
-	private static final long serialVersionUID = -1456437730;
+	private static final long serialVersionUID = -515448851;
 
 	/**
 	 * Setter for <code>M_LIBRARY.AUTHOR</code>. 
@@ -132,5 +132,15 @@ public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	 */
 	public M_LIBRARY() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY.M_LIBRARY);
+	}
+
+	/**
+	 * Create a detached, initialised M_LIBRARY
+	 */
+	public M_LIBRARY(java.lang.String AUTHOR, java.lang.String TITLE) {
+		super(org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY.M_LIBRARY);
+
+		setValue(0, AUTHOR);
+		setValue(1, TITLE);
 	}
 }

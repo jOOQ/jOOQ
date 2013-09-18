@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class X_UNUSED extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1948665240;
+	private static final long serialVersionUID = 267059656;
 
 	/**
 	 * The singleton instance of <code>X_UNUSED</code>
@@ -29,12 +29,12 @@ public class X_UNUSED extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.gene
 	/**
 	 * The column <code>X_UNUSED.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>X_UNUSED.NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), this);
 
 	/**
 	 * The column <code>X_UNUSED.BIG_INTEGER</code>. 

@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_BOOLEANS extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOLEANS> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1095291012;
+	private static final long serialVersionUID = 192379333;
 
 	/**
 	 * The singleton instance of <code>T_BOOLEANS</code>
@@ -27,7 +27,7 @@ public class T_BOOLEANS extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.ge
 	/**
 	 * The column <code>T_BOOLEANS.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOLEANS, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOLEANS, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>T_BOOLEANS.ONE_ZERO</code>. 

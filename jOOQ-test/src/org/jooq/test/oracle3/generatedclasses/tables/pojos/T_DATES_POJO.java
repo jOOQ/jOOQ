@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_DATES")
 public class T_DATES_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DATES_INTERFACE {
 
-	private static final long serialVersionUID = 992260820;
+	private static final long serialVersionUID = -856580999;
 
 	private java.lang.Integer          ID;
 	private java.sql.Date              D;
@@ -21,6 +21,28 @@ public class T_DATES_POJO extends java.lang.ThreadDeath implements java.lang.Clo
 	private java.lang.Long             TS_BIGINT;
 	private org.jooq.types.YearToMonth I_Y;
 	private org.jooq.types.DayToSecond I_D;
+
+	public T_DATES_POJO() {}
+
+	public T_DATES_POJO(
+		java.lang.Integer          ID,
+		java.sql.Date              D,
+		java.sql.Timestamp         T,
+		java.sql.Timestamp         TS,
+		java.lang.Integer          D_INT,
+		java.lang.Long             TS_BIGINT,
+		org.jooq.types.YearToMonth I_Y,
+		org.jooq.types.DayToSecond I_D
+	) {
+		this.ID = ID;
+		this.D = D;
+		this.T = T;
+		this.TS = TS;
+		this.D_INT = D_INT;
+		this.TS_BIGINT = TS_BIGINT;
+		this.I_Y = I_Y;
+		this.I_D = I_D;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)

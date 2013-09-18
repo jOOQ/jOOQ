@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_639_NUMBERS_TABLE")
 public class T_639_NUMBERS_TABLE_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_639_NUMBERS_TABLE_INTERFACE {
 
-	private static final long serialVersionUID = 1649074092;
+	private static final long serialVersionUID = -1928374391;
 
 	private java.lang.Integer    ID;
 	private java.lang.Byte       BYTE;
@@ -24,6 +24,34 @@ public class T_639_NUMBERS_TABLE_POJO extends java.lang.ThreadDeath implements j
 	private java.lang.Long       LONG_DECIMAL;
 	private java.math.BigInteger BIG_INTEGER;
 	private java.math.BigDecimal BIG_DECIMAL;
+
+	public T_639_NUMBERS_TABLE_POJO() {}
+
+	public T_639_NUMBERS_TABLE_POJO(
+		java.lang.Integer    ID,
+		java.lang.Byte       BYTE,
+		java.lang.Short      SHORT,
+		java.lang.Integer    INTEGER,
+		java.lang.Long       LONG,
+		java.lang.Byte       BYTE_DECIMAL,
+		java.lang.Short      SHORT_DECIMAL,
+		java.lang.Integer    INTEGER_DECIMAL,
+		java.lang.Long       LONG_DECIMAL,
+		java.math.BigInteger BIG_INTEGER,
+		java.math.BigDecimal BIG_DECIMAL
+	) {
+		this.ID = ID;
+		this.BYTE = BYTE;
+		this.SHORT = SHORT;
+		this.INTEGER = INTEGER;
+		this.LONG = LONG;
+		this.BYTE_DECIMAL = BYTE_DECIMAL;
+		this.SHORT_DECIMAL = SHORT_DECIMAL;
+		this.INTEGER_DECIMAL = INTEGER_DECIMAL;
+		this.LONG_DECIMAL = LONG_DECIMAL;
+		this.BIG_INTEGER = BIG_INTEGER;
+		this.BIG_DECIMAL = BIG_DECIMAL;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)

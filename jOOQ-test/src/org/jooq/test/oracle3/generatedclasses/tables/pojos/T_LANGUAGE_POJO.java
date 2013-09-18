@@ -13,12 +13,26 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_LANGUAGE")
 public class T_LANGUAGE_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE {
 
-	private static final long serialVersionUID = -523341349;
+	private static final long serialVersionUID = 974703777;
 
 	private java.lang.String  CD;
 	private java.lang.String  DESCRIPTION;
 	private java.lang.String  DESCRIPTION_ENGLISH;
 	private java.lang.Integer ID;
+
+	public T_LANGUAGE_POJO() {}
+
+	public T_LANGUAGE_POJO(
+		java.lang.String  CD,
+		java.lang.String  DESCRIPTION,
+		java.lang.String  DESCRIPTION_ENGLISH,
+		java.lang.Integer ID
+	) {
+		this.CD = CD;
+		this.DESCRIPTION = DESCRIPTION;
+		this.DESCRIPTION_ENGLISH = DESCRIPTION_ENGLISH;
+		this.ID = ID;
+	}
 
 	@javax.persistence.Column(name = "CD", nullable = false, length = 2)
 	@Override

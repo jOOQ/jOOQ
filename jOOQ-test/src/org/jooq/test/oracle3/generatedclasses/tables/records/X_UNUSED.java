@@ -15,7 +15,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 })
 public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED> implements java.lang.Cloneable, org.jooq.Record16<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal, java.lang.Integer, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_UNUSED_INTERFACE {
 
-	private static final long serialVersionUID = 817109181;
+	private static final long serialVersionUID = -1706368249;
 
 	/**
 	 * Setter for <code>X_UNUSED.ID</code>. 
@@ -622,5 +622,29 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 */
 	public X_UNUSED() {
 		super(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED);
+	}
+
+	/**
+	 * Create a detached, initialised X_UNUSED
+	 */
+	public X_UNUSED(java.lang.Integer ID, java.lang.String NAME, java.math.BigInteger BIG_INTEGER, java.lang.Integer ID_REF, java.lang.Integer CLASS, java.lang.Integer FIELDS, java.lang.Integer CONFIGURATION, java.lang.Integer U_D_T, java.lang.Integer META_DATA, java.lang.Integer TYPE0, java.lang.Integer PRIMARY_KEY, java.lang.Integer PRIMARYKEY, java.lang.String NAME_REF, java.math.BigDecimal FIELD_737, java.lang.Integer MS_UNUSED_ID_REF, java.lang.String MS_UNUSED_NAME_REF) {
+		super(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED);
+
+		setValue(0, ID);
+		setValue(1, NAME);
+		setValue(2, BIG_INTEGER);
+		setValue(3, ID_REF);
+		setValue(4, CLASS);
+		setValue(5, FIELDS);
+		setValue(6, CONFIGURATION);
+		setValue(7, U_D_T);
+		setValue(8, META_DATA);
+		setValue(9, TYPE0);
+		setValue(10, PRIMARY_KEY);
+		setValue(11, PRIMARYKEY);
+		setValue(12, NAME_REF);
+		setValue(13, FIELD_737);
+		setValue(14, MS_UNUSED_ID_REF);
+		setValue(15, MS_UNUSED_NAME_REF);
 	}
 }

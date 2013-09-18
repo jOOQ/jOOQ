@@ -11,11 +11,23 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_TRIGGERS")
 public class T_TRIGGERS_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TRIGGERS_INTERFACE {
 
-	private static final long serialVersionUID = 82234870;
+	private static final long serialVersionUID = 1002878348;
 
 	private java.lang.Integer ID_GENERATED;
 	private java.lang.Integer ID;
 	private java.lang.Integer COUNTER;
+
+	public T_TRIGGERS_POJO() {}
+
+	public T_TRIGGERS_POJO(
+		java.lang.Integer ID_GENERATED,
+		java.lang.Integer ID,
+		java.lang.Integer COUNTER
+	) {
+		this.ID_GENERATED = ID_GENERATED;
+		this.ID = ID;
+		this.COUNTER = COUNTER;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID_GENERATED", unique = true, nullable = false, precision = 7)

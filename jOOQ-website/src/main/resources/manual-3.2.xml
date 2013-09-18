@@ -640,16 +640,15 @@ for (AuthorRecord author : create.fetch(AUTHOR)) {
 										<title>Step 2: Your database</title>
 										<content><html>
 											<p>
-												We're going to create a database called "guestbook" and a corresponding "posts" table. Connect to MySQL via your command line client and type the following:
+												We're going to create a database called "library" and a corresponding "author" table. Connect to MySQL via your command line client and type the following:
 											</p>
 											
-</html><sql>CREATE DATABASE guestbook;
+</html><sql>CREATE DATABASE library;
 
-CREATE TABLE `posts` (
-  `id` bigint(20) NOT NULL,
-  `body` varchar(255) DEFAULT NULL,
-  `timestamp` datetime DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
+CREATE TABLE `author` (
+  `id` int NOT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 </sql>
@@ -660,12 +659,12 @@ CREATE TABLE `posts` (
 										<title>Step 3: Code generation</title>
 										<content><html>
 											<p>
-												In this step, we're going to use jOOQ's command line tools to generate classes that map to the Posts table we just created. More detailed information about how to set up the jOOQ code generator can be found here:<br/>
+												In this step, we're going to use jOOQ's command line tools to generate classes that map to the Author table we just created. More detailed information about how to set up the jOOQ code generator can be found here:<br/>
 												<reference id="code-generation" title="jOOQ manual pages about setting up the code generator"/>
 											</p>
 
 											<p>
-												The easiest way to generate a schema is to copy the jOOQ jar files (there should be 3) and the MySQL Connector jar file to a temporary directory. Then, create a guestbook.xml that looks like this:
+												The easiest way to generate a schema is to copy the jOOQ jar files (there should be 3) and the MySQL Connector jar file to a temporary directory. Then, create a library.xml that looks like this:
 											</p>
 											
 </html><xml><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -673,7 +672,7 @@ CREATE TABLE `posts` (
   <!-- Configure the database connection here -->
   <jdbc>
     <driver>com.mysql.jdbc.Driver</driver>
-    <url>jdbc:mysql://localhost:3306/guestbook</url>
+    <url>jdbc:mysql://localhost:3306/library</url>
     <user>root</user>
     <password></password>
   </jdbc>
@@ -690,7 +689,7 @@ CREATE TABLE `posts` (
 
       <!-- The database schema (or in the absence of schema support, in your RDBMS this
            can be the owner, user, database name) to be generated -->
-      <inputSchema>guestbook</inputSchema>
+      <inputSchema>library</inputSchema>
 
       <!-- All elements that are generated from your schema 
            (A Java regular expression. Use the pipe to separate several expressions)
@@ -716,26 +715,26 @@ CREATE TABLE `posts` (
 												Replace the username with whatever user has the appropriate privileges to query the database meta data. You'll also want to look at the other values and replace as necessary. Here are the two interesting properties:
 											</p>
 											<p>
-												<code>generator.target.package</code> - set this to the parent package you want to create for the generated classes. The setting of <code>test.generated</code> will cause the <code>test.generated.Posts</code> and <code>test.generated.PostsRecord</code> to be created
+												<code>generator.target.package</code> - set this to the parent package you want to create for the generated classes. The setting of <code>test.generated</code> will cause the <code>test.generated.Author</code> and <code>test.generated.AuthorRecord</code> to be created
 											</p>
 											<p>
 												<code>generator.target.directory</code> - the directory to output to.
 											</p>
 											
 											<p>
-												Once you have the JAR files and guestbook.xml in your temp directory, type this (use colons instead of semi-colons on UNIX/Linux systems):
+												Once you have the JAR files and library.xml in your temp directory, type this (use colons instead of semi-colons on UNIX/Linux systems):
 											</p>
 
 </html><text>java -classpath jooq-{jooq-version}.jar;jooq-meta-{jooq-version}.jar;jooq-codegen-{jooq-version}.jar;mysql-connector-java-5.1.18-bin.jar;. 
-  org.jooq.util.GenerationTool /guestbook.xml
+  org.jooq.util.GenerationTool /library.xml
 </text><html>
 
 											<p>
-												Note the prefix slash before guestbook.xml. Even though it's in our working directory, we need to prepend a slash, as the configuration file is loaded from the classpath. Replace the filenames with your filenames. In this example, jOOQ {jooq-version} is being used. If everything has worked, you should see this in your console output:
+												Note the prefix slash before library.xml. Even though it's in our working directory, we need to prepend a slash, as the configuration file is loaded from the classpath. Replace the filenames with your filenames. In this example, jOOQ {jooq-version} is being used. If everything has worked, you should see this in your console output:
 											</p>
 
 </html><text>Nov 1, 2011 7:25:06 PM org.jooq.impl.JooqLogger info
-INFO: Initialising properties  : /guestbook.xml
+INFO: Initialising properties  : /library.xml
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: Database parameters
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
@@ -743,7 +742,7 @@ INFO: ----------------------------------------------------------
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO:   dialect                : MYSQL
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
-INFO:   schema                 : guestbook
+INFO:   schema                 : library
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO:   target dir             : C:/workspace/MySQLTest/src
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
@@ -755,7 +754,7 @@ INFO: Emptying                 : C:/workspace/MySQLTest/src/test/generated
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: Generating classes in    : C:/workspace/MySQLTest/src/test/generated
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
-INFO: Generating schema        : Guestbook.java
+INFO: Generating schema        : Library.java
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: Schema generated         : Total: 122.18ms
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
@@ -771,7 +770,7 @@ INFO: Enums fetched            : 0 (0 included, 0 excluded)
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: UDTs fetched             : 0 (0 included, 0 excluded)
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
-INFO: Generating table         : Posts.java
+INFO: Generating table         : Author.java
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: Tables generated         : Total: 680.464ms, +558.284ms
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
@@ -781,7 +780,7 @@ INFO: Keys generated           : Total: 718.621ms, +38.157ms
 Nov 1, 2011 7:25:08 PM org.jooq.impl.JooqLogger info
 INFO: Generating records       : C:/workspace/MySQLTest/src/test/generated/tables/records
 Nov 1, 2011 7:25:08 PM org.jooq.impl.JooqLogger info
-INFO: Generating record        : PostsRecord.java
+INFO: Generating record        : AuthorRecord.java
 Nov 1, 2011 7:25:08 PM org.jooq.impl.JooqLogger info
 INFO: Table records generated  : Total: 782.545ms, +63.924ms
 Nov 1, 2011 7:25:08 PM org.jooq.impl.JooqLogger info
@@ -812,7 +811,7 @@ public class Main {
 
         String userName = "root";
         String password = "";
-        String url = "jdbc:mysql://localhost:3306/guestbook";
+        String url = "jdbc:mysql://localhost:3306/library";
 
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -845,7 +844,7 @@ public class Main {
 											</p>
 											
 </html><java><![CDATA[DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
-Result<Record> result = create.select().from(POSTS).fetch();]]></java><html>
+Result<Record> result = create.select().from(AUTHOR).fetch();]]></java><html>
 
 											<p>
 												First get an instance of <code>DSLContext</code> so we can write a simple <code>SELECT</code> query. We pass an instance of the MySQL connection to <code>DSL</code>. Note that the DSLContext doesn't close the connection. We'll have to do that ourselves.
@@ -864,11 +863,11 @@ Result<Record> result = create.select().from(POSTS).fetch();]]></java><html>
 											</p>
 
 </html><java><![CDATA[for (Record r : result) {
-    Long id = r.getValue(POSTS.ID);
-    String title = r.getValue(POSTS.TITLE);
-    String description = r.getValue(POSTS.BODY);
+    Integer id = r.getValue(AUTHOR.ID);
+    String firstName = r.getValue(AUTHOR.FIRST_NAME);
+    String lastName = r.getValue(AUTHOR.LAST_NAME);
 
-    System.out.println("ID: " + id + " title: " + title + " desciption: " + description);
+    System.out.println("ID: " + id + " first name: " + firstName + " last name: " + lastName);
 }]]></java><html>
 
 											<p>
@@ -897,21 +896,21 @@ public class Main {
 
         String userName = "root";
         String password = "";
-        String url = "jdbc:mysql://localhost:3306/guestbook";
+        String url = "jdbc:mysql://localhost:3306/library";
 
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             conn = DriverManager.getConnection(url, userName, password);
 
             DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
-            Result<Record> result = create.select().from(POSTS).fetch();
+            Result<Record> result = create.select().from(AUTHOR).fetch();
 
             for (Record r : result) {
-                Long id = r.getValue(POSTS.ID);
-                String title = r.getValue(POSTS.TITLE);
-                String description = r.getValue(POSTS.BODY);
+                Long id = r.getValue(AUTHOR.ID);
+                String firstName = r.getValue(AUTHOR.FIRST_NAME);
+                String lastName = r.getValue(AUTHOR.LAST_NAME);
 
-                System.out.println("ID: " + id + " title: " + title + " desciption: " + description);
+                System.out.println("ID: " + id + " first name: " + firstName + " last name: " + lastName);
             }
         } catch (Exception e) {
             // For the sake of this tutorial, let's keep exception handling simple

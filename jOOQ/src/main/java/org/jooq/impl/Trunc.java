@@ -90,9 +90,9 @@ class Trunc<T> extends AbstractFunction<T> {
 
     private final Field<T> getNumericFunction(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
-            /* [/com] */
+            /* [/pro] */
             case DERBY: {
                 Field<BigDecimal> power;
 
@@ -123,7 +123,7 @@ class Trunc<T> extends AbstractFunction<T> {
             case POSTGRES:
                 return field("{trunc}({0}, {1})", SQLDataType.NUMERIC, field.cast(BigDecimal.class), decimals).cast(field.getDataType());
 
-            /* [com] */
+            /* [pro] */
             // SQL Server's round function can be used to truncate.
             case SQLSERVER:
                 return field("{round}({0}, {1}, {2})", field.getDataType(), field, decimals, one());
@@ -136,7 +136,7 @@ class Trunc<T> extends AbstractFunction<T> {
             case DB2:
             case INGRES:
             case ORACLE:
-            /* [/com] */
+            /* [/pro] */
             case CUBRID:
             case HSQLDB:
             default:

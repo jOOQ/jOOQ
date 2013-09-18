@@ -242,14 +242,14 @@ public abstract class AbstractDatabase implements Database {
             }
             else {
                 for (Schema schema : configuredSchemata) {
-                    /* [com] */
+                    /* [pro] */
 
                     // [#1418] Oracle has case-insensitive schema names.
                     if (this instanceof OracleDatabase) {
                         inputSchemata.add(schema.getInputSchema().toUpperCase());
                     }
                     else
-                    /* [/com] */
+                    /* [/pro] */
                     {
                         inputSchemata.add(schema.getInputSchema());
                     }

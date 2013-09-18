@@ -189,7 +189,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         switch (dialect().family()) {
 
-            /* [com] */
+            /* [pro] */
             // In ASE, there don't seem to be any empty byte[]
             case ASE:
                 assertEquals(1, record.getValue(T725_LOB()).length);
@@ -198,7 +198,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // These don't make a difference between an empty byte[] and null
             case ORACLE:
-            /* [/com] */
+            /* [/pro] */
             case SQLITE:
                 assertNull(record.getValue(T725_LOB()));
                 break;
@@ -226,14 +226,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         record.refresh();
 
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
                 assertEquals(1, record.getValue(T725_LOB()).length);
                 assertEquals(0, record.getValue(T725_LOB())[0]);
                 break;
 
             case ORACLE:
-            /* [/com] */
+            /* [/pro] */
             case SQLITE:
                 assertNull(record.getValue(T725_LOB()));
                 break;
@@ -256,14 +256,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(result.getValue(1, 1));
 
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
                 assertEquals(1, result.getValue(2, T725_LOB()).length);
                 assertEquals(0, result.getValue(2, T725_LOB())[0]);
                 break;
 
             case ORACLE:
-            /* [/com] */
+            /* [/pro] */
             case SQLITE:
                 assertNull(result.getValue(2, T725_LOB()));
                 break;
@@ -424,7 +424,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testCastingToDialectDataType() throws Exception {
         for (DataType<?> type : getCastableDataTypes()) {
-            /* [com] */
+            /* [pro] */
             if (dialect() == SQLDialect.ASE ||
                 dialect() == SQLDialect.DB2 ||
                 dialect() == SQLDialect.SYBASE) {
@@ -434,7 +434,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 }
             }
 
-            /* [/com] */
+            /* [/pro] */
             assertEquals(null, create().select(val(null, type).cast(type)).fetchOne(0));
         }
     }
@@ -474,7 +474,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             SQLDataType.VARBINARY,
             SQLDataType.VARCHAR)) {
 
-            /* [com] */
+            /* [pro] */
             if (dialect().family() == SQLDialect.ORACLE) {
                 if (type.getType() == byte[].class ||
                     type == SQLDataType.CLOB ||
@@ -495,7 +495,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 }
             }
 
-            /* [/com] */
+            /* [/pro] */
             assertEquals(null, create().select(val(null, type).cast(type)).fetchOne(0));
         }
     }
@@ -505,7 +505,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         if (dialect() != SQLDialect.HSQLDB) {
             assertEquals(true, create().select(cast(1, Boolean.class)).fetchOne(0));
 
-            if (true/* [com] */ && dialect() != SQLDialect.INGRES/* [/com] */) {
+            if (true/* [pro] */ && dialect() != SQLDialect.INGRES/* [/pro] */) {
                 assertEquals(true, create().select(cast("1", Boolean.class)).fetchOne(0));
             }
         }
@@ -513,7 +513,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(BigInteger.ONE, create().select(cast("1", BigInteger.class)).fetchOne(0));
         assertEquals(BigInteger.ONE, create().select(cast(1, BigInteger.class)).fetchOne(0));
 
-        /* [com] */
+        /* [pro] */
         // Sybase applies the wrong scale when casting. Force scale before comparing (Sybase returns 1.0000 when we expect 1)
         if (dialect() == SQLDialect.SYBASE) {
             BigDecimal result = (BigDecimal)create().select(cast("1", BigDecimal.class)).fetchOne(0);
@@ -524,7 +524,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             result = result.setScale(0);
             assertEquals(BigDecimal.ONE, result);
         } else
-        /* [/com] */
+        /* [/pro] */
         {
             assertEquals(0, BigDecimal.ONE.compareTo((BigDecimal) create().select(cast("1", BigDecimal.class)).fetchOne(0)));
             assertEquals(0, BigDecimal.ONE.compareTo((BigDecimal) create().select(cast(1, BigDecimal.class)).fetchOne(0)));
@@ -548,7 +548,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("1", create().select(cast(1, String.class)).fetchOne(0));
 
         // Sybase ASE does not know null bits
-        if (true/* [com] */ && dialect() != SQLDialect.ASE/* [/com] */) {
+        if (true/* [pro] */ && dialect() != SQLDialect.ASE/* [/pro] */) {
             assertEquals(null, create().select(castNull(Boolean.class)).fetchOne(0));
         }
 
@@ -1378,13 +1378,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Interval tests
         // --------------
-        if (/* [com] */
+        if (/* [pro] */
             dialect() == ASE ||
             dialect() == DB2 ||
             dialect() == INGRES || // [#1285] TODO: Fix this for Ingres
             dialect().family() == SQLSERVER ||
             dialect() == SYBASE ||
-            /* [/com] */
+            /* [/pro] */
             dialect() == CUBRID ||
             dialect() == DERBY ||
             dialect() == FIREBIRD ||
@@ -1444,14 +1444,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testDateTimeArithmetic() throws Exception {
 
-        /* [com] */
+        /* [pro] */
         // [#1285] TODO: Fix this for INGRES
         if (dialect() == INGRES) {
             log.info("SKIPPING", "Date time arithmetic tests");
             return;
         }
 
-        /* [/com] */
+        /* [/pro] */
         // [#1009] SQL DATE doesn't have a time zone. SQL TIMESTAMP does
         long tsShift = -3600000;
 

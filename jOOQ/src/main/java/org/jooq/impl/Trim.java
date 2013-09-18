@@ -65,7 +65,7 @@ class Trim extends AbstractFunction<String> {
 
     @Override
     final Field<String> getFunction0(Configuration configuration) {
-        /* [com] */
+        /* [pro] */
         switch (configuration.dialect().family()) {
             case ASE:
             case INGRES:
@@ -73,7 +73,7 @@ class Trim extends AbstractFunction<String> {
                 return DSL.ltrim(DSL.rtrim(argument));
         }
 
-        /* [/com] */
+        /* [/pro] */
         return function("trim", SQLDataType.VARCHAR, argument);
     }
 }

@@ -455,13 +455,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Check again with limit / offset clauses
         // ---------------------------------------
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case INGRES:
             case ORACLE:
                 log.info("SKIPPING", "LIMIT .. OFFSET .. FOR UPDATE");
                 break;
 
-            /* [/com] */
+            /* [/pro] */
             default: {
                 Result<Record1<Integer>> result3 = create()
                     .select(TAuthor_ID())
@@ -481,12 +481,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case DB2:
             case INGRES:
             case SYBASE:
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
             case FIREBIRD:
             case HSQLDB:
@@ -496,9 +496,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 log.info("SKIPPING", "FOR UPDATE .. WAIT/NOWAIT tests");
                 break;
 
-            /* [com] */
+            /* [pro] */
             case ORACLE:
-            /* [/com] */
+            /* [/pro] */
             case POSTGRES:
             default: {
                 Result<Record1<Integer>> r1a = create()
@@ -509,7 +509,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .fetch();
                 assertEquals(2, r1a.size());
 
-                /* [com] */
+                /* [pro] */
                 if (dialect().family() == ORACLE) {
                     Result<Record1<Integer>> r2a = create()
                         .select(TAuthor_ID())
@@ -545,7 +545,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                             .fetch();
                     assertEquals(2, r3b.size());
                 }
-                /* [/com] */
+                /* [/pro] */
             }
         }
 
@@ -585,9 +585,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         switch (dialect()) {
-            /* [com] */
+            /* [pro] */
             case ASE: // This should normally work. Why doesn't it?
-            /* [/com] */
+            /* [/pro] */
             case MARIADB:
             case MYSQL:
                 log.info("SKIPPING", "FOR UPDATE OF tests");

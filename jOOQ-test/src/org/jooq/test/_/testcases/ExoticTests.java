@@ -114,12 +114,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testTableWithHint() throws Exception {
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case DB2:
             case INGRES:
             case ORACLE:
-            /* [/com] */
+            /* [/pro] */
             case CUBRID:
             case DERBY:
             case FIREBIRD:
@@ -151,13 +151,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testPivotClause() throws Exception {
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case DB2:
             case INGRES:
             case SQLSERVER:
             case SYBASE:
-            /* [/com] */
+            /* [/pro] */
             case CUBRID:
             case DERBY:
             case FIREBIRD:
@@ -285,13 +285,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testAliasingPivot() throws Exception {
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case DB2:
             case INGRES:
             case SQLSERVER:
             case SYBASE:
-            /* [/com] */
+            /* [/pro] */
             case CUBRID:
             case DERBY:
             case FIREBIRD:
@@ -405,13 +405,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testConnectBySimple() throws Exception {
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case DB2:
             case INGRES:
             case SQLSERVER:
             case SYBASE:
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
             case FIREBIRD:
             case H2:
@@ -467,13 +467,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testConnectByDirectory() throws Exception {
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case DB2:
             case INGRES:
             case SQLSERVER:
             case SYBASE:
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
             case FIREBIRD:
             case H2:

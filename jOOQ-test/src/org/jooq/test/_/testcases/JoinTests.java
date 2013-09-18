@@ -308,10 +308,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testNaturalJoin() throws Exception {
         boolean unqualified = false;
-        /* [com] */
+        /* [pro] */
         if (dialect().family() == SQLDialect.ORACLE)
             unqualified = true;
-        /* [/com] */
+        /* [/pro] */
 
         Result<Record2<String, String>> result =
         create().select(TAuthor_LAST_NAME(), TBook_TITLE())
@@ -355,10 +355,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testJoinUsing() throws Exception {
         boolean unqualified = false;
-        /* [com] */
+        /* [pro] */
         if (dialect().family() == SQLDialect.ORACLE)
             unqualified = true;
-        /* [/com] */
+        /* [/pro] */
 
         Result<Record2<String, String>> result =
         create().select(TAuthor_LAST_NAME(), TBook_TITLE())
@@ -627,9 +627,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // --------------------
 
         switch (dialect()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
-            /* [/com] */
+            /* [/pro] */
             case CUBRID:
             case DERBY:
             case H2:

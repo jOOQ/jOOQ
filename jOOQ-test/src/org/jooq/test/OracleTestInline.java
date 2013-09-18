@@ -41,7 +41,7 @@
 
 package org.jooq.test;
 
-/* [com] */
+/* [pro] */
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
@@ -64,4 +64,4 @@ public class OracleTestInline extends OracleTest {
     }
 }
 
-/* [/com] */
+/* [/pro] */

@@ -224,10 +224,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
 
         boolean oracle = false;
-        /* [com] */
+        /* [pro] */
         if (dialect().family() == ORACLE)
             oracle = true;
-        /* [/com] */
+        /* [/pro] */
 
         assertEquals(2, (int) create().select(count)
                                       .from(TAuthor())
@@ -277,10 +277,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Update duplicate records
         // ------------------------
         switch (dialect()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case INGRES:
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
             case H2:
             case POSTGRES:

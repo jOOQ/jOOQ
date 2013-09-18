@@ -76,10 +76,10 @@ class Ln extends AbstractFunction<BigDecimal> {
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         if (base == null) {
             switch (configuration.dialect().family()) {
-                /* [com] */
+                /* [pro] */
                 case ASE:
                 case SQLSERVER:
-                /* [/com] */
+                /* [/pro] */
                 case H2:
                     return function("log", SQLDataType.NUMERIC, argument);
 
@@ -89,13 +89,13 @@ class Ln extends AbstractFunction<BigDecimal> {
         }
         else {
             switch (configuration.dialect().family()) {
-                /* [com] */
+                /* [pro] */
                 case ASE:
                 case DB2:
                 case INGRES:
                 case SQLSERVER:
                 case SYBASE:
-                /* [/com] */
+                /* [/pro] */
                 case DERBY:
                 case H2:
                 case HSQLDB:

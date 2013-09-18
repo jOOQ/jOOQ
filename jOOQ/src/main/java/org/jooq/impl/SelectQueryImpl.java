@@ -214,7 +214,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         if (getLimit().isApplicable()) {
             switch (context.configuration().dialect()) {
 
-                /* [com] */
+                /* [pro] */
                 // Oracle knows the ROWNUM pseudo-column. That makes things simple
                 case ORACLE:
                 case ORACLE10G:
@@ -275,7 +275,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                     break;
                 }
 
-                /* [/com] */
+                /* [/pro] */
                 // By default, render the dialect's limit clause
                 default: {
                     toSQLReferenceLimitDefault(context);
@@ -305,11 +305,11 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
                     // Some dialects don't allow for an OF [table-names] clause
                     // It can be simulated by listing the table's fields, though
-                    /* [com] */
+                    /* [pro] */
                     case DB2:
                     case INGRES:
                     case ORACLE:
-                    /* [/com] */
+                    /* [/pro] */
                     case DERBY: {
                         forUpdateOfTables.toSQLFieldNames(context);
                         break;
@@ -371,7 +371,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         context.visit(getLimit());
     }
 
-    /* [com] */
+    /* [pro] */
     /**
      * Simulate the LIMIT / OFFSET clause in the {@link SQLDialect#DB2},
      * {@link SQLDialect#SQLSERVER2008} and {@link SQLDialect#SYBASE} dialects
@@ -454,7 +454,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                .sql(" > ")
                .visit(getLimit().getLowerRownum());
     }
-    /* [/com] */
+    /* [/pro] */
 
     /**
      * This method renders the main part of a query without the LIMIT clause.
@@ -486,7 +486,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             context.keyword("distinct").sql(" ");
         }
 
-        /* [com] */
+        /* [pro] */
         // Sybase and SQL Server have leading TOP clauses
         switch (dialect.family()) {
             case ASE:
@@ -528,7 +528,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             case INGRES: {
             }
         }
-        /* [/com] */
+        /* [/pro] */
 
         context.declareFields(true);
 

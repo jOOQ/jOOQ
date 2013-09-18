@@ -188,7 +188,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
     protected final void prepare(ExecuteContext ctx) throws SQLException {
         Connection connection = ctx.connection();
 
-        /* [com] */
+        /* [pro] */
         // Just in case, always set Sybase ASE statement mode to return
         // Generated keys if client code wants to SELECT @@identity afterwards
         if (ctx.configuration().dialect() == SQLDialect.ASE) {
@@ -197,7 +197,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         }
 
         // Normal statement preparing if no values should be returned
-        else /* [/com] */if (returning.isEmpty()) {
+        else /* [/pro] */if (returning.isEmpty()) {
             super.prepare(ctx);
             return;
         }
@@ -213,9 +213,9 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 case SQLITE:
                 // Sybase will select @@identity after the INSERT
                 case CUBRID:
-                /* [com] */
+                /* [pro] */
                 case SYBASE:
-                /* [/com] */
+                /* [/pro] */
 
                     super.prepare(ctx);
                     return;
@@ -223,11 +223,11 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 // Some dialects can only return AUTO_INCREMENT values
                 // Other values have to be fetched in a second step
                 // [#1260] TODO CUBRID supports this, but there's a JDBC bug
-                /* [com] */
+                /* [pro] */
                 case ASE:
                 case INGRES:
                 case SQLSERVER:
-                /* [/com] */
+                /* [/pro] */
                 case DERBY:
                 case H2:
                 case MARIADB:
@@ -236,10 +236,10 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                     return;
 
                 // The default is to return all requested fields directly
-                /* [com] */
+                /* [pro] */
                 case DB2:
                 case ORACLE:
-                /* [/com] */
+                /* [/pro] */
                 case HSQLDB:
                 default: {
                     List<String> names = new ArrayList<String>();
@@ -286,9 +286,9 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 // TODO [#832] Fix this. This might be a driver issue. JDBC
                 // Generated keys don't work with jconn3, but they seem to work
                 // with jTDS (which is used for Sybase ASE integration)
-                /* [com] */
+                /* [pro] */
                 case SYBASE:
-                /* [/com] */
+                /* [/pro] */
                 case CUBRID: {
                     listener.executeStart(ctx);
                     result = ctx.statement().executeUpdate();
@@ -302,11 +302,11 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 // Some dialects can only retrieve "identity" (AUTO_INCREMENT) values
                 // Additional values have to be fetched explicitly
                 // [#1260] TODO CUBRID supports this, but there's a JDBC bug
-                /* [com] */
+                /* [pro] */
                 case ASE:
                 case INGRES:
                 case SQLSERVER:
-                /* [/com] */
+                /* [/pro] */
                 case DERBY:
                 case H2:
                 case MARIADB:
@@ -350,10 +350,10 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 }
 
                 // These dialects have full JDBC support
-                /* [com] */
+                /* [pro] */
                 case DB2:
                 case ORACLE:
-                /* [/com] */
+                /* [/pro] */
                 case HSQLDB:
                 default: {
                     listener.executeStart(ctx);

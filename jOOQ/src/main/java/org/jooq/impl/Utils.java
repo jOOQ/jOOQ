@@ -1965,13 +1965,13 @@ final class Utils {
                     return (T) rs.getObject(index);
                 }
 
-                /* [com] */
+                /* [pro] */
                 // Other SQL dialects deal with UUIDs as if they were CHAR(36)
                 // even if they explicitly support them (UNIQUEIDENTIFIER)
                 case SQLSERVER:
                 case SYBASE:
 
-                /* [/com] */
+                /* [/pro] */
                 // Most databases don't have such a type. In this case, jOOQ
                 // simulates the type
                 default: {
@@ -2268,13 +2268,13 @@ final class Utils {
                     return (T) stmt.getObject(index);
                 }
 
-                /* [com] */
+                /* [pro] */
                 // Other SQL dialects deal with UUIDs as if they were CHAR(36)
                 // even if they explicitly support them (UNIQUEIDENTIFIER)
                 case SQLSERVER:
                 case SYBASE:
 
-                /* [/com] */
+                /* [/pro] */
                 // Most databases don't have such a type. In this case, jOOQ
                 // simulates the type
                 default: {

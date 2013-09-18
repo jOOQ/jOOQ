@@ -157,7 +157,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // The below code throws an exception on Ingres when run once. When run
         // twice, the DB crashes... This seems to be a driver / database bug
-        if (true/* [com] */ && dialect() != SQLDialect.INGRES/* [/com] */) {
+        if (true/* [pro] */ && dialect() != SQLDialect.INGRES/* [/pro] */) {
             assertEquals(0, create().select().where(val(false).isTrue()).fetch().size());
             assertEquals(1, create().select().where(val(false).isFalse()).fetch().size());
             assertEquals(1, create().select().where(val(true).isTrue()).fetch().size());
@@ -184,13 +184,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         Field<String> notLike = TBook_PUBLISHED_IN().cast(String.class);
 
-        /* [com] */
+        /* [pro] */
         // DB2 doesn't support this syntax
         if (dialect() == DB2) {
             notLike = val("bbb");
         }
 
-        /* [/com] */
+        /* [/pro] */
         Result<B> books =
         create().selectFrom(TBook())
                 .where(TBook_TITLE().like("%a%"))
@@ -322,12 +322,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testLikeRegex() throws Exception {
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case DB2:
             case INGRES:
             case SQLSERVER:
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
             case FIREBIRD:
             case SQLITE:
@@ -465,7 +465,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetch(TBook_ID()));
 
         // [#1073] Some dialects incorrectly handle NULL in NOT IN predicates
-        /* [com] */
+        /* [pro] */
         if (asList(ASE).contains(dialect())) {
             assertEquals(
             asList(2, 3, 4),
@@ -476,7 +476,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .fetch(TBook_ID()));
         }
         else
-        /* [/com] */
+        /* [/pro] */
         {
             assertEquals(
             asList(),
@@ -523,9 +523,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // = { ALL | ANY | SOME }
         switch (dialect()) {
-            /* [com] */
+            /* [pro] */
             case INGRES: // Ingres supports these syntaxes but has internal errors...
-            /* [/com] */
+            /* [/pro] */
             case SQLITE:
                 log.info("SKIPPING", "= { ALL | ANY | SOME } tests");
                 break;

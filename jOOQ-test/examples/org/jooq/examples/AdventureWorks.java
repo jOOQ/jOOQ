@@ -40,7 +40,7 @@
  */
 package org.jooq.examples;
 
-/* [com] */
+/* [pro] */
 
 import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.Department;
 import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.Employee;
@@ -79,4 +79,4 @@ public class AdventureWorks {
     }
 }
 
-/* [/com] */
+/* [/pro] */

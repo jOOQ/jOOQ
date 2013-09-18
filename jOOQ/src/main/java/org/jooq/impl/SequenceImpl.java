@@ -128,7 +128,7 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
             SQLDialect family = configuration.dialect().family();
 
             switch (family) {
-                /* [com] */
+                /* [pro] */
                 case DB2:
                 case INGRES:
                 case ORACLE:
@@ -137,16 +137,16 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
                     return field(field, getDataType());
                 }
 
-                /* [/com] */
+                /* [/pro] */
                 case H2:
                 case POSTGRES: {
                     String field = method + "('" + getQualifiedName(configuration) + "')";
                     return field(field, getDataType());
                 }
 
-                /* [com] */
+                /* [pro] */
                 case SQLSERVER:
-                /* [/com] */
+                /* [/pro] */
                 case FIREBIRD:
                 case DERBY:
                 case HSQLDB: {
@@ -157,7 +157,7 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
                     else if (family == FIREBIRD) {
                         return field("gen_id(" + getQualifiedName(configuration) + ", 0)", getDataType());
                     }
-                    /* [com] */
+                    /* [pro] */
                     else if (family == SQLSERVER) {
                         return select(field("current_value"))
                                .from("sys.sequences sq")
@@ -168,7 +168,7 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
                                .asField()
                                .cast(type);
                     }
-                    /* [/com] */
+                    /* [/pro] */
                     else {
                         throw new SQLDialectNotSupportedException("The sequence's current value functionality is not supported for the " + family + " dialect.");
                     }

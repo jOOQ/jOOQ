@@ -74,7 +74,7 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
     @Override
     final Field<DayToSecond> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [com] */
+            /* [pro] */
 
             // Sybase ASE's datediff incredibly overflows on 3 days' worth of
             // microseconds. That's why the days have to be leveled at first
@@ -100,7 +100,7 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
                 return field("{datediff}(ms, {0}, {1})", getDataType(), timestamp2, timestamp1);
 
             case ORACLE:
-            /* [/com] */
+            /* [/pro] */
             case POSTGRES:
                 return field("{0} - {1}", getDataType(), timestamp1, timestamp2);
 
@@ -126,10 +126,10 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
             case SQLITE:
                 return field("({strftime}('%s', {0}) - {strftime}('%s', {1})) * 1000", getDataType(), timestamp1, timestamp2);
 
-            /* [com] */
+            /* [pro] */
             // Fall through to default
             case INGRES:
-            /* [/com] */
+            /* [/pro] */
         }
 
         // Default implementation for equals() and hashCode()

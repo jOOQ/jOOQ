@@ -156,13 +156,13 @@ class Expression<T> extends AbstractFunction<T> {
             return function("bin_or", getDataType(), getArguments());
         }
 
-        /* [com] */
+        /* [pro] */
         // Oracle has to simulate or/xor
         else if (BIT_OR == operator && ORACLE == family) {
             return lhs.sub(bitAnd(lhsAsNumber(), rhsAsNumber())).add(rhsAsNumber());
         }
 
-        /* [/com] */
+        /* [/pro] */
         // ~(a & b) & (a | b)
         else if (BIT_XOR == operator && asList(ORACLE, SQLITE).contains(family)) {
             return (Field<T>) bitAnd(
@@ -365,7 +365,7 @@ class Expression<T> extends AbstractFunction<T> {
                     return field("{datetime}({0}, {1})", getDataType(), lhs, interval);
                 }
 
-                /* [com] */
+                /* [pro] */
                 case ASE:
                 case SYBASE:
                 case SQLSERVER: {
@@ -422,7 +422,7 @@ class Expression<T> extends AbstractFunction<T> {
                 }
 
                 case ORACLE:
-                /* [/com] */
+                /* [/pro] */
                 case POSTGRES:
                 default:
                     return new DefaultExpression();
@@ -446,11 +446,11 @@ class Expression<T> extends AbstractFunction<T> {
          */
         private final Field<T> getNumberExpression(Configuration configuration) {
             switch (configuration.dialect().family()) {
-                /* [com] */
+                /* [pro] */
                 case ASE:
                 case SQLSERVER:
                 case SYBASE:
-                /* [/com] */
+                /* [/pro] */
                 case FIREBIRD: {
                     if (operator == ADD) {
                         return field("{dateadd}(day, {0}, {1})", getDataType(), rhsAsNumber(), lhs);
@@ -460,9 +460,9 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
-                /* [com] */
+                /* [pro] */
                 case DB2:
-                /* [/com] */
+                /* [/pro] */
                 case HSQLDB: {
                     if (operator == ADD) {
                         return lhs.add(field("{0} day", rhsAsNumber()));
@@ -498,7 +498,7 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
-                /* [com] */
+                /* [pro] */
                 // Ingres is not working yet
                 case INGRES: {
                     if (operator == ADD) {
@@ -509,7 +509,7 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
-                /* [/com] */
+                /* [/pro] */
                 case POSTGRES: {
 
                     // This seems to be the most reliable way to avoid issues
@@ -532,9 +532,9 @@ class Expression<T> extends AbstractFunction<T> {
                     }
 
                 // These dialects can add / subtract days using +/- operators
-                /* [com] */
+                /* [pro] */
                 case ORACLE:
-                /* [/com] */
+                /* [/pro] */
                 case H2:
                 default:
                     return new DefaultExpression();

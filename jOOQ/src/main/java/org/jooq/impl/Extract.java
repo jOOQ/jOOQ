@@ -87,9 +87,9 @@ class Extract extends AbstractFunction<Integer> {
                         throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
                 }
 
-            /* [com] */
+            /* [pro] */
             case DB2:
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
                 switch (datePart) {
                     case YEAR:
@@ -108,7 +108,7 @@ class Extract extends AbstractFunction<Integer> {
                         throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
                 }
 
-            /* [com] */
+            /* [pro] */
             case ORACLE:
                 switch (datePart) {
                     case YEAR:
@@ -148,7 +148,7 @@ class Extract extends AbstractFunction<Integer> {
                 }
 
             case INGRES:
-            /* [/com] */
+            /* [/pro] */
             case MARIADB:
             case MYSQL:
             case POSTGRES:

@@ -83,13 +83,13 @@ class Neg<T> extends AbstractField<T> {
                    .visit(field)
                    .sql(" - 1)");
         }
-        /* [com] */
+        /* [pro] */
         else if (operator == BIT_NOT && dialect == DB2) {
             context.keyword("bitnot(")
                    .visit(field)
                    .sql(")");
         }
-        /* [/com] */
+        /* [/pro] */
         else if (operator == BIT_NOT && dialect == FIREBIRD) {
             context.keyword("bin_not(")
                    .visit(field)

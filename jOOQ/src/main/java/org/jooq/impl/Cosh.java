@@ -70,12 +70,12 @@ class Cosh extends AbstractFunction<BigDecimal> {
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case INGRES:
             case SQLSERVER:
             case SYBASE:
-            /* [/com] */
+            /* [/pro] */
             case CUBRID:
             case HSQLDB:
             case MARIADB:

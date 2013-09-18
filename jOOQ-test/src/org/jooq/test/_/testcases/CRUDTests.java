@@ -406,12 +406,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("1985", book1.getValue(TBook_TITLE()));
         assertEquals("1985", book2.getValue(TBook_TITLE()));
 
-        /* [com] */
+        /* [pro] */
         // No ON DELETE CASCADE constraints for Sybase ASE
         if (dialect() == SQLDialect.ASE) {
             create().truncate(table("t_book_to_book_store")).execute();
         }
-        /* [/com] */
+        /* [/pro] */
 
         // Delete the modified record
         assertEquals(1, book1.delete());
@@ -572,7 +572,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(null, create().fetchOne(TBookStore(), TBookStore_NAME().equal("Amazon")));
 
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             // Sybase ASE and SQL server do not allow for explicitly setting
             // values on IDENTITY columns
             case ASE:
@@ -580,7 +580,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 log.info("SKIPPING", "Storing previously deleted UpdatableRecords");
                 break;
 
-            /* [/com] */
+            /* [/pro] */
             default:
                 store.store();
                 assertEquals("Amazon", store.getValue(TBookStore_NAME()));
@@ -688,12 +688,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testStoreWithOptimisticLock() throws Exception {
         jOOQAbstractTest.reset = false;
 
-        /* [com] */
+        /* [pro] */
         // No ON DELETE CASCADE constraints for Sybase ASE
         if (dialect() == SQLDialect.ASE) {
             create().truncate(table("t_book_to_book_store")).execute();
         }
-        /* [/com] */
+        /* [/pro] */
 
         testStoreWithOptimisticLock0(TBook(), TBook_ID(), TBook_TITLE());
 

@@ -232,7 +232,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("2", create().select(nvl("2", "1")).fetchOne(0));
 
         // TODO [#831] Fix this for Sybase ASE
-        if (true/* [com] */ && dialect() != SQLDialect.ASE/* [/com] */) {
+        if (true/* [pro] */ && dialect() != SQLDialect.ASE/* [/pro] */) {
             assertTrue(("" + create()
                 .select(nvl(TBook_CONTENT_TEXT(), "abc"))
                 .from(TBook())
@@ -253,7 +253,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("2", create().select(nvl2(val("2"), "2", "1")).fetchOne(0));
 
         // TODO [#831] Fix this for Sybase ASE
-        if (true/* [com] */ && dialect() != SQLDialect.ASE/* [/com] */) {
+        if (true/* [pro] */ && dialect() != SQLDialect.ASE/* [/pro] */) {
             assertEquals("abc", create()
                 .select(nvl2(TBook_CONTENT_TEXT(), "abc", "xyz"))
                 .from(TBook())
@@ -350,12 +350,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         boolean noSubselects = false;
 
-        /* [com] */
+        /* [pro] */
         // Ingres does not allow sub selects in CASE expressions
         if (dialect() == INGRES)
             noSubselects = true;
 
-        /* [/com] */
+        /* [/pro] */
         Field<?> case2 = noSubselects
             ? decode()
                 .value(TBook_AUTHOR_ID())
@@ -584,9 +584,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // ASCII
         switch (dialect()) {
-            /* [com] */
+            /* [pro] */
             case INGRES: // TODO [#864]
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
             case SQLITE: // TODO [#862]
                 log.info("SKIPPING", "ASCII function test");
@@ -613,13 +613,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // MD5
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case DB2:
             case INGRES:
             case SQLSERVER:
             case SYBASE:
-            /* [/com] */
+            /* [/pro] */
             case CUBRID:
             case DERBY:
             case FIREBIRD:
@@ -630,9 +630,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 log.info("SKIPPING", "MD5 function test");
                 break;
 
-            /* [com] */
+            /* [pro] */
             case ORACLE:
-            /* [/com] */
+            /* [/pro] */
             case MARIADB:
             case MYSQL:
             default:
@@ -646,7 +646,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Some databases are limited or buggy
         boolean sqlite = (dialect() == SQLITE);
-        boolean ingres = false/* [com] */ || (dialect() == INGRES)/* [/com] */;
+        boolean ingres = false/* [pro] */ || (dialect() == INGRES)/* [/pro] */;
 
         // The random function
         BigDecimal rand = create().select(rand()).fetchOne(rand());
@@ -1031,9 +1031,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testBitwiseOperations() throws Exception {
         switch (dialect()) {
-            /* [com] */
+            /* [pro] */
             case INGRES:
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
                 log.info("SKIPPING", "Tests for bitwise operations");
                 return;
@@ -1041,13 +1041,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         Field<Integer> bitCount = bitCount(3);
 
-        /* [com] */
+        /* [pro] */
         // TODO [#896] This somehow doesn't work on some dialects
         if (asList(ASE, DB2, SQLSERVER).contains(dialect().family())) {
             bitCount = val(2);
         }
 
-        /* [/com] */
+        /* [/pro] */
         Record result =
         create().select(
                     bitCount,

@@ -111,14 +111,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testTruncateCascade() throws Exception {
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case DB2:
             case INGRES:
             case ORACLE:
             case SQLSERVER:
             case SYBASE:
-            /* [/com] */
+            /* [/pro] */
             case CUBRID:
             case DERBY:
             case FIREBIRD:
@@ -152,14 +152,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testTruncateRestartIdentity() throws Exception {
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case DB2:
             case INGRES:
             case ORACLE:
             case SQLSERVER:
             case SYBASE:
-            /* [/com] */
+            /* [/pro] */
             case CUBRID:
             case DERBY:
             case FIREBIRD:

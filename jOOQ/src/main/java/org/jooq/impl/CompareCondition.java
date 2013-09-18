@@ -125,10 +125,10 @@ class CompareCondition extends AbstractCondition {
         // characters long
         boolean castRhs = false;
 
-        /* [com] */
+        /* [pro] */
         if (dialect == DB2 && rhs instanceof Concat)
             castRhs = true;
-        /* [/com] */
+        /* [/pro] */
 
                      context.keyword(op.toSQL()).sql(" ");
         if (castRhs) context.keyword("cast").sql("(");

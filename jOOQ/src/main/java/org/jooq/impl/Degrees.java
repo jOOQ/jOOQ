@@ -70,10 +70,10 @@ class Degrees extends AbstractFunction<BigDecimal> {
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case INGRES:
             case ORACLE:
-            /* [/com] */
+            /* [/pro] */
             case FIREBIRD:
             case SQLITE:
                 return argument.cast(BigDecimal.class).mul(inline(180)).div(pi());

@@ -118,7 +118,7 @@ public enum SQLDialect {
     // SQL dialects for commercial usage
     // -------------------------------------------------------------------------
 
-    /* [com] */
+    /* [pro] */
 
 //  /**
 //   * The MS Access SQL dialect family. ACCESS support will be added in jOOQ 3.3
@@ -180,7 +180,7 @@ public enum SQLDialect {
      */
     SYBASE("Sybase", true),
 
-    /* [/com] */
+    /* [/pro] */
 
     ;
 

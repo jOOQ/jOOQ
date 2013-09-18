@@ -41,7 +41,7 @@
 
 package org.jooq.test;
 
-/* [com] */
+/* [pro] */
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
@@ -1439,4 +1439,4 @@ public class OracleTest extends jOOQAbstractTest<
     }
 }
 
-/* [/com] */
+/* [/pro] */

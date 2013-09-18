@@ -142,7 +142,7 @@ public class JDBCUtils {
             return SQLITE;
         }
 
-        /* [com] */
+        /* [pro] */
         else if (url.startsWith("jdbc:jtds:sybase:")) {
             return ASE;
         }
@@ -165,7 +165,7 @@ public class JDBCUtils {
         else if (url.startsWith("jdbc:sybase:")) {
             return SYBASE;
         }
-        /* [/com] */
+        /* [/pro] */
 
         return SQLDialect.SQL99;
     }

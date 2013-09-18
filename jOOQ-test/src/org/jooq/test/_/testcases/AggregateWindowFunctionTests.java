@@ -163,12 +163,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Use AVG instead, as in this example the values of MEDIAN and AVG
         // are the same
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case INGRES:
             case DB2:
             case SQLSERVER:
-            /* [/com] */
+            /* [/pro] */
 
             case CUBRID:
             case DERBY:
@@ -267,7 +267,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 assertEquals(0.25, result2.get(1).getValue(3, Double.class));
 
                 // DB2 only knows STDDEV_POP / VAR_POP
-                if (true/* [com] */ && dialect() != SQLDialect.DB2/* [/com] */) {
+                if (true/* [pro] */ && dialect() != SQLDialect.DB2/* [/pro] */) {
                     assertEquals("0.707", result2.get(0).getValue(2, String.class).substring(0, 5));
                     assertEquals(0.5, result2.get(0).getValue(4, Double.class));
                     assertEquals("0.707", result2.get(1).getValue(2, String.class).substring(0, 5));
@@ -330,11 +330,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testLinearRegressionFunctions() throws Exception {
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case INGRES:
             case SQLSERVER:
-            /* [/com] */
+            /* [/pro] */
             case CUBRID:
             case DERBY:
             case FIREBIRD:
@@ -365,13 +365,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         List<String> values = Arrays.asList("1.5", "2.5", "4.0", "-0.5", "0.8", "2.0", "1.0", "2.0", "5.0");
         assertEquals(values, Arrays.asList(roundStrings(1, record.into(String[].class))));
 
-        /* [com] */
+        /* [pro] */
         switch (dialect()) {
             case DB2:
                 log.info("SKIPPING", "Skipping linear regression window function tests");
                 return;
         }
-        /* [/com] */
+        /* [/pro] */
 
         // [#600] As window functions
         Result<Record9<BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal>> result =
@@ -398,10 +398,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testWindowFunctions() throws Exception {
         switch (dialect()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case INGRES:
-            /* [/com] */
+            /* [/pro] */
             case FIREBIRD:
             case MARIADB:
             case MYSQL:
@@ -536,9 +536,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(1), result.getValue(3, column));
 
         switch (dialect()) {
-            /* [com] */
+            /* [pro] */
             case DB2:
-            /* [/com] */
+            /* [/pro] */
             case CUBRID:
                 log.info("SKIPPING", "PERCENT_RANK() and CUME_DIST() window function tests");
                 break;
@@ -645,7 +645,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(0.25, result.get(0).getValue(7, Double.class));
 
         // DB2 only knows STDDEV_POP / VAR_POP
-        if (true/* [com] */ && dialect() != SQLDialect.DB2/* [/com] */) {
+        if (true/* [pro] */ && dialect() != SQLDialect.DB2/* [/pro] */) {
             assertEquals("1.290", result.get(0).getValue(2, String.class).substring(0, 5));
             assertEquals("1.666", result.get(0).getValue(4, String.class).substring(0, 5));
             assertEquals("0.707", result.get(0).getValue(6, String.class).substring(0, 5));
@@ -653,12 +653,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         // NTILE()
-        /* [com] */
+        /* [pro] */
         if (asList(DB2, SYBASE).contains(dialect())) {
             log.info("SKIPPING", "NTILE tests");
         }
         else
-        /* [/com] */
+        /* [/pro] */
         {
             result =
             create().select(TBook_ID(),
@@ -739,9 +739,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case SQLSERVER:
-            /* [/com] */
+            /* [/pro] */
             case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "FIRST_VALUE(... IGNORE NULLS) window function test");
@@ -774,12 +774,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         switch (dialect()) {
-            /* [com] */
+            /* [pro] */
             case SYBASE:
                 log.info("SKIPPING", "LEAD/LAG tests");
                 break;
 
-            /* [/com] */
+            /* [/pro] */
             default: {
                 column = 0;
 
@@ -920,11 +920,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testListAgg() throws Exception {
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case INGRES:
             case SQLSERVER:
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
             case SQLITE:
                 log.info("SKIPPING", "LISTAGG tests");
@@ -959,10 +959,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("4, 3", result1.getValue(1, "books2"));
 
         switch (dialect()) {
-            /* [com] */
+            /* [pro] */
             case DB2:
             case SYBASE:
-            /* [/com] */
+            /* [/pro] */
             case CUBRID:
             case H2:
             case HSQLDB:

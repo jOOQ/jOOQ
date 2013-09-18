@@ -108,9 +108,9 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
         switch (context.configuration().dialect()) {
 
             // These dialects don't implement the TRUNCATE statement
-            /* [com] */
+            /* [pro] */
             case INGRES:
-            /* [/com] */
+            /* [/pro] */
             case FIREBIRD:
             case SQLITE: {
                 context.visit(create(context).delete(table));
@@ -123,12 +123,12 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
                        .keyword("truncate table").sql(" ")
                        .visit(table);
 
-                /* [com] */
+                /* [pro] */
                 if (context.configuration().dialect() == SQLDialect.DB2) {
                     context.sql(" ").keyword("immediate");
                 }
 
-                /* [/com] */
+                /* [/pro] */
                 if (restartIdentity != null) {
                     context.formatSeparator()
                            .keyword(restartIdentity ? "restart identity" : "continue identity");

@@ -73,9 +73,9 @@ class RegexpLike extends AbstractCondition {
         switch (context.configuration().dialect().family()) {
 
             // [#620] These databases are compatible with the MySQL syntax
-            /* [com] */
+            /* [pro] */
             case SYBASE:
-            /* [/com] */
+            /* [/pro] */
             case CUBRID:
             case H2:
             case MARIADB:
@@ -106,7 +106,7 @@ class RegexpLike extends AbstractCondition {
                 break;
             }
 
-            /* [com] */
+            /* [pro] */
             // [#620] Oracle has its own syntax
             case ORACLE: {
 
@@ -115,15 +115,15 @@ class RegexpLike extends AbstractCondition {
                 break;
             }
 
-            /* [/com] */
+            /* [/pro] */
             // Render the SQL standard for those databases that do not support
             // regular expressions
-            /* [com] */
+            /* [pro] */
             case ASE:
             case DB2:
             case INGRES:
             case SQLSERVER:
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
             case FIREBIRD:
             default: {

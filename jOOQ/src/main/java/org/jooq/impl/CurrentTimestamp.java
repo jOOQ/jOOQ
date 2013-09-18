@@ -65,7 +65,7 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
     @Override
     final Field<Timestamp> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
                 return function("current_bigdatetime", SQLDataType.TIMESTAMP);
 
@@ -78,7 +78,7 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
             case DB2:
             case INGRES:
             case SQLSERVER:
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
             case FIREBIRD:
             case HSQLDB:

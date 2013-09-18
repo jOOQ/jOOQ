@@ -531,7 +531,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     sql("`").sql(StringUtils.replace(literal, "`", "``")).sql("`");
                     break;
 
-                /* [com] */
+                /* [pro] */
                 // T-SQL databases use brackets
                 case ASE:
                 case SQLSERVER:
@@ -539,13 +539,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     sql("[").sql(StringUtils.replace(literal, "]", "]]")).sql("]");
                     break;
 
-                /* [/com] */
+                /* [/pro] */
                 // Most dialects implement the SQL standard, using double quotes
-                /* [com] */
+                /* [pro] */
                 case DB2:
                 case INGRES:
                 case ORACLE:
-                /* [/com] */
+                /* [/pro] */
                 case CUBRID:
                 case DERBY:
                 case FIREBIRD:
@@ -583,7 +583,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 return;
 
             switch (configuration().dialect().family()) {
-                /* [com] */
+                /* [pro] */
                 case ASE:
                     checkForceInline(2000);
                     return;
@@ -596,7 +596,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     checkForceInline(2100);
                     return;
 
-                /* [/com] */
+                /* [/pro] */
                 case SQLITE:
                     checkForceInline(999);
                     return;

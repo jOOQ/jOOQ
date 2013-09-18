@@ -77,7 +77,7 @@ class Substring extends AbstractFunction<String> {
                 }
             }
 
-            /* [com] */
+            /* [pro] */
             // Sybase ASE and SQL Server requires 3 arguments
             case ASE:
             case SQLSERVER: {
@@ -110,7 +110,7 @@ class Substring extends AbstractFunction<String> {
 
             case DB2:
             case ORACLE:
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
             case SQLITE:
                 functionName = "substr";

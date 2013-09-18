@@ -40,7 +40,7 @@
  */
 package org.jooq.examples;
 
-/* [com] */
+/* [pro] */
 
 import static org.jooq.impl.DSL.table;
 
@@ -80,4 +80,4 @@ public class DBMS_XPLAN {
     }
 }
 
-/* [/com] */
+/* [/pro] */

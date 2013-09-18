@@ -153,7 +153,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
     @Override
     public final boolean isGenericNumberType() {
-        /* [com] */
+        /* [pro] */
         switch (getDialect().family()) {
             case ORACLE: {
                 return (OracleDataType.NUMBER.getTypeName().equalsIgnoreCase(typeName)
@@ -162,7 +162,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
             }
         }
 
-        /* [/com] */
+        /* [/pro] */
         return false;
     }
 

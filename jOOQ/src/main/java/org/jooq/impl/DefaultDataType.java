@@ -496,9 +496,9 @@ public class DefaultDataType<T> implements DataType<T> {
         }
         else if (Result.class.isAssignableFrom(type)) {
             switch (dialect.family()) {
-                /* [com] */
+                /* [pro] */
                 case ORACLE:
-                /* [/com] */
+                /* [/pro] */
                 case H2:
                     return -10; // OracleTypes.CURSOR;
 

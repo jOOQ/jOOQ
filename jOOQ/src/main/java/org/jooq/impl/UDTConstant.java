@@ -67,7 +67,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
     public final void toSQL(RenderContext context) {
         switch (context.configuration().dialect().family()) {
 
-            /* [com] */
+            /* [pro] */
             // Oracle supports java.sql.SQLData, hence the record can be bound
             // to the CallableStatement directly
             case ORACLE: {
@@ -99,7 +99,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
                 return;
             }
 
-            /* [/com] */
+            /* [/pro] */
             // Due to lack of UDT support in the Postgres JDBC drivers, all UDT's
             // have to be inlined
             case POSTGRES: {
@@ -134,10 +134,10 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             case POSTGRES:
                 return "ROW";
 
-            /* [com] */
+            /* [pro] */
             case ORACLE:
             case DB2:
-            /* [/com] */
+            /* [/pro] */
 
             // Assume default behaviour if dialect is not available
             default: {
@@ -158,7 +158,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
     public final void bind(BindContext context) {
         switch (context.configuration().dialect().family()) {
 
-            /* [com] */
+            /* [pro] */
             // Oracle supports java.sql.SQLData, hence the record can be bound
             // to the CallableStatement directly
             case ORACLE:
@@ -168,7 +168,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             // Is the DB2 case correct? Should it be inlined like the Postgres case?
             case DB2:
 
-            /* [/com] */
+            /* [/pro] */
             // Postgres cannot bind a complete structured type. The type is
             // inlined instead: ROW(.., .., ..)
             case POSTGRES: {

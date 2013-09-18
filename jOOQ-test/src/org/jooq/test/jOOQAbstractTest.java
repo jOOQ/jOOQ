@@ -386,13 +386,13 @@ public abstract class jOOQAbstractTest<
                     }
                 }
 
-                /* [com] */
+                /* [pro] */
                 // There are no IF EXISTS clauses in Sybase ASE
                 else if (e.getMessage().contains("doesn't exist") && getDialect() == SQLDialect.ASE) {
                     continue;
                 }
 
-                /* [/com] */
+                /* [/pro] */
                 // There is no IF EXISTS clause in CUBRID's DROP VIEW statement
                 else if (getDialect() == CUBRID && sql.trim().startsWith("DROP")) {
                     continue;

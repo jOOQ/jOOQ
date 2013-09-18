@@ -41,7 +41,7 @@
 
 package org.jooq.test;
 
-/* [com] */
+/* [pro] */
 
 import static org.jooq.test.db2.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.db2.generatedclasses.Tables.T_BOOLEANS;
@@ -773,4 +773,4 @@ public class DB2Test extends jOOQAbstractTest<
     }
 }
 
-/* [/com] */
+/* [/pro] */

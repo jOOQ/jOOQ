@@ -180,7 +180,7 @@ class ArrayTable extends AbstractTable<Record> {
 
     private final Table<Record> table(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ORACLE: {
                 if (array.getDataType().getType().isArray()) {
                     return simulate().as(alias);
@@ -190,7 +190,7 @@ class ArrayTable extends AbstractTable<Record> {
                 }
             }
 
-            /* [/com] */
+            /* [/pro] */
             case H2: {
                 return new H2ArrayTable().as(alias);
             }
@@ -256,7 +256,7 @@ class ArrayTable extends AbstractTable<Record> {
         }
     }
 
-    /* [com] */
+    /* [pro] */
     private class OracleArrayTable extends DialectArrayTable {
 
         /**
@@ -270,7 +270,7 @@ class ArrayTable extends AbstractTable<Record> {
         }
     }
 
-    /* [/com] */
+    /* [/pro] */
     private abstract class DialectArrayTable extends AbstractTable<Record> {
 
         /**

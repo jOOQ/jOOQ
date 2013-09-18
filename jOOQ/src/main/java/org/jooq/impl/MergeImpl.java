@@ -941,12 +941,12 @@ implements
      */
     private final QueryPart getStandardMerge(Configuration config) {
         switch (config.dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case DB2:
             case ORACLE:
             case SQLSERVER:
             case SYBASE:
-            /* [/com] */
+            /* [/pro] */
             case CUBRID:
             case HSQLDB: {
 
@@ -1111,7 +1111,7 @@ implements
         context.formatIndentEnd()
                .declareTables(false);
 
-        /* [com] */
+        /* [pro] */
         switch (context.configuration().dialect().family()) {
             case SQLSERVER:
             case SYBASE: {
@@ -1143,8 +1143,8 @@ implements
             }
         }
 
-        /* [/com] */
-        boolean onParentheses = false/* [com] */ || context.configuration().dialect().family() == ORACLE/* [/com] */;
+        /* [/pro] */
+        boolean onParentheses = false/* [pro] */ || context.configuration().dialect().family() == ORACLE/* [/pro] */;
         context.end(MERGE_USING)
                .formatSeparator()
                .start(MERGE_ON)
@@ -1210,14 +1210,14 @@ implements
 
         context.end(MERGE_WHERE)
                .end(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
-        /* [com] */
+        /* [pro] */
 
         switch (context.configuration().dialect().family()) {
             case SQLSERVER:
                 context.sql(";");
                 break;
         }
-        /* [/com] */
+        /* [/pro] */
     }
 
     @Override

@@ -118,9 +118,9 @@ class Union<R extends Record> extends AbstractSelect<R> {
         switch (context.configuration().dialect()) {
             // Sybase ASE, Derby, Firebird and SQLite have some syntax issues with unions.
             // Check out https://issues.apache.org/jira/browse/DERBY-2374
-            /* [com] */
+            /* [pro] */
             case ASE:
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
             case FIREBIRD:
             case SQLITE:

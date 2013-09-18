@@ -124,10 +124,10 @@ class Limit extends AbstractQueryPart {
                 break;
             }
 
-            /* [com] */
+            /* [pro] */
             case SQLSERVER:
             case SQLSERVER2012:
-            /* [/com] */
+            /* [/pro] */
             case DERBY: {
 
                 // Casts are not supported here...
@@ -143,7 +143,7 @@ class Limit extends AbstractQueryPart {
                 break;
             }
 
-            /* [com] */
+            /* [pro] */
             case INGRES: {
 
                 // INGRES doesn't allow bind variables in the
@@ -207,7 +207,7 @@ class Limit extends AbstractQueryPart {
                 break;
             }
 
-            /* [/com] */
+            /* [/pro] */
             // A default implementation is necessary for hashCode() and toString()
             default: {
                 context.castMode(NEVER)
@@ -229,10 +229,10 @@ class Limit extends AbstractQueryPart {
 
             // OFFSET .. LIMIT support provided by the following dialects
             // ----------------------------------------------------------
-            /* [com] */
+            /* [pro] */
             case SQLSERVER:
             case SQLSERVER2012:
-            /* [/com] */
+            /* [/pro] */
             case DERBY: {
                 context.visit(offsetOrZero);
                 context.visit(numberOfRows);
@@ -268,7 +268,7 @@ class Limit extends AbstractQueryPart {
                 break;
             }
 
-            /* [com] */
+            /* [pro] */
             // These dialects don't support bind variables at all
             case ASE:
             case INGRES: {
@@ -324,7 +324,7 @@ class Limit extends AbstractQueryPart {
                 break;
             }
 
-            /* [/com] */
+            /* [/pro] */
             // [#2057] Bind the same values as rendered in toSQL() by default
             default: {
                 context.visit(numberOfRows);

@@ -152,9 +152,9 @@ class Val<T> extends AbstractParam<T> {
                 switch (context.configuration().dialect()) {
 
                     // These dialects can hardly detect the type of a bound constant.
-                    /* [com] */
+                    /* [pro] */
                     case DB2:
-                    /* [/com] */
+                    /* [/pro] */
                     case DERBY:
                     case FIREBIRD:
 
@@ -168,9 +168,9 @@ class Val<T> extends AbstractParam<T> {
 
                     // [#1029] Postgres and [#632] Sybase need explicit casting
                     // in very rare cases.
-                    /* [com] */
+                    /* [pro] */
                     case SYBASE:
-                    /* [/com] */
+                    /* [/pro] */
                     case POSTGRES: {
                         return true;
                     }
@@ -183,9 +183,9 @@ class Val<T> extends AbstractParam<T> {
         // them
         if (getDataType().isInterval()) {
             switch (context.configuration().dialect().family()) {
-                /* [com] */
+                /* [pro] */
                 case ORACLE:
-                /* [/com] */
+                /* [/pro] */
                 case POSTGRES:
                     return true;
             }
@@ -363,14 +363,14 @@ class Val<T> extends AbstractParam<T> {
                     context.sql("0x")
                            .sql(convertBytesToHex(binary));
                 }
-                /* [com] */
+                /* [pro] */
                 else if (family == DB2) {
                     context.keyword("blob")
                            .sql("(X'")
                            .sql(convertBytesToHex(binary))
                            .sql("')");
                 }
-                /* [/com] */
+                /* [/pro] */
                 else if (asList(DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE).contains(family)) {
                     context.sql("X'")
                            .sql(convertBytesToHex(binary))
@@ -463,13 +463,13 @@ class Val<T> extends AbstractParam<T> {
                     context.keyword("time").sql("('").sql(escape(val)).sql("')");
                 }
 
-                /* [com] */
+                /* [pro] */
                 // [#1253] Oracle doesn't know time literals
                 else if (family == ORACLE) {
                     context.keyword("timestamp").sql(" '1970-01-01 ").sql(escape(val)).sql("'");
                 }
 
-                /* [/com] */
+                /* [/pro] */
                 // Most dialects implement SQL standard time literals
                 else {
                     context.keyword("time").sql(" '").sql(escape(val)).sql("'");

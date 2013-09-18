@@ -1456,7 +1456,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
                 return select(field).fetchOne(field);
             }
 
-            /* [com] */
+            /* [pro] */
             case INGRES: {
                 Field<BigInteger> field = field("last_identity()", BigInteger.class);
                 return select(field).fetchOne(field);
@@ -1469,7 +1469,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
                 return select(field).fetchOne(field);
             }
 
-            /* [/com] */
+            /* [/pro] */
             default:
                 throw new SQLDialectNotSupportedException("identity functionality not supported by " + configuration.dialect());
         }

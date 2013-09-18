@@ -235,7 +235,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     }
 
     private final boolean simulateCrossJoin(RenderContext context) {
-        return false/* [com] */ || type == CROSS_JOIN && context.configuration().dialect() == ASE/* [/com] */;
+        return false/* [pro] */ || type == CROSS_JOIN && context.configuration().dialect() == ASE/* [/pro] */;
     }
 
     private final boolean simulateNaturalJoin(RenderContext context) {

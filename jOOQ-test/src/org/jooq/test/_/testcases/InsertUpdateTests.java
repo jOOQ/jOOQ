@@ -159,8 +159,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         int firstId = create().select(max(id)).from(table).fetchOne(max(id));
 
-        if (dialect() != POSTGRES/* [com] */ &&
-            dialect() != DB2/* [/com] */) {
+        if (dialect() != POSTGRES/* [pro] */ &&
+            dialect() != DB2/* [/pro] */) {
 
             assertEquals(new BigInteger("" + firstId), create().lastID());
         }
@@ -178,8 +178,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .returning()
                 .fetchOne();
 
-        if (dialect() != POSTGRES/* [com] */ &&
-            dialect() != DB2/* [/com] */) {
+        if (dialect() != POSTGRES/* [pro] */ &&
+            dialect() != DB2/* [/pro] */) {
 
             assertEquals(new BigInteger("" + (firstId + 1)), create().lastID());
             assertEquals(new BigInteger("" + (firstId + 1)), create().lastID());
@@ -195,12 +195,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#1004] Make this work for SQL Server also
         // TODO ... and then, think about Ingres, H2 and Derby as well
         if (dialect() == CUBRID ||
-            /* [com] */
+            /* [pro] */
             dialect() == ASE ||
             dialect() == SYBASE ||
             dialect().family() == SQLSERVER ||
             dialect() == INGRES ||
-            /* [/com] */
+            /* [/pro] */
             dialect() == H2 ||
             dialect() == DERBY) {
 
@@ -374,9 +374,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         Field<?> nullField = null;
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ORACLE:
-            /* [/com] */
+            /* [/pro] */
             case POSTGRES:
                 // TODO: cast this to the UDT type
                 nullField = cast(null, TAuthor_ADDRESS());
@@ -425,11 +425,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Field<Integer> ID4;
 
         switch (dialect()) {
-            /* [com] */
+            /* [pro] */
             // Sybase ASE doesn't allow for selecting data inside VALUES()
             case ASE:
 
-            /* [/com] */
+            /* [/pro] */
             // MySQL doesn't allow for selecting from the INSERT INTO table
             case MARIADB:
             case MYSQL:
@@ -639,13 +639,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(returned.getValue(TTriggers_COUNTER()));
 
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case INGRES:
             case ORACLE:
             case SQLSERVER:
             case SYBASE:
-            /* [/com] */
+            /* [/pro] */
             // TODO [#1260] This should work eventually, when CUBRID fixes this
             // JDBC bug
             case CUBRID:
@@ -747,14 +747,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testUpdateReturning() throws Exception {
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case DB2:
             case INGRES:
             case ORACLE:
             case SQLSERVER:
             case SYBASE:
-            /* [/com] */
+            /* [/pro] */
             case CUBRID:
             case DERBY:
             case H2:
@@ -805,10 +805,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testInsertOnDuplicateKeyUpdate() throws Exception {
         switch (dialect()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case INGRES:
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
             case H2:
             case POSTGRES:
@@ -845,10 +845,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testInsertOnDuplicateKeyIgnore() throws Exception {
         switch (dialect()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case INGRES:
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
             case H2:
             case POSTGRES:
@@ -884,10 +884,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testMerge() throws Exception {
         switch (dialect()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case INGRES:
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
             case H2:
             case MARIADB:
@@ -1007,13 +1007,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testMergeWithOracleSyntaxExtension() throws Exception {
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case DB2:
             case INGRES:
             case SQLSERVER:
             case SYBASE:
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
             case FIREBIRD:
             case H2:
@@ -1104,10 +1104,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testMergeWithH2SyntaxExtension() throws Exception {
         switch (dialect()) {
-            /* [com] */
+            /* [pro] */
             case ASE:
             case INGRES:
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
             case MARIADB:
             case MYSQL:
@@ -1237,11 +1237,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testUpdateJoin() throws Exception {
         switch (dialect().family()) {
-            /* [com] */
+            /* [pro] */
             case DB2:
             case ORACLE:
             case SQLSERVER:
-            /* [/com] */
+            /* [/pro] */
             case DERBY:
             case FIREBIRD:
             case H2:

@@ -41,7 +41,7 @@
 
 package org.jooq.test;
 
-/* [com] */
+/* [pro] */
 
 import static org.jooq.test.ase.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.ase.generatedclasses.Tables.T_BOOLEANS;
@@ -783,4 +783,4 @@ public class ASETest extends jOOQAbstractTest<
     }
 }
 
-/* [/com] */
+/* [/pro] */

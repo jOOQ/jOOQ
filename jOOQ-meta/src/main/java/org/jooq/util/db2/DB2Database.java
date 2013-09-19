@@ -141,6 +141,7 @@ public class DB2Database extends AbstractDatabase {
             .from(KEYCOLUSE)
             .join(TABCONST)
             .on(Keycoluse.TABSCHEMA.equal(Tabconst.TABSCHEMA))
+            .and(Keycoluse.TABNAME.equal(Tabconst.TABNAME))
             .and(Keycoluse.CONSTNAME.equal(Tabconst.CONSTNAME))
             .where(Keycoluse.TABSCHEMA.in(getInputSchemata()))
             .and(Tabconst.TYPE.equal(constraintType))

@@ -2,16 +2,16 @@
 <configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd">
     <jdbc>
         <driver>com.ibm.db2.jcc.DB2Driver</driver>
-        <url>jdbc:db2://localhost:50000/TEST:retrieveMessagesFromServerOnGetMessage=true;</url>
-        <schema>LUKAS</schema>
-        <user>lukas</user>
-        <password>lukas</password>
+        <url>jdbc:db2://localhost:50000/LIBRARY:retrieveMessagesFromServerOnGetMessage=true;</url>
+        <schema>LIBRARY</schema>
+        <user>db2admin</user>
+        <password>db2admin</password>
     </jdbc>
     <generator>
         <name>org.jooq.util.DefaultGenerator</name>
         <database>
             <name>org.jooq.util.db2.DB2Database</name>
-            <includes>T_.*,X_.*,V_.*,P_.*,F_.*,(F|P)[0-9]+,S_.*</includes>
+            <includes>T_.*|X_.*|V_.*|P_.*|F_.*|(F|P)[0-9]+|S_.*</includes>
             <excludes>T_BOOK_DETAILS</excludes>
             <dateAsTimestamp>false</dateAsTimestamp>
             <unsignedTypes>true</unsignedTypes>

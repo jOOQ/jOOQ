@@ -356,7 +356,7 @@ END
 
 CREATE PROCEDURE p_create_author() LANGUAGE SQL
 BEGIN
-	call {jdbc.Schema}.p_create_author_by_name('William', 'Shakespeare');
+	call library.p_create_author_by_name('William', 'Shakespeare');
 END
 /
 

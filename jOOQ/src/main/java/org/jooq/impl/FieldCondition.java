@@ -83,6 +83,7 @@ class FieldCondition extends AbstractCondition {
 
             /* [pro] */
             // These do
+            case DB2:
             case INGRES:
             case ORACLE:
             case SQLSERVER:
@@ -94,7 +95,6 @@ class FieldCondition extends AbstractCondition {
             /* [pro] */
             // Untested yet
             case ASE:
-            case DB2:
             /* [/pro] */
 
             // Native support

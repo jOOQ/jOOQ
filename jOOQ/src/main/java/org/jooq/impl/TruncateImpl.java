@@ -124,7 +124,7 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
                        .visit(table);
 
                 /* [pro] */
-                if (context.configuration().dialect() == SQLDialect.DB2) {
+                if (context.configuration().dialect().family() == SQLDialect.DB2) {
                     context.sql(" ").keyword("immediate");
                 }
 

@@ -214,7 +214,7 @@ class Function<T> extends AbstractField<T> implements
             toSQLStringAgg(context);
         }
         /* [pro] */
-        else if (term == LIST_AGG && asList(DB2).contains(context.configuration().dialect())) {
+        else if (term == LIST_AGG && asList(DB2).contains(context.configuration().dialect().family())) {
             toSQLXMLAGG(context);
         }
         /* [/pro] */
@@ -433,7 +433,7 @@ class Function<T> extends AbstractField<T> implements
 
         if (ignoreNulls) {
             /* [pro] */
-            if (context.configuration().dialect() == SQLDialect.DB2) {
+            if (context.configuration().dialect().family() == SQLDialect.DB2) {
                 context.sql(", 'IGNORE NULLS'");
             }
             else
@@ -444,7 +444,7 @@ class Function<T> extends AbstractField<T> implements
         }
         else if (respectNulls) {
             /* [pro] */
-            if (context.configuration().dialect() == SQLDialect.DB2) {
+            if (context.configuration().dialect().family() == SQLDialect.DB2) {
                 context.sql(", 'RESPECT NULLS'");
             }
             else

@@ -92,7 +92,7 @@ class CompareCondition extends AbstractCondition {
 
     @Override
     public final void toSQL(RenderContext context) {
-        SQLDialect dialect = context.configuration().dialect();
+        SQLDialect family = context.configuration().dialect().family();
         Field<?> lhs = field1;
         Field<?> rhs = field2;
         Comparator op = comparator;
@@ -102,7 +102,7 @@ class CompareCondition extends AbstractCondition {
         // [#293] TODO: This could apply to other operators, too
         if ((op == LIKE || op == NOT_LIKE)
                 && field1.getType() != String.class
-                && asList(ASE, DERBY, POSTGRES).contains(dialect)) {
+                && asList(ASE, DERBY, POSTGRES).contains(family)) {
 
             lhs = lhs.cast(String.class);
         }
@@ -110,7 +110,7 @@ class CompareCondition extends AbstractCondition {
         // [#1423] Only Postgres knows a true ILIKE operator. Other dialects
         // need to simulate this as LOWER(lhs) LIKE LOWER(rhs)
         else if ((op == LIKE_IGNORE_CASE || op == NOT_LIKE_IGNORE_CASE)
-                && POSTGRES != dialect) {
+                && POSTGRES != family) {
 
             lhs = lhs.lower();
             rhs = rhs.lower();
@@ -126,7 +126,7 @@ class CompareCondition extends AbstractCondition {
         boolean castRhs = false;
 
         /* [pro] */
-        if (dialect == DB2 && rhs instanceof Concat)
+        if (family == DB2 && rhs instanceof Concat)
             castRhs = true;
         /* [/pro] */
 

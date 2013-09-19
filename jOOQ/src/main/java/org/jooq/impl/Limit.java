@@ -176,7 +176,9 @@ class Limit extends AbstractQueryPart {
             // Only "TOP" support provided by the following dialects.
             // "OFFSET" support is simulated with nested selects
             // -----------------------------------------------------------------
-            case DB2: {
+            case DB2:
+            case DB2_9:
+            case DB2_10: {
                 if (offset != null) {
                     throw new DataAccessException("DB2 does not support offsets in FETCH FIRST ROWS ONLY clause");
                 }
@@ -295,6 +297,8 @@ class Limit extends AbstractQueryPart {
             // These dialects don't allow bind variables in their TOP clauses
             // --------------------------------------------------------------
             case DB2:
+            case DB2_9:
+            case DB2_10:
             case SQLSERVER2008: {
 
                 // TOP clauses without bind variables

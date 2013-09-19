@@ -136,6 +136,16 @@ public enum SQLDialect {
     DB2("DB2", true),
 
     /**
+     * The IBM DB2 9.x SQL dialect.
+     */
+    DB2_9("DB2", true, DB2),
+
+    /**
+     * The IBM DB2 10.x SQL dialect.
+     */
+    DB2_10("DB2", true, DB2),
+
+    /**
      * The Ingres dialect family.
      */
     INGRES("Ingres", true),

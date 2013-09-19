@@ -925,7 +925,7 @@ public class H2Test extends jOOQAbstractTest<
         assertEquals(-1, (int) record.getXx());
     }
 
-    @Test
+    // TODO [#2700] @Test
     public void testH2T2698InsertPojoThroughDaoWithDefault() throws Exception {
         jOOQAbstractTest.reset = false;
 

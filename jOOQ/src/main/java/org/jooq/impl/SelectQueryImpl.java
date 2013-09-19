@@ -224,7 +224,9 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                     break;
 
                 // With DB2, there are two possibilities
-                case DB2: {
+                case DB2:
+                case DB2_9:
+                case DB2_10: {
 
                     // DB2 natively supports a "FIRST ROWS" clause, without
                     // offset and without bind values

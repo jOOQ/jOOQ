@@ -76,21 +76,21 @@ class Neg<T> extends AbstractField<T> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        SQLDialect dialect = context.configuration().dialect();
+        SQLDialect family = context.configuration().dialect().family();
 
-        if (operator == BIT_NOT && asList(H2, HSQLDB, INGRES, ORACLE).contains(dialect.family())) {
+        if (operator == BIT_NOT && asList(H2, HSQLDB, INGRES, ORACLE).contains(family)) {
             context.sql("(0 -")
                    .visit(field)
                    .sql(" - 1)");
         }
         /* [pro] */
-        else if (operator == BIT_NOT && dialect == DB2) {
+        else if (operator == BIT_NOT && family == DB2) {
             context.keyword("bitnot(")
                    .visit(field)
                    .sql(")");
         }
         /* [/pro] */
-        else if (operator == BIT_NOT && dialect == FIREBIRD) {
+        else if (operator == BIT_NOT && family == FIREBIRD) {
             context.keyword("bin_not(")
                    .visit(field)
                    .sql(")");

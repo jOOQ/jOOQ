@@ -227,7 +227,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             return executeCallableStatement();
         }
         else {
-            switch (configuration.dialect()) {
+            switch (configuration.dialect().family()) {
 
                 // [#852] Some RDBMS don't allow for using JDBC procedure escape
                 // syntax for functions. Select functions from DUAL instead

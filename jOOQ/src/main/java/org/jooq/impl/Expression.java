@@ -171,10 +171,10 @@ class Expression<T> extends AbstractFunction<T> {
         }
 
         // Many dialects don't support shifts. Use multiplication/division instead
-        else if (SHL == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(family.family())) {
+        else if (SHL == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(family)) {
             return lhs.mul(DSL.power(two(), rhsAsNumber()));
         }
-        else if (SHR == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(family.family())) {
+        else if (SHR == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(family)) {
             return lhs.div(DSL.power(two(), rhsAsNumber()));
         }
 

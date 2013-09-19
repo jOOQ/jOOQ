@@ -606,6 +606,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testPlainSQLBlobAndClob() throws Exception {
         jOOQAbstractTest.reset = false;
 
+        // [#2534] BLOB and CLOB should be auto-converted to byte[] and Spring
         create().update(TBook())
                 .set(TBook_CONTENT_TEXT(), "text")
                 .set(TBook_CONTENT_PDF(), "pdf".getBytes("UTF-8"))

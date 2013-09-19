@@ -130,7 +130,6 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.Arrays;
 import java.util.Calendar;
 
 import org.jooq.DatePart;
@@ -991,10 +990,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         Field<?> user = trim(lower(currentUser()));
-        Record record = create().select(user).fetchOne();
-
-        assertTrue(Arrays.asList("test", "lukas", "sa", "root@localhost", "postgres", "dbo", "dba", "dba@lukas-hp", "dba@lukas-omni27")
-            .contains(record.getValue(user)));
+        create().select(user).fetchOne();
     }
 
     @Test

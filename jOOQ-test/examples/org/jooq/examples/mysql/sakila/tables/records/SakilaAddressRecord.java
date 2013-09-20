@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaAddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaAddressRecord> implements org.jooq.Record8<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.lang.Short, java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1162136418;
+	private static final long serialVersionUID = 2093265240;
 
 	/**
 	 * Setter for <code>sakila.address.address_id</code>. 
@@ -292,5 +292,21 @@ public class SakilaAddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 */
 	public SakilaAddressRecord() {
 		super(org.jooq.examples.mysql.sakila.tables.SakilaAddress.ADDRESS);
+	}
+
+	/**
+	 * Create a detached, initialised SakilaAddressRecord
+	 */
+	public SakilaAddressRecord(java.lang.Short addressId, java.lang.String address, java.lang.String address2, java.lang.String district, java.lang.Short cityId, java.lang.String postalCode, java.lang.String phone, java.sql.Timestamp lastUpdate) {
+		super(org.jooq.examples.mysql.sakila.tables.SakilaAddress.ADDRESS);
+
+		setValue(0, addressId);
+		setValue(1, address);
+		setValue(2, address2);
+		setValue(3, district);
+		setValue(4, cityId);
+		setValue(5, postalCode);
+		setValue(6, phone);
+		setValue(7, lastUpdate);
 	}
 }

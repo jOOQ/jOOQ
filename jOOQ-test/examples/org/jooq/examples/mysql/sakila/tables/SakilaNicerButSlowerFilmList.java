@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaNicerButSlowerFilmList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaNicerButSlowerFilmListRecord> {
 
-	private static final long serialVersionUID = -529499937;
+	private static final long serialVersionUID = 955787358;
 
 	/**
 	 * The singleton instance of <code>sakila.nicer_but_slower_film_list</code>
@@ -29,7 +29,7 @@ public class SakilaNicerButSlowerFilmList extends org.jooq.impl.TableImpl<org.jo
 	/**
 	 * The column <code>sakila.nicer_but_slower_film_list.FID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaNicerButSlowerFilmListRecord, java.lang.Short> FID = createField("FID", org.jooq.impl.SQLDataType.SMALLINT, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaNicerButSlowerFilmListRecord, java.lang.Short> FID = createField("FID", org.jooq.impl.SQLDataType.SMALLINT.defaulted(true), this);
 
 	/**
 	 * The column <code>sakila.nicer_but_slower_film_list.title</code>. 
@@ -44,12 +44,12 @@ public class SakilaNicerButSlowerFilmList extends org.jooq.impl.TableImpl<org.jo
 	/**
 	 * The column <code>sakila.nicer_but_slower_film_list.category</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaNicerButSlowerFilmListRecord, java.lang.String> CATEGORY = createField("category", org.jooq.impl.SQLDataType.VARCHAR.length(25), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaNicerButSlowerFilmListRecord, java.lang.String> CATEGORY = createField("category", org.jooq.impl.SQLDataType.VARCHAR.length(25).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.nicer_but_slower_film_list.price</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaNicerButSlowerFilmListRecord, java.math.BigDecimal> PRICE = createField("price", org.jooq.impl.SQLDataType.DECIMAL.precision(4, 2), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaNicerButSlowerFilmListRecord, java.math.BigDecimal> PRICE = createField("price", org.jooq.impl.SQLDataType.DECIMAL.precision(4, 2).defaulted(true), this);
 
 	/**
 	 * The column <code>sakila.nicer_but_slower_film_list.length</code>. 

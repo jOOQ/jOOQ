@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaNicerButSlowerFilmListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaNicerButSlowerFilmListRecord> implements org.jooq.Record8<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.math.BigDecimal, java.lang.Short, org.jooq.examples.mysql.sakila.enums.SakilaNicerButSlowerFilmListRating, java.lang.String> {
 
-	private static final long serialVersionUID = -1249159575;
+	private static final long serialVersionUID = 1517175224;
 
 	/**
 	 * Setter for <code>sakila.nicer_but_slower_film_list.FID</code>. 
@@ -282,5 +282,21 @@ public class SakilaNicerButSlowerFilmListRecord extends org.jooq.impl.TableRecor
 	 */
 	public SakilaNicerButSlowerFilmListRecord() {
 		super(org.jooq.examples.mysql.sakila.tables.SakilaNicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST);
+	}
+
+	/**
+	 * Create a detached, initialised SakilaNicerButSlowerFilmListRecord
+	 */
+	public SakilaNicerButSlowerFilmListRecord(java.lang.Short fid, java.lang.String title, java.lang.String description, java.lang.String category, java.math.BigDecimal price, java.lang.Short length, org.jooq.examples.mysql.sakila.enums.SakilaNicerButSlowerFilmListRating rating, java.lang.String actors) {
+		super(org.jooq.examples.mysql.sakila.tables.SakilaNicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST);
+
+		setValue(0, fid);
+		setValue(1, title);
+		setValue(2, description);
+		setValue(3, category);
+		setValue(4, price);
+		setValue(5, length);
+		setValue(6, rating);
+		setValue(7, actors);
 	}
 }

@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaFilmList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmListRecord> {
 
-	private static final long serialVersionUID = -678643837;
+	private static final long serialVersionUID = 59318530;
 
 	/**
 	 * The singleton instance of <code>sakila.film_list</code>
@@ -29,7 +29,7 @@ public class SakilaFilmList extends org.jooq.impl.TableImpl<org.jooq.examples.my
 	/**
 	 * The column <code>sakila.film_list.FID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmListRecord, java.lang.Short> FID = createField("FID", org.jooq.impl.SQLDataType.SMALLINT, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmListRecord, java.lang.Short> FID = createField("FID", org.jooq.impl.SQLDataType.SMALLINT.defaulted(true), this);
 
 	/**
 	 * The column <code>sakila.film_list.title</code>. 
@@ -44,12 +44,12 @@ public class SakilaFilmList extends org.jooq.impl.TableImpl<org.jooq.examples.my
 	/**
 	 * The column <code>sakila.film_list.category</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmListRecord, java.lang.String> CATEGORY = createField("category", org.jooq.impl.SQLDataType.VARCHAR.length(25), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmListRecord, java.lang.String> CATEGORY = createField("category", org.jooq.impl.SQLDataType.VARCHAR.length(25).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.film_list.price</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmListRecord, java.math.BigDecimal> PRICE = createField("price", org.jooq.impl.SQLDataType.DECIMAL.precision(4, 2), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmListRecord, java.math.BigDecimal> PRICE = createField("price", org.jooq.impl.SQLDataType.DECIMAL.precision(4, 2).defaulted(true), this);
 
 	/**
 	 * The column <code>sakila.film_list.length</code>. 

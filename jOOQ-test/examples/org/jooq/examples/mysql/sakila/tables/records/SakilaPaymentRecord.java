@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaPaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaPaymentRecord> implements org.jooq.Record7<java.lang.Short, java.lang.Short, java.lang.Byte, java.lang.Integer, java.math.BigDecimal, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 927986124;
+	private static final long serialVersionUID = -184582536;
 
 	/**
 	 * Setter for <code>sakila.payment.payment_id</code>. 
@@ -262,5 +262,20 @@ public class SakilaPaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 */
 	public SakilaPaymentRecord() {
 		super(org.jooq.examples.mysql.sakila.tables.SakilaPayment.PAYMENT);
+	}
+
+	/**
+	 * Create a detached, initialised SakilaPaymentRecord
+	 */
+	public SakilaPaymentRecord(java.lang.Short paymentId, java.lang.Short customerId, java.lang.Byte staffId, java.lang.Integer rentalId, java.math.BigDecimal amount, java.sql.Timestamp paymentDate, java.sql.Timestamp lastUpdate) {
+		super(org.jooq.examples.mysql.sakila.tables.SakilaPayment.PAYMENT);
+
+		setValue(0, paymentId);
+		setValue(1, customerId);
+		setValue(2, staffId);
+		setValue(3, rentalId);
+		setValue(4, amount);
+		setValue(5, paymentDate);
+		setValue(6, lastUpdate);
 	}
 }

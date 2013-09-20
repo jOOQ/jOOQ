@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaFilmListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmListRecord> implements org.jooq.Record8<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.math.BigDecimal, java.lang.Short, org.jooq.examples.mysql.sakila.enums.SakilaFilmListRating, java.lang.String> {
 
-	private static final long serialVersionUID = 713279642;
+	private static final long serialVersionUID = -1009755296;
 
 	/**
 	 * Setter for <code>sakila.film_list.FID</code>. 
@@ -282,5 +282,21 @@ public class SakilaFilmListRecord extends org.jooq.impl.TableRecordImpl<org.jooq
 	 */
 	public SakilaFilmListRecord() {
 		super(org.jooq.examples.mysql.sakila.tables.SakilaFilmList.FILM_LIST);
+	}
+
+	/**
+	 * Create a detached, initialised SakilaFilmListRecord
+	 */
+	public SakilaFilmListRecord(java.lang.Short fid, java.lang.String title, java.lang.String description, java.lang.String category, java.math.BigDecimal price, java.lang.Short length, org.jooq.examples.mysql.sakila.enums.SakilaFilmListRating rating, java.lang.String actors) {
+		super(org.jooq.examples.mysql.sakila.tables.SakilaFilmList.FILM_LIST);
+
+		setValue(0, fid);
+		setValue(1, title);
+		setValue(2, description);
+		setValue(3, category);
+		setValue(4, price);
+		setValue(5, length);
+		setValue(6, rating);
+		setValue(7, actors);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaFilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmActorRecord> implements org.jooq.Record3<java.lang.Short, java.lang.Short, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 635663125;
+	private static final long serialVersionUID = 1447306681;
 
 	/**
 	 * Setter for <code>sakila.film_actor.actor_id</code>. 
@@ -142,5 +142,16 @@ public class SakilaFilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 */
 	public SakilaFilmActorRecord() {
 		super(org.jooq.examples.mysql.sakila.tables.SakilaFilmActor.FILM_ACTOR);
+	}
+
+	/**
+	 * Create a detached, initialised SakilaFilmActorRecord
+	 */
+	public SakilaFilmActorRecord(java.lang.Short actorId, java.lang.Short filmId, java.sql.Timestamp lastUpdate) {
+		super(org.jooq.examples.mysql.sakila.tables.SakilaFilmActor.FILM_ACTOR);
+
+		setValue(0, actorId);
+		setValue(1, filmId);
+		setValue(2, lastUpdate);
 	}
 }

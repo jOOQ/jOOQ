@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaFilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmRecord> implements org.jooq.Record13<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.lang.Byte, java.lang.Byte, java.lang.Byte, java.math.BigDecimal, java.lang.Short, java.math.BigDecimal, org.jooq.examples.mysql.sakila.enums.SakilaFilmRating, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -599334520;
+	private static final long serialVersionUID = -1735538422;
 
 	/**
 	 * Setter for <code>sakila.film.film_id</code>. 
@@ -442,5 +442,26 @@ public class SakilaFilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	public SakilaFilmRecord() {
 		super(org.jooq.examples.mysql.sakila.tables.SakilaFilm.FILM);
+	}
+
+	/**
+	 * Create a detached, initialised SakilaFilmRecord
+	 */
+	public SakilaFilmRecord(java.lang.Short filmId, java.lang.String title, java.lang.String description, java.lang.String releaseYear, java.lang.Byte languageId, java.lang.Byte originalLanguageId, java.lang.Byte rentalDuration, java.math.BigDecimal rentalRate, java.lang.Short length, java.math.BigDecimal replacementCost, org.jooq.examples.mysql.sakila.enums.SakilaFilmRating rating, java.lang.String specialFeatures, java.sql.Timestamp lastUpdate) {
+		super(org.jooq.examples.mysql.sakila.tables.SakilaFilm.FILM);
+
+		setValue(0, filmId);
+		setValue(1, title);
+		setValue(2, description);
+		setValue(3, releaseYear);
+		setValue(4, languageId);
+		setValue(5, originalLanguageId);
+		setValue(6, rentalDuration);
+		setValue(7, rentalRate);
+		setValue(8, length);
+		setValue(9, replacementCost);
+		setValue(10, rating);
+		setValue(11, specialFeatures);
+		setValue(12, lastUpdate);
 	}
 }

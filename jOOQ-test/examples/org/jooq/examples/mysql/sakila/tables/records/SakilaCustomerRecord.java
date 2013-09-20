@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaCustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaCustomerRecord> implements org.jooq.Record9<java.lang.Short, java.lang.Byte, java.lang.String, java.lang.String, java.lang.String, java.lang.Short, java.lang.Byte, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1361604669;
+	private static final long serialVersionUID = 628526558;
 
 	/**
 	 * Setter for <code>sakila.customer.customer_id</code>. 
@@ -322,5 +322,22 @@ public class SakilaCustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.
 	 */
 	public SakilaCustomerRecord() {
 		super(org.jooq.examples.mysql.sakila.tables.SakilaCustomer.CUSTOMER);
+	}
+
+	/**
+	 * Create a detached, initialised SakilaCustomerRecord
+	 */
+	public SakilaCustomerRecord(java.lang.Short customerId, java.lang.Byte storeId, java.lang.String firstName, java.lang.String lastName, java.lang.String email, java.lang.Short addressId, java.lang.Byte active, java.sql.Timestamp createDate, java.sql.Timestamp lastUpdate) {
+		super(org.jooq.examples.mysql.sakila.tables.SakilaCustomer.CUSTOMER);
+
+		setValue(0, customerId);
+		setValue(1, storeId);
+		setValue(2, firstName);
+		setValue(3, lastName);
+		setValue(4, email);
+		setValue(5, addressId);
+		setValue(6, active);
+		setValue(7, createDate);
+		setValue(8, lastUpdate);
 	}
 }

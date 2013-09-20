@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaStaffList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffListRecord> {
 
-	private static final long serialVersionUID = 28649455;
+	private static final long serialVersionUID = 1018391092;
 
 	/**
 	 * The singleton instance of <code>sakila.staff_list</code>
@@ -29,7 +29,7 @@ public class SakilaStaffList extends org.jooq.impl.TableImpl<org.jooq.examples.m
 	/**
 	 * The column <code>sakila.staff_list.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffListRecord, java.lang.Byte> ID = createField("ID", org.jooq.impl.SQLDataType.TINYINT, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffListRecord, java.lang.Byte> ID = createField("ID", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this);
 
 	/**
 	 * The column <code>sakila.staff_list.name</code>. 
@@ -39,7 +39,7 @@ public class SakilaStaffList extends org.jooq.impl.TableImpl<org.jooq.examples.m
 	/**
 	 * The column <code>sakila.staff_list.address</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffListRecord, java.lang.String> ADDRESS = createField("address", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffListRecord, java.lang.String> ADDRESS = createField("address", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.staff_list.zip code</code>. 
@@ -49,22 +49,22 @@ public class SakilaStaffList extends org.jooq.impl.TableImpl<org.jooq.examples.m
 	/**
 	 * The column <code>sakila.staff_list.phone</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffListRecord, java.lang.String> PHONE = createField("phone", org.jooq.impl.SQLDataType.VARCHAR.length(20), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffListRecord, java.lang.String> PHONE = createField("phone", org.jooq.impl.SQLDataType.VARCHAR.length(20).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.staff_list.city</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffListRecord, java.lang.String> CITY = createField("city", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffListRecord, java.lang.String> CITY = createField("city", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.staff_list.country</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffListRecord, java.lang.String> COUNTRY = createField("country", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffListRecord, java.lang.String> COUNTRY = createField("country", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.staff_list.SID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffListRecord, java.lang.Byte> SID = createField("SID", org.jooq.impl.SQLDataType.TINYINT, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffListRecord, java.lang.Byte> SID = createField("SID", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this);
 
 	/**
 	 * Create a <code>sakila.staff_list</code> table reference

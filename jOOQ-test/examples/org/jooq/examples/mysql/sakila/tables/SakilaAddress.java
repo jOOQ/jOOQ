@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaAddress extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaAddressRecord> {
 
-	private static final long serialVersionUID = -684633275;
+	private static final long serialVersionUID = 735372038;
 
 	/**
 	 * The singleton instance of <code>sakila.address</code>
@@ -27,12 +27,12 @@ public class SakilaAddress extends org.jooq.impl.TableImpl<org.jooq.examples.mys
 	/**
 	 * The column <code>sakila.address.address_id</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaAddressRecord, java.lang.Short> ADDRESS_ID = createField("address_id", org.jooq.impl.SQLDataType.SMALLINT, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaAddressRecord, java.lang.Short> ADDRESS_ID = createField("address_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this);
 
 	/**
 	 * The column <code>sakila.address.address</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaAddressRecord, java.lang.String> ADDRESS_ = createField("address", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaAddressRecord, java.lang.String> ADDRESS_ = createField("address", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.address.address2</code>. 
@@ -42,12 +42,12 @@ public class SakilaAddress extends org.jooq.impl.TableImpl<org.jooq.examples.mys
 	/**
 	 * The column <code>sakila.address.district</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaAddressRecord, java.lang.String> DISTRICT = createField("district", org.jooq.impl.SQLDataType.VARCHAR.length(20), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaAddressRecord, java.lang.String> DISTRICT = createField("district", org.jooq.impl.SQLDataType.VARCHAR.length(20).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.address.city_id</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaAddressRecord, java.lang.Short> CITY_ID = createField("city_id", org.jooq.impl.SQLDataType.SMALLINT, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaAddressRecord, java.lang.Short> CITY_ID = createField("city_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this);
 
 	/**
 	 * The column <code>sakila.address.postal_code</code>. 
@@ -57,12 +57,12 @@ public class SakilaAddress extends org.jooq.impl.TableImpl<org.jooq.examples.mys
 	/**
 	 * The column <code>sakila.address.phone</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaAddressRecord, java.lang.String> PHONE = createField("phone", org.jooq.impl.SQLDataType.VARCHAR.length(20), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaAddressRecord, java.lang.String> PHONE = createField("phone", org.jooq.impl.SQLDataType.VARCHAR.length(20).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.address.last_update</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaAddressRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaAddressRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this);
 
 	/**
 	 * Create a <code>sakila.address</code> table reference

@@ -13,6 +13,9 @@ DROP FUNCTION IF EXISTS f_one/
 DROP FUNCTION IF EXISTS f_number/
 DROP FUNCTION IF EXISTS f317/
 
+DROP PROCEDURE IF EXISTS fp1908/
+DROP FUNCTION IF EXISTS fp1908/
+
 DROP TRIGGER IF EXISTS t_triggers_trigger/
 
 DROP TABLE IF EXISTS t_dates/
@@ -422,5 +425,18 @@ CREATE FUNCTION f317 (p1 int, p2 int, p3 int, p4 int)
   COMMENT 'integration test for #317'
 BEGIN
   RETURN 1000 * p1 + 100 * p2 + p4;
+END
+/
+
+CREATE PROCEDURE fp1908(in p1 integer, out p2 integer)
+BEGIN
+  SET p2 = p1 + 1;
+END
+/
+
+CREATE FUNCTION fp1908(p1 integer)
+  RETURNS INT
+BEGIN
+  RETURN p1;
 END
 /

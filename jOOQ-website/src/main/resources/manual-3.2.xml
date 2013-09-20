@@ -83,7 +83,7 @@
 					<reference id="tools"/>
 					<p>
 						This section is dedicated to tools that ship with jOOQ, such as the
-						jOOQ console
+						jOOQ's JDBC mocking feature
 					</p>
 				</li>
 				<li>
@@ -398,7 +398,7 @@ CREATE TABLE book_to_book_store (
 								<li>Typesafe SQL construction through a complete API modelling SQL as a domain specific language in Java (see the chapter about <reference id="dsl-and-non-dsl" title="the DSL API"/>)</li>
 								<li>Convenient query execution through an improved API for result fetching (see the chapters about <reference id="fetching" title="the various types of data fetching"/>)</li>
 								<li>SQL dialect abstraction and SQL clause simulation to improve cross-database compatibility and to enable missing features in simpler databases (see the chapter about <reference id="sql-dialects" title="SQL dialects"/>)</li>
-								<li>SQL logging and debugging using jOOQ as an integral part of your development process (see the chapters about <reference id="logging" title="logging"/> and about the <reference id="jooq-console" title="jOOQ Console"/>)</li>
+								<li>SQL logging and debugging using jOOQ as an integral part of your development process (see the chapters about <reference id="logging" title="logging"/>)</li>
 							</ul>
 							<p>
 								Effectively, jOOQ was originally designed to replace any other database abstraction framework short of the ones handling connection pooling and transaction management (see also the <reference id="reference-credits" title="credits for other database abstraction libraries"/>)
@@ -561,7 +561,6 @@ for (AuthorRecord author : create.fetch(AUTHOR)) {
 										jOOQ isn't just a library that helps you <reference id="sql-building" title="build"/> and <reference id="sql-execution" title="execute"/> SQL against your <reference id="code-generation" title="generated, compilable schema"/>. jOOQ ships with a lot of tools. Here are some of the most important tools shipped with jOOQ:
 									</p>
 									<ul>
-										<li><reference id="jooq-console" title="jOOQ Console"/>: This small application hooks into jOOQ's execute listener support to allow for tracing, debugging and introspecting any SQL statement executed through the jOOQ API. This includes setting breakpoints, introspecting bind values, running probe SQL statements, ad-hoc patching of SQL, measuring execution times, exporting stack traces. Use this tool to better know your SQL!</li>
 										<li><reference id="execute-listeners" title="jOOQ's Execute Listeners"/>: jOOQ allows you to hook your custom execute listeners into jOOQ's SQL statement execution lifecycle in order to centrally coordinate any arbitrary operation performed on SQL being executed. Use this for logging, identity generation, SQL tracing, performance measurements, etc.</li>
 										<li><reference id="logging" title="Logging"/>: jOOQ has a standard DEBUG logger built-in, for logging and tracing all your executed SQL statements and fetched result sets</li>
 										<li><reference id="stored-procedures" title="Stored Procedures"/>: jOOQ supports stored procedures and functions of your favourite database. All routines and user-defined types are generated and can be included in jOOQ's SQL building API as function references.</li>
@@ -1653,7 +1652,6 @@ catch (DataAccessException expected) {
 										<li>implement custom logging</li>
 										<li>apply triggers written in Java</li>
 										<li>collect query execution statistics</li>
-										<li>integrate with the <reference id="jooq-console" title="jOOQ Console"/></li>
 									</ul>
 									
 									<p>
@@ -8862,7 +8860,7 @@ public class PrettyPrinter extends DefaultExecuteListener {
     }
 }]]></java><html>
 							<p>
-								See also the manual's sections about <reference id="logging" title="logging"/> and the <reference id="jooq-console" title="jOOQ Console"/> for more sample implementations of actual ExecuteListeners.
+								See also the manual's sections about <reference id="logging" title="logging"/> for more sample implementations of actual ExecuteListeners.
 							</p>
                             
                             <h3>Example: Bad query execution ExecuteListener</h3>
@@ -10225,130 +10223,8 @@ Result<BookRecord> result = create.selectFrom(BOOK).where(BOOK.ID.equal(5)).fetc
 						<title>jOOQ Console</title>
 						<content><html>
 							<p>
-							    The <reference id="execute-listeners" title="ExecuteListener API"/> was driven by a feature request by Christopher Deckers, who has had the courtesy to contribute the jOOQ Console, a sample application interfacing with jOOQ's ExecuteListeners. The jOOQ Console logs all queries executed by jOOQ and displays them nicely in a Swing application. With the jOOQ Console's logger, you can:
+							    The jOOQ Console is no longer supported or shipped with jOOQ 3.2+. You may still use the jOOQ 3.1 Console with new versions of jOOQ, at your own risk.
 						    </p>
-						    <ul>
-						    	<li>Activate the console's DebugListener anytime (in-process or if the remote server is active).</li>
-						    	<li>View simple and batch queries and their parameters.</li>
-						    	<li>Reformat queries along with syntax highlighting for better readability.</li>
-						    	<li>View stack trace of originator of the call.</li>
-						    	<li>Dump the stack to stdout when in an IDE, to directly navigate to relevant classes.</li>
-						    	<li>Track execution time, binding time, parsing time, rows read, fields read.</li>
-						    	<li>Show/hide queries depending on their type (SELECT, UPDATE, etc.).</li>
-						    	<li>Sort any column (timing columns, queries, types, etc.)</li>
-						    	<li>Easy copy paste of rows/columns to Spreadsheet editors.</li>
-						    </ul>
-
-						    <p>
-						    	A short overview of such a debugging session can be seen here:
-						    </p>
-   							<div class="screenshot">
-								<img class="screenshot" src="&lt;?=$root?&gt;/img/jooq-console-01.png" alt="jOOQ Console example"/>
-							</div>
-						    <p>
-							    Please note that the jOOQ Console is still experimental. Any feedback is very welcome on <br/>
-							    <a href="http://groups.google.com/group/jooq-user" title="the jooq-user group">the jooq-user group</a>
-							</p>
-
-							<h3>jOOQ Console operation modes</h3>
-							<p>
-								The jOOQ Console can be run in two different modes:
-							</p>
-							<ul>
-								<li>In-process mode: running in the same process as the queries you're analysing</li>
-								<li>"headless" mode: running remotely</li>
-							</ul>
-
-							<p>
-								Both modes will require that you set the <reference class="org.jooq.debug.impl.DebugListener"/> in the Configuration:
-							</p>
-
-</html><java><![CDATA[// Create a configuration with an appropriate listener provider:
-Configuration configuration = new DefaultConfiguration.set(connection).set(dialect);
-configuration.set(new DefaultExecuteListenerProvider(new org.jooq.debug.impl.DebugListener()));
-
-// Create a DSLContext from the above configuration
-DSLContext create = DSL.using(configuration);]]></java><html>
-
-							<h3>In-process mode</h3>
-							<p>
-								The in-process mode is useful for Swing applications or other, locally run Java programs accessing the database via jOOQ. In order to launch the jOOQ Console "in-process", specify the previously documented settings and launch the Console as follows:
-							</p>
-
-</html><java><![CDATA[// Define a DatabaseDescriptor for the "in-process" mode
-// It is needed for the "Editor" tab
-DatabaseDescriptor descriptor = new DatabaseDescriptor() {
-
-    // Return your generated schema. This is used by the console
-    // to introspect your schema data
-    @Override
-    public Schema getSchema() {
-        return com.example.MySchema.MY_SCHEMA;
-    }
-
-    // Return the SQL dialect that you're using
-    @Override
-    public SQLDialect getSQLDialect() {
-        return SQLDialect.ORACLE;
-    }
-
-    // Return a connection
-    @Override
-    public Connection createConnection() {
-        try {
-            return DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "test", "test");
-        }
-        catch (Exception ignore) {}
-    }
-};
-
-// Now pass this database descriptor to the Console and make it visible
-try {
-
-    // Use this for a nicer look-and-feel
-    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-
-    // Create a new Console
-    Console console = new Console(descriptor, true);
-    console.setLoggingActive(true);
-    console.setVisible(true);
-}
-catch (Exception ignore) {}
-]]></java><html>
-
-							<p>
-								Only in the in-process mode, you can execute ad-hoc queries directly from the console, if you provide it with proper DatabaseDescriptor. These queries are executed from the Editor pane which features:
-							</p>
-							<ul>
-								<li>SQL editing within the console.</li>
-								<li>Incremental search on tables.</li>
-								<li>Simple code completion with tables/columns/SQL keywords.</li>
-								<li>Syntax highlighting and formatting capabilities.</li>
-								<li>Results shown in one or several tabs.</li>
-								<li>Easy analysis of Logger output by copy/pasting/running queries in the Editor.</li>
-							</ul>
-   							<div class="screenshot">
-								<img class="screenshot" src="&lt;?=$root?&gt;/img/jooq-console-02.png" alt="jOOQ Console example"/>
-							</div>
-
-                            <h3>"Headless" mode</h3>
-							<p>
-								In J2EE or other server/client environments, you may not be able to run the console in the same process as your application. You can then run the jOOQ Console in "headless" mode. In addition to the previously documented settings, you'll have to start a debugger server in your application process, that the console can connect to:
-							</p>
-
-</html><java>// Create a new RemoteDebuggerServer in your application that listens to
-// incoming connections on a given port
-SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</java><html>
-
-							<p>
-								Now start your application along with the debugger server and launch the console with this command:
-							</p>
-
-</html><config>java -jar jooq-console-{jooq-version}.jar [host] [port]</config><html>
-
-							<p>
-								Depending on your distribution, you may have to manually add rsyntaxtextarea-2.0.2.jar and jOOQ artefacts on your classpath.
-							</p>
 						</html></content>
 					</section>
 				</sections>
@@ -11104,7 +10980,6 @@ Condition condition3 = BOOK.TITLE.isNotDistinctFrom(possiblyNull);]]></java><htm
 					  Condition -> Predicate
 					  Configuration
 					  Connection
-					  Console
 					  CRUD -> OLTP
 					  DAO
 					  Database

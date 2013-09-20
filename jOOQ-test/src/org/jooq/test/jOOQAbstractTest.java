@@ -1313,6 +1313,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testIgnoreCaseForLongStrings() throws Exception {
+        new PredicateTests(this).testIgnoreCaseForLongStrings();
+    }
+
+    @Test
     public void testLargeINCondition() throws Exception {
         new PredicateTests(this).testLargeINCondition();
     }

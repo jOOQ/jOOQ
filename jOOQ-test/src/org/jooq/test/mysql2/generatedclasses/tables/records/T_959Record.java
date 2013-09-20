@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_959", schema = "test2")
 public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_959Record> implements org.jooq.Record2<org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords, org.jooq.test.mysql2.generatedclasses.enums.T_959SpecialCharacters> {
 
-	private static final long serialVersionUID = 1237831945;
+	private static final long serialVersionUID = -1120985718;
 
 	/**
 	 * Setter for <code>test2.t_959.java_keywords</code>. 
@@ -104,5 +104,15 @@ public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 */
 	public T_959Record() {
 		super(org.jooq.test.mysql2.generatedclasses.tables.T_959.T_959);
+	}
+
+	/**
+	 * Create a detached, initialised T_959Record
+	 */
+	public T_959Record(org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords javaKeywords, org.jooq.test.mysql2.generatedclasses.enums.T_959SpecialCharacters specialCharacters) {
+		super(org.jooq.test.mysql2.generatedclasses.tables.T_959.T_959);
+
+		setValue(0, javaKeywords);
+		setValue(1, specialCharacters);
 	}
 }

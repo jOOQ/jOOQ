@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_identity_pk", schema = "test2")
 public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -493417382;
+	private static final long serialVersionUID = -1659307066;
 
 	/**
 	 * Setter for <code>test2.t_identity_pk.id</code>. 
@@ -117,5 +117,15 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 */
 	public TIdentityPkRecord() {
 		super(org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
+	}
+
+	/**
+	 * Create a detached, initialised TIdentityPkRecord
+	 */
+	public TIdentityPkRecord(java.lang.Integer id, java.lang.Integer val) {
+		super(org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
+
+		setValue(0, id);
+		setValue(1, val);
 	}
 }

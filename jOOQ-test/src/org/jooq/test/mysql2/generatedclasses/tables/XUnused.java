@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -129197299;
+	private static final long serialVersionUID = -1934331795;
 
 	/**
 	 * The singleton instance of <code>test2.x_unused</code>
@@ -29,12 +29,12 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.genera
 	/**
 	 * The column <code>test2.x_unused.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>test2.x_unused.NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), this);
 
 	/**
 	 * The column <code>test2.x_unused.BIG_INTEGER</code>. 

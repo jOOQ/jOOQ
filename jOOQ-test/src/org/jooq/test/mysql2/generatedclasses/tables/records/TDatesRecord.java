@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_dates", schema = "test2")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record8<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long, java.sql.Date, java.sql.Date> {
 
-	private static final long serialVersionUID = 1726723010;
+	private static final long serialVersionUID = -1386454653;
 
 	/**
 	 * Setter for <code>test2.t_dates.id</code>. 
@@ -303,5 +303,21 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	public TDatesRecord() {
 		super(org.jooq.test.mysql2.generatedclasses.tables.TDates.T_DATES);
+	}
+
+	/**
+	 * Create a detached, initialised TDatesRecord
+	 */
+	public TDatesRecord(java.lang.Integer id, java.sql.Date d, java.sql.Time t, java.sql.Timestamp ts, java.lang.Integer dInt, java.lang.Long tsBigint, java.sql.Date y2, java.sql.Date y4) {
+		super(org.jooq.test.mysql2.generatedclasses.tables.TDates.T_DATES);
+
+		setValue(0, id);
+		setValue(1, d);
+		setValue(2, t);
+		setValue(3, ts);
+		setValue(4, dInt);
+		setValue(5, tsBigint);
+		setValue(6, y2);
+		setValue(7, y4);
 	}
 }

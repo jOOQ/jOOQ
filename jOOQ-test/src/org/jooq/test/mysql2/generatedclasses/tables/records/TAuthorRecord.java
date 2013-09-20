@@ -13,7 +13,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_author", schema = "test2")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -578422144;
+	private static final long serialVersionUID = 333298908;
 
 	/**
 	 * Setter for <code>test2.t_author.ID</code>. The author ID
@@ -243,5 +243,19 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	public TAuthorRecord() {
 		super(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR);
+	}
+
+	/**
+	 * Create a detached, initialised TAuthorRecord
+	 */
+	public TAuthorRecord(java.lang.Integer id, java.lang.String firstName, java.lang.String lastName, java.sql.Date dateOfBirth, java.lang.Integer yearOfBirth, java.lang.String address) {
+		super(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR);
+
+		setValue(0, id);
+		setValue(1, firstName);
+		setValue(2, lastName);
+		setValue(3, dateOfBirth);
+		setValue(4, yearOfBirth);
+		setValue(5, address);
 	}
 }

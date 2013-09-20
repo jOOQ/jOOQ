@@ -13,10 +13,20 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "x_test_case_2025", schema = "test2")
 public class XTestCase_2025 implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1315637165;
+	private static final long serialVersionUID = 1971531710;
 
 	private java.lang.Integer refId;
 	private java.lang.String  refName;
+
+	public XTestCase_2025() {}
+
+	public XTestCase_2025(
+		java.lang.Integer refId,
+		java.lang.String  refName
+	) {
+		this.refId = refId;
+		this.refName = refName;
+	}
 
 	@javax.persistence.Column(name = "ref_id", nullable = false, precision = 10)
 	public java.lang.Integer getRefId() {

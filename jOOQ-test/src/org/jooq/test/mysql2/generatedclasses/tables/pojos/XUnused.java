@@ -15,7 +15,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 })
 public class XUnused implements java.io.Serializable {
 
-	private static final long serialVersionUID = -924348692;
+	private static final long serialVersionUID = 1809422435;
 
 	private java.lang.Integer    id;
 	private java.lang.String     name;
@@ -31,6 +31,40 @@ public class XUnused implements java.io.Serializable {
 	private java.lang.Integer    primaryKey;
 	private java.lang.Integer    primarykey;
 	private java.math.BigDecimal field_737;
+
+	public XUnused() {}
+
+	public XUnused(
+		java.lang.Integer    id,
+		java.lang.String     name,
+		java.math.BigInteger bigInteger,
+		java.lang.Integer    idRef,
+		java.lang.String     nameRef,
+		java.lang.Integer    class_,
+		java.lang.Integer    fields,
+		java.lang.Integer    configuration,
+		java.lang.Integer    uDT,
+		java.lang.Integer    metaData,
+		java.lang.Integer    type0,
+		java.lang.Integer    primaryKey,
+		java.lang.Integer    primarykey,
+		java.math.BigDecimal field_737
+	) {
+		this.id = id;
+		this.name = name;
+		this.bigInteger = bigInteger;
+		this.idRef = idRef;
+		this.nameRef = nameRef;
+		this.class_ = class_;
+		this.fields = fields;
+		this.configuration = configuration;
+		this.uDT = uDT;
+		this.metaData = metaData;
+		this.type0 = type0;
+		this.primaryKey = primaryKey;
+		this.primarykey = primarykey;
+		this.field_737 = field_737;
+	}
 
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getId() {

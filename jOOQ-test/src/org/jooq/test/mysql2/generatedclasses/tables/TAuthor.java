@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -1552299357;
+	private static final long serialVersionUID = 2041720033;
 
 	/**
 	 * The singleton instance of <code>test2.t_author</code>
@@ -29,7 +29,7 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.genera
 	/**
 	 * The column <code>test2.t_author.ID</code>. The author ID
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>test2.t_author.FIRST_NAME</code>. The author's first name
@@ -39,7 +39,7 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.genera
 	/**
 	 * The column <code>test2.t_author.LAST_NAME</code>. The author's last name
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this);
 
 	/**
 	 * The column <code>test2.t_author.DATE_OF_BIRTH</code>. The author's date of birth

@@ -9,7 +9,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 1004196160;
+	private static final long serialVersionUID = 632325308;
 
 	/**
 	 * The singleton instance of <code>test2.t_booleans</code>
@@ -27,7 +27,7 @@ public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.gene
 	/**
 	 * The column <code>test2.t_booleans.id</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TBooleansRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TBooleansRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this);
 
 	/**
 	 * The column <code>test2.t_booleans.one_zero</code>. 

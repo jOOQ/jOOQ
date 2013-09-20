@@ -9,7 +9,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 750008684;
+	private static final long serialVersionUID = 2122861323;
 
 	/**
 	 * The singleton instance of <code>test2.t_triggers</code>
@@ -27,7 +27,7 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.gene
 	/**
 	 * The column <code>test2.t_triggers.id_generated</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("id_generated", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("id_generated", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>test2.t_triggers.id</code>. 

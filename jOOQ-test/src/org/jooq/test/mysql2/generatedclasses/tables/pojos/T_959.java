@@ -11,10 +11,20 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_959", schema = "test2")
 public class T_959 implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1543792579;
+	private static final long serialVersionUID = 1804845421;
 
 	private org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords      javaKeywords;
 	private org.jooq.test.mysql2.generatedclasses.enums.T_959SpecialCharacters specialCharacters;
+
+	public T_959() {}
+
+	public T_959(
+		org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords      javaKeywords,
+		org.jooq.test.mysql2.generatedclasses.enums.T_959SpecialCharacters specialCharacters
+	) {
+		this.javaKeywords = javaKeywords;
+		this.specialCharacters = specialCharacters;
+	}
 
 	@javax.persistence.Column(name = "java_keywords", length = 12)
 	public org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords getJavaKeywords() {

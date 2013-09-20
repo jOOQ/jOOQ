@@ -1708,7 +1708,7 @@ final class Utils {
             return (T) stream.readObject();
         }
         else {
-            return (T) stream.readObject();
+            return (T) unlob(stream.readObject());
         }
     }
 
@@ -2020,8 +2020,37 @@ final class Utils {
             return (T) DSL.using(ctx.configuration()).fetch(nested);
         }
         else {
-            return (T) rs.getObject(index);
+            return (T) unlob(rs.getObject(index));
         }
+    }
+
+    /**
+     * [#2534] Extract <code>byte[]</code> or <code>String</code> data from a
+     * LOB, if the argument is a lob.
+     */
+    private static Object unlob(Object object) throws SQLException {
+        if (object instanceof Blob) {
+            Blob blob = (Blob) object;
+
+            try {
+                return blob.getBytes(1, (int) blob.length());
+            }
+            finally {
+                blob.free();
+            }
+        }
+        else if (object instanceof Clob) {
+            Clob clob = (Clob) object;
+
+            try {
+                return clob.getSubString(1, (int) clob.length());
+            }
+            finally {
+                clob.free();
+            }
+        }
+
+        return object;
     }
 
     /* [pro] */

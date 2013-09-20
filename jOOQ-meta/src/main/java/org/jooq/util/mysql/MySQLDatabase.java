@@ -53,11 +53,15 @@ import static org.jooq.util.mysql.mysql.tables.Proc.PROC;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record4;
 import org.jooq.Record5;
+import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
@@ -79,6 +83,7 @@ import org.jooq.util.mysql.information_schema.tables.ReferentialConstraints;
 import org.jooq.util.mysql.information_schema.tables.Schemata;
 import org.jooq.util.mysql.information_schema.tables.TableConstraints;
 import org.jooq.util.mysql.information_schema.tables.Tables;
+import org.jooq.util.mysql.mysql.enums.ProcType;
 import org.jooq.util.mysql.mysql.tables.Proc;
 
 /**
@@ -308,26 +313,46 @@ public class MySQLDatabase extends AbstractDatabase {
     protected List<RoutineDefinition> getRoutines0() throws SQLException {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
-        for (Record record : create().select(
+        Result<Record6<String, String, String, byte[], byte[], ProcType>> records =
+        create().select(
                     Proc.DB,
                     Proc.NAME,
                     Proc.COMMENT,
                     Proc.PARAM_LIST,
-                    Proc.RETURNS)
+                    Proc.RETURNS,
+                    Proc.TYPE)
                 .from(PROC)
                 .where(DB.in(getInputSchemata()))
                 .orderBy(
                     DB,
                     Proc.NAME)
-                .fetch()) {
+                .fetch();
 
-            SchemaDefinition schema = getSchema(record.getValue(DB));
-            String name = record.getValue(Proc.NAME);
-            String comment = record.getValue(Proc.COMMENT);
-            String params = new String(record.getValue(Proc.PARAM_LIST));
-            String returns = new String(record.getValue(Proc.RETURNS));
+        Map<Record, Result<Record6<String, String, String, byte[], byte[], ProcType>>> groups =
+            records.intoGroups(new Field[] { Proc.DB, Proc.NAME });
 
-            result.add(new MySQLRoutineDefinition(schema, name, comment, params, returns));
+        // [#1908] This indirection is necessary as MySQL allows for overloading
+        // procedures and functions with the same signature.
+        for (Entry<Record, Result<Record6<String, String, String, byte[], byte[], ProcType>>> entry : groups.entrySet()) {
+            Result<?> overloads = entry.getValue();
+
+            for (int i = 0; i < overloads.size(); i++) {
+                Record record = overloads.get(i);
+
+                SchemaDefinition schema = getSchema(record.getValue(DB));
+                String name = record.getValue(Proc.NAME);
+                String comment = record.getValue(Proc.COMMENT);
+                String params = new String(record.getValue(Proc.PARAM_LIST));
+                String returns = new String(record.getValue(Proc.RETURNS));
+                ProcType type = record.getValue(Proc.TYPE);
+
+                if (overloads.size() > 1) {
+                    result.add(new MySQLRoutineDefinition(schema, name, comment, params, returns, type, "_" + type.name()));
+                }
+                else {
+                    result.add(new MySQLRoutineDefinition(schema, name, comment, params, returns, type, null));
+                }
+            }
         }
 
         return result;

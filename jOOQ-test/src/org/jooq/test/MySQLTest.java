@@ -894,4 +894,10 @@ public class MySQLTest extends jOOQAbstractTest<
         assertEquals(d2, dates.getValue(1, 0));
         assertEquals(d2, dates.getValue(1, 1));
     }
+
+    @Test
+    public void testMySQLOverloadedProcedures() throws Exception {
+        assertEquals(1, (int) Routines.fp1908_FUNCTION(create().configuration(), 1));
+        assertEquals(2, (int) Routines.fp1908_PROCEDURE(create().configuration(), 1));
+    }
 }

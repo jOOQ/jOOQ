@@ -55,6 +55,7 @@ import org.jooq.util.InOutDefinition;
 import org.jooq.util.ParameterDefinition;
 import org.jooq.util.SchemaDefinition;
 import org.jooq.util.mysql.information_schema.tables.Parameters;
+import org.jooq.util.mysql.mysql.enums.ProcType;
 
 /**
  * @author Lukas Eder
@@ -65,12 +66,22 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
 
     private final String params;
     private final String returns;
+    private final ProcType procType;
 
+    /**
+     * @deprecated - This constructor was deprecated with jOOQ 3.2
+     */
+    @Deprecated
     public MySQLRoutineDefinition(SchemaDefinition schema, String name, String comment, String params, String returns) {
-        super(schema, null, name, comment, null);
+        this(schema, name, comment, params, returns, null, null);
+    }
+
+    public MySQLRoutineDefinition(SchemaDefinition schema, String name, String comment, String params, String returns, ProcType procType, String overload) {
+        super(schema, null, name, comment, overload);
 
         this.params = params;
         this.returns = returns;
+        this.procType = procType;
     }
 
     @Override
@@ -100,6 +111,7 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
                 .from(PARAMETERS)
                 .where(Parameters.SPECIFIC_SCHEMA.eq(getSchema().getInputName()))
                 .and(Parameters.SPECIFIC_NAME.eq(getInputName()))
+                .and(Parameters.ROUTINE_TYPE.eq(procType.name()))
                 .orderBy(Parameters.ORDINAL_POSITION.asc())
                 .fetch()) {
 

@@ -458,7 +458,9 @@ public abstract class jOOQAbstractTest<
 
         // Issue a log dump on adaptive server. Don't know why this is needed
         // http://www.faqs.org/faqs/databases/sybase-faq/part6/
-        if (connection.getClass().getPackage().getName().contains("jtds")) {
+        if (connection.getClass().getPackage().getName().contains("jtds") &&
+            !connection.getMetaData().getURL().contains("sqlserver")) {
+
             log.info("RUNNING", "dump tran TEST with truncate_only");
             connection.createStatement().execute("dump tran TEST with truncate_only");
         }

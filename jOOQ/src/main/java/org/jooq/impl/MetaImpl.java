@@ -42,6 +42,8 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.name;
@@ -49,6 +51,7 @@ import static org.jooq.impl.DSL.name;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -123,13 +126,17 @@ class MetaImpl implements Meta, Serializable {
     public final List<Catalog> getCatalogs() {
         try {
             List<Catalog> result = new ArrayList<Catalog>();
-            Result<Record> catalogs = create.fetch(
-                meta().getCatalogs(),
-                SQLDataType.VARCHAR // TABLE_CATALOG
-            );
 
-            for (String name : catalogs.getValues(0, String.class)) {
-                result.add(new MetaCatalog(name));
+            // [#2760] MySQL JDBC confuses "catalog" and "schema"
+            if (!asList(MYSQL, MARIADB).contains(configuration.dialect().family())) {
+                Result<Record> catalogs = create.fetch(
+                    meta().getCatalogs(),
+                    SQLDataType.VARCHAR // TABLE_CATALOG
+                );
+
+                for (String name : catalogs.getValues(0, String.class)) {
+                    result.add(new MetaCatalog(name));
+                }
             }
 
             // There should always be at least one (empty) catalog in a database
@@ -196,14 +203,31 @@ class MetaImpl implements Meta, Serializable {
         public final List<Schema> getSchemas() {
             try {
                 List<Schema> result = new ArrayList<Schema>();
-                Result<Record> schemas = create.fetch(
-                    meta().getSchemas(),
-                    SQLDataType.VARCHAR, // TABLE_SCHEM
-                    SQLDataType.VARCHAR  // TABLE_CATALOG
-                );
 
-                for (String name : schemas.getValues(0, String.class)) {
-                    result.add(new MetaSchema(name));
+                if (!asList(MYSQL, MARIADB).contains(configuration.dialect().family())) {
+                    Result<Record> schemas = create.fetch(
+                        meta().getSchemas(),
+
+                        // [#2681] Work around a flaw in the MySQL JDBC driver
+                        SQLDataType.VARCHAR, // TABLE_SCHEM
+                        SQLDataType.VARCHAR  // TABLE_CATALOG
+                    );
+
+                    for (String name : schemas.getValues(0, String.class)) {
+                        result.add(new MetaSchema(name));
+                    }
+                }
+
+                // [#2760] MySQL JDBC confuses "catalog" and "schema"
+                else {
+                    Result<Record> schemas = create.fetch(
+                        meta().getCatalogs(),
+                        SQLDataType.VARCHAR  // TABLE_CATALOG
+                    );
+
+                    for (String name : schemas.getValues(0, String.class)) {
+                        result.add(new MetaSchema(name));
+                    }
                 }
 
                 // There should always be at least one (empty) schema in a database
@@ -260,19 +284,25 @@ class MetaImpl implements Meta, Serializable {
                     /* [/pro] */
                 }
 
+                ResultSet rs;
+                if (!asList(MYSQL, MARIADB).contains(configuration.dialect().family())) {
+                    rs = meta().getTables(null, getName(), "%", types);
+                }
+
+                // [#2760] MySQL JDBC confuses "catalog" and "schema"
+                else {
+                    rs = meta().getTables(getName(), null, "%", types);
+                }
+
                 List<Table<?>> result = new ArrayList<Table<?>>();
                 Result<Record> tables = create.fetch(
-                    meta().getTables(null, getName(), "%", types),
+                    rs,
+
+                    // [#2681] Work around a flaw in the MySQL JDBC driver
                     SQLDataType.VARCHAR, // TABLE_CAT
                     SQLDataType.VARCHAR, // TABLE_SCHEM
                     SQLDataType.VARCHAR, // TABLE_NAME
-                    SQLDataType.VARCHAR, // TABLE_TYPE
-                    SQLDataType.VARCHAR, // REMARKS
-                    SQLDataType.VARCHAR, // TYPE_CAT
-                    SQLDataType.VARCHAR, // TYPE_SCHEM
-                    SQLDataType.VARCHAR, // TYPE_NAME
-                    SQLDataType.VARCHAR, // SELF_REFERENCING_COL_NAME
-                    SQLDataType.VARCHAR  // REF_GENERATION
+                    SQLDataType.VARCHAR  // TABLE_TYPE
                 );
 
                 for (Record table : tables) {
@@ -328,8 +358,18 @@ class MetaImpl implements Meta, Serializable {
         }
 
         private final Result<Record> getColumns0(String schema, String table) throws SQLException {
+            ResultSet rs;
+            if (!asList(MYSQL, MARIADB).contains(configuration.dialect().family())) {
+                rs = meta().getColumns(null, schema, table, "%");
+            }
+
+            // [#2760] MySQL JDBC confuses "catalog" and "schema"
+            else {
+                rs = meta().getColumns(schema, null, table, "%");
+            }
+
             return create.fetch(
-                meta().getColumns(null, schema, table, "%"),
+                rs,
 
                 // Work around a bug in the SQL Server JDBC driver by
                 // coercing data types to the expected types
@@ -377,9 +417,19 @@ class MetaImpl implements Meta, Serializable {
             String schema = getSchema() == null ? null : getSchema().getName();
 
             try {
+                ResultSet rs;
+                if (!asList(MYSQL, MARIADB).contains(configuration.dialect().family())) {
+                    rs = meta().getPrimaryKeys(null, schema, getName());
+                }
+
+                // [#2760] MySQL JDBC confuses "catalog" and "schema"
+                else {
+                    rs = meta().getPrimaryKeys(schema, null, getName());
+                }
+
                 Result<Record> result =
                 create.fetch(
-                    meta().getPrimaryKeys(null, schema, getName()),
+                    rs,
                     String.class, // TABLE_CAT
                     String.class, // TABLE_SCHEM
                     String.class, // TABLE_NAME

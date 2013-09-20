@@ -9,7 +9,7 @@ package org.jooq.test.mariadb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mariadb.generatedclasses.tables.records.TIdentityPkRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -993117273;
+	private static final long serialVersionUID = 489087083;
 
 	/**
 	 * Setter for <code>test.t_identity_pk.id</code>. 
@@ -112,5 +112,15 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 */
 	public TIdentityPkRecord() {
 		super(org.jooq.test.mariadb.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
+	}
+
+	/**
+	 * Create a detached, initialised TIdentityPkRecord
+	 */
+	public TIdentityPkRecord(java.lang.Integer id, java.lang.Integer val) {
+		super(org.jooq.test.mariadb.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
+
+		setValue(0, id);
+		setValue(1, val);
 	}
 }

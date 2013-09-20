@@ -11,7 +11,7 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -704744554;
+	private static final long serialVersionUID = 1381106322;
 
 	/**
 	 * Setter for <code>test.v_author.ID</code>. The author ID
@@ -222,5 +222,19 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.m
 	 */
 	public VAuthorRecord() {
 		super(org.jooq.test.mysql.generatedclasses.tables.VAuthor.V_AUTHOR);
+	}
+
+	/**
+	 * Create a detached, initialised VAuthorRecord
+	 */
+	public VAuthorRecord(java.lang.Integer id, java.lang.String firstName, java.lang.String lastName, java.sql.Date dateOfBirth, java.lang.Integer yearOfBirth, java.lang.String address) {
+		super(org.jooq.test.mysql.generatedclasses.tables.VAuthor.V_AUTHOR);
+
+		setValue(0, id);
+		setValue(1, firstName);
+		setValue(2, lastName);
+		setValue(3, dateOfBirth);
+		setValue(4, yearOfBirth);
+		setValue(5, address);
 	}
 }

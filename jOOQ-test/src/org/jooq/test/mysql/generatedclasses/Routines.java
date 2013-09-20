@@ -52,6 +52,48 @@ public class Routines {
 	}
 
 	/**
+	 * Call <code>test.fp1908</code>
+	 */
+	public static java.lang.Integer fp1908_FUNCTION(org.jooq.Configuration configuration, java.lang.Integer p1) {
+		org.jooq.test.mysql.generatedclasses.routines.Fp1908_FUNCTION f = new org.jooq.test.mysql.generatedclasses.routines.Fp1908_FUNCTION();
+		f.setP1(p1);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get <code>test.fp1908</code> as a field
+	 */
+	public static org.jooq.Field<java.lang.Integer> fp1908_FUNCTION(java.lang.Integer p1) {
+		org.jooq.test.mysql.generatedclasses.routines.Fp1908_FUNCTION f = new org.jooq.test.mysql.generatedclasses.routines.Fp1908_FUNCTION();
+		f.setP1(p1);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get <code>test.fp1908</code> as a field
+	 */
+	public static org.jooq.Field<java.lang.Integer> fp1908_FUNCTION(org.jooq.Field<java.lang.Integer> p1) {
+		org.jooq.test.mysql.generatedclasses.routines.Fp1908_FUNCTION f = new org.jooq.test.mysql.generatedclasses.routines.Fp1908_FUNCTION();
+		f.setP1(p1);
+
+		return f.asField();
+	}
+
+	/**
+	 * Call <code>test.fp1908</code>
+	 */
+	public static java.lang.Integer fp1908_PROCEDURE(org.jooq.Configuration configuration, java.lang.Integer p1) {
+		org.jooq.test.mysql.generatedclasses.routines.Fp1908_PROCEDURE p = new org.jooq.test.mysql.generatedclasses.routines.Fp1908_PROCEDURE();
+		p.setP1(p1);
+
+		p.execute(configuration);
+		return p.getP2();
+	}
+
+	/**
 	 * Call <code>test.f_author_exists</code>
 	 */
 	public static java.lang.Integer fAuthorExists(org.jooq.Configuration configuration, java.lang.String authorName) {

@@ -11,7 +11,7 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -691361434;
+	private static final long serialVersionUID = -2072846359;
 
 	/**
 	 * Setter for <code>test.v_library.AUTHOR</code>. 
@@ -102,5 +102,15 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 */
 	public VLibraryRecord() {
 		super(org.jooq.test.mysql.generatedclasses.tables.VLibrary.V_LIBRARY);
+	}
+
+	/**
+	 * Create a detached, initialised VLibraryRecord
+	 */
+	public VLibraryRecord(java.lang.String author, java.lang.String title) {
+		super(org.jooq.test.mysql.generatedclasses.tables.VLibrary.V_LIBRARY);
+
+		setValue(0, author);
+		setValue(1, title);
 	}
 }

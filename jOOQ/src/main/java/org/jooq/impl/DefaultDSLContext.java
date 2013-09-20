@@ -1718,7 +1718,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public int fetchCount(Select<?> query) {
-        return selectCount().from(query).fetchOne(0, int.class);
+        return new FetchCount(configuration(), query).fetchOne().value1();
     }
 
     @Override

@@ -90,6 +90,7 @@ import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectDistinct;
 import static org.jooq.impl.DSL.selectFrom;
+import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.stddevPop;
 import static org.jooq.impl.DSL.stddevSamp;
 import static org.jooq.impl.DSL.sum;
@@ -298,6 +299,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFetchCount() throws Exception {
         assertEquals(1, create().fetchCount(select(one().as("x"))));
         assertEquals(1, create().select(one().as("x")).fetchCount());
+
+        // [#2759] T-SQL databases need to render derived column lists, here!
+        assertEquals(1, create().fetchCount(selectOne()));
+        assertEquals(1, create().selectOne().fetchCount());
 
         assertEquals(4, create().fetchCount(select(TBook_ID(), TBook_TITLE()).from(TBook())));
         assertEquals(4, create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetchCount());

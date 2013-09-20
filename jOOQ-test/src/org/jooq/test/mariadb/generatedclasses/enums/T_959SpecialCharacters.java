@@ -9,19 +9,19 @@ package org.jooq.test.mariadb.generatedclasses.enums;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public enum T_959SpecialCharacters implements org.jooq.EnumType {
 
-	a(""),
+	_(""),
 
-	b("("),
+	__("("),
 
-	c(""),
+	_(""),
 
-	d(""),
+	_(""),
 
-	e(""),
+	_(""),
 
-	f(""),
+	_(""),
 
-	g("enum"),
+	enum_("enum"),
 
 	;
 

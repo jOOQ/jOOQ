@@ -87,10 +87,10 @@ public class SQLServerDataType {
     public static final DataType<Date>       DATE             = new DefaultDataType<Date>(SQLDialect.SQLSERVER, SQLDataType.DATE, "date");
     public static final DataType<Timestamp>  DATETIME         = new DefaultDataType<Timestamp>(SQLDialect.SQLSERVER, SQLDataType.TIMESTAMP, "datetime");
     public static final DataType<Time>       TIME             = new DefaultDataType<Time>(SQLDialect.SQLSERVER, SQLDataType.TIME, "time");
-    public static final DataType<String>     VARCHAR          = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.VARCHAR, "varchar");
+    public static final DataType<String>     VARCHAR          = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.VARCHAR, "varchar", "varchar(max)");
     public static final DataType<String>     CHAR             = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.CHAR, "char");
     public static final DataType<String>     TEXT             = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.CLOB, "text");
-    public static final DataType<String>     NVARCHAR         = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.NVARCHAR, "nvarchar");
+    public static final DataType<String>     NVARCHAR         = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.NVARCHAR, "nvarchar", "nvarchar(max)");
     public static final DataType<String>     NCHAR            = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.NCHAR, "nchar");
     public static final DataType<String>     NTEXT            = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.NCLOB, "ntext");
     public static final DataType<byte[]>     VARBINARY        = new DefaultDataType<byte[]>(SQLDialect.SQLSERVER, SQLDataType.VARBINARY, "varbinary", "varbinary(max)");
@@ -104,9 +104,9 @@ public class SQLServerDataType {
     protected static final DataType<Boolean> __BOOLEAN        = new DefaultDataType<Boolean>(SQLDialect.SQLSERVER, SQLDataType.BOOLEAN, "bit");
     protected static final DataType<Double>  __DOUBLE         = new DefaultDataType<Double>(SQLDialect.SQLSERVER, SQLDataType.DOUBLE, "float");
     protected static final DataType<byte[]>  __LONGVARBINARY  = new DefaultDataType<byte[]>(SQLDialect.SQLSERVER, SQLDataType.LONGVARBINARY, "varbinary", "varbinary(max)");
-    protected static final DataType<String>  __LONGVARCHAR    = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.LONGVARCHAR, "varchar");
+    protected static final DataType<String>  __LONGVARCHAR    = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.LONGVARCHAR, "varchar", "varchar(max)");
     protected static final DataType<String>  __NCLOB          = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.NCLOB, "text");
-    protected static final DataType<String>  __LONGNVARCHAR   = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.LONGNVARCHAR, "varchar");
+    protected static final DataType<String>  __LONGNVARCHAR   = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.LONGNVARCHAR, "varchar", "varchar(max)");
     protected static final DataType<Byte>    __BYTE           = new DefaultDataType<Byte>(SQLDialect.SQLSERVER, SQLDataType.TINYINT, "signed tinyint", "tinyint");
 
     // -------------------------------------------------------------------------

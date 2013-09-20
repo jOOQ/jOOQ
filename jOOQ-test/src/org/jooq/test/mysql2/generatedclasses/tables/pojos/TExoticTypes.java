@@ -11,10 +11,20 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_exotic_types", schema = "test2")
 public class TExoticTypes implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1001436189;
+	private static final long serialVersionUID = -1249735099;
 
 	private java.lang.Integer id;
 	private java.util.UUID    uu;
+
+	public TExoticTypes() {}
+
+	public TExoticTypes(
+		java.lang.Integer id,
+		java.util.UUID    uu
+	) {
+		this.id = id;
+		this.uu = uu;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 10)

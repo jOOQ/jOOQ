@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 2037689572;
+	private static final long serialVersionUID = -1275735549;
 
 	/**
 	 * The singleton instance of <code>test2.t_book_store</code>
@@ -29,7 +29,7 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.gen
 	/**
 	 * The column <code>test2.t_book_store.name</code>. The books store name
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(400), this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
 
 	/**
 	 * Create a <code>test2.t_book_store</code> table reference

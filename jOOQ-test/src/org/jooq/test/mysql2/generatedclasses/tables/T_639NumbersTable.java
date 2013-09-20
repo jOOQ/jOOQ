@@ -9,7 +9,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 1700269785;
+	private static final long serialVersionUID = -240160998;
 
 	/**
 	 * The singleton instance of <code>test2.t_639_numbers_table</code>
@@ -27,7 +27,7 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.mys
 	/**
 	 * The column <code>test2.t_639_numbers_table.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>test2.t_639_numbers_table.BYTE</code>. 

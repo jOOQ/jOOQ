@@ -11,11 +11,23 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_785", schema = "test2")
 public class T_785 implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1364009455;
+	private static final long serialVersionUID = -289916964;
 
 	private java.lang.Integer id;
 	private java.lang.String  name;
 	private java.lang.String  value;
+
+	public T_785() {}
+
+	public T_785(
+		java.lang.Integer id,
+		java.lang.String  name,
+		java.lang.String  value
+	) {
+		this.id = id;
+		this.name = name;
+		this.value = value;
+	}
 
 	@javax.persistence.Column(name = "ID", precision = 10)
 	public java.lang.Integer getId() {

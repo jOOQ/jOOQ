@@ -13,9 +13,17 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_book_store", schema = "test2")
 public class TBookStore implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1902304758;
+	private static final long serialVersionUID = -1736276536;
 
 	private java.lang.String name;
+
+	public TBookStore() {}
+
+	public TBookStore(
+		java.lang.String name
+	) {
+		this.name = name;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "name", unique = true, nullable = false, length = 400)

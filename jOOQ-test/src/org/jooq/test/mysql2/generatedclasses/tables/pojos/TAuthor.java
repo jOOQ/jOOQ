@@ -13,7 +13,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_author", schema = "test2")
 public class TAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1401742014;
+	private static final long serialVersionUID = -487076941;
 
 	private java.lang.Integer id;
 	private java.lang.String  firstName;
@@ -21,6 +21,24 @@ public class TAuthor implements java.io.Serializable {
 	private java.sql.Date     dateOfBirth;
 	private java.lang.Integer yearOfBirth;
 	private java.lang.String  address;
+
+	public TAuthor() {}
+
+	public TAuthor(
+		java.lang.Integer id,
+		java.lang.String  firstName,
+		java.lang.String  lastName,
+		java.sql.Date     dateOfBirth,
+		java.lang.Integer yearOfBirth,
+		java.lang.String  address
+	) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dateOfBirth = dateOfBirth;
+		this.yearOfBirth = yearOfBirth;
+		this.address = address;
+	}
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 10)

@@ -13,7 +13,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "v_book", schema = "test2")
 public class VBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = -451221144;
+	private static final long serialVersionUID = -100326184;
 
 	private java.lang.Integer                                       id;
 	private java.lang.Integer                                       authorId;
@@ -25,6 +25,32 @@ public class VBook implements java.io.Serializable {
 	private java.lang.String                                        contentText;
 	private byte[]                                                  contentPdf;
 	private org.jooq.test.mysql2.generatedclasses.enums.VBookStatus status;
+
+	public VBook() {}
+
+	public VBook(
+		java.lang.Integer                                       id,
+		java.lang.Integer                                       authorId,
+		java.lang.Integer                                       coAuthorId,
+		java.lang.Integer                                       detailsId,
+		java.lang.String                                        title,
+		java.lang.Integer                                       publishedIn,
+		java.lang.Integer                                       languageId,
+		java.lang.String                                        contentText,
+		byte[]                                                  contentPdf,
+		org.jooq.test.mysql2.generatedclasses.enums.VBookStatus status
+	) {
+		this.id = id;
+		this.authorId = authorId;
+		this.coAuthorId = coAuthorId;
+		this.detailsId = detailsId;
+		this.title = title;
+		this.publishedIn = publishedIn;
+		this.languageId = languageId;
+		this.contentText = contentText;
+		this.contentPdf = contentPdf;
+		this.status = status;
+	}
 
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 10)
 	public java.lang.Integer getId() {

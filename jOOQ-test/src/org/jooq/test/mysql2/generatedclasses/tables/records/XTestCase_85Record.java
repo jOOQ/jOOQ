@@ -13,7 +13,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "x_test_case_85", schema = "test2")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 1229356008;
+	private static final long serialVersionUID = 1709550170;
 
 	/**
 	 * Setter for <code>test2.x_test_case_85.id</code>. 
@@ -150,5 +150,16 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	public XTestCase_85Record() {
 		super(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
+	}
+
+	/**
+	 * Create a detached, initialised XTestCase_85Record
+	 */
+	public XTestCase_85Record(java.lang.Integer id, java.lang.Integer xUnusedId, java.lang.String xUnusedName) {
+		super(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
+
+		setValue(0, id);
+		setValue(1, xUnusedId);
+		setValue(2, xUnusedName);
 	}
 }

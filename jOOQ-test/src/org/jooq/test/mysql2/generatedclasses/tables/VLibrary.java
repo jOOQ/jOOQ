@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 1927954541;
+	private static final long serialVersionUID = 347424204;
 
 	/**
 	 * The singleton instance of <code>test2.v_library</code>
@@ -34,7 +34,7 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.gener
 	/**
 	 * The column <code>test2.v_library.TITLE</code>. The book's title
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB.length(65535), this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB.length(65535).nullable(false), this);
 
 	/**
 	 * Create a <code>test2.v_library</code> table reference

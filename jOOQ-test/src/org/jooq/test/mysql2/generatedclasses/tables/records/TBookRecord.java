@@ -13,7 +13,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_book", schema = "test2")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.mysql2.generatedclasses.enums.TBookStatus> {
 
-	private static final long serialVersionUID = 1883887614;
+	private static final long serialVersionUID = -1343427788;
 
 	/**
 	 * Setter for <code>test2.t_book.ID</code>. The book ID
@@ -367,5 +367,23 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	public TBookRecord() {
 		super(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK);
+	}
+
+	/**
+	 * Create a detached, initialised TBookRecord
+	 */
+	public TBookRecord(java.lang.Integer id, java.lang.Integer authorId, java.lang.Integer coAuthorId, java.lang.Integer detailsId, java.lang.String title, java.lang.Integer publishedIn, java.lang.Integer languageId, java.lang.String contentText, byte[] contentPdf, org.jooq.test.mysql2.generatedclasses.enums.TBookStatus status) {
+		super(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK);
+
+		setValue(0, id);
+		setValue(1, authorId);
+		setValue(2, coAuthorId);
+		setValue(3, detailsId);
+		setValue(4, title);
+		setValue(5, publishedIn);
+		setValue(6, languageId);
+		setValue(7, contentText);
+		setValue(8, contentPdf);
+		setValue(9, status);
 	}
 }

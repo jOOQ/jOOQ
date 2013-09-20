@@ -9,7 +9,7 @@ package org.jooq.test.mariadb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mariadb.generatedclasses.tables.records.TExoticTypesRecord> implements org.jooq.Record2<java.lang.Integer, java.util.UUID> {
 
-	private static final long serialVersionUID = 179690193;
+	private static final long serialVersionUID = -942707322;
 
 	/**
 	 * Setter for <code>test.t_exotic_types.ID</code>. 
@@ -112,5 +112,15 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	public TExoticTypesRecord() {
 		super(org.jooq.test.mariadb.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES);
+	}
+
+	/**
+	 * Create a detached, initialised TExoticTypesRecord
+	 */
+	public TExoticTypesRecord(java.lang.Integer id, java.util.UUID uu) {
+		super(org.jooq.test.mariadb.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES);
+
+		setValue(0, id);
+		setValue(1, uu);
 	}
 }

@@ -11,7 +11,7 @@ package org.jooq.test.mariadb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mariadb.generatedclasses.tables.records.XTestCase_71Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -880921215;
+	private static final long serialVersionUID = -1950646697;
 
 	/**
 	 * Setter for <code>test.x_test_case_71.ID</code>. 
@@ -114,5 +114,15 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	public XTestCase_71Record() {
 		super(org.jooq.test.mariadb.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71);
+	}
+
+	/**
+	 * Create a detached, initialised XTestCase_71Record
+	 */
+	public XTestCase_71Record(java.lang.Integer id, java.lang.Integer testCase_64_69Id) {
+		super(org.jooq.test.mariadb.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71);
+
+		setValue(0, id);
+		setValue(1, testCase_64_69Id);
 	}
 }

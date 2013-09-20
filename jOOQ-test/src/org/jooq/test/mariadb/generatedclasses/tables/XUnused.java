@@ -11,7 +11,7 @@ package org.jooq.test.mariadb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.mariadb.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -70328496;
+	private static final long serialVersionUID = 133477390;
 
 	/**
 	 * The singleton instance of <code>test.x_unused</code>
@@ -29,12 +29,12 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.mariadb.gener
 	/**
 	 * The column <code>test.x_unused.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, X_UNUSED);
+	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_UNUSED);
 
 	/**
 	 * The column <code>test.x_unused.NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10), X_UNUSED);
+	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), X_UNUSED);
 
 	/**
 	 * The column <code>test.x_unused.BIG_INTEGER</code>. 

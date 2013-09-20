@@ -11,7 +11,7 @@ package org.jooq.test.mariadb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.mariadb.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 1918704408;
+	private static final long serialVersionUID = -1930759561;
 
 	/**
 	 * The singleton instance of <code>test.t_book_store</code>
@@ -29,7 +29,7 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.mariadb.ge
 	/**
 	 * The column <code>test.t_book_store.name</code>. The books store name
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(400), T_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), T_BOOK_STORE);
 
 	/**
 	 * No further instances allowed

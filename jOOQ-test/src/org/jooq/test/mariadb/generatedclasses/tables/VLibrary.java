@@ -11,7 +11,7 @@ package org.jooq.test.mariadb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.mariadb.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -736384103;
+	private static final long serialVersionUID = -2034350374;
 
 	/**
 	 * The singleton instance of <code>test.v_library</code>
@@ -34,7 +34,7 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.mariadb.gene
 	/**
 	 * The column <code>test.v_library.TITLE</code>. The book's title
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB.length(65535), V_LIBRARY);
+	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB.length(65535).nullable(false), V_LIBRARY);
 
 	/**
 	 * No further instances allowed

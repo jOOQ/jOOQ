@@ -9,7 +9,7 @@ package org.jooq.test.mariadb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.mariadb.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -1870823908;
+	private static final long serialVersionUID = -261445736;
 
 	/**
 	 * The singleton instance of <code>test.t_booleans</code>
@@ -27,7 +27,7 @@ public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.mariadb.gen
 	/**
 	 * The column <code>test.t_booleans.id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TBooleansRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TBooleansRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), T_BOOLEANS);
 
 	/**
 	 * The column <code>test.t_booleans.one_zero</code>. 

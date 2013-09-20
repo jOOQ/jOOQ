@@ -628,4 +628,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals("George", author.getValue(TAuthor_FIRST_NAME()));
     }
+
+    @Test
+    public void testIgnoreCaseForLongStrings() {
+        jOOQAbstractTest.reset = false;
+
+        A a = create().newRecord(TAuthor());
+        a.setValue(TAuthor_ID(), 3);
+        a.setValue(TAuthor_LAST_NAME(), "ABCDEFGHIJ1234567890ABCDEFGHIJ1234567890");
+        assertEquals(1, a.store());
+
+        // [#2712] SQL Server VARCHAR types default to length 30. If used in a
+        // CAST(x AS VARCHAR), this may unexpectedly truncate strings.
+        assertEquals(3, (int)
+        create().select(TAuthor_ID())
+                .from(TAuthor())
+                .where(TAuthor_LAST_NAME().equalIgnoreCase("abcdefghij1234567890abcdefghij1234567890"))
+                .fetchOne(TAuthor_ID()));
+    }
 }

@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaSalesByFilmCategory extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaSalesByFilmCategoryRecord> {
 
-	private static final long serialVersionUID = 271589503;
+	private static final long serialVersionUID = -1929506146;
 
 	/**
 	 * The singleton instance of <code>sakila.sales_by_film_category</code>
@@ -29,7 +29,7 @@ public class SakilaSalesByFilmCategory extends org.jooq.impl.TableImpl<org.jooq.
 	/**
 	 * The column <code>sakila.sales_by_film_category.category</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaSalesByFilmCategoryRecord, java.lang.String> CATEGORY = createField("category", org.jooq.impl.SQLDataType.VARCHAR.length(25), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaSalesByFilmCategoryRecord, java.lang.String> CATEGORY = createField("category", org.jooq.impl.SQLDataType.VARCHAR.length(25).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.sales_by_film_category.total_sales</code>. 

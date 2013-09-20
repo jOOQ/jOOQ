@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaStaffListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffListRecord> implements org.jooq.Record8<java.lang.Byte, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Byte> {
 
-	private static final long serialVersionUID = 1333905406;
+	private static final long serialVersionUID = 1054435248;
 
 	/**
 	 * Setter for <code>sakila.staff_list.ID</code>. 
@@ -282,5 +282,21 @@ public class SakilaStaffListRecord extends org.jooq.impl.TableRecordImpl<org.joo
 	 */
 	public SakilaStaffListRecord() {
 		super(org.jooq.examples.mysql.sakila.tables.SakilaStaffList.STAFF_LIST);
+	}
+
+	/**
+	 * Create a detached, initialised SakilaStaffListRecord
+	 */
+	public SakilaStaffListRecord(java.lang.Byte id, java.lang.String name, java.lang.String address, java.lang.String zip_code, java.lang.String phone, java.lang.String city, java.lang.String country, java.lang.Byte sid) {
+		super(org.jooq.examples.mysql.sakila.tables.SakilaStaffList.STAFF_LIST);
+
+		setValue(0, id);
+		setValue(1, name);
+		setValue(2, address);
+		setValue(3, zip_code);
+		setValue(4, phone);
+		setValue(5, city);
+		setValue(6, country);
+		setValue(7, sid);
 	}
 }

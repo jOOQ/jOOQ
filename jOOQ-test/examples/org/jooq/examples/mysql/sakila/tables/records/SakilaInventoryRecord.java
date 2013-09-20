@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaInventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaInventoryRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.Short, java.lang.Byte, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1824328989;
+	private static final long serialVersionUID = -1882083896;
 
 	/**
 	 * Setter for <code>sakila.inventory.inventory_id</code>. 
@@ -172,5 +172,17 @@ public class SakilaInventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 */
 	public SakilaInventoryRecord() {
 		super(org.jooq.examples.mysql.sakila.tables.SakilaInventory.INVENTORY);
+	}
+
+	/**
+	 * Create a detached, initialised SakilaInventoryRecord
+	 */
+	public SakilaInventoryRecord(java.lang.Integer inventoryId, java.lang.Short filmId, java.lang.Byte storeId, java.sql.Timestamp lastUpdate) {
+		super(org.jooq.examples.mysql.sakila.tables.SakilaInventory.INVENTORY);
+
+		setValue(0, inventoryId);
+		setValue(1, filmId);
+		setValue(2, storeId);
+		setValue(3, lastUpdate);
 	}
 }

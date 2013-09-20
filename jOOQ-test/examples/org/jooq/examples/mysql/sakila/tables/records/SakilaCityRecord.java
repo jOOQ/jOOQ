@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaCityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaCityRecord> implements org.jooq.Record4<java.lang.Short, java.lang.String, java.lang.Short, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 957754545;
+	private static final long serialVersionUID = -806525187;
 
 	/**
 	 * Setter for <code>sakila.city.city_id</code>. 
@@ -172,5 +172,17 @@ public class SakilaCityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	public SakilaCityRecord() {
 		super(org.jooq.examples.mysql.sakila.tables.SakilaCity.CITY);
+	}
+
+	/**
+	 * Create a detached, initialised SakilaCityRecord
+	 */
+	public SakilaCityRecord(java.lang.Short cityId, java.lang.String city, java.lang.Short countryId, java.sql.Timestamp lastUpdate) {
+		super(org.jooq.examples.mysql.sakila.tables.SakilaCity.CITY);
+
+		setValue(0, cityId);
+		setValue(1, city);
+		setValue(2, countryId);
+		setValue(3, lastUpdate);
 	}
 }

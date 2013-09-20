@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaCountry extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaCountryRecord> {
 
-	private static final long serialVersionUID = -293458236;
+	private static final long serialVersionUID = -202889530;
 
 	/**
 	 * The singleton instance of <code>sakila.country</code>
@@ -27,17 +27,17 @@ public class SakilaCountry extends org.jooq.impl.TableImpl<org.jooq.examples.mys
 	/**
 	 * The column <code>sakila.country.country_id</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaCountryRecord, java.lang.Short> COUNTRY_ID = createField("country_id", org.jooq.impl.SQLDataType.SMALLINT, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaCountryRecord, java.lang.Short> COUNTRY_ID = createField("country_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this);
 
 	/**
 	 * The column <code>sakila.country.country</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaCountryRecord, java.lang.String> COUNTRY_ = createField("country", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaCountryRecord, java.lang.String> COUNTRY_ = createField("country", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.country.last_update</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaCountryRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaCountryRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this);
 
 	/**
 	 * Create a <code>sakila.country</code> table reference

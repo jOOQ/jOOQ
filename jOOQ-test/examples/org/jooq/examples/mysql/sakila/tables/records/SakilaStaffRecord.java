@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaStaffRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord> implements org.jooq.Record11<java.lang.Byte, java.lang.String, java.lang.String, java.lang.Short, byte[], java.lang.String, java.lang.Byte, java.lang.Byte, java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 541496558;
+	private static final long serialVersionUID = -653950979;
 
 	/**
 	 * Setter for <code>sakila.staff.staff_id</code>. 
@@ -382,5 +382,24 @@ public class SakilaStaffRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 */
 	public SakilaStaffRecord() {
 		super(org.jooq.examples.mysql.sakila.tables.SakilaStaff.STAFF);
+	}
+
+	/**
+	 * Create a detached, initialised SakilaStaffRecord
+	 */
+	public SakilaStaffRecord(java.lang.Byte staffId, java.lang.String firstName, java.lang.String lastName, java.lang.Short addressId, byte[] picture, java.lang.String email, java.lang.Byte storeId, java.lang.Byte active, java.lang.String username, java.lang.String password, java.sql.Timestamp lastUpdate) {
+		super(org.jooq.examples.mysql.sakila.tables.SakilaStaff.STAFF);
+
+		setValue(0, staffId);
+		setValue(1, firstName);
+		setValue(2, lastName);
+		setValue(3, addressId);
+		setValue(4, picture);
+		setValue(5, email);
+		setValue(6, storeId);
+		setValue(7, active);
+		setValue(8, username);
+		setValue(9, password);
+		setValue(10, lastUpdate);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaActor extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaActorRecord> {
 
-	private static final long serialVersionUID = -1382847565;
+	private static final long serialVersionUID = 1784460568;
 
 	/**
 	 * The singleton instance of <code>sakila.actor</code>
@@ -27,22 +27,22 @@ public class SakilaActor extends org.jooq.impl.TableImpl<org.jooq.examples.mysql
 	/**
 	 * The column <code>sakila.actor.actor_id</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaActorRecord, java.lang.Short> ACTOR_ID = createField("actor_id", org.jooq.impl.SQLDataType.SMALLINT, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaActorRecord, java.lang.Short> ACTOR_ID = createField("actor_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this);
 
 	/**
 	 * The column <code>sakila.actor.first_name</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaActorRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(45), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaActorRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(45).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.actor.last_name</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaActorRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(45), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaActorRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(45).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.actor.last_update</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaActorRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaActorRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this);
 
 	/**
 	 * Create a <code>sakila.actor</code> table reference

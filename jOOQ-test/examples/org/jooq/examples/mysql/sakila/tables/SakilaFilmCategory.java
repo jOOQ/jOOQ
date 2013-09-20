@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaFilmCategory extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmCategoryRecord> {
 
-	private static final long serialVersionUID = -784566559;
+	private static final long serialVersionUID = 1017174469;
 
 	/**
 	 * The singleton instance of <code>sakila.film_category</code>
@@ -27,17 +27,17 @@ public class SakilaFilmCategory extends org.jooq.impl.TableImpl<org.jooq.example
 	/**
 	 * The column <code>sakila.film_category.film_id</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmCategoryRecord, java.lang.Short> FILM_ID = createField("film_id", org.jooq.impl.SQLDataType.SMALLINT, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmCategoryRecord, java.lang.Short> FILM_ID = createField("film_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this);
 
 	/**
 	 * The column <code>sakila.film_category.category_id</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmCategoryRecord, java.lang.Byte> CATEGORY_ID = createField("category_id", org.jooq.impl.SQLDataType.TINYINT, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmCategoryRecord, java.lang.Byte> CATEGORY_ID = createField("category_id", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this);
 
 	/**
 	 * The column <code>sakila.film_category.last_update</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmCategoryRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmCategoryRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this);
 
 	/**
 	 * Create a <code>sakila.film_category</code> table reference

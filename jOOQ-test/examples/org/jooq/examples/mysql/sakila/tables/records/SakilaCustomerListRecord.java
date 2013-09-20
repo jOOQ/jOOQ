@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaCustomerListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaCustomerListRecord> implements org.jooq.Record9<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Byte> {
 
-	private static final long serialVersionUID = -1997838458;
+	private static final long serialVersionUID = 2013523924;
 
 	/**
 	 * Setter for <code>sakila.customer_list.ID</code>. 
@@ -312,5 +312,22 @@ public class SakilaCustomerListRecord extends org.jooq.impl.TableRecordImpl<org.
 	 */
 	public SakilaCustomerListRecord() {
 		super(org.jooq.examples.mysql.sakila.tables.SakilaCustomerList.CUSTOMER_LIST);
+	}
+
+	/**
+	 * Create a detached, initialised SakilaCustomerListRecord
+	 */
+	public SakilaCustomerListRecord(java.lang.Short id, java.lang.String name, java.lang.String address, java.lang.String zip_code, java.lang.String phone, java.lang.String city, java.lang.String country, java.lang.String notes, java.lang.Byte sid) {
+		super(org.jooq.examples.mysql.sakila.tables.SakilaCustomerList.CUSTOMER_LIST);
+
+		setValue(0, id);
+		setValue(1, name);
+		setValue(2, address);
+		setValue(3, zip_code);
+		setValue(4, phone);
+		setValue(5, city);
+		setValue(6, country);
+		setValue(7, notes);
+		setValue(8, sid);
 	}
 }

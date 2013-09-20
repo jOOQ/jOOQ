@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaRentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaRentalRecord> implements org.jooq.Record7<java.lang.Integer, java.sql.Timestamp, java.lang.Integer, java.lang.Short, java.sql.Timestamp, java.lang.Byte, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1839617711;
+	private static final long serialVersionUID = 446168056;
 
 	/**
 	 * Setter for <code>sakila.rental.rental_id</code>. 
@@ -262,5 +262,20 @@ public class SakilaRentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	public SakilaRentalRecord() {
 		super(org.jooq.examples.mysql.sakila.tables.SakilaRental.RENTAL);
+	}
+
+	/**
+	 * Create a detached, initialised SakilaRentalRecord
+	 */
+	public SakilaRentalRecord(java.lang.Integer rentalId, java.sql.Timestamp rentalDate, java.lang.Integer inventoryId, java.lang.Short customerId, java.sql.Timestamp returnDate, java.lang.Byte staffId, java.sql.Timestamp lastUpdate) {
+		super(org.jooq.examples.mysql.sakila.tables.SakilaRental.RENTAL);
+
+		setValue(0, rentalId);
+		setValue(1, rentalDate);
+		setValue(2, inventoryId);
+		setValue(3, customerId);
+		setValue(4, returnDate);
+		setValue(5, staffId);
+		setValue(6, lastUpdate);
 	}
 }

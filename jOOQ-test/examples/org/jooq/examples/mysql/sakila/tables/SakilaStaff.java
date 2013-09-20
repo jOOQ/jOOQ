@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaStaff extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord> {
 
-	private static final long serialVersionUID = -1337775293;
+	private static final long serialVersionUID = 1638184701;
 
 	/**
 	 * The singleton instance of <code>sakila.staff</code>
@@ -27,22 +27,22 @@ public class SakilaStaff extends org.jooq.impl.TableImpl<org.jooq.examples.mysql
 	/**
 	 * The column <code>sakila.staff.staff_id</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord, java.lang.Byte> STAFF_ID = createField("staff_id", org.jooq.impl.SQLDataType.TINYINT, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord, java.lang.Byte> STAFF_ID = createField("staff_id", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this);
 
 	/**
 	 * The column <code>sakila.staff.first_name</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(45), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(45).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.staff.last_name</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(45), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(45).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.staff.address_id</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord, java.lang.Short> ADDRESS_ID = createField("address_id", org.jooq.impl.SQLDataType.SMALLINT, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord, java.lang.Short> ADDRESS_ID = createField("address_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this);
 
 	/**
 	 * The column <code>sakila.staff.picture</code>. 
@@ -57,17 +57,17 @@ public class SakilaStaff extends org.jooq.impl.TableImpl<org.jooq.examples.mysql
 	/**
 	 * The column <code>sakila.staff.store_id</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord, java.lang.Byte> STORE_ID = createField("store_id", org.jooq.impl.SQLDataType.TINYINT, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord, java.lang.Byte> STORE_ID = createField("store_id", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this);
 
 	/**
 	 * The column <code>sakila.staff.active</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord, java.lang.Byte> ACTIVE = createField("active", org.jooq.impl.SQLDataType.TINYINT, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord, java.lang.Byte> ACTIVE = createField("active", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this);
 
 	/**
 	 * The column <code>sakila.staff.username</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord, java.lang.String> USERNAME = createField("username", org.jooq.impl.SQLDataType.VARCHAR.length(16), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord, java.lang.String> USERNAME = createField("username", org.jooq.impl.SQLDataType.VARCHAR.length(16).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.staff.password</code>. 
@@ -77,7 +77,7 @@ public class SakilaStaff extends org.jooq.impl.TableImpl<org.jooq.examples.mysql
 	/**
 	 * The column <code>sakila.staff.last_update</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this);
 
 	/**
 	 * Create a <code>sakila.staff</code> table reference

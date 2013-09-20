@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaActorInfo extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaActorInfoRecord> {
 
-	private static final long serialVersionUID = -417841292;
+	private static final long serialVersionUID = 1483707182;
 
 	/**
 	 * The singleton instance of <code>sakila.actor_info</code>
@@ -29,17 +29,17 @@ public class SakilaActorInfo extends org.jooq.impl.TableImpl<org.jooq.examples.m
 	/**
 	 * The column <code>sakila.actor_info.actor_id</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaActorInfoRecord, java.lang.Short> ACTOR_ID = createField("actor_id", org.jooq.impl.SQLDataType.SMALLINT, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaActorInfoRecord, java.lang.Short> ACTOR_ID = createField("actor_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaulted(true), this);
 
 	/**
 	 * The column <code>sakila.actor_info.first_name</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaActorInfoRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(45), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaActorInfoRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(45).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.actor_info.last_name</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaActorInfoRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(45), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaActorInfoRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(45).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.actor_info.film_info</code>. 

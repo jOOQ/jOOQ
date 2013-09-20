@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaLanguage extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaLanguageRecord> {
 
-	private static final long serialVersionUID = 78439665;
+	private static final long serialVersionUID = 1378175181;
 
 	/**
 	 * The singleton instance of <code>sakila.language</code>
@@ -27,17 +27,17 @@ public class SakilaLanguage extends org.jooq.impl.TableImpl<org.jooq.examples.my
 	/**
 	 * The column <code>sakila.language.language_id</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaLanguageRecord, java.lang.Byte> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.TINYINT, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaLanguageRecord, java.lang.Byte> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this);
 
 	/**
 	 * The column <code>sakila.language.name</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaLanguageRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.CHAR.length(20), this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaLanguageRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.CHAR.length(20).nullable(false), this);
 
 	/**
 	 * The column <code>sakila.language.last_update</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaLanguageRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SakilaLanguageRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this);
 
 	/**
 	 * Create a <code>sakila.language</code> table reference

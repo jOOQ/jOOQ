@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
  * A book store
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public interface ITBookStore extends java.io.Serializable {
+public interface i_t_buch_store extends java.io.Serializable, java.lang.Cloneable {
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_STORE.NAME</code>. The books store name
@@ -26,12 +26,12 @@ public interface ITBookStore extends java.io.Serializable {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Load data from another generated Record/POJO implementing the common interface ITBookStore
+	 * Load data from another generated Record/POJO implementing the common interface i_t_buch_store
 	 */
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore from);
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.i_t_buch_store from);
 
 	/**
-	 * Copy data into another generated Record/POJO implementing the common interface ITBookStore
+	 * Copy data into another generated Record/POJO implementing the common interface i_t_buch_store
 	 */
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore> E into(E into);
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.i_t_buch_store> E into(E into);
 }

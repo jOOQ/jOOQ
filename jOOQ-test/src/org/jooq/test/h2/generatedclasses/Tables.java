@@ -74,17 +74,17 @@ public class Tables {
 	/**
 	 * An entity holding books
 	 */
-	public static final org.jooq.test.h2.generatedclasses.tables.TBook T_BOOK = org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK;
+	public static final org.jooq.test.h2.generatedclasses.tables.TBuch THE_BOOK = org.jooq.test.h2.generatedclasses.tables.TBuch.THE_BOOK;
 
 	/**
 	 * A book store
 	 */
-	public static final org.jooq.test.h2.generatedclasses.tables.TBookStore T_BOOK_STORE = org.jooq.test.h2.generatedclasses.tables.TBookStore.T_BOOK_STORE;
+	public static final org.jooq.test.h2.generatedclasses.tables.TBuchStore T_BUCH_STORE = org.jooq.test.h2.generatedclasses.tables.TBuchStore.T_BUCH_STORE;
 
 	/**
 	 * An m:n relation between books and book stores
 	 */
-	public static final org.jooq.test.h2.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
+	public static final org.jooq.test.h2.generatedclasses.tables.TBuchToBookStore T_BUCH_TO_BOOK_STORE = org.jooq.test.h2.generatedclasses.tables.TBuchToBookStore.T_BUCH_TO_BOOK_STORE;
 
 	/**
 	 * The table PUBLIC.T_ARRAYS
@@ -139,7 +139,7 @@ public class Tables {
 	/**
 	 * The table PUBLIC.V_BOOK
 	 */
-	public static final org.jooq.test.h2.generatedclasses.tables.VBook V_BOOK = org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK;
+	public static final org.jooq.test.h2.generatedclasses.tables.VBuch V_BUCH = org.jooq.test.h2.generatedclasses.tables.VBuch.V_BUCH;
 
 	/**
 	 * The table PUBLIC.Ää

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1654387484;
+	private static final long serialVersionUID = -888573415;
 
 	/**
 	 * The parameter <code>PUBLIC.P_CREATE_AUTHOR_BY_NAME.P2</code>. 
@@ -25,7 +25,7 @@ public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang
 	 * Create a new routine call instance
 	 */
 	public PCreateAuthorByName() {
-		super("P_CREATE_AUTHOR_BY_NAME", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
+		super("P_CREATE_AUTHOR_BY_NAME", org.jooq.test.h2.generatedclasses.NonPublic.NON_PUBLIC);
 
 		addInParameter(P2);
 		addInParameter(P3);

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 615214297;
+	private static final long serialVersionUID = -963277218;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.V_AUTHOR</code>
@@ -58,6 +58,6 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedc
 	 * No further instances allowed
 	 */
 	private VAuthor() {
-		super("V_AUTHOR", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
+		super("V_AUTHOR", org.jooq.test.h2.generatedclasses.NonPublic.NON_PUBLIC);
 	}
 }

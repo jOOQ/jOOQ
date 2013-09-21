@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
  * An m:n relation between books and book stores
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public interface ITBookToBookStore extends java.io.Serializable {
+public interface i_t_buch_to_book_store extends java.io.Serializable, java.lang.Cloneable {
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
@@ -46,12 +46,12 @@ public interface ITBookToBookStore extends java.io.Serializable {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Load data from another generated Record/POJO implementing the common interface ITBookToBookStore
+	 * Load data from another generated Record/POJO implementing the common interface i_t_buch_to_book_store
 	 */
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore from);
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.i_t_buch_to_book_store from);
 
 	/**
-	 * Copy data into another generated Record/POJO implementing the common interface ITBookToBookStore
+	 * Copy data into another generated Record/POJO implementing the common interface i_t_buch_to_book_store
 	 */
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore> E into(E into);
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.i_t_buch_to_book_store> E into(E into);
 }

@@ -58,6 +58,7 @@ import org.jooq.tools.StringUtils;
 import org.jooq.util.jaxb.Configuration;
 import org.jooq.util.jaxb.Generate;
 import org.jooq.util.jaxb.Jdbc;
+import org.jooq.util.jaxb.Matchers;
 import org.jooq.util.jaxb.Property;
 import org.jooq.util.jaxb.Schema;
 import org.jooq.util.jaxb.Strategy;
@@ -181,10 +182,23 @@ public class GenerationTool {
                 : JavaGenerator.class);
             Generator generator = generatorClass.newInstance();
 
-            Class<GeneratorStrategy> strategyClass = (Class<GeneratorStrategy>) (!isBlank(g.getStrategy().getName())
-                ? loadClass(trim(g.getStrategy().getName()))
-                : DefaultGeneratorStrategy.class);
-            GeneratorStrategy strategy = strategyClass.newInstance();
+            GeneratorStrategy strategy;
+
+            Matchers matchers = g.getStrategy().getMatchers();
+            if (matchers != null) {
+                strategy = new MatcherStrategy(matchers);
+
+                if (g.getStrategy().getName() != null) {
+                    log.warn("WARNING: Matchers take precedence over custom strategy. Strategy ignored: " +
+                        g.getStrategy().getName());
+                }
+            }
+            else {
+                Class<GeneratorStrategy> strategyClass = (Class<GeneratorStrategy>) (!isBlank(g.getStrategy().getName())
+                    ? loadClass(trim(g.getStrategy().getName()))
+                    : DefaultGeneratorStrategy.class);
+                strategy = strategyClass.newInstance();
+            }
 
             generator.setStrategy(strategy);
 

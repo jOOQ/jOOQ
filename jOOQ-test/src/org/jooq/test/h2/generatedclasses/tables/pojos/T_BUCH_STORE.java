@@ -9,9 +9,9 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
  * A book store
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TBookStore implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore {
+public class T_BUCH_STORE implements java.io.Serializable, java.lang.Cloneable, org.jooq.test.h2.generatedclasses.tables.interfaces.i_t_buch_store {
 
-	private static final long serialVersionUID = -518702636;
+	private static final long serialVersionUID = -1994261271;
 
 	private java.lang.String name;
 
@@ -33,7 +33,7 @@ public class TBookStore implements org.jooq.test.h2.generatedclasses.tables.inte
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore from) {
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.i_t_buch_store from) {
 		setName(from.getName());
 	}
 
@@ -41,7 +41,7 @@ public class TBookStore implements org.jooq.test.h2.generatedclasses.tables.inte
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore> E into(E into) {
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.i_t_buch_store> E into(E into) {
 		into.from(this);
 		return into;
 	}

@@ -40,8 +40,11 @@ import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.test.h2.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
+import static org.jooq.test.h2.generatedclasses.Tables.THE_BOOK;
+import static org.jooq.test.h2.generatedclasses.Tables.T_AUTHOR;
 import static org.jooq.test.h2.generatedclasses.Tables.T_BOOLEANS;
+import static org.jooq.test.h2.generatedclasses.Tables.T_BUCH_STORE;
+import static org.jooq.test.h2.generatedclasses.Tables.T_BUCH_TO_BOOK_STORE;
 import static org.jooq.test.h2.generatedclasses.Tables.T_DATES;
 import static org.jooq.test.h2.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.h2.generatedclasses.Tables.T_IDENTITY;
@@ -49,12 +52,10 @@ import static org.jooq.test.h2.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.h2.generatedclasses.Tables.T_UNSIGNED;
 import static org.jooq.test.h2.generatedclasses.Tables.V_2603;
 import static org.jooq.test.h2.generatedclasses.Tables.V_AUTHOR;
-import static org.jooq.test.h2.generatedclasses.Tables.V_BOOK;
+import static org.jooq.test.h2.generatedclasses.Tables.V_BUCH;
 import static org.jooq.test.h2.generatedclasses.tables.TAuthor.FIRST_NAME;
 import static org.jooq.test.h2.generatedclasses.tables.TAuthor.LAST_NAME;
-import static org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR;
-import static org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID;
-import static org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK;
+import static org.jooq.test.h2.generatedclasses.tables.TBuch.AUTHOR_ID;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
@@ -90,10 +91,10 @@ import org.jooq.test.h2.generatedclasses.Sequences;
 import org.jooq.test.h2.generatedclasses.Tables;
 import org.jooq.test.h2.generatedclasses.tables.TArrays;
 import org.jooq.test.h2.generatedclasses.tables.TAuthor;
-import org.jooq.test.h2.generatedclasses.tables.TBook;
-import org.jooq.test.h2.generatedclasses.tables.TBookStore;
-import org.jooq.test.h2.generatedclasses.tables.TBookToBookStore;
 import org.jooq.test.h2.generatedclasses.tables.TBooleans;
+import org.jooq.test.h2.generatedclasses.tables.TBuch;
+import org.jooq.test.h2.generatedclasses.tables.TBuchStore;
+import org.jooq.test.h2.generatedclasses.tables.TBuchToBookStore;
 import org.jooq.test.h2.generatedclasses.tables.TExoticTypes;
 import org.jooq.test.h2.generatedclasses.tables.TIdentity;
 import org.jooq.test.h2.generatedclasses.tables.TIdentityPk;
@@ -106,10 +107,10 @@ import org.jooq.test.h2.generatedclasses.tables.VLibrary;
 import org.jooq.test.h2.generatedclasses.tables.daos.TAuthorDao;
 import org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.TBookRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TBooleansRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.TBuchRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.TBuchStoreRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.TBuchToBookStoreRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TExoticTypesRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord;
@@ -138,9 +139,9 @@ import org.junit.Test;
 public class H2Test extends jOOQAbstractTest<
         TAuthorRecord,
         org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor,
-        TBookRecord,
-        TBookStoreRecord,
-        TBookToBookStoreRecord,
+        TBuchRecord,
+        TBuchStoreRecord,
+        TBuchToBookStoreRecord,
         XUnusedRecord,
         VLibraryRecord,
         TArraysRecord,
@@ -202,53 +203,53 @@ public class H2Test extends jOOQAbstractTest<
     }
 
     @Override
-    protected Table<TBookRecord> TBook() {
-        return TBook.T_BOOK;
+    protected Table<TBuchRecord> TBook() {
+        return TBuch.THE_BOOK;
     }
 
     @Override
-    protected TableField<TBookRecord, Integer> TBook_ID() {
-        return TBook.ID;
+    protected TableField<TBuchRecord, Integer> TBook_ID() {
+        return TBuch.ID;
     }
 
     @Override
-    protected TableField<TBookRecord, Integer> TBook_AUTHOR_ID() {
-        return TBook.AUTHOR_ID;
+    protected TableField<TBuchRecord, Integer> TBook_AUTHOR_ID() {
+        return TBuch.AUTHOR_ID;
     }
 
     @Override
-    protected TableField<TBookRecord, Integer> TBook_CO_AUTHOR_ID() {
-        return TBook.CO_AUTHOR_ID;
+    protected TableField<TBuchRecord, Integer> TBook_CO_AUTHOR_ID() {
+        return TBuch.CO_AUTHOR_ID;
     }
 
     @Override
-    protected TableField<TBookRecord, String> TBook_TITLE() {
-        return TBook.TITLE;
+    protected TableField<TBuchRecord, String> TBook_TITLE() {
+        return TBuch.THE_TITLE;
     }
 
     @Override
-    protected TableField<TBookRecord, Integer> TBook_REC_VERSION() {
-        return TBook.REC_VERSION;
+    protected TableField<TBuchRecord, Integer> TBook_REC_VERSION() {
+        return TBuch.REC_VERSION;
     }
 
     @Override
-    protected TableField<TBookRecord, Timestamp> TBook_REC_TIMESTAMP() {
-        return TBook.REC_TIMESTAMP;
+    protected TableField<TBuchRecord, Timestamp> TBook_REC_TIMESTAMP() {
+        return TBuch.REC_TIMESTAMP;
     }
 
     @Override
-    protected Table<TBookStoreRecord> TBookStore() {
-        return TBookStore.T_BOOK_STORE;
+    protected Table<TBuchStoreRecord> TBookStore() {
+        return T_BUCH_STORE;
     }
 
     @Override
-    protected TableField<TBookStoreRecord, String> TBookStore_NAME() {
-        return TBookStore.NAME;
+    protected TableField<TBuchStoreRecord, String> TBookStore_NAME() {
+        return TBuchStore.NAME;
     }
 
     @Override
-    protected Table<TBookToBookStoreRecord> TBookToBookStore() {
-        return T_BOOK_TO_BOOK_STORE;
+    protected Table<TBuchToBookStoreRecord> TBookToBookStore() {
+        return T_BUCH_TO_BOOK_STORE;
     }
 
     @Override
@@ -257,18 +258,18 @@ public class H2Test extends jOOQAbstractTest<
     }
 
     @Override
-    protected TableField<TBookToBookStoreRecord, Integer> TBookToBookStore_BOOK_ID() {
-        return TBookToBookStore.BOOK_ID;
+    protected TableField<TBuchToBookStoreRecord, Integer> TBookToBookStore_BOOK_ID() {
+        return TBuchToBookStore.BOOK_ID;
     }
 
     @Override
-    protected TableField<TBookToBookStoreRecord, String> TBookToBookStore_BOOK_STORE_NAME() {
-        return TBookToBookStore.BOOK_STORE_NAME;
+    protected TableField<TBuchToBookStoreRecord, String> TBookToBookStore_BOOK_STORE_NAME() {
+        return TBuchToBookStore.BOOK_STORE_NAME;
     }
 
     @Override
-    protected TableField<TBookToBookStoreRecord, Integer> TBookToBookStore_STOCK() {
-        return TBookToBookStore.STOCK;
+    protected TableField<TBuchToBookStoreRecord, Integer> TBookToBookStore_STOCK() {
+        return TBuchToBookStore.STOCK;
     }
 
     @Override
@@ -535,37 +536,37 @@ public class H2Test extends jOOQAbstractTest<
     }
 
     @Override
-    protected TableField<TBookRecord, Integer> TBook_LANGUAGE_ID() {
-        return TBook.LANGUAGE_ID;
+    protected TableField<TBuchRecord, Integer> TBook_LANGUAGE_ID() {
+        return TBuch.LANGUAGE_ID;
     }
 
     @Override
-    protected TableField<TBookRecord, Integer> TBook_PUBLISHED_IN() {
-        return TBook.PUBLISHED_IN;
+    protected TableField<TBuchRecord, Integer> TBook_PUBLISHED_IN() {
+        return TBuch.PUBLISHED_IN;
     }
 
     @Override
-    protected TableField<TBookRecord, String> TBook_CONTENT_TEXT() {
-        return TBook.CONTENT_TEXT;
+    protected TableField<TBuchRecord, String> TBook_CONTENT_TEXT() {
+        return TBuch.CONTENT_TEXT;
     }
 
     @Override
-    protected TableField<TBookRecord, byte[]> TBook_CONTENT_PDF() {
-        return TBook.CONTENT_PDF;
+    protected TableField<TBuchRecord, byte[]> TBook_CONTENT_PDF() {
+        return TBuch.CONTENT_PDF;
     }
 
     @Override
-    protected TableField<TBookRecord, ? extends Enum<?>> TBook_STATUS() {
+    protected TableField<TBuchRecord, ? extends Enum<?>> TBook_STATUS() {
         return null;
     }
 
     @Override
-    protected ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_AUTHOR_ID() {
+    protected ForeignKey<TBuchRecord, TAuthorRecord> FK_T_BOOK_AUTHOR_ID() {
         return Keys.FK_T_BOOK_AUTHOR_ID;
     }
 
     @Override
-    protected ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID() {
+    protected ForeignKey<TBuchRecord, TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID() {
         return Keys.FK_T_BOOK_CO_AUTHOR_ID;
     }
 
@@ -576,7 +577,7 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected TableField<VLibraryRecord, String> VLibrary_TITLE() {
-        return VLibrary.TITLE;
+        return VLibrary.THE_TITLE;
     }
 
     @Override
@@ -591,7 +592,7 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected Table<?> VBook() {
-        return V_BOOK;
+        return V_BUCH;
     }
 
     @Override
@@ -861,7 +862,7 @@ public class H2Test extends jOOQAbstractTest<
             create().execute("CREATE VIEW my_view AS\n{0};",
                 select(FIRST_NAME, LAST_NAME, count().cast(Long.class).as("Books Written"))
                 .from(T_AUTHOR)
-                .join(T_BOOK)
+                .join(THE_BOOK)
                 .on(TAuthor.ID.eq(AUTHOR_ID))
                 .groupBy(FIRST_NAME, LAST_NAME)
                 .orderBy(FIRST_NAME, LAST_NAME)

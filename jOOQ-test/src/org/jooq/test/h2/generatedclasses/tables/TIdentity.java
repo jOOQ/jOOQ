@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = 1637029486;
+	private static final long serialVersionUID = 740206913;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_IDENTITY</code>
@@ -38,7 +38,7 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.h2.generate
 	 * No further instances allowed
 	 */
 	private TIdentity() {
-		super("T_IDENTITY", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
+		super("T_IDENTITY", org.jooq.test.h2.generatedclasses.NonPublic.NON_PUBLIC);
 	}
 
 	/**

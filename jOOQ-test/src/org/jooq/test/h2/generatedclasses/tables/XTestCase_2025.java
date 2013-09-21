@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_2025Record> {
 
-	private static final long serialVersionUID = 943924924;
+	private static final long serialVersionUID = 1304309387;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.X_TEST_CASE_2025</code>
@@ -38,7 +38,7 @@ public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.h2.gen
 	 * No further instances allowed
 	 */
 	private XTestCase_2025() {
-		super("X_TEST_CASE_2025", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
+		super("X_TEST_CASE_2025", org.jooq.test.h2.generatedclasses.NonPublic.NON_PUBLIC);
 	}
 
 	/**

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
  * An entity holding books
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public interface ITBook extends java.io.Serializable {
+public interface i_t_buch extends java.io.Serializable, java.lang.Cloneable {
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.ID</code>. The book ID
@@ -54,12 +54,12 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.TITLE</code>. The book's title
 	 */
-	public void setTitle(java.lang.String value);
+	public void setTheTitle(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.TITLE</code>. The book's title
 	 */
-	public java.lang.String getTitle();
+	public java.lang.String getTheTitle();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>. The year the book was published in
@@ -126,12 +126,12 @@ public interface ITBook extends java.io.Serializable {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Load data from another generated Record/POJO implementing the common interface ITBook
+	 * Load data from another generated Record/POJO implementing the common interface i_t_buch
 	 */
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook from);
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.i_t_buch from);
 
 	/**
-	 * Copy data into another generated Record/POJO implementing the common interface ITBook
+	 * Copy data into another generated Record/POJO implementing the common interface i_t_buch
 	 */
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook> E into(E into);
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.i_t_buch> E into(E into);
 }

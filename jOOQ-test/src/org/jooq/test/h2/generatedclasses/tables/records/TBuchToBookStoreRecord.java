@@ -9,9 +9,9 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  * An m:n relation between books and book stores
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore {
+public class TBuchToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBuchToBookStoreRecord> implements java.io.Serializable, java.lang.Cloneable, org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.i_t_buch_to_book_store {
 
-	private static final long serialVersionUID = -1605512644;
+	private static final long serialVersionUID = -1435741943;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
@@ -98,7 +98,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field1() {
-		return org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME;
+		return org.jooq.test.h2.generatedclasses.tables.TBuchToBookStore.BOOK_STORE_NAME;
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_ID;
+		return org.jooq.test.h2.generatedclasses.tables.TBuchToBookStore.BOOK_ID;
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field3() {
-		return org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.STOCK;
+		return org.jooq.test.h2.generatedclasses.tables.TBuchToBookStore.STOCK;
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore from) {
+	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.i_t_buch_to_book_store from) {
 		setBookStoreName(from.getBookStoreName());
 		setBookId(from.getBookId());
 		setStock(from.getStock());
@@ -159,7 +159,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore> E into(E into) {
+	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.i_t_buch_to_book_store> E into(E into) {
 		into.from(this);
 		return into;
 	}
@@ -169,17 +169,17 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Create a detached TBookToBookStoreRecord
+	 * Create a detached TBuchToBookStoreRecord
 	 */
-	public TBookToBookStoreRecord() {
-		super(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+	public TBuchToBookStoreRecord() {
+		super(org.jooq.test.h2.generatedclasses.tables.TBuchToBookStore.T_BUCH_TO_BOOK_STORE);
 	}
 
 	/**
-	 * Create a detached, initialised TBookToBookStoreRecord
+	 * Create a detached, initialised TBuchToBookStoreRecord
 	 */
-	public TBookToBookStoreRecord(java.lang.String bookStoreName, java.lang.Integer bookId, java.lang.Integer stock) {
-		super(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+	public TBuchToBookStoreRecord(java.lang.String bookStoreName, java.lang.Integer bookId, java.lang.Integer stock) {
+		super(org.jooq.test.h2.generatedclasses.tables.TBuchToBookStore.T_BUCH_TO_BOOK_STORE);
 
 		setValue(0, bookStoreName);
 		setValue(1, bookId);

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FArrays3 extends org.jooq.impl.AbstractRoutine<java.lang.Object[]> {
 
-	private static final long serialVersionUID = -389233218;
+	private static final long serialVersionUID = -1829873617;
 
 	/**
 	 * The parameter <code>PUBLIC.F_ARRAYS3.RETURN_VALUE</code>. 
@@ -25,7 +25,7 @@ public class FArrays3 extends org.jooq.impl.AbstractRoutine<java.lang.Object[]> 
 	 * Create a new routine call instance
 	 */
 	public FArrays3() {
-		super("F_ARRAYS3", org.jooq.test.h2.generatedclasses.Public.PUBLIC, org.jooq.impl.SQLDataType.OTHER.getArrayDataType());
+		super("F_ARRAYS3", org.jooq.test.h2.generatedclasses.NonPublic.NON_PUBLIC, org.jooq.impl.SQLDataType.OTHER.getArrayDataType());
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(P1);

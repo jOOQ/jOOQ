@@ -46,7 +46,7 @@
           
           <recordClass>
             <transform>PASCAL</transform>
-            <expression>$1BUCH$2_RECORd</expression>
+            <expression>$1BUCH$2_RECORD</expression>
           </recordClass>
           <recordImplements>java.io.Serializable, java.lang.Cloneable</recordImplements>
           

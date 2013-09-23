@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBooleansRecord> implements org.jooq.Record11<java.lang.Integer, org.jooq.test._.converters.Boolean_10, org.jooq.test._.converters.Boolean_TF_LC, org.jooq.test._.converters.Boolean_TF_UC, org.jooq.test._.converters.Boolean_YES_NO_LC, org.jooq.test._.converters.Boolean_YES_NO_UC, org.jooq.test._.converters.Boolean_YN_LC, org.jooq.test._.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean> {
 
-	private static final long serialVersionUID = -400956370;
+	private static final long serialVersionUID = -547645360;
 
 	/**
 	 * Setter for <code>dbo.t_booleans.id</code>. 
@@ -382,5 +382,24 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	public TBooleansRecord() {
 		super(org.jooq.test.sqlserver.generatedclasses.tables.TBooleans.T_BOOLEANS);
+	}
+
+	/**
+	 * Create a detached, initialised TBooleansRecord
+	 */
+	public TBooleansRecord(java.lang.Integer id, org.jooq.test._.converters.Boolean_10 oneZero, org.jooq.test._.converters.Boolean_TF_LC trueFalseLc, org.jooq.test._.converters.Boolean_TF_UC trueFalseUc, org.jooq.test._.converters.Boolean_YES_NO_LC yesNoLc, org.jooq.test._.converters.Boolean_YES_NO_UC yesNoUc, org.jooq.test._.converters.Boolean_YN_LC yNLc, org.jooq.test._.converters.Boolean_YN_UC yNUc, java.lang.Boolean vcBoolean, java.lang.Boolean cBoolean, java.lang.Boolean nBoolean) {
+		super(org.jooq.test.sqlserver.generatedclasses.tables.TBooleans.T_BOOLEANS);
+
+		setValue(0, id);
+		setValue(1, oneZero);
+		setValue(2, trueFalseLc);
+		setValue(3, trueFalseUc);
+		setValue(4, yesNoLc);
+		setValue(5, yesNoUc);
+		setValue(6, yNLc);
+		setValue(7, yNUc);
+		setValue(8, vcBoolean);
+		setValue(9, cBoolean);
+		setValue(10, nBoolean);
 	}
 }

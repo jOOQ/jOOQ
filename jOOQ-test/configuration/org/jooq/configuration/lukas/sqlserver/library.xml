@@ -53,6 +53,24 @@
                 </jooq:forcedType>
 
                 <!-- 
+                  [#2352] Map some vendor-specific type names
+                  -->
+                <jooq:forcedType>
+                    <jooq:name>VARCHAR</jooq:name>
+                    <jooq:expressions>.*1.*</jooq:expressions>
+                    <jooq:types>(?i:datetimeoffset)</jooq:types>
+                </jooq:forcedType>
+                <jooq:forcedType>
+                    <jooq:name>DATETIMEOFFSET</jooq:name>
+                    <jooq:expressions>.*2.*</jooq:expressions>
+                    <jooq:types>(?i:datetimeoffset)</jooq:types>
+                </jooq:forcedType>
+                <jooq:forcedType>
+                    <jooq:name>DATE</jooq:name>
+                    <jooq:types>(?i:datetimeoffset)</jooq:types>
+                </jooq:forcedType>
+
+                <!-- 
                   [#963] SQL Server doesn't support what other
                   databases consider a SIGNED TINYINT
                   -->

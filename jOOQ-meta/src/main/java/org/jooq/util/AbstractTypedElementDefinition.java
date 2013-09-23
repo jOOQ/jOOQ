@@ -126,7 +126,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
         }
 
         // [#677] Forced types for matching regular expressions
-        ForcedType forcedType = db.getConfiguredForcedType(child);
+        ForcedType forcedType = db.getConfiguredForcedType(child, definedType);
         if (forcedType != null) {
             log.debug("Forcing type", child + " into " + forcedType.getName());
             DataType<?> forcedDataType = null;

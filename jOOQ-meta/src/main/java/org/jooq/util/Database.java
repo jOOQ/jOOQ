@@ -307,6 +307,12 @@ public interface Database {
     ForcedType getConfiguredForcedType(Definition definition);
 
     /**
+     * Get the configured forced type object for any given {@link Definition},
+     * or <code>null</code> if no {@link ForcedType} matches the definition.
+     */
+    ForcedType getConfiguredForcedType(Definition definition, DataTypeDefinition definedType);
+
+    /**
      * Get the dialect for this database.
      */
     SQLDialect getDialect();

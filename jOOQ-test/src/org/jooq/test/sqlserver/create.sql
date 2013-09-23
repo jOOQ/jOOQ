@@ -85,6 +85,9 @@ CREATE TABLE t_dates (
   ts datetime,
   d_int int,
   ts_bigint bigint,
+  offset1 datetimeoffset,
+  offset2 datetimeoffset,
+  offset3 datetimeoffset,
 
   CONSTRAINT pk_t_dates PRIMARY KEY (id)
 )

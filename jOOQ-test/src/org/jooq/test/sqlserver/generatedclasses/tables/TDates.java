@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 183431262;
+	private static final long serialVersionUID = -584948790;
 
 	/**
 	 * The singleton instance of <code>dbo.t_dates</code>
@@ -53,6 +53,21 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gene
 	 * The column <code>dbo.t_dates.ts_bigint</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.BIGINT, this);
+
+	/**
+	 * The column <code>dbo.t_dates.offset1</code>. 
+	 */
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TDatesRecord, java.lang.String> OFFSET1 = createField("offset1", org.jooq.impl.SQLDataType.VARCHAR, this);
+
+	/**
+	 * The column <code>dbo.t_dates.offset2</code>. 
+	 */
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> OFFSET2 = createField("offset2", org.jooq.impl.SQLDataType.TIMESTAMP, this);
+
+	/**
+	 * The column <code>dbo.t_dates.offset3</code>. 
+	 */
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TDatesRecord, java.sql.Date> OFFSET3 = createField("offset3", org.jooq.impl.SQLDataType.DATE, this);
 
 	/**
 	 * Create a <code>dbo.t_dates</code> table reference

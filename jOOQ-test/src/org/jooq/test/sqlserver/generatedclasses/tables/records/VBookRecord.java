@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]> {
 
-	private static final long serialVersionUID = -1983737453;
+	private static final long serialVersionUID = 1489789539;
 
 	/**
 	 * Setter for <code>dbo.v_book.ID</code>. 
@@ -310,5 +310,22 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sql
 	 */
 	public VBookRecord() {
 		super(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK);
+	}
+
+	/**
+	 * Create a detached, initialised VBookRecord
+	 */
+	public VBookRecord(java.lang.Integer id, java.lang.Integer authorId, java.lang.Integer coAuthorId, java.lang.Integer detailsId, java.lang.String title, java.lang.Integer publishedIn, java.lang.Integer languageId, java.lang.String contentText, byte[] contentPdf) {
+		super(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK);
+
+		setValue(0, id);
+		setValue(1, authorId);
+		setValue(2, coAuthorId);
+		setValue(3, detailsId);
+		setValue(4, title);
+		setValue(5, publishedIn);
+		setValue(6, languageId);
+		setValue(7, contentText);
+		setValue(8, contentPdf);
 	}
 }

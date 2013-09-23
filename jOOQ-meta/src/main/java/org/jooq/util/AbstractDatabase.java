@@ -573,8 +573,25 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final ForcedType getConfiguredForcedType(Definition definition) {
+        return getConfiguredForcedType(definition, null);
+    }
+
+    @Override
+    public final ForcedType getConfiguredForcedType(Definition definition, DataTypeDefinition definedType) {
         for (ForcedType forcedType : getConfiguredForcedTypes()) {
-            if (definition.getQualifiedName().matches(forcedType.getExpressions())) {
+            String expressions = forcedType.getExpressions();
+            String types = forcedType.getTypes();
+            boolean match = true;
+
+            if (expressions != null && !definition.getQualifiedName().matches(expressions)) {
+                match = false;
+            }
+
+            if (types != null && definedType != null && !definedType.getType().matches(types)) {
+                match = false;
+            }
+
+            if (match) {
                 return forcedType;
             }
         }

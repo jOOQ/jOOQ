@@ -308,6 +308,32 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testLimitDistinct() throws Exception {
+        assertEquals(asList(1, 2),
+        create().selectDistinct(TBookToBookStore_BOOK_ID())
+                .from(TBookToBookStore())
+                .orderBy(TBookToBookStore_BOOK_ID())
+                .limit(2)
+                .fetch(TBookToBookStore_BOOK_ID()));
+
+        assertEquals(asList(2, 3),
+        create().selectDistinct(TBookToBookStore_BOOK_ID())
+                .from(TBookToBookStore())
+                .orderBy(TBookToBookStore_BOOK_ID())
+                .limit(2)
+                .offset(1)
+                .fetch(TBookToBookStore_BOOK_ID()));
+
+        assertSame(asList(2, 1),
+        create().selectDistinct(TBook_LANGUAGE_ID(), TBook_AUTHOR_ID())
+                .from(TBook())
+                .orderBy(TBook_AUTHOR_ID().desc())
+                .limit(2)
+                .offset(1)
+                .fetch(TBook_AUTHOR_ID()));
+    }
+
+    @Test
     public void testLimitAliased() throws Exception {
         if (asList(ASE, SQLSERVER).contains(dialect().family())) {
             log.info("SKIPPING", "LIMIT .. OFFSET tests");

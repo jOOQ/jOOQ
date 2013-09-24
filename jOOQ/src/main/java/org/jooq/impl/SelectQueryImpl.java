@@ -61,6 +61,7 @@ import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SQLSERVER2008;
 import static org.jooq.SQLDialect.SQLSERVER2012;
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.denseRank;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
@@ -68,6 +69,7 @@ import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import static org.jooq.impl.Utils.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -381,7 +383,23 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         // window function, calculating row numbers for the LIMIT .. OFFSET clause
         RenderContext local = new DefaultRenderContext(context);
         local.subquery(true);
-        toSQLReference0(local, rowNumber().over().orderBy(getNonEmptyOrderBy()).as(rownumName));
+
+        // [#2580] When DISTINCT is applied, we mustn't use ROW_NUMBER() OVER(),
+        // which changes the DISTINCT semantics. Instead, use DENSE_RANK() OVER(),
+        // ordering by the SELECT's ORDER BY clause AND all the expressions from
+        // the projection
+        if (distinct) {
+            List<SortField<?>> order = new ArrayList<SortField<?>>();
+            order.addAll(getNonEmptyOrderBy());
+
+            // TODO: Challenge this with lots of additional tests, improve readability
+            for (Field<?> field : getSelect())
+                order.add(field.asc());
+            toSQLReference0(local, denseRank().over().orderBy(order).as(rownumName));
+        }
+        else {
+            toSQLReference0(local, rowNumber().over().orderBy(getNonEmptyOrderBy()).as(rownumName));
+        }
         String enclosed = local.render();
 
         context.keyword("select * from (")

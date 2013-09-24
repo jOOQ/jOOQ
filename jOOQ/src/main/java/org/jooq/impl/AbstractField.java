@@ -184,9 +184,17 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final <Z> Field<Z> cast(Class<Z> type) {
-        return cast(DefaultDataType.getDataType(null, type));
+
+        // [#2597] Prevent unnecessary casts
+        if (getType() == type) {
+            return (Field<Z>) this;
+        }
+        else {
+            return cast(DefaultDataType.getDataType(null, type));
+        }
     }
 
     // ------------------------------------------------------------------------

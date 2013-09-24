@@ -1528,6 +1528,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testVisitListenerFailOnMissingWhere() throws Exception {
+        new VisitListenerTests(this).testVisitListenerFailOnMissingWhere();
+    }
+
+    @Test
     public void testResultSetType() throws Exception {
         new ResultSetTests(this).testResultSetType();
     }

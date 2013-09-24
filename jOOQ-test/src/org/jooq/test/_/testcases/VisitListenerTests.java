@@ -299,6 +299,28 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         /* [/pro] */
     }
 
+    @Test
+    public void testVisitListenerFailOnMissingWhere() {
+        jOOQAbstractTest.reset = false;
+
+        assertEquals(4,
+        create(new FailOnMissingWhere())
+            .update(TBook())
+            .set(TBook_TITLE(), "changed")
+            .where("1 = 1")
+            .execute());
+
+        try {
+            create(new FailOnMissingWhere())
+                .update(TBook())
+                .set(TBook_TITLE(), "changed")
+                .execute();
+
+            fail();
+        }
+        catch (MissingWhereException expected) {}
+    }
+
     // -------------------------------------------------------------------------
     // Utilities
     // -------------------------------------------------------------------------
@@ -335,24 +357,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         SUBSELECT_CONDITIONS
     }
 
-    /**
-     * This sample visit listener restricts <code>T_AUTHOR.ID = 1</code> and
-     * <code>T_BOOK.AUTHOR_ID
-     * = 1</code>. It can do so in
-     * <ul>
-     * <li>Top-level selects</li>
-     * <li>Subselects (from set operations, such as unions)</li>
-     * <li>Nested selects</li>
-     * <li>Derived tables</li>
-     * <li>Aliased tables</li>
-     * </ul>
-     */
-    private class OnlyAuthorIDEqual1 extends DefaultVisitListener {
+    private class NestingVisitListener extends DefaultVisitListener {
 
         /**
          * Extract the nesting level from the current {@link VisitContext}.
          */
-        private int nestingLevel(VisitContext context) {
+        final int nestingLevel(VisitContext context) {
             return nestingLevel(context, 0);
         }
 
@@ -367,7 +377,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
          * <li><code>1</code>: Increase the level by one (entering a subselect)</li>
          * </ul>
          */
-        private int nestingLevel(VisitContext context, int increase) {
+        int nestingLevel(VisitContext context, int increase) {
             Integer level = (Integer) context.data(DataKey.NESTING_LEVEL);
             if (level == null) {
                 level = 0;
@@ -384,74 +394,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // Initialise the new level that we're about to enter.
             if (increase == 1) {
-                anyPredicatesMap(context).put(level, false);
                 subselectConditionMap(context).put(level, new ArrayList<Condition>());
+                anyPredicatesMap(context).put(level, false);
             }
 
             return level;
-        }
-
-        /**
-         * Lazy-initialise the per-level list of predicates to be added
-         * subselects.
-         */
-        @SuppressWarnings("unchecked")
-        private Map<Integer, List<Condition>> subselectConditionMap(VisitContext context) {
-            Map<Integer, List<Condition>> data = (Map<Integer, List<Condition>>) context.data(DataKey.SUBSELECT_CONDITIONS);
-            if (data == null) {
-                data = new HashMap<Integer, List<Condition>>();
-                context.data(DataKey.SUBSELECT_CONDITIONS, data);
-            }
-            return data;
-        }
-
-        /**
-         * Access the list of predicates to be added to the current subselect
-         * level.
-         */
-        private List<Condition> subselectConditions(VisitContext context) {
-            return subselectConditionMap(context).get(nestingLevel(context));
-        }
-
-        /**
-         * Lazy-initialise the per-level map for "has predicates" flags.
-         */
-        @SuppressWarnings("unchecked")
-        private Map<Integer, Boolean> anyPredicatesMap(VisitContext context) {
-            Map<Integer, Boolean> data = (Map<Integer, Boolean>) context.data(DataKey.SUBSELECT_HAS_PREDICATES);
-            if (data == null) {
-                data = new HashMap<Integer, Boolean>();
-                context.data(DataKey.SUBSELECT_HAS_PREDICATES, data);
-            }
-            return data;
-        }
-
-        /**
-         * Check whether the current subselect level already has predicates.
-         */
-        private boolean anyPredicates(VisitContext context) {
-            return anyPredicatesMap(context).get(nestingLevel(context));
-        }
-
-        /**
-         * Indicate whether the current subselect level already has predicates.
-         */
-        private void anyPredicates(VisitContext context, boolean value) {
-            anyPredicatesMap(context).put(nestingLevel(context), value);
-        }
-
-        /**
-         * Retrieve all clauses for the current subselect level, starting with
-         * the last {@link Clause#SELECT}.
-         */
-        private List<Clause> subselectClauses(VisitContext context) {
-            List<Clause> result = asList(context.clauses());
-            int index = result.lastIndexOf(SELECT);
-
-            if (index > 0)
-                return result.subList(index, result.size() - 1);
-            else
-                return result;
         }
 
         @Override
@@ -469,6 +416,146 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 nestingLevel(context, 1);
             }
         }
+
+        @Override
+        public void clauseEnd(VisitContext context) {
+
+            // Operating on RenderContext only, as we're using inline values
+            if (context.renderContext() == null)
+                return;
+
+            // Leave a SELECT clause / nested select, or DML statement
+            if (context.clause() == SELECT ||
+                context.clause() == UPDATE ||
+                context.clause() == DELETE ||
+                context.clause() == INSERT) {
+                nestingLevel(context, -1);
+            }
+        }
+
+
+
+        @Override
+        public void visitEnd(VisitContext context) {
+
+            // Operating on RenderContext only, as we're using inline values
+            if (context.renderContext() == null)
+                return;
+
+            // Check if we're rendering any condition within the WHERE clause
+            // In this case, we can be sure that jOOQ will render a WHERE keyword
+            if (context.queryPart() instanceof Condition) {
+                List<Clause> clauses = subselectClauses(context);
+
+                if (clauses.contains(SELECT_WHERE) ||
+                    clauses.contains(UPDATE_WHERE) ||
+                    clauses.contains(DELETE_WHERE)) {
+                    anyPredicates(context, true);
+                }
+            }
+        }
+
+        /**
+         * Lazy-initialise the per-level list of predicates to be added
+         * subselects.
+         */
+        @SuppressWarnings("unchecked")
+        Map<Integer, List<Condition>> subselectConditionMap(VisitContext context) {
+            Map<Integer, List<Condition>> data = (Map<Integer, List<Condition>>) context.data(DataKey.SUBSELECT_CONDITIONS);
+            if (data == null) {
+                data = new HashMap<Integer, List<Condition>>();
+                context.data(DataKey.SUBSELECT_CONDITIONS, data);
+            }
+            return data;
+        }
+
+        /**
+         * Access the list of predicates to be added to the current subselect
+         * level.
+         */
+        List<Condition> subselectConditions(VisitContext context) {
+            return subselectConditionMap(context).get(nestingLevel(context));
+        }
+
+        /**
+         * Lazy-initialise the per-level map for "has predicates" flags.
+         */
+        @SuppressWarnings("unchecked")
+        Map<Integer, Boolean> anyPredicatesMap(VisitContext context) {
+            Map<Integer, Boolean> data = (Map<Integer, Boolean>) context.data(DataKey.SUBSELECT_HAS_PREDICATES);
+            if (data == null) {
+                data = new HashMap<Integer, Boolean>();
+                context.data(DataKey.SUBSELECT_HAS_PREDICATES, data);
+            }
+            return data;
+        }
+
+        /**
+         * Check whether the current subselect level already has predicates.
+         */
+        boolean anyPredicates(VisitContext context) {
+            return anyPredicatesMap(context).get(nestingLevel(context));
+        }
+
+        /**
+         * Indicate whether the current subselect level already has predicates.
+         */
+        void anyPredicates(VisitContext context, boolean value) {
+            anyPredicatesMap(context).put(nestingLevel(context), value);
+        }
+
+        /**
+         * Retrieve all clauses for the current subselect level, starting with
+         * the last {@link Clause#SELECT}.
+         */
+        List<Clause> subselectClauses(VisitContext context) {
+            List<Clause> result = asList(context.clauses());
+            int index = result.lastIndexOf(SELECT);
+
+            if (index > 0)
+                return result.subList(index, result.size() - 1);
+            else
+                return result;
+        }
+    }
+
+    private class FailOnMissingWhere extends NestingVisitListener {
+
+        @Override
+        public void clauseEnd(VisitContext context) {
+
+            // Operating on RenderContext only, as we're using inline values
+            if (context.renderContext() == null)
+                return;
+
+            if (context.clause() == SELECT_WHERE ||
+                context.clause() == UPDATE_WHERE ||
+                context.clause() == DELETE_WHERE) {
+
+                if (!anyPredicates(context)) {
+                    throw new MissingWhereException();
+                }
+            }
+        }
+    }
+
+    private static class MissingWhereException extends RuntimeException {
+
+    }
+
+    /**
+     * This sample visit listener restricts <code>T_AUTHOR.ID = 1</code> and
+     * <code>T_BOOK.AUTHOR_ID
+     * = 1</code>. It can do so in
+     * <ul>
+     * <li>Top-level selects</li>
+     * <li>Subselects (from set operations, such as unions)</li>
+     * <li>Nested selects</li>
+     * <li>Derived tables</li>
+     * <li>Aliased tables</li>
+     * </ul>
+     */
+    private class OnlyAuthorIDEqual1 extends NestingVisitListener {
 
         @Override
         public void clauseEnd(VisitContext context) {
@@ -502,13 +589,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 }
             }
 
-            // Leave a SELECT clause / nested select, or DML statement
-            if (context.clause() == SELECT ||
-                context.clause() == UPDATE ||
-                context.clause() == DELETE ||
-                context.clause() == INSERT) {
-                nestingLevel(context, -1);
-            }
+            super.clauseEnd(context);
         }
 
         @Override
@@ -538,17 +619,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             pushConditions(context, TBook(), TBook_AUTHOR_ID(), 1);
             pushConditions(context, TAuthor(), TAuthor_ID(), 1);
 
-            // Check if we're rendering any condition within the WHERE clause
-            // In this case, we can be sure that jOOQ will render a WHERE keyword
-            if (context.queryPart() instanceof Condition) {
-                List<Clause> clauses = subselectClauses(context);
-
-                if (clauses.contains(SELECT_WHERE) ||
-                    clauses.contains(UPDATE_WHERE) ||
-                    clauses.contains(DELETE_WHERE)) {
-                    anyPredicates(context, true);
-                }
-            }
+            super.visitEnd(context);
         }
 
         /* [pro] */

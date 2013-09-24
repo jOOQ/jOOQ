@@ -209,8 +209,7 @@ class MetaImpl implements Meta, Serializable {
                         meta().getSchemas(),
 
                         // [#2681] Work around a flaw in the MySQL JDBC driver
-                        SQLDataType.VARCHAR, // TABLE_SCHEM
-                        SQLDataType.VARCHAR  // TABLE_CATALOG
+                        SQLDataType.VARCHAR // TABLE_SCHEM
                     );
 
                     for (String name : schemas.getValues(0, String.class)) {

@@ -158,7 +158,7 @@
 			</section>
 			
 			<section id="copyright">
-				<title>Copyright and License</title>
+				<title>Copyright, License, and Trademarks</title>
 				<content>
                     <html>
                         <p>
@@ -243,6 +243,52 @@ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
 CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.</text>
+
+                    <html>    
+                        <h3>Trademarks owned by Data Geekery™ GmbH</h3>
+                        <ul>
+                            <li>jOOQ™ is a trademark by Data Geekery™ GmbH</li>
+                            <li>jOOX™ is a trademark by Data Geekery™ GmbH</li>
+                            <li>jOOR™ is a trademark by Data Geekery™ GmbH</li>
+                            <li>jOOU™ is a trademark by Data Geekery™ GmbH</li>
+                        </ul>
+                        
+                        <h3>Trademarks owned by database vendors with no affiliation to Data Geekery™ GmbH</h3>
+                        <ul>
+                            <li>Access® is a registered trademark of Microsoft® Inc.</li>
+                            <li>Adaptive Server® Enterprise is a registered trademark of Sybase®, Inc.</li>
+                            <li>CUBRID™ is a trademark of NHN® Corp.</li>
+                            <li>DB2® is a registered trademark of IBM® Corp.</li>
+                            <li>Derby is a trademark of the Apache™ Software Foundation</li>
+                            <li>H2 is a trademark of the H2 Group</li>
+                            <li>HSQLDB is a trademark of The hsql Development Group</li>
+                            <li>Ingres is a trademark of Actian™ Corp.</li>
+                            <li>MariaDB is a trademark of Monty Program Ab</li>
+                            <li>MySQL® is a registered trademark of Oracle® Corp.</li>
+                            <li>Firebird® is a registered trademark of Firebird Foundation Inc.</li>
+                            <li>Oracle® database is a registered trademark of Oracle® Corp.</li>
+                            <li>PostgreSQL® is a registered trademark of The PostgreSQL Global Development Group</li>
+                            <li>Postgres Plus® is a registered trademark of EnterpriseDB® software</li>
+                            <li>SQL Anywhere® is a registered trademark of Sybase®, Inc.</li>
+                            <li>SQL Server® is a registered trademark of Microsoft® Inc.</li>
+                            <li>SQLite is a trademark of Hipp, Wyrick &amp; Company, Inc.</li>
+                        </ul>
+                        
+                        <h3>Other trademarks by vendors with no affiliation to Data Geekery™ GmbH</h3>
+                        <ul>
+                            <li>Java® is a registered trademark by Oracle® Corp. and/or its affiliates</li>
+                            <li>Scala is a trademark of EPFL</li>
+                        </ul>
+                        
+                        <h3>Other trademark remarks</h3>
+                        <p>
+                            Other names may be trademarks of their respective owners.
+                        </p>
+                        
+                        <p>
+                            Throughout the manual, the above trademarks are referenced without a formal ® (R) or ™ (TM) symbol. It is believed that referencing third-party trademarks in this manual or on the jOOQ website constitutes "fair use". Please <a href="mailto:contact@datageekery.com">contact us</a> if you think that your trademark(s) are not properly attributed.
+                        </p>
+                    </html>
 				</content>
 			</section>
 			

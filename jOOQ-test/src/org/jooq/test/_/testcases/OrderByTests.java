@@ -331,6 +331,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .limit(2)
                 .offset(1)
                 .fetch(TBook_AUTHOR_ID()));
+
+        throw new RuntimeException("#2580: Add more test cases!");
     }
 
     @Test

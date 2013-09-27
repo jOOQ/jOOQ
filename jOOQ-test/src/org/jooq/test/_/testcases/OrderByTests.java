@@ -318,27 +318,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testLimitDistinct() throws Exception {
-
-        // [#2580] The various emulations using ROW_NUMBER() might be tricky when
-        // used with DISTINCT
-        assertEquals(1, (int)
-        create().selectDistinct(TBookToBookStore_BOOK_ID())
-                .from(TBookToBookStore())
-                .orderBy(TBookToBookStore_BOOK_ID())
-                .limit(1)
-                .fetchOne(TBookToBookStore_BOOK_ID()));
-
-        assertEquals(2, (int)
-        create().selectDistinct(TBookToBookStore_BOOK_ID())
-                .from(TBookToBookStore())
-                .orderBy(TBookToBookStore_BOOK_ID())
-                .limit(1)
-                .offset(1)
-                .fetchOne(TBookToBookStore_BOOK_ID()));
-    }
-
-    @Test
-    public void testLimitDistinct() throws Exception {
         assertEquals(asList(1, 2),
         create().selectDistinct(TBookToBookStore_BOOK_ID())
                 .from(TBookToBookStore())

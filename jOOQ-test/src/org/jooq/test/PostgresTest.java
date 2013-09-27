@@ -41,6 +41,7 @@
 
 package org.jooq.test;
 
+import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.test.postgres.generatedclasses.Routines.fSearchBook;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_639_NUMBERS_TABLE;
@@ -63,7 +64,13 @@ import static org.jooq.test.postgres.generatedclasses.Tables.T_UNSIGNED;
 import static org.jooq.test.postgres.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.postgres.generatedclasses.Tables.V_BOOK;
 import static org.jooq.test.postgres.generatedclasses.Tables.V_LIBRARY;
+import static org.jooq.util.postgres.PostgresDSL.arrayAppend;
+import static org.jooq.util.postgres.PostgresDSL.arrayCat;
+import static org.jooq.util.postgres.PostgresDSL.arrayPrepend;
+import static org.jooq.util.postgres.PostgresDSL.arrayToString;
+import static org.jooq.util.postgres.PostgresDSL.stringToArray;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -79,6 +86,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.Record1;
+import org.jooq.Record5;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
@@ -870,6 +878,98 @@ public class PostgresTest extends jOOQAbstractTest<
                 .where(T_ARRAYS.NUMBER_ARRAY.contains(new Integer[] { 1, 2, 3 }))
                 .fetchOne(0));
 
+    }
+
+    @Test
+    public void testPostgresArrayFunctions() throws Exception {
+        String[] a_ab = new String[] { "a", "b" };
+        Param<String[]> v_ab = val(a_ab);
+        Param<String[]> v_n = val(null, v_ab);
+
+        // array_append()
+        // ---------------------------------------------------------------------
+        Record5<String[], String[], String[], String[], String[]> r1 = create()
+        .select(
+            arrayAppend(v_ab, "c"),
+            arrayAppend(v_ab, val("c")),
+            arrayAppend(a_ab, "c"),
+            arrayAppend(a_ab, val("c")),
+            arrayAppend(v_n, "c"))
+        .fetchOne();
+
+        assertEquals(asList("a", "b", "c"), asList(r1.value1()));
+        assertEquals(asList("a", "b", "c"), asList(r1.value2()));
+        assertEquals(asList("a", "b", "c"), asList(r1.value3()));
+        assertEquals(asList("a", "b", "c"), asList(r1.value4()));
+        assertEquals(asList("c"), asList(r1.value5()));
+
+        // array_prepend()
+        // ---------------------------------------------------------------------
+        Record5<String[], String[], String[], String[], String[]> r2 = create()
+        .select(
+            arrayPrepend("c", v_ab),
+            arrayPrepend(val("c"), v_ab),
+            arrayPrepend("c", a_ab),
+            arrayPrepend(val("c"), a_ab),
+            arrayPrepend("c", v_n))
+        .fetchOne();
+
+        assertEquals(asList("c", "a", "b"), asList(r2.value1()));
+        assertEquals(asList("c", "a", "b"), asList(r2.value2()));
+        assertEquals(asList("c", "a", "b"), asList(r2.value3()));
+        assertEquals(asList("c", "a", "b"), asList(r2.value4()));
+        assertEquals(asList("c"), asList(r2.value5()));
+
+        // array_cat()
+        // ---------------------------------------------------------------------
+        Record5<String[], String[], String[], String[], String[]> r3 = create()
+        .select(
+            arrayCat(v_ab, v_ab),
+            arrayCat(v_ab, a_ab),
+            arrayCat(a_ab, v_ab),
+            arrayCat(a_ab, a_ab),
+            arrayCat(v_n, v_ab))
+        .fetchOne();
+
+        assertEquals(asList("a", "b", "a", "b"), asList(r3.value1()));
+        assertEquals(asList("a", "b", "a", "b"), asList(r3.value2()));
+        assertEquals(asList("a", "b", "a", "b"), asList(r3.value3()));
+        assertEquals(asList("a", "b", "a", "b"), asList(r3.value4()));
+        assertEquals(asList("a", "b"), asList(r3.value5()));
+
+        // array_to_string()
+        // ---------------------------------------------------------------------
+        Record5<String, String, String, String, String> r4 = create()
+        .select(
+            arrayToString(v_ab, "--"),
+            arrayToString(v_ab, val("--")),
+            arrayToString(a_ab, "--"),
+            arrayToString(a_ab, val("--")),
+            arrayToString(v_n, "--"))
+        .fetchOne();
+
+        assertEquals("a--b", r4.value1());
+        assertEquals("a--b", r4.value2());
+        assertEquals("a--b", r4.value3());
+        assertEquals("a--b", r4.value4());
+        assertNull(r4.value5());
+
+        // string_to_array()
+        // ---------------------------------------------------------------------
+        Record5<String[], String[], String[], String[], String[]> r5 = create()
+        .select(
+            stringToArray("a--b", "--"),
+            stringToArray("a--b", val("--")),
+            stringToArray(val("a--b"), "--"),
+            stringToArray(val("a--b"), val("--")),
+            stringToArray(val(null, String.class), "--"))
+        .fetchOne();
+
+        assertEquals(asList("a", "b"), asList(r5.value1()));
+        assertEquals(asList("a", "b"), asList(r5.value2()));
+        assertEquals(asList("a", "b"), asList(r5.value3()));
+        assertEquals(asList("a", "b"), asList(r5.value4()));
+        assertNull(r5.value5());
     }
 
     @Test

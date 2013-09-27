@@ -40,8 +40,13 @@
  */
 package org.jooq.util.postgres;
 
+import static org.jooq.SQLDialect.POSTGRES;
+
+import org.jooq.Field;
 import org.jooq.SQLDialect;
+import org.jooq.Support;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 
 /**
  * The {@link SQLDialect#POSTGRES} specific DSL.
@@ -53,6 +58,249 @@ public class PostgresDSL extends DSL {
     /**
      * No instances
      */
-    private PostgresDSL() {
+    private PostgresDSL() {}
+
+    // -------------------------------------------------------------------------
+    // PostgreSQL-specific array functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * The PostgreSQL <code>array_append(anyarray, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1, 2, 3} = array_append(ARRAY[1, 2], 3)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayAppend(T[] array, T value) {
+        return arrayAppend(val(array), val(value));
+    }
+
+    /**
+     * The PostgreSQL <code>array_append(anyarray, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1, 2, 3} = array_append(ARRAY[1, 2], 3)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayAppend(T[] array, Field<T> value) {
+        return arrayAppend(val(array), value);
+    }
+
+    /**
+     * The PostgreSQL <code>array_append(anyarray, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1, 2, 3} = array_append(ARRAY[1, 2], 3)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayAppend(Field<T[]> array, T value) {
+        return arrayAppend(array, val(value));
+    }
+
+    /**
+     * The PostgreSQL <code>array_append(anyarray, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1, 2, 3} = array_append(ARRAY[1, 2], 3)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayAppend(Field<T[]> array, Field<T> value) {
+        return field("{array_append}({0}, {1})", nullSafe(array).getDataType(), nullSafe(array), nullSafe(value));
+    }
+
+    /**
+     * The PostgreSQL <code>array_prepend(anyarray, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1, 2, 3} = array_prepend(1, ARRAY[2, 3])
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayPrepend(T value, T[] array) {
+        return arrayPrepend(val(value), val(array));
+    }
+
+    /**
+     * The PostgreSQL <code>array_prepend(anyarray, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1, 2, 3} = array_prepend(1, ARRAY[2, 3])
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayPrepend(Field<T> value, T[] array) {
+        return arrayPrepend(value, val(array));
+    }
+
+    /**
+     * The PostgreSQL <code>array_prepend(anyarray, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1, 2, 3} = array_prepend(1, ARRAY[2, 3])
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayPrepend(T value, Field<T[]> array) {
+        return arrayPrepend(val(value), array);
+    }
+
+    /**
+     * The PostgreSQL <code>array_prepend(anyarray, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1, 2, 3} = array_prepend(1, ARRAY[2, 3])
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayPrepend(Field<T> value, Field<T[]> array) {
+        return field("{array_prepend}({0}, {1})", nullSafe(array).getDataType(), nullSafe(value), nullSafe(array));
+    }
+
+    /**
+     * The PostgreSQL <code>array_cat(anyarray, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1, 2, 3, 4, 5} = array_cat(ARRAY[1, 2], ARRAY[3, 4, 5])
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayCat(T[] array1, T[] array2) {
+        return arrayCat(val(array1), val(array2));
+    }
+
+    /**
+     * The PostgreSQL <code>array_cat(anyarray, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1, 2, 3, 4, 5} = array_cat(ARRAY[1, 2], ARRAY[3, 4, 5])
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayCat(T[] array1, Field<T[]> array2) {
+        return arrayCat(val(array1), array2);
+    }
+
+    /**
+     * The PostgreSQL <code>array_cat(anyarray, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1, 2, 3, 4, 5} = array_cat(ARRAY[1, 2], ARRAY[3, 4, 5])
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayCat(Field<T[]> array1, T[] array2) {
+        return arrayCat(array1, val(array2));
+    }
+
+    /**
+     * The PostgreSQL <code>array_cat(anyarray, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1, 2, 3, 4, 5} = array_cat(ARRAY[1, 2], ARRAY[3, 4, 5])
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayCat(Field<T[]> array1, Field<T[]> array2) {
+        return field("{array_cat}({0}, {1})", nullSafe(array1).getDataType(), nullSafe(array1), nullSafe(array2));
+    }
+
+    /**
+     * The PostgreSQL <code>array_to_string(anyarray, delimiter)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * '1~^~2~^~3' = array_to_string(ARRAY[1, 2, 3], '~^~')
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Field<String> arrayToString(Object[] array, String delimiter) {
+        return arrayToString(val(array), val(delimiter));
+    }
+
+    /**
+     * The PostgreSQL <code>array_to_string(anyarray, delimiter)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * '1~^~2~^~3' = array_to_string(ARRAY[1, 2, 3], '~^~')
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Field<String> arrayToString(Object[] array, Field<String> delimiter) {
+        return arrayToString(val(array), delimiter);
+    }
+
+    /**
+     * The PostgreSQL <code>array_to_string(anyarray, delimiter)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * '1~^~2~^~3' = array_to_string(ARRAY[1, 2, 3], '~^~')
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Field<String> arrayToString(Field<? extends Object[]> array, String delimiter) {
+        return arrayToString(array, val(delimiter));
+    }
+
+    /**
+     * The PostgreSQL <code>array_to_string(anyarray, delimiter)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * '1~^~2~^~3' = array_to_string(ARRAY[1, 2, 3], '~^~')
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Field<String> arrayToString(Field<? extends Object[]> array, Field<String> delimiter) {
+        return field("{array_to_string}({0}, {1})", SQLDataType.VARCHAR, nullSafe(array), nullSafe(delimiter));
+    }
+
+    /**
+     * The PostgreSQL <code>string_to_array(anyarray, delimiter)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {xx,NULL,zz} = string_to_array('xx~^~yy~^~zz', '~^~', 'yy')
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Field<String[]> stringToArray(String string, String delimiter) {
+        return stringToArray(val(string), val(delimiter));
+    }
+
+    /**
+     * The PostgreSQL <code>string_to_array(anyarray, delimiter)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {xx,NULL,zz} = string_to_array('xx~^~yy~^~zz', '~^~', 'yy')
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Field<String[]> stringToArray(String string, Field<String> delimiter) {
+        return stringToArray(val(string), delimiter);
+    }
+
+    /**
+     * The PostgreSQL <code>string_to_array(anyarray, delimiter)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {xx,NULL,zz} = string_to_array('xx~^~yy~^~zz', '~^~', 'yy')
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Field<String[]> stringToArray(Field<String> string, String delimiter) {
+        return stringToArray(string, val(delimiter));
+    }
+
+    /**
+     * The PostgreSQL <code>string_to_array(anyarray, delimiter)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {xx,NULL,zz} = string_to_array('xx~^~yy~^~zz', '~^~', 'yy')
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Field<String[]> stringToArray(Field<String> string, Field<String> delimiter) {
+        return field("{string_to_array}({0}, {1})", SQLDataType.VARCHAR.getArrayDataType(), nullSafe(string), nullSafe(delimiter));
     }
 }

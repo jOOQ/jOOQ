@@ -22,12 +22,12 @@ public interface IVLibrary extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_LIBRARY.TITLE</code>. 
 	 */
-	public void setTheTitle(java.lang.String value);
+	public void setTitle(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_LIBRARY.TITLE</code>. 
 	 */
-	public java.lang.String getTheTitle();
+	public java.lang.String getTitle();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

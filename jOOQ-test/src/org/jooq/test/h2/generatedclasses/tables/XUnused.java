@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -673350426;
+	private static final long serialVersionUID = -1737671053;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.X_UNUSED</code>
@@ -108,7 +108,7 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedc
 	 * No further instances allowed
 	 */
 	private XUnused() {
-		super("X_UNUSED", org.jooq.test.h2.generatedclasses.NonPublic.NON_PUBLIC);
+		super("X_UNUSED", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
 	}
 
 	/**

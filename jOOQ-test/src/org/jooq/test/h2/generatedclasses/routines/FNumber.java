@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -2122229392;
+	private static final long serialVersionUID = 981067353;
 
 	/**
 	 * The parameter <code>PUBLIC.F_NUMBER.RETURN_VALUE</code>. 
@@ -25,7 +25,7 @@ public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	 * Create a new routine call instance
 	 */
 	public FNumber() {
-		super("F_NUMBER", org.jooq.test.h2.generatedclasses.NonPublic.NON_PUBLIC, org.jooq.impl.SQLDataType.INTEGER);
+		super("F_NUMBER", org.jooq.test.h2.generatedclasses.Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(P1);

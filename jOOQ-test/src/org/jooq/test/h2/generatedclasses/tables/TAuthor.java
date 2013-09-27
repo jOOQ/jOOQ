@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 1460652982;
+	private static final long serialVersionUID = -1755521321;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_AUTHOR</code>
@@ -60,7 +60,7 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedc
 	 * No further instances allowed
 	 */
 	private TAuthor() {
-		super("T_AUTHOR", org.jooq.test.h2.generatedclasses.NonPublic.NON_PUBLIC);
+		super("T_AUTHOR", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
 	}
 
 	/**

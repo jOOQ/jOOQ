@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Ää extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.ÄäRecord> {
 
-	private static final long serialVersionUID = -346555342;
+	private static final long serialVersionUID = 309601669;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.Ää</code>
@@ -33,6 +33,6 @@ public class Ää extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclas
 	 * No further instances allowed
 	 */
 	private Ää() {
-		super("Ää", org.jooq.test.h2.generatedclasses.NonPublic.NON_PUBLIC);
+		super("Ää", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
 	}
 }

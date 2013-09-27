@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 440977079;
+	private static final long serialVersionUID = 228994162;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.V_LIBRARY</code>
@@ -32,12 +32,12 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.h2.generated
 	/**
 	 * The column <code>PUBLIC.V_LIBRARY.TITLE</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.VLibraryRecord, java.lang.String> THE_TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), V_LIBRARY);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), V_LIBRARY);
 
 	/**
 	 * No further instances allowed
 	 */
 	private VLibrary() {
-		super("V_LIBRARY", org.jooq.test.h2.generatedclasses.NonPublic.NON_PUBLIC);
+		super("V_LIBRARY", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
 	}
 }

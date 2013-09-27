@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 116812458;
+	private static final long serialVersionUID = 1600940195;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOLEANS</code>
@@ -83,7 +83,7 @@ public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.h2.generate
 	 * No further instances allowed
 	 */
 	private TBooleans() {
-		super("T_BOOLEANS", org.jooq.test.h2.generatedclasses.NonPublic.NON_PUBLIC);
+		super("T_BOOLEANS", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
 	}
 
 	/**

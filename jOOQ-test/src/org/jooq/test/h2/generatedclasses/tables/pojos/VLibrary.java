@@ -9,19 +9,19 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary implements org.jooq.test.h2.generatedclasses.tables.interfaces.IVLibrary {
 
-	private static final long serialVersionUID = 2047350060;
+	private static final long serialVersionUID = 498569512;
 
 	private java.lang.String author;
-	private java.lang.String the__title;
+	private java.lang.String title;
 
 	public VLibrary() {}
 
 	public VLibrary(
 		java.lang.String author,
-		java.lang.String the__title
+		java.lang.String title
 	) {
 		this.author = author;
-		this.the__title = the__title;
+		this.title = title;
 	}
 
 	@Override
@@ -35,13 +35,13 @@ public class VLibrary implements org.jooq.test.h2.generatedclasses.tables.interf
 	}
 
 	@Override
-	public java.lang.String getTheTitle() {
-		return this.the__title;
+	public java.lang.String getTitle() {
+		return this.title;
 	}
 
 	@Override
-	public void setTheTitle(java.lang.String the__title) {
-		this.the__title = the__title;
+	public void setTitle(java.lang.String title) {
+		this.title = title;
 	}
 
 	// -------------------------------------------------------------------------
@@ -54,7 +54,7 @@ public class VLibrary implements org.jooq.test.h2.generatedclasses.tables.interf
 	@Override
 	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IVLibrary from) {
 		setAuthor(from.getAuthor());
-		setTheTitle(from.getTheTitle());
+		setTitle(from.getTitle());
 	}
 
 	/**

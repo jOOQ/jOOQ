@@ -40,7 +40,7 @@ import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.sign;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR;
-import static org.jooq.test.h2.generatedclasses.tables.TBuch.THE_BOOK;
+import static org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,7 +52,7 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.test.h2.generatedclasses.Routines;
 import org.jooq.test.h2.generatedclasses.tables.TAuthor;
-import org.jooq.test.h2.generatedclasses.tables.TBuch;
+import org.jooq.test.h2.generatedclasses.tables.TBook;
 
 /**
  * Pre-compiled stored functions for H2
@@ -82,9 +82,9 @@ public class F {
 
         String sql = create(connection)
             .select()
-            .from(THE_BOOK)
-            .where(TBuch.ID.in(INTEGER.convert(bookIds)))
-            .orderBy(TBuch.ID.asc())
+            .from(T_BOOK)
+            .where(TBook.ID.in(INTEGER.convert(bookIds)))
+            .orderBy(TBook.ID.asc())
             .getSQL();
 
         stmt = connection.prepareStatement(sql);

@@ -271,8 +271,8 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F_ONE</code>
 	 */
-	public static java.lang.Integer F_ONE_FUNCTION(org.jooq.Configuration configuration) {
-		org.jooq.test.h2.generatedclasses.routines.F_ONE_FUNCTION f = new org.jooq.test.h2.generatedclasses.routines.F_ONE_FUNCTION();
+	public static java.lang.Integer fOne(org.jooq.Configuration configuration) {
+		org.jooq.test.h2.generatedclasses.routines.FOne f = new org.jooq.test.h2.generatedclasses.routines.FOne();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -281,8 +281,8 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_ONE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> F_ONE_FUNCTION() {
-		org.jooq.test.h2.generatedclasses.routines.F_ONE_FUNCTION f = new org.jooq.test.h2.generatedclasses.routines.F_ONE_FUNCTION();
+	public static org.jooq.Field<java.lang.Integer> fOne() {
+		org.jooq.test.h2.generatedclasses.routines.FOne f = new org.jooq.test.h2.generatedclasses.routines.FOne();
 
 		return f.asField();
 	}

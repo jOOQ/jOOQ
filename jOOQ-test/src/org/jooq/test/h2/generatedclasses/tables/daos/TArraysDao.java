@@ -53,13 +53,6 @@ public class TArraysDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generated
 	}
 
 	/**
-	 * Fetch records that have <code>STRING_LIST IN (values)</code>
-	 */
-	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TArrays> fetchByStringList(java.lang.Object[]... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TArrays.STRING_LIST, values);
-	}
-
-	/**
 	 * Fetch records that have <code>NUMBER_ARRAY IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TArrays> fetchByNumberArray(java.lang.Object[]... values) {

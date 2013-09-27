@@ -9,12 +9,12 @@ package org.jooq.test.h2.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PCreateAuthor extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 822387858;
+	private static final long serialVersionUID = 1078602021;
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public PCreateAuthor() {
-		super("P_CREATE_AUTHOR", org.jooq.test.h2.generatedclasses.NonPublic.NON_PUBLIC);
+		super("P_CREATE_AUTHOR", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
 	}
 }

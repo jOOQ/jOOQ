@@ -30,16 +30,6 @@ public interface ITArrays extends java.io.Serializable {
 	public java.lang.Object[] getStringArray();
 
 	/**
-	 * Setter for <code>PUBLIC.T_ARRAYS.STRING_LIST</code>. 
-	 */
-	public void setStringList(java.lang.Object[] value);
-
-	/**
-	 * Getter for <code>PUBLIC.T_ARRAYS.STRING_LIST</code>. 
-	 */
-	public java.lang.Object[] getStringList();
-
-	/**
 	 * Setter for <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>. 
 	 */
 	public void setNumberArray(java.lang.Object[] value);

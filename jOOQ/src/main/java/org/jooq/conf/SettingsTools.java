@@ -39,6 +39,7 @@ import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.StatementType.PREPARED_STATEMENT;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.io.File;
 import java.io.InputStream;
@@ -136,6 +137,13 @@ public final class SettingsTools {
      */
     public static final boolean executeStaticStatements(Settings settings) {
         return getStatementType(settings) == STATIC_STATEMENT;
+    }
+
+    /**
+     * Whether primary keys should be updatable.
+     */
+    public static final boolean updatablePrimaryKeys(Settings settings) {
+        return defaultIfNull(settings.isUpdatablePrimaryKeys(), false);
     }
 
     /**

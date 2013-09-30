@@ -29,14 +29,19 @@ function printContent() {
     <td class="right">English</td>
     <td class="right">Hear about jOOQ and about lots of other good stuff at the <a href="http://www.medit-symposium.com">MEDIT Symposium</a> in Sicilly.</td>
 </tr>
+<td colspan="3">
+    <h2>Past jOOQ events</h2>
+</td>
+<tr>
+    <td class="right">September 2013</td>
+    <td class="right">German</td>
+    <td class="right">Join the jOOQ introductory sessions at the <a href="http://www.jugh.de/display/jugh/2013/08/06/JUGH-Treffen+26.+September+2013">JUGH</a> in Kassel, Germany</td>
+</tr>
 <tr>
     <td class="right">September 2013</td>
     <td class="right">German</td>
     <td class="right">Join the jOOQ training sessions at the <a href="http://www.ch-open.ch/wstage/workshop-tage/2013/aktuelles-programm-2013/ws-6-mit-jooq-und-opensource-datenbanken-sofort-produktiv-werden/">/ch/open workshop days</a> in Zurich, Switzerland</td>
 </tr>
-<td colspan="3">
-    <h2>Past jOOQ events</h2>
-</td>
 <tr>
     <td class="right">June 2013</td>
     <td class="right">German</td>

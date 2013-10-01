@@ -137,7 +137,7 @@
     <modules>
         <module>jOOQ</module>
         <module>jOOQ-codegen</module>
-        <module>jOOQ-codegen-gradle</module>
+        <!--<module>jOOQ-codegen-gradle</module>-->
         <module>jOOQ-codegen-maven</module>
         <!--<module>jOOQ-codegen-maven-example</module>-->
         <!--<module>jOOQ-console</module>-->
@@ -166,11 +166,13 @@
                 <artifactId>jooq-codegen-maven</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!--
             <dependency>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-gradle</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            -->
             <dependency>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-meta</artifactId>

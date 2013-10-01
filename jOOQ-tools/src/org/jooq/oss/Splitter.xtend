@@ -51,22 +51,35 @@ import org.jooq.xtend.Generators
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class OSS extends Generators {
+class RemoveProCode {
+    def static void main(String[] args) {
+        Splitter::split("pro", "/../workspace-jooq-oss");
+    }
+}
+
+class RemoveTrialCode {
+    def static void main(String[] args) {
+        Splitter::split("trial", "/../workspace-jooq-pro");
+    }
+}
+
+class Splitter extends Generators {
     
     static ExecutorService ex;
-    
-    def static void main(String[] args) {
+    String token;
+
+    def static void split(String token, String workspace) {
         ex = Executors::newFixedThreadPool(4);
         
-        val oss = new OSS();
+        val splitter = new Splitter(token);
         
         val workspaceIn = new File("../..").canonicalFile;
-        val workspaceOut = new File(workspaceIn.canonicalPath + "/../workspace-jooq-oss").canonicalFile;
+        val workspaceOut = new File(workspaceIn.canonicalPath + workspace).canonicalFile;
         
         for (project : workspaceIn.listFiles[f | f.name.startsWith("jOOQ")]) {
             val in = new File(workspaceIn, project.name);
             val out = new File(workspaceOut, project.name);
-            oss.transform(in, out, in);
+            splitter.transform(in, out, in);
         }
         
         ex.shutdown;
@@ -101,7 +114,7 @@ class OSS extends Generators {
                 transform(inRoot, outRoot, file);
             }            
         }
-        else if (in.name.equals("LICENSE.txt")) {
+        else if (token == "pro" && in.name.equals("LICENSE.txt")) {
             ex.submit[ |
                 write(out, '''
 Copyright (c) 2009-2013, Data Geekery GmbH (http://www.datageekery.com)
@@ -159,14 +172,17 @@ For more information, please visit: http://www.jooq.org/licenses''');
     val replaceAll = new ArrayList<ImmutablePair<Pattern, String>>();
     val replaceFirst = new ArrayList<ImmutablePair<Pattern, String>>();
     
-    new() {
+    new(String token) {
+        this.token = token;
         
-        // Replace a couple of imports
-        replaceFirst.add(new ImmutablePair(compile('''import org\.jooq\.(ArrayConstant|ArrayRecord|impl\.ArrayRecordImpl|impl\.FlashbackTable.*?);'''), "// ..."));
-        replaceFirst.add(new ImmutablePair(compile('''import static org\.jooq\.impl\.DSL\.(cube|grouping|groupingId|groupingSets);'''), "// ..."));
-        
-        // Replace the Java / Scala / Xtend license header
-        replaceFirst.add(new ImmutablePair(compile('''(?s:/\*\*[\r\n] \* Copyright.*?eula[\r\n] \*/)'''), '''
+        if (token == "pro") {
+            
+            // Replace a couple of imports
+            replaceFirst.add(new ImmutablePair(compile('''import org\.jooq\.(ArrayConstant|ArrayRecord|impl\.ArrayRecordImpl|impl\.FlashbackTable.*?);'''), "// ..."));
+            replaceFirst.add(new ImmutablePair(compile('''import static org\.jooq\.impl\.DSL\.(cube|grouping|groupingId|groupingSets);'''), "// ..."));
+            
+            // Replace the Java / Scala / Xtend license header
+            replaceFirst.add(new ImmutablePair(compile('''(?s:/\*\*[\r\n] \* Copyright.*?eula[\r\n] \*/)'''), '''
 /**
  * Copyright (c) 2009-2013, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
@@ -208,25 +224,26 @@ For more information, please visit: http://www.jooq.org/licenses''');
  *
  */'''));
         
-        // Remove sections of commercial code
-        translateAll.add(compile('''(?s:(/\* \[pro\])( \*.*?/\* )(\[/pro\] \*/))'''));
-        translateAll.add(compile('''(?s:(<!-- \[pro\])( -->.*?<!-- )(\[/pro\] -->))'''));
-        
-        for (d : SQLDialect::values.filter[d | d.commercial]) {
-            
-            // Remove commercial dialects from @Support annotations
-            replaceAll.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?),\s*\b«d.name»\b([^\)]*?\)))'''), "$1$2"));
-            replaceAll.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?)\b«d.name»\b,\s*([^\)]*?\)))'''), "$1$2"));
-            replaceAll.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?)\s*\b«d.name»\b\s*([^\)]*?\)))'''), "$1$2"));
-            
-            // Remove commercial dialects from Arrays.asList() expressions
-            replaceAll.add(new ImmutablePair(compile('''(asList\([^\)]*?),\s*\b«d.name»\b([^\)]*?\))'''), "$1$2"));
-            replaceAll.add(new ImmutablePair(compile('''(asList\([^\)]*?)\b«d.name»\b,\s*([^\)]*?\))'''), "$1$2"));
-            replaceAll.add(new ImmutablePair(compile('''(asList\([^\)]*?)\s*\b«d.name»\b\s*([^\)]*?\))'''), "$1$2"));
-            
-            // Remove commercial dialects from imports
-            replaceAll.add(new ImmutablePair(compile('''import (static )?org\.jooq\.SQLDialect\.«d.name»;'''), "// ..."));
-            replaceAll.add(new ImmutablePair(compile('''import (static )?org\.jooq\.util\.«d.name.toLowerCase»\..*?;'''), "// ..."));
+            for (d : SQLDialect::values.filter[d | d.commercial]) {
+                
+                // Remove commercial dialects from @Support annotations
+                replaceAll.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?),\s*\b«d.name»\b([^\)]*?\)))'''), "$1$2"));
+                replaceAll.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?)\b«d.name»\b,\s*([^\)]*?\)))'''), "$1$2"));
+                replaceAll.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?)\s*\b«d.name»\b\s*([^\)]*?\)))'''), "$1$2"));
+                
+                // Remove commercial dialects from Arrays.asList() expressions
+                replaceAll.add(new ImmutablePair(compile('''(asList\([^\)]*?),\s*\b«d.name»\b([^\)]*?\))'''), "$1$2"));
+                replaceAll.add(new ImmutablePair(compile('''(asList\([^\)]*?)\b«d.name»\b,\s*([^\)]*?\))'''), "$1$2"));
+                replaceAll.add(new ImmutablePair(compile('''(asList\([^\)]*?)\s*\b«d.name»\b\s*([^\)]*?\))'''), "$1$2"));
+                
+                // Remove commercial dialects from imports
+                replaceAll.add(new ImmutablePair(compile('''import (static )?org\.jooq\.SQLDialect\.«d.name»;'''), "// ..."));
+                replaceAll.add(new ImmutablePair(compile('''import (static )?org\.jooq\.util\.«d.name.toLowerCase»\..*?;'''), "// ..."));
+            }
         }
+                
+        // Remove sections of delimited code
+        translateAll.add(compile('''(?s:(/\* \[«token»\])( \*.*?/\* )(\[/«token»\] \*/))'''));
+        translateAll.add(compile('''(?s:(<!-- \[«token»\])( -->.*?<!-- )(\[/«token»\] -->))'''));
     }
 }

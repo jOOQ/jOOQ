@@ -40,6 +40,7 @@
  */
 package org.jooq.test._.testcases;
 
+import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
@@ -786,5 +787,71 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             fail();
         }
         catch (DataChangedException expected) {}
+    }
+
+    @Test
+    public void testUpdatablesWithUpdatablePK() throws Exception {
+        DSLContext create = create();
+        create.configuration().settings().setUpdatablePrimaryKeys(true);
+
+        // Create and insert
+        T639 r1 = create.newRecord(T639());
+        r1.setValue(T639_ID(), 1);
+        assertEquals(1, (int) r1.getValue(T639_ID()));
+        assertNull(r1.original(T639_ID()));
+        assertTrue(r1.changed(T639_ID()));
+        assertEquals(1, r1.store());
+        assertEquals(1, (int) r1.getValue(T639_ID()));
+        assertEquals(1, (int) r1.original(T639_ID()));
+        assertFalse(r1.changed(T639_ID()));
+        assertEquals(1, (int) create.select(T639_ID()).from(T639()).fetchOne().value1());
+
+        // Refresh will not consider the new PK value
+        r1.setValue(T639_ID(), 2);
+        assertEquals(2, (int) r1.getValue(T639_ID()));
+        assertEquals(1, (int) r1.original(T639_ID()));
+        assertTrue(r1.changed(T639_ID()));
+        r1.refresh();
+        assertEquals(1, (int) r1.getValue(T639_ID()));
+        assertEquals(1, (int) r1.original(T639_ID()));
+        assertFalse(r1.changed(T639_ID()));
+
+        // Update with store() will update to the new PK value
+        r1.setValue(T639_ID(), 2);
+        assertEquals(1, r1.store());
+        assertEquals(2, (int) r1.getValue(T639_ID()));
+        assertEquals(2, (int) r1.original(T639_ID()));
+        assertFalse(r1.changed(T639_ID()));
+        assertEquals(2, (int) create.select(T639_ID()).from(T639()).fetchOne().value1());
+
+        // Force update with update() will update to the new PK value
+        r1.setValue(T639_ID(), 3);
+        assertEquals(1, r1.update());
+        assertEquals(3, (int) r1.getValue(T639_ID()));
+        assertEquals(3, (int) r1.original(T639_ID()));
+        assertFalse(r1.changed(T639_ID()));
+        assertEquals(3, (int) create.select(T639_ID()).from(T639()).fetchOne().value1());
+
+        // Force insert with insert() will create a new record
+        r1.setValue(T639_ID(), 4);
+        assertEquals(1, r1.insert());
+        assertEquals(4, (int) r1.getValue(T639_ID()));
+        assertEquals(4, (int) r1.original(T639_ID()));
+        assertFalse(r1.changed(T639_ID()));
+        assertEquals(asList(3, 4), create.select(T639_ID()).from(T639()).fetch(T639_ID()));
+
+        // Copy is not affected
+        T639 r2 = r1.copy();
+        assertNull(r2.getValue(T639_ID()));
+        assertNull(r2.original(T639_ID()));
+        assertFalse(r2.changed(T639_ID()));
+
+        // Delete will not consider the new PK value
+        r1.setValue(T639_ID(), 5);
+        assertEquals(1, r1.delete());
+        assertEquals(5, (int) r1.getValue(T639_ID()));
+        assertEquals(4, (int) r1.original(T639_ID()));
+        assertTrue(r1.changed(T639_ID()));
+        assertEquals(3, (int) create.select(T639_ID()).from(T639()).fetchOne().value1());
     }
 }

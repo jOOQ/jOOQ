@@ -42,11 +42,13 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.Utils.getAnnotatedGetter;
 import static org.jooq.impl.Utils.getAnnotatedMembers;
 import static org.jooq.impl.Utils.getMatchingGetter;
 import static org.jooq.impl.Utils.getMatchingMembers;
 import static org.jooq.impl.Utils.hasColumnAnnotations;
+import static org.jooq.impl.Utils.settings;
 
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
@@ -296,6 +298,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
         // The primary key's changed flag might've been set previously
         else if (val.isChanged()) {
+            val.setValue(value);
+        }
+
+        // [#2764] Users may override updatability of primary key values
+        else if (updatablePrimaryKeys(settings(this))) {
             val.setValue(value);
         }
 

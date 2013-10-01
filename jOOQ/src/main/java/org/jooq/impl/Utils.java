@@ -44,6 +44,7 @@ import static java.lang.Boolean.FALSE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.DSL.escape;
 import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.nullSafe;
@@ -352,16 +353,34 @@ final class Utils {
      * Get an attachable's configuration or a new {@link DefaultConfiguration}
      * if <code>null</code>.
      */
-    static Configuration configuration(AttachableInternal attachable) {
-        return configuration(attachable.configuration());
+    static Configuration configuration(Attachable attachable) {
+        return configuration(attachable instanceof AttachableInternal
+            ? ((AttachableInternal) attachable).configuration()
+            : null);
     }
 
     /**
-     * Get an configuration or a new {@link DefaultConfiguration} if
+     * Get a configuration or a new {@link DefaultConfiguration} if
      * <code>null</code>.
      */
     static Configuration configuration(Configuration configuration) {
         return configuration != null ? configuration : new DefaultConfiguration();
+    }
+
+    /**
+     * Get a configuration's settings or default settings if the configuration
+     * is <code>null</code>.
+     */
+    static Settings settings(Attachable attachable) {
+        return configuration(attachable).settings();
+    }
+
+    /**
+     * Get a configuration's settings or default settings if the configuration
+     * is <code>null</code>.
+     */
+    static Settings settings(Configuration configuration) {
+        return configuration(configuration).settings();
     }
 
     private static final boolean attachRecords(Configuration configuration) {
@@ -1299,7 +1318,14 @@ final class Utils {
      */
     @SuppressWarnings("deprecation")
     static final <T> void addCondition(org.jooq.ConditionProvider provider, Record record, Field<T> field) {
-        provider.addConditions(field.equal(record.getValue(field)));
+
+        // [#2764] If primary keys are allowed to be changed, the
+        if (updatablePrimaryKeys(settings(record))) {
+            provider.addConditions(field.equal(record.original(field)));
+        }
+        else {
+            provider.addConditions(field.equal(record.getValue(field)));
+        }
     }
 
     // ------------------------------------------------------------------------

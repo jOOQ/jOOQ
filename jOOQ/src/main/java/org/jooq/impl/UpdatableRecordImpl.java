@@ -41,12 +41,14 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.DELETE;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.REFRESH;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.STORE;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.UPDATE;
+import static org.jooq.impl.Utils.settings;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -151,16 +153,27 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
         for (TableField<R, ?> field : keys) {
 
-            // If any primary key value is null or changed, execute an insert
-            if (getValue(field) == null || getValue0(field).isChanged()) {
-                executeUpdate = false;
-                break;
+            // [#2764] If primary key values are allowed to be changed,
+            // inserting is only possible without prior loading of pk values
+            if (updatablePrimaryKeys(settings(this))) {
+                if (original(field) == null) {
+                    executeUpdate = false;
+                    break;
+                }
             }
 
-            // If primary key values are unchanged, updates are possible
+            // [#2764] Primary key value changes are interpreted as record copies
             else {
-                executeUpdate = true;
+
+                // If any primary key value is null or changed, execute an insert
+                if (getValue(field) == null || getValue0(field).isChanged()) {
+                    executeUpdate = false;
+                    break;
+                }
             }
+
+            // Otherwise, updates are possible
+            executeUpdate = true;
         }
 
         int result = 0;

@@ -84,6 +84,13 @@
             </roles>
         </contributor>
         <contributor>
+            <name>Ben Manes</name>
+            <email>ben.manes@gmail.com</email>
+            <roles>
+                <role>gradle-support</role>
+            </roles>
+        </contributor>
+        <contributor>
             <name>Ed Schaller</name>
             <email>schallee@darkmist.net</email>
             <roles>
@@ -142,6 +149,10 @@
         <module>jOOQ-scala</module>
     </modules>
 
+    <properties>
+        <version.gradle>1.6</version.gradle>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -159,11 +170,13 @@
                 <artifactId>jooq-codegen-maven</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!--
             <dependency>
                 <groupId>org.jooq</groupId>
-                <artifactId>jooq-codegen-maven</artifactId>
+                <artifactId>jooq-codegen-gradle</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            -->
             <dependency>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-meta</artifactId>
@@ -177,6 +190,34 @@
         </dependencies>
     </dependencyManagement>
 
+	<!--
+	  These additions were introduced with #2711, #2287 by Ben Manes
+	  Sonatype strongly recommends not to reference any third-party
+	  Maven repositories from artefact published to Maven Central.
+	  
+	  There must be another way to solve these issues:
+    <repositories>
+        <repository>
+            <id>maven-central</id>
+            <url>http://repo1.maven.org/maven2</url>
+        </repository>
+        <repository>
+            <id>gradle</id>
+            <url>http://repo.gradle.org/gradle/libs-releases-local</url>
+            <snapshots>
+              <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>gradle-workaround</id>
+            <url>http://flywaydb.org/repo</url>
+            <snapshots>
+              <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+	-->
+	
     <build>
         <defaultGoal>deploy</defaultGoal>
         <finalName>${project.artifactId}-${project.version}</finalName>

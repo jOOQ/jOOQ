@@ -153,19 +153,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         B book2 = newBook(6);
 
         create(listener1).batchStore(book1, book2).execute();
-
-        System.out.println(listener1.events);
-        throw new RuntimeException("Support for RecordListener and batch store is not yet implemented");
-
-//        Result<B> books =
-//        create().selectFrom(TBook())
-//                .orderBy(TBook_ID().asc())
-//                .fetch();
-//
-//        for (int i = 0; i < books.size(); i++) {
-//            books.get(i).attach(create(listener1).configuration());
-//            books.get(i).setValue(TBook_TITLE(), "Title " + i);
-//        }
+        assertEquals(asList(
+            "storeStart", "storeStart",
+            "insertStart", "insertStart",
+            "insertEnd", "insertEnd",
+            "storeEnd", "storeEnd"),
+        listener1.events);
     }
 
     @Test

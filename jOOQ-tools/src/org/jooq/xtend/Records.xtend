@@ -172,7 +172,7 @@ class Records extends Generators {
             public RecordImpl(Collection<? extends Field<?>> fields) {
                 super(fields);
             }
-                
+
             // ------------------------------------------------------------------------
             // XXX: Type-safe Record APIs
             // ------------------------------------------------------------------------

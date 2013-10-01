@@ -111,12 +111,18 @@ class BetweenAndSteps extends Generators {
         package org.jooq.impl;
         
         import static java.util.Arrays.asList;
+        import static org.jooq.Clause.CONDITION;
+        import static org.jooq.Clause.CONDITION_BETWEEN;
+        import static org.jooq.Clause.CONDITION_BETWEEN_SYMMETRIC;
+        import static org.jooq.Clause.CONDITION_NOT_BETWEEN;
+        import static org.jooq.Clause.CONDITION_NOT_BETWEEN_SYMMETRIC;
         import static org.jooq.SQLDialect.ASE;
         import static org.jooq.SQLDialect.CUBRID;
         import static org.jooq.SQLDialect.DB2;
         import static org.jooq.SQLDialect.DERBY;
         import static org.jooq.SQLDialect.FIREBIRD;
         import static org.jooq.SQLDialect.H2;
+        import static org.jooq.SQLDialect.MARIADB;
         import static org.jooq.SQLDialect.MYSQL;
         import static org.jooq.SQLDialect.ORACLE;
         import static org.jooq.SQLDialect.SQLITE;
@@ -131,8 +137,10 @@ class BetweenAndSteps extends Generators {
         «ENDFOR»
         import org.jooq.BetweenAndStepN;
         import org.jooq.BindContext;
+        import org.jooq.Clause;
         import org.jooq.Condition;
         import org.jooq.Configuration;
+        import org.jooq.Context;
         import org.jooq.Field;
         import org.jooq.QueryPartInternal;
         import org.jooq.Record;
@@ -161,13 +169,17 @@ class BetweenAndSteps extends Generators {
             «ENDFOR»
             BetweenAndStepN {
 
-            private static final long serialVersionUID = -4666251100802237878L;
+            private static final long     serialVersionUID              = -4666251100802237878L;
+            private static final Clause[] CLAUSES_BETWEEN               = { CONDITION, CONDITION_BETWEEN };
+            private static final Clause[] CLAUSES_BETWEEN_SYMMETRIC     = { CONDITION, CONDITION_BETWEEN_SYMMETRIC };
+            private static final Clause[] CLAUSES_NOT_BETWEEN           = { CONDITION, CONDITION_NOT_BETWEEN };
+            private static final Clause[] CLAUSES_NOT_BETWEEN_SYMMETRIC = { CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC };
         
-            private final boolean     symmetric;
-            private final boolean     not;
-            private final Row         row;
-            private final Row         minValue;
-            private Row               maxValue;
+            private final boolean         symmetric;
+            private final boolean         not;
+            private final Row             row;
+            private final Row             minValue;
+            private Row                   maxValue;
         
             RowBetweenCondition(Row row, Row minValue, boolean not, boolean symmetric) {
                 this.row = row;
@@ -179,7 +191,7 @@ class BetweenAndSteps extends Generators {
             // ------------------------------------------------------------------------
             // XXX: BetweenAndStep API
             // ------------------------------------------------------------------------
-            
+
             @Override
             public final Condition and(Field f) {
                 if (maxValue == null) {
@@ -240,11 +252,11 @@ class BetweenAndSteps extends Generators {
                 RowN r = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
                 return and(r);
             }
-            
+
             // ------------------------------------------------------------------------
             // XXX: QueryPart API
             // ------------------------------------------------------------------------
-            
+
             @Override
             public final void bind(BindContext context) {
                 delegate(context.configuration()).bind(context);
@@ -255,6 +267,11 @@ class BetweenAndSteps extends Generators {
                 delegate(context.configuration()).toSQL(context);
             }
         
+            @Override
+            public final Clause[] clauses(Context<?> ctx) {
+                return delegate(ctx.configuration()).clauses(ctx);
+            }
+        
             private final QueryPartInternal delegate(Configuration configuration) {
                 // These casts are safe for RowImpl
                 RowN r = (RowN) row;
@@ -262,7 +279,7 @@ class BetweenAndSteps extends Generators {
                 RowN max = (RowN) maxValue;
         
                 // These dialects don't support the SYMMETRIC keyword at all
-                if (symmetric && asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.dialect())) {
+                if (symmetric && asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, MARIADB, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.dialect().family())) {
                     if (not) {
                         return (QueryPartInternal) r.notBetween(min, max).and(r.notBetween(max, min));
                     }
@@ -273,7 +290,7 @@ class BetweenAndSteps extends Generators {
         
                 // These dialects either don't support row value expressions, or they
                 // Can't handle row value expressions with the BETWEEN predicate
-                else if (row.size() > 1 && asList(CUBRID, DERBY, FIREBIRD, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.dialect())) {
+                else if (row.size() > 1 && asList(CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.dialect().family())) {
                     Condition result = r.ge(min).and(r.le(max));
         
                     if (not) {
@@ -296,18 +313,26 @@ class BetweenAndSteps extends Generators {
         
                 @Override
                 public final void toSQL(RenderContext context) {
-                    context.sql(row)
-                           .keyword(not ? " not" : "")
-                           .keyword(" between ")
-                           .keyword(symmetric ? "symmetric " : "")
-                           .sql(minValue)
-                           .keyword(" and ")
-                           .sql(maxValue);
+                                   context.visit(row);
+                    if (not)       context.sql(" ").keyword("not");
+                                   context.sql(" ").keyword("between");
+                    if (symmetric) context.sql(" ").keyword("symmetric");
+                                   context.sql(" ").visit(minValue);
+                                   context.sql(" ").keyword("and");
+                                   context.sql(" ").visit(maxValue);
                 }
         
                 @Override
                 public final void bind(BindContext context) {
-                    context.bind(row).bind(minValue).bind(maxValue);
+                    context.visit(row).visit(minValue).visit(maxValue);
+                }
+        
+                @Override
+                public final Clause[] clauses(Context<?> ctx) {
+                    return not ? symmetric ? CLAUSES_NOT_BETWEEN_SYMMETRIC
+                                           : CLAUSES_NOT_BETWEEN
+                               : symmetric ? CLAUSES_BETWEEN_SYMMETRIC
+                                           : CLAUSES_BETWEEN;
                 }
             }
         }

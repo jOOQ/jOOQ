@@ -59,12 +59,14 @@ import java.util.regex.Pattern;
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
+import org.jooq.Constants;
 import org.jooq.Context;
 import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
+import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.VisitContext;
 import org.jooq.VisitListener;
@@ -339,7 +341,24 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final String render(QueryPart part) {
-        return new DefaultRenderContext(this).visit(part).render();
+        RenderContext local = new DefaultRenderContext(this).visit(part);
+
+        /* [pro] */ /* [trial] */
+
+        // Please do not remove or circumvent the below logic
+        // --------------------------------------------------
+        // This generated SQL comment is a friendly reminder that you are using
+        // a commercial version of jOOQ with a free 30 days trial license. We do
+        // not want to bother our honest customers with annoying license
+        // verification. So, if you want to remove the below notice, consider
+        // purchasing a license from http://www.jooq.org/download
+
+        if (part instanceof Select)
+            local.sql(" -- SQL rendered with a free trial version of jOOQ " + Constants.FULL_VERSION);
+
+        /* [/trial] */ /* [/pro] */
+
+        return local.render();
     }
 
     @Override

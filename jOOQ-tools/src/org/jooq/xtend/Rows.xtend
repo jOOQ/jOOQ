@@ -1199,6 +1199,7 @@ class Rows extends Generators {
         «classHeader»
         package org.jooq.impl;
 
+        import static org.jooq.Clause.FIELD_ROW;
         import static org.jooq.impl.DSL.row;
 
         import java.util.Arrays;
@@ -1210,8 +1211,10 @@ class Rows extends Generators {
         import org.jooq.BetweenAndStep«typeSuffixRaw(degree)»;
         «ENDFOR»
         import org.jooq.BindContext;
+        import org.jooq.Clause;
         import org.jooq.Comparator;
         import org.jooq.Condition;
+        import org.jooq.Context;
         import org.jooq.DataType;
         import org.jooq.Field;
         «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
@@ -1242,9 +1245,10 @@ class Rows extends Generators {
             /**
              * Generated UID
              */
-            private static final long serialVersionUID = -929427349071556318L;
-
-            final Fields              fields;
+            private static final long     serialVersionUID = -929427349071556318L;
+            private static final Clause[] CLAUSES          = { FIELD_ROW };
+        
+            final Fields                  fields;
 
             RowImpl(Field<?>... fields) {
                 this(new Fields(fields));
@@ -1271,7 +1275,7 @@ class Rows extends Generators {
                 String separator = "";
                 for (Field<?> field : fields.fields) {
                     context.sql(separator);
-                    context.sql(field);
+                    context.visit(field);
 
                     separator = ", ";
                 }
@@ -1281,7 +1285,12 @@ class Rows extends Generators {
 
             @Override
             public final void bind(BindContext context) {
-                context.bind(fields);
+                context.visit(fields);
+            }
+        
+            @Override
+            public final Clause[] clauses(Context<?> ctx) {
+                return CLAUSES;
             }
 
             // ------------------------------------------------------------------------

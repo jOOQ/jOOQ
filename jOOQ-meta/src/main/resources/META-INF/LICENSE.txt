@@ -35,4 +35,4 @@ non-transferable license to install and use the Software under the terms of
 the jOOQ License and Maintenance Agreement.
 
 This library is distributed with a LIMITED WARRANTY. See the jOOQ License
-and Maintenance Agreement for more details: http://www.jooq.org/eula
+and Maintenance Agreement for more details: http://www.jooq.org/licensing

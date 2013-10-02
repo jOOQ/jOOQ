@@ -36,7 +36,7 @@
  * the jOOQ License and Maintenance Agreement.
  *
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
- * and Maintenance Agreement for more details: http://www.jooq.org/eula
+ * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
 package org.jooq.docs
 

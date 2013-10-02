@@ -37,7 +37,7 @@
   * the jOOQ License and Maintenance Agreement.
   *
   * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
-  * and Maintenance Agreement for more details: http://www.jooq.org/eula
+  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
   -->
 <xsl:stylesheet version="1.0"
 	xmlns:fo="http://www.w3.org/1999/XSL/Format"

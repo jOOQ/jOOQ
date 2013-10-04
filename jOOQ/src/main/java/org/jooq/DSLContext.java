@@ -4441,7 +4441,7 @@ public interface DSLContext {
      * The record type order is preserved in the way they are passed to this
      * method. This is an example of how statements will be ordered: <code><pre>
      * // Let's assume a[n] are all of the same type, just as b[n], c[n]...
-     * int[] result = create.batchStore(a1, a2, a3, b1, a4, c1, c2, a5)
+     * int[] result = create.batchDelete(a1, a2, a3, b1, a4, c1, c2, a5)
      *                      .execute();
      * </pre></code> The above results in <code>result.length == 8</code> and
      * the following 5 separate batch statements:

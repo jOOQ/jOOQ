@@ -144,6 +144,7 @@ import org.jooq.test._.testcases.RowValueExpressionTests;
 import org.jooq.test._.testcases.SchemaAndMappingTests;
 import org.jooq.test._.testcases.SelectTests;
 import org.jooq.test._.testcases.StatementTests;
+import org.jooq.test._.testcases.TableFunctionTests;
 import org.jooq.test._.testcases.ThreadSafetyTests;
 import org.jooq.test._.testcases.TruncateTests;
 import org.jooq.test._.testcases.ValuesConstructorTests;
@@ -2141,6 +2142,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testStoredProceduresWithCursorParameters() throws Exception {
         new RoutineAndUDTTests(this).testStoredProceduresWithCursorParameters();
+    }
+
+    @Test
+    public void testGenerateSeries() throws Exception {
+        new TableFunctionTests(this).testGenerateSeries();
     }
 
     @Test

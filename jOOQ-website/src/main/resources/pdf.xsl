@@ -65,10 +65,13 @@
 		<xsl:attribute name="white-space-collapse">false</xsl:attribute>
 		<xsl:attribute name="white-space-treatment">preserve</xsl:attribute>
 		<xsl:attribute name="font-size">6pt</xsl:attribute>
-		<xsl:attribute name="margin">12pt</xsl:attribute>
+		<xsl:attribute name="margin-top">15pt</xsl:attribute>
+        <xsl:attribute name="margin-bottom">15pt</xsl:attribute>
+        <xsl:attribute name="margin-left">3pt</xsl:attribute>
+        <xsl:attribute name="margin-right">3pt</xsl:attribute>
 		<xsl:attribute name="padding">4pt</xsl:attribute>
-		<xsl:attribute name="border">2px solid #882222</xsl:attribute>
-		<xsl:attribute name="background-color">#FFEEDD</xsl:attribute>
+        <xsl:attribute name="color">#eeeeee</xsl:attribute>
+		<xsl:attribute name="background-color">#333333</xsl:attribute>
 		<xsl:attribute name="page-break-inside">avoid</xsl:attribute>
 	</xsl:attribute-set>
 
@@ -77,34 +80,37 @@
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="h1">
-		<xsl:attribute name="font-family">Special Elite</xsl:attribute>
-		<xsl:attribute name="font-size">20pt</xsl:attribute>
-		<xsl:attribute name="padding-top">12pt</xsl:attribute>
-		<xsl:attribute name="padding-bottom">12pt</xsl:attribute>
+		<xsl:attribute name="font-family">Roboto</xsl:attribute>
+		<xsl:attribute name="font-size">22pt</xsl:attribute>
+        <xsl:attribute name="font-weight">300</xsl:attribute>
+		<xsl:attribute name="padding-top">24pt</xsl:attribute>
+		<xsl:attribute name="padding-bottom">24pt</xsl:attribute>
 		<xsl:attribute name="page-break-after">avoid</xsl:attribute>
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="h2">
-		<xsl:attribute name="font-family">Special Elite</xsl:attribute>
+		<xsl:attribute name="font-family">Roboto</xsl:attribute>
 		<xsl:attribute name="font-size">16pt</xsl:attribute>
-		<xsl:attribute name="padding-top">10pt</xsl:attribute>
-		<xsl:attribute name="padding-bottom">10pt</xsl:attribute>
+        <xsl:attribute name="font-weight">300</xsl:attribute>
+		<xsl:attribute name="padding-top">15pt</xsl:attribute>
+		<xsl:attribute name="padding-bottom">15pt</xsl:attribute>
 		<xsl:attribute name="page-break-after">avoid</xsl:attribute>
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="h3">
-		<xsl:attribute name="font-family">Special Elite</xsl:attribute>
+		<xsl:attribute name="font-family">Roboto</xsl:attribute>
 		<xsl:attribute name="font-size">15pt</xsl:attribute>
-		<xsl:attribute name="padding-top">10pt</xsl:attribute>
-		<xsl:attribute name="padding-bottom">10pt</xsl:attribute>
+        <xsl:attribute name="font-weight">300</xsl:attribute>
+		<xsl:attribute name="padding-top">15pt</xsl:attribute>
+		<xsl:attribute name="padding-bottom">15pt</xsl:attribute>
 		<xsl:attribute name="page-break-after">avoid</xsl:attribute>
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="a">
 		<xsl:attribute name="font-size">11pt</xsl:attribute>
-		<xsl:attribute name="color">#882222</xsl:attribute>
 		<xsl:attribute name="font-weight">bold</xsl:attribute>
-		<xsl:attribute name="text-shadow">0 1px 2px #666666</xsl:attribute>
+        <xsl:attribute name="text-decoration">underline</xsl:attribute>
+        <xsl:attribute name="color">#3333ee</xsl:attribute>
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="p">
@@ -165,10 +171,10 @@
    			</fo:layout-master-set>
 
    			<fo:page-sequence master-reference="simple">
-   				<fo:flow flow-name="xsl-region-body" font-family="Oxygen">
-   					<fo:block width="100%" margin-left="20mm" margin-right="20mm" font-family="Special Elite">
+   				<fo:flow flow-name="xsl-region-body" font-family="Open Sans" font-weight="300">
+   					<fo:block width="100%" margin-left="20mm" margin-right="20mm" font-family="Roboto" font-weight="300">
 	   					<fo:block width="100%" text-align="center" font-size="36pt" padding-top="60mm">
-	   						<xsl:text>The jOOQ User Manual</xsl:text>
+	   						<xsl:text>The jOOQ™ User Manual</xsl:text>
 	   					</fo:block>
 	   					<fo:block width="100%" text-align="justify" font-size="12pt" color="#555555" padding-top="20mm">
 	   						<xsl:text>SQL was never meant to be abstracted. To be confined in the narrow
@@ -178,7 +184,7 @@
 	   					</fo:block>
 	   					<fo:block width="100%" text-align="center" padding-top="20mm">
 	   						<fo:external-graphic
-	   							src="url('C:/Users/lukas/workspace/jOOQ/jOOQ-website/img/logo.png')"
+	   							src="url('C:/Users/lukas/workspace/jOOQ/jOOQ-website/img/jooq-logo-black.png')"
 								xsl:use-attribute-sets="img"/>
 	   					</fo:block>
    					</fo:block>
@@ -186,7 +192,7 @@
    			</fo:page-sequence>
 
    			<fo:page-sequence master-reference="simple">
-   				<fo:static-content flow-name="xsl-region-before" font-family="Oxygen">
+   				<fo:static-content flow-name="xsl-region-before" font-family="Open Sans" font-weight="300">
    					<fo:block>
 	   					<fo:table table-layout="fixed" width="100%">
 							<fo:table-column column-width="proportional-column-width(1)"/>
@@ -212,7 +218,7 @@
    					</fo:block>
    				</fo:static-content>
 
-   				<fo:static-content flow-name="xsl-region-after" font-family="Oxygen">
+   				<fo:static-content flow-name="xsl-region-after" font-family="Open Sans" font-weight="300">
    					<fo:block>
 			      		<fo:table table-layout="fixed" width="100%">
 							<fo:table-column column-width="150mm"/>
@@ -223,7 +229,7 @@
 							    	<fo:table-cell padding-left="{$page-margin}mm">
 							      		<fo:block xsl:use-attribute-sets="static">
 							      			<xsl:text>
-							      			jOOQ is brought to you by Lukas Eder. Distributed under the Apache 2 licence
+							      			    © 2009 - 2013 by Data Geekery™ GmbH. All rights reserved. 
 							      			</xsl:text>
 							      		</fo:block>
 							    	</fo:table-cell>
@@ -241,7 +247,7 @@
 					</fo:block>
 			    </fo:static-content>
 
-      			<fo:flow flow-name="xsl-region-body" font-family="Oxygen">
+      			<fo:flow flow-name="xsl-region-body" font-family="Open Sans" font-weight="300">
 					<!-- Display the main section's content -->
 					<xsl:apply-templates select="/manual/section/content"/>
 
@@ -282,9 +288,13 @@
 
 	<xsl:template match="html-only" mode="content"/>
 
-	<xsl:template match="content">
-		<xsl:apply-templates select="@*|node()" mode="content"/>
-	</xsl:template>
+    <xsl:template match="content">
+        <xsl:apply-templates select="@*|node()" mode="content"/>
+    </xsl:template>
+
+    <xsl:template match="html" mode="content">
+        <xsl:apply-templates select="@*|node()" mode="content"/>
+    </xsl:template>
 
 	<xsl:template match="div" mode="content">
 		<fo:block xsl:use-attribute-sets="div">

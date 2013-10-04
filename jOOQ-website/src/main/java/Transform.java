@@ -64,12 +64,13 @@ import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.jooq.Constants;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.fop.apps.FOUserAgent;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
-import org.jooq.Constants;
 import org.joox.Context;
 import org.joox.Each;
 import org.joox.Filter;
@@ -133,14 +134,14 @@ public class Transform {
         System.out.println("Transforming manual: " + file("manual.xml"));
         System.out.println();
 
-        System.out.println("Transforming multi-page manual");
-        System.out.println("------------------------------");
-        multiplePages();
-
-        System.out.println();
-        System.out.println("Transforming single-page manual");
-        System.out.println("-------------------------------");
-        singlePage();
+//        System.out.println("Transforming multi-page manual");
+//        System.out.println("------------------------------");
+//        multiplePages();
+//
+//        System.out.println();
+//        System.out.println("Transforming single-page manual");
+//        System.out.println("-------------------------------");
+//        singlePage();
 
         System.out.println();
         System.out.println("Transforming PDF manual");

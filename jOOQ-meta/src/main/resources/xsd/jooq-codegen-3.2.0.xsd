@@ -543,6 +543,18 @@
         byte code
         -->
       <element name="globalObjectReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      
+      <!--
+        Generate fluent setters in
+        
+        - records
+        - pojos
+        - interfaces
+        
+        Fluent setters are against the JavaBeans specification, but can be quite
+        useful to those users who do not depend on EL, JSP, JSF, etc. 
+        -->
+      <element name="fluentSetters" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
     </all>
   </complexType>
 

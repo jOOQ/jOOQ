@@ -507,6 +507,7 @@ public class JavaGenerator extends AbstractGenerator {
             ColumnDefinition column = table.getColumn(i);
 
             final String comment = StringUtils.defaultString(column.getComment());
+            final String setterReturnType = fluentSetters() ? className : "void";
             final String setter = getStrategy().getJavaSetterName(column, Mode.DEFAULT);
             final String getter = getStrategy().getJavaGetterName(column, Mode.DEFAULT);
             final String type = getJavaType(column.getType());
@@ -514,8 +515,10 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.tab(1).javadoc("Setter for <code>%s</code>. %s", name, comment);
             out.tab(1).overrideIf(generateInterfaces());
-            out.tab(1).println("public void %s(%s value) {", setter, type);
+            out.tab(1).println("public %s %s(%s value) {", setterReturnType, setter, type);
             out.tab(2).println("setValue(%s, value);", i);
+            if (fluentSetters())
+                out.tab(2).println("return this;");
             out.tab(1).println("}");
 
             out.tab(1).javadoc("Getter for <code>%s</code>. %s", name, comment);
@@ -664,13 +667,14 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (ColumnDefinition column : table.getColumns()) {
             final String comment = StringUtils.defaultString(column.getComment());
+            final String setterReturnType = fluentSetters() ? className : "void";
             final String setter = getStrategy().getJavaSetterName(column, Mode.DEFAULT);
             final String getter = getStrategy().getJavaGetterName(column, Mode.DEFAULT);
             final String type = getJavaType((column).getType());
             final String name = column.getQualifiedOutputName();
 
             out.tab(1).javadoc("Setter for <code>%s</code>. %s", name, comment);
-            out.tab(1).println("public void %s(%s value);", setter, type);
+            out.tab(1).println("public %s %s(%s value);", setterReturnType, setter, type);
 
             out.tab(1).javadoc("Getter for <code>%s</code>. %s", name, comment);
             printColumnJPAAnnotation(out, column);
@@ -814,6 +818,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (AttributeDefinition attribute : udt.getAttributes()) {
             final String comment = StringUtils.defaultString(attribute.getComment());
+            final String setterReturnType = fluentSetters() ? className : "void";
             final String setter = getStrategy().getJavaSetterName(attribute, Mode.DEFAULT);
             final String getter = getStrategy().getJavaGetterName(attribute, Mode.DEFAULT);
             final String type = getJavaType((attribute).getType());
@@ -821,8 +826,10 @@ public class JavaGenerator extends AbstractGenerator {
             final String name = attribute.getQualifiedOutputName();
 
             out.tab(1).javadoc("Setter for <code>%s</code>. %s", name, comment);
-            out.tab(1).println("public void %s(%s value) {", setter, type);
+            out.tab(1).println("public %s %s(%s value) {", setterReturnType, setter, type);
             out.tab(2).println("setValue(%s, value);", id);
+            if (fluentSetters())
+                out.tab(2).println("return this;");
             out.tab(1).println("}");
 
             out.tab(1).javadoc("Getter for <code>%s</code>. %s", name, comment);
@@ -1336,8 +1343,9 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (ColumnDefinition column : table.getColumns()) {
             final String columnType = getJavaType(column.getType());
-            final String columnGetter = getStrategy().getJavaGetterName(column, Mode.POJO);
+            final String columnSetterReturnType = fluentSetters() ? className : "void";
             final String columnSetter = getStrategy().getJavaSetterName(column, Mode.POJO);
+            final String columnGetter = getStrategy().getJavaGetterName(column, Mode.POJO);
             final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
             // Getter
@@ -1353,8 +1361,10 @@ public class JavaGenerator extends AbstractGenerator {
             if (!generateImmutablePojos()) {
                 out.println();
                 out.tab(1).overrideIf(generateInterfaces());
-                out.tab(1).println("public void %s(%s %s) {", columnSetter, columnType, columnMember);
+                out.tab(1).println("public %s %s(%s %s) {", columnSetterReturnType, columnSetter, columnType, columnMember);
                 out.tab(2).println("this.%s = %s;", columnMember, columnMember);
+                if (fluentSetters())
+                    out.tab(2).println("return this;");
                 out.tab(1).println("}");
             }
         }
@@ -1847,6 +1857,7 @@ public class JavaGenerator extends AbstractGenerator {
         out.tab(1).println("}");
 
         for (ParameterDefinition parameter : routine.getInParameters()) {
+            final String setterReturnType = fluentSetters() ? className : "void";
             final String setter = getStrategy().getJavaSetterName(parameter, Mode.DEFAULT);
             final String numberValue = parameter.getType().isGenericNumberType() ? "Number" : "Value";
             final String numberField = parameter.getType().isGenericNumberType() ? "Number" : "Field";
@@ -1860,8 +1871,10 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (routine.isSQLUsable()) {
                 out.tab(1).javadoc("Set the <code>%s</code> parameter to the function to be used with a {@link org.jooq.Select} statement", parameter.getOutputName());
-                out.tab(1).println("public void %s(%s<%s> field) {", setter, Field.class, getExtendsNumberType(parameter.getType()));
+                out.tab(1).println("public %s %s(%s<%s> field) {", setterReturnType, setter, Field.class, getExtendsNumberType(parameter.getType()));
                 out.tab(2).println("set%s(%s, field);", numberField, paramId);
+                if (fluentSetters())
+                    out.tab(2).println("return this;");
                 out.tab(1).println("}");
             }
         }

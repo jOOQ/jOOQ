@@ -185,6 +185,16 @@ public interface Generator {
     void setGenerateGlobalObjectReferences(boolean generateGlobalObjectReferences);
 
     /**
+     * Whether fluent setters should be generated
+     */
+    boolean fluentSetters();
+
+    /**
+     * Whether fluent setters should be generated
+     */
+    void setFluentSetters(boolean fluentSetters);
+
+    /**
      * The target directory
      */
     String getTargetDirectory();

@@ -299,6 +299,8 @@ public class GenerationTool {
                 generator.setGenerateValidationAnnotations(g.getGenerate().isValidationAnnotations());
             if (g.getGenerate().isGlobalObjectReferences() != null)
                 generator.setGenerateGlobalObjectReferences(g.getGenerate().isGlobalObjectReferences());
+            if (g.getGenerate().isFluentSetters() != null)
+                generator.setFluentSetters(g.getGenerate().isFluentSetters());
 
             // Generator properties that should in fact be strategy properties
             strategy.setInstanceFields(generator.generateInstanceFields());

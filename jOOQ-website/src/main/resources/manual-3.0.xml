@@ -8750,7 +8750,7 @@ Finishing                : Total: 4.814ms, +3.375ms
     </execution>
   </executions>
 
-  <!-- Manage the plugin's dependency. In this example, we'll use a Postgres database -->
+  <!-- Manage the plugin's dependency. In this example, we'll use a PostgreSQL database -->
   <dependencies>
     <dependency>
       <groupId>postgresql</groupId>
@@ -8759,7 +8759,8 @@ Finishing                : Total: 4.814ms, +3.375ms
     </dependency>
   </dependencies>
 
-  <!-- Specify the plugin configuration -->
+  <!-- Specify the plugin configuration.
+       The configuration format is the same as for the standalone code generator -->
   <configuration>
 
     <!-- JDBC connection parameters -->

@@ -62,6 +62,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateJPAAnnotations         = false;
     boolean                            generateValidationAnnotations  = false;
     boolean                            generateGlobalObjectReferences = true;
+    boolean                            fluentSetters                  = false;
 
     protected GeneratorStrategyWrapper strategy;
 
@@ -200,6 +201,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateGlobalObjectReferences(boolean generateGlobalObjectReferences) {
         this.generateGlobalObjectReferences = generateGlobalObjectReferences;
+    }
+
+    @Override
+    public boolean fluentSetters() {
+        return fluentSetters;
+    }
+
+    @Override
+    public void setFluentSetters(boolean fluentSetters) {
+        this.fluentSetters = fluentSetters;
     }
 
     // ----

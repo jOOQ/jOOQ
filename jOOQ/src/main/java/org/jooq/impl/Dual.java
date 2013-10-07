@@ -41,7 +41,11 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.select;
+
 import org.jooq.BindContext;
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Schema;
@@ -52,10 +56,19 @@ import org.jooq.Table;
  */
 class Dual extends AbstractTable<Record> {
 
-    private static final long serialVersionUID = -7492790780048090156L;
+    private static final long          serialVersionUID = -7492790780048090156L;
+    private static final Table<Record> FORCED_DUAL      = select(new Field[] { inline("X").as("DUMMY") }).asTable("DUAL");
+
+    private final boolean              force;
 
     Dual() {
+        this(false);
+    }
+
+    Dual(boolean force) {
         super("dual", (Schema) null);
+
+        this.force = force;
     }
 
     @Override
@@ -65,68 +78,88 @@ class Dual extends AbstractTable<Record> {
 
     @Override
     public final Table<Record> as(String alias) {
-        return new TableAlias<Record>(this, alias);
+        if (force) {
+            return FORCED_DUAL.as(alias);
+        }
+        else {
+            return new TableAlias<Record>(this, alias);
+        }
     }
 
     @Override
     public final Table<Record> as(String alias, String... fieldAliases) {
-        return new TableAlias<Record>(this, alias, fieldAliases);
+        if (force) {
+            return FORCED_DUAL.as(alias, fieldAliases);
+        }
+        else {
+            return new TableAlias<Record>(this, alias, fieldAliases);
+        }
+    }
+
+    @Override
+    public boolean declaresTables() {
+        return true;
     }
 
     @Override
     public final void toSQL(RenderContext context) {
-        switch (context.configuration().dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case SQLSERVER:
-            /* [/pro] */
-            case POSTGRES:
-            case SQLITE:
-                break;
+        if (force) {
+            context.visit(FORCED_DUAL);
+        }
+        else {
+            switch (context.configuration().dialect().family()) {
+                /* [pro] */
+                case ASE:
+                case SQLSERVER:
+                /* [/pro] */
+                case POSTGRES:
+                case SQLITE:
+                    break;
 
-            case FIREBIRD:
-                context.literal("RDB$DATABASE");
-                break;
+                case FIREBIRD:
+                    context.literal("RDB$DATABASE");
+                    break;
 
-            case HSQLDB:
-                context.literal("INFORMATION_SCHEMA")
-                       .sql(".")
-                       .literal("SYSTEM_USERS");
-                break;
+                case HSQLDB:
+                    context.literal("INFORMATION_SCHEMA")
+                           .sql(".")
+                           .literal("SYSTEM_USERS");
+                    break;
 
-            case CUBRID:
-                context.literal("db_root");
-                break;
+                case CUBRID:
+                    context.literal("db_root");
+                    break;
 
-            // These dialects don't have a DUAL table. But simulation is needed
-            // for queries like SELECT 1 WHERE 1 = 1
-            /* [pro] */
-            case INGRES:
-                context.keyword("(select 1 as dual) as dual");
-                break;
+                // These dialects don't have a DUAL table. But simulation is needed
+                // for queries like SELECT 1 WHERE 1 = 1
+                /* [pro] */
+                case INGRES:
+                    context.keyword("(select 1 as dual) as dual");
+                    break;
 
-            case DB2:
-                context.literal("SYSIBM")
-                       .sql(".")
-                       .literal("DUAL");
-                break;
+                case DB2:
+                    context.literal("SYSIBM")
+                           .sql(".")
+                           .literal("DUAL");
+                    break;
 
-            case SYBASE:
-                context.literal("SYS")
-                       .sql(".")
-                       .literal("DUMMY");
-                break;
+                case SYBASE:
+                    context.literal("SYS")
+                           .sql(".")
+                           .literal("DUMMY");
+                    break;
 
-            /* [/pro] */
-            case DERBY:
-                context.literal("SYSIBM")
-                       .sql(".")
-                       .literal("SYSDUMMY1");
-                break;
+                /* [/pro] */
+                case DERBY:
+                    context.literal("SYSIBM")
+                           .sql(".")
+                           .literal("SYSDUMMY1");
+                    break;
 
-            default:
-                context.keyword("dual");
-                break;
+                default:
+                    context.keyword("dual");
+                    break;
+            }
         }
     }
 

@@ -2110,8 +2110,13 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testDual() throws Exception {
-        new GeneralTests(this).testDual();
+    public void testDualImplicit() throws Exception {
+        new TableFunctionTests(this).testDualImplicit();
+    }
+
+    @Test
+    public void testDualExplicit() throws Exception {
+        new TableFunctionTests(this).testDualExplicit();
     }
 
     @Test

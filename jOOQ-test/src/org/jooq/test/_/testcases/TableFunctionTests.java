@@ -41,12 +41,14 @@
 package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
+import static junit.framework.Assert.assertEquals;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.impl.DSL.dual;
 import static org.jooq.impl.DSL.generateSeries;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.selectOne;
-import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
 import java.util.List;
@@ -87,6 +89,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public TableFunctionTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
         super(delegate);
+    }
+
+    @Test
+    public void testDualImplicit() throws Exception {
+        assertEquals(1, (int) create().selectOne().fetchOne(0, Integer.class));
+        assertEquals(1, (int) create().selectOne().where(one().equal(1)).fetchOne(0, Integer.class));
+    }
+
+    @Test
+    public void testDualExplicit() throws Exception {
+        assertEquals("X", create().selectFrom(dual()).fetchOne(0, String.class));
+        assertEquals(
+            asList("X", "X", "X"),
+            asList(create().select()
+                           .from(
+                               dual().as("a"),
+                               dual().as("b"),
+                               dual().as("c"))
+                           .fetchOne().intoArray()));
     }
 
     @Test

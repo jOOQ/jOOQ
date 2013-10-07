@@ -202,7 +202,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
         }
     }
 
-    private void toSQLAs(RenderContext context) {
+    static void toSQLAs(RenderContext context) {
         if (asList(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES).contains(context.configuration().dialect())) {
             context.sql(" ").keyword("as");
         }

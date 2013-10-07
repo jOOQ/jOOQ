@@ -361,12 +361,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         catch (DetachedException expected) {}
     }
 
-    @Test
-    public void testDual() throws Exception {
-        assertEquals(1, (int) create().selectOne().fetchOne(0, Integer.class));
-        assertEquals(1, (int) create().selectOne().where(one().equal(1)).fetchOne(0, Integer.class));
-    }
-
     @SuppressWarnings("unchecked")
     @Test
     public void testNULL() throws Exception {

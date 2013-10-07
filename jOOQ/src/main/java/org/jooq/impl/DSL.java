@@ -4663,6 +4663,27 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
+     * The <code>DUAL</code> table to be used for syntactic completeness.
+     * <p>
+     * In general, jOOQ will generate a <code>DUAL</code> table (or any
+     * equivalent construct, see below), if this is needed syntactically in
+     * generated SQL. You may still wish to explicitly use a <code>DUAL</code>
+     * construct in jOOQ code for various reasons. This <code>DUAL</code> table
+     * will always contain a single record with a single varchar(1) value:
+     * <code><pre>
+     * +-------+
+     * | DUMMY |
+     * +-------+
+     * | X     |
+     * +-------+
+     * </pre></code>
+     */
+    @Support
+    public static Table<Record> dual() {
+        return new Dual(true);
+    }
+
+    /**
      * A table function generating a series of values from <code>from</code> to
      * <code>to</code> (inclusive).
      * <p>

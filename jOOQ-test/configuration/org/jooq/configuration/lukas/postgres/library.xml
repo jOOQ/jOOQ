@@ -110,6 +110,7 @@
             <immutablePojos>true</immutablePojos>
             <interfaces>true</interfaces>
             <jpaAnnotations>false</jpaAnnotations>
+            <fluentSetters>true</fluentSetters>
         </generate>
         <target>
             <packageName>org.jooq.test.postgres.generatedclasses</packageName>

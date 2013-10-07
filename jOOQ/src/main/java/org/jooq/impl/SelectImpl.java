@@ -707,7 +707,7 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
         conditionStep = ConditionStep.ON;
         joinConditions = new ConditionProviderImpl();
         joinConditions.addConditions(conditions);
-        getQuery().addJoin(joinTable, joinType, new Condition[] { joinConditions }, joinPartitionBy);
+        getQuery().addJoin(joinTable, joinType, new Condition[] { joinConditions } /* [pro] */, joinPartitionBy /* [/pro] */);
         joinTable = null;
         joinPartitionBy = null;
         joinType = null;

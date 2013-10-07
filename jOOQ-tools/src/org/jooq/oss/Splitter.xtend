@@ -180,7 +180,7 @@ For more information, please visit: http://www.jooq.org/licenses''');
         if (token == "pro") {
             
             // Replace a couple of imports
-            replaceFirst.add(new ImmutablePair(compile('''import org\.jooq\.(ArrayConstant|ArrayRecord|impl\.ArrayRecordImpl|impl\.FlashbackTable.*?);'''), "// ..."));
+            replaceFirst.add(new ImmutablePair(compile('''import (org\.jooq\.(ArrayConstant|ArrayRecord|VersionsBetweenAndStep|impl\.ArrayRecordImpl|impl\.FlashbackTable.*?)|(com.microsoft.*?));'''), "// ..."));
             replaceFirst.add(new ImmutablePair(compile('''import static org\.jooq\.impl\.DSL\.(cube|grouping|groupingId|groupingSets);'''), "// ..."));
             
             // Replace the Java / Scala / Xtend license header

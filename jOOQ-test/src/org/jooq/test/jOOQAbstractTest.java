@@ -359,6 +359,7 @@ public abstract class jOOQAbstractTest<
                     }
                 }
 
+                /* [pro] */
                 // There is no DROP ** IF EXISTS statement in SQL Server
                 else if (e.getClass().getName().startsWith("com.microsoft")) {
                     switch (((SQLServerException)e).getErrorCode()) {
@@ -367,6 +368,7 @@ public abstract class jOOQAbstractTest<
                         continue;
                     }
                 }
+                /* [/pro] */
 
                 else if (e.getMessage().startsWith("Cannot drop")) {
                     continue;

@@ -497,7 +497,6 @@ class Function<T> extends AbstractField<T> implements
         return arguments;
     }
 
-    /* [pro] */
     @Override
     public final AggregateFunction<T> withinGroupOrderBy(Field<?>... fields) {
         withinGroupOrderBy.addAll(fields);
@@ -516,6 +515,7 @@ class Function<T> extends AbstractField<T> implements
         return this;
     }
 
+    /* [pro] */
     @Override
     public final WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Field<?>... fields) {
         first = true;

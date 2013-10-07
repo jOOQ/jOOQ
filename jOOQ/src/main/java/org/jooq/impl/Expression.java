@@ -41,18 +41,18 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
-import static org.jooq.SQLDialect.ASE;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
 import static org.jooq.impl.DSL.bitAnd;
 import static org.jooq.impl.DSL.bitNot;
 import static org.jooq.impl.DSL.bitOr;
@@ -137,44 +137,44 @@ class Expression<T> extends AbstractFunction<T> {
         // ---------------------------------------------------------------------
 
         // DB2, H2 and HSQLDB know functions, instead of operators
-        if (BIT_AND == operator && asList(DB2, H2, HSQLDB, ORACLE).contains(family)) {
+        if (BIT_AND == operator && asList(H2, HSQLDB).contains(family)) {
             return function("bitand", getDataType(), getArguments());
         }
         else if (BIT_AND == operator && FIREBIRD == family) {
             return function("bin_and", getDataType(), getArguments());
         }
-        else if (BIT_XOR == operator && asList(DB2, H2, HSQLDB).contains(family)) {
+        else if (BIT_XOR == operator && asList(H2, HSQLDB).contains(family)) {
             return function("bitxor", getDataType(), getArguments());
         }
         else if (BIT_XOR == operator && FIREBIRD == family) {
             return function("bin_xor", getDataType(), getArguments());
         }
-        else if (BIT_OR == operator && asList(DB2, H2, HSQLDB).contains(family)) {
+        else if (BIT_OR == operator && asList(H2, HSQLDB).contains(family)) {
             return function("bitor", getDataType(), getArguments());
         }
         else if (BIT_OR == operator && FIREBIRD == family) {
             return function("bin_or", getDataType(), getArguments());
         }
 
-        /* [pro] */
-        // Oracle has to simulate or/xor
-        else if (BIT_OR == operator && ORACLE == family) {
-            return lhs.sub(bitAnd(lhsAsNumber(), rhsAsNumber())).add(rhsAsNumber());
-        }
+        /* [pro] xx
+        xx xxxxxx xxx xx xxxxxxxx xxxxxx
+        xxxx xx xxxxxxx xx xxxxxxxx xx xxxxxx xx xxxxxxx x
+            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
 
-        /* [/pro] */
+        xx [/pro] */
         // ~(a & b) & (a | b)
-        else if (BIT_XOR == operator && asList(ORACLE, SQLITE).contains(family)) {
+        else if (BIT_XOR == operator && asList(SQLITE).contains(family)) {
             return (Field<T>) bitAnd(
                 bitNot(bitAnd(lhsAsNumber(), rhsAsNumber())),
                 bitOr(lhsAsNumber(), rhsAsNumber()));
         }
 
         // Many dialects don't support shifts. Use multiplication/division instead
-        else if (SHL == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(family)) {
+        else if (SHL == operator && asList(H2, HSQLDB).contains(family)) {
             return lhs.mul(DSL.power(two(), rhsAsNumber()));
         }
-        else if (SHR == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(family)) {
+        else if (SHR == operator && asList(H2, HSQLDB).contains(family)) {
             return lhs.div(DSL.power(two(), rhsAsNumber()));
         }
 
@@ -365,64 +365,64 @@ class Expression<T> extends AbstractFunction<T> {
                     return field("{datetime}({0}, {1})", getDataType(), lhs, interval);
                 }
 
-                /* [pro] */
-                case ASE:
-                case SYBASE:
-                case SQLSERVER: {
-                    if (rhs.get(0).getType() == YearToMonth.class) {
-                        return field("{dateadd}(mm, {0}, {1})", getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
-                    }
-                    else {
-                        // SQL Server needs this cast.
-                        Field<Timestamp> lhsAsTS = lhs.cast(Timestamp.class);
-                        DayToSecond interval = rhsAsDTS();
+                /* [pro] xx
+                xxxx xxxx
+                xxxx xxxxxxx
+                xxxx xxxxxxxxxx x
+                    xx xxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxx x
+                        xxxxxx xxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxx xxxxx
+                    x
+                    xxxx x
+                        xx xxx xxxxxx xxxxx xxxx xxxxx
+                        xxxxxxxxxxxxxxxx xxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxx xxxxxxxx x xxxxxxxxxxx
 
-                        // Be careful with 32-bit INT arithmetic. Sybase ASE
-                        // may fatally overflow when using micro-second precision
-                        if (interval.getNano() != 0) {
-                            return field("{dateadd}(ss, {0}, {dateadd}(us, {1}, {2}))", getDataType(),
-                                val(sign * (long) interval.getTotalSeconds()),
-                                val(sign * interval.getMicro()),
-                                lhsAsTS);
-                        }
-                        else {
-                            return field("{dateadd}(ss, {0}, {1})", getDataType(), val(sign * (long) interval.getTotalSeconds()), lhsAsTS);
-                        }
-                    }
-                }
+                        xx xx xxxxxxx xxxx xxxxxx xxx xxxxxxxxxxx xxxxxx xxx
+                        xx xxx xxxxxxx xxxxxxxx xxxx xxxxx xxxxxxxxxxxx xxxxxxxxx
+                        xx xxxxxxxxxxxxxxxxxxx xx xx x
+                            xxxxxx xxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxx xxxx xxxxxxx xxxxxxxxxxxxxx
+                                xxxxxxxx x xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxx
+                        x
+                        xxxx x
+                            xxxxxx xxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxx x xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx
+                        x
+                    x
+                x
 
-                case DB2: {
-                    if (rhs.get(0).getType() == YearToMonth.class) {
-                        if (operator == ADD) {
-                            return lhs.add(field("{0} month", val(rhsAsYTM().intValue())));
-                        }
-                        else {
-                            return lhs.sub(field("{0} month", val(rhsAsYTM().intValue())));
-                        }
-                    }
-                    else {
-                        // DB2 needs this cast if lhs is of type DATE.
-                        DataType<T> type = lhs.getDataType();
+                xxxx xxxx x
+                    xx xxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxx x
+                        xx xxxxxxxxx xx xxxx x
+                            xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        x
+                        xxxx x
+                            xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        x
+                    x
+                    xxxx x
+                        xx xxx xxxxx xxxx xxxx xx xxx xx xx xxxx xxxxx
+                        xxxxxxxxxxx xxxx x xxxxxxxxxxxxxxxxxx
 
-                        if (operator == ADD) {
-                            return lhs.cast(Timestamp.class)
-                                .add(field("{0} microseconds", val(rhsAsDTS().getTotalMicro())))
-                                .cast(type);
-                        }
-                        else {
-                            return lhs.cast(Timestamp.class)
-                                .sub(field("{0} microseconds", val(rhsAsDTS().getTotalMicro())))
-                                .cast(type);
-                        }
-                    }
-                }
+                        xx xxxxxxxxx xx xxxx x
+                            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxxxxx
+                        x
+                        xxxx x
+                            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxxxxx
+                        x
+                    x
+                x
 
-                case INGRES: {
-                    throw new SQLDialectNotSupportedException("Date time arithmetic not supported in Ingres. Contributions welcome!");
-                }
+                xxxx xxxxxxx x
+                    xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxx xxx xxxxxxxxx xx xxxxxxx xxxxxxxxxxxxx xxxxxxxxxxx
+                x
 
-                case ORACLE:
-                /* [/pro] */
+                xxxx xxxxxxx
+                xx [/pro] */
                 case POSTGRES:
                 default:
                     return new DefaultExpression();
@@ -446,11 +446,11 @@ class Expression<T> extends AbstractFunction<T> {
          */
         private final Field<T> getNumberExpression(Configuration configuration) {
             switch (configuration.dialect().family()) {
-                /* [pro] */
-                case ASE:
-                case SQLSERVER:
-                case SYBASE:
-                /* [/pro] */
+                /* [pro] xx
+                xxxx xxxx
+                xxxx xxxxxxxxxx
+                xxxx xxxxxxx
+                xx [/pro] */
                 case FIREBIRD: {
                     if (operator == ADD) {
                         return field("{dateadd}(day, {0}, {1})", getDataType(), rhsAsNumber(), lhs);
@@ -460,9 +460,9 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
-                /* [pro] */
-                case DB2:
-                /* [/pro] */
+                /* [pro] xx
+                xxxx xxxx
+                xx [/pro] */
                 case HSQLDB: {
                     if (operator == ADD) {
                         return lhs.add(field("{0} day", rhsAsNumber()));
@@ -498,18 +498,18 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
-                /* [pro] */
-                // Ingres is not working yet
-                case INGRES: {
-                    if (operator == ADD) {
-                        return lhs.add(field("{date}({0} || ' days')", Object.class, rhsAsNumber()));
-                    }
-                    else {
-                        return lhs.sub(field("{date}({0} || ' days')", Object.class, rhsAsNumber()));
-                    }
-                }
+                /* [pro] xx
+                xx xxxxxx xx xxx xxxxxxx xxx
+                xxxx xxxxxxx x
+                    xx xxxxxxxxx xx xxxx x
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xx x xxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+                    x
+                    xxxx x
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xx x xxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+                    x
+                x
 
-                /* [/pro] */
+                xx [/pro] */
                 case POSTGRES: {
 
                     // This seems to be the most reliable way to avoid issues
@@ -532,9 +532,9 @@ class Expression<T> extends AbstractFunction<T> {
                     }
 
                 // These dialects can add / subtract days using +/- operators
-                /* [pro] */
-                case ORACLE:
-                /* [/pro] */
+                /* [pro] xx
+                xxxx xxxxxxx
+                xx [/pro] */
                 case H2:
                 default:
                     return new DefaultExpression();

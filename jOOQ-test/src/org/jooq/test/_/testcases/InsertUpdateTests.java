@@ -44,19 +44,19 @@ import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
-import static org.jooq.SQLDialect.ASE;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.INGRES;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.castNull;
 import static org.jooq.impl.DSL.count;
@@ -159,8 +159,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         int firstId = create().select(max(id)).from(table).fetchOne(max(id));
 
-        if (dialect() != POSTGRES/* [pro] */ &&
-            dialect() != DB2/* [/pro] */) {
+        if (dialect() != POSTGRES/* [pro] xx xx
+            xxxxxxxxx xx xxxxx [/pro] */) {
 
             assertEquals(new BigInteger("" + firstId), create().lastID());
         }
@@ -178,8 +178,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .returning()
                 .fetchOne();
 
-        if (dialect() != POSTGRES/* [pro] */ &&
-            dialect() != DB2/* [/pro] */) {
+        if (dialect() != POSTGRES/* [pro] xx xx
+            xxxxxxxxx xx xxxxx [/pro] */) {
 
             assertEquals(new BigInteger("" + (firstId + 1)), create().lastID());
             assertEquals(new BigInteger("" + (firstId + 1)), create().lastID());
@@ -195,12 +195,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#1004] Make this work for SQL Server also
         // TODO ... and then, think about Ingres, H2 and Derby as well
         if (dialect() == CUBRID ||
-            /* [pro] */
-            dialect() == ASE ||
-            dialect() == SYBASE ||
-            dialect().family() == SQLSERVER ||
-            dialect() == INGRES ||
-            /* [/pro] */
+            /* [pro] xx
+            xxxxxxxxx xx xxx xx
+            xxxxxxxxx xx xxxxxx xx
+            xxxxxxxxxxxxxxxxxx xx xxxxxxxxx xx
+            xxxxxxxxx xx xxxxxx xx
+            xx [/pro] */
             dialect() == H2 ||
             dialect() == DERBY) {
 
@@ -374,9 +374,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         Field<?> nullField = null;
         switch (dialect().family()) {
-            /* [pro] */
-            case ORACLE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxxxxx
+            xx [/pro] */
             case POSTGRES:
                 // TODO: cast this to the UDT type
                 nullField = cast(null, TAuthor_ADDRESS());
@@ -425,11 +425,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Field<Integer> ID4;
 
         switch (dialect()) {
-            /* [pro] */
-            // Sybase ASE doesn't allow for selecting data inside VALUES()
-            case ASE:
+            /* [pro] xx
+            xx xxxxxx xxx xxxxxxx xxxxx xxx xxxxxxxxx xxxx xxxxxx xxxxxxxx
+            xxxx xxxx
 
-            /* [/pro] */
+            xx [/pro] */
             // MySQL doesn't allow for selecting from the INSERT INTO table
             case MARIADB:
             case MYSQL:
@@ -483,7 +483,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testUpdateWithRowValueExpression() throws Exception {
-        if (asList(ASE, CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL, SQLSERVER, SQLITE, SYBASE).contains(dialect().family())) {
+        if (asList(CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL, SQLITE).contains(dialect().family())) {
             log.info("SKIPPING", "UPDATE with row value expression tests");
             return;
         }
@@ -639,13 +639,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(returned.getValue(TTriggers_COUNTER()));
 
         switch (dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            case ORACLE:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             // TODO [#1260] This should work eventually, when CUBRID fixes this
             // JDBC bug
             case CUBRID:
@@ -747,14 +747,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testUpdateReturning() throws Exception {
         switch (dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case DB2:
-            case INGRES:
-            case ORACLE:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case DERBY:
             case H2:
@@ -805,10 +805,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testInsertOnDuplicateKeyUpdate() throws Exception {
         switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case DERBY:
             case H2:
             case POSTGRES:
@@ -845,10 +845,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testInsertOnDuplicateKeyIgnore() throws Exception {
         switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case DERBY:
             case H2:
             case POSTGRES:
@@ -884,10 +884,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testMerge() throws Exception {
         switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case DERBY:
             case H2:
             case MARIADB:
@@ -1007,13 +1007,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testMergeWithOracleSyntaxExtension() throws Exception {
         switch (dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case DB2:
-            case INGRES:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case DERBY:
             case FIREBIRD:
             case H2:
@@ -1104,10 +1104,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testMergeWithH2SyntaxExtension() throws Exception {
         switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case DERBY:
             case MARIADB:
             case MYSQL:
@@ -1237,11 +1237,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testUpdateJoin() throws Exception {
         switch (dialect().family()) {
-            /* [pro] */
-            case DB2:
-            case ORACLE:
-            case SQLSERVER:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xx [/pro] */
             case DERBY:
             case FIREBIRD:
             case H2:

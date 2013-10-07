@@ -43,8 +43,8 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.tools.reflect.Reflect.on;
 import static org.jooq.util.postgres.PostgresUtils.toPGArrayString;
@@ -64,7 +64,7 @@ import java.sql.Types;
 import java.util.Arrays;
 import java.util.UUID;
 
-import org.jooq.ArrayRecord;
+// ...
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Converter;
@@ -127,15 +127,15 @@ class DefaultBindContext extends AbstractBindContext {
         if (value == null) {
             int sqlType = DefaultDataType.getDataType(dialect, type).getSQLType();
 
-            /* [pro] */
-            // Oracle-style ARRAY types need to be bound with their type name
-            if (ArrayRecord.class.isAssignableFrom(type)) {
-                String typeName = Utils.newArrayRecord((Class<ArrayRecord<?>>) type, configuration).getName();
-                stmt.setNull(nextIndex(), sqlType, typeName);
-            }
+            /* [pro] xx
+            xx xxxxxxxxxxxx xxxxx xxxxx xxxx xx xx xxxxx xxxx xxxxx xxxx xxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                xxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxx
+            x
 
-            else
-            /* [/pro] */
+            xxxx
+            xx [/pro] */
             // [#1126] Oracle's UDTs need to be bound with their type name
             if (UDTRecord.class.isAssignableFrom(type)) {
                 String typeName = Utils.newRecord((Class<UDTRecord<?>>) type)
@@ -147,7 +147,7 @@ class DefaultBindContext extends AbstractBindContext {
 
             // [#1225] [#1227] TODO Put this logic into DataType
             // Some dialects have trouble binding binary data as BLOB
-            else if (asList(POSTGRES, SYBASE).contains(configuration.dialect()) && sqlType == Types.BLOB) {
+            else if (asList(POSTGRES).contains(configuration.dialect()) && sqlType == Types.BLOB) {
                 stmt.setNull(nextIndex(), Types.BINARY);
             }
 
@@ -156,19 +156,19 @@ class DefaultBindContext extends AbstractBindContext {
                 stmt.setNull(nextIndex(), sqlType);
             }
 
-            /* [pro] */
-            // [#725] For SQL Server, unknown types should be set to null
-            // explicitly, too
-            else if (configuration.dialect().family() == SQLSERVER) {
-                stmt.setNull(nextIndex(), sqlType);
-            }
+            /* [pro] xx
+            xx xxxxxx xxx xxx xxxxxxx xxxxxxx xxxxx xxxxxx xx xxx xx xxxx
+            xx xxxxxxxxxxx xxx
+            xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx
+            x
 
-            // [#730] For Sybase, unknown types can be set to null using varchar
-            else if (configuration.dialect() == SYBASE) {
-                stmt.setNull(nextIndex(), Types.VARCHAR);
-            }
+            xx xxxxxx xxx xxxxxxx xxxxxxx xxxxx xxx xx xxx xx xxxx xxxxx xxxxxxx
+            xxxx xx xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+            x
 
-            /* [/pro] */
+            xx [/pro] */
             // [#729] In the absence of the correct JDBC type, try setObject
             else {
                 stmt.setObject(nextIndex(), null);
@@ -291,13 +291,13 @@ class DefaultBindContext extends AbstractBindContext {
                     break;
                 }
 
-                /* [pro] */
-                // Other SQL dialects deal with UUIDs as if they were CHAR(36)
-                // even if they explicitly support them (UNIQUEIDENTIFIER)
-                case SQLSERVER:
-                case SYBASE:
+                /* [pro] xx
+                xx xxxxx xxx xxxxxxxx xxxx xxxx xxxxx xx xx xxxx xxxx xxxxxxxx
+                xx xxxx xx xxxx xxxxxxxxxx xxxxxxx xxxx xxxxxxxxxxxxxxxxxx
+                xxxx xxxxxxxxxx
+                xxxx xxxxxxx
 
-                /* [/pro] */
+                xx [/pro] */
                 // Most databases don't have such a type. In this case, jOOQ
                 // simulates the type
                 default: {
@@ -336,12 +336,12 @@ class DefaultBindContext extends AbstractBindContext {
                     throw new SQLDialectNotSupportedException("Cannot bind ARRAY types in dialect " + dialect);
             }
         }
-        /* [pro] */
-        else if (ArrayRecord.class.isAssignableFrom(type)) {
-            ArrayRecord<?> arrayRecord = (ArrayRecord<?>) value;
-            stmt.setArray(nextIndex(), on(localConnection()).call("createARRAY", arrayRecord.getName(), arrayRecord.get()).<Array>get());
-        }
-        /* [/pro] */
+        /* [pro] xx
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxx xxxxxxxxxxx x xxxxxxxxxxxxxxxx xxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+        xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
             stmt.setString(nextIndex(), ((EnumType) value).getLiteral());
         }

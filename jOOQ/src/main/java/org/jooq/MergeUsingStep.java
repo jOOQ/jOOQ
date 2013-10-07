@@ -41,11 +41,11 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
+// ...
 
 import org.jooq.api.annotation.State;
 import org.jooq.api.annotation.Transition;
@@ -76,7 +76,7 @@ public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
      * Add the <code>USING</code> clause to the SQL standard <code>MERGE</code>
      * statement
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     @Transition(
         name = "USING",
         args = "Table"
@@ -91,7 +91,7 @@ public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
      * in <code>USING(SELECT 1) AS [dummy_table(dummy_field)]</code> in SQL
      * Server, where derived tables need to be aliased.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     @Transition(
         name = "USING DUAL"
     )

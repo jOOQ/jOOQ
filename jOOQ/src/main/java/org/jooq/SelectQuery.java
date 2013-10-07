@@ -40,21 +40,21 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.ASE;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.INGRES;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -128,23 +128,23 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support
     void addJoin(TableLike<?> table, JoinType type, Condition... conditions);
 
-    /* [pro] */
-    /**
-     * Joins the existing table product to a new table using a condition
-     * <p>
-     * This adds a <code>PARTITION BY</code> clause to the right hand side of a
-     * <code>OUTER JOIN</code> expression.
-     *
-     * @param table The joined table
-     * @param type The type of join
-     * @param conditions The joining conditions
-     * @param partitionBy The <code>PARTITION BY</code> expression
-     * @see TablePartitionByStep
-     */
-    @Support(ORACLE)
-    void addJoin(TableLike<?> table, JoinType type, Condition[] conditions, Field<?>[] partitionBy);
+    /* [pro] xx
+    xxx
+     x xxxxx xxx xxxxxxxx xxxxx xxxxxxx xx x xxx xxxxx xxxxx x xxxxxxxxx
+     x xxx
+     x xxxx xxxx x xxxxxxxxxxxxxxx xxxxxxxxx xxxxxx xx xxx xxxxx xxxx xxxx xx x
+     x xxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxx
+     x
+     x xxxxxx xxxxx xxx xxxxxx xxxxx
+     x xxxxxx xxxx xxx xxxx xx xxxx
+     x xxxxxx xxxxxxxxxx xxx xxxxxxx xxxxxxxxxx
+     x xxxxxx xxxxxxxxxxx xxx xxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxx
+     x xxxx xxxxxxxxxxxxxxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxx xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxx xxxxx xxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxx
 
-    /* [/pro] */
+    xx [/pro] */
     /**
      * Joins the existing table product to a new table with a <code>USING</code>
      * clause
@@ -336,21 +336,21 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     void addConnectBy(Condition condition);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
      * query
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     void addConnectByNoCycle(Condition condition);
 
     /**
      * Add an Oracle-specific <code>START WITH</code> clause to the query's
      * <code>CONNECT BY</code> clause
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     void setConnectByStartWith(Condition condition);
 
     // ------------------------------------------------------------------------
@@ -434,7 +434,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param orderBySiblings
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     void setOrderBySiblings(boolean orderBySiblings);
 
     /**
@@ -463,7 +463,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     void addLimit(Param<Integer> numberOfRows);
 
     /**
@@ -480,7 +480,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     void addLimit(int offset, int numberOfRows);
 
     /**
@@ -498,7 +498,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     void addLimit(Param<Integer> offset, int numberOfRows);
 
     /**
@@ -516,7 +516,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     void addLimit(int offset, Param<Integer> numberOfRows);
 
     /**
@@ -534,7 +534,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     void addLimit(Param<Integer> offset, Param<Integer> numberOfRows);
 
     /**
@@ -598,7 +598,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param forUpdate The flag's value
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     void setForUpdate(boolean forUpdate);
 
     /**
@@ -625,7 +625,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param fields The fields that should be locked
      */
-    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     void setForUpdateOf(Field<?>... fields);
 
     /**
@@ -635,7 +635,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @see #setForUpdateOf(Field...)
      */
-    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     void setForUpdateOf(Collection<? extends Field<?>> fields);
 
     /**
@@ -664,30 +664,30 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param tables The tables that should be locked
      */
-    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, ORACLE, SYBASE })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     void setForUpdateOf(Table<?>... tables);
 
-    /* [pro] */
-    /**
-     * Some RDBMS allow for specifying the locking mode for the applied
-     * <code>FOR UPDATE</code> clause. In this case, the session will wait for
-     * some <code>seconds</code>, before aborting the lock acquirement if the
-     * lock is not available.
-     * <p>
-     * This automatically sets the {@link #setForUpdate(boolean)} flag, and
-     * unsets the {@link #setForShare(boolean)} flag, if it was previously set.
-     * <p>
-     * This has been observed to be supported by any of these dialects:
-     * <ul>
-     * <li>Oracle</li>
-     * </ul>
-     *
-     * @param seconds The number of seconds to wait for a lock
-     */
-    @Support(ORACLE)
-    void setForUpdateWait(int seconds);
+    /* [pro] xx
+    xxx
+     x xxxx xxxxx xxxxx xxx xxxxxxxxxx xxx xxxxxxx xxxx xxx xxx xxxxxxx
+     x xxxxxxxxx xxxxxxxxxxxxx xxxxxxx xx xxxx xxxxx xxx xxxxxxx xxxx xxxx xxx
+     x xxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxx xxx xxxx xxxxxxxxxxx xx xxx
+     x xxxx xx xxx xxxxxxxxxx
+     x xxx
+     x xxxx xxxxxxxxxxxxx xxxx xxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxx xxx
+     x xxxxxx xxx xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxx xx xx xxx xxxxxxxxxx xxxx
+     x xxx
+     x xxxx xxx xxxx xxxxxxxx xx xx xxxxxxxxx xx xxx xx xxxxx xxxxxxxxx
+     x xxxx
+     x xxxxxxxxxxxxxxx
+     x xxxxx
+     x
+     x xxxxxx xxxxxxx xxx xxxxxx xx xxxxxxx xx xxxx xxx x xxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxx
 
-    /* [/pro] */
+    xx [/pro] */
     /**
      * Some RDBMS allow for specifying the locking mode for the applied
      * <code>FOR UPDATE</code> clause. In this case, the session will not wait
@@ -701,27 +701,27 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <li>Oracle</li>
      * </ul>
      */
-    @Support({ ORACLE, POSTGRES })
+    @Support({ POSTGRES })
     void setForUpdateNoWait();
 
-    /* [pro] */
-    /**
-     * Some RDBMS allow for specifying the locking mode for the applied
-     * <code>FOR UPDATE</code> clause. In this case, the session will skip all
-     * locked rows from the select statement, whose lock is not available.
-     * <p>
-     * This automatically sets the {@link #setForUpdate(boolean)} flag, and
-     * unsets the {@link #setForShare(boolean)} flag, if it was previously set.
-     * <p>
-     * This has been observed to be supported by any of these dialects:
-     * <ul>
-     * <li>Oracle</li>
-     * </ul>
-     */
-    @Support(ORACLE)
-    void setForUpdateSkipLocked();
+    /* [pro] xx
+    xxx
+     x xxxx xxxxx xxxxx xxx xxxxxxxxxx xxx xxxxxxx xxxx xxx xxx xxxxxxx
+     x xxxxxxxxx xxxxxxxxxxxxx xxxxxxx xx xxxx xxxxx xxx xxxxxxx xxxx xxxx xxx
+     x xxxxxx xxxx xxxx xxx xxxxxx xxxxxxxxxx xxxxx xxxx xx xxx xxxxxxxxxx
+     x xxx
+     x xxxx xxxxxxxxxxxxx xxxx xxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxx xxx
+     x xxxxxx xxx xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxx xx xx xxx xxxxxxxxxx xxxx
+     x xxx
+     x xxxx xxx xxxx xxxxxxxx xx xx xxxxxxxxx xx xxx xx xxxxx xxxxxxxxx
+     x xxxx
+     x xxxxxxxxxxxxxxx
+     x xxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxx xxxxxxxxxxxxxxxxxxxxxxxxx
 
-    /* [/pro] */
+    xx [/pro] */
     /**
      * Sets the "FOR SHARE" flag onto the query
      * <p>

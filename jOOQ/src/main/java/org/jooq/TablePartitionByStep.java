@@ -40,7 +40,7 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 
 import java.util.Collection;
 
@@ -63,27 +63,27 @@ import org.jooq.api.annotation.Transition;
 @State
 public interface TablePartitionByStep extends TableOnStep {
 
-    /* [pro] */
-    /**
-     * Add a <code>PARTITION BY</code> clause to the right hand side of the
-     * <code>OUTER JOIN</code> keywords
-     */
-    @Support(ORACLE)
-    @Transition(
-        name = "PARTITION BY",
-        args = "Field+"
-    )
-    TableOnStep partitionBy(Field<?>... fields);
+    /* [pro] xx
+    xxx
+     x xxx x xxxxxxxxxxxxxxx xxxxxxxxx xxxxxx xx xxx xxxxx xxxx xxxx xx xxx
+     x xxxxxxxxxxx xxxxxxxxxxx xxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxxxx xxxx
+        xxxx x xxxxxxxx
+    x
+    xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
-    /**
-     * Add a <code>PARTITION BY</code> clause to the right hand side of the
-     * <code>OUTER JOIN</code> keywords
-     */
-    @Support(ORACLE)
-    @Transition(
-        name = "PARTITION BY",
-        args = "Field+"
-    )
-    TableOnStep partitionBy(Collection<? extends Field<?>> fields);
-    /* [/pro] */
+    xxx
+     x xxx x xxxxxxxxxxxxxxx xxxxxxxxx xxxxxx xx xxx xxxxx xxxx xxxx xx xxx
+     x xxxxxxxxxxx xxxxxxxxxxx xxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxxxx xxxx
+        xxxx x xxxxxxxx
+    x
+    xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxxx
+    xx [/pro] */
 }

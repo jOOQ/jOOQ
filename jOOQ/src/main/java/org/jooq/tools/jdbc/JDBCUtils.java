@@ -40,21 +40,21 @@
  */
 package org.jooq.tools.jdbc;
 
-import static org.jooq.SQLDialect.ASE;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.INGRES;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
 
 import java.sql.Blob;
 import java.sql.CallableStatement;
@@ -142,30 +142,30 @@ public class JDBCUtils {
             return SQLITE;
         }
 
-        /* [pro] */
-        else if (url.startsWith("jdbc:jtds:sybase:")) {
-            return ASE;
-        }
-        else if (url.startsWith("jdbc:db2:")) {
-            return DB2;
-        }
-        else if (url.startsWith("jdbc:ingres:")) {
-            return INGRES;
-        }
-        else if (url.startsWith("jdbc:oracle:")
-              || url.startsWith("jdbc:oracle:oci")) {
-            return ORACLE;
-        }
-        else if (url.startsWith("jdbc:sqlserver:")
-              || url.startsWith("jdbc:jtds:sqlserver:")
-              || url.startsWith("jdbc:microsoft:sqlserver:")
-              || url.contains(":mssql")) {
-            return SQLSERVER;
-        }
-        else if (url.startsWith("jdbc:sybase:")) {
-            return SYBASE;
-        }
-        /* [/pro] */
+        /* [pro] xx
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxx xxxx
+        x
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxx xxxx
+        x
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxx xxxxxxx
+        x
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+              xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxx xxxxxxx
+        x
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+              xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+              xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+              xx xxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxx xxxxxxxxxx
+        x
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxx xxxxxxx
+        x
+        xx [/pro] */
 
         return SQLDialect.SQL99;
     }

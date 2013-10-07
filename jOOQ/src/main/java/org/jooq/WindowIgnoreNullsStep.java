@@ -40,9 +40,9 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
+// ...
 
 import org.jooq.api.annotation.State;
 import org.jooq.api.annotation.Transition;
@@ -66,25 +66,25 @@ import org.jooq.api.annotation.Transition;
 @State
 public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
 
-    /* [pro] */
-    /**
-     * Add an <code>IGNORE NULLS</code> clause to the window function. This
-     * might not be supported by all dialects.
-     */
-    @Support({ DB2, ORACLE, SYBASE })
-    @Transition(
-        name = "IGNORE NULLS"
-    )
-    WindowOverStep<T> ignoreNulls();
+    /* [pro] xx
+    xxx
+     x xxx xx xxxxxxxxxxxx xxxxxxxxxxxx xxxxxx xx xxx xxxxxx xxxxxxxxx xxxx
+     x xxxxx xxx xx xxxxxxxxx xx xxx xxxxxxxxx
+     xx
+    xxxxxxxxxx xxxx xxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxx xxxxxx
+    x
+    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
 
-    /**
-     * Add a <code>RESPECT NULLS</code> clause to the window function. This
-     * might not be supported by all dialects.
-     */
-    @Support({ DB2, ORACLE, SYBASE })
-    @Transition(
-        name = "RESPECT NULLS"
-    )
-    WindowOverStep<T> respectNulls();
-    /* [/pro] */
+    xxx
+     x xxx x xxxxxxxxxxxxx xxxxxxxxxxxx xxxxxx xx xxx xxxxxx xxxxxxxxx xxxx
+     x xxxxx xxx xx xxxxxxxxx xx xxx xxxxxxxxx
+     xx
+    xxxxxxxxxx xxxx xxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxx xxxxxx
+    x
+    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+    xx [/pro] */
 }

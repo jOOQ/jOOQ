@@ -40,44 +40,44 @@
  */
 package org.jooq.examples;
 
-/* [pro] */
+/* [pro] xx
 
-import static org.jooq.impl.DSL.table;
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+xxxxxx xxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 
-import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.examples.oracle.sys.packages.DbmsXplan;
-import org.jooq.impl.DSL;
+xxxxxx xxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxx
 
-public class DBMS_XPLAN {
+xxxxxx xxxxx xxxxxxxxxx x
 
-    public static void main(String[] args) throws Exception {
-        Class.forName("oracle.jdbc.OracleDriver");
-        Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "TEST", "TEST");
+    xxxxxx xxxxxx xxxx xxxxxxxxxxxxx xxxxx xxxxxx xxxxxxxxx x
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxx xxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxx
 
-        DSLContext ora = DSL.using(connection, SQLDialect.ORACLE);
-        ora.fetch("select * from t_book b join t_author a on b.author_id = a.id");
+        xxxxxxxxxx xxx x xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxx x xxxx xxxxxx x xxxx xxxxxxxx x xx xxxxxxxxxxx x xxxxxxx
 
-        // TODO [#1113] This doesn't work yet
-//        System.out.println("Standalone call:");
-//        System.out.println("----------------");
-//        for (DbmsXplanTypeRecord record : DbmsXplan.displayCursor(ora, null, null, "ALLSTATS LAST").get()) {
-//            System.out.println(record.getPlanTableOutput());
-//        }
+        xx xxxx xxxxxxx xxxx xxxxxxx xxxx xxx
+xx        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+xx        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xx        xxx xxxxxxxxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxx xxxxxxxxx xxxxxxxxxxxxx x
+xx            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xx        x
 
-        // [#1114] Unnesting TABLE of OBJECT
-        System.out.println("Unnested table:");
-        System.out.println("---------------");
-        for (String row : ora.select()
-                             .from(table(DbmsXplan.displayCursor(null, null, "ALLSTATS LAST")))
-                             .fetch(0, String.class)) {
+        xx xxxxxxx xxxxxxxxx xxxxx xx xxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxx xxxxxxx xxx x xxxxxxxxxxxx
+                             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxx xxxxxxxx
+                             xxxxxxxxx xxxxxxxxxxxxxx x
 
-            System.out.println(row);
-        }
-    }
-}
+            xxxxxxxxxxxxxxxxxxxxxxxx
+        x
+    x
+x
 
-/* [/pro] */
+xx [/pro] */

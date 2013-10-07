@@ -169,14 +169,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Schema mapping is supported in many RDBMS. But maintaining several
         // databases is non-trivial in some of them.
         switch (dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case DB2:
-            case INGRES:
-            case ORACLE:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case DERBY:
             case H2:

@@ -40,191 +40,191 @@
  */
 package org.jooq.impl;
 
-/* [pro] */
+/* [pro] xx
 
-import java.lang.reflect.Array;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxx
 
-import org.jooq.ArrayRecord;
-import org.jooq.Attachable;
-import org.jooq.Configuration;
-import org.jooq.DataType;
-import org.jooq.Schema;
-import org.jooq.tools.Convert;
+xxxxxx xxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 
-/**
- * A common base class for Oracle ARRAY types
- * <p>
- * This type is for JOOQ INTERNAL USE only. Do not reference directly
- *
- * @author Lukas Eder
- */
-public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> {
+xxx
+ x x xxxxxx xxxx xxxxx xxx xxxxxx xxxxx xxxxx
+ x xxx
+ x xxxx xxxx xx xxx xxxx xxxxxxxx xxx xxxxx xx xxx xxxxxxxxx xxxxxxxx
+ x
+ x xxxxxxx xxxxx xxxx
+ xx
+xxxxxx xxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxx x
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -908937248705184108L;
+    xxx
+     x xxxxxxxxx xxx
+     xx
+    xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
 
-    private final Schema      schema;
-    private final DataType<T> type;
-    private final String      name;
-    private T[]               array;
+    xxxxxxx xxxxx xxxxxx      xxxxxxx
+    xxxxxxx xxxxx xxxxxxxxxxx xxxxx
+    xxxxxxx xxxxx xxxxxx      xxxxx
+    xxxxxxx xxx               xxxxxx
 
-    /**
-     * Create an empty array record
-     */
-    @SuppressWarnings("unchecked")
-    protected ArrayRecordImpl(Schema schema, String name, DataType<T> type, Configuration configuration) {
-        super(configuration);
+    xxx
+     x xxxxxx xx xxxxx xxxxx xxxxxx
+     xx
+    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxx xxxxx xxxxxxxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxx x
+        xxxxxxxxxxxxxxxxxxxxx
 
-        this.schema = schema;
-        this.name = name;
-        this.type = type;
+        xxxxxxxxxxx x xxxxxxx
+        xxxxxxxxx x xxxxx
+        xxxxxxxxx x xxxxx
 
-        // Array data type initialisation
-        type.asArrayDataType(getClass());
-    }
+        xx xxxxx xxxx xxxx xxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    /**
-     * Create an empty array record
-     */
-    protected ArrayRecordImpl(Schema schema, String name, DataType<T> type) {
-        this(schema, name, type, null);
-    }
+    xxx
+     x xxxxxx xx xxxxx xxxxx xxxxxx
+     xx
+    xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxx xxxxx xxxxxxxxxxx xxxxx x
+        xxxxxxxxxxxx xxxxx xxxxx xxxxxx
+    x
 
-    // -------------------------------------------------------------------------
-    // The Attachable API
-    // -------------------------------------------------------------------------
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xx xxx xxxxxxxxxx xxx
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    @Override
-    final List<Attachable> getAttachables() {
-        List<Attachable> result = new ArrayList<Attachable>();
+    xxxxxxxxx
+    xxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx x
+        xxxxxxxxxxxxxxxx xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxx
 
-        if (Attachable.class.isAssignableFrom(type.getType())) {
-            for (T element : get()) {
-                result.add((Attachable) element);
-            }
-        }
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxx xx xxxxxxx x xxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx
+            x
+        x
 
-        return result;
-    }
+        xxxxxx xxxxxxx
+    x
 
-    // -------------------------------------------------------------------------
-    // The ArrayRecord API
-    // -------------------------------------------------------------------------
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xx xxx xxxxxxxxxxx xxx
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    @Override
-    final T getValue(int index) {
-        return get()[index];
-    }
+    xxxxxxxxx
+    xxxxx x xxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxxxx
+    x
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public final T[] get() {
-        if (array == null) {
-            return (T[]) Array.newInstance(type.getType(), 0);
-        }
-        else {
-            return array;
-        }
-    }
+    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xxxxxxxxx
+    xxxxxx xxxxx xxx xxxxx x
+        xx xxxxxx xx xxxxx x
+            xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
+        x
+        xxxx x
+            xxxxxx xxxxxx
+        x
+    x
 
-    @Override
-    public final List<T> getList() {
-        if (array == null) {
-            return Collections.emptyList();
-        }
-        else {
-            return Arrays.asList(array);
-        }
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxx xxxxxxxxx x
+        xx xxxxxx xx xxxxx x
+            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
+        x
+        xxxx x
+            xxxxxx xxxxxxxxxxxxxxxxxxxxx
+        x
+    x
 
-    @Override
-    public final void set(T... array) {
-        this.array = array;
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxx xxxxxxxx xxxxxx x
+        xxxxxxxxxx x xxxxxx
+    x
 
-    @Override
-    public final void set(java.sql.Array array) throws SQLException {
-        if (array == null) {
-            this.array = null;
-        }
-        else {
-            Object o;
+    xxxxxxxxx
+    xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxx xxxxxx xxxxxx xxxxxxxxxxxx x
+        xx xxxxxx xx xxxxx x
+            xxxxxxxxxx x xxxxx
+        x
+        xxxx x
+            xxxxxx xx
 
-            // [#1179 #1376 #1377] This is needed to load TABLE OF OBJECT
-            // [#884] TODO: This name is used in inlined SQL. It should be
-            // correctly escaped and schema mapped!
-            o = array.getArray(DataTypes.udtRecords());
-            this.array = Convert.convert(o, type.getArrayType());
-        }
-    }
+            xx xxxxxx xxxxx xxxxxx xxxx xx xxxxxx xx xxxx xxxxx xx xxxxxx
+            xx xxxxxx xxxxx xxxx xxxx xx xxxx xx xxxxxxx xxxx xx xxxxxx xx
+            xx xxxxxxxxx xxxxxxx xxx xxxxxx xxxxxxx
+            x x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxx x xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
+        x
+    x
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public final void setList(List<? extends T> list) {
-        if (list == null) {
-            array = null;
-        }
-        else {
-            array = list.toArray((T[]) Array.newInstance(type.getType(), 0));
-        }
-    }
+    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xxxxxxxxx
+    xxxxxx xxxxx xxxx xxxxxxxxxxxxxx xxxxxxx xx xxxxx x
+        xx xxxxx xx xxxxx x
+            xxxxx x xxxxx
+        x
+        xxxx x
+            xxxxx x xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx
+        x
+    x
 
-    @Override
-    public final int size() {
-        return get().length;
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxx xxxxxx x
+        xxxxxx xxxxxxxxxxxxx
+    x
 
-    @Override
-    public final String getName() {
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxx xxxxxxxxx x
 
-        // [#1179] When Schema is present, the name is not fully qualified
-        if (schema != null) {
-            return schema.getName() + "." + name;
-        }
+        xx xxxxxxx xxxx xxxxxx xx xxxxxxxx xxx xxxx xx xxx xxxxx xxxxxxxxx
+        xx xxxxxxx xx xxxxx x
+            xxxxxx xxxxxxxxxxxxxxxx x xxx x xxxxx
+        x
 
-        // When Schema is absent, the name is fully qualified (deprecated, pre 2.0.5)
-        else {
-            return name;
-        }
-    }
+        xx xxxx xxxxxx xx xxxxxxx xxx xxxx xx xxxxx xxxxxxxxx xxxxxxxxxxxx xxx xxxxxx
+        xxxx x
+            xxxxxx xxxxx
+        x
+    x
 
-    @Override
-    public final DataType<T> getDataType() {
-        return type;
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxx xxxxxxxxxxxxx x
+        xxxxxx xxxxx
+    x
 
-    @Override
-    public String toString() {
-        StringBuilder result = new StringBuilder();
-        String separator = "";
+    xxxxxxxxx
+    xxxxxx xxxxxx xxxxxxxxxx x
+        xxxxxxxxxxxxx xxxxxx x xxx xxxxxxxxxxxxxxxx
+        xxxxxx xxxxxxxxx x xxx
 
-        result.append(getName());
-        result.append("(");
+        xxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxx
 
-        if (array != null) {
-            for (T t : array) {
-                result.append(separator);
-                result.append(t);
+        xx xxxxxx xx xxxxx x
+            xxx xx x x xxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxx
 
-                separator = ", ";
-            }
-        }
+                xxxxxxxxx x xx xx
+            x
+        x
 
-        result.append(")");
-        return result.toString();
-    }
+        xxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxxxxxxxxxxxxxxx
+    x
 
-    @Override
-    public final Iterator<T> iterator() {
-        return getList().iterator();
-    }
-}
-/* [/pro] */
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxx xxxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxx
+    x
+x
+xx [/pro] */

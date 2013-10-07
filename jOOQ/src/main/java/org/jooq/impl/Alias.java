@@ -55,11 +55,11 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
@@ -123,7 +123,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // [#1801] Some databases don't allow "derived column names" in
             // "simple class specifications". Hence, wrap the table reference in
             // a subselect
-            if (fieldAliases != null && asList(CUBRID, FIREBIRD, SQLSERVER, SYBASE).contains(dialect.family()) && wrapped instanceof TableImpl) {
+            if (fieldAliases != null && asList(CUBRID, FIREBIRD).contains(dialect.family()) && wrapped instanceof TableImpl) {
 
                 @SuppressWarnings("unchecked")
                 Select<Record> select =
@@ -137,7 +137,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // [#1801] Some databases do not support "derived column names".
             // They can be simulated by concatenating a dummy SELECT with no
             // results using UNION ALL
-            else if (fieldAliases != null && asList(H2, MARIADB, MYSQL, ORACLE, SQLITE).contains(dialect.family())) {
+            else if (fieldAliases != null && asList(H2, MARIADB, MYSQL, SQLITE).contains(dialect.family())) {
                 simulateDerivedColumnList = true;
 
                 SelectFieldList fields = new SelectFieldList();

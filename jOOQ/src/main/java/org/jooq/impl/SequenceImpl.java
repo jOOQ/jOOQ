@@ -42,7 +42,7 @@ package org.jooq.impl;
 
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.SQLSERVER;
+// ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
 
@@ -128,25 +128,25 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
             SQLDialect family = configuration.dialect().family();
 
             switch (family) {
-                /* [pro] */
-                case DB2:
-                case INGRES:
-                case ORACLE:
-                case SYBASE: {
-                    String field = getQualifiedName(configuration) + "." + method;
-                    return field(field, getDataType());
-                }
+                /* [pro] xx
+                xxxx xxxx
+                xxxx xxxxxxx
+                xxxx xxxxxxx
+                xxxx xxxxxxx x
+                    xxxxxx xxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxx x xxxxxxx
+                    xxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxx
+                x
 
-                /* [/pro] */
+                xx [/pro] */
                 case H2:
                 case POSTGRES: {
                     String field = method + "('" + getQualifiedName(configuration) + "')";
                     return field(field, getDataType());
                 }
 
-                /* [pro] */
-                case SQLSERVER:
-                /* [/pro] */
+                /* [pro] xx
+                xxxx xxxxxxxxxx
+                xx [/pro] */
                 case FIREBIRD:
                 case DERBY:
                 case HSQLDB: {
@@ -157,18 +157,18 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
                     else if (family == FIREBIRD) {
                         return field("gen_id(" + getQualifiedName(configuration) + ", 0)", getDataType());
                     }
-                    /* [pro] */
-                    else if (family == SQLSERVER) {
-                        return select(field("current_value"))
-                               .from("sys.sequences sq")
-                               .join("sys.schemas sc")
-                               .on("sq.schema_id = sc.schema_id")
-                               .where("sq.name = ?", name)
-                               .and("sc.name = ?", schema.getName())
-                               .asField()
-                               .cast(type);
-                    }
-                    /* [/pro] */
+                    /* [pro] xx
+                    xxxx xx xxxxxxx xx xxxxxxxxxx x
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                               xxxxxxxxxxxxxxxxxxxx xxxx
+                               xxxxxxxxxxxxxxxxxx xxxx
+                               xxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxx
+                               xxxxxxxxxxxxxxx x xxx xxxxx
+                               xxxxxxxxxxxxx x xxx xxxxxxxxxxxxxxxxx
+                               xxxxxxxxxx
+                               xxxxxxxxxxxx
+                    x
+                    xx [/pro] */
                     else {
                         throw new SQLDialectNotSupportedException("The sequence's current value functionality is not supported for the " + family + " dialect.");
                     }

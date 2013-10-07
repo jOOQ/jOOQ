@@ -87,9 +87,9 @@ class Extract extends AbstractFunction<Integer> {
                         throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
                 }
 
-            /* [pro] */
-            case DB2:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xx [/pro] */
             case DERBY:
                 switch (datePart) {
                     case YEAR:
@@ -108,47 +108,47 @@ class Extract extends AbstractFunction<Integer> {
                         throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
                 }
 
-            /* [pro] */
-            case ORACLE:
-                switch (datePart) {
-                    case YEAR:
-                        return field("{to_char}({0}, 'YYYY')", SQLDataType.INTEGER, field);
-                    case MONTH:
-                        return field("{to_char}({0}, 'MM')", SQLDataType.INTEGER, field);
-                    case DAY:
-                        return field("{to_char}({0}, 'DD')", SQLDataType.INTEGER, field);
-                    case HOUR:
-                        return field("{to_char}({0}, 'HH24')", SQLDataType.INTEGER, field);
-                    case MINUTE:
-                        return field("{to_char}({0}, 'MI')", SQLDataType.INTEGER, field);
-                    case SECOND:
-                        return field("{to_char}({0}, 'SS')", SQLDataType.INTEGER, field);
-                    default:
-                        throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
-                }
+            /* [pro] xx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxx x
+                    xxxx xxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxxxxxx
+                        xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxx x x xxxxxxxxxx
+                x
 
-            case ASE:
-            case SQLSERVER:
-            case SYBASE:
-                switch (datePart) {
-                    case YEAR:
-                        return field("{datepart}(yy, {0})", SQLDataType.INTEGER, field);
-                    case MONTH:
-                        return field("{datepart}(mm, {0})", SQLDataType.INTEGER, field);
-                    case DAY:
-                        return field("{datepart}(dd, {0})", SQLDataType.INTEGER, field);
-                    case HOUR:
-                        return field("{datepart}(hh, {0})", SQLDataType.INTEGER, field);
-                    case MINUTE:
-                        return field("{datepart}(mi, {0})", SQLDataType.INTEGER, field);
-                    case SECOND:
-                        return field("{datepart}(ss, {0})", SQLDataType.INTEGER, field);
-                    default:
-                        throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
-                }
+            xxxx xxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxx x
+                    xxxx xxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxxxxxx
+                        xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxx x x xxxxxxxxxx
+                x
 
-            case INGRES:
-            /* [/pro] */
+            xxxx xxxxxxx
+            xx [/pro] */
             case MARIADB:
             case MYSQL:
             case POSTGRES:

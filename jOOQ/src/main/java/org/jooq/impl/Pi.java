@@ -67,12 +67,12 @@ class Pi extends AbstractFunction<BigDecimal> {
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] */
-            case DB2:
-            case ORACLE:
-                return DSL.asin(one()).mul(two());
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            /* [/pro] */
+            xx [/pro] */
             case SQLITE:
                 return inline(Math.PI, BigDecimal.class);
 

@@ -75,13 +75,13 @@ class Decode<T, Z> extends AbstractFunction<Z> {
     final Field<Z> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
 
-            /* [pro] */
-            // Oracle actually has this function
-            case ORACLE: {
-                return function("decode", getDataType(), getArguments());
-            }
+            /* [pro] xx
+            xx xxxxxx xxxxxxxx xxx xxxx xxxxxxxx
+            xxxx xxxxxxx x
+                xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+            x
 
-            /* [/pro] */
+            xx [/pro] */
             // Other dialects simulate it with a CASE ... WHEN expression
             default: {
                 CaseConditionStep<Z> when = DSL

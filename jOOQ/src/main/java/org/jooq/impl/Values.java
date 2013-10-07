@@ -94,10 +94,10 @@ class Values<R extends Record> extends AbstractTable<R> {
 
             // [#915] Simulate VALUES(..) with SELECT .. UNION ALL SELECT ..
             // for those dialects that do not support a VALUES() constructor
-            /* [pro] */
-            case ORACLE:
-            case SYBASE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case FIREBIRD:
             case MARIADB:
             case MYSQL:
@@ -135,14 +135,14 @@ class Values<R extends Record> extends AbstractTable<R> {
             case DERBY:
             case HSQLDB:
             case POSTGRES:
-            /* [pro] */
-            case SQLSERVER:
+            /* [pro] xx
+            xxxx xxxxxxxxxx
 
-            // TODO to be verified
-            case ASE:
-            case DB2:
-            case INGRES:
-            /* [/pro] */
+            xx xxxx xx xx xxxxxxxx
+            xxxx xxxx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             default: {
                 context.start(TABLE_VALUES)
                        .keyword("values")

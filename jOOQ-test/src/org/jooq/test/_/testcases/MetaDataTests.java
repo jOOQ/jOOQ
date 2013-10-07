@@ -46,9 +46,9 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -116,8 +116,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 sequences++;
 
                 // DB2 has an additional sequence for the T_TRIGGERS table
-                if (/* [pro] */dialect().family() == DB2 ||
-                    /* [/pro] */dialect().family() == H2) {
+                if (/* [pro] xxxxxxxxxxxxxxxxxxxx xx xxx xx
+                    xx [/pro] */dialect().family() == H2) {
 
                     sequences++;
                 }
@@ -127,12 +127,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     sequences += 3;
                 }
 
-                /* [pro] */
-                // Oracle has additional sequences for [#961]
-                else if (dialect().family() == ORACLE) {
-                    sequences += 5;
-                }
-                /* [/pro] */
+                /* [pro] xx
+                xx xxxxxx xxx xxxxxxxxxx xxxxxxxxx xxx xxxxxx
+                xxxx xx xxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+                    xxxxxxxxx xx xx
+                x
+                xx [/pro] */
             }
 
             assertEquals(sequences, schema.getSequences().size());
@@ -181,13 +181,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             if (cUAddressType() == null) {
                 assertEquals(0, schema.getUDTs().size());
             }
-            /* [pro] */
-            // [#643] The U_INVALID types are only available in Oracle
-            // [#799] The member procedure UDT's too
-            else if (dialect().family() == ORACLE) {
-                assertEquals(7, schema.getUDTs().size());
-            }
-            /* [/pro] */
+            /* [pro] xx
+            xx xxxxxx xxx xxxxxxxxx xxxxx xxx xxxx xxxxxxxxx xx xxxxxx
+            xx xxxxxx xxx xxxxxx xxxxxxxxx xxxxx xxx
+            xxxx xx xxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+                xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
+            x
+            xx [/pro] */
             else {
                 assertEquals(3, schema.getUDTs().size());
             }
@@ -339,10 +339,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // [#745] TODO: Unify distinction between NUMERIC and DECIMAL
             else if ("BIG_DECIMAL".equalsIgnoreCase(field.getName())
-                    /* [pro] */
-                    && dialect().family() != SQLDialect.ORACLE
-                    && dialect().family() != SQLDialect.SQLSERVER
-                    /* [/pro] */
+                    /* [pro] xx
+                    xx xxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxx
+                    xx xxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxx
+                    xx [/pro] */
                     && dialect().family() != SQLDialect.POSTGRES
                     && dialect().family() != SQLDialect.SQLITE) {
 
@@ -368,9 +368,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     && dialect() != SQLDialect.HSQLDB
                     && dialect() != SQLDialect.MARIADB
                     && dialect() != SQLDialect.MYSQL
-                    /* [pro] */
-                    && dialect() != SQLDialect.SYBASE
-                    /* [/pro] */
+                    /* [pro] xx
+                    xx xxxxxxxxx xx xxxxxxxxxxxxxxxxx
+                    xx [/pro] */
             ) {
                 assertEquals(Float.class, field.getType());
                 assertEquals(SQLDataType.REAL, field.getDataType());
@@ -379,9 +379,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             else if ("FLOAT".equalsIgnoreCase(field.getName())
                     && dialect() != SQLDialect.MARIADB
                     && dialect() != SQLDialect.MYSQL
-                    /* [pro] */
-                    && dialect() != SQLDialect.SYBASE
-                    /* [/pro] */
+                    /* [pro] xx
+                    xx xxxxxxxxx xx xxxxxxxxxxxxxxxxx
+                    xx [/pro] */
             ) {
                 assertEquals(Double.class, field.getType());
                 assertEquals(SQLDataType.DOUBLE, field.getDataType());
@@ -395,10 +395,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // [#746] TODO: Fix this, too
             else if ("DOUBLE".equalsIgnoreCase(field.getName())
-                    /* [pro] */
-                    && dialect().family() != SQLDialect.SQLSERVER
-                    && dialect() != SQLDialect.ASE
-                    /* [/pro] */
+                    /* [pro] xx
+                    xx xxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxx
+                    xx xxxxxxxxx xx xxxxxxxxxxxxxx
+                    xx [/pro] */
             ) {
 
                 assertEquals(Double.class, field.getType());

@@ -66,14 +66,14 @@ class Euler extends AbstractFunction<BigDecimal> {
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case DB2:
-            case INGRES:
-            case ORACLE:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case DERBY:
             case FIREBIRD:

@@ -47,14 +47,14 @@ import static org.jooq.Clause.CONDITION_NOT_IN;
 import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.IN;
 import static org.jooq.Comparator.NOT_IN;
-import static org.jooq.SQLDialect.ASE;
-import static org.jooq.SQLDialect.DB2;
+// ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.INGRES;
+// ...
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,7 +108,7 @@ class RowInCondition extends AbstractCondition {
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
-        if (asList(ASE, DB2, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(configuration.dialect().family())) {
+        if (asList(DERBY, FIREBIRD, SQLITE).contains(configuration.dialect().family())) {
             List<Condition> conditions = new ArrayList<Condition>();
 
             for (Row row : right) {

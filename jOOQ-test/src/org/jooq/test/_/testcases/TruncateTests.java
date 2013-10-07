@@ -44,7 +44,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.INGRES;
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 
 import java.sql.Date;
@@ -96,7 +96,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().truncate(TAuthor()).execute();
 
             // The above should fail if foreign keys are supported
-            if (!Arrays.asList(CUBRID, FIREBIRD, INGRES, SQLITE).contains(dialect())) {
+            if (!Arrays.asList(CUBRID, FIREBIRD, SQLITE).contains(dialect())) {
                 fail();
             }
         } catch (Exception expected) {
@@ -111,14 +111,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testTruncateCascade() throws Exception {
         switch (dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case DB2:
-            case INGRES:
-            case ORACLE:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case DERBY:
             case FIREBIRD:
@@ -152,14 +152,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testTruncateRestartIdentity() throws Exception {
         switch (dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case DB2:
-            case INGRES:
-            case ORACLE:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case DERBY:
             case FIREBIRD:

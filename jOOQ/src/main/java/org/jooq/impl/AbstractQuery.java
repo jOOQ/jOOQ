@@ -247,17 +247,17 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
     @Override
     public final int execute() {
-        /* [pro] */ /* [trial] */
+        /* [pro] xx xx xxxxxxx xx
 
-        // Please do not remove or circumvent the below logic
-        // --------------------------------------------------
-        // This concurrency sealing friendly reminder that you are using
-        // a commercial version of jOOQ with a free 30 days trial license. We do
-        // not want to bother our honest customers with annoying license
-        // verification. So, if you want to remove the below synchronization,
-        // consider purchasing a license from http://www.jooq.org/download
-        synchronized (AbstractQuery.class) {
-        /* [/trial] */ /* [/pro] */
+        xx xxxxxx xx xxx xxxxxx xx xxxxxxxxxx xxx xxxxx xxxxx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xx xxxx xxxxxxxxxxx xxxxxxx xxxxxxxx xxxxxxxx xxxx xxx xxx xxxxx
+        xx x xxxxxxxxxx xxxxxxx xx xxxx xxxx x xxxx xx xxxx xxxxx xxxxxxxx xx xx
+        xx xxx xxxx xx xxxxxx xxx xxxxxx xxxxxxxxx xxxx xxxxxxxx xxxxxxx
+        xx xxxxxxxxxxxxx xxx xx xxx xxxx xx xxxxxx xxx xxxxx xxxxxxxxxxxxxxxx
+        xx xxxxxxxx xxxxxxxxxx x xxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx x
+        xx xxxxxxxx xx xx [/pro] */
 
         if (isExecutable()) {
 
@@ -347,9 +347,9 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             return 0;
         }
 
-        /* [pro] */ /* [trial] */
-        }
-        /* [/trial] */ /* [/pro] */
+        /* [pro] xx xx xxxxxxx xx
+        x
+        xx xxxxxxxx xx xx [/pro] */
     }
 
     /**

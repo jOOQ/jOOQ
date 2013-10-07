@@ -41,16 +41,16 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLSERVER2012;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
 
 import java.io.Serializable;
 
@@ -79,12 +79,12 @@ public interface Sequence<T extends Number> extends Serializable {
     /**
      * Get the current value of this sequence
      */
-    @Support({ CUBRID, DB2, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, POSTGRES })
     Field<T> currval();
 
     /**
      * Increment the sequence and get the next value
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     Field<T> nextval();
 }

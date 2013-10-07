@@ -124,10 +124,10 @@ class Limit extends AbstractQueryPart {
                 break;
             }
 
-            /* [pro] */
-            case SQLSERVER:
-            case SQLSERVER2012:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxxxxxxxxx
+            xx [/pro] */
             case DERBY: {
 
                 // Casts are not supported here...
@@ -143,73 +143,73 @@ class Limit extends AbstractQueryPart {
                 break;
             }
 
-            /* [pro] */
-            case INGRES: {
+            /* [pro] xx
+            xxxx xxxxxxx x
 
-                // INGRES doesn't allow bind variables in the
-                // OFFSET m FETCH FIRST n ROWS ONLY clause
-                context.paramType(INLINED)
-                       .formatSeparator()
-                       .keyword("offset")
-                       .sql(" ").visit(offsetOrZero)
-                       .sql(" ").keyword("fetch first")
-                       .sql(" ").visit(numberOfRows)
-                       .sql(" ").keyword("rows only")
-                       .paramType(paramType);
+                xx xxxxxx xxxxxxx xxxxx xxxx xxxxxxxxx xx xxx
+                xx xxxxxx x xxxxx xxxxx x xxxx xxxx xxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxx
+                       xxxxxx xxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxx xxxxxxxxxxxxxxxxx xxxxxxx
+                       xxxxxx xxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxx xxxxxxxxxxxxxxxx xxxxxx
+                       xxxxxxxxxxxxxxxxxxxxxx
 
-                break;
-            }
+                xxxxxx
+            x
 
-            // Nice TOP .. START AT support
-            // ----------------------------
-            case SYBASE: {
-                context.paramType(INLINED)
-                       .keyword("top")
-                       .sql(" ").visit(numberOfRows)
-                       .sql(" ").keyword("start at")
-                       .sql(" ").visit(offsetPlusOne)
-                       .paramType(paramType);
+            xx xxxx xxx xx xxxxx xx xxxxxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxx xxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxx
+                       xxxxxx xxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxx xxxxxxxxxxxxxxxxx xxxx
+                       xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxxxxxx
 
-                break;
-            }
+                xxxxxx
+            x
 
-            // Only "TOP" support provided by the following dialects.
-            // "OFFSET" support is simulated with nested selects
-            // -----------------------------------------------------------------
-            case DB2:
-            case DB2_9:
-            case DB2_10: {
-                if (offset != null) {
-                    throw new DataAccessException("DB2 does not support offsets in FETCH FIRST ROWS ONLY clause");
-                }
+            xx xxxx xxxxx xxxxxxx xxxxxxxx xx xxx xxxxxxxxx xxxxxxxxx
+            xx xxxxxxxx xxxxxxx xx xxxxxxxxx xxxx xxxxxx xxxxxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxx xxxx
+            xxxx xxxxxx
+            xxxx xxxxxxx x
+                xx xxxxxxx xx xxxxx x
+                    xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxx xxxx xxx xxxxxxx xxxxxxx xx xxxxx xxxxx xxxx xxxx xxxxxxxxx
+                x
 
-                // DB2 doesn't allow bind variables here. Casting is not needed.
-                context.paramType(INLINED)
-                       .formatSeparator()
-                       .keyword("fetch first")
-                       .sql(" ").visit(numberOfRows)
-                       .sql(" ").keyword("rows only")
-                       .paramType(paramType);
+                xx xxx xxxxxxx xxxxx xxxx xxxxxxxxx xxxxx xxxxxxx xx xxx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxx xxxxxxx
+                       xxxxxx xxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxx xxxxxxxxxxxxxxxx xxxxxx
+                       xxxxxxxxxxxxxxxxxxxxxx
 
-                break;
-            }
+                xxxxxx
+            x
 
-            case ASE:
-            case SQLSERVER2008: {
-                if (offset != null) {
-                    throw new DataAccessException("Offsets in TOP clause not supported");
-                }
+            xxxx xxxx
+            xxxx xxxxxxxxxxxxxx x
+                xx xxxxxxx xx xxxxx x
+                    xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxx xxxxxx xxx xxxxxxxxxxxx
+                x
 
-                // SQL Server and Sybase don't allow bind variables in the TOP n clause
-                context.paramType(INLINED)
-                       .keyword("top")
-                       .sql(" ").visit(numberOfRows)
-                       .paramType(paramType);
+                xx xxx xxxxxx xxx xxxxxx xxxxx xxxxx xxxx xxxxxxxxx xx xxx xxx x xxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxx
+                       xxxxxx xxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxxxxxx
 
-                break;
-            }
+                xxxxxx
+            x
 
-            /* [/pro] */
+            xx [/pro] */
             // A default implementation is necessary for hashCode() and toString()
             default: {
                 context.castMode(NEVER)
@@ -231,10 +231,10 @@ class Limit extends AbstractQueryPart {
 
             // OFFSET .. LIMIT support provided by the following dialects
             // ----------------------------------------------------------
-            /* [pro] */
-            case SQLSERVER:
-            case SQLSERVER2012:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxxxxxxxxx
+            xx [/pro] */
             case DERBY: {
                 context.visit(offsetOrZero);
                 context.visit(numberOfRows);
@@ -270,65 +270,65 @@ class Limit extends AbstractQueryPart {
                 break;
             }
 
-            /* [pro] */
-            // These dialects don't support bind variables at all
-            case ASE:
-            case INGRES: {
-                break;
-            }
+            /* [pro] xx
+            xx xxxxx xxxxxxxx xxxxx xxxxxxx xxxx xxxxxxxxx xx xxx
+            xxxx xxxx
+            xxxx xxxxxxx x
+                xxxxxx
+            x
 
-            // No bind variables in the TOP .. START AT clause
-            // -----------------------------------------------
-            case SYBASE: {
+            xx xx xxxx xxxxxxxxx xx xxx xxx xx xxxxx xx xxxxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxx xxxxxxx x
 
-                // TOP .. START AT clauses without bind variables
-                if (!rendersParams) {
-                }
+                xx xxx xx xxxxx xx xxxxxxx xxxxxxx xxxx xxxxxxxxx
+                xx xxxxxxxxxxxxxxxx x
+                x
 
-                // With simulated OFFSETs, no break, fall through
-                else {
-                    context.visit(getLowerRownum());
-                    context.visit(getUpperRownum());
-                }
+                xx xxxx xxxxxxxxx xxxxxxxx xx xxxxxx xxxx xxxxxxx
+                xxxx x
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                x
 
-                break;
-            }
+                xxxxxx
+            x
 
-            // These dialects don't allow bind variables in their TOP clauses
-            // --------------------------------------------------------------
-            case DB2:
-            case DB2_9:
-            case DB2_10:
-            case SQLSERVER2008: {
+            xx xxxxx xxxxxxxx xxxxx xxxxx xxxx xxxxxxxxx xx xxxxx xxx xxxxxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxx xxxx
+            xxxx xxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxxxxxx x
 
-                // TOP clauses without bind variables
-                if (offset == null && !rendersParams) {
-                }
+                xx xxx xxxxxxx xxxxxxx xxxx xxxxxxxxx
+                xx xxxxxxx xx xxxx xx xxxxxxxxxxxxxxx x
+                x
 
-                // With simulated OFFSETs, no break, fall through
-                else {
-                    context.visit(getLowerRownum());
-                    context.visit(getUpperRownum());
-                }
+                xx xxxx xxxxxxxxx xxxxxxxx xx xxxxxx xxxx xxxxxxx
+                xxxx x
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                x
 
-                break;
-            }
+                xxxxxx
+            x
 
-            // Oracle knows no LIMIT or TOP clause, limits are always bound
-            // ------------------------------------------------------------
-            case ORACLE:
-            case ORACLE10G:
-            case ORACLE11G:
-            case ORACLE12C: {
+            xx xxxxxx xxxxx xx xxxxx xx xxx xxxxxxx xxxxxx xxx xxxxxx xxxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxxxxx x
 
-                // [#1020] With the ROWNUM filtering improvement, the upper
-                // limit is bound before the lower limit
-                context.visit(getUpperRownum());
-                context.visit(getLowerRownum());
-                break;
-            }
+                xx xxxxxxx xxxx xxx xxxxxx xxxxxxxxx xxxxxxxxxxxx xxx xxxxx
+                xx xxxxx xx xxxxx xxxxxx xxx xxxxx xxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxx
+            x
 
-            /* [/pro] */
+            xx [/pro] */
             // [#2057] Bind the same values as rendered in toSQL() by default
             default: {
                 context.visit(numberOfRows);

@@ -40,15 +40,15 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
 
 import java.util.Collection;
 
@@ -107,7 +107,7 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      * @see SelectQuery#setForUpdateOf(Field...) see LockProvider for more
      *      details
      */
-    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     @Transition(
         name = "OF",
         args = "Field+"
@@ -121,7 +121,7 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      * @see SelectQuery#setForUpdateOf(Collection) see LockProvider for
      *      more details
      */
-    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     @Transition(
         name = "OF",
         args = "Field+"
@@ -135,7 +135,7 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      * @see SelectQuery#setForUpdateOf(Table...) see LockProvider for more
      *      details
      */
-    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, ORACLE, SYBASE })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     @Transition(
         name = "OF",
         args = "Table+"

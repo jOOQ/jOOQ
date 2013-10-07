@@ -86,9 +86,9 @@ class GenerateSeries extends AbstractTable<Record1<Integer>> {
     private final QueryPart delegate(Configuration configuration) {
         switch (configuration.dialect().family()) {
             case CUBRID:
-            /* [pro] */
-            case ORACLE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxxxxx
+            xx [/pro] */
 
                 // There is a bug in CUBRID preventing reuse of "level" in the
                 // predicate http://jira.cubrid.org/browse/ENGINE-119

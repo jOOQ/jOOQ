@@ -46,8 +46,8 @@ import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.INGRES;
+// ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.falseCondition;
@@ -178,7 +178,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // This query causes a failure in Ingres. Potentially a bug. See E_OP039F_BOOLFACT on
         // http://docs.ingres.com/ingres/9.2/ingres-92-message-guide/1283-errors-from-opf#E_OP039F_BOOLFACT
-        if (!asList(CUBRID, DB2, INGRES).contains(dialect())) {
+        if (!asList(CUBRID).contains(dialect())) {
 
             // Advanced JOIN usages with single JOIN condition
             Result<Record> result = create().select()
@@ -308,10 +308,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testNaturalJoin() throws Exception {
         boolean unqualified = false;
-        /* [pro] */
-        if (dialect().family() == SQLDialect.ORACLE)
-            unqualified = true;
-        /* [/pro] */
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxx x xxxxx
+        xx [/pro] */
 
         Result<Record2<String, String>> result =
         create().select(TAuthor_LAST_NAME(), TBook_TITLE())
@@ -355,10 +355,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testJoinUsing() throws Exception {
         boolean unqualified = false;
-        /* [pro] */
-        if (dialect().family() == SQLDialect.ORACLE)
-            unqualified = true;
-        /* [/pro] */
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxx x xxxxx
+        xx [/pro] */
 
         Result<Record2<String, String>> result =
         create().select(TAuthor_LAST_NAME(), TBook_TITLE())
@@ -627,9 +627,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // --------------------
 
         switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xx [/pro] */
             case CUBRID:
             case DERBY:
             case H2:

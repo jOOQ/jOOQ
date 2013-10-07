@@ -43,7 +43,7 @@ package org.jooq.impl;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_FUNCTION;
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLSERVER;
+// ...
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.using;
@@ -62,7 +62,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jooq.AggregateFunction;
-import org.jooq.ArrayRecord;
+// ...
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Clause;
@@ -244,12 +244,12 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                     }
 
                 case H2:
-                /* [pro] */
-                case DB2:
+                /* [pro] xx
+                xxxx xxxx
 
-                // Sybase CallableStatement.wasNull() doesn't work :-(
-                case SYBASE:
-                /* [/pro] */
+                xx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxx xxx
+                xxxx xxxxxxx
+                xx [/pro] */
                     return executeSelect();
 
                 // [#773] If JDBC escape syntax is available for functions, use
@@ -400,15 +400,15 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     private final void toSQLEnd(RenderContext context) {
         switch (context.configuration().dialect().family()) {
-            /* [pro] */
-            case ORACLE:
-                context.sql(";")
-                       .formatIndentEnd()
-                       .formatSeparator()
-                       .keyword("end;");
-                break;
+            /* [pro] xx
+            xxxx xxxxxxx
+                xxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxx
+                xxxxxx
 
-            /* [/pro] */
+            xx [/pro] */
             default:
                 context.sql(" }");
                 break;
@@ -417,14 +417,14 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     private final void toSQLBegin(RenderContext context) {
         switch (context.configuration().dialect().family()) {
-            /* [pro] */
-            case ORACLE:
-                context.keyword("begin")
-                       .formatIndentStart()
-                       .formatSeparator();
-                break;
+            /* [pro] xx
+            xxxx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxxx
+                xxxxxx
 
-            /* [/pro] */
+            xx [/pro] */
             default:
                 context.sql("{ ");
                 break;
@@ -433,12 +433,12 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     private final void toSQLAssign(RenderContext context) {
         switch (context.configuration().dialect().family()) {
-            /* [pro] */
-            case ORACLE:
-                context.sql("? := ");
-                break;
+            /* [pro] xx
+            xxxx xxxxxxx
+                xxxxxxxxxxxxxx xx xxx
+                xxxxxx
 
-            /* [/pro] */
+            xx [/pro] */
             default:
                 context.sql("? = ");
                 break;
@@ -447,11 +447,11 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     private final void toSQLCall(RenderContext context) {
         switch (context.configuration().dialect().family()) {
-            /* [pro] */
-            case ORACLE:
-                break;
+            /* [pro] xx
+            xxxx xxxxxxx
+                xxxxxx
 
-            /* [/pro] */
+            xx [/pro] */
             default:
                 context.sql("call ");
                 break;
@@ -461,28 +461,28 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLOutParam(RenderContext context, Parameter<?> parameter) {
-        /* [pro] */
-        switch (context.configuration().dialect().family()) {
-            case ORACLE:
-                context.visit(parameter);
-                context.sql(" => ");
-                break;
-        }
+        /* [pro] xx
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxx xx xxx
+                xxxxxx
+        x
 
-        /* [/pro] */
+        xx [/pro] */
         context.sql("?");
     }
 
     private final void toSQLInParam(RenderContext context, Parameter<?> parameter, Field<?> value) {
-        /* [pro] */
-        switch (context.configuration().dialect().family()) {
-            case ORACLE:
-                context.visit(parameter);
-                context.sql(" => ");
-                break;
-        }
+        /* [pro] xx
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxx xx xxx
+                xxxxxx
+        x
 
-        /* [/pro] */
+        xx [/pro] */
         context.visit(value);
     }
 
@@ -495,14 +495,14 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                 context.sql(".");
             }
 
-            /* [pro] */
-            // [#2569] In SQL Server, routines always have to be fully qualified
-            else if (getSchema() != null && context.configuration().dialect().family() == SQLSERVER) {
-                context.visit(getSchema());
-                context.sql(".");
-            }
+            /* [pro] xx
+            xx xxxxxxx xx xxx xxxxxxx xxxxxxxx xxxxxx xxxx xx xx xxxxx xxxxxxxxx
+            xxxx xx xxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxx
+            x
 
-            /* [/pro] */
+            xx [/pro] */
             if (getPackage() != null) {
                 context.visit(getPackage());
                 context.sql(".");
@@ -536,34 +536,34 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                 int sqlType = parameter.getDataType().getDataType(c).getSQLType();
 
                 switch (c.dialect().family()) {
-                    /* [pro] */
+                    /* [pro] xx
 
-                    // For some user defined types Oracle needs to bind
-                    // also the type name
-                    case ORACLE: {
-                        if (sqlType == Types.STRUCT) {
-                            UDTRecord<?> record = Utils
-                                .newRecord((Class<? extends UDTRecord<?>>) parameter.getType())
-                                .<RuntimeException>operate(null);
-                            statement.registerOutParameter(index, Types.STRUCT, record.getSQLTypeName());
-                        }
+                    xx xxx xxxx xxxx xxxxxxx xxxxx xxxxxx xxxxx xx xxxx
+                    xx xxxx xxx xxxx xxxx
+                    xxxx xxxxxxx x
+                        xx xxxxxxxx xx xxxxxxxxxxxxx x
+                            xxxxxxxxxxxx xxxxxx x xxxxx
+                                xxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
+                        x
 
-                        else if (sqlType == Types.ARRAY) {
-                            ArrayRecord<?> record = Utils.newArrayRecord(
-                                (Class<? extends ArrayRecord<?>>) parameter.getType(), c);
-                            statement.registerOutParameter(index, Types.ARRAY, record.getName());
-                        }
+                        xxxx xx xxxxxxxx xx xxxxxxxxxxxx x
+                            xxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+                        x
 
-                        // The default behaviour is not to register a type
-                        // mapping
-                        else {
-                            statement.registerOutParameter(index, sqlType);
-                        }
+                        xx xxx xxxxxxx xxxxxxxxx xx xxx xx xxxxxxxx x xxxx
+                        xx xxxxxxx
+                        xxxx x
+                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx
+                        x
 
-                        break;
-                    }
+                        xxxxxx
+                    x
 
-                    /* [/pro] */
+                    xx [/pro] */
                     default: {
                         statement.registerOutParameter(index, sqlType);
                         break;

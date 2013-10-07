@@ -43,21 +43,21 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static java.lang.Integer.toOctalString;
 import static java.util.Arrays.asList;
-import static org.jooq.SQLDialect.ASE;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.INGRES;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
@@ -68,7 +68,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
-import org.jooq.ArrayRecord;
+// ...
 import org.jooq.BindContext;
 import org.jooq.Converter;
 import org.jooq.DataType;
@@ -152,9 +152,9 @@ class Val<T> extends AbstractParam<T> {
                 switch (context.configuration().dialect().family()) {
 
                     // These dialects can hardly detect the type of a bound constant.
-                    /* [pro] */
-                    case DB2:
-                    /* [/pro] */
+                    /* [pro] xx
+                    xxxx xxxx
+                    xx [/pro] */
                     case DERBY:
                     case FIREBIRD:
 
@@ -168,9 +168,9 @@ class Val<T> extends AbstractParam<T> {
 
                     // [#1029] Postgres and [#632] Sybase need explicit casting
                     // in very rare cases.
-                    /* [pro] */
-                    case SYBASE:
-                    /* [/pro] */
+                    /* [pro] xx
+                    xxxx xxxxxxx
+                    xx [/pro] */
                     case POSTGRES: {
                         return true;
                     }
@@ -183,9 +183,9 @@ class Val<T> extends AbstractParam<T> {
         // them
         if (getDataType().isInterval()) {
             switch (context.configuration().dialect().family()) {
-                /* [pro] */
-                case ORACLE:
-                /* [/pro] */
+                /* [pro] xx
+                xxxx xxxxxxx
+                xx [/pro] */
                 case POSTGRES:
                     return true;
             }
@@ -203,7 +203,7 @@ class Val<T> extends AbstractParam<T> {
         SQLDialect family = context.configuration().dialect().family();
 
         // [#822] Some RDBMS need precision / scale information on BigDecimals
-        if (value != null && getType() == BigDecimal.class && asList(CUBRID, DB2, DERBY, FIREBIRD, HSQLDB).contains(family)) {
+        if (value != null && getType() == BigDecimal.class && asList(CUBRID, DERBY, FIREBIRD, HSQLDB).contains(family)) {
 
             // Add precision / scale on BigDecimals
             int scale = ((BigDecimal) value).scale();
@@ -227,7 +227,7 @@ class Val<T> extends AbstractParam<T> {
 
             // [#632] [#722] Current integration tests show that Ingres and
             // Sybase can do without casting in most cases.
-            else if (asList(INGRES, SYBASE).contains(family)) {
+            else if (asList().contains(family)) {
                 context.sql(getBindVariable(context));
             }
 
@@ -347,7 +347,7 @@ class Val<T> extends AbstractParam<T> {
 
                 // [#1153] Some dialects don't support boolean literals
                 // TRUE and FALSE
-                if (asList(ASE, DB2, FIREBIRD, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(family)) {
+                if (asList(FIREBIRD, SQLITE).contains(family)) {
                     context.sql(((Boolean) val) ? "1" : "0");
                 }
                 else {
@@ -359,24 +359,24 @@ class Val<T> extends AbstractParam<T> {
             else if (type == byte[].class) {
                 byte[] binary = (byte[]) val;
 
-                if (asList(ASE, SQLSERVER, SYBASE).contains(family)) {
+                if (asList().contains(family)) {
                     context.sql("0x")
                            .sql(convertBytesToHex(binary));
                 }
-                /* [pro] */
-                else if (family == DB2) {
-                    context.keyword("blob")
-                           .sql("(X'")
-                           .sql(convertBytesToHex(binary))
-                           .sql("')");
-                }
-                /* [/pro] */
-                else if (asList(DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE).contains(family)) {
+                /* [pro] xx
+                xxxx xx xxxxxxx xx xxxx x
+                    xxxxxxxxxxxxxxxxxxxxxxx
+                           xxxxxxxxxxx
+                           xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                           xxxxxxxxxxx
+                x
+                xx [/pro] */
+                else if (asList(DERBY, H2, HSQLDB, MARIADB, MYSQL, SQLITE).contains(family)) {
                     context.sql("X'")
                            .sql(convertBytesToHex(binary))
                            .sql("'");
                 }
-                else if (asList(ORACLE).contains(family)) {
+                else if (asList().contains(family)) {
                     context.keyword("hextoraw('")
                            .sql(convertBytesToHex(binary))
                            .sql("')");
@@ -413,7 +413,7 @@ class Val<T> extends AbstractParam<T> {
 
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement date literals
-                if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(family)) {
+                if (asList(SQLITE).contains(family)) {
                     context.sql("'").sql(escape(val)).sql("'");
                 }
 
@@ -431,7 +431,7 @@ class Val<T> extends AbstractParam<T> {
 
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement timestamp literals
-                if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(family)) {
+                if (asList(SQLITE).contains(family)) {
                     context.sql("'").sql(escape(val)).sql("'");
                 }
 
@@ -454,7 +454,7 @@ class Val<T> extends AbstractParam<T> {
 
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement time literals
-                if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(family)) {
+                if (asList(SQLITE).contains(family)) {
                     context.sql("'").sql(escape(val)).sql("'");
                 }
 
@@ -463,13 +463,13 @@ class Val<T> extends AbstractParam<T> {
                     context.keyword("time").sql("('").sql(escape(val)).sql("')");
                 }
 
-                /* [pro] */
-                // [#1253] Oracle doesn't know time literals
-                else if (family == ORACLE) {
-                    context.keyword("timestamp").sql(" '1970-01-01 ").sql(escape(val)).sql("'");
-                }
+                /* [pro] xx
+                xx xxxxxxx xxxxxx xxxxxxx xxxx xxxx xxxxxxxx
+                xxxx xx xxxxxxx xx xxxxxxx x
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                x
 
-                /* [/pro] */
+                xx [/pro] */
                 // Most dialects implement SQL standard time literals
                 else {
                     context.keyword("time").sql(" '").sql(escape(val)).sql("'");
@@ -505,11 +505,11 @@ class Val<T> extends AbstractParam<T> {
                     context.sql("]");
                 }
             }
-            /* [pro] */
-            else if (ArrayRecord.class.isAssignableFrom(type)) {
-                context.sql(val.toString(), true);
-            }
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+            x
+            xx [/pro] */
             else if (EnumType.class.isAssignableFrom(type)) {
                 toSQL(context, ((EnumType) val).getLiteral());
             }

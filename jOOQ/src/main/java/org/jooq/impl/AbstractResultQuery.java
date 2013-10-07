@@ -44,9 +44,9 @@ import static java.sql.ResultSet.CONCUR_UPDATABLE;
 import static java.sql.ResultSet.TYPE_SCROLL_SENSITIVE;
 import static java.util.Arrays.asList;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
-import static org.jooq.SQLDialect.ASE;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.SQLSERVER;
+// ...
 import static org.jooq.impl.Utils.DATA_LOCK_ROWS_FOR_UPDATE;
 
 import java.sql.ResultSet;
@@ -214,7 +214,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
         // [#1296] These dialects do not implement FOR UPDATE. But the same
         // effect can be achieved using ResultSet.CONCUR_UPDATABLE
-        else if (isForUpdate() && asList(CUBRID, SQLSERVER).contains(ctx.configuration().dialect().family())) {
+        else if (isForUpdate() && asList(CUBRID).contains(ctx.configuration().dialect().family())) {
             ctx.data(DATA_LOCK_ROWS_FOR_UPDATE, true);
             ctx.statement(ctx.connection().prepareStatement(ctx.sql(), TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE));
         }
@@ -245,14 +245,14 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
         // JTDS doesn't seem to implement PreparedStatement.execute()
         // correctly, at least not for sp_help
-        /* [pro] */
-        if (ctx.configuration().dialect() == ASE) {
-            ctx.resultSet(ctx.statement().executeQuery());
-        }
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
 
-        // [#1232] Avoid executeQuery() in order to handle queries that may
-        // not return a ResultSet, e.g. SQLite's pragma foreign_key_list(table)
-        else /* [/pro] */if (ctx.statement().execute()) {
+        xx xxxxxxx xxxxx xxxxxxxxxxxxxx xx xxxxx xx xxxxxx xxxxxxx xxxx xxx
+        xx xxx xxxxxx x xxxxxxxxxx xxxx xxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+        xxxx xx [/pro] */if (ctx.statement().execute()) {
             ctx.resultSet(ctx.statement().getResultSet());
         }
 

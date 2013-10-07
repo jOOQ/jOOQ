@@ -43,13 +43,13 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.Term.LIST_AGG;
 import static org.jooq.impl.Term.ROW_NUMBER;
@@ -75,7 +75,7 @@ import org.jooq.WindowOverStep;
 import org.jooq.WindowPartitionByStep;
 import org.jooq.WindowRowsAndStep;
 import org.jooq.WindowRowsStep;
-import org.jooq.util.db2.DB2DataType;
+// ...
 
 /**
  * A field that handles built-in functions, aggregate functions, and window
@@ -210,14 +210,14 @@ class Function<T> extends AbstractField<T> implements
         if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MARIADB, MYSQL).contains(context.configuration().dialect())) {
             toSQLGroupConcat(context);
         }
-        else if (term == LIST_AGG && asList(POSTGRES, SYBASE).contains(context.configuration().dialect())) {
+        else if (term == LIST_AGG && asList(POSTGRES).contains(context.configuration().dialect())) {
             toSQLStringAgg(context);
         }
-        /* [pro] */
-        else if (term == LIST_AGG && asList(DB2).contains(context.configuration().dialect().family())) {
-            toSQLXMLAGG(context);
-        }
-        /* [/pro] */
+        /* [pro] xx
+        xxxx xx xxxxx xx xxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxx
+        x
+        xx [/pro] */
         else {
             toSQLArguments(context);
             toSQLKeepDenseRankOrderByClause(context);
@@ -226,55 +226,55 @@ class Function<T> extends AbstractField<T> implements
         }
     }
 
-    /* [pro] */
-    /**
-     * [#1276] <code>LIST_AGG</code> simulation for DB2
-     */
-    private void toSQLXMLAGG(RenderContext context) {
+    /* [pro] xx
+    xxx
+     x xxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxx xxx
+     xx
+    xxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx x
 
-        // This is a complete view of what the below SQL will render
-        // substr(xmlserialize(xmlagg(xmltext(concat(', ', title)) order by id) as varchar(1024)), 3)
-        if (arguments.size() > 1) {
-            context.keyword("substr(");
-        }
+        xx xxxx xx x xxxxxxxx xxxx xx xxxx xxx xxxxx xxx xxxx xxxxxx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx xxxxx xx xxx xx xxxxxxxxxxxxxxx xx
+        xx xxxxxxxxxxxxxxxxx x xx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
 
-        context.keyword("xmlserialize(xmlagg(xmltext(");
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        if (arguments.size() > 1) {
-            context.keyword("concat(")
-                   .visit(arguments.get(1))
-                   .sql(", ");
-        }
+        xx xxxxxxxxxxxxxxxxx x xx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxx xxx
+        x
 
-        context.visit(arguments.get(0));
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        if (arguments.size() > 1) {
-            context.sql(")"); // CONCAT
-        }
+        xx xxxxxxxxxxxxxxxxx x xx x
+            xxxxxxxxxxxxxxxxx xx xxxxxx
+        x
 
-        context.sql(")"); // XMLTEXT
+        xxxxxxxxxxxxxxxxx xx xxxxxxx
 
-        if (!withinGroupOrderBy.isEmpty()) {
-            context.sql(" ").keyword("order by").sql(" ")
-                   .visit(withinGroupOrderBy);
-        }
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxx xx
+                   xxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
 
-        context.sql(")"); // XMLAGG
-        context.sql(" ").keyword("as").sql(" ");
-        context.sql(DB2DataType.VARCHAR.getCastTypeName());
-        context.sql(")"); // XMLSERIALIZE
+        xxxxxxxxxxxxxxxxx xx xxxxxx
+        xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxx xx xxxxxxxxxxxx
 
-        if (arguments.size() > 1) {
-            context.sql(", ");
+        xx xxxxxxxxxxxxxxxxx x xx x
+            xxxxxxxxxxxxxx xxx
 
-            // The separator is of this form: [', '].
-            // The example has length 4
-            context.sql(arguments.get(1).toString().length() - 1);
-            context.sql(")"); // SUBSTR
-        }
-    }
+            xx xxx xxxxxxxxx xx xx xxxx xxxxx xxx xxx
+            xx xxx xxxxxxx xxx xxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxx
+            xxxxxxxxxxxxxxxxx xx xxxxxx
+        x
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     /**
      * [#1275] <code>LIST_AGG</code> simulation for Postgres, Sybase
      */
@@ -350,7 +350,7 @@ class Function<T> extends AbstractField<T> implements
 
             // Ignore PARTITION BY 1 clause. These databases erroneously map the
             // 1 literal onto the column index
-            if (partitionByOne && asList(CUBRID, SYBASE).contains(context.configuration().dialect())) {
+            if (partitionByOne && asList(CUBRID).contains(context.configuration().dialect())) {
             }
             else {
                 context.sql(glue)
@@ -432,23 +432,23 @@ class Function<T> extends AbstractField<T> implements
         }
 
         if (ignoreNulls) {
-            /* [pro] */
-            if (context.configuration().dialect().family() == SQLDialect.DB2) {
-                context.sql(", 'IGNORE NULLS'");
-            }
-            else
-            /* [/pro] */
+            /* [pro] xx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxx x
+                xxxxxxxxxxxxxx xxxxxxx xxxxxxxxx
+            x
+            xxxx
+            xx [/pro] */
             {
                 context.sql(" ").keyword("ignore nulls");
             }
         }
         else if (respectNulls) {
-            /* [pro] */
-            if (context.configuration().dialect().family() == SQLDialect.DB2) {
-                context.sql(", 'RESPECT NULLS'");
-            }
-            else
-            /* [/pro] */
+            /* [pro] xx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxx x
+                xxxxxxxxxxxxxx xxxxxxxx xxxxxxxxx
+            x
+            xxxx
+            xx [/pro] */
             {
                 context.sql(" ").keyword("respect nulls");
             }
@@ -497,84 +497,84 @@ class Function<T> extends AbstractField<T> implements
         return arguments;
     }
 
-    /* [pro] */
-    @Override
-    public final AggregateFunction<T> withinGroupOrderBy(Field<?>... fields) {
-        withinGroupOrderBy.addAll(fields);
-        return this;
-    }
+    /* [pro] xx
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxx
+    x
 
-    @Override
-    public final AggregateFunction<T> withinGroupOrderBy(SortField<?>... fields) {
-        withinGroupOrderBy.addAll(Arrays.asList(fields));
-        return this;
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxx
+    x
 
-    @Override
-    public final AggregateFunction<T> withinGroupOrderBy(Collection<? extends SortField<?>> fields) {
-        withinGroupOrderBy.addAll(fields);
-        return this;
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxx x
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxx
+    x
 
-    @Override
-    public final WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Field<?>... fields) {
-        first = true;
-        keepDenseRankOrderBy.addAll(fields);
-        return this;
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxx x xxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxx
+    x
 
-    @Override
-    public final WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(SortField<?>... fields) {
-        return keepDenseRankFirstOrderBy(Arrays.asList(fields));
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    @Override
-    public final WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Collection<? extends SortField<?>> fields) {
-        first = true;
-        keepDenseRankOrderBy.addAll(fields);
-        return this;
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxx x
+        xxxxx x xxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxx
+    x
 
-    @Override
-    public final WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Field<?>... fields) {
-        keepDenseRankOrderBy.addAll(fields);
-        return this;
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxx
+    x
 
-    @Override
-    public final WindowBeforeOverStep<T> keepDenseRankLastOrderBy(SortField<?>... fields) {
-        return keepDenseRankLastOrderBy(Arrays.asList(fields));
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    @Override
-    public final WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Collection<? extends SortField<?>> fields) {
-        keepDenseRankOrderBy.addAll(fields);
-        return this;
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxx x
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxx
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     @Override
     public final WindowPartitionByStep<T> over() {
         over = true;
         return this;
     }
 
-    /* [pro] */
-    @Override
-    public final WindowOverStep<T> ignoreNulls() {
-        ignoreNulls = true;
-        respectNulls = false;
-        return this;
-    }
+    /* [pro] xx
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx x
+        xxxxxxxxxxx x xxxxx
+        xxxxxxxxxxxx x xxxxxx
+        xxxxxx xxxxx
+    x
 
-    @Override
-    public final WindowOverStep<T> respectNulls() {
-        ignoreNulls = false;
-        respectNulls = true;
-        return this;
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx x
+        xxxxxxxxxxx x xxxxxx
+        xxxxxxxxxxxx x xxxxx
+        xxxxxx xxxxx
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     @Override
     public final WindowOrderByStep<T> partitionBy(Field<?>... fields) {
         partitionBy.addAll(Arrays.asList(fields));

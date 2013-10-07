@@ -41,7 +41,7 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 
 import org.jooq.api.annotation.State;
 import org.jooq.api.annotation.Transition;
@@ -80,7 +80,7 @@ public interface MergeMatchedDeleteStep<R extends Record> extends MergeNotMatche
      * >http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.
      * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     @Transition(
         name = "DELETE WHERE",
         args = "Condition"
@@ -99,7 +99,7 @@ public interface MergeMatchedDeleteStep<R extends Record> extends MergeNotMatche
      * >http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.
      * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     @Transition(
         name = "DELETE WHERE",
         args = "Condition"

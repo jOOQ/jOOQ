@@ -40,52 +40,52 @@
  */
 package org.jooq;
 
-/* [pro] */
+/* [pro] xx
 
-import static org.jooq.SQLDialect.ORACLE;
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-/**
- * This type is used for the Oracle <code>VERSIONS</code> clause DSL API,
- * providing access to the flashback versions query clauses.
- *
- * @author Lukas Eder
- */
-@State(
-    name = "VersionsBetweenAndTimestampStep"
-)
-public interface VersionsBetweenAndStep<R extends Record, T> {
+xxx
+ x xxxx xxxx xx xxxx xxx xxx xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xxx xxxx
+ x xxxxxxxxx xxxxxx xx xxx xxxxxxxxx xxxxxxxx xxxxx xxxxxxxx
+ x
+ x xxxxxxx xxxxx xxxx
+ xx
+xxxxxxx
+    xxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+x
+xxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxx xx x
 
-    /**
-     * Add an <code>AND</code> clause to the flashback versions query clause.
-     */
-    @Support(ORACLE)
-    @Transition(
-        name = "AND",
-        args = "Field"
-    )
-    Table<R> and(T scn);
+    xxx
+     x xxx xx xxxxxxxxxxxxxxxx xxxxxx xx xxx xxxxxxxxx xxxxxxxx xxxxx xxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxxxxxxxx
+        xxxx x xxxxxx
+        xxxx x xxxxxxx
+    x
+    xxxxxxxx xxxxx xxxxx
 
-    /**
-     * Add an <code>AND</code> clause to the flashback versions query clause.
-     */
-    @Support(ORACLE)
-    @Transition(
-        name = "AND",
-        args = "Field"
-    )
-    Table<R> and(Field<? extends T> scn);
+    xxx
+     x xxx xx xxxxxxxxxxxxxxxx xxxxxx xx xxx xxxxxxxxx xxxxxxxx xxxxx xxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxxxxxxxx
+        xxxx x xxxxxx
+        xxxx x xxxxxxx
+    x
+    xxxxxxxx xxxxxxxxxxx xxxxxxx xx xxxxx
 
-    /**
-     * Add an <code>AND MAXVALUE</code> clause to the flashback versions query
-     * clause.
-     */
-    @Support(ORACLE)
-    @Transition(
-        name = "AND MAXVALUE"
-    )
-    Table<R> andMaxvalue();
-}
-/* [/pro] */
+    xxx
+     x xxx xx xxxxxxxxx xxxxxxxxxxxxxxx xxxxxx xx xxx xxxxxxxxx xxxxxxxx xxxxx
+     x xxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxxxxxxxx
+        xxxx x xxxx xxxxxxxxx
+    x
+    xxxxxxxx xxxxxxxxxxxxxx
+x
+xx [/pro] */

@@ -40,11 +40,11 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 
 import javax.annotation.Generated;
@@ -76,7 +76,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -92,7 +92,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -108,7 +108,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -124,7 +124,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -140,7 +140,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -156,7 +156,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -172,7 +172,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -188,7 +188,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -204,7 +204,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -220,7 +220,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -236,7 +236,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -252,7 +252,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -268,7 +268,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -284,7 +284,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -300,7 +300,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -316,7 +316,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -332,7 +332,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -348,7 +348,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -364,7 +364,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -380,7 +380,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -396,7 +396,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -412,7 +412,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * This is simulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "SET",
         args = {
@@ -425,7 +425,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -438,7 +438,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -451,7 +451,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -464,7 +464,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -477,7 +477,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -490,7 +490,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -503,7 +503,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -516,7 +516,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -529,7 +529,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -542,7 +542,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -555,7 +555,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -568,7 +568,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -581,7 +581,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -594,7 +594,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -607,7 +607,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -620,7 +620,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -633,7 +633,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -646,7 +646,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -659,7 +659,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -672,7 +672,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -685,7 +685,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -698,7 +698,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
-    @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Support({ H2, HSQLDB })
     @Transition(
         name = "SET",
         args = {

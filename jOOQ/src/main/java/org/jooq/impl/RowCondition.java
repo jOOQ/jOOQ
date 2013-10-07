@@ -49,16 +49,16 @@ import static org.jooq.Comparator.GREATER_OR_EQUAL;
 import static org.jooq.Comparator.LESS;
 import static org.jooq.Comparator.LESS_OR_EQUAL;
 import static org.jooq.Comparator.NOT_EQUALS;
-import static org.jooq.SQLDialect.ASE;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,7 +118,7 @@ class RowCondition extends AbstractCondition {
 
         // Regular comparison predicate simulation
         if (asList(EQUALS, NOT_EQUALS).contains(comparator) &&
-            asList(ASE, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(dialect.family())) {
+            asList(DERBY, FIREBIRD, SQLITE).contains(dialect.family())) {
             List<Condition> conditions = new ArrayList<Condition>();
 
             Field<?>[] leftFields = left.fields();
@@ -139,7 +139,7 @@ class RowCondition extends AbstractCondition {
 
         // Ordering comparison predicate simulation
         else if (asList(GREATER, GREATER_OR_EQUAL, LESS, LESS_OR_EQUAL).contains(comparator) &&
-                 asList(DERBY, CUBRID, FIREBIRD, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(dialect.family())) {
+                 asList(DERBY, CUBRID, FIREBIRD, SQLITE).contains(dialect.family())) {
 
             // The order component of the comparator (stripping the equal component)
             Comparator order
@@ -196,14 +196,14 @@ class RowCondition extends AbstractCondition {
         public final void toSQL(RenderContext context) {
 
             // Some dialects do not support != comparison with rows
-            if (comparator == NOT_EQUALS && asList(DB2).contains(context.configuration().dialect().family())) {
+            if (comparator == NOT_EQUALS && asList().contains(context.configuration().dialect().family())) {
                 context.keyword("not").sql("(")
                        .visit(left).sql(" = ").visit(right)
                        .sql(")");
             }
             else {
                 // Some databases need extra parentheses around the RHS
-                boolean extraParentheses = asList(ORACLE).contains(context.configuration().dialect().family());
+                boolean extraParentheses = asList().contains(context.configuration().dialect().family());
 
                 context.visit(left)
                        .sql(" ")

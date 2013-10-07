@@ -20,13 +20,13 @@
             <url>http://www.jooq.org/inc/LICENSE.txt</url>
             <distribution>repo</distribution>
         </license>
-        <!-- [pro] -->
-        <license>
-            <name>jOOQ License and Maintenance Agreement</name>
-            <url>http://www.jooq.org/licensing</url>
-            <distribution>repo</distribution>
-        </license>
-        <!-- [/pro] -->
+        <!-- [pro] xxx
+        xxxxxxxxx
+            xxxxxxxxxx xxxxxxx xxx xxxxxxxxxxx xxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxx
+        xxxx [/pro] -->
     </licenses>
 
     <profiles>

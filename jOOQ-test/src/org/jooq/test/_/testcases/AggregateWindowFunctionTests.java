@@ -44,18 +44,18 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.nCopies;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-import static org.jooq.SQLDialect.ASE;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
 import static org.jooq.impl.DSL.avg;
 import static org.jooq.impl.DSL.avgDistinct;
 import static org.jooq.impl.DSL.count;
@@ -164,12 +164,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Use AVG instead, as in this example the values of MEDIAN and AVG
         // are the same
         switch (dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            case DB2:
-            case SQLSERVER:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxx
+            xxxx xxxxxxxxxx
+            xx [/pro] */
 
             case CUBRID:
             case DERBY:
@@ -268,7 +268,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 assertEquals(0.25, result2.get(1).getValue(3, Double.class));
 
                 // DB2 only knows STDDEV_POP / VAR_POP
-                if (true/* [pro] */ && dialect() != SQLDialect.DB2/* [/pro] */) {
+                if (true/* [pro] xx xx xxxxxxxxx xx xxxxxxxxxxxxxxxx [/pro] */) {
                     assertEquals("0.707", result2.get(0).getValue(2, String.class).substring(0, 5));
                     assertEquals(0.5, result2.get(0).getValue(4, Double.class));
                     assertEquals("0.707", result2.get(1).getValue(2, String.class).substring(0, 5));
@@ -321,7 +321,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1728] COUNT(DISTINCT expr1, expr2, ...)
         // -----------------------------------------
-        if (asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE).contains(dialect().family())) {
+        if (asList(CUBRID, DERBY, FIREBIRD, H2, POSTGRES, SQLITE).contains(dialect().family())) {
             log.info("SKIPPING", "Multi-expression COUNT(DISTINCT) test");
         }
         else {
@@ -335,11 +335,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testLinearRegressionFunctions() throws Exception {
         switch (dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            case SQLSERVER:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xx [/pro] */
             case CUBRID:
             case DERBY:
             case FIREBIRD:
@@ -370,13 +370,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         List<String> values = Arrays.asList("1.5", "2.5", "4.0", "-0.5", "0.8", "2.0", "1.0", "2.0", "5.0");
         assertEquals(values, Arrays.asList(roundStrings(1, record.into(String[].class))));
 
-        /* [pro] */
-        switch (dialect()) {
-            case DB2:
-                log.info("SKIPPING", "Skipping linear regression window function tests");
-                return;
-        }
-        /* [/pro] */
+        /* [pro] xx
+        xxxxxx xxxxxxxxxxx x
+            xxxx xxxx
+                xxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxx xxxxxxxxxx xxxxxx xxxxxxxx xxxxxxxx
+                xxxxxxx
+        x
+        xx [/pro] */
 
         // [#600] As window functions
         Result<Record9<BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal>> result =
@@ -403,10 +403,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testWindowFunctions() throws Exception {
         switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case FIREBIRD:
             case MARIADB:
             case MYSQL:
@@ -541,9 +541,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(1), result.getValue(3, column));
 
         switch (dialect()) {
-            /* [pro] */
-            case DB2:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xx [/pro] */
             case CUBRID:
                 log.info("SKIPPING", "PERCENT_RANK() and CUME_DIST() window function tests");
                 break;
@@ -650,7 +650,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(0.25, result.get(0).getValue(7, Double.class));
 
         // DB2 only knows STDDEV_POP / VAR_POP
-        if (true/* [pro] */ && dialect() != SQLDialect.DB2/* [/pro] */) {
+        if (true/* [pro] xx xx xxxxxxxxx xx xxxxxxxxxxxxxxxx [/pro] */) {
             assertEquals("1.290", result.get(0).getValue(2, String.class).substring(0, 5));
             assertEquals("1.666", result.get(0).getValue(4, String.class).substring(0, 5));
             assertEquals("0.707", result.get(0).getValue(6, String.class).substring(0, 5));
@@ -658,12 +658,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         // NTILE()
-        /* [pro] */
-        if (asList(DB2, SYBASE).contains(dialect())) {
-            log.info("SKIPPING", "NTILE tests");
-        }
-        else
-        /* [/pro] */
+        /* [pro] xx
+        xx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxx
+        x
+        xxxx
+        xx [/pro] */
         {
             result =
             create().select(TBook_ID(),
@@ -743,48 +743,48 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(Integer.valueOf(3), result.getValue(3, column));
         }
 
-        /* [pro] */
-        switch (dialect().family()) {
-            case SQLSERVER:
-            case CUBRID:
-            case POSTGRES:
-                log.info("SKIPPING", "FIRST_VALUE(... IGNORE NULLS) window function test");
-                break;
+        /* [pro] xx
+        xxxxxx xxxxxxxxxxxxxxxxxxxx x
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxx xxxxxx xxxxxx xxxxxxxx xxxxxxx
+                xxxxxx
 
-            default: {
-                column = 0;
+            xxxxxxxx x
+                xxxxxx x xx
 
-                // FIRST_VALUE(... IGNORE NULLS)
-                result = create().select(TBook_ID(),
-                                         firstValue(TBook_ID()).ignoreNulls()
-                                                               .over()
-                                                               .partitionBy(TBook_AUTHOR_ID())
-                                                               .orderBy(TBook_PUBLISHED_IN().asc())
-                                                               .rowsBetweenUnboundedPreceding()
-                                                               .andUnboundedFollowing())
-                                 .from(TBook())
-                                 .orderBy(TBook_ID().asc())
-                                 .fetch();
+                xx xxxxxxxxxxxxxxx xxxxxx xxxxxx
+                xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                               xxxxxxx
+                                                               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                               xxxxxxxxxxxxxxxxxxxxxxxxx
+                                 xxxxxxxxxxxxxx
+                                 xxxxxxxxxxxxxxxxxxxxxxxxxx
+                                 xxxxxxxxx
 
-                // Partitioned and ordered FIRST_VALUE(... IGNORE NULLS) with ROWS
-                column++;
-                assertEquals(Integer.valueOf(2), result.getValue(0, column));
-                assertEquals(Integer.valueOf(2), result.getValue(1, column));
-                assertEquals(Integer.valueOf(3), result.getValue(2, column));
-                assertEquals(Integer.valueOf(3), result.getValue(3, column));
+                xx xxxxxxxxxxx xxx xxxxxxx xxxxxxxxxxxxxxx xxxxxx xxxxxx xxxx xxxx
+                xxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx
 
-                break;
-            }
-        }
-        /* [/pro] */
+                xxxxxx
+            x
+        x
+        xx [/pro] */
 
         switch (dialect()) {
-            /* [pro] */
-            case SYBASE:
-                log.info("SKIPPING", "LEAD/LAG tests");
-                break;
+            /* [pro] xx
+            xxxx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxx
+                xxxxxx
 
-            /* [/pro] */
+            xx [/pro] */
             default: {
                 column = 0;
 
@@ -925,11 +925,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testListAgg() throws Exception {
         switch (dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            case SQLSERVER:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xx [/pro] */
             case DERBY:
             case SQLITE:
                 log.info("SKIPPING", "LISTAGG tests");
@@ -964,10 +964,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("4, 3", result1.getValue(1, "books2"));
 
         switch (dialect()) {
-            /* [pro] */
-            case DB2:
-            case SYBASE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case H2:
             case HSQLDB:

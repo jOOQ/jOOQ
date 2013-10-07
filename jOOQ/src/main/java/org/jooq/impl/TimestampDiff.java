@@ -74,33 +74,33 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
     @Override
     final Field<DayToSecond> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] */
+            /* [pro] xx
 
-            // Sybase ASE's datediff incredibly overflows on 3 days' worth of
-            // microseconds. That's why the days have to be leveled at first
-            case ASE:
+            xx xxxxxx xxxxx xxxxxxxx xxxxxxxxxx xxxxxxxxx xx x xxxxx xxxxx xx
+            xx xxxxxxxxxxxxx xxxxxx xxx xxx xxxx xxxx xx xx xxxxxxx xx xxxxx
+            xxxx xxxx
 
-                // The difference in number of days
-                Field<Integer> days = field("{datediff}(day, {0}, {1})", INTEGER, timestamp2, timestamp1);
+                xx xxx xxxxxxxxxx xx xxxxxx xx xxxx
+                xxxxxxxxxxxxxx xxxx x xxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxx xxxxxxxxxxx xxxxxxxxxxxx
 
-                // The intra-day difference in number of milliseconds
-                Field<Integer> milli = field("{datediff}(ms, {0}, {1})", INTEGER, timestamp2.add(days), timestamp1);
-                return (Field) days.mul(86400000).add(milli);
+                xx xxx xxxxxxxxx xxxxxxxxxx xx xxxxxx xx xxxxxxxxxxxx
+                xxxxxxxxxxxxxx xxxxx x xxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+                xxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            // Fun with DB2 dates. Find some info here:
-            // http://www.ibm.com/developerworks/data/library/techarticle/0211yip/0211yip3.html
-            case DB2:
-                return (Field) function("days", INTEGER, timestamp1).sub(
-                               function("days", INTEGER, timestamp2)).mul(86400000).add(
-                               function("midnight_seconds", INTEGER, timestamp1).sub(
-                               function("midnight_seconds", INTEGER, timestamp2)).mul(1000));
+            xx xxx xxxx xxx xxxxxx xxxx xxxx xxxx xxxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxx xxxx
+                xxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxx
+                               xxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                               xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxx
+                               xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
 
-            case SQLSERVER:
-            case SYBASE:
-                return field("{datediff}(ms, {0}, {1})", getDataType(), timestamp2, timestamp1);
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxx
 
-            case ORACLE:
-            /* [/pro] */
+            xxxx xxxxxxx
+            xx [/pro] */
             case POSTGRES:
                 return field("{0} - {1}", getDataType(), timestamp1, timestamp2);
 
@@ -126,10 +126,10 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
             case SQLITE:
                 return field("({strftime}('%s', {0}) - {strftime}('%s', {1})) * 1000", getDataType(), timestamp1, timestamp2);
 
-            /* [pro] */
-            // Fall through to default
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xx xxxx xxxxxxx xx xxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
         }
 
         // Default implementation for equals() and hashCode()

@@ -69,12 +69,12 @@ class ConditionAsField extends AbstractFunction<Boolean> {
 
             // Some databases don't accept predicates where column expressions
             // are expected.
-            /* [pro] */
-            case DB2:
-            case ORACLE:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case FIREBIRD:
                 return DSL.decode().when(condition, inline(true)).otherwise(inline(false));
@@ -88,11 +88,11 @@ class ConditionAsField extends AbstractFunction<Boolean> {
             case POSTGRES:
             case SQLITE:
 
-            /* [pro] */
-            // Unknown (to be evaluated):
-            case ASE:
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xx xxxxxxx xxx xx xxxxxxxxxxx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
                 return condition;
         }
 

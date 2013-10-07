@@ -42,13 +42,13 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
+// ...
 
 import java.util.Collection;
 import java.util.Map;
@@ -100,7 +100,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, DB2, HSQLDB, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL })
     void onDuplicateKeyUpdate(boolean flag);
 
     /**
@@ -141,7 +141,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * the <code>ON DUPLICATE KEY IGNORE</code> flag (see
      * {@link #onDuplicateKeyIgnore(boolean)}. Setting one will unset the other
      */
-    @Support({ CUBRID, DB2, HSQLDB, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL })
     void onDuplicateKeyIgnore(boolean flag);
 
     /**
@@ -150,7 +150,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ DB2, HSQLDB, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ HSQLDB, MARIADB, MYSQL })
     <T> void addValueForUpdate(Field<T> field, T value);
 
     /**
@@ -159,7 +159,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ DB2, HSQLDB, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ HSQLDB, MARIADB, MYSQL })
     <T> void addValueForUpdate(Field<T> field, Field<T> value);
 
     /**
@@ -172,7 +172,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ DB2, HSQLDB, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ HSQLDB, MARIADB, MYSQL })
     void addValuesForUpdate(Map<? extends Field<?>, ?> map);
 
     /**

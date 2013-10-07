@@ -60,7 +60,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.jooq.ArrayRecord;
+// ...
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.DataType;
@@ -485,11 +485,11 @@ public class DefaultDataType<T> implements DataType<T> {
         else if (type.isArray()) {
             return Types.ARRAY;
         }
-        /* [pro] */
-        else if (ArrayRecord.class.isAssignableFrom(type)) {
-            return Types.ARRAY;
-        }
-        /* [/pro] */
+        /* [pro] xx
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxx xxxxxxxxxxxx
+        x
+        xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
             return Types.VARCHAR;
         }
@@ -498,9 +498,9 @@ public class DefaultDataType<T> implements DataType<T> {
         }
         else if (Result.class.isAssignableFrom(type)) {
             switch (dialect.family()) {
-                /* [pro] */
-                case ORACLE:
-                /* [/pro] */
+                /* [pro] xx
+                xxxx xxxxxxx
+                xx [/pro] */
                 case H2:
                     return -10; // OracleTypes.CURSOR;
 
@@ -562,13 +562,13 @@ public class DefaultDataType<T> implements DataType<T> {
         return new ArrayDataType<T>(this);
     }
 
-    /* [pro] */
-    @Override
-    public final <A extends ArrayRecord<T>> DataType<A> asArrayDataType(Class<A> arrayDataType) {
-        return new DefaultDataType<A>(dialect, arrayDataType, typeName, castTypeName);
-    }
+    /* [pro] xx
+    xxxxxxxxx
+    xxxxxx xxxxx xx xxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx x
+        xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxxxxx
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     @Override
     public final <E extends EnumType> DataType<E> asEnumDataType(Class<E> enumDataType) {
         return new DefaultDataType<E>(dialect, enumDataType, typeName, castTypeName);
@@ -662,9 +662,9 @@ public class DefaultDataType<T> implements DataType<T> {
                 // jOOQ data types are handled here
                 if (EnumType.class.isAssignableFrom(type)
                      || UDTRecord.class.isAssignableFrom(type)
-                     /* [pro] */
-                     || ArrayRecord.class.isAssignableFrom(type)
-                     /* [/pro] */
+                     /* [pro] xx
+                     xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                     xx [/pro] */
                 ) {
 
                     for (SQLDialect d : SQLDialect.values()) {
@@ -735,7 +735,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean isArray() {
-        return /* [pro] */ArrayRecord.class.isAssignableFrom(type) || /* [/pro] */
+        return /* [pro] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xx [/pro] */
             (!isBinary() && type.isArray());
     }
 

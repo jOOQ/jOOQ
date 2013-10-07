@@ -88,26 +88,26 @@ class DateDiff extends AbstractFunction<Integer> {
             case SQLITE:
                 return field("({strftime}('%s', {0}) - {strftime}('%s', {1})) / 86400", getDataType(), date1, date2);
 
-            /* [pro] */
-            case ORACLE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case POSTGRES:
                 return field("{0} - {1}", getDataType(), date1, date2);
 
-            /* [pro] */
-            case ASE:
-            case SQLSERVER:
-            case SYBASE:
-                return field("{datediff}(day, {0}, {1})", getDataType(), date2, date1);
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxx xxxxxxx
 
-            case DB2:
-                return function("days", getDataType(), date1).sub(
-                       function("days", getDataType(), date2));
+            xxxx xxxx
+                xxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxx
+                       xxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxx
 
-            // Fall through to default
-            case INGRES:
-            /* [/pro] */
+            xx xxxx xxxxxxx xx xxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
         }
 
         // Default implementation for equals() and hashCode()

@@ -96,38 +96,38 @@ class GroupConcat extends AbstractFunction<String> implements GroupConcatOrderBy
         return result.withinGroupOrderBy(orderBy);
     }
 
-    /* [pro] */
-    @Override
-    public final WindowBeforeOverStep<String> keepDenseRankFirstOrderBy(Field<?>... fields) {
-        throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
-    }
+    /* [pro] xx
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxx xx xxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
+    x
 
-    @Override
-    public final WindowBeforeOverStep<String> keepDenseRankFirstOrderBy(SortField<?>... fields) {
-        throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxx xx xxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
+    x
 
-    @Override
-    public final WindowBeforeOverStep<String> keepDenseRankFirstOrderBy(Collection<? extends SortField<?>> fields) {
-        throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxx x
+        xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxx xx xxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
+    x
 
-    @Override
-    public final WindowBeforeOverStep<String> keepDenseRankLastOrderBy(Field<?>... fields) {
-        throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxx xx xxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
+    x
 
-    @Override
-    public final WindowBeforeOverStep<String> keepDenseRankLastOrderBy(SortField<?>... fields) {
-        throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxx xx xxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
+    x
 
-    @Override
-    public final WindowBeforeOverStep<String> keepDenseRankLastOrderBy(Collection<? extends SortField<?>> fields) {
-        throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxx x
+        xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxx xx xxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     @Override
     public final WindowPartitionByStep<String> over() {
         throw new UnsupportedOperationException("OVER() not supported on GROUP_CONCAT aggregate function");

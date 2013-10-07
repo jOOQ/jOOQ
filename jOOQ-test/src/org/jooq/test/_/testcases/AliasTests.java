@@ -199,9 +199,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testAliasingDelete() throws Exception {
         switch (dialect().family()) {
-            /* [pro] */
-            case SQLSERVER:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxxxxxxxx
+            xx [/pro] */
             case SQLITE:
                 log.info("SKIPPING", "Aliasing DELETE tests");
                 return;

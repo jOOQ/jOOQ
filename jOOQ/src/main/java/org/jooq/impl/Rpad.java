@@ -76,14 +76,14 @@ class Rpad extends AbstractFunction<String> {
     @Override
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case SQLSERVER:
-            case SYBASE: {
-                return DSL.concat(field, DSL.repeat(character, length.sub(DSL.length(field))));
-            }
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx x
+                xxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            x
 
-            /* [/pro] */
+            xx [/pro] */
             // This beautiful expression was contributed by "Ludo", here:
             // http://stackoverflow.com/questions/6576343/how-to-simulate-lpad-rpad-with-sqlite
             case SQLITE: {

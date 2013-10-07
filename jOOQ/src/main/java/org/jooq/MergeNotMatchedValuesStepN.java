@@ -41,11 +41,11 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
+// ...
 
 import java.util.Collection;
 
@@ -78,7 +78,7 @@ public interface MergeNotMatchedValuesStepN<R extends Record> {
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     @Transition(
         name = "VALUES",
         args = "Object+"
@@ -89,7 +89,7 @@ public interface MergeNotMatchedValuesStepN<R extends Record> {
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     @Transition(
         name = "VALUES",
         args = "Field+"
@@ -100,7 +100,7 @@ public interface MergeNotMatchedValuesStepN<R extends Record> {
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     @Transition(
         name = "VALUES",
         args = "Field+"

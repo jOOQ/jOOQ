@@ -41,22 +41,22 @@
 
 package org.jooq.test;
 
-/* [pro] */
+/* [pro] xx
 
-import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.conf.Settings;
-import org.jooq.impl.DSL;
+xxxxxx xxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxx
 
-/**
- * @author Lukas Eder
- */
-public class SQLServer2008Test extends SQLServerTest {
+xxx
+ x xxxxxxx xxxxx xxxx
+ xx
+xxxxxx xxxxx xxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx x
 
-    @Override
-    protected DSLContext create0(Settings settings) {
-        return DSL.using(getConnection(), SQLDialect.SQLSERVER2008, settings);
-    }
-}
+    xxxxxxxxx
+    xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx
+    x
+x
 
-/* [/pro] */
+xx [/pro] */

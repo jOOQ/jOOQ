@@ -620,28 +620,28 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
         return this;
     }
 
-    /* [pro] */
-    @Override
-    public final SelectImpl<R> wait(int seconds) {
-        getQuery().setForUpdateWait(seconds);
-        return this;
-    }
+    /* [pro] xx
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxx xxxxxxxx x
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxx
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     @Override
     public final SelectImpl<R> noWait() {
         getQuery().setForUpdateNoWait();
         return this;
     }
 
-    /* [pro] */
-    @Override
-    public final SelectImpl<R> skipLocked() {
-        getQuery().setForUpdateSkipLocked();
-        return this;
-    }
+    /* [pro] xx
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxx x
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxx
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     @Override
     public final SelectImpl<R> forShare() {
         getQuery().setForShare(true);
@@ -966,19 +966,19 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
         return naturalRightOuterJoin(table(sql, parts));
     }
 
-    /* [pro] */
-    @Override
-    public final SelectImpl<R> partitionBy(Field<?>... fields) {
-        joinPartitionBy = fields;
-        return this;
-    }
+    /* [pro] xx
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxxxxxxxxxxxx x xxxxxxx
+        xxxxxx xxxxx
+    x
 
-    @Override
-    public final SelectImpl<R> partitionBy(Collection<? extends Field<?>> fields) {
-        return partitionBy(fields.toArray(new Field[fields.size()]));
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     @Override
     public final ResultQuery<R> maxRows(int rows) {
         return getDelegate().maxRows(rows);

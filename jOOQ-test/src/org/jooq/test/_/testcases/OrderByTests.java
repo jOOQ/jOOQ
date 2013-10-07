@@ -43,9 +43,9 @@ package org.jooq.test._.testcases;
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
-import static org.jooq.SQLDialect.ASE;
-import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.SQLSERVER;
+// ...
+// ...
+// ...
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.lower;
@@ -105,16 +105,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testOrderByInSubquery() throws Exception {
-        /* [pro] */
-        // TODO: [#780] Fix this for Ingres and Sybase ASE
-        switch (dialect()) {
-            case ASE:
-            case INGRES:
-                log.info("SKIPPING", "Ordered subqueries");
-                return;
-        }
+        /* [pro] xx
+        xx xxxxx xxxxxx xxx xxxx xxx xxxxxx xxx xxxxxx xxx
+        xxxxxx xxxxxxxxxxx x
+            xxxx xxxx
+            xxxx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxx
+                xxxxxxx
+        x
 
-        /* [/pro] */
+        xx [/pro] */
         // Some RDBMS don't accept ORDER BY clauses in subqueries without
         // TOP clause (e.g. SQL Server). jOOQ will synthetically add a
         // TOP 100 PERCENT clause, if necessary
@@ -288,13 +288,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 create().select().from(TBook()).limit(i).fetch().size());
         }
 
-        /* [pro] */
-        if (dialect() == SQLDialect.ASE) {
-            log.info("SKIPPING", "LIMIT .. OFFSET tests");
-            return;
-        }
+        /* [pro] xx
+        xx xxxxxxxxxx xx xxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxx xxxxxx xx xxxxxx xxxxxxxx
+            xxxxxxx
+        x
 
-        /* [/pro] */
+        xx [/pro] */
         for (int i = 1; i < 6; i++) {
             assertEquals(Math.min(i, 3),
                 create().selectFrom(TBook()).limit(1, i).fetch().size());
@@ -346,13 +346,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testLimitAliased() throws Exception {
-        /* [pro] */
-        if (asList(ASE, SQLSERVER).contains(dialect().family())) {
-            log.info("SKIPPING", "LIMIT .. OFFSET tests");
-            return;
-        }
+        /* [pro] xx
+        xx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxx xxxxxx xx xxxxxx xxxxxxxx
+            xxxxxxx
+        x
 
-        /* [/pro] */
+        xx [/pro] */
         // [#2080] Some databases generate ORDER BY clauses within their ranking
         // functions. There are some syntax problems, when selectable columns
         // have aliases
@@ -414,13 +414,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testLimitNamedParams() throws Exception {
-        /* [pro] */
-        if (asList(ASE, INGRES).contains(dialect())) {
-            log.info("SKIPPING", "Parameterised LIMIT .. OFFSET tests");
-            return;
-        }
+        /* [pro] xx
+        xx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxx xx xxxxxx xxxxxxxx
+            xxxxxxx
+        x
 
-        /* [/pro] */
+        xx [/pro] */
         // Some dialects don't support LIMIT 0 / TOP 0
         for (int i = 1; i < 6; i++) {
             Select<?> s1 = create().selectFrom(TBook()).limit(param("limit", i));
@@ -484,16 +484,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testLimitNested() throws Exception {
-        /* [pro] */
-        // TODO [#780] This is not supported in Ingres
-        if (dialect() == SQLDialect.INGRES ||
-            dialect() == SQLDialect.ASE) {
+        /* [pro] xx
+        xx xxxx xxxxxx xxxx xx xxx xxxxxxxxx xx xxxxxx
+        xx xxxxxxxxxx xx xxxxxxxxxxxxxxxxx xx
+            xxxxxxxxx xx xxxxxxxxxxxxxxx x
 
-            log.info("SKIPPING", "LIMIT clauses in nested SELECTs");
-            return;
-        }
+            xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxx xx xxxxxx xxxxxxxxxx
+            xxxxxxx
+        x
 
-        /* [/pro] */
+        xx [/pro] */
         Table<B> nested = table(create()
             .selectFrom(TBook())
             .orderBy(TBook_ID().desc())

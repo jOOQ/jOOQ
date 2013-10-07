@@ -41,11 +41,11 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
+// ...
 
 import org.jooq.api.annotation.State;
 import org.jooq.api.annotation.Transition;
@@ -76,7 +76,7 @@ public interface MergeOnStep<R extends Record> {
     /**
      * Provide join conditions and proceed to the next step
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     @Transition(
         name = "ON",
         args = "Condition+"
@@ -86,7 +86,7 @@ public interface MergeOnStep<R extends Record> {
     /**
      * Provide join conditions and proceed to the next step
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     @Transition(
         name = "ON",
         args = "Condition"
@@ -103,7 +103,7 @@ public interface MergeOnStep<R extends Record> {
      *
      * @see DSL#condition(String)
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> on(String sql);
 
     /**
@@ -116,7 +116,7 @@ public interface MergeOnStep<R extends Record> {
      *
      * @see DSL#condition(String, Object...)
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> on(String sql, Object... bindings);
 
     /**
@@ -129,6 +129,6 @@ public interface MergeOnStep<R extends Record> {
      *
      * @see DSL#condition(String, QueryPart...)
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> on(String sql, QueryPart... parts);
 }

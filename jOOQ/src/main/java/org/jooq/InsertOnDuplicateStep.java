@@ -41,13 +41,13 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
+// ...
 
 /**
  * This type is used for the {@link Insert}'s DSL API.
@@ -88,7 +88,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertFinalStep
      * <p>
      * These are the dialects that fulfill the above requirements:
      */
-    @Support({ CUBRID, DB2, HSQLDB, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL })
     InsertOnDuplicateSetStep<R> onDuplicateKeyUpdate();
 
     /**
@@ -133,6 +133,6 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertFinalStep
      * </tr>
      * </table>
      */
-    @Support({ CUBRID, DB2, HSQLDB, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL })
     InsertFinalStep<R> onDuplicateKeyIgnore();
 }

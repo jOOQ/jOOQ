@@ -70,10 +70,10 @@ class Nvl2<T> extends AbstractFunction<T> {
     @Override
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] */
-            case INGRES:
-            case ORACLE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case H2:
             case HSQLDB:
                 return function("nvl2", getDataType(), getArguments());

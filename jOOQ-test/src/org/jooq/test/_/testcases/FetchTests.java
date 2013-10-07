@@ -48,7 +48,7 @@ import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.count;
@@ -419,10 +419,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testFetchMany() throws Exception {
         switch (dialect().family()) {
-            /* [pro] */
-            case ORACLE:
-            case SYBASE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case SQLITE:
                 log.info("SKIPPING", "Fetch Many tests");
                 return;
@@ -439,14 +439,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testFetchWithoutResults() throws Exception {
-        /* [pro] */
-        switch (dialect()) {
-            case ASE:
-                log.info("SKIPPING", "Fetch without results tests");
-                return;
-        }
+        /* [pro] xx
+        xxxxxx xxxxxxxxxxx x
+            xxxx xxxx
+                xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxx xxxxxxx xxxxxxxx
+                xxxxxxx
+        x
 
-        /* [/pro] */
+        xx [/pro] */
         Result<Record> result =
         create().fetch(
             create().update(TAuthor())
@@ -473,10 +473,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFetchIntoWithAnnotations() throws Exception {
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
@@ -653,10 +653,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFetchIntoWithoutAnnotations() throws Exception {
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
@@ -741,10 +741,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
@@ -785,10 +785,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
@@ -852,10 +852,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "testRecordFromUpdatePK() tests");
@@ -950,10 +950,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
@@ -1015,10 +1015,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
@@ -1117,10 +1117,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
@@ -1310,10 +1310,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
@@ -2174,13 +2174,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(r2.get(0).getValue(TBook_TITLE()), r2.get(1).getValue(TBook_TITLE()));
         assertEquals(r3.get(0).getValue(TBook_TITLE()), r3.get(1).getValue(TBook_TITLE()));
 
-        /* [pro] */
-        // Some JDBC drivers already perform string interning...
-        if (dialect().family() == ORACLE) {
-            Assert.assertNotSame(r1.get(0).getValue(TBook_TITLE()), r1.get(1).getValue(TBook_TITLE()));
-        }
+        /* [pro] xx
+        xx xxxx xxxx xxxxxxx xxxxxxx xxxxxxx xxxxxx xxxxxxxxxxxx
+        xx xxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
 
-        /* [/pro] */
+        xx [/pro] */
         Assert.assertSame(r2.get(0).getValue(TBook_TITLE()), r2.get(1).getValue(TBook_TITLE()));
         Assert.assertSame(r3.get(0).getValue(TBook_TITLE()), r3.get(1).getValue(TBook_TITLE()));
 

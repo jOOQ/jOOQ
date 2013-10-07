@@ -58,21 +58,21 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
-import org.jooq.util.ase.ASEDataType;
+// ...
 import org.jooq.util.cubrid.CUBRIDDataType;
-import org.jooq.util.db2.DB2DataType;
+// ...
 import org.jooq.util.derby.DerbyDataType;
 import org.jooq.util.firebird.FirebirdDataType;
 import org.jooq.util.h2.H2DataType;
 import org.jooq.util.hsqldb.HSQLDBDataType;
-import org.jooq.util.ingres.IngresDataType;
+// ...
 import org.jooq.util.mariadb.MariaDBDataType;
 import org.jooq.util.mysql.MySQLDataType;
-import org.jooq.util.oracle.OracleDataType;
+// ...
 import org.jooq.util.postgres.PostgresDataType;
 import org.jooq.util.sqlite.SQLiteDataType;
-import org.jooq.util.sqlserver.SQLServerDataType;
-import org.jooq.util.sybase.SybaseDataType;
+// ...
+// ...
 
 
 
@@ -321,14 +321,14 @@ public final class SQLDataType {
         // TODO [#650] Make this more reliable using a data type registry
 
         try {
-            /* [pro] */
-            Class.forName(ASEDataType.class.getName());
-            Class.forName(DB2DataType.class.getName());
-            Class.forName(IngresDataType.class.getName());
-            Class.forName(OracleDataType.class.getName());
-            Class.forName(SQLServerDataType.class.getName());
-            Class.forName(SybaseDataType.class.getName());
-            /* [/pro] */
+            /* [pro] xx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xx [/pro] */
             Class.forName(CUBRIDDataType.class.getName());
             Class.forName(DerbyDataType.class.getName());
             Class.forName(FirebirdDataType.class.getName());

@@ -41,11 +41,11 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
+// ...
 
 import java.util.Map;
 
@@ -78,7 +78,7 @@ public interface MergeNotMatchedSetStep<R extends Record> {
      * Set values for <code>INSERT</code> in the <code>MERGE</code> statement's
      * <code>WHEN NOT MATCHED</code> clause.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -92,7 +92,7 @@ public interface MergeNotMatchedSetStep<R extends Record> {
      * Set values for <code>INSERT</code> in the <code>MERGE</code> statement's
      * <code>WHEN NOT MATCHED</INSERT> clause.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -106,7 +106,7 @@ public interface MergeNotMatchedSetStep<R extends Record> {
      * Set values for <code>INSERT</code> in the <code>MERGE</code> statement's
      * <code>WHEN NOT MATCHED</INSERT> clause.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     @Transition(
         name = "SET",
         args = {
@@ -124,7 +124,7 @@ public interface MergeNotMatchedSetStep<R extends Record> {
      * <code>Field&lt;T&gt;</code>. jOOQ will attempt to convert values to their
      * corresponding field's type.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeNotMatchedSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
 
     /**
@@ -136,6 +136,6 @@ public interface MergeNotMatchedSetStep<R extends Record> {
      *
      * @see #set(Map)
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeNotMatchedSetMoreStep<R> set(Record record);
 }

@@ -61,13 +61,13 @@ import static org.jooq.JoinType.NATURAL_JOIN;
 import static org.jooq.JoinType.NATURAL_LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
-import static org.jooq.SQLDialect.ASE;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
+// ...
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
@@ -235,19 +235,19 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     }
 
     private final boolean simulateCrossJoin(RenderContext context) {
-        return false/* [pro] */ || type == CROSS_JOIN && context.configuration().dialect() == ASE/* [/pro] */;
+        return false/* [pro] xx xx xxxx xx xxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx [/pro] */;
     }
 
     private final boolean simulateNaturalJoin(RenderContext context) {
-        return type == NATURAL_JOIN && asList(ASE, CUBRID, DB2, INGRES, SQLSERVER).contains(context.configuration().dialect().family());
+        return type == NATURAL_JOIN && asList(CUBRID).contains(context.configuration().dialect().family());
     }
 
     private final boolean simulateNaturalLeftOuterJoin(RenderContext context) {
-        return type == NATURAL_LEFT_OUTER_JOIN && asList(ASE, CUBRID, DB2, H2, INGRES, SQLSERVER).contains(context.configuration().dialect().family());
+        return type == NATURAL_LEFT_OUTER_JOIN && asList(CUBRID, H2).contains(context.configuration().dialect().family());
     }
 
     private final boolean simulateNaturalRightOuterJoin(RenderContext context) {
-        return type == NATURAL_RIGHT_OUTER_JOIN && asList(ASE, CUBRID, DB2, H2, INGRES, SQLSERVER).contains(context.configuration().dialect().family());
+        return type == NATURAL_RIGHT_OUTER_JOIN && asList(CUBRID, H2).contains(context.configuration().dialect().family());
     }
 
     private final void toSQLJoinCondition(RenderContext context) {
@@ -255,7 +255,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
 
             // [#582] Some dialects don't explicitly support a JOIN .. USING
             // syntax. This can be simulated with JOIN .. ON
-            if (asList(ASE, CUBRID, DB2, H2, SQLSERVER, SYBASE).contains(context.configuration().dialect().family())) {
+            if (asList(CUBRID, H2).contains(context.configuration().dialect().family())) {
                 boolean first = true;
                 for (Field<?> field : using) {
                     context.formatSeparator();
@@ -388,19 +388,19 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     // Join API
     // ------------------------------------------------------------------------
 
-    /* [pro] */
-    @Override
-    public final TableOnStep partitionBy(Field<?>... fields) {
-        return partitionBy(Utils.list(fields));
-    }
+    /* [pro] xx
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    @Override
-    public final TableOnStep partitionBy(Collection<? extends Field<?>> fields) {
-        rhsPartitionBy.addAll(fields);
-        return this;
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxx x
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxx
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     @Override
     public final JoinTable on(Condition... conditions) {
         condition.addConditions(conditions);

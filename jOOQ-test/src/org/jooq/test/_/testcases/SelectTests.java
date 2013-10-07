@@ -43,7 +43,7 @@ package org.jooq.test._.testcases;
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.countDistinct;
 import static org.jooq.impl.DSL.select;
@@ -455,13 +455,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Check again with limit / offset clauses
         // ---------------------------------------
         switch (dialect().family()) {
-            /* [pro] */
-            case INGRES:
-            case ORACLE:
-                log.info("SKIPPING", "LIMIT .. OFFSET .. FOR UPDATE");
-                break;
+            /* [pro] xx
+            xxxx xxxxxxx
+            xxxx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxx xxxxxx xx xxxxxx xx xxx xxxxxxxxx
+                xxxxxx
 
-            /* [/pro] */
+            xx [/pro] */
             default: {
                 Result<Record1<Integer>> result3 = create()
                     .select(TAuthor_ID())
@@ -481,12 +481,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         switch (dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case DB2:
-            case INGRES:
-            case SYBASE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case DERBY:
             case FIREBIRD:
             case HSQLDB:
@@ -496,9 +496,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 log.info("SKIPPING", "FOR UPDATE .. WAIT/NOWAIT tests");
                 break;
 
-            /* [pro] */
-            case ORACLE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxxxxx
+            xx [/pro] */
             case POSTGRES:
             default: {
                 Result<Record1<Integer>> r1a = create()
@@ -509,43 +509,43 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .fetch();
                 assertEquals(2, r1a.size());
 
-                /* [pro] */
-                if (dialect().family() == ORACLE) {
-                    Result<Record1<Integer>> r2a = create()
-                        .select(TAuthor_ID())
-                        .from(TAuthor())
-                        .forUpdate()
-                        .wait(2)
-                        .fetch();
-                    assertEquals(2, r2a.size());
-                    Result<Record1<Integer>> r3a = create()
-                        .select(TAuthor_ID())
-                        .from(TAuthor())
-                        .forUpdate()
-                        .skipLocked()
-                        .fetch();
-                    assertEquals(2, r3a.size());
+                /* [pro] xx
+                xx xxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+                    xxxxxxxxxxxxxxxxxxxxxxxx xxx x xxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxx
+                        xxxxxxxx
+                        xxxxxxxxx
+                    xxxxxxxxxxxxxxx xxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxx xxx x xxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxx
+                        xxxxxxxxxxxxx
+                        xxxxxxxxx
+                    xxxxxxxxxxxxxxx xxxxxxxxxxxx
 
-                    Result<A> r2b = create().selectFrom(TAuthor())
-                            .forUpdate()
-                            .of(TAuthor_LAST_NAME(), TAuthor_FIRST_NAME())
-                            .wait(2)
-                            .fetch();
-                    assertEquals(2, r2b.size());
-                    Result<A> r1b = create().selectFrom(TAuthor())
-                            .forUpdate()
-                            .of(TAuthor_LAST_NAME(), TAuthor_FIRST_NAME())
-                            .noWait()
-                            .fetch();
-                    assertEquals(2, r1b.size());
-                    Result<A> r3b = create().selectFrom(TAuthor())
-                            .forUpdate()
-                            .of(TAuthor_LAST_NAME(), TAuthor_FIRST_NAME())
-                            .skipLocked()
-                            .fetch();
-                    assertEquals(2, r3b.size());
-                }
-                /* [/pro] */
+                    xxxxxxxxx xxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxx
+                            xxxxxxxxx
+                    xxxxxxxxxxxxxxx xxxxxxxxxxxx
+                    xxxxxxxxx xxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxx
+                            xxxxxxxxx
+                    xxxxxxxxxxxxxxx xxxxxxxxxxxx
+                    xxxxxxxxx xxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxx
+                            xxxxxxxxx
+                    xxxxxxxxxxxxxxx xxxxxxxxxxxx
+                x
+                xx [/pro] */
             }
         }
 
@@ -585,9 +585,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         switch (dialect()) {
-            /* [pro] */
-            case ASE: // This should normally work. Why doesn't it?
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx xx xxxx xxxxxx xxxxxxxx xxxxx xxx xxxxxxx xxx
+            xx [/pro] */
             case MARIADB:
             case MYSQL:
                 log.info("SKIPPING", "FOR UPDATE OF tests");

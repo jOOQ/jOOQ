@@ -54,7 +54,7 @@ import static org.jooq.Clause.TABLE_ALIAS;
 import static org.jooq.Clause.UPDATE;
 import static org.jooq.Clause.UPDATE_UPDATE;
 import static org.jooq.Clause.UPDATE_WHERE;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.queryPart;
@@ -247,56 +247,56 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
            .where(TBook_TITLE().eq("changed"))
         ));
 
-        /* [pro] */
-        if (dialect().family() == ORACLE) {
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxx xx xxxxxxx x
 
-            // Cannot insert books for author_id = 2
-            try {
-                create(new OnlyAuthorIDEqual1())
-                    .insertInto(TBook())
-                    .set(TBook_ID(), 5)
-                    .set(TBook_AUTHOR_ID(), 2)
-                    .set(TBook_TITLE(), "1234")
-                    .set(TBook_PUBLISHED_IN(), 2000)
-                    .set(TBook_LANGUAGE_ID(), 1)
-                    .execute();
-                fail();
-            }
-            catch (DataAccessException expected) {
-                assertTrue(
-                    expected.getMessage(),
-                    expected.getMessage().toUpperCase().contains("ORA-01402"));
-            }
+            xx xxxxxx xxxxxx xxxxx xxx xxxxxxxxx x x
+            xxx x
+                xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxx xx
+                    xxxxxxxxxxxxxxxxxxxxxxx xx
+                    xxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxx xx
+                    xxxxxxxxxxx
+                xxxxxxx
+            x
+            xxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxx x
+                xxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            x
 
-            // Can insert books for author_id = 1
-            assertEquals(1,
-            create(new OnlyAuthorIDEqual1())
-                .insertInto(TBook())
-                .set(TBook_ID(), 5)
-                .set(TBook_AUTHOR_ID(), 1)
-                .set(TBook_TITLE(), "1234")
-                .set(TBook_PUBLISHED_IN(), 2000)
-                .set(TBook_LANGUAGE_ID(), 1)
-                .execute());
-            assertEquals(1, create().selectFrom(TBook()).where(TBook_ID().eq(5)).fetch().size());
+            xx xxx xxxxxx xxxxx xxx xxxxxxxxx x x
+            xxxxxxxxxxxxxxx
+            xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxx xx
+                xxxxxxxxxxxxxxxxxxxxxxx xx
+                xxxxxxxxxxxxxxxxxxx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxx xx
+                xxxxxxxxxxxx
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            // Cannot insert any new authors
-            try {
-                create(new OnlyAuthorIDEqual1())
-                    .insertInto(TAuthor())
-                    .set(TAuthor_ID(), 3)
-                    .set(TAuthor_FIRST_NAME(), "Jon")
-                    .set(TAuthor_LAST_NAME(), "Doe")
-                    .execute();
-                fail();
-            }
-            catch (DataAccessException expected) {
-                assertTrue(
-                    expected.getMessage(),
-                    expected.getMessage().toUpperCase().contains("ORA-01402"));
-            }
-        }
-        /* [/pro] */
+            xx xxxxxx xxxxxx xxx xxx xxxxxxx
+            xxx x
+                xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxx xx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+                    xxxxxxxxxxx
+                xxxxxxx
+            x
+            xxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxx x
+                xxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            x
+        x
+        xx [/pro] */
     }
 
     @Test
@@ -599,13 +599,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             if (context.renderContext() == null)
                 return;
 
-            /* [pro] */
-            // Add Oracle CHECK OPTIONs to INSERT statements, if applicable
-            if (context.configuration().dialect().family() == ORACLE) {
-                patchCheckOption(context, TBook(), TBook_AUTHOR_ID(), 1);
-                patchCheckOption(context, TAuthor(), TAuthor_ID(), 1);
-            }
-            /* [/pro] */
+            /* [pro] xx
+            xx xxx xxxxxx xxxxx xxxxxxx xx xxxxxx xxxxxxxxxxx xx xxxxxxxxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxx xxx
+                xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxx xxx
+            x
+            xx [/pro] */
         }
 
         @Override
@@ -622,42 +622,42 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             super.visitEnd(context);
         }
 
-        /* [pro] */
-        private <E> void patchCheckOption(
-                final VisitContext context,
-                final Table<?> table,
-                final Field<E> field,
-                final E... values)
-        {
-            if (context.queryPart() == table) {
+        /* [pro] xx
+        xxxxxxx xxx xxxx xxxxxxxxxxxxxxxxx
+                xxxxx xxxxxxxxxxxx xxxxxxxx
+                xxxxx xxxxxxxx xxxxxx
+                xxxxx xxxxxxxx xxxxxx
+                xxxxx xxxx xxxxxxx
+        x
+            xx xxxxxxxxxxxxxxxxxxxx xx xxxxxx x
 
-                // ... within a SQL INSERT INTO clause
-                List<Clause> clauses = subselectClauses(context);
-                if (clauses.contains(INSERT_INSERT_INTO)
+                xx xxx xxxxxx x xxx xxxxxx xxxx xxxxxx
+                xxxxxxxxxxxx xxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxx
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    // But avoid recursion!
-                    && !clauses.contains(CUSTOM)) {
+                    xx xxx xxxxx xxxxxxxxxx
+                    xx xxxxxxxxxxxxxxxxxxxxxxxxxx x
 
-                    // ... then, replace the table by an equivalent
-                    // view with a CHECK OPTION clause
-                    context.queryPart(new CustomQueryPart() {
-                        @Override
-                        public void toSQL(RenderContext ctx) {
-                            ParamType previous = ctx.paramType();
-                            ctx.paramType(INLINED)
-                               .visit(queryPart(
-                                   "(SELECT * FROM {0} WHERE {1} WITH CHECK OPTION)",
-                                   table,
-                                   field.in(values).or(field.isNull())
-                                ))
-                               .paramType(previous);
-                        }
-                    });
-                }
-            }
-        }
+                    xx xxx xxxxx xxxxxxx xxx xxxxx xx xx xxxxxxxxxx
+                    xx xxxx xxxx x xxxxx xxxxxx xxxxxx
+                    xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx x
+                        xxxxxxxxx
+                        xxxxxx xxxx xxxxxxxxxxxxxxxxxxx xxxx x
+                            xxxxxxxxx xxxxxxxx x xxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxx
+                               xxxxxxxxxxxxxxxxx
+                                   xxxxxxxx x xxxx xxx xxxxx xxx xxxx xxxxx xxxxxxxxx
+                                   xxxxxx
+                                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                xx
+                               xxxxxxxxxxxxxxxxxxxxx
+                        x
+                    xxx
+                x
+            x
+        x
 
-        /* [/pro] */
+        xx [/pro] */
         private <E> void pushConditions(VisitContext context, Table<?> table, Field<E> field, E... values) {
 
             // Check if we're visiting the given table

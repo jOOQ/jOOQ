@@ -150,14 +150,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case HSQLDB:
             case DERBY:
 
-            /* [pro] */
-            // Ingres has smoe weird issue, claiming that NEXT VALUE was not
-            // requested before CURRENT VALUE
-            case INGRES:
-                log.info("SKIPPING", "Sequence CURRVAL tests");
-                break;
+            /* [pro] xx
+            xx xxxxxx xxx xxxx xxxxx xxxxxx xxxxxxxx xxxx xxxx xxxxx xxx xxx
+            xx xxxxxxxxx xxxxxx xxxxxxx xxxxx
+            xxxx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxx xxxxxxxx
+                xxxxxx
 
-            /* [/pro] */
+            xx [/pro] */
             default:
                 currval = sequence.currval();
                 assertEquals("5", "" + create().select(currval).fetchOne(currval));

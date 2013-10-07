@@ -41,7 +41,7 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 
 import org.jooq.api.annotation.State;
 import org.jooq.impl.DSL;
@@ -95,14 +95,14 @@ public interface SelectConnectByConditionStep<R extends Record> extends SelectSt
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     SelectConnectByConditionStep<R> and(Condition condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     SelectConnectByConditionStep<R> and(Field<Boolean> condition);
 
     /**
@@ -116,7 +116,7 @@ public interface SelectConnectByConditionStep<R extends Record> extends SelectSt
      *
      * @see DSL#condition(String)
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     SelectConnectByConditionStep<R> and(String sql);
 
     /**
@@ -130,7 +130,7 @@ public interface SelectConnectByConditionStep<R extends Record> extends SelectSt
      *
      * @see DSL#condition(String, Object...)
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     SelectConnectByConditionStep<R> and(String sql, Object... bindings);
 
     /**
@@ -144,7 +144,7 @@ public interface SelectConnectByConditionStep<R extends Record> extends SelectSt
      *
      * @see DSL#condition(String, QueryPart...)
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     SelectConnectByConditionStep<R> and(String sql, QueryPart... parts);
 
 }

@@ -40,7 +40,7 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 
 import org.jooq.api.annotation.State;
@@ -91,22 +91,22 @@ import org.jooq.api.annotation.Transition;
 @State
 public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionStep<R> {
 
-    /* [pro] */
-    /**
-     * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
-     * the end of the query.
-     * <p>
-     * Be careful not to confuse this with {@link Object#wait(long)} !
-     *
-     * @see SelectQuery#setForUpdateWait(int) see LockProvider for more details
-     */
-    @Support(ORACLE)
-    @Transition(
-        name = "WAIT",
-        args = "Integer"
-    )
-    SelectOptionStep<R> wait(int seconds);
-    /* [/pro] */
+    /* [pro] xx
+    xxx
+     x xxx x xxxxxxxxxxxxxxxxx xxxxxx xx xxx xxxxxxxxx xxxxxxxxxxxxx xxxxxx xx
+     x xxx xxx xx xxx xxxxxx
+     x xxx
+     x xx xxxxxxx xxx xx xxxxxxx xxxx xxxx xxxxxx xxxxxxxxxxxxxxxxxx x
+     x
+     x xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxx xxx xxxx xxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxx
+        xxxx x xxxxxxxxx
+    x
+    xxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxx
+    xx [/pro] */
 
     /**
      * Add a <code>NOWAIT</code> clause to the <code>FOR UPDATE</code> clause at
@@ -114,24 +114,24 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
      *
      * @see SelectQuery#setForUpdateNoWait() see LockProvider for more details
      */
-    @Support({ ORACLE, POSTGRES })
+    @Support({ POSTGRES })
     @Transition(
         name = "NOWAIT"
     )
     SelectOptionStep<R> noWait();
 
-    /* [pro] */
-    /**
-     * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
-     * the end of the query.
-     *
-     * @see SelectQuery#setForUpdateSkipLocked() see LockProvider for more
-     *      details
-     */
-    @Support(ORACLE)
-    @Transition(
-        name = "SKIP LOCKED"
-    )
-    SelectOptionStep<R> skipLocked();
-    /* [/pro] */
+    /* [pro] xx
+    xxx
+     x xxx x xxxxxxxxxxxxxxxxx xxxxxx xx xxx xxxxxxxxx xxxxxxxxxxxxx xxxxxx xx
+     x xxx xxx xx xxx xxxxxx
+     x
+     x xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxx xxx xxxx
+     x      xxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxxxxxxxx
+        xxxx x xxxxx xxxxxxx
+    x
+    xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
+    xx [/pro] */
 }

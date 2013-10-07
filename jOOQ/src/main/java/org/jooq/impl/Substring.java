@@ -77,40 +77,40 @@ class Substring extends AbstractFunction<String> {
                 }
             }
 
-            /* [pro] */
-            // Sybase ASE and SQL Server requires 3 arguments
-            case ASE:
-            case SQLSERVER: {
-                if (getArguments().length == 2) {
-                    return function(functionName,
-                        SQLDataType.VARCHAR, getArguments()[0],
-                        getArguments()[1],
-                        inline(Integer.MAX_VALUE));
-                }
+            /* [pro] xx
+            xx xxxxxx xxx xxx xxx xxxxxx xxxxxxxx x xxxxxxxxx
+            xxxx xxxx
+            xxxx xxxxxxxxxx x
+                xx xxxxxxxxxxxxxxxxxxxxxx xx xx x
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                x
 
-                // Default behaviour
-                else {
-                    break;
-                }
-            }
+                xx xxxxxxx xxxxxxxxx
+                xxxx x
+                    xxxxxx
+                x
+            x
 
-            // [#722] For undocumented reasons, Ingres needs explicit casting
-            case INGRES: {
-                if (getArguments().length == 2) {
-                    return field("{substring}({0}, {cast}({1} {as integer}))",
-                        SQLDataType.VARCHAR,
-                        getArguments());
-                }
-                else {
-                    return field("{substring}({0}, {cast}({1} {as integer}), {cast}({2} {as integer}))",
-                        SQLDataType.VARCHAR,
-                        getArguments());
-                }
-            }
+            xx xxxxxx xxx xxxxxxxxxxxx xxxxxxxx xxxxxx xxxxx xxxxxxxx xxxxxxx
+            xxxx xxxxxxx x
+                xx xxxxxxxxxxxxxxxxxxxxxx xx xx x
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxx xxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxx
+                x
+                xxxx x
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxx xxxxxxxxxx xxxxxxxxxx xxx xxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxx
+                x
+            x
 
-            case DB2:
-            case ORACLE:
-            /* [/pro] */
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case DERBY:
             case SQLITE:
                 functionName = "substr";

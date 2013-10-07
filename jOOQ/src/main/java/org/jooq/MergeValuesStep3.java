@@ -41,12 +41,12 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
+// ...
 
 import java.util.Collection;
 
@@ -71,19 +71,19 @@ public interface MergeValuesStep3<R extends Record, T1, T2, T3> {
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     Merge<R> values(T1 value1, T2 value2, T3 value3);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     Merge<R> values(Field<T1> value1, Field<T2> value2, Field<T3> value3);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     Merge<R> values(Collection<?> values);
 
     /**
@@ -95,6 +95,6 @@ public interface MergeValuesStep3<R extends Record, T1, T2, T3> {
      * <code>INTO</code> clause:
      * {@link DSLContext#mergeInto(Table, Field, Field, Field)}
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     Merge<R> select(Select<? extends Record3<T1, T2, T3>> select);
 }

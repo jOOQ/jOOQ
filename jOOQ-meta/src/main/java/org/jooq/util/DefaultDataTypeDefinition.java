@@ -44,7 +44,7 @@ package org.jooq.util;
 import static org.jooq.impl.DefaultDataType.normalise;
 
 import org.jooq.SQLDialect;
-import org.jooq.util.oracle.OracleDataType;
+// ...
 
 
 /**
@@ -153,16 +153,16 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
     @Override
     public final boolean isGenericNumberType() {
-        /* [pro] */
-        switch (getDialect().family()) {
-            case ORACLE: {
-                return (OracleDataType.NUMBER.getTypeName().equalsIgnoreCase(typeName)
-                    && precision == 0
-                    && scale == 0);
-            }
-        }
+        /* [pro] xx
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxx x
+            xxxx xxxxxxx x
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xx xxxxxxxxx xx x
+                    xx xxxxx xx xxx
+            x
+        x
 
-        /* [/pro] */
+        xx [/pro] */
         return false;
     }
 

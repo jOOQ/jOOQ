@@ -273,14 +273,14 @@ class MetaImpl implements Meta, Serializable {
                         types = new String[] { "TABLE", "VIEW" };
                         break;
 
-                    /* [pro] */
-                    // [#2448] Avoid returning Oracle table SYNONYMs.
-                    // Note: "MATERIALIZED VIEW" is not included, as they are also
-                    // returned as "TABLE" by Oracle JDBC
-                    case ORACLE:
-                        types = new String[] { "TABLE", "VIEW" };
-                        break;
-                    /* [/pro] */
+                    /* [pro] xx
+                    xx xxxxxxx xxxxx xxxxxxxxx xxxxxx xxxxx xxxxxxxxx
+                    xx xxxxx xxxxxxxxxxxxx xxxxx xx xxx xxxxxxxxx xx xxxx xxx xxxx
+                    xx xxxxxxxx xx xxxxxxx xx xxxxxx xxxx
+                    xxxx xxxxxxx
+                        xxxxx x xxx xxxxxxxx x xxxxxxxx xxxxxx xx
+                        xxxxxx
+                    xx [/pro] */
                 }
 
                 ResultSet rs;

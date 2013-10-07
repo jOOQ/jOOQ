@@ -67,21 +67,21 @@ class Replace extends AbstractFunction<String> {
 
         // [#861] Most dialects don't ship with a two-argument replace function:
         switch (configuration.dialect().family()) {
-            /* [pro] */
-            case ASE: {
-                if (args.length == 2) {
-                    return function("str_replace", VARCHAR, args[0], args[1], val(null));
-                }
-                else {
-                    return function("str_replace", VARCHAR, args);
-                }
-            }
+            /* [pro] xx
+            xxxx xxxx x
+                xx xxxxxxxxxxxx xx xx x
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxxxxx
+                x
+                xxxx x
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxx
+                x
+            x
 
-            case DB2:
-            case INGRES:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case FIREBIRD:
             case HSQLDB:
             case MARIADB:

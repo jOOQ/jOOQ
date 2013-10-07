@@ -89,13 +89,13 @@ public interface DataType<T> extends Serializable {
      */
     DataType<T[]> getArrayDataType();
 
-    /* [pro] */
-    /**
-     * Retrieve the data type for an Oracle-style ARRAY of this data type.
-     */
-    <A extends ArrayRecord<T>> DataType<A> asArrayDataType(Class<A> arrayDataType);
+    /* [pro] xx
+    xxx
+     x xxxxxxxx xxx xxxx xxxx xxx xx xxxxxxxxxxxx xxxxx xx xxxx xxxx xxxxx
+     xx
+    xx xxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
 
-    /* [/pro] */
+    xx [/pro] */
     /**
      * Retrieve the data type for a given enum data type.
      */

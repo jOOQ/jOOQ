@@ -40,22 +40,22 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.ASE;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.INGRES;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SQLSERVER2012;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
+// ...
 
 import java.math.BigInteger;
 import java.sql.Connection;
@@ -3603,7 +3603,7 @@ public interface DSLContext {
      * statement without field specification. See also
      * {@link #mergeInto(Table, Field...)}
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     @Transition(
         name = "MERGE INTO",
         args = "Table"
@@ -3632,7 +3632,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1> MergeKeyStep1<R, T1> mergeInto(Table<R> table, Field<T1> field1);
 
     /**
@@ -3656,7 +3656,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2> MergeKeyStep2<R, T1, T2> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2);
 
     /**
@@ -3680,7 +3680,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3> MergeKeyStep3<R, T1, T2, T3> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3);
 
     /**
@@ -3704,7 +3704,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4> MergeKeyStep4<R, T1, T2, T3, T4> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
 
     /**
@@ -3728,7 +3728,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4, T5> MergeKeyStep5<R, T1, T2, T3, T4, T5> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
 
     /**
@@ -3752,7 +3752,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4, T5, T6> MergeKeyStep6<R, T1, T2, T3, T4, T5, T6> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
     /**
@@ -3776,7 +3776,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7> MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
 
     /**
@@ -3800,7 +3800,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
 
     /**
@@ -3824,7 +3824,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
 
     /**
@@ -3848,7 +3848,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
 
     /**
@@ -3872,7 +3872,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
 
     /**
@@ -3896,7 +3896,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
 
     /**
@@ -3920,7 +3920,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
 
     /**
@@ -3944,7 +3944,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
 
     /**
@@ -3968,7 +3968,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
 
     /**
@@ -3992,7 +3992,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
 
     /**
@@ -4016,7 +4016,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
 
     /**
@@ -4040,7 +4040,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
 
     /**
@@ -4064,7 +4064,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
 
     /**
@@ -4088,7 +4088,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
 
     /**
@@ -4112,7 +4112,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
 
     /**
@@ -4136,7 +4136,7 @@ public interface DSLContext {
      * </table>
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
 
 // [jooq-tools] END [merge]
@@ -4161,7 +4161,7 @@ public interface DSLContext {
      * </tr>
      * </table>
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Field<?>... fields);
 
     /**
@@ -4169,7 +4169,7 @@ public interface DSLContext {
      *
      * @see #mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields);
 
     /**
@@ -4542,7 +4542,7 @@ public interface DSLContext {
      *         dialects, if no such number is available.
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ ASE, CUBRID, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, SQLITE })
     BigInteger lastID() throws DataAccessException;
 
     /**
@@ -4551,7 +4551,7 @@ public interface DSLContext {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     <T extends Number> T nextval(Sequence<T> sequence) throws DataAccessException;
 
     /**
@@ -4560,7 +4560,7 @@ public interface DSLContext {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, DB2, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, POSTGRES })
     <T extends Number> T currval(Sequence<T> sequence) throws DataAccessException;
 
     // -------------------------------------------------------------------------

@@ -42,7 +42,7 @@ package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
-import static org.jooq.SQLDialect.INGRES;
+// ...
 import static org.jooq.impl.DSL.currentDate;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.not;
@@ -404,12 +404,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // SQL standard (DATE, INTERVAL) OVERLAPS (DATE, INTERVAL) predicate
         // -----------------------------------------------------------------
-        /* [pro] */
-        if (asList(INGRES).contains(dialect())) {
-            log.info("SKIPPING", "Ingres INTERVAL OVERLAPS tests");
-        }
-        else
-        /* [/pro] */
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx
+        x
+        xxxx
+        xx [/pro] */
         {
             assertEquals(1, (int)
             create().selectOne()

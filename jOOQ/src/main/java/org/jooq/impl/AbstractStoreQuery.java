@@ -188,16 +188,16 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
     protected final void prepare(ExecuteContext ctx) throws SQLException {
         Connection connection = ctx.connection();
 
-        /* [pro] */
-        // Just in case, always set Sybase ASE statement mode to return
-        // Generated keys if client code wants to SELECT @@identity afterwards
-        if (ctx.configuration().dialect() == SQLDialect.ASE) {
-            ctx.statement(connection.prepareStatement(ctx.sql(), Statement.RETURN_GENERATED_KEYS));
-            return;
-        }
+        /* [pro] xx
+        xx xxxx xx xxxxx xxxxxx xxx xxxxxx xxx xxxxxxxxx xxxx xx xxxxxx
+        xx xxxxxxxxx xxxx xx xxxxxx xxxx xxxxx xx xxxxxx xxxxxxxxxx xxxxxxxxxx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxx
+        x
 
-        // Normal statement preparing if no values should be returned
-        else /* [/pro] */if (returning.isEmpty()) {
+        xx xxxxxx xxxxxxxxx xxxxxxxxx xx xx xxxxxx xxxxxx xx xxxxxxxx
+        xxxx xx [/pro] */if (returning.isEmpty()) {
             super.prepare(ctx);
             return;
         }
@@ -213,9 +213,9 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 case SQLITE:
                 // Sybase will select @@identity after the INSERT
                 case CUBRID:
-                /* [pro] */
-                case SYBASE:
-                /* [/pro] */
+                /* [pro] xx
+                xxxx xxxxxxx
+                xx [/pro] */
 
                     super.prepare(ctx);
                     return;
@@ -223,11 +223,11 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 // Some dialects can only return AUTO_INCREMENT values
                 // Other values have to be fetched in a second step
                 // [#1260] TODO CUBRID supports this, but there's a JDBC bug
-                /* [pro] */
-                case ASE:
-                case INGRES:
-                case SQLSERVER:
-                /* [/pro] */
+                /* [pro] xx
+                xxxx xxxx
+                xxxx xxxxxxx
+                xxxx xxxxxxxxxx
+                xx [/pro] */
                 case DERBY:
                 case H2:
                 case MARIADB:
@@ -236,10 +236,10 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                     return;
 
                 // The default is to return all requested fields directly
-                /* [pro] */
-                case DB2:
-                case ORACLE:
-                /* [/pro] */
+                /* [pro] xx
+                xxxx xxxx
+                xxxx xxxxxxx
+                xx [/pro] */
                 case HSQLDB:
                 default: {
                     List<String> names = new ArrayList<String>();
@@ -286,9 +286,9 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 // TODO [#832] Fix this. This might be a driver issue. JDBC
                 // Generated keys don't work with jconn3, but they seem to work
                 // with jTDS (which is used for Sybase ASE integration)
-                /* [pro] */
-                case SYBASE:
-                /* [/pro] */
+                /* [pro] xx
+                xxxx xxxxxxx
+                xx [/pro] */
                 case CUBRID: {
                     listener.executeStart(ctx);
                     result = ctx.statement().executeUpdate();
@@ -302,11 +302,11 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 // Some dialects can only retrieve "identity" (AUTO_INCREMENT) values
                 // Additional values have to be fetched explicitly
                 // [#1260] TODO CUBRID supports this, but there's a JDBC bug
-                /* [pro] */
-                case ASE:
-                case INGRES:
-                case SQLSERVER:
-                /* [/pro] */
+                /* [pro] xx
+                xxxx xxxx
+                xxxx xxxxxxx
+                xxxx xxxxxxxxxx
+                xx [/pro] */
                 case DERBY:
                 case H2:
                 case MARIADB:
@@ -350,10 +350,10 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 }
 
                 // These dialects have full JDBC support
-                /* [pro] */
-                case DB2:
-                case ORACLE:
-                /* [/pro] */
+                /* [pro] xx
+                xxxx xxxx
+                xxxx xxxxxxx
+                xx [/pro] */
                 case HSQLDB:
                 default: {
                     listener.executeStart(ctx);

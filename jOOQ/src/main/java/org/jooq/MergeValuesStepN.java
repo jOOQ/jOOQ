@@ -41,12 +41,12 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
+// ...
 
 import java.util.Collection;
 
@@ -73,7 +73,7 @@ public interface MergeValuesStepN<R extends Record> {
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     @Transition(
         name = "VALUES",
         args = "Object+"
@@ -83,7 +83,7 @@ public interface MergeValuesStepN<R extends Record> {
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     @Transition(
         name = "VALUES",
         args = "Field+"
@@ -93,7 +93,7 @@ public interface MergeValuesStepN<R extends Record> {
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     @Transition(
         name = "VALUES",
         args = "Field+"
@@ -110,7 +110,7 @@ public interface MergeValuesStepN<R extends Record> {
      * {@link DSLContext#mergeInto(Table, Field...)} or
      * {@link DSLContext#mergeInto(Table, Collection)}
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     @Transition(
         name = "SELECT",
         args = "Select"

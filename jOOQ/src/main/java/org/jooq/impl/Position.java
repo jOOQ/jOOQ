@@ -67,25 +67,25 @@ class Position extends AbstractFunction<Integer> {
     @Override
     final Field<Integer> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] */
-            case DB2:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xx [/pro] */
             case DERBY:
                 return function("locate", SQLDataType.INTEGER, search, in);
 
-            /* [pro] */
-            case INGRES:
-            case SYBASE:
-                return function("locate", SQLDataType.INTEGER, in, search);
+            /* [pro] xx
+            xxxx xxxxxxx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxx
 
-            case ORACLE:
-                return function("instr", SQLDataType.INTEGER, in, search);
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxx
 
-            case ASE:
-            case SQLSERVER:
-                return function("charindex", SQLDataType.INTEGER, search, in);
+            xxxx xxxx
+            xxxx xxxxxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx xxxx
 
-            /* [/pro] */
+            xx [/pro] */
             default:
                 return field("{position}({0} {in} {1})", SQLDataType.INTEGER, search, in);
         }

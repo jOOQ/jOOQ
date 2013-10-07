@@ -45,7 +45,7 @@ import static org.jooq.impl.DSL.fieldByName;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.ArrayRecord;
+// ...
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -90,21 +90,21 @@ class ArrayTable extends AbstractTable<Record> {
             arrayType = array.getDataType().getType().getComponentType();
         }
 
-        /* [pro] */
-        // [#1110] Keep track of element type information of Oracle VARRAY / TABLE types
-        else if (array instanceof ArrayConstant) {
-            arrayType = array.getDataType().getType();
-        }
+        /* [pro] xx
+        xx xxxxxxx xxxx xxxxx xx xxxxxxx xxxx xxxxxxxxxxx xx xxxxxx xxxxxx x xxxxx xxxxx
+        xxxx xx xxxxxx xxxxxxxxxx xxxxxxxxxxxxxx x
+            xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
 
-        // [#1111] Keep track of element type information of Oracle
-        // VARRAY / TABLE types returned from functions
-        else if (ArrayRecord.class.isAssignableFrom(array.getDataType().getType())) {
-            // TODO [#523] This information should be available in ARRAY meta-data
-            ArrayRecord<?> dummy = Utils.newArrayRecord((Class<ArrayRecord<?>>) array.getDataType().getType(), new DefaultConfiguration());
-            arrayType = dummy.getDataType().getType();
-        }
+        xx xxxxxxx xxxx xxxxx xx xxxxxxx xxxx xxxxxxxxxxx xx xxxxxx
+        xx xxxxxx x xxxxx xxxxx xxxxxxxx xxxx xxxxxxxxx
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xx xxxx xxxxxx xxxx xxxxxxxxxxx xxxxxx xx xxxxxxxxx xx xxxxx xxxxxxxxx
+            xxxxxxxxxxxxxx xxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
 
-        /* [/pro] */
+        xx [/pro] */
         // Is this case possible?
         else {
             arrayType = Object.class;
@@ -182,17 +182,17 @@ class ArrayTable extends AbstractTable<Record> {
 
     private final Table<Record> table(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] */
-            case ORACLE: {
-                if (array.getDataType().getType().isArray()) {
-                    return simulate().as(alias);
-                }
-                else {
-                    return new OracleArrayTable().as(alias);
-                }
-            }
+            /* [pro] xx
+            xxxx xxxxxxx x
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxx
+                x
+                xxxx x
+                    xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                x
+            x
 
-            /* [/pro] */
+            xx [/pro] */
             case H2: {
                 return new H2ArrayTable().as(alias);
             }
@@ -258,21 +258,21 @@ class ArrayTable extends AbstractTable<Record> {
         }
     }
 
-    /* [pro] */
-    private class OracleArrayTable extends DialectArrayTable {
+    /* [pro] xx
+    xxxxxxx xxxxx xxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxx x
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 1716687061980551706L;
+        xxx
+         x xxxxxxxxx xxx
+         xx
+        xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
 
-        @Override
-        public void toSQL(RenderContext context) {
-            context.keyword("table (").visit(array).sql(")");
-        }
-    }
+        xxxxxxxxx
+        xxxxxx xxxx xxxxxxxxxxxxxxxxxxx xxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     private abstract class DialectArrayTable extends AbstractTable<Record> {
 
         /**

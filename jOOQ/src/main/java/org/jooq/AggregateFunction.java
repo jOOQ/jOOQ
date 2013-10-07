@@ -40,11 +40,11 @@
  */
 package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
 
 import java.util.Collection;
 
@@ -80,113 +80,113 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * Server and Sybase.
      */
     @Override
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "OVER"
     )
     WindowPartitionByStep<T> over();
 
-    /* [pro] */
-    /**
-     * Restrict this aggregate function to <code>FIRST</code> values
-     * <p>
-     * An example: <code><pre>
-     * MAX(ID) KEEP (DENSE_RANK FIRST ORDER BY 1)
-     * </pre></code>
-     * <p>
-     * This clause is only available on
-     * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
-     */
-    @Support(ORACLE)
-    @Transition(
-        name = "KEEP DENSE_RANK FIRST ORDER BY",
-        args = "Field+"
-    )
-    WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Field<?>... fields);
+    /* [pro] xx
+    xxx
+     x xxxxxxxx xxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xxxxxx
+     x xxx
+     x xx xxxxxxxx xxxxxxxxxxx
+     x xxxxxxx xxxx xxxxxxxxxxx xxxxx xxxxx xx xx
+     x xxxxxxxxxxxxx
+     x xxx
+     x xxxx xxxxxx xx xxxx xxxxxxxxx xx
+     x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxxxxxxxx
+        xxxx x xxxxx xxxxxxxxxx xxxxx xxxxx xxxx
+        xxxx x xxxxxxxx
+    x
+    xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
-    /**
-     * Restrict this aggregate function to <code>FIRST</code> values
-     * <p>
-     * An example: <code><pre>
-     * MAX(ID) KEEP (DENSE_RANK FIRST ORDER BY 1)
-     * </pre></code>
-     * <p>
-     * This clause is only available on
-     * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
-     */
-    @Support(ORACLE)
-    @Transition(
-        name = "KEEP DENSE_RANK FIRST ORDER BY",
-        args = "SortField+"
-    )
-    WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(SortField<?>... fields);
+    xxx
+     x xxxxxxxx xxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xxxxxx
+     x xxx
+     x xx xxxxxxxx xxxxxxxxxxx
+     x xxxxxxx xxxx xxxxxxxxxxx xxxxx xxxxx xx xx
+     x xxxxxxxxxxxxx
+     x xxx
+     x xxxx xxxxxx xx xxxx xxxxxxxxx xx
+     x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxxxxxxxx
+        xxxx x xxxxx xxxxxxxxxx xxxxx xxxxx xxxx
+        xxxx x xxxxxxxxxxxx
+    x
+    xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
-    /**
-     * Restrict this aggregate function to <code>FIRST</code> values
-     * <p>
-     * An example: <code><pre>
-     * MAX(ID) KEEP (DENSE_RANK FIRST ORDER BY 1)
-     * </pre></code>
-     * <p>
-     * This clause is only available on
-     * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
-     */
-    @Support(ORACLE)
-    @Transition(
-        name = "KEEP DENSE_RANK FIRST ORDER BY",
-        args = "SortField+"
-    )
-    WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Collection<? extends SortField<?>> fields);
+    xxx
+     x xxxxxxxx xxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xxxxxx
+     x xxx
+     x xx xxxxxxxx xxxxxxxxxxx
+     x xxxxxxx xxxx xxxxxxxxxxx xxxxx xxxxx xx xx
+     x xxxxxxxxxxxxx
+     x xxx
+     x xxxx xxxxxx xx xxxx xxxxxxxxx xx
+     x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxxxxxxxx
+        xxxx x xxxxx xxxxxxxxxx xxxxx xxxxx xxxx
+        xxxx x xxxxxxxxxxxx
+    x
+    xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxx
 
-    /**
-     * Restrict this aggregate function to <code>FIRST</code> values
-     * <p>
-     * An example: <code><pre>
-     * MAX(ID) KEEP (DENSE_RANK LAST ORDER BY 1)
-     * </pre></code>
-     * <p>
-     * This clause is only available on
-     * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
-     */
-    @Support(ORACLE)
-    @Transition(
-        name = "KEEP DENSE_RANK LAST ORDER BY",
-        args = "Field+"
-    )
-    WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Field<?>... fields);
+    xxx
+     x xxxxxxxx xxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xxxxxx
+     x xxx
+     x xx xxxxxxxx xxxxxxxxxxx
+     x xxxxxxx xxxx xxxxxxxxxxx xxxx xxxxx xx xx
+     x xxxxxxxxxxxxx
+     x xxx
+     x xxxx xxxxxx xx xxxx xxxxxxxxx xx
+     x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxxxxxxxx
+        xxxx x xxxxx xxxxxxxxxx xxxx xxxxx xxxx
+        xxxx x xxxxxxxx
+    x
+    xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
-    /**
-     * Restrict this aggregate function to <code>FIRST</code> values
-     * <p>
-     * An example: <code><pre>
-     * MAX(ID) KEEP (DENSE_RANK LAST ORDER BY 1)
-     * </pre></code>
-     * <p>
-     * This clause is only available on
-     * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
-     */
-    @Support(ORACLE)
-    @Transition(
-        name = "KEEP DENSE_RANK LAST ORDER BY",
-        args = "SortField+"
-    )
-    WindowBeforeOverStep<T> keepDenseRankLastOrderBy(SortField<?>... fields);
+    xxx
+     x xxxxxxxx xxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xxxxxx
+     x xxx
+     x xx xxxxxxxx xxxxxxxxxxx
+     x xxxxxxx xxxx xxxxxxxxxxx xxxx xxxxx xx xx
+     x xxxxxxxxxxxxx
+     x xxx
+     x xxxx xxxxxx xx xxxx xxxxxxxxx xx
+     x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxxxxxxxx
+        xxxx x xxxxx xxxxxxxxxx xxxx xxxxx xxxx
+        xxxx x xxxxxxxxxxxx
+    x
+    xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
-    /**
-     * Restrict this aggregate function to <code>FIRST</code> values
-     * <p>
-     * An example: <code><pre>
-     * MAX(ID) KEEP (DENSE_RANK LAST ORDER BY 1)
-     * </pre></code>
-     * <p>
-     * This clause is only available on
-     * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
-     */
-    @Support(ORACLE)
-    @Transition(
-        name = "KEEP DENSE_RANK LAST ORDER BY",
-        args = "SortField+"
-    )
-    WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Collection<? extends SortField<?>> fields);
-    /* [/pro] */
+    xxx
+     x xxxxxxxx xxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xxxxxx
+     x xxx
+     x xx xxxxxxxx xxxxxxxxxxx
+     x xxxxxxx xxxx xxxxxxxxxxx xxxx xxxxx xx xx
+     x xxxxxxxxxxxxx
+     x xxx
+     x xxxx xxxxxx xx xxxx xxxxxxxxx xx
+     x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxxxxxxxx
+        xxxx x xxxxx xxxxxxxxxx xxxx xxxxx xxxx
+        xxxx x xxxxxxxxxxxx
+    x
+    xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxx
+    xx [/pro] */
 }

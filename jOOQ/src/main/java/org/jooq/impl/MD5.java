@@ -66,11 +66,11 @@ class MD5 extends AbstractFunction<String> {
     @Override
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] */
-            case ORACLE:
-                return field("{lower}({rawtohex}({sys}.{dbms_crypto}.{hash}({utl_raw}.{cast_to_raw}({0}), 2)))", SQLDataType.VARCHAR, argument);
+            /* [pro] xx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxx
 
-            /* [/pro] */
+            xx [/pro] */
             case MARIADB:
             case MYSQL:
             default:

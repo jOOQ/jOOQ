@@ -41,21 +41,21 @@
 
 package org.jooq;
 
-import static org.jooq.SQLDialect.ASE;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.INGRES;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -66,7 +66,7 @@ import org.jooq.api.annotation.Transition;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 import org.jooq.types.Interval;
-import org.jooq.util.oracle.OracleDSL;
+// ...
 
 /**
  * A field used in tables and conditions
@@ -1104,7 +1104,7 @@ public interface Field<T> extends GroupField {
      *
      * @see #likeRegex(String)
      */
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "LIKE_REGEX",
         args = "Field",
@@ -1119,7 +1119,7 @@ public interface Field<T> extends GroupField {
      *
      * @see #likeRegex(String)
      */
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "LIKE_REGEX",
         args = "Field",
@@ -1134,7 +1134,7 @@ public interface Field<T> extends GroupField {
      *
      * @see #likeRegex(String)
      */
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "NOT LIKE_REGEX",
         args = "Field",
@@ -1149,7 +1149,7 @@ public interface Field<T> extends GroupField {
      *
      * @see #likeRegex(Field)
      */
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "NOT LIKE_REGEX",
         args = "Field",
@@ -1473,7 +1473,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#escape(Field, char)
      * @see #like(Field, char)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "CONTAINS",
         args = "Field",
@@ -1513,7 +1513,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#escape(Field, char)
      * @see #like(Field, char)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "STARTS WITH",
         args = "Field",
@@ -1553,7 +1553,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#escape(Field, char)
      * @see #like(Field, char)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "ENDS WITH",
         args = "Field",
@@ -2045,7 +2045,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "EQUAL",
         args = "QuantifiedSelect",
@@ -2102,7 +2102,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "EQ",
         args = "QuantifiedSelect",
@@ -2138,7 +2138,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition notEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2180,7 +2180,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition ne(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2211,7 +2211,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition lessThan(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2248,7 +2248,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition lt(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2279,7 +2279,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition lessOrEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2316,7 +2316,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition le(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2347,7 +2347,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition greaterThan(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2384,7 +2384,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition gt(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2415,7 +2415,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition greaterOrEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2452,7 +2452,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition ge(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2572,7 +2572,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#sqrt(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> sqrt();
 
     /**
@@ -2582,7 +2582,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#exp(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> exp();
 
     /**
@@ -2592,7 +2592,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#ln(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> ln();
 
     /**
@@ -2602,7 +2602,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#log(Field, int)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> log(int base);
 
     /**
@@ -2612,7 +2612,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#power(Field, Number)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> pow(Number exponent);
 
     /**
@@ -2620,7 +2620,7 @@ public interface Field<T> extends GroupField {
      *
      * @see #power(Number)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> power(Number exponent);
 
     /**
@@ -2630,7 +2630,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#acos(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> acos();
 
     /**
@@ -2640,7 +2640,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#asin(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> asin();
 
     /**
@@ -2650,7 +2650,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#atan(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> atan();
 
     /**
@@ -2660,7 +2660,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#atan2(Field, Number)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> atan2(Number y);
 
     /**
@@ -2670,7 +2670,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#atan2(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> atan2(Field<? extends Number> y);
 
     /**
@@ -2680,7 +2680,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#cos(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> cos();
 
     /**
@@ -2690,7 +2690,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#sin(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> sin();
 
     /**
@@ -2700,7 +2700,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#tan(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> tan();
 
     /**
@@ -2710,7 +2710,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#cot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> cot();
 
     /**
@@ -2720,7 +2720,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#sinh(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> sinh();
 
     /**
@@ -2730,7 +2730,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#cosh(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> cosh();
 
     /**
@@ -2740,7 +2740,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#tanh(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> tanh();
 
     /**
@@ -2750,7 +2750,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#coth(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> coth();
 
     /**
@@ -2840,7 +2840,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#median(Field)
      */
-    @Support({ HSQLDB, ORACLE, SYBASE })
+    @Support({ HSQLDB })
     Field<BigDecimal> median();
 
     /**
@@ -2850,7 +2850,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#stddevPop(Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> stddevPop();
 
     /**
@@ -2860,7 +2860,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#stddevSamp(Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> stddevSamp();
 
     /**
@@ -2870,7 +2870,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#varPop(Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> varPop();
 
     /**
@@ -2880,7 +2880,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#varSamp(Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> varSamp();
 
     /**
@@ -2891,7 +2891,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#count(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<Integer> countOver();
 
     /**
@@ -2902,7 +2902,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#max(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<T> maxOver();
 
     /**
@@ -2913,7 +2913,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#min(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<T> minOver();
 
     /**
@@ -2924,7 +2924,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#sum(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<BigDecimal> sumOver();
 
     /**
@@ -2935,7 +2935,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#avg(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<BigDecimal> avgOver();
 
     /**
@@ -2946,7 +2946,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#firstValue(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ POSTGRES })
     WindowIgnoreNullsStep<T> firstValue();
 
     /**
@@ -2957,7 +2957,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lastValue(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ POSTGRES })
     WindowIgnoreNullsStep<T> lastValue();
 
     /**
@@ -2968,7 +2968,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lead(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER })
+    @Support({ POSTGRES })
     WindowIgnoreNullsStep<T> lead();
 
     /**
@@ -2979,7 +2979,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lead(Field, int)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER })
+    @Support({ POSTGRES })
     WindowIgnoreNullsStep<T> lead(int offset);
 
     /**
@@ -2990,7 +2990,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lead(Field, int, Object)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER })
+    @Support({ POSTGRES })
     WindowIgnoreNullsStep<T> lead(int offset, T defaultValue);
 
     /**
@@ -3001,7 +3001,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lead(Field, int, Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER })
+    @Support({ POSTGRES })
     WindowIgnoreNullsStep<T> lead(int offset, Field<T> defaultValue);
 
     /**
@@ -3012,7 +3012,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lag(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER })
+    @Support({ POSTGRES })
     WindowIgnoreNullsStep<T> lag();
 
     /**
@@ -3023,7 +3023,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lag(Field, int)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER })
+    @Support({ POSTGRES })
     WindowIgnoreNullsStep<T> lag(int offset);
 
     /**
@@ -3034,7 +3034,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lag(Field, int, Object)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER })
+    @Support({ POSTGRES })
     WindowIgnoreNullsStep<T> lag(int offset, T defaultValue);
 
     /**
@@ -3045,7 +3045,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lag(Field, int, Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER })
+    @Support({ POSTGRES })
     WindowIgnoreNullsStep<T> lag(int offset, Field<T> defaultValue);
 
     /**
@@ -3056,7 +3056,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#stddevPop(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<BigDecimal> stddevPopOver();
 
     /**
@@ -3067,7 +3067,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#stddevSamp(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<BigDecimal> stddevSampOver();
 
     /**
@@ -3078,7 +3078,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#varPop(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<BigDecimal> varPopOver();
 
     /**
@@ -3089,7 +3089,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#varSamp(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<BigDecimal> varSampOver();
 
     /**
@@ -3157,7 +3157,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#rpad(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> rpad(Field<? extends Number> length);
 
     /**
@@ -3167,7 +3167,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#rpad(Field, int)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> rpad(int length);
 
     /**
@@ -3177,7 +3177,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#rpad(Field, Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> rpad(Field<? extends Number> length, Field<String> character);
 
     /**
@@ -3187,7 +3187,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#rpad(Field, int, char)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> rpad(int length, char character);
 
     /**
@@ -3197,7 +3197,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#lpad(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> lpad(Field<? extends Number> length);
 
     /**
@@ -3207,7 +3207,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#lpad(Field, int)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> lpad(int length);
 
     /**
@@ -3217,7 +3217,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#lpad(Field, Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> lpad(Field<? extends Number> length, Field<String> character);
 
     /**
@@ -3227,7 +3227,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#lpad(Field, int, char)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> lpad(int length, char character);
 
     /**
@@ -3237,7 +3237,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#repeat(Field, int)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> repeat(Number count);
 
     /**
@@ -3247,7 +3247,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#repeat(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> repeat(Field<? extends Number> count);
 
     /**
@@ -3257,7 +3257,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#replace(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> replace(Field<String> search);
 
     /**
@@ -3267,7 +3267,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#replace(Field, String)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> replace(String search);
 
     /**
@@ -3277,7 +3277,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#replace(Field, Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> replace(Field<String> search, Field<String> replace);
 
     /**
@@ -3287,7 +3287,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#replace(Field, String, String)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> replace(String search, String replace);
 
     /**
@@ -3297,7 +3297,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#position(Field, String)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<Integer> position(String search);
 
     /**
@@ -3307,7 +3307,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#position(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<Integer> position(Field<String> search);
 
     /**
@@ -3317,7 +3317,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#ascii(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<Integer> ascii();
 
     /**

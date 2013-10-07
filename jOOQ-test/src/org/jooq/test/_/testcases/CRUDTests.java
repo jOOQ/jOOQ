@@ -407,12 +407,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("1985", book1.getValue(TBook_TITLE()));
         assertEquals("1985", book2.getValue(TBook_TITLE()));
 
-        /* [pro] */
-        // No ON DELETE CASCADE constraints for Sybase ASE
-        if (dialect() == SQLDialect.ASE) {
-            create().truncate(table("t_book_to_book_store")).execute();
-        }
-        /* [/pro] */
+        /* [pro] xx
+        xx xx xx xxxxxx xxxxxxx xxxxxxxxxxx xxx xxxxxx xxx
+        xx xxxxxxxxxx xx xxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+        xx [/pro] */
 
         // Delete the modified record
         assertEquals(1, book1.delete());
@@ -573,15 +573,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(null, create().fetchOne(TBookStore(), TBookStore_NAME().equal("Amazon")));
 
         switch (dialect().family()) {
-            /* [pro] */
-            // Sybase ASE and SQL server do not allow for explicitly setting
-            // values on IDENTITY columns
-            case ASE:
-            case SQLSERVER:
-                log.info("SKIPPING", "Storing previously deleted UpdatableRecords");
-                break;
+            /* [pro] xx
+            xx xxxxxx xxx xxx xxx xxxxxx xx xxx xxxxx xxx xxxxxxxxxx xxxxxxx
+            xx xxxxxx xx xxxxxxxx xxxxxxx
+            xxxx xxxx
+            xxxx xxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxx
+                xxxxxx
 
-            /* [/pro] */
+            xx [/pro] */
             default:
                 store.store();
                 assertEquals("Amazon", store.getValue(TBookStore_NAME()));
@@ -689,12 +689,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testStoreWithOptimisticLock() throws Exception {
         jOOQAbstractTest.reset = false;
 
-        /* [pro] */
-        // No ON DELETE CASCADE constraints for Sybase ASE
-        if (dialect() == SQLDialect.ASE) {
-            create().truncate(table("t_book_to_book_store")).execute();
-        }
-        /* [/pro] */
+        /* [pro] xx
+        xx xx xx xxxxxx xxxxxxx xxxxxxxxxxx xxx xxxxxx xxx
+        xx xxxxxxxxxx xx xxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+        xx [/pro] */
 
         testStoreWithOptimisticLock0(TBook(), TBook_ID(), TBook_TITLE());
 

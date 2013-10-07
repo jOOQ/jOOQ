@@ -42,15 +42,15 @@ package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
 import static org.jooq.impl.DSL.count;
-import static org.jooq.impl.DSL.cube;
-import static org.jooq.impl.DSL.grouping;
-import static org.jooq.impl.DSL.groupingId;
-import static org.jooq.impl.DSL.groupingSets;
+// ...
+// ...
+// ...
+// ...
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.rollup;
 import static org.jooq.impl.DSL.selectOne;
@@ -186,10 +186,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testGroupByCubeRollup() throws Exception {
         switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case DERBY:
             case FIREBIRD:
             case H2:
@@ -228,83 +228,83 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             return;
         }
 
-        /* [pro] */
-        // ROLLUP clause
-        // -------------
-        Field<Integer> groupingId = groupingId(TBook_ID(), TBook_AUTHOR_ID());
-        if (asList(DB2, SYBASE).contains(dialect()))
-            groupingId = one();
+        /* [pro] xx
+        xx xxxxxx xxxxxx
+        xx xxxxxxxxxxxxx
+        xxxxxxxxxxxxxx xxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
+        xx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxx x xxxxxx
 
-        Result<Record4<Integer, Integer, Integer, Integer>> result2 = create()
-                .select(
-                    TBook_ID(),
-                    TBook_AUTHOR_ID(),
-                    grouping(TBook_ID()),
-                    groupingId)
-                .from(TBook())
-                .groupBy(rollup(
-                    TBook_ID(),
-                    TBook_AUTHOR_ID()))
-                .orderBy(
-                    TBook_ID().asc().nullsFirst(),
-                    TBook_AUTHOR_ID().asc().nullsFirst()).fetch();
+        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxxx xxxxxxx x xxxxxxxx
+                xxxxxxxx
+                    xxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxx
+                xxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxx
+                    xxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxx
+                xxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        assertEquals(9, result2.size());
-        assertEquals(Arrays.asList(null, 1, 1, 2, 2, 3, 3, 4, 4), result2.getValues(0));
-        assertEquals(Arrays.asList(null, null, 1, null, 1, null, 2, null, 2), result2.getValues(1));
-        assertEquals(Arrays.asList(1, 0, 0, 0, 0, 0, 0, 0, 0), result2.getValues(2));
+        xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xx xx xx xx xx xx xxx xxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xx xxxxx xx xxxxx xx xxxxx xxx xxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xx xx xx xx xx xx xxx xxxxxxxxxxxxxxxxxxxxxx
 
-        if (!asList(DB2, SYBASE).contains(dialect()))
-            assertEquals(Arrays.asList(3, 1, 0, 1, 0, 1, 0, 1, 0), result2.getValues(3));
+        xx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xx xx xx xx xx xx xxx xxxxxxxxxxxxxxxxxxxxxx
 
-        // CUBE clause
-        // -----------
-        Result<Record4<Integer, Integer, Integer, Integer>> result3 = create().select(
-                    TBook_ID(),
-                    TBook_AUTHOR_ID(),
-                    grouping(TBook_ID()),
-                    groupingId)
-                .from(TBook())
-                .groupBy(cube(
-                    TBook_ID(),
-                    TBook_AUTHOR_ID()))
-                .orderBy(
-                    TBook_ID().asc().nullsFirst(),
-                    TBook_AUTHOR_ID().asc().nullsFirst()).fetch();
+        xx xxxx xxxxxx
+        xx xxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxxx xxxxxxx x xxxxxxxxxxxxxxxx
+                    xxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxx
+                xxxxxxxxxxxxxx
+                xxxxxxxxxxxxxx
+                    xxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxx
+                xxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        assertEquals(11, result3.size());
-        assertEquals(Arrays.asList(null, null, null, 1, 1, 2, 2, 3, 3, 4, 4), result3.getValues(0));
-        assertEquals(Arrays.asList(null, 1, 2, null, 1, null, 1, null, 2, null, 2), result3.getValues(1));
-        assertEquals(Arrays.asList(1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0), result3.getValues(2));
+        xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxx xx xx xx xx xx xx xx xxx xxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xx xxxxx xx xxxxx xx xxxxx xx xxxxx xxx xxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xx xx xx xx xx xx xx xx xxx xxxxxxxxxxxxxxxxxxxxxx
 
-        if (!asList(DB2, SYBASE).contains(dialect()))
-            assertEquals(Arrays.asList(3, 2, 2, 1, 0, 1, 0, 1, 0, 1, 0), result3.getValues(3));
+        xx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xx xx xx xx xx xx xx xx xxx xxxxxxxxxxxxxxxxxxxxxx
 
-        // GROUPING SETS clause
-        // --------------------
-        Result<Record4<Integer, Integer, Integer, Integer>> result4 = create().select(
-                    TBook_ID(),
-                    TBook_AUTHOR_ID(),
-                    grouping(TBook_ID()),
-                    groupingId)
-                .from(TBook())
-                .groupBy(groupingSets(
-                    new Field<?>[] { TBook_AUTHOR_ID(), TBook_ID() },
-                    new Field<?>[] { TBook_AUTHOR_ID(), TBook_LANGUAGE_ID() },
-                    new Field<?>[0],
-                    new Field<?>[0]))
-                .orderBy(
-                    TBook_ID().asc().nullsFirst(),
-                    TBook_AUTHOR_ID().asc().nullsFirst()).fetch();
+        xx xxxxxxxx xxxx xxxxxx
+        xx xxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxxx xxxxxxx x xxxxxxxxxxxxxxxx
+                    xxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxx
+                xxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxx
+                    xxx xxxxxxxxxx x xxxxxxxxxxxxxxxxxx xxxxxxxxxx xx
+                    xxx xxxxxxxxxx x xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xx
+                    xxx xxxxxxxxxxxx
+                    xxx xxxxxxxxxxxxx
+                xxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        assertEquals(9, result4.size());
-        assertEquals(Arrays.asList(null, null, null, null, null, 1, 2, 3, 4), result4.getValues(0));
-        assertEquals(Arrays.asList(null, null, 1, 2, 2, 1, 1, 2, 2), result4.getValues(1));
-        assertEquals(Arrays.asList(1, 1, 1, 1, 1, 0, 0, 0, 0), result4.getValues(2));
+        xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxx xxxxx xxxxx xx xx xx xxx xxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xx xx xx xx xx xx xxx xxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xx xx xx xx xx xx xxx xxxxxxxxxxxxxxxxxxxxxx
 
-        if (!asList(DB2, SYBASE).contains(dialect()))
-            assertEquals(Arrays.asList(3, 3, 2, 2, 2, 0, 0, 0, 0), result4.getValues(3));
-        /* [/pro] */
+        xx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xx xx xx xx xx xx xxx xxxxxxxxxxxxxxxxxxxxxx
+        xx [/pro] */
     }
 
     @Test

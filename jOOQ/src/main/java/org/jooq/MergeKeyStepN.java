@@ -41,12 +41,12 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
+// ...
 
 import java.util.Collection;
 
@@ -76,7 +76,7 @@ public interface MergeKeyStepN<R extends Record> extends MergeValuesStepN<R> {
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     @Transition(
         name = "KEY",
         args = "Field+"
@@ -89,7 +89,7 @@ public interface MergeKeyStepN<R extends Record> extends MergeValuesStepN<R> {
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     @Transition(
         name = "KEY",
         args = "Field+"

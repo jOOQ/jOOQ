@@ -40,8 +40,8 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.ORACLE11G;
-import static org.jooq.SQLDialect.ORACLE12C;
+// ...
+// ...
 
 import java.util.Collection;
 
@@ -59,45 +59,45 @@ import org.jooq.api.annotation.Transition;
 )
 public interface PivotInStep<T> {
 
-    /* [pro] */
-    /**
-     * Specify the acceptable values for pivoting
-     *
-     * @param values The pivoting values
-     * @return A new pivoted table
-     */
-    @Support({ ORACLE11G, ORACLE12C })
-    Table<Record> in(T... values);
+    /* [pro] xx
+    xxx
+     x xxxxxxx xxx xxxxxxxxxx xxxxxx xxx xxxxxxxx
+     x
+     x xxxxxx xxxxxx xxx xxxxxxxx xxxxxx
+     x xxxxxxx x xxx xxxxxxx xxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxx xx
+    xxxxxxxxxxxxx xxxxxxx xxxxxxxx
 
-    /**
-     * Specify the acceptable values for pivoting
-     * <p>
-     * This clause is generally only supported by {@link SQLDialect#ORACLE}.
-     * {@link SQLDialect#SQLSERVER} accepts only literals, use
-     * {@link #in(Object...)} instead.
-     *
-     * @param fields The pivoting values
-     * @return A new pivoted table
-     */
-    @Support({ ORACLE11G, ORACLE12C })
-    @Transition(
-        name = "IN",
-        args = "Field+",
-        to = "PivotTable"
-    )
-    Table<Record> in(Field<?>... fields);
+    xxx
+     x xxxxxxx xxx xxxxxxxxxx xxxxxx xxx xxxxxxxx
+     x xxx
+     x xxxx xxxxxx xx xxxxxxxxx xxxx xxxxxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxxx
+     x xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxx xxxxxxxxx xxx
+     x xxxxxx xxxxxxxxxxxxxxx xxxxxxxx
+     x
+     x xxxxxx xxxxxx xxx xxxxxxxx xxxxxx
+     x xxxxxxx x xxx xxxxxxx xxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxx
+        xxxx x xxxxxxxxx
+        xx x xxxxxxxxxxxx
+    x
+    xxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxx
 
-    /**
-     * Specify the acceptable values for pivoting
-     * <p>
-     * This clause is generally only supported by {@link SQLDialect#ORACLE}.
-     * {@link SQLDialect#SQLSERVER} accepts only literals, use
-     * {@link #in(Object...)} instead.
-     *
-     * @param fields The pivoting values
-     * @return A new pivoted table
-     */
-    @Support({ ORACLE11G, ORACLE12C })
-    Table<Record> in(Collection<? extends Field<T>> fields);
-    /* [/pro] */
+    xxx
+     x xxxxxxx xxx xxxxxxxxxx xxxxxx xxx xxxxxxxx
+     x xxx
+     x xxxx xxxxxx xx xxxxxxxxx xxxx xxxxxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxxx
+     x xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxx xxxxxxxxx xxx
+     x xxxxxx xxxxxxxxxxxxxxx xxxxxxxx
+     x
+     x xxxxxx xxxxxx xxx xxxxxxxx xxxxxx
+     x xxxxxxx x xxx xxxxxxx xxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxx xx
+    xxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxxx
+    xx [/pro] */
 }

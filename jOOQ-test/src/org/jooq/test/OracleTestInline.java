@@ -41,27 +41,27 @@
 
 package org.jooq.test;
 
-/* [pro] */
+/* [pro] xx
 
-import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.conf.Settings;
-import org.jooq.conf.StatementType;
-import org.jooq.impl.DSL;
+xxxxxx xxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxx
 
 
-/**
- * @author Lukas Eder
- */
-public class OracleTestInline extends OracleTest {
+xxx
+ x xxxxxxx xxxxx xxxx
+ xx
+xxxxxx xxxxx xxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxx x
 
-    @Override
-    protected DSLContext create0(Settings settings) {
-        settings = (settings != null) ? settings : new Settings();
-        settings.withStatementType(StatementType.STATIC_STATEMENT);
-        settings.withRenderFormatted(true);
-        return DSL.using(getConnection(), SQLDialect.ORACLE, settings);
-    }
-}
+    xxxxxxxxx
+    xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxx x
+        xxxxxxxx x xxxxxxxxx xx xxxxx x xxxxxxxx x xxx xxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxx
+    x
+x
 
-/* [/pro] */
+xx [/pro] */

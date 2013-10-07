@@ -118,79 +118,79 @@ public enum SQLDialect {
     // SQL dialects for commercial usage
     // -------------------------------------------------------------------------
 
-    /* [pro] */
+    /* [pro] xx
 
-//  /**
-//   * The MS Access SQL dialect family. ACCESS support will be added in jOOQ 3.3
-//   */
-//  ACCESS("Access", true),
+xx  xxx
+xx   x xxx xx xxxxxx xxx xxxxxxx xxxxxxx xxxxxx xxxxxxx xxxx xx xxxxx xx xxxx xxx
+xx   xx
+xx  xxxxxxxxxxxxxxxx xxxxxx
 
-    /**
-     * The Sybase Adaptive Server SQL dialect family.
-     */
-    ASE("ASE", true),
+    xxx
+     x xxx xxxxxx xxxxxxxx xxxxxx xxx xxxxxxx xxxxxxx
+     xx
+    xxxxxxxxxx xxxxxx
 
-    /**
-     * The IBM DB2 SQL dialect family.
-     */
-    DB2("DB2", true),
+    xxx
+     x xxx xxx xxx xxx xxxxxxx xxxxxxx
+     xx
+    xxxxxxxxxx xxxxxx
 
-    /**
-     * The IBM DB2 9.x SQL dialect.
-     */
-    DB2_9("DB2", true, DB2),
+    xxx
+     x xxx xxx xxx xxx xxx xxxxxxxx
+     xx
+    xxxxxxxxxxxx xxxxx xxxxx
 
-    /**
-     * The IBM DB2 10.x SQL dialect.
-     */
-    DB2_10("DB2", true, DB2),
+    xxx
+     x xxx xxx xxx xxxx xxx xxxxxxxx
+     xx
+    xxxxxxxxxxxxx xxxxx xxxxx
 
-    /**
-     * The Ingres dialect family.
-     */
-    INGRES("Ingres", true),
+    xxx
+     x xxx xxxxxx xxxxxxx xxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx xxxxxx
 
-    /**
-     * The Oracle dialect family.
-     */
-    ORACLE("Oracle", true),
+    xxx
+     x xxx xxxxxx xxxxxxx xxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx xxxxxx
 
-    /**
-     * The Oracle 10g dialect.
-     */
-    ORACLE10G("Oracle", true, ORACLE),
+    xxx
+     x xxx xxxxxx xxx xxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxx
 
-    /**
-     * The Oracle 11g dialect.
-     */
-    ORACLE11G("Oracle", true, ORACLE),
+    xxx
+     x xxx xxxxxx xxx xxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxx
 
-    /**
-     * The Oracle 12c dialect.
-     */
-    ORACLE12C("Oracle", true, ORACLE),
+    xxx
+     x xxx xxxxxx xxx xxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxx
 
-    /**
-     * The SQL Server dialect family.
-     */
-    SQLSERVER("SQLServer", true),
+    xxx
+     x xxx xxx xxxxxx xxxxxxx xxxxxxx
+     xx
+    xxxxxxxxxxxxxxxxxxxxxx xxxxxx
 
-    /**
-     * The SQL Server 2008 dialect.
-     */
-    SQLSERVER2008("SQLServer", true, SQLSERVER),
+    xxx
+     x xxx xxx xxxxxx xxxx xxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxx
 
-    /**
-     * The SQL Server 2012 dialect.
-     */
-    SQLSERVER2012("SQLServer", true, SQLSERVER),
+    xxx
+     x xxx xxx xxxxxx xxxx xxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxx
 
-    /**
-     * The Sybase SQL Anywhere dialect family.
-     */
-    SYBASE("Sybase", true),
+    xxx
+     x xxx xxxxxx xxx xxxxxxxx xxxxxxx xxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx xxxxxx
 
-    /* [/pro] */
+    xx [/pro] */
 
     ;
 

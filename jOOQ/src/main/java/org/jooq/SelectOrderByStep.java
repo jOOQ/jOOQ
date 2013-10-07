@@ -41,7 +41,7 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 
 import java.util.Collection;
 
@@ -146,7 +146,7 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * clause, to indicate that the hierarchical ordering should be preserved
      * and elements of each hierarchy should be ordered among themselves.
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     @Transition(
         name = "ORDER SIBLINGS BY",
         args = "Field+"
@@ -160,7 +160,7 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * clause, to indicate that the hierarchical ordering should be preserved
      * and elements of each hierarchy should be ordered among themselves.
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     @Transition(
         name = "ORDER SIBLINGS BY",
         args = "SortField+"
@@ -174,7 +174,7 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * clause, to indicate that the hierarchical ordering should be preserved
      * and elements of each hierarchy should be ordered among themselves.
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     @Transition(
         name = "ORDER SIBLINGS BY",
         args = "SortField+"
@@ -194,7 +194,7 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * <code>orderBy(DSL.literal(1).desc())</code> to apply descending
      * ordering
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     @Transition(
         name = "ORDER SIBLINGS BY",
         args = "Integer+"

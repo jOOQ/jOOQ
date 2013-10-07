@@ -43,7 +43,7 @@ package org.jooq.impl;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jooq.ArrayRecord;
+// ...
 import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;

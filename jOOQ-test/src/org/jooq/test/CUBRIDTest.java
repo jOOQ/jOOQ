@@ -58,7 +58,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.util.UUID;
 
-import org.jooq.ArrayRecord;
+// ...
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -479,28 +479,28 @@ public class CUBRIDTest extends jOOQAbstractTest<
         return null;
     }
 
-    /* [pro] */
-    @Override
-    protected TableField<XUnusedRecord, ArrayRecord<String>> TArrays_STRING_R() {
-        return null;
-    }
+    /* [pro] xx
+    xxxxxxxxx
+    xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx x
+        xxxxxx xxxxx
+    x
 
-    @Override
-    protected TableField<XUnusedRecord, ArrayRecord<Integer>> TArrays_NUMBER_R() {
-        return null;
-    }
+    xxxxxxxxx
+    xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx x
+        xxxxxx xxxxx
+    x
 
-    @Override
-    protected TableField<XUnusedRecord, ArrayRecord<Date>> TArrays_DATE_R() {
-        return null;
-    }
+    xxxxxxxxx
+    xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx x
+        xxxxxx xxxxx
+    x
 
-    @Override
-    protected TableField<XUnusedRecord, ? extends ArrayRecord<Long>> TArrays_NUMBER_LONG_R() {
-        return null;
-    }
+    xxxxxxxxx
+    xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx x
+        xxxxxx xxxxx
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     @Override
     protected TableField<TBookRecord, Integer> TBook_LANGUAGE_ID() {
         return TBook.LANGUAGE_ID;
@@ -687,23 +687,23 @@ public class CUBRIDTest extends jOOQAbstractTest<
         return null;
     }
 
-    /* [pro] */
-    @Override
-    protected <T extends ArrayRecord<Integer>> Field<T> FArrays1Field_R(Field<T> array) {
-        return null;
-    }
+    /* [pro] xx
+    xxxxxxxxx
+    xxxxxxxxx xx xxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxx
+    x
 
-    @Override
-    protected <T extends ArrayRecord<Long>> Field<T> FArrays2Field_R(Field<T> array) {
-        return null;
-    }
+    xxxxxxxxx
+    xxxxxxxxx xx xxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxx
+    x
 
-    @Override
-    protected <T extends ArrayRecord<String>> Field<T> FArrays3Field_R(Field<T> array) {
-        return null;
-    }
+    xxxxxxxxx
+    xxxxxxxxx xx xxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxx
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     @Override
     protected Class<? extends UDTRecord<?>> cUAddressType() {
         return null;

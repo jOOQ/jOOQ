@@ -53,7 +53,7 @@ import static org.jooq.tools.reflect.Reflect.on;
 import java.sql.Date;
 import java.util.Arrays;
 
-import org.jooq.ArrayRecord;
+// ...
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
@@ -180,7 +180,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // TODO: [#459] Sybase messes up IN/OUT parameter orders.
             // Check back on this, when this is fixed.
-            if (true/* [pro] */ && dialect() != SQLDialect.SYBASE/* [/pro] */) {
+            if (true/* [pro] xx xx xxxxxxxxx xx xxxxxxxxxxxxxxxxxxx [/pro] */) {
                 Object p391b = invoke(cRoutines(), "p391", create().configuration(), null, 2, DUMMY_OUT_INT, DUMMY_OUT_INT, 3, null);
                 assertEquals(null, invoke(p391b, "getIo1"));
                 assertEquals("2", "" + invoke(p391b, "getO1"));
@@ -197,43 +197,43 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // F378, which is a stored function with OUT parameters
         // ---------------------------------------------------------------------
-        /* [pro] */
-        switch (dialect().family()) {
+        /* [pro] xx
+        xxxxxx xxxxxxxxxxxxxxxxxxxx x
 
-            // Currently, this is only supported for oracle
-            case ORACLE:
-                Object result1a = invoke(cRoutines(), "f378", create().configuration(), null, null);
-                assertEquals(null, invoke(result1a, "getIo"));
-                assertEquals(null, invoke(result1a, "getO"));
-                assertEquals(null, invoke(result1a, "getReturnValue"));
+            xx xxxxxxxxxx xxxx xx xxxx xxxxxxxxx xxx xxxxxx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxx
+                xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxx
+                xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxx
+                xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
 
-                Object result2a = invoke(cRoutines(), "f378", create().configuration(), null, 2);
-                assertEquals(null, invoke(result2a, "getIo"));
-                assertEquals("2", "" + invoke(result2a, "getO"));
-                assertEquals(null, invoke(result2a, "getReturnValue"));
+                xxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxx
+                xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxx
+                xxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxx xxxxxxxxx
+                xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
 
-                Object result3a = invoke(cRoutines(), "f378", create().configuration(), 1, 2);
-                assertEquals("1", "" + invoke(result3a, "getIo"));
-                assertEquals("2", "" + invoke(result3a, "getO"));
-                assertEquals("3", "" + invoke(result3a, "getReturnValue"));
+                xxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxx
+                xxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxx xxxxxxxxxx
+                xxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxx xxxxxxxxx
+                xxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
 
-                Object result1b = invoke(cLibrary(), "pkgF378", create().configuration(), null, null);
-                assertEquals(null, invoke(result1b, "getIo"));
-                assertEquals(null, invoke(result1b, "getO"));
-                assertEquals(null, invoke(result1b, "getReturnValue"));
+                xxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxx
+                xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxx
+                xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxx
+                xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
 
-                Object result2b = invoke(cLibrary(), "pkgF378", create().configuration(), null, 2);
-                assertEquals(null, invoke(result2b, "getIo"));
-                assertEquals("2", "" + invoke(result2b, "getO"));
-                assertEquals(null, invoke(result2b, "getReturnValue"));
+                xxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxx
+                xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxx
+                xxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxx xxxxxxxxx
+                xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
 
-                Object result3b = invoke(cLibrary(), "pkgF378", create().configuration(), 1, 2);
-                assertEquals("1", "" + invoke(result3b, "getIo"));
-                assertEquals("2", "" + invoke(result3b, "getO"));
-                assertEquals("3", "" + invoke(result3b, "getReturnValue"));
-                break;
-        }
-        /* [/pro] */
+                xxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxx
+                xxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxx xxxxxxxxxx
+                xxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxx xxxxxxxxx
+                xxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
+                xxxxxx
+        x
+        xx [/pro] */
     }
 
     @Test
@@ -406,81 +406,81 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         jOOQAbstractTest.reset = false;
 
-        /* [pro] */
-        if (TArrays_STRING_R() != null) {
-            Result<?> arrays = create().select(
-                TArrays_STRING_R(),
-                TArrays_NUMBER_R(),
-                TArrays_DATE_R())
-            .from(TArrays())
-            .orderBy(TArrays_ID())
-            .fetch();
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxx xx xxxxx x
+            xxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxx
 
-            assertEquals(null, arrays.getValue(0, TArrays_STRING_R()));
-            assertEquals(null, arrays.getValue(0, TArrays_NUMBER_R()));
-            assertEquals(null, arrays.getValue(0, TArrays_DATE_R()));
+            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
 
-            assertEquals(Arrays.asList(), Arrays.asList(arrays.getValue(1, TArrays_STRING_R()).get()));
-            assertEquals(Arrays.asList(), Arrays.asList(arrays.getValue(1, TArrays_NUMBER_R()).get()));
-            assertEquals(Arrays.asList(), Arrays.asList(arrays.getValue(1, TArrays_DATE_R()).get()));
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            assertEquals(Arrays.asList("a"), Arrays.asList(arrays.getValue(2, TArrays_STRING_R()).get()));
-            assertEquals(Arrays.asList(1), Arrays.asList(arrays.getValue(2, TArrays_NUMBER_R()).get()));
-            assertEquals("[1981-07-10]", Arrays.asList(arrays.getValue(2, TArrays_DATE_R()).get()).toString());
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            assertEquals(Arrays.asList("a", "b"), Arrays.asList(arrays.getValue(3, TArrays_STRING_R()).get()));
-            assertEquals(Arrays.asList(1, 2), Arrays.asList(arrays.getValue(3, TArrays_NUMBER_R()).get()));
-            assertEquals("[1981-07-10, 2000-01-01]", Arrays.asList(arrays.getValue(3, TArrays_DATE_R()).get()).toString());
-
-
-
-            InsertQuery<?> insert = create().insertQuery(TArrays());
-            insert.addValue(TArrays_ID(), 5);
-            insert.addValue((Field) TArrays_NUMBER_R(),
-                on(TArrays_NUMBER_R().getType()).create(create().configuration(), new Integer[] { 1, 2, 3 }).get());
-            insert.addValue((Field) TArrays_STRING_R(),
-                on(TArrays_STRING_R().getType()).create(create().configuration(), new String[] { "a", "b", "c", "d\"\\d" }).get());
-            insert.addValue((Field) TArrays_DATE_R(),
-                on(TArrays_DATE_R().getType()).create(create().configuration(), new Date[] { new Date(0), new Date(84600 * 1000), new Date(84600 * 2000) }).get());
-            insert.execute();
-
-            Record array = create().select(
-                TArrays_STRING_R(),
-                TArrays_NUMBER_R(),
-                TArrays_DATE_R())
-            .from(TArrays())
-            .where(TArrays_ID().equal(5))
-            .fetchOne();
-
-            assertEquals(Arrays.asList("a", "b", "c", "d\"\\d"), Arrays.asList(array.getValue(TArrays_STRING_R()).get()));
-            assertEquals(Arrays.asList(1, 2, 3), Arrays.asList(array.getValue(TArrays_NUMBER_R()).get()));
-            assertEquals("[1970-01-01, 1970-01-02, 1970-01-03]", Arrays.asList(array.getValue(TArrays_DATE_R()).get()).toString());
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
 
-            UpdateQuery<X> update = create().updateQuery(TArrays());
-            update.addValue((Field) TArrays_NUMBER_R(),
-                on(TArrays_NUMBER_R().getType()).create(create().configuration(), new Integer[] { 3, 2, 1 }).get());
-            update.addValue((Field) TArrays_STRING_R(),
-                on(TArrays_STRING_R().getType()).create(create().configuration(), new String[] { "d\"\\d", "c", "b", "a" }).get());
-            update.addValue((Field) TArrays_DATE_R(),
-                on(TArrays_DATE_R().getType()).create(create().configuration(), new Date[] { new Date(84600 * 2000), new Date(84600 * 1000), new Date(0) }).get());
-            update.addConditions(TArrays_ID().equal(5));
-            update.execute();
+            xxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
+            xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxx x xx xx x xxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxx x xxxx xxxx xxxx xxxxxxxx xxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxx x xxx xxxxxxxx xxx xxxxxxxxxx x xxxxxx xxx xxxxxxxxxx x xxxxx xxxxxxxxxx
+            xxxxxxxxxxxxxxxxx
 
-            array = create().select(
-                TArrays_STRING_R(),
-                TArrays_NUMBER_R(),
-                TArrays_DATE_R())
-            .from(TArrays())
-            .where(TArrays_ID().equal(5))
-            .fetchOne();
+            xxxxxx xxxxx x xxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxx
 
-            assertEquals(Arrays.asList("d\"\\d", "c", "b", "a"), Arrays.asList(array.getValue(TArrays_STRING_R()).get()));
-            assertEquals(Arrays.asList(3, 2, 1), Arrays.asList(array.getValue(TArrays_NUMBER_R()).get()));
-            assertEquals("[1970-01-03, 1970-01-02, 1970-01-01]", Arrays.asList(array.getValue(TArrays_DATE_R()).get()).toString());
-        }
-        /* [/pro] */
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+
+            xxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxx x xx xx x xxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxx x xxxxxxxxx xxxx xxxx xxx xxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxx x xxx xxxxxxxxxx x xxxxxx xxx xxxxxxxxxx x xxxxxx xxx xxxxxxx xxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxx
+
+            xxxxx x xxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxx
+
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+        xx [/pro] */
 
         if (TArrays_STRING() != null) {
             Result<?> arrays = create().select(
@@ -676,97 +676,97 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         jOOQAbstractTest.reset = false;
 
-        /* [pro] */
-        if (TArrays_STRING_R() != null) {
-            ArrayRecord<Integer> i;
-            ArrayRecord<Long> l;
-            ArrayRecord<String> s;
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxx xx xxxxx x
+            xxxxxxxxxxxxxxxxxxxx xx
+            xxxxxxxxxxxxxxxxx xx
+            xxxxxxxxxxxxxxxxxxx xx
 
-            assertEquals(null, invoke(cRoutines(), "pArrays1", create().configuration(), null));
-            assertEquals(null, invoke(cRoutines(), "pArrays2", create().configuration(), null));
-            assertEquals(null, invoke(cRoutines(), "pArrays3", create().configuration(), null));
-            assertEquals(null, invoke(cRoutines(), "fArrays1", create().configuration(), null));
-            assertEquals(null, invoke(cRoutines(), "fArrays2", create().configuration(), null));
-            assertEquals(null, invoke(cRoutines(), "fArrays3", create().configuration(), null));
+            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
 
-            i = newNUMBER_R();
-            l = newNUMBER_LONG_R();
-            s = newSTRING_R();
+            x x xxxxxxxxxxxxxx
+            x x xxxxxxxxxxxxxxxxxxx
+            x x xxxxxxxxxxxxxx
 
-            assertEquals(
-                Arrays.asList(new Integer[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays1", create().configuration(), i)).get()));
-            assertEquals(
-                Arrays.asList(new Long[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays2", create().configuration(), l)).get()));
-            assertEquals(
-                Arrays.asList(new String[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays3", create().configuration(), s)).get()));
-            assertEquals(
-                Arrays.asList(new Integer[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays1", create().configuration(), i)).get()));
-            assertEquals(
-                Arrays.asList(new Long[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays2", create().configuration(), l)).get()));
-            assertEquals(
-                Arrays.asList(new String[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays3", create().configuration(), s)).get()));
+            xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+            xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxx xxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+            xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxx xxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+            xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+            xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxx xxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+            xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxx xxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
 
-            i = newNUMBER_R();
-            l = newNUMBER_LONG_R();
-            s = newSTRING_R();
+            x x xxxxxxxxxxxxxx
+            x x xxxxxxxxxxxxxxxxxxx
+            x x xxxxxxxxxxxxxx
 
-            i.set((Integer) null);
-            l.set((Long) null);
-            s.set((String) null);
+            xxxxxxxxxxxxxxx xxxxxx
+            xxxxxxxxxxxx xxxxxx
+            xxxxxxxxxxxxxx xxxxxx
 
-            assertEquals(
-                Arrays.asList((Integer) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays1", create().configuration(), i)).get()));
-            assertEquals(
-                Arrays.asList((Long) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays2", create().configuration(), l)).get()));
-            assertEquals(
-                Arrays.asList((String) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays3", create().configuration(), s)).get()));
-            assertEquals(
-                Arrays.asList((Integer) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays1", create().configuration(), i)).get()));
-            assertEquals(
-                Arrays.asList((Long) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays2", create().configuration(), l)).get()));
-            assertEquals(
-                Arrays.asList((String) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays3", create().configuration(), s)).get()));
+            xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+            xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxx xxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+            xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxx xxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+            xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+            xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxx xxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+            xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxx xxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
 
-            i = newNUMBER_R();
-            l = newNUMBER_LONG_R();
-            s = newSTRING_R();
+            x x xxxxxxxxxxxxxx
+            x x xxxxxxxxxxxxxxxxxxx
+            x x xxxxxxxxxxxxxx
 
-            i.set(1, 2);
-            l.set(1L, 2L);
-            s.set("1", "2");
+            xxxxxxxx xxx
+            xxxxxxxxx xxxx
+            xxxxxxxxxx xxxxx
 
-            assertEquals(
-                Arrays.asList(1, 2),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays1", create().configuration(), i)).get()));
-            assertEquals(
-                Arrays.asList(1L, 2L),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays2", create().configuration(), l)).get()));
-            assertEquals(
-                Arrays.asList("1", "2"),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays3", create().configuration(), s)).get()));
-            assertEquals(
-                Arrays.asList(1, 2),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays1", create().configuration(), i)).get()));
-            assertEquals(
-                Arrays.asList(1L, 2L),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays2", create().configuration(), l)).get()));
-            assertEquals(
-                Arrays.asList("1", "2"),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays3", create().configuration(), s)).get()));
-        }
-        /* [/pro] */
+            xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxx xxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+            xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxx xxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+            xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxx xxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+            xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxx xxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+            xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxx xxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+            xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxx xxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+        x
+        xx [/pro] */
 
         if (TArrays_STRING() != null) {
             if (supportsOUTParameters()) {
@@ -847,23 +847,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    /* [pro] */
-    private ArrayRecord<Integer> newNUMBER_R() throws Exception {
-        ArrayRecord<Integer> result = TArrays_NUMBER_R().getType().getConstructor(Configuration.class).newInstance(create().configuration());
-        return result;
-    }
+    /* [pro] xx
+    xxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxx xxxxxxxxx x
+        xxxxxxxxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxxxx
+    x
 
-    private ArrayRecord<Long> newNUMBER_LONG_R() throws Exception {
-        ArrayRecord<Long> result = TArrays_NUMBER_LONG_R().getType().getConstructor(Configuration.class).newInstance(create().configuration());
-        return result;
-    }
+    xxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxx x
+        xxxxxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxxxx
+    x
 
-    private ArrayRecord<String> newSTRING_R() throws Exception {
-        ArrayRecord<String> result = TArrays_STRING_R().getType().getConstructor(Configuration.class).newInstance(create().configuration());
-        return result;
-    }
+    xxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxx xxxxxxxxx x
+        xxxxxxxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxxxx
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     @Test
     public void testUDTs() throws Exception {
         if (TAuthor_ADDRESS() == null) {
@@ -887,11 +887,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(null, on(a1).call("getCode").get());
         assertTrue(Arrays.equals(new byte[] { 0x71, 0x71 }, on(a1).call("getF_1323").<byte[]>get()));
 
-        /* [pro] */
-        if (TArrays_NUMBER_R() != null) {
-            assertEquals(Arrays.asList(1, 2, 3), invoke(invoke(street1, "getFloors"), "getList"));
-        }
-        /* [/pro] */
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxx xx xxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxx
+        x
+        xx [/pro] */
         if (TArrays_NUMBER() != null) {
             assertEquals(Arrays.asList(1, 2, 3), Arrays.asList((Object[]) invoke(street1, "getFloors")));
         }
@@ -906,11 +906,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(2, on(a2).call("getCode").get());
         assertEquals(null, on(a2).call("getF_1323").<byte[]>get());
 
-        /* [pro] */
-        if (TArrays_NUMBER_R() != null) {
-            assertEquals(null, invoke(street2, "getFloors"));
-        }
-        /* [/pro] */
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxx xx xxxxx x
+            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxx
+        x
+        xx [/pro] */
         if (TArrays_NUMBER() != null) {
             assertEquals(null, invoke(street2, "getFloors"));
         }
@@ -950,11 +950,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Parliament Hill", invoke(street, "getStreet"));
         assertEquals("77", invoke(street, "getNo"));
 
-        /* [pro] */
-        if (TArrays_NUMBER_R() != null) {
-            assertEquals(Arrays.asList(1, 2, 3), invoke(invoke(street, "getFloors"), "getList"));
-        }
-        /* [/pro] */
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxx xx xxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxx
+        x
+        xx [/pro] */
         if (TArrays_NUMBER() != null) {
             assertEquals(Arrays.asList(1, 2, 3), Arrays.asList((Object[]) invoke(street, "getFloors")));
         }
@@ -968,120 +968,120 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testArrayTables() throws Exception {
-        /* [pro] */
-        if (TArrays_NUMBER_R() != null) {
-            Result<?> result;
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxx xx xxxxx x
+            xxxxxxxxx xxxxxxx
 
-            // [#1184] Test data type
-            assertTrue(TArrays_NUMBER_R().getDataType().isArray());
-            assertFalse(TBook_ID().getDataType().isArray());
+            xx xxxxxxx xxxx xxxx xxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            // An empty array
-            // --------------
-            ArrayRecord<Integer> array = newNUMBER_R();
-            result = create().select().from(table(array)).fetch();
+            xx xx xxxxx xxxxx
+            xx xxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxx xxxxx x xxxxxxxxxxxxxx
+            xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            assertEquals(0, result.size());
-            assertEquals(1, result.fieldsRow().size());
-            // [#523] TODO use ArrayRecord meta data instead
-//            assertEquals(array.getDataType(), result.getField(0).getDataType());
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xx xxxxxx xxxx xxx xxxxxxxxxxx xxxx xxxx xxxxxxx
+xx            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            // An array containing null
-            // ------------------------
-            array.set((Integer) null);
-            result = create().select().from(table(array)).fetch();
+            xx xx xxxxx xxxxxxxxxx xxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxx xxxxxx
+            xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            assertEquals(1, result.size());
-            assertEquals(1, result.fieldsRow().size());
-//            assertEquals(array.getDataType(), result.getField(0).getDataType());
-            assertEquals(null, result.getValue(0, 0));
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+xx            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxx
 
-            // An array containing two values
-            // ------------------------------
-            array.set((Integer) null, 1);
-            result = create().select().from(table(array)).fetch();
+            xx xx xxxxx xxxxxxxxxx xxx xxxxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxx xxxxx xxx
+            xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            assertEquals(2, result.size());
-            assertEquals(1, result.fieldsRow().size());
-//            assertEquals(array.getDataType(), result.getField(0).getDataType());
-            assertEquals(null, result.getValue(0, 0));
-            assertEquals("1", "" + result.getValue(1, 0));
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+xx            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxx
+            xxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxx xxxx
 
-            // An array containing three values
-            // --------------------------------
-            array.set((Integer) null, 1, 2);
-            result = create().select().from(table(array)).fetch();
+            xx xx xxxxx xxxxxxxxxx xxxxx xxxxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxx xxxxx xx xxx
+            xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            assertEquals(3, result.size());
-            assertEquals(1, result.fieldsRow().size());
-//            assertEquals(array.getDataType(), result.getField(0).getDataType());
-            assertEquals(null, result.getValue(0, 0));
-            assertEquals("1", "" + result.getValue(1, 0));
-            assertEquals("2", "" + result.getValue(2, 0));
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+xx            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxx
+            xxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxx xxxx
+            xxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxx xxxx
 
-            // Joining an unnested array table
-            // -------------------------------
-            array.set(2, 3);
-            Table<?> table = table(array);
-            result = create()
-                .select(TBook_ID(), TBook_TITLE())
-                .from(TBook())
-                .join(table)
-                .on(table.field(0).cast(Integer.class).equal(TBook_ID()))
-                .orderBy(TBook_ID())
-                .fetch();
+            xx xxxxxxx xx xxxxxxxx xxxxx xxxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxx xxx
+            xxxxxxxx xxxxx x xxxxxxxxxxxxx
+            xxxxxx x xxxxxxxx
+                xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
+                xxxxxxxxxxxxxx
+                xxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxx
 
-            assertEquals(2, result.size());
-            assertEquals(Integer.valueOf(2), result.getValue(0, TBook_ID()));
-            assertEquals(Integer.valueOf(3), result.getValue(1, TBook_ID()));
-            assertEquals("Animal Farm", result.getValue(0, TBook_TITLE()));
-            assertEquals("O Alquimista", result.getValue(1, TBook_TITLE()));
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
 
-            // Joining an aliased unnested array table
-            // ---------------------------------------
-            result = create()
-                .select(TBook_ID(), TBook_TITLE())
-                .from(TBook())
-                .join(table.as("t"))
-                .on(table.as("t").field(0).cast(Integer.class).equal(TBook_ID()))
-                .orderBy(TBook_ID())
-                .fetch();
+            xx xxxxxxx xx xxxxxxx xxxxxxxx xxxxx xxxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxx x xxxxxxxx
+                xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
+                xxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxx
 
-            assertEquals(2, result.size());
-            assertEquals(Integer.valueOf(2), result.getValue(0, TBook_ID()));
-            assertEquals(Integer.valueOf(3), result.getValue(1, TBook_ID()));
-            assertEquals("Animal Farm", result.getValue(0, TBook_TITLE()));
-            assertEquals("O Alquimista", result.getValue(1, TBook_TITLE()));
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
 
-            // Functions returning arrays
-            // --------------------------
-            result = create().select().from(table(FArrays1Field_R(null))).fetch();
-            assertEquals(0, result.size());
-            assertEquals(1, result.fieldsRow().size());
+            xx xxxxxxxxx xxxxxxxxx xxxxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            array = newNUMBER_R();
-            result = create().select().from(table(FArrays1Field_R(val(array)))).fetch();
-            assertEquals(0, result.size());
-            assertEquals(1, result.fieldsRow().size());
+            xxxxx x xxxxxxxxxxxxxx
+            xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            array.set(null, 1);
-            result = create().select().from(table(FArrays1Field_R(val(array)))).fetch();
-            assertEquals(2, result.size());
-            assertEquals(1, result.fieldsRow().size());
-            assertEquals(null, result.getValue(0, 0));
-            assertEquals("1", "" + result.getValue(1, 0));
+            xxxxxxxxxxxxxxx xxx
+            xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxx
+            xxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxx xxxx
 
-            array.set(null, 1, null, 2);
-            result = create().select().from(table(FArrays1Field_R(val(array)))).fetch();
-            assertEquals(4, result.size());
-            assertEquals(1, result.fieldsRow().size());
-            assertEquals(null, result.getValue(0, 0));
-            assertEquals("1", "" + result.getValue(1, 0));
-            assertEquals(null, result.getValue(2, 0));
-            assertEquals("2", "" + result.getValue(3, 0));
-        }
-        else
-        /* [/pro] */
+            xxxxxxxxxxxxxxx xx xxxxx xxx
+            xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxx
+            xxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxx xxxx
+            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxx
+            xxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxx xxxx
+        x
+        xxxx
+        xx [/pro] */
         if (TArrays_NUMBER() != null) {
             Result<?> result;
             Table<?> table;
@@ -1230,9 +1230,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testStoredProceduresWithCursorParameters() throws Exception {
         switch (dialect().family()) {
-            /* [pro] */
-            case ORACLE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxxxxx
+            xx [/pro] */
             case H2:
             case HSQLDB:
             case POSTGRES:
@@ -1267,14 +1267,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
                 // Get a filled cursor
                 // -------------------
-                /* [pro] */
-                if (TArrays_STRING_R() != null) {
-                    ArrayRecord<Integer> i = newNUMBER_R();
-                    i.set(1, 2, 4, 6);
-                    integerArray = i;
-                }
-                else
-                /* [/pro] */
+                /* [pro] xx
+                xx xxxxxxxxxxxxxxxxxxx xx xxxxx x
+                    xxxxxxxxxxxxxxxxxxxx x x xxxxxxxxxxxxxx
+                    xxxxxxxx xx xx xxx
+                    xxxxxxxxxxxx x xx
+                x
+                xxxx
+                xx [/pro] */
                 if (TArrays_STRING() != null) {
                     integerArray = new Integer[] { 1, 2, 4, 6 };
                 }
@@ -1367,14 +1367,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
                 // Get a filled cursor
                 // -------------------
-                /* [pro] */
-                if (TArrays_STRING_R() != null) {
-                    ArrayRecord<Integer> i = newNUMBER_R();
-                    i.set(1, 2, 4, 6);
-                    integerArray = i;
-                }
-                else
-                /* [/pro] */
+                /* [pro] xx
+                xx xxxxxxxxxxxxxxxxxxx xx xxxxx x
+                    xxxxxxxxxxxxxxxxxxxx x x xxxxxxxxxxxxxx
+                    xxxxxxxx xx xx xxx
+                    xxxxxxxxxxxx x xx
+                x
+                xxxx
+                xx [/pro] */
                 if (TArrays_STRING() != null) {
                     integerArray = new Integer[] { 1, 2, 4, 6 };
                 }

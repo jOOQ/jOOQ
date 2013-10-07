@@ -72,7 +72,7 @@ import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
 import org.jooq.UniqueKey;
 import org.jooq.VersionsBetweenAndStep;
-import org.jooq.impl.FlashbackTable.FlashbackType;
+// ...
 import org.jooq.tools.StringUtils;
 
 /**
@@ -303,85 +303,85 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         return tableField;
     }
 
-    /* [pro] */
-    // ------------------------------------------------------------------------
-    // XXX: Other API
-    // ------------------------------------------------------------------------
+    /* [pro] xx
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xx xxxx xxxxx xxx
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    @Override
-    public final Table<R> with(String hint) {
-        return new WithTable<R>(this, hint);
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxx xxxxxxxxxxx xxxxx x
+        xxxxxx xxx xxxxxxxxxxxxxxxxxx xxxxxx
+    x
 
-    // ------------------------------------------------------------------------
-    // XXX: PIVOT API
-    // ------------------------------------------------------------------------
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xx xxxx xxxxx xxx
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    @Override
-    public final PivotForStep pivot(Field<?>... aggregateFunctions) {
-        return new Pivot<Object>(this, aggregateFunctions);
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx x
+        xxxxxx xxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx
+    x
 
-    @Override
-    public final PivotForStep pivot(Collection<? extends Field<?>> aggregateFunctions) {
-        return pivot(aggregateFunctions.toArray(new Field[0]));
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
+    x
 
-    // ------------------------------------------------------------------------
-    // XXX: FLASHBACK QUERY API
-    // ------------------------------------------------------------------------
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xx xxxx xxxxxxxxx xxxxx xxx
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    @Override
-    public final VersionsBetweenAndStep<R, Number> versionsBetweenScn(Number scn) {
-        return versionsBetweenScn(val(scn));
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    @Override
-    public final VersionsBetweenAndStep<R, Number> versionsBetweenScn(Field<? extends Number> scn) {
-        return new FlashbackTable<R, Number>(this, null, scn, FlashbackType.SCN);
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxx xxxx x
+        xxxxxx xxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxx
+    x
 
-    @Override
-    public final VersionsBetweenAndStep<R, Number> versionsBetweenScnMinvalue() {
-        return new FlashbackTable<R, Number>(this, null, null, FlashbackType.SCN);
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+        xxxxxx xxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxx xxxxx xxxxxxxxxxxxxxxxxxx
+    x
 
-    @Override
-    public final VersionsBetweenAndStep<R, Timestamp> versionsBetweenTimestamp(Timestamp timestamp) {
-        return versionsBetweenTimestamp(val(timestamp));
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    @Override
-    public final VersionsBetweenAndStep<R, Timestamp> versionsBetweenTimestamp(Field<Timestamp> timestamp) {
-        return new FlashbackTable<R, Timestamp>(this, null, timestamp, FlashbackType.TIMESTAMP);
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx x
+        xxxxxx xxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    @Override
-    public final VersionsBetweenAndStep<R, Timestamp> versionsBetweenTimestampMinvalue() {
-        return new FlashbackTable<R, Timestamp>(this, null, null, FlashbackType.TIMESTAMP);
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+        xxxxxx xxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    @Override
-    public final Table<R> asOfScn(Number scn) {
-        return asOfScn(val(scn));
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxx xxxxxxxxxxxxxx xxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxx
+    x
 
-    @Override
-    public final Table<R> asOfScn(Field<? extends Number> scn) {
-        return new FlashbackTable<R, Number>(this, scn, null, FlashbackType.SCN);
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxx xxxx x
+        xxxxxx xxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxx xxxxx xxxxxxxxxxxxxxxxxxx
+    x
 
-    @Override
-    public final Table<R> asOfTimestamp(Timestamp timestamp) {
-        return asOfTimestamp(val(timestamp));
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    @Override
-    public final Table<R> asOfTimestamp(Field<Timestamp> timestamp) {
-        return new FlashbackTable<R, Timestamp>(this, timestamp, null, FlashbackType.TIMESTAMP);
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx x
+        xxxxxx xxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     // ------------------------------------------------------------------------
     // XXX: DIVISION API
     // ------------------------------------------------------------------------

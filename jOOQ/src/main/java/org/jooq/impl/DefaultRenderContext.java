@@ -343,20 +343,20 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     public final String render(QueryPart part) {
         RenderContext local = new DefaultRenderContext(this).visit(part);
 
-        /* [pro] */ /* [trial] */
+        /* [pro] xx xx xxxxxxx xx
 
-        // Please do not remove or circumvent the below logic
-        // --------------------------------------------------
-        // This generated SQL comment is a friendly reminder that you are using
-        // a commercial version of jOOQ with a free 30 days trial license. We do
-        // not want to bother our honest customers with annoying license
-        // verification. So, if you want to remove the below notice, consider
-        // purchasing a license from http://www.jooq.org/download
+        xx xxxxxx xx xxx xxxxxx xx xxxxxxxxxx xxx xxxxx xxxxx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xx xxxx xxxxxxxxx xxx xxxxxxx xx x xxxxxxxx xxxxxxxx xxxx xxx xxx xxxxx
+        xx x xxxxxxxxxx xxxxxxx xx xxxx xxxx x xxxx xx xxxx xxxxx xxxxxxxx xx xx
+        xx xxx xxxx xx xxxxxx xxx xxxxxx xxxxxxxxx xxxx xxxxxxxx xxxxxxx
+        xx xxxxxxxxxxxxx xxx xx xxx xxxx xx xxxxxx xxx xxxxx xxxxxxx xxxxxxxx
+        xx xxxxxxxxxx x xxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        if (part instanceof Select)
-            local.sql(" -- SQL rendered with a free trial version of jOOQ " + Constants.FULL_VERSION);
+        xx xxxxx xxxxxxxxxx xxxxxxx
+            xxxxxxxxxxx xx xxx xxxxxxxx xxxx x xxxx xxxxx xxxxxxx xx xxxx x x xxxxxxxxxxxxxxxxxxxxxxxx
 
-        /* [/trial] */ /* [/pro] */
+        xx xxxxxxxx xx xx [/pro] */
 
         return local.render();
     }
@@ -550,21 +550,21 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     sql("`").sql(StringUtils.replace(literal, "`", "``")).sql("`");
                     break;
 
-                /* [pro] */
-                // T-SQL databases use brackets
-                case ASE:
-                case SQLSERVER:
-                case SYBASE:
-                    sql("[").sql(StringUtils.replace(literal, "]", "]]")).sql("]");
-                    break;
+                /* [pro] xx
+                xx xxxxx xxxxxxxxx xxx xxxxxxxx
+                xxxx xxxx
+                xxxx xxxxxxxxxx
+                xxxx xxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxxxx
+                    xxxxxx
 
-                /* [/pro] */
+                xx [/pro] */
                 // Most dialects implement the SQL standard, using double quotes
-                /* [pro] */
-                case DB2:
-                case INGRES:
-                case ORACLE:
-                /* [/pro] */
+                /* [pro] xx
+                xxxx xxxx
+                xxxx xxxxxxx
+                xxxx xxxxxxx
+                xx [/pro] */
                 case CUBRID:
                 case DERBY:
                 case FIREBIRD:
@@ -602,20 +602,20 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 return;
 
             switch (configuration().dialect().family()) {
-                /* [pro] */
-                case ASE:
-                    checkForceInline(2000);
-                    return;
+                /* [pro] xx
+                xxxx xxxx
+                    xxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxx
 
-                case INGRES:
-                    checkForceInline(1024);
-                    return;
+                xxxx xxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxx
 
-                case SQLSERVER:
-                    checkForceInline(2100);
-                    return;
+                xxxx xxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxx
 
-                /* [/pro] */
+                xx [/pro] */
                 case SQLITE:
                     checkForceInline(999);
                     return;

@@ -59,7 +59,7 @@ import java.util.UUID;
 
 import junit.framework.Assert;
 
-import org.jooq.ArrayRecord;
+// ...
 import org.jooq.Configuration;
 import org.jooq.DAO;
 import org.jooq.DSLContext;
@@ -387,24 +387,24 @@ public abstract class BaseTest<
         return delegate.TArrays_UDT();
     }
 
-    /* [pro] */
-    protected TableField<X, ? extends ArrayRecord<String>> TArrays_STRING_R() {
-        return delegate.TArrays_STRING_R();
-    }
+    /* [pro] xx
+    xxxxxxxxx xxxxxxxxxxxxx x xxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    protected TableField<X, ? extends ArrayRecord<Integer>> TArrays_NUMBER_R() {
-        return delegate.TArrays_NUMBER_R();
-    }
+    xxxxxxxxx xxxxxxxxxxxxx x xxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    protected TableField<X, ? extends ArrayRecord<Long>> TArrays_NUMBER_LONG_R() {
-        return delegate.TArrays_NUMBER_LONG_R();
-    }
+    xxxxxxxxx xxxxxxxxxxxxx x xxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    protected TableField<X, ? extends ArrayRecord<Date>> TArrays_DATE_R() {
-        return delegate.TArrays_DATE_R();
-    }
+    xxxxxxxxx xxxxxxxxxxxxx x xxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     protected DAO<A, AP, Integer> TAuthorDao() {
         return delegate.TAuthorDao();
     }
@@ -682,19 +682,19 @@ public abstract class BaseTest<
         return delegate.FArrays3Field(array);
     }
 
-    /* [pro] */
-    protected <Z extends ArrayRecord<Integer>> Field<Z> FArrays1Field_R(Field<Z> array) {
-        return delegate.FArrays1Field_R(array);
-    }
+    /* [pro] xx
+    xxxxxxxxx xx xxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    protected <Z extends ArrayRecord<Long>> Field<Z> FArrays2Field_R(Field<Z> array) {
-        return delegate.FArrays2Field_R(array);
-    }
+    xxxxxxxxx xx xxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    protected <Z extends ArrayRecord<String>> Field<Z> FArrays3Field_R(Field<Z> array) {
-        return delegate.FArrays3Field_R(array);
-    }
-    /* [/pro] */
+    xxxxxxxxx xx xxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
+    xx [/pro] */
 
     protected boolean supportsOUTParameters() {
         return delegate.supportsOUTParameters();

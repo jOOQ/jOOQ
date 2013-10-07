@@ -67,39 +67,39 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
     public final void toSQL(RenderContext context) {
         switch (context.configuration().dialect().family()) {
 
-            /* [pro] */
-            // Oracle supports java.sql.SQLData, hence the record can be bound
-            // to the CallableStatement directly
-            case ORACLE: {
-                if (context.paramType() == INLINED) {
-                    toSQLInline(context);
-                } else {
-                    context.sql("?");
-                }
+            /* [pro] xx
+            xx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxx xxxxx xxx xxxxxx xxx xx xxxxx
+            xx xx xxx xxxxxxxxxxxxxxxxx xxxxxxxx
+            xxxx xxxxxxx x
+                xx xxxxxxxxxxxxxxxxxxxx xx xxxxxxxx x
+                    xxxxxxxxxxxxxxxxxxxxx
+                x xxxx x
+                    xxxxxxxxxxxxxxxxx
+                x
 
-                return;
-            }
+                xxxxxxx
+            x
 
-            // DB2 supports UDT's but this is only experimental in jOOQ
-            case DB2: {
+            xx xxx xxxxxxxx xxxxx xxx xxxx xx xxxx xxxxxxxxxxxx xx xxxx
+            xxxx xxxx x
 
-                // The subsequent DB2 logic should be refactored into toSQLInline()
-                context.sql(getInlineConstructor(context));
-                context.sql("()");
+                xx xxx xxxxxxxxxx xxx xxxxx xxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxx
 
-                String separator = "..";
-                for (Field<?> field : value.fields()) {
-                    context.sql(separator);
-                    context.sql(field.getName());
-                    context.sql("(");
-                    context.visit(val(value.getValue(field)));
-                    context.sql(")");
-                }
+                xxxxxx xxxxxxxxx x xxxxx
+                xxx xxxxxxxxx xxxxx x xxxxxxxxxxxxxxx x
+                    xxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxx
+                x
 
-                return;
-            }
+                xxxxxxx
+            x
 
-            /* [/pro] */
+            xx [/pro] */
             // Due to lack of UDT support in the Postgres JDBC drivers, all UDT's
             // have to be inlined
             case POSTGRES: {
@@ -134,10 +134,10 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             case POSTGRES:
                 return "ROW";
 
-            /* [pro] */
-            case ORACLE:
-            case DB2:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxxxxx
+            xxxx xxxx
+            xx [/pro] */
 
             // Assume default behaviour if dialect is not available
             default: {
@@ -158,17 +158,17 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
     public final void bind(BindContext context) {
         switch (context.configuration().dialect().family()) {
 
-            /* [pro] */
-            // Oracle supports java.sql.SQLData, hence the record can be bound
-            // to the CallableStatement directly
-            case ORACLE:
-                context.bindValues(value);
-                break;
+            /* [pro] xx
+            xx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxx xxxxx xxx xxxxxx xxx xx xxxxx
+            xx xx xxx xxxxxxxxxxxxxxxxx xxxxxxxx
+            xxxx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxx
 
-            // Is the DB2 case correct? Should it be inlined like the Postgres case?
-            case DB2:
+            xx xx xxx xxx xxxx xxxxxxxx xxxxxx xx xx xxxxxxx xxxx xxx xxxxxxxx xxxxx
+            xxxx xxxx
 
-            /* [/pro] */
+            xx [/pro] */
             // Postgres cannot bind a complete structured type. The type is
             // inlined instead: ROW(.., .., ..)
             case POSTGRES: {

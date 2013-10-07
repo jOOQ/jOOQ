@@ -108,10 +108,10 @@ class Dual extends AbstractTable<Record> {
         }
         else {
             switch (context.configuration().dialect().family()) {
-                /* [pro] */
-                case ASE:
-                case SQLSERVER:
-                /* [/pro] */
+                /* [pro] xx
+                xxxx xxxx
+                xxxx xxxxxxxxxx
+                xx [/pro] */
                 case POSTGRES:
                 case SQLITE:
                     break;
@@ -132,24 +132,24 @@ class Dual extends AbstractTable<Record> {
 
                 // These dialects don't have a DUAL table. But simulation is needed
                 // for queries like SELECT 1 WHERE 1 = 1
-                /* [pro] */
-                case INGRES:
-                    context.keyword("(select 1 as dual) as dual");
-                    break;
+                /* [pro] xx
+                xxxx xxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxx x xx xxxxx xx xxxxxxx
+                    xxxxxx
 
-                case DB2:
-                    context.literal("SYSIBM")
-                           .sql(".")
-                           .literal("DUAL");
-                    break;
+                xxxx xxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxx
+                           xxxxxxxxx
+                           xxxxxxxxxxxxxxxxx
+                    xxxxxx
 
-                case SYBASE:
-                    context.literal("SYS")
-                           .sql(".")
-                           .literal("DUMMY");
-                    break;
+                xxxx xxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxx
+                           xxxxxxxxx
+                           xxxxxxxxxxxxxxxxxx
+                    xxxxxx
 
-                /* [/pro] */
+                xx [/pro] */
                 case DERBY:
                     context.literal("SYSIBM")
                            .sql(".")

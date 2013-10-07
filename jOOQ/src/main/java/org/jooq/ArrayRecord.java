@@ -40,59 +40,59 @@
  */
 package org.jooq;
 
-/* [pro] */
+/* [pro] xx
 
-import java.sql.Array;
-import java.sql.SQLException;
-import java.util.List;
+xxxxxx xxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxx
 
-/**
- * A "record" that encapsulates an Oracle-style ARRAY (or VARRAY), additionally
- * providing some convenience methods
- *
- * @param <E> The array element type
- * @author Lukas Eder
- */
-public interface ArrayRecord<E> extends Attachable, Iterable<E> {
+xxx
+ x x xxxxxxxx xxxx xxxxxxxxxxxx xx xxxxxxxxxxxx xxxxx xxx xxxxxxxx xxxxxxxxxxxx
+ x xxxxxxxxx xxxx xxxxxxxxxxx xxxxxxx
+ x
+ x xxxxxx xxx xxx xxxxx xxxxxxx xxxx
+ x xxxxxxx xxxxx xxxx
+ xx
+xxxxxx xxxxxxxxx xxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxx xxxxxxxxxxx x
 
-    /**
-     * Get the contained array
-     */
-    E[] get();
+    xxx
+     x xxx xxx xxxxxxxxx xxxxx
+     xx
+    xxx xxxxxx
 
-    /**
-     * Get the contained array as a {@link List}
-     */
-    List<E> getList();
+    xxx
+     x xxx xxx xxxxxxxxx xxxxx xx x xxxxxx xxxxx
+     xx
+    xxxxxxx xxxxxxxxxx
 
-    /**
-     * Set the contained array
-     */
-    void set(Array array) throws SQLException;
+    xxx
+     x xxx xxx xxxxxxxxx xxxxx
+     xx
+    xxxx xxxxxxxxx xxxxxx xxxxxx xxxxxxxxxxxxx
 
-    /**
-     * Set the contained array
-     */
-    void set(E... array);
+    xxx
+     x xxx xxx xxxxxxxxx xxxxx
+     xx
+    xxxx xxxxxxxx xxxxxxx
 
-    /**
-     * Set the contained array as a {@link List}
-     */
-    void setList(List<? extends E> list);
+    xxx
+     x xxx xxx xxxxxxxxx xxxxx xx x xxxxxx xxxxx
+     xx
+    xxxx xxxxxxxxxxxxxx xxxxxxx xx xxxxxx
 
-    /**
-     * Get the size of the contained array
-     */
-    int size();
+    xxx
+     x xxx xxx xxxx xx xxx xxxxxxxxx xxxxx
+     xx
+    xxx xxxxxxx
 
-    /**
-     * Get the name of the array type
-     */
-    String getName();
+    xxx
+     x xxx xxx xxxx xx xxx xxxxx xxxx
+     xx
+    xxxxxx xxxxxxxxxx
 
-    /**
-     * Get the data type of the array type
-     */
-    DataType<E> getDataType();
-}
-/* [/pro] */
+    xxx
+     x xxx xxx xxxx xxxx xx xxx xxxxx xxxx
+     xx
+    xxxxxxxxxxx xxxxxxxxxxxxxx
+x
+xx [/pro] */

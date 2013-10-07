@@ -43,7 +43,7 @@ package org.jooq.test._.testcases;
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.dual;
 import static org.jooq.impl.DSL.generateSeries;
@@ -112,7 +112,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testGenerateSeries() throws Exception {
-        if (!asList(CUBRID, POSTGRES, ORACLE).contains(dialect().family()))
+        if (!asList(CUBRID, POSTGRES).contains(dialect().family()))
             return;
 
         List<Integer> expected = asList(0, 1, 2, 3);

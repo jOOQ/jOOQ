@@ -41,7 +41,7 @@
 
 package org.jooq;
 
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 
 /**
  * A parameter to a stored procedure or function.
@@ -100,6 +100,6 @@ public interface Parameter<T> extends QueryPart {
      * <p>
      * Currently, this is only supported for Oracle 11g
      */
-    @Support({ ORACLE })
+    @Support({})
     boolean isDefaulted();
 }

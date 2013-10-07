@@ -41,12 +41,12 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
+// ...
 
 import java.util.Collection;
 
@@ -75,7 +75,7 @@ public interface MergeKeyStep1<R extends Record, T1> extends MergeValuesStep1<R,
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     MergeValuesStep1<R, T1> key(Field<?>... keys);
 
     /**
@@ -84,6 +84,6 @@ public interface MergeKeyStep1<R extends Record, T1> extends MergeValuesStep1<R,
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     MergeValuesStep1<R, T1> key(Collection<? extends Field<?>> keys);
 }

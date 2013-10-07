@@ -88,7 +88,7 @@ import java.util.regex.Pattern;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import org.jooq.ArrayRecord;
+// ...
 import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
@@ -246,23 +246,23 @@ final class Utils {
     // XXX: Record constructors and related methods
     // ------------------------------------------------------------------------
 
-    /* [pro] */
-    /**
-     * Create a new Oracle-style VARRAY {@link ArrayRecord}
-     */
-    static final <R extends ArrayRecord<?>> R newArrayRecord(Class<R> type, Configuration configuration) {
-        try {
-            return type.getConstructor(Configuration.class).newInstance(configuration);
-        }
-        catch (Exception e) {
-            throw new IllegalStateException(
-                "ArrayRecord type does not provide a constructor with signature ArrayRecord(FieldProvider) : " + type
-                    + ". Exception : " + e.getMessage());
+    /* [pro] xx
+    xxx
+     x xxxxxx x xxx xxxxxxxxxxxx xxxxxx xxxxxx xxxxxxxxxxxx
+     xx
+    xxxxxx xxxxx xx xxxxxxx xxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxx x
+        xxx x
+            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+        xxxxx xxxxxxxxxx xx x
+            xxxxx xxx xxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxx xxxx xxxx xxx xxxxxxx x xxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx x x x xxxx
+                    x xx xxxxxxxxx x x x xxxxxxxxxxxxxxxx
 
-        }
-    }
+        x
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     /**
      * Create a new record
      */
@@ -1722,11 +1722,11 @@ final class Utils {
             Array result = stream.readArray();
             return (T) (result == null ? null : result.getArray());
         }
-        /* [pro] */
-        else if (ArrayRecord.class.isAssignableFrom(type)) {
-            return (T) getArrayRecord(configuration, stream.readArray(), (Class<? extends ArrayRecord<?>>) type);
-        }
-        /* [/pro] */
+        /* [pro] xx
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
+        x
+        xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
             return getEnumType(type, stream.readString());
         }
@@ -1852,15 +1852,15 @@ final class Utils {
         else if (type == UUID.class) {
             stream.writeString(value.toString());
         }
-        /* [pro] */
-        else if (ArrayRecord.class.isAssignableFrom(type)) {
+        /* [pro] xx
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
 
-            // [#1544] We can safely assume that localConfiguration has been
-            // set on DefaultBindContext, prior to serialising arrays to SQLOut
-            ArrayRecord<?> arrayRecord = (ArrayRecord<?>) value;
-            stream.writeArray(on(localConnection()).call("createARRAY", arrayRecord.getName(), arrayRecord.get()).<Array>get());
-        }
-        /* [/pro] */
+            xx xxxxxxx xx xxx xxxxxx xxxxxx xxxx xxxxxxxxxxxxxxxxxx xxx xxxx
+            xx xxx xx xxxxxxxxxxxxxxxxxxx xxxxx xx xxxxxxxxxxx xxxxxx xx xxxxxx
+            xxxxxxxxxxxxxx xxxxxxxxxxx x xxxxxxxxxxxxxxxx xxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+        xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
             stream.writeString(((EnumType) value).getLiteral());
         }
@@ -1997,13 +1997,13 @@ final class Utils {
                     return (T) rs.getObject(index);
                 }
 
-                /* [pro] */
-                // Other SQL dialects deal with UUIDs as if they were CHAR(36)
-                // even if they explicitly support them (UNIQUEIDENTIFIER)
-                case SQLSERVER:
-                case SYBASE:
+                /* [pro] xx
+                xx xxxxx xxx xxxxxxxx xxxx xxxx xxxxx xx xx xxxx xxxx xxxxxxxx
+                xx xxxx xx xxxx xxxxxxxxxx xxxxxxx xxxx xxxxxxxxxxxxxxxxxx
+                xxxx xxxxxxxxxx
+                xxxx xxxxxxx
 
-                /* [/pro] */
+                xx [/pro] */
                 // Most databases don't have such a type. In this case, jOOQ
                 // simulates the type
                 default: {
@@ -2025,11 +2025,11 @@ final class Utils {
                     return (T) convertArray(rs.getArray(index), (Class<? extends Object[]>) type);
             }
         }
-        /* [pro] */
-        else if (ArrayRecord.class.isAssignableFrom(type)) {
-            return (T) getArrayRecord(ctx.configuration(), rs.getArray(index), (Class<? extends ArrayRecord<?>>) type);
-        }
-        /* [/pro] */
+        /* [pro] xx
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
+        x
+        xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
             return getEnumType(type, rs.getString(index));
         }
@@ -2079,20 +2079,20 @@ final class Utils {
         return object;
     }
 
-    /* [pro] */
-    private static final ArrayRecord<?> getArrayRecord(Configuration configuration, Array array, Class<? extends ArrayRecord<?>> type) throws SQLException {
-        if (array == null) {
-            return null;
-        }
-        else {
-            // TODO: [#523] Use array record meta data instead
-            ArrayRecord<?> record = Utils.newArrayRecord(type, configuration);
-            record.set(array);
-            return record;
-        }
-    }
+    /* [pro] xx
+    xxxxxxx xxxxxx xxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxx xxxxxx xxxxxxx xxxxxxx xxxxxxxxxxxxxxx xxxxx xxxxxx xxxxxxxxxxxx x
+        xx xxxxxx xx xxxxx x
+            xxxxxx xxxxx
+        x
+        xxxx x
+            xx xxxxx xxxxxx xxx xxxxx xxxxxx xxxx xxxx xxxxxxx
+            xxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxx
+            xxxxxx xxxxxxx
+        x
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     private static final Object[] convertArray(Object array, Class<? extends Object[]> type) throws SQLException {
         if (array instanceof Object[]) {
             return Convert.convert(array, type);
@@ -2333,13 +2333,13 @@ final class Utils {
                     return (T) stmt.getObject(index);
                 }
 
-                /* [pro] */
-                // Other SQL dialects deal with UUIDs as if they were CHAR(36)
-                // even if they explicitly support them (UNIQUEIDENTIFIER)
-                case SQLSERVER:
-                case SYBASE:
+                /* [pro] xx
+                xx xxxxx xxx xxxxxxxx xxxx xxxx xxxxx xx xx xxxx xxxx xxxxxxxx
+                xx xxxx xx xxxx xxxxxxxxxx xxxxxxx xxxx xxxxxxxxxxxxxxxxxx
+                xxxx xxxxxxxxxx
+                xxxx xxxxxxx
 
-                /* [/pro] */
+                xx [/pro] */
                 // Most databases don't have such a type. In this case, jOOQ
                 // simulates the type
                 default: {
@@ -2352,11 +2352,11 @@ final class Utils {
         else if (type.isArray()) {
             return (T) convertArray(stmt.getObject(index), (Class<? extends Object[]>)type);
         }
-        /* [pro] */
-        else if (ArrayRecord.class.isAssignableFrom(type)) {
-            return (T) getArrayRecord(ctx.configuration(), stmt.getArray(index), (Class<? extends ArrayRecord<?>>) type);
-        }
-        /* [/pro] */
+        /* [pro] xx
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
+        x
+        xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
             return getEnumType(type, stmt.getString(index));
         }
@@ -2457,11 +2457,11 @@ final class Utils {
         else if (type.isArray()) {
             return (T) pgNewArray(type, string);
         }
-        /* [pro] */
-        else if (ArrayRecord.class.isAssignableFrom(type)) {
-            // Not supported
-        }
-        /* [/pro] */
+        /* [pro] xx
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xx xxx xxxxxxxxx
+        x
+        xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
             return getEnumType(type, string);
         }

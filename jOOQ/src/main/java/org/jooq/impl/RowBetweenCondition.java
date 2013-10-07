@@ -46,18 +46,18 @@ import static org.jooq.Clause.CONDITION_BETWEEN;
 import static org.jooq.Clause.CONDITION_BETWEEN_SYMMETRIC;
 import static org.jooq.Clause.CONDITION_NOT_BETWEEN;
 import static org.jooq.Clause.CONDITION_NOT_BETWEEN_SYMMETRIC;
-import static org.jooq.SQLDialect.ASE;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
 import static org.jooq.impl.DSL.row;
 
 import javax.annotation.Generated;
@@ -713,7 +713,7 @@ implements
         RowN max = (RowN) maxValue;
 
         // These dialects don't support the SYMMETRIC keyword at all
-        if (symmetric && asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, MARIADB, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.dialect().family())) {
+        if (symmetric && asList(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE).contains(configuration.dialect().family())) {
             if (not) {
                 return (QueryPartInternal) r.notBetween(min, max).and(r.notBetween(max, min));
             }
@@ -724,7 +724,7 @@ implements
 
         // These dialects either don't support row value expressions, or they
         // Can't handle row value expressions with the BETWEEN predicate
-        else if (row.size() > 1 && asList(CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.dialect().family())) {
+        else if (row.size() > 1 && asList(CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL, SQLITE).contains(configuration.dialect().family())) {
             Condition result = r.ge(min).and(r.le(max));
 
             if (not) {

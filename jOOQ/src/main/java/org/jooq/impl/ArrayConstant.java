@@ -40,55 +40,55 @@
  */
 package org.jooq.impl;
 
-/* [pro] */
+/* [pro] xx
 
-import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.impl.DSL.val;
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxx
 
-import org.jooq.ArrayRecord;
-import org.jooq.BindContext;
-import org.jooq.DataType;
-import org.jooq.RenderContext;
+xxxxxx xxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 
-/**
- * @author Lukas Eder
- */
-class ArrayConstant<R extends ArrayRecord<?>> extends AbstractParam<R> {
+xxx
+ x xxxxxxx xxxxx xxxx
+ xx
+xxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx x
 
-    private static final long serialVersionUID = -8538560256712388066L;
-    private final R           array;
+    xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxx
+    xxxxxxx xxxxx x           xxxxxx
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    ArrayConstant(R array) {
-        super(array, (DataType) array.getDataType());
+    xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxx xx
+    xxxxxxxxxxxxxxx xxxxxx x
+        xxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
 
-        this.array = array;
-    }
+        xxxxxxxxxx x xxxxxx
+    x
 
-    @Override
-    public final void toSQL(RenderContext context) {
-        if (context.paramType() == INLINED) {
-            context.sql(array.getName());
-            context.sql("(");
+    xxxxxxxxx
+    xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxx xxxxxxxx x
+        xx xxxxxxxxxxxxxxxxxxxx xx xxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxx
 
-            String separator = "";
-            for (Object object : array.get()) {
-                context.sql(separator);
-                context.visit(val(object));
+            xxxxxx xxxxxxxxx x xxx
+            xxx xxxxxxx xxxxxx x xxxxxxxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                separator = ", ";
-            }
+                xxxxxxxxx x xx xx
+            x
 
-            context.sql(")");
-        }
-        else {
-            context.sql("?");
-        }
-    }
+            xxxxxxxxxxxxxxxxx
+        x
+        xxxx x
+            xxxxxxxxxxxxxxxxx
+        x
+    x
 
-    @Override
-    public final void bind(BindContext context) {
-        context.bindValues(array);
-    }
-}
-/* [/pro] */
+    xxxxxxxxx
+    xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx xxxxxxxx x
+        xxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
+x
+xx [/pro] */

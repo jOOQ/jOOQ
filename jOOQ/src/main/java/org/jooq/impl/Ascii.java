@@ -70,9 +70,9 @@ class Ascii extends AbstractFunction<Integer> {
                 return function("ascii_val", SQLDataType.INTEGER, string);
 
             // TODO [#862] [#864] simulate this for some dialects
-            /* [pro] */
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxxxxx
+            xx [/pro] */
             case DERBY:
             case SQLITE:
 

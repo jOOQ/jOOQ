@@ -111,15 +111,15 @@ implements
     private Table<?> pivot(Configuration configuration) {
         switch (configuration.dialect()) {
 
-            /* [pro] */
-            // Oracle has native support for the PIVOT clause
-            case ORACLE:
-            case ORACLE11G:
-            case ORACLE12C: {
-                return new OraclePivotTable();
-            }
+            /* [pro] xx
+            xx xxxxxx xxx xxxxxx xxxxxxx xxx xxx xxxxx xxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxxxxx x
+                xxxxxx xxx xxxxxxxxxxxxxxxxxxx
+            x
 
-            /* [/pro] */
+            xx [/pro] */
             // Some other dialects can simulate it. This implementation is
             // EXPERIMENTAL and not officially supported
             default: {
@@ -219,58 +219,58 @@ implements
         }
     }
 
-    /* [pro] */
-    /**
-     * The Oracle-specific <code>PIVOT</code> implementation
-     */
-    private class OraclePivotTable extends DialectPivotTable {
+    /* [pro] xx
+    xxx
+     x xxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
+     xx
+    xxxxxxx xxxxx xxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxx x
 
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -3451610306872726958L;
+        xxx
+         x xxxxxxxxx xxx
+         xx
+        xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxx
 
-        @Override
-        public void toSQL(RenderContext context) {
+        xxxxxxxxx
+        xxxxxx xxxx xxxxxxxxxxxxxxxxxxx xxxxxxxx x
 
-            // Bind variables are not allowed inside of PIVOT clause
-            ParamType paramType = context.paramType();
-            boolean declareFields = context.declareFields();
-            boolean declareTables = context.declareTables();
+            xx xxxx xxxxxxxxx xxx xxx xxxxxxx xxxxxx xx xxxxx xxxxxx
+            xxxxxxxxx xxxxxxxxx x xxxxxxxxxxxxxxxxxxxx
+            xxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxx
 
-            context.declareTables(true)
-                   .visit(table)
-                   .declareTables(declareTables)
-                   .formatSeparator()
-                   .keyword("pivot").sql(" (")
-                   .paramType(INLINED)
-                   .declareFields(true)
-                   .formatIndentStart()
-                   .visit(aggregateFunctions)
-                   .formatSeparator()
-                   .keyword("for").sql(" ")
-                   .literal(on.getName())
-                   .formatSeparator()
-                   .keyword("in").sql(" (")
-                   .visit(in)
-                   .declareFields(declareFields)
-                   .paramType(paramType)
-                   .sql(")")
-                   .formatIndentEnd()
-                   .formatNewLine()
-                   .sql(")");
-        }
+            xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxxxxx xxx
+                   xxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxxx xx
+                   xxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxx xxx
+                   xxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxx
+                   xxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxx
+                   xxxxxxxxxx
+        x
 
-        @Override
-        public void bind(BindContext context) throws DataAccessException {
-            boolean declareTables = context.declareFields();
+        xxxxxxxxx
+        xxxxxx xxxx xxxxxxxxxxxxxxxx xxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxx x
+            xxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxx
 
-            context.declareTables(true)
-                   .visit(table)
-                   .declareTables(declareTables);
-        }
-    }
-    /* [/pro] */
+            xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+    x
+    xx [/pro] */
 
     /**
      * A base class for dialect-specific implementations of the pivot table
@@ -345,29 +345,29 @@ implements
     // XXX: Pivot API
     // ------------------------------------------------------------------------
 
-    /* [pro] */
-    @SuppressWarnings("unchecked")
-    @Override
-    public final <Z> Pivot<Z> on(Field<Z> field) {
-        // The previous bound of <T> is Object, but that's irrelevant
-        this.on = (Field<T>) field;
-        return (Pivot<Z>) this;
-    }
+    /* [pro] xx
+    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xxxxxxxxx
+    xxxxxx xxxxx xxx xxxxxxxx xxxxxxxxxxx xxxxxx x
+        xx xxx xxxxxxxx xxxxx xx xxx xx xxxxxxx xxx xxxxxx xxxxxxxxxx
+        xxxxxxx x xxxxxxxxxx xxxxxx
+        xxxxxx xxxxxxxxxx xxxxx
+    x
 
-    @Override
-    public final Table<Record> in(Object... values) {
-        return in(Utils.fields(values, on).toArray(new Field<?>[0]));
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxx xxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxx
+    x
 
-    @Override
-    public final Table<Record> in(Field<?>... f) {
-        this.in = new SelectFieldList(f);
-        return this;
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxx xx x
+        xxxxxxx x xxx xxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxx
+    x
 
-    @Override
-    public final Table<Record> in(Collection<? extends Field<T>> f) {
-        return in(f.toArray(new Field[0]));
-    }
-    /* [/pro] */
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xx x
+        xxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxx
+    x
+    xx [/pro] */
 }

@@ -40,141 +40,141 @@
  */
 package org.jooq.impl;
 
-/* [pro] */
+/* [pro] xx
 
-import static org.jooq.impl.DSL.keyword;
-import static org.jooq.impl.DSL.val;
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxx
 
-import org.jooq.BindContext;
-import org.jooq.Field;
-import org.jooq.QueryPart;
-import org.jooq.Record;
-import org.jooq.RenderContext;
-import org.jooq.Table;
-import org.jooq.VersionsBetweenAndStep;
+xxxxxx xxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-/**
- * A flashback query clause implementation.
- *
- * @author Lukas Eder
- */
-class FlashbackTable<R extends Record, T>
-extends AbstractTable<R>
-implements VersionsBetweenAndStep<R, T> {
+xxx
+ x x xxxxxxxxx xxxxx xxxxxx xxxxxxxxxxxxxxx
+ x
+ x xxxxxxx xxxxx xxxx
+ xx
+xxxxx xxxxxxxxxxxxxxxx xxxxxxx xxxxxxx xx
+xxxxxxx xxxxxxxxxxxxxxxx
+xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xx x
 
-    /**
-     * Generated UID
-     */
-    private static final long   serialVersionUID = -7918219502110473521L;
+    xxx
+     x xxxxxxxxx xxx
+     xx
+    xxxxxxx xxxxxx xxxxx xxxx   xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxx
 
-    private final Table<R>      table;
-    private final QueryPart     type;
-    private final Field<?>      asOf;
-    private final QueryPart     minvalue;
-    private QueryPart           maxvalue;
+    xxxxxxx xxxxx xxxxxxxx      xxxxxx
+    xxxxxxx xxxxx xxxxxxxxx     xxxxx
+    xxxxxxx xxxxx xxxxxxxx      xxxxx
+    xxxxxxx xxxxx xxxxxxxxx     xxxxxxxxx
+    xxxxxxx xxxxxxxxx           xxxxxxxxx
 
-    FlashbackTable(Table<R> table, Field<?> asOf, Field<?> minvalue, FlashbackType type) {
-        super("flashbackquery");
+    xxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxx xxxxx xxxxxxxx xxxxxxxxx xxxxxxxxxxxxx xxxxx x
+        xxxxxxxxxxxxxxxxxxxxxxxx
 
-        this.table = table;
-        this.asOf = asOf;
-        this.minvalue = minvalue != null ? minvalue : keyword("minvalue");
-        this.type = type == FlashbackType.SCN ? keyword("scn") : keyword("timestamp");
-    }
+        xxxxxxxxxx x xxxxxx
+        xxxxxxxxx x xxxxx
+        xxxxxxxxxxxxx x xxxxxxxx xx xxxx x xxxxxxxx x xxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxx x xxxx xx xxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
+    x
 
-    // ------------------------------------------------------------------------
-    // XXX: Flashback API
-    // ------------------------------------------------------------------------
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xx xxxx xxxxxxxxx xxx
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    @Override
-    public final Table<R> and(T value) {
-        return and(val(value));
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxx xxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxx
+    x
 
-    @Override
-    public final Table<R> and(Field<? extends T> field) {
-        maxvalue = field;
-        return this;
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxx xxxxxxxxxxx xxxxxxx xx xxxxxx x
+        xxxxxxxx x xxxxxx
+        xxxxxx xxxxx
+    x
 
-    @Override
-    public final Table<R> andMaxvalue() {
-        maxvalue = keyword("maxvalue");
-        return this;
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxx xxxxxxxxxxxxx x
+        xxxxxxxx x xxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxx
+    x
 
-    // ------------------------------------------------------------------------
-    // XXX: Table API
-    // ------------------------------------------------------------------------
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xx xxxx xxxxx xxx
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    @Override
-    public final Class<? extends R> getRecordType() {
-        return table.getRecordType();
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxx xxxxxxx xx xxxxxxxxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    @Override
-    public final void toSQL(RenderContext context) {
-        context.visit(table);
+    xxxxxxxxx
+    xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxx xxxxxxxx x
+        xxxxxxxxxxxxxxxxxxxxx
 
-        if (asOf != null) {
-            context.sql(" ")
-                   .keyword("as of")
-                   .sql(" ")
-                   .visit(type)
-                   .sql(" ")
-                   .visit(asOf);
-        }
-        else {
-            context.sql(" ")
-                   .keyword("versions between")
-                   .sql(" ")
-                   .visit(type)
-                   .sql(" ")
-                   .visit(minvalue)
-                   .sql(" ")
-                   .keyword("and")
-                   .sql(" ")
-                   .visit(maxvalue);
-        }
-    }
+        xx xxxxx xx xxxxx x
+            xxxxxxxxxxxxx xx
+                   xxxxxxxxxxxx xxxx
+                   xxxxxx xx
+                   xxxxxxxxxxxx
+                   xxxxxx xx
+                   xxxxxxxxxxxxx
+        x
+        xxxx x
+            xxxxxxxxxxxxx xx
+                   xxxxxxxxxxxxxxxxxx xxxxxxxxx
+                   xxxxxx xx
+                   xxxxxxxxxxxx
+                   xxxxxx xx
+                   xxxxxxxxxxxxxxxx
+                   xxxxxx xx
+                   xxxxxxxxxxxxxxx
+                   xxxxxx xx
+                   xxxxxxxxxxxxxxxxx
+        x
+    x
 
-    @Override
-    public final void bind(BindContext context) {
-        context.visit(table);
+    xxxxxxxxx
+    xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx xxxxxxxx x
+        xxxxxxxxxxxxxxxxxxxxx
 
-        if (asOf != null) {
-            context.visit(asOf);
-        }
-        else {
-            context.visit(minvalue).visit(maxvalue);
-        }
-    }
+        xx xxxxx xx xxxxx x
+            xxxxxxxxxxxxxxxxxxxx
+        x
+        xxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+    x
 
-    @Override
-    public final boolean declaresTables() {
-        return true;
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxx xxxxxxxxxxxxxxxx x
+        xxxxxx xxxxx
+    x
 
-    @Override
-    public final Table<R> as(String alias) {
-        return new TableAlias<R>(this, alias, true);
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxx xxxxxxxxx xxxxxx x
+        xxxxxx xxx xxxxxxxxxxxxxxxxxxx xxxxxx xxxxxx
+    x
 
-    @Override
-    public final Table<R> as(String alias, String... fieldAliases) {
-        return new TableAlias<R>(this, alias, fieldAliases, true);
-    }
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxx xxxxxxxxx xxxxxx xxxxxxxxx xxxxxxxxxxxxx x
+        xxxxxx xxx xxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxx xxxxxx
+    x
 
-    @Override
-    final Fields<R> fields0() {
-        return new Fields<R>(table.fields());
-    }
+    xxxxxxxxx
+    xxxxx xxxxxxxxx xxxxxxxxx x
+        xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    /**
-     * The flashback query clause type
-     */
-    enum FlashbackType {
-        SCN, TIMESTAMP;
-    }
-}
-/* [/pro] */
+    xxx
+     x xxx xxxxxxxxx xxxxx xxxxxx xxxx
+     xx
+    xxxx xxxxxxxxxxxxx x
+        xxxx xxxxxxxxxx
+    x
+x
+xx [/pro] */

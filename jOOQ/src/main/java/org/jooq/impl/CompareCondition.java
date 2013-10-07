@@ -48,8 +48,8 @@ import static org.jooq.Comparator.LIKE;
 import static org.jooq.Comparator.LIKE_IGNORE_CASE;
 import static org.jooq.Comparator.NOT_LIKE;
 import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
-import static org.jooq.SQLDialect.ASE;
-import static org.jooq.SQLDialect.DB2;
+// ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.POSTGRES;
 
@@ -102,7 +102,7 @@ class CompareCondition extends AbstractCondition {
         // [#293] TODO: This could apply to other operators, too
         if ((op == LIKE || op == NOT_LIKE)
                 && field1.getType() != String.class
-                && asList(ASE, DERBY, POSTGRES).contains(family)) {
+                && asList(DERBY, POSTGRES).contains(family)) {
 
             lhs = lhs.cast(String.class);
         }
@@ -125,10 +125,10 @@ class CompareCondition extends AbstractCondition {
         // characters long
         boolean castRhs = false;
 
-        /* [pro] */
-        if (family == DB2 && rhs instanceof Concat)
-            castRhs = true;
-        /* [/pro] */
+        /* [pro] xx
+        xx xxxxxxx xx xxx xx xxx xxxxxxxxxx xxxxxxx
+            xxxxxxx x xxxxx
+        xx [/pro] */
 
                      context.keyword(op.toSQL()).sql(" ");
         if (castRhs) context.keyword("cast").sql("(");

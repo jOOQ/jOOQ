@@ -81,21 +81,21 @@ class FieldCondition extends AbstractCondition {
             case CUBRID:
             case FIREBIRD:
 
-            /* [pro] */
-            // These do
-            case DB2:
-            case INGRES:
-            case ORACLE:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
+            /* [pro] xx
+            xx xxxxx xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
                 return (QueryPartInternal) condition("{0} = {1}", field, inline(true));
 
 
-            /* [pro] */
-            // Untested yet
-            case ASE:
-            /* [/pro] */
+            /* [pro] xx
+            xx xxxxxxxx xxx
+            xxxx xxxx
+            xx [/pro] */
 
             // Native support
             case DERBY:

@@ -83,11 +83,11 @@ class Concat extends AbstractFunction<String> {
             case MYSQL:
                 return function("concat", SQLDataType.VARCHAR, cast);
 
-            /* [pro] */
-            case SQLSERVER:
-                return new Expression<String>(ADD, first, others);
+            /* [pro] xx
+            xxxx xxxxxxxxxx
+                xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxx
 
-            /* [/pro] */
+            xx [/pro] */
             default:
                 return new Expression<String>(CONCAT, first, others);
         }

@@ -40,8 +40,8 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.ORACLE11G;
-import static org.jooq.SQLDialect.ORACLE12C;
+// ...
+// ...
 
 import org.jooq.api.annotation.State;
 import org.jooq.api.annotation.Transition;
@@ -57,21 +57,21 @@ import org.jooq.api.annotation.Transition;
 )
 public interface PivotForStep {
 
-    /* [pro] */
-    /**
-     * Add a list of fields to the <code>PIVOT</code> clause. Normally, the
-     * keyword used here would be <code>FOR</code>, but <code>for</code> is a
-     * reserved word in Java and cannot be used. <code>on</code> is close
-     * enough.
-     *
-     * @param field The pivoting field
-     * @return A DSL object to create the <code>PIVOT</code> expression
-     */
-    @Support({ ORACLE11G, ORACLE12C })
-    @Transition(
-        name = "FOR",
-        args = "Field"
-    )
-    <T> PivotInStep<T> on(Field<T> field);
-    /* [/pro] */
+    /* [pro] xx
+    xxx
+     x xxx x xxxx xx xxxxxx xx xxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxx
+     x xxxxxxx xxxx xxxx xxxxx xx xxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxxxx xx x
+     x xxxxxxxx xxxx xx xxxx xxx xxxxxx xx xxxxx xxxxxxxxxxxxxxx xx xxxxx
+     x xxxxxxx
+     x
+     x xxxxxx xxxxx xxx xxxxxxxx xxxxx
+     x xxxxxxx x xxx xxxxxx xx xxxxxx xxx xxxxxxxxxxxxxxxxxx xxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxx
+        xxxx x xxxxxxx
+    x
+    xxx xxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxx
+    xx [/pro] */
 }

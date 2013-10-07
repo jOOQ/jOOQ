@@ -40,24 +40,24 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.ASE;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.INGRES;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.ORACLE11G;
-import static org.jooq.SQLDialect.ORACLE12C;
+// ...
+// ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SQLSERVER2012;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
+// ...
 import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Utils.combine;
 
@@ -75,7 +75,7 @@ import javax.annotation.Generated;
 import javax.sql.DataSource;
 
 import org.jooq.AggregateFunction;
-import org.jooq.ArrayRecord;
+// ...
 import org.jooq.Case;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -3476,7 +3476,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table)
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     @Transition(
         name = "MERGE INTO",
         args = "Table"
@@ -3513,7 +3513,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1> MergeKeyStep1<R, T1> mergeInto(Table<R> table, Field<T1> field1) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1);
     }
@@ -3545,7 +3545,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2> MergeKeyStep2<R, T1, T2> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2);
     }
@@ -3577,7 +3577,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3> MergeKeyStep3<R, T1, T2, T3> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3);
     }
@@ -3609,7 +3609,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4> MergeKeyStep4<R, T1, T2, T3, T4> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4);
     }
@@ -3641,7 +3641,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4, T5> MergeKeyStep5<R, T1, T2, T3, T4, T5> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5);
     }
@@ -3673,7 +3673,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4, T5, T6> MergeKeyStep6<R, T1, T2, T3, T4, T5, T6> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6);
     }
@@ -3705,7 +3705,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7> MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7);
     }
@@ -3737,7 +3737,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8);
     }
@@ -3769,7 +3769,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9);
     }
@@ -3801,7 +3801,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
     }
@@ -3833,7 +3833,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
     }
@@ -3865,7 +3865,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12);
     }
@@ -3897,7 +3897,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13);
     }
@@ -3929,7 +3929,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14);
     }
@@ -3961,7 +3961,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15);
     }
@@ -3993,7 +3993,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16);
     }
@@ -4025,7 +4025,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17);
     }
@@ -4057,7 +4057,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18);
     }
@@ -4089,7 +4089,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19);
     }
@@ -4121,7 +4121,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20);
     }
@@ -4153,7 +4153,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21);
     }
@@ -4185,7 +4185,7 @@ public class DSL {
      * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
     	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
     }
@@ -4218,7 +4218,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Field<?>... fields) {
         return using(new DefaultConfiguration()).mergeInto(table, fields);
     }
@@ -4232,7 +4232,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Collection)
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB })
     public static <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields) {
         return using(new DefaultConfiguration()).mergeInto(table, fields);
     }
@@ -4335,7 +4335,7 @@ public class DSL {
      * @see Field#lessThan(QuantifiedSelect)
      * @see Field#lessOrEqual(QuantifiedSelect)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "ALL",
         args = "Select"
@@ -4358,7 +4358,7 @@ public class DSL {
      * @see Field#lessThan(QuantifiedSelect)
      * @see Field#lessOrEqual(QuantifiedSelect)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "ALL",
         args = "Field+"
@@ -4401,7 +4401,7 @@ public class DSL {
      * @see Field#lessThan(QuantifiedSelect)
      * @see Field#lessOrEqual(QuantifiedSelect)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "ANY",
         args = "Select"
@@ -4424,7 +4424,7 @@ public class DSL {
      * @see Field#lessThan(QuantifiedSelect)
      * @see Field#lessOrEqual(QuantifiedSelect)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "ANY",
         args = "Field+"
@@ -4505,29 +4505,29 @@ public class DSL {
         return table(val(array));
     }
 
-    /* [pro] */
-    /**
-     * A synonym for {@link #unnest(ArrayRecord)}.
-     *
-     * @see #unnest(ArrayRecord)
-     */
-    @Support(ORACLE)
-    @Transition(
-        name = "TABLE",
-        args = "Array",
-        to = "UnnestedTable"
-    )
-    public static Table<?> table(ArrayRecord<?> array) {
-        return table(val(array));
-    }
+    /* [pro] xx
+    xxx
+     x x xxxxxxx xxx xxxxxx xxxxxxxxxxxxxxxxxxxxxx
+     x
+     x xxxx xxxxxxxxxxxxxxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxx
+        xxxx x xxxxxxxx
+        xx x xxxxxxxxxxxxxxx
+    x
+    xxxxxx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxx
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     /**
      * A synonym for {@link #unnest(Field)}.
      *
      * @see #unnest(Field)
      */
-    @Support({ H2, HSQLDB, POSTGRES, ORACLE })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "TABLE",
         args = "Field",
@@ -4581,24 +4581,24 @@ public class DSL {
         return unnest(val(array));
     }
 
-    /* [pro] */
-    /**
-     * Create a table from an array of values.
-     * <p>
-     * This wraps the argument array in a <code>TABLE</code> function for
-     * Oracle. Currently, only Oracle knows typed arrays
-     */
-    @Support(ORACLE)
-    @Transition(
-        name = "UNNEST",
-        args = "Array",
-        to = "UnnestedTable"
-    )
-    public static Table<?> unnest(ArrayRecord<?> array) {
-        return unnest(val(array));
-    }
+    /* [pro] xx
+    xxx
+     x xxxxxx x xxxxx xxxx xx xxxxx xx xxxxxxx
+     x xxx
+     x xxxx xxxxx xxx xxxxxxxx xxxxx xx x xxxxxxxxxxxxxxxxxx xxxxxxxx xxx
+     x xxxxxxx xxxxxxxxxx xxxx xxxxxx xxxxx xxxxx xxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxxx
+        xxxx x xxxxxxxx
+        xx x xxxxxxxxxxxxxxx
+    x
+    xxxxxx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxx
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     /**
      * Create a table from a field.
      * <p>
@@ -4620,7 +4620,7 @@ public class DSL {
      * In all dialects where arrays are not supported, unnesting of arrays is
      * simulated using several <code>UNION ALL</code> connected subqueries.
      */
-    @Support({ H2, HSQLDB, POSTGRES, ORACLE })
+    @Support({ H2, HSQLDB, POSTGRES })
     @Transition(
         name = "UNNEST",
         args = "Field",
@@ -4637,18 +4637,18 @@ public class DSL {
             return new FunctionTable<Record>(cursor);
         }
 
-        /* [pro] */
-        // The field is an Oracle-style VARRAY constant
-        else if (ArrayConstant.class.isAssignableFrom(cursor.getClass())) {
-            return new ArrayTable(cursor);
-        }
+        /* [pro] xx
+        xx xxx xxxxx xx xx xxxxxxxxxxxx xxxxxx xxxxxxxx
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxx xxx xxxxxxxxxxxxxxxxxxx
+        x
 
-        // The field is an Oracle-style VARRAY field
-        else if (ArrayRecord.class.isAssignableFrom(cursor.getDataType().getType())) {
-            return new ArrayTable(cursor);
-        }
+        xx xxx xxxxx xx xx xxxxxxxxxxxx xxxxxx xxxxx
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxx xxx xxxxxxxxxxxxxxxxxxx
+        x
 
-        /* [/pro] */
+        xx [/pro] */
         // The field is a regular array
         else if (cursor.getType().isArray() && cursor.getType() != byte[].class) {
             return new ArrayTable(cursor);
@@ -4697,7 +4697,7 @@ public class DSL {
      * SELECT * FROM (SELECT a + LEVEL - 1 FROM DUAL CONNECT BY a + LEVEL - 1 &lt;= b)
      * </pre></code>
      */
-    @Support({ CUBRID, ORACLE, POSTGRES })
+    @Support({ CUBRID, POSTGRES })
     public static Table<Record1<Integer>> generateSeries(int from, int to) {
         return generateSeries(val(from), val(to));
     }
@@ -4716,7 +4716,7 @@ public class DSL {
      * SELECT * FROM (SELECT a + LEVEL - 1 FROM DUAL CONNECT BY a + LEVEL - 1 &lt;= b)
      * </pre></code>
      */
-    @Support({ CUBRID, ORACLE, POSTGRES })
+    @Support({ CUBRID, POSTGRES })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, Field<Integer> to) {
         return new GenerateSeries(nullSafe(from), nullSafe(to));
     }
@@ -6494,7 +6494,7 @@ public class DSL {
      *
      * @see #rpad(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "RPAD",
         args = {
@@ -6516,7 +6516,7 @@ public class DSL {
      * well, depending on the RDBMS:
      * <code><pre>concat([field], repeat(' ', [length] - length([field])))</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "RPAD",
         args = {
@@ -6534,7 +6534,7 @@ public class DSL {
      *
      * @see #rpad(Field, Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "RPAD",
         args = {
@@ -6553,7 +6553,7 @@ public class DSL {
      *
      * @see #rpad(Field, Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "RPAD",
         args = {
@@ -6579,7 +6579,7 @@ public class DSL {
      * In {@link SQLDialect#SQLITE}, this is simulated as such:
      * <code><pre>[field] || replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '''', ''), '0', [character])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "RPAD",
         args = {
@@ -6598,7 +6598,7 @@ public class DSL {
      *
      * @see #lpad(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "LPAD",
         args = {
@@ -6620,7 +6620,7 @@ public class DSL {
      * well, depending on the RDBMS:
      * <code><pre>concat(repeat(' ', [length] - length([field])), [field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "LPAD",
         args = {
@@ -6638,7 +6638,7 @@ public class DSL {
      *
      * @see #lpad(Field, Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "LPAD",
         args = {
@@ -6657,7 +6657,7 @@ public class DSL {
      *
      * @see #lpad(Field, Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "LPAD",
         args = {
@@ -6683,7 +6683,7 @@ public class DSL {
      * In {@link SQLDialect#SQLITE}, this is simulated as such:
      * <code><pre>replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '''', ''), '0', [character]) || [field]</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "LPAD",
         args = {
@@ -6702,7 +6702,7 @@ public class DSL {
      *
      * @see #repeat(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> repeat(String field, int count) {
         return repeat(Utils.field(field, String.class), Utils.field(count));
     }
@@ -6712,7 +6712,7 @@ public class DSL {
      *
      * @see #repeat(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> repeat(String field, Field<? extends Number> count) {
         return repeat(Utils.field(field, String.class), nullSafe(count));
     }
@@ -6722,7 +6722,7 @@ public class DSL {
      *
      * @see #repeat(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> repeat(Field<String> field, int count) {
         return repeat(nullSafe(field), Utils.field(count));
     }
@@ -6740,7 +6740,7 @@ public class DSL {
      * In {@link SQLDialect#SQLITE}, this is simulated as such:
      * <code><pre>replace(substr(quote(zeroblob(([count] + 1) / 2)), 3, [count]), '0', [field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> repeat(Field<String> field, Field<? extends Number> count) {
         return new Repeat(nullSafe(field), nullSafe(count));
     }
@@ -6769,7 +6769,7 @@ public class DSL {
      * @see #replace(Field, String, String)
      * @see Field#like(Field, char)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> escape(Field<String> field, char escape) {
         Field<String> replace = field;
 
@@ -6786,7 +6786,7 @@ public class DSL {
      *
      * @see #replace(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> replace(Field<String> field, String search) {
         return replace(nullSafe(field), Utils.field(search, String.class));
     }
@@ -6800,7 +6800,7 @@ public class DSL {
      * using the three-argument replace function:
      * <code><pre>replace([field], [search], '')</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> replace(Field<String> field, Field<String> search) {
         return new Replace(nullSafe(field), nullSafe(search));
     }
@@ -6810,7 +6810,7 @@ public class DSL {
      *
      * @see #replace(Field, Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> replace(Field<String> field, String search, String replace) {
         return replace(nullSafe(field), Utils.field(search, String.class), Utils.field(replace, String.class));
     }
@@ -6822,7 +6822,7 @@ public class DSL {
      * <code><pre>replace([field], [search]) or
      * str_replace([field], [search])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> replace(Field<String> field, Field<String> search, Field<String> replace) {
         return new Replace(nullSafe(field), nullSafe(search), nullSafe(replace));
     }
@@ -6832,7 +6832,7 @@ public class DSL {
      *
      * @see #position(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> position(String in, String search) {
         return position(Utils.field(in, String.class), Utils.field(search, String.class));
     }
@@ -6842,7 +6842,7 @@ public class DSL {
      *
      * @see #position(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> position(String in, Field<String> search) {
         return position(Utils.field(in, String.class), nullSafe(search));
     }
@@ -6852,7 +6852,7 @@ public class DSL {
      *
      * @see #position(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> position(Field<String> in, String search) {
         return position(nullSafe(in), Utils.field(search, String.class));
     }
@@ -6867,7 +6867,7 @@ public class DSL {
      * instr([in], [search]) or
      * charindex([search], [in])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> position(Field<String> in, Field<String> search) {
         return new Position(nullSafe(search), nullSafe(in));
     }
@@ -6877,7 +6877,7 @@ public class DSL {
      *
      * @see #ascii(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> ascii(String field) {
         return ascii(Utils.field(field, String.class));
     }
@@ -6888,7 +6888,7 @@ public class DSL {
      * This renders the ascii function:
      * <code><pre>ascii([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> ascii(Field<String> field) {
         return new Ascii(nullSafe(field));
     }
@@ -7070,7 +7070,7 @@ public class DSL {
      * </tr>
      * </table>
      */
-    @Support({ MARIADB, MYSQL, ORACLE })
+    @Support({ MARIADB, MYSQL })
     public static Field<String> md5(String string) {
         return md5(Utils.field(string));
     }
@@ -7097,7 +7097,7 @@ public class DSL {
      * </tr>
      * </table>
      */
-    @Support({ MARIADB, MYSQL, ORACLE })
+    @Support({ MARIADB, MYSQL })
     public static Field<String> md5(Field<String> string) {
         return new MD5(nullSafe(string));
     }
@@ -7696,7 +7696,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @Support({ CUBRID, DB2, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, MARIADB, MYSQL })
     @Transition(
         name = "ROLLUP",
         args = "Field+"
@@ -7705,203 +7705,203 @@ public class DSL {
         return new Rollup(nullSafe(fields));
     }
 
-    /* [pro] */
-    /**
-     * Create a CUBE(field1, field2, .., fieldn) grouping field.
-     * <p>
-     * This has been observed to work with the following databases:
-     * <ul>
-     * <li>DB2</li>
-     * <li>Oracle</li>
-     * <li>SQL Server</li>
-     * <li>Sybase SQL Anywhere</li>
-     * </ul>
-     * <p>
-     * Please check the SQL Server documentation for a very nice explanation of
-     * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
-     * clauses in grouping contexts: <a
-     * href="http://msdn.microsoft.com/en-US/library/bb522495.aspx"
-     * >http://msdn.microsoft.com/en-US/library/bb522495.aspx</a>
-     *
-     * @param fields The fields that are part of the <code>CUBE</code>
-     *            function
-     * @return A field to be used in a <code>GROUP BY</code> clause
-     */
-    @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "CUBE",
-        args = "Field+"
-    )
-    public static GroupField cube(Field<?>... fields) {
-        return function("cube", Object.class, nullSafe(fields));
-    }
+    /* [pro] xx
+    xxx
+     x xxxxxx x xxxxxxxxxxxx xxxxxxx xxx xxxxxxx xxxxxxxx xxxxxx
+     x xxx
+     x xxxx xxx xxxx xxxxxxxx xx xxxx xxxx xxx xxxxxxxxx xxxxxxxxxx
+     x xxxx
+     x xxxxxxxxxxxx
+     x xxxxxxxxxxxxxxx
+     x xxxxxxx xxxxxxxxxxx
+     x xxxxxxxxxx xxx xxxxxxxxxxxxx
+     x xxxxx
+     x xxx
+     x xxxxxx xxxxx xxx xxx xxxxxx xxxxxxxxxxxxx xxx x xxxx xxxx xxxxxxxxxxx xx
+     x xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxx xxxxxxxxxxx
+     x xxxxxxx xx xxxxxxxx xxxxxxxxx xx
+     x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+     x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+     x
+     x xxxxxx xxxxxx xxx xxxxxx xxxx xxx xxxx xx xxx xxxxxxxxxxxxxxxxx
+     x            xxxxxxxx
+     x xxxxxxx x xxxxx xx xx xxxx xx x xxxxxxxxxxx xxxxxxxxx xxxxxx
+     xx
+    xxxxxxxxxx xxxx xxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxx
+        xxxx x xxxxxxxx
+    x
+    xxxxxx xxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+    x
 
-    /**
-     * Create a GROUPING SETS(field1, field2, .., fieldn) grouping field where
-     * each grouping set only consists of a single field.
-     * <p>
-     * This has been observed to work with the following databases:
-     * <ul>
-     * <li>DB2</li>
-     * <li>Oracle</li>
-     * <li>SQL Server</li>
-     * <li>Sybase SQL Anywhere</li>
-     * </ul>
-     * <p>
-     * Please check the SQL Server documentation for a very nice explanation of
-     * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
-     * clauses in grouping contexts: <a
-     * href="http://msdn.microsoft.com/en-US/library/bb522495.aspx"
-     * >http://msdn.microsoft.com/en-US/library/bb522495.aspx</a>
-     *
-     * @param fields The fields that are part of the <code>GROUPING SETS</code>
-     *            function
-     * @return A field to be used in a <code>GROUP BY</code> clause
-     */
-    @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "GROUPING SETS",
-        args = "Field+"
-    )
-    public static GroupField groupingSets(Field<?>... fields) {
-        List<Field<?>>[] array = new List[fields.length];
+    xxx
+     x xxxxxx x xxxxxxxx xxxxxxxxxxxx xxxxxxx xxx xxxxxxx xxxxxxxx xxxxx xxxxx
+     x xxxx xxxxxxxx xxx xxxx xxxxxxxx xx x xxxxxx xxxxxx
+     x xxx
+     x xxxx xxx xxxx xxxxxxxx xx xxxx xxxx xxx xxxxxxxxx xxxxxxxxxx
+     x xxxx
+     x xxxxxxxxxxxx
+     x xxxxxxxxxxxxxxx
+     x xxxxxxx xxxxxxxxxxx
+     x xxxxxxxxxx xxx xxxxxxxxxxxxx
+     x xxxxx
+     x xxx
+     x xxxxxx xxxxx xxx xxx xxxxxx xxxxxxxxxxxxx xxx x xxxx xxxx xxxxxxxxxxx xx
+     x xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxx xxxxxxxxxxx
+     x xxxxxxx xx xxxxxxxx xxxxxxxxx xx
+     x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+     x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+     x
+     x xxxxxx xxxxxx xxx xxxxxx xxxx xxx xxxx xx xxx xxxxxxxxxxxxxx xxxxxxxxxxx
+     x            xxxxxxxx
+     x xxxxxxx x xxxxx xx xx xxxx xx x xxxxxxxxxxx xxxxxxxxx xxxxxx
+     xx
+    xxxxxxxxxx xxxx xxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxxx xxxxxx
+        xxxx x xxxxxxxx
+    x
+    xxxxxx xxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxxxxxxxxxxxxx xxxxx x xxx xxxxxxxxxxxxxxxxxxxx
 
-        for (int i = 0; i < fields.length; i++) {
-            array[i] = Arrays.<Field<?>>asList(fields[i]);
-        }
+        xxx xxxx x x xx x x xxxxxxxxxxxxxx xxxx x
+            xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
 
-        return groupingSets(array);
-    }
+        xxxxxx xxxxxxxxxxxxxxxxxxxx
+    x
 
-    /**
-     * Create a GROUPING SETS((field1a, field1b), (field2a), .., (fieldna,
-     * fieldnb)) grouping field.
-     * <p>
-     * This has been observed to work with the following databases:
-     * <ul>
-     * <li>DB2</li>
-     * <li>Oracle</li>
-     * <li>SQL Server</li>
-     * <li>Sybase SQL Anywhere</li>
-     * </ul>
-     * <p>
-     * Please check the SQL Server documentation for a very nice explanation of
-     * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
-     * clauses in grouping contexts: <a
-     * href="http://msdn.microsoft.com/en-US/library/bb522495.aspx"
-     * >http://msdn.microsoft.com/en-US/library/bb522495.aspx</a>
-     *
-     * @param fieldSets The fields that are part of the <code>GROUPING SETS</code>
-     *            function
-     * @return A field to be used in a <code>GROUP BY</code> clause
-     */
-    @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "GROUPING SETS",
-        args = "Field+"
-    )
-    public static GroupField groupingSets(Field<?>[]... fieldSets) {
-        List<Field<?>>[] array = new List[fieldSets.length];
+    xxx
+     x xxxxxx x xxxxxxxx xxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxx xxx xxxxxxxxx
+     x xxxxxxxxx xxxxxxxx xxxxxx
+     x xxx
+     x xxxx xxx xxxx xxxxxxxx xx xxxx xxxx xxx xxxxxxxxx xxxxxxxxxx
+     x xxxx
+     x xxxxxxxxxxxx
+     x xxxxxxxxxxxxxxx
+     x xxxxxxx xxxxxxxxxxx
+     x xxxxxxxxxx xxx xxxxxxxxxxxxx
+     x xxxxx
+     x xxx
+     x xxxxxx xxxxx xxx xxx xxxxxx xxxxxxxxxxxxx xxx x xxxx xxxx xxxxxxxxxxx xx
+     x xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxx xxxxxxxxxxx
+     x xxxxxxx xx xxxxxxxx xxxxxxxxx xx
+     x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+     x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+     x
+     x xxxxxx xxxxxxxxx xxx xxxxxx xxxx xxx xxxx xx xxx xxxxxxxxxxxxxx xxxxxxxxxxx
+     x            xxxxxxxx
+     x xxxxxxx x xxxxx xx xx xxxx xx x xxxxxxxxxxx xxxxxxxxx xxxxxx
+     xx
+    xxxxxxxxxx xxxx xxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxxx xxxxxx
+        xxxx x xxxxxxxx
+    x
+    xxxxxx xxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx x
+        xxxxxxxxxxxxxxxx xxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxx
 
-        for (int i = 0; i < fieldSets.length; i++) {
-            array[i] = Arrays.asList(fieldSets[i]);
-        }
+        xxx xxxx x x xx x x xxxxxxxxxxxxxxxxx xxxx x
+            xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
 
-        return groupingSets(array);
-    }
+        xxxxxx xxxxxxxxxxxxxxxxxxxx
+    x
 
-    /**
-     * Create a GROUPING SETS((field1a, field1b), (field2a), .., (fieldna,
-     * fieldnb)) grouping field.
-     * <p>
-     * This has been observed to work with the following databases:
-     * <ul>
-     * <li>DB2</li>
-     * <li>Oracle</li>
-     * <li>SQL Server</li>
-     * <li>Sybase SQL Anywhere</li>
-     * </ul>
-     * <p>
-     * Please check the SQL Server documentation for a very nice explanation of
-     * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
-     * clauses in grouping contexts: <a
-     * href="http://msdn.microsoft.com/en-US/library/bb522495.aspx"
-     * >http://msdn.microsoft.com/en-US/library/bb522495.aspx</a>
-     *
-     * @param fieldSets The fields that are part of the <code>GROUPING SETS</code>
-     *            function
-     * @return A field to be used in a <code>GROUP BY</code> clause
-     */
-    @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "GROUPING SETS",
-        args = "Field+"
-    )
-    public static GroupField groupingSets(Collection<? extends Field<?>>... fieldSets) {
-        WrappedList[] array = new WrappedList[fieldSets.length];
+    xxx
+     x xxxxxx x xxxxxxxx xxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxx xxx xxxxxxxxx
+     x xxxxxxxxx xxxxxxxx xxxxxx
+     x xxx
+     x xxxx xxx xxxx xxxxxxxx xx xxxx xxxx xxx xxxxxxxxx xxxxxxxxxx
+     x xxxx
+     x xxxxxxxxxxxx
+     x xxxxxxxxxxxxxxx
+     x xxxxxxx xxxxxxxxxxx
+     x xxxxxxxxxx xxx xxxxxxxxxxxxx
+     x xxxxx
+     x xxx
+     x xxxxxx xxxxx xxx xxx xxxxxx xxxxxxxxxxxxx xxx x xxxx xxxx xxxxxxxxxxx xx
+     x xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxx xxxxxxxxxxx
+     x xxxxxxx xx xxxxxxxx xxxxxxxxx xx
+     x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+     x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+     x
+     x xxxxxx xxxxxxxxx xxx xxxxxx xxxx xxx xxxx xx xxx xxxxxxxxxxxxxx xxxxxxxxxxx
+     x            xxxxxxxx
+     x xxxxxxx x xxxxx xx xx xxxx xx x xxxxxxxxxxx xxxxxxxxx xxxxxx
+     xx
+    xxxxxxxxxx xxxx xxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxxx xxxxxx
+        xxxx x xxxxxxxx
+    x
+    xxxxxx xxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxx xxxxxxxxxx x
+        xxxxxxxxxxxxx xxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        for (int i = 0; i < fieldSets.length; i++) {
-            array[i] = new WrappedList(new QueryPartList<Field<?>>(fieldSets[i]));
-        }
+        xxx xxxx x x xx x x xxxxxxxxxxxxxxxxx xxxx x
+            xxxxxxxx x xxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
 
-        return new Function<Object>("grouping sets", SQLDataType.OTHER, array);
-    }
+        xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxx
+    x
 
-    /**
-     * Create a GROUPING(field) aggregation field to be used along with
-     * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
-     * groupings.
-     * <p>
-     * This has been observed to work with the following databases:
-     * <ul>
-     * <li>DB2</li>
-     * <li>Oracle</li>
-     * <li>SQL Server</li>
-     * <li>Sybase SQL Anywhere</li>
-     * </ul>
-     *
-     * @param field The function argument
-     * @return The <code>GROUPING</code> aggregation field
-     * @see #cube(Field...)
-     * @see #rollup(Field...)
-     */
-    @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "GROUPING",
-        args = "Field",
-        to = "GroupingFunction"
-    )
-    public static Field<Integer> grouping(Field<?> field) {
-        return function("grouping", Integer.class, nullSafe(field));
-    }
+    xxx
+     x xxxxxx x xxxxxxxxxxxxxxx xxxxxxxxxxx xxxxx xx xx xxxx xxxxx xxxx
+     x xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxx xxxxxxxxxxx
+     x xxxxxxxxxx
+     x xxx
+     x xxxx xxx xxxx xxxxxxxx xx xxxx xxxx xxx xxxxxxxxx xxxxxxxxxx
+     x xxxx
+     x xxxxxxxxxxxx
+     x xxxxxxxxxxxxxxx
+     x xxxxxxx xxxxxxxxxxx
+     x xxxxxxxxxx xxx xxxxxxxxxxxxx
+     x xxxxx
+     x
+     x xxxxxx xxxxx xxx xxxxxxxx xxxxxxxx
+     x xxxxxxx xxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxx
+     x xxxx xxxxxxxxxxxxxxx
+     x xxxx xxxxxxxxxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxx xxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxxxxx
+        xxxx x xxxxxxxx
+        xx x xxxxxxxxxxxxxxxxxx
+    x
+    xxxxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx
+    x
 
-    /**
-     * Create a GROUPING_ID(field1, field2, .., fieldn) aggregation field to be
-     * used along with <code>CUBE</code>, <code>ROLLUP</code>, and
-     * <code>GROUPING SETS</code> groupings.
-     * <p>
-     * This has been observed to work with the following databases:
-     * <ul>
-     * <li>Oracle</li>
-     * <li>SQL Server</li>
-     * </ul>
-     *
-     * @param fields The function arguments
-     * @return The <code>GROUPING_ID</code> aggregation field
-     * @see #cube(Field...)
-     * @see #rollup(Field...)
-     */
-    @Support({ ORACLE, SQLSERVER})
-    @Transition(
-        name = "GROUPING_ID",
-        args = "Field",
-        to = "GroupingFunction"
-    )
-    public static Field<Integer> groupingId(Field<?>... fields) {
-        return function("grouping_id", Integer.class, nullSafe(fields));
-    }
+    xxx
+     x xxxxxx x xxxxxxxxxxxxxxxxxxx xxxxxxx xxx xxxxxxx xxxxxxxxxxx xxxxx xx xx
+     x xxxx xxxxx xxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxx
+     x xxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxx
+     x xxx
+     x xxxx xxx xxxx xxxxxxxx xx xxxx xxxx xxx xxxxxxxxx xxxxxxxxxx
+     x xxxx
+     x xxxxxxxxxxxxxxx
+     x xxxxxxx xxxxxxxxxxx
+     x xxxxx
+     x
+     x xxxxxx xxxxxx xxx xxxxxxxx xxxxxxxxx
+     x xxxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxx
+     x xxxx xxxxxxxxxxxxxxx
+     x xxxx xxxxxxxxxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxx xxxxxxxxxxx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxxxxxxxx
+        xxxx x xxxxxxxx
+        xx x xxxxxxxxxxxxxxxxxx
+    x
+    xxxxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+    x
 
-    /* [/pro] */
+    xx [/pro] */
     // ------------------------------------------------------------------------
     // XXX Bitwise operations
     // ------------------------------------------------------------------------
@@ -7912,7 +7912,7 @@ public class DSL {
      *
      * @see #bitCount(Field)
      */
-    @Support({ CUBRID, FIREBIRD, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_COUNT",
         args = "Field",
@@ -7939,7 +7939,7 @@ public class DSL {
      * <p>
      * More efficient algorithms are very welcome
      */
-    @Support({ CUBRID, FIREBIRD, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_COUNT",
         args = "Field",
@@ -7954,7 +7954,7 @@ public class DSL {
      *
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_NOT",
         args = "Field",
@@ -7970,7 +7970,7 @@ public class DSL {
      * Most dialects natively support this using <code>~[field]</code>. jOOQ
      * simulates this operator in some dialects using <code>-[field] - 1</code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_NOT",
         args = "Field",
@@ -7985,7 +7985,7 @@ public class DSL {
      *
      * @see #bitAnd(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_AND",
         args = {
@@ -8003,7 +8003,7 @@ public class DSL {
      *
      * @see #bitAnd(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_AND",
         args = {
@@ -8021,7 +8021,7 @@ public class DSL {
      *
      * @see #bitAnd(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_AND",
         args = {
@@ -8044,7 +8044,7 @@ public class DSL {
      * ... or the and function elsewhere:
      * <code><pre>bitand([field1], [field2])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_AND",
         args = {
@@ -8063,7 +8063,7 @@ public class DSL {
      * @see #bitNand(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_NAND",
         args = {
@@ -8082,7 +8082,7 @@ public class DSL {
      * @see #bitNand(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_NAND",
         args = {
@@ -8101,7 +8101,7 @@ public class DSL {
      * @see #bitNand(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_NAND",
         args = {
@@ -8126,7 +8126,7 @@ public class DSL {
      *
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_NAND",
         args = {
@@ -8144,7 +8144,7 @@ public class DSL {
      *
      * @see #bitOr(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_OR",
         args = {
@@ -8162,7 +8162,7 @@ public class DSL {
      *
      * @see #bitOr(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_OR",
         args = {
@@ -8180,7 +8180,7 @@ public class DSL {
      *
      * @see #bitOr(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_OR",
         args = {
@@ -8203,7 +8203,7 @@ public class DSL {
      * ... or the or function elsewhere:
      * <code><pre>bitor([field1], [field2])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_OR",
         args = {
@@ -8222,7 +8222,7 @@ public class DSL {
      * @see #bitNor(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_NOR",
         args = {
@@ -8240,7 +8240,7 @@ public class DSL {
      * @see #bitNor(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_NOR",
         args = {
@@ -8258,7 +8258,7 @@ public class DSL {
      * @see #bitNor(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_NOR",
         args = {
@@ -8283,7 +8283,7 @@ public class DSL {
      *
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_NOR",
         args = {
@@ -8301,7 +8301,7 @@ public class DSL {
      *
      * @see #bitXor(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_XOR",
         args = {
@@ -8319,7 +8319,7 @@ public class DSL {
      *
      * @see #bitXor(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_XOR",
         args = {
@@ -8337,7 +8337,7 @@ public class DSL {
      *
      * @see #bitXor(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_XOR",
         args = {
@@ -8360,7 +8360,7 @@ public class DSL {
      * ... or the xor function elsewhere:
      * <code><pre>bitxor([field1], [field2])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_XOR",
         args = {
@@ -8379,7 +8379,7 @@ public class DSL {
      * @see #bitXNor(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_XNOR",
         args = {
@@ -8398,7 +8398,7 @@ public class DSL {
      * @see #bitXNor(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_XNOR",
         args = {
@@ -8417,7 +8417,7 @@ public class DSL {
      * @see #bitXNor(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_XNOR",
         args = {
@@ -8440,7 +8440,7 @@ public class DSL {
      * ... or the not xor function elsewhere:
      * <code><pre>bitnot(bitxor([field1], [field2]))</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "BIT_XNOR",
         args = {
@@ -8459,7 +8459,7 @@ public class DSL {
      * @see #shl(Field, Field)
      * @see #power(Field, Number)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "SHL",
         args = {
@@ -8478,7 +8478,7 @@ public class DSL {
      * @see #shl(Field, Field)
      * @see #power(Field, Number)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "SHL",
         args = {
@@ -8497,7 +8497,7 @@ public class DSL {
      * @see #shl(Field, Field)
      * @see #power(Field, Number)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "SHL",
         args = {
@@ -8519,7 +8519,7 @@ public class DSL {
      *
      * @see #power(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "SHL",
         args = {
@@ -8538,7 +8538,7 @@ public class DSL {
      * @see #shr(Field, Field)
      * @see #power(Field, Number)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "SHR",
         args = {
@@ -8557,7 +8557,7 @@ public class DSL {
      * @see #shr(Field, Field)
      * @see #power(Field, Number)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "SHR",
         args = {
@@ -8576,7 +8576,7 @@ public class DSL {
      * @see #shr(Field, Field)
      * @see #power(Field, Number)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "SHR",
         args = {
@@ -8598,7 +8598,7 @@ public class DSL {
      *
      * @see #power(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, H2, FIREBIRD, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ CUBRID, H2, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "SHR",
         args = {
@@ -8930,7 +8930,7 @@ public class DSL {
      *
      * @see #trunc(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "TRUNC",
         args = "Field",
@@ -8945,7 +8945,7 @@ public class DSL {
      *
      * @see #trunc(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "TRUNC",
         args = {
@@ -8963,7 +8963,7 @@ public class DSL {
      *
      * @see #trunc(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "TRUNC",
         args = {
@@ -8981,7 +8981,7 @@ public class DSL {
      *
      * @see #trunc(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "TRUNC",
         args = {
@@ -9037,7 +9037,7 @@ public class DSL {
      *
      * @see #trunc(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "TRUNC",
         args = {
@@ -9055,7 +9055,7 @@ public class DSL {
      *
      * @see #sqrt(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "SQRT",
         args = "Field",
@@ -9073,7 +9073,7 @@ public class DSL {
      * power (which in turn may also be simulated using ln and exp functions):
      * <code><pre>power([field], 0.5)</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "SQRT",
         args = "Field",
@@ -9088,7 +9088,7 @@ public class DSL {
      *
      * @see #exp(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "EXP",
         args = "Field",
@@ -9104,7 +9104,7 @@ public class DSL {
      * This renders the same on all dialects:
      * <code><pre>exp([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "EXP",
         args = "Field",
@@ -9119,7 +9119,7 @@ public class DSL {
      *
      * @see #ln(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "LN",
         args = "Field",
@@ -9136,7 +9136,7 @@ public class DSL {
      * <code><pre>ln([field]) or
      * log([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "LN",
         args = "Field",
@@ -9151,7 +9151,7 @@ public class DSL {
      *
      * @see #log(Field, int)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "LOG",
         args = {
@@ -9172,7 +9172,7 @@ public class DSL {
      * most RDBMS) using the natural logarithm:
      * <code><pre>ln([field]) / ln([base])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "LOG",
         args = {
@@ -9190,7 +9190,7 @@ public class DSL {
      *
      * @see #power(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "POWER",
         args = {
@@ -9208,7 +9208,7 @@ public class DSL {
      *
      * @see #power(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "POWER",
         args = {
@@ -9226,7 +9226,7 @@ public class DSL {
      *
      * @see #power(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "POWER",
         args = {
@@ -9247,7 +9247,7 @@ public class DSL {
      * elsewhere using ln and exp:
      * <code><pre>exp(ln([field]) * [exponent])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "POWER",
         args = {
@@ -9265,7 +9265,7 @@ public class DSL {
      *
      * @see #acos(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "ACOS",
         args = "Field",
@@ -9281,7 +9281,7 @@ public class DSL {
      * This renders the acos function where available:
      * <code><pre>acos([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "ACOS",
         args = "Field",
@@ -9296,7 +9296,7 @@ public class DSL {
      *
      * @see #asin(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "ASIN",
         args = "Field",
@@ -9312,7 +9312,7 @@ public class DSL {
      * This renders the asin function where available:
      * <code><pre>asin([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "ASIN",
         args = "Field",
@@ -9327,7 +9327,7 @@ public class DSL {
      *
      * @see #atan(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "ATAN",
         args = "Field",
@@ -9343,7 +9343,7 @@ public class DSL {
      * This renders the atan function where available:
      * <code><pre>atan([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "ATAN",
         args = "Field",
@@ -9358,7 +9358,7 @@ public class DSL {
      *
      * @see #atan2(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "ATAN2",
         args = {
@@ -9376,7 +9376,7 @@ public class DSL {
      *
      * @see #atan2(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "ATAN2",
         args = {
@@ -9394,7 +9394,7 @@ public class DSL {
       *
      * @see #atan2(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "ATAN2",
         args = {
@@ -9414,7 +9414,7 @@ public class DSL {
      * <code><pre>atan2([x], [y]) or
      * atn2([x], [y])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "ATAN2",
         args = {
@@ -9432,7 +9432,7 @@ public class DSL {
      *
      * @see #cos(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "COS",
         args = "Field",
@@ -9448,7 +9448,7 @@ public class DSL {
      * This renders the cos function where available:
      * <code><pre>cos([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "COS",
         args = "Field",
@@ -9463,7 +9463,7 @@ public class DSL {
      *
      * @see #sin(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "SIN",
         args = "Field",
@@ -9479,7 +9479,7 @@ public class DSL {
      * This renders the sin function where available:
      * <code><pre>sin([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "SIN",
         args = "Field",
@@ -9494,7 +9494,7 @@ public class DSL {
      *
      * @see #tan(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "TAN",
         args = "Field",
@@ -9510,7 +9510,7 @@ public class DSL {
      * This renders the tan function where available:
      * <code><pre>tan([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "TAN",
         args = "Field",
@@ -9525,7 +9525,7 @@ public class DSL {
      *
      * @see #cot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "COT",
         args = "Field",
@@ -9542,7 +9542,7 @@ public class DSL {
      * <code><pre>cot([field])</pre></code> ... or simulates it elsewhere using
      * sin and cos: <code><pre>cos([field]) / sin([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "COT",
         args = "Field",
@@ -9557,7 +9557,7 @@ public class DSL {
      *
      * @see #sinh(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "SINH",
         args = "Field",
@@ -9574,7 +9574,7 @@ public class DSL {
      * <code><pre>sinh([field])</pre></code> ... or simulates it elsewhere using
      * exp: <code><pre>(exp([field] * 2) - 1) / (exp([field] * 2))</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "SINH",
         args = "Field",
@@ -9589,7 +9589,7 @@ public class DSL {
      *
      * @see #cosh(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "COSH",
         args = "Field",
@@ -9606,7 +9606,7 @@ public class DSL {
      * <code><pre>cosh([field])</pre></code> ... or simulates it elsewhere using
      * exp: <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2))</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "COSH",
         args = "Field",
@@ -9621,7 +9621,7 @@ public class DSL {
      *
      * @see #tanh(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "TANH",
         args = "Field",
@@ -9639,7 +9639,7 @@ public class DSL {
      * exp:
      * <code><pre>(exp([field] * 2) - 1) / (exp([field] * 2) + 1)</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "TANH",
         args = "Field",
@@ -9654,7 +9654,7 @@ public class DSL {
      *
      * @see #coth(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "COTH",
         args = "Field",
@@ -9670,7 +9670,7 @@ public class DSL {
      * This is not supported by any RDBMS, but simulated using exp exp:
      * <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2) - 1)</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "COTH",
         args = "Field",
@@ -9753,7 +9753,7 @@ public class DSL {
      * Retrieve the Oracle-specific <code>LEVEL</code> pseudo-field (to be used
      * along with <code>CONNECT BY</code> clauses).
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     @Transition(
         name = "LEVEL",
         to = "ConnectByExpression"
@@ -9766,7 +9766,7 @@ public class DSL {
      * Retrieve the Oracle-specific <code>CONNECT_BY_ISCYCLE</code> pseudo-field
      * (to be used along with <code>CONNECT BY</code> clauses).
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     @Transition(
         name = "CONNECT_BY_ISCYCLE",
         to = "ConnectByExpression"
@@ -9779,7 +9779,7 @@ public class DSL {
      * Retrieve the Oracle-specific <code>CONNECT_BY_ISLEAF</code> pseudo-field
      * (to be used along with <code>CONNECT BY</code> clauses).
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     @Transition(
         name = "CONNECT_BY_ISLEAF",
         to = "ConnectByExpression"
@@ -9792,7 +9792,7 @@ public class DSL {
      * Retrieve the Oracle-specific <code>CONNECT_BY_ROOT</code> pseudo-column
      * (to be used along with <code>CONNECT BY</code> clauses).
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     @Transition(
         name = "CONNECT_BY_ROOT",
         args = "Field",
@@ -9807,7 +9807,7 @@ public class DSL {
      * <code>SYS_CONNECT_BY_PATH(field, separator)</code> function (to be used
      * along with <code>CONNECT BY</code> clauses).
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     @Transition(
         name = "SYS_CONNECT_BY_PATH",
         args = {
@@ -9824,7 +9824,7 @@ public class DSL {
      * Add the Oracle-specific <code>PRIOR</code> unary operator before a field
      * (to be used along with <code>CONNECT BY</code> clauses).
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     @Transition(
         name = "PRIOR",
         args = "Field",
@@ -9841,7 +9841,7 @@ public class DSL {
     /**
      * Retrieve the Oracle-specific <code>ROWNUM</code> pseudo-field.
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID })
     public static Field<Integer> rownum() {
         return field("rownum", Integer.class);
     }
@@ -9998,7 +9998,7 @@ public class DSL {
     /**
      * Get the median over a numeric field: median(field).
      */
-    @Support({ HSQLDB, ORACLE, SYBASE })
+    @Support({ HSQLDB })
     @Transition(
         name = "MEDIAN",
         args = "Field",
@@ -10011,7 +10011,7 @@ public class DSL {
     /**
      * Get the population standard deviation of a numeric field: stddev_pop(field).
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "STDDEV_POP",
         args = "Field",
@@ -10024,7 +10024,7 @@ public class DSL {
     /**
      * Get the sample standard deviation of a numeric field: stddev_samp(field).
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "STDDEV_SAMP",
         args = "Field",
@@ -10037,7 +10037,7 @@ public class DSL {
     /**
      * Get the population variance of a numeric field: var_pop(field).
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "VAR_POP",
         args = "Field",
@@ -10050,7 +10050,7 @@ public class DSL {
     /**
      * Get the sample variance of a numeric field: var_samp(field).
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "VAR_SAMP",
         args = "Field",
@@ -10070,7 +10070,7 @@ public class DSL {
      * Note that {@link SQLDialect#DB2} does not support linear regression
      * window functions.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ POSTGRES })
     @Transition(
         name = "REGR_SLOPE",
         args = {
@@ -10093,7 +10093,7 @@ public class DSL {
      * Note that {@link SQLDialect#DB2} does not support linear regression
      * window functions.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ POSTGRES })
     @Transition(
         name = "REGR_INTERCEPT",
         args = {
@@ -10116,7 +10116,7 @@ public class DSL {
      * Note that {@link SQLDialect#DB2} does not support linear regression
      * window functions.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ POSTGRES })
     @Transition(
         name = "REGR_COUNT",
         args = {
@@ -10139,7 +10139,7 @@ public class DSL {
      * Note that {@link SQLDialect#DB2} does not support linear regression
      * window functions.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ POSTGRES })
     @Transition(
         name = "REGR_R2",
         args = {
@@ -10162,7 +10162,7 @@ public class DSL {
      * Note that {@link SQLDialect#DB2} does not support linear regression
      * window functions.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ POSTGRES })
     @Transition(
         name = "REGR_AVGX",
         args = {
@@ -10185,7 +10185,7 @@ public class DSL {
      * Note that {@link SQLDialect#DB2} does not support linear regression
      * window functions.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ POSTGRES })
     @Transition(
         name = "REGR_AVGY",
         args = {
@@ -10208,7 +10208,7 @@ public class DSL {
      * Note that {@link SQLDialect#DB2} does not support linear regression
      * window functions.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ POSTGRES })
     @Transition(
         name = "REGR_SXX",
         args = {
@@ -10231,7 +10231,7 @@ public class DSL {
      * Note that {@link SQLDialect#DB2} does not support linear regression
      * window functions.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ POSTGRES })
     @Transition(
         name = "REGR_SYY",
         args = {
@@ -10254,7 +10254,7 @@ public class DSL {
      * Note that {@link SQLDialect#DB2} does not support linear regression
      * window functions.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ POSTGRES })
     @Transition(
         name = "REGR_SXY",
         args = {
@@ -10284,7 +10284,7 @@ public class DSL {
      *
      * @see #groupConcat(Field)
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE11G, ORACLE12C, POSTGRES, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "LISTAGG",
         args = "Field"
@@ -10310,7 +10310,7 @@ public class DSL {
      *
      * @see #groupConcat(Field)
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE11G, ORACLE12C, POSTGRES, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "LISTAGG",
         args = {
@@ -10343,7 +10343,7 @@ public class DSL {
      *
      * @see #listAgg(Field)
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "GROUP_CONCAT",
         args = "Field"
@@ -10371,7 +10371,7 @@ public class DSL {
      *
      * @see #listAgg(Field)
      */
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "GROUP_CONCAT DISTINCT",
         args = "Field"
@@ -10396,7 +10396,7 @@ public class DSL {
      * {@link SQLDialect#HSQLDB} can simulate this function using
      * <code>ROWNUM()</code>
      */
-    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, POSTGRES })
     @Transition(
         name = "ROW_NUMBER"
     )
@@ -10410,7 +10410,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "RANK"
     )
@@ -10424,7 +10424,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "DENSE_RANK"
     )
@@ -10438,7 +10438,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ POSTGRES })
     @Transition(
         name = "PERCENT_RANK"
     )
@@ -10452,7 +10452,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ POSTGRES })
     @Transition(
         name = "CUME_DIST"
     )
@@ -10466,7 +10466,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, POSTGRES, ORACLE, SQLSERVER })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "NTILE",
         args = "Integer"
@@ -10481,7 +10481,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ POSTGRES })
     @Transition(
         name = "FIRST_VALUE",
         args = "Field"
@@ -10496,7 +10496,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ POSTGRES })
     @Transition(
         name = "LAST_VALUE",
         args = "Field"
@@ -10511,7 +10511,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, SQLSERVER2012, ORACLE })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "LEAD",
         args = "Field"
@@ -10526,7 +10526,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, SQLSERVER2012, ORACLE })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "LEAD",
         args = {
@@ -10546,7 +10546,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, SQLSERVER2012, ORACLE })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "LEAD",
         args = {
@@ -10567,7 +10567,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, SQLSERVER2012, ORACLE })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "LEAD",
         args = {
@@ -10586,7 +10586,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, SQLSERVER2012, ORACLE })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "LAG",
         args = "Field"
@@ -10601,7 +10601,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, SQLSERVER2012, ORACLE })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "LAG",
         args = {
@@ -10621,7 +10621,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, SQLSERVER2012, ORACLE })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "LAG",
         args = {
@@ -10642,7 +10642,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, SQLSERVER2012, ORACLE })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "LAG",
         args = {
@@ -10979,12 +10979,12 @@ public class DSL {
         if (value instanceof UDTRecord) {
             return new UDTConstant((UDTRecord) value);
         }
-        /* [pro] */
-        else if (value instanceof ArrayRecord) {
-            return new ArrayConstant((ArrayRecord) value);
-        }
+        /* [pro] xx
+        xxxx xx xxxxxx xxxxxxxxxx xxxxxxxxxxxx x
+            xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+        x
 
-        /* [/pro] */
+        xx [/pro] */
         // The default behaviour
         else {
             T converted = type.convert(value);
@@ -12734,7 +12734,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "CURRENT_USER",
         to = "SystemFunction"

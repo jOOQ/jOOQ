@@ -96,11 +96,11 @@ class FieldMapsForInsert extends AbstractQueryPart {
             switch (context.configuration().dialect().family()) {
 
                 // Some dialects don't support multi-record inserts
-                /* [pro] */
-                case ASE:
-                case INGRES:
-                case ORACLE:
-                /* [/pro] */
+                /* [pro] xx
+                xxxx xxxx
+                xxxx xxxxxxx
+                xxxx xxxxxxx
+                xx [/pro] */
                 case FIREBIRD:
                 case SQLITE:
                     context.start(INSERT_SELECT);

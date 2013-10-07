@@ -41,26 +41,26 @@
 
 package org.jooq.test;
 
-/* [pro] */
+/* [pro] xx
 
-import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.conf.Settings;
-import org.jooq.conf.StatementType;
-import org.jooq.impl.DSL;
+xxxxxx xxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxx
 
 
-/**
- * @author Lukas Eder
- */
-public class SQLServerTestInline extends SQLServerTest {
+xxx
+ x xxxxxxx xxxxx xxxx
+ xx
+xxxxxx xxxxx xxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx x
 
-    @Override
-    protected DSLContext create0(Settings settings) {
-        settings = (settings != null) ? settings : new Settings();
-        settings.withStatementType(StatementType.STATIC_STATEMENT);
-        return DSL.using(getConnection(), SQLDialect.SQLSERVER, settings);
-    }
-}
+    xxxxxxxxx
+    xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxx x
+        xxxxxxxx x xxxxxxxxx xx xxxxx x xxxxxxxx x xxx xxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx
+    x
+x
 
-/* [/pro] */
+xx [/pro] */

@@ -113,239 +113,239 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testTableWithHint() throws Exception {
-        /* [pro] */
-        switch (dialect().family()) {
-            case ASE:
-            case DB2:
-            case INGRES:
-            case ORACLE:
-            case CUBRID:
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE:
-                log.info("SKIPPING", "[ table ] WITH [ hint ] tests");
-                return;
-        }
+        /* [pro] xx
+        xxxxxx xxxxxxxxxxxxxxxxxxxx x
+            xxxx xxxx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxx
+            xxxx xxxxxxxxx
+            xxxx xxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxx
+            xxxx xxxxxx
+            xxxx xxxxxxxxx
+            xxxx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxx xx xxxxx x xxxx x xxxx x xxxxxxxx
+                xxxxxxx
+        x
 
-        Table<B> b = TBook().as("b").with("READUNCOMMITTED");
-        Table<A> a = TAuthor().with("READUNCOMMITTED").as("a");
+        xxxxxxxx x x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxx x x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        Result<?> result =
-        create().select()
-                .from(b)
-                .join(a)
-                .on(b.field(TBook_AUTHOR_ID()).eq(a.field(TAuthor_ID())))
-                .orderBy(b.field(TBook_ID()))
-                .fetch();
+        xxxxxxxxx xxxxxx x
+        xxxxxxxxxxxxxxxxx
+                xxxxxxxx
+                xxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxx
 
-        assertEquals(4, result.size());
-        assertEquals(BOOK_IDS, result.getValues(TBook_ID()));
-        /* [/pro] */
+        xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xx [/pro] */
     }
 
     @Test
     public void testPivotClause() throws Exception {
-        /* [pro] */
-        switch (dialect().family()) {
-            case ASE:
-            case DB2:
-            case INGRES:
-            case SQLSERVER:
-            case SYBASE:
-            case CUBRID:
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE:
-                log.info("SKIPPING", "PIVOT clause tests");
-                return;
-        }
+        /* [pro] xx
+        xxxxxx xxxxxxxxxxxxxxxxxxxx x
+            xxxx xxxx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxx
+            xxxx xxxxxxxxx
+            xxxx xxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxx
+            xxxx xxxxxx
+            xxxx xxxxxxxxx
+            xxxx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxx xxxxxxxx
+                xxxxxxx
+        x
 
-        // Simple pivoting, no aliasing
-        // ----------------------------
+        xx xxxxxx xxxxxxxxx xx xxxxxxxx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        Result<Record> result1 =
-        create().select()
-                .from(TBookToBookStore()
-                .pivot(count())
-                .on(TBookToBookStore_BOOK_STORE_NAME())
-                .in("Orell Füssli",
-                    "Ex Libris",
-                    "Buchhandlung im Volkshaus"))
-                .orderBy(
-                    one().asc(),
-                    two().asc())
-                .fetch();
+        xxxxxxxxxxxxxx xxxxxxx x
+        xxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxx xxxxxxxx
+                    xxx xxxxxxxx
+                    xxxxxxxxxxxxx xx xxxxxxxxxxxx
+                xxxxxxxxx
+                    xxxxxxxxxxxx
+                    xxxxxxxxxxxx
+                xxxxxxxxx
 
-        assertEquals(6, result1.size());
-        assertEquals(TBookToBookStore_BOOK_ID().getName(), result1.field(0).getName());
-        assertEquals(TBookToBookStore_STOCK().getName(), result1.field(1).getName());
-        assertTrue(result1.field(2).getName().contains("Orell Füssli"));
-        assertTrue(result1.field(3).getName().contains("Ex Libris"));
-        assertTrue(result1.field(4).getName().contains("Buchhandlung im Volkshaus"));
-        assertEquals(
-            asList(1, 1, 0, 1, 0),
-            asList(result1.get(0).into(Integer[].class)));
-        assertEquals(
-            asList(1, 10, 1, 0, 0),
-            asList(result1.get(1).into(Integer[].class)));
-        assertEquals(
-            asList(2, 10, 1, 0, 0),
-            asList(result1.get(2).into(Integer[].class)));
-        assertEquals(
-            asList(3, 1, 0, 0, 1),
-            asList(result1.get(3).into(Integer[].class)));
-        assertEquals(
-            asList(3, 2, 0, 1, 0),
-            asList(result1.get(4).into(Integer[].class)));
-        assertEquals(
-            asList(3, 10, 1, 0, 0),
-            asList(result1.get(5).into(Integer[].class)));
+        xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxx
+        xxxxxxxxxxxxx
+            xxxxxxxxx xx xx xx xxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxx
+            xxxxxxxxx xxx xx xx xxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxx
+            xxxxxxxxx xxx xx xx xxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxx
+            xxxxxxxxx xx xx xx xxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxx
+            xxxxxxxxx xx xx xx xxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxx
+            xxxxxxxxx xxx xx xx xxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        // Pivoting with plenty of aliasing and several aggregate functions
-        // ----------------------------------------------------------------
+        xx xxxxxxxx xxxx xxxxxx xx xxxxxxxx xxx xxxxxxx xxxxxxxxx xxxxxxxxx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        Result<Record> result2 =
-        create().select()
-                .from(TBookToBookStore()
-                .pivot(avg(TBookToBookStore_STOCK()).as("AVG"),
-                       max(TBookToBookStore_STOCK()).as("MAX"),
-                       sum(TBookToBookStore_STOCK()).as("SUM"),
-                       count(TBookToBookStore_STOCK()).as("CNT"))
-                .on(TBookToBookStore_BOOK_STORE_NAME())
-                .in(val("Orell Füssli").as("BS1"),
-                    val("Ex Libris").as("BS2"),
-                    val("Buchhandlung im Volkshaus").as("BS3")))
-                .orderBy(val(1).asc())
-                .fetch();
+        xxxxxxxxxxxxxx xxxxxxx x
+        xxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
+                    xxxxxxx xxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxx
 
-        assertEquals(3, result2.size());
-        assertEquals(TBookToBookStore_BOOK_ID().getName(), result2.field(0).getName());
-        assertEquals("BS1_AVG", result2.field(1).getName());
-        assertEquals("BS1_MAX", result2.field(2).getName());
-        assertEquals("BS1_SUM", result2.field(3).getName());
-        assertEquals("BS1_CNT", result2.field(4).getName());
-        assertEquals("BS2_AVG", result2.field(5).getName());
-        assertEquals("BS2_MAX", result2.field(6).getName());
-        assertEquals("BS2_SUM", result2.field(7).getName());
-        assertEquals("BS2_CNT", result2.field(8).getName());
-        assertEquals("BS3_AVG", result2.field(9).getName());
-        assertEquals("BS3_MAX", result2.field(10).getName());
-        assertEquals("BS3_SUM", result2.field(11).getName());
-        assertEquals("BS3_CNT", result2.field(12).getName());
-        assertEquals(
-            asList(1,
-                   10, 10, 10, 1,
-                   1, 1, 1, 1,
-                   null, null, null, 0),
-            asList(result2.get(0).into(Integer[].class)));
-        assertEquals(
-            asList(2,
-                   10, 10, 10, 1,
-                   null, null, null, 0,
-                   null, null, null, 0),
-            asList(result2.get(1).into(Integer[].class)));
-        assertEquals(
-            asList(3,
-                   10, 10, 10, 1,
-                   2, 2, 2, 1,
-                   1, 1, 1, 1),
-            asList(result2.get(2).into(Integer[].class)));
+        xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxx
+            xxxxxxxxx
+                   xxx xxx xxx xx
+                   xx xx xx xx
+                   xxxxx xxxxx xxxxx xxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxx
+            xxxxxxxxx
+                   xxx xxx xxx xx
+                   xxxxx xxxxx xxxxx xx
+                   xxxxx xxxxx xxxxx xxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxx
+            xxxxxxxxx
+                   xxx xxx xxx xx
+                   xx xx xx xx
+                   xx xx xx xxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
-        // Check aliasing of fields in source table
-        Field<Integer> lang = TBook_LANGUAGE_ID().cast(Integer.class).as("lang");
-        Result<Record> result3 =
-        create().select()
-                .from(table(select(TBook_AUTHOR_ID(), lang)
-                           .from(TBook()))
-                .pivot(count())
-                .on(lang)
-                .in(1, 2, 3, 4))
-                .fetch();
+        xx xxxxx xxxxxxxx xx xxxxxx xx xxxxxx xxxxx
+        xxxxxxxxxxxxxx xxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxx xxxxxxx x
+        xxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx
+                           xxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxx
+                xxxxxxxxx
+                xxxxxx xx xx xxx
+                xxxxxxxxx
 
-        assertEquals(2, result3.size());
-        assertEquals(5, result3.fieldsRow().size());
-        assertEquals(AUTHOR_IDS, result3.getValues(0));
-        assertEquals(
-            asList(1, 2, 0, 0, 0),
-            asList(result3.get(0).into(Integer[].class)));
-        /* [/pro] */
+        xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxx
+            xxxxxxxxx xx xx xx xxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xx [/pro] */
     }
 
     @Test
     public void testAliasingPivot() throws Exception {
-        /* [pro] */
-        switch (dialect().family()) {
-            case ASE:
-            case DB2:
-            case INGRES:
-            case SQLSERVER:
-            case SYBASE:
-            case CUBRID:
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE:
-                log.info("SKIPPING", "PIVOT clause tests");
-                return;
-        }
+        /* [pro] xx
+        xxxxxx xxxxxxxxxxxxxxxxxxxx x
+            xxxx xxxx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxx
+            xxxx xxxxxxxxx
+            xxxx xxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxx
+            xxxx xxxxxx
+            xxxx xxxxxxxxx
+            xxxx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxx xxxxxxxx
+                xxxxxxx
+        x
 
-        Result<?> r1 =
-        create().select()
-                .from(TBookToBookStore()
-                .pivot(max(TBookToBookStore_STOCK()).as("max"),
-                       count(TBookToBookStore_STOCK()).as("cnt"))
-                .on(TBookToBookStore_BOOK_STORE_NAME())
-                .in("Orell Füssli",
-                    "Ex Libris",
-                    "Buchhandlung im Volkshaus")
-                .as("pivot_table", "book_id", "of_max", "of_cnt",
-                                              "ex_max", "ex_cnt",
-                                              "bv_max", "bv_cnt"))
-                .orderBy(val(1).asc())
-                .fetch();
+        xxxxxxxxx xx x
+        xxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxx xxxxxxxx
+                    xxx xxxxxxxx
+                    xxxxxxxxxxxxx xx xxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxx xxxxxxxxx
+                                              xxxxxxxxx xxxxxxxxx
+                                              xxxxxxxxx xxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxx
 
-        assertEquals(3, r1.size());
-        assertEquals(7, r1.fieldsRow().size());
-        assertEquals(asList(1, 2, 3), r1.getValues("book_id", Integer.class));
-        assertEquals(asList(10, 10, 10), r1.getValues("of_max", Integer.class));
-        assertEquals(asList(1, 1, 1), r1.getValues("of_cnt", Integer.class));
-        assertEquals(asList(1, null, 2), r1.getValues("ex_max", Integer.class));
-        assertEquals(asList(1, 0, 1), r1.getValues("ex_cnt", Integer.class));
-        assertEquals(asList(null, null, 1), r1.getValues("bv_max", Integer.class));
-        assertEquals(asList(0, 0, 1), r1.getValues("bv_cnt", Integer.class));
+        xxxxxxxxxxxxxxx xxxxxxxxxxx
+        xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxx xx xxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxx xxx xxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxx xx xxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxx xxxxx xxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxx xx xxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxx xx xxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
 
-        Result<?> r2 =
-        create().select()
-                .from(table(select(level().as("lvl")).connectBy(level().le(5)))
-                    .pivot(max(fieldByName("lvl")))
-                    .on(fieldByName("lvl"))
-                    .in(1, 2, 3, 4, 5)
-                    .as("t", "a", "b", "c", "d", "e"))
-                .fetch();
+        xxxxxxxxx xx x
+        xxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxx xx xx xx xx
+                    xxxxxxxx xxxx xxxx xxxx xxxx xxxxx
+                xxxxxxxxx
 
-        assertEquals(1, r2.size());
-        assertEquals(5, r2.fieldsRow().size());
-        assertEquals(1, (int) r2.get(0).getValue("a", Integer.class));
-        assertEquals(2, (int) r2.get(0).getValue("b", Integer.class));
-        assertEquals(3, (int) r2.get(0).getValue("c", Integer.class));
-        assertEquals(4, (int) r2.get(0).getValue("d", Integer.class));
-        assertEquals(5, (int) r2.get(0).getValue("e", Integer.class));
-        /* [/pro] */
+        xxxxxxxxxxxxxxx xxxxxxxxxxx
+        xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+        xx [/pro] */
     }
 
     @Test
@@ -405,13 +405,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testConnectBySimple() throws Exception {
         switch (dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case DB2:
-            case INGRES:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case DERBY:
             case FIREBIRD:
             case H2:
@@ -467,13 +467,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testConnectByDirectory() throws Exception {
         switch (dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case DB2:
-            case INGRES:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case DERBY:
             case FIREBIRD:
             case H2:

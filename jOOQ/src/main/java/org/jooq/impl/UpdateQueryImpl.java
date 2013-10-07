@@ -48,8 +48,8 @@ import static org.jooq.Clause.UPDATE_SET;
 import static org.jooq.Clause.UPDATE_SET_ASSIGNMENT;
 import static org.jooq.Clause.UPDATE_UPDATE;
 import static org.jooq.Clause.UPDATE_WHERE;
-import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
+// ...
 import static org.jooq.impl.DSL.select;
 
 import java.util.Collection;
@@ -483,7 +483,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
             // Some dialects don't really support row value expressions on the
             // right hand side of a SET clause
-            if (multiValue != null && !asList(INGRES, ORACLE).contains(context.configuration().dialect().family())) {
+            if (multiValue != null && !asList().contains(context.configuration().dialect().family())) {
                 context.visit(multiValue);
             }
 

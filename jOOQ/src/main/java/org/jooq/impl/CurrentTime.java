@@ -65,13 +65,13 @@ class CurrentTime extends AbstractFunction<Time> {
     @Override
     final Field<Time> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] */
-            case ORACLE:
-                return field("sysdate", SQLDataType.TIME);
+            /* [pro] xx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
 
-            case DB2:
-            case INGRES:
-            /* [/pro] */
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case DERBY:
             case FIREBIRD:
             case HSQLDB:
@@ -79,13 +79,13 @@ class CurrentTime extends AbstractFunction<Time> {
             case SQLITE:
                 return field("current_time", SQLDataType.TIME);
 
-            /* [pro] */
-            case SQLSERVER:
-                return field("convert(time, current_timestamp)", SQLDataType.TIME);
+            /* [pro] xx
+            xxxx xxxxxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
 
-            case SYBASE:
-                return field("current time", SQLDataType.TIME);
-            /* [/pro] */
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxx
+            xx [/pro] */
         }
 
         return function("current_time", SQLDataType.TIME);

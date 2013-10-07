@@ -41,11 +41,11 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
+// ...
 
 import org.jooq.api.annotation.State;
 import org.jooq.impl.DSL;
@@ -76,14 +76,14 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> and(Condition condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> and(Field<Boolean> condition);
 
     /**
@@ -97,7 +97,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      *
      * @see DSL#condition(String)
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> and(String sql);
 
     /**
@@ -111,7 +111,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      *
      * @see DSL#condition(String, Object...)
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> and(String sql, Object... bindings);
 
     /**
@@ -125,49 +125,49 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      *
      * @see DSL#condition(String, QueryPart...)
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> and(String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> andNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> andNot(Field<Boolean> condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> andExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> andNotExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator and proceed to the next step.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> or(Condition condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator and proceed to the next step.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> or(Field<Boolean> condition);
 
     /**
@@ -181,7 +181,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      *
      * @see DSL#condition(String)
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> or(String sql);
 
     /**
@@ -195,7 +195,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      *
      * @see DSL#condition(String, Object...)
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> or(String sql, Object... bindings);
 
     /**
@@ -209,34 +209,34 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      *
      * @see DSL#condition(String, QueryPart...)
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> or(String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> orNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> orNot(Field<Boolean> condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> orExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> orNotExists(Select<?> select);
 }

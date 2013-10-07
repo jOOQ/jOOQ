@@ -71,7 +71,7 @@ import org.jooq.UniqueKey;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.AbstractKeys;
 import org.jooq.impl.AbstractRoutine;
-import org.jooq.impl.ArrayRecordImpl;
+// ...
 import org.jooq.impl.DAOImpl;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.PackageImpl;
@@ -994,42 +994,42 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateArray(SchemaDefinition schema, ArrayDefinition array) {
         log.info("Generating ARRAY", getStrategy().getFileName(array, Mode.RECORD));
 
-        /* [pro] */
-        final String className = getStrategy().getJavaClassName(array, Mode.RECORD);
-        final String elementType = getJavaType(array.getElementType());
-        final String elementTypeRef = getJavaTypeReference(database, array.getElementType());
-        final List<String> interfaces = getStrategy().getJavaClassImplements(array, Mode.RECORD);
-        final String arrayName = array.getOutputName();
-        final String schemaId = getStrategy().getFullJavaIdentifier(schema);
+        /* [pro] xx
+        xxxxx xxxxxx xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
+        xxxxx xxxxxx xxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxx xxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxx xxxxxxxxxxxx xxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
+        xxxxx xxxxxx xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxx
+        xxxxx xxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        JavaWriter out = new JavaWriter(getStrategy().getFile(array, Mode.RECORD));
-        printPackage(out, array, Mode.RECORD);
-        printClassJavadoc(out, array);
+        xxxxxxxxxx xxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxx xxxxxxx
 
-        out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, ArrayRecordImpl.class, elementType, interfaces);
-        out.printSerial();
+        xxxxxxxxxxxxxxxxxxx xxxxx xx xxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxx xxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxx
 
-        out.tab(1).javadoc("Create a new <code>%s</code> record", array.getQualifiedOutputName());
-        out.tab(1).println("public %s(%s configuration) {", className, Configuration.class);
-        out.tab(2).println("super(%s, \"%s\", %s, configuration);", schemaId, arrayName, elementTypeRef);
-        out.tab(1).println("}");
+        xxxxxxxxxxxxxxxxxxxxxxxxxx x xxx xxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxx xxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxx
 
-        out.tab(1).javadoc("Create a new <code>%s</code> record", array.getQualifiedOutputName());
-        out.tab(1).println("public %s(%s configuration, %s... array) {", className, Configuration.class, elementType);
-        out.tab(2).println("this(configuration);");
-        out.tab(2).println("set(array);");
-        out.tab(1).println("}");
+        xxxxxxxxxxxxxxxxxxxxxxxxxx x xxx xxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxx xxxxx xxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxx
 
-        out.tab(1).javadoc("Create a new <code>%s</code> record", array.getQualifiedOutputName());
-        out.tab(1).println("public %s(%s configuration, %s<? extends %s> list) {", className, Configuration.class, List.class, elementType);
-        out.tab(2).println("this(configuration);");
-        out.tab(2).println("setList(list);");
-        out.tab(1).println("}");
+        xxxxxxxxxxxxxxxxxxxxxxxxxx x xxx xxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxx xxxx xxxxxxx xxx xxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxx
 
-        generateArrayClassFooter(array, out);
-        out.println("}");
-        out.close();
-        /* [/pro] */
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx
+        xxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxx
+        xx [/pro] */
     }
 
     /**

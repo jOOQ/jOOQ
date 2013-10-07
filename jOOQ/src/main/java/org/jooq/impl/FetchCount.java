@@ -83,21 +83,21 @@ class FetchCount extends AbstractResultQuery<Record1<Integer>> {
     private final QueryPart delegate(Configuration configuration) {
         switch (configuration.dialect().family()) {
 
-            /* [pro] */
-            // [#2759] Some dialects cannot have derived tables with unnamed
-            // columns in them. Apply a derived column list instead.
-            case SQLSERVER:
-            case SYBASE: {
-                List<Field<?>> fields = query.getSelect();
-                String[] names = new String[fields.size()];
+            /* [pro] xx
+            xx xxxxxxx xxxx xxxxxxxx xxxxxx xxxx xxxxxxx xxxxxx xxxx xxxxxxx
+            xx xxxxxxx xx xxxxx xxxxx x xxxxxxx xxxxxx xxxx xxxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx x
+                xxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxx
+                xxxxxxxx xxxxx x xxx xxxxxxxxxxxxxxxxxxxxxx
 
-                for (int i = 0; i < names.length; i++)
-                    names[i] = "f" + (i + 1);
+                xxx xxxx x x xx x x xxxxxxxxxxxxx xxxx
+                    xxxxxxxx x xxx x xx x xxx
 
-                return select(count).from(query.asTable("q", names));
-            }
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+            x
 
-            /* [/pro] */
+            xx [/pro] */
             default:
                 return select(count).from(query.asTable("q"));
         }

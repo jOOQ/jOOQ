@@ -41,11 +41,11 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
 
 import java.util.Collection;
 
@@ -74,7 +74,7 @@ public interface WindowOrderByStep<T> extends WindowFinalStep<T> {
     /**
      * Add an <code>ORDER BY</code> clause to the window function.
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "ORDER BY",
         args = "Field+"
@@ -84,7 +84,7 @@ public interface WindowOrderByStep<T> extends WindowFinalStep<T> {
     /**
      * Add an <code>ORDER BY</code> clause to the window function.
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "ORDER BY",
         args = "SortField+"
@@ -94,7 +94,7 @@ public interface WindowOrderByStep<T> extends WindowFinalStep<T> {
     /**
      * Add an <code>ORDER BY</code> clause to the window function.
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "ORDER BY",
         args = "SortField+"

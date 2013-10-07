@@ -51,20 +51,20 @@ import static org.jooq.Clause.SELECT_ORDER_BY;
 import static org.jooq.Clause.SELECT_SELECT;
 import static org.jooq.Clause.SELECT_START_WITH;
 import static org.jooq.Clause.SELECT_WHERE;
-import static org.jooq.SQLDialect.ASE;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.INGRES;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SQLSERVER2008;
-import static org.jooq.SQLDialect.SQLSERVER2012;
+// ...
+// ...
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.denseRank;
 import static org.jooq.impl.DSL.inline;
@@ -216,70 +216,70 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         if (getLimit().isApplicable()) {
             switch (context.configuration().dialect()) {
 
-                /* [pro] */
-                // Oracle knows the ROWNUM pseudo-column. That makes things simple
-                case ORACLE:
-                case ORACLE10G:
-                case ORACLE11G:
-                case ORACLE12C:
-                    toSQLReferenceLimitOracle(context);
-                    break;
+                /* [pro] xx
+                xx xxxxxx xxxxx xxx xxxxxx xxxxxxxxxxxxxx xxxx xxxxx xxxxxx xxxxxx
+                xxxx xxxxxxx
+                xxxx xxxxxxxxxx
+                xxxx xxxxxxxxxx
+                xxxx xxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxx
 
-                // With DB2, there are two possibilities
-                case DB2:
-                case DB2_9:
-                case DB2_10: {
+                xx xxxx xxxx xxxxx xxx xxx xxxxxxxxxxxxx
+                xxxx xxxx
+                xxxx xxxxxx
+                xxxx xxxxxxx x
 
-                    // DB2 natively supports a "FIRST ROWS" clause, without
-                    // offset and without bind values
-                    if (getLimit().offsetZero() && !getLimit().rendersParams()) {
-                        toSQLReferenceLimitDefault(context);
-                    }
+                    xx xxx xxxxxxxx xxxxxxxx x xxxxxx xxxxx xxxxxxx xxxxxxx
+                    xx xxxxxx xxx xxxxxxx xxxx xxxxxx
+                    xx xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    x
 
-                    // "OFFSET" has to be simulated
-                    else {
-                        toSQLReferenceLimitDB2SQLServer2008Sybase(context);
-                    }
+                    xx xxxxxxxx xxx xx xx xxxxxxxxx
+                    xxxx x
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    x
 
-                    break;
-                }
+                    xxxxxx
+                x
 
-                // Sybase ASE and SQL Server support a TOP clause without OFFSET
-                // OFFSET can be simulated in SQL Server, not in ASE
-                case ASE:
-                case SQLSERVER2008: {
+                xx xxxxxx xxx xxx xxx xxxxxx xxxxxxx x xxx xxxxxx xxxxxxx xxxxxx
+                xx xxxxxx xxx xx xxxxxxxxx xx xxx xxxxxxx xxx xx xxx
+                xxxx xxxx
+                xxxx xxxxxxxxxxxxxx x
 
-                    // Native TOP support, without OFFSET and without bind values
-                    if (getLimit().offsetZero() && !getLimit().rendersParams()) {
-                        toSQLReference0(context);
-                    }
+                    xx xxxxxx xxx xxxxxxxx xxxxxxx xxxxxx xxx xxxxxxx xxxx xxxxxx
+                    xx xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                        xxxxxxxxxxxxxxxxxxxxxxxxx
+                    x
 
-                    // OFFSET simulation
-                    else {
-                        toSQLReferenceLimitDB2SQLServer2008Sybase(context);
-                    }
+                    xx xxxxxx xxxxxxxxxx
+                    xxxx x
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    x
 
-                    break;
-                }
+                    xxxxxx
+                x
 
-                // Sybase has TOP .. START AT support (no bind values)
-                // Firebird has FIRST .. SKIP support (no bind values)
-                case SYBASE: {
+                xx xxxxxx xxx xxx xx xxxxx xx xxxxxxx xxx xxxx xxxxxxx
+                xx xxxxxxxx xxx xxxxx xx xxxx xxxxxxx xxx xxxx xxxxxxx
+                xxxx xxxxxxx x
 
-                    // Native TOP support, without OFFSET and without bind values
-                    if (!getLimit().rendersParams()) {
-                        toSQLReference0(context);
-                    }
+                    xx xxxxxx xxx xxxxxxxx xxxxxxx xxxxxx xxx xxxxxxx xxxx xxxxxx
+                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                        xxxxxxxxxxxxxxxxxxxxxxxxx
+                    x
 
-                    // OFFSET simulation
-                    else {
-                        toSQLReferenceLimitDB2SQLServer2008Sybase(context);
-                    }
+                    xx xxxxxx xxxxxxxxxx
+                    xxxx x
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    x
 
-                    break;
-                }
+                    xxxxxx
+                x
 
-                /* [/pro] */
+                xx [/pro] */
                 // By default, render the dialect's limit clause
                 default: {
                     toSQLReferenceLimitDefault(context);
@@ -294,7 +294,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         }
 
         // [#1296] FOR UPDATE is simulated in some dialects using ResultSet.CONCUR_UPDATABLE
-        if (forUpdate && !asList(CUBRID, SQLSERVER).contains(context.configuration().dialect().family())) {
+        if (forUpdate && !asList(CUBRID).contains(context.configuration().dialect().family())) {
             context.formatSeparator()
                    .keyword("for update");
 
@@ -309,11 +309,11 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
                     // Some dialects don't allow for an OF [table-names] clause
                     // It can be simulated by listing the table's fields, though
-                    /* [pro] */
-                    case DB2:
-                    case INGRES:
-                    case ORACLE:
-                    /* [/pro] */
+                    /* [pro] xx
+                    xxxx xxxx
+                    xxxx xxxxxxx
+                    xxxx xxxxxxx
+                    xx [/pro] */
                     case DERBY: {
                         forUpdateOfTables.toSQLFieldNames(context);
                         break;
@@ -375,106 +375,106 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         context.visit(getLimit());
     }
 
-    /* [pro] */
-    /**
-     * Simulate the LIMIT / OFFSET clause in the {@link SQLDialect#DB2},
-     * {@link SQLDialect#SQLSERVER2008} and {@link SQLDialect#SYBASE} dialects
-     */
-    private final void toSQLReferenceLimitDB2SQLServer2008Sybase(RenderContext context) {
+    /* [pro] xx
+    xxx
+     x xxxxxxxx xxx xxxxx x xxxxxx xxxxxx xx xxx xxxxxx xxxxxxxxxxxxxxxx
+     x xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxx
+     xx
+    xxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx x
 
-        // [#1954] Render enclosed SELECT first to obtain a "unique" hash code
-        RenderContext tmpLocal = new DefaultRenderContext(context);
-        tmpLocal.subquery(true);
-        toSQLReference0(tmpLocal);
-        String tmpEnclosed = tmpLocal.render();
+        xx xxxxxxx xxxxxx xxxxxxxx xxxxxx xxxxx xx xxxxxx x xxxxxxxx xxxx xxxx
+        xxxxxxxxxxxxx xxxxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxxxxxxxx x xxxxxxxxxxxxxxxxxx
 
-        String subqueryName = "limit_" + Utils.hash(tmpEnclosed);
-        String rownumName = "rownum_" + Utils.hash(tmpEnclosed);
+        xxxxxx xxxxxxxxxxxx x xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxxxxxxx x xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxx
 
-        // Render enclosed SELECT again, adding an additional ROW_NUMBER() OVER()
-        // window function, calculating row numbers for the LIMIT .. OFFSET clause
-        RenderContext local = new DefaultRenderContext(context);
-        local.subquery(true);
+        xx xxxxxx xxxxxxxx xxxxxx xxxxxx xxxxxx xx xxxxxxxxxx xxxxxxxxxxxx xxxxxx
+        xx xxxxxx xxxxxxxxx xxxxxxxxxxx xxx xxxxxxx xxx xxx xxxxx xx xxxxxx xxxxxx
+        xxxxxxxxxxxxx xxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxx
 
-        // [#2580] When DISTINCT is applied, we mustn't use ROW_NUMBER() OVER(),
-        // which changes the DISTINCT semantics. Instead, use DENSE_RANK() OVER(),
-        // ordering by the SELECT's ORDER BY clause AND all the expressions from
-        // the projection
-        if (distinct) {
-            List<SortField<?>> order = new ArrayList<SortField<?>>();
-            order.addAll(getNonEmptyOrderBy());
+        xx xxxxxxx xxxx xxxxxxxx xx xxxxxxxx xx xxxxxxx xxx xxxxxxxxxxxx xxxxxxx
+        xx xxxxx xxxxxxx xxx xxxxxxxx xxxxxxxxxx xxxxxxxx xxx xxxxxxxxxxxx xxxxxxx
+        xx xxxxxxxx xx xxx xxxxxxxx xxxxx xx xxxxxx xxx xxx xxx xxxxxxxxxxx xxxx
+        xx xxx xxxxxxxxxx
+        xx xxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxx xxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            // TODO: Challenge this with lots of additional tests, improve readability
-            for (Field<?> field : getSelect())
-                order.add(field.asc());
-            toSQLReference0(local, denseRank().over().orderBy(order).as(rownumName));
-        }
-        else {
-            toSQLReference0(local, rowNumber().over().orderBy(getNonEmptyOrderBy()).as(rownumName));
-        }
-        String enclosed = local.render();
+            xx xxxxx xxxxxxxxx xxxx xxxx xxxx xx xxxxxxxxxx xxxxxx xxxxxxx xxxxxxxxxxx
+            xxx xxxxxxxxx xxxxx x xxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+        xxxx x
+            xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+        xxxxxx xxxxxxxx x xxxxxxxxxxxxxxx
 
-        context.keyword("select * from (")
-               .formatIndentStart()
-               .formatNewLine()
-               .sql(enclosed)
-               .formatIndentEnd()
-               .formatNewLine()
-               .sql(") ").keyword("as").sql(" ")
-               .visit(name(subqueryName))
-               .formatSeparator()
-               .keyword("where").sql(" ")
-               .visit(name(rownumName))
-               .sql(" > ")
-               .visit(getLimit().getLowerRownum())
-               .formatSeparator()
-               .keyword("and").sql(" ")
-               .visit(name(rownumName))
-               .sql(" <= ")
-               .visit(getLimit().getUpperRownum());
-    }
+        xxxxxxxxxxxxxxxxxxxxxxx x xxxx xxx
+               xxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxx
+               xxxxxxx xxxxxxxxxxxxxxxxxxxxxx xx
+               xxxxxxxxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxxxxxxx xx
+               xxxxxxxxxxxxxxxxxxxxxxxx
+               xxxxxx x xx
+               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxxxxx xx
+               xxxxxxxxxxxxxxxxxxxxxxxx
+               xxxxxx xx xx
+               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
 
-    /**
-     * Simulate the LIMIT / OFFSET clause in the {@link SQLDialect#ORACLE}
-     * dialect
-     */
-    private final void toSQLReferenceLimitOracle(RenderContext context) {
-        RenderContext local = new DefaultRenderContext(context);
-        toSQLReference0(local);
-        String enclosed = local.render();
+    xxx
+     x xxxxxxxx xxx xxxxx x xxxxxx xxxxxx xx xxx xxxxxx xxxxxxxxxxxxxxxxxx
+     x xxxxxxx
+     xx
+    xxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx x
+        xxxxxxxxxxxxx xxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxxxxx x xxxxxxxxxxxxxxx
 
-        String subqueryName = "limit_" + Utils.hash(enclosed);
-        String rownumName = "rownum_" + Utils.hash(enclosed);
+        xxxxxx xxxxxxxxxxxx x xxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxxxxxxx x xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
 
-        context.keyword("select").sql(" * ").keyword("from").sql(" (")
-               .formatIndentStart()
-               .formatNewLine()
-                 .keyword("select").sql(" ")
-                 .visit(name(subqueryName)).sql(".*, ")
-                 .keyword("rownum").sql(" ").keyword("as").sql(" ")
-                 .visit(name(rownumName))
-                 .formatSeparator()
-                 .keyword("from").sql(" (")
-                 .formatIndentStart()
-                 .formatNewLine()
-                   .sql(enclosed)
-                 .formatIndentEnd()
-                 .formatNewLine()
-                 .sql(") ")
-                 .visit(name(subqueryName))
-                 .formatSeparator()
-                 .keyword("where").sql(" ").keyword("rownum").sql(" <= ")
-                 .visit(getLimit().getUpperRownum())
-               .formatIndentEnd()
-               .formatNewLine()
-               .sql(") ")
-               .formatSeparator()
-               .keyword("where").sql(" ")
-               .visit(name(rownumName))
-               .sql(" > ")
-               .visit(getLimit().getLowerRownum());
-    }
-    /* [/pro] */
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxx xxx
+               xxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxx
+                 xxxxxxxxxxxxxxxxxxxxxxxx xx
+                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx
+                 xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xx
+                 xxxxxxxxxxxxxxxxxxxxxxxx
+                 xxxxxxxxxxxxxxxxxx
+                 xxxxxxxxxxxxxxxxxxxxxx xxx
+                 xxxxxxxxxxxxxxxxxxxx
+                 xxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxx
+                 xxxxxxxxxxxxxxxxxx
+                 xxxxxxxxxxxxxxxx
+                 xxxxxxx xx
+                 xxxxxxxxxxxxxxxxxxxxxxxxxx
+                 xxxxxxxxxxxxxxxxxx
+                 xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xx xx
+                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxx
+               xxxxxxx xx
+               xxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxxxxxxx xx
+               xxxxxxxxxxxxxxxxxxxxxxxx
+               xxxxxx x xx
+               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
+    xx [/pro] */
 
     /**
      * This method renders the main part of a query without the LIMIT clause.
@@ -506,49 +506,49 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             context.keyword("distinct").sql(" ");
         }
 
-        /* [pro] */
-        // Sybase and SQL Server have leading TOP clauses
-        switch (dialect.family()) {
-            case ASE:
-            case SQLSERVER: {
+        /* [pro] xx
+        xx xxxxxx xxx xxx xxxxxx xxxx xxxxxxx xxx xxxxxxx
+        xxxxxx xxxxxxxxxxxxxxxxxx x
+            xxxx xxxx
+            xxxx xxxxxxxxxx x
 
-                // If we have a TOP clause, it needs to be rendered here
-                if (asList(ASE, SQLSERVER2008).contains(dialect)
-                        && getLimit().isApplicable()
-                        && getLimit().offsetZero()
-                        && !getLimit().rendersParams()) {
+                xx xx xx xxxx x xxx xxxxxxx xx xxxxx xx xx xxxxxxxx xxxx
+                xx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xx xxxxxxxxxxxxxxxxxxxxxxxxx
+                        xx xxxxxxxxxxxxxxxxxxxxxxx
+                        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx x
 
-                    context.visit(getLimit()).sql(" ");
-                }
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
+                x
 
-                // [#759] SQL Server needs a TOP clause in ordered subqueries
-                else if (dialect.family() == SQLSERVER
-                        && context.subquery()
-                        && !getOrderBy().isEmpty()) {
+                xx xxxxxx xxx xxxxxx xxxxx x xxx xxxxxx xx xxxxxxx xxxxxxxxxx
+                xxxx xx xxxxxxxxxxxxxxxxx xx xxxxxxxxx
+                        xx xxxxxxxxxxxxxxxxxx
+                        xx xxxxxxxxxxxxxxxxxxxxxxxx x
 
-                    // [#2423] SQL Server 2012 will render an OFFSET .. FETCH
-                    // clause if there is an applicable limit
-                    if (dialect == SQLSERVER2008 || !getLimit().isApplicable()) {
-                        context.keyword("top").sql(" 100 ").keyword("percent").sql(" ");
-                    }
-                }
+                    xx xxxxxxx xxx xxxxxx xxxx xxxx xxxxxx xx xxxxxx xx xxxxx
+                    xx xxxxxx xx xxxxx xx xx xxxxxxxxxx xxxxx
+                    xx xxxxxxxx xx xxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
+                    x
+                x
 
-                break;
-            }
+                xxxxxx
+            x
 
-            case SYBASE: {
-                if (getLimit().isApplicable() && !getLimit().rendersParams()) {
-                    context.visit(getLimit()).sql(" ");
-                }
+            xxxx xxxxxxx x
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
+                x
 
-                break;
-            }
+                xxxxxx
+            x
 
-            // [#780] Ordered subqueries should be handled for Ingres and ASE as well
-            case INGRES: {
-            }
-        }
-        /* [/pro] */
+            xx xxxxxx xxxxxxx xxxxxxxxxx xxxxxx xx xxxxxxx xxx xxxxxx xxx xxx xx xxxx
+            xxxx xxxxxxx x
+            x
+        x
+        xx [/pro] */
 
         context.declareFields(true);
 
@@ -612,7 +612,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
             // [#1681] Sybase ASE and Ingres need a cross-joined dummy table
             // To be able to GROUP BY () empty sets
-            if (grouping && getGroupBy().isEmpty() && asList(ASE, INGRES).contains(dialect)) {
+            if (grouping && getGroupBy().isEmpty() && asList().contains(dialect)) {
                 context.sql(", (select 1 as x) as empty_grouping_dummy_table");
             }
         }
@@ -677,7 +677,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             if (getGroupBy().isEmpty()) {
 
                 // [#1681] Use the constant field from the dummy table Sybase ASE, Ingres
-                if (asList(ASE, INGRES).contains(dialect)) {
+                if (asList().contains(dialect)) {
                     context.sql("empty_grouping_dummy_table.x");
                 }
 
@@ -728,7 +728,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         // [#2423] SQL Server 2012 requires an ORDER BY clause, along with
         // OFFSET .. FETCH
-        else if (getLimit().isApplicable() && asList(SQLSERVER, SQLSERVER2012).contains(dialect)){
+        else if (getLimit().isApplicable() && asList().contains(dialect)){
             context.formatSeparator()
                    .keyword("order by")
                    .sql(" 1");

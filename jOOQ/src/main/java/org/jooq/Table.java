@@ -41,22 +41,22 @@
 
 package org.jooq;
 
-import static org.jooq.SQLDialect.ASE;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.INGRES;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.ORACLE11G;
-import static org.jooq.SQLDialect.ORACLE12C;
+// ...
+// ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
 
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -451,7 +451,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * <p>
      * This is only possible where the underlying RDBMS supports it
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "RIGHT OUTER JOIN",
         args = "Table"
@@ -470,7 +470,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "RIGHT OUTER JOIN",
         args = "Table"
@@ -489,7 +489,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String, Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "RIGHT OUTER JOIN",
         args = "Table"
@@ -508,7 +508,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String, QueryPart...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "RIGHT OUTER JOIN",
         args = "Table"
@@ -520,7 +520,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * <p>
      * This is only possible where the underlying RDBMS supports it
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @Transition(
         name = "FULL OUTER JOIN",
         args = "Table"
@@ -539,7 +539,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String)
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @Transition(
         name = "FULL OUTER JOIN",
         args = "Table"
@@ -558,7 +558,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String, Object...)
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @Transition(
         name = "FULL OUTER JOIN",
         args = "Table"
@@ -577,7 +577,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String, QueryPart...)
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @Transition(
         name = "FULL OUTER JOIN",
         args = "Table"
@@ -837,7 +837,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * If this is not supported by your RDBMS, then jOOQ will try to simulate
      * this behaviour using the information provided in this query.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "NATURAL RIGHT OUTER JOIN",
         args = "Table",
@@ -858,7 +858,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "NATURAL RIGHT OUTER JOIN",
         args = "Table",
@@ -879,7 +879,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String, Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "NATURAL RIGHT OUTER JOIN",
         args = "Table",
@@ -900,7 +900,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String, QueryPart...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "NATURAL RIGHT OUTER JOIN",
         args = "Table",
@@ -912,76 +912,76 @@ public interface Table<R extends Record> extends TableLike<R> {
     // XXX: Exotic and vendor-specific clauses on tables
     // -------------------------------------------------------------------------
 
-    /* [pro] */
-    /**
-     * Specify a SQL Server style table hint for query optimisation
-     * <p>
-     * This makes sense only on an actual database table or view, not on other
-     * composed table sources.
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * create.select()
-     *       .from(BOOK.as("b").with("READUNCOMMITTED")
-     *       .fetch();
-     * </pre></code>
-     * <p>
-     * For {@link SQLDialect#ORACLE} style hints, see
-     * {@link SelectFromStep#hint(String)} and {@link SelectQuery#addHint(String)}
-     *
-     * @see <a
-     *      href="http://msdn.microsoft.com/en-us/library/ms187373.aspx">http://msdn.microsoft.com/en-us/library/ms187373.aspx</a>
-     * @see SelectFromStep#hint(String)
-     * @see SelectQuery#addHint(String)
-     */
-    @Support({ SQLSERVER, SYBASE })
-    @Transition(
-        name = "WITH",
-        args = "String"
-    )
-    Table<R> with(String hint);
+    /* [pro] xx
+    xxx
+     x xxxxxxx x xxx xxxxxx xxxxx xxxxx xxxx xxx xxxxx xxxxxxxxxxxx
+     x xxx
+     x xxxx xxxxx xxxxx xxxx xx xx xxxxxx xxxxxxxx xxxxx xx xxxxx xxx xx xxxxx
+     x xxxxxxxx xxxxx xxxxxxxx
+     x xxx
+     x xxxxxxxx
+     x xxx
+     x xxxxxxxxxxx
+     x xxxxxxxxxxxxxxx
+     x       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+     x       xxxxxxxxx
+     x xxxxxxxxxxxxx
+     x xxx
+     x xxx xxxxxx xxxxxxxxxxxxxxxxxx xxxxx xxxxxx xxx
+     x xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+     x
+     x xxxx xx
+     x      xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+     x xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+     x xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxx
+        xxxx x xxxxxxxx
+    x
+    xxxxxxxx xxxxxxxxxxx xxxxxx
 
-    /**
-     * Create a new <code>TABLE</code> reference from this table, pivoting it
-     * into another form
-     * <p>
-     * This has been observed to work with
-     * <ul>
-     * <li> {@link SQLDialect#ORACLE11G} upwards</li>
-     * <li> {@link SQLDialect#SQLSERVER} (not yet officially supported)</li>
-     * <li>Other dialects by using some means of simulation (not yet officially
-     * supported)</li>
-     * </ul>
-     *
-     * @param aggregateFunctions The aggregate functions used for pivoting.
-     * @return A DSL object to create the <code>PIVOT</code> expression
-     */
-    @Support({ ORACLE11G, ORACLE12C })
-    @Transition(
-        name = "PIVOT",
-        args = "Field+"
-    )
-    PivotForStep pivot(Field<?>... aggregateFunctions);
+    xxx
+     x xxxxxx x xxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxx xxxx xxxxxx xxxxxxxx xx
+     x xxxx xxxxxxx xxxx
+     x xxx
+     x xxxx xxx xxxx xxxxxxxx xx xxxx xxxx
+     x xxxx
+     x xxxx xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+     x xxxx xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxx
+     x xxxxxxxxx xxxxxxxx xx xxxxx xxxx xxxxx xx xxxxxxxxxx xxxx xxx xxxxxxxxxx
+     x xxxxxxxxxxxxxxx
+     x xxxxx
+     x
+     x xxxxxx xxxxxxxxxxxxxxxxxx xxx xxxxxxxxx xxxxxxxxx xxxx xxx xxxxxxxxx
+     x xxxxxxx x xxx xxxxxx xx xxxxxx xxx xxxxxxxxxxxxxxxxxx xxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxx
+        xxxx x xxxxxxxx
+    x
+    xxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx
 
-    /**
-     * Create a new <code>TABLE</code> reference from this table, pivoting it
-     * into another form
-     * <p>
-     * For more details, see {@link #pivot(Field...)}
-     *
-     * @param aggregateFunctions The aggregate functions used for pivoting.
-     * @return A DSL object to create the <code>PIVOT</code> expression
-     * @see #pivot(Field...)
-     */
-    @Support({ ORACLE11G, ORACLE12C })
-    @Transition(
-        name = "PIVOT",
-        args = "Field+"
-    )
-    PivotForStep pivot(Collection<? extends Field<?>> aggregateFunctions);
+    xxx
+     x xxxxxx x xxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxx xxxx xxxxxx xxxxxxxx xx
+     x xxxx xxxxxxx xxxx
+     x xxx
+     x xxx xxxx xxxxxxxx xxx xxxxxx xxxxxxxxxxxxxxxxx
+     x
+     x xxxxxx xxxxxxxxxxxxxxxxxx xxx xxxxxxxxx xxxxxxxxx xxxx xxx xxxxxxxxx
+     x xxxxxxx x xxx xxxxxx xx xxxxxx xxx xxxxxxxxxxxxxxxxxx xxxxxxxxxx
+     x xxxx xxxxxxxxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxx
+        xxxx x xxxxxxxx
+    x
+    xxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxxx
 
-    /* [/pro] */
+    xx [/pro] */
     /**
      * Create a new <code>TABLE</code> reference from this table, applying
      * relational division.
@@ -1041,113 +1041,113 @@ public interface Table<R extends Record> extends TableLike<R> {
     )
     DivideByOnStep divideBy(Table<?> divisor);
 
-    /* [pro] */
-    /**
-     * Create an {@link SQLDialect#ORACLE} flashback versions query clause from
-     * this table.
-     */
-    @Support({ ORACLE })
-    @Transition(
-        name = "VERSIONS BETWEEN SCN",
-        args = "Field"
-    )
-    VersionsBetweenAndStep<R, Number> versionsBetweenScn(Number scn);
+    /* [pro] xx
+    xxx
+     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxx xxxxx xxxxxx xxxx
+     x xxxx xxxxxx
+     xx
+    xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxxx xxxxxxx xxxxx
+        xxxx x xxxxxxx
+    x
+    xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxx
 
-    /**
-     * Create an {@link SQLDialect#ORACLE} flashback versions query clause from
-     * this table.
-     */
-    @Support({ ORACLE })
-    @Transition(
-        name = "VERSIONS BETWEEN SCN",
-        args = "Field"
-    )
-    VersionsBetweenAndStep<R, Number> versionsBetweenScn(Field<? extends Number> scn);
+    xxx
+     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxx xxxxx xxxxxx xxxx
+     x xxxx xxxxxx
+     xx
+    xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxxx xxxxxxx xxxxx
+        xxxx x xxxxxxx
+    x
+    xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxx xxxxx
 
-    /**
-     * Create an {@link SQLDialect#ORACLE} flashback versions query clause from
-     * this table.
-     */
-    @Support({ ORACLE })
-    @Transition(
-        name = "VERSIONS BETWEEN SCN MINVALUE"
-    )
-    VersionsBetweenAndStep<R, Number> versionsBetweenScnMinvalue();
+    xxx
+     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxx xxxxx xxxxxx xxxx
+     x xxxx xxxxxx
+     xx
+    xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxxx xxxxxxx xxx xxxxxxxxx
+    x
+    xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    /**
-     * Create an {@link SQLDialect#ORACLE} flashback versions query clause from
-     * this table.
-     */
-    @Support({ ORACLE })
-    @Transition(
-        name = "VERSIONS BETWEEN TIMESTAMP",
-        args = "Field"
-    )
-    VersionsBetweenAndStep<R, Timestamp> versionsBetweenTimestamp(Timestamp timestamp);
+    xxx
+     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxx xxxxx xxxxxx xxxx
+     x xxxx xxxxxx
+     xx
+    xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxxx xxxxxxx xxxxxxxxxxx
+        xxxx x xxxxxxx
+    x
+    xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
 
-    /**
-     * Create an {@link SQLDialect#ORACLE} flashback versions query clause from
-     * this table.
-     */
-    @Support({ ORACLE })
-    @Transition(
-        name = "VERSIONS BETWEEN TIMESTAMP",
-        args = "Field"
-    )
-    VersionsBetweenAndStep<R, Timestamp> versionsBetweenTimestamp(Field<Timestamp> timestamp);
+    xxx
+     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxx xxxxx xxxxxx xxxx
+     x xxxx xxxxxx
+     xx
+    xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxxx xxxxxxx xxxxxxxxxxx
+        xxxx x xxxxxxx
+    x
+    xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
 
-    /**
-     * Create an {@link SQLDialect#ORACLE} flashback versions query clause from
-     * this table.
-     */
-    @Support({ ORACLE })
-    @Transition(
-        name = "VERSIONS BETWEEN TIMESTAMP MINVALUE"
-    )
-    VersionsBetweenAndStep<R, Timestamp> versionsBetweenTimestampMinvalue();
+    xxx
+     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxx xxxxx xxxxxx xxxx
+     x xxxx xxxxxx
+     xx
+    xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxxxx
+    x
+    xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    /**
-     * Create an {@link SQLDialect#ORACLE} flashback query clause from this
-     * table.
-     */
-    @Support({ ORACLE })
-    @Transition(
-        name = "AS OF SCN",
-        args = "Field"
-    )
-    Table<R> asOfScn(Number scn);
+    xxx
+     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxx xxxxxx xxxx xxxx
+     x xxxxxx
+     xx
+    xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxx xx xxxxx
+        xxxx x xxxxxxx
+    x
+    xxxxxxxx xxxxxxxxxxxxxx xxxxx
 
-    /**
-     * Create an {@link SQLDialect#ORACLE} flashback query clause from this
-     * table.
-     */
-    @Support({ ORACLE })
-    @Transition(
-        name = "AS OF SCN",
-        args = "Field"
-    )
-    Table<R> asOfScn(Field<? extends Number> scn);
+    xxx
+     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxx xxxxxx xxxx xxxx
+     x xxxxxx
+     xx
+    xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxx xx xxxxx
+        xxxx x xxxxxxx
+    x
+    xxxxxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxx xxxxx
 
-    /**
-     * Create an {@link SQLDialect#ORACLE} flashback query clause from this
-     * table.
-     */
-    @Support({ ORACLE })
-    @Transition(
-        name = "AS OF TIMESTAMP",
-        args = "Field"
-    )
-    Table<R> asOfTimestamp(Timestamp timestamp);
+    xxx
+     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxx xxxxxx xxxx xxxx
+     x xxxxxx
+     xx
+    xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxx xx xxxxxxxxxxx
+        xxxx x xxxxxxx
+    x
+    xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
 
-    /**
-     * Create an {@link SQLDialect#ORACLE} flashback query clause from this
-     * table.
-     */
-    @Support({ ORACLE })
-    @Transition(
-        name = "AS OF TIMESTAMP",
-        args = "Field"
-    )
-    Table<R> asOfTimestamp(Field<Timestamp> timestamp);
-    /* [/pro] */
+    xxx
+     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxx xxxxxx xxxx xxxx
+     x xxxxxx
+     xx
+    xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxx xx xxxxxxxxxxx
+        xxxx x xxxxxxx
+    x
+    xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
+    xx [/pro] */
 }

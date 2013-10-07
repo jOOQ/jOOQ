@@ -65,13 +65,13 @@ class CurrentDate extends AbstractFunction<Date> {
     @Override
     final Field<Date> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] */
-            case ORACLE:
-                return field("{trunc}({sysdate})", SQLDataType.DATE);
+            /* [pro] xx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
 
-            case DB2:
-            case INGRES:
-            /* [/pro] */
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case DERBY:
             case FIREBIRD:
             case HSQLDB:
@@ -79,13 +79,13 @@ class CurrentDate extends AbstractFunction<Date> {
             case SQLITE:
                 return field("current_date", SQLDataType.DATE);
 
-            /* [pro] */
-            case SQLSERVER:
-                return field("convert(date, current_timestamp)", SQLDataType.DATE);
+            /* [pro] xx
+            xxxx xxxxxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
 
-            case SYBASE:
-                return field("current date", SQLDataType.DATE);
-            /* [/pro] */
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxx
+            xx [/pro] */
         }
 
         return function("current_date", SQLDataType.DATE);

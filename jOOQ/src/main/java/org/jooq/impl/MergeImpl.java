@@ -52,7 +52,7 @@ import static org.jooq.Clause.MERGE_WHEN_MATCHED_THEN_UPDATE;
 import static org.jooq.Clause.MERGE_WHEN_NOT_MATCHED_THEN_INSERT;
 import static org.jooq.Clause.MERGE_WHERE;
 import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
@@ -941,12 +941,12 @@ implements
      */
     private final QueryPart getStandardMerge(Configuration config) {
         switch (config.dialect().family()) {
-            /* [pro] */
-            case DB2:
-            case ORACLE:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case HSQLDB: {
 
@@ -1111,40 +1111,40 @@ implements
         context.formatIndentEnd()
                .declareTables(false);
 
-        /* [pro] */
-        switch (context.configuration().dialect().family()) {
-            case SQLSERVER:
-            case SYBASE: {
-                if (using instanceof Select) {
-                    int hash = Utils.hash(using);
+        /* [pro] xx
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx x
+                xx xxxxxx xxxxxxxxxx xxxxxxx x
+                    xxx xxxx x xxxxxxxxxxxxxxxxxx
 
-                    context.sql(" ").keyword("as").sql(" ")
-                           .sql("dummy_")
-                           .sql(hash)
-                           .sql("(");
+                    xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xx
+                           xxxxxxxxxxxxxx
+                           xxxxxxxxxx
+                           xxxxxxxxxx
 
-                    String separator = "";
-                    for (Field<?> field : ((Select<?>) using).fields()) {
+                    xxxxxx xxxxxxxxx x xxx
+                    xxx xxxxxxxxx xxxxx x xxxxxxxxxxxx xxxxxxxxxxxxxxxx x
 
-                        // Some fields are unnamed
-                        // [#579] Correct this
-                        String name = StringUtils.isBlank(field.getName())
-                            ? "dummy_" + hash + "_" + Utils.hash(field)
-                            : field.getName();
+                        xx xxxx xxxxxx xxx xxxxxxx
+                        xx xxxxxx xxxxxxx xxxx
+                        xxxxxx xxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            x xxxxxxxx x xxxx x xxx x xxxxxxxxxxxxxxxxx
+                            x xxxxxxxxxxxxxxxx
 
-                        context.sql(separator).literal(name);
-                        separator = ", ";
-                    }
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxx x xx xx
+                    x
 
-                    context.sql(")");
-                }
+                    xxxxxxxxxxxxxxxxx
+                x
 
-                break;
-            }
-        }
+                xxxxxx
+            x
+        x
 
-        /* [/pro] */
-        boolean onParentheses = false/* [pro] */ || context.configuration().dialect().family() == ORACLE/* [/pro] */;
+        xx [/pro] */
+        boolean onParentheses = false/* [pro] xx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxx [/pro] */;
         context.end(MERGE_USING)
                .formatSeparator()
                .start(MERGE_ON)
@@ -1210,14 +1210,14 @@ implements
 
         context.end(MERGE_WHERE)
                .end(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
-        /* [pro] */
+        /* [pro] xx
 
-        switch (context.configuration().dialect().family()) {
-            case SQLSERVER:
-                context.sql(";");
-                break;
-        }
-        /* [/pro] */
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxx xxxxxxxxxx
+                xxxxxxxxxxxxxxxxx
+                xxxxxx
+        x
+        xx [/pro] */
     }
 
     @Override

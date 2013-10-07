@@ -40,43 +40,43 @@
  */
 package org.jooq.examples;
 
-/* [pro] */
+/* [pro] xx
 
-import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.Department;
-import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.Employee;
-import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.EmployeeAddress;
-import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.EmployeeDepartmentHistory;
-import static org.jooq.examples.sqlserver.adventureworks.person.Tables.Contact;
-import static org.jooq.impl.DSL.val;
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxx
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+xxxxxx xxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 
-import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.impl.DSL;
+xxxxxx xxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxx
 
-public class AdventureWorks {
+xxxxxx xxxxx xxxxxxxxxxxxxx x
 
-    public static void main(String[] args) throws Exception {
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        Connection connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=AdventureWorks;integratedSecurity=true");
+    xxxxxx xxxxxx xxxx xxxxxxxxxxxxx xxxxx xxxxxx xxxxxxxxx x
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxx xxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        DSLContext create = DSL.using(connection, SQLDialect.SQLSERVER);
+        xxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx
 
-        System.out.println(create
-              .select(Employee.fields())
-              .select(val("###"))
-              .select(Department.fields())
-              .select(val("###"))
-              .select(Contact.fields())
-              .from(Employee)
-              .join(EmployeeAddress).using(Employee.EmployeeID)
-              .join(EmployeeDepartmentHistory).using(Employee.EmployeeID)
-              .join(Department).using(Department.DepartmentID)
-              .join(Contact).using(Contact.ContactID)
-              .fetch());
-    }
-}
+        xxxxxxxxxxxxxxxxxxxxxxxxx
+              xxxxxxxxxxxxxxxxxxxxxxxxxx
+              xxxxxxxxxxxxxxxxxxx
+              xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+              xxxxxxxxxxxxxxxxxxx
+              xxxxxxxxxxxxxxxxxxxxxxxxx
+              xxxxxxxxxxxxxxx
+              xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+              xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+              xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+              xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+              xxxxxxxxxx
+    x
+x
 
-/* [/pro] */
+xx [/pro] */

@@ -41,23 +41,23 @@
 
 package org.jooq.test;
 
-/* [pro] */
+/* [pro] xx
 
-import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.conf.Settings;
-import org.jooq.impl.DSL;
+xxxxxx xxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxx
 
 
-/**
- * @author Lukas Eder
- */
-public class OracleTest11g extends OracleTest {
+xxx
+ x xxxxxxx xxxxx xxxx
+ xx
+xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxx xxxxxxxxxx x
 
-    @Override
-    protected DSLContext create0(Settings settings) {
-        return DSL.using(getConnection(), SQLDialect.ORACLE11G, settings);
-    }
-}
+    xxxxxxxxx
+    xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx
+    x
+x
 
-/* [/pro] */
+xx [/pro] */

@@ -70,12 +70,12 @@ class Tanh extends AbstractFunction<BigDecimal> {
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case HSQLDB:
             case MARIADB:

@@ -43,7 +43,7 @@ package org.jooq.test._.testcases;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
-import static org.jooq.SQLDialect.ORACLE;
+// ...
 import static org.jooq.impl.DSL.count;
 
 import java.sql.Date;
@@ -224,10 +224,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
 
         boolean oracle = false;
-        /* [pro] */
-        if (dialect().family() == ORACLE)
-            oracle = true;
-        /* [/pro] */
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxx xx xxxxxxx
+            xxxxxx x xxxxx
+        xx [/pro] */
 
         assertEquals(2, (int) create().select(count)
                                       .from(TAuthor())
@@ -277,10 +277,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Update duplicate records
         // ------------------------
         switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case DERBY:
             case H2:
             case POSTGRES:

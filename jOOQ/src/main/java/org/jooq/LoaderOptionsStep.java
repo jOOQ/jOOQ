@@ -41,13 +41,13 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+// ...
+// ...
+// ...
 
 import java.sql.Connection;
 
@@ -72,7 +72,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * the default. This cannot be combined with {@link #onDuplicateKeyError()}
      * or {@link #onDuplicateKeyIgnore()}
      */
-    @Support({ CUBRID, DB2, HSQLDB, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL })
     LoaderOptionsStep<R> onDuplicateKeyUpdate();
 
     /**

@@ -44,11 +44,11 @@ import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
-import static org.jooq.SQLDialect.ASE;
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.INGRES;
+// ...
+// ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
+// ...
 import static org.jooq.impl.DSL.abs;
 import static org.jooq.impl.DSL.acos;
 import static org.jooq.impl.DSL.ascii;
@@ -231,7 +231,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("2", create().select(nvl("2", "1")).fetchOne(0));
 
         // TODO [#831] Fix this for Sybase ASE
-        if (true/* [pro] */ && dialect() != SQLDialect.ASE/* [/pro] */) {
+        if (true/* [pro] xx xx xxxxxxxxx xx xxxxxxxxxxxxxxxx [/pro] */) {
             assertTrue(("" + create()
                 .select(nvl(TBook_CONTENT_TEXT(), "abc"))
                 .from(TBook())
@@ -252,7 +252,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("2", create().select(nvl2(val("2"), "2", "1")).fetchOne(0));
 
         // TODO [#831] Fix this for Sybase ASE
-        if (true/* [pro] */ && dialect() != SQLDialect.ASE/* [/pro] */) {
+        if (true/* [pro] xx xx xxxxxxxxx xx xxxxxxxxxxxxxxxx [/pro] */) {
             assertEquals("abc", create()
                 .select(nvl2(TBook_CONTENT_TEXT(), "abc", "xyz"))
                 .from(TBook())
@@ -349,12 +349,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         boolean noSubselects = false;
 
-        /* [pro] */
-        // Ingres does not allow sub selects in CASE expressions
-        if (dialect() == INGRES)
-            noSubselects = true;
+        /* [pro] xx
+        xx xxxxxx xxxx xxx xxxxx xxx xxxxxxx xx xxxx xxxxxxxxxxx
+        xx xxxxxxxxxx xx xxxxxxx
+            xxxxxxxxxxxx x xxxxx
 
-        /* [/pro] */
+        xx [/pro] */
         Field<?> case2 = noSubselects
             ? decode()
                 .value(TBook_AUTHOR_ID())
@@ -583,9 +583,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // ASCII
         switch (dialect()) {
-            /* [pro] */
-            case INGRES: // TODO [#864]
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxxxxx xx xxxx xxxxxx
+            xx [/pro] */
             case DERBY:
             case SQLITE: // TODO [#862]
                 log.info("SKIPPING", "ASCII function test");
@@ -612,13 +612,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // MD5
         switch (dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case DB2:
-            case INGRES:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case CUBRID:
             case DERBY:
             case FIREBIRD:
@@ -629,9 +629,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 log.info("SKIPPING", "MD5 function test");
                 break;
 
-            /* [pro] */
-            case ORACLE:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxxxxx
+            xx [/pro] */
             case MARIADB:
             case MYSQL:
             default:
@@ -645,7 +645,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Some databases are limited or buggy
         boolean sqlite = (dialect() == SQLITE);
-        boolean ingres = false/* [pro] */ || (dialect() == INGRES)/* [/pro] */;
+        boolean ingres = false/* [pro] xx xx xxxxxxxxxx xx xxxxxxxxx [/pro] */;
 
         // The random function
         BigDecimal rand = create().select(rand()).fetchOne(rand());
@@ -1027,9 +1027,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testBitwiseOperations() throws Exception {
         switch (dialect()) {
-            /* [pro] */
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxxxxx
+            xx [/pro] */
             case DERBY:
                 log.info("SKIPPING", "Tests for bitwise operations");
                 return;
@@ -1037,13 +1037,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         Field<Integer> bitCount = bitCount(3);
 
-        /* [pro] */
-        // TODO [#896] This somehow doesn't work on some dialects
-        if (asList(ASE, DB2, SQLSERVER).contains(dialect().family())) {
-            bitCount = val(2);
-        }
+        /* [pro] xx
+        xx xxxx xxxxxx xxxx xxxxxxx xxxxxxx xxxx xx xxxx xxxxxxxx
+        xx xxxxxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxx x xxxxxxx
+        x
 
-        /* [/pro] */
+        xx [/pro] */
         Record result =
         create().select(
                     bitCount,

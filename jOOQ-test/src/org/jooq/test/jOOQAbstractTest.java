@@ -174,7 +174,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.postgresql.util.PSQLException;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
+// ...
 
 /**
  * The abstract test suite uses generic types to model the generated test schema
@@ -359,14 +359,16 @@ public abstract class jOOQAbstractTest<
                     }
                 }
 
-                // There is no DROP ** IF EXISTS statement in SQL Server
-                else if (e.getClass().getName().startsWith("com.microsoft")) {
-                    switch (((SQLServerException)e).getErrorCode()) {
-                        case 3701: // Tables
-                        case 218:  // Types
-                        continue;
-                    }
-                }
+                /* [pro] xx
+                xx xxxxx xx xx xxxx xx xx xxxxxx xxxxxxxxx xx xxx xxxxxx
+                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                        xxxx xxxxx xx xxxxxx
+                        xxxx xxxx  xx xxxxx
+                        xxxxxxxxx
+                    x
+                x
+                xx [/pro] */
 
                 else if (e.getMessage().startsWith("Cannot drop")) {
                     continue;

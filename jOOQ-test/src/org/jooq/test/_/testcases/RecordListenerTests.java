@@ -90,12 +90,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testRecordListenerLoad() throws Exception {
 
         // Check if lifecycle is handled correctly when initialising new records.
-        SimpleRecordListener listener1 = new SimpleRecordListener();
+        ReadListener listener1 = new ReadListener();
         create(listener1).newRecord(TBook());
         assertEquals(asList("loadStart", "loadEnd"), listener1.events);
 
         // Check if lifecycle is handled correctly when loading records from the DB.
-        SimpleRecordListener listener2 = new SimpleRecordListener();
+        ReadListener listener2 = new ReadListener();
         B book1 =
         create(listener2)
             .selectFrom(TBook())
@@ -113,11 +113,35 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList("loadStart", "loadEnd"), listener2.events);
     }
 
+    private static class ReadListener extends DefaultRecordListener {
+        List<String> events = new ArrayList<String>();
+
+        @Override
+        public void loadStart(RecordContext ctx) {
+            events.add("loadStart");
+        }
+
+        @Override
+        public void loadEnd(RecordContext ctx) {
+            events.add("loadEnd");
+        }
+
+        @Override
+        public void refreshStart(RecordContext ctx) {
+            events.add("refreshStart");
+        }
+
+        @Override
+        public void refreshEnd(RecordContext ctx) {
+            events.add("refreshEnd");
+        }
+    }
+
     @Test
     public void testRecordListenerStore() throws Exception {
         jOOQAbstractTest.reset = false;
 
-        SimpleRecordListener listener1 = new SimpleRecordListener();
+        WriteListener listener1 = new WriteListener();
         B book1 = newBook(5);
         book1.attach(create(listener1).configuration());
         assertEquals(1, book1.store());
@@ -128,7 +152,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(1, book1.store());
         assertEquals(asList("storeStart", "updateStart", "updateEnd", "storeEnd"), listener1.events);
 
-        SimpleRecordListener listener2 = new SimpleRecordListener();
+        WriteListener listener2 = new WriteListener();
         B book2 = newBook(6);
         book2.attach(create(listener2).configuration());
         assertEquals(1, book2.insert());
@@ -147,7 +171,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testRecordListenerBatchStore() throws Exception {
         jOOQAbstractTest.reset = false;
-        SimpleRecordListener listener1 = new SimpleRecordListener();
+        WriteListener listener1 = new WriteListener();
 
         B book1 = newBook(5);
         B book2 = newBook(6);
@@ -169,7 +193,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .where(TBook_ID().eq(1))
             .fetchOne();
 
-        SimpleRecordListener listener1 = new SimpleRecordListener();
+        ReadListener listener1 = new ReadListener();
         book.attach(create(listener1).configuration());
 
         // TODO: There is an internal load operation involved here. Is that
@@ -178,18 +202,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList("loadStart", "loadEnd", "refreshStart", "refreshEnd"), listener1.events);
     }
 
-    private static class SimpleRecordListener extends DefaultRecordListener {
+    private static class WriteListener extends DefaultRecordListener {
         List<String> events = new ArrayList<String>();
-
-        @Override
-        public void loadStart(RecordContext ctx) {
-            events.add("loadStart");
-        }
-
-        @Override
-        public void loadEnd(RecordContext ctx) {
-            events.add("loadEnd");
-        }
 
         @Override
         public void storeStart(RecordContext ctx) {
@@ -229,16 +243,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         @Override
         public void deleteEnd(RecordContext ctx) {
             events.add("deleteEnd");
-        }
-
-        @Override
-        public void refreshStart(RecordContext ctx) {
-            events.add("refreshStart");
-        }
-
-        @Override
-        public void refreshEnd(RecordContext ctx) {
-            events.add("refreshEnd");
         }
     }
 }

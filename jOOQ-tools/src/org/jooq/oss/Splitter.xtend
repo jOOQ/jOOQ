@@ -99,6 +99,8 @@ class Splitter extends Generators {
                 && !path.canonicalPath.endsWith("._trace")
                 && !path.canonicalPath.endsWith("jOOQ-tools")
                 && !path.canonicalPath.endsWith("jOOQ-website")
+                && !path.canonicalPath.endsWith("jOOQ-websites")
+                && !path.canonicalPath.endsWith("jOOQ-webservices")
                 && !path.canonicalPath.contains("\\access")
                 && !path.canonicalPath.contains("\\ase")
                 && !path.canonicalPath.contains("\\db2")

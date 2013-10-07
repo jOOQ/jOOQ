@@ -71,7 +71,7 @@ import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
 import org.jooq.UniqueKey;
-import org.jooq.VersionsBetweenAndStep;
+// ...
 // ...
 import org.jooq.tools.StringUtils;
 

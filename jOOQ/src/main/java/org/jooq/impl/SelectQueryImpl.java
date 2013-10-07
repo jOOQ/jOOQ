@@ -99,6 +99,8 @@ import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
+import org.jooq.TableOnStep;
+import org.jooq.TablePartitionByStep;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.StringUtils;
@@ -813,12 +815,14 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         forUpdateOfTables.addAll(Arrays.asList(tables));
     }
 
-    @Override
-    public final void setForUpdateWait(int seconds) {
-        setForUpdate(true);
-        forUpdateMode = ForUpdateMode.WAIT;
-        forUpdateWait = seconds;
-    }
+    /* [pro] xx
+    xxxxxxxxx
+    xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxx x
+        xxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxx x xxxxxxxx
+    x
+    xx [/pro] */
 
     @Override
     public final void setForUpdateNoWait() {
@@ -827,12 +831,14 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         forUpdateWait = 0;
     }
 
-    @Override
-    public final void setForUpdateSkipLocked() {
-        setForUpdate(true);
-        forUpdateMode = ForUpdateMode.SKIP_LOCKED;
-        forUpdateWait = 0;
-    }
+    /* [pro] xx
+    xxxxxxxxx
+    xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxx x
+        xxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxx x xx
+    x
+    xx [/pro] */
 
     @Override
     public final void setForShare(boolean forShare) {
@@ -1093,13 +1099,19 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
     @Override
     public final void addJoin(TableLike<?> table, JoinType type, Condition... conditions) {
-        addJoin(table, type, conditions, null);
+        addJoin0(table, type, conditions, null);
     }
 
-    @Override
-    public final void addJoin(TableLike<?> table, JoinType type, Condition[] conditions, Field<?>[] partitionBy) {
-        // TODO: This and similar methods should be refactored, patterns extracted...
+    /* [pro] xx
+    xxxxxxxxx
+    xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxx xxxxx xxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxx x
+        xxxxxxxxxxxxxxx xxxxx xxxxxxxxxxx xxxxxxxxxxxxx
+    x
+    xx [/pro] */
 
+    private final void addJoin0(TableLike<?> table, JoinType type, Condition[] conditions, Field<?>[] partitionBy) {
+
+        // TODO: This and similar methods should be refactored, patterns extracted...
         int index = getFrom().size() - 1;
         Table<?> joined = null;
 
@@ -1107,12 +1119,24 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             case JOIN:
                 joined = getFrom().get(index).join(table).on(conditions);
                 break;
-            case LEFT_OUTER_JOIN:
-                joined = getFrom().get(index).leftOuterJoin(table).partitionBy(partitionBy).on(conditions);
+            case LEFT_OUTER_JOIN: {
+                TablePartitionByStep p = getFrom().get(index).leftOuterJoin(table);
+                TableOnStep o = p;
+                /* [pro] xx
+                x x xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xx [/pro] */
+                joined = o.on(conditions);
                 break;
-            case RIGHT_OUTER_JOIN:
-                joined = getFrom().get(index).rightOuterJoin(table).partitionBy(partitionBy).on(conditions);
+            }
+            case RIGHT_OUTER_JOIN: {
+                TablePartitionByStep p = getFrom().get(index).rightOuterJoin(table);
+                TableOnStep o = p;
+                /* [pro] xx
+                x x xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xx [/pro] */
+                joined = o.on(conditions);
                 break;
+            }
             case FULL_OUTER_JOIN:
                 joined = getFrom().get(index).fullOuterJoin(table).on(conditions);
                 break;

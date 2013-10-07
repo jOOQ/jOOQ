@@ -497,25 +497,25 @@ class Function<T> extends AbstractField<T> implements
         return arguments;
     }
 
+    @Override
+    public final AggregateFunction<T> withinGroupOrderBy(Field<?>... fields) {
+        withinGroupOrderBy.addAll(fields);
+        return this;
+    }
+
+    @Override
+    public final AggregateFunction<T> withinGroupOrderBy(SortField<?>... fields) {
+        withinGroupOrderBy.addAll(Arrays.asList(fields));
+        return this;
+    }
+
+    @Override
+    public final AggregateFunction<T> withinGroupOrderBy(Collection<? extends SortField<?>> fields) {
+        withinGroupOrderBy.addAll(fields);
+        return this;
+    }
+
     /* [pro] xx
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxx
-    x
-
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxx
-    x
-
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxx x
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxx
-    x
-
     xxxxxxxxx
     xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
         xxxxx x xxxxx

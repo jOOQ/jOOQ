@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1223839901;
+	private static final long serialVersionUID = -1684802809;
 
 	/**
 	 * Setter for <code>t_triggers.id_generated</code>. 
@@ -142,5 +142,16 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	public TTriggersRecord() {
 		super(org.jooq.test.sqlite.generatedclasses.tables.TTriggers.T_TRIGGERS);
+	}
+
+	/**
+	 * Create a detached, initialised TTriggersRecord
+	 */
+	public TTriggersRecord(java.lang.Integer idGenerated, java.lang.Integer id, java.lang.Integer counter) {
+		super(org.jooq.test.sqlite.generatedclasses.tables.TTriggers.T_TRIGGERS);
+
+		setValue(0, idGenerated);
+		setValue(1, id);
+		setValue(2, counter);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_986_2Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_986_2Record> implements org.jooq.Record1<java.lang.Integer> {
 
-	private static final long serialVersionUID = -1125935424;
+	private static final long serialVersionUID = 867942147;
 
 	/**
 	 * Setter for <code>DBA.t_986_2.REF</code>. 
@@ -82,5 +82,14 @@ public class T_986_2Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	public T_986_2Record() {
 		super(org.jooq.test.sybase.generatedclasses.tables.T_986_2.T_986_2);
+	}
+
+	/**
+	 * Create a detached, initialised T_986_2Record
+	 */
+	public T_986_2Record(java.lang.Integer ref) {
+		super(org.jooq.test.sybase.generatedclasses.tables.T_986_2.T_986_2);
+
+		setValue(0, ref);
 	}
 }

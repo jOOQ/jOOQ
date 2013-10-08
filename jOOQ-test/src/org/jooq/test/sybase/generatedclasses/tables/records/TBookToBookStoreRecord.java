@@ -11,7 +11,7 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1306561728;
+	private static final long serialVersionUID = 1029773341;
 
 	/**
 	 * Setter for <code>DBA.t_book_to_book_store.book_store_name</code>. 
@@ -144,5 +144,16 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	public TBookToBookStoreRecord() {
 		super(org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+	}
+
+	/**
+	 * Create a detached, initialised TBookToBookStoreRecord
+	 */
+	public TBookToBookStoreRecord(java.lang.String bookStoreName, java.lang.Integer bookId, java.lang.Integer stock) {
+		super(org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+
+		setValue(0, bookStoreName);
+		setValue(1, bookId);
+		setValue(2, stock);
 	}
 }

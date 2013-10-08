@@ -30,13 +30,13 @@
             <url>http://www.jooq.org/inc/LICENSE.txt</url>
             <distribution>repo</distribution>
         </license>
-        <!-- [com] -->
+        <!-- [pro] -->
         <license>
             <name>jOOQ License and Maintenance Agreement</name>
             <url>http://www.jooq.org/eula</url>
             <distribution>repo</distribution>
         </license>
-        <!-- [/com] -->
+        <!-- [/pro] -->
     </licenses>
 
     <scm>
@@ -53,7 +53,7 @@
     <developers>
         <developer>
             <name>Lukas Eder</name>
-            <email>lukas.eder@gmail.com</email>
+            <email>lukas.eder@datageekery.com</email>
             <roles>
                 <role>architect</role>
                 <role>developer</role>
@@ -149,10 +149,6 @@
         <module>jOOQ-scala</module>
     </modules>
 
-    <properties>
-        <version.gradle>1.6</version.gradle>
-    </properties>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -170,13 +166,6 @@
                 <artifactId>jooq-codegen-maven</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <!--
-            <dependency>
-                <groupId>org.jooq</groupId>
-                <artifactId>jooq-codegen-gradle</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            -->
             <dependency>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-meta</artifactId>
@@ -190,34 +179,6 @@
         </dependencies>
     </dependencyManagement>
 
-	<!--
-	  These additions were introduced with #2711, #2287 by Ben Manes
-	  Sonatype strongly recommends not to reference any third-party
-	  Maven repositories from artefact published to Maven Central.
-	  
-	  There must be another way to solve these issues:
-    <repositories>
-        <repository>
-            <id>maven-central</id>
-            <url>http://repo1.maven.org/maven2</url>
-        </repository>
-        <repository>
-            <id>gradle</id>
-            <url>http://repo.gradle.org/gradle/libs-releases-local</url>
-            <snapshots>
-              <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>gradle-workaround</id>
-            <url>http://flywaydb.org/repo</url>
-            <snapshots>
-              <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-	-->
-	
     <build>
         <defaultGoal>deploy</defaultGoal>
         <finalName>${project.artifactId}-${project.version}</finalName>
@@ -305,12 +266,8 @@
     </build>
 
     <profiles>
-        <!-- The release profile is used only for releasing jOOQ to
-             the Sonatype Maven repository or to Maven central
-             lengthy or annoying operations for everyday use by users
-             building jOOQ themselves are put here -->
         <profile>
-            <id>release</id>
+            <id>release-oss</id>
             <build>
                 <plugins>
                     <plugin>
@@ -327,6 +284,36 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <inherited>true</inherited>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.7</version>
+                        <executions>
+                            <execution>
+                                <id>bundle-sources</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <maxmemory>512</maxmemory>
+                            <encoding>UTF-8</encoding>
+                            <show>protected</show>
+                            <notree>true</notree>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        <!-- [pro] -->
+        <profile>
+            <id>release-pro</id>
+            <build>
+                <plugins>
                     <plugin>
                         <inherited>true</inherited>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -366,6 +353,6 @@
                 </plugins>
             </build>
         </profile>
+        <!-- [/pro] -->
     </profiles>
-
 </project>

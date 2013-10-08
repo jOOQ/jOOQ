@@ -42,6 +42,9 @@ package org.jooq;
 
 /**
  * A listing of clauses that emit events {@link VisitListener}.
+ * <p>
+ * <h3>Disclaimer</h3> This SPI is still <strong>experimental</strong>! Some SPI
+ * elements and/or behavioural elements may change in future minor releases.
  */
 public enum Clause {
 

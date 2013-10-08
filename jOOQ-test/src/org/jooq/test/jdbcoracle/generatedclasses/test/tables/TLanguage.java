@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -1123002764;
+	private static final long serialVersionUID = 1985457898;
 
 	/**
 	 * The singleton instance of <code>TEST.T_LANGUAGE</code>
@@ -49,5 +49,21 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.
 	 */
 	private TLanguage() {
 		super("T_LANGUAGE", org.jooq.test.jdbcoracle.generatedclasses.test.Test.TEST);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TLanguageRecord> getPrimaryKey() {
+		return org.jooq.test.jdbcoracle.generatedclasses.test.Keys.PK_T_LANGUAGE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TLanguageRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TLanguageRecord>>asList(org.jooq.test.jdbcoracle.generatedclasses.test.Keys.PK_T_LANGUAGE);
 	}
 }

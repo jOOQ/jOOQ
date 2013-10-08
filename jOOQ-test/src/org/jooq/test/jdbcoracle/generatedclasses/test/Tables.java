@@ -72,6 +72,11 @@ public class Tables {
 	public static final org.jooq.test.jdbcoracle.generatedclasses.test.tables.TTriggers T_TRIGGERS = org.jooq.test.jdbcoracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS;
 
 	/**
+	 * The table TEST.T_UNSIGNED
+	 */
+	public static final org.jooq.test.jdbcoracle.generatedclasses.test.tables.TUnsigned T_UNSIGNED = org.jooq.test.jdbcoracle.generatedclasses.test.tables.TUnsigned.T_UNSIGNED;
+
+	/**
 	 * The table TEST.T_639_NUMBERS_TABLE
 	 */
 	public static final org.jooq.test.jdbcoracle.generatedclasses.test.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.jdbcoracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;

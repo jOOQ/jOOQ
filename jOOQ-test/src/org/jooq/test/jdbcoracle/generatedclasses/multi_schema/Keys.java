@@ -21,6 +21,9 @@ public class Keys {
 	// UNIQUE and PRIMARY KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> PK_T_AUTHOR = UniqueKeys0.PK_T_AUTHOR;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord> PK_T_BOOK = UniqueKeys0.PK_T_BOOK;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> PK_T_BOOK_SALE = UniqueKeys0.PK_T_BOOK_SALE;
 
 	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
@@ -30,4 +33,10 @@ public class Keys {
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
 	// -------------------------------------------------------------------------
+
+	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> PK_T_AUTHOR = createUniqueKey(org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR, org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.TAuthor.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord> PK_T_BOOK = createUniqueKey(org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.TBook.T_BOOK, org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.TBook.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> PK_T_BOOK_SALE = createUniqueKey(org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE, org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.TBookSale.ID);
+	}
 }

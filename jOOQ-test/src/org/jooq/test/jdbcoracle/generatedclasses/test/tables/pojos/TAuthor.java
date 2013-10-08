@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = 250269131;
+	private static final long serialVersionUID = -1470434070;
 
 	private java.lang.Integer id;
 	private java.lang.String  firstName;
@@ -17,6 +17,24 @@ public class TAuthor implements org.jooq.test.jdbcoracle.generatedclasses.test.t
 	private java.sql.Date     dateOfBirth;
 	private java.lang.Integer yearOfBirth;
 	private java.lang.Object  address;
+
+	public TAuthor() {}
+
+	public TAuthor(
+		java.lang.Integer id,
+		java.lang.String  firstName,
+		java.lang.String  lastName,
+		java.sql.Date     dateOfBirth,
+		java.lang.Integer yearOfBirth,
+		java.lang.Object  address
+	) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dateOfBirth = dateOfBirth;
+		this.yearOfBirth = yearOfBirth;
+		this.address = address;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

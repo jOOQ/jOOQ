@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 290478776;
+	private static final long serialVersionUID = -2001224531;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOLEANS</code>
@@ -84,5 +84,21 @@ public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.
 	 */
 	private TBooleans() {
 		super("T_BOOLEANS", org.jooq.test.jdbcoracle.generatedclasses.test.Test.TEST);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TBooleansRecord> getPrimaryKey() {
+		return org.jooq.test.jdbcoracle.generatedclasses.test.Keys.PK_T_BOOLEANS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TBooleansRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TBooleansRecord>>asList(org.jooq.test.jdbcoracle.generatedclasses.test.Keys.PK_T_BOOLEANS);
 	}
 }

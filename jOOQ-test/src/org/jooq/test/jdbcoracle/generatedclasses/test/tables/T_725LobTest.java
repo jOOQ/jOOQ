@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = 1454879306;
+	private static final long serialVersionUID = 1694495474;
 
 	/**
 	 * The singleton instance of <code>TEST.T_725_LOB_TEST</code>
@@ -39,5 +39,21 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.jdbcorac
 	 */
 	private T_725LobTest() {
 		super("T_725_LOB_TEST", org.jooq.test.jdbcoracle.generatedclasses.test.Test.TEST);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.T_725LobTestRecord> getPrimaryKey() {
+		return org.jooq.test.jdbcoracle.generatedclasses.test.Keys.PK_T_725_LOB_TEST;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.T_725LobTestRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.T_725LobTestRecord>>asList(org.jooq.test.jdbcoracle.generatedclasses.test.Keys.PK_T_725_LOB_TEST);
 	}
 }

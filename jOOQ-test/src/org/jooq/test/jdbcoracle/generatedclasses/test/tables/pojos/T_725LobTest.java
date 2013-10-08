@@ -9,10 +9,20 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IT_725LobTest {
 
-	private static final long serialVersionUID = -1904898680;
+	private static final long serialVersionUID = -901079792;
 
 	private java.lang.Integer id;
 	private byte[]            lob;
+
+	public T_725LobTest() {}
+
+	public T_725LobTest(
+		java.lang.Integer id,
+		byte[]            lob
+	) {
+		this.id = id;
+		this.lob = lob;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

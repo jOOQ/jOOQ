@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VIncomplete implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IVIncomplete {
 
-	private static final long serialVersionUID = -1702103797;
+	private static final long serialVersionUID = 80148779;
 
 	private java.lang.Object id;
 	private java.lang.Object authorId;
@@ -20,6 +20,30 @@ public class VIncomplete implements org.jooq.test.jdbcoracle.generatedclasses.te
 	private java.lang.Object languageId;
 	private java.lang.Object contentText;
 	private java.lang.Object contentPdf;
+
+	public VIncomplete() {}
+
+	public VIncomplete(
+		java.lang.Object id,
+		java.lang.Object authorId,
+		java.lang.Object coAuthorId,
+		java.lang.Object detailsId,
+		java.lang.Object title,
+		java.lang.Object publishedIn,
+		java.lang.Object languageId,
+		java.lang.Object contentText,
+		java.lang.Object contentPdf
+	) {
+		this.id = id;
+		this.authorId = authorId;
+		this.coAuthorId = coAuthorId;
+		this.detailsId = detailsId;
+		this.title = title;
+		this.publishedIn = publishedIn;
+		this.languageId = languageId;
+		this.contentText = contentText;
+		this.contentPdf = contentPdf;
+	}
 
 	@Override
 	public java.lang.Object getId() {

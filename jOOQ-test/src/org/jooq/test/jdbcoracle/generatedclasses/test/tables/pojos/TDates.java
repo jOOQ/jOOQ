@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.ITDates {
 
-	private static final long serialVersionUID = 226136137;
+	private static final long serialVersionUID = 1692519592;
 
 	private java.lang.Integer          id;
 	private java.sql.Date              d;
@@ -19,6 +19,28 @@ public class TDates implements org.jooq.test.jdbcoracle.generatedclasses.test.ta
 	private java.lang.Long             tsBigint;
 	private org.jooq.types.YearToMonth iY;
 	private org.jooq.types.DayToSecond iD;
+
+	public TDates() {}
+
+	public TDates(
+		java.lang.Integer          id,
+		java.sql.Date              d,
+		java.sql.Timestamp         t,
+		java.sql.Timestamp         ts,
+		java.lang.Integer          dInt,
+		java.lang.Long             tsBigint,
+		org.jooq.types.YearToMonth iY,
+		org.jooq.types.DayToSecond iD
+	) {
+		this.id = id;
+		this.d = d;
+		this.t = t;
+		this.ts = ts;
+		this.dInt = dInt;
+		this.tsBigint = tsBigint;
+		this.iY = iY;
+		this.iD = iD;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

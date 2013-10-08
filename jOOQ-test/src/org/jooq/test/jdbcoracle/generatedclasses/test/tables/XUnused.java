@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1704142653;
+	private static final long serialVersionUID = 1409371699;
 
 	/**
 	 * The singleton instance of <code>TEST.X_UNUSED</code>
@@ -109,5 +109,21 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.ge
 	 */
 	private XUnused() {
 		super("X_UNUSED", org.jooq.test.jdbcoracle.generatedclasses.test.Test.TEST);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XUnusedRecord> getPrimaryKey() {
+		return org.jooq.test.jdbcoracle.generatedclasses.test.Keys.PK_X_UNUSED;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XUnusedRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XUnusedRecord>>asList(org.jooq.test.jdbcoracle.generatedclasses.test.Keys.PK_X_UNUSED);
 	}
 }

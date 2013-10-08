@@ -9,13 +9,29 @@ package org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookSale implements org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.interfaces.ITBookSale {
 
-	private static final long serialVersionUID = -672036643;
+	private static final long serialVersionUID = 969726003;
 
 	private java.lang.Integer    id;
 	private java.lang.Integer    bookId;
 	private java.lang.String     bookStoreName;
 	private java.sql.Date        soldAt;
 	private java.math.BigDecimal soldFor;
+
+	public TBookSale() {}
+
+	public TBookSale(
+		java.lang.Integer    id,
+		java.lang.Integer    bookId,
+		java.lang.String     bookStoreName,
+		java.sql.Date        soldAt,
+		java.math.BigDecimal soldFor
+	) {
+		this.id = id;
+		this.bookId = bookId;
+		this.bookStoreName = bookStoreName;
+		this.soldAt = soldAt;
+		this.soldFor = soldFor;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

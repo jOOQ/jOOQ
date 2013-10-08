@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 1902552759;
+	private static final long serialVersionUID = -1075338148;
 
 	/**
 	 * The singleton instance of <code>TEST.T_TRIGGERS</code>
@@ -44,5 +44,21 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.
 	 */
 	private TTriggers() {
 		super("T_TRIGGERS", org.jooq.test.jdbcoracle.generatedclasses.test.Test.TEST);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TTriggersRecord> getPrimaryKey() {
+		return org.jooq.test.jdbcoracle.generatedclasses.test.Keys.PK_T_TRIGGERS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TTriggersRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TTriggersRecord>>asList(org.jooq.test.jdbcoracle.generatedclasses.test.Keys.PK_T_TRIGGERS);
 	}
 }

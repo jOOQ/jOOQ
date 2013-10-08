@@ -32,7 +32,7 @@ function manualHeader($isSingle, $forVersion) {
 
         <meta name="description" content="jOOQ, a fluent API for typesafe SQL query construction and execution."/>
         <meta name="author" content="Lukas Eder"/>
-        <meta name="keywords" content="jOOQ, JDBC, database abstraction, source code generation, SQL, stored procedures, stored functions, UDT, UDF, typesafe, fluentAPI, fluent API, jOOQL"/>
+        <meta name="keywords" content="jOOQ, JDBC, SQL Builder, Java SQL, SQL Java, database abstraction, source code generation, SQL, stored procedures, stored functions, UDT, UDF, typesafe, fluentAPI, fluent API, jOOQL"/>
 
         <link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
@@ -229,7 +229,7 @@ function manualHeader($isSingle, $forVersion) {
                     <img src="<?=$root?>/img/social-su.png" width="37" height="27" alt="Share jOOQ on StumbleUpon" title="Share jOOQ on StumbleUpon"/></a>
             </div>
             <div class="tweet-item">
-                <a href="http://twitter.com/share?text=%23jOOQ,+the+best+way+to+write+%23SQL+in+%23Java" target="_blank">
+                <a href="http://twitter.com/share?text=%23jOOQ,+the+best+way+to+write+%23SQL+in+%23Java+via+@JavaOOQ" target="_blank">
                     <img src="<?=$root?>/img/social-tw.png" width="37" height="27" alt="Share jOOQ on Twitter" title="Share jOOQ on Twitter"/></a>
             </div>
             <div class="tweet-item">
@@ -237,8 +237,8 @@ function manualHeader($isSingle, $forVersion) {
                     <img src="<?=$root?>/img/social-in.png" width="37" height="27" alt="Share jOOQ on LinkedIn" title="Share jOOQ on LinkedIn"/></a>
             </div>
             <div class="tweet-item">
-                <a href="http://www.facebook.com/sharer.php?u=http://www.jooq.org" target="_blank">
-                    <img src="<?=$root?>/img/social-fb.png" width="37" height="27" alt="Share jOOQ on Facebook" title="Share jOOQ on Facebook"/></a>
+                <a href="https://www.facebook.com/pages/JOOQ/215855665237534" target="_blank">
+                    <img src="<?=$root?>/img/social-fb.png" width="37" height="27" alt="Follow jOOQ on Facebook" title="Follow jOOQ on Facebook"/></a>
             </div>
             <div class="tweet-item">
                 <a id="newsletterbutton" href="#">

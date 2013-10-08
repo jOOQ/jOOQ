@@ -10,54 +10,77 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 3.2.0-alpha-01 - August 26, 2013
+Version 3.2.0 - October 9, 2013
 ================================================================================
 
-** This is a preview for the upcoming jOOQ 3.2.0 release, which is due for late
-September 2013. Beware that the new SPI might still be undergoing minor changes
+With the new jOOQ 3.2, apart from introducing great new features, we are 
+changing quite a few things on how we operate. At Data Geekery GmbH, we believe
+in Open Source. But we also believe in the creative power enabled by commercial
+software. This is why we have chosen to implement a dual-licensing strategy.
+Read more about this strategy here:
 
-This release mainly features two new SPI elements, which allow jOOQ users to
-take even more control of their jOOQ experience. A new rendering SPI called 
-VisitListener has been introduced, allowing for listening to arbitrary types of
-SQL rendering events and for interacting with jOOQ's SQL renderer in order to
-perform SQL transformation. An example of such transformation is given here:
-https://github.com/jOOQ/jOOQ/blob/master/jOOQ-test/src/org/jooq/test/_/testcases/VisitListenerTests.java
+http://blog.jooq.org/2013/11/10/jooq-3-2-offering-commercial-licensing-and-support
 
-The above example adds custom "security" predicates to SELECT, UPDATE, DELETE
-statements, restricting access to parts of data. It even transforms INSERT
-statements adding a CHECK option to prevent "invalid" data insertion. Such SQL
-transformation can also be used to implement shared-schema multi-tenancy. More
-examples will follow in the manual when 3.2.0 is released.
+But jOOQ 3.2 also ships with great new features! They include:
 
-The other SPI is called RecordListener and it allows for hooking into a Record's
-CRUD lifecycle, possibly modifying records prior to INSERTs, UPDATEs, DELETEs,
-etc. An example use-case is the central generation of IDs (e.g. UUIDs) for all
-records thus created.
+A new RecordListener SPI which can be hooked into the Configuration in order to
+control ActiveRecord lifecycle events. This is very useful if you want to
+initialise some database records prior to inserting new data, or if you want to
+implement a central ID generation strategy, e.g. by generating Java UUIDs.
+
+A new, experimental VisitListener SPI which can be hooked into the Configuration
+in order to control jOOQ's complete QueryPart rendering and variable binding
+lifecycle. Use this powerful SPI to perform custom SQL transformation, e.g. to
+implement shared-schema multi-tenancy, or a security layer centrally preventing
+access to certain data.
+
+With this release, the Oracle and DB2 SQL dialect families will now be able to
+distinguish Oracle 10g, 11g, 12c features, as well as DB2 9.x, 10.x features.
+This is important as more and more databases start supporting the SQL standard
+OFFSET .. FETCH clause and other clauses that are emulated by jOOQ.
+
+The code generator has experienced a lot of improvements, mainly including a new
+MatcherStrategy, which can be configured through Maven or XML code generator
+configurations. This generator strategy will allow you to implement several
+regular-expression based naming pattern replacements for all sorts of generated
+artefacts. This is extremely useful to generate table, record, pojo class name
+prefixes, suffixes in particular, or to just completely redesign the way the
+jOOQ code generator generates things.
 
 Features and improvements
 -------------------------
+#674  - Add <fluentSetters/> code generation flag to let generated setters
+        return this
+#996  - Add support for various Postgres ARRAY operations
 #1079 - Add support for Oracle's FLASHBACK QUERY clause
+#1171 - Add a MatcherStrategy GeneratorStrategy to allow for configurative regex
+        pattern matching and replacement
+#1644 - Add DSL.dual() to explicitly create a DUAL table that works with any
+        dialect
 #1903 - Duplicate Query construction API between DSLContext and DSL
 #2010 - Add listener API to Record / UpdatableRecord
-#2542 - Add an org.jooq.Keyword type and DSL.keyword(String) to construct it
+#2352 - Enhance <ForcedType/> to allow for forcing a type upon all columns / 
+        parameters / attributes of a given data type
+#2542 - Add a Keyword type and DSL.keyword(String) to construct it
 #2593 - Add Meta.getPrimaryKeys()
 #2594 - Add primary key and foreign key navigation support in JDBCDatabase
 #2595 - Add implicit conversions from Scala functions to RecordMapper
 #2603 - Add <includeExcludeColumns/> flag to code generation configuration to
         indicate that <includes/> and <excludes/> shall also match column names
-#2606 - Distinguish Oracle10g, Oracle11g, Oracle12c SQLDialects within the
+#2606 - Distinguish ORACLE10G, ORACLE11G, ORACLE12C SQLDialects within the 
         ORACLE family
 #2618 - Document the fact that different packages are generated for different
         schemas
-#2619 - Add an example ExecuteListener to the manual, showing how UPDATE and
+#2619 - Add an example ExecuteListener to the manual, showing how UPDATE and 
         DELETE statements without WHERE clause can be aborted
 #2630 - Add DSL.queryPart(String, Object...) and similar methods to create
         simple plain SQL query parts
+#2652 - Change tutorial to use the common AUTHOR table, instead of POSTS
 #2660 - Add some documentation about jOOQ not supporting operator precedence
-#2665 - Implement SPI for RenderContext listening to allow for custom SQL 
+#2665 - Implement SPI for RenderContext listening to allow for custom SQL
         transformation
-#2666 - Pull up RenderContext.sql(QueryPart) and BindContext.bind(QueryPart)
-        to Context.visit(QueryPart)
+#2666 - Pull up RenderContext.sql(QueryPart) and BindContext.bind(QueryPart) to
+        Context.visit(QueryPart)
 #2667 - Add org.jooq.Clause and let org.jooq.Context listen on start(Clause) and
         end(Clause) events
 #2676 - Add QueryPartInternal.clause() to allow for QueryParts to return Clause
@@ -71,33 +94,83 @@ Features and improvements
 #2702 - Add DataType.defaulted() and DataType.nullable()
 #2706 - Generate "full" constructors in records, allowing to construct a record
         with all values set
+#2713 - Add support for custom code sections in generated code
+#2722 - Add DSLContext.newRecord(Field<?>...) to support the creation of custom
+        record types
+#2723 - Add example VisitListener implementation that prevents UPDATE, DELETE
+        statement execution without explicit WHERE clause
+#2724 - The default logger should log the number of affected records, if
+        applicable
+#2725 - Add ExecuteContext.rows() to indicate the number of affected rows in the
+        last executed statement
+#2726 - Add Attachable.detach()
+#2729 - Emulate IS DISTINCT FROM through IS / IS NOT in SQLite
+#2733 - Add the default log4j.xml configuration file to the maven plugin
+#2745 - Generate default constructor and "assignment-constructor" in POJOs
+#2757 - Add support for DB2 10.5
+#2764 - Let CRUD operations be able to perform UPDATEs on primary keys
+#2765 - Add support for a database-agnostic GENERATE_SERIES(FROM, TO) table
+        function
 
 API changes (backwards-compatible)
 ----------------------------------
 #2581 - Deprecate fetchLater() and FutureResult<R>
-#2662 - Deprecate the internal method DSLContext.bind(QueryPart, 
-        PreparedStatement)
+#2662 - Deprecate the internal method 
+        DSLContext.bind(QueryPart, PreparedStatement)
+#2719 - Change various method(Collection<SortField<?>>) into 
+        method(Collection<? extends SortField<?>>)
 
 Bug fixes
 ---------
+#1908 - Compilation error in generated code when a MySQL procedure and function
+        share the same name and signature
+#2534 - Correctly handle Oracle BLOB and CLOB data types, when fetched through
+        plain SQL
+#2580 - Bad SQL rendered when combining DISTINCT with LIMIT .. OFFSET in DB2,
+        SQL Server
+#2584 - ORA-00904: "SYS"."ALL_PROCEDURES"."OBJECT_TYPE": invalid identifier when 
+        running code generation with Oracle 10gR1
 #2586 - Bad SQL dialect referenced from ASE's and CUBRID's package-info.java
-#2591 - Result.intoGroups() and similar methods create key Records with
+#2591 - Result.intoGroups() and similar methods create key Records with 
         changed=true
 #2592 - Qualified names created using DSL.name(String...) should not render null
         or empty string parts
 #2596 - Scala tests don't run with Maven
+#2597 - f1.concat(f2).toString() seems to render unnecessary cast expression
 #2608 - Error in code generator when the sqlite_sequence table is missing
 #2613 - The batch INSERT query example in the manual is no longer correct with
         jOOQ 3.x
 #2624 - Wrong SQL Server 2012 detection in jOOQ-Meta
 #2628 - Add missing Javadoc to DefaultDSLContext
 #2634 - Minor documentation bug: The MockDataProvider uses toLowerCase() but
-        upper-cases SQL keywords
+        upper-case SQL keywords
+#2643 - Routine.execute(Configuration) should restore the original routine state
+        after execution
+#2681 - "Type NULL is not supported in dialect MYSQL" when calling 
+        Meta.getTables() with MySQL or MariaDB JDBC drivers
 #2690 - Inaccurate runtime xsd versions in 3.1 manual
 #2703 - SQLDialect.getNameLC() and getNameUC() are not NPE-safe
 #2707 - PostgreSQL ENUM ordering is inconsistent with the database
 #2708 - Wrong SQL rendered for CAST(x AS DECIMAL(y, z)). Precision and scale are
-        lost
+        lost.
+#2712 - Field.equalIgnoreCase(String) method broken for SQL Server
+#2714 - Documentation bug in INSERT statements. Cannot combine Field<?> with
+        String arguments in VALUES() clause
+#2717 - DefaultResultSet compile-time depends on Java 1.7 / JDBC 4.1
+#2718 - NullPointerException in code generator when a primary key (or foreign
+        key) column is excluded from code generation
+#2720 - Fix the manual's claim that <includes/> accepts comma-separated regular
+        expressions
+#2730 - Immutable Pojo+Interface code generation produces uncompilable pojo
+#2736 - Improve code generator compatibility with PostgreSQL 8.x by testing if
+        pg_catalog.pg_enum and information_schema.attributes exist
+#2753 - DATE_DIFF() with CURRENT_DATE() returns wrong precision in Oracle
+#2755 - Incomplete @Support annotations on OrderedAggregateFunction methods
+#2758 - Duplicate primary key column references generated for DB2
+#2759 - DSLContext.fetchCount() fails when argument SELECT statement does not
+        explicitly provide column names in SQL Server
+#2760 - org.jooq.Meta should treat MySQL databases as Schema, not as Catalog
+#2766 - Javadoc typo on DSLContext.batchDelete()
 
 Version 3.1.0 - June 30, 2013
 ================================================================================
@@ -111,8 +184,7 @@ SQL Server 2012 is another SQL dialect that is now officially supported in jOOQ,
 allowing to make use of the newly supported ROWS UNBOUNDED PRECEDING and similar
 windowing clauses, as well as the long awaited OFFSET .. FETCH clause. From now
 on, jOOQ SQLDialect.family() allows to define a super-set of SQL dialects by the
-same vendors with only subtle differences. SQL Server users be careful to choose
-the right dialect!
+same vendors with only subtle differences.
 
 POJO mapping is taken to the next level. jOOQ opened up its internal
 DefaultRecordMapper providing useful Record to POJO mapping algorithms. But your
@@ -562,7 +634,7 @@ Features and improvements
 #1583 - Add support for row value expressions in UPDATE statements: UPDATE ..
         SET (A, B, C) = (SELECT X, Y, Z)
 #1624 - Add support for java.util.UUID as a <T> type
-#1663 -	Document RenderContext and make it part of the public API
+#1663 - Document RenderContext and make it part of the public API
 #1686 - Add UpdatableRecord.insert() and update()
 #1689 - Generate <E> E into(E) and <E> R from(E) methods to generated records
 #1690 - Add UpdatableRecord.key() returning a Record holding PK values

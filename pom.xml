@@ -30,13 +30,13 @@
             <url>http://www.jooq.org/inc/LICENSE.txt</url>
             <distribution>repo</distribution>
         </license>
-        <!-- [com] -->
-        <license>
-            <name>jOOQ License and Maintenance Agreement</name>
-            <url>http://www.jooq.org/eula</url>
-            <distribution>repo</distribution>
-        </license>
-        <!-- [/com] -->
+        <!-- [pro] xxx
+        xxxxxxxxx
+            xxxxxxxxxx xxxxxxx xxx xxxxxxxxxxx xxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxx
+        xxxx [/pro] -->
     </licenses>
 
     <scm>
@@ -53,7 +53,7 @@
     <developers>
         <developer>
             <name>Lukas Eder</name>
-            <email>lukas.eder@gmail.com</email>
+            <email>lukas.eder@datageekery.com</email>
             <roles>
                 <role>architect</role>
                 <role>developer</role>
@@ -149,10 +149,6 @@
         <module>jOOQ-scala</module>
     </modules>
 
-    <properties>
-        <version.gradle>1.6</version.gradle>
-    </properties>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -170,13 +166,6 @@
                 <artifactId>jooq-codegen-maven</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <!--
-            <dependency>
-                <groupId>org.jooq</groupId>
-                <artifactId>jooq-codegen-gradle</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            -->
             <dependency>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-meta</artifactId>
@@ -190,34 +179,6 @@
         </dependencies>
     </dependencyManagement>
 
-	<!--
-	  These additions were introduced with #2711, #2287 by Ben Manes
-	  Sonatype strongly recommends not to reference any third-party
-	  Maven repositories from artefact published to Maven Central.
-	  
-	  There must be another way to solve these issues:
-    <repositories>
-        <repository>
-            <id>maven-central</id>
-            <url>http://repo1.maven.org/maven2</url>
-        </repository>
-        <repository>
-            <id>gradle</id>
-            <url>http://repo.gradle.org/gradle/libs-releases-local</url>
-            <snapshots>
-              <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>gradle-workaround</id>
-            <url>http://flywaydb.org/repo</url>
-            <snapshots>
-              <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-	-->
-	
     <build>
         <defaultGoal>deploy</defaultGoal>
         <finalName>${project.artifactId}-${project.version}</finalName>
@@ -305,12 +266,8 @@
     </build>
 
     <profiles>
-        <!-- The release profile is used only for releasing jOOQ to
-             the Sonatype Maven repository or to Maven central
-             lengthy or annoying operations for everyday use by users
-             building jOOQ themselves are put here -->
         <profile>
-            <id>release</id>
+            <id>release-oss</id>
             <build>
                 <plugins>
                     <plugin>
@@ -346,26 +303,56 @@
                             <encoding>UTF-8</encoding>
                             <show>protected</show>
                             <notree>true</notree>
-                            <header>
-                            <![CDATA[
-                                <script type="text/javascript">
-                                  var _gaq = _gaq || [];
-                                  _gaq.push(['_setAccount', 'UA-30716479-1']);
-                                  _gaq.push(['_trackPageview']);
-                        
-                                  (function() {
-                                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-                                  })();
-                                </script>
-                            ]]>
-                            </header>
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
         </profile>
+        
+        <!-- [pro] xxx
+        xxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxx
+            xxxxxxx
+                xxxxxxxxx
+                    xxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxx
+                            xxxxxxxxxxx
+                                xxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxx
+                                    xxxxxxxxxxxxxxxx
+                                xxxxxxxx
+                            xxxxxxxxxxxx
+                        xxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxx
+                            xxxxxxxxx
+                                xxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+                                  xxx xxxx x xxxx xx xxx
+                                  xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+                                  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        
+                                  xxxxxxxxxxx x
+                                    xxx xx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x xxxxxxxxxxxxxxxxxx xxxxxxxx x xxxxx
+                                    xxxxxx x xxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxx x xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                    xxx x x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
+                                  xxxxx
+                                xxxxxxxxx
+                            xxx
+                            xxxxxxxxx
+                        xxxxxxxxxxxxxxxx
+                    xxxxxxxxx
+                xxxxxxxxxx
+            xxxxxxxx
+        xxxxxxxxxx
+        xxxx [/pro] -->
     </profiles>
-
 </project>

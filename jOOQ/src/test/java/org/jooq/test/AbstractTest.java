@@ -51,7 +51,10 @@ import java.sql.PreparedStatement;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+import junit.framework.Assert;
+
 import org.jooq.BindContext;
+import org.jooq.Constants;
 import org.jooq.DSLContext;
 import org.jooq.RenderContext;
 import org.jooq.Result;
@@ -180,5 +183,25 @@ public abstract class AbstractTest {
 
     protected final String zeroTimestamp() {
         return new Timestamp(0).toString();
+    }
+
+    protected static void assertEquals(int expected, int actual) {
+        Assert.assertEquals(expected, actual);
+    }
+
+    protected static void assertEquals(Object expected, Object actual) {
+        if (actual instanceof String) {
+            actual = ((String) actual).replace(" -- SQL rendered with a free trial version of jOOQ " + Constants.FULL_VERSION, "");
+        }
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    protected static void assertEquals(String message, Object expected, Object actual) {
+        if (actual instanceof String) {
+            actual = ((String) actual).replace(" -- SQL rendered with a free trial version of jOOQ " + Constants.FULL_VERSION, "");
+        }
+
+        Assert.assertEquals(message, expected, actual);
     }
 }

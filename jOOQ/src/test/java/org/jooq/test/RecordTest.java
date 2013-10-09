@@ -41,7 +41,6 @@
 
 package org.jooq.test;
 
-import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 
 import org.jooq.test.data.Table1;

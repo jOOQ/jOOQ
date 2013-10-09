@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 1798906023;
+	private static final long serialVersionUID = 866653643;
 
 	/**
 	 * Setter for <code>t_directory.id</code>. 
@@ -172,5 +172,17 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	public TDirectoryRecord() {
 		super(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.T_DIRECTORY);
+	}
+
+	/**
+	 * Create a detached, initialised TDirectoryRecord
+	 */
+	public TDirectoryRecord(java.lang.Integer id, java.lang.Integer parentId, java.lang.Integer isDirectory, java.lang.String name) {
+		super(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.T_DIRECTORY);
+
+		setValue(0, id);
+		setValue(1, parentId);
+		setValue(2, isDirectory);
+		setValue(3, name);
 	}
 }

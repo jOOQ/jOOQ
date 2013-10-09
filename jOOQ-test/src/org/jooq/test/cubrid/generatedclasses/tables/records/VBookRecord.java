@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.cubrid.generatedclasses.enums.VBookStatus> {
 
-	private static final long serialVersionUID = 1862538472;
+	private static final long serialVersionUID = 953564902;
 
 	/**
 	 * Setter for <code>v_book.id</code>. 
@@ -340,5 +340,23 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.cub
 	 */
 	public VBookRecord() {
 		super(org.jooq.test.cubrid.generatedclasses.tables.VBook.V_BOOK);
+	}
+
+	/**
+	 * Create a detached, initialised VBookRecord
+	 */
+	public VBookRecord(java.lang.Integer id, java.lang.Integer authorId, java.lang.Integer coAuthorId, java.lang.Integer detailsId, java.lang.String title, java.lang.Integer publishedIn, java.lang.Integer languageId, java.lang.String contentText, byte[] contentPdf, org.jooq.test.cubrid.generatedclasses.enums.VBookStatus status) {
+		super(org.jooq.test.cubrid.generatedclasses.tables.VBook.V_BOOK);
+
+		setValue(0, id);
+		setValue(1, authorId);
+		setValue(2, coAuthorId);
+		setValue(3, detailsId);
+		setValue(4, title);
+		setValue(5, publishedIn);
+		setValue(6, languageId);
+		setValue(7, contentText);
+		setValue(8, contentPdf);
+		setValue(9, status);
 	}
 }

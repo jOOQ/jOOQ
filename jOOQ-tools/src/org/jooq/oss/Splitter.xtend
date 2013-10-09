@@ -101,15 +101,17 @@ class Splitter extends Generators {
                 && !path.canonicalPath.contains("jOOQ-website")
                 && !path.canonicalPath.contains("jOOQ-websites")
                 && !path.canonicalPath.contains("jOOQ-webservices")
-                && !path.canonicalPath.contains("\\access")
-                && !path.canonicalPath.contains("\\ase")
-                && !path.canonicalPath.contains("\\db2")
-                && !path.canonicalPath.contains("\\ingres")
-                && !path.canonicalPath.contains("\\oracle")
-                && !path.canonicalPath.contains("\\sqlserver")
-                && !path.canonicalPath.contains("\\sybase")
-                && !path.canonicalPath.contains("\\target")
-                && !path.canonicalPath.contains("\\bin")
+                && !path.canonicalPath.contains("\\target\\")
+                && !path.canonicalPath.contains("\\bin\\")
+                && (token.equals("trial") || (
+                       !path.canonicalPath.contains("\\access")
+                    && !path.canonicalPath.contains("\\ase")
+                    && !path.canonicalPath.contains("\\db2")
+                    && !path.canonicalPath.contains("\\ingres")
+                    && !path.canonicalPath.contains("\\oracle")
+                    && !path.canonicalPath.contains("\\sqlserver")
+                    && !path.canonicalPath.contains("\\sybase")
+                ))
             ];
 
             for (file : files) {
@@ -177,7 +179,7 @@ For more information, please visit: http://www.jooq.org/licenses''');
     new(String token) {
         this.token = token;
         
-        if (token == "pro") {
+        if (token.equals("pro")) {
             
             // Replace a couple of imports
             replaceFirst.add(new ImmutablePair(compile('''import (org\.jooq\.(ArrayConstant|ArrayRecord|VersionsBetweenAndStep|impl\.ArrayRecordImpl|impl\.FlashbackTable.*?)|(com.microsoft.*?));'''), "// ..."));

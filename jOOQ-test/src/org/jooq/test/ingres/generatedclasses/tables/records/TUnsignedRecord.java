@@ -9,7 +9,7 @@ package org.jooq.test.ingres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ingres.generatedclasses.tables.records.TUnsignedRecord> implements org.jooq.Record4<org.jooq.types.UByte, org.jooq.types.UShort, org.jooq.types.UInteger, org.jooq.types.ULong> {
 
-	private static final long serialVersionUID = -990884897;
+	private static final long serialVersionUID = 1562774029;
 
 	/**
 	 * Setter for <code>test.t_unsigned.u_byte</code>. 
@@ -160,5 +160,17 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 */
 	public TUnsignedRecord() {
 		super(org.jooq.test.ingres.generatedclasses.tables.TUnsigned.T_UNSIGNED);
+	}
+
+	/**
+	 * Create a detached, initialised TUnsignedRecord
+	 */
+	public TUnsignedRecord(org.jooq.types.UByte uByte, org.jooq.types.UShort uShort, org.jooq.types.UInteger uInt, org.jooq.types.ULong uLong) {
+		super(org.jooq.test.ingres.generatedclasses.tables.TUnsigned.T_UNSIGNED);
+
+		setValue(0, uByte);
+		setValue(1, uShort);
+		setValue(2, uInt);
+		setValue(3, uLong);
 	}
 }

@@ -19,7 +19,7 @@ in Open Source. But we also believe in the creative power enabled by commercial
 software. This is why we have chosen to implement a dual-licensing strategy.
 Read more about this strategy here:
 
-http://blog.jooq.org/2013/11/10/jooq-3-2-offering-commercial-licensing-and-support
+http://blog.jooq.org/2013/10/09/jooq-3-2-offering-commercial-licensing-and-support
 
 But jOOQ 3.2 also ships with great new features! They include:
 

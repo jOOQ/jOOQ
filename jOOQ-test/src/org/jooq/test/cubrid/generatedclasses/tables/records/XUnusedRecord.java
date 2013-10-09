@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record14<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 2089162109;
+	private static final long serialVersionUID = 171221858;
 
 	/**
 	 * Setter for <code>x_unused.id</code>. 
@@ -472,5 +472,27 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	public XUnusedRecord() {
 		super(org.jooq.test.cubrid.generatedclasses.tables.XUnused.X_UNUSED);
+	}
+
+	/**
+	 * Create a detached, initialised XUnusedRecord
+	 */
+	public XUnusedRecord(java.lang.Integer id, java.lang.String name, java.math.BigInteger bigInteger, java.lang.Integer idRef, java.lang.String nameRef, java.lang.Integer class_, java.lang.Integer fields, java.lang.Integer configuration, java.lang.Integer uDT, java.lang.Integer metaData, java.lang.Integer type0, java.lang.Integer primaryKey, java.lang.Integer primarykey, java.math.BigDecimal field_737) {
+		super(org.jooq.test.cubrid.generatedclasses.tables.XUnused.X_UNUSED);
+
+		setValue(0, id);
+		setValue(1, name);
+		setValue(2, bigInteger);
+		setValue(3, idRef);
+		setValue(4, nameRef);
+		setValue(5, class_);
+		setValue(6, fields);
+		setValue(7, configuration);
+		setValue(8, uDT);
+		setValue(9, metaData);
+		setValue(10, type0);
+		setValue(11, primaryKey);
+		setValue(12, primarykey);
+		setValue(13, field_737);
 	}
 }

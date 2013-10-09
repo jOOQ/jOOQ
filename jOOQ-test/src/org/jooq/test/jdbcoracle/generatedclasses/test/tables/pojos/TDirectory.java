@@ -9,12 +9,26 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDirectory implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.ITDirectory {
 
-	private static final long serialVersionUID = 858893099;
+	private static final long serialVersionUID = -1959517670;
 
 	private java.lang.Integer id;
 	private java.lang.Integer parentId;
 	private java.lang.Integer isDirectory;
 	private java.lang.String  name;
+
+	public TDirectory() {}
+
+	public TDirectory(
+		java.lang.Integer id,
+		java.lang.Integer parentId,
+		java.lang.Integer isDirectory,
+		java.lang.String  name
+	) {
+		this.id = id;
+		this.parentId = parentId;
+		this.isDirectory = isDirectory;
+		this.name = name;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

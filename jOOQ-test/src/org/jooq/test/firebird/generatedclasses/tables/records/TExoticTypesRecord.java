@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_EXOTIC_TYPES")
 public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TExoticTypesRecord> implements org.jooq.Record2<java.lang.Integer, java.util.UUID>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITExoticTypes {
 
-	private static final long serialVersionUID = 2081749720;
+	private static final long serialVersionUID = -713421848;
 
 	/**
 	 * Setter for <code>T_EXOTIC_TYPES.ID</code>. 
@@ -144,5 +144,15 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	public TExoticTypesRecord() {
 		super(org.jooq.test.firebird.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES);
+	}
+
+	/**
+	 * Create a detached, initialised TExoticTypesRecord
+	 */
+	public TExoticTypesRecord(java.lang.Integer id, java.util.UUID uu) {
+		super(org.jooq.test.firebird.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES);
+
+		setValue(0, id);
+		setValue(1, uu);
 	}
 }

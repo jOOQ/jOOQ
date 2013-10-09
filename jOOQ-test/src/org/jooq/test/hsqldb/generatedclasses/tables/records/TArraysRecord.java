@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.String[], java.lang.Integer[], java.sql.Date[]>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITArrays {
 
-	private static final long serialVersionUID = -319949754;
+	private static final long serialVersionUID = 436399753;
 
 	/**
 	 * Setter for <code>PUBLIC.T_ARRAYS.ID</code>. 
@@ -204,5 +204,17 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	public TArraysRecord() {
 		super(org.jooq.test.hsqldb.generatedclasses.tables.TArrays.T_ARRAYS);
+	}
+
+	/**
+	 * Create a detached, initialised TArraysRecord
+	 */
+	public TArraysRecord(java.lang.Integer id, java.lang.String[] stringArray, java.lang.Integer[] numberArray, java.sql.Date[] dateArray) {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.TArrays.T_ARRAYS);
+
+		setValue(0, id);
+		setValue(1, stringArray);
+		setValue(2, numberArray);
+		setValue(3, dateArray);
 	}
 }

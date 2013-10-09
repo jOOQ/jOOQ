@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = 684128552;
+	private static final long serialVersionUID = -2064262640;
 
 	private java.lang.Integer    id;
 	private java.lang.String     name;
@@ -27,6 +27,44 @@ public class XUnused implements org.jooq.test.jdbcoracle.generatedclasses.test.t
 	private java.math.BigDecimal field_737;
 	private java.lang.Integer    msUnusedIdRef;
 	private java.lang.String     msUnusedNameRef;
+
+	public XUnused() {}
+
+	public XUnused(
+		java.lang.Integer    id,
+		java.lang.String     name,
+		java.math.BigInteger bigInteger,
+		java.lang.Integer    idRef,
+		java.lang.Integer    class_,
+		java.lang.Integer    fields,
+		java.lang.Integer    configuration,
+		java.lang.Integer    uDT,
+		java.lang.Integer    metaData,
+		java.lang.Integer    type0,
+		java.lang.Integer    primaryKey,
+		java.lang.Integer    primarykey,
+		java.lang.String     nameRef,
+		java.math.BigDecimal field_737,
+		java.lang.Integer    msUnusedIdRef,
+		java.lang.String     msUnusedNameRef
+	) {
+		this.id = id;
+		this.name = name;
+		this.bigInteger = bigInteger;
+		this.idRef = idRef;
+		this.class_ = class_;
+		this.fields = fields;
+		this.configuration = configuration;
+		this.uDT = uDT;
+		this.metaData = metaData;
+		this.type0 = type0;
+		this.primaryKey = primaryKey;
+		this.primarykey = primarykey;
+		this.nameRef = nameRef;
+		this.field_737 = field_737;
+		this.msUnusedIdRef = msUnusedIdRef;
+		this.msUnusedNameRef = msUnusedNameRef;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

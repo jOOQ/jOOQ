@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook implements org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = 870547964;
+	private static final long serialVersionUID = 1405190435;
 
 	private java.lang.Integer id;
 	private java.lang.Integer authorId;
@@ -20,6 +20,30 @@ public class TBook implements org.jooq.test.jdbcoracle.generatedclasses.multi_sc
 	private java.lang.Integer languageId;
 	private java.lang.String  contentText;
 	private byte[]            contentPdf;
+
+	public TBook() {}
+
+	public TBook(
+		java.lang.Integer id,
+		java.lang.Integer authorId,
+		java.lang.Integer coAuthorId,
+		java.lang.Integer detailsId,
+		java.lang.String  title,
+		java.lang.Integer publishedIn,
+		java.lang.Integer languageId,
+		java.lang.String  contentText,
+		byte[]            contentPdf
+	) {
+		this.id = id;
+		this.authorId = authorId;
+		this.coAuthorId = coAuthorId;
+		this.detailsId = detailsId;
+		this.title = title;
+		this.publishedIn = publishedIn;
+		this.languageId = languageId;
+		this.contentText = contentText;
+		this.contentPdf = contentPdf;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

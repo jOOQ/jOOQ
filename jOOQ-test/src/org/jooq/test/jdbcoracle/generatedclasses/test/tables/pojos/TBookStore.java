@@ -9,9 +9,17 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.ITBookStore {
 
-	private static final long serialVersionUID = -729289759;
+	private static final long serialVersionUID = 963578851;
 
 	private java.lang.String name;
+
+	public TBookStore() {}
+
+	public TBookStore(
+		java.lang.String name
+	) {
+		this.name = name;
+	}
 
 	@Override
 	public java.lang.String getName() {

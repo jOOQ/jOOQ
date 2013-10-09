@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDirectory extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TDirectoryRecord> {
 
-	private static final long serialVersionUID = -2114666759;
+	private static final long serialVersionUID = -1379145968;
 
 	/**
 	 * The singleton instance of <code>TEST.T_DIRECTORY</code>
@@ -49,5 +49,21 @@ public class TDirectory extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle
 	 */
 	private TDirectory() {
 		super("T_DIRECTORY", org.jooq.test.jdbcoracle.generatedclasses.test.Test.TEST);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TDirectoryRecord> getPrimaryKey() {
+		return org.jooq.test.jdbcoracle.generatedclasses.test.Keys.PK_T_DIRECTORY;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TDirectoryRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TDirectoryRecord>>asList(org.jooq.test.jdbcoracle.generatedclasses.test.Keys.PK_T_DIRECTORY);
 	}
 }

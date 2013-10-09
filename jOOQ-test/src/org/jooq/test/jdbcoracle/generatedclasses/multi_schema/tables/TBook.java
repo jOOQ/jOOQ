@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 311837544;
+	private static final long serialVersionUID = 469855274;
 
 	/**
 	 * The singleton instance of <code>MULTI_SCHEMA.T_BOOK</code>
@@ -74,5 +74,21 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.gene
 	 */
 	private TBook() {
 		super("T_BOOK", org.jooq.test.jdbcoracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord> getPrimaryKey() {
+		return org.jooq.test.jdbcoracle.generatedclasses.multi_schema.Keys.PK_T_BOOK;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord>>asList(org.jooq.test.jdbcoracle.generatedclasses.multi_schema.Keys.PK_T_BOOK);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record8<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long, org.jooq.types.YearToMonth, org.jooq.types.DayToSecond>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITDates {
 
-	private static final long serialVersionUID = 1364664004;
+	private static final long serialVersionUID = 1042613122;
 
 	/**
 	 * Setter for <code>PUBLIC.T_DATES.ID</code>. 
@@ -336,5 +336,21 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	public TDatesRecord() {
 		super(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES);
+	}
+
+	/**
+	 * Create a detached, initialised TDatesRecord
+	 */
+	public TDatesRecord(java.lang.Integer id, java.sql.Date d, java.sql.Time t, java.sql.Timestamp ts, java.lang.Integer dInt, java.lang.Long tsBigint, org.jooq.types.YearToMonth iY, org.jooq.types.DayToSecond iD) {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES);
+
+		setValue(0, id);
+		setValue(1, d);
+		setValue(2, t);
+		setValue(3, ts);
+		setValue(4, dInt);
+		setValue(5, tsBigint);
+		setValue(6, iY);
+		setValue(7, iD);
 	}
 }

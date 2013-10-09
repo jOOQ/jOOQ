@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = 590221897;
+	private static final long serialVersionUID = 1454657321;
 
 	/**
 	 * The singleton instance of <code>TEST.T_ARRAYS</code>
@@ -54,5 +54,21 @@ public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.ge
 	 */
 	private TArrays() {
 		super("T_ARRAYS", org.jooq.test.jdbcoracle.generatedclasses.test.Test.TEST);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TArraysRecord> getPrimaryKey() {
+		return org.jooq.test.jdbcoracle.generatedclasses.test.Keys.PK_T_ARRAYS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TArraysRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TArraysRecord>>asList(org.jooq.test.jdbcoracle.generatedclasses.test.Keys.PK_T_ARRAYS);
 	}
 }

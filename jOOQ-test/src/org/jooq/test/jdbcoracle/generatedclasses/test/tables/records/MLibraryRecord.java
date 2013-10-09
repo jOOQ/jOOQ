@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.MLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String>, org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IMLibrary {
 
-	private static final long serialVersionUID = 1604528922;
+	private static final long serialVersionUID = -1557229160;
 
 	/**
 	 * Setter for <code>TEST.M_LIBRARY.AUTHOR</code>. 
@@ -126,5 +126,15 @@ public class MLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 */
 	public MLibraryRecord() {
 		super(org.jooq.test.jdbcoracle.generatedclasses.test.tables.MLibrary.M_LIBRARY);
+	}
+
+	/**
+	 * Create a detached, initialised MLibraryRecord
+	 */
+	public MLibraryRecord(java.lang.String author, java.lang.String title) {
+		super(org.jooq.test.jdbcoracle.generatedclasses.test.tables.MLibrary.M_LIBRARY);
+
+		setValue(0, author);
+		setValue(1, title);
 	}
 }

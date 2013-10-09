@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.VIncompleteRecord> implements org.jooq.Record9<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object>, org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IVIncomplete {
 
-	private static final long serialVersionUID = -476457929;
+	private static final long serialVersionUID = 618951596;
 
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.ID</code>. 
@@ -357,5 +357,22 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	 */
 	public VIncompleteRecord() {
 		super(org.jooq.test.jdbcoracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE);
+	}
+
+	/**
+	 * Create a detached, initialised VIncompleteRecord
+	 */
+	public VIncompleteRecord(java.lang.Object id, java.lang.Object authorId, java.lang.Object coAuthorId, java.lang.Object detailsId, java.lang.Object title, java.lang.Object publishedIn, java.lang.Object languageId, java.lang.Object contentText, java.lang.Object contentPdf) {
+		super(org.jooq.test.jdbcoracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE);
+
+		setValue(0, id);
+		setValue(1, authorId);
+		setValue(2, coAuthorId);
+		setValue(3, detailsId);
+		setValue(4, title);
+		setValue(5, publishedIn);
+		setValue(6, languageId);
+		setValue(7, contentText);
+		setValue(8, contentPdf);
 	}
 }

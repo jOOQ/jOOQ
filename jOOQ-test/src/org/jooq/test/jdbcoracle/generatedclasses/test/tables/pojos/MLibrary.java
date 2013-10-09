@@ -9,10 +9,20 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MLibrary implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IMLibrary {
 
-	private static final long serialVersionUID = -557858383;
+	private static final long serialVersionUID = -392429300;
 
 	private java.lang.String author;
 	private java.lang.String title;
+
+	public MLibrary() {}
+
+	public MLibrary(
+		java.lang.String author,
+		java.lang.String title
+	) {
+		this.author = author;
+		this.title = title;
+	}
 
 	@Override
 	public java.lang.String getAuthor() {

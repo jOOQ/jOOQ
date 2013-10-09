@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SystemRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.SystemRecord> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ISystem {
 
-	private static final long serialVersionUID = 953946888;
+	private static final long serialVersionUID = 1485684532;
 
 	/**
 	 * Setter for <code>PUBLIC.SYSTEM.ID</code>. 
@@ -93,5 +93,14 @@ public class SystemRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	 */
 	public SystemRecord() {
 		super(org.jooq.test.hsqldb.generatedclasses.tables.System.SYSTEM);
+	}
+
+	/**
+	 * Create a detached, initialised SystemRecord
+	 */
+	public SystemRecord(java.lang.Integer id) {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.System.SYSTEM);
+
+		setValue(0, id);
 	}
 }

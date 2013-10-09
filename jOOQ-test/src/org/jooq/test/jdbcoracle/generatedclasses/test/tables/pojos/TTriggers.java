@@ -9,11 +9,23 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.ITTriggers {
 
-	private static final long serialVersionUID = 1685841118;
+	private static final long serialVersionUID = 1709975189;
 
 	private java.lang.Integer idGenerated;
 	private java.lang.Integer id;
 	private java.lang.Integer counter;
+
+	public TTriggers() {}
+
+	public TTriggers(
+		java.lang.Integer idGenerated,
+		java.lang.Integer id,
+		java.lang.Integer counter
+	) {
+		this.idGenerated = idGenerated;
+		this.id = id;
+		this.counter = counter;
+	}
 
 	@Override
 	public java.lang.Integer getIdGenerated() {

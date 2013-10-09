@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 480765423;
+	private static final long serialVersionUID = 1945699734;
 
 	/**
 	 * The singleton instance of <code>TEST.X_TEST_CASE_64_69</code>
@@ -39,5 +39,21 @@ public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.jdbco
 	 */
 	private XTestCase_64_69() {
 		super("X_TEST_CASE_64_69", org.jooq.test.jdbcoracle.generatedclasses.test.Test.TEST);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XTestCase_64_69Record> getPrimaryKey() {
+		return org.jooq.test.jdbcoracle.generatedclasses.test.Keys.PK_X_TEST_CASE_64_69;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XTestCase_64_69Record>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XTestCase_64_69Record>>asList(org.jooq.test.jdbcoracle.generatedclasses.test.Keys.PK_X_TEST_CASE_64_69);
 	}
 }

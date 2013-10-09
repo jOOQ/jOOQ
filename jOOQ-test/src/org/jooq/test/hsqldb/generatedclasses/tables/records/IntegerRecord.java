@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class IntegerRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.IntegerRecord> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IInteger {
 
-	private static final long serialVersionUID = 1659642427;
+	private static final long serialVersionUID = 1258675659;
 
 	/**
 	 * Setter for <code>PUBLIC.INTEGER.ID</code>. 
@@ -93,5 +93,14 @@ public class IntegerRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	public IntegerRecord() {
 		super(org.jooq.test.hsqldb.generatedclasses.tables.Integer.INTEGER);
+	}
+
+	/**
+	 * Create a detached, initialised IntegerRecord
+	 */
+	public IntegerRecord(java.lang.Integer id) {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.Integer.INTEGER);
+
+		setValue(0, id);
 	}
 }

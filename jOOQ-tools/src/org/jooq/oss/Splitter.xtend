@@ -104,13 +104,14 @@ class Splitter extends Generators {
                 && !path.canonicalPath.contains("\\target\\")
                 && !path.canonicalPath.contains("\\bin\\")
                 && (token.equals("trial") || (
-                       !path.canonicalPath.contains("\\access")
-                    && !path.canonicalPath.contains("\\ase")
-                    && !path.canonicalPath.contains("\\db2")
-                    && !path.canonicalPath.contains("\\ingres")
-                    && !path.canonicalPath.contains("\\oracle")
-                    && !path.canonicalPath.contains("\\sqlserver")
-                    && !path.canonicalPath.contains("\\sybase")
+                       !path.canonicalPath.contains("\\access\\")
+                    && !path.canonicalPath.contains("\\ase\\")
+                    && !path.canonicalPath.contains("\\db2\\")
+                    && !path.canonicalPath.contains("\\ingres\\")
+                    && !path.canonicalPath.contains("\\jdbcoracle\\")
+                    && !path.canonicalPath.contains("\\oracle\\")
+                    && !path.canonicalPath.contains("\\sqlserver\\")
+                    && !path.canonicalPath.contains("\\sybase\\")
                 ))
             ];
 

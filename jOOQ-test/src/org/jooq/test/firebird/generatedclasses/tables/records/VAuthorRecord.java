@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_AUTHOR")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IVAuthor {
 
-	private static final long serialVersionUID = 1918600864;
+	private static final long serialVersionUID = 1074425055;
 
 	/**
 	 * Setter for <code>V_AUTHOR.ID</code>. 
@@ -269,5 +269,19 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.f
 	 */
 	public VAuthorRecord() {
 		super(org.jooq.test.firebird.generatedclasses.tables.VAuthor.V_AUTHOR);
+	}
+
+	/**
+	 * Create a detached, initialised VAuthorRecord
+	 */
+	public VAuthorRecord(java.lang.Integer id, java.lang.String firstName, java.lang.String lastName, java.sql.Date dateOfBirth, java.lang.Integer yearOfBirth, java.lang.String address) {
+		super(org.jooq.test.firebird.generatedclasses.tables.VAuthor.V_AUTHOR);
+
+		setValue(0, id);
+		setValue(1, firstName);
+		setValue(2, lastName);
+		setValue(3, dateOfBirth);
+		setValue(4, yearOfBirth);
+		setValue(5, address);
 	}
 }

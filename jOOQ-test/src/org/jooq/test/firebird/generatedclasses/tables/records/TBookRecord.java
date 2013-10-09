@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_BOOK")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = 1504466463;
+	private static final long serialVersionUID = -833987089;
 
 	/**
 	 * Setter for <code>T_BOOK.ID</code>. 
@@ -422,5 +422,23 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	public TBookRecord() {
 		super(org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK);
+	}
+
+	/**
+	 * Create a detached, initialised TBookRecord
+	 */
+	public TBookRecord(java.lang.Integer id, java.lang.Integer authorId, java.lang.Integer coAuthorId, java.lang.Integer detailsId, java.lang.String title, java.lang.Integer publishedIn, java.lang.Integer languageId, java.lang.String contentText, byte[] contentPdf, java.lang.Integer recVersion) {
+		super(org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK);
+
+		setValue(0, id);
+		setValue(1, authorId);
+		setValue(2, coAuthorId);
+		setValue(3, detailsId);
+		setValue(4, title);
+		setValue(5, publishedIn);
+		setValue(6, languageId);
+		setValue(7, contentText);
+		setValue(8, contentPdf);
+		setValue(9, recVersion);
 	}
 }

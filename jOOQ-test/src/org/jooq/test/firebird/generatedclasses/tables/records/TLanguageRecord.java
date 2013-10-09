@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_LANGUAGE")
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITLanguage {
 
-	private static final long serialVersionUID = 236453406;
+	private static final long serialVersionUID = -1030550584;
 
 	/**
 	 * Setter for <code>T_LANGUAGE.CD</code>. 
@@ -216,5 +216,17 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	public TLanguageRecord() {
 		super(org.jooq.test.firebird.generatedclasses.tables.TLanguage.T_LANGUAGE);
+	}
+
+	/**
+	 * Create a detached, initialised TLanguageRecord
+	 */
+	public TLanguageRecord(java.lang.String cd, java.lang.String description, java.lang.String descriptionEnglish, java.lang.Integer id) {
+		super(org.jooq.test.firebird.generatedclasses.tables.TLanguage.T_LANGUAGE);
+
+		setValue(0, cd);
+		setValue(1, description);
+		setValue(2, descriptionEnglish);
+		setValue(3, id);
 	}
 }

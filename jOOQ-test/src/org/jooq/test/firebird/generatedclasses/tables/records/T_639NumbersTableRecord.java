@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_639_NUMBERS_TABLE")
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigDecimal, java.lang.Float, java.lang.Double>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_639NumbersTable {
 
-	private static final long serialVersionUID = -832838513;
+	private static final long serialVersionUID = 593835160;
 
 	/**
 	 * Setter for <code>T_639_NUMBERS_TABLE.ID</code>. 
@@ -450,5 +450,24 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	public T_639NumbersTableRecord() {
 		super(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE);
+	}
+
+	/**
+	 * Create a detached, initialised T_639NumbersTableRecord
+	 */
+	public T_639NumbersTableRecord(java.lang.Integer id, java.lang.Short short_, java.lang.Integer integer, java.lang.Long long_, java.lang.Byte byteDecimal, java.lang.Short shortDecimal, java.lang.Integer integerDecimal, java.lang.Long longDecimal, java.math.BigDecimal bigDecimal, java.lang.Float float_, java.lang.Double double_) {
+		super(org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE);
+
+		setValue(0, id);
+		setValue(1, short_);
+		setValue(2, integer);
+		setValue(3, long_);
+		setValue(4, byteDecimal);
+		setValue(5, shortDecimal);
+		setValue(6, integerDecimal);
+		setValue(7, longDecimal);
+		setValue(8, bigDecimal);
+		setValue(9, float_);
+		setValue(10, double_);
 	}
 }

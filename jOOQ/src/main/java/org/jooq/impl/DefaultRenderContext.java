@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
@@ -353,8 +354,14 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         // verification. So, if you want to remove the below notice, consider
         // purchasing a license from http://www.jooq.org/download
 
-        if (part instanceof Select)
-            local.sql(" -- SQL rendered with a free trial version of jOOQ " + Constants.FULL_VERSION);
+        if (part instanceof Select) {
+            if (configuration().dialect().family() == INGRES) {
+                local.sql(" /* SQL rendered with a free trial version of jOOQ " + Constants.FULL_VERSION + " */");
+            }
+            else {
+                local.sql(" -- SQL rendered with a free trial version of jOOQ " + Constants.FULL_VERSION);
+            }
+        }
 
         /* [/trial] */ /* [/pro] */
 

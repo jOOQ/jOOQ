@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_DATES")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record6<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITDates {
 
-	private static final long serialVersionUID = 849191761;
+	private static final long serialVersionUID = -536858810;
 
 	/**
 	 * Setter for <code>T_DATES.ID</code>. 
@@ -280,5 +280,19 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	public TDatesRecord() {
 		super(org.jooq.test.firebird.generatedclasses.tables.TDates.T_DATES);
+	}
+
+	/**
+	 * Create a detached, initialised TDatesRecord
+	 */
+	public TDatesRecord(java.lang.Integer id, java.sql.Date d, java.sql.Time t, java.sql.Timestamp ts, java.lang.Integer dInt, java.lang.Long tsBigint) {
+		super(org.jooq.test.firebird.generatedclasses.tables.TDates.T_DATES);
+
+		setValue(0, id);
+		setValue(1, d);
+		setValue(2, t);
+		setValue(3, ts);
+		setValue(4, dInt);
+		setValue(5, tsBigint);
 	}
 }

@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_85")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IXTestCase_85 {
 
-	private static final long serialVersionUID = 38579761;
+	private static final long serialVersionUID = -957258480;
 
 	/**
 	 * Setter for <code>X_TEST_CASE_85.ID</code>. 
@@ -179,5 +179,16 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	public XTestCase_85Record() {
 		super(org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
+	}
+
+	/**
+	 * Create a detached, initialised XTestCase_85Record
+	 */
+	public XTestCase_85Record(java.lang.Integer id, java.lang.Integer xUnusedId, java.lang.String xUnusedName) {
+		super(org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
+
+		setValue(0, id);
+		setValue(1, xUnusedId);
+		setValue(2, xUnusedName);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 1349505957;
+	private static final long serialVersionUID = 1354532548;
 
 	/**
 	 * Setter for <code>TEST.V_LIBRARY.AUTHOR</code>. 
@@ -100,5 +100,15 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 */
 	public VLibraryRecord() {
 		super(org.jooq.test.derby.generatedclasses.tables.VLibrary.V_LIBRARY);
+	}
+
+	/**
+	 * Create a detached, initialised VLibraryRecord
+	 */
+	public VLibraryRecord(java.lang.String author, java.lang.String title) {
+		super(org.jooq.test.derby.generatedclasses.tables.VLibrary.V_LIBRARY);
+
+		setValue(0, author);
+		setValue(1, title);
 	}
 }

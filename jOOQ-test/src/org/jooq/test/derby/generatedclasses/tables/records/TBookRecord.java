@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 305756917;
+	private static final long serialVersionUID = 1062837010;
 
 	/**
 	 * Setter for <code>TEST.T_BOOK.ID</code>. 
@@ -352,5 +352,23 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	public TBookRecord() {
 		super(org.jooq.test.derby.generatedclasses.tables.TBook.T_BOOK);
+	}
+
+	/**
+	 * Create a detached, initialised TBookRecord
+	 */
+	public TBookRecord(java.lang.Integer id, java.lang.Integer authorId, java.lang.Integer coAuthorId, java.lang.Integer detailsId, java.lang.String title, java.lang.Integer publishedIn, java.lang.Integer languageId, java.lang.String contentText, byte[] contentPdf, java.sql.Timestamp recTimestamp) {
+		super(org.jooq.test.derby.generatedclasses.tables.TBook.T_BOOK);
+
+		setValue(0, id);
+		setValue(1, authorId);
+		setValue(2, coAuthorId);
+		setValue(3, detailsId);
+		setValue(4, title);
+		setValue(5, publishedIn);
+		setValue(6, languageId);
+		setValue(7, contentText);
+		setValue(8, contentPdf);
+		setValue(9, recTimestamp);
 	}
 }

@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_AUTHOR")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = 261907532;
+	private static final long serialVersionUID = 387919599;
 
 	/**
 	 * Setter for <code>T_AUTHOR.ID</code>. 
@@ -284,5 +284,19 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	public TAuthorRecord() {
 		super(org.jooq.test.firebird.generatedclasses.tables.TAuthor.T_AUTHOR);
+	}
+
+	/**
+	 * Create a detached, initialised TAuthorRecord
+	 */
+	public TAuthorRecord(java.lang.Integer id, java.lang.String firstName, java.lang.String lastName, java.sql.Date dateOfBirth, java.lang.Integer yearOfBirth, java.lang.String address) {
+		super(org.jooq.test.firebird.generatedclasses.tables.TAuthor.T_AUTHOR);
+
+		setValue(0, id);
+		setValue(1, firstName);
+		setValue(2, lastName);
+		setValue(3, dateOfBirth);
+		setValue(4, yearOfBirth);
+		setValue(5, address);
 	}
 }

@@ -3,7 +3,7 @@
 	<property name="dir.workspace" value="${basedir}/.." />
 	<property name="dir.target" value="${basedir}/target" />
 	<property name="dir.release" value="${basedir}/release" />
-	<property name="version" value="3.2.0-alpha-01"/>
+	<property name="version" value="3.2.0"/>
 
 	<!-- Run a full mvn clean package install deploy first before this -->
 	<target name="release" description="Release a new version">
@@ -49,14 +49,8 @@
 		<copy todir="${dir.release}/${version}/third-party/src" file="C:\Users\lukas\.m2\repository\javax\validation\validation-api\1.1.0.Alpha1\validation-api-1.1.0.Alpha1-sources.jar"/>
 
 
-		<zip destfile="${dir.release}/versions/jOOQ-${version}-full.zip">
+		<zip destfile="${dir.release}/versions/jOOQ-${version}.zip">
 			<fileset dir="${dir.release}/${version}"/>
-		</zip>
-		<zip destfile="${dir.release}/versions/jOOQ-${version}-binaries-only.zip">
-			<fileset dir="${dir.release}/${version}">
-				<include name="*.txt"/>
-				<include name="lib/**"/>
-			</fileset>
 		</zip>
 
 		<delete dir="${dir.release}/${version}"/>

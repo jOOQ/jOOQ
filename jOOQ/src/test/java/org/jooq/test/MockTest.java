@@ -41,7 +41,6 @@
 package org.jooq.test;
 
 import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.fail;
 import static org.jooq.impl.DSL.val;

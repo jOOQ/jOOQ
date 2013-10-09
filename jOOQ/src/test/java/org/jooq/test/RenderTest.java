@@ -48,7 +48,6 @@ import static org.jooq.conf.RenderKeywordStyle.LOWER;
 import static org.jooq.conf.RenderKeywordStyle.UPPER;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 import static org.jooq.impl.DSL.val;
-import static org.junit.Assert.assertEquals;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;

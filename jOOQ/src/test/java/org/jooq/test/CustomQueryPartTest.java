@@ -40,7 +40,6 @@
  */
 package org.jooq.test;
 
-import static junit.framework.Assert.assertEquals;
 import static org.jooq.impl.DSL.val;
 
 import org.jooq.BindContext;

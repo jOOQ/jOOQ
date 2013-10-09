@@ -41,7 +41,6 @@
 package org.jooq.test;
 
 import static org.jooq.test.data.Table1.FIELD_ID1;
-import static org.junit.Assert.assertEquals;
 
 import org.jooq.impl.SQLDataType;
 

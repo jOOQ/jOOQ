@@ -40,8 +40,6 @@
  */
 package org.jooq.test;
 
-import static org.junit.Assert.assertEquals;
-
 import org.jooq.BindContext;
 import org.jooq.RenderContext;
 import org.jooq.exception.DataAccessException;

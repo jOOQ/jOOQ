@@ -41,7 +41,6 @@
 
 package org.jooq.test;
 
-import static junit.framework.Assert.assertEquals;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.any;

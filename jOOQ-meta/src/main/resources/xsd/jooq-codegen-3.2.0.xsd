@@ -468,7 +468,7 @@
       <element name="expressions" type="string" minOccurs="1" maxOccurs="1" />
       
       <!--
-        A Java regular expression matching data types to be forced to thave this
+        A Java regular expression matching data types to be forced to have this
         type. If provided, both "expressions" and "types" must match.
         -->
       <element name="types" type="string" minOccurs="0" maxOccurs="1" />

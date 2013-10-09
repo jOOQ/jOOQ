@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IT_785 {
 
-	private static final long serialVersionUID = 2072460536;
+	private static final long serialVersionUID = -2083063399;
 
 	/**
 	 * Setter for <code>PUBLIC.T_785.ID</code>. 
@@ -159,5 +159,16 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	public T_785Record() {
 		super(org.jooq.test.hsqldb.generatedclasses.tables.T_785.T_785);
+	}
+
+	/**
+	 * Create a detached, initialised T_785Record
+	 */
+	public T_785Record(java.lang.Integer id, java.lang.String name, java.lang.String value) {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.T_785.T_785);
+
+		setValue(0, id);
+		setValue(1, name);
+		setValue(2, value);
 	}
 }

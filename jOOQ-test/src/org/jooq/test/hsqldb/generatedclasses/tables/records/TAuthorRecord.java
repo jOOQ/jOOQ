@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = -1139022210;
+	private static final long serialVersionUID = -1916187982;
 
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.ID</code>. 
@@ -270,5 +270,19 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	public TAuthorRecord() {
 		super(org.jooq.test.hsqldb.generatedclasses.tables.TAuthor.T_AUTHOR);
+	}
+
+	/**
+	 * Create a detached, initialised TAuthorRecord
+	 */
+	public TAuthorRecord(java.lang.Integer id, java.lang.String firstName, java.lang.String lastName, java.sql.Date dateOfBirth, java.lang.Integer yearOfBirth, java.lang.String address) {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.TAuthor.T_AUTHOR);
+
+		setValue(0, id);
+		setValue(1, firstName);
+		setValue(2, lastName);
+		setValue(3, dateOfBirth);
+		setValue(4, yearOfBirth);
+		setValue(5, address);
 	}
 }

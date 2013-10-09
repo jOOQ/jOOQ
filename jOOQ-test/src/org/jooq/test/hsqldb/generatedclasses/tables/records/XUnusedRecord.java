@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record16<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal, java.lang.Integer, java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = -2126668594;
+	private static final long serialVersionUID = -992221801;
 
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.ID</code>. 
@@ -600,5 +600,29 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	public XUnusedRecord() {
 		super(org.jooq.test.hsqldb.generatedclasses.tables.XUnused.X_UNUSED);
+	}
+
+	/**
+	 * Create a detached, initialised XUnusedRecord
+	 */
+	public XUnusedRecord(java.lang.Integer id, java.lang.String name, java.math.BigInteger bigInteger, java.lang.Integer idRef, java.lang.Integer class_, java.lang.Integer fields, java.lang.Integer configuration, java.lang.Integer uDT, java.lang.Integer metaData, java.lang.Integer type0, java.lang.Integer primaryKey, java.lang.Integer primarykey, java.lang.String nameRef, java.math.BigDecimal field_737, java.lang.Integer connection, java.lang.Integer preparedStatement) {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.XUnused.X_UNUSED);
+
+		setValue(0, id);
+		setValue(1, name);
+		setValue(2, bigInteger);
+		setValue(3, idRef);
+		setValue(4, class_);
+		setValue(5, fields);
+		setValue(6, configuration);
+		setValue(7, uDT);
+		setValue(8, metaData);
+		setValue(9, type0);
+		setValue(10, primaryKey);
+		setValue(11, primarykey);
+		setValue(12, nameRef);
+		setValue(13, field_737);
+		setValue(14, connection);
+		setValue(15, preparedStatement);
 	}
 }

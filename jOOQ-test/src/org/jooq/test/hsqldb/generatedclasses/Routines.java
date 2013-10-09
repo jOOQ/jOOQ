@@ -438,40 +438,6 @@ public class Routines {
 	}
 
 	/**
-	 * Call <code>PUBLIC.P2515_</code>
-	 */
-	public static java.lang.Integer p2515_(org.jooq.Configuration configuration, java.lang.Integer aA, java.lang.Integer aA_) {
-		org.jooq.test.hsqldb.generatedclasses.routines.P2515_ f = new org.jooq.test.hsqldb.generatedclasses.routines.P2515_();
-		f.setAA(aA);
-		f.setAA_(aA_);
-
-		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Get <code>PUBLIC.P2515_</code> as a field
-	 */
-	public static org.jooq.Field<java.lang.Integer> p2515_(java.lang.Integer aA, java.lang.Integer aA_) {
-		org.jooq.test.hsqldb.generatedclasses.routines.P2515_ f = new org.jooq.test.hsqldb.generatedclasses.routines.P2515_();
-		f.setAA(aA);
-		f.setAA_(aA_);
-
-		return f.asField();
-	}
-
-	/**
-	 * Get <code>PUBLIC.P2515_</code> as a field
-	 */
-	public static org.jooq.Field<java.lang.Integer> p2515_(org.jooq.Field<java.lang.Integer> aA, org.jooq.Field<java.lang.Integer> aA_) {
-		org.jooq.test.hsqldb.generatedclasses.routines.P2515_ f = new org.jooq.test.hsqldb.generatedclasses.routines.P2515_();
-		f.setAA(aA);
-		f.setAA_(aA_);
-
-		return f.asField();
-	}
-
-	/**
 	 * Call <code>PUBLIC.P391</code>
 	 */
 	public static org.jooq.test.hsqldb.generatedclasses.routines.P391 p391(org.jooq.Configuration configuration, java.lang.Integer i1, java.lang.Integer io1, java.lang.Integer io2, java.lang.Integer i2) {

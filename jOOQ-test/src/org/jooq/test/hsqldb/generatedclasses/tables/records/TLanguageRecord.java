@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITLanguage {
 
-	private static final long serialVersionUID = -656199342;
+	private static final long serialVersionUID = -2140039745;
 
 	/**
 	 * Setter for <code>PUBLIC.T_LANGUAGE.CD</code>. 
@@ -204,5 +204,17 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	public TLanguageRecord() {
 		super(org.jooq.test.hsqldb.generatedclasses.tables.TLanguage.T_LANGUAGE);
+	}
+
+	/**
+	 * Create a detached, initialised TLanguageRecord
+	 */
+	public TLanguageRecord(java.lang.String cd, java.lang.String description, java.lang.String descriptionEnglish, java.lang.Integer id) {
+		super(org.jooq.test.hsqldb.generatedclasses.tables.TLanguage.T_LANGUAGE);
+
+		setValue(0, cd);
+		setValue(1, description);
+		setValue(2, descriptionEnglish);
+		setValue(3, id);
 	}
 }

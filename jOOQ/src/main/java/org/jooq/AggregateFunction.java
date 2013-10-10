@@ -39,7 +39,8 @@
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
 package org.jooq;
-import static org.jooq.SQLDialect.CUBRID;
+
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;

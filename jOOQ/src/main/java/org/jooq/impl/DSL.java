@@ -620,7 +620,8 @@ public class DSL {
         return new SelectImpl<Record>(new DefaultConfiguration()).select(fields);
     }
 
-// [jooq-tools] START [select]
+// [jooq-tools] START [select]
+
     /**
      * Create a new DSL subselect statement.
      * <p>
@@ -1619,7 +1620,8 @@ public class DSL {
         return new SelectImpl<Record>(new DefaultConfiguration(), true).select(fields);
     }
 
-// [jooq-tools] START [selectDistinct]
+// [jooq-tools] START [selectDistinct]
+
     /**
      * Create a new DSL subselect statement.
      * <p>
@@ -2686,7 +2688,8 @@ public class DSL {
         return using(new DefaultConfiguration()).insertInto(into);
     }
 
-    // [jooq-tools] START [insert]
+    // [jooq-tools] START [insert]
+
     /**
      * Create a new DSL insert statement.
      * <p>
@@ -3485,7 +3488,8 @@ public class DSL {
         return using(new DefaultConfiguration()).mergeInto(table);
     }
 
-    // [jooq-tools] START [merge]
+    // [jooq-tools] START [merge]
+
     /**
      * Create a new DSL merge statement (H2-specific syntax).
      * <p>
@@ -11019,7 +11023,8 @@ public class DSL {
         return dataType;
     }
 
-    // [jooq-tools] START [row-value]
+    // [jooq-tools] START [row-value]
+
     /**
      * Create a row value expression of degree <code>1</code>.
      * <p>
@@ -11408,7 +11413,8 @@ public class DSL {
         return row(Utils.fields(values).toArray(new Field[0]));
     }
 
-// [jooq-tools] START [row-field]
+// [jooq-tools] START [row-field]
+
     /**
      * Create a row value expression of degree <code>1</code>.
      * <p>
@@ -11801,7 +11807,8 @@ public class DSL {
     // [#915] TODO: These are experimental VALUES() table constructors
     // -------------------------------------------------------------------------
 
-// [jooq-tools] START [values]
+// [jooq-tools] START [values]
+
     /**
      * Create a <code>VALUES()</code> expression of degree <code>1</code>.
      * <p>

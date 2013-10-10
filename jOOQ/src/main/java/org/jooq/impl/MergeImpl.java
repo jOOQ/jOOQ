@@ -151,7 +151,8 @@ implements
     // Cascading interface implementations for Merge behaviour
     MergeUsingStep<R>,
 
-// [jooq-tools] START [implementsKeyStep]
+// [jooq-tools] START [implementsKeyStep]
+
     MergeKeyStep1<R, T1>,
     MergeKeyStep2<R, T1, T2>,
     MergeKeyStep3<R, T1, T2, T3>,
@@ -183,7 +184,8 @@ implements
     MergeMatchedDeleteStep<R>,
     MergeNotMatchedSetMoreStep<R>,
 
-// [jooq-tools] START [implementsNotMatchedValuesStep]
+// [jooq-tools] START [implementsNotMatchedValuesStep]
+
     MergeNotMatchedValuesStep1<R, T1>,
     MergeNotMatchedValuesStep2<R, T1, T2>,
     MergeNotMatchedValuesStep3<R, T1, T2, T3>,
@@ -306,7 +308,8 @@ implements
     // Shared MERGE API
     // -------------------------------------------------------------------------
 
-// [jooq-tools] START [values]
+// [jooq-tools] START [values]
+
     @Override
     public final MergeImpl values(T1 value1) {
         return values(new Object[] { value1 });
@@ -750,7 +753,8 @@ implements
         return whenNotMatchedThenInsert(Collections.<Field<?>>emptyList());
     }
 
-// [jooq-tools] START [whenNotMatchedThenInsert]
+// [jooq-tools] START [whenNotMatchedThenInsert]
+
     @Override
     @SuppressWarnings("hiding")
     public final <T1> MergeImpl whenNotMatchedThenInsert(Field<T1> field1) {

@@ -110,6 +110,8 @@ class Splitter extends Generators {
                     && !path.canonicalPath.contains("\\ingres\\")
                     && !path.canonicalPath.contains("\\jdbcoracle\\")
                     && !path.canonicalPath.contains("\\oracle\\")
+                    && !path.canonicalPath.contains("\\oracle2\\")
+                    && !path.canonicalPath.contains("\\oracle3\\")
                     && !path.canonicalPath.contains("\\sqlserver\\")
                     && !path.canonicalPath.contains("\\sybase\\")
                 ))

@@ -161,7 +161,8 @@ final class UpdateImpl<R extends Record>
         return set(Utils.map(record));
     }
 
-// [jooq-tools] START [set]
+// [jooq-tools] START [set]
+
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final <T1> UpdateWhereStep<R> set(Row1<T1> row, Row1<T1> value) {

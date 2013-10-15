@@ -64,6 +64,8 @@ DROP TABLE IF EXISTS t_booleans/
 DROP TABLE IF EXISTS t_identity/
 DROP TABLE IF EXISTS t_identity_pk/
 DROP TABLE IF EXISTS t_pg_extensions/
+DROP TABLE IF EXISTS t_inheritance_capitals/
+DROP TABLE IF EXISTS t_inheritance_cities/
 
 DROP TYPE IF EXISTS u_address_type/
 DROP TYPE IF EXISTS u_street_type/
@@ -106,6 +108,18 @@ CREATE TYPE u_address_type AS (
   code INTEGER,
   f_1323 bytea
 )
+/
+
+CREATE TABLE t_inheritance_cities (
+  name text,
+  population int,
+  altitude int
+)
+/
+
+CREATE TABLE t_inheritance_capitals (
+  state char(2)
+) INHERITS (t_inheritance_cities)
 /
 
 CREATE TABLE t_pg_extensions (

@@ -43,8 +43,10 @@ package org.jooq.util.postgres;
 import static org.jooq.SQLDialect.POSTGRES;
 
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Support;
+import org.jooq.Table;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 
@@ -302,5 +304,22 @@ public class PostgresDSL extends DSL {
     @Support({ POSTGRES })
     public static Field<String[]> stringToArray(Field<String> string, Field<String> delimiter) {
         return field("{string_to_array}({0}, {1})", SQLDataType.VARCHAR.getArrayDataType(), nullSafe(string), nullSafe(delimiter));
+    }
+
+    // -------------------------------------------------------------------------
+    // Other PostgreSQL-specific functions / clauses
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get the PostgreSQL-specific <code>ONLY [table]</code> clause for use with
+     * table inheritance.
+     * <p>
+     * Example: <code><pre>
+     * SELECT * FROM ONLY parent_table
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Table<Record> only(Table<?> table) {
+        return table("{only} {0}", table);
     }
 }

@@ -92,6 +92,16 @@ public class Tables {
 	public static final org.jooq.test.postgres.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
 
 	/**
+	 * The table public.t_inheritance_capitals
+	 */
+	public static final org.jooq.test.postgres.generatedclasses.tables.TInheritanceCapitals T_INHERITANCE_CAPITALS = org.jooq.test.postgres.generatedclasses.tables.TInheritanceCapitals.T_INHERITANCE_CAPITALS;
+
+	/**
+	 * The table public.t_inheritance_cities
+	 */
+	public static final org.jooq.test.postgres.generatedclasses.tables.TInheritanceCities T_INHERITANCE_CITIES = org.jooq.test.postgres.generatedclasses.tables.TInheritanceCities.T_INHERITANCE_CITIES;
+
+	/**
 	 * The table public.t_language
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE;

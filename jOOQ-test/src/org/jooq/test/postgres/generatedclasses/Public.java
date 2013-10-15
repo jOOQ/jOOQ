@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 1182973771;
+	private static final long serialVersionUID = 1957310571;
 
 	/**
 	 * The singleton instance of <code>public</code>
@@ -60,6 +60,8 @@ public class Public extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.postgres.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES,
 			org.jooq.test.postgres.generatedclasses.tables.TIdentity.T_IDENTITY,
 			org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
+			org.jooq.test.postgres.generatedclasses.tables.TInheritanceCapitals.T_INHERITANCE_CAPITALS,
+			org.jooq.test.postgres.generatedclasses.tables.TInheritanceCities.T_INHERITANCE_CITIES,
 			org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE,
 			org.jooq.test.postgres.generatedclasses.tables.TPgExtensions.T_PG_EXTENSIONS,
 			org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS,

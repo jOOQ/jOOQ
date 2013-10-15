@@ -42,6 +42,7 @@
 package org.jooq.test;
 
 import static java.util.Arrays.asList;
+import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.test.postgres.generatedclasses.Routines.fSearchBook;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_639_NUMBERS_TABLE;
@@ -58,6 +59,7 @@ import static org.jooq.test.postgres.generatedclasses.Tables.T_DATES;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_IDENTITY_PK;
+import static org.jooq.test.postgres.generatedclasses.Tables.T_INHERITANCE_CITIES;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_PG_EXTENSIONS;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_TRIGGERS;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_UNSIGNED;
@@ -68,6 +70,7 @@ import static org.jooq.util.postgres.PostgresDSL.arrayAppend;
 import static org.jooq.util.postgres.PostgresDSL.arrayCat;
 import static org.jooq.util.postgres.PostgresDSL.arrayPrepend;
 import static org.jooq.util.postgres.PostgresDSL.arrayToString;
+import static org.jooq.util.postgres.PostgresDSL.only;
 import static org.jooq.util.postgres.PostgresDSL.stringToArray;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -1058,5 +1061,11 @@ public class PostgresTest extends jOOQAbstractTest<
                                      .withOutput("test")))).render(val));
 
 
+    }
+
+    @Test
+    public void testPostgresOnlyClause() throws Exception {
+        assertEquals(3, create().fetchCount(selectOne().from(T_INHERITANCE_CITIES)));
+        assertEquals(2, create().fetchCount(selectOne().from(only(T_INHERITANCE_CITIES))));
     }
 }

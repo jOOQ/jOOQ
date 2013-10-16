@@ -54,6 +54,6 @@ INSERT INTO t_arrays VALUES (2, '{}', '{}', '{}', '{}', '{}', '{}')/
 INSERT INTO t_arrays VALUES (3, '{"a"}', '{1}', ARRAY[TO_DATE('1981-07-10', 'YYYY-MM-DD')], ARRAY[ROW('Downing Street', '10', null, E'\\x6969')]::u_street_type[], '{"England"}', ARRAY[ARRAY[1]])/
 INSERT INTO t_arrays VALUES (4, '{"a", "b"}', '{1, 2}', ARRAY[TO_DATE('1981-07-10', 'YYYY-MM-DD'), TO_DATE('2000-01-01', 'YYYY-MM-DD')], ARRAY[ROW('Downing Street', '10', '{}', E'\\x6969'), ROW('Bahnhofstrasse', '12', '{1, 2}', E'\\x6969')]::u_street_type[], '{"England", "Germany"}', ARRAY[ARRAY[1], ARRAY[2]])/
 
-INSERT INTO t_inheritance_capitals VALUES ('Zurich', 396389, 408, 'ZH')/
-INSERT INTO t_inheritance_cities VALUES ('Winterthur', 103075, 439)/
-INSERT INTO t_inheritance_cities VALUES ('Uster', 32577, 464)/
+INSERT INTO t_inheritance_1_1 VALUES ('1', '1')/
+INSERT INTO t_inheritance_1   VALUES ('2')/
+INSERT INTO t_inheritance_1   VALUES ('3')/

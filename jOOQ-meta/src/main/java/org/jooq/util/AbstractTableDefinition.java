@@ -44,6 +44,7 @@ package org.jooq.util;
 import static org.jooq.impl.DSL.table;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
@@ -65,9 +66,14 @@ implements TableDefinition {
     private UniqueKeyDefinition             primaryKey;
     private boolean                         identityLoaded;
     private IdentityDefinition              identity;
+    private TableDefinition                 parentTable;
+    private List<TableDefinition>           childTables;
 
     public AbstractTableDefinition(SchemaDefinition schema, String name, String comment) {
         super(schema, name, comment);
+
+        parentTable = null;
+        childTables = new ArrayList<TableDefinition>();
     }
 
     @Override
@@ -128,6 +134,20 @@ implements TableDefinition {
         }
 
         return identity;
+    }
+
+    public final void setParentTable(TableDefinition parentTable) {
+        this.parentTable = parentTable;
+    }
+
+    @Override
+    public final TableDefinition getParentTable() {
+        return parentTable;
+    }
+
+    @Override
+    public final List<TableDefinition> getChildTables() {
+        return childTables;
     }
 
     @Override

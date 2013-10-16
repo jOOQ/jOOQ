@@ -59,7 +59,7 @@ import static org.jooq.test.postgres.generatedclasses.Tables.T_DATES;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_IDENTITY_PK;
-import static org.jooq.test.postgres.generatedclasses.Tables.T_INHERITANCE_CITIES;
+import static org.jooq.test.postgres.generatedclasses.Tables.T_INHERITANCE_1;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_PG_EXTENSIONS;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_TRIGGERS;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_UNSIGNED;
@@ -1065,7 +1065,7 @@ public class PostgresTest extends jOOQAbstractTest<
 
     @Test
     public void testPostgresOnlyClause() throws Exception {
-        assertEquals(3, create().fetchCount(selectOne().from(T_INHERITANCE_CITIES)));
-        assertEquals(2, create().fetchCount(selectOne().from(only(T_INHERITANCE_CITIES))));
+        assertEquals(3, create().fetchCount(selectOne().from(T_INHERITANCE_1)));
+        assertEquals(2, create().fetchCount(selectOne().from(only(T_INHERITANCE_1))));
     }
 }

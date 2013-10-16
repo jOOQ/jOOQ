@@ -322,4 +322,12 @@ public class PostgresDSL extends DSL {
     public static Table<Record> only(Table<?> table) {
         return table("{only} {0}", table);
     }
+
+    /**
+     * Get the PostgreSQL-specific <code>[table].oid</code> column from any table.
+     */
+    @Support({ POSTGRES })
+    public static Field<Long> oid(Table<?> table) {
+        return field("{0}.oid", Long.class, table);
+    }
 }

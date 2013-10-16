@@ -100,6 +100,16 @@ public interface TableDefinition extends Definition {
     IdentityDefinition getIdentity();
 
     /**
+     * Get the parent table if table inheritance is applicable.
+     */
+    TableDefinition getParentTable();
+
+    /**
+     * Get the child tables if table inheritance is applicable.
+     */
+    List<TableDefinition> getChildTables();
+
+    /**
      * This TableDefinition as a {@link Table}.
      */
     Table<Record> getTable();

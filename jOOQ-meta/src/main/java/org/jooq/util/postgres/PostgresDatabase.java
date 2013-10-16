@@ -44,6 +44,7 @@ package org.jooq.util.postgres;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
@@ -58,21 +59,28 @@ import static org.jooq.util.postgres.information_schema.Tables.ROUTINES;
 import static org.jooq.util.postgres.information_schema.Tables.SEQUENCES;
 import static org.jooq.util.postgres.information_schema.Tables.TABLES;
 import static org.jooq.util.postgres.information_schema.Tables.TABLE_CONSTRAINTS;
+import static org.jooq.util.postgres.pg_catalog.Tables.PG_CLASS;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_ENUM;
+import static org.jooq.util.postgres.pg_catalog.Tables.PG_INHERITS;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_NAMESPACE;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_TYPE;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jooq.DSLContext;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record2;
 import org.jooq.Record4;
+import org.jooq.Record5;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
+import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -93,6 +101,9 @@ import org.jooq.util.hsqldb.HSQLDBDatabase;
 import org.jooq.util.postgres.information_schema.tables.CheckConstraints;
 import org.jooq.util.postgres.information_schema.tables.Routines;
 import org.jooq.util.postgres.information_schema.tables.TableConstraints;
+import org.jooq.util.postgres.pg_catalog.tables.PgClass;
+import org.jooq.util.postgres.pg_catalog.tables.PgInherits;
+import org.jooq.util.postgres.pg_catalog.tables.PgNamespace;
 
 /**
  * Postgres uses the ANSI default INFORMATION_SCHEMA, but unfortunately ships
@@ -102,6 +113,8 @@ import org.jooq.util.postgres.information_schema.tables.TableConstraints;
  * @author Lukas Eder
  */
 public class PostgresDatabase extends AbstractDatabase {
+
+    private static final JooqLogger log = JooqLogger.getLogger(PostgresDatabase.class);
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
@@ -232,6 +245,7 @@ public class PostgresDatabase extends AbstractDatabase {
     @Override
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
+        Map<Name, PostgresTableDefinition> map = new HashMap<Name, PostgresTableDefinition>();
 
         for (Record record : create()
                 .select(
@@ -248,7 +262,51 @@ public class PostgresDatabase extends AbstractDatabase {
             String name = record.getValue(TABLES.TABLE_NAME);
             String comment = "";
 
-            result.add(new PostgresTableDefinition(schema, name, comment));
+            PostgresTableDefinition t = new PostgresTableDefinition(schema, name, comment);
+            result.add(t);
+            map.put(name(schema.getName(), name), t);
+        }
+
+        PgClass ct = PG_CLASS.as("ct");
+        PgNamespace cn = PG_NAMESPACE.as("cn");
+        PgInherits i = PG_INHERITS.as("i");
+        PgClass pt = PG_CLASS.as("pt");
+        PgNamespace pn = PG_NAMESPACE.as("pn");
+
+        for (Record5<String, String, String, String, Integer> inheritance : create()
+                .select(
+                    cn.NSPNAME,
+                    ct.RELNAME,
+                    pn.NSPNAME,
+                    pt.RELNAME,
+                    max(i.INHSEQNO).over().partitionBy(i.INHRELID).as("m")
+                )
+                .from(ct)
+                .join(cn).on("{0} = {1}.oid", ct.RELNAMESPACE, cn)
+                .join(i).on("{0} = {1}.oid", i.INHRELID, ct)
+                .join(pt).on("{0} = {1}.oid", i.INHPARENT, pt)
+                .join(pn).on("{0} = {1}.oid", pt.RELNAMESPACE, pn)
+                .fetch()) {
+
+            Name child = name(inheritance.value1(), inheritance.value2());
+            Name parent = name(inheritance.value3(), inheritance.value4());
+
+            if (inheritance.value5() > 1) {
+                log.info("Multiple inheritance",
+                    "Multiple inheritance is not supported by jOOQ: " +
+                    child +
+                    " inherits from " +
+                    parent);
+            }
+            else {
+                PostgresTableDefinition childTable = map.get(child);
+                PostgresTableDefinition parentTable = map.get(parent);
+
+                if (childTable != null && parentTable != null) {
+                    childTable.setParentTable(parentTable);
+                    parentTable.getChildTables().add(childTable);
+                }
+            }
         }
 
         return result;

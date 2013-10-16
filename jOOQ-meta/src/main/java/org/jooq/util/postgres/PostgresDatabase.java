@@ -50,6 +50,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.upper;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.util.postgres.PostgresDSL.oid;
 import static org.jooq.util.postgres.information_schema.Tables.ATTRIBUTES;
 import static org.jooq.util.postgres.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.util.postgres.information_schema.Tables.KEY_COLUMN_USAGE;
@@ -282,10 +283,10 @@ public class PostgresDatabase extends AbstractDatabase {
                     max(i.INHSEQNO).over().partitionBy(i.INHRELID).as("m")
                 )
                 .from(ct)
-                .join(cn).on("{0} = {1}.oid", ct.RELNAMESPACE, cn)
-                .join(i).on("{0} = {1}.oid", i.INHRELID, ct)
-                .join(pt).on("{0} = {1}.oid", i.INHPARENT, pt)
-                .join(pn).on("{0} = {1}.oid", pt.RELNAMESPACE, pn)
+                .join(cn).on(ct.RELNAMESPACE.eq(oid(cn)))
+                .join(i).on(i.INHRELID.eq(oid(ct)))
+                .join(pt).on(i.INHPARENT.eq(oid(pt)))
+                .join(pn).on(pt.RELNAMESPACE.eq(oid(pn)))
                 .fetch()) {
 
             Name child = name(inheritance.value1(), inheritance.value2());
@@ -380,9 +381,9 @@ public class PostgresDatabase extends AbstractDatabase {
                     PG_NAMESPACE.NSPNAME,
                     PG_TYPE.TYPNAME)
                 .from(PG_TYPE)
-                .join(PG_NAMESPACE).on("pg_type.typnamespace = pg_namespace.oid")
+                .join(PG_NAMESPACE).on(PG_TYPE.TYPNAMESPACE.eq(oid(PG_NAMESPACE)))
                 .where(PG_NAMESPACE.NSPNAME.in(getInputSchemata()))
-                .and(field("pg_type.oid", Long.class).in(select(PG_ENUM.ENUMTYPID).from(PG_ENUM)))
+                .and(oid(PG_TYPE).in(select(PG_ENUM.ENUMTYPID).from(PG_ENUM)))
                 .orderBy(
                     PG_NAMESPACE.NSPNAME,
                     PG_TYPE.TYPNAME)
@@ -395,8 +396,8 @@ public class PostgresDatabase extends AbstractDatabase {
                 List<String> labels = create()
                     .select(PG_ENUM.ENUMLABEL)
                     .from(PG_ENUM)
-                    .join(PG_TYPE).on("pg_enum.enumtypid = pg_type.oid")
-                    .join(PG_NAMESPACE).on("pg_type.typnamespace = pg_namespace.oid")
+                    .join(PG_TYPE).on(PG_ENUM.ENUMTYPID.eq(oid(PG_TYPE)))
+                    .join(PG_NAMESPACE).on(PG_TYPE.TYPNAMESPACE.eq(oid(PG_NAMESPACE)))
                     .where(PG_NAMESPACE.NSPNAME.eq(nspname))
                     .and(PG_TYPE.TYPNAME.eq(typname))
                     .orderBy(field("{0}::{1}", PG_ENUM.ENUMLABEL, name(nspname, typname)))

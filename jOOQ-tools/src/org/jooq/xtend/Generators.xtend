@@ -227,11 +227,24 @@ abstract class Generators {
      * <code>t1, t2, .., t[N]</code>
      */
     def tn(int degree) {
-    	return
-    	if (degree == 0)
-    		"values"
-		else
-	        (1..degree).join(", ", [e | "t" + e])
+        return
+        if (degree == 0)
+            "values"
+        else
+            (1..degree).join(", ", [e | "t" + e])
+    }
+    
+    /**
+     * A comma-separated list of identifier references
+     * <p>
+     * <code>t1, t2, .., t[N]</code>
+     */
+    def val_tn(int degree) {
+        return
+        if (degree == 0)
+            "values"
+        else
+            (1..degree).join(", ", [e | "val(t" + e + ")"])
     }
     
     /** 
@@ -292,11 +305,24 @@ abstract class Generators {
      * <code>Field t1, Field t2, .., Field t[N]</code>
      */
     def Field_tn(int degree) {
-    	return
-    	if (degree == 0)
-    		"Field<?>... values"
-		else
-	        (1..degree).join(", ", [e | "Field t" + e])
+        return
+        if (degree == 0)
+            "Field<?>... values"
+        else
+            (1..degree).join(", ", [e | "Field t" + e])
+    }
+        
+    /**
+     * A comma-separated list of sort field declarations
+     * <p>
+     * <code>SortField t1, SortField t2, .., SortField t[N]</code>
+     */
+    def SortField_tn(int degree) {
+        return
+        if (degree == 0)
+            "SortField<?>... values"
+        else
+            (1..degree).join(", ", [e | "SortField t" + e])
     }
     
     /**
@@ -318,11 +344,24 @@ abstract class Generators {
      * <code>Field&lt;T1> field1, Field&lt;T2> field2, .., Field&ltT[N]> field[N]</code>
      */
     def Field_TN_fieldn(int degree) {
-    	return
-    	if (degree == 0)
-    		"Field<?>... fields"
-		else
-	        (1..degree).join(", ", [e | "Field<T" + e + "> field" + e])
+        return
+        if (degree == 0)
+            "Field<?>... fields"
+        else
+            (1..degree).join(", ", [e | "Field<T" + e + "> field" + e])
+    }
+     
+    /**
+     * A comma-separated list of field declarations
+     * <p>
+     * <code>SortField&lt;T1> field1, SortField&lt;T2> field2, .., SortField&ltT[N]> field[N]</code>
+     */
+    def SortField_TN_fieldn(int degree) {
+        return
+        if (degree == 0)
+            "SortField<?>... fields"
+        else
+            (1..degree).join(", ", [e | "SortField<T" + e + "> field" + e])
     }
     
     /**

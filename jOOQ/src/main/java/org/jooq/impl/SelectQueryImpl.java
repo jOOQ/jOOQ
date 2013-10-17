@@ -51,6 +51,7 @@ import static org.jooq.Clause.SELECT_ORDER_BY;
 import static org.jooq.Clause.SELECT_SELECT;
 import static org.jooq.Clause.SELECT_START_WITH;
 import static org.jooq.Clause.SELECT_WHERE;
+import static org.jooq.Operator.OR;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
@@ -65,11 +66,13 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SQLSERVER2008;
 import static org.jooq.SQLDialect.SQLSERVER2012;
+import static org.jooq.SortOrder.ASC;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.denseRank;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import static org.jooq.impl.Utils.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
@@ -140,6 +143,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     private final ConditionProviderImpl     having;
     private final SortFieldList             orderBy;
     private boolean                         orderBySiblings;
+    private final QueryPartList<Field<?>>   seek;
     private final Limit                     limit;
 
     SelectQueryImpl(Configuration configuration) {
@@ -166,6 +170,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         this.groupBy = new QueryPartList<GroupField>();
         this.having = new ConditionProviderImpl();
         this.orderBy = new SortFieldList();
+        this.seek = new QueryPartList<Field<?>>();
         this.limit = new Limit();
 
         if (from != null) {
@@ -931,8 +936,63 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         return limit;
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     final ConditionProviderImpl getWhere() {
-        return condition;
+        if (getOrderBy().isEmpty() || getSeek().isEmpty()) {
+            return condition;
+        }
+        else {
+            SortFieldList o = getOrderBy();
+            Condition c = null;
+
+            // [#2786] TODO: Check if NULLS FIRST | NULLS LAST clauses are
+            // contained in the SortFieldList, in case of which, the below
+            // predicates will become a lot more complicated.
+            if (o.nulls()) {}
+
+            // If we have uniform sorting, more efficient row value expression
+            // predicates can be applied, which can be heavily optimised on some
+            // databases.
+            if (o.size() > 1 && o.uniform()) {
+                if (o.get(0).getOrder() == ASC) {
+                    c = row(o.fields()).gt(row(getSeek()));
+                }
+                else {
+                    c = row(o.fields()).lt(row(getSeek()));
+                }
+            }
+
+            // With alternating sorting, the SEEK clause has to be explicitly
+            // phrased for each ORDER BY field.
+            else {
+                ConditionProviderImpl or = new ConditionProviderImpl();
+
+                for (int i = 0; i < o.size(); i++) {
+                    ConditionProviderImpl and = new ConditionProviderImpl();
+
+                    for (int j = 0; j < i; j++) {
+                        SortFieldImpl<?> s = (SortFieldImpl<?>) o.get(j);
+                        and.addConditions(((Field) s.getField()).eq(seek.get(j)));
+                    }
+
+                    SortFieldImpl<?> s = (SortFieldImpl<?>) o.get(i);
+                    if (s.getOrder() == ASC) {
+                        and.addConditions(((Field) s.getField()).gt(seek.get(i)));
+                    }
+                    else {
+                        and.addConditions(((Field) s.getField()).lt(seek.get(i)));
+                    }
+
+                    or.addConditions(OR, and);
+                }
+
+                c = or;
+            }
+
+            ConditionProviderImpl result = new ConditionProviderImpl();
+            result.addConditions(condition, c);
+            return result;
+        }
     }
 
     final ConditionProviderImpl getConnectBy() {
@@ -949,6 +1009,10 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
     final SortFieldList getOrderBy() {
         return orderBy;
+    }
+
+    final QueryPartList<Field<?>> getSeek() {
+        return seek;
     }
 
     final SortFieldList getNonEmptyOrderBy() {
@@ -990,6 +1054,16 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     @Override
     public final void setOrderBySiblings(boolean orderBySiblings) {
         this.orderBySiblings = orderBySiblings;
+    }
+
+    @Override
+    public final void addSeek(Field<?>... fields) {
+        addSeek(Arrays.asList(fields));
+    }
+
+    @Override
+    public final void addSeek(Collection<? extends Field<?>> fields) {
+        getSeek().addAll(fields);
     }
 
     @Override

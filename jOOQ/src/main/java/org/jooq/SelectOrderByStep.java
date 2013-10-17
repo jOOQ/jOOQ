@@ -45,6 +45,8 @@ import static org.jooq.SQLDialect.ORACLE;
 
 import java.util.Collection;
 
+import javax.annotation.Generated;
+
 import org.jooq.api.annotation.State;
 import org.jooq.api.annotation.Transition;
 
@@ -93,6 +95,164 @@ import org.jooq.api.annotation.Transition;
 @State
 public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> {
 
+// [jooq-tools] START [order-by-field-array]
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1> SelectSeekStep1<R, T1> orderBy(Field<T1> field1);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2> SelectSeekStep2<R, T1, T2> orderBy(Field<T1> field1, Field<T2> field2);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3> SelectSeekStep3<R, T1, T2, T3> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4> SelectSeekStep4<R, T1, T2, T3, T4> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5> SelectSeekStep5<R, T1, T2, T3, T4, T5> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6> SelectSeekStep6<R, T1, T2, T3, T4, T5, T6> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7> SelectSeekStep7<R, T1, T2, T3, T4, T5, T6, T7> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8> SelectSeekStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSeekStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSeekStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSeekStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSeekStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSeekStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSeekStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSeekStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSeekStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSeekStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSeekStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSeekStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSeekStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSeekStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSeekStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> orderBy(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
+
+// [jooq-tools] END [order-by-field-array]
+
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
@@ -101,7 +261,166 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
         name = "ORDER BY",
         args = "Field+"
     )
-    SelectLimitStep<R> orderBy(Field<?>... fields);
+    SelectSeekStepN<R> orderBy(Field<?>... fields);
+
+// [jooq-tools] START [order-by-sortfield-array]
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1> SelectSeekStep1<R, T1> orderBy(SortField<T1> field1);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2> SelectSeekStep2<R, T1, T2> orderBy(SortField<T1> field1, SortField<T2> field2);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3> SelectSeekStep3<R, T1, T2, T3> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4> SelectSeekStep4<R, T1, T2, T3, T4> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5> SelectSeekStep5<R, T1, T2, T3, T4, T5> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4, SortField<T5> field5);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6> SelectSeekStep6<R, T1, T2, T3, T4, T5, T6> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4, SortField<T5> field5, SortField<T6> field6);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7> SelectSeekStep7<R, T1, T2, T3, T4, T5, T6, T7> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4, SortField<T5> field5, SortField<T6> field6, SortField<T7> field7);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8> SelectSeekStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4, SortField<T5> field5, SortField<T6> field6, SortField<T7> field7, SortField<T8> field8);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSeekStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4, SortField<T5> field5, SortField<T6> field6, SortField<T7> field7, SortField<T8> field8, SortField<T9> field9);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSeekStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4, SortField<T5> field5, SortField<T6> field6, SortField<T7> field7, SortField<T8> field8, SortField<T9> field9, SortField<T10> field10);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSeekStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4, SortField<T5> field5, SortField<T6> field6, SortField<T7> field7, SortField<T8> field8, SortField<T9> field9, SortField<T10> field10, SortField<T11> field11);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSeekStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4, SortField<T5> field5, SortField<T6> field6, SortField<T7> field7, SortField<T8> field8, SortField<T9> field9, SortField<T10> field10, SortField<T11> field11, SortField<T12> field12);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSeekStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4, SortField<T5> field5, SortField<T6> field6, SortField<T7> field7, SortField<T8> field8, SortField<T9> field9, SortField<T10> field10, SortField<T11> field11, SortField<T12> field12, SortField<T13> field13);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSeekStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4, SortField<T5> field5, SortField<T6> field6, SortField<T7> field7, SortField<T8> field8, SortField<T9> field9, SortField<T10> field10, SortField<T11> field11, SortField<T12> field12, SortField<T13> field13, SortField<T14> field14);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSeekStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4, SortField<T5> field5, SortField<T6> field6, SortField<T7> field7, SortField<T8> field8, SortField<T9> field9, SortField<T10> field10, SortField<T11> field11, SortField<T12> field12, SortField<T13> field13, SortField<T14> field14, SortField<T15> field15);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSeekStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4, SortField<T5> field5, SortField<T6> field6, SortField<T7> field7, SortField<T8> field8, SortField<T9> field9, SortField<T10> field10, SortField<T11> field11, SortField<T12> field12, SortField<T13> field13, SortField<T14> field14, SortField<T15> field15, SortField<T16> field16);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSeekStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4, SortField<T5> field5, SortField<T6> field6, SortField<T7> field7, SortField<T8> field8, SortField<T9> field9, SortField<T10> field10, SortField<T11> field11, SortField<T12> field12, SortField<T13> field13, SortField<T14> field14, SortField<T15> field15, SortField<T16> field16, SortField<T17> field17);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSeekStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4, SortField<T5> field5, SortField<T6> field6, SortField<T7> field7, SortField<T8> field8, SortField<T9> field9, SortField<T10> field10, SortField<T11> field11, SortField<T12> field12, SortField<T13> field13, SortField<T14> field14, SortField<T15> field15, SortField<T16> field16, SortField<T17> field17, SortField<T18> field18);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSeekStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4, SortField<T5> field5, SortField<T6> field6, SortField<T7> field7, SortField<T8> field8, SortField<T9> field9, SortField<T10> field10, SortField<T11> field11, SortField<T12> field12, SortField<T13> field13, SortField<T14> field14, SortField<T15> field15, SortField<T16> field16, SortField<T17> field17, SortField<T18> field18, SortField<T19> field19);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSeekStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4, SortField<T5> field5, SortField<T6> field6, SortField<T7> field7, SortField<T8> field8, SortField<T9> field9, SortField<T10> field10, SortField<T11> field11, SortField<T12> field12, SortField<T13> field13, SortField<T14> field14, SortField<T15> field15, SortField<T16> field16, SortField<T17> field17, SortField<T18> field18, SortField<T19> field19, SortField<T20> field20);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSeekStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4, SortField<T5> field5, SortField<T6> field6, SortField<T7> field7, SortField<T8> field8, SortField<T9> field9, SortField<T10> field10, SortField<T11> field11, SortField<T12> field12, SortField<T13> field13, SortField<T14> field14, SortField<T15> field15, SortField<T16> field16, SortField<T17> field17, SortField<T18> field18, SortField<T19> field19, SortField<T20> field20, SortField<T21> field21);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query.
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSeekStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> orderBy(SortField<T1> field1, SortField<T2> field2, SortField<T3> field3, SortField<T4> field4, SortField<T5> field5, SortField<T6> field6, SortField<T7> field7, SortField<T8> field8, SortField<T9> field9, SortField<T10> field10, SortField<T11> field11, SortField<T12> field12, SortField<T13> field13, SortField<T14> field14, SortField<T15> field15, SortField<T16> field16, SortField<T17> field17, SortField<T18> field18, SortField<T19> field19, SortField<T20> field20, SortField<T21> field21, SortField<T22> field22);
+
+// [jooq-tools] END [order-by-sortfield-array]
+
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
@@ -111,7 +430,7 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
         name = "ORDER BY",
         args = "SortField+"
     )
-    SelectLimitStep<R> orderBy(SortField<?>... fields);
+    SelectSeekStepN<R> orderBy(SortField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
@@ -121,7 +440,7 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
         name = "ORDER BY",
         args = "SortField+"
     )
-    SelectLimitStep<R> orderBy(Collection<? extends SortField<?>> fields);
+    SelectSeekStepN<R> orderBy(Collection<? extends SortField<?>> fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query

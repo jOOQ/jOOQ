@@ -278,6 +278,106 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testOrderByAndSeek() throws Exception {
+
+        // Single ORDER BY column, no LIMIT
+        // --------------------------------
+        assertEquals(
+            asList(3, 4),
+            create().select(TBook_ID())
+                    .from(TBook())
+                    .orderBy(TBook_ID())
+                    .seek(2)
+                    .fetch(TBook_ID()));
+
+        assertEquals(
+            asList(2, 1),
+            create().select(TBook_ID())
+                    .from(TBook())
+                    .orderBy(TBook_ID().desc())
+                    .seek(3)
+                    .fetch(TBook_ID()));
+
+        // Single ORDER BY column, with LIMIT
+        // ----------------------------------
+        assertEquals(
+            asList(3),
+            create().select(TBook_ID())
+                    .from(TBook())
+                    .orderBy(TBook_ID())
+                    .seek(2)
+                    .limit(1)
+                    .fetch(TBook_ID()));
+
+        assertEquals(
+            asList(2, 3),
+            create().select(TBook_ID())
+                    .from(TBook())
+                    .orderBy(TBook_ID())
+                    .seek(1)
+                    .limit(2)
+                    .fetch(TBook_ID()));
+
+        assertEquals(
+            asList(2, 1),
+            create().select(TBook_ID())
+                    .from(TBook())
+                    .orderBy(TBook_ID().desc())
+                    .seek(3)
+                    .limit(4)
+                    .fetch(TBook_ID()));
+
+        // Several aligned ORDER BY columns (same sort direction) with or without LIMIT
+        // ----------------------------------------------------------------------------
+
+        // For optimisation purposes, jOOQ will render row value expression predicates in case sort directions are aligned
+
+        assertEquals(
+            asList(1, 3, 3, 1),
+            create().select(TBookToBookStore_BOOK_ID())
+                    .from(TBookToBookStore())
+                    .orderBy(TBookToBookStore_STOCK().asc(), TBookToBookStore_BOOK_ID().asc())
+                    .seek(0, 0)
+                    .limit(4)
+                    .fetch(TBookToBookStore_BOOK_ID()));
+
+        assertEquals(
+            asList(3, 3, 1, 2),
+            create().select(TBookToBookStore_BOOK_ID())
+                    .from(TBookToBookStore())
+                    .orderBy(TBookToBookStore_STOCK().asc(), TBookToBookStore_BOOK_ID().asc())
+                    .seek(1, 1)
+                    .limit(4)
+                    .fetch(TBookToBookStore_BOOK_ID()));
+
+        assertEquals(
+            asList(3, 1, 2, 3),
+            create().select(TBookToBookStore_BOOK_ID())
+                    .from(TBookToBookStore())
+                    .orderBy(TBookToBookStore_STOCK().asc(), TBookToBookStore_BOOK_ID().asc())
+                    .seek(1, 3)
+                    .fetch(TBookToBookStore_BOOK_ID()));
+
+        // Several non-aligned ORDER BY columns (different sort direction) with or without LIMIT
+        // -------------------------------------------------------------------------------------
+
+        assertEquals(
+            asList(1, 3, 3, 1),
+            create().select(TBookToBookStore_BOOK_ID())
+                    .from(TBookToBookStore())
+                    .orderBy(
+                        TBookToBookStore_STOCK().desc(),
+                        TBookToBookStore_BOOK_STORE_NAME().asc(),
+                        TBookToBookStore_BOOK_ID().desc()
+                    )
+                    .seek(10, "Orell Füssli", 2)
+                    .fetch(TBookToBookStore_BOOK_ID()));
+
+        // Complete random sorting with NULLS FIRST and NULLS LAST
+        // -------------------------------------------------------
+    }
+
+    @Test
     public void testLimit() throws Exception {
 
         // Some dialects don't support LIMIT 0 / TOP 0

@@ -2021,6 +2021,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFunctionsOnStrings_LEFT_RIGHT() throws Exception {
+        new FunctionTests(this).testFunctionsOnStrings_LEFT_RIGHT();
+    }
+
+    @Test
     public void testFunctionsOnStrings_REPEAT() throws Exception {
         new FunctionTests(this).testFunctionsOnStrings_REPEAT();
     }

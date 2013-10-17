@@ -6968,6 +6968,110 @@ public class DSL {
     }
 
     /**
+     * Get the left outermost characters from a string.
+     * <p>
+     * Example:
+     * <code><pre>
+     * 'abc' = LEFT('abcde', 3)
+     * </pre></code>
+     */
+    @Support
+    public static Field<String> left(String field, int length) {
+        return left(Utils.field(field), Utils.field(length));
+    }
+
+    /**
+     * Get the left outermost characters from a string.
+     * <p>
+     * Example:
+     * <code><pre>
+     * 'abc' = LEFT('abcde', 3)
+     * </pre></code>
+     */
+    @Support
+    public static Field<String> left(String field, Field<? extends Number> length) {
+        return left(Utils.field(field), nullSafe(length));
+    }
+
+    /**
+     * Get the left outermost characters from a string.
+     * <p>
+     * Example:
+     * <code><pre>
+     * 'abc' = LEFT('abcde', 3)
+     * </pre></code>
+     */
+    @Support
+    public static Field<String> left(Field<String> field, int length) {
+        return left(nullSafe(field), Utils.field(length));
+    }
+
+    /**
+     * Get the left outermost characters from a string.
+     * <p>
+     * Example:
+     * <code><pre>
+     * 'abc' = LEFT('abcde', 3)
+     * </pre></code>
+     */
+    @Support
+    public static Field<String> left(Field<String> field, Field<? extends Number> length) {
+        return new Left(field, length);
+    }
+
+    /**
+     * Get the right outermost characters from a string.
+     * <p>
+     * Example:
+     * <code><pre>
+     * 'cde' = RIGHT('abcde', 3)
+     * </pre></code>
+     */
+    @Support
+    public static Field<String> right(String field, int length) {
+        return right(Utils.field(field), Utils.field(length));
+    }
+
+    /**
+     * Get the right outermost characters from a string.
+     * <p>
+     * Example:
+     * <code><pre>
+     * 'cde' = RIGHT('abcde', 3)
+     * </pre></code>
+     */
+    @Support
+    public static Field<String> right(String field, Field<? extends Number> length) {
+        return right(Utils.field(field), nullSafe(length));
+    }
+
+    /**
+     * Get the right outermost characters from a string.
+     * <p>
+     * Example:
+     * <code><pre>
+     * 'cde' = RIGHT('abcde', 3)
+     * </pre></code>
+     */
+    @Support
+    public static Field<String> right(Field<String> field, int length) {
+        return right(nullSafe(field), Utils.field(length));
+    }
+
+    /**
+     * Get the right outermost characters from a string.
+     * <p>
+     * Example:
+     * <code><pre>
+     * 'cde' = RIGHT('abcde', 3)
+     * </pre></code>
+     */
+    @Support
+    public static Field<String> right(Field<String> field, Field<? extends Number> length) {
+        return new Right(field, length);
+    }
+
+    /**
      * Get the length of a <code>VARCHAR</code> type. This is a synonym for
      * {@link #charLength(String)}.
      *

@@ -53,6 +53,7 @@ class GenerateAll {
     	MergeDSL::main(args);
     	Records::main(args);
     	Rows::main(args);
+    	SelectSeekStep::main(args);
     	UpdateDSL::main(args);
     }
 }

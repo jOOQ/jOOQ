@@ -438,6 +438,22 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void setOrderBySiblings(boolean orderBySiblings);
 
     /**
+     * Adds seeking fields.
+     *
+     * @param fields The seeking fields
+     */
+    @Support
+    void addSeek(Field<?>... fields);
+
+    /**
+     * Adds seeking fields.
+     *
+     * @param fields The seeking fields
+     */
+    @Support
+    void addSeek(Collection<? extends Field<?>> fields);
+
+    /**
      * Limit the results of this select
      * <p>
      * This is the same as calling {@link #addLimit(int, int)} with offset = 0

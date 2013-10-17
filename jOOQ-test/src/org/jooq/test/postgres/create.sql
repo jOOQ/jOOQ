@@ -64,7 +64,7 @@ DROP TABLE IF EXISTS t_booleans/
 DROP TABLE IF EXISTS t_identity/
 DROP TABLE IF EXISTS t_identity_pk/
 DROP TABLE IF EXISTS t_pg_extensions/
-DROP TABLE IF EXISTS t_inheritance_1_all/
+DROP TABLE IF EXISTS t_inheritance_all/
 DROP TABLE IF EXISTS t_inheritance_1_2_1/
 DROP TABLE IF EXISTS t_inheritance_1_2/
 DROP TABLE IF EXISTS t_inheritance_1_1/

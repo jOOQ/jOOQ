@@ -1810,10 +1810,14 @@ public abstract class jOOQAbstractTest<
         new OrderByTests(this).testOrderByIndirection();
     }
 
-
     @Test
     public void testOrderByAndLimit() throws Exception {
         new OrderByTests(this).testOrderByAndLimit();
+    }
+
+    @Test
+    public void testOrderByAndSeek() throws Exception {
+        new OrderByTests(this).testOrderByAndSeek();
     }
 
     @Test

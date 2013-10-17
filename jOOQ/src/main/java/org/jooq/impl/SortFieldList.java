@@ -47,6 +47,7 @@ import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.SortField;
+import org.jooq.SortOrder;
 
 /**
  * @author Lukas Eder
@@ -63,7 +64,7 @@ class SortFieldList extends QueryPartList<SortField<?>> {
         super(wrappedList);
     }
 
-    void addAll(Field<?>... fields) {
+    final void addAll(Field<?>... fields) {
         SortField<?>[] result = new SortField[fields.length];
 
         for (int i = 0; i < fields.length; i++) {
@@ -71,5 +72,39 @@ class SortFieldList extends QueryPartList<SortField<?>> {
         }
 
         addAll(Arrays.asList(result));
+    }
+
+    /**
+     * Whether the {@link SortField}s in this list are uniformly sorted, e.g.
+     * all {@link SortOrder#ASC} or all {@link SortOrder#DESC}.
+     */
+    final boolean uniform() {
+        for (SortField<?> field : this)
+            if (field.getOrder() != get(0).getOrder())
+                return false;
+
+        return true;
+    }
+
+    /**
+     * Whether any of the {@link SortField}s in this list contains a
+     * <code>NULLS FIRST</code> or <code>NULLS LAST</code> clause.
+     */
+    final boolean nulls() {
+        for (SortField<?> field : this)
+            if (((SortFieldImpl<?>) field).getNullsFirst() ||
+                ((SortFieldImpl<?>) field).getNullsFirst())
+                return true;
+
+        return false;
+    }
+
+    final List<Field<?>> fields() {
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        for (SortField<?> field : this)
+            result.add(((SortFieldImpl<?>) field).getField());
+
+        return result;
     }
 }

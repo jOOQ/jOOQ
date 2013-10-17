@@ -79,6 +79,18 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
         return order;
     }
 
+    final Field<T> getField() {
+        return field;
+    }
+
+    final boolean getNullsFirst() {
+        return nullsFirst;
+    }
+
+    final boolean getNullsLast() {
+        return nullsLast;
+    }
+
     @Override
     public final SortField<T> nullsFirst() {
         nullsFirst = true;

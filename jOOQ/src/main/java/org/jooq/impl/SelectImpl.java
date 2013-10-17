@@ -44,6 +44,7 @@ import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.val;
 
 import java.sql.ResultSet;
 import java.util.Arrays;
@@ -51,6 +52,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
+
+import javax.annotation.Generated;
 
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -80,6 +83,30 @@ import org.jooq.SelectOnConditionStep;
 import org.jooq.SelectOnStep;
 import org.jooq.SelectOptionalOnStep;
 import org.jooq.SelectQuery;
+import org.jooq.SelectSeekLimitStep;
+import org.jooq.SelectSeekStep1;
+import org.jooq.SelectSeekStep10;
+import org.jooq.SelectSeekStep11;
+import org.jooq.SelectSeekStep12;
+import org.jooq.SelectSeekStep13;
+import org.jooq.SelectSeekStep14;
+import org.jooq.SelectSeekStep15;
+import org.jooq.SelectSeekStep16;
+import org.jooq.SelectSeekStep17;
+import org.jooq.SelectSeekStep18;
+import org.jooq.SelectSeekStep19;
+import org.jooq.SelectSeekStep2;
+import org.jooq.SelectSeekStep20;
+import org.jooq.SelectSeekStep21;
+import org.jooq.SelectSeekStep22;
+import org.jooq.SelectSeekStep3;
+import org.jooq.SelectSeekStep4;
+import org.jooq.SelectSeekStep5;
+import org.jooq.SelectSeekStep6;
+import org.jooq.SelectSeekStep7;
+import org.jooq.SelectSeekStep8;
+import org.jooq.SelectSeekStep9;
+import org.jooq.SelectSeekStepN;
 import org.jooq.SelectSelectStep;
 import org.jooq.SortField;
 import org.jooq.Table;
@@ -92,7 +119,8 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
-class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> implements
+@SuppressWarnings({ "unchecked", "rawtypes" })
+class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> extends AbstractDelegatingQuery<Select<R>> implements
 
     // Cascading interface implementations for Select behaviour
     SelectSelectStep<R>,
@@ -101,6 +129,33 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     SelectConditionStep<R>,
     SelectConnectByConditionStep<R>,
     SelectHavingConditionStep<R>,
+    // [jooq-tools] START [implements-select-seek-step]
+    SelectSeekStep1<R, T1>,
+    SelectSeekStep2<R, T1, T2>,
+    SelectSeekStep3<R, T1, T2, T3>,
+    SelectSeekStep4<R, T1, T2, T3, T4>,
+    SelectSeekStep5<R, T1, T2, T3, T4, T5>,
+    SelectSeekStep6<R, T1, T2, T3, T4, T5, T6>,
+    SelectSeekStep7<R, T1, T2, T3, T4, T5, T6, T7>,
+    SelectSeekStep8<R, T1, T2, T3, T4, T5, T6, T7, T8>,
+    SelectSeekStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9>,
+    SelectSeekStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>,
+    SelectSeekStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>,
+    SelectSeekStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>,
+    SelectSeekStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>,
+    SelectSeekStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>,
+    SelectSeekStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>,
+    SelectSeekStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>,
+    SelectSeekStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>,
+    SelectSeekStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>,
+    SelectSeekStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>,
+    SelectSeekStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>,
+    SelectSeekStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>,
+    SelectSeekStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>,
+
+// [jooq-tools] END [implements-select-seek-step]
+    SelectSeekStepN<R>,
+    SelectSeekLimitStep<R>,
     SelectOffsetStep<R>,
     SelectForUpdateOfStep<R> {
 
@@ -166,7 +221,6 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
      * This method must be able to return both incompatible types
      * SelectSelectStep&lt;Record> and SelectSelectStep&lt;R>
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final SelectImpl select(Field<?>... fields) {
         getQuery().addSelect(fields);
@@ -177,7 +231,6 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
      * This method must be able to return both incompatible types
      * SelectSelectStep&lt;Record> and SelectSelectStep&lt;R>
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final SelectImpl select(Collection<? extends Field<?>> fields) {
         getQuery().addSelect(fields);
@@ -185,92 +238,92 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> hint(String hint) {
+    public final SelectImpl hint(String hint) {
         getQuery().addHint(hint);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> option(String hint) {
+    public final SelectImpl option(String hint) {
         getQuery().addOption(hint);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> from(TableLike<?>... tables) {
+    public final SelectImpl from(TableLike<?>... tables) {
         getQuery().addFrom(tables);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> from(Collection<? extends TableLike<?>> tables) {
+    public final SelectImpl from(Collection<? extends TableLike<?>> tables) {
         getQuery().addFrom(tables);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> from(String sql) {
+    public final SelectImpl from(String sql) {
         return from(table(sql));
     }
 
     @Override
-    public final SelectImpl<R> from(String sql, Object... bindings) {
+    public final SelectImpl from(String sql, Object... bindings) {
         return from(table(sql, bindings));
     }
 
     @Override
-    public final SelectImpl<R> from(String sql, QueryPart... parts) {
+    public final SelectImpl from(String sql, QueryPart... parts) {
         return from(table(sql, parts));
     }
 
     @Override
-    public final SelectImpl<R> where(Condition... conditions) {
+    public final SelectImpl where(Condition... conditions) {
         conditionStep = ConditionStep.WHERE;
         getQuery().addConditions(conditions);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> where(Collection<? extends Condition> conditions) {
+    public final SelectImpl where(Collection<? extends Condition> conditions) {
         conditionStep = ConditionStep.WHERE;
         getQuery().addConditions(conditions);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> where(Field<Boolean> condition) {
+    public final SelectImpl where(Field<Boolean> condition) {
         return where(condition(condition));
     }
 
     @Override
-    public final SelectImpl<R> where(String sql) {
+    public final SelectImpl where(String sql) {
         return where(condition(sql));
     }
 
     @Override
-    public final SelectImpl<R> where(String sql, Object... bindings) {
+    public final SelectImpl where(String sql, Object... bindings) {
         return where(condition(sql, bindings));
     }
 
     @Override
-    public final SelectImpl<R> where(String sql, QueryPart... parts) {
+    public final SelectImpl where(String sql, QueryPart... parts) {
         return where(condition(sql, parts));
     }
 
     @Override
-    public final SelectImpl<R> whereExists(Select<?> select) {
+    public final SelectImpl whereExists(Select<?> select) {
         conditionStep = ConditionStep.WHERE;
         return andExists(select);
     }
 
     @Override
-    public final SelectImpl<R> whereNotExists(Select<?> select) {
+    public final SelectImpl whereNotExists(Select<?> select) {
         conditionStep = ConditionStep.WHERE;
         return andNotExists(select);
     }
 
     @Override
-    public final SelectImpl<R> and(Condition condition) {
+    public final SelectImpl and(Condition condition) {
         switch (conditionStep) {
             case WHERE:
                 getQuery().addConditions(condition);
@@ -290,47 +343,47 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> and(Field<Boolean> condition) {
+    public final SelectImpl and(Field<Boolean> condition) {
         return and(condition(condition));
     }
 
     @Override
-    public final SelectImpl<R> and(String sql) {
+    public final SelectImpl and(String sql) {
         return and(condition(sql));
     }
 
     @Override
-    public final SelectImpl<R> and(String sql, Object... bindings) {
+    public final SelectImpl and(String sql, Object... bindings) {
         return and(condition(sql, bindings));
     }
 
     @Override
-    public final SelectImpl<R> and(String sql, QueryPart... parts) {
+    public final SelectImpl and(String sql, QueryPart... parts) {
         return and(condition(sql, parts));
     }
 
     @Override
-    public final SelectImpl<R> andNot(Condition condition) {
+    public final SelectImpl andNot(Condition condition) {
         return and(condition.not());
     }
 
     @Override
-    public final SelectImpl<R> andNot(Field<Boolean> condition) {
+    public final SelectImpl andNot(Field<Boolean> condition) {
         return andNot(condition(condition));
     }
 
     @Override
-    public final SelectImpl<R> andExists(Select<?> select) {
+    public final SelectImpl andExists(Select<?> select) {
         return and(exists(select));
     }
 
     @Override
-    public final SelectImpl<R> andNotExists(Select<?> select) {
+    public final SelectImpl andNotExists(Select<?> select) {
         return and(notExists(select));
     }
 
     @Override
-    public final SelectImpl<R> or(Condition condition) {
+    public final SelectImpl or(Condition condition) {
         switch (conditionStep) {
             case WHERE:
                 getQuery().addConditions(Operator.OR, condition);
@@ -349,191 +402,763 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> or(Field<Boolean> condition) {
+    public final SelectImpl or(Field<Boolean> condition) {
         return or(condition(condition));
     }
 
     @Override
-    public final SelectImpl<R> or(String sql) {
+    public final SelectImpl or(String sql) {
         return or(condition(sql));
     }
 
     @Override
-    public final SelectImpl<R> or(String sql, Object... bindings) {
+    public final SelectImpl or(String sql, Object... bindings) {
         return or(condition(sql, bindings));
     }
 
     @Override
-    public final SelectImpl<R> or(String sql, QueryPart... parts) {
+    public final SelectImpl or(String sql, QueryPart... parts) {
         return or(condition(sql, parts));
     }
 
     @Override
-    public final SelectImpl<R> orNot(Condition condition) {
+    public final SelectImpl orNot(Condition condition) {
         return or(condition.not());
     }
 
     @Override
-    public final SelectImpl<R> orNot(Field<Boolean> condition) {
+    public final SelectImpl orNot(Field<Boolean> condition) {
         return orNot(condition(condition));
     }
 
     @Override
-    public final SelectImpl<R> orExists(Select<?> select) {
+    public final SelectImpl orExists(Select<?> select) {
         return or(exists(select));
     }
 
     @Override
-    public final SelectImpl<R> orNotExists(Select<?> select) {
+    public final SelectImpl orNotExists(Select<?> select) {
         return or(notExists(select));
     }
 
     @Override
-    public final SelectImpl<R> connectBy(Condition condition) {
+    public final SelectImpl connectBy(Condition condition) {
         conditionStep = ConditionStep.CONNECT_BY;
         getQuery().addConnectBy(condition);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> connectBy(Field<Boolean> condition) {
+    public final SelectImpl connectBy(Field<Boolean> condition) {
         return connectBy(condition(condition));
     }
 
     @Override
-    public final SelectImpl<R> connectBy(String sql) {
+    public final SelectImpl connectBy(String sql) {
         return connectBy(condition(sql));
     }
 
     @Override
-    public final SelectImpl<R> connectBy(String sql, Object... bindings) {
+    public final SelectImpl connectBy(String sql, Object... bindings) {
         return connectBy(condition(sql, bindings));
     }
 
     @Override
-    public final SelectImpl<R> connectBy(String sql, QueryPart... parts) {
+    public final SelectImpl connectBy(String sql, QueryPart... parts) {
         return connectBy(condition(sql, parts));
     }
 
     @Override
-    public final SelectImpl<R> connectByNoCycle(Condition condition) {
+    public final SelectImpl connectByNoCycle(Condition condition) {
         conditionStep = ConditionStep.CONNECT_BY;
         getQuery().addConnectByNoCycle(condition);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> connectByNoCycle(Field<Boolean> condition) {
+    public final SelectImpl connectByNoCycle(Field<Boolean> condition) {
         return connectByNoCycle(condition(condition));
     }
 
     @Override
-    public final SelectImpl<R> connectByNoCycle(String sql) {
+    public final SelectImpl connectByNoCycle(String sql) {
         return connectByNoCycle(condition(sql));
     }
 
     @Override
-    public final SelectImpl<R> connectByNoCycle(String sql, Object... bindings) {
+    public final SelectImpl connectByNoCycle(String sql, Object... bindings) {
         return connectByNoCycle(condition(sql, bindings));
     }
 
     @Override
-    public final SelectImpl<R> connectByNoCycle(String sql, QueryPart... parts) {
+    public final SelectImpl connectByNoCycle(String sql, QueryPart... parts) {
         return connectByNoCycle(condition(sql, parts));
     }
 
     @Override
-    public final SelectImpl<R> startWith(Condition condition) {
+    public final SelectImpl startWith(Condition condition) {
         getQuery().setConnectByStartWith(condition);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> startWith(Field<Boolean> condition) {
+    public final SelectImpl startWith(Field<Boolean> condition) {
         return startWith(condition(condition));
     }
 
     @Override
-    public final SelectImpl<R> startWith(String sql) {
+    public final SelectImpl startWith(String sql) {
         return startWith(condition(sql));
     }
 
     @Override
-    public final SelectImpl<R> startWith(String sql, Object... bindings) {
+    public final SelectImpl startWith(String sql, Object... bindings) {
         return startWith(condition(sql, bindings));
     }
 
     @Override
-    public final SelectImpl<R> startWith(String sql, QueryPart... parts) {
+    public final SelectImpl startWith(String sql, QueryPart... parts) {
         return startWith(condition(sql, parts));
     }
 
     @Override
-    public final SelectImpl<R> groupBy(GroupField... fields) {
+    public final SelectImpl groupBy(GroupField... fields) {
         getQuery().addGroupBy(fields);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> groupBy(Collection<? extends GroupField> fields) {
+    public final SelectImpl groupBy(Collection<? extends GroupField> fields) {
         getQuery().addGroupBy(fields);
         return this;
     }
 
+// [jooq-tools] START [order-by-field-array]
+
     @Override
-    public final SelectImpl<R> orderBy(Field<?>... fields) {
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep1 orderBy(Field t1) {
+        return orderBy(new Field[] { t1 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep2 orderBy(Field t1, Field t2) {
+        return orderBy(new Field[] { t1, t2 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep3 orderBy(Field t1, Field t2, Field t3) {
+        return orderBy(new Field[] { t1, t2, t3 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep4 orderBy(Field t1, Field t2, Field t3, Field t4) {
+        return orderBy(new Field[] { t1, t2, t3, t4 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep5 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5) {
+        return orderBy(new Field[] { t1, t2, t3, t4, t5 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep6 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6) {
+        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep7 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7) {
+        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep8 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8) {
+        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep9 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9) {
+        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep10 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10) {
+        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep11 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11) {
+        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep12 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12) {
+        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep13 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13) {
+        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep14 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14) {
+        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep15 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15) {
+        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep16 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16) {
+        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep17 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17) {
+        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep18 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18) {
+        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep19 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19) {
+        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep20 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19, Field t20) {
+        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep21 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19, Field t20, Field t21) {
+        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep22 orderBy(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19, Field t20, Field t21, Field t22) {
+        return orderBy(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22 });
+    }
+
+// [jooq-tools] END [order-by-field-array]
+
+    @Override
+    public final SelectImpl orderBy(Field<?>... fields) {
+        getQuery().addOrderBy(fields);
+        return this;
+    }
+
+// [jooq-tools] START [order-by-sortfield-array]
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep1 orderBy(SortField t1) {
+        return orderBy(new SortField[] { t1 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep2 orderBy(SortField t1, SortField t2) {
+        return orderBy(new SortField[] { t1, t2 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep3 orderBy(SortField t1, SortField t2, SortField t3) {
+        return orderBy(new SortField[] { t1, t2, t3 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep4 orderBy(SortField t1, SortField t2, SortField t3, SortField t4) {
+        return orderBy(new SortField[] { t1, t2, t3, t4 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep5 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5) {
+        return orderBy(new SortField[] { t1, t2, t3, t4, t5 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep6 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6) {
+        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep7 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7) {
+        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep8 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8) {
+        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep9 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9) {
+        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep10 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10) {
+        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep11 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11) {
+        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep12 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12) {
+        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep13 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13) {
+        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep14 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13, SortField t14) {
+        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep15 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13, SortField t14, SortField t15) {
+        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep16 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13, SortField t14, SortField t15, SortField t16) {
+        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep17 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13, SortField t14, SortField t15, SortField t16, SortField t17) {
+        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep18 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13, SortField t14, SortField t15, SortField t16, SortField t17, SortField t18) {
+        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep19 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13, SortField t14, SortField t15, SortField t16, SortField t17, SortField t18, SortField t19) {
+        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep20 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13, SortField t14, SortField t15, SortField t16, SortField t17, SortField t18, SortField t19, SortField t20) {
+        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep21 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13, SortField t14, SortField t15, SortField t16, SortField t17, SortField t18, SortField t19, SortField t20, SortField t21) {
+        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekStep22 orderBy(SortField t1, SortField t2, SortField t3, SortField t4, SortField t5, SortField t6, SortField t7, SortField t8, SortField t9, SortField t10, SortField t11, SortField t12, SortField t13, SortField t14, SortField t15, SortField t16, SortField t17, SortField t18, SortField t19, SortField t20, SortField t21, SortField t22) {
+        return orderBy(new SortField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22 });
+    }
+
+// [jooq-tools] END [order-by-sortfield-array]
+
+    @Override
+    public final SelectImpl orderBy(SortField<?>... fields) {
         getQuery().addOrderBy(fields);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> orderBy(SortField<?>... fields) {
+    public final SelectImpl orderBy(Collection<? extends SortField<?>> fields) {
         getQuery().addOrderBy(fields);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> orderBy(Collection<? extends SortField<?>> fields) {
-        getQuery().addOrderBy(fields);
-        return this;
-    }
-
-    @Override
-    public final SelectImpl<R> orderBy(int... fieldIndexes) {
+    public final SelectImpl orderBy(int... fieldIndexes) {
         getQuery().addOrderBy(fieldIndexes);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> orderSiblingsBy(Field<?>... fields) {
+    public final SelectImpl orderSiblingsBy(Field<?>... fields) {
         getQuery().addOrderBy(fields);
         getQuery().setOrderBySiblings(true);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> orderSiblingsBy(SortField<?>... fields) {
+    public final SelectImpl orderSiblingsBy(SortField<?>... fields) {
         getQuery().addOrderBy(fields);
         getQuery().setOrderBySiblings(true);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> orderSiblingsBy(Collection<? extends SortField<?>> fields) {
+    public final SelectImpl orderSiblingsBy(Collection<? extends SortField<?>> fields) {
         getQuery().addOrderBy(fields);
         getQuery().setOrderBySiblings(true);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> orderSiblingsBy(int... fieldIndexes) {
+    public final SelectImpl orderSiblingsBy(int... fieldIndexes) {
         getQuery().addOrderBy(fieldIndexes);
         getQuery().setOrderBySiblings(true);
         return this;
     }
 
+// [jooq-tools] START [seek]
+
     @Override
-    public final SelectImpl<R> limit(int numberOfRows) {
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1) {
+        return seek(val(t1));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2) {
+        return seek(val(t1), val(t2));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3) {
+        return seek(val(t1), val(t2), val(t3));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4) {
+        return seek(val(t1), val(t2), val(t3), val(t4));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5) {
+        return seek(val(t1), val(t2), val(t3), val(t4), val(t5));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6) {
+        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7) {
+        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8) {
+        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9) {
+        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10) {
+        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11) {
+        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12) {
+        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13) {
+        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14) {
+        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15) {
+        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16) {
+        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17) {
+        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18) {
+        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19) {
+        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18), val(t19));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19, Object t20) {
+        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18), val(t19), val(t20));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19, Object t20, Object t21) {
+        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18), val(t19), val(t20), val(t21));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19, Object t20, Object t21, Object t22) {
+        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18), val(t19), val(t20), val(t21), val(t22));
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1) {
+        getQuery().addSeek(t1);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2) {
+        getQuery().addSeek(t1, t2);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3) {
+        getQuery().addSeek(t1, t2, t3);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4) {
+        getQuery().addSeek(t1, t2, t3, t4);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5) {
+        getQuery().addSeek(t1, t2, t3, t4, t5);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6) {
+        getQuery().addSeek(t1, t2, t3, t4, t5, t6);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7) {
+        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8) {
+        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9) {
+        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10) {
+        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11) {
+        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12) {
+        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13) {
+        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14) {
+        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15) {
+        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16) {
+        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17) {
+        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18) {
+        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19) {
+        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19, Field t20) {
+        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19, Field t20, Field t21) {
+        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21);
+        return this;
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19, Field t20, Field t21, Field t22) {
+        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
+        return this;
+    }
+
+// [jooq-tools] END [seek]
+
+    @Override
+    public final SelectSeekLimitStep<R> seek(Object... values) {
+        return this;
+    }
+
+    @Override
+    public final SelectSeekLimitStep<R> seek(Field<?>... values) {
+        return this;
+    }
+
+    @Override
+    public final SelectImpl limit(int numberOfRows) {
         this.limit = numberOfRows;
         this.limitParam = null;
         getQuery().addLimit(numberOfRows);
@@ -541,7 +1166,7 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> limit(Param<Integer> numberOfRows) {
+    public final SelectImpl limit(Param<Integer> numberOfRows) {
         this.limit = null;
         this.limitParam = numberOfRows;
         getQuery().addLimit(numberOfRows);
@@ -549,31 +1174,31 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> limit(int offset, int numberOfRows) {
+    public final SelectImpl limit(int offset, int numberOfRows) {
         getQuery().addLimit(offset, numberOfRows);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> limit(int offset, Param<Integer> numberOfRows) {
+    public final SelectImpl limit(int offset, Param<Integer> numberOfRows) {
         getQuery().addLimit(offset, numberOfRows);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> limit(Param<Integer> offset, int numberOfRows) {
+    public final SelectImpl limit(Param<Integer> offset, int numberOfRows) {
         getQuery().addLimit(offset, numberOfRows);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> limit(Param<Integer> offset, Param<Integer> numberOfRows) {
+    public final SelectImpl limit(Param<Integer> offset, Param<Integer> numberOfRows) {
         getQuery().addLimit(offset, numberOfRows);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> offset(int offset) {
+    public final SelectImpl offset(int offset) {
         if (limit != null) {
             getQuery().addLimit(offset, limit);
         }
@@ -585,7 +1210,7 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> offset(Param<Integer> offset) {
+    public final SelectImpl offset(Param<Integer> offset) {
         if (limit != null) {
             getQuery().addLimit(offset, limit);
         }
@@ -597,113 +1222,113 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> forUpdate() {
+    public final SelectImpl forUpdate() {
         getQuery().setForUpdate(true);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> of(Field<?>... fields) {
+    public final SelectImpl of(Field<?>... fields) {
         getQuery().setForUpdateOf(fields);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> of(Collection<? extends Field<?>> fields) {
+    public final SelectImpl of(Collection<? extends Field<?>> fields) {
         getQuery().setForUpdateOf(fields);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> of(Table<?>... tables) {
+    public final SelectImpl of(Table<?>... tables) {
         getQuery().setForUpdateOf(tables);
         return this;
     }
 
     /* [pro] xx
     xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxx xxxxxxxx x
+    xxxxxx xxxxx xxxxxxxxxx xxxxxxxx xxxxxxxx x
         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         xxxxxx xxxxx
     x
 
     xx [/pro] */
     @Override
-    public final SelectImpl<R> noWait() {
+    public final SelectImpl noWait() {
         getQuery().setForUpdateNoWait();
         return this;
     }
 
     /* [pro] xx
     xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxx x
+    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxx x
         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         xxxxxx xxxxx
     x
 
     xx [/pro] */
     @Override
-    public final SelectImpl<R> forShare() {
+    public final SelectImpl forShare() {
         getQuery().setForShare(true);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> union(Select<? extends R> select) {
-        return new SelectImpl<R>(getDelegate().union(select));
+    public final SelectImpl union(Select<? extends R> select) {
+        return new SelectImpl(getDelegate().union(select));
     }
 
     @Override
-    public final SelectImpl<R> unionAll(Select<? extends R> select) {
-        return new SelectImpl<R>(getDelegate().unionAll(select));
+    public final SelectImpl unionAll(Select<? extends R> select) {
+        return new SelectImpl(getDelegate().unionAll(select));
     }
 
     @Override
-    public final SelectImpl<R> except(Select<? extends R> select) {
-        return new SelectImpl<R>(getDelegate().except(select));
+    public final SelectImpl except(Select<? extends R> select) {
+        return new SelectImpl(getDelegate().except(select));
     }
 
     @Override
-    public final SelectImpl<R> intersect(Select<? extends R> select) {
-        return new SelectImpl<R>(getDelegate().intersect(select));
+    public final SelectImpl intersect(Select<? extends R> select) {
+        return new SelectImpl(getDelegate().intersect(select));
     }
 
     @Override
-    public final SelectImpl<R> having(Condition... conditions) {
+    public final SelectImpl having(Condition... conditions) {
         conditionStep = ConditionStep.HAVING;
         getQuery().addHaving(conditions);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> having(Collection<? extends Condition> conditions) {
+    public final SelectImpl having(Collection<? extends Condition> conditions) {
         conditionStep = ConditionStep.HAVING;
         getQuery().addHaving(conditions);
         return this;
     }
 
     @Override
-    public final SelectImpl<R> having(Field<Boolean> condition) {
+    public final SelectImpl having(Field<Boolean> condition) {
         return having(condition(condition));
     }
 
     @Override
-    public final SelectImpl<R> having(String sql) {
+    public final SelectImpl having(String sql) {
         return having(condition(sql));
     }
 
     @Override
-    public final SelectImpl<R> having(String sql, Object... bindings) {
+    public final SelectImpl having(String sql, Object... bindings) {
         return having(condition(sql, bindings));
     }
 
     @Override
-    public final SelectImpl<R> having(String sql, QueryPart... parts) {
+    public final SelectImpl having(String sql, QueryPart... parts) {
         return having(condition(sql, parts));
     }
 
     @Override
-    public final SelectImpl<R> on(Condition... conditions) {
+    public final SelectImpl on(Condition... conditions) {
         conditionStep = ConditionStep.ON;
         joinConditions = new ConditionProviderImpl();
         joinConditions.addConditions(conditions);
@@ -715,27 +1340,27 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> on(Field<Boolean> condition) {
+    public final SelectImpl on(Field<Boolean> condition) {
         return on(condition(condition));
     }
 
     @Override
-    public final SelectImpl<R> on(String sql) {
+    public final SelectImpl on(String sql) {
         return on(condition(sql));
     }
 
     @Override
-    public final SelectImpl<R> on(String sql, Object... bindings) {
+    public final SelectImpl on(String sql, Object... bindings) {
         return on(condition(sql, bindings));
     }
 
     @Override
-    public final SelectImpl<R> on(String sql, QueryPart... parts) {
+    public final SelectImpl on(String sql, QueryPart... parts) {
         return on(condition(sql, parts));
     }
 
     @Override
-    public final SelectImpl<R> onKey() throws DataAccessException {
+    public final SelectImpl onKey() throws DataAccessException {
         conditionStep = ConditionStep.ON;
         getQuery().addJoinOnKey(joinTable, joinType);
         joinTable = null;
@@ -745,7 +1370,7 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> onKey(TableField<?, ?>... keyFields) throws DataAccessException {
+    public final SelectImpl onKey(TableField<?, ?>... keyFields) throws DataAccessException {
         conditionStep = ConditionStep.ON;
         getQuery().addJoinOnKey(joinTable, joinType, keyFields);
         joinTable = null;
@@ -755,7 +1380,7 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> onKey(ForeignKey<?, ?> key) {
+    public final SelectImpl onKey(ForeignKey<?, ?> key) {
         conditionStep = ConditionStep.ON;
         getQuery().addJoinOnKey(joinTable, joinType, key);
         joinTable = null;
@@ -766,12 +1391,12 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> using(Field<?>... fields) {
+    public final SelectImpl using(Field<?>... fields) {
         return using(Arrays.asList(fields));
     }
 
     @Override
-    public final SelectImpl<R> using(Collection<? extends Field<?>> fields) {
+    public final SelectImpl using(Collection<? extends Field<?>> fields) {
         getQuery().addJoinUsing(joinTable, joinType, fields);
         joinTable = null;
         joinPartitionBy = null;
@@ -780,17 +1405,17 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> join(TableLike<?> table) {
+    public final SelectImpl join(TableLike<?> table) {
         return join(table, JoinType.JOIN);
     }
 
     @Override
-    public final SelectImpl<R> leftOuterJoin(TableLike<?> table) {
+    public final SelectImpl leftOuterJoin(TableLike<?> table) {
         return join(table, JoinType.LEFT_OUTER_JOIN);
     }
 
     @Override
-    public final SelectImpl<R> rightOuterJoin(TableLike<?> table) {
+    public final SelectImpl rightOuterJoin(TableLike<?> table) {
         return join(table, JoinType.RIGHT_OUTER_JOIN);
     }
 
@@ -800,7 +1425,7 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> join(TableLike<?> table, JoinType type) {
+    public final SelectImpl join(TableLike<?> table, JoinType type) {
         switch (type) {
             case CROSS_JOIN:
             case NATURAL_JOIN:
@@ -832,62 +1457,62 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> naturalJoin(TableLike<?> table) {
+    public final SelectImpl naturalJoin(TableLike<?> table) {
         return join(table, JoinType.NATURAL_JOIN);
     }
 
     @Override
-    public final SelectImpl<R> naturalLeftOuterJoin(TableLike<?> table) {
+    public final SelectImpl naturalLeftOuterJoin(TableLike<?> table) {
         return join(table, JoinType.NATURAL_LEFT_OUTER_JOIN);
     }
 
     @Override
-    public final SelectImpl<R> naturalRightOuterJoin(TableLike<?> table) {
+    public final SelectImpl naturalRightOuterJoin(TableLike<?> table) {
         return join(table, JoinType.NATURAL_RIGHT_OUTER_JOIN);
     }
 
     @Override
-    public final SelectImpl<R> join(String sql) {
+    public final SelectImpl join(String sql) {
         return join(table(sql));
     }
 
     @Override
-    public final SelectImpl<R> join(String sql, Object... bindings) {
+    public final SelectImpl join(String sql, Object... bindings) {
         return join(table(sql, bindings));
     }
 
     @Override
-    public final SelectImpl<R> join(String sql, QueryPart... parts) {
+    public final SelectImpl join(String sql, QueryPart... parts) {
         return join(table(sql, parts));
     }
 
     @Override
-    public final SelectImpl<R> leftOuterJoin(String sql) {
+    public final SelectImpl leftOuterJoin(String sql) {
         return leftOuterJoin(table(sql));
     }
 
     @Override
-    public final SelectImpl<R> leftOuterJoin(String sql, Object... bindings) {
+    public final SelectImpl leftOuterJoin(String sql, Object... bindings) {
         return leftOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final SelectImpl<R> leftOuterJoin(String sql, QueryPart... parts) {
+    public final SelectImpl leftOuterJoin(String sql, QueryPart... parts) {
         return leftOuterJoin(table(sql, parts));
     }
 
     @Override
-    public final SelectImpl<R> rightOuterJoin(String sql) {
+    public final SelectImpl rightOuterJoin(String sql) {
         return rightOuterJoin(table(sql));
     }
 
     @Override
-    public final SelectImpl<R> rightOuterJoin(String sql, Object... bindings) {
+    public final SelectImpl rightOuterJoin(String sql, Object... bindings) {
         return rightOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final SelectImpl<R> rightOuterJoin(String sql, QueryPart... parts) {
+    public final SelectImpl rightOuterJoin(String sql, QueryPart... parts) {
         return rightOuterJoin(table(sql, parts));
     }
 
@@ -922,59 +1547,59 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> naturalJoin(String sql) {
+    public final SelectImpl naturalJoin(String sql) {
         return naturalJoin(table(sql));
     }
 
     @Override
-    public final SelectImpl<R> naturalJoin(String sql, Object... bindings) {
+    public final SelectImpl naturalJoin(String sql, Object... bindings) {
         return naturalJoin(table(sql, bindings));
     }
 
     @Override
-    public final SelectImpl<R> naturalJoin(String sql, QueryPart... parts) {
+    public final SelectImpl naturalJoin(String sql, QueryPart... parts) {
         return naturalJoin(table(sql, parts));
     }
 
     @Override
-    public final SelectImpl<R> naturalLeftOuterJoin(String sql) {
+    public final SelectImpl naturalLeftOuterJoin(String sql) {
         return naturalLeftOuterJoin(table(sql));
     }
 
     @Override
-    public final SelectImpl<R> naturalLeftOuterJoin(String sql, Object... bindings) {
+    public final SelectImpl naturalLeftOuterJoin(String sql, Object... bindings) {
         return naturalLeftOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final SelectImpl<R> naturalLeftOuterJoin(String sql, QueryPart... parts) {
+    public final SelectImpl naturalLeftOuterJoin(String sql, QueryPart... parts) {
         return naturalLeftOuterJoin(table(sql, parts));
     }
 
     @Override
-    public final SelectImpl<R> naturalRightOuterJoin(String sql) {
+    public final SelectImpl naturalRightOuterJoin(String sql) {
         return naturalRightOuterJoin(table(sql));
     }
 
     @Override
-    public final SelectImpl<R> naturalRightOuterJoin(String sql, Object... bindings) {
+    public final SelectImpl naturalRightOuterJoin(String sql, Object... bindings) {
         return naturalRightOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final SelectImpl<R> naturalRightOuterJoin(String sql, QueryPart... parts) {
+    public final SelectImpl naturalRightOuterJoin(String sql, QueryPart... parts) {
         return naturalRightOuterJoin(table(sql, parts));
     }
 
     /* [pro] xx
     xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
         xxxxxxxxxxxxxxx x xxxxxxx
         xxxxxx xxxxx
     x
 
     xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxx x
+    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxx x
         xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
     x
 

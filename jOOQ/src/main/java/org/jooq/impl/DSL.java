@@ -67,6 +67,7 @@ import java.sql.Date;
 import java.sql.ResultSetMetaData;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -11801,6 +11802,23 @@ public class DSL {
     @Support
     public static RowN row(Field<?>... values) {
         return new RowImpl(values);
+    }
+
+    /**
+     * Create a row value expression of degree <code>N > 22</code>.
+     * <p>
+     * Note: Not all databases support row value expressions, but many row value
+     * expression operations can be simulated on all databases. See relevant row
+     * value expression method Javadocs for details.
+     */
+    @Support
+    public static RowN row(Collection<?> values) {
+        Collection<Field<?>> fields = new ArrayList<Field<?>>();
+
+        for (Object o : values)
+            fields.add(o instanceof Field<?> ? (Field<?>) o : val(o));
+
+        return new RowImpl(fields);
     }
 
     // -------------------------------------------------------------------------

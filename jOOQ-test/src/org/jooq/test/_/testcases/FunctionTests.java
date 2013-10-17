@@ -88,6 +88,7 @@ import static org.jooq.impl.DSL.greatest;
 import static org.jooq.impl.DSL.hour;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.least;
+import static org.jooq.impl.DSL.left;
 import static org.jooq.impl.DSL.length;
 import static org.jooq.impl.DSL.ln;
 import static org.jooq.impl.DSL.log;
@@ -107,6 +108,7 @@ import static org.jooq.impl.DSL.rad;
 import static org.jooq.impl.DSL.rand;
 import static org.jooq.impl.DSL.repeat;
 import static org.jooq.impl.DSL.replace;
+import static org.jooq.impl.DSL.right;
 import static org.jooq.impl.DSL.round;
 import static org.jooq.impl.DSL.rpad;
 import static org.jooq.impl.DSL.rtrim;
@@ -554,6 +556,29 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals("eorge", result.getValue(substring(TAuthor_FIRST_NAME(), 2)));
         assertEquals("eo", result.getValue(substring(TAuthor_FIRST_NAME(), 2, 2)));
+    }
+
+    @Test
+    public void testFunctionsOnStrings_LEFT_RIGHT() throws Exception {
+
+        // LEFT and RIGHT
+        Record2<String, String> result = create().select(
+            left(val("abcde"), 3),
+            right(val("abcde"), 3)).fetchOne();
+
+        assertEquals("abc", result.value1());
+        assertEquals("cde", result.value2());
+
+        result =
+        create().select(
+                    left(TAuthor_FIRST_NAME(), 3),
+                    right(TAuthor_FIRST_NAME(), 3))
+                .from(TAuthor())
+                .where(TAuthor_ID().equal(1))
+                .fetchOne();
+
+        assertEquals("Geo", result.value1());
+        assertEquals("rge", result.value2());
     }
 
     @Test

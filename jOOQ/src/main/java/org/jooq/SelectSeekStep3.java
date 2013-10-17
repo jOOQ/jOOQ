@@ -109,7 +109,7 @@ public interface SelectSeekStep3<R extends Record, T1, T2, T3> extends SelectLim
      * DSL.using(configuration)
      *    .selectFrom(TABLE)
      *    .orderBy(ID, CODE)
-     *    .seek(3, 'abc')
+     *    .seek(3, "abc")
      *    .fetch();
      * </pre></code>
      * <p>
@@ -157,7 +157,7 @@ public interface SelectSeekStep3<R extends Record, T1, T2, T3> extends SelectLim
      * DSL.using(configuration)
      *    .selectFrom(TABLE)
      *    .orderBy(ID, CODE)
-     *    .seek(3, 'abc')
+     *    .seek(3, "abc")
      *    .fetch();
      * </pre></code>
      * <p>

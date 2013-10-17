@@ -109,7 +109,7 @@ public interface SelectSeekStep6<R extends Record, T1, T2, T3, T4, T5, T6> exten
      * DSL.using(configuration)
      *    .selectFrom(TABLE)
      *    .orderBy(ID, CODE)
-     *    .seek(3, 'abc')
+     *    .seek(3, "abc")
      *    .fetch();
      * </pre></code>
      * <p>
@@ -157,7 +157,7 @@ public interface SelectSeekStep6<R extends Record, T1, T2, T3, T4, T5, T6> exten
      * DSL.using(configuration)
      *    .selectFrom(TABLE)
      *    .orderBy(ID, CODE)
-     *    .seek(3, 'abc')
+     *    .seek(3, "abc")
      *    .fetch();
      * </pre></code>
      * <p>

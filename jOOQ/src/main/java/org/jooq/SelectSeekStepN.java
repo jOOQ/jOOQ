@@ -107,7 +107,8 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * DSL.using(configuration)
      *    .selectFrom(TABLE)
      *    .orderBy(ID, CODE)
-     *    .seek(3, 'abc')
+<<<<<<< HEAD
+     *    .seek(3, "abc")
      *    .fetch();
      * </pre></code>
      * <p>
@@ -157,7 +158,7 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * DSL.using(configuration)
      *    .selectFrom(TABLE)
      *    .orderBy(ID, CODE)
-     *    .seek(3, 'abc')
+     *    .seek(3, "abc")
      *    .fetch();
      * </pre></code>
      * <p>

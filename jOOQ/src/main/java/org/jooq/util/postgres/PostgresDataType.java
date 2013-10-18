@@ -147,6 +147,7 @@ public class PostgresDataType {
     public static final DataType<Result<Record>> REFCURSOR              = new DefaultDataType<Result<Record>>(SQLDialect.POSTGRES, SQLDataType.RESULT, "refcursor");
     public static final DataType<Object>     ANY                        = new DefaultDataType<Object>(SQLDialect.POSTGRES, SQLDataType.OTHER, "any");
     public static final DataType<UUID>       UUID                       = new DefaultDataType<UUID>(SQLDialect.POSTGRES, SQLDataType.UUID, "uuid");
+    public static final DataType<Object>     JSON                       = new DefaultDataType<Object>(SQLDialect.POSTGRES, SQLDataType.OTHER, "json");
 
     // Meta-table types
     public static final DataType<Long>       OID                        = new DefaultDataType<Long>(SQLDialect.POSTGRES, SQLDataType.BIGINT, "oid");

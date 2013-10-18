@@ -1068,4 +1068,16 @@ public class PostgresTest extends jOOQAbstractTest<
         assertEquals(3, create().fetchCount(selectOne().from(T_INHERITANCE_1)));
         assertEquals(2, create().fetchCount(selectOne().from(only(T_INHERITANCE_1))));
     }
+
+    @Test
+    public void testPostgresJsonDataType() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        create().insertInto(T_EXOTIC_TYPES, T_EXOTIC_TYPES.ID, T_EXOTIC_TYPES.JS)
+                .values(1, null)
+                .values(2, "{}")
+                .values(3, "[]")
+                .values(4, "{\"hello\":\"world\"}")
+                .execute();
+    }
 }

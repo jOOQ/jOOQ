@@ -67,6 +67,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SQLSERVER2008;
 import static org.jooq.SQLDialect.SQLSERVER2012;
+import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.SortOrder.ASC;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.denseRank;
@@ -202,9 +203,15 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                .visit(getConnectByStartWith())
                .visit(getConnectBy())
                .visit(getGroupBy())
-               .visit(getHaving())
-               .visit(getWindow())
-               .visit(getOrderBy());
+               .visit(getHaving());
+
+        if (asList(POSTGRES, SYBASE).contains(context.configuration().dialect().family())) {
+            context.declareWindows(true)
+                   .visit(getWindow())
+                   .declareWindows(false);
+        }
+
+        context.visit(getOrderBy());
 
         // TOP clauses never bind values. So this can be safely applied at the
         // end for LIMIT .. OFFSET clauses, or ROW_NUMBER() filtering
@@ -727,7 +734,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         // -------------
         context.start(SELECT_WINDOW);
 
-        if (!getWindow().isEmpty()) {
+        if (!getWindow().isEmpty() && asList(POSTGRES, SYBASE).contains(dialect.family())) {
             context.formatSeparator()
                    .keyword("window")
                    .sql(" ")

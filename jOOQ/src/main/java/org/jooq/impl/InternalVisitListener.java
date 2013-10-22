@@ -40,84 +40,47 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
-import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.Clause.SELECT;
+import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
 
-import org.jooq.BindContext;
-import org.jooq.Clause;
-import org.jooq.Context;
-import org.jooq.Name;
-import org.jooq.RenderContext;
-import org.jooq.WindowDefinition;
-import org.jooq.WindowSpecification;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.LinkedList;
+
+import org.jooq.VisitContext;
+import org.jooq.VisitListener;
 
 /**
+ * A {@link VisitListener} used by jOOQ internally, to implement some useful
+ * features.
+ * <p>
+ * Features implemented are:
+ * <h3>[#2790] Keep a locally scoped data map, scoped for the current subquery</h3>
+ * <p>
+ * Sometimes, it is useful to have some information only available while
+ * visiting QueryParts in the same context of the current subquery, e.g. when
+ * communicating between SELECT and WINDOW clause, as is required to emulate
+ * [#531].
+ * </p>
+ *
  * @author Lukas Eder
  */
-class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefinition {
+class InternalVisitListener extends DefaultVisitListener {
 
-    /**
-     * Generated UID
-     */
-    private static final long         serialVersionUID = -7779419148766154430L;
-
-    private final Name                name;
-    private final WindowSpecification window;
-
-    WindowDefinitionImpl(Name name, WindowSpecification window) {
-        this.name = name;
-        this.window = window;
-    }
-
-    final Name getName() {
-        return name;
-    }
+    private Deque<Object> stack = new LinkedList<Object>();
 
     @Override
-    public final void toSQL(RenderContext ctx) {
-
-        // In the WINDOW clause, always declare window definitions
-        if (ctx.declareWindows()) {
-            ctx.visit(name)
-               .sql(" ")
-               .keyword("as")
-               .sql(" (")
-               .visit(window)
-               .sql(")");
-        }
-
-        // Outside the WINDOW clause, only few dialects actually support
-        // referencing WINDOW definitions
-        else if (asList(ctx.configuration().dialect()).contains(POSTGRES)) {
-            ctx.visit(name);
-        }
-
-        // When emulating, just repeat the window specification
-        else {
-            ctx.visit(window);
+    public void clauseStart(VisitContext ctx) {
+        if (ctx.clause() == SELECT) {
+            stack.push(ctx.context().data(DATA_LOCALLY_SCOPED_DATA_MAP));
+            ctx.context().data(DATA_LOCALLY_SCOPED_DATA_MAP, new HashMap<Object, Object>());
         }
     }
 
     @Override
-    public final void bind(BindContext ctx) {
-        if (ctx.declareWindows()) {
-            ctx.visit(name).visit(window);
+    public void clauseEnd(VisitContext ctx) {
+        if (ctx.clause() == SELECT) {
+            ctx.context().data(DATA_LOCALLY_SCOPED_DATA_MAP, stack.pop());
         }
-        else if (asList(ctx.configuration().dialect()).contains(POSTGRES)) {
-            ctx.visit(name);
-        }
-        else {
-            ctx.visit(window);
-        }
-    }
-
-    @Override
-    public final boolean declaresWindows() {
-        return true;
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 }

@@ -76,13 +76,16 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
+import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
+import static org.jooq.impl.Utils.DATA_WINDOW_DEFINITIONS;
 import static org.jooq.impl.Utils.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
@@ -193,6 +196,8 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
     @Override
     public final void bind(BindContext context) {
+        pushWindow(context);
+
         context.declareFields(true)
                .visit(getSelect0())
                .declareFields(false)
@@ -225,6 +230,8 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
     @Override
     public final void toSQL(RenderContext context) {
+        pushWindow(context);
+
         Boolean wrapDerivedTables = (Boolean) context.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);
         if (TRUE.equals(wrapDerivedTables)) {
             context.sql("(")
@@ -383,6 +390,16 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         if (TRUE.equals(wrapDerivedTables)) {
             context.sql(")")
                    .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private final void pushWindow(Context<?> context) {
+        // [#531] [#2790] Make the WINDOW clause available to the SELECT clause
+        // to be able to inline window definitions if the WINDOW clause is not
+        // supported.
+        if (!getWindow().isEmpty()) {
+            ((Map<Object, Object>) context.data(DATA_LOCALLY_SCOPED_DATA_MAP)).put(DATA_WINDOW_DEFINITIONS, getWindow());
         }
     }
 

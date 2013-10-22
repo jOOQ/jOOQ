@@ -211,6 +211,25 @@ final class Utils {
      */
     static final String          DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES      = "org.jooq.configuration.wrap-derived-tables-in-parentheses";
 
+    /**
+     * [#2790] A locally scoped data map.
+     * <p>
+     * Sometimes, it is useful to have some information only available while
+     * visiting QueryParts in the same context of the current subquery, e.g.
+     * when communicating between SELECT and WINDOW clauses, as is required to
+     * emulate #531.
+     */
+    static final String          DATA_LOCALLY_SCOPED_DATA_MAP                 = "org.jooq.configuration.locally-scoped-data-map";
+
+    /**
+     * [#531] The local window definitions.
+     * <p>
+     * The window definitions declared in the <code>WINDOW</code> clause are
+     * needed in the <code>SELECT</code> clause when emulating them by inlining
+     * window specifications.
+     */
+    static final String          DATA_WINDOW_DEFINITIONS                      = "org.jooq.configuration.local-window-definitions";
+
     // ------------------------------------------------------------------------
     // Other constants
     // ------------------------------------------------------------------------

@@ -53,12 +53,16 @@ import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Term.LIST_AGG;
 import static org.jooq.impl.Term.ROW_NUMBER;
+import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
+import static org.jooq.impl.Utils.DATA_WINDOW_DEFINITIONS;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
 
 import org.jooq.AggregateFunction;
 import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
@@ -194,12 +198,9 @@ class Function<T> extends AbstractField<T> implements
                .visit(keepDenseRankOrderBy)
                .visit(withinGroupOrderBy);
 
-            if (windowSpecification != null)
-                ctx.visit(windowSpecification);
-            else if (windowDefinition != null)
-                ctx.visit(windowDefinition);
-            else if (windowName != null)
-                ctx.visit(windowName);
+            QueryPart window = window(ctx);
+            if (window != null)
+                ctx.visit(window);
         }
     }
 
@@ -331,9 +332,10 @@ class Function<T> extends AbstractField<T> implements
     }
 
     private final void toSQLOverClause(RenderContext ctx) {
+        QueryPart window = window(ctx);
 
         // Render this clause only if needed
-        if (windowSpecification == null && windowDefinition == null && windowName == null)
+        if (window == null)
             return;
 
         // [#1524] Don't render this clause where it is not supported
@@ -344,12 +346,35 @@ class Function<T> extends AbstractField<T> implements
         ctx.sql(" ")
            .keyword("over")
            .sql(" (")
-           .visit(windowSpecification != null
-                ? windowSpecification
-                : windowDefinition != null
-                ? windowDefinition
-                : windowName)
+           .visit(window)
            .sql(")");
+    }
+
+    @SuppressWarnings("unchecked")
+    private final QueryPart window(Context<?> ctx) {
+        if (windowSpecification != null)
+            return windowSpecification;
+
+        if (windowDefinition != null)
+            return windowDefinition;
+
+        // [#531] Inline window specifications if the WINDOW clause is not supported
+        if (windowName != null) {
+            if (asList(POSTGRES, SYBASE).contains(ctx.configuration().dialect().family())) {
+                return windowName;
+            }
+
+            Map<Object, Object> map = (Map<Object, Object>) ctx.data(DATA_LOCALLY_SCOPED_DATA_MAP);
+            QueryPartList<WindowDefinition> windows = (QueryPartList<WindowDefinition>) map.get(DATA_WINDOW_DEFINITIONS);
+
+            for (WindowDefinition window : windows) {
+                if (((WindowDefinitionImpl) window).getName().equals(windowName)) {
+                    return window;
+                }
+            }
+        }
+
+        return null;
     }
 
     /**

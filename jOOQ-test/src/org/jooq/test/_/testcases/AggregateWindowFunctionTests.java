@@ -73,8 +73,10 @@ import static org.jooq.impl.DSL.maxDistinct;
 import static org.jooq.impl.DSL.median;
 import static org.jooq.impl.DSL.min;
 import static org.jooq.impl.DSL.minDistinct;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.ntile;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.percentRank;
 import static org.jooq.impl.DSL.rank;
 import static org.jooq.impl.DSL.regrAvgX;
@@ -105,6 +107,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -114,8 +117,11 @@ import org.jooq.Record6;
 import org.jooq.Record9;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.WindowDefinition;
+import org.jooq.WindowSpecification;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -996,5 +1002,49 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("1984Animal Farm", result2.getValue(1, 2));
         assertEquals("O AlquimistaBrida", result2.getValue(2, 2));
         assertEquals("O AlquimistaBrida", result2.getValue(3, 2));
+    }
+
+    @Test
+    public void testWindowClause() throws Exception {
+        Name a = name("a");
+        Name b = name("b");
+
+        TableField<B, Integer> aField = TBook_ID();
+        TableField<B, Integer> bField = TBook_AUTHOR_ID();
+
+        WindowSpecification aSpec = partitionBy(aField);
+        WindowSpecification bSpec = partitionBy(bField);
+
+        WindowDefinition aDef = a.as(aSpec);
+        WindowDefinition bDef = b.as(bSpec);
+
+        Result<?> result =
+        create().select(
+                    rowNumber().over().partitionBy(aField),
+                    rowNumber().over(a),
+                    rowNumber().over("a"),
+                    rowNumber().over(aSpec),
+                    rowNumber().over(aDef),
+                    rowNumber().over().partitionBy(bField),
+                    rowNumber().over(b),
+                    rowNumber().over("b"),
+                    rowNumber().over(bSpec),
+                    rowNumber().over(bDef))
+                .from(TBook())
+                .window(aDef, bDef)
+                .orderBy(aField)
+                .fetch();
+
+        assertEquals(asList(1, 1, 1, 1), result.getValues(0));
+        assertEquals(asList(1, 1, 1, 1), result.getValues(1));
+        assertEquals(asList(1, 1, 1, 1), result.getValues(2));
+        assertEquals(asList(1, 1, 1, 1), result.getValues(3));
+        assertEquals(asList(1, 1, 1, 1), result.getValues(4));
+
+        assertEquals(asList(1, 2, 1, 2), result.getValues(5));
+        assertEquals(asList(1, 2, 1, 2), result.getValues(6));
+        assertEquals(asList(1, 2, 1, 2), result.getValues(7));
+        assertEquals(asList(1, 2, 1, 2), result.getValues(8));
+        assertEquals(asList(1, 2, 1, 2), result.getValues(9));
     }
 }

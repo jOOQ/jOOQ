@@ -40,16 +40,18 @@
  */
 package org.jooq.oss
 
-import static java.util.regex.Pattern.*;
-
 import java.io.File
 import java.util.ArrayList
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
 import java.util.regex.Pattern
 import org.apache.commons.lang3.tuple.ImmutablePair
 import org.jooq.SQLDialect
 import org.jooq.xtend.Generators
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
+
+import static java.util.regex.Pattern.*
 
 class RemoveProCode {
     def static void main(String[] args) {
@@ -66,6 +68,8 @@ class RemoveTrialCode {
 class Splitter extends Generators {
     
     static ExecutorService ex;
+    static AtomicInteger charsTotal = new AtomicInteger(0);
+    static AtomicInteger charsMasked = new AtomicInteger(0);
     String token;
 
     def static void split(String token, String workspace) {
@@ -83,6 +87,12 @@ class Splitter extends Generators {
         }
         
         ex.shutdown;
+        ex.awaitTermination(1, TimeUnit::MINUTES);
+
+        System::out.println();
+        System::out.println("Total  chars : " + charsTotal);
+        System::out.println("Masked chars : " + charsMasked);
+        System::out.println("Percentage   : " + (100.0 * charsMasked.get / charsTotal.get));
     }
 
     def transform(File inRoot, File outRoot, File in) {
@@ -150,7 +160,8 @@ For more information, please visit: http://www.jooq.org/licenses''');
         }
         else {
             ex.submit[ | 
-                var content = read(in);
+                var original = read(in);
+                var content = original;
     
                 for (pattern : translateAll) {
                     val m = pattern.matcher(content);
@@ -171,7 +182,18 @@ For more information, please visit: http://www.jooq.org/licenses''');
                 }
                 
                 write(out, content);
+                compare(content, original);
             ];
+        }
+    }
+    
+    def compare(String content, String original) {
+        charsTotal.addAndGet(original.length);
+        
+        for (i : 0 .. Math::min(content.length, original.length)) {
+            if (("" + content.charAt(i) == "x") && ("" + original.charAt(i) != "x")) {
+                charsMasked.incrementAndGet;
+            }
         }
     }
     

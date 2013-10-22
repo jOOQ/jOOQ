@@ -40,7 +40,8 @@
  */
 package org.jooq.impl;
 
-import java.util.Arrays;
+import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.POSTGRES;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
@@ -49,77 +50,70 @@ import org.jooq.Name;
 import org.jooq.RenderContext;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
-import org.jooq.tools.StringUtils;
 
 /**
- * The default implementation for a SQL identifier
- *
  * @author Lukas Eder
  */
-class NameImpl extends AbstractQueryPart implements Name {
+class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefinition {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 8562325639223483938L;
+    private static final long         serialVersionUID = -7779419148766154430L;
 
-    private String[]          qualifiedName;
+    private final Name                name;
+    private final WindowSpecification window;
 
-    NameImpl(String[] qualifiedName) {
-        this.qualifiedName = qualifiedName;
+    WindowDefinitionImpl(Name name, WindowSpecification window) {
+        this.name = name;
+        this.window = window;
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        String separator = "";
+    public final void toSQL(RenderContext ctx) {
 
-        for (String name : qualifiedName) {
-            if (!StringUtils.isEmpty(name)) {
-                context.sql(separator).literal(name);
-                separator = ".";
-            }
+        // In the WINDOW clause, always declare window definitions
+        if (ctx.declareWindows()) {
+            ctx.visit(name)
+               .sql(" ")
+               .keyword("as")
+               .sql(" (")
+               .visit(window)
+               .sql(")");
+        }
+
+        // Outside the WINDOW clause, only few dialects actually support
+        // referencing WINDOW definitions
+        else if (asList(ctx.configuration().dialect()).contains(POSTGRES)) {
+            ctx.visit(name);
+        }
+
+        // When emulating, just repeat the window specification
+        else {
+            ctx.visit(window);
         }
     }
 
     @Override
-    public final void bind(BindContext context) {}
+    public final void bind(BindContext ctx) {
+        if (ctx.declareWindows()) {
+            ctx.visit(name).visit(window);
+        }
+        else if (asList(ctx.configuration().dialect()).contains(POSTGRES)) {
+            ctx.visit(name);
+        }
+        else {
+            ctx.visit(window);
+        }
+    }
+
+    @Override
+    public boolean declaresWindows() {
+        return true;
+    }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return null;
-    }
-
-    @Override
-    public final String[] getName() {
-        return qualifiedName;
-    }
-
-    @Override
-    public final WindowDefinition as(WindowSpecification window) {
-        return new WindowDefinitionImpl(this, window);
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: Object API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public int hashCode() {
-        return Arrays.hashCode(getName());
-    }
-
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-
-        // [#1626] NameImpl equality can be decided without executing the
-        // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof NameImpl) {
-            return Arrays.equals(getName(), (((NameImpl) that).getName()));
-        }
-
-        return super.equals(that);
     }
 }

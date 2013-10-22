@@ -76,12 +76,92 @@ import org.jooq.api.annotation.Transition;
 public interface WindowOverStep<T> {
 
     /**
-     * Add an <code>OVER</code> clause
+     * Turn this aggregate function into a window function.
+     * <p>
+     * An example: <code><pre>
+     * MAX(id) OVER (PARTITION BY 1)
+     * </code></pre>
+     * <p>
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, POSTGRES })
     @Transition(
         name = "OVER"
     )
     WindowPartitionByStep<T> over();
+
+    /**
+     * Turn this aggregate function into a window function referencing a window
+     * name.
+     * <p>
+     * An example: <code><pre>
+     * MAX(id) OVER my_window
+     * </code></pre>
+     * <p>
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase. If the <code>WINDOW</code> clause is not supported
+     * (see {@link SelectWindowStep#window(WindowDefinition...)}, then
+     * referenced windows will be inlined.
+     */
+    @Support({ CUBRID, POSTGRES })
+    @Transition(
+        name = "OVER"
+    )
+    WindowFinalStep<T> over(Name name);
+
+    /**
+     * Turn this aggregate function into a window function referencing a window
+     * name.
+     * <p>
+     * An example: <code><pre>
+     * MAX(id) OVER my_window
+     * </code></pre>
+     * <p>
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase. If the <code>WINDOW</code> clause is not supported
+     * (see {@link SelectWindowStep#window(WindowDefinition...)}, then
+     * referenced windows will be inlined.
+     */
+    @Support({ CUBRID, POSTGRES })
+    @Transition(
+        name = "OVER"
+    )
+    WindowFinalStep<T> over(String name);
+
+    /**
+     * Turn this aggregate function into a window function.
+     * <p>
+     * An example: <code><pre>
+     * MAX(id) OVER (PARTITION BY 1)
+     * </code></pre>
+     * <p>
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
+     */
+    @Support({ CUBRID, POSTGRES })
+    @Transition(
+        name = "OVER"
+    )
+    WindowFinalStep<T> over(WindowSpecification specification);
+
+    /**
+     * Turn this aggregate function into a window function referencing a window
+     * definition.
+     * <p>
+     * An example: <code><pre>
+     * MAX(id) OVER my_window
+     * </code></pre>
+     * <p>
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase. If the <code>WINDOW</code> clause is not supported
+     * (see {@link SelectWindowStep#window(WindowDefinition...)}, then
+     * referenced windows will be inlined.
+     */
+    @Support({ CUBRID, POSTGRES })
+    @Transition(
+        name = "OVER"
+    )
+    WindowFinalStep<T> over(WindowDefinition definition);
 
 }

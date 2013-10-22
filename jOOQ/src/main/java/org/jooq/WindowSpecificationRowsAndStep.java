@@ -40,33 +40,60 @@
  */
 package org.jooq;
 
-import org.jooq.conf.Settings;
+// ...
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
 
 /**
- * A SQL identifier <code>QueryPart</code>.
+ * An intermediate step in the construction of a {@link WindowSpecification}.
  * <p>
- * A <code>Name</code> is a {@link QueryPart} that renders a SQL identifier
- * according to the settings specified in {@link Settings#getRenderNameStyle()}.
+ * Example: <code><pre>
+ * WindowSpecification spec =
+ * DSL.partitionBy(BOOK.AUTHOR_ID)
+ *    .orderBy(BOOK.ID)
+ *    .rowsBetweenUnboundedPreceding()
+ *    .andCurrentRow();
+ * </pre></code>
  *
  * @author Lukas Eder
  */
-public interface Name extends QueryPart {
+public interface WindowSpecificationRowsAndStep {
 
     /**
-     * The qualified name of this SQL identifier.
+     * Add a <code>... AND UNBOUNDED PRECEDING</code> frame clause to the window
+     * specification.
      */
-    String[] getName();
+    @Support({ POSTGRES })
+    WindowSpecificationFinalStep andUnboundedPreceding();
 
     /**
-     * Create a {@link WindowDefinition} from this name.
-     * <p>
-     * This creates a window definition that can be
-     * <ul>
-     * <li>declared in the <code>WINDOW</code> clause (see
-     * {@link SelectWindowStep#window(WindowDefinition...)}</li>
-     * <li>referenced from the <code>OVER</code> clause (see
-     * {@link AggregateFunction#over(WindowDefinition)}</li>
-     * </ul>
+     * Add a <code>... AND [number] PRECEDING</code> frame clause to the window
+     * specification.
      */
-    WindowDefinition as(WindowSpecification window);
+    @Support({ POSTGRES })
+    WindowSpecificationFinalStep andPreceding(int number);
+
+    /**
+     * Add a <code>... AND CURRENT ROW</code> frame clause to the window
+     * specification.
+     */
+    @Support({ POSTGRES })
+    WindowSpecificationFinalStep andCurrentRow();
+
+    /**
+     * Add a <code>... AND UNBOUNDED FOLLOWING</code> frame clause to the window
+     * specification.
+     */
+    @Support({ POSTGRES })
+    WindowSpecificationFinalStep andUnboundedFollowing();
+
+    /**
+     * Add a <code>... AND [number] FOLLOWING</code> frame clause to the window
+     * specification.
+     */
+    @Support({ POSTGRES })
+    WindowSpecificationFinalStep andFollowing(int number);
+
 }

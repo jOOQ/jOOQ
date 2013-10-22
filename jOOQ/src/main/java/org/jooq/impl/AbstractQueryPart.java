@@ -87,6 +87,14 @@ abstract class AbstractQueryPart implements QueryPartInternal {
         return false;
     }
 
+    /**
+     * Subclasses may override this
+     */
+    @Override
+    public boolean declaresWindows() {
+        return false;
+    }
+
     // -------------------------------------------------------------------------
     // The Object API
     // -------------------------------------------------------------------------

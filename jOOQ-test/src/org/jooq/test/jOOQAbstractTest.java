@@ -1966,6 +1966,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testWindowClause() throws Exception {
+        new AggregateWindowFunctionTests(this).testWindowClause();
+    }
+
+    @Test
     public void testStoredFunctions() throws Exception {
         new RoutineAndUDTTests(this).testStoredFunctions();
     }

@@ -50,9 +50,13 @@ import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupConcatSeparatorStep;
+import org.jooq.Name;
 import org.jooq.SortField;
 import org.jooq.WindowBeforeOverStep;
+import org.jooq.WindowDefinition;
+import org.jooq.WindowFinalStep;
 import org.jooq.WindowPartitionByStep;
+import org.jooq.WindowSpecification;
 
 /**
  * @author Lukas Eder
@@ -130,6 +134,26 @@ class GroupConcat extends AbstractFunction<String> implements GroupConcatOrderBy
     xx [/pro] */
     @Override
     public final WindowPartitionByStep<String> over() {
+        throw new UnsupportedOperationException("OVER() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final WindowFinalStep<String> over(WindowSpecification specification) {
+        throw new UnsupportedOperationException("OVER() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final WindowFinalStep<String> over(WindowDefinition definition) {
+        throw new UnsupportedOperationException("OVER() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final WindowFinalStep<String> over(Name name) {
+        throw new UnsupportedOperationException("OVER() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final WindowFinalStep<String> over(String name) {
         throw new UnsupportedOperationException("OVER() not supported on GROUP_CONCAT aggregate function");
     }
 

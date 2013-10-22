@@ -40,33 +40,29 @@
  */
 package org.jooq;
 
-import org.jooq.conf.Settings;
-
 /**
- * A SQL identifier <code>QueryPart</code>.
+ * A window definition.
  * <p>
- * A <code>Name</code> is a {@link QueryPart} that renders a SQL identifier
- * according to the settings specified in {@link Settings#getRenderNameStyle()}.
+ * Window definitions can be
+ * <ul>
+ * <li>declared in the <code>WINDOW</code> clause (see
+ * {@link SelectWindowStep#window(WindowDefinition...)}</li>
+ * <li>referenced from the <code>OVER</code> clause (see
+ * {@link AggregateFunction#over(WindowDefinition)}</li>
+ * </ul>
+ * <p>
+ * The <code>WINDOW</code> clause is only natively supported by
+ * <ul>
+ * <li> {@link SQLDialect#POSTGRES}</li>
+ * <li> {@link SQLDialect#SYBASE}</li>
+ * </ul>
+ * <p>
+ * If your database supports window functions, but not the <code>WINDOW</code>
+ * clause, jOOQ will inline window definitions into their respective window
+ * functions.
  *
  * @author Lukas Eder
  */
-public interface Name extends QueryPart {
+public interface WindowDefinition extends QueryPart {
 
-    /**
-     * The qualified name of this SQL identifier.
-     */
-    String[] getName();
-
-    /**
-     * Create a {@link WindowDefinition} from this name.
-     * <p>
-     * This creates a window definition that can be
-     * <ul>
-     * <li>declared in the <code>WINDOW</code> clause (see
-     * {@link SelectWindowStep#window(WindowDefinition...)}</li>
-     * <li>referenced from the <code>OVER</code> clause (see
-     * {@link AggregateFunction#over(WindowDefinition)}</li>
-     * </ul>
-     */
-    WindowDefinition as(WindowSpecification window);
 }

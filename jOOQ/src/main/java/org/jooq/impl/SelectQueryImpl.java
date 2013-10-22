@@ -51,6 +51,7 @@ import static org.jooq.Clause.SELECT_ORDER_BY;
 import static org.jooq.Clause.SELECT_SELECT;
 import static org.jooq.Clause.SELECT_START_WITH;
 import static org.jooq.Clause.SELECT_WHERE;
+import static org.jooq.Clause.SELECT_WINDOW;
 import static org.jooq.Operator.OR;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
@@ -104,6 +105,7 @@ import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnStep;
 import org.jooq.TablePartitionByStep;
+import org.jooq.WindowDefinition;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.StringUtils;
@@ -141,6 +143,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     private boolean                         grouping;
     private final QueryPartList<GroupField> groupBy;
     private final ConditionProviderImpl     having;
+    private final WindowList                window;
     private final SortFieldList             orderBy;
     private boolean                         orderBySiblings;
     private final QueryPartList<Field<?>>   seek;
@@ -169,6 +172,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         this.connectByStartWith = new ConditionProviderImpl();
         this.groupBy = new QueryPartList<GroupField>();
         this.having = new ConditionProviderImpl();
+        this.window = new WindowList();
         this.orderBy = new SortFieldList();
         this.seek = new QueryPartList<Field<?>>();
         this.limit = new Limit();
@@ -199,6 +203,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                .visit(getConnectBy())
                .visit(getGroupBy())
                .visit(getHaving())
+               .visit(getWindow())
                .visit(getOrderBy());
 
         // TOP clauses never bind values. So this can be safely applied at the
@@ -718,6 +723,21 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         context.end(SELECT_HAVING);
 
+        // WINDOW clause
+        // -------------
+        context.start(SELECT_WINDOW);
+
+        if (!getWindow().isEmpty()) {
+            context.formatSeparator()
+                   .keyword("window")
+                   .sql(" ")
+                   .declareWindows(true)
+                   .visit(getWindow())
+                   .declareWindows(false);
+        }
+
+        context.end(SELECT_WINDOW);
+
         // ORDER BY clause
         // ---------------
         context.start(SELECT_ORDER_BY);
@@ -1007,6 +1027,10 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         return having;
     }
 
+    final QueryPartList<WindowDefinition> getWindow() {
+        return window;
+    }
+
     final SortFieldList getOrderBy() {
         return orderBy;
     }
@@ -1164,6 +1188,16 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     @Override
     public final void addHaving(Operator operator, Collection<? extends Condition> conditions) {
         getHaving().addConditions(operator, conditions);
+    }
+
+    @Override
+    public final void addWindow(WindowDefinition... definitions) {
+        addWindow(Arrays.asList(definitions));
+    }
+
+    @Override
+    public final void addWindow(Collection<? extends WindowDefinition> definitions) {
+        getWindow().addAll(definitions);
     }
 
     @Override

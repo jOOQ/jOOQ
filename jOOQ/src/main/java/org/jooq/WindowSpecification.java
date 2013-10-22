@@ -40,33 +40,24 @@
  */
 package org.jooq;
 
-import org.jooq.conf.Settings;
-
 /**
- * A SQL identifier <code>QueryPart</code>.
+ * A window specification.
  * <p>
- * A <code>Name</code> is a {@link QueryPart} that renders a SQL identifier
- * according to the settings specified in {@link Settings#getRenderNameStyle()}.
+ * Window specifications are the syntactic clauses that can be passed to both
+ * window definitions in <code>WINDOW</code> clauses, as well as to the
+ * <code>OVER</code> clause of window functions. This makes window
+ * specifications highly reusable across several queries.
+ * <p>
+ * Example: <code><pre>
+ * WindowSpecification spec =
+ * DSL.partitionBy(BOOK.AUTHOR_ID)
+ *    .orderBy(BOOK.ID)
+ *    .rowsBetweenUnboundedPreceding()
+ *    .andCurrentRow();
+ * </pre></code>
  *
  * @author Lukas Eder
  */
-public interface Name extends QueryPart {
+public interface WindowSpecification extends QueryPart {
 
-    /**
-     * The qualified name of this SQL identifier.
-     */
-    String[] getName();
-
-    /**
-     * Create a {@link WindowDefinition} from this name.
-     * <p>
-     * This creates a window definition that can be
-     * <ul>
-     * <li>declared in the <code>WINDOW</code> clause (see
-     * {@link SelectWindowStep#window(WindowDefinition...)}</li>
-     * <li>referenced from the <code>OVER</code> clause (see
-     * {@link AggregateFunction#over(WindowDefinition)}</li>
-     * </ul>
-     */
-    WindowDefinition as(WindowSpecification window);
 }

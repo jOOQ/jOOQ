@@ -40,86 +40,22 @@
  */
 package org.jooq.impl;
 
-import java.util.Arrays;
-
-import org.jooq.BindContext;
-import org.jooq.Clause;
-import org.jooq.Context;
-import org.jooq.Name;
-import org.jooq.RenderContext;
 import org.jooq.WindowDefinition;
-import org.jooq.WindowSpecification;
-import org.jooq.tools.StringUtils;
 
 /**
- * The default implementation for a SQL identifier
+ * A list of {@link WindowDefinition} query parts.
  *
  * @author Lukas Eder
  */
-class NameImpl extends AbstractQueryPart implements Name {
+class WindowList extends QueryPartList<WindowDefinition> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 8562325639223483938L;
-
-    private String[]          qualifiedName;
-
-    NameImpl(String[] qualifiedName) {
-        this.qualifiedName = qualifiedName;
-    }
+    private static final long serialVersionUID = 4284724883554582081L;
 
     @Override
-    public final void toSQL(RenderContext context) {
-        String separator = "";
-
-        for (String name : qualifiedName) {
-            if (!StringUtils.isEmpty(name)) {
-                context.sql(separator).literal(name);
-                separator = ".";
-            }
-        }
-    }
-
-    @Override
-    public final void bind(BindContext context) {}
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
-
-    @Override
-    public final String[] getName() {
-        return qualifiedName;
-    }
-
-    @Override
-    public final WindowDefinition as(WindowSpecification window) {
-        return new WindowDefinitionImpl(this, window);
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: Object API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public int hashCode() {
-        return Arrays.hashCode(getName());
-    }
-
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-
-        // [#1626] NameImpl equality can be decided without executing the
-        // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof NameImpl) {
-            return Arrays.equals(getName(), (((NameImpl) that).getName()));
-        }
-
-        return super.equals(that);
+    public final boolean declaresWindows() {
+        return true;
     }
 }

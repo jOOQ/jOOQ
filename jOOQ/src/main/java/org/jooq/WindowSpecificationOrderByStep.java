@@ -40,33 +40,45 @@
  */
 package org.jooq;
 
-import org.jooq.conf.Settings;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
+import java.util.Collection;
 
 /**
- * A SQL identifier <code>QueryPart</code>.
+ * An intermediate step in the construction of a {@link WindowSpecification}.
  * <p>
- * A <code>Name</code> is a {@link QueryPart} that renders a SQL identifier
- * according to the settings specified in {@link Settings#getRenderNameStyle()}.
+ * Example: <code><pre>
+ * WindowSpecification spec =
+ * DSL.partitionBy(BOOK.AUTHOR_ID)
+ *    .orderBy(BOOK.ID)
+ *    .rowsBetweenUnboundedPreceding()
+ *    .andCurrentRow();
+ * </pre></code>
  *
  * @author Lukas Eder
  */
-public interface Name extends QueryPart {
+public interface WindowSpecificationOrderByStep extends WindowSpecificationRowsStep {
 
     /**
-     * The qualified name of this SQL identifier.
+     * Add an <code>ORDER BY</code> clause to the window specification.
      */
-    String[] getName();
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    WindowSpecificationRowsStep orderBy(Field<?>... fields);
 
     /**
-     * Create a {@link WindowDefinition} from this name.
-     * <p>
-     * This creates a window definition that can be
-     * <ul>
-     * <li>declared in the <code>WINDOW</code> clause (see
-     * {@link SelectWindowStep#window(WindowDefinition...)}</li>
-     * <li>referenced from the <code>OVER</code> clause (see
-     * {@link AggregateFunction#over(WindowDefinition)}</li>
-     * </ul>
+     * Add an <code>ORDER BY</code> clause to the window specification.
      */
-    WindowDefinition as(WindowSpecification window);
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    WindowSpecificationRowsStep orderBy(SortField<?>... fields);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the window specification.
+     */
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    WindowSpecificationRowsStep orderBy(Collection<? extends SortField<?>> fields);
 }

@@ -271,6 +271,22 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addHaving(Operator operator, Collection<? extends Condition> conditions);
 
     /**
+     * Adds new window definitions to the window clause of the query.
+     *
+     * @param definitions The definitions
+     */
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    void addWindow(WindowDefinition... definitions);
+
+    /**
+     * Adds new window definitions to the window clause of the query.
+     *
+     * @param definitions The definitions
+     */
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    void addWindow(Collection<? extends WindowDefinition> definitions);
+
+    /**
      * Add an Oracle-style hint to the select clause.
      * <p>
      * Example: <code><pre>

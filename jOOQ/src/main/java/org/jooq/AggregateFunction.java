@@ -74,7 +74,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * Turn this aggregate function into a window function.
      * <p>
      * An example: <code><pre>
-     * MAX(ID) OVER (PARTITION BY 1)
+     * MAX(id) OVER (PARTITION BY 1)
      * </code></pre>
      * <p>
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
@@ -87,12 +87,89 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
     )
     WindowPartitionByStep<T> over();
 
+    /**
+     * Turn this aggregate function into a window function referencing a window
+     * name.
+     * <p>
+     * An example: <code><pre>
+     * MAX(id) OVER my_window
+     * </code></pre>
+     * <p>
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase. If the <code>WINDOW</code> clause is not supported
+     * (see {@link SelectWindowStep#window(WindowDefinition...)}, then
+     * referenced windows will be inlined.
+     */
+    @Override
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "OVER"
+    )
+    WindowFinalStep<T> over(Name name);
+
+    /**
+     * Turn this aggregate function into a window function referencing a window
+     * name.
+     * <p>
+     * An example: <code><pre>
+     * MAX(id) OVER my_window
+     * </code></pre>
+     * <p>
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase. If the <code>WINDOW</code> clause is not supported
+     * (see {@link SelectWindowStep#window(WindowDefinition...)}, then
+     * referenced windows will be inlined.
+     */
+    @Override
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "OVER"
+    )
+    WindowFinalStep<T> over(String name);
+
+    /**
+     * Turn this aggregate function into a window function.
+     * <p>
+     * An example: <code><pre>
+     * MAX(id) OVER (PARTITION BY 1)
+     * </code></pre>
+     * <p>
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
+     */
+    @Override
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "OVER"
+    )
+    WindowFinalStep<T> over(WindowSpecification specification);
+
+    /**
+     * Turn this aggregate function into a window function referencing a window
+     * definition.
+     * <p>
+     * An example: <code><pre>
+     * MAX(id) OVER my_window
+     * </code></pre>
+     * <p>
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase. If the <code>WINDOW</code> clause is not supported
+     * (see {@link SelectWindowStep#window(WindowDefinition...)}, then
+     * referenced windows will be inlined.
+     */
+    @Override
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "OVER"
+    )
+    WindowFinalStep<T> over(WindowDefinition definition);
+
     /* [pro] */
     /**
      * Restrict this aggregate function to <code>FIRST</code> values
      * <p>
      * An example: <code><pre>
-     * MAX(ID) KEEP (DENSE_RANK FIRST ORDER BY 1)
+     * MAX(id) KEEP (DENSE_RANK FIRST ORDER BY 1)
      * </pre></code>
      * <p>
      * This clause is only available on
@@ -109,7 +186,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * Restrict this aggregate function to <code>FIRST</code> values
      * <p>
      * An example: <code><pre>
-     * MAX(ID) KEEP (DENSE_RANK FIRST ORDER BY 1)
+     * MAX(id) KEEP (DENSE_RANK FIRST ORDER BY 1)
      * </pre></code>
      * <p>
      * This clause is only available on
@@ -126,7 +203,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * Restrict this aggregate function to <code>FIRST</code> values
      * <p>
      * An example: <code><pre>
-     * MAX(ID) KEEP (DENSE_RANK FIRST ORDER BY 1)
+     * MAX(id) KEEP (DENSE_RANK FIRST ORDER BY 1)
      * </pre></code>
      * <p>
      * This clause is only available on
@@ -143,7 +220,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * Restrict this aggregate function to <code>FIRST</code> values
      * <p>
      * An example: <code><pre>
-     * MAX(ID) KEEP (DENSE_RANK LAST ORDER BY 1)
+     * MAX(id) KEEP (DENSE_RANK LAST ORDER BY 1)
      * </pre></code>
      * <p>
      * This clause is only available on
@@ -160,7 +237,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * Restrict this aggregate function to <code>FIRST</code> values
      * <p>
      * An example: <code><pre>
-     * MAX(ID) KEEP (DENSE_RANK LAST ORDER BY 1)
+     * MAX(id) KEEP (DENSE_RANK LAST ORDER BY 1)
      * </pre></code>
      * <p>
      * This clause is only available on
@@ -177,7 +254,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * Restrict this aggregate function to <code>FIRST</code> values
      * <p>
      * An example: <code><pre>
-     * MAX(ID) KEEP (DENSE_RANK LAST ORDER BY 1)
+     * MAX(id) KEEP (DENSE_RANK LAST ORDER BY 1)
      * </pre></code>
      * <p>
      * This clause is only available on

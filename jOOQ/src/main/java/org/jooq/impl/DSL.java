@@ -198,6 +198,7 @@ import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
+import org.jooq.SortField;
 import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.TruncateIdentityStep;
@@ -206,6 +207,11 @@ import org.jooq.Update;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOverStep;
+import org.jooq.WindowSpecification;
+import org.jooq.WindowSpecificationFinalStep;
+import org.jooq.WindowSpecificationOrderByStep;
+import org.jooq.WindowSpecificationRowsAndStep;
+import org.jooq.WindowSpecificationRowsStep;
 import org.jooq.api.annotation.State;
 import org.jooq.api.annotation.Transition;
 import org.jooq.conf.RenderNameStyle;
@@ -10487,6 +10493,130 @@ public class DSL {
     )
     public static GroupConcatOrderByStep groupConcatDistinct(Field<?> field) {
         return new GroupConcat(nullSafe(field), true);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX Window clauses
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>PARTITION BY</code> clause.
+     */
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    public static WindowSpecificationOrderByStep partitionBy(Field<?>... fields) {
+        return new WindowSpecificationImpl().partitionBy(fields);
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>PARTITION BY</code> clause.
+     */
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    public static WindowSpecificationOrderByStep partitionBy(Collection<? extends Field<?>> fields) {
+        return new WindowSpecificationImpl().partitionBy(fields);
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
+     */
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    public static WindowSpecificationOrderByStep orderBy(Field<?>... fields) {
+        return new WindowSpecificationImpl().orderBy(fields);
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
+     */
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    public static WindowSpecificationRowsStep orderBy(SortField<?>... fields) {
+        return new WindowSpecificationImpl().orderBy(fields);
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
+     */
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    public static WindowSpecificationRowsStep orderBy(Collection<? extends SortField<?>> fields) {
+        return new WindowSpecificationImpl().orderBy(fields);
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    public static WindowSpecificationFinalStep rowsUnboundedPreceding() {
+        return new WindowSpecificationImpl().rowsUnboundedPreceding();
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    public static WindowSpecificationFinalStep rowsPreceding(int number) {
+        return new WindowSpecificationImpl().rowsPreceding(number);
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    public static WindowSpecificationFinalStep rowsCurrentRow() {
+        return new WindowSpecificationImpl().rowsCurrentRow();
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    public static WindowSpecificationFinalStep rowsUnboundedFollowing() {
+        return new WindowSpecificationImpl().rowsUnboundedFollowing();
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    public static WindowSpecificationFinalStep rowsFollowing(int number) {
+        return new WindowSpecificationImpl().rowsFollowing(number);
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    public static WindowSpecificationRowsAndStep rowsBetweenUnboundedPreceding() {
+        return new WindowSpecificationImpl().rowsBetweenUnboundedPreceding();
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    public static WindowSpecificationRowsAndStep rowsBetweenPreceding(int number) {
+        return new WindowSpecificationImpl().rowsBetweenPreceding(number);
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    public static WindowSpecificationRowsAndStep rowsBetweenCurrentRow() {
+        return new WindowSpecificationImpl().rowsBetweenCurrentRow();
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    public static WindowSpecificationRowsAndStep rowsBetweenUnboundedFollowing() {
+        return new WindowSpecificationImpl().rowsBetweenUnboundedFollowing();
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
+     */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    public static WindowSpecificationRowsAndStep rowsBetweenFollowing(int number) {
+        return new WindowSpecificationImpl().rowsBetweenFollowing(number);
     }
 
     // -------------------------------------------------------------------------

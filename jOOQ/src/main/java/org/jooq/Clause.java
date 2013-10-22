@@ -416,6 +416,7 @@ public enum Clause {
      * @see #CONDITION
      */
     SELECT_HAVING,
+    SELECT_WINDOW,
     SELECT_ORDER_BY,
 
     // -------------------------------------------------------------------------

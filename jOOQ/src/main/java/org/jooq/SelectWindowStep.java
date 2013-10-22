@@ -43,8 +43,6 @@ package org.jooq;
 import java.util.Collection;
 
 import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
-import org.jooq.impl.DSL;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -89,74 +87,8 @@ import org.jooq.impl.DSL;
  * @author Lukas Eder
  */
 @State
-public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> {
+public interface SelectWindowStep<R extends Record> extends SelectOrderByStep<R> {
 
-    /**
-     * Add a <code>HAVING</code> clause to the query.
-     */
-    @Support
-    @Transition(
-        name = "HAVING",
-        args = "Condition+"
-    )
-    SelectHavingConditionStep<R> having(Condition... conditions);
-
-    /**
-     * Add a <code>HAVING</code> clause to the query.
-     */
-    @Support
-    @Transition(
-        name = "HAVING",
-        args = "Condition+"
-    )
-    SelectHavingConditionStep<R> having(Collection<? extends Condition> conditions);
-
-    /**
-     * Add a <code>HAVING</code> clause to the query.
-     */
-    @Support
-    @Transition(
-        name = "HAVING",
-        args = "Condition"
-    )
-    SelectHavingConditionStep<R> having(Field<Boolean> condition);
-
-    /**
-     * Add a <code>HAVING</code> clause to the query.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @see DSL#condition(String)
-     */
-    @Support
-    SelectHavingConditionStep<R> having(String sql);
-
-    /**
-     * Add a <code>HAVING</code> clause to the query.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @see DSL#condition(String, Object...)
-     */
-    @Support
-    SelectHavingConditionStep<R> having(String sql, Object... bindings);
-
-    /**
-     * Add a <code>HAVING</code> clause to the query.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @see DSL#condition(String, QueryPart...)
-     */
-    @Support
-    SelectHavingConditionStep<R> having(String sql, QueryPart... parts);
+    SelectOrderByStep<R> window(WindowDefinition... definitions);
+    SelectOrderByStep<R> window(Collection<? extends WindowDefinition> definitions);
 }

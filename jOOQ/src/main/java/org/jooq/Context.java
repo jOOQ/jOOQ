@@ -127,7 +127,7 @@ public interface Context<C extends Context<C>> {
 
     /**
      * TODO [#2667]
-     * 
+     *
      * Properties of these methods:
      * - A clause is always started / ended, even if it isn't rendered or if it's empty!
      */
@@ -156,6 +156,17 @@ public interface Context<C extends Context<C>> {
      * Set the new context value for {@link #declareTables()}
      */
     C declareTables(boolean declareTables);
+
+    /**
+     * Whether the current context is rendering a SQL window declaration (e.g. a
+     * {@link WindowDefinition} in the <code>WINDOW</code> clause of the query).
+     */
+    boolean declareWindows();
+
+    /**
+     * Set the new context value for {@link #declareWindows()}
+     */
+    C declareWindows(boolean declareWindows);
 
     /**
      * Whether the current context is rendering a sub-query (nested query)

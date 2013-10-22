@@ -1006,6 +1006,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testWindowClause() throws Exception {
+        switch (dialect()) {
+            /* [pro] */
+            case ASE:
+            case INGRES:
+            /* [/pro] */
+            case FIREBIRD:
+            case HSQLDB:
+            case MARIADB:
+            case MYSQL:
+            case SQLITE:
+                log.info("SKIPPING", "Window function tests");
+                return;
+        }
+
+
         Name a = name("a");
         Name b = name("b");
 
@@ -1020,16 +1035,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         Result<?> result =
         create().select(
-                    rowNumber().over().partitionBy(aField),
-                    rowNumber().over(a),
-                    rowNumber().over("a"),
-                    rowNumber().over(aSpec),
-                    rowNumber().over(aDef),
-                    rowNumber().over().partitionBy(bField),
-                    rowNumber().over(b),
-                    rowNumber().over("b"),
-                    rowNumber().over(bSpec),
-                    rowNumber().over(bDef))
+                    count().over().partitionBy(aField),
+                    count().over(a),
+                    count().over("a"),
+                    count().over(aSpec),
+                    count().over(aDef),
+                    count().over().partitionBy(bField),
+                    count().over(b),
+                    count().over("b"),
+                    count().over(bSpec),
+                    count().over(bDef))
                 .from(TBook())
                 .window(aDef, bDef)
                 .orderBy(aField)
@@ -1041,10 +1056,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList(1, 1, 1, 1), result.getValues(3));
         assertEquals(asList(1, 1, 1, 1), result.getValues(4));
 
-        assertEquals(asList(1, 2, 1, 2), result.getValues(5));
-        assertEquals(asList(1, 2, 1, 2), result.getValues(6));
-        assertEquals(asList(1, 2, 1, 2), result.getValues(7));
-        assertEquals(asList(1, 2, 1, 2), result.getValues(8));
-        assertEquals(asList(1, 2, 1, 2), result.getValues(9));
+        assertEquals(asList(2, 2, 2, 2), result.getValues(5));
+        assertEquals(asList(2, 2, 2, 2), result.getValues(6));
+        assertEquals(asList(2, 2, 2, 2), result.getValues(7));
+        assertEquals(asList(2, 2, 2, 2), result.getValues(8));
+        assertEquals(asList(2, 2, 2, 2), result.getValues(9));
     }
 }

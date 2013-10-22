@@ -87,7 +87,7 @@ import org.jooq.impl.DSL;
  * @author Lukas Eder
  */
 @State
-public interface SelectHavingConditionStep<R extends Record> extends SelectOrderByStep<R> {
+public interface SelectHavingConditionStep<R extends Record> extends SelectWindowStep<R> {
 
     /**
      * Combine the currently assembled conditions with another one using the

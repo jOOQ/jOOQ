@@ -11,6 +11,11 @@ DELETE FROM t_dates/
 DELETE FROM t_identity/
 DELETE FROM t_identity_pk/
 DELETE FROM t_triggers/
+DELETE FROM t_inheritance_all/
+DELETE FROM t_inheritance_1_2_1/
+DELETE FROM t_inheritance_1_2/
+DELETE FROM t_inheritance_1_1/
+DELETE FROM t_inheritance_1/
 
 DROP SEQUENCE IF EXISTS s_author_id/
 CREATE SEQUENCE s_author_id/

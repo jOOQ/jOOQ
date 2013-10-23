@@ -662,9 +662,7 @@ public interface DSLContext {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The results from the executed query.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the query returned more than one record
      */

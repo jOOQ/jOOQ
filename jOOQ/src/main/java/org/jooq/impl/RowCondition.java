@@ -149,6 +149,14 @@ class RowCondition extends AbstractCondition {
                 : (comparator == LESS_OR_EQUAL) ? LESS
                 : null;
 
+            // [#2658] The factored order component of the comparator (enforcing the equal component)
+            Comparator factoredOrder
+                = (comparator == GREATER) ? GREATER_OR_EQUAL
+                : (comparator == GREATER_OR_EQUAL) ? GREATER_OR_EQUAL
+                : (comparator == LESS) ? LESS_OR_EQUAL
+                : (comparator == LESS_OR_EQUAL) ? LESS_OR_EQUAL
+                : null;
+
             // Whether the comparator has an equal component
             boolean equal
                 = (comparator == GREATER_OR_EQUAL)
@@ -178,6 +186,17 @@ class RowCondition extends AbstractCondition {
             }
 
             Condition result = new CombinedCondition(Operator.OR, outer);
+
+            // [#2658] For performance reasons, an additional, redundant
+            // predicate is factored out to favour the application of range
+            // scans as the topmost predicate is AND-connected, not
+            // OR-connected:
+            // (A, B, C) > (X, Y, Z)
+            // (A >= X) AND ((A > X) OR (A = X AND B > Y) OR (A = X AND B = Y AND C > Z))
+            if (leftFields.length > 1) {
+                result = leftFields[0].compare(factoredOrder, (Field) rightFields[0]).and(result);
+            }
+
             return (QueryPartInternal) result;
         }
         else {

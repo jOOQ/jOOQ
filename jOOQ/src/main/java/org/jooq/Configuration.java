@@ -123,8 +123,7 @@ public interface Configuration extends Serializable {
      * See {@link ExecuteListener} for more details.
      *
      * @param key A key to identify the custom data
-     * @param value The custom data or <code>null</code> to unset the custom
-     *            data
+     * @param value The custom data
      * @return The previously set custom data or <code>null</code> if no data
      *         was previously set for the given key
      * @see ExecuteListener

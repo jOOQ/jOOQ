@@ -87,12 +87,12 @@ class Splitter extends Generators {
         }
         
         ex.shutdown;
-        ex.awaitTermination(1, TimeUnit::MINUTES);
-
-        System::out.println();
-        System::out.println("Total  chars : " + charsTotal);
-        System::out.println("Masked chars : " + charsMasked);
-        System::out.println("Percentage   : " + (100.0 * charsMasked.get / charsTotal.get));
+//        ex.awaitTermination(1, TimeUnit::MINUTES);
+//
+//        System::out.println();
+//        System::out.println("Total  chars : " + charsTotal);
+//        System::out.println("Masked chars : " + charsMasked);
+//        System::out.println("Percentage   : " + (100.0 * charsMasked.get / charsTotal.get));
     }
 
     def transform(File inRoot, File outRoot, File in) {

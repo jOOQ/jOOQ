@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.tools.reflect.Reflect.on;
 
@@ -402,6 +403,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         Record record = q.fetchAny();
         assertEquals("Coelho", record.getValue(TAuthor_LAST_NAME()));
+    }
+
+    @Test
+    public void testFetchValue() throws Exception {
+        assertEquals(1, (int) create().fetchValue(selectOne()));
     }
 
     @Test
@@ -1557,6 +1563,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 break;
             }
         }
+    }
+
+    @Test
+    public void testFetchResultSetValue() throws Exception {
+        assertEquals(1, create().fetchValue(
+            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID() + " = 1").resultSet()));
+        assertEquals("1", create().fetchValue(
+            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID() + " = 1").resultSet(),
+            String.class));
+        assertEquals("1", create().fetchValue(
+            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID() + " = 1").resultSet(),
+            SQLDataType.VARCHAR));
+        assertEquals("1", create().fetchValue(
+            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID() + " = 1").resultSet(),
+            TBook_TITLE()));
     }
 
     @Test

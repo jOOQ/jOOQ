@@ -182,6 +182,7 @@ import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
 import org.jooq.tools.csv.CSVReader;
@@ -467,6 +468,21 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
+    public Object fetchValue(String sql) {
+        return fetchValue((ResultQuery) resultQuery(sql));
+    }
+
+    @Override
+    public Object fetchValue(String sql, Object... bindings) {
+        return fetchValue((ResultQuery) resultQuery(sql, bindings));
+    }
+
+    @Override
+    public Object fetchValue(String sql, QueryPart... parts) {
+        return fetchValue((ResultQuery) resultQuery(sql, parts));
+    }
+
+    @Override
     public int execute(String sql) {
         return query(sql).execute();
     }
@@ -548,6 +564,26 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     @Override
     public Record fetchOne(ResultSet rs, Class<?>... types) {
         return Utils.fetchOne(fetchLazy(rs, types));
+    }
+
+    @Override
+    public Object fetchValue(ResultSet rs) {
+        return value1((Record1) fetchOne(rs));
+    }
+
+    @Override
+    public <T> T fetchValue(ResultSet rs, Field<T> field) {
+        return (T) value1((Record1) fetchOne(rs, field));
+    }
+
+    @Override
+    public <T> T fetchValue(ResultSet rs, DataType<T> type) {
+        return (T) value1((Record1) fetchOne(rs, type));
+    }
+
+    @Override
+    public <T> T fetchValue(ResultSet rs, Class<T> type) {
+        return (T) value1((Record1) fetchOne(rs, type));
     }
 
     @Override
@@ -1714,6 +1750,29 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         finally {
             query.attach(previous);
         }
+    }
+
+    @Override
+    public <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query) {
+        final Configuration previous = Utils.getConfiguration(query);
+
+        try {
+            query.attach(configuration);
+            return value1(fetchOne(query));
+        }
+        finally {
+            query.attach(previous);
+        }
+    }
+
+    private final <T, R extends Record1<T>> T value1(R record) {
+        if (record == null)
+            return null;
+
+        if (record.size() != 1)
+            throw new InvalidResultException("Record contains more than one value : " + record);
+
+        return record.value1();
     }
 
     @Override

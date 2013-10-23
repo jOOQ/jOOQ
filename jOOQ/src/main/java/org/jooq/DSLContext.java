@@ -166,7 +166,7 @@ public interface DSLContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Get a new {@link RenderContext} for the context of this executor.
+     * Get a new {@link RenderContext} for the context of this <code>DSLContext</code>.
      * <p>
      * This will return an initialised render context as such:
      * <ul>
@@ -184,7 +184,7 @@ public interface DSLContext {
     RenderContext renderContext();
 
     /**
-     * Render a QueryPart in the context of this executor.
+     * Render a QueryPart in the context of this <code>DSLContext</code>.
      * <p>
      * This is the same as calling <code>renderContext().render(part)</code>
      *
@@ -194,7 +194,7 @@ public interface DSLContext {
     String render(QueryPart part);
 
     /**
-     * Render a QueryPart in the context of this executor, rendering bind
+     * Render a QueryPart in the context of this <code>DSLContext</code>, rendering bind
      * variables as named parameters.
      * <p>
      * This is the same as calling
@@ -206,7 +206,7 @@ public interface DSLContext {
     String renderNamedParams(QueryPart part);
 
     /**
-     * Render a QueryPart in the context of this executor, inlining all bind
+     * Render a QueryPart in the context of this <code>DSLContext</code>, inlining all bind
      * variables.
      * <p>
      * This is the same as calling
@@ -253,7 +253,7 @@ public interface DSLContext {
     Param<?> extractParam(QueryPart part, String name);
 
     /**
-     * Get a new {@link BindContext} for the context of this executor.
+     * Get a new {@link BindContext} for the context of this <code>DSLContext</code>.
      * <p>
      * This will return an initialised bind context as such:
      * <ul>
@@ -734,6 +734,96 @@ public interface DSLContext {
     Record fetchOne(String sql, QueryPart... parts) throws DataAccessException, InvalidResultException;
 
     /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The result value from the executed query. This may be
+     *         <code>null</code> if the database returned no records
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     *             or a record with more than one value.
+     */
+    @Support
+    Object fetchValue(String sql) throws DataAccessException, InvalidResultException;
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * There must be as many bind variables contained in the SQL, as passed in
+     * the bindings parameter
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @param bindings The bindings
+     * @return The results from the executed query. This may be
+     *         <code>null</code> if the database returned no records
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     *             or a record with more than one value.
+     */
+    @Support
+    Object fetchValue(String sql, Object... bindings) throws DataAccessException, InvalidResultException;
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Unlike {@link #fetchValue(String, Object...)}, the SQL passed to this
+     * method should not contain any bind variables. Instead, you can pass
+     * {@link QueryPart} objects to the method which will be rendered at indexed
+     * locations of your SQL string as such: <code><pre>
+     * // The following query
+     * fetchOne("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
+     *
+     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * select ?, 'test' from "DUAL"
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link DSL#name(String...)} and similar methods
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return The results from the executed query. This may be
+     *         <code>null</code> if the database returned no records
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record or a record with more than one value.
+     */
+    @Support
+    Object fetchValue(String sql, QueryPart... parts) throws DataAccessException, InvalidResultException;
+
+    /**
      * Execute a query holding plain SQL.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -1071,6 +1161,82 @@ public interface DSLContext {
      */
     @Support
     Record fetchOne(ResultSet rs, Class<?>... types) throws DataAccessException, InvalidResultException;
+
+    /**
+     * Fetch a record from a JDBC {@link ResultSet} and return the only
+     * contained value.
+     * <p>
+     * This will internally fetch all records and throw an exception if there
+     * was more than one resulting record.
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     *             or a record with more than one value.
+     */
+    @Support
+    Object fetchValue(ResultSet rs) throws DataAccessException, InvalidResultException;
+
+    /**
+     * Fetch a record from a JDBC {@link ResultSet} and return the only
+     * contained value.
+     * <p>
+     * This will internally fetch all records and throw an exception if there
+     * was more than one resulting record.
+     * <p>
+     * The additional <code>field</code> argument is used by jOOQ to coerce
+     * field names and data types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param field The field to use in the desired output
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     *             or a record with more than one value.
+     */
+    @Support
+    <T> T fetchValue(ResultSet rs, Field<T> field) throws DataAccessException, InvalidResultException;
+
+    /**
+     * Fetch a record from a JDBC {@link ResultSet} and return the only
+     * contained value.
+     * <p>
+     * This will internally fetch all records and throw an exception if there
+     * was more than one resulting record.
+     * <p>
+     * The additional <code>type</code> argument is used by jOOQ to coerce data
+     * types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param type The data type to use in the desired output
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     *             or a record with more than one value.
+     */
+    @Support
+    <T> T fetchValue(ResultSet rs, DataType<T> type) throws DataAccessException, InvalidResultException;
+
+    /**
+     * Fetch a record from a JDBC {@link ResultSet} and return the only
+     * contained value.
+     * <p>
+     * This will internally fetch all records and throw an exception if there
+     * was more than one resulting record.
+     * <p>
+     * The additional <code>type</code> argument is used by jOOQ to coerce data
+     * types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param type The data types to use in the desired output
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     *             or a record with more than one value.
+     */
+    @Support
+    <T> T fetchValue(ResultSet rs, Class<T> type) throws DataAccessException, InvalidResultException;
 
     /**
      * Wrap a JDBC {@link ResultSet} into a jOOQ {@link Cursor}.
@@ -4922,7 +5088,7 @@ public interface DSLContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Execute a {@link ResultQuery} in the context of this executor and return
+     * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
      * results.
      *
      * @param query The query to execute
@@ -4933,7 +5099,7 @@ public interface DSLContext {
     <R extends Record> Result<R> fetch(ResultQuery<R> query) throws DataAccessException;
 
     /**
-     * Execute a {@link ResultQuery} in the context of this executor and return
+     * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
      * a cursor.
      *
      * @param query The query to execute
@@ -4944,7 +5110,7 @@ public interface DSLContext {
     <R extends Record> Cursor<R> fetchLazy(ResultQuery<R> query) throws DataAccessException;
 
     /**
-     * Execute a {@link ResultQuery} in the context of this executor and return
+     * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
      * a cursor.
      *
      * @param query The query to execute
@@ -4955,7 +5121,7 @@ public interface DSLContext {
     <R extends Record> List<Result<Record>> fetchMany(ResultQuery<R> query) throws DataAccessException;
 
     /**
-     * Execute a {@link ResultQuery} in the context of this executor and return
+     * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
      * a record.
      *
      * @param query The query to execute
@@ -4967,7 +5133,19 @@ public interface DSLContext {
     <R extends Record> R fetchOne(ResultQuery<R> query) throws DataAccessException, InvalidResultException;
 
     /**
-     * Execute a {@link Select} query in the context of this executor and return
+     * Execute a {@link ResultQuery} in the context of this
+     * <code>DSLContext</code> and return a single value.
+     *
+     * @param query The query to execute
+     * @return The value.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     *             or a record with more than one value.
+     */
+    <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query) throws DataAccessException, InvalidResultException;
+
+    /**
+     * Execute a {@link Select} query in the context of this <code>DSLContext</code> and return
      * a <code>COUNT(*)</code> value.
      * <p>
      * This wraps a pre-existing <code>SELECT</code> query in another one to
@@ -4991,7 +5169,7 @@ public interface DSLContext {
     int fetchCount(Select<?> query) throws DataAccessException;
 
     /**
-     * Execute a {@link Query} in the context of this executor.
+     * Execute a {@link Query} in the context of this <code>DSLContext</code>.
      *
      * @param query The query to execute
      * @return The number of affected rows

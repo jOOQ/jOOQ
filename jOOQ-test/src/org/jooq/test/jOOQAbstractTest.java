@@ -1001,6 +1001,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchResultSetValue() throws Exception {
+        new FetchTests(this).testFetchResultSetValue();
+    }
+
+    @Test
     public void testFetchResultSetWithCoercedTypes() throws Exception {
         new FetchTests(this).testFetchResultSetWithCoercedTypes();
     }
@@ -1133,6 +1138,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testPlainSQLWithQueryParts() throws Exception {
         new PlainSQLTests(this).testPlainSQLWithQueryParts();
+    }
+
+    @Test
+    public void testPlainSQLFetchValue() throws Exception {
+        new PlainSQLTests(this).testPlainSQLFetchValue();
     }
 
     @Test
@@ -1368,6 +1378,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testFetch() throws Exception {
         new FetchTests(this).testFetch();
+    }
+
+    @Test
+    public void testFetchValue() throws Exception {
+        new FetchTests(this).testFetchValue();
     }
 
     @Test

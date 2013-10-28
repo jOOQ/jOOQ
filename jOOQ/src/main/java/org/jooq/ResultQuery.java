@@ -1019,6 +1019,17 @@ public interface ResultQuery<R extends Record> extends Query {
     ResultQuery<R> maxRows(int rows);
 
     /**
+     * Specify the fetch size of the underlying {@link Statement}.
+     * <p>
+     * Regardless of this setting, {@link #fetchLazy()} is the only way in jOOQ
+     * not to fetch all data in memory. However, you may influence how your JDBC
+     * driver interacts with your database through specifying a fetch size.
+     *
+     * @see Statement#setFetchSize(int)
+     */
+    ResultQuery<R> fetchSize(int rows);
+
+    /**
      * Specify the <code>ResultSet</code> concurrency of <code>ResultSet</code>
      * objects created by jOOQ.
      * <p>

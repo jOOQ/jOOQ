@@ -342,6 +342,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    @Deprecated
     public final Cursor<R> fetchLazy(int size) {
         lazy = true;
         fetchSize = size;

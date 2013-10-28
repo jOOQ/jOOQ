@@ -156,7 +156,10 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      * @see #fetchLazy()
      * @see Statement#setFetchSize(int)
+     * @deprecated - [#2811] - 3.3.0 - Use {@link #fetchSize(int)} and
+     *             {@link #fetchLazy()} instead.
      */
+    @Deprecated
     Cursor<R> fetchLazy(int fetchSize) throws DataAccessException;
 
     /**

@@ -1638,7 +1638,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // ---------------------------------------------------------------------
             // A regular pass through the cursor
             // ---------------------------------------------------------------------
-            Cursor<B> cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLazy(fetchSize);
+            Cursor<B> cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchSize(fetchSize).fetchLazy();
 
             assertTrue(cursor.hasNext());
             assertTrue(cursor.hasNext());
@@ -1680,7 +1680,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // ---------------------------------------------------------------------
             // Prematurely closing the cursor
             // ---------------------------------------------------------------------
-            cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLazy(fetchSize);
+            cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchSize(fetchSize).fetchLazy();
 
             assertTrue(cursor.hasNext());
             assertTrue(cursor.hasNext());
@@ -1696,7 +1696,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // ---------------------------------------------------------------------
             // Fetching several records at once
             // ---------------------------------------------------------------------
-            cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLazy(fetchSize);
+            cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchSize(fetchSize).fetchLazy();
             Result<B> fetch0 = cursor.fetch(0);
 
             assertTrue(fetch0.isEmpty());

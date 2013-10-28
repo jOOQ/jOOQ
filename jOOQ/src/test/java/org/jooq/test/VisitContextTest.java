@@ -93,6 +93,7 @@ import static org.jooq.Clause.SELECT_SELECT;
 import static org.jooq.Clause.SELECT_START_WITH;
 import static org.jooq.Clause.SELECT_UNION_ALL;
 import static org.jooq.Clause.SELECT_WHERE;
+import static org.jooq.Clause.SELECT_WINDOW;
 import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_ALIAS;
 import static org.jooq.Clause.TABLE_REFERENCE;
@@ -422,6 +423,7 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_CONNECT_BY),
             asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_GROUP_BY),
             asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_HAVING),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_WINDOW),
             asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_ORDER_BY),
             asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT),
             asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_SELECT),
@@ -438,6 +440,7 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_CONNECT_BY),
             asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_GROUP_BY),
             asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_HAVING),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_WINDOW),
             asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_ORDER_BY),
             asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE),
             asList(INSERT, INSERT_RETURNING)
@@ -476,6 +479,7 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_CONNECT_BY),
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_GROUP_BY),
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_HAVING),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_WINDOW),
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_ORDER_BY),
             asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE),
             asList(INSERT, INSERT_RETURNING)
@@ -849,6 +853,7 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_CONNECT_BY),
             asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_GROUP_BY),
             asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_HAVING),
+            asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_WINDOW),
             asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_ORDER_BY)
         ),
         exists(selectOne()));
@@ -872,6 +877,7 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_CONNECT_BY),
             asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_GROUP_BY),
             asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_HAVING),
+            asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_WINDOW),
             asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_ORDER_BY)
         ),
         notExists(selectOne()));

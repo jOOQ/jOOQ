@@ -90,11 +90,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     private static final JooqLogger log              = JooqLogger.getLogger(AbstractResultQuery.class);
 
     private int                     maxRows;
+    private int                     fetchSize;
     private int                     resultSetConcurrency;
     private int                     resultSetType;
     private int                     resultSetHoldability;
     private transient boolean       lazy;
-    private transient int           size;
     private transient boolean       many;
     private transient Cursor<R>     cursor;
     private Result<R>               result;
@@ -141,6 +141,12 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final ResultQuery<R> maxRows(int rows) {
         this.maxRows = rows;
+        return this;
+    }
+
+    @Override
+    public final ResultQuery<R> fetchSize(int rows) {
+        this.fetchSize = rows;
         return this;
     }
 
@@ -226,11 +232,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
         // [#1263] Allow for negative fetch sizes to support some non-standard
         // MySQL feature, where Integer.MIN_VALUE is used
-        if (size != 0) {
+        if (fetchSize != 0) {
             if (log.isDebugEnabled())
-                log.debug("Setting fetch size", size);
+                log.debug("Setting fetch size", fetchSize);
 
-            ctx.statement().setFetchSize(size);
+            ctx.statement().setFetchSize(fetchSize);
         }
 
         // [#1854] Set the max number of rows for this result query
@@ -336,16 +342,16 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final Cursor<R> fetchLazy(int fetchSize) {
+    public final Cursor<R> fetchLazy(int size) {
         lazy = true;
-        size = fetchSize;
+        fetchSize = size;
 
         try {
             execute();
         }
         finally {
             lazy = false;
-            size = 0;
+            fetchSize = 0;
         }
 
         return cursor;

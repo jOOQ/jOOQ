@@ -1567,16 +1567,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testFetchResultSetValue() throws Exception {
-        assertEquals(1, create().fetchValue(
-            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID() + " = 1").resultSet()));
+        assertEquals("1", "" + create().fetchValue(
+            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID().getName() + " = 1").resultSet()));
         assertEquals("1", create().fetchValue(
-            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID() + " = 1").resultSet(),
+            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID().getName() + " = 1").resultSet(),
             String.class));
         assertEquals("1", create().fetchValue(
-            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID() + " = 1").resultSet(),
+            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID().getName() + " = 1").resultSet(),
             SQLDataType.VARCHAR));
         assertEquals("1", create().fetchValue(
-            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID() + " = 1").resultSet(),
+            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID().getName() + " = 1").resultSet(),
             TBook_TITLE()));
     }
 

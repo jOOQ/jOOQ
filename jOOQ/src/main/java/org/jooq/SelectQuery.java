@@ -459,7 +459,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param fields The seeking fields
      */
     @Support
-    void addSeek(Field<?>... fields);
+    void addSeekAfter(Field<?>... fields);
 
     /**
      * Adds seeking fields.
@@ -467,7 +467,23 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param fields The seeking fields
      */
     @Support
-    void addSeek(Collection<? extends Field<?>> fields);
+    void addSeekAfter(Collection<? extends Field<?>> fields);
+
+    /**
+     * Adds seeking fields.
+     *
+     * @param fields The seeking fields
+     */
+    @Support
+    void addSeekBefore(Field<?>... fields);
+
+    /**
+     * Adds seeking fields.
+     *
+     * @param fields The seeking fields
+     */
+    @Support
+    void addSeekBefore(Collection<? extends Field<?>> fields);
 
     /**
      * Limit the results of this select

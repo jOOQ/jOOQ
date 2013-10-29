@@ -177,7 +177,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case SQLSERVER:
             /* [/pro] */
 
-            case CUBRID:
             case DERBY:
             case FIREBIRD:
             case H2:
@@ -550,7 +549,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             /* [pro] */
             case DB2:
             /* [/pro] */
-            case CUBRID:
                 log.info("SKIPPING", "PERCENT_RANK() and CUME_DIST() window function tests");
                 break;
 

@@ -295,7 +295,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().select(TBook_ID())
                     .from(TBook())
                     .orderBy(TBook_ID().desc())
-                    .seek(3)
+                    .seekAfter(3)
+                    .fetch(TBook_ID()));
+
+        assertEquals(
+            asList(1, 2),
+            create().select(TBook_ID())
+                    .from(TBook())
+                    .orderBy(TBook_ID().asc())
+                    .seekBefore(3)
                     .fetch(TBook_ID()));
 
         // Single ORDER BY column, with LIMIT
@@ -305,7 +313,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().select(TBook_ID())
                     .from(TBook())
                     .orderBy(TBook_ID())
-                    .seek(2)
+                    .seekAfter(2)
                     .limit(1)
                     .fetch(TBook_ID()));
 
@@ -314,7 +322,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().select(TBook_ID())
                     .from(TBook())
                     .orderBy(TBook_ID())
-                    .seek(1)
+                    .seekAfter(1)
                     .limit(2)
                     .fetch(TBook_ID()));
 
@@ -323,7 +331,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().select(TBook_ID())
                     .from(TBook())
                     .orderBy(TBook_ID().desc())
-                    .seek(3)
+                    .seekAfter(3)
+                    .limit(4)
+                    .fetch(TBook_ID()));
+
+        assertEquals(
+            asList(1, 2),
+            create().select(TBook_ID())
+                    .from(TBook())
+                    .orderBy(TBook_ID().asc())
+                    .seekBefore(3)
                     .limit(4)
                     .fetch(TBook_ID()));
 

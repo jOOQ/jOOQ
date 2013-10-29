@@ -151,6 +151,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     private final SortFieldList             orderBy;
     private boolean                         orderBySiblings;
     private final QueryPartList<Field<?>>   seek;
+    private boolean                         seekBefore;
     private final Limit                     limit;
 
     SelectQueryImpl(Configuration configuration) {
@@ -998,7 +999,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             // predicates can be applied, which can be heavily optimised on some
             // databases.
             if (o.size() > 1 && o.uniform()) {
-                if (o.get(0).getOrder() == ASC) {
+                if (o.get(0).getOrder() == ASC ^ seekBefore) {
                     c = row(o.fields()).gt(row(getSeek()));
                 }
                 else {
@@ -1016,15 +1017,15 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
                     for (int j = 0; j < i; j++) {
                         SortFieldImpl<?> s = (SortFieldImpl<?>) o.get(j);
-                        and.addConditions(((Field) s.getField()).eq(seek.get(j)));
+                        and.addConditions(((Field) s.getField()).eq(getSeek().get(j)));
                     }
 
                     SortFieldImpl<?> s = (SortFieldImpl<?>) o.get(i);
-                    if (s.getOrder() == ASC) {
-                        and.addConditions(((Field) s.getField()).gt(seek.get(i)));
+                    if (s.getOrder() == ASC ^ seekBefore) {
+                        and.addConditions(((Field) s.getField()).gt(getSeek().get(i)));
                     }
                     else {
-                        and.addConditions(((Field) s.getField()).lt(seek.get(i)));
+                        and.addConditions(((Field) s.getField()).lt(getSeek().get(i)));
                     }
 
                     or.addConditions(OR, and);
@@ -1105,12 +1106,24 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     }
 
     @Override
-    public final void addSeek(Field<?>... fields) {
-        addSeek(Arrays.asList(fields));
+    public final void addSeekAfter(Field<?>... fields) {
+        addSeekAfter(Arrays.asList(fields));
     }
 
     @Override
-    public final void addSeek(Collection<? extends Field<?>> fields) {
+    public final void addSeekAfter(Collection<? extends Field<?>> fields) {
+        seekBefore = false;
+        getSeek().addAll(fields);
+    }
+
+    @Override
+    public final void addSeekBefore(Field<?>... fields) {
+        addSeekBefore(Arrays.asList(fields));
+    }
+
+    @Override
+    public final void addSeekBefore(Collection<? extends Field<?>> fields) {
+        seekBefore = true;
         getSeek().addAll(fields);
     }
 

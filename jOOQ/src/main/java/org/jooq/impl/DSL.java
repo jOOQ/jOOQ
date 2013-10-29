@@ -40,6 +40,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -6372,7 +6373,7 @@ public class DSL {
         to = "StringFunction"
     )
     public static Field<String> upper(Field<String> field) {
-        return function("upper", SQLDataType.VARCHAR, nullSafe(field));
+        return new Upper(nullSafe(field));
     }
 
     /**
@@ -6402,8 +6403,8 @@ public class DSL {
         args = "Field",
         to = "StringFunction"
     )
-    public static Field<String> lower(Field<String> value) {
-        return function("lower", SQLDataType.VARCHAR, nullSafe(value));
+    public static Field<String> lower(Field<String> field) {
+        return new Lower(nullSafe(field));
     }
 
     /**
@@ -6813,7 +6814,7 @@ public class DSL {
      *
      * @see #replace(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, String search) {
         return replace(nullSafe(field), Utils.field(search, String.class));
     }
@@ -6827,7 +6828,7 @@ public class DSL {
      * using the three-argument replace function:
      * <code><pre>replace([field], [search], '')</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, Field<String> search) {
         return new Replace(nullSafe(field), nullSafe(search));
     }
@@ -6837,7 +6838,7 @@ public class DSL {
      *
      * @see #replace(Field, Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, String search, String replace) {
         return replace(nullSafe(field), Utils.field(search, String.class), Utils.field(replace, String.class));
     }
@@ -6849,7 +6850,7 @@ public class DSL {
      * <code><pre>replace([field], [search]) or
      * str_replace([field], [search])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, Field<String> search, Field<String> replace) {
         return new Replace(nullSafe(field), nullSafe(search), nullSafe(replace));
     }

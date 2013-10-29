@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -149,6 +150,10 @@ class DefaultBindContext extends AbstractBindContext {
             // Some dialects have trouble binding binary data as BLOB
             else if (asList(POSTGRES, SYBASE).contains(configuration.dialect()) && sqlType == Types.BLOB) {
                 stmt.setNull(nextIndex(), Types.BINARY);
+            }
+
+            else if (configuration.dialect().family() == ACCESS) {
+                stmt.setString(nextIndex(), null);
             }
 
             // All other types can be set to null if the JDBC type is known

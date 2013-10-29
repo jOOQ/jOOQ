@@ -72,6 +72,7 @@ enum Term {
                 case ASE:
                     return "8 * datalength";
 
+                case ACCESS:
                 case SQLSERVER:
                     return "8 * len";
 
@@ -95,6 +96,7 @@ enum Term {
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
                 /* [pro] */
+                case ACCESS:
                 case SQLSERVER:
                     return "len";
 
@@ -147,6 +149,7 @@ enum Term {
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
                 /* [pro] */
+                case ACCESS:
                 case SQLSERVER:
                     return "len";
 

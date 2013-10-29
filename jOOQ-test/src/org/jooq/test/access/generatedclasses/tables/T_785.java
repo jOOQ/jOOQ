@@ -9,10 +9,10 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = 1038673352;
+	private static final long serialVersionUID = -639244360;
 
 	/**
-	 * The singleton instance of <code>T_785</code>
+	 * The singleton instance of <code>t_785</code>
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.T_785 T_785 = new org.jooq.test.access.generatedclasses.tables.T_785();
 
@@ -25,24 +25,24 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.access.generate
 	}
 
 	/**
-	 * The column <code>T_785.ID</code>. 
+	 * The column <code>t_785.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_785);
 
 	/**
-	 * The column <code>T_785.XNAME</code>. 
+	 * The column <code>t_785.NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_785Record, java.lang.String> XNAME = createField("XNAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_785);
+	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_785);
 
 	/**
-	 * The column <code>T_785.XVALUE</code>. 
+	 * The column <code>t_785.VALUE</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_785Record, java.lang.String> XVALUE = createField("XVALUE", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_785);
+	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_785);
 
 	/**
 	 * No further instances allowed
 	 */
 	private T_785() {
-		super("T_785", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		super("t_785", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 }

@@ -61,6 +61,7 @@ import static org.jooq.JoinType.NATURAL_JOIN;
 import static org.jooq.JoinType.NATURAL_LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -149,11 +150,16 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         JoinType translatedType = translateType(context);
         Clause translatedClause = translateClause(translatedType);
 
+        // In MS Access, the INNER keyword is not optional
+        String keyword = translatedType == JOIN && context.configuration().dialect().family() == ACCESS
+               ? "inner join"
+               : translatedType.toSQL();
+
         context.visit(lhs)
                .formatIndentStart()
                .formatSeparator()
                .start(translatedClause)
-               .keyword(translatedType.toSQL())
+               .keyword(keyword)
                .sql(" ");
 
         // [#671] Some databases formally require nested JOINS to be

@@ -92,7 +92,16 @@ public class JDBCUtils {
         SQLDialect result = SQLDialect.SQL99;
 
         try {
-            String url = connection.getMetaData().getURL();
+            DatabaseMetaData m = connection.getMetaData();
+
+            /* [pro] */
+            String product = m.getDatabaseProductName();
+            if ("ACCESS".equalsIgnoreCase(product)) {
+                return SQLDialect.ACCESS;
+            }
+            /* [/pro] */
+
+            String url = m.getURL();
             result = dialect(url);
         }
         catch (SQLException ignore) {}

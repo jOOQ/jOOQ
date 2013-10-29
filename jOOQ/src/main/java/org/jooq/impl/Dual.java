@@ -133,14 +133,18 @@ class Dual extends AbstractTable<Record> {
                 // These dialects don't have a DUAL table. But simulation is needed
                 // for queries like SELECT 1 WHERE 1 = 1
                 /* [pro] */
-                case INGRES:
-                    context.keyword("(select 1 as dual) as dual");
+                case ACCESS:
+                    context.sql("(select count(*) from MSysResources) as dual");
                     break;
 
                 case DB2:
                     context.literal("SYSIBM")
                            .sql(".")
                            .literal("DUAL");
+                    break;
+
+                case INGRES:
+                    context.keyword("(select 1 as dual) as dual");
                     break;
 
                 case SYBASE:

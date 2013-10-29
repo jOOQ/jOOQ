@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd">
     <jdbc>
-        <driver>net.ucanaccess.jdbc.UcanaccessDriver</driver>
-        <url>jdbc:ucanaccess:///C:/Users/Lukas/workspace/jOOQ/jOOQ-test/access/test.mdb;Newdatabaseversion=V2010</url>
-        <user>admin</user>
+        <driver>sun.jdbc.odbc.JdbcOdbcDriver</driver>
+        <url>jdbc:odbc:TEST</url>
+        <user></user>
         <password></password>
     </jdbc>
     <generator>

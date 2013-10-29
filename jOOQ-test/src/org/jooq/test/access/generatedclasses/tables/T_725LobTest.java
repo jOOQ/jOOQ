@@ -9,10 +9,10 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = 1089417720;
+	private static final long serialVersionUID = 477058722;
 
 	/**
-	 * The singleton instance of <code>T_725_LOB_TEST</code>
+	 * The singleton instance of <code>t_725_lob_test</code>
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = new org.jooq.test.access.generatedclasses.tables.T_725LobTest();
 
@@ -25,35 +25,19 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.access.g
 	}
 
 	/**
-	 * The column <code>T_725_LOB_TEST.ID</code>. 
+	 * The column <code>t_725_lob_test.id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_725_LOB_TEST);
+	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_725_LOB_TEST);
 
 	/**
-	 * The column <code>T_725_LOB_TEST.LOB</code>. 
+	 * The column <code>t_725_lob_test.lob</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB.length(16777216), T_725_LOB_TEST);
+	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("lob", org.jooq.impl.SQLDataType.VARBINARY, T_725_LOB_TEST);
 
 	/**
 	 * No further instances allowed
 	 */
 	private T_725LobTest() {
-		super("T_725_LOB_TEST", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.T_725LobTestRecord> getPrimaryKey() {
-		return org.jooq.test.access.generatedclasses.Keys.PK_T_725_LOB_TEST;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public java.util.List<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.T_725LobTestRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.T_725LobTestRecord>>asList(org.jooq.test.access.generatedclasses.Keys.PK_T_725_LOB_TEST);
+		super("t_725_lob_test", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 }

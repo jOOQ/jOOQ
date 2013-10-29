@@ -9,45 +9,45 @@ package org.jooq.test.access.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStoreRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1416739370;
+	private static final long serialVersionUID = 917174688;
 
 	/**
-	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
+	 * Setter for <code>t_book_to_book_store.book_store_name</code>. 
 	 */
 	public void setBookStoreName(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
+	 * Getter for <code>t_book_to_book_store.book_store_name</code>. 
 	 */
 	public java.lang.String getBookStoreName() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
+	 * Setter for <code>t_book_to_book_store.book_id</code>. 
 	 */
 	public void setBookId(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
+	 * Getter for <code>t_book_to_book_store.book_id</code>. 
 	 */
 	public java.lang.Integer getBookId() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>. 
+	 * Setter for <code>t_book_to_book_store.stock</code>. 
 	 */
 	public void setStock(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>. 
+	 * Getter for <code>t_book_to_book_store.stock</code>. 
 	 */
 	public java.lang.Integer getStock() {
 		return (java.lang.Integer) getValue(2);
@@ -130,5 +130,16 @@ public class TBookToBookStoreRecord extends org.jooq.impl.TableRecordImpl<org.jo
 	 */
 	public TBookToBookStoreRecord() {
 		super(org.jooq.test.access.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+	}
+
+	/**
+	 * Create a detached, initialised TBookToBookStoreRecord
+	 */
+	public TBookToBookStoreRecord(java.lang.String bookStoreName, java.lang.Integer bookId, java.lang.Integer stock) {
+		super(org.jooq.test.access.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+
+		setValue(0, bookStoreName);
+		setValue(1, bookId);
+		setValue(2, stock);
 	}
 }

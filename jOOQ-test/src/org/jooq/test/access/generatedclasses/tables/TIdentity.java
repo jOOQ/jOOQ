@@ -9,10 +9,10 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = -1523211008;
+	private static final long serialVersionUID = -581680878;
 
 	/**
-	 * The singleton instance of <code>T_IDENTITY</code>
+	 * The singleton instance of <code>t_identity</code>
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.TIdentity T_IDENTITY = new org.jooq.test.access.generatedclasses.tables.TIdentity();
 
@@ -25,35 +25,19 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.access.gene
 	}
 
 	/**
-	 * The column <code>T_IDENTITY.ID</code>. 
+	 * The column <code>t_identity.id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY);
+	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord, java.lang.Object> ID = createField("id", org.jooq.impl.SQLDataType.OTHER, T_IDENTITY);
 
 	/**
-	 * The column <code>T_IDENTITY.VAL</code>. 
+	 * The column <code>t_identity.val</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("VAL", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY);
+	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY);
 
 	/**
 	 * No further instances allowed
 	 */
 	private TIdentity() {
-		super("T_IDENTITY", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord> getPrimaryKey() {
-		return org.jooq.test.access.generatedclasses.Keys.PK_T_IDENTITY;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public java.util.List<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord>>asList(org.jooq.test.access.generatedclasses.Keys.PK_T_IDENTITY);
+		super("t_identity", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 }

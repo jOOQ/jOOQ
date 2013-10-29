@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
@@ -204,6 +205,15 @@ class MetaImpl implements Meta, Serializable {
             try {
                 List<Schema> result = new ArrayList<Schema>();
 
+                /* [pro] */
+                // Apparently, JDBC-ODBC does not support getting schemas this way...
+                // at least not for MS Access
+                if (ACCESS == configuration.dialect().family()) {
+                }
+
+                else
+                /* [/pro] */
+
                 if (!asList(MYSQL, MARIADB).contains(configuration.dialect().family())) {
                     Result<Record> schemas = create.fetch(
                         meta().getSchemas(),
@@ -284,7 +294,18 @@ class MetaImpl implements Meta, Serializable {
                 }
 
                 ResultSet rs;
-                if (!asList(MYSQL, MARIADB).contains(configuration.dialect().family())) {
+
+                /* [pro] */
+                // Although the JDBC-ODBC bridge reports the database file as the MS Access
+                // catalog, that information cannot be passed to the getTables() method
+                if (ACCESS == configuration.dialect().family()) {
+                    rs = meta().getTables(null, null, "%", types);
+                }
+                else
+
+                /* [/pro] */
+
+                if (!asList(ACCESS, MYSQL, MARIADB).contains(configuration.dialect().family())) {
                     rs = meta().getTables(null, getName(), "%", types);
                 }
 

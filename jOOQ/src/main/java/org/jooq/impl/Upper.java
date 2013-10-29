@@ -40,66 +40,39 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.val;
-import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.DSL.field;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-class Replace extends AbstractFunction<String> {
+class Upper extends AbstractFunction<String> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = -9070564546827153434L;
+    private final Field<String> field;
 
-    Replace(Field<?>... arguments) {
-        super("replace", SQLDataType.VARCHAR, arguments);
+    Upper(Field<String> field) {
+        super("upper", field.getDataType(), field);
+
+        this.field = field;
     }
 
     @Override
-    final Field<String> getFunction0(Configuration configuration) {
-        Field<?>[] args = getArguments();
-
-        // [#861] Most dialects don't ship with a two-argument replace function:
+    final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] */
-            case ASE: {
-                if (args.length == 2) {
-                    return function("str_replace", VARCHAR, args[0], args[1], val(null));
-                }
-                else {
-                    return function("str_replace", VARCHAR, args);
-                }
-            }
-
             case ACCESS:
-            case DB2:
-            case INGRES:
-            case SQLSERVER:
-            case SYBASE:
+                return field("{ucase}({0})", getDataType(), field);
             /* [/pro] */
-            case FIREBIRD:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE: {
-                if (args.length == 2) {
-                    return function("replace", VARCHAR, args[0], args[1], val(""));
-                }
-                else {
-                    return function("replace", VARCHAR, args);
-                }
-            }
 
-            default: {
-                return function("replace", VARCHAR, args);
-            }
+            default:
+                return field("{upper}({0})", getDataType(), field);
         }
     }
 }

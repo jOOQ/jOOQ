@@ -120,10 +120,15 @@ public enum SQLDialect {
 
     /* [pro] */
 
-//  /**
-//   * The MS Access SQL dialect family. ACCESS support will be added in jOOQ 3.3
-//   */
-//  ACCESS("Access", true),
+    /**
+     * The MS Access SQL dialect family.
+     */
+    ACCESS("Access", true),
+
+    /**
+     * The MS Access 2013 SQL dialect.
+     */
+    ACCESS2013("Access", true, ACCESS),
 
     /**
      * The Sybase Adaptive Server SQL dialect family.

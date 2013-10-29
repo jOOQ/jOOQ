@@ -612,6 +612,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             /* [pro] xx
             xxxx xxxx
             xxxx xxxxxxx
+            xxxx xxxxxxx
             xx [/pro] */
 
             case DERBY:

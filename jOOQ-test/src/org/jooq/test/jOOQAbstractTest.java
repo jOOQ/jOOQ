@@ -2051,6 +2051,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFunctionsOnStrings_REVERSE() throws Exception {
+        new FunctionTests(this).testFunctionsOnStrings_REVERSE();
+    }
+
+    @Test
     public void testFunctionsOnStrings_ASCII() throws Exception {
         new FunctionTests(this).testFunctionsOnStrings_ASCII();
     }

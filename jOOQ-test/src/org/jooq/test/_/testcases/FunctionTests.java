@@ -108,6 +108,7 @@ import static org.jooq.impl.DSL.rad;
 import static org.jooq.impl.DSL.rand;
 import static org.jooq.impl.DSL.repeat;
 import static org.jooq.impl.DSL.replace;
+import static org.jooq.impl.DSL.reverse;
 import static org.jooq.impl.DSL.right;
 import static org.jooq.impl.DSL.round;
 import static org.jooq.impl.DSL.rpad;
@@ -598,6 +599,37 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 assertEquals("a", result.getValue(0));
                 assertEquals("abab", result.getValue(1));
                 assertEquals("abcabcabc", result.getValue(2));
+                break;
+            }
+        }
+    }
+
+    @Test
+    public void testFunctionsOnStrings_REVERSE() throws Exception {
+
+        // REVERSE
+        switch (dialect().family()) {
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
+
+            case DERBY:
+            case FIREBIRD:
+            case H2:
+            case INGRES:
+            case SQLITE:
+                log.info("SKIPPING", "REVERSE function");
+                break;
+
+            default: {
+                Record result = create().select(
+                    reverse("a"),
+                    reverse("ab"),
+                    reverse("abc")).fetchOne();
+                assertEquals("a", result.getValue(0));
+                assertEquals("ba", result.getValue(1));
+                assertEquals("cba", result.getValue(2));
                 break;
             }
         }

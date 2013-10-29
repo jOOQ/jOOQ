@@ -6757,6 +6757,22 @@ public class DSL {
     }
 
     /**
+     * Get the <code>reverse(field)</code> function.
+     */
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<String> reverse(String value) {
+        return reverse(val(value));
+    }
+
+    /**
+     * Get the <code>reverse(field)</code> function.
+     */
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<String> reverse(Field<String> field) {
+        return new Reverse(nullSafe(field));
+    }
+
+    /**
      * Convenience method for {@link #replace(Field, String, String)} to escape
      * data for use with {@link Field#like(Field, char)}.
      * <p>

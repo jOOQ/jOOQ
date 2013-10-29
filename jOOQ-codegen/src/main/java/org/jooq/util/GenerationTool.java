@@ -324,21 +324,32 @@ public class GenerationTool {
     }
 
     private Class<?> loadClass(String className) throws ClassNotFoundException {
+        try {
 
-        // [#2283] If no explicit class loader was provided try loading the class
-        // with "default" techniques
-        if (loader == null) {
-            try {
-                return Class.forName(className);
+            // [#2283] If no explicit class loader was provided try loading the class
+            // with "default" techniques
+            if (loader == null) {
+                try {
+                    return Class.forName(className);
+                }
+                catch (ClassNotFoundException e) {
+                    return Thread.currentThread().getContextClassLoader().loadClass(className);
+                }
             }
-            catch (ClassNotFoundException e) {
-                return Thread.currentThread().getContextClassLoader().loadClass(className);
+
+            // Prefer the explicit class loader if available
+            else {
+                return loader.loadClass(className);
             }
         }
 
-        // Prefer the explicit class loader if available
-        else {
-            return loader.loadClass(className);
+        // [#2801]
+        catch (ClassNotFoundException e) {
+            if (className.startsWith("org.jooq.util.")) {
+                log.warn("Licensing", "With jOOQ 3.2, licensing has changed, and your database may no longer be supported with jOOQ Open Source Edition. See http://www.jooq.org/licensing for details");
+            }
+
+            throw e;
         }
     }
 

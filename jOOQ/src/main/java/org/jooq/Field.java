@@ -2840,7 +2840,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#median(Field)
      */
-    @Support({ HSQLDB })
+    @Support({ CUBRID, HSQLDB })
     Field<BigDecimal> median();
 
     /**
@@ -2946,7 +2946,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#firstValue(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ POSTGRES })
+    @Support({ CUBRID, POSTGRES })
     WindowIgnoreNullsStep<T> firstValue();
 
     /**
@@ -2957,7 +2957,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lastValue(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ POSTGRES })
+    @Support({ CUBRID, POSTGRES })
     WindowIgnoreNullsStep<T> lastValue();
 
     /**

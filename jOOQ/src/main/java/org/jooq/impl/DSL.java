@@ -10129,7 +10129,7 @@ public class DSL {
     /**
      * Get the median over a numeric field: median(field).
      */
-    @Support({ HSQLDB })
+    @Support({ CUBRID, HSQLDB })
     @Transition(
         name = "MEDIAN",
         args = "Field",
@@ -10693,7 +10693,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ POSTGRES })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "PERCENT_RANK"
     )
@@ -10707,7 +10707,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ POSTGRES })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "CUME_DIST"
     )
@@ -10736,7 +10736,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ POSTGRES })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "FIRST_VALUE",
         args = "Field"
@@ -10751,7 +10751,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ POSTGRES })
+    @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "LAST_VALUE",
         args = "Field"

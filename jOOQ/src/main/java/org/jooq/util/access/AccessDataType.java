@@ -81,7 +81,7 @@ public class AccessDataType {
     public static final DataType<Double>     FLOAT            = new DefaultDataType<Double>(SQLDialect.ACCESS, SQLDataType.FLOAT, "float");
     public static final DataType<Short>      SMALLINT         = new DefaultDataType<Short>(SQLDialect.ACCESS, SQLDataType.SMALLINT, "smallint");
     public static final DataType<Integer>    INTEGER          = new DefaultDataType<Integer>(SQLDialect.ACCESS, SQLDataType.INTEGER, "integer");
-    public static final DataType<BigDecimal> DECIMAL          = new DefaultDataType<BigDecimal>(SQLDialect.ACCESS, SQLDataType.DECIMAL, "decimal");
+    public static final DataType<BigDecimal> NUMERIC          = new DefaultDataType<BigDecimal>(SQLDialect.ACCESS, SQLDataType.NUMERIC, "numeric");
     public static final DataType<String>     TEXT             = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.CLOB, "text");
     public static final DataType<String>     CHAR             = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.CHAR, "character");
     public static final DataType<Timestamp>  DATETIME         = new DefaultDataType<Timestamp>(SQLDialect.ACCESS, SQLDataType.TIMESTAMP, "datetime");
@@ -91,8 +91,8 @@ public class AccessDataType {
     // -------------------------------------------------------------------------
 
     protected static final DataType<byte[]>     __VARBINARY   = new DefaultDataType<byte[]>(SQLDialect.ACCESS, SQLDataType.VARBINARY, "binary");
-    protected static final DataType<Long>       __BIGINT      = new DefaultDataType<Long>(SQLDialect.ACCESS, SQLDataType.BIGINT, "decimal");
-    protected static final DataType<BigDecimal> __NUMERIC     = new DefaultDataType<BigDecimal>(SQLDialect.ACCESS, SQLDataType.NUMERIC, "decimal");
+    protected static final DataType<Long>       __BIGINT      = new DefaultDataType<Long>(SQLDialect.ACCESS, SQLDataType.BIGINT, "numeric");
+    protected static final DataType<BigDecimal> __DECIMAL     = new DefaultDataType<BigDecimal>(SQLDialect.ACCESS, SQLDataType.DECIMAL, "numeric");
     protected static final DataType<Date>       __DATE        = new DefaultDataType<Date>(SQLDialect.ACCESS, SQLDataType.DATE, "datetime");
     protected static final DataType<Time>       __TIME        = new DefaultDataType<Time>(SQLDialect.ACCESS, SQLDataType.TIME, "datetime");
     protected static final DataType<String>     __VARCHAR     = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.VARCHAR, "text");
@@ -114,10 +114,10 @@ public class AccessDataType {
     // Compatibility types for supported Java types
     // -------------------------------------------------------------------------
 
-    protected static final DataType<BigInteger> __BIGINTEGER       = new DefaultDataType<BigInteger>(SQLDialect.ACCESS, SQLDataType.DECIMAL_INTEGER, "decimal");
+    protected static final DataType<BigInteger> __BIGINTEGER       = new DefaultDataType<BigInteger>(SQLDialect.ACCESS, SQLDataType.DECIMAL_INTEGER, "numeric");
     protected static final DataType<UShort>     __SMALLINTUNSIGNED = new DefaultDataType<UShort>(SQLDialect.ACCESS, SQLDataType.SMALLINTUNSIGNED, "integer");
-    protected static final DataType<UInteger>   __INTEGERUNSIGNED  = new DefaultDataType<UInteger>(SQLDialect.ACCESS, SQLDataType.INTEGERUNSIGNED, "decimal");
-    protected static final DataType<ULong>      __BIGINTUNSIGNED   = new DefaultDataType<ULong>(SQLDialect.ACCESS, SQLDataType.BIGINTUNSIGNED, "decimal");
+    protected static final DataType<UInteger>   __INTEGERUNSIGNED  = new DefaultDataType<UInteger>(SQLDialect.ACCESS, SQLDataType.INTEGERUNSIGNED, "numeric");
+    protected static final DataType<ULong>      __BIGINTUNSIGNED   = new DefaultDataType<ULong>(SQLDialect.ACCESS, SQLDataType.BIGINTUNSIGNED, "numeric");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof

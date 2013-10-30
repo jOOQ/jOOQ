@@ -1,3 +1,7 @@
+DROP TABLE v_library/
+DROP TABLE v_author/
+DROP TABLE v_book/
+
 DROP TABLE t_dates/
 DROP TABLE t_triggers/
 DROP TABLE t_book_to_book_store/
@@ -192,4 +196,17 @@ CREATE TABLE t_639_numbers_table (
 
   CONSTRAINT pk_t_639_numbers_table PRIMARY KEY(ID)
 )
+/
+
+CREATE VIEW v_library AS
+SELECT a.first_name + ' ' + a.last_name AS author, b.title AS title
+FROM t_author AS a INNER JOIN t_book AS b ON b.author_id = a.id
+/
+
+CREATE VIEW v_author AS
+SELECT * FROM t_author
+/
+
+CREATE VIEW v_book AS
+SELECT * FROM t_book
 /

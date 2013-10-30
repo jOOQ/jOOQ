@@ -10008,7 +10008,7 @@ public class DSL {
     /**
      * Get the count(distinct field) function.
      */
-    @Support
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, FIREBIRD, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     @Transition(
         name = "COUNT DISTINCT",
         args = "Field"

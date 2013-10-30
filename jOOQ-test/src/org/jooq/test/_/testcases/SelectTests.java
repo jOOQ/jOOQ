@@ -45,7 +45,6 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.impl.DSL.count;
-import static org.jooq.impl.DSL.countDistinct;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.selectZero;
@@ -161,10 +160,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(1), result.get(0).getValue(TBook_AUTHOR_ID()));
         assertEquals(Integer.valueOf(2), result.get(1).getValue(TBook_AUTHOR_ID()));
 
-        assertEquals(2, create()
-            .select(countDistinct(TBook_AUTHOR_ID()))
-            .from(TBook())
-            .fetchOne(0));
         assertEquals(2, create()
             .selectDistinct(TBook_AUTHOR_ID())
             .from(TBook())

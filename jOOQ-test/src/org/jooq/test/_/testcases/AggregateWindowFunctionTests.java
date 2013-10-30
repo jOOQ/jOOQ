@@ -325,6 +325,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testCountDistinct() throws Exception {
 
+        /* [pro] */
+        if (dialect().family() == ACCESS) {
+            log.info("SKIPPING", "COUNT(DISTINCT ...) tests");
+            return;
+        }
+        /* [/pro] */
+
+        assertEquals(2, create()
+            .select(countDistinct(TBook_AUTHOR_ID()))
+            .from(TBook())
+            .fetchOne(0));
+
         // [#1728] COUNT(DISTINCT expr1, expr2, ...)
         // -----------------------------------------
         if (asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE).contains(dialect().family())) {

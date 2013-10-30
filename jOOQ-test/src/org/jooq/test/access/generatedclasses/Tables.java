@@ -85,4 +85,19 @@ public class Tables {
 	 * The table t_unsigned
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.TUnsigned T_UNSIGNED = org.jooq.test.access.generatedclasses.tables.TUnsigned.T_UNSIGNED;
+
+	/**
+	 * The table v_author
+	 */
+	public static final org.jooq.test.access.generatedclasses.tables.VAuthor V_AUTHOR = org.jooq.test.access.generatedclasses.tables.VAuthor.V_AUTHOR;
+
+	/**
+	 * The table v_book
+	 */
+	public static final org.jooq.test.access.generatedclasses.tables.VBook V_BOOK = org.jooq.test.access.generatedclasses.tables.VBook.V_BOOK;
+
+	/**
+	 * The table v_library
+	 */
+	public static final org.jooq.test.access.generatedclasses.tables.VLibrary V_LIBRARY = org.jooq.test.access.generatedclasses.tables.VLibrary.V_LIBRARY;
 }

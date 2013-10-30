@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 1144713160;
+	private static final long serialVersionUID = -2091031276;
 
 	/**
 	 * The singleton instance of <code>t_dates</code>
@@ -32,17 +32,17 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.access.generat
 	/**
 	 * The column <code>t_dates.d</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.lang.Object> D = createField("d", org.jooq.impl.SQLDataType.OTHER, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> D = createField("d", org.jooq.impl.SQLDataType.TIMESTAMP, T_DATES);
 
 	/**
 	 * The column <code>t_dates.t</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.lang.Object> T = createField("t", org.jooq.impl.SQLDataType.OTHER, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> T = createField("t", org.jooq.impl.SQLDataType.TIMESTAMP, T_DATES);
 
 	/**
 	 * The column <code>t_dates.ts</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.lang.Object> TS = createField("ts", org.jooq.impl.SQLDataType.OTHER, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("ts", org.jooq.impl.SQLDataType.TIMESTAMP, T_DATES);
 
 	/**
 	 * The column <code>t_dates.d_int</code>. 
@@ -52,7 +52,7 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.access.generat
 	/**
 	 * The column <code>t_dates.ts_bigint</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.lang.Object> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.OTHER, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.lang.Double> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.DOUBLE, T_DATES);
 
 	/**
 	 * No further instances allowed

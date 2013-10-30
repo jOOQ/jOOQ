@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 1945852387;
+	private static final long serialVersionUID = -1366280954;
 
 	/**
 	 * The singleton instance of <code>t_author</code>
@@ -42,7 +42,7 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.access.genera
 	/**
 	 * The column <code>t_author.date_of_birth</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord, java.lang.Object> DATE_OF_BIRTH = createField("date_of_birth", org.jooq.impl.SQLDataType.OTHER, T_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord, java.sql.Timestamp> DATE_OF_BIRTH = createField("date_of_birth", org.jooq.impl.SQLDataType.TIMESTAMP, T_AUTHOR);
 
 	/**
 	 * The column <code>t_author.year_of_birth</code>. 

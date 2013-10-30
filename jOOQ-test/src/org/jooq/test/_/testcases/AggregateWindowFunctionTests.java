@@ -44,6 +44,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.nCopies;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -326,7 +327,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1728] COUNT(DISTINCT expr1, expr2, ...)
         // -----------------------------------------
-        if (asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE).contains(dialect().family())) {
+        if (asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE).contains(dialect().family())) {
             log.info("SKIPPING", "Multi-expression COUNT(DISTINCT) test");
         }
         else {

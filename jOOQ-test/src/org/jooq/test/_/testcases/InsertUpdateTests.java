@@ -883,8 +883,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testMerge() throws Exception {
-        switch (dialect()) {
+        switch (dialect().family()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */

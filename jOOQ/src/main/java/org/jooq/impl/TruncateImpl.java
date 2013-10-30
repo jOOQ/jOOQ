@@ -105,10 +105,11 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
 
     @Override
     public final void toSQL(RenderContext context) {
-        switch (context.configuration().dialect()) {
+        switch (context.configuration().dialect().family()) {
 
             // These dialects don't implement the TRUNCATE statement
             /* [pro] */
+            case ACCESS:
             case INGRES:
             /* [/pro] */
             case FIREBIRD:

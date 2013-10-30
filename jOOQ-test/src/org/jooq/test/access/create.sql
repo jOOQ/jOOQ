@@ -51,7 +51,7 @@ CREATE TABLE t_dates (
   t time,
   ts datetime,
   d_int int,
-  ts_bigint money,
+  ts_bigint numeric,
 
   CONSTRAINT pk_t_dates PRIMARY KEY (id)
 )
@@ -77,7 +77,7 @@ CREATE TABLE t_booleans (
 CREATE TABLE t_unsigned (
   u_byte smallint,
   u_short int,
-  u_int money,
+  u_int numeric,
   u_long text
 )
 /
@@ -184,13 +184,13 @@ CREATE TABLE t_639_numbers_table (
   [BYTE] BYTE,
   [SHORT] SMALLINT,
   [INTEGER] INT,
-  [LONG] MONEY,
-  BYTE_DECIMAL FLOAT,
-  SHORT_DECIMAL FLOAT,
-  INTEGER_DECIMAL FLOAT,
-  LONG_DECIMAL FLOAT,
-  BIG_INTEGER FLOAT,
-  BIG_DECIMAL FLOAT,
+  [LONG] NUMERIC,
+  BYTE_DECIMAL NUMERIC,
+  SHORT_DECIMAL NUMERIC,
+  INTEGER_DECIMAL NUMERIC,
+  LONG_DECIMAL NUMERIC,
+  BIG_INTEGER NUMERIC,
+  BIG_DECIMAL NUMERIC,
   [FLOAT] REAL,
   [DOUBLE] FLOAT,
 

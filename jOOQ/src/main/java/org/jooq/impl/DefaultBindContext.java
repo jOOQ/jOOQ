@@ -220,7 +220,12 @@ class DefaultBindContext extends AbstractBindContext {
             stmt.setInt(nextIndex(), (Integer) value);
         }
         else if (type == Long.class) {
-            stmt.setLong(nextIndex(), (Long) value);
+            if (dialect.family() == ACCESS) {
+                stmt.setBigDecimal(nextIndex(), new BigDecimal((Long) value));
+            }
+            else {
+                stmt.setLong(nextIndex(), (Long) value);
+            }
         }
         else if (type == Short.class) {
             stmt.setShort(nextIndex(), (Short) value);

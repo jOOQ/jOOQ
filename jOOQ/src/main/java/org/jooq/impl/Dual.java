@@ -58,6 +58,7 @@ class Dual extends AbstractTable<Record> {
 
     private static final long          serialVersionUID = -7492790780048090156L;
     private static final Table<Record> FORCED_DUAL      = select(new Field[] { inline("X").as("DUMMY") }).asTable("DUAL");
+    static final String                DUAL_ACCESS      = "select count(*) from MSysResources";
 
     private final boolean              force;
 
@@ -134,7 +135,7 @@ class Dual extends AbstractTable<Record> {
                 // for queries like SELECT 1 WHERE 1 = 1
                 /* [pro] */
                 case ACCESS:
-                    context.sql("(select count(*) from MSysResources) as dual");
+                    context.sql("(").sql(DUAL_ACCESS).sql(") as dual");
                     break;
 
                 case DB2:

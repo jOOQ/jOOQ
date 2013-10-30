@@ -78,6 +78,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
+import static org.jooq.impl.Dual.DUAL_ACCESS;
 import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import static org.jooq.impl.Utils.DATA_WINDOW_DEFINITIONS;
@@ -652,11 +653,18 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                    .sql(" ")
                    .visit(getFrom());
 
+            /* [pro] */
             // [#1681] Sybase ASE and Ingres need a cross-joined dummy table
             // To be able to GROUP BY () empty sets
-            if (grouping && getGroupBy().isEmpty() && asList(ASE, INGRES).contains(dialect)) {
-                context.sql(", (select 1 as x) as empty_grouping_dummy_table");
+            if (grouping && getGroupBy().isEmpty()) {
+                if (asList(ASE, INGRES).contains(dialect)) {
+                    context.sql(", (select 1 as x) as empty_grouping_dummy_table");
+                }
+                else if (asList(ACCESS).contains(dialect)) {
+                    context.sql(", (").sql(DUAL_ACCESS).sql(") as empty_grouping_dummy_table");
+                }
             }
+            /* [/pro] */
         }
 
         context.declareTables(false)
@@ -719,7 +727,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             if (getGroupBy().isEmpty()) {
 
                 // [#1681] Use the constant field from the dummy table Sybase ASE, Ingres
-                if (asList(ASE, INGRES).contains(dialect)) {
+                if (asList(ACCESS, ASE, INGRES).contains(dialect)) {
                     context.sql("empty_grouping_dummy_table.x");
                 }
 

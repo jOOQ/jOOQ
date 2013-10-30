@@ -48,6 +48,7 @@ import static org.jooq.Clause.FIELD_REFERENCE;
 import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_ALIAS;
 import static org.jooq.Clause.TABLE_REFERENCE;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -203,7 +204,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
     }
 
     static void toSQLAs(RenderContext context) {
-        if (asList(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES).contains(context.configuration().dialect())) {
+        if (asList(ACCESS, DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES).contains(context.configuration().dialect())) {
             context.sql(" ").keyword("as");
         }
     }

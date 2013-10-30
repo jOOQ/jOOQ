@@ -6338,7 +6338,7 @@ public class DSL {
         to = "Function"
     )
     public static <T> Field<T> nullif(Field<T> value, Field<T> other) {
-        return function("nullif", nullSafeDataType(value), nullSafe(value), nullSafe(other));
+        return new NullIf<T>(nullSafe(value), nullSafe(other));
     }
 
     // -------------------------------------------------------------------------

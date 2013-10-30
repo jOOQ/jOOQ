@@ -40,58 +40,40 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
-
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-class Nvl<T> extends AbstractFunction<T> {
+public class NullIf<T> extends AbstractFunction<T> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 409629290052619844L;
 
     private final Field<T>    arg1;
     private final Field<T>    arg2;
 
-    Nvl(Field<T> arg1, Field<T> arg2) {
-        super("nvl", arg1.getDataType(), arg1, arg2);
+    NullIf(Field<T> arg1, Field<T> arg2) {
+        super("nullif", arg1.getDataType(), arg1, arg2);
 
         this.arg1 = arg1;
         this.arg2 = arg2;
     }
 
     @Override
-    final Field<T> getFunction0(Configuration configuration) {
+    final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] */
             case ACCESS:
-                return field("{iif}({0} is null, {1}, {0})", getDataType(), arg1, arg2);
-
-            case DB2:
-            case INGRES:
-            case ORACLE:
+                return DSL.field("{iif}({0} = {1}, null, {0})", getDataType(), arg1, arg2);
             /* [/pro] */
 
-            case H2:
-            case HSQLDB:
-                return field("{nvl}({0}, {1})", getDataType(), arg1, arg2);
-
-            case DERBY:
-            case POSTGRES:
-                return field("{coalesce}({0}, {1})", getDataType(), arg1, arg2);
-
-            case MARIADB:
-            case MYSQL:
-            case SQLITE:
-                return field("{ifnull}({0}, {1})", getDataType(), arg1, arg2);
-
             default:
-                return DSL.decode().when(arg1.isNotNull(), arg1).otherwise(arg2);
+                return DSL.field("{nullif}({0}, {1})", getDataType(), arg1, arg2);
         }
     }
 }

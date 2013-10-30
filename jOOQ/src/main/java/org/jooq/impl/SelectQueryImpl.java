@@ -53,6 +53,8 @@ import static org.jooq.Clause.SELECT_START_WITH;
 import static org.jooq.Clause.SELECT_WHERE;
 import static org.jooq.Clause.SELECT_WINDOW;
 import static org.jooq.Operator.OR;
+import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.ACCESS2013;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
@@ -273,6 +275,8 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
                 // Sybase ASE and SQL Server support a TOP clause without OFFSET
                 // OFFSET can be simulated in SQL Server, not in ASE
+                case ACCESS:
+                case ACCESS2013:
                 case ASE:
                 case SQLSERVER2008: {
 
@@ -546,11 +550,12 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         /* [pro] */
         // Sybase and SQL Server have leading TOP clauses
         switch (dialect.family()) {
+            case ACCESS:
             case ASE:
             case SQLSERVER: {
 
                 // If we have a TOP clause, it needs to be rendered here
-                if (asList(ASE, SQLSERVER2008).contains(dialect)
+                if (asList(ACCESS, ACCESS2013, ASE, SQLSERVER2008).contains(dialect)
                         && getLimit().isApplicable()
                         && getLimit().offsetZero()
                         && !getLimit().rendersParams()) {

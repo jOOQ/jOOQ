@@ -43,6 +43,7 @@ package org.jooq.test._.testcases;
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -257,6 +258,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals(asList(2, 4), result1);
 
+        /* [pro] */
+        // [#2812] TODO: Implement this also for MS Access and Sybase ASE
+        if (asList(ACCESS, ASE).contains(dialect().family())) {
+            log.info("SKIPPING", "OFFSET tests");
+            return;
+        }
+        /* [/pro] */
+
         // [#1954] LIMIT .. OFFSET is more trouble than LIMIT, as it is
         // simulated using ROW_NUMBER() in DB2, SQL Server
         List<Integer> result2 =
@@ -406,7 +415,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         /* [pro] */
-        if (dialect() == SQLDialect.ASE) {
+        // [#2812] TODO: Implement this also for MS Access and Sybase ASE
+        if (asList(ACCESS, ASE).contains(dialect().family())) {
             log.info("SKIPPING", "LIMIT .. OFFSET tests");
             return;
         }

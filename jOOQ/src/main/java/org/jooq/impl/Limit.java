@@ -194,6 +194,8 @@ class Limit extends AbstractQueryPart {
                 break;
             }
 
+            case ACCESS:
+            case ACCESS2013:
             case ASE:
             case SQLSERVER2008: {
                 if (offset != null) {
@@ -296,6 +298,8 @@ class Limit extends AbstractQueryPart {
 
             // These dialects don't allow bind variables in their TOP clauses
             // --------------------------------------------------------------
+            case ACCESS:
+            case ACCESS2013:
             case DB2:
             case DB2_9:
             case DB2_10:

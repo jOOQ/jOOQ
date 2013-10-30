@@ -66,26 +66,28 @@ class CurrentDate extends AbstractFunction<Date> {
     final Field<Date> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] */
+            case ACCESS:
+                return field("{date}()", SQLDataType.DATE);
+
             case ORACLE:
                 return field("{trunc}({sysdate})", SQLDataType.DATE);
+
+            case SQLSERVER:
+                return field("{convert}({date}, {current_timestamp})", SQLDataType.DATE);
+
+            case SYBASE:
+                return field("{current date}", SQLDataType.DATE);
 
             case DB2:
             case INGRES:
             /* [/pro] */
+
             case DERBY:
             case FIREBIRD:
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                return field("current_date", SQLDataType.DATE);
-
-            /* [pro] */
-            case SQLSERVER:
-                return field("convert(date, current_timestamp)", SQLDataType.DATE);
-
-            case SYBASE:
-                return field("current date", SQLDataType.DATE);
-            /* [/pro] */
+                return field("{current_date}", SQLDataType.DATE);
         }
 
         return function("current_date", SQLDataType.DATE);

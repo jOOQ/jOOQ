@@ -175,6 +175,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testOrderByWithDual() throws Exception {
+        assertEquals(1, (int) create().selectOne().orderBy(1).fetchOne(0, int.class));
+    }
+
+    @Test
     public void testOrderByIndexes() throws Exception {
         assertEquals(Arrays.asList(1, 2, 3, 4),
             create().selectFrom(TBook())

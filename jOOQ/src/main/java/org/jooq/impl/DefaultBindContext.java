@@ -154,6 +154,10 @@ class DefaultBindContext extends AbstractBindContext {
 
             /* [pro] */
             else if (configuration.dialect().family() == ACCESS) {
+
+                // This incredible mess is only needed with the Sun JDBC-ODBC bridge
+                // Apparently, other drivers are better:
+                // http://stackoverflow.com/a/19712785/521799
                 switch (sqlType) {
                     case Types.BINARY:
                     case Types.VARBINARY:

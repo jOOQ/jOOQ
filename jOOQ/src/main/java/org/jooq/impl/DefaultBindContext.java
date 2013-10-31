@@ -203,7 +203,7 @@ class DefaultBindContext extends AbstractBindContext {
             stmt.setBoolean(nextIndex(), (Boolean) value);
         }
         else if (type == BigDecimal.class) {
-            if (dialect == SQLITE) {
+            if (asList(ACCESS, SQLITE).contains(dialect.family())) {
                 stmt.setString(nextIndex(), value.toString());
             }
             else {
@@ -211,7 +211,7 @@ class DefaultBindContext extends AbstractBindContext {
             }
         }
         else if (type == BigInteger.class) {
-            if (dialect == SQLITE) {
+            if (asList(ACCESS, SQLITE).contains(dialect.family())) {
                 stmt.setString(nextIndex(), value.toString());
             }
             else {
@@ -237,10 +237,13 @@ class DefaultBindContext extends AbstractBindContext {
             stmt.setInt(nextIndex(), (Integer) value);
         }
         else if (type == Long.class) {
+            /* [pro] */
             if (dialect.family() == ACCESS) {
-                stmt.setBigDecimal(nextIndex(), new BigDecimal((Long) value));
+                stmt.setString(nextIndex(), value.toString());
             }
-            else {
+            else
+            /* [/pro] */
+            {
                 stmt.setLong(nextIndex(), (Long) value);
             }
         }

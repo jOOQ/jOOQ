@@ -6991,6 +6991,28 @@ public class DSL {
     }
 
     /**
+     * Get the mid(field, startingPosition, length) function.
+     *
+     * @see #substring(Field, Field, Field)
+     */
+    @Support
+    public static Field<String> mid(Field<String> field, int startingPosition, int length) {
+        return substring(nullSafe(field), Utils.field(startingPosition), Utils.field(length));
+    }
+
+    /**
+     * Get the mid(field, startingPosition, length) function.
+     * <p>
+     * This renders the substr or substring function:
+     * <code><pre>substr([field], [startingPosition], [length]) or
+     * substring([field], [startingPosition], [length])</pre></code>
+     */
+    @Support
+    public static Field<String> mid(Field<String> field, Field<? extends Number> startingPosition, Field<? extends Number> length) {
+        return substring(nullSafe(field), nullSafe(startingPosition), nullSafe(length));
+    }
+
+    /**
      * Get the left outermost characters from a string.
      * <p>
      * Example:

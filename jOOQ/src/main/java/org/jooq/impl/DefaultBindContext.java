@@ -152,10 +152,23 @@ class DefaultBindContext extends AbstractBindContext {
                 stmt.setNull(nextIndex(), Types.BINARY);
             }
 
+            /* [pro] */
             else if (configuration.dialect().family() == ACCESS) {
-                stmt.setString(nextIndex(), null);
+                switch (sqlType) {
+                    case Types.BINARY:
+                    case Types.VARBINARY:
+                    case Types.LONGVARBINARY:
+                    case Types.BLOB:
+                        stmt.setNull(nextIndex(), Types.VARCHAR);
+                        break;
+
+                    default:
+                        stmt.setString(nextIndex(), null);
+                        break;
+                }
             }
 
+            /* [/pro] */
             // All other types can be set to null if the JDBC type is known
             else if (sqlType != Types.OTHER) {
                 stmt.setNull(nextIndex(), sqlType);

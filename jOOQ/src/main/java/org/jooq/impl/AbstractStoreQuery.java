@@ -214,6 +214,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 // Sybase will select @@identity after the INSERT
                 case CUBRID:
                 /* [pro] */
+                case ACCESS:
                 case SYBASE:
                 /* [/pro] */
 
@@ -287,6 +288,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 // Generated keys don't work with jconn3, but they seem to work
                 // with jTDS (which is used for Sybase ASE integration)
                 /* [pro] */
+                case ACCESS:
                 case SYBASE:
                 /* [/pro] */
                 case CUBRID: {

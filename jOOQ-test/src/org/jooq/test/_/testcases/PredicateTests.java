@@ -210,16 +210,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1072] Add checks for ESCAPE syntax
         // ------------------------------------
-        books =
-        create().selectFrom(TBook())
-                .where(TBook_TITLE().like("%(!%)%", '!'))
-                .and(TBook_TITLE().like("%(#_)%", '#'))
-                .and(TBook_TITLE().notLike("%(!%)%", '#'))
-                .and(TBook_TITLE().notLike("%(#_)%", '!'))
-                .fetch();
+        // [#2818] TODO: Re-enable this test for MS Access
+        if (!asList(SQLDialect.ACCESS).contains(dialect().family())) {
+            books =
+            create().selectFrom(TBook())
+                    .where(TBook_TITLE().like("%(!%)%", '!'))
+                    .and(TBook_TITLE().like("%(#_)%", '#'))
+                    .and(TBook_TITLE().notLike("%(!%)%", '#'))
+                    .and(TBook_TITLE().notLike("%(#_)%", '!'))
+                    .fetch();
 
-        assertEquals(1, books.size());
-        assertEquals(5, (int) books.get(0).getValue(TBook_ID()));
+            assertEquals(1, books.size());
+            assertEquals(5, (int) books.get(0).getValue(TBook_ID()));
+        }
 
         // DERBY doesn't know any REPLACE function, hence only test those
         // conditions that do not use REPLACE internally
@@ -239,18 +242,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1106] Add checks for Factory.escape() function
         // ------------------------------------------------
-        books =
-        create().selectFrom(TBook())
-                .where(TBook_TITLE().like(concat("%", escape("(%)", '!'), "%"), '!'))
-                .and(derby ? trueCondition() :
-                     TBook_TITLE().like(concat(val("%"), escape(val("(_)"), '#'), val("%")), '#'))
-                .and(TBook_TITLE().notLike(concat("%", escape("(!%)", '#'), "%"), '#'))
-                .and(derby ? trueCondition() :
-                     TBook_TITLE().notLike(concat(val("%"), escape(val("(#_)"), '!'), val("%")), '!'))
-                .fetch();
+        // [#2818] TODO: Re-enable this test for MS Access
+        if (!asList(SQLDialect.ACCESS).contains(dialect().family())) {
+            books =
+            create().selectFrom(TBook())
+                    .where(TBook_TITLE().like(concat("%", escape("(%)", '!'), "%"), '!'))
+                    .and(derby ? trueCondition() :
+                         TBook_TITLE().like(concat(val("%"), escape(val("(_)"), '#'), val("%")), '#'))
+                    .and(TBook_TITLE().notLike(concat("%", escape("(!%)", '#'), "%"), '#'))
+                    .and(derby ? trueCondition() :
+                         TBook_TITLE().notLike(concat(val("%"), escape(val("(#_)"), '!'), val("%")), '!'))
+                    .fetch();
 
-        assertEquals(1, books.size());
-        assertEquals(5, (int) books.get(0).getValue(TBook_ID()));
+            assertEquals(1, books.size());
+            assertEquals(5, (int) books.get(0).getValue(TBook_ID()));
+        }
 
         // [#1089] Add checks for convenience methods
         // ------------------------------------------

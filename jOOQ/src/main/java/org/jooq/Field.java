@@ -1179,7 +1179,7 @@ public interface Field<T> extends GroupField {
      * <p>
      * SQL: <code>this like value escape 'e'</code>
      */
-    @Support
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     @Transition(
         name = "LIKE",
         args = {
@@ -1208,7 +1208,7 @@ public interface Field<T> extends GroupField {
      * <p>
      * SQL: <code>this like value escape 'e'</code>
      */
-    @Support
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     @Transition(
         name = "LIKE",
         args = {
@@ -1243,7 +1243,7 @@ public interface Field<T> extends GroupField {
      * {@link SQLDialect#POSTGRES}, or to
      * <code>lower(this) like lower(field)</code> in all other dialects.
      */
-    @Support
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     @Transition(
         name = "LIKE IGNORE CASE",
         args = {
@@ -1278,7 +1278,7 @@ public interface Field<T> extends GroupField {
      * {@link SQLDialect#POSTGRES}, or to
      * <code>lower(this) like lower(value)</code> in all other dialects.
      */
-    @Support
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     @Transition(
         name = "LIKE IGNORE CASE",
         args = {
@@ -1307,7 +1307,7 @@ public interface Field<T> extends GroupField {
      * <p>
      * SQL: <code>this not like field escape 'e'</code>
      */
-    @Support
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     @Transition(
         name = "NOT LIKE",
         args = {
@@ -1336,7 +1336,7 @@ public interface Field<T> extends GroupField {
      * <p>
      * SQL: <code>this not like value escape 'e'</code>
      */
-    @Support
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     @Transition(
         name = "NOT LIKE",
         args = {
@@ -1371,7 +1371,7 @@ public interface Field<T> extends GroupField {
      * {@link SQLDialect#POSTGRES}, or to
      * <code>lower(this) not like lower(field)</code> in all other dialects.
      */
-    @Support
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     @Transition(
         name = "NOT LIKE IGNORE CASE",
         args = {
@@ -1406,7 +1406,7 @@ public interface Field<T> extends GroupField {
      * {@link SQLDialect#POSTGRES}, or to
      * <code>lower(this) not like lower(value)</code> in all other dialects.
      */
-    @Support
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     @Transition(
         name = "NOT LIKE IGNORE CASE",
         args = {

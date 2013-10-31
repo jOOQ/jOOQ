@@ -6782,7 +6782,7 @@ public class DSL {
      * @see #replace(Field, String, String)
      * @see Field#like(Field, char)
      */
-    @Support
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static String escape(String value, char escape) {
         String esc = "" + escape;
         return value.replace(esc, esc + esc).replace("%", esc + "%").replace("_", esc + "_");

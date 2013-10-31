@@ -267,7 +267,7 @@ public class MySQLDSL extends DSL {
     // -------------------------------------------------------------------------
 
     /**
-     * Get a field based {@link EnumType} by its MySQL-specific index
+     * Get a field based {@link EnumType} by its MySQL-specific index.
      * <p>
      * If your MySQL enum type contains these three values: <code>A, B, C</code>
      * , then this will be the mapping of indexes to values:

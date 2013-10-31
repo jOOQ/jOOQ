@@ -480,6 +480,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
@@ -660,6 +661,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
@@ -748,6 +750,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
@@ -792,6 +795,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
@@ -859,6 +863,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
@@ -957,6 +962,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
@@ -1022,6 +1028,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
@@ -1124,6 +1131,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
@@ -1317,6 +1325,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */

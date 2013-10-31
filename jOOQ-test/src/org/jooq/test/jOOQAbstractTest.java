@@ -1811,6 +1811,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testOrderByWithDual() throws Exception {
+        new OrderByTests(this).testOrderByWithDual();
+    }
+
+    @Test
     public void testOrderByNulls() throws Exception {
         new OrderByTests(this).testOrderByNulls();
     }

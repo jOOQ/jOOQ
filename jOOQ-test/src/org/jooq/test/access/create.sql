@@ -168,6 +168,7 @@ CREATE TABLE t_book_to_book_store (
   book_id int NOT NULL,
   stock int,
 
+  CONSTRAINT pk_b2bs PRIMARY KEY(book_store_name, book_id),
   CONSTRAINT fk_b2bs_bs_name FOREIGN KEY (book_store_name)
                              REFERENCES t_book_store (name),
   CONSTRAINT fk_b2bs_b_id    FOREIGN KEY (book_id)

@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -98012780;
+	private static final long serialVersionUID = 836484817;
 
 	/**
 	 * The singleton instance of <code>t_book_to_book_store</code>
@@ -51,6 +51,22 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.acce
 	 */
 	public TBookToBookStore(java.lang.String alias) {
 		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord> getPrimaryKey() {
+		return org.jooq.test.access.generatedclasses.Keys.PK_T_BOOK_TO_BOOK_STORE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.access.generatedclasses.Keys.PK_T_BOOK_TO_BOOK_STORE);
 	}
 
 	/**

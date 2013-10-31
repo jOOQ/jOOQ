@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.access.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 1362756206;
+	private static final long serialVersionUID = -1885841866;
 
 	/**
 	 * Setter for <code>v_library.author</code>. 
@@ -64,7 +64,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field1() {
-		return org.jooq.test.access.generatedclasses.tables.VLibrary.AUTHOR;
+		return org.jooq.test.access.generatedclasses.tables.VLibrary.V_LIBRARY.AUTHOR;
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field2() {
-		return org.jooq.test.access.generatedclasses.tables.VLibrary.TITLE;
+		return org.jooq.test.access.generatedclasses.tables.VLibrary.V_LIBRARY.TITLE;
 	}
 
 	/**

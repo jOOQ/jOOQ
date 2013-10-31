@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 841790583;
+	private static final long serialVersionUID = -213016423;
 
 	/**
 	 * The singleton instance of <code>t_triggers</code>
@@ -27,22 +27,53 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.access.gene
 	/**
 	 * The column <code>t_triggers.id_generated</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TTriggersRecord, java.lang.Object> ID_GENERATED = createField("id_generated", org.jooq.impl.SQLDataType.OTHER, T_TRIGGERS);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("id_generated", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The column <code>t_triggers.id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The column <code>t_triggers.counter</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("counter", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("counter", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * No further instances allowed
+	 * Create a <code>t_triggers</code> table reference
 	 */
-	private TTriggers() {
+	public TTriggers() {
 		super("t_triggers", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+	}
+
+	/**
+	 * Create an aliased <code>t_triggers</code> table reference
+	 */
+	public TTriggers(java.lang.String alias) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.TTriggers.T_TRIGGERS);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TTriggersRecord> getPrimaryKey() {
+		return org.jooq.test.access.generatedclasses.Keys.PK_T_TRIGGERS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TTriggersRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TTriggersRecord>>asList(org.jooq.test.access.generatedclasses.Keys.PK_T_TRIGGERS);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.access.generatedclasses.tables.TTriggers as(java.lang.String alias) {
+		return new org.jooq.test.access.generatedclasses.tables.TTriggers(alias);
 	}
 }

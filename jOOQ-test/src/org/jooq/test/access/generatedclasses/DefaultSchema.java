@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -58526771;
+	private static final long serialVersionUID = 70149020;
 
 	/**
 	 * The singleton instance of <code></code>
@@ -47,6 +47,7 @@ public class DefaultSchema extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.access.generatedclasses.tables.TLanguage.T_LANGUAGE,
 			org.jooq.test.access.generatedclasses.tables.TTriggers.T_TRIGGERS,
 			org.jooq.test.access.generatedclasses.tables.TUnsigned.T_UNSIGNED,
+			org.jooq.test.access.generatedclasses.tables.XUnused.X_UNUSED,
 			org.jooq.test.access.generatedclasses.tables.VAuthor.V_AUTHOR,
 			org.jooq.test.access.generatedclasses.tables.VBook.V_BOOK,
 			org.jooq.test.access.generatedclasses.tables.VLibrary.V_LIBRARY);

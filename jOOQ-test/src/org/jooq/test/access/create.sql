@@ -35,7 +35,9 @@ DROP TABLE t_identity_pk/
 
 CREATE TABLE t_identity_pk (
   id AUTOINCREMENT NOT NULL,
-  val int
+  val int,
+
+  CONSTRAINT pk_t_identity_pk PRIMARY KEY (id)
 )
 /
 
@@ -85,7 +87,9 @@ CREATE TABLE t_unsigned (
 CREATE TABLE t_triggers (
   id_generated AUTOINCREMENT not null,
   id int,
-  [counter] int
+  [counter] int,
+
+  CONSTRAINT pk_t_triggers PRIMARY KEY (id_generated)
 )
 /
 
@@ -168,6 +172,28 @@ CREATE TABLE t_book_to_book_store (
                              REFERENCES t_book_store (name),
   CONSTRAINT fk_b2bs_b_id    FOREIGN KEY (book_id)
                              REFERENCES t_book (id)
+)
+/
+
+CREATE TABLE x_unused (
+  id int NOT NULL,
+  [NAME] VARCHAR(10) NOT NULL,
+  BIG_INTEGER NUMERIC,
+  id_ref int,
+  CLASS int,
+  FIELDS int,
+  CONFIGURATION int,
+  U_D_T int,
+  META_DATA int,
+  TYPE0 int,
+  PRIMARY_KEY int,
+  PRIMARYKEY int,
+  name_ref VARCHAR(10),
+  [FIELD 737] NUMERIC,
+
+  CONSTRAINT pk_x_unused PRIMARY KEY(ID, NAME),
+  CONSTRAINT uk_x_unused_id UNIQUE(ID),
+  CONSTRAINT fk_x_unused_self FOREIGN KEY(ID_REF, NAME_REF) REFERENCES X_UNUSED(ID, NAME)
 )
 /
 

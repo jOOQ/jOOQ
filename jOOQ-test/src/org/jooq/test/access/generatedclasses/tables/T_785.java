@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = -639244360;
+	private static final long serialVersionUID = 2072813433;
 
 	/**
 	 * The singleton instance of <code>t_785</code>
@@ -27,22 +27,37 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.access.generate
 	/**
 	 * The column <code>t_785.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_785);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The column <code>t_785.NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_785);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
 	 * The column <code>t_785.VALUE</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_785);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
-	 * No further instances allowed
+	 * Create a <code>t_785</code> table reference
 	 */
-	private T_785() {
+	public T_785() {
 		super("t_785", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+	}
+
+	/**
+	 * Create an aliased <code>t_785</code> table reference
+	 */
+	public T_785(java.lang.String alias) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.T_785.T_785);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.access.generatedclasses.tables.T_785 as(java.lang.String alias) {
+		return new org.jooq.test.access.generatedclasses.tables.T_785(alias);
 	}
 }

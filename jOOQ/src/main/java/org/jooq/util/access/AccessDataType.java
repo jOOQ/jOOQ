@@ -108,7 +108,7 @@ public class AccessDataType {
     protected static final DataType<String>  __LONGVARCHAR    = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.LONGVARCHAR, "text");
     protected static final DataType<String>  __NCLOB          = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.NCLOB, "text");
     protected static final DataType<String>  __LONGNVARCHAR   = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.LONGNVARCHAR, "text");
-    protected static final DataType<Byte>    __BYTE           = new DefaultDataType<Byte>(SQLDialect.ACCESS, SQLDataType.TINYINT, "smallint");
+    protected static final DataType<Byte>    __BYTE           = new DefaultDataType<Byte>(SQLDialect.ACCESS, SQLDataType.TINYINT, "signed tinyint", "smallint");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
@@ -123,6 +123,7 @@ public class AccessDataType {
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
+    public static final DataType<Integer>    COUNTER          = new DefaultDataType<Integer>(SQLDialect.ACCESS, SQLDataType.INTEGER, "counter", "integer");
     public static final DataType<BigDecimal> MONEY            = new DefaultDataType<BigDecimal>(SQLDialect.ACCESS, SQLDataType.DECIMAL, "money");
     public static final DataType<byte[]>     IMAGE            = new DefaultDataType<byte[]>(SQLDialect.ACCESS, SQLDataType.BINARY, "image");
     public static final DataType<UUID>       UNIQUEIDENTIFIER = new DefaultDataType<UUID>(SQLDialect.ACCESS, SQLDataType.UUID, "uniqueidentifier");

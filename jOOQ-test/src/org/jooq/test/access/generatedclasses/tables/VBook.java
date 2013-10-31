@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -338052044;
+	private static final long serialVersionUID = 1008787979;
 
 	/**
 	 * The singleton instance of <code>v_book</code>
@@ -27,52 +27,67 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.access.generate
 	/**
 	 * The column <code>v_book.id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VBookRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VBookRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The column <code>v_book.author_id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VBookRecord, java.lang.Integer> AUTHOR_ID = createField("author_id", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VBookRecord, java.lang.Integer> AUTHOR_ID = createField("author_id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The column <code>v_book.co_author_id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The column <code>v_book.details_id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VBookRecord, java.lang.Integer> DETAILS_ID = createField("details_id", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VBookRecord, java.lang.Integer> DETAILS_ID = createField("details_id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The column <code>v_book.title</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(200), V_BOOK);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(200), this);
 
 	/**
 	 * The column <code>v_book.published_in</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VBookRecord, java.lang.Integer> PUBLISHED_IN = createField("published_in", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VBookRecord, java.lang.Integer> PUBLISHED_IN = createField("published_in", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The column <code>v_book.language_id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VBookRecord, java.lang.Integer> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VBookRecord, java.lang.Integer> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The column <code>v_book.content_text</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VBookRecord, java.lang.String> CONTENT_TEXT = createField("content_text", org.jooq.impl.SQLDataType.VARCHAR.length(255), V_BOOK);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VBookRecord, java.lang.String> CONTENT_TEXT = createField("content_text", org.jooq.impl.SQLDataType.VARCHAR.length(255), this);
 
 	/**
 	 * The column <code>v_book.content_pdf</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("content_pdf", org.jooq.impl.SQLDataType.BINARY, V_BOOK);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("content_pdf", org.jooq.impl.SQLDataType.BINARY, this);
 
 	/**
-	 * No further instances allowed
+	 * Create a <code>v_book</code> table reference
 	 */
-	private VBook() {
+	public VBook() {
 		super("v_book", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+	}
+
+	/**
+	 * Create an aliased <code>v_book</code> table reference
+	 */
+	public VBook(java.lang.String alias) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.VBook.V_BOOK);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.access.generatedclasses.tables.VBook as(java.lang.String alias) {
+		return new org.jooq.test.access.generatedclasses.tables.VBook(alias);
 	}
 }

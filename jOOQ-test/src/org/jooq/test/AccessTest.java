@@ -43,23 +43,23 @@ package org.jooq.test;
 
 /* [pro] */
 
-import static org.jooq.test.sqlserver.generatedclasses.Tables.T_639_NUMBERS_TABLE;
-import static org.jooq.test.sqlserver.generatedclasses.Tables.T_725_LOB_TEST;
-import static org.jooq.test.sqlserver.generatedclasses.Tables.T_785;
-import static org.jooq.test.sqlserver.generatedclasses.Tables.T_AUTHOR;
-import static org.jooq.test.sqlserver.generatedclasses.Tables.T_BOOK;
-import static org.jooq.test.sqlserver.generatedclasses.Tables.T_BOOK_STORE;
-import static org.jooq.test.sqlserver.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
-import static org.jooq.test.sqlserver.generatedclasses.Tables.T_BOOLEANS;
-import static org.jooq.test.sqlserver.generatedclasses.Tables.T_DATES;
-import static org.jooq.test.sqlserver.generatedclasses.Tables.T_EXOTIC_TYPES;
-import static org.jooq.test.sqlserver.generatedclasses.Tables.T_IDENTITY;
-import static org.jooq.test.sqlserver.generatedclasses.Tables.T_IDENTITY_PK;
-import static org.jooq.test.sqlserver.generatedclasses.Tables.T_TRIGGERS;
-import static org.jooq.test.sqlserver.generatedclasses.Tables.T_UNSIGNED;
-import static org.jooq.test.sqlserver.generatedclasses.Tables.V_AUTHOR;
-import static org.jooq.test.sqlserver.generatedclasses.Tables.V_BOOK;
-import static org.jooq.test.sqlserver.generatedclasses.Tables.V_LIBRARY;
+import static org.jooq.test.access.generatedclasses.Tables.T_639_NUMBERS_TABLE;
+import static org.jooq.test.access.generatedclasses.Tables.T_725_LOB_TEST;
+import static org.jooq.test.access.generatedclasses.Tables.T_785;
+import static org.jooq.test.access.generatedclasses.Tables.T_AUTHOR;
+import static org.jooq.test.access.generatedclasses.Tables.T_BOOK;
+import static org.jooq.test.access.generatedclasses.Tables.T_BOOK_STORE;
+import static org.jooq.test.access.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
+import static org.jooq.test.access.generatedclasses.Tables.T_BOOLEANS;
+import static org.jooq.test.access.generatedclasses.Tables.T_DATES;
+import static org.jooq.test.access.generatedclasses.Tables.T_EXOTIC_TYPES;
+import static org.jooq.test.access.generatedclasses.Tables.T_IDENTITY;
+import static org.jooq.test.access.generatedclasses.Tables.T_IDENTITY_PK;
+import static org.jooq.test.access.generatedclasses.Tables.T_TRIGGERS;
+import static org.jooq.test.access.generatedclasses.Tables.T_UNSIGNED;
+import static org.jooq.test.access.generatedclasses.Tables.V_AUTHOR;
+import static org.jooq.test.access.generatedclasses.Tables.V_BOOK;
+import static org.jooq.test.access.generatedclasses.Tables.V_LIBRARY;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -86,23 +86,23 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
-import org.jooq.test.sqlserver.generatedclasses.Keys;
-import org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord;
-import org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord;
-import org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord;
-import org.jooq.test.sqlserver.generatedclasses.tables.records.TBookToBookStoreRecord;
-import org.jooq.test.sqlserver.generatedclasses.tables.records.TBooleansRecord;
-import org.jooq.test.sqlserver.generatedclasses.tables.records.TDatesRecord;
-import org.jooq.test.sqlserver.generatedclasses.tables.records.TExoticTypesRecord;
-import org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityPkRecord;
-import org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord;
-import org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord;
-import org.jooq.test.sqlserver.generatedclasses.tables.records.TUnsignedRecord;
-import org.jooq.test.sqlserver.generatedclasses.tables.records.T_639NumbersTableRecord;
-import org.jooq.test.sqlserver.generatedclasses.tables.records.T_725LobTestRecord;
-import org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record;
-import org.jooq.test.sqlserver.generatedclasses.tables.records.VLibraryRecord;
-import org.jooq.test.sqlserver.generatedclasses.tables.records.XUnusedRecord;
+import org.jooq.test.access.generatedclasses.Keys;
+import org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord;
+import org.jooq.test.access.generatedclasses.tables.records.TBookRecord;
+import org.jooq.test.access.generatedclasses.tables.records.TBookStoreRecord;
+import org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord;
+import org.jooq.test.access.generatedclasses.tables.records.TBooleansRecord;
+import org.jooq.test.access.generatedclasses.tables.records.TDatesRecord;
+import org.jooq.test.access.generatedclasses.tables.records.TExoticTypesRecord;
+import org.jooq.test.access.generatedclasses.tables.records.TIdentityPkRecord;
+import org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord;
+import org.jooq.test.access.generatedclasses.tables.records.TTriggersRecord;
+import org.jooq.test.access.generatedclasses.tables.records.TUnsignedRecord;
+import org.jooq.test.access.generatedclasses.tables.records.T_639NumbersTableRecord;
+import org.jooq.test.access.generatedclasses.tables.records.T_725LobTestRecord;
+import org.jooq.test.access.generatedclasses.tables.records.T_785Record;
+import org.jooq.test.access.generatedclasses.tables.records.VLibraryRecord;
+import org.jooq.test.access.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
@@ -135,7 +135,7 @@ public class AccessTest extends jOOQAbstractTest<
 
     @Override
     protected DSLContext create0(Settings settings) {
-        return DSL.using(getConnection(), SQLDialect.ACCESS, settings.withRenderSchema(false));
+        return DSL.using(getConnection(), SQLDialect.ACCESS, settings);
     }
 
     @Override

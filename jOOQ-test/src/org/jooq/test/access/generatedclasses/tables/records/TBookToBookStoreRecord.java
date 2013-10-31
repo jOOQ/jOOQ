@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStoreRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 917174688;
+	private static final long serialVersionUID = -1881903412;
 
 	/**
 	 * Setter for <code>t_book_to_book_store.book_store_name</code>. 
@@ -78,7 +78,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.TableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field1() {
-		return org.jooq.test.access.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME;
+		return org.jooq.test.access.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME;
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.TableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.jooq.test.access.generatedclasses.tables.TBookToBookStore.BOOK_ID;
+		return org.jooq.test.access.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.TableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field3() {
-		return org.jooq.test.access.generatedclasses.tables.TBookToBookStore.STOCK;
+		return org.jooq.test.access.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.STOCK;
 	}
 
 	/**

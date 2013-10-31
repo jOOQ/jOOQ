@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -2061105551;
+	private static final long serialVersionUID = 599528704;
 
 	/**
 	 * The singleton instance of <code>v_library</code>
@@ -27,17 +27,32 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.access.gener
 	/**
 	 * The column <code>v_library.author</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("author", org.jooq.impl.SQLDataType.VARCHAR, V_LIBRARY);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("author", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
 	 * The column <code>v_library.title</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(200), V_LIBRARY);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(200), this);
 
 	/**
-	 * No further instances allowed
+	 * Create a <code>v_library</code> table reference
 	 */
-	private VLibrary() {
+	public VLibrary() {
 		super("v_library", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+	}
+
+	/**
+	 * Create an aliased <code>v_library</code> table reference
+	 */
+	public VLibrary(java.lang.String alias) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.VLibrary.V_LIBRARY);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.access.generatedclasses.tables.VLibrary as(java.lang.String alias) {
+		return new org.jooq.test.access.generatedclasses.tables.VLibrary(alias);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -1020707883;
+	private static final long serialVersionUID = -98012780;
 
 	/**
 	 * The singleton instance of <code>t_book_to_book_store</code>
@@ -27,22 +27,37 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.acce
 	/**
 	 * The column <code>t_book_to_book_store.book_store_name</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR.length(200), T_BOOK_TO_BOOK_STORE);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR.length(200), this);
 
 	/**
 	 * The column <code>t_book_to_book_store.book_id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("book_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("book_id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The column <code>t_book_to_book_store.stock</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("stock", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("stock", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * No further instances allowed
+	 * Create a <code>t_book_to_book_store</code> table reference
 	 */
-	private TBookToBookStore() {
+	public TBookToBookStore() {
 		super("t_book_to_book_store", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+	}
+
+	/**
+	 * Create an aliased <code>t_book_to_book_store</code> table reference
+	 */
+	public TBookToBookStore(java.lang.String alias) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.access.generatedclasses.tables.TBookToBookStore as(java.lang.String alias) {
+		return new org.jooq.test.access.generatedclasses.tables.TBookToBookStore(alias);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -655509479;
+	private static final long serialVersionUID = 770271323;
 
 	/**
 	 * The singleton instance of <code>t_exotic_types</code>
@@ -27,17 +27,48 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.access.g
 	/**
 	 * The column <code>t_exotic_types.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TExoticTypesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_EXOTIC_TYPES);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TExoticTypesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The column <code>t_exotic_types.UU</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("UU", org.jooq.impl.SQLDataType.UUID, T_EXOTIC_TYPES);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("UU", org.jooq.impl.SQLDataType.UUID, this);
 
 	/**
-	 * No further instances allowed
+	 * Create a <code>t_exotic_types</code> table reference
 	 */
-	private TExoticTypes() {
+	public TExoticTypes() {
 		super("t_exotic_types", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+	}
+
+	/**
+	 * Create an aliased <code>t_exotic_types</code> table reference
+	 */
+	public TExoticTypes(java.lang.String alias) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TExoticTypesRecord> getPrimaryKey() {
+		return org.jooq.test.access.generatedclasses.Keys.PK_T_EXOTIC_TYPES;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TExoticTypesRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TExoticTypesRecord>>asList(org.jooq.test.access.generatedclasses.Keys.PK_T_EXOTIC_TYPES);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.access.generatedclasses.tables.TExoticTypes as(java.lang.String alias) {
+		return new org.jooq.test.access.generatedclasses.tables.TExoticTypes(alias);
 	}
 }

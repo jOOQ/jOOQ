@@ -87,6 +87,11 @@ public class Tables {
 	public static final org.jooq.test.access.generatedclasses.tables.TUnsigned T_UNSIGNED = org.jooq.test.access.generatedclasses.tables.TUnsigned.T_UNSIGNED;
 
 	/**
+	 * The table x_unused
+	 */
+	public static final org.jooq.test.access.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.access.generatedclasses.tables.XUnused.X_UNUSED;
+
+	/**
 	 * The table v_author
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.VAuthor V_AUTHOR = org.jooq.test.access.generatedclasses.tables.VAuthor.V_AUTHOR;

@@ -1293,7 +1293,7 @@ final class Utils {
      */
     static final Field<String> escapeForLike(Object value, Configuration configuration) {
         if (value != null && value.getClass() == String.class) {
-
+            
             /* [pro] */
             if (configuration.dialect().family() == ACCESS) {
                 return val("[" + value + "]");

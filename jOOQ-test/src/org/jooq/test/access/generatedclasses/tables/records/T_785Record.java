@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.access.generatedclasses.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 905449845;
+	private static final long serialVersionUID = -2129048358;
 
 	/**
 	 * Setter for <code>t_785.ID</code>. 
@@ -78,7 +78,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.acc
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.access.generatedclasses.tables.T_785.ID;
+		return org.jooq.test.access.generatedclasses.tables.T_785.T_785.ID;
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.acc
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field2() {
-		return org.jooq.test.access.generatedclasses.tables.T_785.NAME;
+		return org.jooq.test.access.generatedclasses.tables.T_785.T_785.NAME;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.acc
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field3() {
-		return org.jooq.test.access.generatedclasses.tables.T_785.VALUE;
+		return org.jooq.test.access.generatedclasses.tables.T_785.T_785.VALUE;
 	}
 
 	/**

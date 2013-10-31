@@ -55,6 +55,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,12 +71,14 @@ import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.tools.JooqLogger;
 
 /**
  * An implementation of the public {@link Meta} type.
@@ -91,6 +94,7 @@ class MetaImpl implements Meta, Serializable {
      * Generated UID
      */
     private static final long                   serialVersionUID = 3582980783173033809L;
+    private static final JooqLogger             log              = JooqLogger.getLogger(MetaImpl.class);
 
     private final DSLContext                    create;
     private final Configuration                 configuration;
@@ -431,14 +435,21 @@ class MetaImpl implements Meta, Serializable {
             return unmodifiableList(asList(getPrimaryKey()));
         }
 
-        @SuppressWarnings("unchecked")
         @Override
         public final UniqueKey<Record> getPrimaryKey() {
-            String schema = getSchema() == null ? null : getSchema().getName();
+            SQLDialect family = configuration.dialect().family();
 
+            /* [pro] */
+            if (family == ACCESS) {
+                return getPrimaryKeyForAccess();
+            }
+            /* [/pro] */
+
+            String schema = getSchema() == null ? null : getSchema().getName();
             try {
                 ResultSet rs;
-                if (!asList(MYSQL, MARIADB).contains(configuration.dialect().family())) {
+
+                if (!asList(MYSQL, MARIADB).contains(family)) {
                     rs = meta().getPrimaryKeys(null, schema, getName());
                 }
 
@@ -460,21 +471,70 @@ class MetaImpl implements Meta, Serializable {
 
                 // Sort by KEY_SEQ
                 result.sortAsc(4);
-
-                if (result.size() > 0) {
-                    TableField<Record, ?>[] fields = new TableField[result.size()];
-                    for (int i = 0; i < fields.length; i++) {
-                        fields[i] = (TableField<Record, ?>) field(result.get(i).getValue(3, String.class));
-                    }
-
-                    return AbstractKeys.createUniqueKey(this, fields);
-                }
-                else {
-                    return null;
-                }
+                return createPrimaryKey(result, 3);
             }
             catch (SQLException e) {
                 throw new DataAccessException("Error while accessing DatabaseMetaData", e);
+            }
+        }
+
+        /* [pro] */
+        private final UniqueKey<Record> getPrimaryKeyForAccess() {
+
+            // The JDBC-ODBC bridge does not correctly report primary keys for MS Access.
+            // UNIQUE keys are available through the JDBC Index meta data view, though
+            try {
+                ResultSet rs = meta().getIndexInfo(null, null, getName(), true, true);
+                Result<Record> result =
+                create.fetch(
+                    rs,
+                    String.class,  // TABLE_CAT
+                    String.class,  // TABLE_SCHEM
+                    String.class,  // TABLE_NAME
+                    Boolean.class, // NON_UNIQUE
+                    String.class,  // INDEX_QUALIFIER
+                    String.class,  // INDEX_NAME
+                    String.class,  // TYPE
+                    String.class,  // ORDINAL_POSITION
+                    String.class   // COLUMN_NAME
+                );
+
+                // Retain only unique indexes, i.e. NON_UNIQUE = false
+                Iterator<Record> it = result.iterator();
+                while (it.hasNext())
+                    if (it.next().getValue(3) != Boolean.FALSE)
+                        it.remove();
+
+                // Retain only the first unique index, i.e. group by INDEX_NAME
+                if (result.isNotEmpty())
+                    result = result.intoGroups(result.field(5)).values().iterator().next();
+
+                // Sort by ORDINAL_POSITION
+                result.sortAsc(7);
+
+                // Pass the COLUMN_NAME
+                return createPrimaryKey(result, 8);
+            }
+            catch (SQLException e) {
+                log.info("Index access error", e.getMessage());
+            }
+
+            return null;
+        }
+        /* [/pro] */
+
+        @SuppressWarnings("unchecked")
+        private final UniqueKey<Record> createPrimaryKey(Result<Record> result, int columnName) {
+            if (result.size() > 0) {
+                TableField<Record, ?>[] fields = new TableField[result.size()];
+                for (int i = 0; i < fields.length; i++) {
+                    fields[i] = (TableField<Record, ?>) field(result.get(i).getValue(columnName, String.class));
+                }
+
+                return AbstractKeys.createUniqueKey(this, fields);
+            }
+            else {
+                return null;
             }
         }
 

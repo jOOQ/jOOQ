@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = -581680878;
+	private static final long serialVersionUID = -362115367;
 
 	/**
 	 * The singleton instance of <code>t_identity</code>
@@ -27,17 +27,32 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.access.gene
 	/**
 	 * The column <code>t_identity.id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord, java.lang.Object> ID = createField("id", org.jooq.impl.SQLDataType.OTHER, T_IDENTITY);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * The column <code>t_identity.val</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * No further instances allowed
+	 * Create a <code>t_identity</code> table reference
 	 */
-	private TIdentity() {
+	public TIdentity() {
 		super("t_identity", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+	}
+
+	/**
+	 * Create an aliased <code>t_identity</code> table reference
+	 */
+	public TIdentity(java.lang.String alias) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.TIdentity.T_IDENTITY);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.access.generatedclasses.tables.TIdentity as(java.lang.String alias) {
+		return new org.jooq.test.access.generatedclasses.tables.TIdentity(alias);
 	}
 }

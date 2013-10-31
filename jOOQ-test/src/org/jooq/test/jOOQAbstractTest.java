@@ -395,6 +395,11 @@ public abstract class jOOQAbstractTest<
                     continue;
                 }
 
+                // Ucanaccess has missing table exceptions
+                else if (e.getMessage().contains("missing table")) {
+                    continue;
+                }
+
                 /* [/pro] */
                 // There is no IF EXISTS clause in CUBRID's DROP VIEW statement
                 else if (getDialect() == CUBRID && sql.trim().startsWith("DROP")) {

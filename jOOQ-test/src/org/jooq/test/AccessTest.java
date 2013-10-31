@@ -87,8 +87,6 @@ import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
 import org.jooq.test.sqlserver.generatedclasses.Keys;
-import org.jooq.test.sqlserver.generatedclasses.Routines;
-import org.jooq.test.sqlserver.generatedclasses.Sequences;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord;
@@ -109,7 +107,7 @@ import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
-import org.jooq.util.sqlserver.SQLServerDataType;
+import org.jooq.util.access.AccessDataType;
 
 /**
  * @author Lukas Eder
@@ -632,35 +630,33 @@ public class AccessTest extends jOOQAbstractTest<
 
     @Override
     protected Field<? extends Number> FAuthorExistsField(String authorName) {
-        return Routines.fAuthorExists(authorName);
+        return null;
     }
 
     @Override
     protected Field<? extends Number> FOneField() {
-        return Routines.fOne();
+        return null;
     }
 
     @Override
     protected Field<? extends Number> FNumberField(Number n) {
-        return Routines.fNumber((Integer) n);
+        return null;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     protected Field<? extends Number> FNumberField(Field<? extends Number> n) {
-        return Routines.fNumber((Field<Integer>) n);
+        return null;
     }
 
     @Override
     protected Field<? extends Number> F317Field(Number n1, Number n2, Number n3, Number n4) {
-        return Routines.f317((Integer) n1, (Integer) n2, (Integer) n3, (Integer) n4);
+        return null;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     protected Field<? extends Number> F317Field(Field<? extends Number> n1, Field<? extends Number> n2,
         Field<? extends Number> n3, Field<? extends Number> n4) {
-        return Routines.f317((Field<Integer>) n1, (Field<Integer>) n2, (Field<Integer>) n3, (Field<Integer>) n4);
+        return null;
     }
 
     @Override
@@ -710,7 +706,7 @@ public class AccessTest extends jOOQAbstractTest<
 
     @Override
     protected Class<?> cRoutines() {
-        return Routines.class;
+        return null;
     }
 
     @Override
@@ -735,35 +731,26 @@ public class AccessTest extends jOOQAbstractTest<
 
     @Override
     protected Class<?> cSequences() {
-        return Sequences.class;
+        return null;
     }
 
     @Override
     protected DataType<?>[] getCastableDataTypes() {
         return new DataType<?>[] {
-            SQLServerDataType.BIGINT,
-            SQLServerDataType.BINARY,
-            SQLServerDataType.BIT,
-            SQLServerDataType.CHAR,
-            SQLServerDataType.DATE,
-            SQLServerDataType.DATETIME,
-            SQLServerDataType.DECIMAL,
-            SQLServerDataType.FLOAT,
-            SQLServerDataType.IMAGE,
-            SQLServerDataType.INT,
-            SQLServerDataType.MONEY,
-            SQLServerDataType.NCHAR,
-            SQLServerDataType.NTEXT,
-            SQLServerDataType.NUMERIC,
-            SQLServerDataType.NVARCHAR,
-            SQLServerDataType.REAL,
-            SQLServerDataType.SMALLDATETIME,
-            SQLServerDataType.SMALLINT,
-            SQLServerDataType.SMALLMONEY,
-            SQLServerDataType.TEXT,
-            SQLServerDataType.TINYINT,
-            SQLServerDataType.VARBINARY,
-            SQLServerDataType.VARCHAR,
+            AccessDataType.BINARY,
+            AccessDataType.BIT,
+            AccessDataType.CHAR,
+            AccessDataType.DATETIME,
+            AccessDataType.FLOAT,
+            AccessDataType.IMAGE,
+            AccessDataType.INTEGER,
+            AccessDataType.MONEY,
+            AccessDataType.NUMERIC,
+            AccessDataType.REAL,
+            AccessDataType.SMALLINT,
+            AccessDataType.TEXT,
+            AccessDataType.TINYINT,
+            AccessDataType.UNIQUEIDENTIFIER,
         };
     }
 }

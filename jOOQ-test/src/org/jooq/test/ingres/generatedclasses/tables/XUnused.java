@@ -9,7 +9,7 @@ package org.jooq.test.ingres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 349831066;
+	private static final long serialVersionUID = -1788021733;
 
 	/**
 	 * The singleton instance of <code>test.x_unused</code>
@@ -106,7 +106,7 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.ingres.genera
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.XUnusedRecord> getPrimaryKey() {
-		return org.jooq.test.ingres.generatedclasses.Keys.UK_X_UNUSED_ID;
+		return org.jooq.test.ingres.generatedclasses.Keys.PK_X_UNUSED;
 	}
 
 	/**

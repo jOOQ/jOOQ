@@ -46,7 +46,6 @@ import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.name;
 
 import java.io.Serializable;
@@ -350,16 +349,19 @@ class MetaImpl implements Meta, Serializable {
             }
         }
 
+        @SuppressWarnings("unchecked")
         private final Result<Record> getColumns(String schema, String table) throws SQLException {
 
             // SQLite JDBC's DatabaseMetaData.getColumns() can only return a single
             // table's columns
             if (columnCache == null && configuration.dialect() != SQLITE) {
-                Field<String> tableSchem = fieldByName(String.class, "TABLE_SCHEM");
-                Field<String> tableName = fieldByName(String.class, "TABLE_NAME");
+                Result<Record> columns = getColumns0(schema, "%");
+
+                Field<String> tableSchem = (Field<String>) columns.field(1); // TABLE_SCHEM
+                Field<String> tableName = (Field<String>) columns.field(2);  // TABLE_NAME
 
                 Map<Record, Result<Record>> groups =
-                getColumns0(schema, "%").intoGroups(new Field[] {
+                columns.intoGroups(new Field[] {
                     tableSchem,
                     tableName
                 });
@@ -540,10 +542,10 @@ class MetaImpl implements Meta, Serializable {
 
         private final void init(Result<Record> columns) {
             for (Record column : columns) {
-                String columnName = column.getValue("COLUMN_NAME", String.class);
-                String typeName = column.getValue("TYPE_NAME", String.class);
-                int precision = column.getValue("COLUMN_SIZE", int.class);
-                int scale = column.getValue("DECIMAL_DIGITS", int.class);
+                String columnName = column.getValue(3, String.class); // COLUMN_NAME
+                String typeName = column.getValue(5, String.class);   // TYPE_NAME
+                int precision = column.getValue(6, int.class);        // COLUMN_SIZE
+                int scale = column.getValue(8, int.class);            // DECIMAL_DIGITS
 
                 // TODO: Exception handling should be moved inside SQLDataType
                 DataType<?> type = null;

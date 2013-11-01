@@ -45,6 +45,7 @@ import static junit.framework.Assert.assertEquals;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 import static org.jooq.impl.DSL.all;
 import static org.jooq.impl.DSL.any;
@@ -463,12 +464,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // The IN clause
         // [#1073] NULL checks
-        assertEquals(
-        asList(1),
-        create().select(TBook_ID())
-                .from(TBook())
-                .where(TBook_ID().in(val(1), castNull(Integer.class)))
-                .fetch(TBook_ID()));
+        // Ingres doesn't correctly implement NULL semantics in IN predicates
+        if (!asList(INGRES).contains(dialect().family())) {
+            assertEquals(
+            asList(1),
+            create().select(TBook_ID())
+                    .from(TBook())
+                    .where(TBook_ID().in(val(1), castNull(Integer.class)))
+                    .fetch(TBook_ID()));
+        }
 
         // [#1073] Some dialects incorrectly handle NULL in NOT IN predicates
         /* [pro] */

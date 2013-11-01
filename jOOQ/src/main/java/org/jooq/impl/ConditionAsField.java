@@ -71,6 +71,7 @@ class ConditionAsField extends AbstractFunction<Boolean> {
             // are expected.
             /* [pro] */
             case DB2:
+            case INGRES:
             case ORACLE:
             case SQLSERVER:
             case SYBASE:
@@ -91,7 +92,6 @@ class ConditionAsField extends AbstractFunction<Boolean> {
             /* [pro] */
             // Unknown (to be evaluated):
             case ASE:
-            case INGRES:
             /* [/pro] */
                 return condition;
         }

@@ -46,6 +46,7 @@ package org.jooq.test;
 import static org.jooq.test.ingres.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.ingres.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.ingres.generatedclasses.Tables.T_DATES;
+import static org.jooq.test.ingres.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.ingres.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.ingres.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.ingres.generatedclasses.Tables.T_UNSIGNED;
@@ -84,6 +85,7 @@ import org.jooq.test.ingres.generatedclasses.tables.TBook;
 import org.jooq.test.ingres.generatedclasses.tables.TBookStore;
 import org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore;
 import org.jooq.test.ingres.generatedclasses.tables.TBooleans;
+import org.jooq.test.ingres.generatedclasses.tables.TExoticTypes;
 import org.jooq.test.ingres.generatedclasses.tables.TIdentity;
 import org.jooq.test.ingres.generatedclasses.tables.TIdentityPk;
 import org.jooq.test.ingres.generatedclasses.tables.TTriggers;
@@ -98,6 +100,7 @@ import org.jooq.test.ingres.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.ingres.generatedclasses.tables.records.TBookToBookStoreRecord;
 import org.jooq.test.ingres.generatedclasses.tables.records.TBooleansRecord;
 import org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord;
+import org.jooq.test.ingres.generatedclasses.tables.records.TExoticTypesRecord;
 import org.jooq.test.ingres.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.ingres.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.ingres.generatedclasses.tables.records.TTriggersRecord;
@@ -131,7 +134,7 @@ public class IngresTest extends jOOQAbstractTest<
         XUnusedRecord,
         TTriggersRecord,
         TUnsignedRecord,
-        XUnusedRecord,
+        TExoticTypesRecord,
         TIdentityRecord,
         TIdentityPkRecord,
         T_725LobTestRecord,
@@ -369,18 +372,18 @@ public class IngresTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected Table<XUnusedRecord> TExoticTypes() {
-        return null;
+    protected Table<TExoticTypesRecord> TExoticTypes() {
+        return T_EXOTIC_TYPES;
     }
 
     @Override
-    protected TableField<XUnusedRecord, Integer> TExoticTypes_ID() {
-        return null;
+    protected TableField<TExoticTypesRecord, Integer> TExoticTypes_ID() {
+        return TExoticTypes.ID;
     }
 
     @Override
-    protected TableField<XUnusedRecord, UUID> TExoticTypes_UU() {
-        return null;
+    protected TableField<TExoticTypesRecord, UUID> TExoticTypes_UU() {
+        return TExoticTypes.UU;
     }
 
     @Override

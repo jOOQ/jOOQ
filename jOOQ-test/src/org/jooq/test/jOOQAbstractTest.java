@@ -533,6 +533,17 @@ public abstract class jOOQAbstractTest<
 
     @SuppressWarnings("unused")
     public final Connection getConnection() {
+        try {
+            if (connectionInitialised && connection != null && connection.isClosed()) {
+                log.info("CONNECTION CLOSED", "Reconnecting...");
+
+                connectionInitialised = false;
+                connection = null;
+            }
+        }
+        catch (SQLException e) {
+        }
+
         if (!connectionInitialised) {
             connectionInitialised = true;
             connection = getConnection0(null, null);

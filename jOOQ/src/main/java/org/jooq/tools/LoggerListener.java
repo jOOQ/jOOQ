@@ -111,8 +111,13 @@ public class LoggerListener extends DefaultExecuteListener {
 
     @Override
     public void resultEnd(ExecuteContext ctx) {
-        if (log.isDebugEnabled() && ctx.result() != null) {
-            logMultiline("Fetched result", ctx.result().format(500), Level.FINE);
+        if (ctx.result() != null) {
+            if (log.isTraceEnabled()) {
+                logMultiline("Fetched result", ctx.result().format(500), Level.FINE);
+            }
+            else if (log.isDebugEnabled()) {
+                logMultiline("Fetched result", ctx.result().format(5), Level.FINE);
+            }
         }
     }
 

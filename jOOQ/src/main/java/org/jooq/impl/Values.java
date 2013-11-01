@@ -99,6 +99,7 @@ class Values<R extends Record> extends AbstractTable<R> {
             case SYBASE:
             /* [/pro] */
             case FIREBIRD:
+            case INGRES:
             case MARIADB:
             case MYSQL:
             case SQLITE:
@@ -136,12 +137,10 @@ class Values<R extends Record> extends AbstractTable<R> {
             case HSQLDB:
             case POSTGRES:
             /* [pro] */
-            case SQLSERVER:
-
-            // TODO to be verified
             case ASE:
             case DB2:
-            case INGRES:
+            case SQLSERVER:
+
             /* [/pro] */
             default: {
                 context.start(TABLE_VALUES)

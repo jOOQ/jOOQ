@@ -149,21 +149,12 @@ CREATE TABLE t_author (
   CONSTRAINT pk_t_author PRIMARY KEY (ID)
 )
 /
-COMMENT ON TABLE t_author IS 'An entity holding authors of books'/
-COMMENT ON COLUMN t_author.id IS 'The author ID'/
-COMMENT ON COLUMN t_author.first_name IS 'The author''s first name'/
-COMMENT ON COLUMN t_author.last_name IS 'The author''s last name'/
-COMMENT ON COLUMN t_author.date_of_birth IS 'The author''s date of birth'/
-COMMENT ON COLUMN t_author.year_of_birth IS 'The author''s year of birth'/
-COMMENT ON COLUMN t_author.address IS 'The author''s address'/
 
 CREATE TABLE t_book_details (
   ID INT NOT NULL,
 
   CONSTRAINT pk_t_book_details PRIMARY KEY (ID)
 )
-/
-COMMENT ON TABLE t_book_details IS 'An unused details table'
 /
 
 CREATE TABLE t_book (
@@ -184,14 +175,6 @@ CREATE TABLE t_book (
   CONSTRAINT fk_t_book_language_id FOREIGN KEY (LANGUAGE_ID) REFERENCES T_LANGUAGE(ID)
 )
 /
-COMMENT ON TABLE t_book IS 'An entity holding books'/
-COMMENT ON COLUMN t_book.id IS 'The book ID'/
-COMMENT ON COLUMN t_book.author_id IS 'The author ID in entity ''author'''/
-COMMENT ON COLUMN t_book.title IS 'The book''s title'/
-COMMENT ON COLUMN t_book.published_in IS  'The year the book was published in'/
-COMMENT ON COLUMN t_book.language_id IS  'The language of the book'/
-COMMENT ON COLUMN t_book.content_text IS 'Some textual content of the book'/
-COMMENT ON COLUMN t_book.content_pdf IS 'Some binary content of the book'/
 
 
 CREATE TABLE t_book_store (
@@ -199,10 +182,6 @@ CREATE TABLE t_book_store (
 
   CONSTRAINT uk_t_book_store_name PRIMARY KEY(name)
 )
-/
-COMMENT ON TABLE t_book_store IS 'A book store'
-/
-COMMENT ON COLUMN t_book_store.name IS 'The books store name'
 /
 
 
@@ -220,10 +199,6 @@ CREATE TABLE t_book_to_book_store (
                              ON DELETE CASCADE
 )
 /
-COMMENT ON TABLE t_book_to_book_store IS 'An m:n relation between books and book stores'/
-COMMENT ON COLUMN t_book_to_book_store.book_store_name IS 'The book store name'/
-COMMENT ON COLUMN t_book_to_book_store.book_id IS 'The book ID'/
-COMMENT ON COLUMN t_book_to_book_store.stock IS 'The number of books on stock'/
 
 
 CREATE TABLE x_unused (
@@ -245,8 +220,6 @@ CREATE TABLE x_unused (
   CONSTRAINT pk_x_unused PRIMARY KEY(ID, NAME),
   CONSTRAINT uk_x_unused_id UNIQUE(ID)
 )
-/
-COMMENT ON TABLE x_unused IS 'An unused table in the same schema. Note: Ingres suddenly could not handle composite self-references anymore... CONSTRAINT fk_x_unused_self FOREIGN KEY(ID_REF, NAME_REF) REFERENCES X_UNUSED(ID, NAME)'
 /
 
 CREATE TABLE t_exotic_types (

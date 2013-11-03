@@ -40,7 +40,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.field;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -69,22 +69,26 @@ class Nvl<T> extends AbstractFunction<T> {
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] */
+            case ACCESS:
+                return field("{iif}({0} is null, {1}, {0})", getDataType(), arg1, arg2);
+
             case DB2:
             case INGRES:
             case ORACLE:
             /* [/pro] */
+
             case H2:
             case HSQLDB:
-                return function("nvl", getDataType(), getArguments());
+                return field("{nvl}({0}, {1})", getDataType(), arg1, arg2);
 
             case DERBY:
             case POSTGRES:
-                return function("coalesce", getDataType(), getArguments());
+                return field("{coalesce}({0}, {1})", getDataType(), arg1, arg2);
 
             case MARIADB:
             case MYSQL:
             case SQLITE:
-                return function("ifnull", getDataType(), getArguments());
+                return field("{ifnull}({0}, {1})", getDataType(), arg1, arg2);
 
             default:
                 return DSL.decode().when(arg1.isNotNull(), arg1).otherwise(arg2);

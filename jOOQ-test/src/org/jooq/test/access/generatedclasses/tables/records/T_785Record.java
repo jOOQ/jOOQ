@@ -9,47 +9,47 @@ package org.jooq.test.access.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.access.generatedclasses.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 1653744410;
+	private static final long serialVersionUID = -2129048358;
 
 	/**
-	 * Setter for <code>T_785.ID</code>. 
+	 * Setter for <code>t_785.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>T_785.ID</code>. 
+	 * Getter for <code>t_785.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>T_785.XNAME</code>. 
+	 * Setter for <code>t_785.NAME</code>. 
 	 */
-	public void setXname(java.lang.String value) {
+	public void setName(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>T_785.XNAME</code>. 
+	 * Getter for <code>t_785.NAME</code>. 
 	 */
-	public java.lang.String getXname() {
+	public java.lang.String getName() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>T_785.XVALUE</code>. 
+	 * Setter for <code>t_785.VALUE</code>. 
 	 */
-	public void setXvalue(java.lang.String value) {
+	public void setValue(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>T_785.XVALUE</code>. 
+	 * Getter for <code>t_785.VALUE</code>. 
 	 */
-	public java.lang.String getXvalue() {
+	public java.lang.String getValue() {
 		return (java.lang.String) getValue(2);
 	}
 
@@ -78,7 +78,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.acc
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.access.generatedclasses.tables.T_785.ID;
+		return org.jooq.test.access.generatedclasses.tables.T_785.T_785.ID;
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.acc
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field2() {
-		return org.jooq.test.access.generatedclasses.tables.T_785.XNAME;
+		return org.jooq.test.access.generatedclasses.tables.T_785.T_785.NAME;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.acc
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field3() {
-		return org.jooq.test.access.generatedclasses.tables.T_785.XVALUE;
+		return org.jooq.test.access.generatedclasses.tables.T_785.T_785.VALUE;
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.acc
 	 */
 	@Override
 	public java.lang.String value2() {
-		return getXname();
+		return getName();
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.acc
 	 */
 	@Override
 	public java.lang.String value3() {
-		return getXvalue();
+		return getValue();
 	}
 
 	// -------------------------------------------------------------------------
@@ -130,5 +130,16 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.acc
 	 */
 	public T_785Record() {
 		super(org.jooq.test.access.generatedclasses.tables.T_785.T_785);
+	}
+
+	/**
+	 * Create a detached, initialised T_785Record
+	 */
+	public T_785Record(java.lang.Integer id, java.lang.String name, java.lang.String value) {
+		super(org.jooq.test.access.generatedclasses.tables.T_785.T_785);
+
+		setValue(0, id);
+		setValue(1, name);
+		setValue(2, value);
 	}
 }

@@ -41,6 +41,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
@@ -102,6 +103,16 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     @Override
     public final Configuration configuration() {
         return configuration;
+    }
+
+    // -------------------------------------------------------------------------
+    // The QueryPart API
+    // -------------------------------------------------------------------------
+
+    final void toSQLSemiColon(RenderContext ctx) {
+        if (ctx.configuration().dialect().family() == ACCESS) {
+            ctx.sql(';');
+        }
     }
 
     // -------------------------------------------------------------------------

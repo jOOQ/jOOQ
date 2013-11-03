@@ -9,10 +9,10 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -2137699300;
+	private static final long serialVersionUID = -810547424;
 
 	/**
-	 * The singleton instance of <code>T_BOOK_STORE</code>
+	 * The singleton instance of <code>t_book_store</code>
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.TBookStore T_BOOK_STORE = new org.jooq.test.access.generatedclasses.tables.TBookStore();
 
@@ -25,15 +25,22 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.access.gen
 	}
 
 	/**
-	 * The column <code>T_BOOK_STORE.XNAME</code>. 
+	 * The column <code>t_book_store.name</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> XNAME = createField("XNAME", org.jooq.impl.SQLDataType.VARCHAR.length(16777216), T_BOOK_STORE);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(200), this);
 
 	/**
-	 * No further instances allowed
+	 * Create a <code>t_book_store</code> table reference
 	 */
-	private TBookStore() {
-		super("T_BOOK_STORE", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+	public TBookStore() {
+		super("t_book_store", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+	}
+
+	/**
+	 * Create an aliased <code>t_book_store</code> table reference
+	 */
+	public TBookStore(java.lang.String alias) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.TBookStore.T_BOOK_STORE);
 	}
 
 	/**
@@ -50,5 +57,13 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.access.gen
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TBookStoreRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TBookStoreRecord>>asList(org.jooq.test.access.generatedclasses.Keys.PK_T_BOOK_STORE);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.access.generatedclasses.tables.TBookStore as(java.lang.String alias) {
+		return new org.jooq.test.access.generatedclasses.tables.TBookStore(alias);
 	}
 }

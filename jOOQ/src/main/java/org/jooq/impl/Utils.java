@@ -41,12 +41,15 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
+import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.escape;
 import static org.jooq.impl.DSL.getDataType;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
@@ -1282,8 +1285,24 @@ final class Utils {
      * Utility method to escape strings or "toString" other objects
      */
     static final Field<String> escapeForLike(Object value) {
+        return escapeForLike(value, new DefaultConfiguration());
+    }
+
+    /**
+     * Utility method to escape strings or "toString" other objects
+     */
+    static final Field<String> escapeForLike(Object value, Configuration configuration) {
         if (value != null && value.getClass() == String.class) {
-            return val(escape("" + value, ESCAPE));
+            
+            /* [pro] */
+            if (configuration.dialect().family() == ACCESS) {
+                return val("[" + value + "]");
+            }
+            else
+            /* [/pro] */
+            {
+                return val(escape("" + value, ESCAPE));
+            }
         }
         else {
             return val("" + value);
@@ -1293,10 +1312,26 @@ final class Utils {
     /**
      * Utility method to escape string fields, or cast other fields
      */
-    @SuppressWarnings("unchecked")
     static final Field<String> escapeForLike(Field<?> field) {
+        return escapeForLike(field, new DefaultConfiguration());
+    }
+
+    /**
+     * Utility method to escape string fields, or cast other fields
+     */
+    @SuppressWarnings("unchecked")
+    static final Field<String> escapeForLike(Field<?> field, Configuration configuration) {
         if (nullSafe(field).getDataType().isString()) {
-            return escape((Field<String>) field, ESCAPE);
+
+            /* [pro] */
+            if (configuration.dialect().family() == ACCESS) {
+                return concat(inline("["), field, inline("]"));
+            }
+            else
+            /* [/pro] */
+            {
+                return escape((Field<String>) field, ESCAPE);
+            }
         }
         else {
             return field.cast(String.class);

@@ -12,77 +12,97 @@ package org.jooq.test.access.generatedclasses;
 public class Tables {
 
 	/**
-	 * The table T_639_NUMBERS_TABLE
+	 * The table t_639_numbers_table
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.access.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
 
 	/**
-	 * The table T_725_LOB_TEST
+	 * The table t_725_lob_test
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = org.jooq.test.access.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST;
 
 	/**
-	 * The table T_785
+	 * The table t_785
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.T_785 T_785 = org.jooq.test.access.generatedclasses.tables.T_785.T_785;
 
 	/**
-	 * The table T_AUTHOR
+	 * The table t_author
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.TAuthor T_AUTHOR = org.jooq.test.access.generatedclasses.tables.TAuthor.T_AUTHOR;
 
 	/**
-	 * The table T_BOOK
+	 * The table t_book
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.TBook T_BOOK = org.jooq.test.access.generatedclasses.tables.TBook.T_BOOK;
 
 	/**
-	 * The table T_BOOK_STORE
+	 * The table t_book_store
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.TBookStore T_BOOK_STORE = org.jooq.test.access.generatedclasses.tables.TBookStore.T_BOOK_STORE;
 
 	/**
-	 * The table T_BOOK_TO_BOOK_STORE
+	 * The table t_book_to_book_store
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.access.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
 
 	/**
-	 * The table T_BOOLEANS
+	 * The table t_booleans
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.access.generatedclasses.tables.TBooleans.T_BOOLEANS;
 
 	/**
-	 * The table T_DATES
+	 * The table t_dates
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.TDates T_DATES = org.jooq.test.access.generatedclasses.tables.TDates.T_DATES;
 
 	/**
-	 * The table T_EXOTIC_TYPES
+	 * The table t_exotic_types
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.TExoticTypes T_EXOTIC_TYPES = org.jooq.test.access.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
 
 	/**
-	 * The table T_IDENTITY
+	 * The table t_identity
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.access.generatedclasses.tables.TIdentity.T_IDENTITY;
 
 	/**
-	 * The table T_IDENTITY_PK
+	 * The table t_identity_pk
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.access.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
 
 	/**
-	 * The table T_LANGUAGE
+	 * The table t_language
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.access.generatedclasses.tables.TLanguage.T_LANGUAGE;
 
 	/**
-	 * The table T_TRIGGERS
+	 * The table t_triggers
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.access.generatedclasses.tables.TTriggers.T_TRIGGERS;
 
 	/**
-	 * The table T_UNSIGNED
+	 * The table t_unsigned
 	 */
 	public static final org.jooq.test.access.generatedclasses.tables.TUnsigned T_UNSIGNED = org.jooq.test.access.generatedclasses.tables.TUnsigned.T_UNSIGNED;
+
+	/**
+	 * The table x_unused
+	 */
+	public static final org.jooq.test.access.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.access.generatedclasses.tables.XUnused.X_UNUSED;
+
+	/**
+	 * The table v_author
+	 */
+	public static final org.jooq.test.access.generatedclasses.tables.VAuthor V_AUTHOR = org.jooq.test.access.generatedclasses.tables.VAuthor.V_AUTHOR;
+
+	/**
+	 * The table v_book
+	 */
+	public static final org.jooq.test.access.generatedclasses.tables.VBook V_BOOK = org.jooq.test.access.generatedclasses.tables.VBook.V_BOOK;
+
+	/**
+	 * The table v_library
+	 */
+	public static final org.jooq.test.access.generatedclasses.tables.VLibrary V_LIBRARY = org.jooq.test.access.generatedclasses.tables.VLibrary.V_LIBRARY;
 }

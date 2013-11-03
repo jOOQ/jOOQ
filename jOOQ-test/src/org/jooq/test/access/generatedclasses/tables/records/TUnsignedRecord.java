@@ -9,59 +9,59 @@ package org.jooq.test.access.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.access.generatedclasses.tables.records.TUnsignedRecord> implements org.jooq.Record4<org.jooq.types.UByte, org.jooq.types.UShort, org.jooq.types.UInteger, org.jooq.types.ULong> {
 
-	private static final long serialVersionUID = -332413147;
+	private static final long serialVersionUID = 756445487;
 
 	/**
-	 * Setter for <code>T_UNSIGNED.U_BYTE</code>. 
+	 * Setter for <code>t_unsigned.u_byte</code>. 
 	 */
 	public void setUByte(org.jooq.types.UByte value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>T_UNSIGNED.U_BYTE</code>. 
+	 * Getter for <code>t_unsigned.u_byte</code>. 
 	 */
 	public org.jooq.types.UByte getUByte() {
 		return (org.jooq.types.UByte) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>T_UNSIGNED.U_SHORT</code>. 
+	 * Setter for <code>t_unsigned.u_short</code>. 
 	 */
 	public void setUShort(org.jooq.types.UShort value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>T_UNSIGNED.U_SHORT</code>. 
+	 * Getter for <code>t_unsigned.u_short</code>. 
 	 */
 	public org.jooq.types.UShort getUShort() {
 		return (org.jooq.types.UShort) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>T_UNSIGNED.U_INT</code>. 
+	 * Setter for <code>t_unsigned.u_int</code>. 
 	 */
 	public void setUInt(org.jooq.types.UInteger value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>T_UNSIGNED.U_INT</code>. 
+	 * Getter for <code>t_unsigned.u_int</code>. 
 	 */
 	public org.jooq.types.UInteger getUInt() {
 		return (org.jooq.types.UInteger) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>T_UNSIGNED.U_LONG</code>. 
+	 * Setter for <code>t_unsigned.u_long</code>. 
 	 */
 	public void setULong(org.jooq.types.ULong value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>T_UNSIGNED.U_LONG</code>. 
+	 * Getter for <code>t_unsigned.u_long</code>. 
 	 */
 	public org.jooq.types.ULong getULong() {
 		return (org.jooq.types.ULong) getValue(3);
@@ -92,7 +92,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<org.jooq.types.UByte> field1() {
-		return org.jooq.test.access.generatedclasses.tables.TUnsigned.U_BYTE;
+		return org.jooq.test.access.generatedclasses.tables.TUnsigned.T_UNSIGNED.U_BYTE;
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<org.jooq.types.UShort> field2() {
-		return org.jooq.test.access.generatedclasses.tables.TUnsigned.U_SHORT;
+		return org.jooq.test.access.generatedclasses.tables.TUnsigned.T_UNSIGNED.U_SHORT;
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<org.jooq.types.UInteger> field3() {
-		return org.jooq.test.access.generatedclasses.tables.TUnsigned.U_INT;
+		return org.jooq.test.access.generatedclasses.tables.TUnsigned.T_UNSIGNED.U_INT;
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<org.jooq.types.ULong> field4() {
-		return org.jooq.test.access.generatedclasses.tables.TUnsigned.U_LONG;
+		return org.jooq.test.access.generatedclasses.tables.TUnsigned.T_UNSIGNED.U_LONG;
 	}
 
 	/**
@@ -160,5 +160,17 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 */
 	public TUnsignedRecord() {
 		super(org.jooq.test.access.generatedclasses.tables.TUnsigned.T_UNSIGNED);
+	}
+
+	/**
+	 * Create a detached, initialised TUnsignedRecord
+	 */
+	public TUnsignedRecord(org.jooq.types.UByte uByte, org.jooq.types.UShort uShort, org.jooq.types.UInteger uInt, org.jooq.types.ULong uLong) {
+		super(org.jooq.test.access.generatedclasses.tables.TUnsigned.T_UNSIGNED);
+
+		setValue(0, uByte);
+		setValue(1, uShort);
+		setValue(2, uInt);
+		setValue(3, uLong);
 	}
 }

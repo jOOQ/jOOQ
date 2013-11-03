@@ -44,7 +44,6 @@ import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.DSL.val;
 
 import java.sql.ResultSet;
 import java.util.Arrays;
@@ -864,298 +863,830 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1) {
-        return seek(val(t1));
+        return seek(new Object[] { t1 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1) {
+        return seekBefore(new Object[] { t1 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1) {
+        return seekAfter(new Object[] { t1 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2) {
-        return seek(val(t1), val(t2));
+        return seek(new Object[] { t1, t2 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2) {
+        return seekBefore(new Object[] { t1, t2 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2) {
+        return seekAfter(new Object[] { t1, t2 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3) {
-        return seek(val(t1), val(t2), val(t3));
+        return seek(new Object[] { t1, t2, t3 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3) {
+        return seekBefore(new Object[] { t1, t2, t3 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3) {
+        return seekAfter(new Object[] { t1, t2, t3 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4) {
-        return seek(val(t1), val(t2), val(t3), val(t4));
+        return seek(new Object[] { t1, t2, t3, t4 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4) {
+        return seekBefore(new Object[] { t1, t2, t3, t4 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4) {
+        return seekAfter(new Object[] { t1, t2, t3, t4 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5) {
-        return seek(val(t1), val(t2), val(t3), val(t4), val(t5));
+        return seek(new Object[] { t1, t2, t3, t4, t5 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4, Object t5) {
+        return seekBefore(new Object[] { t1, t2, t3, t4, t5 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4, Object t5) {
+        return seekAfter(new Object[] { t1, t2, t3, t4, t5 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6) {
-        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6));
+        return seek(new Object[] { t1, t2, t3, t4, t5, t6 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6) {
+        return seekBefore(new Object[] { t1, t2, t3, t4, t5, t6 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6) {
+        return seekAfter(new Object[] { t1, t2, t3, t4, t5, t6 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7) {
-        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7));
+        return seek(new Object[] { t1, t2, t3, t4, t5, t6, t7 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7) {
+        return seekBefore(new Object[] { t1, t2, t3, t4, t5, t6, t7 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7) {
+        return seekAfter(new Object[] { t1, t2, t3, t4, t5, t6, t7 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8) {
-        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8));
+        return seek(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8) {
+        return seekBefore(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8) {
+        return seekAfter(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9) {
-        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9));
+        return seek(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9) {
+        return seekBefore(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9) {
+        return seekAfter(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10) {
-        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10));
+        return seek(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10) {
+        return seekBefore(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10) {
+        return seekAfter(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11) {
-        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11));
+        return seek(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11) {
+        return seekBefore(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11) {
+        return seekAfter(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12) {
-        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12));
+        return seek(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12) {
+        return seekBefore(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12) {
+        return seekAfter(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13) {
-        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13));
+        return seek(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13) {
+        return seekBefore(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13) {
+        return seekAfter(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14) {
-        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14));
+        return seek(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14) {
+        return seekBefore(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14) {
+        return seekAfter(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15) {
-        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15));
+        return seek(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15) {
+        return seekBefore(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15) {
+        return seekAfter(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16) {
-        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16));
+        return seek(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16) {
+        return seekBefore(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16) {
+        return seekAfter(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17) {
-        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17));
+        return seek(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17) {
+        return seekBefore(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17) {
+        return seekAfter(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18) {
-        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18));
+        return seek(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18) {
+        return seekBefore(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18) {
+        return seekAfter(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19) {
-        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18), val(t19));
+        return seek(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19) {
+        return seekBefore(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19) {
+        return seekAfter(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19, Object t20) {
-        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18), val(t19), val(t20));
+        return seek(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19, Object t20) {
+        return seekBefore(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19, Object t20) {
+        return seekAfter(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19, Object t20, Object t21) {
-        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18), val(t19), val(t20), val(t21));
+        return seek(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19, Object t20, Object t21) {
+        return seekBefore(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19, Object t20, Object t21) {
+        return seekAfter(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19, Object t20, Object t21, Object t22) {
-        return seek(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18), val(t19), val(t20), val(t21), val(t22));
+        return seek(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19, Object t20, Object t21, Object t22) {
+        return seekBefore(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19, Object t20, Object t21, Object t22) {
+        return seekAfter(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1) {
-        getQuery().addSeek(t1);
-        return this;
+        return seek(new Field[] { t1 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1) {
+        return seekBefore(new Field[] { t1 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1) {
+        return seekAfter(new Field[] { t1 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2) {
-        getQuery().addSeek(t1, t2);
-        return this;
+        return seek(new Field[] { t1, t2 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2) {
+        return seekBefore(new Field[] { t1, t2 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2) {
+        return seekAfter(new Field[] { t1, t2 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3) {
-        getQuery().addSeek(t1, t2, t3);
-        return this;
+        return seek(new Field[] { t1, t2, t3 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3) {
+        return seekBefore(new Field[] { t1, t2, t3 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3) {
+        return seekAfter(new Field[] { t1, t2, t3 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4) {
-        getQuery().addSeek(t1, t2, t3, t4);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4) {
+        return seekBefore(new Field[] { t1, t2, t3, t4 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4) {
+        return seekAfter(new Field[] { t1, t2, t3, t4 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5) {
-        getQuery().addSeek(t1, t2, t3, t4, t5);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4, t5 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4, Field t5) {
+        return seekBefore(new Field[] { t1, t2, t3, t4, t5 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4, Field t5) {
+        return seekAfter(new Field[] { t1, t2, t3, t4, t5 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6) {
-        getQuery().addSeek(t1, t2, t3, t4, t5, t6);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4, t5, t6 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6) {
+        return seekBefore(new Field[] { t1, t2, t3, t4, t5, t6 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6) {
+        return seekAfter(new Field[] { t1, t2, t3, t4, t5, t6 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7) {
-        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4, t5, t6, t7 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7) {
+        return seekBefore(new Field[] { t1, t2, t3, t4, t5, t6, t7 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7) {
+        return seekAfter(new Field[] { t1, t2, t3, t4, t5, t6, t7 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8) {
-        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8) {
+        return seekBefore(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8) {
+        return seekAfter(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9) {
-        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9) {
+        return seekBefore(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9) {
+        return seekAfter(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10) {
-        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10) {
+        return seekBefore(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10) {
+        return seekAfter(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11) {
-        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11) {
+        return seekBefore(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11) {
+        return seekAfter(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12) {
-        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12) {
+        return seekBefore(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12) {
+        return seekAfter(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13) {
-        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13) {
+        return seekBefore(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13) {
+        return seekAfter(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14) {
-        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14) {
+        return seekBefore(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14) {
+        return seekAfter(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15) {
-        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15) {
+        return seekBefore(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15) {
+        return seekAfter(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16) {
-        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16) {
+        return seekBefore(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16) {
+        return seekAfter(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17) {
-        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17) {
+        return seekBefore(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17) {
+        return seekAfter(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18) {
-        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18) {
+        return seekBefore(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18) {
+        return seekAfter(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19) {
-        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19) {
+        return seekBefore(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19) {
+        return seekAfter(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19, Field t20) {
-        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19, Field t20) {
+        return seekBefore(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19, Field t20) {
+        return seekAfter(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19, Field t20, Field t21) {
-        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19, Field t20, Field t21) {
+        return seekBefore(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19, Field t20, Field t21) {
+        return seekAfter(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21 });
     }
 
     @Override
     @Generated("This method was generated using jOOQ-tools")
     public final SelectSeekLimitStep<R> seek(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19, Field t20, Field t21, Field t22) {
-        getQuery().addSeek(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
-        return this;
+        return seek(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekBefore(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19, Field t20, Field t21, Field t22) {
+        return seekBefore(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22 });
+    }
+
+    @Override
+    @Generated("This method was generated using jOOQ-tools")
+    public final SelectSeekLimitStep<R> seekAfter(Field t1, Field t2, Field t3, Field t4, Field t5, Field t6, Field t7, Field t8, Field t9, Field t10, Field t11, Field t12, Field t13, Field t14, Field t15, Field t16, Field t17, Field t18, Field t19, Field t20, Field t21, Field t22) {
+        return seekAfter(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22 });
     }
 
 // [jooq-tools] END [seek]
 
     @Override
     public final SelectSeekLimitStep<R> seek(Object... values) {
+        getQuery().addSeekAfter(Utils.fields(values));
         return this;
     }
 
     @Override
-    public final SelectSeekLimitStep<R> seek(Field<?>... values) {
+    public final SelectSeekLimitStep<R> seek(Field<?>... fields) {
+        getQuery().addSeekAfter(fields);
+        return this;
+    }
+
+    @Override
+    public SelectSeekLimitStep<R> seekAfter(Object... values) {
+        getQuery().addSeekAfter(Utils.fields(values));
+        return this;
+    }
+
+    @Override
+    public SelectSeekLimitStep<R> seekAfter(Field<?>... fields) {
+        getQuery().addSeekAfter(fields);
+        return this;
+    }
+
+    @Override
+    public SelectSeekLimitStep<R> seekBefore(Object... values) {
+        getQuery().addSeekBefore(Utils.fields(values));
+        return this;
+    }
+
+    @Override
+    public SelectSeekLimitStep<R> seekBefore(Field<?>... fields) {
+        getQuery().addSeekBefore(fields);
         return this;
     }
 
@@ -1624,6 +2155,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public final ResultQuery<R> fetchSize(int rows) {
+        return getDelegate().fetchSize(rows);
+    }
+
+    @Override
     public final ResultQuery<R> resultSetConcurrency(int resultSetConcurrency) {
         return getDelegate().resultSetConcurrency(resultSetConcurrency);
     }
@@ -1684,6 +2220,7 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    @Deprecated
     public final Cursor<R> fetchLazy(int fetchSize) {
         return getDelegate().fetchLazy(fetchSize);
     }

@@ -9,31 +9,31 @@ package org.jooq.test.access.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.access.generatedclasses.tables.records.TExoticTypesRecord> implements org.jooq.Record2<java.lang.Integer, java.util.UUID> {
 
-	private static final long serialVersionUID = -1276202901;
+	private static final long serialVersionUID = 910067516;
 
 	/**
-	 * Setter for <code>T_EXOTIC_TYPES.ID</code>. 
+	 * Setter for <code>t_exotic_types.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>T_EXOTIC_TYPES.ID</code>. 
+	 * Getter for <code>t_exotic_types.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>T_EXOTIC_TYPES.UU</code>. 
+	 * Setter for <code>t_exotic_types.UU</code>. 
 	 */
 	public void setUu(java.util.UUID value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>T_EXOTIC_TYPES.UU</code>. 
+	 * Getter for <code>t_exotic_types.UU</code>. 
 	 */
 	public java.util.UUID getUu() {
 		return (java.util.UUID) getValue(1);
@@ -76,7 +76,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.access.generatedclasses.tables.TExoticTypes.ID;
+		return org.jooq.test.access.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.ID;
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Field<java.util.UUID> field2() {
-		return org.jooq.test.access.generatedclasses.tables.TExoticTypes.UU;
+		return org.jooq.test.access.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.UU;
 	}
 
 	/**
@@ -112,5 +112,15 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	public TExoticTypesRecord() {
 		super(org.jooq.test.access.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES);
+	}
+
+	/**
+	 * Create a detached, initialised TExoticTypesRecord
+	 */
+	public TExoticTypesRecord(java.lang.Integer id, java.util.UUID uu) {
+		super(org.jooq.test.access.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES);
+
+		setValue(0, id);
+		setValue(1, uu);
 	}
 }

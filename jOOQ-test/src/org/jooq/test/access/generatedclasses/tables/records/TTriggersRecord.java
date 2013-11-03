@@ -9,47 +9,47 @@ package org.jooq.test.access.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.access.generatedclasses.tables.records.TTriggersRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -974726197;
+	private static final long serialVersionUID = 777624437;
 
 	/**
-	 * Setter for <code>T_TRIGGERS.ID_GENERATED</code>. 
+	 * Setter for <code>t_triggers.id_generated</code>. 
 	 */
 	public void setIdGenerated(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>T_TRIGGERS.ID_GENERATED</code>. 
+	 * Getter for <code>t_triggers.id_generated</code>. 
 	 */
 	public java.lang.Integer getIdGenerated() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>T_TRIGGERS.ID</code>. 
+	 * Setter for <code>t_triggers.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>T_TRIGGERS.ID</code>. 
+	 * Getter for <code>t_triggers.id</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>T_TRIGGERS.XINTEGER</code>. 
+	 * Setter for <code>t_triggers.counter</code>. 
 	 */
-	public void setXinteger(java.lang.Integer value) {
+	public void setCounter(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>T_TRIGGERS.XINTEGER</code>. 
+	 * Getter for <code>t_triggers.counter</code>. 
 	 */
-	public java.lang.Integer getXinteger() {
+	public java.lang.Integer getCounter() {
 		return (java.lang.Integer) getValue(2);
 	}
 
@@ -90,7 +90,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.access.generatedclasses.tables.TTriggers.ID_GENERATED;
+		return org.jooq.test.access.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED;
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.jooq.test.access.generatedclasses.tables.TTriggers.ID;
+		return org.jooq.test.access.generatedclasses.tables.TTriggers.T_TRIGGERS.ID;
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field3() {
-		return org.jooq.test.access.generatedclasses.tables.TTriggers.XINTEGER;
+		return org.jooq.test.access.generatedclasses.tables.TTriggers.T_TRIGGERS.COUNTER;
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public java.lang.Integer value3() {
-		return getXinteger();
+		return getCounter();
 	}
 
 	// -------------------------------------------------------------------------
@@ -142,5 +142,16 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	public TTriggersRecord() {
 		super(org.jooq.test.access.generatedclasses.tables.TTriggers.T_TRIGGERS);
+	}
+
+	/**
+	 * Create a detached, initialised TTriggersRecord
+	 */
+	public TTriggersRecord(java.lang.Integer idGenerated, java.lang.Integer id, java.lang.Integer counter) {
+		super(org.jooq.test.access.generatedclasses.tables.TTriggers.T_TRIGGERS);
+
+		setValue(0, idGenerated);
+		setValue(1, id);
+		setValue(2, counter);
 	}
 }

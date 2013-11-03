@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -151,6 +152,27 @@ class DefaultBindContext extends AbstractBindContext {
                 stmt.setNull(nextIndex(), Types.BINARY);
             }
 
+            /* [pro] */
+            else if (configuration.dialect().family() == ACCESS) {
+
+                // This incredible mess is only needed with the Sun JDBC-ODBC bridge
+                // Apparently, other drivers are better:
+                // http://stackoverflow.com/a/19712785/521799
+                switch (sqlType) {
+                    case Types.BINARY:
+                    case Types.VARBINARY:
+                    case Types.LONGVARBINARY:
+                    case Types.BLOB:
+                        stmt.setNull(nextIndex(), Types.VARCHAR);
+                        break;
+
+                    default:
+                        stmt.setString(nextIndex(), null);
+                        break;
+                }
+            }
+
+            /* [/pro] */
             // All other types can be set to null if the JDBC type is known
             else if (sqlType != Types.OTHER) {
                 stmt.setNull(nextIndex(), sqlType);
@@ -181,7 +203,7 @@ class DefaultBindContext extends AbstractBindContext {
             stmt.setBoolean(nextIndex(), (Boolean) value);
         }
         else if (type == BigDecimal.class) {
-            if (dialect == SQLITE) {
+            if (asList(ACCESS, SQLITE).contains(dialect.family())) {
                 stmt.setString(nextIndex(), value.toString());
             }
             else {
@@ -189,7 +211,7 @@ class DefaultBindContext extends AbstractBindContext {
             }
         }
         else if (type == BigInteger.class) {
-            if (dialect == SQLITE) {
+            if (asList(ACCESS, SQLITE).contains(dialect.family())) {
                 stmt.setString(nextIndex(), value.toString());
             }
             else {
@@ -215,7 +237,15 @@ class DefaultBindContext extends AbstractBindContext {
             stmt.setInt(nextIndex(), (Integer) value);
         }
         else if (type == Long.class) {
-            stmt.setLong(nextIndex(), (Long) value);
+            /* [pro] */
+            if (dialect.family() == ACCESS) {
+                stmt.setString(nextIndex(), value.toString());
+            }
+            else
+            /* [/pro] */
+            {
+                stmt.setLong(nextIndex(), (Long) value);
+            }
         }
         else if (type == Short.class) {
             stmt.setShort(nextIndex(), (Short) value);

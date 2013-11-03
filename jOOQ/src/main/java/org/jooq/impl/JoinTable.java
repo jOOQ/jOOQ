@@ -61,6 +61,7 @@ import static org.jooq.JoinType.NATURAL_JOIN;
 import static org.jooq.JoinType.NATURAL_LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -149,11 +150,16 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         JoinType translatedType = translateType(context);
         Clause translatedClause = translateClause(translatedType);
 
+        // In MS Access, the INNER keyword is not optional
+        String keyword = translatedType == JOIN && context.configuration().dialect().family() == ACCESS
+               ? "inner join"
+               : translatedType.toSQL();
+
         context.visit(lhs)
                .formatIndentStart()
                .formatSeparator()
                .start(translatedClause)
-               .keyword(translatedType.toSQL())
+               .keyword(keyword)
                .sql(" ");
 
         // [#671] Some databases formally require nested JOINS to be
@@ -239,15 +245,15 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     }
 
     private final boolean simulateNaturalJoin(RenderContext context) {
-        return type == NATURAL_JOIN && asList(ASE, CUBRID, DB2, INGRES, SQLSERVER).contains(context.configuration().dialect().family());
+        return type == NATURAL_JOIN && asList(ACCESS, ASE, CUBRID, DB2, INGRES, SQLSERVER).contains(context.configuration().dialect().family());
     }
 
     private final boolean simulateNaturalLeftOuterJoin(RenderContext context) {
-        return type == NATURAL_LEFT_OUTER_JOIN && asList(ASE, CUBRID, DB2, H2, INGRES, SQLSERVER).contains(context.configuration().dialect().family());
+        return type == NATURAL_LEFT_OUTER_JOIN && asList(ACCESS, ASE, CUBRID, DB2, H2, INGRES, SQLSERVER).contains(context.configuration().dialect().family());
     }
 
     private final boolean simulateNaturalRightOuterJoin(RenderContext context) {
-        return type == NATURAL_RIGHT_OUTER_JOIN && asList(ASE, CUBRID, DB2, H2, INGRES, SQLSERVER).contains(context.configuration().dialect().family());
+        return type == NATURAL_RIGHT_OUTER_JOIN && asList(ACCESS, ASE, CUBRID, DB2, H2, INGRES, SQLSERVER).contains(context.configuration().dialect().family());
     }
 
     private final void toSQLJoinCondition(RenderContext context) {
@@ -255,7 +261,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
 
             // [#582] Some dialects don't explicitly support a JOIN .. USING
             // syntax. This can be simulated with JOIN .. ON
-            if (asList(ASE, CUBRID, DB2, H2, SQLSERVER, SYBASE).contains(context.configuration().dialect().family())) {
+            if (asList(ACCESS, ASE, CUBRID, DB2, H2, SQLSERVER, SYBASE).contains(context.configuration().dialect().family())) {
                 boolean first = true;
                 for (Field<?> field : using) {
                     context.formatSeparator();

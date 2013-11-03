@@ -27,22 +27,22 @@ public class Tables {
 	public static final org.jooq.test.ingres.generatedclasses.tables.T_785 T_785 = org.jooq.test.ingres.generatedclasses.tables.T_785.T_785;
 
 	/**
-	 * An entity holding authors of books
+	 * The table test.t_author
 	 */
 	public static final org.jooq.test.ingres.generatedclasses.tables.TAuthor T_AUTHOR = org.jooq.test.ingres.generatedclasses.tables.TAuthor.T_AUTHOR;
 
 	/**
-	 * An entity holding books
+	 * The table test.t_book
 	 */
 	public static final org.jooq.test.ingres.generatedclasses.tables.TBook T_BOOK = org.jooq.test.ingres.generatedclasses.tables.TBook.T_BOOK;
 
 	/**
-	 * A book store
+	 * The table test.t_book_store
 	 */
 	public static final org.jooq.test.ingres.generatedclasses.tables.TBookStore T_BOOK_STORE = org.jooq.test.ingres.generatedclasses.tables.TBookStore.T_BOOK_STORE;
 
 	/**
-	 * An m:n relation between books and book stores
+	 * The table test.t_book_to_book_store
 	 */
 	public static final org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
 
@@ -122,7 +122,7 @@ public class Tables {
 	public static final org.jooq.test.ingres.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = org.jooq.test.ingres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85;
 
 	/**
-	 * An unused table in the same schema. Note: Ingres suddenly could not handle composite self-references anymore... CONSTRAINT fk_x_unused_self FOREIGN KEY(ID_REF, NAME_REF) REFERENCES X_UNUSED(ID, NAME)
+	 * The table test.x_unused
 	 */
 	public static final org.jooq.test.ingres.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.ingres.generatedclasses.tables.XUnused.X_UNUSED;
 }

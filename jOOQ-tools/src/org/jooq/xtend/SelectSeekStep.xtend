@@ -114,7 +114,19 @@ class SelectSeekStep extends Generators {
                 @Override
                 «generatedMethod»
                 public final SelectSeekLimitStep<R> seek(«Object_tn(degree)») {
-                    return seek(«val_tn(degree)»);
+                    return seek(new Object[] { «tn(degree)» });
+                }
+            
+                @Override
+                «generatedMethod»
+                public final SelectSeekLimitStep<R> seekBefore(«Object_tn(degree)») {
+                    return seekBefore(new Object[] { «tn(degree)» });
+                }
+            
+                @Override
+                «generatedMethod»
+                public final SelectSeekLimitStep<R> seekAfter(«Object_tn(degree)») {
+                    return seekAfter(new Object[] { «tn(degree)» });
                 }
             ''');
         }
@@ -125,8 +137,19 @@ class SelectSeekStep extends Generators {
                 @Override
                 «generatedMethod»
                 public final SelectSeekLimitStep<R> seek(«Field_tn(degree)») {
-                    getQuery().addSeek(«tn(degree)»);
-                    return this;
+                    return seek(new Field[] { «tn(degree)» });
+                }
+            
+                @Override
+                «generatedMethod»
+                public final SelectSeekLimitStep<R> seekBefore(«Field_tn(degree)») {
+                    return seekBefore(new Field[] { «tn(degree)» });
+                }
+            
+                @Override
+                «generatedMethod»
+                public final SelectSeekLimitStep<R> seekAfter(«Field_tn(degree)») {
+                    return seekAfter(new Field[] { «tn(degree)» });
                 }
             ''');
         }
@@ -228,18 +251,18 @@ class SelectSeekStep extends Generators {
             public interface SelectSeekStep«degree»<R extends Record, «TN(degree)»> extends SelectLimitStep<R> {
             
                 /**
-                 * Add a synthetic <code>SEEK</code> clause to the query.
+                 * Add a synthetic <code>SEEK AFTER</code> clause to the query.
                  * <p>
-                 * The synthetic <code>SEEK</code> clause is an alternative way to specify
+                 * The synthetic <code>SEEK AFTER</code> clause is an alternative way to specify
                  * an <code>OFFSET</code>, and thus to perform paging in a SQL query. This
                  * can be advantageous for two reasons:
                  * <p>
                  * <ol>
-                 * <li>The SQL generated from the <code>SEEK</code> clause is a regular
+                 * <li>The SQL generated from the <code>SEEK AFTER</code> clause is a regular
                  * predicate, which can be used by query plan optimisers to choose an
                  * appropriate index. The SQL standard <code>OFFSET</code> clause will need
                  * to skip <code>N</code> rows in memory.</li>
-                 * <li>The <code>SEEK</code> clause is stable with respect to new data being
+                 * <li>The <code>SEEK AFTER</code> clause is stable with respect to new data being
                  * inserted or data being deleted while paging through pages.</li>
                  * </ol>
                  * <p>
@@ -266,28 +289,31 @@ class SelectSeekStep extends Generators {
                  * WHERE (id > 3) OR (id = 3 AND code > 'abc')
                  * </pre></code>
                  * <p>
-                 * The <code>SEEK</code> method currently does not support seeking
+                 * The <code>SEEK AFTER</code> method currently does not support seeking
                  * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
                  * <code>NULLS LAST</code> clauses in the <code>ORDER BY</code> clause.
                  *
                  * @see <a
                  *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
+                 * @see <a
+                 *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
+                 * @see #seekAfter(«(1..degree).join(", ", [e | "Object"])»)
                  */
                 SelectSeekLimitStep<R> seek(«TN_tn(degree)»);
 
                 /**
-                 * Add a synthetic <code>SEEK</code> clause to the query.
+                 * Add a synthetic <code>SEEK AFTER</code> clause to the query.
                  * <p>
-                 * The synthetic <code>SEEK</code> clause is an alternative way to specify
+                 * The synthetic <code>SEEK AFTER</code> clause is an alternative way to specify
                  * an <code>OFFSET</code>, and thus to perform paging in a SQL query. This
                  * can be advantageous for two reasons:
                  * <p>
                  * <ol>
-                 * <li>The SQL generated from the <code>SEEK</code> clause is a regular
+                 * <li>The SQL generated from the <code>SEEK AFTER</code> clause is a regular
                  * predicate, which can be used by query plan optimisers to choose an
                  * appropriate index. The SQL standard <code>OFFSET</code> clause will need
                  * to skip <code>N</code> rows in memory.</li>
-                 * <li>The <code>SEEK</code> clause is stable with respect to new data being
+                 * <li>The <code>SEEK AFTER</code> clause is stable with respect to new data being
                  * inserted or data being deleted while paging through pages.</li>
                  * </ol>
                  * <p>
@@ -314,14 +340,217 @@ class SelectSeekStep extends Generators {
                  * WHERE (id > 3) OR (id = 3 AND code > 'abc')
                  * </pre></code>
                  * <p>
-                 * The <code>SEEK</code> method currently does not support seeking
+                 * The <code>SEEK AFTER</code> method currently does not support seeking
                  * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
                  * <code>NULLS LAST</code> clauses in the <code>ORDER BY</code> clause.
                  *
                  * @see <a
                  *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
+                 * @see <a
+                 *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
+                 * @see #seekAfter(«(1..degree).join(", ", [e | "Field"])»)
                  */
                 SelectSeekLimitStep<R> seek(«Field_TN_fieldn(degree)»);
+            
+                /**
+                 * Add a synthetic <code>SEEK AFTER</code> clause to the query.
+                 * <p>
+                 * The synthetic <code>SEEK AFTER</code> clause is an alternative way to specify
+                 * an <code>OFFSET</code>, and thus to perform paging in a SQL query. This
+                 * can be advantageous for two reasons:
+                 * <p>
+                 * <ol>
+                 * <li>The SQL generated from the <code>SEEK AFTER</code> clause is a regular
+                 * predicate, which can be used by query plan optimisers to choose an
+                 * appropriate index. The SQL standard <code>OFFSET</code> clause will need
+                 * to skip <code>N</code> rows in memory.</li>
+                 * <li>The <code>SEEK AFTER</code> clause is stable with respect to new data being
+                 * inserted or data being deleted while paging through pages.</li>
+                 * </ol>
+                 * <p>
+                 * Example: <code><pre>
+                 * DSL.using(configuration)
+                 *    .selectFrom(TABLE)
+                 *    .orderBy(ID, CODE)
+                 *    .seekAfter(3, "abc")
+                 *    .fetch();
+                 * </pre></code>
+                 * <p>
+                 * The above query will render the following SQL statement:
+                 * <p>
+                 * <code><pre>
+                 * SELECT * FROM table
+                 * WHERE (id, code) > (3, 'abc')
+                 * ORDER BY id ASC, code ASC
+                 * </pre></code>
+                 * <p>
+                 * The actual row value expression predicate may be expanded into this
+                 * equivalent predicate:
+                 * <p>
+                 * <code><pre>
+                 * WHERE (id > 3) OR (id = 3 AND code > 'abc')
+                 * </pre></code>
+                 * <p>
+                 * The <code>SEEK AFTER</code> method currently does not support seeking
+                 * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
+                 * <code>NULLS LAST</code> clauses in the <code>ORDER BY</code> clause.
+                 *
+                 * @see <a
+                 *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
+                 * @see <a
+                 *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
+                 */
+                SelectSeekLimitStep<R> seekAfter(«TN_tn(degree)»);
+
+                /**
+                 * Add a synthetic <code>SEEK AFTER</code> clause to the query.
+                 * <p>
+                 * The synthetic <code>SEEK AFTER</code> clause is an alternative way to specify
+                 * an <code>OFFSET</code>, and thus to perform paging in a SQL query. This
+                 * can be advantageous for two reasons:
+                 * <p>
+                 * <ol>
+                 * <li>The SQL generated from the <code>SEEK AFTER</code> clause is a regular
+                 * predicate, which can be used by query plan optimisers to choose an
+                 * appropriate index. The SQL standard <code>OFFSET</code> clause will need
+                 * to skip <code>N</code> rows in memory.</li>
+                 * <li>The <code>SEEK AFTER</code> clause is stable with respect to new data being
+                 * inserted or data being deleted while paging through pages.</li>
+                 * </ol>
+                 * <p>
+                 * Example: <code><pre>
+                 * DSL.using(configuration)
+                 *    .selectFrom(TABLE)
+                 *    .orderBy(ID, CODE)
+                 *    .seekAfter(3, "abc")
+                 *    .fetch();
+                 * </pre></code>
+                 * <p>
+                 * The above query will render the following SQL statement:
+                 * <p>
+                 * <code><pre>
+                 * SELECT * FROM table
+                 * WHERE (id, code) > (3, 'abc')
+                 * ORDER BY id ASC, code ASC
+                 * </pre></code>
+                 * <p>
+                 * The actual row value expression predicate may be expanded into this
+                 * equivalent predicate:
+                 * <p>
+                 * <code><pre>
+                 * WHERE (id > 3) OR (id = 3 AND code > 'abc')
+                 * </pre></code>
+                 * <p>
+                 * The <code>SEEK AFTER</code> method currently does not support seeking
+                 * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
+                 * <code>NULLS LAST</code> clauses in the <code>ORDER BY</code> clause.
+                 *
+                 * @see <a
+                 *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
+                 * @see <a
+                 *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
+                 */
+                SelectSeekLimitStep<R> seekAfter(«Field_TN_fieldn(degree)»);
+            
+                /**
+                 * Add a synthetic <code>SEEK BEFORE</code> clause to the query.
+                 * <p>
+                 * The synthetic <code>SEEK BEFORE</code> clause is an alternative way to specify
+                 * an <code>OFFSET</code>, and thus to perform paging in a SQL query. This
+                 * can be advantageous for two reasons:
+                 * <p>
+                 * <ol>
+                 * <li>The SQL generated from the <code>SEEK BEFORE</code> clause is a regular
+                 * predicate, which can be used by query plan optimisers to choose an
+                 * appropriate index. The SQL standard <code>OFFSET</code> clause will need
+                 * to skip <code>N</code> rows in memory.</li>
+                 * <li>The <code>SEEK BEFORE</code> clause is stable with respect to new data being
+                 * inserted or data being deleted while paging through pages.</li>
+                 * </ol>
+                 * <p>
+                 * Example: <code><pre>
+                 * DSL.using(configuration)
+                 *    .selectFrom(TABLE)
+                 *    .orderBy(ID, CODE)
+                 *    .seekBefore(3, "abc")
+                 *    .fetch();
+                 * </pre></code>
+                 * <p>
+                 * The above query will render the following SQL statement:
+                 * <p>
+                 * <code><pre>
+                 * SELECT * FROM table
+                 * WHERE (id, code) < (3, 'abc')
+                 * ORDER BY id ASC, code ASC
+                 * </pre></code>
+                 * <p>
+                 * The actual row value expression predicate may be expanded into this
+                 * equivalent predicate:
+                 * <p>
+                 * <code><pre>
+                 * WHERE (id < 3) OR (id = 3 AND code < 'abc')
+                 * </pre></code>
+                 * <p>
+                 * The <code>SEEK BEFORE</code> method currently does not support seeking
+                 * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
+                 * <code>NULLS LAST</code> clauses in the <code>ORDER BY</code> clause.
+                 *
+                 * @see <a
+                 *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
+                 * @see <a
+                 *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
+                 */
+                SelectSeekLimitStep<R> seekBefore(«TN_tn(degree)»);
+
+                /**
+                 * Add a synthetic <code>SEEK BEFORE</code> clause to the query.
+                 * <p>
+                 * The synthetic <code>SEEK BEFORE</code> clause is an alternative way to specify
+                 * an <code>OFFSET</code>, and thus to perform paging in a SQL query. This
+                 * can be advantageous for two reasons:
+                 * <p>
+                 * <ol>
+                 * <li>The SQL generated from the <code>SEEK BEFORE</code> clause is a regular
+                 * predicate, which can be used by query plan optimisers to choose an
+                 * appropriate index. The SQL standard <code>OFFSET</code> clause will need
+                 * to skip <code>N</code> rows in memory.</li>
+                 * <li>The <code>SEEK BEFORE</code> clause is stable with respect to new data being
+                 * inserted or data being deleted while paging through pages.</li>
+                 * </ol>
+                 * <p>
+                 * Example: <code><pre>
+                 * DSL.using(configuration)
+                 *    .selectFrom(TABLE)
+                 *    .orderBy(ID, CODE)
+                 *    .seekBefore(3, "abc")
+                 *    .fetch();
+                 * </pre></code>
+                 * <p>
+                 * The above query will render the following SQL statement:
+                 * <p>
+                 * <code><pre>
+                 * SELECT * FROM table
+                 * WHERE (id, code) < (3, 'abc')
+                 * ORDER BY id ASC, code ASC
+                 * </pre></code>
+                 * <p>
+                 * The actual row value expression predicate may be expanded into this
+                 * equivalent predicate:
+                 * <p>
+                 * <code><pre>
+                 * WHERE (id < 3) OR (id = 3 AND code < 'abc')
+                 * </pre></code>
+                 * <p>
+                 * The <code>SEEK BEFORE</code> method currently does not support seeking
+                 * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
+                 * <code>NULLS LAST</code> clauses in the <code>ORDER BY</code> clause.
+                 *
+                 * @see <a
+                 *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
+                 * @see <a
+                 *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
+                 */
+                SelectSeekLimitStep<R> seekBefore(«Field_TN_fieldn(degree)»);
             }
             ''');
              

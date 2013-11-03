@@ -45,10 +45,14 @@ import java.util.List;
 
 import org.jooq.BindContext;
 import org.jooq.CaseWhenStep;
+import org.jooq.Clause;
+import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 
-class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V, T> {
+class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep<V, T> {
 
     /**
      * Generated UID
@@ -106,98 +110,175 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
     }
 
     @Override
-    public final void bind(BindContext ctx) {
-        switch (ctx.configuration().dialect()) {
+    final QueryPart getFunction0(Configuration configuration) {
+        switch (configuration.dialect().family()) {
+            /* [pro] */
+            case ACCESS:
+                return new Switch();
 
-            // The DERBY dialect doesn't support the simple CASE clause
-            case DERBY: {
-                for (int i = 0; i < compareValues.size(); i++) {
-                    ctx.visit(value);
-                    ctx.visit(compareValues.get(i));
-                    ctx.visit(results.get(i));
-                }
-
-                break;
-            }
-
-            default: {
-                ctx.visit(value);
-
-                for (int i = 0; i < compareValues.size(); i++) {
-                    ctx.visit(compareValues.get(i));
-                    ctx.visit(results.get(i));
-                }
-
-                break;
-            }
-        }
-
-        if (otherwise != null) {
-            ctx.visit(otherwise);
+            /* [/pro] */
+            default:
+                return new Native();
         }
     }
 
-    @Override
-    public final void toSQL(RenderContext ctx) {
-        ctx.formatIndentLockStart()
-           .keyword("case");
+    private abstract class Base extends AbstractQueryPart {
 
-        int size = compareValues.size();
-        switch (ctx.configuration().dialect()) {
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 6146002888421945901L;
 
-            // The DERBY dialect doesn't support the simple CASE clause
-            case DERBY: {
-                ctx.formatIndentLockStart();
+        @Override
+        public final void bind(BindContext ctx) {
+            switch (ctx.configuration().dialect()) {
 
-                for (int i = 0; i < size; i++) {
-                    if (i > 0) {
-                        ctx.formatNewLine();
+                /* [pro] */
+                // The ACCESS dialect only knows the Switch function
+                case ACCESS:
+                /* [/pro] */
+
+                // The DERBY dialect doesn't support the simple CASE clause
+                case DERBY: {
+                    for (int i = 0; i < compareValues.size(); i++) {
+                        ctx.visit(value);
+                        ctx.visit(compareValues.get(i));
+                        ctx.visit(results.get(i));
                     }
 
-                    ctx.sql(" ").keyword("when").sql(" ");
-                    ctx.visit(value.equal(compareValues.get(i)));
-                    ctx.sql(" ").keyword("then").sql(" ");
-                    ctx.visit(results.get(i));
+                    break;
                 }
 
-                break;
+                default: {
+                    ctx.visit(value);
+
+                    for (int i = 0; i < compareValues.size(); i++) {
+                        ctx.visit(compareValues.get(i));
+                        ctx.visit(results.get(i));
+                    }
+
+                    break;
+                }
             }
 
-            default: {
-                ctx.sql(" ")
-                   .visit(value)
-                   .formatIndentLockStart();
-
-                for (int i = 0; i < size; i++) {
-                    if (i > 0) {
-                        ctx.formatNewLine();
-                    }
-
-                    ctx.sql(" ").keyword("when").sql(" ");
-                    ctx.visit(compareValues.get(i));
-                    ctx.sql(" ").keyword("then").sql(" ");
-                    ctx.visit(results.get(i));
-                }
-
-                break;
+            if (otherwise != null) {
+                ctx.visit(otherwise);
             }
         }
 
-        if (otherwise != null) {
-            ctx.formatNewLine()
-               .sql(" ").keyword("else").sql(" ").visit(otherwise);
+        @Override
+        public final Clause[] clauses(Context<?> ctx) {
+            return null;
         }
+    }
 
-        ctx.formatIndentLockEnd();
+    /* [pro] */
+    private class Switch extends Base {
 
-        if (size > 1 || otherwise != null) {
-            ctx.formatSeparator();
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = -2421654117534179787L;
+
+        @Override
+        public final void toSQL(RenderContext ctx) {
+            ctx.keyword("switch")
+               .sql("(");
+
+            for (int i = 0; i < compareValues.size(); i++) {
+                if (i > 0) {
+                    ctx.sql(", ");
+                }
+
+                ctx.visit(value)
+                   .sql(" = ")
+                   .visit(compareValues.get(i))
+                   .sql(", ")
+                   .visit(results.get(i));
+            }
+
+            if (otherwise != null) {
+                ctx.sql(", ")
+                   .keyword("true")
+                   .sql(", ")
+                   .visit(otherwise);
+            }
+
+            ctx.sql(")");
         }
-        else {
-            ctx.sql(" ");
-        }
+    }
 
-        ctx.keyword("end")
-           .formatIndentLockEnd();
+    /* [/pro] */
+
+    private class Native extends Base {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 7564667836130498156L;
+
+        @Override
+        public final void toSQL(RenderContext ctx) {
+            ctx.formatIndentLockStart()
+               .keyword("case");
+
+            int size = compareValues.size();
+            switch (ctx.configuration().dialect()) {
+
+                // The DERBY dialect doesn't support the simple CASE clause
+                case DERBY: {
+                    ctx.formatIndentLockStart();
+
+                    for (int i = 0; i < size; i++) {
+                        if (i > 0) {
+                            ctx.formatNewLine();
+                        }
+
+                        ctx.sql(" ").keyword("when").sql(" ");
+                        ctx.visit(value.equal(compareValues.get(i)));
+                        ctx.sql(" ").keyword("then").sql(" ");
+                        ctx.visit(results.get(i));
+                    }
+
+                    break;
+                }
+
+                default: {
+                    ctx.sql(" ")
+                       .visit(value)
+                       .formatIndentLockStart();
+
+                    for (int i = 0; i < size; i++) {
+                        if (i > 0) {
+                            ctx.formatNewLine();
+                        }
+
+                        ctx.sql(" ").keyword("when").sql(" ");
+                        ctx.visit(compareValues.get(i));
+                        ctx.sql(" ").keyword("then").sql(" ");
+                        ctx.visit(results.get(i));
+                    }
+
+                    break;
+                }
+            }
+
+            if (otherwise != null) {
+                ctx.formatNewLine()
+                   .sql(" ").keyword("else").sql(" ").visit(otherwise);
+            }
+
+            ctx.formatIndentLockEnd();
+
+            if (size > 1 || otherwise != null) {
+                ctx.formatSeparator();
+            }
+            else {
+                ctx.sql(" ");
+            }
+
+            ctx.keyword("end")
+               .formatIndentLockEnd();
+        }
     }
 }

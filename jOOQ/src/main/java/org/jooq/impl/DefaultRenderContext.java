@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
@@ -152,7 +153,11 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         // purchasing a license from http://www.jooq.org/download
 
         if (part instanceof Select) {
-            if (configuration().dialect().family() == INGRES) {
+
+            // It seems as though MS Access cannot handle any SQL comments
+            if (ACCESS == configuration().dialect().family()) {
+            }
+            else if (asList(ACCESS, INGRES).contains(configuration().dialect().family())) {
                 local.sql(" /* SQL rendered with a free trial version of jOOQ " + Constants.FULL_VERSION + " */");
             }
             else {
@@ -356,6 +361,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
                 /* [pro] */
                 // T-SQL databases use brackets
+                case ACCESS:
                 case ASE:
                 case SQLSERVER:
                 case SYBASE:

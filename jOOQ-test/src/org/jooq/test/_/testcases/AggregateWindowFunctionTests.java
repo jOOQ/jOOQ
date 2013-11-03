@@ -44,6 +44,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.nCopies;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -177,7 +178,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case SQLSERVER:
             /* [/pro] */
 
-            case CUBRID:
             case DERBY:
             case FIREBIRD:
             case H2:
@@ -314,8 +314,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(4, create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetchCount());
 
         assertEquals(3, create().fetchCount(selectDistinct(TBook_ID(), TBook_TITLE()).from(TBook()).where(TBook_ID().in(1, 2, 3))));
-        assertEquals(2, create().fetchCount(selectFrom(TBook()).limit(2)));
-        assertEquals(2, create().fetchCount(selectFrom(TBook()).limit(2).offset(1)));
+
+        // Ingres doesn't allow for LIMIT .. OFFSET in nested selects or derived tables.
+        if (!asList(INGRES).contains(dialect().family())) {
+            assertEquals(2, create().fetchCount(selectFrom(TBook()).limit(2)));
+            assertEquals(2, create().fetchCount(selectFrom(TBook()).limit(2).offset(1)));
+        }
+
         assertEquals(2, create().fetchCount(
             select(TBook_TITLE()).from(TBook()).where(TBook_ID().eq(1))
             .union(
@@ -325,9 +330,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testCountDistinct() throws Exception {
 
+        /* [pro] */
+        if (dialect().family() == ACCESS) {
+            log.info("SKIPPING", "COUNT(DISTINCT ...) tests");
+            return;
+        }
+        /* [/pro] */
+
+        assertEquals(2, create()
+            .select(countDistinct(TBook_AUTHOR_ID()))
+            .from(TBook())
+            .fetchOne(0));
+
         // [#1728] COUNT(DISTINCT expr1, expr2, ...)
         // -----------------------------------------
-        if (asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE).contains(dialect().family())) {
+        if (asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE).contains(dialect().family())) {
             log.info("SKIPPING", "Multi-expression COUNT(DISTINCT) test");
         }
         else {
@@ -410,6 +427,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testWindowFunctions() throws Exception {
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
@@ -550,7 +568,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             /* [pro] */
             case DB2:
             /* [/pro] */
-            case CUBRID:
                 log.info("SKIPPING", "PERCENT_RANK() and CUME_DIST() window function tests");
                 break;
 
@@ -1008,10 +1025,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testWindowClause() throws Exception {
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
             case FIREBIRD:
+            case H2:
             case HSQLDB:
             case MARIADB:
             case MYSQL:

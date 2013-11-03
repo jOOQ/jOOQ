@@ -43,6 +43,7 @@ package org.jooq.test._.testcases;
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -175,6 +176,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testOrderByWithDual() throws Exception {
+        assertEquals(1, (int) create().selectOne().orderBy(1).fetchOne(0, int.class));
+    }
+
+    @Test
     public void testOrderByIndexes() throws Exception {
         assertEquals(Arrays.asList(1, 2, 3, 4),
             create().selectFrom(TBook())
@@ -257,6 +263,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals(asList(2, 4), result1);
 
+        /* [pro] */
+        // [#2812] TODO: Implement this also for MS Access and Sybase ASE
+        if (asList(ACCESS, ASE).contains(dialect().family())) {
+            log.info("SKIPPING", "OFFSET tests");
+            return;
+        }
+        /* [/pro] */
+
         // [#1954] LIMIT .. OFFSET is more trouble than LIMIT, as it is
         // simulated using ROW_NUMBER() in DB2, SQL Server
         List<Integer> result2 =
@@ -295,7 +309,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().select(TBook_ID())
                     .from(TBook())
                     .orderBy(TBook_ID().desc())
-                    .seek(3)
+                    .seekAfter(3)
+                    .fetch(TBook_ID()));
+
+        assertEquals(
+            asList(1, 2),
+            create().select(TBook_ID())
+                    .from(TBook())
+                    .orderBy(TBook_ID().asc())
+                    .seekBefore(3)
                     .fetch(TBook_ID()));
 
         // Single ORDER BY column, with LIMIT
@@ -305,7 +327,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().select(TBook_ID())
                     .from(TBook())
                     .orderBy(TBook_ID())
-                    .seek(2)
+                    .seekAfter(2)
                     .limit(1)
                     .fetch(TBook_ID()));
 
@@ -314,7 +336,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().select(TBook_ID())
                     .from(TBook())
                     .orderBy(TBook_ID())
-                    .seek(1)
+                    .seekAfter(1)
                     .limit(2)
                     .fetch(TBook_ID()));
 
@@ -323,7 +345,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().select(TBook_ID())
                     .from(TBook())
                     .orderBy(TBook_ID().desc())
-                    .seek(3)
+                    .seekAfter(3)
+                    .limit(4)
+                    .fetch(TBook_ID()));
+
+        assertEquals(
+            asList(1, 2),
+            create().select(TBook_ID())
+                    .from(TBook())
+                    .orderBy(TBook_ID().asc())
+                    .seekBefore(3)
                     .limit(4)
                     .fetch(TBook_ID()));
 
@@ -389,7 +420,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         /* [pro] */
-        if (dialect() == SQLDialect.ASE) {
+        // [#2812] TODO: Implement this also for MS Access and Sybase ASE
+        if (asList(ACCESS, ASE).contains(dialect().family())) {
             log.info("SKIPPING", "LIMIT .. OFFSET tests");
             return;
         }

@@ -9,31 +9,31 @@ package org.jooq.test.access.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.access.generatedclasses.tables.records.TIdentityPkRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1104657257;
+	private static final long serialVersionUID = -39381583;
 
 	/**
-	 * Setter for <code>T_IDENTITY_PK.ID</code>. 
+	 * Setter for <code>t_identity_pk.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>T_IDENTITY_PK.ID</code>. 
+	 * Getter for <code>t_identity_pk.id</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>T_IDENTITY_PK.VAL</code>. 
+	 * Setter for <code>t_identity_pk.val</code>. 
 	 */
 	public void setVal(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>T_IDENTITY_PK.VAL</code>. 
+	 * Getter for <code>t_identity_pk.val</code>. 
 	 */
 	public java.lang.Integer getVal() {
 		return (java.lang.Integer) getValue(1);
@@ -76,7 +76,7 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.access.generatedclasses.tables.TIdentityPk.ID;
+		return org.jooq.test.access.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID;
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.jooq.test.access.generatedclasses.tables.TIdentityPk.VAL;
+		return org.jooq.test.access.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.VAL;
 	}
 
 	/**
@@ -112,5 +112,15 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 */
 	public TIdentityPkRecord() {
 		super(org.jooq.test.access.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
+	}
+
+	/**
+	 * Create a detached, initialised TIdentityPkRecord
+	 */
+	public TIdentityPkRecord(java.lang.Integer id, java.lang.Integer val) {
+		super(org.jooq.test.access.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
+
+		setValue(0, id);
+		setValue(1, val);
 	}
 }

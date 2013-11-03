@@ -395,6 +395,11 @@ public abstract class jOOQAbstractTest<
                     continue;
                 }
 
+                // Ucanaccess has missing table exceptions
+                else if (e.getMessage().contains("missing table")) {
+                    continue;
+                }
+
                 /* [/pro] */
                 // There is no IF EXISTS clause in CUBRID's DROP VIEW statement
                 else if (getDialect() == CUBRID && sql.trim().startsWith("DROP")) {
@@ -528,6 +533,17 @@ public abstract class jOOQAbstractTest<
 
     @SuppressWarnings("unused")
     public final Connection getConnection() {
+        try {
+            if (connectionInitialised && connection != null && connection.isClosed()) {
+                log.info("CONNECTION CLOSED", "Reconnecting...");
+
+                connectionInitialised = false;
+                connection = null;
+            }
+        }
+        catch (SQLException e) {
+        }
+
         if (!connectionInitialised) {
             connectionInitialised = true;
             connection = getConnection0(null, null);
@@ -1811,6 +1827,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testOrderByWithDual() throws Exception {
+        new OrderByTests(this).testOrderByWithDual();
+    }
+
+    @Test
     public void testOrderByNulls() throws Exception {
         new OrderByTests(this).testOrderByNulls();
     }
@@ -2048,6 +2069,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testFunctionsOnStrings_REPEAT() throws Exception {
         new FunctionTests(this).testFunctionsOnStrings_REPEAT();
+    }
+
+    @Test
+    public void testFunctionsOnStrings_REVERSE() throws Exception {
+        new FunctionTests(this).testFunctionsOnStrings_REVERSE();
     }
 
     @Test

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd">
     <jdbc>
-        <driver>net.ucanaccess.jdbc.UcanaccessDriver</driver>
-        <url>jdbc:ucanaccess:///C:/Users/Lukas/workspace/jOOQ/jOOQ-test/access/test.mdb;Newdatabaseversion=V2010</url>
-        <user>admin</user>
+        <driver>sun.jdbc.odbc.JdbcOdbcDriver</driver>
+        <url>jdbc:odbc:TEST</url>
+        <user></user>
         <password></password>
     </jdbc>
     <generator>
@@ -47,6 +47,47 @@
             </customTypes>
 
             <forcedTypes>
+            
+                <!-- Make up for missing data types -->
+                <forcedType>
+                    <name>DATE</name>
+                    <expressions>(?i:(.*?.)?T_AUTHOR.DATE_OF_BIRTH)</expressions>
+                </forcedType>
+                <forcedType>
+                    <name>DATE</name>
+                    <expressions>(?i:(.*?.)?T_DATES.D)</expressions>
+                </forcedType>
+                <forcedType>
+                    <name>TIME</name>
+                    <expressions>(?i:(.*?.)?T_DATES.T)</expressions>
+                </forcedType>
+                <forcedType>
+                    <name>SIGNED TINYINT</name>
+                    <expressions>(?i:(.*?.)?T_639_NUMBERS_TABLE.BYTE(_DECIMAL)?)</expressions>
+                </forcedType>
+                <forcedType>
+                    <name>SMALLINT</name>
+                    <expressions>(?i:(.*?.)?T_639_NUMBERS_TABLE.SHORT_DECIMAL)</expressions>
+                </forcedType>
+                <forcedType>
+                    <name>INTEGER</name>
+                    <expressions>(?i:(.*?.)?T_639_NUMBERS_TABLE.INTEGER_DECIMAL)</expressions>
+                </forcedType>
+                <forcedType>
+                    <name>BIGINT</name>
+                    <expressions>(?i:(.*?.)?T_639_NUMBERS_TABLE.LONG(_DECIMAL)?)</expressions>
+                </forcedType>
+                <forcedType>
+                    <name>DECIMAL</name>
+                    <expressions>(?i:(.*?.)?T_639_NUMBERS_TABLE.BIG_DECIMAL)</expressions>
+                </forcedType>
+                <forcedType>
+                    <name>DECIMAL INTEGER</name>
+                    <expressions>(?i:(.*?.)?T_639_NUMBERS_TABLE.BIG_INTEGER)</expressions>
+                </forcedType>
+
+
+                
                 <forcedType>
                     <name>BIT</name>
                     <expressions>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expressions>
@@ -107,7 +148,6 @@
         <generate>
             <navigationMethods>true</navigationMethods>
             <deprecated>true</deprecated>
-            <instanceFields>false</instanceFields>
             <generatedAnnotation>false</generatedAnnotation>
             <records>true</records>
             <pojos>false</pojos>

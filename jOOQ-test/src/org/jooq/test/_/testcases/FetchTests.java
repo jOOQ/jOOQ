@@ -480,6 +480,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
@@ -660,6 +661,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
@@ -748,6 +750,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
@@ -792,6 +795,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
@@ -859,6 +863,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
@@ -957,6 +962,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
@@ -1022,6 +1028,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
@@ -1124,6 +1131,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
@@ -1317,6 +1325,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             /* [/pro] */
@@ -1567,16 +1576,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testFetchResultSetValue() throws Exception {
-        assertEquals(1, create().fetchValue(
-            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID() + " = 1").resultSet()));
+        assertEquals("1", "" + create().fetchValue(
+            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID().getName() + " = 1").resultSet()));
         assertEquals("1", create().fetchValue(
-            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID() + " = 1").resultSet(),
+            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID().getName() + " = 1").resultSet(),
             String.class));
         assertEquals("1", create().fetchValue(
-            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID() + " = 1").resultSet(),
+            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID().getName() + " = 1").resultSet(),
             SQLDataType.VARCHAR));
         assertEquals("1", create().fetchValue(
-            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID() + " = 1").resultSet(),
+            create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID().getName() + " = 1").resultSet(),
             TBook_TITLE()));
     }
 
@@ -1638,7 +1647,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // ---------------------------------------------------------------------
             // A regular pass through the cursor
             // ---------------------------------------------------------------------
-            Cursor<B> cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLazy(fetchSize);
+            Cursor<B> cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchSize(fetchSize).fetchLazy();
 
             assertTrue(cursor.hasNext());
             assertTrue(cursor.hasNext());
@@ -1680,7 +1689,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // ---------------------------------------------------------------------
             // Prematurely closing the cursor
             // ---------------------------------------------------------------------
-            cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLazy(fetchSize);
+            cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchSize(fetchSize).fetchLazy();
 
             assertTrue(cursor.hasNext());
             assertTrue(cursor.hasNext());
@@ -1696,7 +1705,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // ---------------------------------------------------------------------
             // Fetching several records at once
             // ---------------------------------------------------------------------
-            cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLazy(fetchSize);
+            cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchSize(fetchSize).fetchLazy();
             Result<B> fetch0 = cursor.fetch(0);
 
             assertTrue(fetch0.isEmpty());

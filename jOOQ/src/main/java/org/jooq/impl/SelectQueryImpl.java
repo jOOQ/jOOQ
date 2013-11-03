@@ -53,6 +53,8 @@ import static org.jooq.Clause.SELECT_START_WITH;
 import static org.jooq.Clause.SELECT_WHERE;
 import static org.jooq.Clause.SELECT_WINDOW;
 import static org.jooq.Operator.OR;
+import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.ACCESS2013;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
@@ -76,6 +78,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
+import static org.jooq.impl.Dual.DUAL_ACCESS;
 import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import static org.jooq.impl.Utils.DATA_WINDOW_DEFINITIONS;
@@ -151,6 +154,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     private final SortFieldList             orderBy;
     private boolean                         orderBySiblings;
     private final QueryPartList<Field<?>>   seek;
+    private boolean                         seekBefore;
     private final Limit                     limit;
 
     SelectQueryImpl(Configuration configuration) {
@@ -272,6 +276,8 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
                 // Sybase ASE and SQL Server support a TOP clause without OFFSET
                 // OFFSET can be simulated in SQL Server, not in ASE
+                case ACCESS:
+                case ACCESS2013:
                 case ASE:
                 case SQLSERVER2008: {
 
@@ -545,11 +551,12 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         /* [pro] */
         // Sybase and SQL Server have leading TOP clauses
         switch (dialect.family()) {
+            case ACCESS:
             case ASE:
             case SQLSERVER: {
 
                 // If we have a TOP clause, it needs to be rendered here
-                if (asList(ASE, SQLSERVER2008).contains(dialect)
+                if (asList(ACCESS, ACCESS2013, ASE, SQLSERVER2008).contains(dialect)
                         && getLimit().isApplicable()
                         && getLimit().offsetZero()
                         && !getLimit().rendersParams()) {
@@ -646,11 +653,18 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                    .sql(" ")
                    .visit(getFrom());
 
+            /* [pro] */
             // [#1681] Sybase ASE and Ingres need a cross-joined dummy table
             // To be able to GROUP BY () empty sets
-            if (grouping && getGroupBy().isEmpty() && asList(ASE, INGRES).contains(dialect)) {
-                context.sql(", (select 1 as x) as empty_grouping_dummy_table");
+            if (grouping && getGroupBy().isEmpty()) {
+                if (asList(ASE, INGRES).contains(dialect)) {
+                    context.sql(", (select 1 as x) as empty_grouping_dummy_table");
+                }
+                else if (asList(ACCESS).contains(dialect)) {
+                    context.sql(", (").sql(DUAL_ACCESS).sql(") as empty_grouping_dummy_table");
+                }
             }
+            /* [/pro] */
         }
 
         context.declareTables(false)
@@ -713,7 +727,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             if (getGroupBy().isEmpty()) {
 
                 // [#1681] Use the constant field from the dummy table Sybase ASE, Ingres
-                if (asList(ASE, INGRES).contains(dialect)) {
+                if (asList(ACCESS, ASE, INGRES).contains(dialect)) {
                     context.sql("empty_grouping_dummy_table.x");
                 }
 
@@ -998,7 +1012,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             // predicates can be applied, which can be heavily optimised on some
             // databases.
             if (o.size() > 1 && o.uniform()) {
-                if (o.get(0).getOrder() == ASC) {
+                if (o.get(0).getOrder() == ASC ^ seekBefore) {
                     c = row(o.fields()).gt(row(getSeek()));
                 }
                 else {
@@ -1016,15 +1030,15 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
                     for (int j = 0; j < i; j++) {
                         SortFieldImpl<?> s = (SortFieldImpl<?>) o.get(j);
-                        and.addConditions(((Field) s.getField()).eq(seek.get(j)));
+                        and.addConditions(((Field) s.getField()).eq(getSeek().get(j)));
                     }
 
                     SortFieldImpl<?> s = (SortFieldImpl<?>) o.get(i);
-                    if (s.getOrder() == ASC) {
-                        and.addConditions(((Field) s.getField()).gt(seek.get(i)));
+                    if (s.getOrder() == ASC ^ seekBefore) {
+                        and.addConditions(((Field) s.getField()).gt(getSeek().get(i)));
                     }
                     else {
-                        and.addConditions(((Field) s.getField()).lt(seek.get(i)));
+                        and.addConditions(((Field) s.getField()).lt(getSeek().get(i)));
                     }
 
                     or.addConditions(OR, and);
@@ -1105,12 +1119,24 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     }
 
     @Override
-    public final void addSeek(Field<?>... fields) {
-        addSeek(Arrays.asList(fields));
+    public final void addSeekAfter(Field<?>... fields) {
+        addSeekAfter(Arrays.asList(fields));
     }
 
     @Override
-    public final void addSeek(Collection<? extends Field<?>> fields) {
+    public final void addSeekAfter(Collection<? extends Field<?>> fields) {
+        seekBefore = false;
+        getSeek().addAll(fields);
+    }
+
+    @Override
+    public final void addSeekBefore(Field<?>... fields) {
+        addSeekBefore(Arrays.asList(fields));
+    }
+
+    @Override
+    public final void addSeekBefore(Collection<? extends Field<?>> fields) {
+        seekBefore = true;
         getSeek().addAll(fields);
     }
 

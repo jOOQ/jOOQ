@@ -84,6 +84,7 @@ class Concat extends AbstractFunction<String> {
                 return function("concat", SQLDataType.VARCHAR, cast);
 
             /* [pro] */
+            case ACCESS:
             case SQLSERVER:
                 return new Expression<String>(ADD, first, others);
 

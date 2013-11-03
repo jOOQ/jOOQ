@@ -1,3 +1,7 @@
+DROP TABLE v_library/
+DROP TABLE v_author/
+DROP TABLE v_book/
+
 DROP TABLE t_dates/
 DROP TABLE t_triggers/
 DROP TABLE t_book_to_book_store/
@@ -30,24 +34,26 @@ DROP TABLE t_identity/
 DROP TABLE t_identity_pk/
 
 CREATE TABLE t_identity_pk (
-  id int IDENTITY NOT NULL,
-  val int
+  id AUTOINCREMENT NOT NULL,
+  val int,
+
+  CONSTRAINT pk_t_identity_pk PRIMARY KEY (id)
 )
 /
 
 CREATE TABLE t_identity (
-  id int IDENTITY NOT NULL,
+  id AUTOINCREMENT NOT NULL,
   val int
 )
 /
 
 CREATE TABLE t_dates (
   id int,
-  d date null,
-  t time null,
-  ts datetime null,
-  d_int int null,
-  ts_bigint bigint null,
+  d date,
+  t time,
+  ts datetime,
+  d_int int,
+  ts_bigint numeric,
 
   CONSTRAINT pk_t_dates PRIMARY KEY (id)
 )
@@ -55,16 +61,16 @@ CREATE TABLE t_dates (
 
 CREATE TABLE t_booleans (
   id int,
-  one_zero int null,
-  true_false_lc varchar(5) null,
-  true_false_uc varchar(5) null,
-  yes_no_lc varchar(3) null,
-  yes_no_uc varchar(3) null,
-  y_n_lc char(1) null,
-  y_n_uc char(1) null,
-  vc_boolean varchar(1) null,
-  c_boolean char(1) null,
-  n_boolean int null,
+  one_zero int,
+  true_false_lc varchar(5),
+  true_false_uc varchar(5),
+  yes_no_lc varchar(3),
+  yes_no_uc varchar(3),
+  y_n_lc char(1),
+  y_n_uc char(1),
+  vc_boolean varchar(1),
+  c_boolean char(1),
+  n_boolean int,
 
   CONSTRAINT pk_t_booleans PRIMARY KEY (id)
 )
@@ -73,22 +79,24 @@ CREATE TABLE t_booleans (
 CREATE TABLE t_unsigned (
   u_byte smallint,
   u_short int,
-  u_int bigint,
-  u_long decimal(20)
+  u_int numeric,
+  u_long text
 )
 /
 
 CREATE TABLE t_triggers (
-  id_generated int IDENTITY not null,
-  id int null,
-  counter int null
+  id_generated AUTOINCREMENT not null,
+  id int,
+  [counter] int,
+
+  CONSTRAINT pk_t_triggers PRIMARY KEY (id_generated)
 )
 /
 
 CREATE TABLE t_language (
   cd CHAR(2) NOT NULL,
-  descr VARCHAR(50) NULL,
-  description_english VARCHAR(50) NULL,
+  descr VARCHAR(50),
+  description_english VARCHAR(50),
   id int NOT NULL,
 
   CONSTRAINT pk_t_language PRIMARY KEY (id)
@@ -97,26 +105,26 @@ CREATE TABLE t_language (
 
 CREATE TABLE t_725_lob_test (
   id int NOT NULL,
-  lob VARBINARY(500) NULL,
+  lob VARBINARY(500),
 
   CONSTRAINT pk_t_725_lob_test PRIMARY KEY (id)
 )
 /
 
 CREATE TABLE t_785 (
-  ID int NULL,
-  NAME varchar(50) NULL,
-  VALUE varchar(50) NULL
+  ID int,
+  NAME varchar(50),
+  [VALUE] varchar(50)
 )
 /
 
 CREATE TABLE t_author (
   id INT NOT NULL,
-  first_name VARCHAR(50) NULL,
+  first_name VARCHAR(50),
   last_name VARCHAR(50) NOT NULL,
-  date_of_birth DATE NULL,
-  year_of_birth INT NULL,
-  address VARCHAR(200) NULL,
+  date_of_birth DATE,
+  year_of_birth INT,
+  address VARCHAR(200),
 
   CONSTRAINT pk_t_author PRIMARY KEY (id)
 )
@@ -132,13 +140,13 @@ CREATE TABLE t_book_details (
 CREATE TABLE t_book (
   id INT NOT NULL,
   author_id INT NOT NULL,
-  co_author_id INT NULL,
-  details_id INT NULL,
-  title VARCHAR(400) NOT NULL,
+  co_author_id INT,
+  details_id INT,
+  title VARCHAR(200) NOT NULL,
   published_in INT NOT NULL,
   language_id INT NOT NULL,
-  content_text CLOB NULL,
-  content_pdf BINARY(400) NULL,
+  content_text TEXT,
+  content_pdf BINARY,
 
   CONSTRAINT pk_t_book PRIMARY KEY (id),
   CONSTRAINT fk_t_book_author_id FOREIGN KEY (author_id) REFERENCES t_author(id),
@@ -149,21 +157,44 @@ CREATE TABLE t_book (
 /
 
 CREATE TABLE t_book_store (
-  name VARCHAR(400) NOT NULL,
+  name VARCHAR(200) NOT NULL,
 
   CONSTRAINT uk_t_book_store_name PRIMARY KEY(name)
 )
 /
 
 CREATE TABLE t_book_to_book_store (
-  book_store_name VARCHAR(400) NOT NULL,
+  book_store_name VARCHAR(200) NOT NULL,
   book_id int NOT NULL,
   stock int,
 
+  CONSTRAINT pk_b2bs PRIMARY KEY(book_store_name, book_id),
   CONSTRAINT fk_b2bs_bs_name FOREIGN KEY (book_store_name)
                              REFERENCES t_book_store (name),
   CONSTRAINT fk_b2bs_b_id    FOREIGN KEY (book_id)
                              REFERENCES t_book (id)
+)
+/
+
+CREATE TABLE x_unused (
+  id int NOT NULL,
+  [NAME] VARCHAR(10) NOT NULL,
+  BIG_INTEGER NUMERIC,
+  id_ref int,
+  CLASS int,
+  FIELDS int,
+  CONFIGURATION int,
+  U_D_T int,
+  META_DATA int,
+  TYPE0 int,
+  PRIMARY_KEY int,
+  PRIMARYKEY int,
+  name_ref VARCHAR(10),
+  [FIELD 737] NUMERIC,
+
+  CONSTRAINT pk_x_unused PRIMARY KEY(ID, NAME),
+  CONSTRAINT uk_x_unused_id UNIQUE(ID),
+  CONSTRAINT fk_x_unused_self FOREIGN KEY(ID_REF, NAME_REF) REFERENCES X_UNUSED(ID, NAME)
 )
 /
 
@@ -177,19 +208,32 @@ CREATE TABLE t_exotic_types (
 
 CREATE TABLE t_639_numbers_table (
   ID INT NOT NULL,
-  BYTE TINYINT NULL,
-  SHORT SMALLINT NULL,
-  [INTEGER] INT NULL,
-  [LONG] BIGINT NULL,
-  BYTE_DECIMAL DECIMAL(2, 0) NULL,
-  SHORT_DECIMAL DECIMAL(4, 0) NULL,
-  INTEGER_DECIMAL DECIMAL(9, 0) NULL,
-  LONG_DECIMAL DECIMAL(18, 0) NULL,
-  BIG_INTEGER DECIMAL(22, 0) NULL,
-  BIG_DECIMAL DECIMAL(22, 5) NULL,
-  [FLOAT] REAL NULL,
-  [DOUBLE] DOUBLE PRECISION NULL,
+  [BYTE] BYTE,
+  [SHORT] SMALLINT,
+  [INTEGER] INT,
+  [LONG] NUMERIC,
+  BYTE_DECIMAL NUMERIC,
+  SHORT_DECIMAL NUMERIC,
+  INTEGER_DECIMAL NUMERIC,
+  LONG_DECIMAL NUMERIC,
+  BIG_INTEGER NUMERIC,
+  BIG_DECIMAL NUMERIC,
+  [FLOAT] REAL,
+  [DOUBLE] FLOAT,
 
   CONSTRAINT pk_t_639_numbers_table PRIMARY KEY(ID)
 )
+/
+
+CREATE VIEW v_library AS
+SELECT a.first_name + ' ' + a.last_name AS author, b.title AS title
+FROM t_author AS a INNER JOIN t_book AS b ON b.author_id = a.id
+/
+
+CREATE VIEW v_author AS
+SELECT * FROM t_author
+/
+
+CREATE VIEW v_book AS
+SELECT * FROM t_book
 /

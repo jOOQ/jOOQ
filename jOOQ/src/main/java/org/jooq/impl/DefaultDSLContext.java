@@ -1498,6 +1498,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
                 return select(field).fetchOne(field);
             }
 
+            case ACCESS:
             case ASE:
             case SQLSERVER:
             case SYBASE: {

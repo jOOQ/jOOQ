@@ -42,10 +42,10 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.name;
 
 import java.io.Serializable;
@@ -54,6 +54,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,12 +70,14 @@ import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.tools.JooqLogger;
 
 /**
  * An implementation of the public {@link Meta} type.
@@ -90,6 +93,7 @@ class MetaImpl implements Meta, Serializable {
      * Generated UID
      */
     private static final long                   serialVersionUID = 3582980783173033809L;
+    private static final JooqLogger             log              = JooqLogger.getLogger(MetaImpl.class);
 
     private final DSLContext                    create;
     private final Configuration                 configuration;
@@ -204,6 +208,15 @@ class MetaImpl implements Meta, Serializable {
             try {
                 List<Schema> result = new ArrayList<Schema>();
 
+                /* [pro] */
+                // Apparently, JDBC-ODBC does not support getting schemas this way...
+                // at least not for MS Access
+                if (ACCESS == configuration.dialect().family()) {
+                }
+
+                else
+                /* [/pro] */
+
                 if (!asList(MYSQL, MARIADB).contains(configuration.dialect().family())) {
                     Result<Record> schemas = create.fetch(
                         meta().getSchemas(),
@@ -284,7 +297,18 @@ class MetaImpl implements Meta, Serializable {
                 }
 
                 ResultSet rs;
-                if (!asList(MYSQL, MARIADB).contains(configuration.dialect().family())) {
+
+                /* [pro] */
+                // Although the JDBC-ODBC bridge reports the database file as the MS Access
+                // catalog, that information cannot be passed to the getTables() method
+                if (ACCESS == configuration.dialect().family()) {
+                    rs = meta().getTables(null, null, "%", types);
+                }
+                else
+
+                /* [/pro] */
+
+                if (!asList(ACCESS, MYSQL, MARIADB).contains(configuration.dialect().family())) {
                     rs = meta().getTables(null, getName(), "%", types);
                 }
 
@@ -325,16 +349,19 @@ class MetaImpl implements Meta, Serializable {
             }
         }
 
+        @SuppressWarnings("unchecked")
         private final Result<Record> getColumns(String schema, String table) throws SQLException {
 
             // SQLite JDBC's DatabaseMetaData.getColumns() can only return a single
             // table's columns
             if (columnCache == null && configuration.dialect() != SQLITE) {
-                Field<String> tableSchem = fieldByName(String.class, "TABLE_SCHEM");
-                Field<String> tableName = fieldByName(String.class, "TABLE_NAME");
+                Result<Record> columns = getColumns0(schema, "%");
+
+                Field<String> tableSchem = (Field<String>) columns.field(1); // TABLE_SCHEM
+                Field<String> tableName = (Field<String>) columns.field(2);  // TABLE_NAME
 
                 Map<Record, Result<Record>> groups =
-                getColumns0(schema, "%").intoGroups(new Field[] {
+                columns.intoGroups(new Field[] {
                     tableSchem,
                     tableName
                 });
@@ -410,14 +437,21 @@ class MetaImpl implements Meta, Serializable {
             return unmodifiableList(asList(getPrimaryKey()));
         }
 
-        @SuppressWarnings("unchecked")
         @Override
         public final UniqueKey<Record> getPrimaryKey() {
-            String schema = getSchema() == null ? null : getSchema().getName();
+            SQLDialect family = configuration.dialect().family();
 
+            /* [pro] */
+            if (family == ACCESS) {
+                return getPrimaryKeyForAccess();
+            }
+            /* [/pro] */
+
+            String schema = getSchema() == null ? null : getSchema().getName();
             try {
                 ResultSet rs;
-                if (!asList(MYSQL, MARIADB).contains(configuration.dialect().family())) {
+
+                if (!asList(MYSQL, MARIADB).contains(family)) {
                     rs = meta().getPrimaryKeys(null, schema, getName());
                 }
 
@@ -439,30 +473,79 @@ class MetaImpl implements Meta, Serializable {
 
                 // Sort by KEY_SEQ
                 result.sortAsc(4);
-
-                if (result.size() > 0) {
-                    TableField<Record, ?>[] fields = new TableField[result.size()];
-                    for (int i = 0; i < fields.length; i++) {
-                        fields[i] = (TableField<Record, ?>) field(result.get(i).getValue(3, String.class));
-                    }
-
-                    return AbstractKeys.createUniqueKey(this, fields);
-                }
-                else {
-                    return null;
-                }
+                return createPrimaryKey(result, 3);
             }
             catch (SQLException e) {
                 throw new DataAccessException("Error while accessing DatabaseMetaData", e);
             }
         }
 
+        /* [pro] */
+        private final UniqueKey<Record> getPrimaryKeyForAccess() {
+
+            // The JDBC-ODBC bridge does not correctly report primary keys for MS Access.
+            // UNIQUE keys are available through the JDBC Index meta data view, though
+            try {
+                ResultSet rs = meta().getIndexInfo(null, null, getName(), true, true);
+                Result<Record> result =
+                create.fetch(
+                    rs,
+                    String.class,  // TABLE_CAT
+                    String.class,  // TABLE_SCHEM
+                    String.class,  // TABLE_NAME
+                    Boolean.class, // NON_UNIQUE
+                    String.class,  // INDEX_QUALIFIER
+                    String.class,  // INDEX_NAME
+                    String.class,  // TYPE
+                    String.class,  // ORDINAL_POSITION
+                    String.class   // COLUMN_NAME
+                );
+
+                // Retain only unique indexes, i.e. NON_UNIQUE = false
+                Iterator<Record> it = result.iterator();
+                while (it.hasNext())
+                    if (it.next().getValue(3) != Boolean.FALSE)
+                        it.remove();
+
+                // Retain only the first unique index, i.e. group by INDEX_NAME
+                if (result.isNotEmpty())
+                    result = result.intoGroups(result.field(5)).values().iterator().next();
+
+                // Sort by ORDINAL_POSITION
+                result.sortAsc(7);
+
+                // Pass the COLUMN_NAME
+                return createPrimaryKey(result, 8);
+            }
+            catch (SQLException e) {
+                log.info("Index access error", e.getMessage());
+            }
+
+            return null;
+        }
+        /* [/pro] */
+
+        @SuppressWarnings("unchecked")
+        private final UniqueKey<Record> createPrimaryKey(Result<Record> result, int columnName) {
+            if (result.size() > 0) {
+                TableField<Record, ?>[] fields = new TableField[result.size()];
+                for (int i = 0; i < fields.length; i++) {
+                    fields[i] = (TableField<Record, ?>) field(result.get(i).getValue(columnName, String.class));
+                }
+
+                return AbstractKeys.createUniqueKey(this, fields);
+            }
+            else {
+                return null;
+            }
+        }
+
         private final void init(Result<Record> columns) {
             for (Record column : columns) {
-                String columnName = column.getValue("COLUMN_NAME", String.class);
-                String typeName = column.getValue("TYPE_NAME", String.class);
-                int precision = column.getValue("COLUMN_SIZE", int.class);
-                int scale = column.getValue("DECIMAL_DIGITS", int.class);
+                String columnName = column.getValue(3, String.class); // COLUMN_NAME
+                String typeName = column.getValue(5, String.class);   // TYPE_NAME
+                int precision = column.getValue(6, int.class);        // COLUMN_SIZE
+                int scale = column.getValue(8, int.class);            // DECIMAL_DIGITS
 
                 // TODO: Exception handling should be moved inside SQLDataType
                 DataType<?> type = null;

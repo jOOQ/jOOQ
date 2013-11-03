@@ -40,6 +40,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -6337,7 +6338,7 @@ public class DSL {
         to = "Function"
     )
     public static <T> Field<T> nullif(Field<T> value, Field<T> other) {
-        return function("nullif", nullSafeDataType(value), nullSafe(value), nullSafe(other));
+        return new NullIf<T>(nullSafe(value), nullSafe(other));
     }
 
     // -------------------------------------------------------------------------
@@ -6372,7 +6373,7 @@ public class DSL {
         to = "StringFunction"
     )
     public static Field<String> upper(Field<String> field) {
-        return function("upper", SQLDataType.VARCHAR, nullSafe(field));
+        return new Upper(nullSafe(field));
     }
 
     /**
@@ -6402,8 +6403,8 @@ public class DSL {
         args = "Field",
         to = "StringFunction"
     )
-    public static Field<String> lower(Field<String> value) {
-        return function("lower", SQLDataType.VARCHAR, nullSafe(value));
+    public static Field<String> lower(Field<String> field) {
+        return new Lower(nullSafe(field));
     }
 
     /**
@@ -6757,6 +6758,22 @@ public class DSL {
     }
 
     /**
+     * Get the <code>reverse(field)</code> function.
+     */
+    @Support({ ASE, CUBRID, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER })
+    public static Field<String> reverse(String value) {
+        return reverse(val(value));
+    }
+
+    /**
+     * Get the <code>reverse(field)</code> function.
+     */
+    @Support({ ASE, CUBRID, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER })
+    public static Field<String> reverse(Field<String> field) {
+        return new Reverse(nullSafe(field));
+    }
+
+    /**
      * Convenience method for {@link #replace(Field, String, String)} to escape
      * data for use with {@link Field#like(Field, char)}.
      * <p>
@@ -6765,7 +6782,7 @@ public class DSL {
      * @see #replace(Field, String, String)
      * @see Field#like(Field, char)
      */
-    @Support
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static String escape(String value, char escape) {
         String esc = "" + escape;
         return value.replace(esc, esc + esc).replace("%", esc + "%").replace("_", esc + "_");
@@ -6797,7 +6814,7 @@ public class DSL {
      *
      * @see #replace(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, String search) {
         return replace(nullSafe(field), Utils.field(search, String.class));
     }
@@ -6811,7 +6828,7 @@ public class DSL {
      * using the three-argument replace function:
      * <code><pre>replace([field], [search], '')</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, Field<String> search) {
         return new Replace(nullSafe(field), nullSafe(search));
     }
@@ -6821,7 +6838,7 @@ public class DSL {
      *
      * @see #replace(Field, Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, String search, String replace) {
         return replace(nullSafe(field), Utils.field(search, String.class), Utils.field(replace, String.class));
     }
@@ -6833,7 +6850,7 @@ public class DSL {
      * <code><pre>replace([field], [search]) or
      * str_replace([field], [search])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, Field<String> search, Field<String> replace) {
         return new Replace(nullSafe(field), nullSafe(search), nullSafe(replace));
     }
@@ -6971,6 +6988,28 @@ public class DSL {
     @Support
     public static Field<String> substring(Field<String> field, Field<? extends Number> startingPosition, Field<? extends Number> length) {
         return new Substring(nullSafe(field), nullSafe(startingPosition), nullSafe(length));
+    }
+
+    /**
+     * Get the mid(field, startingPosition, length) function.
+     *
+     * @see #substring(Field, Field, Field)
+     */
+    @Support
+    public static Field<String> mid(Field<String> field, int startingPosition, int length) {
+        return substring(nullSafe(field), Utils.field(startingPosition), Utils.field(length));
+    }
+
+    /**
+     * Get the mid(field, startingPosition, length) function.
+     * <p>
+     * This renders the substr or substring function:
+     * <code><pre>substr([field], [startingPosition], [length]) or
+     * substring([field], [startingPosition], [length])</pre></code>
+     */
+    @Support
+    public static Field<String> mid(Field<String> field, Field<? extends Number> startingPosition, Field<? extends Number> length) {
+        return substring(nullSafe(field), nullSafe(startingPosition), nullSafe(length));
     }
 
     /**
@@ -9991,7 +10030,7 @@ public class DSL {
     /**
      * Get the count(distinct field) function.
      */
-    @Support
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, FIREBIRD, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     @Transition(
         name = "COUNT DISTINCT",
         args = "Field"
@@ -10113,7 +10152,7 @@ public class DSL {
     /**
      * Get the median over a numeric field: median(field).
      */
-    @Support({ HSQLDB, ORACLE, SYBASE })
+    @Support({ CUBRID, HSQLDB, ORACLE, SYBASE })
     @Transition(
         name = "MEDIAN",
         args = "Field",
@@ -10677,7 +10716,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     @Transition(
         name = "PERCENT_RANK"
     )
@@ -10691,7 +10730,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "CUME_DIST"
     )
@@ -10720,7 +10759,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     @Transition(
         name = "FIRST_VALUE",
         args = "Field"
@@ -10735,7 +10774,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     @Transition(
         name = "LAST_VALUE",
         args = "Field"

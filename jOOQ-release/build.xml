@@ -67,9 +67,15 @@
         <antcall target="copy-src"/>
 		<antcall target="rest"/>
 	</target>
-	
-	<target name="release-pro" description="Release a new version">
+    
+    <target name="release-pro" description="Release a new version">
+        <antcall target="copy-lib-javadoc"/>
+        <antcall target="copy-src"/>
+        <antcall target="rest"/>
+    </target>
+    
+    <target name="release-trial" description="Release a new version">
         <antcall target="copy-lib-javadoc"/>
         <antcall target="rest"/>
-	</target>
+    </target>
 </project>

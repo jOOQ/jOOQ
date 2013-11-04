@@ -119,6 +119,7 @@ class Union<R extends Record> extends AbstractSelect<R> {
             // Sybase ASE, Derby, Firebird and SQLite have some syntax issues with unions.
             // Check out https://issues.apache.org/jira/browse/DERBY-2374
             /* [pro] xx
+            xxxx xxxxxxx
             xxxx xxxx
             xx [/pro] */
             case DERBY:

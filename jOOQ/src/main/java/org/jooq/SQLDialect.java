@@ -120,10 +120,15 @@ public enum SQLDialect {
 
     /* [pro] xx
 
-xx  xxx
-xx   x xxx xx xxxxxx xxx xxxxxxx xxxxxxx xxxxxx xxxxxxx xxxx xx xxxxx xx xxxx xxx
-xx   xx
-xx  xxxxxxxxxxxxxxxx xxxxxx
+    xxx
+     x xxx xx xxxxxx xxx xxxxxxx xxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx xxxxxx
+
+    xxx
+     x xxx xx xxxxxx xxxx xxx xxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxx
 
     xxx
      x xxx xxxxxx xxxxxxxx xxxxxx xxx xxxxxxx xxxxxxx

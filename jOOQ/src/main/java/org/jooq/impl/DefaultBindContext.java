@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
@@ -151,6 +152,27 @@ class DefaultBindContext extends AbstractBindContext {
                 stmt.setNull(nextIndex(), Types.BINARY);
             }
 
+            /* [pro] xx
+            xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+
+                xx xxxx xxxxxxxxxx xxxx xx xxxx xxxxxx xxxx xxx xxx xxxxxxxxx xxxxxx
+                xx xxxxxxxxxxx xxxxx xxxxxxx xxx xxxxxxx
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxx xxxxxxxxx x
+                    xxxx xxxxxxxxxxxxx
+                    xxxx xxxxxxxxxxxxxxxx
+                    xxxx xxxxxxxxxxxxxxxxxxxx
+                    xxxx xxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+                        xxxxxx
+
+                    xxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+                        xxxxxx
+                x
+            x
+
+            xx [/pro] */
             // All other types can be set to null if the JDBC type is known
             else if (sqlType != Types.OTHER) {
                 stmt.setNull(nextIndex(), sqlType);
@@ -181,7 +203,7 @@ class DefaultBindContext extends AbstractBindContext {
             stmt.setBoolean(nextIndex(), (Boolean) value);
         }
         else if (type == BigDecimal.class) {
-            if (dialect == SQLITE) {
+            if (asList(SQLITE).contains(dialect.family())) {
                 stmt.setString(nextIndex(), value.toString());
             }
             else {
@@ -189,7 +211,7 @@ class DefaultBindContext extends AbstractBindContext {
             }
         }
         else if (type == BigInteger.class) {
-            if (dialect == SQLITE) {
+            if (asList(SQLITE).contains(dialect.family())) {
                 stmt.setString(nextIndex(), value.toString());
             }
             else {
@@ -215,7 +237,15 @@ class DefaultBindContext extends AbstractBindContext {
             stmt.setInt(nextIndex(), (Integer) value);
         }
         else if (type == Long.class) {
-            stmt.setLong(nextIndex(), (Long) value);
+            /* [pro] xx
+            xx xxxxxxxxxxxxxxxxx xx xxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+            x
+            xxxx
+            xx [/pro] */
+            {
+                stmt.setLong(nextIndex(), (Long) value);
+            }
         }
         else if (type == Short.class) {
             stmt.setShort(nextIndex(), (Short) value);

@@ -97,6 +97,7 @@ class Values<R extends Record> extends AbstractTable<R> {
             /* [pro] xx
             xxxx xxxxxxx
             xxxx xxxxxxx
+            xxxx xxxxxxx
             xx [/pro] */
             case FIREBIRD:
             case MARIADB:
@@ -136,12 +137,10 @@ class Values<R extends Record> extends AbstractTable<R> {
             case HSQLDB:
             case POSTGRES:
             /* [pro] xx
+            xxxx xxxx
+            xxxx xxxx
             xxxx xxxxxxxxxx
 
-            xx xxxx xx xx xxxxxxxx
-            xxxx xxxx
-            xxxx xxxx
-            xxxx xxxxxxx
             xx [/pro] */
             default: {
                 context.start(TABLE_VALUES)

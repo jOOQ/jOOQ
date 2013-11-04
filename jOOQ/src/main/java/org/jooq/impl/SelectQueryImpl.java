@@ -54,6 +54,8 @@ import static org.jooq.Clause.SELECT_WHERE;
 import static org.jooq.Clause.SELECT_WINDOW;
 import static org.jooq.Operator.OR;
 // ...
+// ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -76,6 +78,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
+import static org.jooq.impl.Dual.DUAL_ACCESS;
 import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import static org.jooq.impl.Utils.DATA_WINDOW_DEFINITIONS;
@@ -273,6 +276,8 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
                 xx xxxxxx xxx xxx xxx xxxxxx xxxxxxx x xxx xxxxxx xxxxxxx xxxxxx
                 xx xxxxxx xxx xx xxxxxxxxx xx xxx xxxxxxx xxx xx xxx
+                xxxx xxxxxxx
+                xxxx xxxxxxxxxxx
                 xxxx xxxx
                 xxxx xxxxxxxxxxxxxx x
 
@@ -546,11 +551,12 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         /* [pro] xx
         xx xxxxxx xxx xxx xxxxxx xxxx xxxxxxx xxx xxxxxxx
         xxxxxx xxxxxxxxxxxxxxxxxx x
+            xxxx xxxxxxx
             xxxx xxxx
             xxxx xxxxxxxxxx x
 
                 xx xx xx xxxx x xxx xxxxxxx xx xxxxx xx xx xxxxxxxx xxxx
-                xx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xx xxxxxxxxxxxxxxx xxxxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                         xx xxxxxxxxxxxxxxxxxxxxxxxxx
                         xx xxxxxxxxxxxxxxxxxxxxxxx
                         xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx x
@@ -647,11 +653,18 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                    .sql(" ")
                    .visit(getFrom());
 
-            // [#1681] Sybase ASE and Ingres need a cross-joined dummy table
-            // To be able to GROUP BY () empty sets
-            if (grouping && getGroupBy().isEmpty() && asList().contains(dialect)) {
-                context.sql(", (select 1 as x) as empty_grouping_dummy_table");
-            }
+            /* [pro] xx
+            xx xxxxxxx xxxxxx xxx xxx xxxxxx xxxx x xxxxxxxxxxxx xxxxx xxxxx
+            xx xx xx xxxx xx xxxxx xx xx xxxxx xxxx
+            xx xxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxx x
+                xx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx x
+                    xxxxxxxxxxxxxx xxxxxxx x xx xx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                x
+                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                    xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                x
+            x
+            xx [/pro] */
         }
 
         context.declareTables(false)

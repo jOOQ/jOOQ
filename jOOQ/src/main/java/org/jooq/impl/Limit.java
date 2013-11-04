@@ -194,6 +194,8 @@ class Limit extends AbstractQueryPart {
                 xxxxxx
             x
 
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxxx
             xxxx xxxx
             xxxx xxxxxxxxxxxxxx x
                 xx xxxxxxx xx xxxxx x
@@ -296,6 +298,8 @@ class Limit extends AbstractQueryPart {
 
             xx xxxxx xxxxxxxx xxxxx xxxxx xxxx xxxxxxxxx xx xxxxx xxx xxxxxxx
             xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxxx
             xxxx xxxx
             xxxx xxxxxx
             xxxx xxxxxxx

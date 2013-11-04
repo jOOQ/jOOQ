@@ -215,6 +215,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 case CUBRID:
                 /* [pro] xx
                 xxxx xxxxxxx
+                xxxx xxxxxxx
                 xx [/pro] */
 
                     super.prepare(ctx);
@@ -287,6 +288,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 // Generated keys don't work with jconn3, but they seem to work
                 // with jTDS (which is used for Sybase ASE integration)
                 /* [pro] xx
+                xxxx xxxxxxx
                 xxxx xxxxxxx
                 xx [/pro] */
                 case CUBRID: {

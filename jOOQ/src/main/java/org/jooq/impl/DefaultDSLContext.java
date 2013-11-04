@@ -1498,6 +1498,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             x
 
+            xxxx xxxxxxx
             xxxx xxxx
             xxxx xxxxxxxxxx
             xxxx xxxxxxx x

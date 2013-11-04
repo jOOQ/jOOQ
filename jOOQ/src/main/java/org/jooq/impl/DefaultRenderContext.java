@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 // ...
+// ...
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
@@ -152,7 +153,11 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         xx xxxxxxxxxx x xxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
         xx xxxxx xxxxxxxxxx xxxxxxx x
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+
+            xx xx xxxxx xx xxxxxx xx xxxxxx xxxxxx xxxxxx xxx xxx xxxxxxxx
+            xx xxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            x
+            xxxx xx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
                 xxxxxxxxxxx xx xxx xxxxxxxx xxxx x xxxx xxxxx xxxxxxx xx xxxx x x xxxxxxxxxxxxxxxxxxxxxx x x xxxxx
             x
             xxxx x
@@ -356,6 +361,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
                 /* [pro] xx
                 xx xxxxx xxxxxxxxx xxx xxxxxxxx
+                xxxx xxxxxxx
                 xxxx xxxx
                 xxxx xxxxxxxxxx
                 xxxx xxxxxxx

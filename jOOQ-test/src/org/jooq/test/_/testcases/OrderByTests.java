@@ -46,6 +46,7 @@ import static junit.framework.Assert.assertNull;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.lower;
@@ -262,6 +263,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals(asList(2, 4), result1);
 
+        /* [pro] xx
+        xx xxxxxxx xxxxx xxxxxxxxx xxxx xxxx xxx xx xxxxxx xxx xxxxxx xxx
+        xx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxx
+            xxxxxxx
+        x
+        xx [/pro] */
+
         // [#1954] LIMIT .. OFFSET is more trouble than LIMIT, as it is
         // simulated using ROW_NUMBER() in DB2, SQL Server
         List<Integer> result2 =
@@ -411,7 +420,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         /* [pro] xx
-        xx xxxxxxxxxx xx xxxxxxxxxxxxxxx x
+        xx xxxxxxx xxxxx xxxxxxxxx xxxx xxxx xxx xx xxxxxx xxx xxxxxx xxx
+        xx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxxxxxxxxxxxxxxxx xxxxxx xx xxxxxx xxxxxxxx
             xxxxxxx
         x

@@ -44,12 +44,14 @@ import static java.util.Arrays.asList;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_IS_NOT_NULL;
 import static org.jooq.Clause.CONDITION_IS_NULL;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...

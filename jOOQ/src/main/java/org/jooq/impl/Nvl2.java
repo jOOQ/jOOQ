@@ -40,7 +40,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.field;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -74,9 +74,10 @@ class Nvl2<T> extends AbstractFunction<T> {
             xxxx xxxxxxx
             xxxx xxxxxxx
             xx [/pro] */
+
             case H2:
             case HSQLDB:
-                return function("nvl2", getDataType(), getArguments());
+                return field("{nvl2}({0}, {1}, {2})", getDataType(), arg1, arg2, arg3);
 
             default:
                 return DSL.decode().when(arg1.isNotNull(), arg2).otherwise(arg3);

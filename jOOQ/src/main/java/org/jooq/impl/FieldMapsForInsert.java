@@ -97,6 +97,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
 
                 // Some dialects don't support multi-record inserts
                 /* [pro] xx
+                xxxx xxxxxxx
                 xxxx xxxx
                 xxxx xxxxxxx
                 xxxx xxxxxxx

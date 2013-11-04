@@ -45,11 +45,15 @@ import java.util.List;
 
 import org.jooq.BindContext;
 import org.jooq.CaseConditionStep;
+import org.jooq.Clause;
 import org.jooq.Condition;
+import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 
-class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseConditionStep<T> {
+class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseConditionStep<T> {
 
     /**
      * Generated UID
@@ -95,48 +99,119 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
     }
 
     @Override
-    public final void bind(BindContext context) {
-        for (int i = 0; i < conditions.size(); i++) {
-            context.visit(conditions.get(i));
-            context.visit(results.get(i));
-        }
+    final QueryPart getFunction0(Configuration configuration) {
+        switch (configuration.dialect().family()) {
+            /* [pro] xx
+            xxxx xxxxxxx
+                xxxxxx xxx xxxxxxxxx
 
-        if (otherwise != null) {
-            context.visit(otherwise);
+            xx [/pro] */
+            default:
+                return new Native();
         }
     }
 
-    @Override
-    public final void toSQL(RenderContext context) {
-        context.formatIndentLockStart()
-               .keyword("case")
-               .formatIndentLockStart();
+    private abstract class Base extends AbstractQueryPart {
 
-        int size = conditions.size();
-        for (int i = 0; i < size; i++) {
-            if (i > 0) {
-                context.formatNewLine();
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 6146002888421945901L;
+
+        @Override
+        public final void bind(BindContext context) {
+            for (int i = 0; i < conditions.size(); i++) {
+                context.visit(conditions.get(i));
+                context.visit(results.get(i));
             }
 
-            context.sql(" ").keyword("when").sql(" ").visit(conditions.get(i))
-                   .sql(" ").keyword("then").sql(" ").visit(results.get(i));
+            if (otherwise != null) {
+                context.visit(otherwise);
+            }
         }
 
-        if (otherwise != null) {
-            context.formatNewLine()
-                   .sql(" ").keyword("else").sql(" ").visit(otherwise);
+        @Override
+        public final Clause[] clauses(Context<?> ctx) {
+            return null;
         }
+    }
 
-        context.formatIndentLockEnd();
+    /* [pro] xx
+    xxxxxxx xxxxx xxxxxx xxxxxxx xxxx x
 
-        if (size > 1 || otherwise != null) {
-            context.formatSeparator();
+        xxx
+         x xxxxxxxxx xxx
+         xx
+        xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
+
+        xxxxxxxxx
+        xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxx xxxx x
+            xxxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxx
+
+            xxx xxxx x xxxxxxxxxxxxxxxxxx
+            xxx xxxx x x xx x x xxxxx xxxx x
+                xx xx x xx x
+                    xxxxxxxxxx xxx
+                x
+
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxx xx
+                   xxxxxxxxxxxxxxxxxxxxxxx
+            x
+
+            xx xxxxxxxxxx xx xxxxx x
+                xxxxxxxxxx xx
+                   xxxxxxxxxxxxxxxx
+                   xxxxxxx xx
+                   xxxxxxxxxxxxxxxxxx
+            x
+
+            xxxxxxxxxxxxx
+        x
+    x
+
+    xx [/pro] */
+
+    private class Native extends Base {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 7850713333675233736L;
+
+        @Override
+        public final void toSQL(RenderContext context) {
+            context.formatIndentLockStart()
+                   .keyword("case")
+                   .formatIndentLockStart();
+
+            int size = conditions.size();
+            for (int i = 0; i < size; i++) {
+                if (i > 0) {
+                    context.formatNewLine();
+                }
+
+                context.sql(" ").keyword("when").sql(" ").visit(conditions.get(i))
+                       .sql(" ").keyword("then").sql(" ").visit(results.get(i));
+            }
+
+            if (otherwise != null) {
+                context.formatNewLine()
+                       .sql(" ").keyword("else").sql(" ").visit(otherwise);
+            }
+
+            context.formatIndentLockEnd();
+
+            if (size > 1 || otherwise != null) {
+                context.formatSeparator();
+            }
+            else {
+                context.sql(" ");
+            }
+
+            context.keyword("end")
+                   .formatIndentLockEnd();
         }
-        else {
-            context.sql(" ");
-        }
-
-        context.keyword("end")
-               .formatIndentLockEnd();
     }
 }

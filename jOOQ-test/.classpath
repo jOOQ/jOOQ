@@ -14,6 +14,11 @@
 	xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 	xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
 	xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+    xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     xxxx [/pro] -->
 	<classpathentry exported="true" kind="lib" path="lib/hsqldb.jar" sourcepath="/jOOQ-sources/hsqldb-2.2.4.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/derby.jar" sourcepath="/jOOQ-sources/db-derby-10.8.1.2-src.zip"/>

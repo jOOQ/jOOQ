@@ -40,6 +40,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.ExpressionOperator.MODULO;
 
@@ -70,6 +71,9 @@ class Mod<T> extends AbstractFunction<T> {
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxx xxxxx xxxxx xxxxxxxxxxxxxx xxxxx xxxxxx
+
             xxxx xxxx
             xxxx xxxxxxxxxx
             xx [/pro] */

@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -6337,7 +6338,7 @@ public class DSL {
         to = "Function"
     )
     public static <T> Field<T> nullif(Field<T> value, Field<T> other) {
-        return function("nullif", nullSafeDataType(value), nullSafe(value), nullSafe(other));
+        return new NullIf<T>(nullSafe(value), nullSafe(other));
     }
 
     // -------------------------------------------------------------------------
@@ -6372,7 +6373,7 @@ public class DSL {
         to = "StringFunction"
     )
     public static Field<String> upper(Field<String> field) {
-        return function("upper", SQLDataType.VARCHAR, nullSafe(field));
+        return new Upper(nullSafe(field));
     }
 
     /**
@@ -6402,8 +6403,8 @@ public class DSL {
         args = "Field",
         to = "StringFunction"
     )
-    public static Field<String> lower(Field<String> value) {
-        return function("lower", SQLDataType.VARCHAR, nullSafe(value));
+    public static Field<String> lower(Field<String> field) {
+        return new Lower(nullSafe(field));
     }
 
     /**
@@ -6781,7 +6782,7 @@ public class DSL {
      * @see #replace(Field, String, String)
      * @see Field#like(Field, char)
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static String escape(String value, char escape) {
         String esc = "" + escape;
         return value.replace(esc, esc + esc).replace("%", esc + "%").replace("_", esc + "_");
@@ -10029,7 +10030,7 @@ public class DSL {
     /**
      * Get the count(distinct field) function.
      */
-    @Support
+    @Support({ CUBRID, DERBY, H2, HSQLDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE })
     @Transition(
         name = "COUNT DISTINCT",
         args = "Field"

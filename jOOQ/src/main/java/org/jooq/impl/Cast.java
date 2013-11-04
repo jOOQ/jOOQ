@@ -48,17 +48,24 @@ import static org.jooq.impl.SQLDataType.FLOAT;
 import static org.jooq.impl.SQLDataType.REAL;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+
 import org.jooq.BindContext;
+import org.jooq.Clause;
+import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 import org.jooq.RenderContext.CastMode;
-import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
-class Cast<T> extends AbstractField<T> {
+class Cast<T> extends AbstractFunction<T> {
 
     /**
      * Generated UID
@@ -77,13 +84,105 @@ class Cast<T> extends AbstractField<T> {
         return getDataType().getSQLDataType();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public final void toSQL(RenderContext context) {
-        // Avoid casting bind values inside an explicit cast...
-        CastMode castMode = context.castMode();
+    final QueryPart getFunction0(Configuration configuration) {
+        switch (configuration.dialect().family()) {
+            /* [pro] xx
+            xxxx xxxxxxx
+                xxxxxx xxx xxxxxxxxxxxxx
+            xx [/pro] */
 
-        if (context.configuration().dialect() == SQLDialect.DERBY) {
+            case DERBY:
+                return new CastDerby();
+
+            default:
+                return new Native();
+        }
+    }
+
+    /* [pro] xx
+    xxxxxxx xxxxx xxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxx x
+
+        xxx
+         x xxxxxxxxx xxx
+         xx
+        xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
+
+        xxxxxxxxx
+        xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxx xxxx x
+            xxxxx xxxxxxxx xxxx x xxxxxxxxxx
+            xxxxx xxxxxx xxxxxxxx x
+                  xxxxx xx xxxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxx
+                x xxxxxxx
+                x xxxxx xx xxxxxxxxxx xx xxxx xx xxxxxxxxxxx
+                x xxxxxxx
+                x xxxxx xx xxxxxxxxxxx xx xxxx xx xxxxxxxxxxxx
+                x xxxxxx
+                x xxxxx xx xxxxxxxxxxxxx xx xxxx xx xxxxxxxxxx
+                x xxxxxx
+                x xxxxx xx xxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxx
+                x xxxxxx
+                x xxxxx xx xxxxxxxxxxx xx xxxx xx xxxxxxxxxxxx
+                x xxxxxx
+                xx xxx xxxxx xxxxxxx xxxxx xxx xxxxxxx
+                x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                x xxxxxx
+                x xxxxx xx xxxxxxxxxx xx xxxx xx xxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxx
+                x xxxxxxx
+                xx xxx xxxxx xxxxx xxx xxxxxx
+                x xxxxxx
+                x
+
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+
+        xxxxxxxxx
+        xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx xxxx x
+            xxxxxxxxxxxxxxxxx
+        x
+
+        xxxxxxxxx
+        xxxxxx xxxxx xxxxxxxx xxxxxxxxxxxxxxxxxx xxxx x
+            xxxxxx xxxxx
+        x
+    x
+    xx [/pro] */
+
+    private class CastDerby extends Native {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = -8737153188122391258L;
+
+        @SuppressWarnings("unchecked")
+        private final Field<Boolean> asDecodeNumberToBoolean() {
+
+            // [#859] 0 => false, null => null, all else is true
+            return DSL.decode().value((Field<Integer>) field)
+                                   .when(inline(0), inline(false))
+                                   .when(inline((Integer) null), inline((Boolean) null))
+                                   .otherwise(inline(true));
+        }
+
+        @SuppressWarnings("unchecked")
+        private final Field<Boolean> asDecodeVarcharToBoolean() {
+            Field<String> s = (Field<String>) field;
+
+            // [#859] '0', 'f', 'false' => false, null => null, all else is true
+            return DSL.decode().when(s.equal(inline("0")), inline(false))
+                                   .when(DSL.lower(s).equal(inline("false")), inline(false))
+                                   .when(DSL.lower(s).equal(inline("f")), inline(false))
+                                   .when(s.isNull(), inline((Boolean) null))
+                                   .otherwise(inline(true));
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public void toSQL(RenderContext context) {
+
+            // Avoid casting bind values inside an explicit cast...
+            CastMode castMode = context.castMode();
 
             // [#857] Interestingly, Derby does not allow for casting numeric
             // types directly to VARCHAR. An intermediary cast to CHAR is needed
@@ -138,43 +237,12 @@ class Cast<T> extends AbstractField<T> {
                 context.visit(asDecodeVarcharToBoolean());
                 return;
             }
+
+            super.toSQL(context);
         }
 
-        // Default rendering, if no special case has applied yet
-        context.keyword("cast").sql("(")
-                   .castMode(CastMode.NEVER)
-                   .visit(field)
-                   .castMode(castMode)
-                   .sql(" ").keyword("as").sql(" ")
-                   .keyword(getDataType(context.configuration()).getCastTypeName(context.configuration()))
-               .sql(")");
-    }
-
-    @SuppressWarnings("unchecked")
-    private Field<Boolean> asDecodeNumberToBoolean() {
-
-        // [#859] 0 => false, null => null, all else is true
-        return DSL.decode().value((Field<Integer>) field)
-                               .when(inline(0), inline(false))
-                               .when(inline((Integer) null), inline((Boolean) null))
-                               .otherwise(inline(true));
-    }
-
-    @SuppressWarnings("unchecked")
-    private Field<Boolean> asDecodeVarcharToBoolean() {
-        Field<String> s = (Field<String>) field;
-
-        // [#859] '0', 'f', 'false' => false, null => null, all else is true
-        return DSL.decode().when(s.equal(inline("0")), inline(false))
-                               .when(DSL.lower(s).equal(inline("false")), inline(false))
-                               .when(DSL.lower(s).equal(inline("f")), inline(false))
-                               .when(s.isNull(), inline((Boolean) null))
-                               .otherwise(inline(true));
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        if (context.configuration().dialect() == SQLDialect.DERBY) {
+        @Override
+        public void bind(BindContext context) {
 
             // [#859] casting numeric types to BOOLEAN
             if (field.getDataType().isNumeric() &&
@@ -191,8 +259,42 @@ class Cast<T> extends AbstractField<T> {
                 context.visit(asDecodeVarcharToBoolean());
                 return;
             }
+
+            super.bind(context);
+        }
+    }
+
+    private class Native extends AbstractQueryPart {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = -8497561014419483312L;
+
+        @Override
+        public void toSQL(RenderContext context) {
+
+            // Avoid casting bind values inside an explicit cast...
+            CastMode castMode = context.castMode();
+
+            // Default rendering, if no special case has applied yet
+            context.keyword("cast").sql("(")
+                       .castMode(CastMode.NEVER)
+                       .visit(field)
+                       .castMode(castMode)
+                       .sql(" ").keyword("as").sql(" ")
+                       .keyword(getDataType(context.configuration()).getCastTypeName(context.configuration()))
+                   .sql(")");
         }
 
-        context.visit(field);
+        @Override
+        public void bind(BindContext context) {
+            context.visit(field);
+        }
+
+        @Override
+        public final Clause[] clauses(Context<?> ctx) {
+            return null;
+        }
     }
 }

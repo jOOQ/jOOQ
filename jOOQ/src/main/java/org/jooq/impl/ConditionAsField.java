@@ -72,6 +72,7 @@ class ConditionAsField extends AbstractFunction<Boolean> {
             /* [pro] xx
             xxxx xxxx
             xxxx xxxxxxx
+            xxxx xxxxxxx
             xxxx xxxxxxxxxx
             xxxx xxxxxxx
             xx [/pro] */
@@ -91,7 +92,6 @@ class ConditionAsField extends AbstractFunction<Boolean> {
             /* [pro] xx
             xx xxxxxxx xxx xx xxxxxxxxxxx
             xxxx xxxx
-            xxxx xxxxxxx
             xx [/pro] */
                 return condition;
         }

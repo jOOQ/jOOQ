@@ -72,6 +72,7 @@ enum Term {
                 xxxx xxxx
                     xxxxxx xx x xxxxxxxxxxxx
 
+                xxxx xxxxxxx
                 xxxx xxxxxxxxxx
                     xxxxxx xx x xxxxx
 
@@ -95,6 +96,7 @@ enum Term {
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
                 /* [pro] xx
+                xxxx xxxxxxx
                 xxxx xxxxxxxxxx
                     xxxxxx xxxxxx
 
@@ -147,6 +149,7 @@ enum Term {
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
                 /* [pro] xx
+                xxxx xxxxxxx
                 xxxx xxxxxxxxxx
                     xxxxxx xxxxxx
 

@@ -46,6 +46,7 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -144,6 +145,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testCharCasts() throws Exception {
+        if (asList().contains(dialect().family())) {
+            log.info("SKIPPING", "Char cast tests");
+            return;
+        }
 
         // [#1241] Casting to CHAR. Some dialects don't like that. They should
         // be casting to VARCHAR instead

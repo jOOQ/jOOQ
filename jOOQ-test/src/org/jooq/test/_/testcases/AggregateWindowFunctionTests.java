@@ -45,6 +45,7 @@ import static java.util.Collections.nCopies;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -313,8 +314,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(4, create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetchCount());
 
         assertEquals(3, create().fetchCount(selectDistinct(TBook_ID(), TBook_TITLE()).from(TBook()).where(TBook_ID().in(1, 2, 3))));
-        assertEquals(2, create().fetchCount(selectFrom(TBook()).limit(2)));
-        assertEquals(2, create().fetchCount(selectFrom(TBook()).limit(2).offset(1)));
+
+        // Ingres doesn't allow for LIMIT .. OFFSET in nested selects or derived tables.
+        if (!asList().contains(dialect().family())) {
+            assertEquals(2, create().fetchCount(selectFrom(TBook()).limit(2)));
+            assertEquals(2, create().fetchCount(selectFrom(TBook()).limit(2).offset(1)));
+        }
+
         assertEquals(2, create().fetchCount(
             select(TBook_TITLE()).from(TBook()).where(TBook_ID().eq(1))
             .union(
@@ -323,6 +329,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testCountDistinct() throws Exception {
+
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+            xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxx xxxxxxxx
+            xxxxxxx
+        x
+        xx [/pro] */
+
+        assertEquals(2, create()
+            .select(countDistinct(TBook_AUTHOR_ID()))
+            .from(TBook())
+            .fetchOne(0));
 
         // [#1728] COUNT(DISTINCT expr1, expr2, ...)
         // -----------------------------------------
@@ -409,6 +427,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testWindowFunctions() throws Exception {
         switch (dialect()) {
             /* [pro] xx
+            xxxx xxxxxxx
             xxxx xxxx
             xxxx xxxxxxx
             xx [/pro] */
@@ -548,9 +567,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         switch (dialect()) {
             /* [pro] xx
             xxxx xxxx
+                xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxx xxxxxxxxxxx xxxxxx xxxxxxxx xxxxxxxx
+                xxxxxx
             xx [/pro] */
-                log.info("SKIPPING", "PERCENT_RANK() and CUME_DIST() window function tests");
-                break;
 
             default: {
                 column = 0;
@@ -1006,6 +1025,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testWindowClause() throws Exception {
         switch (dialect()) {
             /* [pro] xx
+            xxxx xxxxxxx
             xxxx xxxx
             xxxx xxxxxxx
             xx [/pro] */

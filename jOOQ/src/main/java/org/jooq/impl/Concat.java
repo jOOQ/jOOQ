@@ -84,6 +84,7 @@ class Concat extends AbstractFunction<String> {
                 return function("concat", SQLDataType.VARCHAR, cast);
 
             /* [pro] xx
+            xxxx xxxxxxx
             xxxx xxxxxxxxxx
                 xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxx
 

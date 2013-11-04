@@ -395,6 +395,11 @@ public abstract class jOOQAbstractTest<
                     xxxxxxxxx
                 x
 
+                xx xxxxxxxxxx xxx xxxxxxx xxxxx xxxxxxxxxx
+                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx x
+                    xxxxxxxxx
+                x
+
                 xx [/pro] */
                 // There is no IF EXISTS clause in CUBRID's DROP VIEW statement
                 else if (getDialect() == CUBRID && sql.trim().startsWith("DROP")) {

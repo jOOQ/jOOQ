@@ -62,6 +62,7 @@ import static org.jooq.JoinType.NATURAL_LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.H2;
@@ -149,11 +150,20 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         JoinType translatedType = translateType(context);
         Clause translatedClause = translateClause(translatedType);
 
+        String keyword = translatedType.toSQL();
+
+        /* [pro] xx
+        xx xx xx xxxxxxx xxx xxxxx xxxxxxx xx xxx xxxxxxxx
+        xx xxxxxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+            xxxxxxx x xxxxxx xxxxxx
+        x
+        xx [/pro] */
+
         context.visit(lhs)
                .formatIndentStart()
                .formatSeparator()
                .start(translatedClause)
-               .keyword(translatedType.toSQL())
+               .keyword(keyword)
                .sql(" ");
 
         // [#671] Some databases formally require nested JOINS to be

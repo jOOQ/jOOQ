@@ -65,6 +65,9 @@ class Reverse extends AbstractFunction<String> {
     QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxx
+
             xxxx xxxx
             xxxx xxxxxxx
             xxxx xxxxxxxxxx

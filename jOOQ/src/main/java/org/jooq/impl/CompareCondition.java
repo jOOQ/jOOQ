@@ -120,12 +120,12 @@ class CompareCondition extends AbstractCondition {
         context.visit(lhs)
                .sql(" ");
 
-        // [#1131] Some weird DB2 issue stops "LIKE" from working with a
-        // concatenated search expression, if the expression is more than 4000
-        // characters long
         boolean castRhs = false;
 
         /* [pro] xx
+        xx xxxxxxx xxxx xxxxx xxx xxxxx xxxxx xxxxxx xxxx xxxxxxx xxxx x
+        xx xxxxxxxxxxxx xxxxxx xxxxxxxxxxx xx xxx xxxxxxxxxx xx xxxx xxxx xxxx
+        xx xxxxxxxxxx xxxx
         xx xxxxxxx xx xxx xx xxx xxxxxxxxxx xxxxxxx
             xxxxxxx x xxxxx
         xx [/pro] */

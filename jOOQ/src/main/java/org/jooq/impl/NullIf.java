@@ -40,66 +40,40 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.val;
-import static org.jooq.impl.SQLDataType.VARCHAR;
-
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-class Replace extends AbstractFunction<String> {
+public class NullIf<T> extends AbstractFunction<T> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 409629290052619844L;
 
-    Replace(Field<?>... arguments) {
-        super("replace", SQLDataType.VARCHAR, arguments);
+    private final Field<T>    arg1;
+    private final Field<T>    arg2;
+
+    NullIf(Field<T> arg1, Field<T> arg2) {
+        super("nullif", arg1.getDataType(), arg1, arg2);
+
+        this.arg1 = arg1;
+        this.arg2 = arg2;
     }
 
     @Override
-    final Field<String> getFunction0(Configuration configuration) {
-        Field<?>[] args = getArguments();
-
-        // [#861] Most dialects don't ship with a two-argument replace function:
+    final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx
-            xxxx xxxx x
-                xx xxxxxxxxxxxx xx xx x
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxxxxx
-                x
-                xxxx x
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxx
-                x
-            x
-
             xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxx x xxxx xxxxx xxxxxx xxxxxxxxxxxxxx xxxxx xxxxxx
             xx [/pro] */
-            case FIREBIRD:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE: {
-                if (args.length == 2) {
-                    return function("replace", VARCHAR, args[0], args[1], val(""));
-                }
-                else {
-                    return function("replace", VARCHAR, args);
-                }
-            }
 
-            default: {
-                return function("replace", VARCHAR, args);
-            }
+            default:
+                return DSL.field("{nullif}({0}, {1})", getDataType(), arg1, arg2);
         }
     }
 }

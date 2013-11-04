@@ -67,25 +67,27 @@ class CurrentDate extends AbstractFunction<Date> {
         switch (configuration.dialect().family()) {
             /* [pro] xx
             xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+
+            xxxx xxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+
+            xxxx xxxxxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxx
 
             xxxx xxxx
             xxxx xxxxxxx
             xx [/pro] */
+
             case DERBY:
             case FIREBIRD:
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                return field("current_date", SQLDataType.DATE);
-
-            /* [pro] xx
-            xxxx xxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxx
-            xx [/pro] */
+                return field("{current_date}", SQLDataType.DATE);
         }
 
         return function("current_date", SQLDataType.DATE);

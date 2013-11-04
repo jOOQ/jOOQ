@@ -48,6 +48,7 @@ import static org.jooq.impl.DSL.val;
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -84,12 +85,12 @@ class Contains<T> extends AbstractCondition {
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.visit(condition());
+        context.visit(condition(context.configuration()));
     }
 
     @Override
     public final void bind(BindContext context) throws DataAccessException {
-        context.visit(condition());
+        context.visit(condition(context.configuration()));
     }
 
     @Override
@@ -97,7 +98,7 @@ class Contains<T> extends AbstractCondition {
         return CLAUSES;
     }
 
-    private final Condition condition() {
+    private final Condition condition(Configuration configuration) {
 
         // [#1107] Some dialects support "contains" operations for ARRAYs
         if (lhs.getDataType().isArray()) {
@@ -109,10 +110,10 @@ class Contains<T> extends AbstractCondition {
             Field<String> concat;
 
             if (rhs == null) {
-                concat = DSL.concat(inline("%"), Utils.escapeForLike(value), inline("%"));
+                concat = DSL.concat(inline("%"), Utils.escapeForLike(value, configuration), inline("%"));
             }
             else {
-                concat = DSL.concat(inline("%"), Utils.escapeForLike(rhs), inline("%"));
+                concat = DSL.concat(inline("%"), Utils.escapeForLike(rhs, configuration), inline("%"));
             }
 
             return lhs.like(concat, Utils.ESCAPE);

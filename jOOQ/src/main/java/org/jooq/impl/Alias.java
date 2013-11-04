@@ -48,11 +48,13 @@ import static org.jooq.Clause.FIELD_REFERENCE;
 import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_ALIAS;
 import static org.jooq.Clause.TABLE_REFERENCE;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...

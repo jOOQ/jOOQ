@@ -59,6 +59,7 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
 // ...
+// ...
 import org.jooq.util.cubrid.CUBRIDDataType;
 // ...
 import org.jooq.util.derby.DerbyDataType;
@@ -322,6 +323,7 @@ public final class SQLDataType {
 
         try {
             /* [pro] xx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

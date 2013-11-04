@@ -62,20 +62,4 @@ public interface LoaderJSONOptionsStep<R extends TableRecord<R>> extends LoaderL
      */
     @Support
     LoaderJSONOptionsStep<R> ignoreRows(int number);
-
-    /**
-     * Specify the input string representation of <code>NULL</code>.
-     * <p>
-     * By default, this is set to <code>null</code>, which means that all empty
-     * strings are loaded into the database as such. In some databases (e.g.
-     * {@link org.jooq.SQLDialect#ORACLE}), this is effectively the same as loading
-     * <code>NULL</code>.
-     * <p>
-     * In order to treat empty strings as <code>null</code>, you can set the
-     * <code>nullString</code> to <code>""</code>. If the null string is
-     * overridden with something like <code>{null}</code>, for instance, then
-     * empty strings will also be loaded as such by jOOQ.
-     */
-    @Support
-    LoaderJSONOptionsStep<R> nullString(String nullString);
 }

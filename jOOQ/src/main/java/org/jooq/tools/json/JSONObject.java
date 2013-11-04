@@ -32,6 +32,7 @@ import java.util.Map;
  *
  * @author FangYidong<fangyidong@yahoo.com.cn>
  */
+@SuppressWarnings({ "serial", "rawtypes", "unchecked" })
 public class JSONObject extends HashMap{
 
 

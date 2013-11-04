@@ -32,8 +32,8 @@ import java.util.List;
  *
  * @author FangYidong<fangyidong@yahoo.com.cn>
  */
+@SuppressWarnings({ "serial", "rawtypes", "unchecked" })
 public class JSONArray extends ArrayList {
-
 
     /**
      * Constructs an empty JSONArray.

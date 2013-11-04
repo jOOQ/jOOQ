@@ -47,12 +47,13 @@ package org.jooq;
  * optional CSV loader options.
  *
  * @author Lukas Eder
+ * @author Johannes Bühler
  */
 public interface LoaderJSONOptionsStep<R extends TableRecord<R>> extends LoaderLoadStep<R> {
 
     /**
-     * Specify that a certain number of rows should be ignored from the CSV
-     * file. This is useful for skipping processing information
+     * Specify that a certain number of rows should be ignored from the JSON
+     * input. This is useful for skipping processing information
      * <p>
      * By default, this is set to <code>1</code>, as CSV files are expected to
      * hold a header row.
@@ -61,7 +62,6 @@ public interface LoaderJSONOptionsStep<R extends TableRecord<R>> extends LoaderL
      */
     @Support
     LoaderJSONOptionsStep<R> ignoreRows(int number);
-
 
     /**
      * Specify the input string representation of <code>NULL</code>.

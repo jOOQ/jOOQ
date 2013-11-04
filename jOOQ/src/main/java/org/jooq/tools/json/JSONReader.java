@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * A very simple JSON reader based on Simple JSON.
  */
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class JSONReader implements Closeable {
 
 
@@ -20,7 +21,6 @@ public class JSONReader implements Closeable {
         this.parser = new JSONParser();
     }
 
-    @SuppressWarnings("unchecked")
     public List<String[]> readAll() throws IOException {
         List<String[]> all;
         try {

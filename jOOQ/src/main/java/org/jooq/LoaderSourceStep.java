@@ -40,12 +40,12 @@
  */
 package org.jooq;
 
-import org.xml.sax.InputSource;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.Reader;
+
+import org.xml.sax.InputSource;
 
 /**
  * The <code>Loader</code> API is used for configuring data loads.
@@ -54,6 +54,7 @@ import java.io.Reader;
  * load type and data source.
  *
  * @author Lukas Eder
+ * @author Johannes Bühler
  */
 public interface LoaderSourceStep<R extends TableRecord<R>> {
 

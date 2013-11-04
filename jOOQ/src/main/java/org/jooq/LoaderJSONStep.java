@@ -45,10 +45,11 @@ import java.util.Collection;
 /**
  * The <code>Loader</code> API is used for configuring data loads.
  * <p>
- * The step in constructing the {@link org.jooq.Loader} object where you can set the
- * mandatory JSON loader options.
+ * The step in constructing the {@link org.jooq.Loader} object where you can set
+ * the mandatory JSON loader options.
  *
  * @author Lukas Eder
+ * @author Johannes Bühler
  */
 public interface LoaderJSONStep<R extends TableRecord<R>> {
 

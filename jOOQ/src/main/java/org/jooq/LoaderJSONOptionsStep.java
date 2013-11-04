@@ -40,100 +40,42 @@
  */
 package org.jooq;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.Reader;
-
-import org.xml.sax.InputSource;
-
 /**
  * The <code>Loader</code> API is used for configuring data loads.
  * <p>
- * The step in constructing the {@link Loader} object where you can specify the
- * load type and data source.
+ * The step in constructing the {@link org.jooq.Loader} object where you can set the
+ * optional CSV loader options.
  *
  * @author Lukas Eder
  * @author Johannes Bühler
  */
-public interface LoaderSourceStep<R extends TableRecord<R>> {
+public interface LoaderJSONOptionsStep<R extends TableRecord<R>> extends LoaderLoadStep<R> {
 
     /**
-     * Load CSV data
+     * Specify that a certain number of rows should be ignored from the JSON
+     * input. This is useful for skipping processing information
+     * <p>
+     * By default, this is set to <code>1</code>, as CSV files are expected to
+     * hold a header row.
+     *
+     * @param number The number of rows to ignore.
      */
     @Support
-    LoaderCSVStep<R> loadCSV(File file) throws FileNotFoundException;
+    LoaderJSONOptionsStep<R> ignoreRows(int number);
 
     /**
-     * Load CSV data
+     * Specify the input string representation of <code>NULL</code>.
+     * <p>
+     * By default, this is set to <code>null</code>, which means that all empty
+     * strings are loaded into the database as such. In some databases (e.g.
+     * {@link org.jooq.SQLDialect#ORACLE}), this is effectively the same as loading
+     * <code>NULL</code>.
+     * <p>
+     * In order to treat empty strings as <code>null</code>, you can set the
+     * <code>nullString</code> to <code>""</code>. If the null string is
+     * overridden with something like <code>{null}</code>, for instance, then
+     * empty strings will also be loaded as such by jOOQ.
      */
     @Support
-    LoaderCSVStep<R> loadCSV(String data);
-
-    /**
-     * Load CSV data
-     */
-    @Support
-    LoaderCSVStep<R> loadCSV(InputStream stream);
-
-    /**
-     * Load CSV data
-     */
-    @Support
-    LoaderCSVStep<R> loadCSV(Reader reader);
-
-    /**
-     * Load XML data
-     */
-    @Support
-    LoaderXMLStep<R> loadXML(File file) throws FileNotFoundException;
-
-    /**
-     * Load XML data
-     */
-    @Support
-    LoaderXMLStep<R> loadXML(String data);
-
-    /**
-     * Load XML data
-     */
-    @Support
-    LoaderXMLStep<R> loadXML(InputStream stream);
-
-    /**
-     * Load XML data
-     */
-    @Support
-    LoaderXMLStep<R> loadXML(Reader reader);
-
-    /**
-     * Load XML data
-     */
-    @Support
-    LoaderXMLStep<R> loadXML(InputSource source);
-
-    /**
-     * Load JSON data
-     */
-    @Support
-    LoaderJSONStep<R> loadJSON(File file) throws FileNotFoundException;
-
-    /**
-     * Load JSON data
-     */
-    @Support
-    LoaderJSONStep<R> loadJSON(String data);
-
-    /**
-     * Load JSON data
-     */
-    @Support
-    LoaderJSONStep<R> loadJSON(InputStream stream);
-
-    /**
-     * Load JSON data
-     */
-    @Support
-    LoaderJSONStep<R> loadJSON(Reader reader);
-
+    LoaderJSONOptionsStep<R> nullString(String nullString);
 }

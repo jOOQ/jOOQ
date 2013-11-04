@@ -21,6 +21,7 @@
 package org.jooq.tools.json;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
 import java.util.List;
 import java.util.Map;
@@ -209,4 +210,32 @@ public class JSONValue {
             }
         }// for
     }
+
+    /**
+     * Parse JSON text into java object from the input source.
+     *
+     * @see org.json.simple.parser.JSONParser
+     *
+     * @param in
+     * @return Instance of the following:
+     *      org.json.simple.JSONObject,
+     *      org.json.simple.JSONArray,
+     *      java.lang.String,
+     *      java.lang.Number,
+     *      java.lang.Boolean,
+     *      null
+     *
+     * @throws IOException
+     * @throws ParseException
+     */
+    public static Object parseWithException(Reader in) throws IOException, ParseException{
+        JSONParser parser=new JSONParser();
+        return parser.parse(in);
+    }
+
+    public static Object parseWithException(String s) throws ParseException{
+        JSONParser parser=new JSONParser();
+        return parser.parse(s);
+    }
+
 }

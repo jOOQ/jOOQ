@@ -22,6 +22,7 @@ package org.jooq.tools.json;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -31,7 +32,18 @@ import java.util.Map;
  *
  * @author FangYidong<fangyidong@yahoo.com.cn>
  */
-public class JSONObject {
+@SuppressWarnings({ "serial", "rawtypes", "unchecked" })
+public class JSONObject extends HashMap{
+
+
+    public JSONObject() {
+        super();
+    }
+
+
+    public JSONObject(Map map) {
+        super(map);
+    }
 
     /**
      * Encode a map into JSON text and write it to out. If this map is also a

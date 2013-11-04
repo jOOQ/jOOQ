@@ -40,100 +40,36 @@
  */
 package org.jooq;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.Reader;
-
-import org.xml.sax.InputSource;
+import java.util.Collection;
 
 /**
  * The <code>Loader</code> API is used for configuring data loads.
  * <p>
- * The step in constructing the {@link Loader} object where you can specify the
- * load type and data source.
+ * The step in constructing the {@link org.jooq.Loader} object where you can set
+ * the mandatory JSON loader options.
  *
  * @author Lukas Eder
  * @author Johannes Bühler
  */
-public interface LoaderSourceStep<R extends TableRecord<R>> {
+public interface LoaderJSONStep<R extends TableRecord<R>> {
 
     /**
-     * Load CSV data
+     * Specify the the fields to be loaded into the table in the correct order.
+     * The JSON column at index <code>i</code> is inserted into the table field
+     * at index <code>i</code>. If <code>fields[i] == null</code>, then the JSON
+     * column is skipped.
      */
     @Support
-    LoaderCSVStep<R> loadCSV(File file) throws FileNotFoundException;
+    LoaderJSONOptionsStep<R> fields(Field<?>... fields);
 
     /**
-     * Load CSV data
+     * Specify the the fields to be loaded into the table in the correct order.
+     * The JSON column at index <code>i</code> is inserted into the table field
+     * at index <code>i</code>. If
+     * <code>new ArrayList(fields).get(i) == null</code>, then the JSON column is
+     * skipped.
      */
     @Support
-    LoaderCSVStep<R> loadCSV(String data);
-
-    /**
-     * Load CSV data
-     */
-    @Support
-    LoaderCSVStep<R> loadCSV(InputStream stream);
-
-    /**
-     * Load CSV data
-     */
-    @Support
-    LoaderCSVStep<R> loadCSV(Reader reader);
-
-    /**
-     * Load XML data
-     */
-    @Support
-    LoaderXMLStep<R> loadXML(File file) throws FileNotFoundException;
-
-    /**
-     * Load XML data
-     */
-    @Support
-    LoaderXMLStep<R> loadXML(String data);
-
-    /**
-     * Load XML data
-     */
-    @Support
-    LoaderXMLStep<R> loadXML(InputStream stream);
-
-    /**
-     * Load XML data
-     */
-    @Support
-    LoaderXMLStep<R> loadXML(Reader reader);
-
-    /**
-     * Load XML data
-     */
-    @Support
-    LoaderXMLStep<R> loadXML(InputSource source);
-
-    /**
-     * Load JSON data
-     */
-    @Support
-    LoaderJSONStep<R> loadJSON(File file) throws FileNotFoundException;
-
-    /**
-     * Load JSON data
-     */
-    @Support
-    LoaderJSONStep<R> loadJSON(String data);
-
-    /**
-     * Load JSON data
-     */
-    @Support
-    LoaderJSONStep<R> loadJSON(InputStream stream);
-
-    /**
-     * Load JSON data
-     */
-    @Support
-    LoaderJSONStep<R> loadJSON(Reader reader);
+    LoaderJSONOptionsStep<R> fields(Collection<? extends Field<?>> fields);
 
 }

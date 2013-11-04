@@ -150,10 +150,14 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         JoinType translatedType = translateType(context);
         Clause translatedClause = translateClause(translatedType);
 
+        String keyword = translatedType.toSQL();
+
+        /* [pro] */
         // In MS Access, the INNER keyword is not optional
-        String keyword = translatedType == JOIN && context.configuration().dialect().family() == ACCESS
-               ? "inner join"
-               : translatedType.toSQL();
+        if (translatedType == JOIN && context.configuration().dialect().family() == ACCESS) {
+            keyword = "inner join";
+        }
+        /* [/pro] */
 
         context.visit(lhs)
                .formatIndentStart()

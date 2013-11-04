@@ -42,6 +42,7 @@ package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
@@ -212,7 +213,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // [#1072] Add checks for ESCAPE syntax
         // ------------------------------------
         // [#2818] TODO: Re-enable this test for MS Access
-        if (!asList(SQLDialect.ACCESS).contains(dialect().family())) {
+        if (!asList(ACCESS).contains(dialect().family())) {
             books =
             create().selectFrom(TBook())
                     .where(TBook_TITLE().like("%(!%)%", '!'))
@@ -244,7 +245,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // [#1106] Add checks for Factory.escape() function
         // ------------------------------------------------
         // [#2818] TODO: Re-enable this test for MS Access
-        if (!asList(SQLDialect.ACCESS).contains(dialect().family())) {
+        if (!asList(ACCESS).contains(dialect().family())) {
             books =
             create().selectFrom(TBook())
                     .where(TBook_TITLE().like(concat("%", escape("(%)", '!'), "%"), '!'))

@@ -567,9 +567,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         switch (dialect()) {
             /* [pro] */
             case DB2:
-            /* [/pro] */
                 log.info("SKIPPING", "PERCENT_RANK() and CUME_DIST() window function tests");
                 break;
+            /* [/pro] */
 
             default: {
                 column = 0;

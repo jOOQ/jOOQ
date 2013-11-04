@@ -87,8 +87,10 @@ class Cast<T> extends AbstractFunction<T> {
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
+            /* [pro] */
             case ACCESS:
                 return new CastAccess();
+            /* [/pro] */
 
             case DERBY:
                 return new CastDerby();
@@ -98,6 +100,7 @@ class Cast<T> extends AbstractFunction<T> {
         }
     }
 
+    /* [pro] */
     private class CastAccess extends AbstractQueryPart {
 
         /**
@@ -143,6 +146,7 @@ class Cast<T> extends AbstractFunction<T> {
             return null;
         }
     }
+    /* [/pro] */
 
     private class CastDerby extends Native {
 

@@ -110,9 +110,11 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     // -------------------------------------------------------------------------
 
     final void toSQLSemiColon(RenderContext ctx) {
+        /* [pro] */
         if (ctx.configuration().dialect().family() == ACCESS) {
             ctx.sql(';');
         }
+        /* [/pro] */
     }
 
     // -------------------------------------------------------------------------

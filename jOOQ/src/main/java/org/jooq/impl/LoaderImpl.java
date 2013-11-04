@@ -35,23 +35,48 @@
 */
 package org.jooq.impl;
 
-import org.jooq.*;
-import org.jooq.exception.DataAccessException;
-import org.jooq.tools.StringUtils;
-import org.jooq.tools.csv.CSVParser;
-import org.jooq.tools.csv.CSVReader;
-import org.jooq.tools.json.JSONReader;
-import org.xml.sax.InputSource;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jooq.Condition;
+import org.jooq.Configuration;
+import org.jooq.DSLContext;
+import org.jooq.Field;
+import org.jooq.InsertQuery;
+import org.jooq.Loader;
+import org.jooq.LoaderCSVOptionsStep;
+import org.jooq.LoaderCSVStep;
+import org.jooq.LoaderError;
+import org.jooq.LoaderJSONOptionsStep;
+import org.jooq.LoaderJSONStep;
+import org.jooq.LoaderOptionsStep;
+import org.jooq.LoaderXMLStep;
+import org.jooq.SelectQuery;
+import org.jooq.Table;
+import org.jooq.TableRecord;
+import org.jooq.exception.DataAccessException;
+import org.jooq.tools.StringUtils;
+import org.jooq.tools.csv.CSVParser;
+import org.jooq.tools.csv.CSVReader;
+import org.jooq.tools.json.JSONReader;
+
+import org.xml.sax.InputSource;
+
 /**
  * @author Lukas Eder
+ * @author Johannes Bühler
  */
 class LoaderImpl<R extends TableRecord<R>> implements
 
@@ -79,7 +104,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     private static final int        CONTENT_CSV             = 0;
     private static final int        CONTENT_XML             = 1;
-    private static final int        CONTENT_JSON             = 2;
+    private static final int        CONTENT_JSON            = 2;
 
     // Configuration data
     // ------------------
@@ -293,14 +318,14 @@ class LoaderImpl<R extends TableRecord<R>> implements
     }
 
     @Override
-    public LoaderJSONStep<R> loadJSON(File file) throws FileNotFoundException {
+    public final LoaderJSONStep<R> loadJSON(File file) throws FileNotFoundException {
         content = CONTENT_JSON;
         data = new BufferedReader(new FileReader(file));
         return this;
     }
 
     @Override
-    public LoaderJSONStep<R> loadJSON(String json) {
+    public final LoaderJSONStep<R> loadJSON(String json) {
         content = CONTENT_JSON;
         data = new BufferedReader(new StringReader(json));
         return this;
@@ -308,19 +333,18 @@ class LoaderImpl<R extends TableRecord<R>> implements
     }
 
     @Override
-    public LoaderJSONStep<R> loadJSON(InputStream stream) {
+    public final LoaderJSONStep<R> loadJSON(InputStream stream) {
         content = CONTENT_JSON;
         data = new BufferedReader(new InputStreamReader(stream));
         return this;
     }
 
     @Override
-    public LoaderJSONStep<R> loadJSON(Reader reader) {
+    public final LoaderJSONStep<R> loadJSON(Reader reader) {
         content = CONTENT_JSON;
         data = new BufferedReader(reader);
         return this;
     }
-
 
     // -------------------------------------------------------------------------
     // XML configuration
@@ -351,7 +375,6 @@ class LoaderImpl<R extends TableRecord<R>> implements
     }
 
     private void executeJSON() throws IOException {
-
         JSONReader reader = new JSONReader(data);
 
         try {
@@ -466,8 +489,6 @@ class LoaderImpl<R extends TableRecord<R>> implements
         finally {
             reader.close();
         }
-
-
     }
 
     private final void executeCSV() throws IOException {

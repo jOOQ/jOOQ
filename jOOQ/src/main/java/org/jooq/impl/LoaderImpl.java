@@ -35,40 +35,20 @@
 */
 package org.jooq.impl;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.jooq.Condition;
-import org.jooq.Configuration;
-import org.jooq.DSLContext;
-import org.jooq.Field;
-import org.jooq.InsertQuery;
-import org.jooq.Loader;
-import org.jooq.LoaderCSVOptionsStep;
-import org.jooq.LoaderCSVStep;
-import org.jooq.LoaderError;
-import org.jooq.LoaderOptionsStep;
-import org.jooq.LoaderXMLStep;
-import org.jooq.SelectQuery;
-import org.jooq.Table;
-import org.jooq.TableRecord;
+import org.jooq.*;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.csv.CSVParser;
 import org.jooq.tools.csv.CSVReader;
-
+import org.jooq.tools.json.JSONReader;
 import org.xml.sax.InputSource;
+
+import java.io.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Lukas Eder
@@ -80,6 +60,8 @@ class LoaderImpl<R extends TableRecord<R>> implements
     LoaderXMLStep<R>,
     LoaderCSVStep<R>,
     LoaderCSVOptionsStep<R>,
+    LoaderJSONStep<R>,
+    LoaderJSONOptionsStep<R>,
     Loader<R> {
 
     // Configuration constants
@@ -97,6 +79,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     private static final int        CONTENT_CSV             = 0;
     private static final int        CONTENT_XML             = 1;
+    private static final int        CONTENT_JSON             = 2;
 
     // Configuration data
     // ------------------
@@ -309,6 +292,36 @@ class LoaderImpl<R extends TableRecord<R>> implements
         return this;
     }
 
+    @Override
+    public LoaderJSONStep<R> loadJSON(File file) throws FileNotFoundException {
+        content = CONTENT_JSON;
+        data = new BufferedReader(new FileReader(file));
+        return this;
+    }
+
+    @Override
+    public LoaderJSONStep<R> loadJSON(String json) {
+        content = CONTENT_JSON;
+        data = new BufferedReader(new StringReader(json));
+        return this;
+
+    }
+
+    @Override
+    public LoaderJSONStep<R> loadJSON(InputStream stream) {
+        content = CONTENT_JSON;
+        data = new BufferedReader(new InputStreamReader(stream));
+        return this;
+    }
+
+    @Override
+    public LoaderJSONStep<R> loadJSON(Reader reader) {
+        content = CONTENT_JSON;
+        data = new BufferedReader(reader);
+        return this;
+    }
+
+
     // -------------------------------------------------------------------------
     // XML configuration
     // -------------------------------------------------------------------------
@@ -327,11 +340,134 @@ class LoaderImpl<R extends TableRecord<R>> implements
         else if (content == CONTENT_XML) {
             throw new UnsupportedOperationException();
         }
+        else if (content == CONTENT_JSON) {
+            executeJSON();
+        }
         else {
             throw new IllegalStateException();
         }
 
         return this;
+    }
+
+    private void executeJSON() throws IOException {
+
+        JSONReader reader = new JSONReader(data);
+
+        try {
+            String[] row = null;
+
+            // TODO: When running in COMMIT_AFTER > 1 or COMMIT_ALL mode, then
+            // it might be better to bulk load / merge n records
+            Iterator<String[]> rows = reader.readAll().iterator();
+            rowloop: while (rows.hasNext()) {
+                row = rows.next();
+                // [#1627] Handle NULL values
+                for (int i = 0; i < row.length; i++) {
+                    if (StringUtils.equals(nullString, row[i])) {
+                        row[i] = null;
+                    }
+                }
+
+                processed++;
+                InsertQuery<R> insert = create.insertQuery(table);
+
+                for (int i = 0; i < row.length; i++) {
+                    if (i < fields.length && fields[i] != null) {
+                        addValue0(insert, fields[i], row[i]);
+                    }
+                }
+
+                // TODO: This is only supported by some dialects. Let other
+                // dialects execute a SELECT and then either an INSERT or UPDATE
+                if (onDuplicate == ON_DUPLICATE_KEY_UPDATE) {
+                    insert.onDuplicateKeyUpdate(true);
+
+                    for (int i = 0; i < row.length; i++) {
+                        if (i < fields.length && fields[i] != null && !primaryKey[i]) {
+                            addValueForUpdate0(insert, fields[i], row[i]);
+                        }
+                    }
+                }
+
+                // TODO: This can be implemented faster using a MERGE statement
+                // in some dialects
+                else if (onDuplicate == ON_DUPLICATE_KEY_IGNORE) {
+                    SelectQuery<R> select = create.selectQuery(table);
+
+                    for (int i = 0; i < row.length; i++) {
+                        if (i < fields.length && primaryKey[i]) {
+                            select.addConditions(getCondition(fields[i], row[i]));
+                        }
+                    }
+
+                    try {
+                        if (select.execute() > 0) {
+                            ignored++;
+                            continue rowloop;
+                        }
+                    } catch (DataAccessException e) {
+                        errors.add(new LoaderErrorImpl(e, row, processed - 1, select));
+                    }
+                }
+
+                // Don't do anything. Let the execution fail
+                else if (onDuplicate == ON_DUPLICATE_KEY_ERROR) {
+                }
+
+                try {
+                    insert.execute();
+                    stored++;
+
+                    if (commit == COMMIT_AFTER) {
+                        if (processed % commitAfter == 0) {
+                            configuration.connectionProvider().acquire().commit();
+                        }
+                    }
+                } catch (DataAccessException e) {
+                    errors.add(new LoaderErrorImpl(e, row, processed - 1, insert));
+                    ignored++;
+
+                    if (onError == ON_ERROR_ABORT) {
+                        break rowloop;
+                    }
+                }
+            }
+
+            // Rollback on errors in COMMIT_ALL mode
+            try {
+                if (commit == COMMIT_ALL) {
+                    if (!errors.isEmpty()) {
+                        stored = 0;
+                        configuration.connectionProvider().acquire().rollback();
+                    }
+                    else {
+                        configuration.connectionProvider().acquire().commit();
+                    }
+                }
+
+                // Commit remaining elements in COMMIT_AFTER mode
+                else if (commit == COMMIT_AFTER) {
+                    if (processed % commitAfter != 0) {
+                        configuration.connectionProvider().acquire().commit();
+                    }
+                }
+            }
+            catch (DataAccessException e) {
+                errors.add(new LoaderErrorImpl(e, null, processed - 1, null));
+            }
+        }
+
+        // SQLExceptions originating from rollbacks or commits are always fatal
+        // They are propagated, and not swallowed
+        catch (SQLException e) {
+            throw Utils.translate(null, e);
+        }
+        finally {
+            reader.close();
+        }
+
+
     }
 
     private final void executeCSV() throws IOException {

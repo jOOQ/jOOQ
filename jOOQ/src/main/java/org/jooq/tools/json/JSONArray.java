@@ -22,6 +22,8 @@ package org.jooq.tools.json;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,7 +32,25 @@ import java.util.List;
  *
  * @author FangYidong<fangyidong@yahoo.com.cn>
  */
-public class JSONArray {
+public class JSONArray extends ArrayList {
+
+
+    /**
+     * Constructs an empty JSONArray.
+     */
+    public JSONArray(){
+        super();
+    }
+
+    /**
+     * Constructs a JSONArray containing the elements of the specified
+     * collection, in the order they are returned by the collection's iterator.
+     *
+     * @param c the collection whose elements are to be placed into this JSONArray
+     */
+    public JSONArray(Collection c){
+        super(c);
+    }
 
     /**
      * Encode a list into JSON text and write it to out. If this list is also a

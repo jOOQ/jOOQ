@@ -579,11 +579,17 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final ForcedType getConfiguredForcedType(Definition definition, DataTypeDefinition definedType) {
         for (ForcedType forcedType : getConfiguredForcedTypes()) {
-            String expressions = forcedType.getExpressions();
+            String expression = forcedType.getExpression();
+
+            if (forcedType.getExpressions() != null) {
+                expression = forcedType.getExpressions();
+                log.warn("DEPRECATED", "The <expressions/> element in <forcedType/> is deprecated. Use <expression/> instead");
+            }
+
             String types = forcedType.getTypes();
             boolean match = true;
 
-            if (expressions != null && !definition.getQualifiedName().matches(expressions)) {
+            if (expression != null && !definition.getQualifiedName().matches(expression)) {
                 match = false;
             }
 

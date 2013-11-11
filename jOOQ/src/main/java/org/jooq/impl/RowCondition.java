@@ -139,7 +139,7 @@ class RowCondition extends AbstractCondition {
 
         // Ordering comparison predicate simulation
         else if (asList(GREATER, GREATER_OR_EQUAL, LESS, LESS_OR_EQUAL).contains(comparator) &&
-                 asList(DERBY, CUBRID, FIREBIRD, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(dialect.family())) {
+                 asList(DERBY, CUBRID, FIREBIRD, INGRES, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(dialect.family())) {
 
             // The order component of the comparator (stripping the equal component)
             Comparator order

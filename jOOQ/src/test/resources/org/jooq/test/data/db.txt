@@ -6,7 +6,7 @@ select 'A';
 > A
 @ rows: 1
 
-select 'A' -- SQL rendered with a free trial version of jOOQ 3.2.0;
+select 'A' -- SQL rendered with a free trial version of jOOQ 3.2.1;
 > A
 > -
 > A
@@ -18,7 +18,7 @@ select 'A', 'B';
 > A B
 @ rows: 1
 
-select 'A', 'B' -- SQL rendered with a free trial version of jOOQ 3.2.0;
+select 'A', 'B' -- SQL rendered with a free trial version of jOOQ 3.2.1;
 > A B
 > - -
 > A B
@@ -31,7 +31,7 @@ select "TABLE1"."ID1", "TABLE1"."NAME1" from "TABLE1";
 > 2   Y
 @ rows: 2
 
-select "TABLE1"."ID1", "TABLE1"."NAME1" from "TABLE1" -- SQL rendered with a free trial version of jOOQ 3.2.0;
+select "TABLE1"."ID1", "TABLE1"."NAME1" from "TABLE1" -- SQL rendered with a free trial version of jOOQ 3.2.1;
 > ID1 NAME1
 > --- -----
 > 1   X
@@ -47,7 +47,7 @@ select "TABLE2"."ID2", "TABLE2"."NAME2" from "TABLE2";
 > +---+-----+
 @ rows: 2
 
-select "TABLE2"."ID2", "TABLE2"."NAME2" from "TABLE2" -- SQL rendered with a free trial version of jOOQ 3.2.0;
+select "TABLE2"."ID2", "TABLE2"."NAME2" from "TABLE2" -- SQL rendered with a free trial version of jOOQ 3.2.1;
 > +---+-----+
 > |ID2|NAME2|
 > +---+-----+

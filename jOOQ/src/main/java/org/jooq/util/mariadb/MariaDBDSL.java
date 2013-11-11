@@ -253,7 +253,7 @@ public class MariaDBDSL extends DSL {
     // -------------------------------------------------------------------------
 
     /**
-     * Get a field based {@link EnumType} by its MariaDB-specific index
+     * Get a field based {@link EnumType} by its MariaDB-specific index.
      * <p>
      * If your MariaDB enum type contains these three values:
      * <code>A, B, C</code> , then this will be the mapping of indexes to

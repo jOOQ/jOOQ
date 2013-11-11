@@ -54,40 +54,40 @@
            <forcedTypes>
                 <forcedType>
                     <name>BOOLEAN</name>
-                    <expressions>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expressions>
+                    <expression>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expression>
                 </forcedType>
                 <forcedType>
                     <name>java.util.UUID</name>
-                    <expressions>(?i:(.*?.)?T_EXOTIC_TYPES.UU)</expressions>
+                    <expression>(?i:(.*?.)?T_EXOTIC_TYPES.UU)</expression>
                 </forcedType>
 
                 <forcedType>
                     <name>org.jooq.test._.converters.Boolean_YES_NO_LC</name>
-                    <expressions>(?i:(.*?.)?T_BOOLEANS.YES_NO_LC)</expressions>
+                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_LC)</expression>
                 </forcedType>
                 <forcedType>
                     <name>org.jooq.test._.converters.Boolean_YES_NO_UC</name>
-                    <expressions>(?i:(.*?.)?T_BOOLEANS.YES_NO_UC)</expressions>
+                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_UC)</expression>
                 </forcedType>
                 <forcedType>
                     <name>org.jooq.test._.converters.Boolean_YN_LC</name>
-                    <expressions>(?i:(.*?.)?T_BOOLEANS.Y_N_LC)</expressions>
+                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_LC)</expression>
                 </forcedType>
                 <forcedType>
                     <name>org.jooq.test._.converters.Boolean_YN_UC</name>
-                    <expressions>(?i:(.*?.)?T_BOOLEANS.Y_N_UC)</expressions>
+                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_UC)</expression>
                 </forcedType>
                 <forcedType>
                     <name>org.jooq.test._.converters.Boolean_TF_LC</name>
-                    <expressions>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_LC)</expressions>
+                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_LC)</expression>
                 </forcedType>
                 <forcedType>
                     <name>org.jooq.test._.converters.Boolean_TF_UC</name>
-                    <expressions>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_UC)</expressions>
+                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_UC)</expression>
                 </forcedType>
                 <forcedType>
                     <name>org.jooq.test._.converters.Boolean_10</name>
-                    <expressions>(?i:(.*?.)?T_BOOLEANS.ONE_ZERO)</expressions>
+                    <expression>(?i:(.*?.)?T_BOOLEANS.ONE_ZERO)</expression>
                 </forcedType>
             </forcedTypes>
         </database>

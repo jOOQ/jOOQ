@@ -252,6 +252,11 @@ class Val<T> extends AbstractParam<T> {
             toSQLCast(context, dataType, getValueLength(), 0, 0);
         }
 
+        // [#2842] Some data types should not be cast to any length in some dialects
+        else if (type == SQLDataType.LONGVARCHAR && asList(SYBASE).contains(family)) {
+            toSQLCast(context, dataType, 0, 0, 0);
+        }
+
         // In all other cases, the bind variable can be cast normally
         else {
             toSQLCast(context, dataType, dataType.length(), dataType.precision(), dataType.scale());

@@ -10,6 +10,25 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.2.1 - November 11, 2013
+================================================================================
+
+This is a patch release with some useful fixes for the 3.0 branch
+
+Bug fixes
+---------
+#2658 - Inefficient emulation of row value expression comparison predicates 
+        <, <=, >, >=. Factor out predicates for improved index usage
+#2792 - data(Object, Object) methods do not unset the value if null is passed
+#2795 - Bad Javadoc on various fetchOne() methods
+#2816 - Manual shows wrong DefaultConfiguration constructor call for use with
+        Spring
+#2819 - Invalid SQL rendered for Ingres row value expression predicates
+#2820 - Invalid SQL rendered for Ingres derived column lists
+#2825 - IngresDatabase treats unique keys as primary keys
+#2831 - Bad Javadoc formatting on MySQLDSL's and MariaDBDSL's enumType() method
+#2842 - Sybase CAST(? AS LONG VARCHAR) must not contain a length
+
 Version 3.2.0 - October 9, 2013
 ================================================================================
 

@@ -171,7 +171,10 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (generateImmutablePojos && generateInterfaces)
             log.info("  immutable pojos", "Immutable POJOs do not have any setters. Hence, setters are also missing from interfaces");
+        else
+            log.info("  none");
 
+        log.info("");
         log.info("----------------------------------------------------------");
 
         String targetPackage = getTargetPackage();

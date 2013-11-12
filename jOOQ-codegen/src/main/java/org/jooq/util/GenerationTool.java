@@ -55,7 +55,12 @@ import java.sql.DriverManager;
 import java.util.List;
 import java.util.Properties;
 
-import javax.xml.bind.JAXB;
+import javax.xml.XMLConstants;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.ValidationEvent;
+import javax.xml.bind.ValidationEventHandler;
+import javax.xml.validation.SchemaFactory;
 
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -402,16 +407,37 @@ public class GenerationTool {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         copyLarge(in, out);
         String xml = out.toString();
+        String xsd = "/xsd/jooq-codegen-3.3.0.xsd";
 
         // TODO [#1201] Add better error handling here
         xml = xml.replaceAll(
             "<(\\w+:)?configuration xmlns(:\\w+)?=\"http://www.jooq.org/xsd/jooq-codegen-\\d+\\.\\d+\\.\\d+.xsd\">",
-            "<$1configuration xmlns$2=\"http://www.jooq.org/xsd/jooq-codegen-3.3.0.xsd\">");
+            "<$1configuration xmlns$2=\"http://www.jooq.org" + xsd + "\">");
 
         xml = xml.replace(
             "<configuration>",
-            "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-3.3.0.xsd\">");
+            "<configuration xmlns=\"http://www.jooq.org" + xsd + "\">");
 
-        return JAXB.unmarshal(new StringReader(xml), Configuration.class);
+        try {
+            SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            javax.xml.validation.Schema schema = sf.newSchema(
+                GenerationTool.class.getResource(xsd)
+            );
+
+            JAXBContext ctx = JAXBContext.newInstance(Configuration.class);
+            Unmarshaller unmarshaller = ctx.createUnmarshaller();
+            unmarshaller.setSchema(schema);
+            unmarshaller.setEventHandler(new ValidationEventHandler() {
+                @Override
+                public boolean handleEvent(ValidationEvent event) {
+                    log.warn("Unmarshal warning", event.getMessage());
+                    return true;
+                }
+            });
+            return (Configuration) unmarshaller.unmarshal(new StringReader(xml));
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

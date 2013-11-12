@@ -20,6 +20,10 @@
       <inputSchema>PUBLIC</inputSchema>
 
       <customTypes>
+        <!-- [#2844] This typo should emit a warning -->
+        <customtype>
+        </customtype>
+        
         <customType>
           <name>org.jooq.test._.converters.Boolean_10</name>
           <converter>org.jooq.test._.converters.Boolean_10_Converter</converter>

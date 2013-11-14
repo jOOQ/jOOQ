@@ -181,6 +181,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(key.getValue(0), record.getValue(TBook_ID()));
             assertEquals(key.getValue(1), record.getValue(TBook_LANGUAGE_ID()));
             assertEquals(key.getValue(2), record.getValue(TBook_TITLE()));
+
+            // Check if the key can be constructed synthetically
+            // See also http://stackoverflow.com/q/19938815/521799
+            Record3<Integer, Integer, String> k = create().newRecord(TBook_ID(), TBook_LANGUAGE_ID(), TBook_TITLE());
+            k.setValue(TBook_ID(), record.getValue(TBook_ID()));
+            k.setValue(TBook_LANGUAGE_ID(), record.getValue(TBook_LANGUAGE_ID()));
+            k.setValue(TBook_TITLE(), record.getValue(TBook_TITLE()));
+            assertEquals(key, k);
+            assertEquals(record, map3.get(k));
         }
 
         // List of Map

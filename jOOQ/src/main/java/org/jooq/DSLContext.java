@@ -1436,6 +1436,8 @@ public interface DSLContext {
     @Support
     Result<Record> fetchFromCSV(String string, char delimiter) throws DataAccessException;
 
+    Result<Record> fetchFromJSON(String string);
+
     /**
      * Fetch all data from a list of strings.
      * <p>

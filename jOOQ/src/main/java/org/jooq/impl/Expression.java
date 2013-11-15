@@ -53,10 +53,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.DSL.bitAnd;
-import static org.jooq.impl.DSL.bitNot;
-import static org.jooq.impl.DSL.bitOr;
-import static org.jooq.impl.DSL.bitXor;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
@@ -159,15 +155,15 @@ class Expression<T> extends AbstractFunction<T> {
         /* [pro] */
         // Oracle has to simulate or/xor
         else if (BIT_OR == operator && ORACLE == family) {
-            return lhs.sub(bitAnd(lhsAsNumber(), rhsAsNumber())).add(rhsAsNumber());
+            return lhs.sub(DSL.bitAnd(lhsAsNumber(), rhsAsNumber())).add(rhsAsNumber());
         }
 
         /* [/pro] */
         // ~(a & b) & (a | b)
         else if (BIT_XOR == operator && asList(ORACLE, SQLITE).contains(family)) {
-            return (Field<T>) bitAnd(
-                bitNot(bitAnd(lhsAsNumber(), rhsAsNumber())),
-                bitOr(lhsAsNumber(), rhsAsNumber()));
+            return (Field<T>) DSL.bitAnd(
+                DSL.bitNot(DSL.bitAnd(lhsAsNumber(), rhsAsNumber())),
+                DSL.bitOr(lhsAsNumber(), rhsAsNumber()));
         }
 
         // Many dialects don't support shifts. Use multiplication/division instead
@@ -188,13 +184,13 @@ class Expression<T> extends AbstractFunction<T> {
 
         // These operators are not supported in any dialect
         else if (BIT_NAND == operator) {
-            return (Field<T>) bitNot(bitAnd(lhsAsNumber(), rhsAsNumber()));
+            return (Field<T>) DSL.bitNot(DSL.bitAnd(lhsAsNumber(), rhsAsNumber()));
         }
         else if (BIT_NOR == operator) {
-            return (Field<T>) bitNot(bitOr(lhsAsNumber(), rhsAsNumber()));
+            return (Field<T>) DSL.bitNot(DSL.bitOr(lhsAsNumber(), rhsAsNumber()));
         }
         else if (BIT_XNOR == operator) {
-            return (Field<T>) bitNot(bitXor(lhsAsNumber(), rhsAsNumber()));
+            return (Field<T>) DSL.bitNot(DSL.bitXor(lhsAsNumber(), rhsAsNumber()));
         }
 
         // ---------------------------------------------------------------------

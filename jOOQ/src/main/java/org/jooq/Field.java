@@ -834,6 +834,156 @@ public interface Field<T> extends GroupField {
     Field<T> modulo(Field<? extends Number> value);
 
     // ------------------------------------------------------------------------
+    // Bitwise operations
+    // ------------------------------------------------------------------------
+
+    /**
+     * The bitwise not operator.
+     *
+     * @see DSL#bitNot(Field)
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Field<T> bitNot();
+
+    /**
+     * The bitwise and operator.
+     *
+     * @see DSL#bitAnd(Field, Field)
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Field<T> bitAnd(T value);
+
+    /**
+     * The bitwise and operator.
+     *
+     * @see DSL#bitAnd(Field, Field)
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Field<T> bitAnd(Field<T> value);
+
+    /**
+     * The bitwise not and operator.
+     *
+     * @see DSL#bitNand(Field, Field)
+     * @see DSL#bitNot(Field)
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Field<T> bitNand(T value);
+
+    /**
+     * The bitwise not and operator.
+     *
+     * @see DSL#bitNand(Field, Field)
+     * @see DSL#bitNot(Field)
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Field<T> bitNand(Field<T> value);
+
+    /**
+     * The bitwise or operator.
+     *
+     * @see DSL#bitOr(Field, Field)
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Field<T> bitOr(T value);
+
+    /**
+     * The bitwise or operator.
+     *
+     * @see DSL#bitOr(Field, Field)
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Field<T> bitOr(Field<T> value);
+
+    /**
+     * The bitwise not or operator.
+     *
+     * @see DSL#bitNor(Field, Field)
+     * @see DSL#bitNot(Field)
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Field<T> bitNor(T value);
+
+    /**
+     * The bitwise not or operator.
+     *
+     * @see DSL#bitNor(Field, Field)
+     * @see DSL#bitNot(Field)
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Field<T> bitNor(Field<T> value);
+
+    /**
+     * The bitwise xor operator.
+     *
+     * @see DSL#bitXor(Field, Field)
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Field<T> bitXor(T value);
+
+    /**
+     * The bitwise xor operator.
+     *
+     * @see DSL#bitXor(Field, Field)
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Field<T> bitXor(Field<T> value);
+
+    /**
+     * The bitwise not xor operator.
+     *
+     * @see DSL#bitXNor(Field, Field)
+     * @see DSL#bitNot(Field)
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Field<T> bitXNor(T value);
+
+    /**
+     * The bitwise not xor operator.
+     *
+     * @see DSL#bitXNor(Field, Field)
+     * @see DSL#bitNot(Field)
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Field<T> bitXNor(Field<T> value);
+
+    /**
+     * The bitwise left shift operator.
+     *
+     * @see DSL#shl(Field, Field)
+     * @see DSL#power(Field, Number)
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Field<T> shl(T value);
+
+    /**
+     * The bitwise left shift operator.
+     *
+     * @see DSL#shl(Field, Field)
+     * @see DSL#power(Field, Number)
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Field<T> shl(Field<T> value);
+
+    /**
+     * The bitwise right shift operator.
+     *
+     * @see DSL#shr(Field, Field)
+     * @see DSL#power(Field, Number)
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Field<T> shr(T value);
+
+    /**
+     * The bitwise right shift operator.
+     *
+     * @see DSL#shr(Field, Field)
+     * @see DSL#power(Field, Number)
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Field<T> shr(Field<T> value);
+
+    // ------------------------------------------------------------------------
     // NULL predicates
     // ------------------------------------------------------------------------
 

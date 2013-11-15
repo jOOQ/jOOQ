@@ -59,6 +59,7 @@ import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.DIVIDE;
 import static org.jooq.impl.ExpressionOperator.MULTIPLY;
@@ -428,6 +429,114 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Override
     public final Field<T> modulo(Field<? extends Number> value) {
         return mod(value);
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Bitwise operations
+    // ------------------------------------------------------------------------
+    // Unsafe casting is needed here, as bitwise operations only work on
+    // numeric values...
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Field<T> bitNot() {
+        return DSL.bitNot((Field) this);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Field<T> bitAnd(T value) {
+        return DSL.bitAnd((Field) this, (Field) val(value, this));
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Field<T> bitAnd(Field<T> value) {
+        return DSL.bitAnd((Field) this, (Field) value);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Field<T> bitNand(T value) {
+        return DSL.bitNand((Field) this, (Field) val(value, this));
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Field<T> bitNand(Field<T> value) {
+        return DSL.bitNand((Field) this, (Field) value);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Field<T> bitOr(T value) {
+        return DSL.bitOr((Field) this, (Field) val(value, this));
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Field<T> bitOr(Field<T> value) {
+        return DSL.bitOr((Field) this, (Field) value);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Field<T> bitNor(T value) {
+        return DSL.bitNor((Field) this, (Field) val(value, this));
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Field<T> bitNor(Field<T> value) {
+        return DSL.bitNor((Field) this, (Field) value);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Field<T> bitXor(T value) {
+        return DSL.bitXor((Field) this, (Field) val(value, this));
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Field<T> bitXor(Field<T> value) {
+        return DSL.bitXor((Field) this, (Field) value);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Field<T> bitXNor(T value) {
+        return DSL.bitXNor((Field) this, (Field) val(value, this));
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Field<T> bitXNor(Field<T> value) {
+        return DSL.bitXNor((Field) this, (Field) value);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Field<T> shl(T value) {
+        return DSL.shl((Field) this, (Field) val(value, this));
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Field<T> shl(Field<T> value) {
+        return DSL.shl((Field) this, (Field) value);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Field<T> shr(T value) {
+        return DSL.shr((Field) this, (Field) val(value, this));
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Field<T> shr(Field<T> value) {
+        return DSL.shr((Field) this, (Field) value);
     }
 
     // ------------------------------------------------------------------------

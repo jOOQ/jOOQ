@@ -41,7 +41,146 @@
 
 package org.jooq.impl;
 
-import org.jooq.*;
+import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.conf.ParamType.NAMED;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.queryPart;
+import static org.jooq.impl.DSL.template;
+import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.Utils.list;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.io.StringReader;
+import java.math.BigInteger;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Generated;
+import javax.sql.DataSource;
+
+import org.jooq.Attachable;
+import org.jooq.Batch;
+import org.jooq.BatchBindStep;
+import org.jooq.BindContext;
+import org.jooq.Condition;
+import org.jooq.Configuration;
+import org.jooq.ConnectionProvider;
+import org.jooq.Cursor;
+import org.jooq.DSLContext;
+import org.jooq.DataType;
+import org.jooq.DeleteQuery;
+import org.jooq.DeleteWhereStep;
+import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
+import org.jooq.Field;
+import org.jooq.InsertQuery;
+import org.jooq.InsertSetStep;
+import org.jooq.InsertValuesStep1;
+import org.jooq.InsertValuesStep10;
+import org.jooq.InsertValuesStep11;
+import org.jooq.InsertValuesStep12;
+import org.jooq.InsertValuesStep13;
+import org.jooq.InsertValuesStep14;
+import org.jooq.InsertValuesStep15;
+import org.jooq.InsertValuesStep16;
+import org.jooq.InsertValuesStep17;
+import org.jooq.InsertValuesStep18;
+import org.jooq.InsertValuesStep19;
+import org.jooq.InsertValuesStep2;
+import org.jooq.InsertValuesStep20;
+import org.jooq.InsertValuesStep21;
+import org.jooq.InsertValuesStep22;
+import org.jooq.InsertValuesStep3;
+import org.jooq.InsertValuesStep4;
+import org.jooq.InsertValuesStep5;
+import org.jooq.InsertValuesStep6;
+import org.jooq.InsertValuesStep7;
+import org.jooq.InsertValuesStep8;
+import org.jooq.InsertValuesStep9;
+import org.jooq.InsertValuesStepN;
+import org.jooq.LoaderOptionsStep;
+import org.jooq.MergeKeyStep1;
+import org.jooq.MergeKeyStep10;
+import org.jooq.MergeKeyStep11;
+import org.jooq.MergeKeyStep12;
+import org.jooq.MergeKeyStep13;
+import org.jooq.MergeKeyStep14;
+import org.jooq.MergeKeyStep15;
+import org.jooq.MergeKeyStep16;
+import org.jooq.MergeKeyStep17;
+import org.jooq.MergeKeyStep18;
+import org.jooq.MergeKeyStep19;
+import org.jooq.MergeKeyStep2;
+import org.jooq.MergeKeyStep20;
+import org.jooq.MergeKeyStep21;
+import org.jooq.MergeKeyStep22;
+import org.jooq.MergeKeyStep3;
+import org.jooq.MergeKeyStep4;
+import org.jooq.MergeKeyStep5;
+import org.jooq.MergeKeyStep6;
+import org.jooq.MergeKeyStep7;
+import org.jooq.MergeKeyStep8;
+import org.jooq.MergeKeyStep9;
+import org.jooq.MergeKeyStepN;
+import org.jooq.MergeUsingStep;
+import org.jooq.Meta;
+import org.jooq.Param;
+import org.jooq.Query;
+import org.jooq.QueryPart;
+import org.jooq.Record;
+import org.jooq.Record1;
+import org.jooq.Record10;
+import org.jooq.Record11;
+import org.jooq.Record12;
+import org.jooq.Record13;
+import org.jooq.Record14;
+import org.jooq.Record15;
+import org.jooq.Record16;
+import org.jooq.Record17;
+import org.jooq.Record18;
+import org.jooq.Record19;
+import org.jooq.Record2;
+import org.jooq.Record20;
+import org.jooq.Record21;
+import org.jooq.Record22;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.Record5;
+import org.jooq.Record6;
+import org.jooq.Record7;
+import org.jooq.Record8;
+import org.jooq.Record9;
+import org.jooq.RenderContext;
+import org.jooq.Result;
+import org.jooq.ResultQuery;
+import org.jooq.SQLDialect;
+import org.jooq.Schema;
+import org.jooq.Select;
+import org.jooq.SelectQuery;
+import org.jooq.SelectSelectStep;
+import org.jooq.SelectWhereStep;
+import org.jooq.Sequence;
+import org.jooq.Table;
+import org.jooq.TableLike;
+import org.jooq.TableRecord;
+import org.jooq.TruncateIdentityStep;
+import org.jooq.UDT;
+import org.jooq.UDTRecord;
+import org.jooq.UpdatableRecord;
+import org.jooq.UpdateQuery;
+import org.jooq.UpdateSetFirstStep;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
@@ -49,20 +188,6 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
 import org.jooq.tools.csv.CSVReader;
 import org.jooq.tools.json.JSONReader;
-
-import javax.annotation.Generated;
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.Serializable;
-import java.io.StringReader;
-import java.math.BigInteger;
-import java.sql.*;
-import java.util.*;
-
-import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.conf.ParamType.NAMED;
-import static org.jooq.impl.DSL.*;
-import static org.jooq.impl.Utils.list;
 
 /**
  * A default implementation for {@link DSLContext}.
@@ -627,7 +752,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return result;
     }
 
-// [jooq-tools] START [select]
+    // [jooq-tools] START [select]
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
@@ -761,7 +886,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-// [jooq-tools] END [select]
+    // [jooq-tools] END [select]
 
     @Override
     public SelectSelectStep<Record> selectDistinct(Collection<? extends Field<?>> fields) {
@@ -777,7 +902,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return result;
     }
 
-// [jooq-tools] START [selectDistinct]
+    // [jooq-tools] START [selectDistinct]
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
@@ -911,7 +1036,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-// [jooq-tools] END [selectDistinct]
+    // [jooq-tools] END [selectDistinct]
 
     @Override
     public SelectSelectStep<Record1<Integer>> selectZero() {
@@ -954,7 +1079,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return new InsertImpl(configuration, into, Collections.<Field<?>>emptyList());
     }
 
-// [jooq-tools] START [insert]
+    // [jooq-tools] START [insert]
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
@@ -1088,7 +1213,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 }));
     }
 
-// [jooq-tools] END [insert]
+    // [jooq-tools] END [insert]
 
     @Override
     public <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Field<?>... fields) {
@@ -1115,7 +1240,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return new MergeImpl(configuration, table);
     }
 
-// [jooq-tools] START [merge]
+    // [jooq-tools] START [merge]
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
@@ -1249,7 +1374,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
     }
 
-// [jooq-tools] END [merge]
+    // [jooq-tools] END [merge]
 
     @Override
     public <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Field<?>... fields) {
@@ -1570,7 +1695,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return (Record22) newRecord(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-// [jooq-tools] END [newRecord]
+    // [jooq-tools] END [newRecord]
 
     @Override
     public <R extends UDTRecord<R>> R newRecord(UDT<R> type) {
@@ -1585,14 +1710,14 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     @Override
     public <R extends Record> R newRecord(Table<R> table, final Object source) {
         return Utils.newRecord(table, configuration)
-                    .operate(new RecordOperation<R, RuntimeException>() {
+            .operate(new RecordOperation<R, RuntimeException>() {
 
-            @Override
-            public R operate(R record) {
-                record.from(source);
-                return record;
-            }
-        });
+                @Override
+                public R operate(R record) {
+                    record.from(source);
+                    return record;
+                }
+            });
     }
 
     @Override
@@ -1670,11 +1795,13 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     private final <T, R extends Record1<T>> T value1(R record) {
-        if (record == null)
+        if (record == null) {
             return null;
+        }
 
-        if (record.size() != 1)
+        if (record.size() != 1) {
             throw new InvalidResultException("Record contains more than one value : " + record);
+        }
 
         return record.value1();
     }

@@ -41,15 +41,8 @@
 
 package org.jooq.impl;
 
-import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.conf.ParamType.NAMED;
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.fieldByName;
-import static org.jooq.impl.DSL.queryPart;
-import static org.jooq.impl.DSL.template;
-import static org.jooq.impl.DSL.trueCondition;
-import static org.jooq.impl.Utils.list;
-
+import javax.annotation.Generated;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringReader;
@@ -66,9 +59,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.Generated;
-import javax.sql.DataSource;
 
 import org.jooq.Attachable;
 import org.jooq.Batch;
@@ -188,6 +178,15 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
 import org.jooq.tools.csv.CSVReader;
 import org.jooq.tools.json.JSONReader;
+
+import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.conf.ParamType.NAMED;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.queryPart;
+import static org.jooq.impl.DSL.template;
+import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.Utils.list;
 
 /**
  * A default implementation for {@link DSLContext}.

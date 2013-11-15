@@ -40,10 +40,16 @@
  */
 package org.jooq.test._.testcases;
 
-import org.jooq.*;
-import org.jooq.test.jOOQAbstractTest;
-
 import java.sql.Date;
+
+import org.jooq.Loader;
+import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Record6;
+import org.jooq.TableRecord;
+import org.jooq.UpdatableRecord;
+import org.jooq.test.jOOQAbstractTest;
 
 // ...
 

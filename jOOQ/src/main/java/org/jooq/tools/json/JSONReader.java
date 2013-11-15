@@ -8,6 +8,10 @@ import java.util.*;
 
 /**
  * A very simple JSON reader based on Simple JSON.
+ *
+ * @author Johannes Bühler
+ *
+ * @since 3.3.0
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class JSONReader implements Closeable {

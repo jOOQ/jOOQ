@@ -1,13 +1,22 @@
 package org.jooq.test._.testcases;
 
-import org.jooq.*;
-import org.jooq.test.BaseTest;
-import org.jooq.test.jOOQAbstractTest;
-import org.junit.Test;
-
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Arrays;
+
+import org.jooq.Field;
+import org.jooq.Loader;
+import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Record6;
+import org.jooq.Result;
+import org.jooq.TableRecord;
+import org.jooq.UpdatableRecord;
+import org.jooq.test.BaseTest;
+import org.jooq.test.jOOQAbstractTest;
+
+import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;

@@ -43,6 +43,7 @@ package org.jooq.test._.testcases;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
+import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.impl.DSL.count;
 
 import java.sql.Date;
@@ -102,7 +103,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Empty CSV file
         // --------------
-        Loader<A> loader = createLoader1();
+        Loader<A> loader = createForEmptyFile();
 
         assertEquals(0, loader.processed());
         assertEquals(0, loader.errors().size());
@@ -113,8 +114,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Constraint violations (LAST_NAME is NOT NULL)
         // Loading is aborted
         // ---------------------------------------------
-        loader =
-                createLoader2();
+        loader = createLoaderAbortingOnConstraintViolationOnLAST_NAME();
 
         // [#812] Reset stale connection. Seems to be necessary in Postgres
         resetLoaderConnection();
@@ -129,7 +129,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Constraint violations (LAST_NAME is NOT NULL)
         // Errors are ignored
         // ---------------------------------------------
-        loader = createLoader3();
+        loader = createLoaderIgnoringConstraintViolationOnLAST_NAME();
 
         // [#812] Reset stale connection. Seems to be necessary in Postgres
         resetLoaderConnection();
@@ -145,8 +145,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Constraint violations (Duplicate records)
         // Loading is aborted
         // -----------------------------------------
-        loader =
-                createLoader4();
+        loader = createLoaderAbortingOnDuplicateRecords();
 
         // [#812] Reset stale connection. Seems to be necessary in Postgres
         resetLoaderConnection();
@@ -161,7 +160,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Constraint violations (Duplicate records)
         // Errors are ignored
         // -----------------------------------------
-        loader = createLoader5();
+        loader = createLoaderIgnoringDuplicateRecords();
 
         assertEquals(2, loader.processed());
         assertEquals(0, loader.errors().size());
@@ -170,8 +169,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Two records with different NULL representations for FIRST_NAME
         // --------------------------------------------------------------
-        loader =
-                createLoader6();
+        loader = createLoaderWithDifferentNulls();
 
         assertEquals(2, loader.processed());
         assertEquals(2, loader.stored());
@@ -180,10 +178,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
 
         boolean oracle = false;
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxx xx xxxxxxx
-            xxxxxx x xxxxx
-        xx [/pro] */
+        /* [pro] */
+        if (dialect().family() == ORACLE)
+            oracle = true;
+        /* [/pro] */
 
         assertEquals(2, (int) create().select(count)
                 .from(TAuthor())
@@ -198,7 +196,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Two records but don't load one column, and specify a value for NULL
         // -------------------------------------------------------------------
-        loader = createLoader7();
+        loader = createLoaderButDontLoadAllColumns();
 
         assertEquals(2, loader.processed());
         assertEquals(2, loader.stored());
@@ -225,10 +223,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Update duplicate records
         // ------------------------
         switch (dialect()) {
-            /* [pro] xx
-            xxxx xxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+            /* [pro] */
+            case ASE:
+            case INGRES:
+            /* [/pro] */
             case DERBY:
             case H2:
             case POSTGRES:
@@ -238,7 +236,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 break;
 
             default: {
-                loader = createLoader8();
+                loader = createLoaderUpdatingDuplicateRecords();
 
                 assertEquals(2, loader.processed());
                 assertEquals(2, loader.stored());
@@ -268,7 +266,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Rollback on duplicate keys
         // --------------------------
-        loader = createLoader9();
+        loader = createLoaderWithRollbackOnDuplicateKeys();
 
         assertEquals(2, loader.processed());
         assertEquals(0, loader.stored());
@@ -289,7 +287,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Commit and ignore duplicates
         // ----------------------------
-        loader = createLoader10();
+        loader = createLoaderCommittingAndIgnoringDuplicates();
 
         assertEquals(3, loader.processed());
         assertEquals(1, loader.stored());
@@ -309,25 +307,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Coelho", result.getValue(1, TAuthor_LAST_NAME()));
     }
 
-    protected abstract Loader<A> createLoader9() throws java.io.IOException;
+    protected abstract Loader<A> createLoaderWithRollbackOnDuplicateKeys() throws java.io.IOException;
 
-    protected abstract Loader<A> createLoader8() throws java.io.IOException;
+    protected abstract Loader<A> createLoaderUpdatingDuplicateRecords() throws java.io.IOException;
 
-    protected abstract Loader<A> createLoader7() throws java.io.IOException;
+    protected abstract Loader<A> createLoaderButDontLoadAllColumns() throws java.io.IOException;
 
-    protected abstract Loader<A> createLoader6() throws java.io.IOException;
+    protected abstract Loader<A> createLoaderWithDifferentNulls() throws java.io.IOException;
 
-    protected abstract Loader<A> createLoader5() throws java.io.IOException;
+    protected abstract Loader<A> createLoaderIgnoringDuplicateRecords() throws java.io.IOException;
 
-    protected abstract Loader<A> createLoader4() throws java.io.IOException;
+    protected abstract Loader<A> createLoaderAbortingOnDuplicateRecords() throws java.io.IOException;
 
-    protected abstract Loader<A> createLoader3() throws java.io.IOException;
+    protected abstract Loader<A> createLoaderIgnoringConstraintViolationOnLAST_NAME() throws java.io.IOException;
 
-    protected abstract Loader<A> createLoader10() throws java.io.IOException;
+    protected abstract Loader<A> createLoaderCommittingAndIgnoringDuplicates() throws java.io.IOException;
 
-    protected abstract Loader<A> createLoader2() throws java.io.IOException;
+    protected abstract Loader<A> createLoaderAbortingOnConstraintViolationOnLAST_NAME() throws java.io.IOException;
 
-    protected abstract Loader<A> createLoader1() throws java.io.IOException;
+    protected abstract Loader<A> createForEmptyFile() throws java.io.IOException;
 
     private void resetLoaderConnection() throws SQLException {
         jOOQAbstractTest.connection.rollback();

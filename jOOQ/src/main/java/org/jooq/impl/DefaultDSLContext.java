@@ -41,15 +41,8 @@
 
 package org.jooq.impl;
 
-import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.conf.ParamType.NAMED;
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.fieldByName;
-import static org.jooq.impl.DSL.queryPart;
-import static org.jooq.impl.DSL.template;
-import static org.jooq.impl.DSL.trueCondition;
-import static org.jooq.impl.Utils.list;
-
+import javax.annotation.Generated;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringReader;
@@ -63,11 +56,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.Generated;
-import javax.sql.DataSource;
 
 import org.jooq.Attachable;
 import org.jooq.Batch;
@@ -186,6 +177,16 @@ import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
 import org.jooq.tools.csv.CSVReader;
+import org.jooq.tools.json.JSONReader;
+
+import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.conf.ParamType.NAMED;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.queryPart;
+import static org.jooq.impl.DSL.template;
+import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.Utils.list;
 
 /**
  * A default implementation for {@link DSLContext}.
@@ -665,6 +666,32 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
+    public Result<Record> fetchFromJSON(String string) {
+        List<String[]> data = new LinkedList<String[]>();
+        JSONReader reader = null;
+        try {
+            reader = new JSONReader(new StringReader(string));
+            List<String[]> records = reader.readAll();
+            String[] fields = reader.getFields();
+            data.add(fields);
+            data.addAll(records);
+        } catch (IOException e) {
+            throw new DataAccessException("Could not read the JSON string", e);
+        } finally {
+            try  {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException ignore) {
+            }
+        }
+
+        return fetchFromStringData(data);
+    }
+
+
+
+    @Override
     public Result<Record> fetchFromStringData(String[]... data) {
         return fetchFromStringData(list(data));
     }
@@ -724,7 +751,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return result;
     }
 
-// [jooq-tools] START [select]
+    // [jooq-tools] START [select]
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
@@ -858,7 +885,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-// [jooq-tools] END [select]
+    // [jooq-tools] END [select]
 
     @Override
     public SelectSelectStep<Record> selectDistinct(Collection<? extends Field<?>> fields) {
@@ -874,7 +901,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return result;
     }
 
-// [jooq-tools] START [selectDistinct]
+    // [jooq-tools] START [selectDistinct]
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
@@ -1008,7 +1035,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-// [jooq-tools] END [selectDistinct]
+    // [jooq-tools] END [selectDistinct]
 
     @Override
     public SelectSelectStep<Record1<Integer>> selectZero() {
@@ -1051,7 +1078,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return new InsertImpl(configuration, into, Collections.<Field<?>>emptyList());
     }
 
-// [jooq-tools] START [insert]
+    // [jooq-tools] START [insert]
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
@@ -1185,7 +1212,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 }));
     }
 
-// [jooq-tools] END [insert]
+    // [jooq-tools] END [insert]
 
     @Override
     public <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Field<?>... fields) {
@@ -1212,7 +1239,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return new MergeImpl(configuration, table);
     }
 
-// [jooq-tools] START [merge]
+    // [jooq-tools] START [merge]
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
@@ -1346,7 +1373,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
     }
 
-// [jooq-tools] END [merge]
+    // [jooq-tools] END [merge]
 
     @Override
     public <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Field<?>... fields) {
@@ -1667,7 +1694,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return (Record22) newRecord(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-// [jooq-tools] END [newRecord]
+    // [jooq-tools] END [newRecord]
 
     @Override
     public <R extends UDTRecord<R>> R newRecord(UDT<R> type) {
@@ -1682,14 +1709,14 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     @Override
     public <R extends Record> R newRecord(Table<R> table, final Object source) {
         return Utils.newRecord(table, configuration)
-                    .operate(new RecordOperation<R, RuntimeException>() {
+            .operate(new RecordOperation<R, RuntimeException>() {
 
-            @Override
-            public R operate(R record) {
-                record.from(source);
-                return record;
-            }
-        });
+                @Override
+                public R operate(R record) {
+                    record.from(source);
+                    return record;
+                }
+            });
     }
 
     @Override
@@ -1767,11 +1794,13 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     private final <T, R extends Record1<T>> T value1(R record) {
-        if (record == null)
+        if (record == null) {
             return null;
+        }
 
-        if (record.size() != 1)
+        if (record.size() != 1) {
             throw new InvalidResultException("Record contains more than one value : " + record);
+        }
 
         return record.value1();
     }

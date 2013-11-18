@@ -82,13 +82,12 @@ import org.jooq.impl.DSL;
  * A contextual DSL providing "attached" implementations to the
  * <code>org.jooq</code> interfaces.
  * <p>
- * Apart from the {@link DSL}, this contextual DSL is the main entry point
- * for client code, to access jOOQ classes and functionality that are related to
- * {@link Query} execution. Unlike objects created through the
- * <code>DSL</code> type, objects created from a <code>DSLContext</code> will be
- * "attached" to the <code>DSLContext</code>'s {@link #configuration()}, such
- * that they can be executed immediately in a fluent style. An example is given
- * here:
+ * Apart from the {@link DSL}, this contextual DSL is the main entry point for
+ * client code, to access jOOQ classes and functionality that are related to
+ * {@link Query} execution. Unlike objects created through the <code>DSL</code>
+ * type, objects created from a <code>DSLContext</code> will be "attached" to
+ * the <code>DSLContext</code>'s {@link #configuration()}, such that they can be
+ * executed immediately in a fluent style. An example is given here:
  * <p>
  * <code><pre>
  * DSLContext create = DSL.using(connection, dialect);
@@ -141,8 +140,8 @@ public interface DSLContext {
      * Map a table to another one.
      * <p>
      * This will map a table onto another one, depending on configured table
-     * mapping in this <code>DSLContext</code>. If no applicable table mapping can
-     * be found, the table itself is returned.
+     * mapping in this <code>DSLContext</code>. If no applicable table mapping
+     * can be found, the table itself is returned.
      *
      * @param table A table
      * @return The mapped table
@@ -166,7 +165,8 @@ public interface DSLContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Get a new {@link RenderContext} for the context of this <code>DSLContext</code>.
+     * Get a new {@link RenderContext} for the context of this
+     * <code>DSLContext</code>.
      * <p>
      * This will return an initialised render context as such:
      * <ul>
@@ -176,7 +176,9 @@ public interface DSLContext {
      * <li> <code>{@link RenderContext#declareFields()} == false</code></li>
      * <li> <code>{@link RenderContext#declareTables()} == false</code></li>
      * <li> <code>{@link RenderContext#format()} == false</code></li>
-     * <li> <code>{@link RenderContext#paramType()} == {@link ParamType#INDEXED}</code></li>
+     * <li>
+     * <code>{@link RenderContext#paramType()} == {@link ParamType#INDEXED}</code>
+     * </li>
      * <li> <code>{@link RenderContext#qualify()} == true</code></li>
      * <li> <code>{@link RenderContext#subquery()} == false</code></li>
      * </ul>
@@ -194,8 +196,8 @@ public interface DSLContext {
     String render(QueryPart part);
 
     /**
-     * Render a QueryPart in the context of this <code>DSLContext</code>, rendering bind
-     * variables as named parameters.
+     * Render a QueryPart in the context of this <code>DSLContext</code>,
+     * rendering bind variables as named parameters.
      * <p>
      * This is the same as calling
      * <code>renderContext().namedParams(true).render(part)</code>
@@ -206,8 +208,8 @@ public interface DSLContext {
     String renderNamedParams(QueryPart part);
 
     /**
-     * Render a QueryPart in the context of this <code>DSLContext</code>, inlining all bind
-     * variables.
+     * Render a QueryPart in the context of this <code>DSLContext</code>,
+     * inlining all bind variables.
      * <p>
      * This is the same as calling
      * <code>renderContext().inline(true).render(part)</code>
@@ -253,7 +255,8 @@ public interface DSLContext {
     Param<?> extractParam(QueryPart part, String name);
 
     /**
-     * Get a new {@link BindContext} for the context of this <code>DSLContext</code>.
+     * Get a new {@link BindContext} for the context of this
+     * <code>DSLContext</code>.
      * <p>
      * This will return an initialised bind context as such:
      * <ul>
@@ -816,7 +819,8 @@ public interface DSLContext {
      * @return The results from the executed query. This may be
      *         <code>null</code> if the database returned no records
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record or a record with more than one value.
+     * @throws InvalidResultException if the query returned more than one record
+     *             or a record with more than one value.
      */
     @Support
     Object fetchValue(String sql, QueryPart... parts) throws DataAccessException, InvalidResultException;
@@ -1436,6 +1440,8 @@ public interface DSLContext {
     @Support
     Result<Record> fetchFromCSV(String string, char delimiter) throws DataAccessException;
 
+    Result<Record> fetchFromJSON(String string);
+
     /**
      * Fetch all data from a list of strings.
      * <p>
@@ -1543,16 +1549,16 @@ public interface DSLContext {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Field#in(Select)}, {@link Field#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
-     * create a subselect), consider using the static
-     * {@link DSL#select(Field)} instead.
+     * create a subselect), consider using the static {@link DSL#select(Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1568,17 +1574,14 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
+    @Transition(name = "SELECT", args = "Field+")
     <T1> SelectSelectStep<Record1<T1>> select(Field<T1> field1);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row2#in(Select)}, {@link Row2#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -1602,17 +1605,14 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
+    @Transition(name = "SELECT", args = "Field+")
     <T1, T2> SelectSelectStep<Record2<T1, T2>> select(Field<T1> field1, Field<T2> field2);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row3#in(Select)}, {@link Row3#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -1636,17 +1636,14 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
+    @Transition(name = "SELECT", args = "Field+")
     <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row4#in(Select)}, {@link Row4#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -1670,17 +1667,15 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> select(Field<T1> field1, Field<T2> field2,
+        Field<T3> field3, Field<T4> field4);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row5#in(Select)}, {@link Row5#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -1704,17 +1699,15 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> select(Field<T1> field1, Field<T2> field2,
+        Field<T3> field3, Field<T4> field4, Field<T5> field5);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row6#in(Select)}, {@link Row6#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -1738,17 +1731,15 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> select(Field<T1> field1,
+        Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row7#in(Select)}, {@link Row7#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -1756,7 +1747,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1772,17 +1764,15 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> select(Field<T1> field1,
+        Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row8#in(Select)}, {@link Row8#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -1790,7 +1780,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1806,17 +1797,16 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select(Field<T1> field1,
+        Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7,
+        Field<T8> field8);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row9#in(Select)}, {@link Row9#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -1824,7 +1814,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1840,17 +1831,16 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> select(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row10#in(Select)}, {@link Row10#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -1858,7 +1848,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1874,17 +1865,16 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row11#in(Select)}, {@link Row11#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -1892,7 +1882,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1908,17 +1899,16 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row12#in(Select)}, {@link Row12#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -1926,7 +1916,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1942,17 +1933,16 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> select(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row13#in(Select)}, {@link Row13#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -1960,7 +1950,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1976,17 +1967,17 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row14#in(Select)}, {@link Row14#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -1994,7 +1985,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2010,17 +2002,17 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> select(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row15#in(Select)}, {@link Row15#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -2028,7 +2020,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2044,17 +2037,17 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row16#in(Select)}, {@link Row16#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -2062,7 +2055,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2078,17 +2072,17 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row17#in(Select)}, {@link Row17#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -2096,7 +2090,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2112,17 +2107,18 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> select(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row18#in(Select)}, {@link Row18#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -2130,7 +2126,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2146,17 +2143,18 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> select(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row19#in(Select)}, {@link Row19#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -2164,7 +2162,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2180,17 +2179,18 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row20#in(Select)}, {@link Row20#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -2198,7 +2198,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2214,17 +2215,18 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> select(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row21#in(Select)}, {@link Row21#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -2232,7 +2234,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2248,17 +2251,18 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> select(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
 
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(Field...)}, except that it
-     * declares additional record-level typesafety, which is needed by
+     * This is the same as {@link #select(Field...)}, except that it declares
+     * additional record-level typesafety, which is needed by
      * {@link Row22#in(Select)}, {@link Row22#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
@@ -2266,7 +2270,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2282,13 +2287,15 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
+    @Transition(name = "SELECT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21,
+        Field<T22> field22);
 
-// [jooq-tools] END [select]
+    // [jooq-tools] END [select]
 
     /**
      * Create a new DSL select statement.
@@ -2368,10 +2375,7 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
     <T1> SelectSelectStep<Record1<T1>> selectDistinct(Field<T1> field1);
 
     /**
@@ -2402,10 +2406,7 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
     <T1, T2> SelectSelectStep<Record2<T1, T2>> selectDistinct(Field<T1> field1, Field<T2> field2);
 
     /**
@@ -2436,11 +2437,9 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> selectDistinct(Field<T1> field1, Field<T2> field2,
+        Field<T3> field3);
 
     /**
      * Create a new DSL select statement.
@@ -2470,11 +2469,9 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> selectDistinct(Field<T1> field1, Field<T2> field2,
+        Field<T3> field3, Field<T4> field4);
 
     /**
      * Create a new DSL select statement.
@@ -2504,11 +2501,9 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> selectDistinct(Field<T1> field1,
+        Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
 
     /**
      * Create a new DSL select statement.
@@ -2522,7 +2517,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2538,11 +2534,9 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> selectDistinct(Field<T1> field1,
+        Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
     /**
      * Create a new DSL select statement.
@@ -2556,7 +2550,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2572,11 +2567,9 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> selectDistinct(Field<T1> field1,
+        Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
 
     /**
      * Create a new DSL select statement.
@@ -2590,7 +2583,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2606,11 +2600,10 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> selectDistinct(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8);
 
     /**
      * Create a new DSL select statement.
@@ -2624,7 +2617,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2640,11 +2634,10 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> selectDistinct(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9);
 
     /**
      * Create a new DSL select statement.
@@ -2658,7 +2651,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2674,11 +2668,10 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> selectDistinct(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
 
     /**
      * Create a new DSL select statement.
@@ -2692,7 +2685,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2708,11 +2702,10 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> selectDistinct(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
 
     /**
      * Create a new DSL select statement.
@@ -2726,7 +2719,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2742,11 +2736,10 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> selectDistinct(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
 
     /**
      * Create a new DSL select statement.
@@ -2760,7 +2753,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2776,11 +2770,11 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> selectDistinct(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13);
 
     /**
      * Create a new DSL select statement.
@@ -2794,7 +2788,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2810,11 +2805,11 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> selectDistinct(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14);
 
     /**
      * Create a new DSL select statement.
@@ -2828,7 +2823,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2844,11 +2840,11 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> selectDistinct(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
 
     /**
      * Create a new DSL select statement.
@@ -2862,7 +2858,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2878,11 +2875,11 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> selectDistinct(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
 
     /**
      * Create a new DSL select statement.
@@ -2896,7 +2893,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2912,11 +2910,12 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> selectDistinct(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17);
 
     /**
      * Create a new DSL select statement.
@@ -2930,7 +2929,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2946,11 +2946,12 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> selectDistinct(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18);
 
     /**
      * Create a new DSL select statement.
@@ -2964,7 +2965,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2980,11 +2982,12 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> selectDistinct(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19);
 
     /**
      * Create a new DSL select statement.
@@ -2998,7 +3001,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -3014,11 +3018,12 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> selectDistinct(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
 
     /**
      * Create a new DSL select statement.
@@ -3032,7 +3037,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -3048,11 +3054,12 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> selectDistinct(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
 
     /**
      * Create a new DSL select statement.
@@ -3066,7 +3073,8 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -3082,13 +3090,15 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
+    @Transition(name = "SELECT DISTINCT", args = "Field+")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> selectDistinct(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21,
+        Field<T22> field22);
 
-// [jooq-tools] END [selectDistinct]
+    // [jooq-tools] END [selectDistinct]
 
     /**
      * Create a new DSL select statement for a constant <code>0</code> literal.
@@ -3096,8 +3106,8 @@ public interface DSLContext {
      * This creates an attached, renderable and executable <code>SELECT</code>
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
-     * create a subselect), consider using the static
-     * {@link DSL#selectZero()} instead.
+     * create a subselect), consider using the static {@link DSL#selectZero()}
+     * instead.
      * <p>
      * Example: <code><pre>
      * DSLContext create = DSL.using(configuration);
@@ -3113,9 +3123,7 @@ public interface DSLContext {
      * @see DSL#selectZero()
      */
     @Support
-    @Transition(
-        name = "SELECT ZERO"
-    )
+    @Transition(name = "SELECT ZERO")
     SelectSelectStep<Record1<Integer>> selectZero();
 
     /**
@@ -3124,8 +3132,8 @@ public interface DSLContext {
      * This creates an attached, renderable and executable <code>SELECT</code>
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
-     * create a subselect), consider using the static
-     * {@link DSL#selectOne()} instead.
+     * create a subselect), consider using the static {@link DSL#selectOne()}
+     * instead.
      * <p>
      * Example: <code><pre>
      * DSLContext create = DSL.using(configuration);
@@ -3141,9 +3149,7 @@ public interface DSLContext {
      * @see DSL#selectOne()
      */
     @Support
-    @Transition(
-        name = "SELECT ONE"
-    )
+    @Transition(name = "SELECT ONE")
     SelectSelectStep<Record1<Integer>> selectOne();
 
     /**
@@ -3152,8 +3158,8 @@ public interface DSLContext {
      * This creates an attached, renderable and executable <code>SELECT</code>
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
-     * create a subselect), consider using the static
-     * {@link DSL#selectCount()} instead.
+     * create a subselect), consider using the static {@link DSL#selectCount()}
+     * instead.
      * <p>
      * Example: <code><pre>
      * DSLContext create = DSL.using(configuration);
@@ -3168,9 +3174,7 @@ public interface DSLContext {
      * @see DSL#selectCount()
      */
     @Support
-    @Transition(
-        name = "SELECT COUNT"
-    )
+    @Transition(name = "SELECT COUNT")
     SelectSelectStep<Record1<Integer>> selectCount();
 
     /**
@@ -3275,7 +3279,8 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3> InsertValuesStep3<R, T1, T2, T3> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3);
+    <R extends Record, T1, T2, T3> InsertValuesStep3<R, T1, T2, T3> insertInto(Table<R> into, Field<T1> field1,
+        Field<T2> field2, Field<T3> field3);
 
     /**
      * Create a new DSL insert statement.
@@ -3293,7 +3298,8 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4> InsertValuesStep4<R, T1, T2, T3, T4> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
+    <R extends Record, T1, T2, T3, T4> InsertValuesStep4<R, T1, T2, T3, T4> insertInto(Table<R> into, Field<T1> field1,
+        Field<T2> field2, Field<T3> field3, Field<T4> field4);
 
     /**
      * Create a new DSL insert statement.
@@ -3311,7 +3317,8 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4, T5> InsertValuesStep5<R, T1, T2, T3, T4, T5> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
+    <R extends Record, T1, T2, T3, T4, T5> InsertValuesStep5<R, T1, T2, T3, T4, T5> insertInto(Table<R> into,
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
 
     /**
      * Create a new DSL insert statement.
@@ -3329,7 +3336,8 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4, T5, T6> InsertValuesStep6<R, T1, T2, T3, T4, T5, T6> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
+    <R extends Record, T1, T2, T3, T4, T5, T6> InsertValuesStep6<R, T1, T2, T3, T4, T5, T6> insertInto(Table<R> into,
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
     /**
      * Create a new DSL insert statement.
@@ -3347,7 +3355,9 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7> InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7> InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> insertInto(
+        Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7);
 
     /**
      * Create a new DSL insert statement.
@@ -3365,7 +3375,9 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> InsertValuesStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> InsertValuesStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> insertInto(
+        Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8);
 
     /**
      * Create a new DSL insert statement.
@@ -3383,7 +3395,9 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> InsertValuesStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> InsertValuesStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> insertInto(
+        Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
 
     /**
      * Create a new DSL insert statement.
@@ -3401,7 +3415,9 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> InsertValuesStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> InsertValuesStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> insertInto(
+        Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
 
     /**
      * Create a new DSL insert statement.
@@ -3419,7 +3435,9 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> InsertValuesStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> InsertValuesStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> insertInto(
+        Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
 
     /**
      * Create a new DSL insert statement.
@@ -3437,7 +3455,10 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> InsertValuesStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> InsertValuesStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> insertInto(
+        Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12);
 
     /**
      * Create a new DSL insert statement.
@@ -3455,7 +3476,10 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> InsertValuesStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> InsertValuesStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> insertInto(
+        Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13);
 
     /**
      * Create a new DSL insert statement.
@@ -3473,7 +3497,10 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> InsertValuesStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> InsertValuesStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> insertInto(
+        Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14);
 
     /**
      * Create a new DSL insert statement.
@@ -3491,7 +3518,10 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> InsertValuesStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> InsertValuesStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> insertInto(
+        Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
 
     /**
      * Create a new DSL insert statement.
@@ -3509,7 +3539,10 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> insertInto(
+        Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
 
     /**
      * Create a new DSL insert statement.
@@ -3527,7 +3560,11 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> InsertValuesStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> InsertValuesStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> insertInto(
+        Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17);
 
     /**
      * Create a new DSL insert statement.
@@ -3545,7 +3582,11 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> InsertValuesStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> InsertValuesStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> insertInto(
+        Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18);
 
     /**
      * Create a new DSL insert statement.
@@ -3563,7 +3604,11 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> InsertValuesStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> InsertValuesStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> insertInto(
+        Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19);
 
     /**
      * Create a new DSL insert statement.
@@ -3581,7 +3626,11 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> InsertValuesStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> InsertValuesStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> insertInto(
+        Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
 
     /**
      * Create a new DSL insert statement.
@@ -3599,7 +3648,11 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> InsertValuesStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> InsertValuesStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> insertInto(
+        Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
 
     /**
      * Create a new DSL insert statement.
@@ -3617,9 +3670,14 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> InsertValuesStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> InsertValuesStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> insertInto(
+        Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21,
+        Field<T22> field22);
 
-// [jooq-tools] END [insert]
+    // [jooq-tools] END [insert]
 
     /**
      * Create a new DSL insert statement.
@@ -3690,10 +3748,7 @@ public interface DSLContext {
      * </pre></code>
      */
     @Support
-    @Transition(
-        name = "UPDATE",
-        args = "Table"
-    )
+    @Transition(name = "UPDATE", args = "Table")
     <R extends Record> UpdateSetFirstStep<R> update(Table<R> table);
 
     /**
@@ -3771,10 +3826,7 @@ public interface DSLContext {
      * {@link #mergeInto(Table, Field...)}
      */
     @Support({ CUBRID, HSQLDB })
-    @Transition(
-        name = "MERGE INTO",
-        args = "Table"
-    )
+    @Transition(name = "MERGE INTO", args = "Table")
     <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table);
 
     // [jooq-tools] START [merge]
@@ -3849,7 +3901,8 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3> MergeKeyStep3<R, T1, T2, T3> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3);
+    <R extends Record, T1, T2, T3> MergeKeyStep3<R, T1, T2, T3> mergeInto(Table<R> table, Field<T1> field1,
+        Field<T2> field2, Field<T3> field3);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -3873,7 +3926,8 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4> MergeKeyStep4<R, T1, T2, T3, T4> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
+    <R extends Record, T1, T2, T3, T4> MergeKeyStep4<R, T1, T2, T3, T4> mergeInto(Table<R> table, Field<T1> field1,
+        Field<T2> field2, Field<T3> field3, Field<T4> field4);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -3897,7 +3951,8 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4, T5> MergeKeyStep5<R, T1, T2, T3, T4, T5> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
+    <R extends Record, T1, T2, T3, T4, T5> MergeKeyStep5<R, T1, T2, T3, T4, T5> mergeInto(Table<R> table,
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -3921,7 +3976,8 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4, T5, T6> MergeKeyStep6<R, T1, T2, T3, T4, T5, T6> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
+    <R extends Record, T1, T2, T3, T4, T5, T6> MergeKeyStep6<R, T1, T2, T3, T4, T5, T6> mergeInto(Table<R> table,
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -3945,7 +4001,9 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7> MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7> MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7> mergeInto(
+        Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -3969,7 +4027,9 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> mergeInto(
+        Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -3993,7 +4053,9 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> mergeInto(
+        Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -4017,7 +4079,9 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> mergeInto(
+        Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -4041,7 +4105,9 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> mergeInto(
+        Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -4065,7 +4131,10 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> mergeInto(
+        Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -4089,7 +4158,10 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> mergeInto(
+        Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -4113,7 +4185,10 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> mergeInto(
+        Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -4137,7 +4212,10 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> mergeInto(
+        Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -4161,7 +4239,10 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> mergeInto(
+        Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -4185,7 +4266,11 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> mergeInto(
+        Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -4209,7 +4294,11 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> mergeInto(
+        Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -4233,7 +4322,11 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> mergeInto(
+        Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -4257,7 +4350,11 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> mergeInto(
+        Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -4281,7 +4378,11 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> mergeInto(
+        Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -4305,9 +4406,14 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, H2, HSQLDB })
-    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
+    <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> mergeInto(
+        Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5,
+        Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21,
+        Field<T22> field22);
 
-// [jooq-tools] END [merge]
+    // [jooq-tools] END [merge]
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -4363,9 +4469,7 @@ public interface DSLContext {
      * Some but not all databases support aliased tables in delete statements.
      */
     @Support
-    @Transition(
-        name = "DELETE"
-    )
+    @Transition(name = "DELETE")
     <R extends Record> DeleteWhereStep<R> delete(Table<R> table);
 
     // -------------------------------------------------------------------------
@@ -4684,10 +4788,7 @@ public interface DSLContext {
      * dialects that do not support them natively.
      */
     @Support
-    @Transition(
-        name = "TRUNCATE",
-        args = "Table"
-    )
+    @Transition(name = "TRUNCATE", args = "Table")
     <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table);
 
     // -------------------------------------------------------------------------
@@ -4849,7 +4950,8 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4> Record4<T1, T2, T3, T4> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
+    <T1, T2, T3, T4> Record4<T1, T2, T3, T4> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3,
+        Field<T4> field4);
 
     /**
      * Create a new empty {@link Record}.
@@ -4861,7 +4963,8 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4, T5> Record5<T1, T2, T3, T4, T5> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
+    <T1, T2, T3, T4, T5> Record5<T1, T2, T3, T4, T5> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3,
+        Field<T4> field4, Field<T5> field5);
 
     /**
      * Create a new empty {@link Record}.
@@ -4873,7 +4976,8 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4, T5, T6> Record6<T1, T2, T3, T4, T5, T6> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
+    <T1, T2, T3, T4, T5, T6> Record6<T1, T2, T3, T4, T5, T6> newRecord(Field<T1> field1, Field<T2> field2,
+        Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
     /**
      * Create a new empty {@link Record}.
@@ -4885,7 +4989,8 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4, T5, T6, T7> Record7<T1, T2, T3, T4, T5, T6, T7> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
+    <T1, T2, T3, T4, T5, T6, T7> Record7<T1, T2, T3, T4, T5, T6, T7> newRecord(Field<T1> field1, Field<T2> field2,
+        Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
 
     /**
      * Create a new empty {@link Record}.
@@ -4897,7 +5002,9 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4, T5, T6, T7, T8> Record8<T1, T2, T3, T4, T5, T6, T7, T8> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
+    <T1, T2, T3, T4, T5, T6, T7, T8> Record8<T1, T2, T3, T4, T5, T6, T7, T8> newRecord(Field<T1> field1,
+        Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7,
+        Field<T8> field8);
 
     /**
      * Create a new empty {@link Record}.
@@ -4909,7 +5016,9 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9> Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9> Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> newRecord(Field<T1> field1,
+        Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7,
+        Field<T8> field8, Field<T9> field9);
 
     /**
      * Create a new empty {@link Record}.
@@ -4921,7 +5030,9 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> newRecord(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
 
     /**
      * Create a new empty {@link Record}.
@@ -4933,7 +5044,9 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> newRecord(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
 
     /**
      * Create a new empty {@link Record}.
@@ -4945,7 +5058,9 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> newRecord(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
 
     /**
      * Create a new empty {@link Record}.
@@ -4957,7 +5072,10 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> newRecord(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13);
 
     /**
      * Create a new empty {@link Record}.
@@ -4969,7 +5087,10 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> newRecord(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14);
 
     /**
      * Create a new empty {@link Record}.
@@ -4981,7 +5102,10 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> newRecord(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
 
     /**
      * Create a new empty {@link Record}.
@@ -4993,7 +5117,10 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> newRecord(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
 
     /**
      * Create a new empty {@link Record}.
@@ -5005,7 +5132,11 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> newRecord(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17);
 
     /**
      * Create a new empty {@link Record}.
@@ -5017,7 +5148,11 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> newRecord(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18);
 
     /**
      * Create a new empty {@link Record}.
@@ -5029,7 +5164,11 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> newRecord(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19);
 
     /**
      * Create a new empty {@link Record}.
@@ -5041,7 +5180,11 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> newRecord(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
 
     /**
      * Create a new empty {@link Record}.
@@ -5053,7 +5196,11 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> newRecord(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
 
     /**
      * Create a new empty {@link Record}.
@@ -5065,9 +5212,14 @@ public interface DSLContext {
      * @return The new record
      */
     @Generated("This method was generated using jOOQ-tools")
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> newRecord(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> newRecord(
+        Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6,
+        Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11,
+        Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16,
+        Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21,
+        Field<T22> field22);
 
-// [jooq-tools] END [newRecord]
+    // [jooq-tools] END [newRecord]
 
     /**
      * Create a new empty {@link Result}.
@@ -5086,8 +5238,8 @@ public interface DSLContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
-     * results.
+     * Execute a {@link ResultQuery} in the context of this
+     * <code>DSLContext</code> and return results.
      *
      * @param query The query to execute
      * @return The result
@@ -5097,8 +5249,8 @@ public interface DSLContext {
     <R extends Record> Result<R> fetch(ResultQuery<R> query) throws DataAccessException;
 
     /**
-     * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
-     * a cursor.
+     * Execute a {@link ResultQuery} in the context of this
+     * <code>DSLContext</code> and return a cursor.
      *
      * @param query The query to execute
      * @return The cursor
@@ -5108,8 +5260,8 @@ public interface DSLContext {
     <R extends Record> Cursor<R> fetchLazy(ResultQuery<R> query) throws DataAccessException;
 
     /**
-     * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
-     * a cursor.
+     * Execute a {@link ResultQuery} in the context of this
+     * <code>DSLContext</code> and return a cursor.
      *
      * @param query The query to execute
      * @return The results
@@ -5119,8 +5271,8 @@ public interface DSLContext {
     <R extends Record> List<Result<Record>> fetchMany(ResultQuery<R> query) throws DataAccessException;
 
     /**
-     * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
-     * a record.
+     * Execute a {@link ResultQuery} in the context of this
+     * <code>DSLContext</code> and return a record.
      *
      * @param query The query to execute
      * @return The record
@@ -5143,8 +5295,8 @@ public interface DSLContext {
     <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query) throws DataAccessException, InvalidResultException;
 
     /**
-     * Execute a {@link Select} query in the context of this <code>DSLContext</code> and return
-     * a <code>COUNT(*)</code> value.
+     * Execute a {@link Select} query in the context of this
+     * <code>DSLContext</code> and return a <code>COUNT(*)</code> value.
      * <p>
      * This wraps a pre-existing <code>SELECT</code> query in another one to
      * calculate the <code>COUNT(*)</code> value, without modifying the original

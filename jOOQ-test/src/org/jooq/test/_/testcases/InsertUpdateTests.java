@@ -592,7 +592,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Returning all fields
         InsertQuery<T> query;
         query = create().insertQuery(TTriggers());
-        query.addValue(TTriggers_COUNTER(), null);
+        query.addValue(TTriggers_COUNTER(), val(null, int.class));
         query.addValue(TTriggers_COUNTER(), 0);
         query.setReturning();
         assertEquals(1, query.execute());
@@ -710,7 +710,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Without RETURNING clause
         query = create().insertQuery(TTriggers());
-        query.addValue(TTriggers_ID(), null);
+        query.addValue(TTriggers_ID(), val(null, int.class));
         query.addValue(TTriggers_COUNTER(), 0);
         assertEquals(1, query.execute());
         assertNull(query.getReturnedRecord());

@@ -237,6 +237,10 @@ public class CSVReader implements Closeable, Iterator<String[]> {
         br.close();
     }
 
+    // ------------------------------------------------------------------------
+    // XXX: Iterator implementation added by Johannes Buehler
+    // ------------------------------------------------------------------------
+
     @Override
     public boolean hasNext() {
         return hasNext;
@@ -246,7 +250,8 @@ public class CSVReader implements Closeable, Iterator<String[]> {
     public String[] next() {
         try {
             return readNext();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

@@ -40,26 +40,62 @@
  */
 package org.jooq.test._.testcases;
 
-import org.jooq.*;
-import org.jooq.test.BaseTest;
-import org.jooq.test.jOOQAbstractTest;
-import org.junit.Test;
+import static java.util.Arrays.asList;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+import static org.jooq.impl.DSL.cast;
+import static org.jooq.impl.DSL.castNull;
+import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.decode;
+import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.max;
+import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.DSL.tableByName;
+import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.DSL.val;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.util.Arrays;
 
-import static java.util.Arrays.asList;
-import static junit.framework.Assert.*;
-import static org.jooq.SQLDialect.*;
-import static org.jooq.impl.DSL.*;
+import org.jooq.Field;
+import org.jooq.Insert;
+import org.jooq.InsertQuery;
+import org.jooq.MergeFinalStep;
+import org.jooq.Record;
+import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Record6;
+import org.jooq.Result;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.TableRecord;
+import org.jooq.UpdatableRecord;
+import org.jooq.UpdateQuery;
+import org.jooq.test.BaseTest;
+import org.jooq.test.jOOQAbstractTest;
 
-// ...
-// ...
-// ...
-// ...
-// ...
+import org.junit.Test;
 
 public class InsertUpdateTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
@@ -556,7 +592,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Returning all fields
         InsertQuery<T> query;
         query = create().insertQuery(TTriggers());
-        query.addValue(TTriggers_COUNTER(), (Field)null);
+        query.addValue(TTriggers_COUNTER(), null);
         query.addValue(TTriggers_COUNTER(), 0);
         query.setReturning();
         assertEquals(1, query.execute());
@@ -674,7 +710,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Without RETURNING clause
         query = create().insertQuery(TTriggers());
-        query.addValue(TTriggers_ID(), (Field)null);
+        query.addValue(TTriggers_ID(), null);
         query.addValue(TTriggers_COUNTER(), 0);
         assertEquals(1, query.execute());
         assertNull(query.getReturnedRecord());

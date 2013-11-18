@@ -40,6 +40,17 @@
  */
 package org.jooq.test;
 
+import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.test._.listeners.JDBCLifecycleListener.RS_CLOSE_COUNT;
+import static org.jooq.test._.listeners.JDBCLifecycleListener.RS_START_COUNT;
+import static org.jooq.test._.listeners.JDBCLifecycleListener.STMT_CLOSE_COUNT;
+import static org.jooq.test._.listeners.JDBCLifecycleListener.STMT_START_COUNT;
+import static org.jooq.test._.listeners.LifecycleWatcherListener.LISTENER_END_COUNT;
+import static org.jooq.test._.listeners.LifecycleWatcherListener.LISTENER_START_COUNT;
+import static org.jooq.tools.reflect.Reflect.on;
+
 import java.io.File;
 import java.io.InputStream;
 import java.lang.reflect.Method;
@@ -61,6 +72,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 
+// ...
 import org.jooq.DAO;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -160,22 +172,8 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.postgresql.util.PSQLException;
-
-import static java.util.Arrays.asList;
-import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.test._.listeners.JDBCLifecycleListener.RS_CLOSE_COUNT;
-import static org.jooq.test._.listeners.JDBCLifecycleListener.RS_START_COUNT;
-import static org.jooq.test._.listeners.JDBCLifecycleListener.STMT_CLOSE_COUNT;
-import static org.jooq.test._.listeners.JDBCLifecycleListener.STMT_START_COUNT;
-import static org.jooq.test._.listeners.LifecycleWatcherListener.LISTENER_END_COUNT;
-import static org.jooq.test._.listeners.LifecycleWatcherListener.LISTENER_START_COUNT;
-import static org.jooq.tools.reflect.Reflect.on;
-
-// ...
 
 // ...
 
@@ -1550,7 +1548,6 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    @Ignore // ist currently failing for other reasons than any change from my side
     public void testRecordListenerBatchStore() throws Exception {
         new RecordListenerTests(this).testRecordListenerBatchStore();
     }
@@ -1871,7 +1868,6 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    @Ignore
     public void testLimitDistinct() throws Exception {
         new OrderByTests(this).testLimitDistinct();
     }
@@ -2400,6 +2396,7 @@ public abstract class jOOQAbstractTest<
     public void testCsvLoader() throws Exception {
         new CsvLoaderTests(this).testLoader();
     }
+
     @Test
     public void testJsonLoader() throws Exception {
         new JsonLoaderTests(this).testLoader();

@@ -54,26 +54,26 @@ import org.jooq.test.jOOQAbstractTest;
 // ...
 
 public class JsonLoaderTests<
-        A extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
-        AP,
-        B extends UpdatableRecord<B>,
-        S extends UpdatableRecord<S> & Record1<String>,
-        B2S extends UpdatableRecord<B2S> & Record3<String, Integer, Integer>,
-        BS extends UpdatableRecord<BS>,
-        L extends TableRecord<L> & Record2<String, String>,
-        X extends TableRecord<X>,
-        DATE extends UpdatableRecord<DATE>,
-        BOOL extends UpdatableRecord<BOOL>,
-        D extends UpdatableRecord<D>,
-        T extends UpdatableRecord<T>,
-        U extends TableRecord<U>,
-        UU extends UpdatableRecord<UU>,
-        I extends TableRecord<I>,
-        IPK extends UpdatableRecord<IPK>,
-        T725 extends UpdatableRecord<T725>,
-        T639 extends UpdatableRecord<T639>,
-        T785 extends TableRecord<T785>>
-        extends AbstractLoaderTests {
+    A extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
+    AP,
+    B extends UpdatableRecord<B>,
+    S extends UpdatableRecord<S> & Record1<String>,
+    B2S extends UpdatableRecord<B2S> & Record3<String, Integer, Integer>,
+    BS extends UpdatableRecord<BS>,
+    L extends TableRecord<L> & Record2<String, String>,
+    X extends TableRecord<X>,
+    DATE extends UpdatableRecord<DATE>,
+    BOOL extends UpdatableRecord<BOOL>,
+    D extends UpdatableRecord<D>,
+    T extends UpdatableRecord<T>,
+    U extends TableRecord<U>,
+    UU extends UpdatableRecord<UU>,
+    I extends TableRecord<I>,
+    IPK extends UpdatableRecord<IPK>,
+    T725 extends UpdatableRecord<T725>,
+    T639 extends UpdatableRecord<T639>,
+    T785 extends TableRecord<T785>>
+extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> {
 
     public JsonLoaderTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
         super(delegate);

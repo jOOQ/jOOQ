@@ -1,37 +1,42 @@
 /**
- * Copyright (c) 2009-2013, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2009-2013, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
- * This software is licensed to you under the Apache License, Version 2.0
- * (the "License"); You may obtain a copy of the License at
+ * This work is dual-licensed
+ * - under the Apache Software License 2.0 (the "ASL")
+ * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
+ * =============================================================================
+ * You may choose which license applies to you:
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * - If you're using this work with Open Source databases, you may choose
+ *   either ASL or jOOQ License.
+ * - If you're using this work with at least one commercial database, you must
+ *   choose jOOQ License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * For more information, please visit http://www.jooq.org/licenses
  *
- * . Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer.
+ * Apache Software License 2.0:
+ * -----------------------------------------------------------------------------
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * . Redistributions in binary form must reproduce the above copyright notice,
- *   this list of conditions and the following disclaimer in the documentation
- *   and/or other materials provided with the distribution.
+ *  http://www.apache.org/licenses/LICENSE-2.0
  *
- * . Neither the name "jOOQ" nor the names of its contributors may be
- *   used to endorse or promote products derived from this software without
- *   specific prior written permission.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * jOOQ License and Maintenance Agreement:
+ * -----------------------------------------------------------------------------
+ * Data Geekery grants the Customer the non-exclusive, timely limited and
+ * non-transferable license to install and use the Software under the terms of
+ * the jOOQ License and Maintenance Agreement.
+ *
+ * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
+ * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
 package org.jooq.impl;
 
@@ -70,7 +75,6 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.csv.CSVParser;
 import org.jooq.tools.csv.CSVReader;
-import org.jooq.tools.json.JSONReader;
 
 import org.xml.sax.InputSource;
 
@@ -81,8 +85,13 @@ import org.xml.sax.InputSource;
 class LoaderImpl<R extends TableRecord<R>> implements
 
     // Cascading interface implementations for Loader behaviour
-    LoaderOptionsStep<R>, LoaderXMLStep<R>, LoaderCSVStep<R>, LoaderCSVOptionsStep<R>, LoaderJSONStep<R>,
-    LoaderJSONOptionsStep<R>, Loader<R> {
+    LoaderOptionsStep<R>,
+    LoaderXMLStep<R>,
+    LoaderCSVStep<R>,
+    LoaderCSVOptionsStep<R>,
+    LoaderJSONStep<R>,
+    LoaderJSONOptionsStep<R>,
+    Loader<R> {
 
     // Configuration constants
     // -----------------------
@@ -149,9 +158,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
     @Override
     public final LoaderImpl<R> onDuplicateKeyIgnore() {
         if (table.getPrimaryKey() == null) {
-            throw new IllegalStateException(
-                "ON DUPLICATE KEY IGNORE only works on tables with explicit primary keys. Table is not updatable : "
-                    + table);
+            throw new IllegalStateException("ON DUPLICATE KEY IGNORE only works on tables with explicit primary keys. Table is not updatable : " + table);
         }
 
         onDuplicate = ON_DUPLICATE_KEY_IGNORE;
@@ -161,9 +168,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
     @Override
     public final LoaderImpl<R> onDuplicateKeyUpdate() {
         if (table.getPrimaryKey() == null) {
-            throw new IllegalStateException(
-                "ON DUPLICATE KEY UPDATE only works on tables with explicit primary keys. Table is not updatable : "
-                    + table);
+            throw new IllegalStateException("ON DUPLICATE KEY UPDATE only works on tables with explicit primary keys. Table is not updatable : " + table);
         }
 
         onDuplicate = ON_DUPLICATE_KEY_UPDATE;
@@ -377,6 +382,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
         JSONReader reader = new JSONReader(data);
 
         try {
+
             // The current json format is not designed for streaming. Thats why
             // all records are loaded at once.
             List<String[]> allRecords = reader.readAll();

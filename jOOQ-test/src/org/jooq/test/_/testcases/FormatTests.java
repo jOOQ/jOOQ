@@ -40,18 +40,10 @@
  */
 package org.jooq.test._.testcases;
 
-import org.jooq.*;
-import org.jooq.test.BaseTest;
-import org.jooq.test._.tools.DOMBuilder;
-import org.jooq.test.jOOQAbstractTest;
-import org.junit.Test;
-import org.w3c.dom.Document;
+import static java.util.Arrays.asList;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -61,13 +53,33 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+
+import org.jooq.Field;
+import org.jooq.Record;
+import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Record6;
+import org.jooq.Result;
+import org.jooq.Row;
+import org.jooq.TableRecord;
+import org.jooq.UpdatableRecord;
+import org.jooq.test.BaseTest;
+import org.jooq.test.jOOQAbstractTest;
+import org.jooq.test._.tools.DOMBuilder;
+
+import org.junit.Test;
+import org.w3c.dom.Document;
 
 /**
  * @author Lukas Eder
  * @author Ivan Dugic
+ * @author Johannes Buehler
  */
 public class FormatTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,

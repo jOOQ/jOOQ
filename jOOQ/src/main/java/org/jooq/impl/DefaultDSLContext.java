@@ -186,7 +186,6 @@ import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
 import org.jooq.tools.csv.CSVReader;
-import org.jooq.tools.json.JSONReader;
 
 /**
  * A default implementation for {@link DSLContext}.

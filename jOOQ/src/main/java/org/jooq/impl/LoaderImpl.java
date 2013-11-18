@@ -75,7 +75,6 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.csv.CSVParser;
 import org.jooq.tools.csv.CSVReader;
-import org.jooq.tools.json.JSONReader;
 
 import org.xml.sax.InputSource;
 

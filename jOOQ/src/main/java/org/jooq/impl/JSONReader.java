@@ -38,7 +38,7 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.tools.json;
+package org.jooq.impl;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -49,13 +49,17 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jooq.tools.json.ContainerFactory;
+import org.jooq.tools.json.JSONParser;
+import org.jooq.tools.json.ParseException;
+
 /**
  * A very simple JSON reader based on Simple JSON.
  *
  * @author Johannes Bühler
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class JSONReader implements Closeable {
+class JSONReader implements Closeable {
 
     private final BufferedReader br;
     private final JSONParser     parser;

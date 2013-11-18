@@ -38,23 +38,29 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.xtend
+package org.jooq.xtend.test
+
+import java.sql.DriverManager
+import static extension org.jooq.xtend.Conversions.*
+
+import org.jooq.impl.DSL
+import org.jooq.Record2
+import org.jooq.Select
+
+import static org.jooq.impl.DSL.*
 
 /**
- * @author Lukas Eder
+ * @author Lukas Eder 
  */
-class GenerateAll {
+class XtendConversionsTest {
+    
     def static void main(String[] args) {
-    	BetweenAndSteps::main(args);
-    	ScalaConversions::main(args);
-    	XtendConversions::main(args);
-    	DSLContext::main(args);
-    	DSL::main(args);
-    	InsertDSL::main(args);
-    	MergeDSL::main(args);
-    	Records::main(args);
-    	Rows::main(args);
-    	SelectSeekStep::main(args);
-    	UpdateDSL::main(args);
+        Class::forName("org.h2.Driver")
+        using(DriverManager::getConnection("jdbc:h2:~/test", "sa", ""))
+        
+        val r = row(inline(1), inline("a"))
+        val s = (select(inline(2), inline("b"))) as Select<Record2<Integer, String>>
+        // val c = r > s
+        org.jooq.xtend.Conversions::operator_greaterThan(r, r)
     }
 }

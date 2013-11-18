@@ -51,9 +51,12 @@ import java.io.RandomAccessFile
 abstract class Generators {
 	
 	def file(String className) {
-		if (className.contains("scala")) {
-			return new File("./../jOOQ-scala/src/main/scala/" + className.replace(".", "/") + ".scala");
-		}
+        if (className.contains("xtend")) {
+            return new File("./../jOOQ-xtend/src/main/xtend/" + className.replace(".", "/") + ".xtend");
+        }
+        else if (className.contains("scala")) {
+            return new File("./../jOOQ-scala/src/main/scala/" + className.replace(".", "/") + ".scala");
+        }
 		else {
 			return new File("./../jOOQ/src/main/java/" + className.replace(".", "/") + ".java");
 		}

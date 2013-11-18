@@ -45,10 +45,10 @@ import org.jooq.Constants
 /**
  * @author Lukas Eder
  */
-class Conversions extends Generators {
+class ScalaConversions extends Generators {
     
     def static void main(String[] args) {
-        val conversions = new Conversions();
+        val conversions = new ScalaConversions();
         conversions.generateAsTuple();
         conversions.generateAsMapper();
         // conversions.generateAsHandler();

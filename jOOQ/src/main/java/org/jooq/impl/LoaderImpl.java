@@ -416,7 +416,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
         }
     }
 
-    private void executeSQL(Iterator<String[]> reader) throws IOException, SQLException {
+    private void executeSQL(Iterator<String[]> reader) throws SQLException {
         String[] row;
 
         // TODO: When running in COMMIT_AFTER > 1 or COMMIT_ALL mode, then

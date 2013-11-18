@@ -1407,6 +1407,31 @@ public interface DSLContext {
     Result<Record> fetchFromCSV(String string) throws DataAccessException;
 
     /**
+     * Fetch all data from a JSON string.
+     * <p>
+     * This is the inverse of calling {@link Result#formatJSON()}. Use the
+     * various conversion methods to retrieve other data types from the
+     * <code>Result</code>:
+     * <ul>
+     * <li> {@link Result#getValues(Field, Class)}</li>
+     * <li> {@link Result#getValues(int, Class)}</li>
+     * <li> {@link Result#getValues(String, Class)}</li>
+     * <li> {@link Result#getValues(Field, Converter)}</li>
+     * <li> {@link Result#getValues(int, Converter)}</li>
+     * <li> {@link Result#getValues(String, Converter)}</li>
+     * </ul>
+     * <p>
+     * Missing values result in <code>null</code>. Empty values result in empty
+     * <code>Strings</code>
+     *
+     * @param string The JSON string
+     * @return The transformed result
+     * @throws DataAccessException If anything went wrong parsing the JSON file
+     */
+    @Support
+    Result<Record> fetchFromJSON(String string);
+
+    /**
      * Fetch all data from a CSV string.
      * <p>
      * This is inverse of calling {@link Result#formatCSV(char)}. The first row

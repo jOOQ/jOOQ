@@ -79,6 +79,7 @@ import org.w3c.dom.Document;
 /**
  * @author Lukas Eder
  * @author Ivan Dugic
+ * @author Johannes Buehler
  */
 public class FormatTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
@@ -399,6 +400,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         assertEquals("]}", json);
+    }
+
+    @Test
+    public void testFetchFromJSON() {
+
+        // Factory.fetchFromJSON() should be the inverse of Result.formatJSON()
+        // ... apart from the loss of type information
+        String json = create().selectFrom(TBook()).orderBy(TBook_ID()).fetch().formatJSON();
+        Result<Record> result2 = create().fetchFromJSON(json);
+        int expectedRecords = create().selectFrom(TBook()).fetchCount();
+        assertEquals(expectedRecords, result2.size());
+        assertEquals(BOOK_IDS, result2.getValues(TBook_ID(), Integer.class));
+        assertEquals(BOOK_AUTHOR_IDS, result2.getValues(TBook_AUTHOR_ID(), Integer.class));
+        assertEquals(BOOK_TITLES, result2.getValues(TBook_TITLE()));
     }
 
     @Test

@@ -43,7 +43,6 @@ package org.jooq.test._.testcases;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
-import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.impl.DSL.count;
 
 import java.sql.Date;
@@ -64,7 +63,11 @@ import org.jooq.test.jOOQAbstractTest;
 
 import org.junit.Test;
 
-public class LoaderTests<
+/**
+ * @author Johannes Buehler
+ * @author Lukas Eder
+ */
+public abstract class AbstractLoaderTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,
     B    extends UpdatableRecord<B>,
@@ -86,7 +89,7 @@ public class LoaderTests<
     T785 extends TableRecord<T785>>
 extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> {
 
-    public LoaderTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
+    public AbstractLoaderTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
         super(delegate);
     }
 
@@ -99,11 +102,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Empty CSV file
         // --------------
-        Loader<A> loader =
-        create().loadInto(TAuthor())
-                .loadCSV("")
-                .fields(TAuthor_ID())
-                .execute();
+        Loader<A> loader = createLoader1();
 
         assertEquals(0, loader.processed());
         assertEquals(0, loader.errors().size());
@@ -115,13 +114,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Loading is aborted
         // ---------------------------------------------
         loader =
-        create().loadInto(TAuthor())
-                .loadCSV(
-                    "3\n" +
-                    "4")
-                .fields(TAuthor_ID())
-                .ignoreRows(0)
-                .execute();
+                createLoader2();
 
         // [#812] Reset stale connection. Seems to be necessary in Postgres
         resetLoaderConnection();
@@ -136,15 +129,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Constraint violations (LAST_NAME is NOT NULL)
         // Errors are ignored
         // ---------------------------------------------
-        loader =
-        create().loadInto(TAuthor())
-                .onErrorIgnore()
-                .loadCSV(
-                    "3\n" +
-                    "4")
-                .fields(TAuthor_ID())
-                .ignoreRows(0)
-                .execute();
+        loader = createLoader3();
 
         // [#812] Reset stale connection. Seems to be necessary in Postgres
         resetLoaderConnection();
@@ -161,17 +146,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Loading is aborted
         // -----------------------------------------
         loader =
-        create().loadInto(TAuthor())
-                .onDuplicateKeyError()
-                .onErrorAbort()
-                .loadCSV(
-                    "1;'Kafka'\n" +
-                    "2;Frisch")
-                .fields(TAuthor_ID(), TAuthor_LAST_NAME())
-                .quote('\'')
-                .separator(';')
-                .ignoreRows(0)
-                .execute();
+                createLoader4();
 
         // [#812] Reset stale connection. Seems to be necessary in Postgres
         resetLoaderConnection();
@@ -186,16 +161,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Constraint violations (Duplicate records)
         // Errors are ignored
         // -----------------------------------------
-        loader =
-        create().loadInto(TAuthor())
-                .onDuplicateKeyIgnore()
-                .onErrorAbort()
-                .loadCSV(
-                    "1,\"Kafka\"\n" +
-                    "2,Frisch")
-                .fields(TAuthor_ID(), TAuthor_LAST_NAME())
-                .ignoreRows(0)
-                .execute();
+        loader = createLoader5();
 
         assertEquals(2, loader.processed());
         assertEquals(0, loader.errors().size());
@@ -205,17 +171,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Two records with different NULL representations for FIRST_NAME
         // --------------------------------------------------------------
         loader =
-        create().loadInto(TAuthor())
-                .loadCSV(
-                    "####Some Data####\n" +
-                    "\"ID\",\"Last Qualifier\"\r" +
-                    "3,\"\",Hesse\n" +
-                    "4,,Frisch")
-                .fields(TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
-                .quote('"')
-                .separator(',')
-                .ignoreRows(2)
-                .execute();
+                createLoader6();
 
         assertEquals(2, loader.processed());
         assertEquals(2, loader.stored());
@@ -224,33 +180,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
 
         boolean oracle = false;
-        /* [pro] */
-        if (dialect().family() == ORACLE)
-            oracle = true;
-        /* [/pro] */
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxx xx xxxxxxx
+            xxxxxx x xxxxx
+        xx [/pro] */
 
         assertEquals(2, (int) create().select(count)
-                                      .from(TAuthor())
-                                      .where(TAuthor_ID().in(3, 4))
-                                      .and(TAuthor_LAST_NAME().in("Hesse", "Frisch"))
-                                      .and(oracle ?
-                                           TAuthor_FIRST_NAME().isNull() :
-                                           TAuthor_FIRST_NAME().equal(""))
-                                      .fetchOne(count));
+                .from(TAuthor())
+                .where(TAuthor_ID().in(3, 4))
+                .and(TAuthor_LAST_NAME().in("Hesse", "Frisch"))
+                .and(oracle ?
+                        TAuthor_FIRST_NAME().isNull() :
+                        TAuthor_FIRST_NAME().equal(""))
+                .fetchOne(count));
 
         assertEquals(2, create().delete(TAuthor()).where(TAuthor_ID().in(3, 4)).execute());
 
         // Two records but don't load one column, and specify a value for NULL
         // -------------------------------------------------------------------
-        loader =
-        create().loadInto(TAuthor())
-                .loadCSV(
-                    "\"ID\",ignore,\"First Qualifier\",\"Last Qualifier\"\r" +
-                    "5,asdf,{null},Hesse\n" +
-                    "6,asdf,\"\",Frisch")
-                .fields(TAuthor_ID(), null, TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
-                .nullString("{null}")
-                .execute();
+        loader = createLoader7();
 
         assertEquals(2, loader.processed());
         assertEquals(2, loader.stored());
@@ -258,18 +206,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(0, loader.errors().size());
 
         Result<A> result =
-        create().selectFrom(TAuthor())
-                .where(TAuthor_ID().in(5, 6))
-                .and(TAuthor_LAST_NAME().in("Hesse", "Frisch"))
-                .orderBy(TAuthor_ID())
-                .fetch();
+                create().selectFrom(TAuthor())
+                        .where(TAuthor_ID().in(5, 6))
+                        .and(TAuthor_LAST_NAME().in("Hesse", "Frisch"))
+                        .orderBy(TAuthor_ID())
+                        .fetch();
 
         assertEquals(2, result.size());
         assertEquals(5, (int) result.getValue(0, TAuthor_ID()));
         assertEquals(6, (int) result.getValue(1, TAuthor_ID()));
         assertEquals("Hesse", result.getValue(0, TAuthor_LAST_NAME()));
         assertEquals("Frisch", result.getValue(1, TAuthor_LAST_NAME()));
-        assertEquals(null, result.getValue(0, TAuthor_FIRST_NAME()));
+        assertNull(result.getValue(0, TAuthor_FIRST_NAME()));
         assertEquals(oracle ? null : "", result.getValue(1, TAuthor_FIRST_NAME()));
 
         assertEquals(2, create().delete(TAuthor()).where(TAuthor_ID().in(5, 6)).execute());
@@ -277,10 +225,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Update duplicate records
         // ------------------------
         switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            /* [/pro] */
+            /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxx
+            xx [/pro] */
             case DERBY:
             case H2:
             case POSTGRES:
@@ -290,15 +238,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 break;
 
             default: {
-                loader =
-                create().loadInto(TAuthor())
-                        .onDuplicateKeyUpdate()
-                        .loadCSV(
-                            "\"ID\",\"First Qualifier\",\"Last Qualifier\"\r" +
-                            "1,Hermann,Hesse\n" +
-                            "7,\"Max\",Frisch")
-                        .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
-                        .execute();
+                loader = createLoader8();
 
                 assertEquals(2, loader.processed());
                 assertEquals(2, loader.stored());
@@ -306,10 +246,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 assertEquals(0, loader.errors().size());
 
                 result =
-                create().selectFrom(TAuthor())
-                        .where(TAuthor_LAST_NAME().in("Hesse", "Frisch"))
-                        .orderBy(TAuthor_ID())
-                        .fetch();
+                        create().selectFrom(TAuthor())
+                                .where(TAuthor_LAST_NAME().in("Hesse", "Frisch"))
+                                .orderBy(TAuthor_ID())
+                                .fetch();
 
                 assertEquals(2, result.size());
                 assertEquals(1, (int) result.getValue(0, TAuthor_ID()));
@@ -328,18 +268,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Rollback on duplicate keys
         // --------------------------
-        loader =
-        create().loadInto(TAuthor())
-                .commitAll()
-                .onDuplicateKeyError()
-                .onErrorAbort()
-                .loadCSV(
-                    "\"ID\",\"First Qualifier\",\"Last Qualifier\"\r" +
-                    "8,Hermann,Hesse\n" +
-                    "1,\"Max\",Frisch\n" +
-                    "2,Friedrich,Dürrenmatt")
-                .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
-                .execute();
+        loader = createLoader9();
 
         assertEquals(2, loader.processed());
         assertEquals(0, loader.stored());
@@ -347,31 +276,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(1, loader.errors().size());
         assertEquals(1, loader.errors().get(0).rowIndex());
         assertEquals(
-            Arrays.asList("1", "Max", "Frisch"),
-            Arrays.asList(loader.errors().get(0).row()));
+                Arrays.asList("1", "Max", "Frisch"),
+                Arrays.asList(loader.errors().get(0).row()));
 
         result =
-        create().selectFrom(TAuthor())
-                .where(TAuthor_ID().in(8))
-                .orderBy(TAuthor_ID())
-                .fetch();
+                create().selectFrom(TAuthor())
+                        .where(TAuthor_ID().in(8))
+                        .orderBy(TAuthor_ID())
+                        .fetch();
 
         assertEquals(0, result.size());
 
         // Commit and ignore duplicates
         // ----------------------------
-        loader =
-        create().loadInto(TAuthor())
-                .commitAll()
-                .onDuplicateKeyIgnore()
-                .onErrorAbort()
-                .loadCSV(
-                    "\"ID\",\"First Qualifier\",\"Last Qualifier\"\r" +
-                    "8,Hermann,Hesse\n" +
-                    "1,\"Max\",Frisch\n" +
-                    "2,Friedrich,Dürrenmatt")
-                .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
-                .execute();
+        loader = createLoader10();
 
         assertEquals(3, loader.processed());
         assertEquals(1, loader.stored());
@@ -379,10 +297,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(0, loader.errors().size());
 
         result =
-        create().selectFrom(TAuthor())
-                .where(TAuthor_ID().in(1, 2, 8))
-                .orderBy(TAuthor_ID())
-                .fetch();
+                create().selectFrom(TAuthor())
+                        .where(TAuthor_ID().in(1, 2, 8))
+                        .orderBy(TAuthor_ID())
+                        .fetch();
 
         assertEquals(3, result.size());
         assertEquals(8, (int) result.getValue(2, TAuthor_ID()));
@@ -391,6 +309,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Coelho", result.getValue(1, TAuthor_LAST_NAME()));
     }
 
+    protected abstract Loader<A> createLoader9() throws java.io.IOException;
+
+    protected abstract Loader<A> createLoader8() throws java.io.IOException;
+
+    protected abstract Loader<A> createLoader7() throws java.io.IOException;
+
+    protected abstract Loader<A> createLoader6() throws java.io.IOException;
+
+    protected abstract Loader<A> createLoader5() throws java.io.IOException;
+
+    protected abstract Loader<A> createLoader4() throws java.io.IOException;
+
+    protected abstract Loader<A> createLoader3() throws java.io.IOException;
+
+    protected abstract Loader<A> createLoader10() throws java.io.IOException;
+
+    protected abstract Loader<A> createLoader2() throws java.io.IOException;
+
+    protected abstract Loader<A> createLoader1() throws java.io.IOException;
 
     private void resetLoaderConnection() throws SQLException {
         jOOQAbstractTest.connection.rollback();

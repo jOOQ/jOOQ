@@ -38,7 +38,6 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-
 package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
@@ -63,6 +62,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -186,6 +186,7 @@ import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
 import org.jooq.tools.csv.CSVReader;
+import org.jooq.tools.json.JSONReader;
 
 /**
  * A default implementation for {@link DSLContext}.
@@ -657,6 +658,32 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         finally {
             try {
                 reader.close();
+            }
+            catch (IOException ignore) {}
+        }
+
+        return fetchFromStringData(data);
+    }
+
+    @Override
+    public Result<Record> fetchFromJSON(String string) {
+        List<String[]> data = new LinkedList<String[]>();
+        JSONReader reader = null;
+        try {
+            reader = new JSONReader(new StringReader(string));
+            List<String[]> records = reader.readAll();
+            String[] fields = reader.getFields();
+            data.add(fields);
+            data.addAll(records);
+        }
+        catch (IOException e) {
+            throw new DataAccessException("Could not read the JSON string", e);
+        }
+        finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
             }
             catch (IOException ignore) {}
         }

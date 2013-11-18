@@ -278,7 +278,7 @@ public class JSONParser {
     private List createArrayContainer(ContainerFactory containerFactory){
         if(containerFactory == null)
             return new JSONArray();
-        List l = containerFactory.creatArrayContainer();
+        List l = containerFactory.createArrayContainer();
 
         if(l == null)
             return new JSONArray();

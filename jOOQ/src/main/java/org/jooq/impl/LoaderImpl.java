@@ -1,38 +1,43 @@
 /**
-* Copyright (c) 2009-2013, Lukas Eder, lukas.eder@gmail.com
-* All rights reserved.
-*
-* This software is licensed to you under the Apache License, Version 2.0
-* (the "License"); You may obtain a copy of the License at
-*
-*   http://www.apache.org/licenses/LICENSE-2.0
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-* . Redistributions of source code must retain the above copyright notice, this
-*   list of conditions and the following disclaimer.
-*
-* . Redistributions in binary form must reproduce the above copyright notice,
-*   this list of conditions and the following disclaimer in the documentation
-*   and/or other materials provided with the distribution.
-*
-* . Neither the name "jOOQ" nor the names of its contributors may be
-*   used to endorse or promote products derived from this software without
-*   specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-* ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-* INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-* CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.
-*/
+ * Copyright (c) 2009-2013, Data Geekery GmbH (http://www.datageekery.com)
+ * All rights reserved.
+ *
+ * This work is dual-licensed
+ * - under the Apache Software License 2.0 (the "ASL")
+ * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
+ * =============================================================================
+ * You may choose which license applies to you:
+ *
+ * - If you're using this work with Open Source databases, you may choose
+ *   either ASL or jOOQ License.
+ * - If you're using this work with at least one commercial database, you must
+ *   choose jOOQ License
+ *
+ * For more information, please visit http://www.jooq.org/licenses
+ *
+ * Apache Software License 2.0:
+ * -----------------------------------------------------------------------------
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * jOOQ License and Maintenance Agreement:
+ * -----------------------------------------------------------------------------
+ * Data Geekery grants the Customer the non-exclusive, timely limited and
+ * non-transferable license to install and use the Software under the terms of
+ * the jOOQ License and Maintenance Agreement.
+ *
+ * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
+ * and Maintenance Agreement for more details: http://www.jooq.org/licensing
+ */
 package org.jooq.impl;
 
 import java.io.BufferedReader;
@@ -378,107 +383,11 @@ class LoaderImpl<R extends TableRecord<R>> implements
         JSONReader reader = new JSONReader(data);
 
         try {
-            String[] row = null;
 
-            // TODO: When running in COMMIT_AFTER > 1 or COMMIT_ALL mode, then
-            // it might be better to bulk load / merge n records
-            Iterator<String[]> rows = reader.readAll().iterator();
-            rowloop: while (rows.hasNext()) {
-                row = rows.next();
-                // [#1627] Handle NULL values
-                for (int i = 0; i < row.length; i++) {
-                    if (StringUtils.equals(nullString, row[i])) {
-                        row[i] = null;
-                    }
-                }
-
-                processed++;
-                InsertQuery<R> insert = create.insertQuery(table);
-
-                for (int i = 0; i < row.length; i++) {
-                    if (i < fields.length && fields[i] != null) {
-                        addValue0(insert, fields[i], row[i]);
-                    }
-                }
-
-                // TODO: This is only supported by some dialects. Let other
-                // dialects execute a SELECT and then either an INSERT or UPDATE
-                if (onDuplicate == ON_DUPLICATE_KEY_UPDATE) {
-                    insert.onDuplicateKeyUpdate(true);
-
-                    for (int i = 0; i < row.length; i++) {
-                        if (i < fields.length && fields[i] != null && !primaryKey[i]) {
-                            addValueForUpdate0(insert, fields[i], row[i]);
-                        }
-                    }
-                }
-
-                // TODO: This can be implemented faster using a MERGE statement
-                // in some dialects
-                else if (onDuplicate == ON_DUPLICATE_KEY_IGNORE) {
-                    SelectQuery<R> select = create.selectQuery(table);
-
-                    for (int i = 0; i < row.length; i++) {
-                        if (i < fields.length && primaryKey[i]) {
-                            select.addConditions(getCondition(fields[i], row[i]));
-                        }
-                    }
-
-                    try {
-                        if (select.execute() > 0) {
-                            ignored++;
-                            continue rowloop;
-                        }
-                    } catch (DataAccessException e) {
-                        errors.add(new LoaderErrorImpl(e, row, processed - 1, select));
-                    }
-                }
-
-                // Don't do anything. Let the execution fail
-                else if (onDuplicate == ON_DUPLICATE_KEY_ERROR) {
-                }
-
-                try {
-                    insert.execute();
-                    stored++;
-
-                    if (commit == COMMIT_AFTER) {
-                        if (processed % commitAfter == 0) {
-                            configuration.connectionProvider().acquire().commit();
-                        }
-                    }
-                } catch (DataAccessException e) {
-                    errors.add(new LoaderErrorImpl(e, row, processed - 1, insert));
-                    ignored++;
-
-                    if (onError == ON_ERROR_ABORT) {
-                        break rowloop;
-                    }
-                }
-            }
-
-            // Rollback on errors in COMMIT_ALL mode
-            try {
-                if (commit == COMMIT_ALL) {
-                    if (!errors.isEmpty()) {
-                        stored = 0;
-                        configuration.connectionProvider().acquire().rollback();
-                    }
-                    else {
-                        configuration.connectionProvider().acquire().commit();
-                    }
-                }
-
-                // Commit remaining elements in COMMIT_AFTER mode
-                else if (commit == COMMIT_AFTER) {
-                    if (processed % commitAfter != 0) {
-                        configuration.connectionProvider().acquire().commit();
-                    }
-                }
-            }
-            catch (DataAccessException e) {
-                errors.add(new LoaderErrorImpl(e, null, processed - 1, null));
-            }
+            // The current json format is not designed for streaming. Thats why
+            // all records are loaded at once.
+            List<String[]> allRecords = reader.readAll();
+            executeSQL(allRecords.iterator());
         }
 
         // SQLExceptions originating from rollbacks or commits are always fatal
@@ -495,108 +404,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
         CSVReader reader = new CSVReader(data, separator, quote, ignoreRows);
 
         try {
-            String[] row = null;
-
-            // TODO: When running in COMMIT_AFTER > 1 or COMMIT_ALL mode, then
-            // it might be better to bulk load / merge n records
-            rowloop: while ((row = reader.readNext()) != null) {
-
-                // [#1627] Handle NULL values
-                for (int i = 0; i < row.length; i++) {
-                    if (StringUtils.equals(nullString, row[i])) {
-                        row[i] = null;
-                    }
-                }
-
-                processed++;
-                InsertQuery<R> insert = create.insertQuery(table);
-
-                for (int i = 0; i < row.length; i++) {
-                    if (i < fields.length && fields[i] != null) {
-                        addValue0(insert, fields[i], row[i]);
-                    }
-                }
-
-                // TODO: This is only supported by some dialects. Let other
-                // dialects execute a SELECT and then either an INSERT or UPDATE
-                if (onDuplicate == ON_DUPLICATE_KEY_UPDATE) {
-                    insert.onDuplicateKeyUpdate(true);
-
-                    for (int i = 0; i < row.length; i++) {
-                        if (i < fields.length && fields[i] != null && !primaryKey[i]) {
-                            addValueForUpdate0(insert, fields[i], row[i]);
-                        }
-                    }
-                }
-
-                // TODO: This can be implemented faster using a MERGE statement
-                // in some dialects
-                else if (onDuplicate == ON_DUPLICATE_KEY_IGNORE) {
-                    SelectQuery<R> select = create.selectQuery(table);
-
-                    for (int i = 0; i < row.length; i++) {
-                        if (i < fields.length && primaryKey[i]) {
-                            select.addConditions(getCondition(fields[i], row[i]));
-                        }
-                    }
-
-                    try {
-                        if (select.execute() > 0) {
-                            ignored++;
-                            continue rowloop;
-                        }
-                    }
-                    catch (DataAccessException e) {
-                        errors.add(new LoaderErrorImpl(e, row, processed - 1, select));
-                    }
-                }
-
-                // Don't do anything. Let the execution fail
-                else if (onDuplicate == ON_DUPLICATE_KEY_ERROR) {
-                }
-
-                try {
-                    insert.execute();
-                    stored++;
-
-                    if (commit == COMMIT_AFTER) {
-                        if (processed % commitAfter == 0) {
-                            configuration.connectionProvider().acquire().commit();
-                        }
-                    }
-                }
-                catch (DataAccessException e) {
-                    errors.add(new LoaderErrorImpl(e, row, processed - 1, insert));
-                    ignored++;
-
-                    if (onError == ON_ERROR_ABORT) {
-                        break rowloop;
-                    }
-                }
-            }
-
-            // Rollback on errors in COMMIT_ALL mode
-            try {
-                if (commit == COMMIT_ALL) {
-                    if (!errors.isEmpty()) {
-                        stored = 0;
-                        configuration.connectionProvider().acquire().rollback();
-                    }
-                    else {
-                        configuration.connectionProvider().acquire().commit();
-                    }
-                }
-
-                // Commit remaining elements in COMMIT_AFTER mode
-                else if (commit == COMMIT_AFTER) {
-                    if (processed % commitAfter != 0) {
-                        configuration.connectionProvider().acquire().commit();
-                    }
-                }
-            }
-            catch (DataAccessException e) {
-                errors.add(new LoaderErrorImpl(e, null, processed - 1, null));
-            }
+            executeSQL(reader);
         }
 
         // SQLExceptions originating from rollbacks or commits are always fatal
@@ -606,6 +414,110 @@ class LoaderImpl<R extends TableRecord<R>> implements
         }
         finally {
             reader.close();
+        }
+    }
+
+    private void executeSQL(Iterator<String[]> reader) throws IOException, SQLException {
+        String[] row;
+
+        // TODO: When running in COMMIT_AFTER > 1 or COMMIT_ALL mode, then
+        // it might be better to bulk load / merge n records
+        rowloop: while (reader.hasNext() && ((row = reader.next()) != null)) {
+
+            // [#1627] Handle NULL values
+            for (int i = 0; i < row.length; i++) {
+                if (StringUtils.equals(nullString, row[i])) {
+                    row[i] = null;
+                }
+            }
+
+            processed++;
+            InsertQuery<R> insert = create.insertQuery(table);
+
+            for (int i = 0; i < row.length; i++) {
+                if (i < fields.length && fields[i] != null) {
+                    addValue0(insert, fields[i], row[i]);
+                }
+            }
+
+            // TODO: This is only supported by some dialects. Let other
+            // dialects execute a SELECT and then either an INSERT or UPDATE
+            if (onDuplicate == ON_DUPLICATE_KEY_UPDATE) {
+                insert.onDuplicateKeyUpdate(true);
+
+                for (int i = 0; i < row.length; i++) {
+                    if (i < fields.length && fields[i] != null && !primaryKey[i]) {
+                        addValueForUpdate0(insert, fields[i], row[i]);
+                    }
+                }
+            }
+
+            // TODO: This can be implemented faster using a MERGE statement
+            // in some dialects
+            else if (onDuplicate == ON_DUPLICATE_KEY_IGNORE) {
+                SelectQuery<R> select = create.selectQuery(table);
+
+                for (int i = 0; i < row.length; i++) {
+                    if (i < fields.length && primaryKey[i]) {
+                        select.addConditions(getCondition(fields[i], row[i]));
+                    }
+                }
+
+                try {
+                    if (select.execute() > 0) {
+                        ignored++;
+                        continue rowloop;
+                    }
+                }
+                catch (DataAccessException e) {
+                    errors.add(new LoaderErrorImpl(e, row, processed - 1, select));
+                }
+            }
+
+            // Don't do anything. Let the execution fail
+            else if (onDuplicate == ON_DUPLICATE_KEY_ERROR) {}
+
+            try {
+                insert.execute();
+                stored++;
+
+                if (commit == COMMIT_AFTER) {
+                    if (processed % commitAfter == 0) {
+                        configuration.connectionProvider().acquire().commit();
+                    }
+                }
+            }
+            catch (DataAccessException e) {
+                errors.add(new LoaderErrorImpl(e, row, processed - 1, insert));
+                ignored++;
+
+                if (onError == ON_ERROR_ABORT) {
+                    break rowloop;
+                }
+            }
+        }
+
+        // Rollback on errors in COMMIT_ALL mode
+        try {
+            if (commit == COMMIT_ALL) {
+                if (!errors.isEmpty()) {
+                    stored = 0;
+                    configuration.connectionProvider().acquire().rollback();
+                }
+                else {
+                    configuration.connectionProvider().acquire().commit();
+                }
+            }
+
+            // Commit remaining elements in COMMIT_AFTER mode
+            else if (commit == COMMIT_AFTER) {
+                if (processed % commitAfter != 0) {
+                    configuration.connectionProvider().acquire().commit();
+                }
+            }
+        }
+        catch (DataAccessException e) {
+            errors.add(new LoaderErrorImpl(e, null, processed - 1, null));
         }
     }
 

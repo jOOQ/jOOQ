@@ -115,6 +115,7 @@ import org.jooq.test._.testcases.AliasTests;
 import org.jooq.test._.testcases.BatchTests;
 import org.jooq.test._.testcases.BenchmarkTests;
 import org.jooq.test._.testcases.CRUDTests;
+import org.jooq.test._.testcases.CsvLoaderTests;
 import org.jooq.test._.testcases.DaoTests;
 import org.jooq.test._.testcases.DataTypeTests;
 import org.jooq.test._.testcases.EnumTests;
@@ -128,7 +129,7 @@ import org.jooq.test._.testcases.GroupByTests;
 import org.jooq.test._.testcases.InsertUpdateTests;
 import org.jooq.test._.testcases.JDBCTests;
 import org.jooq.test._.testcases.JoinTests;
-import org.jooq.test._.testcases.LoaderTests;
+import org.jooq.test._.testcases.JsonLoaderTests;
 import org.jooq.test._.testcases.MetaDataTests;
 import org.jooq.test._.testcases.OrderByTests;
 import org.jooq.test._.testcases.PlainSQLTests;
@@ -1792,6 +1793,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchFromJSON() throws Exception {
+        new FormatTests(this).testFetchFromJSON();
+    }
+
+    @Test
     public void testFormatXML() throws Exception {
         new FormatTests(this).testFormatXML();
     }
@@ -2387,8 +2393,13 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testLoader() throws Exception {
-        new LoaderTests(this).testLoader();
+    public void testCsvLoader() throws Exception {
+        new CsvLoaderTests(this).testLoader();
+    }
+
+    @Test
+    public void testJsonLoader() throws Exception {
+        new JsonLoaderTests(this).testLoader();
     }
 
     @Test

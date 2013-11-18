@@ -1,0 +1,262 @@
+/**
+ * Copyright (c) 2009-2013, Data Geekery GmbH (http://www.datageekery.com)
+ * All rights reserved.
+ *
+ * This work is dual-licensed
+ * - under the Apache Software License 2.0 (the "ASL")
+ * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
+ * =============================================================================
+ * You may choose which license applies to you:
+ *
+ * - If you're using this work with Open Source databases, you may choose
+ *   either ASL or jOOQ License.
+ * - If you're using this work with at least one commercial database, you must
+ *   choose jOOQ License
+ *
+ * For more information, please visit http://www.jooq.org/licenses
+ *
+ * Apache Software License 2.0:
+ * -----------------------------------------------------------------------------
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * jOOQ License and Maintenance Agreement:
+ * -----------------------------------------------------------------------------
+ * Data Geekery grants the Customer the non-exclusive, timely limited and
+ * non-transferable license to install and use the Software under the terms of
+ * the jOOQ License and Maintenance Agreement.
+ *
+ * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
+ * and Maintenance Agreement for more details: http://www.jooq.org/licensing
+ */
+package org.jooq.test._.testcases;
+
+import java.sql.Date;
+
+import org.jooq.Loader;
+import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Record6;
+import org.jooq.TableRecord;
+import org.jooq.UpdatableRecord;
+import org.jooq.test.jOOQAbstractTest;
+
+// ...
+
+public class JsonLoaderTests<
+    A extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
+    AP,
+    B extends UpdatableRecord<B>,
+    S extends UpdatableRecord<S> & Record1<String>,
+    B2S extends UpdatableRecord<B2S> & Record3<String, Integer, Integer>,
+    BS extends UpdatableRecord<BS>,
+    L extends TableRecord<L> & Record2<String, String>,
+    X extends TableRecord<X>,
+    DATE extends UpdatableRecord<DATE>,
+    BOOL extends UpdatableRecord<BOOL>,
+    D extends UpdatableRecord<D>,
+    T extends UpdatableRecord<T>,
+    U extends TableRecord<U>,
+    UU extends UpdatableRecord<UU>,
+    I extends TableRecord<I>,
+    IPK extends UpdatableRecord<IPK>,
+    T725 extends UpdatableRecord<T725>,
+    T639 extends UpdatableRecord<T639>,
+    T785 extends TableRecord<T785>>
+extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> {
+
+    public JsonLoaderTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
+        super(delegate);
+    }
+
+    @Override
+    protected Loader<A> createLoader9() throws java.io.IOException {
+        String json = "{\"fields\":[{\"name\":\"ID\",\"type\":\"INTEGER\"},{\"name\":\"FIRST_NAME\",\"type\":\"VARCHAR\"},{\"name\":\"LAST_NAME\",\"type\":\"VARCHAR\"}]," +
+                "\"records\":[[8,\"Hermann\",\"Hesse\"],[1,\"Max\",\"Frisch\"],[2,\"Friedrich\",\"Dürrenmatt\"]]}";
+        Loader<A> loader;
+        String csv = "\"ID\",\"First Qualifier\",\"Last Qualifier\"\r" +
+                "8,Hermann,Hesse\n" +
+                "1,\"Max\",Frisch\n" +
+                "2,Friedrich,Dürrenmatt";
+        loader =
+                create().loadInto(TAuthor())
+                        .commitAll()
+                        .onDuplicateKeyError()
+                        .onErrorAbort()
+                        .loadJSON(
+                                json)
+                        .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
+                        .execute();
+        return loader;
+    }
+
+    @Override
+    protected Loader<A> createLoader8() throws java.io.IOException {
+        String json = "{\"fields\":[{\"name\":\"ID\",\"type\":\"INTEGER\"},{\"name\":\"FIRST_NAME\",\"type\":\"VARCHAR\"},{\"name\":\"LAST_NAME\",\"type\":\"VARCHAR\"}]," +
+                "\"records\":[[1,Hermann,\"Hesse\"],[7,\"Max\",\"Frisch\"]]}";
+        Loader<A> loader;
+        String csv = "\"ID\",\"First Qualifier\",\"Last Qualifier\"\r" +
+                "1,Hermann,Hesse\n" +
+                "7,\"Max\",Frisch";
+        loader =
+                create().loadInto(TAuthor())
+                        .onDuplicateKeyUpdate()
+                        .loadJSON(
+                                json)
+                        .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
+                        .execute();
+        return loader;
+    }
+
+    @Override
+    protected Loader<A> createLoader7() throws java.io.IOException {
+        String json = "{\"fields\":[{\"name\":\"ID\",\"type\":\"INTEGER\"},{\"name\":\"ignore\",\"type\":\"String\"},{\"name\":\"FIRST_NAME\",\"type\":\"VARCHAR\"},{\"name\":\"LAST_NAME\",\"type\":\"VARCHAR\"}]," +
+                "\"records\":[[5,\"asdf\",null,\"Hesse\"],[6,\"asdf\",\"\",\"Frisch\"]]}";
+        Loader<A> loader;
+        String csv = "\"ID\",ignore,\"First Qualifier\",\"Last Qualifier\"\r" +
+                "5,asdf,{null},Hesse\n" +
+                "6,asdf,\"\",Frisch";
+        loader =
+                create().loadInto(TAuthor())
+                        .loadJSON(
+                                json)
+                        .fields(TAuthor_ID(), null, TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
+                        .execute();
+        return loader;
+    }
+
+    @Override
+    protected Loader<A> createLoader6() throws java.io.IOException {
+        String json = "{\"fields\":[{\"name\":\"ID\",\"type\":\"INTEGER\"},{\"name\":\"FIRST_NAME\",\"type\":\"VARCHAR\"},{\"name\":\"LAST_NAME\",\"type\":\"VARCHAR\"}]," +
+                "\"records\":[[3,\"\",\"Hesse\"],[4,\"\",\"Frisch\"]]}";
+
+        String csv = "####Some Data####\n" +
+                "\"ID\",\"Last Qualifier\"\r" +
+                "3,\"\",Hesse\n" +
+                "4,,Frisch";
+        Loader<A> execute = create().loadInto(TAuthor())
+                .loadJSON(
+                        json)
+                .fields(TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
+//                .quote('"')
+//                .separator(',')
+               // .ignoreRows(2)
+                .execute();
+        return execute;
+    }
+
+    @Override
+    protected Loader<A> createLoader5() throws java.io.IOException {
+        Loader<A> loader;
+        String json = "{\"fields\":[{\"name\":\"ID\",\"type\":\"INTEGER\"},{\"name\":\"LAST_NAME\",\"type\":\"VARCHAR\"}]," +
+                "\"records\":[[1,\"Kafka\"],[2,\"Frisch\"]]}";
+        String csv = "1,\"Kafka\"\n" +
+                "2,Frisch";
+        loader =
+                create().loadInto(TAuthor())
+                        .onDuplicateKeyIgnore()
+                        .onErrorAbort()
+                        .loadJSON(
+                                json)
+                        .fields(TAuthor_ID(), TAuthor_LAST_NAME())
+                        .ignoreRows(0)
+                        .execute();
+        System.out.println("Loader 5 " + create().selectFrom(TAuthor()).fetch().formatJSON());
+        return loader;
+    }
+
+    @Override
+    protected Loader<A> createLoader4() throws java.io.IOException {
+        String csv = "1;'Kafka'\n" +
+                "2;Frisch";
+        String json = "{\"fields\":[{\"name\":\"ID\",\"type\":\"INTEGER\"},{\"name\":\"LAST_NAME\",\"type\":\"VARCHAR\"}]," +
+                "\"records\":[[1,\"Kafka\"],[2,\"Frisch\"]]}";
+
+        Loader<A> loader = create().loadInto(TAuthor())
+                .onDuplicateKeyError()
+                .onErrorAbort()
+                .loadJSON(
+                        json)
+                .fields(TAuthor_ID(), TAuthor_LAST_NAME())
+                //.quote('\'')
+                //.separator(';')
+                .ignoreRows(0)
+                .execute();
+        System.out.println("Loader 4 " + create().selectFrom(TAuthor()).fetch().formatJSON());
+        return loader;
+    }
+
+    @Override
+    protected Loader<A> createLoader3() throws java.io.IOException {
+        Loader<A> loader;
+        String json = "{\"fields\":[{\"name\":\"ID\",\"type\":\"INTEGER\"}],\"records\":[[3],[4]]}";
+        String csv = "3\n" +
+                "4";
+        loader =
+                create().loadInto(TAuthor())
+                        .onErrorIgnore()
+                        .loadJSON(
+                                json)
+                        .fields(TAuthor_ID())
+                        .ignoreRows(0)
+                        .execute();
+        return loader;
+    }
+
+    @Override
+    protected Loader<A> createLoader10() throws java.io.IOException {
+        Loader<A> loader;
+        String json = "{\"fields\":[{\"name\":\"ID\",\"type\":\"INTEGER\"},{\"name\":\"FIRST_NAME\",\"type\":\"VARCHAR\"},{\"name\":\"LAST_NAME\",\"type\":\"VARCHAR\"}]," +
+                "\"records\":[[8,\"Hermann\",\"Hesse\"],[1,\"Max\",\"Frisch\"],[2,\"Friedrich\",\"Dürrenmatt\"]]}";
+
+        String csv = "\"ID\",\"First Qualifier\",\"Last Qualifier\"\r" +
+                "8,Hermann,Hesse\n" +
+                "1,\"Max\",Frisch\n" +
+                "2,Friedrich,Dürrenmatt";
+        loader =
+                create().loadInto(TAuthor())
+                        .commitAll()
+                        .onDuplicateKeyIgnore()
+                        .onErrorAbort()
+                        .loadJSON(
+                                json)
+                        .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
+                        .execute();
+        return loader;
+    }
+
+    @Override
+    protected Loader<A> createLoader2() throws java.io.IOException {
+        String json = "{\"fields\":[{\"name\":\"ID\",\"type\":\"INTEGER\"}],\"records\":[[3],[4]]}";
+        String csv = "3\n" +
+                "4";
+        Loader<A> execute = create().loadInto(TAuthor())
+                .loadJSON(
+                        json)
+                .fields(TAuthor_ID())
+                .ignoreRows(0)
+                .execute();
+
+        //System.out.println("Loader 2 "+create().selectFrom(TAuthor()).fetch().formatJSON());
+        return execute;
+    }
+
+    @Override
+    protected Loader<A> createLoader1() throws java.io.IOException {
+        return create().loadInto(TAuthor())
+                .loadCSV("")
+                .fields(TAuthor_ID())
+                .execute();
+    }
+
+}

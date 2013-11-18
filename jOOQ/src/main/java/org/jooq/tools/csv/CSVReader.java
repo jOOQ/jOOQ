@@ -20,6 +20,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ import java.util.List;
  *
  * @author Glen Smith
  */
-public class CSVReader implements Closeable {
+public class CSVReader implements Closeable, Iterator<String[]> {
 
     private BufferedReader  br;
     private boolean         hasNext            = true;
@@ -234,5 +235,29 @@ public class CSVReader implements Closeable {
     @Override
     public void close() throws IOException {
         br.close();
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Iterator implementation added by Johannes Buehler
+    // ------------------------------------------------------------------------
+
+    @Override
+    public boolean hasNext() {
+        return hasNext;
+    }
+
+    @Override
+    public String[] next() {
+        try {
+            return readNext();
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException("remove() method is not supported for CSV Iterator ");
     }
 }

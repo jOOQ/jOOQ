@@ -47,7 +47,9 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.falseCondition;
@@ -70,7 +72,6 @@ import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.Result;
-import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
@@ -309,10 +310,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testNaturalJoin() throws Exception {
         boolean unqualified = false;
-        /* [pro] */
-        if (dialect().family() == SQLDialect.ORACLE)
+        if (asList(HSQLDB, ORACLE).contains(dialect().family()))
             unqualified = true;
-        /* [/pro] */
 
         Result<Record2<String, String>> result =
         create().select(TAuthor_LAST_NAME(), TBook_TITLE())
@@ -356,10 +355,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testJoinUsing() throws Exception {
         boolean unqualified = false;
-        /* [pro] */
-        if (dialect().family() == SQLDialect.ORACLE)
+        if (asList(HSQLDB, ORACLE).contains(dialect().family()))
             unqualified = true;
-        /* [/pro] */
 
         Result<Record2<String, String>> result =
         create().select(TAuthor_LAST_NAME(), TBook_TITLE())

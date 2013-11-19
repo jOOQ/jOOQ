@@ -16,7 +16,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/iijdbc.jar"/>
     <classpathentry exported="true" kind="lib" path="lib/ucanaccess/commons-lang-2.4.jar"/>
     <classpathentry exported="true" kind="lib" path="lib/ucanaccess/commons-logging-1.0.4.jar"/>
-    <classpathentry exported="true" kind="lib" path="lib/ucanaccess/hsqldb.jar"/>
     <classpathentry exported="true" kind="lib" path="lib/ucanaccess/jackcess-2.0.1.jar"/>
     <classpathentry exported="true" kind="lib" path="lib/ucanaccess/ucanaccess-2.0.0.jar"/>
     <!-- [/pro] -->

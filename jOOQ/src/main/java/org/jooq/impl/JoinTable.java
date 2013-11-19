@@ -294,7 +294,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
                 context.formatSeparator()
                        .start(TABLE_JOIN_USING)
                        .keyword("using")
-                       .sql("( ");
+                       .sql("(");
                 Utils.fieldNames(context, using);
                 context.sql(")")
                        .end(TABLE_JOIN_USING);

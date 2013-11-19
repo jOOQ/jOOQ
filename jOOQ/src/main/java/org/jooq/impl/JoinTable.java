@@ -93,6 +93,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnConditionStep;
+import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.exception.DataAccessException;
 

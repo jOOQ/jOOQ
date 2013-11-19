@@ -40,6 +40,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.conf.RenderNameStyle.LOWER;
+import static org.jooq.conf.RenderNameStyle.UPPER;
 import static org.jooq.impl.Utils.fieldArray;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
@@ -66,6 +68,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.StoreQuery;
 import org.jooq.Table;
+import org.jooq.conf.RenderNameStyle;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 /**
@@ -244,9 +247,21 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 case HSQLDB:
                 default: {
                     List<String> names = new ArrayList<String>();
+                    RenderNameStyle style = configuration().settings().getRenderNameStyle();
 
                     for (Field<?> field : returning) {
-                        names.add(field.getName());
+
+                        // [#2845] Field names should be passed to JDBC in the case
+                        // imposed by the user. For instance, if the user uses
+                        // PostgreSQL generated case-insensitive Fields (default to lower case)
+                        // and wants to query HSQLDB (default to upper case), they may choose
+                        // to overwrite casing using RenderKeywordStyle.
+                        if (style == UPPER)
+                            names.add(field.getName().toUpperCase());
+                        else if (style == LOWER)
+                            names.add(field.getName().toLowerCase());
+                        else
+                            names.add(field.getName());
                     }
 
                     ctx.statement(connection.prepareStatement(ctx.sql(), names.toArray(new String[names.size()])));

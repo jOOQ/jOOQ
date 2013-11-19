@@ -153,7 +153,8 @@ public abstract class BaseTest<
     // Various tables related to trac ticket numbers
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
-    T785 extends TableRecord<T785>> {
+    T785 extends TableRecord<T785>,
+    CASE extends UpdatableRecord<CASE>> {
 
     protected static final List<Short>     BOOK_IDS_SHORT     = Arrays.asList((short) 1, (short) 2, (short) 3, (short) 4);
     protected static final List<Integer>   BOOK_IDS           = Arrays.asList(1, 2, 3, 4);
@@ -169,9 +170,9 @@ public abstract class BaseTest<
 
     protected static final JooqLogger      log                = JooqLogger.getLogger(jOOQAbstractTest.class);
 
-    protected final jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate;
+    protected final jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate;
 
-    protected BaseTest(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
+    protected BaseTest(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
         this.delegate = delegate;
     }
 
@@ -257,6 +258,30 @@ public abstract class BaseTest<
 
     protected TableField<T785, String> T785_VALUE() {
         return delegate.T785_VALUE();
+    }
+
+    protected Table<CASE> CASE() {
+        return delegate.CASE();
+    }
+
+    protected TableField<CASE, Integer> CASE_ID() {
+        return delegate.CASE_ID();
+    }
+
+    protected TableField<CASE, Integer> CASE_insensitive() {
+        return delegate.CASE_insensitive();
+    }
+
+    protected TableField<CASE, Integer> CASE_UPPER() {
+        return delegate.CASE_UPPER();
+    }
+
+    protected TableField<CASE, Integer> CASE_lower() {
+        return delegate.CASE_lower();
+    }
+
+    protected TableField<CASE, Integer> CASE_Mixed() {
+        return delegate.CASE_Mixed();
     }
 
     protected Table<U> TUnsigned() {

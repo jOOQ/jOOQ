@@ -42,6 +42,7 @@ DROP TABLE t_658_22/
 DROP TABLE t_658_32/
 DROP TABLE t_725_lob_test/
 DROP TABLE t_785/
+DROP TABLE "T_2845_CASE_sensitivity"/
 DROP TABLE t_unsigned/
 DROP TABLE t_booleans/
 DROP TABLE t_identity/
@@ -146,6 +147,18 @@ CREATE TABLE t_785 (
   ID int,
   NAME varchar(50),
   VALUE varchar(50)
+)
+/
+
+CREATE TABLE "T_2845_CASE_sensitivity" ( 
+  id int,
+  
+  insensitive int,
+  "UPPER" int,
+  "lower" int,
+  "Mixed" int,
+  
+  CONSTRAINT pk_t_2845_case_sensitivity PRIMARY KEY (id)
 )
 /
 

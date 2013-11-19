@@ -212,7 +212,8 @@ public class OracleTest extends jOOQAbstractTest<
         XUnusedRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
-        T_785Record> {
+        T_785Record,
+        XUnusedRecord> {
 
     static {
         // [#624] Incomplete or erroneous artefacts must be generated too. This
@@ -372,6 +373,11 @@ public class OracleTest extends jOOQAbstractTest<
     @Override
     protected TableField<T_785Record, String> T785_VALUE() {
         return T_785.VALUE;
+    }
+
+    @Override
+    protected Table<XUnusedRecord> CASE() {
+        return null;
     }
 
     @Override

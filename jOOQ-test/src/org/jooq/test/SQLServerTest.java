@@ -136,7 +136,8 @@ public class SQLServerTest extends jOOQAbstractTest<
         TIdentityPkRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
-        T_785Record> {
+        T_785Record,
+        XUnusedRecord> {
 
     @Override
     protected DSLContext create0(Settings settings) {
@@ -341,6 +342,11 @@ public class SQLServerTest extends jOOQAbstractTest<
     @Override
     protected TableField<T_785Record, String> T785_VALUE() {
         return T_785.VALUE;
+    }
+
+    @Override
+    protected Table<XUnusedRecord> CASE() {
+        return null;
     }
 
     @Override

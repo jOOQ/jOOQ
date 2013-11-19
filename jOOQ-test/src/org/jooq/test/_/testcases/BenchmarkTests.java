@@ -83,8 +83,9 @@ public class BenchmarkTests<
     IPK  extends UpdatableRecord<IPK>,
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
-    T785 extends TableRecord<T785>>
-extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> {
+    T785 extends TableRecord<T785>,
+    CASE extends UpdatableRecord<CASE>>
+extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> {
 
     private static final int    REPETITIONS_NEW_RECORD   = 1000000;
     private static final int    REPETITIONS_RECORD_INTO  = 2000;
@@ -92,7 +93,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     private static final int    REPETITIONS_SELECT       = 100;
     private static final String RANDOM                   = "" + new Random().nextLong();
 
-    public BenchmarkTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
+    public BenchmarkTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
         super(delegate);
     }
 

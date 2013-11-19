@@ -81,10 +81,11 @@ public class TruncateTests<
     IPK  extends UpdatableRecord<IPK>,
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
-    T785 extends TableRecord<T785>>
-extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> {
+    T785 extends TableRecord<T785>,
+    CASE extends UpdatableRecord<CASE>>
+extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> {
 
-    public TruncateTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
+    public TruncateTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
         super(delegate);
     }
 

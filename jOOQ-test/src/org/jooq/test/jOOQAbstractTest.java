@@ -237,7 +237,8 @@ public abstract class jOOQAbstractTest<
         // Various tables related to trac ticket numbers
         T725 extends UpdatableRecord<T725>,
         T639 extends UpdatableRecord<T639>,
-        T785 extends TableRecord<T785>> {
+        T785 extends TableRecord<T785>,
+        CASE extends UpdatableRecord<CASE>> {
 
     protected static final List<Short>   BOOK_IDS_SHORT         = Arrays.asList((short) 1, (short) 2, (short) 3, (short) 4);
     protected static final List<Integer> BOOK_IDS               = Arrays.asList(1, 2, 3, 4);
@@ -742,6 +743,23 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<T785, Integer> T785_ID();
     protected abstract TableField<T785, String> T785_NAME();
     protected abstract TableField<T785, String> T785_VALUE();
+
+    protected abstract Table<CASE> CASE();
+    protected TableField<CASE, Integer> CASE_ID() {
+        return (TableField<CASE, Integer>) CASE().field(0);
+    }
+    protected TableField<CASE, Integer> CASE_insensitive() {
+        return (TableField<CASE, Integer>) CASE().field(1);
+    }
+    protected TableField<CASE, Integer> CASE_UPPER() {
+        return (TableField<CASE, Integer>) CASE().field(2);
+    }
+    protected TableField<CASE, Integer> CASE_lower() {
+        return (TableField<CASE, Integer>) CASE().field(3);
+    }
+    protected TableField<CASE, Integer> CASE_Mixed() {
+        return (TableField<CASE, Integer>) CASE().field(4);
+    }
 
     protected abstract Table<U> TUnsigned();
     protected abstract TableField<U, UByte> TUnsigned_U_BYTE();
@@ -1665,6 +1683,16 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testInsertReturning() throws Exception {
         new InsertUpdateTests(this).testInsertReturning();
+    }
+
+    @Test
+    public void testInsertReturningWithCaseSensitiveColumns() throws Exception {
+        new InsertUpdateTests(this).testInsertReturningWithCaseSensitiveColumns();
+    }
+
+    @Test
+    public void testInsertReturningWithRenderNameStyleAS_IS() throws Exception {
+        new InsertUpdateTests(this).testInsertReturningWithRenderNameStyleAS_IS();
     }
 
     // @Test [#2374]

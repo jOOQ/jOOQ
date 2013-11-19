@@ -93,7 +93,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnConditionStep;
-import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.exception.DataAccessException;
 
@@ -294,7 +293,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
                 context.formatSeparator()
                        .start(TABLE_JOIN_USING)
                        .keyword("using")
-                       .sql("( ");
+                       .sql("(");
                 Utils.fieldNames(context, using);
                 context.sql(")")
                        .end(TABLE_JOIN_USING);

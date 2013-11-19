@@ -41,6 +41,7 @@
 
 package org.jooq.test;
 
+import static org.jooq.test.hsqldb.generatedclasses.Tables.T_2845_CASE_SENSITIVITY;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.T_725_LOB_TEST;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.T_785;
@@ -101,6 +102,7 @@ import org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.TUnsignedRecord;
+import org.jooq.test.hsqldb.generatedclasses.tables.records.T_2845CaseSensitivityRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.T_785Record;
@@ -134,7 +136,8 @@ public class HSQLDBTest extends jOOQAbstractTest<
         TIdentityPkRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
-        T_785Record> {
+        T_785Record,
+        T_2845CaseSensitivityRecord> {
 
 	@Override
     protected DSLContext create0(Settings settings) {
@@ -349,6 +352,11 @@ public class HSQLDBTest extends jOOQAbstractTest<
     @Override
     protected TableField<T_785Record, String> T785_VALUE() {
         return T_785.VALUE;
+    }
+
+    @Override
+    protected Table<T_2845CaseSensitivityRecord> CASE() {
+        return T_2845_CASE_SENSITIVITY;
     }
 
     @Override

@@ -23,6 +23,7 @@ public class Keys {
 	// UNIQUE and PRIMARY KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_2845CaseSensitivityRecord> PK_T_2845_CASE_SENSITIVITY = UniqueKeys0.PK_T_2845_CASE_SENSITIVITY;
 	public static final org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = UniqueKeys0.PK_T_639_NUMBERS_TABLE;
 	public static final org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST = UniqueKeys0.PK_T_725_LOB_TEST;
 	public static final org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record> T_937 = UniqueKeys0.T_937;
@@ -70,6 +71,7 @@ public class Keys {
 	}
 
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
+		public static final org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_2845CaseSensitivityRecord> PK_T_2845_CASE_SENSITIVITY = createUniqueKey(org.jooq.test.hsqldb.generatedclasses.tables.T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY, org.jooq.test.hsqldb.generatedclasses.tables.T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = createUniqueKey(org.jooq.test.hsqldb.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.hsqldb.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST = createUniqueKey(org.jooq.test.hsqldb.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.hsqldb.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record> T_937 = createUniqueKey(org.jooq.test.hsqldb.generatedclasses.tables.T_937.T_937, org.jooq.test.hsqldb.generatedclasses.tables.T_937.T_937.T_937_);

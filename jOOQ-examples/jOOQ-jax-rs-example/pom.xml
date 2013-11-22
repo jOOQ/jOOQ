@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jooq</groupId>
-    <artifactId>jooq-webservices</artifactId>
+    <artifactId>jooq-jax-rs-example</artifactId>
     <packaging>war</packaging>
     <version>1.0</version>
 

@@ -21,5 +21,4 @@
         <servlet-name>Jersey Spring Web Application</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
-
 </web-app>

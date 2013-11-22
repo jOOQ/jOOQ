@@ -1,7 +1,41 @@
-package org.jooq.web.services;
+/**
+ * Copyright (c) 2011-2013, Data Geekery GmbH, contact@datageekery.com
+ * All rights reserved.
+ *
+ * This software is licensed to you under the Apache License, Version 2.0
+ * (the "License"); You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * . Redistributions of source code must retain the above copyright notice, this
+ *   list of conditions and the following disclaimer.
+ *
+ * . Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ *
+ * . Neither the name "jOOQ" nor the names of its contributors may be
+ *   used to endorse or promote products derived from this software without
+ *   specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.jooq.example.jaxrs;
 
 import static java.sql.DriverManager.getConnection;
-import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.example.jaxrs.db.Routines.generateKey;
 import static org.jooq.example.jaxrs.db.Tables.LICENSE;
 import static org.jooq.example.jaxrs.db.Tables.LOG_VERIFY;
@@ -23,32 +57,33 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.jooq.DSLContext;
-import org.jooq.ExecuteContext;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultConnectionProvider;
-import org.jooq.impl.DefaultExecuteListener;
-import org.jooq.impl.DefaultExecuteListenerProvider;
-import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 
 /**
- * @author Lukas Eder
+ * The license server.
  */
 @Path("/license/")
 @Component
 @Scope("request")
 public class LicenseService {
 
+    /**
+     * <code>/license/generate</code> generates and returns a new license key.
+     *
+     * @param mail The input email address of the licensee.
+     */
     @GET
     @Produces("text/plain")
     @Path("/generate")
-    public String generateGET(
+    public String generate(
         final @QueryParam("mail") String mail
     ) {
     	return run(new CtxRunnable() {
@@ -69,10 +104,18 @@ public class LicenseService {
 		});
     }
     
+    /**
+     * <code>/license/verify</code> checks if a given licensee has access to version using a license.
+     *
+     * @param request The servlet request from the JAX-RS context.
+     * @param mail The input email address of the licensee.
+     * @param license The license used by the licensee.
+     * @param version The product version being accessed.
+     */
     @GET
     @Produces("text/plain")
     @Path("/verify")
-    public String verifyGET(
+    public String verify(
 		final @Context HttpServletRequest request,
 		final @QueryParam("mail") String mail,
 		final @QueryParam("license") String license,
@@ -102,7 +145,15 @@ public class LicenseService {
 			}
 		});
 	}
-	
+    
+    // -------------------------------------------------------------------------
+    // Utilities
+    // -------------------------------------------------------------------------
+
+    /**
+     * This method encapsulates a transaction and initialises a jOOQ DSLcontext.
+     * This could also be achieved with Spring and DBCP for connection pooling.
+     */
 	private String run(CtxRunnable runnable) {
     	Connection c = null;
     	
@@ -112,7 +163,6 @@ public class LicenseService {
     		DSLContext ctx = DSL.using(new DefaultConfiguration()
     				.set(new DefaultConnectionProvider(c))
     				.set(SQLDialect.POSTGRES)
-    				.set(new DefaultExecuteListenerProvider(new LicenseLogger()))
     				.set(new Settings().withExecuteLogging(false)));
     		
     		return runnable.run(ctx);
@@ -127,43 +177,7 @@ public class LicenseService {
     	}
 	}
 	
-    // -------------------------------------------------------------------------
-    // Utilities
-    // -------------------------------------------------------------------------
-	
 	private interface CtxRunnable {
 		String run(DSLContext ctx);
-	}
-	
-	private static class LicenseLogger extends DefaultExecuteListener {
-
-		private static final JooqLogger log = JooqLogger
-				.getLogger(LicenseLogger.class);
-
-		/**
-		 *  Generated UID
-		 */
-		private static final long serialVersionUID = 2293454050264611920L;
-
-		@Override
-		public void renderEnd(ExecuteContext ctx) {
-			if (ctx.query() != null) {
-				log.info("Query", ctx.query().getSQL(INLINED));
-			}
-		}
-
-	    @Override
-	    public void resultEnd(ExecuteContext ctx) {
-	        if (log.isDebugEnabled() && ctx.result() != null) {
-	            logMultiline("Result", ctx.result().format(5));
-	        }
-	    }
-
-	    private void logMultiline(String comment, String message) {
-	        for (String line : message.split("\n")) {
-                log.info(comment, line);
-	            comment = "";
-	        }
-	    }
 	}
 }

@@ -21,16 +21,24 @@
         <copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}-javadoc.jar"/>
         <copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version}-javadoc.jar"/>
 	</target>
-	
-	<target name="copy-src">
+    
+    <target name="copy-src">
         <mkdir dir="${dir.release}/versions" />
         <mkdir dir="${dir.release}/${version}/src" />
-		
-		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ/target/jooq-${version}-sources.jar"/>
-		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}-sources.jar"/>
-		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}-sources.jar"/>
-		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version}-sources.jar"/>
-	</target>
+        
+        <copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ/target/jooq-${version}-sources.jar"/>
+        <copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}-sources.jar"/>
+        <copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}-sources.jar"/>
+        <copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version}-sources.jar"/>
+    </target>
+        
+    <target name="copy-trial">
+        <copy todir="${dir.release}/${version}">
+            <fileset dir="${dir.release}/template-trial">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
+    </target>
 	
 	<target name="rest">
         <copy todir="${dir.release}/${version}">
@@ -76,6 +84,7 @@
     
     <target name="release-trial" description="Release a new version">
         <antcall target="copy-lib-javadoc"/>
+    	<antcall target="copy-src-trial"/>
         <antcall target="rest"/>
     </target>
 </project>

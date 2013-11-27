@@ -41,6 +41,9 @@
 
 package org.jooq.util.oracle;
 
+import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.util.oracle.sys.Tables.ALL_COLL_TYPES;
 import static org.jooq.util.oracle.sys.Tables.ALL_CONSTRAINTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_CONS_COLUMNS;
@@ -63,6 +66,7 @@ import org.jooq.Record;
 import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -86,6 +90,8 @@ import org.jooq.util.oracle.sys.tables.AllConstraints;
  * @author Lukas Eder
  */
 public class OracleDatabase extends AbstractDatabase {
+
+    private static Boolean is10g;
 
     /**
      * {@inheritDoc}
@@ -271,22 +277,27 @@ public class OracleDatabase extends AbstractDatabase {
 
         for (Record record : create()
                 .select()
-                .from(create()
-                    .select(
+                .from(
+                     select(
                         ALL_TAB_COMMENTS.OWNER,
                         ALL_TAB_COMMENTS.TABLE_NAME,
                         ALL_TAB_COMMENTS.COMMENTS)
                     .from(ALL_TAB_COMMENTS)
                     .where(ALL_TAB_COMMENTS.OWNER.upper().in(getInputSchemata()))
                     .and(ALL_TAB_COMMENTS.TABLE_NAME.notLike("%$%"))
-                .unionAll(create()
-                    .select(
-                        ALL_MVIEW_COMMENTS.OWNER,
-                        ALL_MVIEW_COMMENTS.MVIEW_NAME,
-                        ALL_MVIEW_COMMENTS.COMMENTS)
-                    .from(ALL_MVIEW_COMMENTS)
-                    .where(ALL_MVIEW_COMMENTS.OWNER.upper().in(getInputSchemata()))
-                    .and(ALL_MVIEW_COMMENTS.MVIEW_NAME.notLike("%$%"))))
+                .unionAll(
+                    is10g()
+
+                    ?    select(
+                            ALL_MVIEW_COMMENTS.OWNER,
+                            ALL_MVIEW_COMMENTS.MVIEW_NAME,
+                            ALL_MVIEW_COMMENTS.COMMENTS)
+                        .from(ALL_MVIEW_COMMENTS)
+                        .where(ALL_MVIEW_COMMENTS.OWNER.upper().in(getInputSchemata()))
+                        .and(ALL_MVIEW_COMMENTS.MVIEW_NAME.notLike("%$%"))
+
+                    :    select(val(""), val(""), val(""))
+                        .where(falseCondition())))
                 .orderBy(1, 2)
                 .fetch()) {
 
@@ -445,5 +456,24 @@ public class OracleDatabase extends AbstractDatabase {
     @Override
     protected DSLContext create0() {
         return DSL.using(getConnection(), SQLDialect.ORACLE);
+    }
+
+    private boolean is10g() {
+        if (is10g == null) {
+
+            // [#2864] The ALL_MVIEW_COMMENTS view was introduced in Oracle 10g
+            try {
+                create().selectCount()
+                        .from(ALL_MVIEW_COMMENTS)
+                        .fetch();
+
+                is10g = true;
+            }
+            catch (DataAccessException e) {
+                is10g = false;
+            }
+        }
+
+        return is10g;
     }
 }

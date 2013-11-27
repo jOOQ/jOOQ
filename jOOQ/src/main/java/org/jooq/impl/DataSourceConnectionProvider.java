@@ -71,7 +71,6 @@ import org.jooq.exception.DataAccessException;
 public class DataSourceConnectionProvider implements ConnectionProvider {
 
     private final DataSource dataSource;
-    private Connection       connection;
 
     public DataSourceConnectionProvider(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -83,27 +82,18 @@ public class DataSourceConnectionProvider implements ConnectionProvider {
 
     @Override
     public Connection acquire() {
-        if (null == connection) {
-            try {
-                connection = dataSource.getConnection();
-            }
-            catch (SQLException e) {
-                throw new DataAccessException("Error getting connection from data source " + dataSource, e);
-            }
+        try {
+            return dataSource.getConnection();
         }
-
-        return connection;
+        catch (SQLException e) {
+            throw new DataAccessException("Error getting connection from data source " + dataSource, e);
+        }
     }
 
     @Override
-    public void release(Connection released) {
-        if (this.connection != released) {
-            throw new IllegalArgumentException("Expected " + this.connection + " but got " + released);
-        }
-
+    public void release(Connection connection) {
         try {
             connection.close();
-            this.connection = null;
         }
         catch (SQLException e) {
             throw new DataAccessException("Error closing connection " + connection, e);

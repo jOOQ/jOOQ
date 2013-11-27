@@ -43,7 +43,6 @@ package org.jooq.util.oracle;
 
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.util.oracle.sys.Tables.ALL_ARGUMENTS;
-import static org.jooq.util.oracle.sys.Tables.ALL_COL_COMMENTS;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -51,6 +50,7 @@ import java.sql.SQLException;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.exception.DataAccessException;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
@@ -150,12 +150,19 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
 
     private boolean is11g() {
         if (is11g == null) {
-            is11g = create().selectCount()
-                            .from(ALL_COL_COMMENTS)
-                            .where(ALL_COL_COMMENTS.OWNER.equal(ALL_ARGUMENTS.getSchema().getName()))
-                            .and(ALL_COL_COMMENTS.TABLE_NAME.equal(ALL_ARGUMENTS.getName()))
-                            .and(ALL_COL_COMMENTS.COLUMN_NAME.equal(ALL_ARGUMENTS.DEFAULTED.getName()))
-                            .fetchOne(0, boolean.class);
+
+            // [#2866] The ALL_ARGUMENTS.DEFAULTED column was introduced in Oracle 11g
+            try {
+                create().selectCount()
+                        .from(ALL_ARGUMENTS)
+                        .where(ALL_ARGUMENTS.DEFAULTED.eq("defaulted"))
+                        .fetch();
+
+                is11g = true;
+            }
+            catch (DataAccessException e) {
+                is11g = false;
+            }
         }
 
         return is11g;

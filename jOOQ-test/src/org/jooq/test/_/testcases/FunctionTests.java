@@ -77,6 +77,7 @@ import static org.jooq.impl.DSL.currentDate;
 import static org.jooq.impl.DSL.currentTime;
 import static org.jooq.impl.DSL.currentTimestamp;
 import static org.jooq.impl.DSL.currentUser;
+import static org.jooq.impl.DSL.date;
 import static org.jooq.impl.DSL.day;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.deg;
@@ -123,6 +124,8 @@ import static org.jooq.impl.DSL.sqrt;
 import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.tan;
 import static org.jooq.impl.DSL.tanh;
+import static org.jooq.impl.DSL.time;
+import static org.jooq.impl.DSL.timestamp;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.trunc;
 import static org.jooq.impl.DSL.upper;
@@ -926,6 +929,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(0), record.getValue(2));
         assertEquals(Integer.valueOf(1), record.getValue(3));
         assertEquals(Integer.valueOf(2), record.getValue(4));
+    }
+
+    @Test
+    public void testDateOrTimeFunction() throws Exception {
+        Field<Date> d = date(inline(Timestamp.valueOf("1970-01-01 02:00:00.0")));
+        Field<Time> t = time(inline(Timestamp.valueOf("1970-01-01 02:00:00.0")));
+        Field<Timestamp> ts = timestamp(inline(Date.valueOf("1970-01-01")));
+
+        Record3<Date, Time, Timestamp> record =
+        create().select(d, t, ts)
+                .fetchOne();
+
+        assertEquals("1970-01-01 00:00:00.0", record.getValue(ts).toString());
+        assertEquals("1970-01-01", record.getValue(d).toString());
+        assertEquals("02:00:00", record.getValue(t).toString());
     }
 
     @Test

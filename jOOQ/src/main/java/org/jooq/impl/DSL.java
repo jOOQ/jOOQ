@@ -7823,6 +7823,48 @@ public class DSL {
         return extract(field, DatePart.SECOND);
     }
 
+    /**
+     * Convert a temporal value to a <code>DATE</code>.
+     */
+    public static Field<Date> date(java.util.Date value) {
+        return date(Utils.field(value));
+    }
+
+    /**
+     * Convert a temporal value to a <code>DATE</code>.
+     */
+    public static Field<Date> date(Field<? extends java.util.Date> field) {
+        return new DateOrTime<Date>(field, SQLDataType.DATE);
+    }
+
+    /**
+     * Convert a temporal value to a <code>TIME</code>.
+     */
+    public static Field<Time> time(java.util.Date value) {
+        return time(Utils.field(value));
+    }
+
+    /**
+     * Convert a temporal value to a <code>TIME</code>.
+     */
+    public static Field<Time> time(Field<? extends java.util.Date> field) {
+        return new DateOrTime<Time>(field, SQLDataType.TIME);
+    }
+
+    /**
+     * Convert a temporal value to a <code>TIMESTAMP</code>.
+     */
+    public static Field<Timestamp> timestamp(java.util.Date value) {
+        return timestamp(Utils.field(value));
+    }
+
+    /**
+     * Convert a temporal value to a <code>TIMESTAMP</code>.
+     */
+    public static Field<Timestamp> timestamp(Field<? extends java.util.Date> field) {
+        return new DateOrTime<Timestamp>(field, SQLDataType.TIMESTAMP);
+    }
+
     // ------------------------------------------------------------------------
     // XXX Construction of special grouping functions
     // ------------------------------------------------------------------------

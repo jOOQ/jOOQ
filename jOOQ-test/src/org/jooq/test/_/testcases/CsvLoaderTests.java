@@ -90,14 +90,13 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
                 "1,\"Max\",Frisch\n" +
                 "2,Friedrich,Dürrenmatt";
         loader =
-                create().loadInto(TAuthor())
-                        .commitAll()
-                        .onDuplicateKeyError()
-                        .onErrorAbort()
-                        .loadCSV(
-                                csv)
-                        .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
-                        .execute();
+        create().loadInto(TAuthor())
+                .commitAll()
+                .onDuplicateKeyError()
+                .onErrorAbort()
+                .loadCSV(csv)
+                .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
+                .execute();
         return loader;
     }
 
@@ -108,12 +107,11 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
                 "1,Hermann,Hesse\n" +
                 "7,\"Max\",Frisch";
         loader =
-                create().loadInto(TAuthor())
-                        .onDuplicateKeyUpdate()
-                            .loadCSV(
-                                    csv)
-                        .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
-                        .execute();
+        create().loadInto(TAuthor())
+                .onDuplicateKeyUpdate()
+                .loadCSV(csv)
+                .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
+                .execute();
         return loader;
     }
 
@@ -124,12 +122,11 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
                 "5,asdf,{null},Hesse\n" +
                 "6,asdf,\"\",Frisch";
         loader =
-                create().loadInto(TAuthor())
-                        .loadCSV(
-                                csv)
-                        .fields(TAuthor_ID(), null, TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
-                        .nullString("{null}")
-                        .execute();
+        create().loadInto(TAuthor())
+                .loadCSV(csv)
+                .fields(TAuthor_ID(), null, TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
+                .nullString("{null}")
+                .execute();
         return loader;
     }
 
@@ -140,9 +137,9 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
                 "\"ID\",\"Last Qualifier\"\r" +
                 "3,\"\",Hesse\n" +
                 "4,,Frisch";
-        Loader<A> execute = create().loadInto(TAuthor())
-                .loadCSV(
-                        csv)
+        Loader<A> execute =
+        create().loadInto(TAuthor())
+                .loadCSV(csv)
                 .fields(TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
                 .quote('"')
                 .separator(',')
@@ -157,15 +154,15 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
         String csv = "1,\"Kafka\"\n" +
                 "2,Frisch";
         loader =
-                create().loadInto(TAuthor())
-                        .onDuplicateKeyIgnore()
-                        .onErrorAbort()
-                        .loadCSV(
-                                csv)
-                        .fields(TAuthor_ID(), TAuthor_LAST_NAME())
-                        .ignoreRows(0)
-                        .execute();
-        System.out.println("Loader 5 " + create().selectFrom(TAuthor()).fetch().formatJSON());
+        create().loadInto(TAuthor())
+                .onDuplicateKeyIgnore()
+                .onErrorAbort()
+                .loadCSV(
+                        csv)
+                .fields(TAuthor_ID(), TAuthor_LAST_NAME())
+                .ignoreRows(0)
+                .execute();
+
         return loader;
     }
 
@@ -174,17 +171,17 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
         String csv = "1;'Kafka'\n" +
                 "2;Frisch";
 
-        Loader<A> loader = create().loadInto(TAuthor())
+        Loader<A> loader =
+        create().loadInto(TAuthor())
                 .onDuplicateKeyError()
                 .onErrorAbort()
-                .loadCSV(
-                        csv)
+                .loadCSV(csv)
                 .fields(TAuthor_ID(), TAuthor_LAST_NAME())
                 .quote('\'')
                 .separator(';')
                 .ignoreRows(0)
                 .execute();
-        System.out.println("Loader 4 " + create().selectFrom(TAuthor()).fetch().formatJSON());
+
         return loader;
     }
 
@@ -194,13 +191,13 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
         String csv = "3\n" +
                 "4";
         loader =
-                create().loadInto(TAuthor())
-                        .onErrorIgnore()
-                        .loadCSV(
-                                csv)
-                        .fields(TAuthor_ID())
-                        .ignoreRows(0)
-                        .execute();
+        create().loadInto(TAuthor())
+                .onErrorIgnore()
+                .loadCSV(
+                        csv)
+                .fields(TAuthor_ID())
+                .ignoreRows(0)
+                .execute();
         return loader;
     }
 
@@ -213,14 +210,14 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
                 "1,\"Max\",Frisch\n" +
                 "2,Friedrich,Dürrenmatt";
         loader =
-                create().loadInto(TAuthor())
-                        .commitAll()
-                        .onDuplicateKeyIgnore()
-                        .onErrorAbort()
-                        .loadCSV(
-                                csv)
-                        .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
-                        .execute();
+        create().loadInto(TAuthor())
+                .commitAll()
+                .onDuplicateKeyIgnore()
+                .onErrorAbort()
+                .loadCSV(
+                        csv)
+                .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
+                .execute();
         return loader;
     }
 
@@ -228,20 +225,20 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
     protected Loader<A> createLoaderAbortingOnConstraintViolationOnLAST_NAME() throws java.io.IOException {
         String csv = "3\n" +
                 "4";
-        Loader<A> execute = create().loadInto(TAuthor())
-                .loadCSV(
-                        csv)
+        Loader<A> execute =
+        create().loadInto(TAuthor())
+                .loadCSV(csv)
                 .fields(TAuthor_ID())
                 .ignoreRows(0)
                 .execute();
 
-        //System.out.println("Loader 2 "+create().selectFrom(TAuthor()).fetch().formatJSON());
         return execute;
     }
 
     @Override
     protected Loader<A> createForEmptyFile() throws java.io.IOException {
-        return create().loadInto(TAuthor())
+        return
+        create().loadInto(TAuthor())
                 .loadCSV("")
                 .fields(TAuthor_ID())
                 .execute();

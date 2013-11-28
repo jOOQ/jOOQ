@@ -9,16 +9,16 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes implements org.jooq.test.postgres.generatedclasses.tables.interfaces.ITExoticTypes {
 
-	private static final long serialVersionUID = -1260019296;
+	private static final long serialVersionUID = 288641934;
 
 	private final java.lang.Integer id;
 	private final java.util.UUID    uu;
-	private final java.lang.String  js;
+	private final java.lang.Object  js;
 
 	public TExoticTypes(
 		java.lang.Integer id,
 		java.util.UUID    uu,
-		java.lang.String  js
+		java.lang.Object  js
 	) {
 		this.id = id;
 		this.uu = uu;
@@ -36,7 +36,7 @@ public class TExoticTypes implements org.jooq.test.postgres.generatedclasses.tab
 	}
 
 	@Override
-	public java.lang.String getJs() {
+	public java.lang.Object getJs() {
 		return this.js;
 	}
 }

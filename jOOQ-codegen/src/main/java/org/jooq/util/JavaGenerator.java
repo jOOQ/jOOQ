@@ -1072,7 +1072,12 @@ public class JavaGenerator extends AbstractGenerator {
         out.println("public enum %s[[before= implements ][%s]] {", className, interfaces);
 
         for (String literal : e.getLiterals()) {
-            final String identifier = GenerationUtil.convertToJavaIdentifier(literal);
+            String identifier = GenerationUtil.convertToJavaIdentifier(literal);
+
+            // [#2781] Disambiguate collisions with the leading package name
+            if (identifier.equals(getStrategy().getJavaPackageName(e).replaceAll("\\..*", ""))) {
+                identifier += "_";
+            }
 
             out.println();
             out.tab(1).println("%s(\"%s\"),", identifier, literal);

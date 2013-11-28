@@ -69,12 +69,14 @@ DROP TABLE IF EXISTS t_inheritance_1_2_1/
 DROP TABLE IF EXISTS t_inheritance_1_2/
 DROP TABLE IF EXISTS t_inheritance_1_1/
 DROP TABLE IF EXISTS t_inheritance_1/
+DROP TABLE IF EXISTS t_2781/
 
 DROP TYPE IF EXISTS u_address_type/
 DROP TYPE IF EXISTS u_street_type/
 DROP TYPE IF EXISTS u_book_status/
 DROP TYPE IF EXISTS u_country/
 DROP TYPE IF EXISTS u_959/
+DROP TYPE IF EXISTS u_2781/
 DROP TYPE IF EXISTS u_uuids/
 
 CREATE TYPE u_uuids AS (
@@ -91,6 +93,7 @@ CREATE TYPE u_959 AS ENUM('abstract', 'assert', 'boolean', 'break', 'byte', 'cas
 	                 'protected', 'public', 'return', 'short', 'static', 'strictfp',
 	                 'super', 'switch', 'synchronized', 'this', 'throw', 'throws',
 	                 'transient', 'true', 'try', 'void', 'volatile', 'while')/
+CREATE TYPE u_2781 AS ENUM('org', 'jooq')/
 CREATE TYPE u_book_status AS ENUM ('SOLD OUT', 'ON STOCK', 'ORDERED')/
 CREATE TYPE u_country AS ENUM ('Brazil', 'England', 'Germany')/
 
@@ -110,6 +113,12 @@ CREATE TYPE u_address_type AS (
   since DATE,
   code INTEGER,
   f_1323 bytea
+)
+/
+
+CREATE TABLE t_2781 (
+  org text,
+  jooq text
 )
 /
 

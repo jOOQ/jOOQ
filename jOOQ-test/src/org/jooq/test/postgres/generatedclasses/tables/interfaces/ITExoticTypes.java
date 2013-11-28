@@ -22,5 +22,5 @@ public interface ITExoticTypes extends java.io.Serializable {
 	/**
 	 * Getter for <code>public.t_exotic_types.js</code>. 
 	 */
-	public java.lang.String getJs();
+	public java.lang.Object getJs();
 }

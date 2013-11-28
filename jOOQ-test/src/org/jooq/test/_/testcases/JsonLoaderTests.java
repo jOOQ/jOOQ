@@ -85,10 +85,6 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
         String json = "{\"fields\":[{\"name\":\"ID\",\"type\":\"INTEGER\"},{\"name\":\"FIRST_NAME\",\"type\":\"VARCHAR\"},{\"name\":\"LAST_NAME\",\"type\":\"VARCHAR\"}]," +
                 "\"records\":[[8,\"Hermann\",\"Hesse\"],[1,\"Max\",\"Frisch\"],[2,\"Friedrich\",\"Dürrenmatt\"]]}";
         Loader<A> loader;
-        String csv = "\"ID\",\"First Qualifier\",\"Last Qualifier\"\r" +
-                "8,Hermann,Hesse\n" +
-                "1,\"Max\",Frisch\n" +
-                "2,Friedrich,Dürrenmatt";
         loader =
                 create().loadInto(TAuthor())
                         .commitAll()
@@ -104,11 +100,8 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
     @Override
     protected Loader<A> createLoaderUpdatingDuplicateRecords() throws java.io.IOException {
         String json = "{\"fields\":[{\"name\":\"ID\",\"type\":\"INTEGER\"},{\"name\":\"FIRST_NAME\",\"type\":\"VARCHAR\"},{\"name\":\"LAST_NAME\",\"type\":\"VARCHAR\"}]," +
-                "\"records\":[[1,Hermann,\"Hesse\"],[7,\"Max\",\"Frisch\"]]}";
+                "\"records\":[[1,\"Hermann\",\"Hesse\"],[7,\"Max\",\"Frisch\"]]}";
         Loader<A> loader;
-        String csv = "\"ID\",\"First Qualifier\",\"Last Qualifier\"\r" +
-                "1,Hermann,Hesse\n" +
-                "7,\"Max\",Frisch";
         loader =
                 create().loadInto(TAuthor())
                         .onDuplicateKeyUpdate()
@@ -124,9 +117,6 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
         String json = "{\"fields\":[{\"name\":\"ID\",\"type\":\"INTEGER\"},{\"name\":\"ignore\",\"type\":\"String\"},{\"name\":\"FIRST_NAME\",\"type\":\"VARCHAR\"},{\"name\":\"LAST_NAME\",\"type\":\"VARCHAR\"}]," +
                 "\"records\":[[5,\"asdf\",null,\"Hesse\"],[6,\"asdf\",\"\",\"Frisch\"]]}";
         Loader<A> loader;
-        String csv = "\"ID\",ignore,\"First Qualifier\",\"Last Qualifier\"\r" +
-                "5,asdf,{null},Hesse\n" +
-                "6,asdf,\"\",Frisch";
         loader =
                 create().loadInto(TAuthor())
                         .loadJSON(
@@ -141,10 +131,6 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
         String json = "{\"fields\":[{\"name\":\"ID\",\"type\":\"INTEGER\"},{\"name\":\"FIRST_NAME\",\"type\":\"VARCHAR\"},{\"name\":\"LAST_NAME\",\"type\":\"VARCHAR\"}]," +
                 "\"records\":[[3,\"\",\"Hesse\"],[4,\"\",\"Frisch\"]]}";
 
-        String csv = "####Some Data####\n" +
-                "\"ID\",\"Last Qualifier\"\r" +
-                "3,\"\",Hesse\n" +
-                "4,,Frisch";
         Loader<A> execute = create().loadInto(TAuthor())
                 .loadJSON(
                         json)
@@ -161,8 +147,6 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
         Loader<A> loader;
         String json = "{\"fields\":[{\"name\":\"ID\",\"type\":\"INTEGER\"},{\"name\":\"LAST_NAME\",\"type\":\"VARCHAR\"}]," +
                 "\"records\":[[1,\"Kafka\"],[2,\"Frisch\"]]}";
-        String csv = "1,\"Kafka\"\n" +
-                "2,Frisch";
         loader =
                 create().loadInto(TAuthor())
                         .onDuplicateKeyIgnore()
@@ -178,8 +162,6 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
 
     @Override
     protected Loader<A> createLoaderAbortingOnDuplicateRecords() throws java.io.IOException {
-        String csv = "1;'Kafka'\n" +
-                "2;Frisch";
         String json = "{\"fields\":[{\"name\":\"ID\",\"type\":\"INTEGER\"},{\"name\":\"LAST_NAME\",\"type\":\"VARCHAR\"}]," +
                 "\"records\":[[1,\"Kafka\"],[2,\"Frisch\"]]}";
 
@@ -201,8 +183,6 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
     protected Loader<A> createLoaderIgnoringConstraintViolationOnLAST_NAME() throws java.io.IOException {
         Loader<A> loader;
         String json = "{\"fields\":[{\"name\":\"ID\",\"type\":\"INTEGER\"}],\"records\":[[3],[4]]}";
-        String csv = "3\n" +
-                "4";
         loader =
                 create().loadInto(TAuthor())
                         .onErrorIgnore()
@@ -220,10 +200,6 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
         String json = "{\"fields\":[{\"name\":\"ID\",\"type\":\"INTEGER\"},{\"name\":\"FIRST_NAME\",\"type\":\"VARCHAR\"},{\"name\":\"LAST_NAME\",\"type\":\"VARCHAR\"}]," +
                 "\"records\":[[8,\"Hermann\",\"Hesse\"],[1,\"Max\",\"Frisch\"],[2,\"Friedrich\",\"Dürrenmatt\"]]}";
 
-        String csv = "\"ID\",\"First Qualifier\",\"Last Qualifier\"\r" +
-                "8,Hermann,Hesse\n" +
-                "1,\"Max\",Frisch\n" +
-                "2,Friedrich,Dürrenmatt";
         loader =
                 create().loadInto(TAuthor())
                         .commitAll()
@@ -239,8 +215,6 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
     @Override
     protected Loader<A> createLoaderAbortingOnConstraintViolationOnLAST_NAME() throws java.io.IOException {
         String json = "{\"fields\":[{\"name\":\"ID\",\"type\":\"INTEGER\"}],\"records\":[[3],[4]]}";
-        String csv = "3\n" +
-                "4";
         Loader<A> execute = create().loadInto(TAuthor())
                 .loadJSON(
                         json)

@@ -214,9 +214,6 @@ public class JSONValue {
     /**
      * Parse JSON text into java object from the input source.
      *
-     * @see org.json.simple.parser.JSONParser
-     *
-     * @param in
      * @return Instance of the following:
      *      org.json.simple.JSONObject,
      *      org.json.simple.JSONArray,
@@ -224,9 +221,6 @@ public class JSONValue {
      *      java.lang.Number,
      *      java.lang.Boolean,
      *      null
-     *
-     * @throws IOException
-     * @throws ParseException
      */
     public static Object parseWithException(Reader in) throws IOException, ParseException{
         JSONParser parser=new JSONParser();

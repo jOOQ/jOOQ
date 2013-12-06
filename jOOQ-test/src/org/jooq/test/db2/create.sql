@@ -151,7 +151,7 @@ CREATE TABLE t_785 (
 /
 
 CREATE TABLE "T_2845_CASE_sensitivity" ( 
-  id int,
+  id int NOT NULL,
   
   insensitive int,
   "UPPER" int,

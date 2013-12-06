@@ -405,7 +405,7 @@ final class Utils {
         return configuration(configuration).settings();
     }
 
-    private static final boolean attachRecords(Configuration configuration) {
+    static final boolean attachRecords(Configuration configuration) {
         if (configuration != null) {
             Settings settings = configuration.settings();
 
@@ -1293,7 +1293,7 @@ final class Utils {
      */
     static final Field<String> escapeForLike(Object value, Configuration configuration) {
         if (value != null && value.getClass() == String.class) {
-            
+
             /* [pro] */
             if (configuration.dialect().family() == ACCESS) {
                 return val("[" + value + "]");

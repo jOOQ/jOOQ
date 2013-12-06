@@ -1496,6 +1496,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchAttachables() throws Exception {
+        new FetchTests(this).testFetchAttachables();
+    }
+
+    @Test
     public void testFetchIntoTableRecordsWithUDTs() throws Exception {
         new FetchTests(this).testFetchIntoTableRecordsWithUDTs();
     }

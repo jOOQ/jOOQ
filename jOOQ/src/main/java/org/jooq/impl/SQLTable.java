@@ -56,7 +56,7 @@ class SQLTable extends AbstractTable<Record> {
     private final QueryPart   delegate;
 
     public SQLTable(QueryPart delegate) {
-        super(delegate.toString());
+        super("table");
 
         this.delegate = delegate;
     }

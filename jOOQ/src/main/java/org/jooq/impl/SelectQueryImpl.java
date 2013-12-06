@@ -80,6 +80,7 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.Dual.DUAL_ACCESS;
 import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
+import static org.jooq.impl.Utils.DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE;
 import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import static org.jooq.impl.Utils.DATA_WINDOW_DEFINITIONS;
 import static org.jooq.impl.Utils.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
@@ -644,10 +645,15 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         // The simplest way to see if no FROM clause needs to be rendered is to
         // render it. But use a new RenderContext (without any VisitListeners)
         // for that purpose!
-        DefaultConfiguration c = new DefaultConfiguration(context.configuration().dialect());
-        String renderedFrom = new DefaultRenderContext(c).render(getFrom());
+        boolean hasFrom = (context.data(DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE) != null);
 
-        if (!renderedFrom.isEmpty()) {
+        if (!hasFrom) {
+            DefaultConfiguration c = new DefaultConfiguration(context.configuration().dialect());
+            String renderedFrom = new DefaultRenderContext(c).render(getFrom());
+            hasFrom = !renderedFrom.isEmpty();
+        }
+
+        if (hasFrom) {
             context.formatSeparator()
                    .keyword("from")
                    .sql(" ")

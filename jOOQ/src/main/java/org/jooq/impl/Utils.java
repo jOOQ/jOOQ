@@ -48,6 +48,7 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.escape;
+import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.nullSafe;
@@ -232,6 +233,14 @@ final class Utils {
      * window specifications.
      */
     static final String          DATA_WINDOW_DEFINITIONS                      = "org.jooq.configuration.local-window-definitions";
+
+    /**
+     * [#2744] Currently rendering the DB2 FINAL TABLE clause.
+     * <p>
+     * In DB2, a <code>FINAL TABLE (INSERT ...)</code> clause exists, which
+     * corresponds to the PostgreSQL <code>INSERT .. RETURNING</code> clause.
+     */
+    static final String          DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE        = "org.jooq.configuration.rendering-db2-final-table-clause";
 
     // ------------------------------------------------------------------------
     // Other constants
@@ -748,6 +757,18 @@ final class Utils {
                 result.add(field(values[i], types[i]));
             }
         }
+
+        return result;
+    }
+
+    /**
+     * Return a list of unqualified {@link Field}s.
+     */
+    static final List<Field<?>> unqualify(List<? extends Field<?>> fields) {
+        QueryPartList<Field<?>> result = new QueryPartList<Field<?>>();
+
+        for (Field<?> field : fields)
+            result.add(fieldByName(field.getName()));
 
         return result;
     }

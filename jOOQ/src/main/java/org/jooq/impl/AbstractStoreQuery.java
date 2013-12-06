@@ -81,11 +81,11 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
     /**
      * Generated UID
      */
-    private static final long             serialVersionUID = 6864591335823160569L;
+    private static final long     serialVersionUID = 6864591335823160569L;
 
-    private final Table<R>                into;
-    private final QueryPartList<Field<?>> returning;
-    private Result<R>                     returned;
+    final Table<R>                into;
+    final QueryPartList<Field<?>> returning;
+    Result<R>                     returned;
 
     AbstractStoreQuery(Configuration configuration, Table<R> into) {
         super(configuration);
@@ -209,17 +209,20 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         else {
             switch (ctx.configuration().dialect().family()) {
 
+                /* [pro] xx
+                xxxx xxxxxxx
+                xx xxxxxxx xxx xxxxx xxx xxxxxx xx xxxx xxxxx xxxxx xxxxxxx xxx xxxxxx
+                xxxx xxxx
+                xx xxxxxx xxxx xxxxxx xxxxxxxxxx xxxxx xxx xxxxxx
+                xxxx xxxxxxx
+                xx [/pro] */
+
                 // Postgres uses the RETURNING clause in SQL
                 case FIREBIRD:
                 case POSTGRES:
                 // SQLite will select last_insert_rowid() after the INSER
                 case SQLITE:
-                // Sybase will select @@identity after the INSERT
                 case CUBRID:
-                /* [pro] xx
-                xxxx xxxxxxx
-                xxxx xxxxxxx
-                xx [/pro] */
 
                     super.prepare(ctx);
                     return;
@@ -241,7 +244,6 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
 
                 // The default is to return all requested fields directly
                 /* [pro] xx
-                xxxx xxxx
                 xxxx xxxxxxx
                 xx [/pro] */
                 case HSQLDB:
@@ -298,14 +300,16 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                     return result;
                 }
 
-                // Sybase can select @@identity after the insert
-                // TODO [#832] Fix this. This might be a driver issue. JDBC
-                // Generated keys don't work with jconn3, but they seem to work
-                // with jTDS (which is used for Sybase ASE integration)
                 /* [pro] xx
                 xxxx xxxxxxx
+
+                xx xxxxxx xxx xxxxxx xxxxxxxxxx xxxxx xxx xxxxxx
+                xx xxxx xxxxxx xxx xxxxx xxxx xxxxx xx x xxxxxx xxxxxx xxxx
+                xx xxxxxxxxx xxxx xxxxx xxxx xxxx xxxxxxx xxx xxxx xxxx xx xxxx
+                xx xxxx xxxx xxxxxx xx xxxx xxx xxxxxx xxx xxxxxxxxxxxx
                 xxxx xxxxxxx
                 xx [/pro] */
+
                 case CUBRID: {
                     listener.executeStart(ctx);
                     result = ctx.statement().executeUpdate();
@@ -354,6 +358,11 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                     }
                 }
 
+                /* [pro] xx
+                xx xxxxxxx xxx xxxxx xxx xxxxxx xx xxxx xxxxx xxxxx xxxxxxx xxx xxxxxx
+                xxxx xxxx
+                xx [/pro] */
+
                 // Firebird and Postgres can execute the INSERT .. RETURNING
                 // clause like a select clause. JDBC support is not implemented
                 // in the Postgres JDBC driver
@@ -368,7 +377,6 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
 
                 // These dialects have full JDBC support
                 /* [pro] xx
-                xxxx xxxx
                 xxxx xxxxxxx
                 xx [/pro] */
                 case HSQLDB:

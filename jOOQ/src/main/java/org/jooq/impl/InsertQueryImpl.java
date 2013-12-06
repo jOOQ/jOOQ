@@ -47,8 +47,12 @@ import static org.jooq.Clause.INSERT_INSERT_INTO;
 import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE;
 import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT;
 import static org.jooq.Clause.INSERT_RETURNING;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.Utils.DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE;
+import static org.jooq.impl.Utils.unqualify;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +68,7 @@ import org.jooq.InsertQuery;
 import org.jooq.Merge;
 import org.jooq.MergeNotMatchedStep;
 import org.jooq.MergeOnConditionStep;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Table;
@@ -146,6 +151,17 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     public final void toSQL(RenderContext context) {
+
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxxxx
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxx
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+        x
+        xxxx
+        xx [/pro] */
 
         // ON DUPLICATE KEY UPDATE clause
         // ------------------------------
@@ -259,8 +275,25 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         context.end(INSERT_RETURNING);
     }
 
+    /* [pro] xx
+    xxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxx
+    x
+    xx [/pro] */
+
     @Override
     public final void bind(BindContext context) {
+
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxxxx
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxx
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+        x
+        xxxx
+        xx [/pro] */
 
         // ON DUPLICATE KEY UPDATE clause
         // ------------------------------
@@ -378,13 +411,13 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @SuppressWarnings("unchecked")
     private final Merge<R> toMerge(Configuration configuration) {
-        Table<R> into = getInto();
+        Table<R> i = getInto();
 
-        if (into.getPrimaryKey() != null) {
+        if (i.getPrimaryKey() != null) {
             Condition condition = null;
             List<Field<?>> key = new ArrayList<Field<?>>();
 
-            for (Field<?> f : into.getPrimaryKey().getFields()) {
+            for (Field<?> f : i.getPrimaryKey().getFields()) {
                 Field<Object> field = (Field<Object>) f;
                 Field<Object> value = (Field<Object>) insertMaps.getMap().get(field);
 
@@ -400,7 +433,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
             }
 
             MergeOnConditionStep<R> on =
-            create(configuration).mergeInto(into)
+            create(configuration).mergeInto(i)
                                  .usingDual()
                                  .on(condition);
 

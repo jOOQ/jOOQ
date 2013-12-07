@@ -43,6 +43,7 @@ package org.jooq.test._.testcases;
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
+import static org.jooq.tools.StringUtils.defaultString;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -210,7 +211,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         for (int j = 0; j < books.size(); j++) {
             for (int i = 0; i < row.size(); i++) {
-                assertEquals(books.get(j).getValue(i, String.class, "{null}"),
+                assertEquals(defaultString(books.get(j).getValue(i, String.class), "{null}"),
                           xp.evaluate("/table/tbody/tr[" + (j + 1) + "]/td[" + (i + 1) + "]/text()", doc));
             }
         }
@@ -469,7 +470,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             for (int i = 0; i < row.size(); i++) {
                 assertEquals(row.field(i).getName(),
                           xp.evaluate("/result/records/record[" + (j + 1) + "]/value[" + (i + 1) + "]/@field", doc));
-                assertEquals(books.get(j).getValue(i, String.class, ""),
+                assertEquals(defaultString(books.get(j).getValue(i, String.class)),
                           xp.evaluate("/result/records/record[" + (j + 1) + "]/value[" + (i + 1) + "]/text()", doc));
             }
         }

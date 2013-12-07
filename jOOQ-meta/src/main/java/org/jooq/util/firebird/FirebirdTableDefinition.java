@@ -79,7 +79,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                 r.RDB$FIELD_NAME.trim(),
                 r.RDB$DESCRIPTION,
                 r.RDB$DEFAULT_VALUE,
-                r.RDB$NULL_FLAG,
+                r.RDB$NULL_FLAG.nvl((short) 0),
                 r.RDB$DEFAULT_SOURCE,
                 r.RDB$FIELD_POSITION,
                 f.RDB$FIELD_LENGTH,
@@ -135,7 +135,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     record.getValue(f.RDB$FIELD_LENGTH),
                     record.getValue(f.RDB$FIELD_PRECISION),
                     record.getValue("FIELD_SCALE", Integer.class),
-                    record.getValue(r.RDB$NULL_FLAG, (short) 0) == 0,
+                    record.getValue(r.RDB$NULL_FLAG.nvl((short) 0)) == 0,
                     record.getValue(r.RDB$DEFAULT_SOURCE) != null
             );
 

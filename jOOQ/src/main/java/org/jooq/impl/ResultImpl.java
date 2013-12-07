@@ -194,6 +194,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    @Deprecated
     public final <T> T getValue(int index, Field<T> field, T defaultValue) {
         return get(index).getValue(field, defaultValue);
     }
@@ -204,6 +205,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    @Deprecated
     public final Object getValue(int index, int fieldIndex, Object defaultValue) {
         return get(index).getValue(fieldIndex, defaultValue);
     }
@@ -214,6 +216,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    @Deprecated
     public final Object getValue(int index, String fieldName, Object defaultValue) {
         return get(index).getValue(fieldName, defaultValue);
     }
@@ -1014,10 +1017,9 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return (T[]) Convert.convertArray(intoArray(fieldIndex), type);
     }
 
-    @SuppressWarnings("cast")
     @Override
     public final <U> U[] intoArray(int fieldIndex, Converter<?, U> converter) {
-        return (U[]) Convert.convertArray(intoArray(fieldIndex), converter);
+        return Convert.convertArray(intoArray(fieldIndex), converter);
     }
 
     @Override
@@ -1033,10 +1035,9 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return (T[]) Convert.convertArray(intoArray(fieldName), type);
     }
 
-    @SuppressWarnings("cast")
     @Override
     public final <U> U[] intoArray(String fieldName, Converter<?, U> converter) {
-        return (U[]) Convert.convertArray(intoArray(fieldName), converter);
+        return Convert.convertArray(intoArray(fieldName), converter);
     }
 
     @SuppressWarnings("unchecked")
@@ -1051,10 +1052,9 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return (T[]) Convert.convertArray(intoArray(field), type);
     }
 
-    @SuppressWarnings("cast")
     @Override
     public final <T, U> U[] intoArray(Field<T> field, Converter<? super T, U> converter) {
-        return (U[]) Convert.convertArray(intoArray(field), converter);
+        return Convert.convertArray(intoArray(field), converter);
     }
 
     @Override

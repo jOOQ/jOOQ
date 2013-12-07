@@ -496,6 +496,28 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testJoinOnKeyWithAlias() throws Exception {
+
+        // Test using unambiguous keys
+        // ---------------------------
+        Table<B> b = TBook().as("b");
+        Table<S> bs = TBookStore().as("bs");
+        Result<Record2<Integer, String>> result4 =
+        create().select(b.field(TBook_ID()), bs.field(TBookStore_NAME()))
+                .from(b)
+                .join(TBookToBookStore()).onKey()
+                .join(bs).onKey()
+                .orderBy(b.field(TBook_ID()), bs.field(TBookStore_NAME()))
+                .fetch();
+
+        assertEquals(6, result4.size());
+        assertEquals(asList(1, 1, 2, 3, 3, 3), result4.getValues(0));
+        assertEquals(asList(
+            "Ex Libris", "Orell Füssli", "Orell Füssli",
+            "Buchhandlung im Volkshaus", "Ex Libris", "Orell Füssli"), result4.getValues(1));
+    }
+
+    @Test
     public void testInverseAndNestedJoin() throws Exception {
 
         // [#1086] TODO: Fix this for SQLite

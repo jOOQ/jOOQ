@@ -177,6 +177,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
+    @Deprecated
     public final <T> T getValue(Field<T> field, T defaultValue) {
         return getValue0(field).getValue(defaultValue);
     }
@@ -187,6 +188,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
+    @Deprecated
     public final <T> T getValue(Field<?> field, Class<? extends T> type, T defaultValue) {
         final T result = getValue(field, type);
         return result == null ? defaultValue : result;
@@ -198,6 +200,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
+    @Deprecated
     public final <T, U> U getValue(Field<T> field, Converter<? super T, U> converter, U defaultValue) {
         final U result = getValue(field, converter);
         return result == null ? defaultValue : result;
@@ -209,6 +212,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
+    @Deprecated
     public final Object getValue(int index, Object defaultValue) {
         final Object result = getValue(index);
         return result == null ? defaultValue : result;
@@ -220,6 +224,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
+    @Deprecated
     public final <T> T getValue(int index, Class<? extends T> type, T defaultValue) {
         final T result = getValue(index, type);
         return result == null ? defaultValue : result;
@@ -231,6 +236,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
+    @Deprecated
     public final <U> U getValue(int index, Converter<?, U> converter, U defaultValue) {
         final U result = getValue(index, converter);
         return result == null ? defaultValue : result;
@@ -242,6 +248,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
+    @Deprecated
     public final Object getValue(String fieldName, Object defaultValue) {
         return getValue((Field<Object>) field(fieldName), defaultValue);
     }
@@ -252,6 +259,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
+    @Deprecated
     public final <T> T getValue(String fieldName, Class<? extends T> type, T defaultValue) {
         final T result = getValue(fieldName, type);
         return result == null ? defaultValue : result;
@@ -263,6 +271,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
+    @Deprecated
     public final <U> U getValue(String fieldName, Converter<?, U> converter, U defaultValue) {
         final U result = getValue(fieldName, converter);
         return result == null ? defaultValue : result;

@@ -246,7 +246,7 @@ public class OracleDatabase extends AbstractDatabase {
         for (Record record : create().select(
                     ALL_SEQUENCES.SEQUENCE_OWNER,
                     ALL_SEQUENCES.SEQUENCE_NAME,
-                    ALL_SEQUENCES.MAX_VALUE)
+                    ALL_SEQUENCES.MAX_VALUE.nvl(BigDecimal.valueOf(Long.MAX_VALUE)))
                 .from(ALL_SEQUENCES)
                 .where(ALL_SEQUENCES.SEQUENCE_OWNER.upper().in(getInputSchemata()))
                 .orderBy(
@@ -256,7 +256,7 @@ public class OracleDatabase extends AbstractDatabase {
 
 
             SchemaDefinition schema = getSchema(record.getValue(ALL_SEQUENCES.SEQUENCE_OWNER));
-            BigInteger value = record.getValue(ALL_SEQUENCES.MAX_VALUE, BigInteger.class, BigInteger.valueOf(Long.MAX_VALUE));
+            BigInteger value = record.getValue(ALL_SEQUENCES.MAX_VALUE.nvl(BigDecimal.valueOf(Long.MAX_VALUE)), BigInteger.class);
             DataTypeDefinition type = getDataTypeForMAX_VAL(schema, value);
 
             result.add(new DefaultSequenceDefinition(
@@ -359,9 +359,9 @@ public class OracleDatabase extends AbstractDatabase {
                 ALL_COLL_TYPES.OWNER,
                 ALL_COLL_TYPES.TYPE_NAME,
                 ALL_COLL_TYPES.ELEM_TYPE_NAME,
-                ALL_COLL_TYPES.LENGTH,
-                ALL_COLL_TYPES.PRECISION,
-                ALL_COLL_TYPES.SCALE)
+                ALL_COLL_TYPES.LENGTH.nvl(BigDecimal.ZERO),
+                ALL_COLL_TYPES.PRECISION.nvl(BigDecimal.ZERO),
+                ALL_COLL_TYPES.SCALE.nvl(BigDecimal.ZERO))
             .from(ALL_COLL_TYPES)
             .where(ALL_COLL_TYPES.OWNER.upper().in(getInputSchemata()))
             .and(ALL_COLL_TYPES.COLL_TYPE.in("VARYING ARRAY", "TABLE"))
@@ -375,9 +375,9 @@ public class OracleDatabase extends AbstractDatabase {
             String name = record.getValue(ALL_COLL_TYPES.TYPE_NAME);
             String dataType = record.getValue(ALL_COLL_TYPES.ELEM_TYPE_NAME);
 
-            int length = record.getValue(ALL_COLL_TYPES.LENGTH, BigDecimal.ZERO).intValue();
-            int precision = record.getValue(ALL_COLL_TYPES.PRECISION, BigDecimal.ZERO).intValue();
-            int scale = record.getValue(ALL_COLL_TYPES.SCALE, BigDecimal.ZERO).intValue();
+            int length = record.getValue(ALL_COLL_TYPES.LENGTH.nvl(BigDecimal.ZERO)).intValue();
+            int precision = record.getValue(ALL_COLL_TYPES.PRECISION.nvl(BigDecimal.ZERO)).intValue();
+            int scale = record.getValue(ALL_COLL_TYPES.SCALE.nvl(BigDecimal.ZERO)).intValue();
 
             DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(this, schema, dataType, length, precision, scale, null, null);
             DefaultArrayDefinition array = new DefaultArrayDefinition(schema, name, type);

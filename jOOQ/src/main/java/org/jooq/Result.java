@@ -129,7 +129,9 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *             <tt>index &lt; 0 || index &gt;= size()</tt>)
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
+     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
      */
+    @Deprecated
     <T> T getValue(int index, Field<T> field, T defaultValue) throws IndexOutOfBoundsException,
         IllegalArgumentException;
 
@@ -157,7 +159,9 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *             <tt>index &lt; 0 || index &gt;= size()</tt>)
      * @throws IllegalArgumentException If the argument fieldIndex is not
      *             contained in {@link #fieldsRow()}
+     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
      */
+    @Deprecated
     Object getValue(int index, int fieldIndex, Object defaultValue) throws IndexOutOfBoundsException,
         IllegalArgumentException;
 
@@ -185,7 +189,9 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *             <tt>index &lt; 0 || index &gt;= size()</tt>)
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}
+     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
      */
+    @Deprecated
     Object getValue(int index, String fieldName, Object defaultValue) throws IndexOutOfBoundsException,
         IllegalArgumentException;
 

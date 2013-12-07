@@ -190,11 +190,11 @@ public class CUBRIDDatabase extends AbstractDatabase {
         for (Record record : create()
                 .select(
                     DB_SERIAL.NAME,
-                    DB_SERIAL.MAX_VAL)
+                    DB_SERIAL.MAX_VAL.nvl(BigInteger.valueOf(Long.MAX_VALUE)))
                 .from(DB_SERIAL)
                 .fetch()) {
 
-            BigInteger value = record.getValue(DB_SERIAL.MAX_VAL, BigInteger.class, BigInteger.valueOf(Long.MAX_VALUE));
+            BigInteger value = record.getValue(DB_SERIAL.MAX_VAL.nvl(BigInteger.valueOf(Long.MAX_VALUE)), BigInteger.class);
             DataTypeDefinition type = getDataTypeForMAX_VAL(getSchemata().get(0), value);
 
             result.add(new DefaultSequenceDefinition(

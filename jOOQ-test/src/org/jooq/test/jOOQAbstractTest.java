@@ -1957,6 +1957,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testJoinOnKeyWithAlias() throws Exception {
+        new JoinTests(this).testJoinOnKeyWithAlias();
+    }
+
+    @Test
     public void testInverseAndNestedJoin() throws Exception {
         new JoinTests(this).testInverseAndNestedJoin();
     }

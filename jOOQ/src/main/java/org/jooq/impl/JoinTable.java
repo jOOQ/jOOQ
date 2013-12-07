@@ -477,7 +477,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         throw onKeyException();
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final JoinTable onKey(ForeignKey<?, ?> key) {
         JoinTable result = this;
@@ -486,7 +486,11 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         TableField<?, ?>[] referenced = key.getKey().getFieldsArray();
 
         for (int i = 0; i < references.length; i++) {
-            result.and(((Field<Void>) references[i]).equal((Field<Void>) referenced[i]));
+            Field f1 = references[i];
+            Field f2 = referenced[i];
+
+            // [#2870] TODO: If lhs or rhs are aliased tables, extract the appropriate fields from them
+            result.and(f1.equal(f2));
         }
 
         return result;

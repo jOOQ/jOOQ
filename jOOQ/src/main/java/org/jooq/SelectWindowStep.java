@@ -40,6 +40,13 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+
 import java.util.Collection;
 
 import org.jooq.api.annotation.State;
@@ -89,6 +96,31 @@ import org.jooq.api.annotation.State;
 @State
 public interface SelectWindowStep<R extends Record> extends SelectOrderByStep<R> {
 
+    /**
+     * Add a <code>WINDOW</code> clause to the statement.
+     * <p>
+     * Use the <code>WINDOW</code> clause to specify window definitions for
+     * reuse among several window functions.
+     * <p>
+     * Only {@link SQLDialect#POSTGRES} and {@link SQLDialect#SYBASE} are known
+     * to support the SQL standard <code>WINDOW</code> clause, but you can still
+     * use this clause in all other databases supporting window functions. jOOQ
+     * will inline window definitions where they are referenced.
+     */
+    @Support({ CUBRID, POSTGRES })
     SelectOrderByStep<R> window(WindowDefinition... definitions);
+
+    /**
+     * Add a <code>WINDOW</code> clause to the statement.
+     * <p>
+     * Use the <code>WINDOW</code> clause to specify window definitions for
+     * reuse among several window functions.
+     * <p>
+     * Only {@link SQLDialect#POSTGRES} and {@link SQLDialect#SYBASE} are known
+     * to support the SQL standard <code>WINDOW</code> clause, but you can still
+     * use this clause in all other databases supporting window functions. jOOQ
+     * will inline window definitions where they are referenced.
+     */
+    @Support({ CUBRID, POSTGRES })
     SelectOrderByStep<R> window(Collection<? extends WindowDefinition> definitions);
 }

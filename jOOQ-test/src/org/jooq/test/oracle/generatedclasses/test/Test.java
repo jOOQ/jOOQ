@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -478898232;
+	private static final long serialVersionUID = -1812674887;
 
 	/**
 	 * The singleton instance of <code>TEST</code>
@@ -21,23 +21,6 @@ public class Test extends org.jooq.impl.SchemaImpl {
 	 */
 	private Test() {
 		super("TEST");
-	}
-
-	@Override
-	public final java.util.List<org.jooq.Sequence<?>> getSequences() {
-		java.util.List result = new java.util.ArrayList();
-		result.addAll(getSequences0());
-		return result;
-	}
-
-	private final java.util.List<org.jooq.Sequence<?>> getSequences0() {
-		return java.util.Arrays.<org.jooq.Sequence<?>>asList(
-			org.jooq.test.oracle.generatedclasses.test.Sequences.S_AUTHOR_ID,
-			org.jooq.test.oracle.generatedclasses.test.Sequences.S_961_BIG_INTEGER,
-			org.jooq.test.oracle.generatedclasses.test.Sequences.S_961_BYTE,
-			org.jooq.test.oracle.generatedclasses.test.Sequences.S_961_INT,
-			org.jooq.test.oracle.generatedclasses.test.Sequences.S_961_LONG,
-			org.jooq.test.oracle.generatedclasses.test.Sequences.S_961_SHORT);
 	}
 
 	@Override
@@ -62,6 +45,7 @@ public class Test extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE,
 			org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS,
 			org.jooq.test.oracle.generatedclasses.test.tables.TUnsigned.T_UNSIGNED,
+			org.jooq.test.oracle.generatedclasses.test.tables.T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY,
 			org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,
 			org.jooq.test.oracle.generatedclasses.test.tables.T_725LobTest.T_725_LOB_TEST,
 			org.jooq.test.oracle.generatedclasses.test.tables.T_785.T_785,

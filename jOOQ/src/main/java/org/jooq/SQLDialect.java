@@ -122,76 +122,106 @@ public enum SQLDialect {
 
     xxx
      x xxx xx xxxxxx xxx xxxxxxx xxxxxxx
+     x xxx
+     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxxxxxxxx xxxxxx
 
     xxx
      x xxx xx xxxxxx xxxx xxx xxxxxxxx
+     x xxx
+     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxx
 
     xxx
      x xxx xxxxxx xxxxxxxx xxxxxx xxx xxxxxxx xxxxxxx
+     x xxx
+     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxx xxxxxx
 
     xxx
      x xxx xxx xxx xxx xxxxxxx xxxxxxx
+     x xxx
+     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxx xxxxxx
 
     xxx
      x xxx xxx xxx xxx xxx xxxxxxxx
+     x xxx
+     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxxxx xxxxx xxxxx
 
     xxx
      x xxx xxx xxx xxxx xxx xxxxxxxx
+     x xxx
+     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxxxxx xxxxx xxxxx
 
     xxx
      x xxx xxxxxx xxxxxxx xxxxxxx
+     x xxx
+     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxxxxxxxx xxxxxx
 
     xxx
      x xxx xxxxxx xxxxxxx xxxxxxx
+     x xxx
+     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxxxxxxxx xxxxxx
 
     xxx
      x xxx xxxxxx xxx xxxxxxxx
+     x xxx
+     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxx
 
     xxx
      x xxx xxxxxx xxx xxxxxxxx
+     x xxx
+     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxx
 
     xxx
      x xxx xxxxxx xxx xxxxxxxx
+     x xxx
+     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxx
 
     xxx
      x xxx xxx xxxxxx xxxxxxx xxxxxxx
+     x xxx
+     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxxxxxxxxxxxxxx xxxxxx
 
     xxx
      x xxx xxx xxxxxx xxxx xxxxxxxx
+     x xxx
+     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxx
 
     xxx
      x xxx xxx xxxxxx xxxx xxxxxxxx
+     x xxx
+     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxx
 
     xxx
      x xxx xxxxxx xxx xxxxxxxx xxxxxxx xxxxxxx
+     x xxx
+     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxxxxxxxx xxxxxx
 

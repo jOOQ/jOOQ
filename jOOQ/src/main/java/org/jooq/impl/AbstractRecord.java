@@ -286,9 +286,21 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return values;
     }
 
+    /**
+     * Subclasses may type-unsafely set a value to a record index. This method
+     * takes care of converting the value to the appropriate type.
+     */
+    protected final void setValue(int index, Object value) {
+        setValue(index, (Field) field(index), value);
+    }
+
     @Override
     public final <T> void setValue(Field<T> field, T value) {
-        Value<T> val = getValue0(field);
+        setValue(fields.indexOf(field), field, value);
+    }
+
+    private final <T> void setValue(int index, Field<T> field, T value) {
+        Value<T> val = getValue0(index);
         UniqueKey<?> key = getPrimaryKey();
 
         // Normal fields' changed flag is always set to true
@@ -335,14 +347,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     final void setValue(int index, Value<?> value) {
         getValues()[index] = value;
-    }
-
-    /**
-     * Subclasses may type-unsafely set a value to a record index. This method
-     * takes care of converting the value to the appropriate type.
-     */
-    protected final void setValue(int index, Object value) {
-        getValue0(index).setValue(Convert.convert(value, fields.type(index)));
     }
 
     /**

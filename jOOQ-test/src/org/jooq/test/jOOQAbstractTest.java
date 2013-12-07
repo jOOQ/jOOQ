@@ -1552,6 +1552,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRecordChangedOnGeneratedMethods() throws Exception {
+        new RecordTests(this).testRecordChangedOnGeneratedMethods();
+    }
+
+    @Test
     public void testRecordReset() throws Exception {
         new RecordTests(this).testRecordReset();
     }

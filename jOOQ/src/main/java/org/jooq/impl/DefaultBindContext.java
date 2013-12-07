@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
@@ -170,6 +171,12 @@ class DefaultBindContext extends AbstractBindContext {
                         xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
                         xxxxxx
                 x
+            x
+
+            xx xxxxxxx xxxxxx xxxxxx xxxx xxx xxxx xxxxxxxx xxx xxx xxxx xxxxxx
+            xx xxxxxx xxx xxx xxxxxxx xxxxx
+            xxxx xx xxxxxxxx xx xxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
             x
 
             xx [/pro] */

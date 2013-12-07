@@ -55,6 +55,6 @@ public class Boolean_TF_LC_Converter extends EnumConverter<String, Boolean_TF_LC
 
     @Override
     public String to(Boolean_TF_LC userObject) {
-        return userObject.getValue();
+        return userObject == null ? null : userObject.getValue();
     }
 }

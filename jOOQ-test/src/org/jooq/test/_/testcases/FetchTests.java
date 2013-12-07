@@ -1221,20 +1221,37 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testFetchIntoTableRecordsWithColumnAmbiguities() throws Exception {
+
+        // [#2836] When fetching into TableRecord types, the "expected" behaviour would
+        // be to map "obvious" columns onto their corresponding values
+        // Fixing this might be a "dangerous" change.
+        B book =
+        create().select()
+                .from(TBook())
+                .join(TAuthor())
+                .on(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+                .where(TBook_ID().eq(4))
+                .fetchOneInto(TBook().getRecordType());
+
+        assertEquals(4, (int) book.getValue(TBook_ID()));
+    }
+
+    @Test
     public void testFetchAttachables() throws Exception {
         // [#2869] DefaultRecordMapper should recognise Attachable types and attach them
         // according to the Settings.
 
         B b1 = create().selectFrom(TBook()).where(TBook_ID().eq(1)).fetchOne();
         B b2 = b1.into(TBook().getRecordType());
-        
+
         assertNotNull(((AttachableInternal) b1).configuration());
         assertNotNull(((AttachableInternal) b2).configuration());
-        
+
         B b3 = create(new Settings().withAttachRecords(false))
                     .selectFrom(TBook()).where(TBook_ID().eq(1)).fetchOne();
         B b4 = b3.into(TBook().getRecordType());
-        
+
         assertNull(((AttachableInternal) b3).configuration());
         assertNull(((AttachableInternal) b4).configuration());
     }

@@ -95,13 +95,6 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     @Override
-    public final void setRecord(R record) {
-        for (Field<?> field : record.fields()) {
-            addValue(record, field);
-        }
-    }
-
-    @Override
     public final void newRecord() {
         insertMaps.newRecord();
     }

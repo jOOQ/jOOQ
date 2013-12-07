@@ -61,7 +61,7 @@ CREATE TABLE t_2327_uk_only (
 /
 
 CREATE TABLE t_identity_pk (
-  id INTEGER AUTO_INCREMENT,
+  id INTEGER NOT NULL AUTO_INCREMENT,
   val int,
 
   CONSTRAINT pk_t_identity_pk PRIMARY KEY (id)

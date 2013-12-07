@@ -141,15 +141,6 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         return updateMap;
     }
 
-    @Override
-    public final void setRecord(R record) {
-        for (Field<?> field : record.fields()) {
-            if (((AbstractRecord) record).getValue0(field).isChanged()) {
-                addValue(record, field);
-            }
-        }
-    }
-
 // [jooq-tools] START [addValues]
 
     @Generated("This method was generated using jOOQ-tools")

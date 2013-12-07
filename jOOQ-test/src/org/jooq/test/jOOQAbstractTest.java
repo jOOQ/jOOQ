@@ -305,6 +305,7 @@ public abstract class jOOQAbstractTest<
                 }
             }
             catch (Exception e) {
+                log.debug("Ignoring", e.getMessage().replaceAll("\n", " "));
 
                 // Ignore all errors on DROP statements
                 if (sql.trim().startsWith("DROP")) {

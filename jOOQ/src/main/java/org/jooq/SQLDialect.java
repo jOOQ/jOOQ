@@ -122,76 +122,106 @@ public enum SQLDialect {
 
     /**
      * The MS Access SQL dialect family.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
      */
     ACCESS("Access", true),
 
     /**
      * The MS Access 2013 SQL dialect.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
      */
     ACCESS2013("Access", true, ACCESS),
 
     /**
      * The Sybase Adaptive Server SQL dialect family.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
      */
     ASE("ASE", true),
 
     /**
      * The IBM DB2 SQL dialect family.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
      */
     DB2("DB2", true),
 
     /**
      * The IBM DB2 9.x SQL dialect.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
      */
     DB2_9("DB2", true, DB2),
 
     /**
      * The IBM DB2 10.x SQL dialect.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
      */
     DB2_10("DB2", true, DB2),
 
     /**
      * The Ingres dialect family.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
      */
     INGRES("Ingres", true),
 
     /**
      * The Oracle dialect family.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
      */
     ORACLE("Oracle", true),
 
     /**
      * The Oracle 10g dialect.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
      */
     ORACLE10G("Oracle", true, ORACLE),
 
     /**
      * The Oracle 11g dialect.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
      */
     ORACLE11G("Oracle", true, ORACLE),
 
     /**
      * The Oracle 12c dialect.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
      */
     ORACLE12C("Oracle", true, ORACLE),
 
     /**
      * The SQL Server dialect family.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
      */
     SQLSERVER("SQLServer", true),
 
     /**
      * The SQL Server 2008 dialect.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
      */
     SQLSERVER2008("SQLServer", true, SQLSERVER),
 
     /**
      * The SQL Server 2012 dialect.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
      */
     SQLSERVER2012("SQLServer", true, SQLSERVER),
 
     /**
      * The Sybase SQL Anywhere dialect family.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
      */
     SYBASE("Sybase", true),
 

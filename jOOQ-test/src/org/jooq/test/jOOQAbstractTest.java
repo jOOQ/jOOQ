@@ -1497,6 +1497,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchIntoTableRecordsWithColumnAmbiguities() throws Exception {
+        new FetchTests(this).testFetchIntoTableRecordsWithColumnAmbiguities();
+    }
+
+    @Test
     public void testFetchAttachables() throws Exception {
         new FetchTests(this).testFetchAttachables();
     }

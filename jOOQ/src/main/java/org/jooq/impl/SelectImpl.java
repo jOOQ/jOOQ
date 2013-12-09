@@ -1975,7 +1975,9 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
             case CROSS_JOIN:
             case NATURAL_JOIN:
             case NATURAL_LEFT_OUTER_JOIN:
-            case NATURAL_RIGHT_OUTER_JOIN: {
+            case NATURAL_RIGHT_OUTER_JOIN:
+            case CROSS_APPLY:
+            case OUTER_APPLY: {
                 getQuery().addJoin(table, type);
                 joinTable = null;
                 joinPartitionBy = null;
@@ -2015,6 +2017,20 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     public final SelectImpl naturalRightOuterJoin(TableLike<?> table) {
         return join(table, JoinType.NATURAL_RIGHT_OUTER_JOIN);
     }
+
+    /* [pro] xx
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx
+    x
+
+    xx [/pro] */
 
     @Override
     public final SelectImpl join(String sql) {
@@ -2137,6 +2153,37 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     /* [pro] xx
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+    x
+
     xxxxxxxxx
     xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
         xxxxxxxxxxxxxxx x xxxxxxx

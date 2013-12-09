@@ -308,6 +308,99 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testCrossApply() throws Exception {
+        switch (dialect()) {
+            /* [pro] xx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxxxxxxxxx
+            xxxx xxxxxxxxxxxxxx
+            xxxx xxxxxxx
+                xxxxxx
+
+            xx [/pro] */
+            default:
+                log.info("SKIPPING", "CROSS APPLY tests");
+                return;
+        }
+
+        /* [pro] xx
+        xxxxxxxxxxxxx
+            xxxxxxxxx xxx
+            xxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    x
+                    xxxxxxxxxxx xxxxxxxxxx
+        xx
+
+        xxxxxxxxxxxxx
+            xxxxxxxxx xxx
+            xxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    x
+                    xxxxxxxxxxx xxxxxxxxxx
+        xx
+
+        xxxxxxxxxxxxx
+            xxxxxxxxx xxx
+            xxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxx
+                    xxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        x
+                        xxxxxxxxxxxxxxxxxxxx
+                    x
+                    xxxxxxxxxxx xxxxxxxxxx
+        xx
+
+        xxxxxxxxxxxxx
+            xxxxxxxxx xxx
+            xxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    x
+                    xxxxxxxxxxx xxxxxxxxxx
+        xx
+
+        xxxxxxxxxxxxx
+            xxxxxxxxx xxx
+            xxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    x
+                    xxxxxxxxxxx xxxxxxxxxx
+        xx
+
+        xxxxxxxxxxxxx
+            xxxxxxxxx xxx
+            xxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            x
+                            xxxxxxxxxxxxxxxxxxxxx
+                    x
+                    xxxxxxxxxxx xxxxxxxxxx
+        xx
+        xx [/pro] */
+    }
+
+    @Test
     public void testNaturalJoin() throws Exception {
         boolean unqualified = false;
         if (asList(HSQLDB).contains(dialect().family()))

@@ -41,6 +41,16 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.TABLE;
+import static org.jooq.JoinType.CROSS_APPLY;
+import static org.jooq.JoinType.CROSS_JOIN;
+import static org.jooq.JoinType.FULL_OUTER_JOIN;
+import static org.jooq.JoinType.JOIN;
+import static org.jooq.JoinType.LEFT_OUTER_JOIN;
+import static org.jooq.JoinType.NATURAL_JOIN;
+import static org.jooq.JoinType.NATURAL_LEFT_OUTER_JOIN;
+import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
+import static org.jooq.JoinType.OUTER_APPLY;
+import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 
@@ -402,7 +412,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public final TableOnStep join(TableLike<?> table) {
-        return join(table, JoinType.JOIN);
+        return join(table, JOIN);
     }
 
     @Override
@@ -422,7 +432,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public final TablePartitionByStep leftOuterJoin(TableLike<?> table) {
-        return join(table, JoinType.LEFT_OUTER_JOIN);
+        return join(table, LEFT_OUTER_JOIN);
     }
 
     @Override
@@ -442,7 +452,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public final TablePartitionByStep rightOuterJoin(TableLike<?> table) {
-        return join(table, JoinType.RIGHT_OUTER_JOIN);
+        return join(table, RIGHT_OUTER_JOIN);
     }
 
     @Override
@@ -462,7 +472,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public final TableOnStep fullOuterJoin(TableLike<?> table) {
-        return join(table, JoinType.FULL_OUTER_JOIN);
+        return join(table, FULL_OUTER_JOIN);
     }
 
     @Override
@@ -482,7 +492,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public final Table<Record> crossJoin(TableLike<?> table) {
-        return join(table, JoinType.CROSS_JOIN);
+        return join(table, CROSS_JOIN);
     }
 
     @Override
@@ -502,7 +512,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public final Table<Record> naturalJoin(TableLike<?> table) {
-        return join(table, JoinType.NATURAL_JOIN);
+        return join(table, NATURAL_JOIN);
     }
 
     @Override
@@ -522,7 +532,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public final Table<Record> naturalLeftOuterJoin(TableLike<?> table) {
-        return join(table, JoinType.NATURAL_LEFT_OUTER_JOIN);
+        return join(table, NATURAL_LEFT_OUTER_JOIN);
     }
 
     @Override
@@ -542,7 +552,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public final Table<Record> naturalRightOuterJoin(TableLike<?> table) {
-        return join(table, JoinType.NATURAL_RIGHT_OUTER_JOIN);
+        return join(table, NATURAL_RIGHT_OUTER_JOIN);
     }
 
     @Override
@@ -559,6 +569,50 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     public final Table<Record> naturalRightOuterJoin(String sql, QueryPart... parts) {
         return naturalRightOuterJoin(table(sql, parts));
     }
+
+    /* [pro] xx
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxx xxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxx xxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+    x
+
+    xx [/pro] */
 
     // ------------------------------------------------------------------------
     // XXX: Object API

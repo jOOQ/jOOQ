@@ -52,6 +52,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -657,5 +658,113 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     SelectJoinStep<R> naturalRightOuterJoin(String sql, QueryPart... parts);
+
+    // -------------------------------------------------------------------------
+    // XXX: APPLY clauses on tables
+    // -------------------------------------------------------------------------
+
+    /* [pro] xx
+
+    xxx
+     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
+     x
+     x xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+
+    xxx
+     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
+     x xxx
+     x xxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxx xxxx xxxx xxxxxxxx xxx xxxx
+     x xxxxxxxxx xxxxxx xxxxxxxxxx xxx xxx xxxx xxxxxx xxx xxxxxxxxxxx xx
+     x xxxxxxxxx xxx xxxxxxxxxx xx xxxx xx xxxxxxxx xxx xxxx xxxxxxxxx xxxxxx
+     x xxxxxx xxxxxxxx xxxx xxxxxxxxxxxx xxxx xxx xxxxxxxx
+     x
+     x xxxx xxxxxxxxxxxxxxxxx
+     x xxxx xxxxxxxxxxxxxxxxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxx
+
+    xxx
+     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
+     x xxx
+     x xxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxx xxxx xxxx xxxxxxxx xxx xxxx
+     x xxxxxxxxx xxxxxx xxxxxxxxxx xxx xxx xxxx xxxxxx xxx xxxxxxxxxxx xx
+     x xxxxxxxxx xxx xxxxxxxxxx xx xxxx xx xxxxxxxx xxx xxxx xxxxxxxxx xxxxxx
+     x xxxxxx xxxxxxxx xxxx xxxxxxxxxxxx xxxx xxx xxxxxxxx
+     x
+     x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxx
+     x xxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxxx
+
+    xxx
+     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
+     x xxx
+     x xxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxx xxxx xxxx xxxxxxxx xxx xxxx
+     x xxxxxxxxx xxxxxx xxxxxxxxxx xxx xxx xxxx xxxxxx xxx xxxxxxxxxxx xx
+     x xxxxxxxxx xxx xxxxxxxxxx xx xxxx xx xxxxxxxx xxx xxxx xxxxxxxxx xxxxxx
+     x xxxxxx xxxxxxxx xxxx xxxxxxxxxxxx xxxx xxx xxxxxxxx
+     x
+     x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
+     x xxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxxx
+
+    xxx
+     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
+     x
+     x xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+
+    xxx
+     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
+     x xxx
+     x xxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxx xxxx xxxx xxxxxxxx xxx xxxx
+     x xxxxxxxxx xxxxxx xxxxxxxxxx xxx xxx xxxx xxxxxx xxx xxxxxxxxxxx xx
+     x xxxxxxxxx xxx xxxxxxxxxx xx xxxx xx xxxxxxxx xxx xxxx xxxxxxxxx xxxxxx
+     x xxxxxx xxxxxxxx xxxx xxxxxxxxxxxx xxxx xxx xxxxxxxx
+     x
+     x xxxx xxxxxxxxxxxxxxxxx
+     x xxxx xxxxxxxxxxxxxxxxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxx
+
+    xxx
+     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
+     x xxx
+     x xxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxx xxxx xxxx xxxxxxxx xxx xxxx
+     x xxxxxxxxx xxxxxx xxxxxxxxxx xxx xxx xxxx xxxxxx xxx xxxxxxxxxxx xx
+     x xxxxxxxxx xxx xxxxxxxxxx xx xxxx xx xxxxxxxx xxx xxxx xxxxxxxxx xxxxxx
+     x xxxxxx xxxxxxxx xxxx xxxxxxxxxxxx xxxx xxx xxxxxxxx
+     x
+     x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxx
+     x xxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxxx
+
+    xxx
+     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
+     x xxx
+     x xxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxx xxxx xxxx xxxxxxxx xxx xxxx
+     x xxxxxxxxx xxxxxx xxxxxxxxxx xxx xxx xxxx xxxxxx xxx xxxxxxxxxxx xx
+     x xxxxxxxxx xxx xxxxxxxxxx xx xxxx xx xxxxxxxx xxx xxxx xxxxxxxxx xxxxxx
+     x xxxxxx xxxxxxxx xxxx xxxxxxxxxxxx xxxx xxx xxxxxxxx
+     x
+     x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
+     x xxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxxx
+
+    xx [/pro] */
 
 }

@@ -41,6 +41,10 @@
 
 package org.jooq;
 
+// ...
+// ...
+// ...
+
 
 /**
  * The type of join
@@ -50,52 +54,64 @@ package org.jooq;
 public enum JoinType {
 
     /**
-     * <code>INNER JOIN</code> two tables
+     * <code>INNER JOIN</code> two tables.
      */
     @Support
     JOIN("join"),
 
     /**
-     * <code>CROSS JOIN</code> two tables
+     * <code>CROSS JOIN</code> two tables.
      */
     @Support
     CROSS_JOIN("cross join"),
 
     /**
-     * <code>LEFT OUTER JOIN</code> two tables
+     * <code>LEFT OUTER JOIN</code> two tables.
      */
     @Support
     LEFT_OUTER_JOIN("left outer join"),
 
     /**
-     * <code>RIGHT OUTER JOIN</code> two tables
+     * <code>RIGHT OUTER JOIN</code> two tables.
      */
     @Support
     RIGHT_OUTER_JOIN("right outer join"),
 
     /**
-     * <code>FULL OUTER JOIN</code> two tables
+     * <code>FULL OUTER JOIN</code> two tables.
      */
     @Support
     FULL_OUTER_JOIN("full outer join"),
 
     /**
-     * <code>NATURAL INNER JOIN</code> two tables
+     * <code>NATURAL INNER JOIN</code> two tables.
      */
     @Support
     NATURAL_JOIN("natural join"),
 
     /**
-     * <code>NATURAL LEFT OUTER JOIN</code> two tables
+     * <code>NATURAL LEFT OUTER JOIN</code> two tables.
      */
     @Support
     NATURAL_LEFT_OUTER_JOIN("natural left outer join"),
 
     /**
-     * <code>NATURAL RIGHT OUTER JOIN</code> two tables
+     * <code>NATURAL RIGHT OUTER JOIN</code> two tables.
      */
     @Support
     NATURAL_RIGHT_OUTER_JOIN("natural right outer join"),
+
+    /**
+     * <code>CROSS APPLY</code> two tables.
+     */
+    @Support({})
+    CROSS_APPLY("cross apply"),
+
+    /**
+     * <code>OUTER APPLY</code> two tables.
+     */
+    @Support({})
+    OUTER_APPLY("outer apply"),
 
     ;
 

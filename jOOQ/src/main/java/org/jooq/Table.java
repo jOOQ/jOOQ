@@ -910,6 +910,144 @@ public interface Table<R extends Record> extends TableLike<R> {
     Table<Record> naturalRightOuterJoin(String sql, QueryPart... parts);
 
     // -------------------------------------------------------------------------
+    // XXX: APPLY clauses on tables
+    // -------------------------------------------------------------------------
+
+    /* [pro] xx
+
+    xxx
+     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxx xxxxxxx
+        xxxx x xxxxxxxx
+        xx x xxxxxxxxxxxxx
+    x
+    xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+
+    xxx
+     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
+     x xxx
+     x xxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxx xxxx xxxx xxxxxxxx xxx xxxx
+     x xxxxxxxxx xxxxxx xxxxxxxxxx xxx xxx xxxx xxxxxx xxx xxxxxxxxxxx xx
+     x xxxxxxxxx xxx xxxxxxxxxx xx xxxx xx xxxxxxxx xxx xxxx xxxxxxxxx xxxxxx
+     x xxxxxx xxxxxxxx xxxx xxxxxxxxxxxx xxxx xxx xxxxxxxx
+     x
+     x xxxx xxxxxxxxxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxx xxxxxxx
+        xxxx x xxxxxxxx
+        xx x xxxxxxxxxxxxx
+    x
+    xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxx
+
+    xxx
+     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
+     x xxx
+     x xxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxx xxxx xxxx xxxxxxxx xxx xxxx
+     x xxxxxxxxx xxxxxx xxxxxxxxxx xxx xxx xxxx xxxxxx xxx xxxxxxxxxxx xx
+     x xxxxxxxxx xxx xxxxxxxxxx xx xxxx xx xxxxxxxx xxx xxxx xxxxxxxxx xxxxxx
+     x xxxxxx xxxxxxxx xxxx xxxxxxxxxxxx xxxx xxx xxxxxxxx
+     x
+     x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxx xxxxxxx
+        xxxx x xxxxxxxx
+        xx x xxxxxxxxxxxxx
+    x
+    xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxxx
+
+    xxx
+     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
+     x xxx
+     x xxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxx xxxx xxxx xxxxxxxx xxx xxxx
+     x xxxxxxxxx xxxxxx xxxxxxxxxx xxx xxx xxxx xxxxxx xxx xxxxxxxxxxx xx
+     x xxxxxxxxx xxx xxxxxxxxxx xx xxxx xx xxxxxxxx xxx xxxx xxxxxxxxx xxxxxx
+     x xxxxxx xxxxxxxx xxxx xxxxxxxxxxxx xxxx xxx xxxxxxxx
+     x
+     x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxx xxxxxxx
+        xxxx x xxxxxxxx
+        xx x xxxxxxxxxxxxx
+    x
+    xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxxx
+
+    xxx
+     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxx xxxxxxx
+        xxxx x xxxxxxxx
+        xx x xxxxxxxxxxxxx
+    x
+    xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+
+    xxx
+     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
+     x xxx
+     x xxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxx xxxx xxxx xxxxxxxx xxx xxxx
+     x xxxxxxxxx xxxxxx xxxxxxxxxx xxx xxx xxxx xxxxxx xxx xxxxxxxxxxx xx
+     x xxxxxxxxx xxx xxxxxxxxxx xx xxxx xx xxxxxxxx xxx xxxx xxxxxxxxx xxxxxx
+     x xxxxxx xxxxxxxx xxxx xxxxxxxxxxxx xxxx xxx xxxxxxxx
+     x
+     x xxxx xxxxxxxxxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxx xxxxxxx
+        xxxx x xxxxxxxx
+        xx x xxxxxxxxxxxxx
+    x
+    xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxx
+
+    xxx
+     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
+     x xxx
+     x xxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxx xxxx xxxx xxxxxxxx xxx xxxx
+     x xxxxxxxxx xxxxxx xxxxxxxxxx xxx xxx xxxx xxxxxx xxx xxxxxxxxxxx xx
+     x xxxxxxxxx xxx xxxxxxxxxx xx xxxx xx xxxxxxxx xxx xxxx xxxxxxxxx xxxxxx
+     x xxxxxx xxxxxxxx xxxx xxxxxxxxxxxx xxxx xxx xxxxxxxx
+     x
+     x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxx xxxxxxx
+        xxxx x xxxxxxxx
+        xx x xxxxxxxxxxxxx
+    x
+    xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxxx
+
+    xxx
+     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
+     x xxx
+     x xxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxx xxxx xxxx xxxxxxxx xxx xxxx
+     x xxxxxxxxx xxxxxx xxxxxxxxxx xxx xxx xxxx xxxxxx xxx xxxxxxxxxxx xx
+     x xxxxxxxxx xxx xxxxxxxxxx xx xxxx xx xxxxxxxx xxx xxxx xxxxxxxxx xxxxxx
+     x xxxxxx xxxxxxxx xxxx xxxxxxxxxxxx xxxx xxx xxxxxxxx
+     x
+     x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxx xxxxxxx
+        xxxx x xxxxxxxx
+        xx x xxxxxxxxxxxxx
+    x
+    xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxxx
+
+    xx [/pro] */
+
+    // -------------------------------------------------------------------------
     // XXX: Exotic and vendor-specific clauses on tables
     // -------------------------------------------------------------------------
 

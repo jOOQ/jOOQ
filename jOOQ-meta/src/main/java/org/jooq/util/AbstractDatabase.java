@@ -811,13 +811,36 @@ public abstract class AbstractDatabase implements Database {
     /**
      * Retrieve ALL relations from the database.
      */
-    protected final Relations getRelations0() throws SQLException {
+    protected final Relations getRelations0() {
         DefaultRelations result = new DefaultRelations();
 
-        loadPrimaryKeys(result);
-        loadUniqueKeys(result);
-        loadForeignKeys(result);
-        loadCheckConstraints(result);
+        try {
+            loadPrimaryKeys(result);
+        }
+        catch (Exception e) {
+            log.error("Error while fetching primary keys", e);
+        }
+
+        try {
+            loadUniqueKeys(result);
+        }
+        catch (Exception e) {
+            log.error("Error while fetching unique keys", e);
+        }
+
+        try {
+            loadForeignKeys(result);
+        }
+        catch (Exception e) {
+            log.error("Error while fetching foreign keys", e);
+        }
+
+        try {
+            loadCheckConstraints(result);
+        }
+        catch (Exception e) {
+            log.error("Error while fetching check constraints", e);
+        }
 
         return result;
     }

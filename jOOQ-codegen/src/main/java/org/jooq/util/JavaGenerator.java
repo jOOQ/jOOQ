@@ -602,6 +602,34 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(2).println("return %s();", colGetter);
                 out.tab(1).println("}");
             }
+
+            // value[N](T[N])
+            for (int i = 1; i <= degree; i++) {
+                ColumnDefinition column = table.getColumn(i - 1);
+
+                final String colType = getJavaType(column.getType());
+                final String colSetter = getStrategy().getJavaSetterName(column, Mode.RECORD);
+
+                out.tab(1).overrideInherit();
+                out.tab(1).println("public %s value%s(%s value) {", className, i, colType);
+                out.tab(2).println("%s(value);", colSetter);
+                out.tab(2).println("return this;");
+                out.tab(1).println("}");
+            }
+
+            List<String> arguments = new ArrayList<String>();
+            for (int i = 1; i <= degree; i++) {
+                ColumnDefinition column = table.getColumn(i - 1);
+
+                final String colType = getJavaType(column.getType());
+
+                arguments.add(colType + " value" + i);
+            }
+
+            out.tab(1).overrideInherit();
+            out.tab(1).println("public %s values([[%s]]) {", className, arguments);
+            out.tab(2).println("return this;");
+            out.tab(1).println("}");
         }
 
         if (generateInterfaces() && !generateImmutablePojos()) {

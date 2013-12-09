@@ -56,13 +56,13 @@ public interface Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> ext
     // ------------------------------------------------------------------------
 
     /**
-     * Get this record's fields as a {@link Row12}
+     * Get this record's fields as a {@link Row12}.
      */
     @Override
     Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> fieldsRow();
 
     /**
-     * Get this record's values as a {@link Row12}
+     * Get this record's values as a {@link Row12}.
      */
     @Override
     Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> valuesRow();
@@ -72,62 +72,62 @@ public interface Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> ext
     // ------------------------------------------------------------------------
 
     /**
-     * Get the first field
+     * Get the first field.
      */
     Field<T1> field1();
 
     /**
-     * Get the second field
+     * Get the second field.
      */
     Field<T2> field2();
 
     /**
-     * Get the third field
+     * Get the third field.
      */
     Field<T3> field3();
 
     /**
-     * Get the fourth field
+     * Get the fourth field.
      */
     Field<T4> field4();
 
     /**
-     * Get the fifth field
+     * Get the fifth field.
      */
     Field<T5> field5();
 
     /**
-     * Get the sixth field
+     * Get the sixth field.
      */
     Field<T6> field6();
 
     /**
-     * Get the seventh field
+     * Get the seventh field.
      */
     Field<T7> field7();
 
     /**
-     * Get the eighth field
+     * Get the eighth field.
      */
     Field<T8> field8();
 
     /**
-     * Get the ninth field
+     * Get the ninth field.
      */
     Field<T9> field9();
 
     /**
-     * Get the tenth field
+     * Get the tenth field.
      */
     Field<T10> field10();
 
     /**
-     * Get the eleventh field
+     * Get the eleventh field.
      */
     Field<T11> field11();
 
     /**
-     * Get the twelfth field
+     * Get the twelfth field.
      */
     Field<T12> field12();
 
@@ -136,63 +136,128 @@ public interface Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> ext
     // ------------------------------------------------------------------------
 
     /**
-     * Get the first value
+     * Get the first value.
      */
     T1 value1();
 
     /**
-     * Get the second value
+     * Get the second value.
      */
     T2 value2();
 
     /**
-     * Get the third value
+     * Get the third value.
      */
     T3 value3();
 
     /**
-     * Get the fourth value
+     * Get the fourth value.
      */
     T4 value4();
 
     /**
-     * Get the fifth value
+     * Get the fifth value.
      */
     T5 value5();
 
     /**
-     * Get the sixth value
+     * Get the sixth value.
      */
     T6 value6();
 
     /**
-     * Get the seventh value
+     * Get the seventh value.
      */
     T7 value7();
 
     /**
-     * Get the eighth value
+     * Get the eighth value.
      */
     T8 value8();
 
     /**
-     * Get the ninth value
+     * Get the ninth value.
      */
     T9 value9();
 
     /**
-     * Get the tenth value
+     * Get the tenth value.
      */
     T10 value10();
 
     /**
-     * Get the eleventh value
+     * Get the eleventh value.
      */
     T11 value11();
 
     /**
-     * Get the twelfth value
+     * Get the twelfth value.
      */
     T12 value12();
+
+    /**
+     * Set the first value.
+     */
+    Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> value1(T1 value);
+
+    /**
+     * Set the second value.
+     */
+    Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> value2(T2 value);
+
+    /**
+     * Set the third value.
+     */
+    Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> value3(T3 value);
+
+    /**
+     * Set the fourth value.
+     */
+    Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> value4(T4 value);
+
+    /**
+     * Set the fifth value.
+     */
+    Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> value5(T5 value);
+
+    /**
+     * Set the sixth value.
+     */
+    Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> value6(T6 value);
+
+    /**
+     * Set the seventh value.
+     */
+    Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> value7(T7 value);
+
+    /**
+     * Set the eighth value.
+     */
+    Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> value8(T8 value);
+
+    /**
+     * Set the ninth value.
+     */
+    Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> value9(T9 value);
+
+    /**
+     * Set the tenth value.
+     */
+    Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> value10(T10 value);
+
+    /**
+     * Set the eleventh value.
+     */
+    Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> value11(T11 value);
+
+    /**
+     * Set the twelfth value.
+     */
+    Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> value12(T12 value);
+
+    /**
+     * Set all values.
+     */
+    Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12);
 
 }

@@ -56,13 +56,13 @@ public interface Record2<T1, T2> extends Record {
     // ------------------------------------------------------------------------
 
     /**
-     * Get this record's fields as a {@link Row2}
+     * Get this record's fields as a {@link Row2}.
      */
     @Override
     Row2<T1, T2> fieldsRow();
 
     /**
-     * Get this record's values as a {@link Row2}
+     * Get this record's values as a {@link Row2}.
      */
     @Override
     Row2<T1, T2> valuesRow();
@@ -72,12 +72,12 @@ public interface Record2<T1, T2> extends Record {
     // ------------------------------------------------------------------------
 
     /**
-     * Get the first field
+     * Get the first field.
      */
     Field<T1> field1();
 
     /**
-     * Get the second field
+     * Get the second field.
      */
     Field<T2> field2();
 
@@ -86,13 +86,28 @@ public interface Record2<T1, T2> extends Record {
     // ------------------------------------------------------------------------
 
     /**
-     * Get the first value
+     * Get the first value.
      */
     T1 value1();
 
     /**
-     * Get the second value
+     * Get the second value.
      */
     T2 value2();
+
+    /**
+     * Set the first value.
+     */
+    Record2<T1, T2> value1(T1 value);
+
+    /**
+     * Set the second value.
+     */
+    Record2<T1, T2> value2(T2 value);
+
+    /**
+     * Set all values.
+     */
+    Record2<T1, T2> values(T1 t1, T2 t2);
 
 }

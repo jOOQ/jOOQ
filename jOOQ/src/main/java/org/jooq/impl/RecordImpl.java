@@ -360,4 +360,246 @@ implements
     public final T22 value22() {
         return (T22) getValue(21);
     }
+
+    @Override
+    public final RecordImpl value1(T1 value) {
+        setValue(0, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value2(T2 value) {
+        setValue(1, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value3(T3 value) {
+        setValue(2, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value4(T4 value) {
+        setValue(3, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value5(T5 value) {
+        setValue(4, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value6(T6 value) {
+        setValue(5, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value7(T7 value) {
+        setValue(6, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value8(T8 value) {
+        setValue(7, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value9(T9 value) {
+        setValue(8, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value10(T10 value) {
+        setValue(9, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value11(T11 value) {
+        setValue(10, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value12(T12 value) {
+        setValue(11, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value13(T13 value) {
+        setValue(12, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value14(T14 value) {
+        setValue(13, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value15(T15 value) {
+        setValue(14, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value16(T16 value) {
+        setValue(15, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value17(T17 value) {
+        setValue(16, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value18(T18 value) {
+        setValue(17, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value19(T19 value) {
+        setValue(18, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value20(T20 value) {
+        setValue(19, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value21(T21 value) {
+        setValue(20, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl value22(T22 value) {
+        setValue(21, value);
+        return this;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
+        return null;
+    }
+
+    @Override
+    public final RecordImpl values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
+        return null;
+    }
 }

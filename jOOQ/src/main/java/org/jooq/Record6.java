@@ -56,13 +56,13 @@ public interface Record6<T1, T2, T3, T4, T5, T6> extends Record {
     // ------------------------------------------------------------------------
 
     /**
-     * Get this record's fields as a {@link Row6}
+     * Get this record's fields as a {@link Row6}.
      */
     @Override
     Row6<T1, T2, T3, T4, T5, T6> fieldsRow();
 
     /**
-     * Get this record's values as a {@link Row6}
+     * Get this record's values as a {@link Row6}.
      */
     @Override
     Row6<T1, T2, T3, T4, T5, T6> valuesRow();
@@ -72,32 +72,32 @@ public interface Record6<T1, T2, T3, T4, T5, T6> extends Record {
     // ------------------------------------------------------------------------
 
     /**
-     * Get the first field
+     * Get the first field.
      */
     Field<T1> field1();
 
     /**
-     * Get the second field
+     * Get the second field.
      */
     Field<T2> field2();
 
     /**
-     * Get the third field
+     * Get the third field.
      */
     Field<T3> field3();
 
     /**
-     * Get the fourth field
+     * Get the fourth field.
      */
     Field<T4> field4();
 
     /**
-     * Get the fifth field
+     * Get the fifth field.
      */
     Field<T5> field5();
 
     /**
-     * Get the sixth field
+     * Get the sixth field.
      */
     Field<T6> field6();
 
@@ -106,33 +106,68 @@ public interface Record6<T1, T2, T3, T4, T5, T6> extends Record {
     // ------------------------------------------------------------------------
 
     /**
-     * Get the first value
+     * Get the first value.
      */
     T1 value1();
 
     /**
-     * Get the second value
+     * Get the second value.
      */
     T2 value2();
 
     /**
-     * Get the third value
+     * Get the third value.
      */
     T3 value3();
 
     /**
-     * Get the fourth value
+     * Get the fourth value.
      */
     T4 value4();
 
     /**
-     * Get the fifth value
+     * Get the fifth value.
      */
     T5 value5();
 
     /**
-     * Get the sixth value
+     * Get the sixth value.
      */
     T6 value6();
+
+    /**
+     * Set the first value.
+     */
+    Record6<T1, T2, T3, T4, T5, T6> value1(T1 value);
+
+    /**
+     * Set the second value.
+     */
+    Record6<T1, T2, T3, T4, T5, T6> value2(T2 value);
+
+    /**
+     * Set the third value.
+     */
+    Record6<T1, T2, T3, T4, T5, T6> value3(T3 value);
+
+    /**
+     * Set the fourth value.
+     */
+    Record6<T1, T2, T3, T4, T5, T6> value4(T4 value);
+
+    /**
+     * Set the fifth value.
+     */
+    Record6<T1, T2, T3, T4, T5, T6> value5(T5 value);
+
+    /**
+     * Set the sixth value.
+     */
+    Record6<T1, T2, T3, T4, T5, T6> value6(T6 value);
+
+    /**
+     * Set all values.
+     */
+    Record6<T1, T2, T3, T4, T5, T6> values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6);
 
 }

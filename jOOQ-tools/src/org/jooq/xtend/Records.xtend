@@ -77,13 +77,13 @@ class Records extends Generators {
                 // ------------------------------------------------------------------------
             
                 /**
-                 * Get this record's fields as a {@link Row«degree»}
+                 * Get this record's fields as a {@link Row«degree»}.
                  */
                 @Override
                 Row«degree»<«TN(degree)»> fieldsRow();
             
                 /**
-                 * Get this record's values as a {@link Row«degree»}
+                 * Get this record's values as a {@link Row«degree»}.
                  */
                 @Override
                 Row«degree»<«TN(degree)»> valuesRow();
@@ -94,7 +94,7 @@ class Records extends Generators {
                 «FOR d : (1..degree)»
 
                 /**
-                 * Get the «first(d)» field
+                 * Get the «first(d)» field.
                  */
                 Field<T«d»> field«d»();
                 «ENDFOR»
@@ -105,10 +105,22 @@ class Records extends Generators {
                 «FOR d : (1..degree)»
 
                 /**
-                 * Get the «first(d)» value
+                 * Get the «first(d)» value.
                  */
                 T«d» value«d»();
                 «ENDFOR»
+                «FOR d : (1..degree)»
+
+                /**
+                 * Set the «first(d)» value.
+                 */
+                Record«recTypeSuffix(degree)» value«d»(T«d» value);
+                «ENDFOR»
+
+                /**
+                 * Set all values.
+                 */
+                Record«recTypeSuffix(degree)» values(«TN_tn(degree)»);
             
             }
             ''');
@@ -198,6 +210,21 @@ class Records extends Generators {
             @Override
             public final T«degree» value«degree»() {
                 return (T«degree») getValue(«degree - 1»);
+            }
+            «ENDFOR»
+            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+
+            @Override
+            public final RecordImpl value«degree»(T«degree» value) {
+                setValue(«degree - 1», value);
+                return this;
+            }
+            «ENDFOR»
+            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+
+            @Override
+            public final RecordImpl values(«TN_tn(degree)») {
+                return null;
             }
             «ENDFOR»
         }

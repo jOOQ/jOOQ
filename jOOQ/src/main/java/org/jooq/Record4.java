@@ -56,13 +56,13 @@ public interface Record4<T1, T2, T3, T4> extends Record {
     // ------------------------------------------------------------------------
 
     /**
-     * Get this record's fields as a {@link Row4}
+     * Get this record's fields as a {@link Row4}.
      */
     @Override
     Row4<T1, T2, T3, T4> fieldsRow();
 
     /**
-     * Get this record's values as a {@link Row4}
+     * Get this record's values as a {@link Row4}.
      */
     @Override
     Row4<T1, T2, T3, T4> valuesRow();
@@ -72,22 +72,22 @@ public interface Record4<T1, T2, T3, T4> extends Record {
     // ------------------------------------------------------------------------
 
     /**
-     * Get the first field
+     * Get the first field.
      */
     Field<T1> field1();
 
     /**
-     * Get the second field
+     * Get the second field.
      */
     Field<T2> field2();
 
     /**
-     * Get the third field
+     * Get the third field.
      */
     Field<T3> field3();
 
     /**
-     * Get the fourth field
+     * Get the fourth field.
      */
     Field<T4> field4();
 
@@ -96,23 +96,48 @@ public interface Record4<T1, T2, T3, T4> extends Record {
     // ------------------------------------------------------------------------
 
     /**
-     * Get the first value
+     * Get the first value.
      */
     T1 value1();
 
     /**
-     * Get the second value
+     * Get the second value.
      */
     T2 value2();
 
     /**
-     * Get the third value
+     * Get the third value.
      */
     T3 value3();
 
     /**
-     * Get the fourth value
+     * Get the fourth value.
      */
     T4 value4();
+
+    /**
+     * Set the first value.
+     */
+    Record4<T1, T2, T3, T4> value1(T1 value);
+
+    /**
+     * Set the second value.
+     */
+    Record4<T1, T2, T3, T4> value2(T2 value);
+
+    /**
+     * Set the third value.
+     */
+    Record4<T1, T2, T3, T4> value3(T3 value);
+
+    /**
+     * Set the fourth value.
+     */
+    Record4<T1, T2, T3, T4> value4(T4 value);
+
+    /**
+     * Set all values.
+     */
+    Record4<T1, T2, T3, T4> values(T1 t1, T2 t2, T3 t3, T4 t4);
 
 }

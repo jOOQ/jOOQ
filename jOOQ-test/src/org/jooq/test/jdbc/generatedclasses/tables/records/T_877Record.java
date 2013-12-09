@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_877Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.jdbc.generatedclasses.tables.records.T_877Record> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.jdbc.generatedclasses.tables.interfaces.IT_877 {
 
-	private static final long serialVersionUID = 718386918;
+	private static final long serialVersionUID = 2093043044;
 
 	/**
 	 * Setter for <code>PUBLIC.T_877.ID</code>. 
@@ -63,6 +63,23 @@ public class T_877Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.jdb
 		return getId();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_877Record value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_877Record values(java.lang.Integer value1) {
+		return this;
+	}
+
 	// -------------------------------------------------------------------------
 	// FROM and INTO
 	// -------------------------------------------------------------------------
@@ -93,5 +110,14 @@ public class T_877Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.jdb
 	 */
 	public T_877Record() {
 		super(org.jooq.test.jdbc.generatedclasses.tables.T_877.T_877);
+	}
+
+	/**
+	 * Create a detached, initialised T_877Record
+	 */
+	public T_877Record(java.lang.Integer id) {
+		super(org.jooq.test.jdbc.generatedclasses.tables.T_877.T_877);
+
+		setValue(0, id);
 	}
 }

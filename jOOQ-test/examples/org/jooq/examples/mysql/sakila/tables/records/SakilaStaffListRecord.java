@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaStaffListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffListRecord> implements org.jooq.Record8<java.lang.Byte, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Byte> {
 
-	private static final long serialVersionUID = 1054435248;
+	private static final long serialVersionUID = 1417231136;
 
 	/**
 	 * Setter for <code>sakila.staff_list.ID</code>. 
@@ -271,6 +271,86 @@ public class SakilaStaffListRecord extends org.jooq.impl.TableRecordImpl<org.joo
 	@Override
 	public java.lang.Byte value8() {
 		return getSid();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffListRecord value1(java.lang.Byte value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffListRecord value2(java.lang.String value) {
+		setName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffListRecord value3(java.lang.String value) {
+		setAddress(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffListRecord value4(java.lang.String value) {
+		setZip_code(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffListRecord value5(java.lang.String value) {
+		setPhone(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffListRecord value6(java.lang.String value) {
+		setCity(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffListRecord value7(java.lang.String value) {
+		setCountry(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffListRecord value8(java.lang.Byte value) {
+		setSid(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffListRecord values(java.lang.Byte value1, java.lang.String value2, java.lang.String value3, java.lang.String value4, java.lang.String value5, java.lang.String value6, java.lang.String value7, java.lang.Byte value8) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

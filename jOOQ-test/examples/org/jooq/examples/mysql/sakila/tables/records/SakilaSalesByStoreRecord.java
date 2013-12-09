@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaSalesByStoreRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaSalesByStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.String, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 550296967;
+	private static final long serialVersionUID = 1974128101;
 
 	/**
 	 * Setter for <code>sakila.sales_by_store.store</code>. 
@@ -121,6 +121,41 @@ public class SakilaSalesByStoreRecord extends org.jooq.impl.TableRecordImpl<org.
 	@Override
 	public java.math.BigDecimal value3() {
 		return getTotalSales();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaSalesByStoreRecord value1(java.lang.String value) {
+		setStore(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaSalesByStoreRecord value2(java.lang.String value) {
+		setManager(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaSalesByStoreRecord value3(java.math.BigDecimal value) {
+		setTotalSales(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaSalesByStoreRecord values(java.lang.String value1, java.lang.String value2, java.math.BigDecimal value3) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

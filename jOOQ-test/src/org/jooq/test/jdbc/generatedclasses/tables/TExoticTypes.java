@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = 303513786;
+	private static final long serialVersionUID = -1150658559;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_EXOTIC_TYPES</code>
@@ -39,5 +39,21 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.gen
 	 */
 	private TExoticTypes() {
 		super("T_EXOTIC_TYPES", org.jooq.test.jdbc.generatedclasses.Public.PUBLIC);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TExoticTypesRecord> getPrimaryKey() {
+		return org.jooq.test.jdbc.generatedclasses.Keys.PK_T_EXOTIC_TYPES;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TExoticTypesRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TExoticTypesRecord>>asList(org.jooq.test.jdbc.generatedclasses.Keys.PK_T_EXOTIC_TYPES);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1001706775;
+	private static final long serialVersionUID = 1727379700;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOK</code>
@@ -84,5 +84,37 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedc
 	 */
 	private TBook() {
 		super("T_BOOK", org.jooq.test.jdbc.generatedclasses.Public.PUBLIC);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TBookRecord> getPrimaryKey() {
+		return org.jooq.test.jdbc.generatedclasses.Keys.PK_T_BOOK;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TBookRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TBookRecord>>asList(org.jooq.test.jdbc.generatedclasses.Keys.PK_T_BOOK);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TBookRecord, java.lang.Integer> getRecordVersion() {
+		return org.jooq.test.jdbc.generatedclasses.tables.TBook.REC_VERSION;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TBookRecord, java.sql.Timestamp> getRecordTimestamp() {
+		return org.jooq.test.jdbc.generatedclasses.tables.TBook.REC_TIMESTAMP;
 	}
 }

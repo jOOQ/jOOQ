@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaRentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaRentalRecord> implements org.jooq.Record7<java.lang.Integer, java.sql.Timestamp, java.lang.Integer, java.lang.Short, java.sql.Timestamp, java.lang.Byte, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 446168056;
+	private static final long serialVersionUID = -1851603011;
 
 	/**
 	 * Setter for <code>sakila.rental.rental_id</code>. 
@@ -251,6 +251,77 @@ public class SakilaRentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.sql.Timestamp value7() {
 		return getLastUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaRentalRecord value1(java.lang.Integer value) {
+		setRentalId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaRentalRecord value2(java.sql.Timestamp value) {
+		setRentalDate(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaRentalRecord value3(java.lang.Integer value) {
+		setInventoryId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaRentalRecord value4(java.lang.Short value) {
+		setCustomerId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaRentalRecord value5(java.sql.Timestamp value) {
+		setReturnDate(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaRentalRecord value6(java.lang.Byte value) {
+		setStaffId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaRentalRecord value7(java.sql.Timestamp value) {
+		setLastUpdate(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaRentalRecord values(java.lang.Integer value1, java.sql.Timestamp value2, java.lang.Integer value3, java.lang.Short value4, java.sql.Timestamp value5, java.lang.Byte value6, java.sql.Timestamp value7) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

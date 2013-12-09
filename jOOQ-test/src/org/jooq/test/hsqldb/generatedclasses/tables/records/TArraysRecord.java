@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.String[], java.lang.Integer[], java.sql.Date[]>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITArrays {
 
-	private static final long serialVersionUID = 436399753;
+	private static final long serialVersionUID = -659606644;
 
 	/**
 	 * Setter for <code>PUBLIC.T_ARRAYS.ID</code>. 
@@ -169,6 +169,50 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public java.sql.Date[] value4() {
 		return getDateArray();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord value2(java.lang.String[] value) {
+		setStringArray(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord value3(java.lang.Integer[] value) {
+		setNumberArray(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord value4(java.sql.Date[] value) {
+		setDateArray(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord values(java.lang.Integer value1, java.lang.String[] value2, java.lang.Integer[] value3, java.sql.Date[] value4) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

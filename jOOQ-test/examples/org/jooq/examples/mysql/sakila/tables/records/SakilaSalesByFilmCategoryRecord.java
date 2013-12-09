@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaSalesByFilmCategoryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaSalesByFilmCategoryRecord> implements org.jooq.Record2<java.lang.String, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 593842516;
+	private static final long serialVersionUID = -557792397;
 
 	/**
 	 * Setter for <code>sakila.sales_by_film_category.category</code>. 
@@ -91,6 +91,32 @@ public class SakilaSalesByFilmCategoryRecord extends org.jooq.impl.TableRecordIm
 	@Override
 	public java.math.BigDecimal value2() {
 		return getTotalSales();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaSalesByFilmCategoryRecord value1(java.lang.String value) {
+		setCategory(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaSalesByFilmCategoryRecord value2(java.math.BigDecimal value) {
+		setTotalSales(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaSalesByFilmCategoryRecord values(java.lang.String value1, java.math.BigDecimal value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

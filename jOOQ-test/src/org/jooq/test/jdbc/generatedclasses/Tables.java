@@ -17,6 +17,16 @@ public class Tables {
 	public static final org.jooq.test.jdbc.generatedclasses.tables.T_2327UkOnly T_2327_UK_ONLY = org.jooq.test.jdbc.generatedclasses.tables.T_2327UkOnly.T_2327_UK_ONLY;
 
 	/**
+	 * The table PUBLIC.T_2698
+	 */
+	public static final org.jooq.test.jdbc.generatedclasses.tables.T_2698 T_2698 = org.jooq.test.jdbc.generatedclasses.tables.T_2698.T_2698;
+
+	/**
+	 * The table PUBLIC.T_2718
+	 */
+	public static final org.jooq.test.jdbc.generatedclasses.tables.T_2718 T_2718 = org.jooq.test.jdbc.generatedclasses.tables.T_2718.T_2718;
+
+	/**
 	 * The table PUBLIC.T_639_NUMBERS_TABLE
 	 */
 	public static final org.jooq.test.jdbc.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.jdbc.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
@@ -97,6 +107,11 @@ public class Tables {
 	public static final org.jooq.test.jdbc.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.jdbc.generatedclasses.tables.TTriggers.T_TRIGGERS;
 
 	/**
+	 * The table PUBLIC.T_UNSIGNED
+	 */
+	public static final org.jooq.test.jdbc.generatedclasses.tables.TUnsigned T_UNSIGNED = org.jooq.test.jdbc.generatedclasses.tables.TUnsigned.T_UNSIGNED;
+
+	/**
 	 * The table PUBLIC.X_TEST_CASE_2025
 	 */
 	public static final org.jooq.test.jdbc.generatedclasses.tables.XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.jdbc.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025;
@@ -122,6 +137,11 @@ public class Tables {
 	public static final org.jooq.test.jdbc.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.jdbc.generatedclasses.tables.XUnused.X_UNUSED;
 
 	/**
+	 * The table PUBLIC.V_2603
+	 */
+	public static final org.jooq.test.jdbc.generatedclasses.tables.V_2603 V_2603 = org.jooq.test.jdbc.generatedclasses.tables.V_2603.V_2603;
+
+	/**
 	 * The table PUBLIC.V_AUTHOR
 	 */
 	public static final org.jooq.test.jdbc.generatedclasses.tables.VAuthor V_AUTHOR = org.jooq.test.jdbc.generatedclasses.tables.VAuthor.V_AUTHOR;
@@ -135,4 +155,9 @@ public class Tables {
 	 * The table PUBLIC.V_LIBRARY
 	 */
 	public static final org.jooq.test.jdbc.generatedclasses.tables.VLibrary V_LIBRARY = org.jooq.test.jdbc.generatedclasses.tables.VLibrary.V_LIBRARY;
+
+	/**
+	 * The table PUBLIC.Ää
+	 */
+	public static final org.jooq.test.jdbc.generatedclasses.tables.Ää ÄÄ = org.jooq.test.jdbc.generatedclasses.tables.Ää.ÄÄ;
 }

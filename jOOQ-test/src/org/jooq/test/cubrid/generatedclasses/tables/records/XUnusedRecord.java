@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record14<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 171221858;
+	private static final long serialVersionUID = 1103930316;
 
 	/**
 	 * Setter for <code>x_unused.id</code>. 
@@ -461,6 +461,140 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public java.math.BigDecimal value14() {
 		return getField_737();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XUnusedRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XUnusedRecord value2(java.lang.String value) {
+		setName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XUnusedRecord value3(java.math.BigInteger value) {
+		setBigInteger(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XUnusedRecord value4(java.lang.Integer value) {
+		setIdRef(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XUnusedRecord value5(java.lang.String value) {
+		setNameRef(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XUnusedRecord value6(java.lang.Integer value) {
+		setClass_(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XUnusedRecord value7(java.lang.Integer value) {
+		setFields(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XUnusedRecord value8(java.lang.Integer value) {
+		setConfiguration(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XUnusedRecord value9(java.lang.Integer value) {
+		setUDT(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XUnusedRecord value10(java.lang.Integer value) {
+		setMetaData(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XUnusedRecord value11(java.lang.Integer value) {
+		setType0(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XUnusedRecord value12(java.lang.Integer value) {
+		setPrimaryKey_(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XUnusedRecord value13(java.lang.Integer value) {
+		setPrimarykey(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XUnusedRecord value14(java.math.BigDecimal value) {
+		setField_737(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XUnusedRecord values(java.lang.Integer value1, java.lang.String value2, java.math.BigInteger value3, java.lang.Integer value4, java.lang.String value5, java.lang.Integer value6, java.lang.Integer value7, java.lang.Integer value8, java.lang.Integer value9, java.lang.Integer value10, java.lang.Integer value11, java.lang.Integer value12, java.lang.Integer value13, java.math.BigDecimal value14) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

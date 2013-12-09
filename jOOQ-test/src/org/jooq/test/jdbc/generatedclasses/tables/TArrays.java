@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = 1047228124;
+	private static final long serialVersionUID = -951729578;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_ARRAYS</code>
@@ -49,5 +49,21 @@ public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generate
 	 */
 	private TArrays() {
 		super("T_ARRAYS", org.jooq.test.jdbc.generatedclasses.Public.PUBLIC);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TArraysRecord> getPrimaryKey() {
+		return org.jooq.test.jdbc.generatedclasses.Keys.PK_T_ARRAYS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TArraysRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TArraysRecord>>asList(org.jooq.test.jdbc.generatedclasses.Keys.PK_T_ARRAYS);
 	}
 }

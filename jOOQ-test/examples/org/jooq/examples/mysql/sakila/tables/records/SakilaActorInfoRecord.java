@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaActorInfoRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaActorInfoRecord> implements org.jooq.Record4<java.lang.Short, java.lang.String, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -333837809;
+	private static final long serialVersionUID = 572759082;
 
 	/**
 	 * Setter for <code>sakila.actor_info.actor_id</code>. 
@@ -151,6 +151,50 @@ public class SakilaActorInfoRecord extends org.jooq.impl.TableRecordImpl<org.joo
 	@Override
 	public java.lang.String value4() {
 		return getFilmInfo();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaActorInfoRecord value1(java.lang.Short value) {
+		setActorId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaActorInfoRecord value2(java.lang.String value) {
+		setFirstName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaActorInfoRecord value3(java.lang.String value) {
+		setLastName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaActorInfoRecord value4(java.lang.String value) {
+		setFilmInfo(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaActorInfoRecord values(java.lang.Short value1, java.lang.String value2, java.lang.String value3, java.lang.String value4) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

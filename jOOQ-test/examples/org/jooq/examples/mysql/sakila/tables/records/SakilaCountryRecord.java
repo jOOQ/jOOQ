@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaCountryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaCountryRecord> implements org.jooq.Record3<java.lang.Short, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 209482317;
+	private static final long serialVersionUID = -174608065;
 
 	/**
 	 * Setter for <code>sakila.country.country_id</code>. 
@@ -131,6 +131,41 @@ public class SakilaCountryRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	@Override
 	public java.sql.Timestamp value3() {
 		return getLastUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCountryRecord value1(java.lang.Short value) {
+		setCountryId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCountryRecord value2(java.lang.String value) {
+		setCountry(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCountryRecord value3(java.sql.Timestamp value) {
+		setLastUpdate(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCountryRecord values(java.lang.Short value1, java.lang.String value2, java.sql.Timestamp value3) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

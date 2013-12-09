@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaCustomerListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaCustomerListRecord> implements org.jooq.Record9<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Byte> {
 
-	private static final long serialVersionUID = 2013523924;
+	private static final long serialVersionUID = 802056573;
 
 	/**
 	 * Setter for <code>sakila.customer_list.ID</code>. 
@@ -301,6 +301,95 @@ public class SakilaCustomerListRecord extends org.jooq.impl.TableRecordImpl<org.
 	@Override
 	public java.lang.Byte value9() {
 		return getSid();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerListRecord value1(java.lang.Short value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerListRecord value2(java.lang.String value) {
+		setName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerListRecord value3(java.lang.String value) {
+		setAddress(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerListRecord value4(java.lang.String value) {
+		setZip_code(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerListRecord value5(java.lang.String value) {
+		setPhone(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerListRecord value6(java.lang.String value) {
+		setCity(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerListRecord value7(java.lang.String value) {
+		setCountry(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerListRecord value8(java.lang.String value) {
+		setNotes(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerListRecord value9(java.lang.Byte value) {
+		setSid(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerListRecord values(java.lang.Short value1, java.lang.String value2, java.lang.String value3, java.lang.String value4, java.lang.String value5, java.lang.String value6, java.lang.String value7, java.lang.String value8, java.lang.Byte value9) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

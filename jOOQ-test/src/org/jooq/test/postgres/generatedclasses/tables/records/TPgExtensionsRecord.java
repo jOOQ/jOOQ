@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TPgExtensionsRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord> implements org.jooq.Record5<java.lang.Integer, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITPgExtensions {
 
-	private static final long serialVersionUID = -666302179;
+	private static final long serialVersionUID = 499339171;
 
 	/**
 	 * Setter for <code>public.t_pg_extensions.id</code>. 
@@ -201,6 +201,59 @@ public class TPgExtensionsRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	@Override
 	public java.lang.Object value5() {
 		return getPgGeometry();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TPgExtensionsRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TPgExtensionsRecord value2(java.lang.Object value) {
+		setPgInterval(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TPgExtensionsRecord value3(java.lang.Object value) {
+		setPgBox(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TPgExtensionsRecord value4(java.lang.Object value) {
+		setPgHstore(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TPgExtensionsRecord value5(java.lang.Object value) {
+		setPgGeometry(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TPgExtensionsRecord values(java.lang.Integer value1, java.lang.Object value2, java.lang.Object value3, java.lang.Object value4, java.lang.Object value5) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

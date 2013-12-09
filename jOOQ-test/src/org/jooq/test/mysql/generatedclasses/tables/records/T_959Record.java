@@ -9,7 +9,7 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.T_959Record> implements org.jooq.Record2<org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords, org.jooq.test.mysql.generatedclasses.enums.T_959SpecialCharacters> {
 
-	private static final long serialVersionUID = 1939174495;
+	private static final long serialVersionUID = -1177526601;
 
 	/**
 	 * Setter for <code>test.t_959.java_keywords</code>. 
@@ -89,6 +89,32 @@ public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	@Override
 	public org.jooq.test.mysql.generatedclasses.enums.T_959SpecialCharacters value2() {
 		return getSpecialCharacters();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_959Record value1(org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords value) {
+		setJavaKeywords(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_959Record value2(org.jooq.test.mysql.generatedclasses.enums.T_959SpecialCharacters value) {
+		setSpecialCharacters(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_959Record values(org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords value1, org.jooq.test.mysql.generatedclasses.enums.T_959SpecialCharacters value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

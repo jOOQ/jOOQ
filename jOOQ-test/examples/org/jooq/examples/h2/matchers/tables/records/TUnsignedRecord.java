@@ -9,7 +9,7 @@ package org.jooq.examples.h2.matchers.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.h2.matchers.tables.records.TUnsignedRecord> implements org.jooq.Record4<org.jooq.types.UByte, org.jooq.types.UShort, org.jooq.types.UInteger, org.jooq.types.ULong>, org.jooq.examples.h2.matchers.tables.interfaces.ITUnsigned {
 
-	private static final long serialVersionUID = 1900400232;
+	private static final long serialVersionUID = -1334281177;
 
 	/**
 	 * Setter for <code>PUBLIC.T_UNSIGNED.U_BYTE</code>. 
@@ -157,6 +157,50 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.exam
 	@Override
 	public org.jooq.types.ULong value4() {
 		return getULong();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TUnsignedRecord value1(org.jooq.types.UByte value) {
+		setUByte(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TUnsignedRecord value2(org.jooq.types.UShort value) {
+		setUShort(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TUnsignedRecord value3(org.jooq.types.UInteger value) {
+		setUInt(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TUnsignedRecord value4(org.jooq.types.ULong value) {
+		setULong(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TUnsignedRecord values(org.jooq.types.UByte value1, org.jooq.types.UShort value2, org.jooq.types.UInteger value3, org.jooq.types.ULong value4) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

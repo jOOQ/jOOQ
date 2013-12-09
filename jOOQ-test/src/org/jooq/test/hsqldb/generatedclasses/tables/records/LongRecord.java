@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LongRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.LongRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Long>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ILong {
 
-	private static final long serialVersionUID = 1806007503;
+	private static final long serialVersionUID = 1475318459;
 
 	/**
 	 * Setter for <code>PUBLIC.LONG.ID</code>. 
@@ -93,6 +93,32 @@ public class LongRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsql
 	@Override
 	public java.lang.Long value2() {
 		return getOther();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public LongRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public LongRecord value2(java.lang.Long value) {
+		setOther(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public LongRecord values(java.lang.Integer value1, java.lang.Long value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

@@ -9,10 +9,20 @@ package org.jooq.test.jdbc.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentity implements org.jooq.test.jdbc.generatedclasses.tables.interfaces.ITIdentity {
 
-	private static final long serialVersionUID = -1882849332;
+	private static final long serialVersionUID = -444978976;
 
 	private java.lang.Integer id;
 	private java.lang.Integer val;
+
+	public TIdentity() {}
+
+	public TIdentity(
+		java.lang.Integer id,
+		java.lang.Integer val
+	) {
+		this.id = id;
+		this.val = val;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

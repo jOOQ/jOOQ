@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaStoreRecord> implements org.jooq.Record4<java.lang.Byte, java.lang.Byte, java.lang.Short, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 468760731;
+	private static final long serialVersionUID = 729274396;
 
 	/**
 	 * Setter for <code>sakila.store.store_id</code>. 
@@ -161,6 +161,50 @@ public class SakilaStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	@Override
 	public java.sql.Timestamp value4() {
 		return getLastUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStoreRecord value1(java.lang.Byte value) {
+		setStoreId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStoreRecord value2(java.lang.Byte value) {
+		setManagerStaffId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStoreRecord value3(java.lang.Short value) {
+		setAddressId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStoreRecord value4(java.sql.Timestamp value) {
+		setLastUpdate(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStoreRecord values(java.lang.Byte value1, java.lang.Byte value2, java.lang.Short value3, java.sql.Timestamp value4) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

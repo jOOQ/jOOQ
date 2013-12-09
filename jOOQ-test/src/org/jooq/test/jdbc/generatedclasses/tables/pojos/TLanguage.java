@@ -9,12 +9,26 @@ package org.jooq.test.jdbc.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage implements org.jooq.test.jdbc.generatedclasses.tables.interfaces.ITLanguage {
 
-	private static final long serialVersionUID = -2114585975;
+	private static final long serialVersionUID = -1893588902;
 
 	private java.lang.String  cd;
 	private java.lang.String  description;
 	private java.lang.String  descriptionEnglish;
 	private java.lang.Integer id;
+
+	public TLanguage() {}
+
+	public TLanguage(
+		java.lang.String  cd,
+		java.lang.String  description,
+		java.lang.String  descriptionEnglish,
+		java.lang.Integer id
+	) {
+		this.cd = cd;
+		this.description = description;
+		this.descriptionEnglish = descriptionEnglish;
+		this.id = id;
+	}
 
 	@Override
 	public java.lang.String getCd() {

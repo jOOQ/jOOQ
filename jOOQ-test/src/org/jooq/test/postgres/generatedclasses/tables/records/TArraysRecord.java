@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> implements org.jooq.Record7<java.lang.Integer, java.lang.String[], java.lang.Integer[], java.sql.Date[], org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord[], org.jooq.test.postgres.generatedclasses.enums.UCountry[], java.lang.Integer[]>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITArrays {
 
-	private static final long serialVersionUID = 1649429551;
+	private static final long serialVersionUID = 1165121123;
 
 	/**
 	 * Setter for <code>public.t_arrays.id</code>. 
@@ -265,6 +265,77 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public java.lang.Integer[] value7() {
 		return getArrayArray();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord value2(java.lang.String[] value) {
+		setStringArray(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord value3(java.lang.Integer[] value) {
+		setNumberArray(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord value4(java.sql.Date[] value) {
+		setDateArray(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord value5(org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord[] value) {
+		setUdtArray(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord value6(org.jooq.test.postgres.generatedclasses.enums.UCountry[] value) {
+		setEnumArray(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord value7(java.lang.Integer[] value) {
+		setArrayArray(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord values(java.lang.Integer value1, java.lang.String[] value2, java.lang.Integer[] value3, java.sql.Date[] value4, org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord[] value5, org.jooq.test.postgres.generatedclasses.enums.UCountry[] value6, java.lang.Integer[] value7) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

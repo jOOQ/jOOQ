@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 1126137860;
+	private static final long serialVersionUID = -1035783604;
 
 	/**
 	 * The singleton instance of <code>PUBLIC</code>
@@ -33,6 +33,8 @@ public class Public extends org.jooq.impl.SchemaImpl {
 	private final java.util.List<org.jooq.Table<?>> getTables0() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
 			org.jooq.test.jdbc.generatedclasses.tables.T_2327UkOnly.T_2327_UK_ONLY,
+			org.jooq.test.jdbc.generatedclasses.tables.T_2698.T_2698,
+			org.jooq.test.jdbc.generatedclasses.tables.T_2718.T_2718,
 			org.jooq.test.jdbc.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,
 			org.jooq.test.jdbc.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST,
 			org.jooq.test.jdbc.generatedclasses.tables.T_785.T_785,
@@ -49,13 +51,16 @@ public class Public extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.jdbc.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
 			org.jooq.test.jdbc.generatedclasses.tables.TLanguage.T_LANGUAGE,
 			org.jooq.test.jdbc.generatedclasses.tables.TTriggers.T_TRIGGERS,
+			org.jooq.test.jdbc.generatedclasses.tables.TUnsigned.T_UNSIGNED,
 			org.jooq.test.jdbc.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025,
 			org.jooq.test.jdbc.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69,
 			org.jooq.test.jdbc.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71,
 			org.jooq.test.jdbc.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85,
 			org.jooq.test.jdbc.generatedclasses.tables.XUnused.X_UNUSED,
+			org.jooq.test.jdbc.generatedclasses.tables.V_2603.V_2603,
 			org.jooq.test.jdbc.generatedclasses.tables.VAuthor.V_AUTHOR,
 			org.jooq.test.jdbc.generatedclasses.tables.VBook.V_BOOK,
-			org.jooq.test.jdbc.generatedclasses.tables.VLibrary.V_LIBRARY);
+			org.jooq.test.jdbc.generatedclasses.tables.VLibrary.V_LIBRARY,
+			org.jooq.test.jdbc.generatedclasses.tables.Ää.ÄÄ);
 	}
 }

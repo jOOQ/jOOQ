@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.T_725LobTestRecord> implements org.jooq.Record2<java.lang.Integer, byte[]> {
 
-	private static final long serialVersionUID = -710647681;
+	private static final long serialVersionUID = 41498240;
 
 	/**
 	 * Setter for <code>t_725_lob_test.ID</code>. 
@@ -101,6 +101,32 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public byte[] value2() {
 		return getLob();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_725LobTestRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_725LobTestRecord value2(byte[] value) {
+		setLob(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_725LobTestRecord values(java.lang.Integer value1, byte[] value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

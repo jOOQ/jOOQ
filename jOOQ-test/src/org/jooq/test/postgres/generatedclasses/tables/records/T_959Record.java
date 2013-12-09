@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_959Record> implements org.jooq.Record1<org.jooq.test.postgres.generatedclasses.enums.U_959>, org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_959 {
 
-	private static final long serialVersionUID = 317405709;
+	private static final long serialVersionUID = 1528660837;
 
 	/**
 	 * Setter for <code>public.t_959.java_keywords</code>. 
@@ -61,6 +61,23 @@ public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	@Override
 	public org.jooq.test.postgres.generatedclasses.enums.U_959 value1() {
 		return getJavaKeywords();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_959Record value1(org.jooq.test.postgres.generatedclasses.enums.U_959 value) {
+		setJavaKeywords(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_959Record values(org.jooq.test.postgres.generatedclasses.enums.U_959 value1) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

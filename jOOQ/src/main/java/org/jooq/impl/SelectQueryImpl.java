@@ -1353,19 +1353,8 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                 joined = getFrom().get(index).fullOuterJoin(table).onKey();
                 break;
 
-            // These join types don't take any ON clause. Ignore conditions.
-            case CROSS_JOIN:
-                joined = getFrom().get(index).crossJoin(table);
-                break;
-            case NATURAL_JOIN:
-                joined = getFrom().get(index).naturalJoin(table);
-                break;
-            case NATURAL_LEFT_OUTER_JOIN:
-                joined = getFrom().get(index).naturalLeftOuterJoin(table);
-                break;
-            case NATURAL_RIGHT_OUTER_JOIN:
-                joined = getFrom().get(index).naturalRightOuterJoin(table);
-                break;
+            default:
+                throw new IllegalArgumentException("JoinType " + type + " is not supported with the addJoinOnKey() method. Use INNER or OUTER JOINs only");
         }
 
         getFrom().set(index, joined);
@@ -1392,19 +1381,8 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                 joined = getFrom().get(index).fullOuterJoin(table).onKey(keyFields);
                 break;
 
-            // These join types don't take any ON clause. Ignore conditions.
-            case CROSS_JOIN:
-                joined = getFrom().get(index).crossJoin(table);
-                break;
-            case NATURAL_JOIN:
-                joined = getFrom().get(index).naturalJoin(table);
-                break;
-            case NATURAL_LEFT_OUTER_JOIN:
-                joined = getFrom().get(index).naturalLeftOuterJoin(table);
-                break;
-            case NATURAL_RIGHT_OUTER_JOIN:
-                joined = getFrom().get(index).naturalRightOuterJoin(table);
-                break;
+            default:
+                throw new IllegalArgumentException("JoinType " + type + " is not supported with the addJoinOnKey() method. Use INNER or OUTER JOINs only");
         }
 
         getFrom().set(index, joined);
@@ -1431,19 +1409,8 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                 joined = getFrom().get(index).fullOuterJoin(table).onKey(key);
                 break;
 
-            // These join types don't take any ON clause. Ignore conditions.
-            case CROSS_JOIN:
-                joined = getFrom().get(index).crossJoin(table);
-                break;
-            case NATURAL_JOIN:
-                joined = getFrom().get(index).naturalJoin(table);
-                break;
-            case NATURAL_LEFT_OUTER_JOIN:
-                joined = getFrom().get(index).naturalLeftOuterJoin(table);
-                break;
-            case NATURAL_RIGHT_OUTER_JOIN:
-                joined = getFrom().get(index).naturalRightOuterJoin(table);
-                break;
+            default:
+                throw new IllegalArgumentException("JoinType " + type + " is not supported with the addJoinOnKey() method. Use INNER or OUTER JOINs only");
         }
 
         getFrom().set(index, joined);
@@ -1475,19 +1442,8 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                 joined = getFrom().get(index).fullOuterJoin(table).using(fields);
                 break;
 
-            // These join types don't take any USING clause. Ignore fields
-            case CROSS_JOIN:
-                joined = getFrom().get(index).crossJoin(table);
-                break;
-            case NATURAL_JOIN:
-                joined = getFrom().get(index).naturalJoin(table);
-                break;
-            case NATURAL_LEFT_OUTER_JOIN:
-                joined = getFrom().get(index).naturalLeftOuterJoin(table);
-                break;
-            case NATURAL_RIGHT_OUTER_JOIN:
-                joined = getFrom().get(index).naturalRightOuterJoin(table);
-                break;
+            default:
+                throw new IllegalArgumentException("JoinType " + type + " is not supported with the addJoinUsing() method. Use INNER or OUTER JOINs only");
         }
 
         getFrom().set(index, joined);

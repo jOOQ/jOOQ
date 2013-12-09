@@ -44,6 +44,7 @@ package org.jooq.util.cubrid;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.util.cubrid.dba.Tables.DB_CLASS;
 import static org.jooq.util.cubrid.dba.Tables.DB_INDEX;
 import static org.jooq.util.cubrid.dba.Tables.DB_INDEX_KEY;
@@ -190,11 +191,11 @@ public class CUBRIDDatabase extends AbstractDatabase {
         for (Record record : create()
                 .select(
                     DB_SERIAL.NAME,
-                    DB_SERIAL.MAX_VAL.nvl(BigInteger.valueOf(Long.MAX_VALUE)))
+                    DB_SERIAL.MAX_VAL)
                 .from(DB_SERIAL)
                 .fetch()) {
 
-            BigInteger value = record.getValue(DB_SERIAL.MAX_VAL.nvl(BigInteger.valueOf(Long.MAX_VALUE)), BigInteger.class);
+            BigInteger value = defaultIfNull(record.getValue(DB_SERIAL.MAX_VAL, BigInteger.class), BigInteger.valueOf(Long.MAX_VALUE));
             DataTypeDefinition type = getDataTypeForMAX_VAL(getSchemata().get(0), value);
 
             result.add(new DefaultSequenceDefinition(

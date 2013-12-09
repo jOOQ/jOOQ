@@ -104,6 +104,54 @@ public class OracleDSL extends DSL {
         return function("sys_context", SQLDataType.VARCHAR, val(namespace), val(parameter), val(length));
     }
 
+    /**
+     * The Oracle-specific <code>TO_CHAR</code> function.
+     */
+    @Support(ORACLE)
+    public static Field<String> toChar(String value) {
+        return toChar(val(value));
+    }
+
+    /**
+     * The Oracle-specific <code>TO_CHAR</code> function.
+     */
+    @Support(ORACLE)
+    public static Field<String> toChar(Field<String> value) {
+        return field("{to_char}({0})", String.class, nullSafe(value));
+    }
+
+    /**
+     * The Oracle-specific <code>TO_CHAR</code> function.
+     */
+    @Support(ORACLE)
+    public static Field<String> toChar(String value, String formatMask) {
+        return toChar(val(value), val(formatMask));
+    }
+
+    /**
+     * The Oracle-specific <code>TO_CHAR</code> function.
+     */
+    @Support(ORACLE)
+    public static Field<String> toChar(String value, Field<String> formatMask) {
+        return toChar(val(value), formatMask);
+    }
+
+    /**
+     * The Oracle-specific <code>TO_CHAR</code> function.
+     */
+    @Support(ORACLE)
+    public static Field<String> toChar(Field<String> value, String formatMask) {
+        return toChar(value, val(formatMask));
+    }
+
+    /**
+     * The Oracle-specific <code>TO_CHAR</code> function.
+     */
+    @Support(ORACLE)
+    public static Field<String> toChar(Field<String> value, Field<String> formatMask) {
+        return field("{to_char}({0}, {1})", String.class, nullSafe(value), nullSafe(formatMask));
+    }
+
     // -------------------------------------------------------------------------
     // Oracle Flashback Version Query pseudo-columns
     // -------------------------------------------------------------------------

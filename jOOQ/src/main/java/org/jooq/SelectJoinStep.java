@@ -52,6 +52,7 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.ORACLE12C;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -657,5 +658,113 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinStep<R> naturalRightOuterJoin(String sql, QueryPart... parts);
+
+    // -------------------------------------------------------------------------
+    // XXX: APPLY clauses on tables
+    // -------------------------------------------------------------------------
+
+    /* [pro] */
+
+    /**
+     * <code>CROSS APPLY</code> a table to this table.
+     *
+     * @see Table#crossApply(TableLike)
+     */
+    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    SelectJoinStep<R> crossApply(TableLike<?> table);
+
+    /**
+     * <code>CROSS APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String)
+     * @see Table#crossApply(String)
+     */
+    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    SelectJoinStep<R> crossApply(String sql);
+
+    /**
+     * <code>CROSS APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, Object...)
+     * @see Table#crossApply(String, Object...)
+     */
+    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    SelectJoinStep<R> crossApply(String sql, Object... bindings);
+
+    /**
+     * <code>CROSS APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, QueryPart...)
+     * @see Table#crossApply(String, QueryPart...)
+     */
+    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    SelectJoinStep<R> crossApply(String sql, QueryPart... parts);
+
+    /**
+     * <code>OUTER APPLY</code> a table to this table.
+     *
+     * @see Table#outerApply(TableLike)
+     */
+    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    SelectJoinStep<R> outerApply(TableLike<?> table);
+
+    /**
+     * <code>OUTER APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String)
+     * @see Table#outerApply(String)
+     */
+    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    SelectJoinStep<R> outerApply(String sql);
+
+    /**
+     * <code>OUTER APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, Object...)
+     * @see Table#outerApply(String, Object...)
+     */
+    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    SelectJoinStep<R> outerApply(String sql, Object... bindings);
+
+    /**
+     * <code>OUTER APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, QueryPart...)
+     * @see Table#outerApply(String, QueryPart...)
+     */
+    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    SelectJoinStep<R> outerApply(String sql, QueryPart... parts);
+
+    /* [/pro] */
 
 }

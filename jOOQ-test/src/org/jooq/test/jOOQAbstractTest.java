@@ -1957,6 +1957,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testCrossApply() throws Exception {
+        new JoinTests(this).testCrossApply();
+    }
+
+    @Test
     public void testNaturalJoin() throws Exception {
         new JoinTests(this).testNaturalJoin();
     }

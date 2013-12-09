@@ -308,6 +308,99 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testCrossApply() throws Exception {
+        switch (dialect()) {
+            /* [pro] */
+            case ORACLE12C:
+            case SQLSERVER:
+            case SQLSERVER2008:
+            case SQLSERVER2012:
+            case SYBASE:
+                break;
+
+            /* [/pro] */
+            default:
+                log.info("SKIPPING", "CROSS APPLY tests");
+                return;
+        }
+
+        /* [pro] */
+        assertEquals(
+            asList(2, 2),
+            create().select()
+                    .from(TAuthor())
+                    .crossApply(
+                        select(count().as("c"))
+                        .from(TBook())
+                        .where(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+                    )
+                    .fetch("c", int.class)
+        );
+
+        assertEquals(
+            asList(2, 2),
+            create().select()
+                    .from(TAuthor())
+                    .outerApply(
+                        select(count().as("c"))
+                        .from(TBook())
+                        .where(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+                    )
+                    .fetch("c", int.class)
+        );
+
+        assertEquals(
+            asList(2, 2),
+            create().select()
+                    .from(TAuthor())
+                    .join(
+                        select(count().as("c"))
+                        .from(TBook())
+                        .where(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+                        ,
+                        JoinType.CROSS_APPLY
+                    )
+                    .fetch("c", int.class)
+        );
+
+        assertEquals(
+            asList(2, 2),
+            create().select()
+                    .from(TAuthor().crossApply(
+                            select(count().as("c"))
+                            .from(TBook())
+                            .where(TBook_AUTHOR_ID().eq(TAuthor_ID())))
+                    )
+                    .fetch("c", int.class)
+        );
+
+        assertEquals(
+            asList(2, 2),
+            create().select()
+                    .from(TAuthor().outerApply(
+                            select(count().as("c"))
+                            .from(TBook())
+                            .where(TBook_AUTHOR_ID().eq(TAuthor_ID())))
+                    )
+                    .fetch("c", int.class)
+        );
+
+        assertEquals(
+            asList(2, 2),
+            create().select()
+                    .from(TAuthor().join(
+                            select(count().as("c"))
+                            .from(TBook())
+                            .where(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+                            ,
+                            JoinType.OUTER_APPLY)
+                    )
+                    .fetch("c", int.class)
+        );
+        /* [/pro] */
+    }
+
+    @Test
     public void testNaturalJoin() throws Exception {
         boolean unqualified = false;
         if (asList(HSQLDB, ORACLE).contains(dialect().family()))

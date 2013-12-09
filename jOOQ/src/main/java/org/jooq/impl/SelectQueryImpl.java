@@ -1318,6 +1318,15 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             case NATURAL_RIGHT_OUTER_JOIN:
                 joined = getFrom().get(index).naturalRightOuterJoin(table);
                 break;
+
+            /* [pro] */
+            case CROSS_APPLY:
+                joined = getFrom().get(index).crossApply(table);
+                break;
+            case OUTER_APPLY:
+                joined = getFrom().get(index).outerApply(table);
+                break;
+            /* [/pro] */
         }
 
         getFrom().set(index, joined);

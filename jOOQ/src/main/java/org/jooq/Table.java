@@ -910,6 +910,144 @@ public interface Table<R extends Record> extends TableLike<R> {
     Table<Record> naturalRightOuterJoin(String sql, QueryPart... parts);
 
     // -------------------------------------------------------------------------
+    // XXX: APPLY clauses on tables
+    // -------------------------------------------------------------------------
+
+    /* [pro] */
+
+    /**
+     * <code>CROSS APPLY</code> a table to this table.
+     */
+    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Transition(
+        name = "CROSS APPLY",
+        args = "Table",
+        to = "JoinedTable"
+    )
+    Table<Record> crossApply(TableLike<?> table);
+
+    /**
+     * <code>CROSS APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String)
+     */
+    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Transition(
+        name = "CROSS APPLY",
+        args = "Table",
+        to = "JoinedTable"
+    )
+    Table<Record> crossApply(String sql);
+
+    /**
+     * <code>CROSS APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, Object...)
+     */
+    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Transition(
+        name = "CROSS APPLY",
+        args = "Table",
+        to = "JoinedTable"
+    )
+    Table<Record> crossApply(String sql, Object... bindings);
+
+    /**
+     * <code>CROSS APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, QueryPart...)
+     */
+    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Transition(
+        name = "CROSS APPLY",
+        args = "Table",
+        to = "JoinedTable"
+    )
+    Table<Record> crossApply(String sql, QueryPart... parts);
+
+    /**
+     * <code>OUTER APPLY</code> a table to this table.
+     */
+    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Transition(
+        name = "OUTER APPLY",
+        args = "Table",
+        to = "JoinedTable"
+    )
+    Table<Record> outerApply(TableLike<?> table);
+
+    /**
+     * <code>OUTER APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String)
+     */
+    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Transition(
+        name = "OUTER APPLY",
+        args = "Table",
+        to = "JoinedTable"
+    )
+    Table<Record> outerApply(String sql);
+
+    /**
+     * <code>OUTER APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, Object...)
+     */
+    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Transition(
+        name = "OUTER APPLY",
+        args = "Table",
+        to = "JoinedTable"
+    )
+    Table<Record> outerApply(String sql, Object... bindings);
+
+    /**
+     * <code>OUTER APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, QueryPart...)
+     */
+    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Transition(
+        name = "OUTER APPLY",
+        args = "Table",
+        to = "JoinedTable"
+    )
+    Table<Record> outerApply(String sql, QueryPart... parts);
+
+    /* [/pro] */
+
+    // -------------------------------------------------------------------------
     // XXX: Exotic and vendor-specific clauses on tables
     // -------------------------------------------------------------------------
 

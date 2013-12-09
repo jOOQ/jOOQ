@@ -44,22 +44,26 @@ import static java.util.Arrays.asList;
 import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_JOIN;
 import static org.jooq.Clause.TABLE_JOIN_CROSS;
+import static org.jooq.Clause.TABLE_JOIN_CROSS_APPLY;
 import static org.jooq.Clause.TABLE_JOIN_INNER;
 import static org.jooq.Clause.TABLE_JOIN_NATURAL;
 import static org.jooq.Clause.TABLE_JOIN_NATURAL_OUTER_LEFT;
 import static org.jooq.Clause.TABLE_JOIN_NATURAL_OUTER_RIGHT;
 import static org.jooq.Clause.TABLE_JOIN_ON;
+import static org.jooq.Clause.TABLE_JOIN_OUTER_APPLY;
 import static org.jooq.Clause.TABLE_JOIN_OUTER_FULL;
 import static org.jooq.Clause.TABLE_JOIN_OUTER_LEFT;
 import static org.jooq.Clause.TABLE_JOIN_OUTER_RIGHT;
 import static org.jooq.Clause.TABLE_JOIN_PARTITION_BY;
 import static org.jooq.Clause.TABLE_JOIN_USING;
+import static org.jooq.JoinType.CROSS_APPLY;
 import static org.jooq.JoinType.CROSS_JOIN;
 import static org.jooq.JoinType.JOIN;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_JOIN;
 import static org.jooq.JoinType.NATURAL_LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
+import static org.jooq.JoinType.OUTER_APPLY;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
@@ -198,7 +202,9 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         if (!asList(CROSS_JOIN,
                     NATURAL_JOIN,
                     NATURAL_LEFT_OUTER_JOIN,
-                    NATURAL_RIGHT_OUTER_JOIN).contains(translatedType)) {
+                    NATURAL_RIGHT_OUTER_JOIN,
+                    CROSS_APPLY,
+                    OUTER_APPLY).contains(translatedType)) {
             toSQLJoinCondition(context);
         }
 
@@ -219,6 +225,8 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
             case FULL_OUTER_JOIN:          return TABLE_JOIN_OUTER_FULL;
             case NATURAL_LEFT_OUTER_JOIN:  return TABLE_JOIN_NATURAL_OUTER_LEFT;
             case NATURAL_RIGHT_OUTER_JOIN: return TABLE_JOIN_NATURAL_OUTER_RIGHT;
+            case CROSS_APPLY:              return TABLE_JOIN_CROSS_APPLY;
+            case OUTER_APPLY:              return TABLE_JOIN_OUTER_APPLY;
             default: throw new IllegalArgumentException("Bad join type: " + translatedType);
         }
     }

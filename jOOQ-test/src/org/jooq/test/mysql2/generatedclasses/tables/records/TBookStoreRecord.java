@@ -13,7 +13,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_book_store", schema = "test2")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = -1525652624;
+	private static final long serialVersionUID = -2069801963;
 
 	/**
 	 * Setter for <code>test2.t_book_store.name</code>. The books store name
@@ -77,6 +77,23 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@Override
 	public java.lang.String value1() {
 		return getName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookStoreRecord value1(java.lang.String value) {
+		setName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookStoreRecord values(java.lang.String value1) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

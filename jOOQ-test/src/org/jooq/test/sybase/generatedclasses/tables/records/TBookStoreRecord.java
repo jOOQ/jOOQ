@@ -11,7 +11,7 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = 1413501180;
+	private static final long serialVersionUID = 1333069897;
 
 	/**
 	 * Setter for <code>DBA.t_book_store.name</code>. 
@@ -73,6 +73,23 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@Override
 	public java.lang.String value1() {
 		return getName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookStoreRecord value1(java.lang.String value) {
+		setName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookStoreRecord values(java.lang.String value1) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

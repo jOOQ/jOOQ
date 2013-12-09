@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaLanguageRecord> implements org.jooq.Record3<java.lang.Byte, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1393952892;
+	private static final long serialVersionUID = -887371367;
 
 	/**
 	 * Setter for <code>sakila.language.language_id</code>. 
@@ -131,6 +131,41 @@ public class SakilaLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.
 	@Override
 	public java.sql.Timestamp value3() {
 		return getLastUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaLanguageRecord value1(java.lang.Byte value) {
+		setLanguageId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaLanguageRecord value2(java.lang.String value) {
+		setName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaLanguageRecord value3(java.sql.Timestamp value) {
+		setLastUpdate(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaLanguageRecord values(java.lang.Byte value1, java.lang.String value2, java.sql.Timestamp value3) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

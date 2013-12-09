@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String>, org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IT_785 {
 
-	private static final long serialVersionUID = -808087604;
+	private static final long serialVersionUID = 793990935;
 
 	/**
 	 * Setter for <code>TEST.T_785.ID</code>. 
@@ -125,6 +125,41 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.jdb
 	@Override
 	public java.lang.String value3() {
 		return getValue();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_785Record value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_785Record value2(java.lang.String value) {
+		setName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_785Record value3(java.lang.String value) {
+		setValue(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_785Record values(java.lang.Integer value1, java.lang.String value2, java.lang.String value3) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

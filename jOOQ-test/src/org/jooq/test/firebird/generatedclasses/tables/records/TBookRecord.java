@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_BOOK")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = -833987089;
+	private static final long serialVersionUID = 1872807150;
 
 	/**
 	 * Setter for <code>T_BOOK.ID</code>. 
@@ -381,6 +381,104 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@Override
 	public java.lang.Integer value10() {
 		return getRecVersion();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value2(java.lang.Integer value) {
+		setAuthorId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value3(java.lang.Integer value) {
+		setCoAuthorId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value4(java.lang.Integer value) {
+		setDetailsId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value5(java.lang.String value) {
+		setTitle(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value6(java.lang.Integer value) {
+		setPublishedIn(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value7(java.lang.Integer value) {
+		setLanguageId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value8(java.lang.String value) {
+		setContentText(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value9(byte[] value) {
+		setContentPdf(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value10(java.lang.Integer value) {
+		setRecVersion(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord values(java.lang.Integer value1, java.lang.Integer value2, java.lang.Integer value3, java.lang.Integer value4, java.lang.String value5, java.lang.Integer value6, java.lang.Integer value7, java.lang.String value8, byte[] value9, java.lang.Integer value10) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

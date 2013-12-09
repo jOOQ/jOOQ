@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_INCOMPLETE")
 public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE> implements java.lang.Cloneable, org.jooq.Record9<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INTERFACE {
 
-	private static final long serialVersionUID = 1975003404;
+	private static final long serialVersionUID = 446251081;
 
 	/**
 	 * Setter for <code>V_INCOMPLETE.ID</code>. 
@@ -328,6 +328,95 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	@Override
 	public java.lang.Object value9() {
 		return getCONTENT_PDF();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_INCOMPLETE value1(java.lang.Object value) {
+		setID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_INCOMPLETE value2(java.lang.Object value) {
+		setAUTHOR_ID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_INCOMPLETE value3(java.lang.Object value) {
+		setCO_AUTHOR_ID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_INCOMPLETE value4(java.lang.Object value) {
+		setDETAILS_ID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_INCOMPLETE value5(java.lang.Object value) {
+		setTITLE(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_INCOMPLETE value6(java.lang.Object value) {
+		setPUBLISHED_IN(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_INCOMPLETE value7(java.lang.Object value) {
+		setLANGUAGE_ID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_INCOMPLETE value8(java.lang.Object value) {
+		setCONTENT_TEXT(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_INCOMPLETE value9(java.lang.Object value) {
+		setCONTENT_PDF(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_INCOMPLETE values(java.lang.Object value1, java.lang.Object value2, java.lang.Object value3, java.lang.Object value4, java.lang.Object value5, java.lang.Object value6, java.lang.Object value7, java.lang.Object value8, java.lang.Object value9) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

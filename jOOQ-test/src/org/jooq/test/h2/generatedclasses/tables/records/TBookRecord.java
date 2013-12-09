@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer, java.sql.Timestamp>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = 1585415183;
+	private static final long serialVersionUID = 1896240556;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.ID</code>. The book ID
@@ -395,6 +395,113 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@Override
 	public java.sql.Timestamp value11() {
 		return getRecTimestamp();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value2(java.lang.Integer value) {
+		setAuthorId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value3(java.lang.Integer value) {
+		setCoAuthorId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value4(java.lang.Integer value) {
+		setDetailsId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value5(java.lang.String value) {
+		setTitle(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value6(java.lang.Integer value) {
+		setPublishedIn(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value7(java.lang.Integer value) {
+		setLanguageId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value8(java.lang.String value) {
+		setContentText(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value9(byte[] value) {
+		setContentPdf(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value10(java.lang.Integer value) {
+		setRecVersion(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value11(java.sql.Timestamp value) {
+		setRecTimestamp(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord values(java.lang.Integer value1, java.lang.Integer value2, java.lang.Integer value3, java.lang.Integer value4, java.lang.String value5, java.lang.Integer value6, java.lang.Integer value7, java.lang.String value8, byte[] value9, java.lang.Integer value10, java.sql.Timestamp value11) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

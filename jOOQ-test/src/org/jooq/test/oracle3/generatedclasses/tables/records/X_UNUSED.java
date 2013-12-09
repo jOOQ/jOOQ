@@ -15,7 +15,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 })
 public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED> implements java.lang.Cloneable, org.jooq.Record16<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal, java.lang.Integer, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_UNUSED_INTERFACE {
 
-	private static final long serialVersionUID = -1706368249;
+	private static final long serialVersionUID = -622449402;
 
 	/**
 	 * Setter for <code>X_UNUSED.ID</code>. 
@@ -575,6 +575,158 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	@Override
 	public java.lang.String value16() {
 		return getMS_UNUSED_NAME_REF();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_UNUSED value1(java.lang.Integer value) {
+		setID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_UNUSED value2(java.lang.String value) {
+		setNAME(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_UNUSED value3(java.math.BigInteger value) {
+		setBIG_INTEGER(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_UNUSED value4(java.lang.Integer value) {
+		setID_REF(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_UNUSED value5(java.lang.Integer value) {
+		setCLASS(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_UNUSED value6(java.lang.Integer value) {
+		setFIELDS(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_UNUSED value7(java.lang.Integer value) {
+		setCONFIGURATION(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_UNUSED value8(java.lang.Integer value) {
+		setU_D_T(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_UNUSED value9(java.lang.Integer value) {
+		setMETA_DATA(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_UNUSED value10(java.lang.Integer value) {
+		setTYPE0(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_UNUSED value11(java.lang.Integer value) {
+		setPRIMARY_KEY(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_UNUSED value12(java.lang.Integer value) {
+		setPRIMARYKEY(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_UNUSED value13(java.lang.String value) {
+		setNAME_REF(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_UNUSED value14(java.math.BigDecimal value) {
+		setFIELD_737(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_UNUSED value15(java.lang.Integer value) {
+		setMS_UNUSED_ID_REF(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_UNUSED value16(java.lang.String value) {
+		setMS_UNUSED_NAME_REF(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_UNUSED values(java.lang.Integer value1, java.lang.String value2, java.math.BigInteger value3, java.lang.Integer value4, java.lang.Integer value5, java.lang.Integer value6, java.lang.Integer value7, java.lang.Integer value8, java.lang.Integer value9, java.lang.Integer value10, java.lang.Integer value11, java.lang.Integer value12, java.lang.String value13, java.math.BigDecimal value14, java.lang.Integer value15, java.lang.String value16) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

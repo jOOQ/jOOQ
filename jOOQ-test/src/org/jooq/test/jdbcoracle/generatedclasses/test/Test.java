@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1255890678;
+	private static final long serialVersionUID = 1459174007;
 
 	/**
 	 * The singleton instance of <code>TEST</code>
@@ -45,6 +45,7 @@ public class Test extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.jdbcoracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE,
 			org.jooq.test.jdbcoracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS,
 			org.jooq.test.jdbcoracle.generatedclasses.test.tables.TUnsigned.T_UNSIGNED,
+			org.jooq.test.jdbcoracle.generatedclasses.test.tables.T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY,
 			org.jooq.test.jdbcoracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,
 			org.jooq.test.jdbcoracle.generatedclasses.test.tables.T_725LobTest.T_725_LOB_TEST,
 			org.jooq.test.jdbcoracle.generatedclasses.test.tables.T_785.T_785,

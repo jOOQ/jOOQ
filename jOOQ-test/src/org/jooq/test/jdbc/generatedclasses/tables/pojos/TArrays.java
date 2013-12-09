@@ -9,12 +9,26 @@ package org.jooq.test.jdbc.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArrays implements org.jooq.test.jdbc.generatedclasses.tables.interfaces.ITArrays {
 
-	private static final long serialVersionUID = 1580911049;
+	private static final long serialVersionUID = 303754612;
 
 	private java.lang.Integer id;
 	private java.lang.Object  stringArray;
 	private java.lang.Object  numberArray;
 	private java.lang.Object  dateArray;
+
+	public TArrays() {}
+
+	public TArrays(
+		java.lang.Integer id,
+		java.lang.Object  stringArray,
+		java.lang.Object  numberArray,
+		java.lang.Object  dateArray
+	) {
+		this.id = id;
+		this.stringArray = stringArray;
+		this.numberArray = numberArray;
+		this.dateArray = dateArray;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

@@ -9,7 +9,7 @@ package org.jooq.examples.h2.matchers.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.h2.matchers.tables.records.TIdentityPkRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.examples.h2.matchers.tables.interfaces.ITIdentityPk {
 
-	private static final long serialVersionUID = -1546670754;
+	private static final long serialVersionUID = 822171160;
 
 	/**
 	 * Setter for <code>PUBLIC.T_IDENTITY_PK.ID</code>. 
@@ -105,6 +105,32 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	@Override
 	public java.lang.Integer value2() {
 		return getVal();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TIdentityPkRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TIdentityPkRecord value2(java.lang.Integer value) {
+		setVal(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TIdentityPkRecord values(java.lang.Integer value1, java.lang.Integer value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

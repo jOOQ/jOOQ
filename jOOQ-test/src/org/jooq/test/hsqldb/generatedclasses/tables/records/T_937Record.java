@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_937Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IT_937 {
 
-	private static final long serialVersionUID = -1080775427;
+	private static final long serialVersionUID = -915668711;
 
 	/**
 	 * Setter for <code>PUBLIC.T_937.T_937</code>. 
@@ -73,6 +73,23 @@ public class T_937Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@Override
 	public java.lang.Integer value1() {
 		return getT_937();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_937Record value1(java.lang.Integer value) {
+		setT_937(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_937Record values(java.lang.Integer value1) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

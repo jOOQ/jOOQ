@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.MLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String>, org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IMLibrary {
 
-	private static final long serialVersionUID = -1557229160;
+	private static final long serialVersionUID = 1229360638;
 
 	/**
 	 * Setter for <code>TEST.M_LIBRARY.AUTHOR</code>. 
@@ -93,6 +93,32 @@ public class MLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	@Override
 	public java.lang.String value2() {
 		return getTitle();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public MLibraryRecord value1(java.lang.String value) {
+		setAuthor(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public MLibraryRecord value2(java.lang.String value) {
+		setTitle(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public MLibraryRecord values(java.lang.String value1, java.lang.String value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

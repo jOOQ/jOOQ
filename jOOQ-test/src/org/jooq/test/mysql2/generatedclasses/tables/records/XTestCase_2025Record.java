@@ -13,7 +13,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "x_test_case_2025", schema = "test2")
 public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_2025Record> implements org.jooq.Record2<java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -1544031205;
+	private static final long serialVersionUID = 562558530;
 
 	/**
 	 * Setter for <code>test2.x_test_case_2025.ref_id</code>. 
@@ -95,6 +95,32 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	@Override
 	public java.lang.String value2() {
 		return getRefName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_2025Record value1(java.lang.Integer value) {
+		setRefId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_2025Record value2(java.lang.String value) {
+		setRefName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_2025Record values(java.lang.Integer value1, java.lang.String value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

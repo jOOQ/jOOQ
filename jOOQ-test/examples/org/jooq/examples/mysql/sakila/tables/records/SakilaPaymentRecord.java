@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaPaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaPaymentRecord> implements org.jooq.Record7<java.lang.Short, java.lang.Short, java.lang.Byte, java.lang.Integer, java.math.BigDecimal, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -184582536;
+	private static final long serialVersionUID = 576595529;
 
 	/**
 	 * Setter for <code>sakila.payment.payment_id</code>. 
@@ -251,6 +251,77 @@ public class SakilaPaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	@Override
 	public java.sql.Timestamp value7() {
 		return getLastUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaPaymentRecord value1(java.lang.Short value) {
+		setPaymentId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaPaymentRecord value2(java.lang.Short value) {
+		setCustomerId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaPaymentRecord value3(java.lang.Byte value) {
+		setStaffId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaPaymentRecord value4(java.lang.Integer value) {
+		setRentalId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaPaymentRecord value5(java.math.BigDecimal value) {
+		setAmount(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaPaymentRecord value6(java.sql.Timestamp value) {
+		setPaymentDate(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaPaymentRecord value7(java.sql.Timestamp value) {
+		setLastUpdate(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaPaymentRecord values(java.lang.Short value1, java.lang.Short value2, java.lang.Byte value3, java.lang.Integer value4, java.math.BigDecimal value5, java.sql.Timestamp value6, java.sql.Timestamp value7) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

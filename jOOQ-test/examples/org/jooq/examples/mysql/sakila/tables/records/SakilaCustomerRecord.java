@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaCustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaCustomerRecord> implements org.jooq.Record9<java.lang.Short, java.lang.Byte, java.lang.String, java.lang.String, java.lang.String, java.lang.Short, java.lang.Byte, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 628526558;
+	private static final long serialVersionUID = -1612595889;
 
 	/**
 	 * Setter for <code>sakila.customer.customer_id</code>. 
@@ -311,6 +311,95 @@ public class SakilaCustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.
 	@Override
 	public java.sql.Timestamp value9() {
 		return getLastUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerRecord value1(java.lang.Short value) {
+		setCustomerId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerRecord value2(java.lang.Byte value) {
+		setStoreId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerRecord value3(java.lang.String value) {
+		setFirstName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerRecord value4(java.lang.String value) {
+		setLastName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerRecord value5(java.lang.String value) {
+		setEmail(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerRecord value6(java.lang.Short value) {
+		setAddressId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerRecord value7(java.lang.Byte value) {
+		setActive(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerRecord value8(java.sql.Timestamp value) {
+		setCreateDate(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerRecord value9(java.sql.Timestamp value) {
+		setLastUpdate(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaCustomerRecord values(java.lang.Short value1, java.lang.Byte value2, java.lang.String value3, java.lang.String value4, java.lang.String value5, java.lang.Short value6, java.lang.Byte value7, java.sql.Timestamp value8, java.sql.Timestamp value9) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

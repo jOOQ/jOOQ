@@ -11,7 +11,7 @@ package org.jooq.test.mariadb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mariadb.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -359092247;
+	private static final long serialVersionUID = -1340787540;
 
 	/**
 	 * Setter for <code>test.v_library.AUTHOR</code>. 
@@ -91,6 +91,32 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	@Override
 	public java.lang.String value2() {
 		return getTitle();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VLibraryRecord value1(java.lang.String value) {
+		setAuthor(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VLibraryRecord value2(java.lang.String value) {
+		setTitle(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VLibraryRecord values(java.lang.String value1, java.lang.String value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

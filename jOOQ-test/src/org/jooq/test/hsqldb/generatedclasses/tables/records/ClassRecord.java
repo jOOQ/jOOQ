@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ClassRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.ClassRecord> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IClass {
 
-	private static final long serialVersionUID = -1567047243;
+	private static final long serialVersionUID = -1400929736;
 
 	/**
 	 * Setter for <code>PUBLIC.CLASS.CLASS</code>. 
@@ -61,6 +61,23 @@ public class ClassRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	@Override
 	public java.lang.Integer value1() {
 		return getClass_();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ClassRecord value1(java.lang.Integer value) {
+		setClass_(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ClassRecord values(java.lang.Integer value1) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

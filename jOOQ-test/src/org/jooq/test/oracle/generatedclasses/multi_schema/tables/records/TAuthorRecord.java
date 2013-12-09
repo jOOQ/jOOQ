@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @javax.persistence.Table(name = "T_AUTHOR", schema = "MULTI_SCHEMA")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.Object> {
 
-	private static final long serialVersionUID = 1404245006;
+	private static final long serialVersionUID = 1033884912;
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_AUTHOR.ID</code>. 
@@ -234,6 +234,68 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public java.lang.Object value6() {
 		return getAddress();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TAuthorRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TAuthorRecord value2(java.lang.String value) {
+		setFirstName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TAuthorRecord value3(java.lang.String value) {
+		setLastName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TAuthorRecord value4(java.sql.Date value) {
+		setDateOfBirth(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TAuthorRecord value5(java.lang.Integer value) {
+		setYearOfBirth(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TAuthorRecord value6(java.lang.Object value) {
+		setAddress(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TAuthorRecord values(java.lang.Integer value1, java.lang.String value2, java.lang.String value3, java.sql.Date value4, java.lang.Integer value5, java.lang.Object value6) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

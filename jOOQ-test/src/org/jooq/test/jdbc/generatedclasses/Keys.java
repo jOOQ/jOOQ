@@ -21,6 +21,25 @@ public class Keys {
 	// UNIQUE and PRIMARY KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.T_2698Record> PK_T_2698 = UniqueKeys0.PK_T_2698;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.T_2718Record> PK_T_2718 = UniqueKeys0.PK_T_2718;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = UniqueKeys0.PK_T_639_NUMBERS_TABLE;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST = UniqueKeys0.PK_T_725_LOB_TEST;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TArraysRecord> PK_T_ARRAYS = UniqueKeys0.PK_T_ARRAYS;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TAuthorRecord> PK_T_AUTHOR = UniqueKeys0.PK_T_AUTHOR;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TBookRecord> PK_T_BOOK = UniqueKeys0.PK_T_BOOK;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TBookStoreRecord> PK_T_BOOK_STORE = UniqueKeys0.PK_T_BOOK_STORE;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TBookToBookStoreRecord> PK_T_BOOK_TO_BOOK_STORE = UniqueKeys0.PK_T_BOOK_TO_BOOK_STORE;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TBooleansRecord> PK_T_BOOLEANS = UniqueKeys0.PK_T_BOOLEANS;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TDatesRecord> PK_T_DATES = UniqueKeys0.PK_T_DATES;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TExoticTypesRecord> PK_T_EXOTIC_TYPES = UniqueKeys0.PK_T_EXOTIC_TYPES;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TIdentityPkRecord> PK_T_IDENTITY_PK = UniqueKeys0.PK_T_IDENTITY_PK;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord> PK_T_LANGUAGE = UniqueKeys0.PK_T_LANGUAGE;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TTriggersRecord> PK_T_TRIGGERS = UniqueKeys0.PK_T_TRIGGERS;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.XTestCase_64_69Record> PK_X_TEST_CASE_64_69 = UniqueKeys0.PK_X_TEST_CASE_64_69;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.XTestCase_71Record> PK_X_TEST_CASE_71 = UniqueKeys0.PK_X_TEST_CASE_71;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.XTestCase_85Record> PK_X_TEST_CASE_85 = UniqueKeys0.PK_X_TEST_CASE_85;
+	public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.XUnusedRecord> PK_X_UNUSED = UniqueKeys0.PK_X_UNUSED;
 
 	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
@@ -30,4 +49,26 @@ public class Keys {
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
 	// -------------------------------------------------------------------------
+
+	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.T_2698Record> PK_T_2698 = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.T_2698.T_2698, org.jooq.test.jdbc.generatedclasses.tables.T_2698.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.T_2718Record> PK_T_2718 = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.T_2718.T_2718, org.jooq.test.jdbc.generatedclasses.tables.T_2718.EXCLUDE_ME);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.jdbc.generatedclasses.tables.T_639NumbersTable.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.jdbc.generatedclasses.tables.T_725LobTest.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TArraysRecord> PK_T_ARRAYS = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.TArrays.T_ARRAYS, org.jooq.test.jdbc.generatedclasses.tables.TArrays.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TAuthorRecord> PK_T_AUTHOR = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.TAuthor.T_AUTHOR, org.jooq.test.jdbc.generatedclasses.tables.TAuthor.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TBookRecord> PK_T_BOOK = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.jdbc.generatedclasses.tables.TBook.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TBookStoreRecord> PK_T_BOOK_STORE = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.TBookStore.T_BOOK_STORE, org.jooq.test.jdbc.generatedclasses.tables.TBookStore.NAME);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TBookToBookStoreRecord> PK_T_BOOK_TO_BOOK_STORE = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE, org.jooq.test.jdbc.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, org.jooq.test.jdbc.generatedclasses.tables.TBookToBookStore.BOOK_ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TBooleansRecord> PK_T_BOOLEANS = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.TBooleans.T_BOOLEANS, org.jooq.test.jdbc.generatedclasses.tables.TBooleans.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TDatesRecord> PK_T_DATES = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.TDates.T_DATES, org.jooq.test.jdbc.generatedclasses.tables.TDates.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TExoticTypesRecord> PK_T_EXOTIC_TYPES = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES, org.jooq.test.jdbc.generatedclasses.tables.TExoticTypes.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TIdentityPkRecord> PK_T_IDENTITY_PK = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.jdbc.generatedclasses.tables.TIdentityPk.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord> PK_T_LANGUAGE = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.TLanguage.T_LANGUAGE, org.jooq.test.jdbc.generatedclasses.tables.TLanguage.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TTriggersRecord> PK_T_TRIGGERS = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.jdbc.generatedclasses.tables.TTriggers.ID_GENERATED);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.XTestCase_64_69Record> PK_X_TEST_CASE_64_69 = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69, org.jooq.test.jdbc.generatedclasses.tables.XTestCase_64_69.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.XTestCase_71Record> PK_X_TEST_CASE_71 = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71, org.jooq.test.jdbc.generatedclasses.tables.XTestCase_71.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.XTestCase_85Record> PK_X_TEST_CASE_85 = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85, org.jooq.test.jdbc.generatedclasses.tables.XTestCase_85.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.XUnusedRecord> PK_X_UNUSED = createUniqueKey(org.jooq.test.jdbc.generatedclasses.tables.XUnused.X_UNUSED, org.jooq.test.jdbc.generatedclasses.tables.XUnused.ID, org.jooq.test.jdbc.generatedclasses.tables.XUnused.NAME);
+	}
 }

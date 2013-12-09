@@ -9,7 +9,7 @@ package org.jooq.test.oracle2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DateAsTimestampTDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord> implements org.jooq.Record8<java.lang.Integer, java.util.GregorianCalendar, java.util.GregorianCalendar, java.util.GregorianCalendar, java.lang.Integer, java.lang.Long, org.jooq.types.YearToMonth, org.jooq.types.DayToSecond> {
 
-	private static final long serialVersionUID = -1960716147;
+	private static final long serialVersionUID = -691084435;
 
 	/**
 	 * Setter for <code>TEST.T_DATES.ID</code>. 
@@ -281,6 +281,86 @@ public class DateAsTimestampTDatesRecord extends org.jooq.impl.UpdatableRecordIm
 	@Override
 	public org.jooq.types.DayToSecond value8() {
 		return getID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DateAsTimestampTDatesRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DateAsTimestampTDatesRecord value2(java.util.GregorianCalendar value) {
+		setD(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DateAsTimestampTDatesRecord value3(java.util.GregorianCalendar value) {
+		setT(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DateAsTimestampTDatesRecord value4(java.util.GregorianCalendar value) {
+		setTs(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DateAsTimestampTDatesRecord value5(java.lang.Integer value) {
+		setDInt(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DateAsTimestampTDatesRecord value6(java.lang.Long value) {
+		setTsBigint(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DateAsTimestampTDatesRecord value7(org.jooq.types.YearToMonth value) {
+		setIY(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DateAsTimestampTDatesRecord value8(org.jooq.types.DayToSecond value) {
+		setID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DateAsTimestampTDatesRecord values(java.lang.Integer value1, java.util.GregorianCalendar value2, java.util.GregorianCalendar value3, java.util.GregorianCalendar value4, java.lang.Integer value5, java.lang.Long value6, org.jooq.types.YearToMonth value7, org.jooq.types.DayToSecond value8) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

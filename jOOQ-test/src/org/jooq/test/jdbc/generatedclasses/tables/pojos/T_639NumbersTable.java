@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable implements org.jooq.test.jdbc.generatedclasses.tables.interfaces.IT_639NumbersTable {
 
-	private static final long serialVersionUID = -300468103;
+	private static final long serialVersionUID = -1565466733;
 
 	private java.lang.Integer    id;
 	private java.lang.Byte       byte_;
@@ -24,6 +24,38 @@ public class T_639NumbersTable implements org.jooq.test.jdbc.generatedclasses.ta
 	private java.math.BigDecimal bigDecimal;
 	private java.lang.Float      float_;
 	private java.lang.Double     double_;
+
+	public T_639NumbersTable() {}
+
+	public T_639NumbersTable(
+		java.lang.Integer    id,
+		java.lang.Byte       byte_,
+		java.lang.Short      short_,
+		java.lang.Integer    integer,
+		java.lang.Long       long_,
+		java.lang.Byte       byteDecimal,
+		java.lang.Short      shortDecimal,
+		java.lang.Integer    integerDecimal,
+		java.lang.Long       longDecimal,
+		java.math.BigInteger bigInteger,
+		java.math.BigDecimal bigDecimal,
+		java.lang.Float      float_,
+		java.lang.Double     double_
+	) {
+		this.id = id;
+		this.byte_ = byte_;
+		this.short_ = short_;
+		this.integer = integer;
+		this.long_ = long_;
+		this.byteDecimal = byteDecimal;
+		this.shortDecimal = shortDecimal;
+		this.integerDecimal = integerDecimal;
+		this.longDecimal = longDecimal;
+		this.bigInteger = bigInteger;
+		this.bigDecimal = bigDecimal;
+		this.float_ = float_;
+		this.double_ = double_;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

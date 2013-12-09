@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.jdbc.generatedclasses.tables.records.TIdentityRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.jdbc.generatedclasses.tables.interfaces.ITIdentity {
 
-	private static final long serialVersionUID = -1468471982;
+	private static final long serialVersionUID = -424753615;
 
 	/**
 	 * Setter for <code>PUBLIC.T_IDENTITY.ID</code>. 
@@ -95,6 +95,32 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 		return getVal();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TIdentityRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TIdentityRecord value2(java.lang.Integer value) {
+		setVal(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TIdentityRecord values(java.lang.Integer value1, java.lang.Integer value2) {
+		return this;
+	}
+
 	// -------------------------------------------------------------------------
 	// FROM and INTO
 	// -------------------------------------------------------------------------
@@ -126,5 +152,15 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 */
 	public TIdentityRecord() {
 		super(org.jooq.test.jdbc.generatedclasses.tables.TIdentity.T_IDENTITY);
+	}
+
+	/**
+	 * Create a detached, initialised TIdentityRecord
+	 */
+	public TIdentityRecord(java.lang.Integer id, java.lang.Integer val) {
+		super(org.jooq.test.jdbc.generatedclasses.tables.TIdentity.T_IDENTITY);
+
+		setValue(0, id);
+		setValue(1, val);
 	}
 }

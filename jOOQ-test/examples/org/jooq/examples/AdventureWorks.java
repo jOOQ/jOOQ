@@ -42,12 +42,7 @@ package org.jooq.examples;
 
 /* [pro] */
 
-import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.Department;
 import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.Employee;
-import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.EmployeeAddress;
-import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.EmployeeDepartmentHistory;
-import static org.jooq.examples.sqlserver.adventureworks.person.Tables.Contact;
-import static org.jooq.impl.DSL.val;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -60,21 +55,13 @@ public class AdventureWorks {
 
     public static void main(String[] args) throws Exception {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        Connection connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=AdventureWorks;integratedSecurity=true");
+        Connection connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=AdventureWorks2012;integratedSecurity=true");
 
         DSLContext create = DSL.using(connection, SQLDialect.SQLSERVER);
 
         System.out.println(create
               .select(Employee.fields())
-              .select(val("###"))
-              .select(Department.fields())
-              .select(val("###"))
-              .select(Contact.fields())
               .from(Employee)
-              .join(EmployeeAddress).using(Employee.EmployeeID)
-              .join(EmployeeDepartmentHistory).using(Employee.EmployeeID)
-              .join(Department).using(Department.DepartmentID)
-              .join(Contact).using(Contact.ContactID)
               .fetch());
     }
 }

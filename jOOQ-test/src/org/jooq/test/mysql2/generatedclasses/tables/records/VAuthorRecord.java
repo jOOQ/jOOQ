@@ -13,7 +13,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "v_author", schema = "test2")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 2030973485;
+	private static final long serialVersionUID = -151605205;
 
 	/**
 	 * Setter for <code>test2.v_author.ID</code>. The author ID
@@ -219,6 +219,68 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.m
 	@Override
 	public java.lang.String value6() {
 		return getAddress();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord value2(java.lang.String value) {
+		setFirstName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord value3(java.lang.String value) {
+		setLastName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord value4(java.sql.Date value) {
+		setDateOfBirth(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord value5(java.lang.Integer value) {
+		setYearOfBirth(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord value6(java.lang.String value) {
+		setAddress(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord values(java.lang.Integer value1, java.lang.String value2, java.lang.String value3, java.sql.Date value4, java.lang.Integer value5, java.lang.String value6) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

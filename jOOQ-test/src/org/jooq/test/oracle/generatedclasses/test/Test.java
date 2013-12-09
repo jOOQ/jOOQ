@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1812674887;
+	private static final long serialVersionUID = -921672298;
 
 	/**
 	 * The singleton instance of <code>TEST</code>
@@ -21,6 +21,23 @@ public class Test extends org.jooq.impl.SchemaImpl {
 	 */
 	private Test() {
 		super("TEST");
+	}
+
+	@Override
+	public final java.util.List<org.jooq.Sequence<?>> getSequences() {
+		java.util.List result = new java.util.ArrayList();
+		result.addAll(getSequences0());
+		return result;
+	}
+
+	private final java.util.List<org.jooq.Sequence<?>> getSequences0() {
+		return java.util.Arrays.<org.jooq.Sequence<?>>asList(
+			org.jooq.test.oracle.generatedclasses.test.Sequences.S_AUTHOR_ID,
+			org.jooq.test.oracle.generatedclasses.test.Sequences.S_961_BIG_INTEGER,
+			org.jooq.test.oracle.generatedclasses.test.Sequences.S_961_BYTE,
+			org.jooq.test.oracle.generatedclasses.test.Sequences.S_961_INT,
+			org.jooq.test.oracle.generatedclasses.test.Sequences.S_961_LONG,
+			org.jooq.test.oracle.generatedclasses.test.Sequences.S_961_SHORT);
 	}
 
 	@Override

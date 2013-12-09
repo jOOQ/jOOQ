@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 1803355775;
+	private static final long serialVersionUID = -1383173867;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOK_STORE</code>
@@ -34,5 +34,21 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.gener
 	 */
 	private TBookStore() {
 		super("T_BOOK_STORE", org.jooq.test.jdbc.generatedclasses.Public.PUBLIC);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TBookStoreRecord> getPrimaryKey() {
+		return org.jooq.test.jdbc.generatedclasses.Keys.PK_T_BOOK_STORE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TBookStoreRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TBookStoreRecord>>asList(org.jooq.test.jdbc.generatedclasses.Keys.PK_T_BOOK_STORE);
 	}
 }

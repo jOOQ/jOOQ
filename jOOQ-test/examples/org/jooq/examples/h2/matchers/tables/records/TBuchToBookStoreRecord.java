@@ -11,7 +11,7 @@ package org.jooq.examples.h2.matchers.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBuchToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.h2.matchers.tables.records.TBuchToBookStoreRecord> implements java.io.Serializable, java.lang.Cloneable, org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.examples.h2.matchers.tables.interfaces.i_t_buch_to_book_store {
 
-	private static final long serialVersionUID = -365601213;
+	private static final long serialVersionUID = 1930230072;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
@@ -139,6 +139,41 @@ public class TBuchToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@Override
 	public java.lang.Integer value3() {
 		return getStock();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBuchToBookStoreRecord value1(java.lang.String value) {
+		setBookStoreName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBuchToBookStoreRecord value2(java.lang.Integer value) {
+		setBookId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBuchToBookStoreRecord value3(java.lang.Integer value) {
+		setStock(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBuchToBookStoreRecord values(java.lang.String value1, java.lang.Integer value2, java.lang.Integer value3) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

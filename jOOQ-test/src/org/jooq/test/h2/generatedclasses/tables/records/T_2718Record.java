@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2718Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.T_2718Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2718 {
 
-	private static final long serialVersionUID = -753508908;
+	private static final long serialVersionUID = -482531198;
 
 	/**
 	 * Setter for <code>PUBLIC.T_2718.EXCLUDE_ME</code>. 
@@ -105,6 +105,32 @@ public class T_2718Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	@Override
 	public java.lang.Integer value2() {
 		return getXx();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_2718Record value1(java.lang.Integer value) {
+		setExcludeMe(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_2718Record value2(java.lang.Integer value) {
+		setXx(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_2718Record values(java.lang.Integer value1, java.lang.Integer value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

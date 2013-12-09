@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = -495001995;
+	private static final long serialVersionUID = 600058304;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_IDENTITY_PK</code>
@@ -39,5 +39,21 @@ public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.gene
 	 */
 	private TIdentityPk() {
 		super("T_IDENTITY_PK", org.jooq.test.jdbc.generatedclasses.Public.PUBLIC);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TIdentityPkRecord> getPrimaryKey() {
+		return org.jooq.test.jdbc.generatedclasses.Keys.PK_T_IDENTITY_PK;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TIdentityPkRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.TIdentityPkRecord>>asList(org.jooq.test.jdbc.generatedclasses.Keys.PK_T_IDENTITY_PK);
 	}
 }

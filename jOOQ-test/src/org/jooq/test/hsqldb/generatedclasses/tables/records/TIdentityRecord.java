@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITIdentity {
 
-	private static final long serialVersionUID = 2053364567;
+	private static final long serialVersionUID = 2099613420;
 
 	/**
 	 * Setter for <code>PUBLIC.T_IDENTITY.ID</code>. 
@@ -93,6 +93,32 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	@Override
 	public java.lang.Integer value2() {
 		return getVal();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TIdentityRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TIdentityRecord value2(java.lang.Integer value) {
+		setVal(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TIdentityRecord values(java.lang.Integer value1, java.lang.Integer value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

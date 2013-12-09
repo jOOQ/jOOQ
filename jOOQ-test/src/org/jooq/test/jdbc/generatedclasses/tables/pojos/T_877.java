@@ -9,9 +9,17 @@ package org.jooq.test.jdbc.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_877 implements org.jooq.test.jdbc.generatedclasses.tables.interfaces.IT_877 {
 
-	private static final long serialVersionUID = -2000398290;
+	private static final long serialVersionUID = 469428323;
 
 	private java.lang.Integer id;
+
+	public T_877() {}
+
+	public T_877(
+		java.lang.Integer id
+	) {
+		this.id = id;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

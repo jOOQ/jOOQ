@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_BOOK_STORE")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITBookStore {
 
-	private static final long serialVersionUID = 714979788;
+	private static final long serialVersionUID = -2060356877;
 
 	/**
 	 * Setter for <code>T_BOOK_STORE.NAME</code>. 
@@ -79,6 +79,23 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@Override
 	public java.lang.String value1() {
 		return getName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookStoreRecord value1(java.lang.String value) {
+		setName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookStoreRecord values(java.lang.String value1) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

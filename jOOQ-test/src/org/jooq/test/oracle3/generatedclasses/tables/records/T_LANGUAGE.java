@@ -13,7 +13,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_LANGUAGE")
 public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> implements java.lang.Cloneable, org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE {
 
-	private static final long serialVersionUID = 2111173071;
+	private static final long serialVersionUID = 1033689403;
 
 	/**
 	 * Setter for <code>T_LANGUAGE.CD</code>. The language ISO code
@@ -178,6 +178,50 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	@Override
 	public java.lang.Integer value4() {
 		return getID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_LANGUAGE value1(java.lang.String value) {
+		setCD(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_LANGUAGE value2(java.lang.String value) {
+		setDESCRIPTION(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_LANGUAGE value3(java.lang.String value) {
+		setDESCRIPTION_ENGLISH(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_LANGUAGE value4(java.lang.Integer value) {
+		setID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_LANGUAGE values(java.lang.String value1, java.lang.String value2, java.lang.String value3, java.lang.Integer value4) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

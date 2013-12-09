@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String>, org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.ITBookStore {
 
-	private static final long serialVersionUID = -227498560;
+	private static final long serialVersionUID = 1738073147;
 
 	/**
 	 * Setter for <code>TEST.T_BOOK_STORE.NAME</code>. 
@@ -73,6 +73,23 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@Override
 	public java.lang.String value1() {
 		return getName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookStoreRecord value1(java.lang.String value) {
+		setName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookStoreRecord values(java.lang.String value1) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = 1844461942;
+	private static final long serialVersionUID = -2121807474;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.X_TEST_CASE_85</code>
@@ -44,5 +44,21 @@ public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.gen
 	 */
 	private XTestCase_85() {
 		super("X_TEST_CASE_85", org.jooq.test.jdbc.generatedclasses.Public.PUBLIC);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.XTestCase_85Record> getPrimaryKey() {
+		return org.jooq.test.jdbc.generatedclasses.Keys.PK_X_TEST_CASE_85;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.XTestCase_85Record>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.jdbc.generatedclasses.tables.records.XTestCase_85Record>>asList(org.jooq.test.jdbc.generatedclasses.Keys.PK_X_TEST_CASE_85);
 	}
 }

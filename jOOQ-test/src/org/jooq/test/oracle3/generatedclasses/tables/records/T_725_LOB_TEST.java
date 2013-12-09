@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_725_LOB_TEST")
 public class T_725_LOB_TEST extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, byte[]>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_725_LOB_TEST_INTERFACE {
 
-	private static final long serialVersionUID = 1680676055;
+	private static final long serialVersionUID = 932214385;
 
 	/**
 	 * Setter for <code>T_725_LOB_TEST.ID</code>. 
@@ -110,6 +110,32 @@ public class T_725_LOB_TEST extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	@Override
 	public byte[] value2() {
 		return getLOB();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_725_LOB_TEST value1(java.lang.Integer value) {
+		setID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_725_LOB_TEST value2(byte[] value) {
+		setLOB(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_725_LOB_TEST values(java.lang.Integer value1, byte[] value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

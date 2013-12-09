@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_ARRAYS", schema = "TEST")
 public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord> implements org.jooq.Record5<java.lang.Integer, org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord, org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord, org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord, org.jooq.test.oracle.generatedclasses.test.udt.records.UDateArrayRecord> {
 
-	private static final long serialVersionUID = -1941444477;
+	private static final long serialVersionUID = 1610126979;
 
 	/**
 	 * Setter for <code>TEST.T_ARRAYS.ID</code>. 
@@ -200,6 +200,59 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.UDateArrayRecord value5() {
 		return getDateArray();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord value2(org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord value) {
+		setStringArray(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord value3(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord value) {
+		setNumberArray(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord value4(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord value) {
+		setNumberLongArray(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord value5(org.jooq.test.oracle.generatedclasses.test.udt.records.UDateArrayRecord value) {
+		setDateArray(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TArraysRecord values(java.lang.Integer value1, org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord value2, org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord value3, org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord value4, org.jooq.test.oracle.generatedclasses.test.udt.records.UDateArrayRecord value5) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

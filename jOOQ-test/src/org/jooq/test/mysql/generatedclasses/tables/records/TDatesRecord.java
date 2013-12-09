@@ -9,7 +9,7 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record8<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long, java.sql.Date, java.sql.Date> {
 
-	private static final long serialVersionUID = 749942881;
+	private static final long serialVersionUID = 1747634916;
 
 	/**
 	 * Setter for <code>test.t_dates.id</code>. 
@@ -281,6 +281,86 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	@Override
 	public java.sql.Date value8() {
 		return getY4();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value2(java.sql.Date value) {
+		setD(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value3(java.sql.Time value) {
+		setT(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value4(java.sql.Timestamp value) {
+		setTs(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value5(java.lang.Integer value) {
+		setDInt(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value6(java.lang.Long value) {
+		setTsBigint(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value7(java.sql.Date value) {
+		setY2(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value8(java.sql.Date value) {
+		setY4(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord values(java.lang.Integer value1, java.sql.Date value2, java.sql.Time value3, java.sql.Timestamp value4, java.lang.Integer value5, java.lang.Long value6, java.sql.Date value7, java.sql.Date value8) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

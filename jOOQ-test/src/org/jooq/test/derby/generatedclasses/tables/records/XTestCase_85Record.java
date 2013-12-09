@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -8426836;
+	private static final long serialVersionUID = -5296257;
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_85.ID</code>. 
@@ -131,6 +131,41 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.lang.String value3() {
 		return getXUnusedName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_85Record value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_85Record value2(java.lang.Integer value) {
+		setXUnusedId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_85Record value3(java.lang.String value) {
+		setXUnusedName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_85Record values(java.lang.Integer value1, java.lang.Integer value2, java.lang.String value3) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

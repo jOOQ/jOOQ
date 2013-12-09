@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_DIRECTORY")
 public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY> implements java.lang.Cloneable, org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DIRECTORY_INTERFACE {
 
-	private static final long serialVersionUID = -941210161;
+	private static final long serialVersionUID = -1178464697;
 
 	/**
 	 * Setter for <code>T_DIRECTORY.ID</code>. 
@@ -176,6 +176,50 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@Override
 	public java.lang.String value4() {
 		return getname();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_DIRECTORY value1(java.lang.Integer value) {
+		setID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_DIRECTORY value2(java.lang.Integer value) {
+		setPARENT_ID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_DIRECTORY value3(java.lang.Integer value) {
+		setIS_DIRECTORY(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_DIRECTORY value4(java.lang.String value) {
+		setname(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_DIRECTORY values(java.lang.Integer value1, java.lang.Integer value2, java.lang.Integer value3, java.lang.String value4) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

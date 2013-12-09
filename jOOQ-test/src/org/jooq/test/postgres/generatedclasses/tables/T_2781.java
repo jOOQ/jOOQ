@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2781 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record> {
 
-	private static final long serialVersionUID = -946034670;
+	private static final long serialVersionUID = 79017074;
 
 	/**
 	 * The singleton instance of <code>public.t_2781</code>
@@ -27,12 +27,12 @@ public class T_2781 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gener
 	/**
 	 * The column <code>public.t_2781.org</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record, java.lang.String> org_ = createField("org", org.jooq.impl.SQLDataType.CLOB, this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record, java.lang.String> org_ = createField("org", org.jooq.impl.SQLDataType.CLOB.defaulted(true), this);
 
 	/**
 	 * The column <code>public.t_2781.jooq</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record, java.lang.String> jooq = createField("jooq", org.jooq.impl.SQLDataType.CLOB, this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record, java.lang.String> jooq = createField("jooq", org.jooq.impl.SQLDataType.CLOB.defaulted(true), this);
 
 	/**
 	 * Create a <code>public.t_2781</code> table reference

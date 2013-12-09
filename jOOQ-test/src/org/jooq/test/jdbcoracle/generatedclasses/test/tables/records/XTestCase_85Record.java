@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String>, org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IXTestCase_85 {
 
-	private static final long serialVersionUID = 710824696;
+	private static final long serialVersionUID = 382032885;
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_85.ID</code>. 
@@ -137,6 +137,41 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.lang.String value3() {
 		return getXUnusedName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_85Record value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_85Record value2(java.lang.Integer value) {
+		setXUnusedId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_85Record value3(java.lang.String value) {
+		setXUnusedName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_85Record values(java.lang.Integer value1, java.lang.Integer value2, java.lang.String value3) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

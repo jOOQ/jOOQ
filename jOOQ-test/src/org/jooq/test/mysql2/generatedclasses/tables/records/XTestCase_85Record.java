@@ -13,7 +13,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "x_test_case_85", schema = "test2")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 1709550170;
+	private static final long serialVersionUID = 1010393933;
 
 	/**
 	 * Setter for <code>test2.x_test_case_85.id</code>. 
@@ -139,6 +139,41 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.lang.String value3() {
 		return getXUnusedName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_85Record value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_85Record value2(java.lang.Integer value) {
+		setXUnusedId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_85Record value3(java.lang.String value) {
+		setXUnusedName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_85Record values(java.lang.Integer value1, java.lang.Integer value2, java.lang.String value3) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

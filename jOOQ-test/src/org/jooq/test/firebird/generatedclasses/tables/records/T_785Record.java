@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_785")
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_785 {
 
-	private static final long serialVersionUID = 1837779659;
+	private static final long serialVersionUID = 1094436054;
 
 	/**
 	 * Setter for <code>T_785.ID</code>. 
@@ -132,6 +132,41 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	@Override
 	public java.lang.String value3() {
 		return getValue();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_785Record value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_785Record value2(java.lang.String value) {
+		setName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_785Record value3(java.lang.String value) {
+		setValue(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_785Record values(java.lang.Integer value1, java.lang.String value2, java.lang.String value3) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

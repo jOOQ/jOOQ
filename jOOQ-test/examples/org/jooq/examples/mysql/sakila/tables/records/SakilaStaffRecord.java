@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaStaffRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffRecord> implements org.jooq.Record11<java.lang.Byte, java.lang.String, java.lang.String, java.lang.Short, byte[], java.lang.String, java.lang.Byte, java.lang.Byte, java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -653950979;
+	private static final long serialVersionUID = -396060051;
 
 	/**
 	 * Setter for <code>sakila.staff.staff_id</code>. 
@@ -371,6 +371,113 @@ public class SakilaStaffRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	@Override
 	public java.sql.Timestamp value11() {
 		return getLastUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffRecord value1(java.lang.Byte value) {
+		setStaffId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffRecord value2(java.lang.String value) {
+		setFirstName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffRecord value3(java.lang.String value) {
+		setLastName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffRecord value4(java.lang.Short value) {
+		setAddressId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffRecord value5(byte[] value) {
+		setPicture(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffRecord value6(java.lang.String value) {
+		setEmail(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffRecord value7(java.lang.Byte value) {
+		setStoreId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffRecord value8(java.lang.Byte value) {
+		setActive(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffRecord value9(java.lang.String value) {
+		setUsername(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffRecord value10(java.lang.String value) {
+		setPassword(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffRecord value11(java.sql.Timestamp value) {
+		setLastUpdate(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaStaffRecord values(java.lang.Byte value1, java.lang.String value2, java.lang.String value3, java.lang.Short value4, byte[] value5, java.lang.String value6, java.lang.Byte value7, java.lang.Byte value8, java.lang.String value9, java.lang.String value10, java.sql.Timestamp value11) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

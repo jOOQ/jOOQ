@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> implements org.jooq.Record5<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Date, java.math.BigDecimal>, org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.interfaces.ITBookSale {
 
-	private static final long serialVersionUID = -569311521;
+	private static final long serialVersionUID = -77384923;
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>. 
@@ -201,6 +201,59 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@Override
 	public java.math.BigDecimal value5() {
 		return getSoldFor();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookSaleRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookSaleRecord value2(java.lang.Integer value) {
+		setBookId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookSaleRecord value3(java.lang.String value) {
+		setBookStoreName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookSaleRecord value4(java.sql.Date value) {
+		setSoldAt(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookSaleRecord value5(java.math.BigDecimal value) {
+		setSoldFor(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookSaleRecord values(java.lang.Integer value1, java.lang.Integer value2, java.lang.String value3, java.sql.Date value4, java.math.BigDecimal value5) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

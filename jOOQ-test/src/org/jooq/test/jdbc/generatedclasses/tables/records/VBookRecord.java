@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.jdbc.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer, java.sql.Timestamp>, org.jooq.test.jdbc.generatedclasses.tables.interfaces.IVBook {
 
-	private static final long serialVersionUID = -1564716617;
+	private static final long serialVersionUID = 1540544178;
 
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.ID</code>. 
@@ -383,6 +383,113 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.jdb
 		return getRecTimestamp();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VBookRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VBookRecord value2(java.lang.Integer value) {
+		setAuthorId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VBookRecord value3(java.lang.Integer value) {
+		setCoAuthorId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VBookRecord value4(java.lang.Integer value) {
+		setDetailsId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VBookRecord value5(java.lang.String value) {
+		setTitle(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VBookRecord value6(java.lang.Integer value) {
+		setPublishedIn(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VBookRecord value7(java.lang.Integer value) {
+		setLanguageId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VBookRecord value8(java.lang.String value) {
+		setContentText(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VBookRecord value9(byte[] value) {
+		setContentPdf(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VBookRecord value10(java.lang.Integer value) {
+		setRecVersion(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VBookRecord value11(java.sql.Timestamp value) {
+		setRecTimestamp(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VBookRecord values(java.lang.Integer value1, java.lang.Integer value2, java.lang.Integer value3, java.lang.Integer value4, java.lang.String value5, java.lang.Integer value6, java.lang.Integer value7, java.lang.String value8, byte[] value9, java.lang.Integer value10, java.sql.Timestamp value11) {
+		return this;
+	}
+
 	// -------------------------------------------------------------------------
 	// FROM and INTO
 	// -------------------------------------------------------------------------
@@ -423,5 +530,24 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.jdb
 	 */
 	public VBookRecord() {
 		super(org.jooq.test.jdbc.generatedclasses.tables.VBook.V_BOOK);
+	}
+
+	/**
+	 * Create a detached, initialised VBookRecord
+	 */
+	public VBookRecord(java.lang.Integer id, java.lang.Integer authorId, java.lang.Integer coAuthorId, java.lang.Integer detailsId, java.lang.String title, java.lang.Integer publishedIn, java.lang.Integer languageId, java.lang.String contentText, byte[] contentPdf, java.lang.Integer recVersion, java.sql.Timestamp recTimestamp) {
+		super(org.jooq.test.jdbc.generatedclasses.tables.VBook.V_BOOK);
+
+		setValue(0, id);
+		setValue(1, authorId);
+		setValue(2, coAuthorId);
+		setValue(3, detailsId);
+		setValue(4, title);
+		setValue(5, publishedIn);
+		setValue(6, languageId);
+		setValue(7, contentText);
+		setValue(8, contentPdf);
+		setValue(9, recVersion);
+		setValue(10, recTimestamp);
 	}
 }

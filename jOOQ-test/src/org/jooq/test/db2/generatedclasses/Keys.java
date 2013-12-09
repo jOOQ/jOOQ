@@ -23,6 +23,7 @@ public class Keys {
 	// UNIQUE and PRIMARY KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.T_2845CaseSensitivityRecord> T_2845_CASE_SENSITIVITY__PK_T_2845_CASE_SENSITIVITY = UniqueKeys0.T_2845_CASE_SENSITIVITY__PK_T_2845_CASE_SENSITIVITY;
 	public static final org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.T_639NumbersTableRecord> T_639_NUMBERS_TABLE__PK_T_639_NUMBERS_TABLE = UniqueKeys0.T_639_NUMBERS_TABLE__PK_T_639_NUMBERS_TABLE;
 	public static final org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.T_725LobTestRecord> T_725_LOB_TEST__PK_T_725_LOB_TEST = UniqueKeys0.T_725_LOB_TEST__PK_T_725_LOB_TEST;
 	public static final org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.T_986_1Record> T_986_1__PK_986 = UniqueKeys0.T_986_1__PK_986;
@@ -72,6 +73,7 @@ public class Keys {
 	}
 
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
+		public static final org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.T_2845CaseSensitivityRecord> T_2845_CASE_SENSITIVITY__PK_T_2845_CASE_SENSITIVITY = createUniqueKey(org.jooq.test.db2.generatedclasses.tables.T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY, org.jooq.test.db2.generatedclasses.tables.T_2845CaseSensitivity.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.T_639NumbersTableRecord> T_639_NUMBERS_TABLE__PK_T_639_NUMBERS_TABLE = createUniqueKey(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.T_725LobTestRecord> T_725_LOB_TEST__PK_T_725_LOB_TEST = createUniqueKey(org.jooq.test.db2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.db2.generatedclasses.tables.T_725LobTest.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.T_986_1Record> T_986_1__PK_986 = createUniqueKey(org.jooq.test.db2.generatedclasses.tables.T_986_1.T_986_1, org.jooq.test.db2.generatedclasses.tables.T_986_1.REF);

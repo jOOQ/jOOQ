@@ -9,10 +9,20 @@ package org.jooq.test.jdbc.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes implements org.jooq.test.jdbc.generatedclasses.tables.interfaces.ITExoticTypes {
 
-	private static final long serialVersionUID = 69618566;
+	private static final long serialVersionUID = -1923177988;
 
 	private java.lang.Integer id;
 	private java.util.UUID    uu;
+
+	public TExoticTypes() {}
+
+	public TExoticTypes(
+		java.lang.Integer id,
+		java.util.UUID    uu
+	) {
+		this.id = id;
+		this.uu = uu;
+	}
 
 	@Override
 	public java.lang.Integer getId() {

@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaAddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaAddressRecord> implements org.jooq.Record8<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.lang.Short, java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 2093265240;
+	private static final long serialVersionUID = -1563730164;
 
 	/**
 	 * Setter for <code>sakila.address.address_id</code>. 
@@ -281,6 +281,86 @@ public class SakilaAddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	@Override
 	public java.sql.Timestamp value8() {
 		return getLastUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaAddressRecord value1(java.lang.Short value) {
+		setAddressId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaAddressRecord value2(java.lang.String value) {
+		setAddress(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaAddressRecord value3(java.lang.String value) {
+		setAddress2(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaAddressRecord value4(java.lang.String value) {
+		setDistrict(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaAddressRecord value5(java.lang.Short value) {
+		setCityId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaAddressRecord value6(java.lang.String value) {
+		setPostalCode(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaAddressRecord value7(java.lang.String value) {
+		setPhone(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaAddressRecord value8(java.sql.Timestamp value) {
+		setLastUpdate(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaAddressRecord values(java.lang.Short value1, java.lang.String value2, java.lang.String value3, java.lang.String value4, java.lang.Short value5, java.lang.String value6, java.lang.String value7, java.sql.Timestamp value8) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

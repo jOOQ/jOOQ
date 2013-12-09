@@ -13,7 +13,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_BOOK")
 public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> implements java.lang.Cloneable, org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = 1440273798;
+	private static final long serialVersionUID = 1026425959;
 
 	/**
 	 * Setter for <code>T_BOOK.ID</code>. The book ID
@@ -343,6 +343,95 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	@Override
 	public byte[] value9() {
 		return getCONTENT_PDF();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOK value1(java.lang.Integer value) {
+		setID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOK value2(java.lang.Integer value) {
+		setAUTHOR_ID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOK value3(java.lang.Integer value) {
+		setCO_AUTHOR_ID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOK value4(java.lang.Integer value) {
+		setDETAILS_ID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOK value5(java.lang.String value) {
+		setTITLE(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOK value6(java.lang.Integer value) {
+		setPUBLISHED_IN(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOK value7(java.lang.Integer value) {
+		setLANGUAGE_ID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOK value8(java.lang.String value) {
+		setCONTENT_TEXT(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOK value9(byte[] value) {
+		setCONTENT_PDF(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOK values(java.lang.Integer value1, java.lang.Integer value2, java.lang.Integer value3, java.lang.Integer value4, java.lang.String value5, java.lang.Integer value6, java.lang.Integer value7, java.lang.String value8, byte[] value9) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

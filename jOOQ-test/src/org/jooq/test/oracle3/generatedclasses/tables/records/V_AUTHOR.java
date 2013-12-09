@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_AUTHOR")
 public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_AUTHOR> implements java.lang.Cloneable, org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_AUTHOR_INTERFACE {
 
-	private static final long serialVersionUID = 576669416;
+	private static final long serialVersionUID = 1995638882;
 
 	/**
 	 * Setter for <code>V_AUTHOR.ID</code>. 
@@ -229,6 +229,68 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	@Override
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE value6() {
 		return getADDRESS();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_AUTHOR value1(java.lang.Integer value) {
+		setID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_AUTHOR value2(java.lang.String value) {
+		setFIRST_NAME(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_AUTHOR value3(java.lang.String value) {
+		setLAST_NAME(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_AUTHOR value4(java.sql.Date value) {
+		setDATE_OF_BIRTH(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_AUTHOR value5(java.lang.Integer value) {
+		setYEAR_OF_BIRTH(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_AUTHOR value6(org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE value) {
+		setADDRESS(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_AUTHOR values(java.lang.Integer value1, java.lang.String value2, java.lang.String value3, java.sql.Date value4, java.lang.Integer value5, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE value6) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

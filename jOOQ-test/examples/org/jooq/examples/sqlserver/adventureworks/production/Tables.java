@@ -8,8 +8,8 @@ package org.jooq.examples.sqlserver.adventureworks.production;
  *
  * Convenience access to all tables in Production
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class Tables {
 
 	/**
 	 * The table Production.BillOfMaterials
@@ -150,9 +150,4 @@ public final class Tables {
 	 * The table Production.WorkOrderRouting
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting WorkOrderRouting = org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

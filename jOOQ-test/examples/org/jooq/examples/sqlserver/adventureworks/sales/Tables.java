@@ -8,13 +8,8 @@ package org.jooq.examples.sqlserver.adventureworks.sales;
  *
  * Convenience access to all tables in Sales
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
-
-	/**
-	 * The table Sales.ContactCreditCard
-	 */
-	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard ContactCreditCard = org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard;
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class Tables {
 
 	/**
 	 * The table Sales.CountryRegionCurrency
@@ -42,14 +37,9 @@ public final class Tables {
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer Customer = org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.Customer;
 
 	/**
-	 * The table Sales.CustomerAddress
+	 * The table Sales.PersonCreditCard
 	 */
-	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.CustomerAddress CustomerAddress = org.jooq.examples.sqlserver.adventureworks.sales.tables.CustomerAddress.CustomerAddress;
-
-	/**
-	 * The table Sales.Individual
-	 */
-	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual Individual = org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.Individual;
+	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.PersonCreditCard PersonCreditCard = org.jooq.examples.sqlserver.adventureworks.sales.tables.PersonCreditCard.PersonCreditCard;
 
 	/**
 	 * The table Sales.SalesOrderDetail
@@ -117,19 +107,14 @@ public final class Tables {
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.Store Store = org.jooq.examples.sqlserver.adventureworks.sales.tables.Store.Store;
 
 	/**
-	 * The table Sales.StoreContact
-	 */
-	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact StoreContact = org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact;
-
-	/**
 	 * The table Sales.vIndividualCustomer
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer vIndividualCustomer = org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer;
 
 	/**
-	 * The table Sales.vIndividualDemographics
+	 * The table Sales.vPersonDemographics
 	 */
-	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics vIndividualDemographics = org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics.vIndividualDemographics;
+	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.vPersonDemographics vPersonDemographics = org.jooq.examples.sqlserver.adventureworks.sales.tables.vPersonDemographics.vPersonDemographics;
 
 	/**
 	 * The table Sales.vSalesPerson
@@ -142,12 +127,17 @@ public final class Tables {
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears vSalesPersonSalesByFiscalYears = org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears.vSalesPersonSalesByFiscalYears;
 
 	/**
+	 * The table Sales.vStoreWithAddresses
+	 */
+	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.vStoreWithAddresses vStoreWithAddresses = org.jooq.examples.sqlserver.adventureworks.sales.tables.vStoreWithAddresses.vStoreWithAddresses;
+
+	/**
+	 * The table Sales.vStoreWithContacts
+	 */
+	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.vStoreWithContacts vStoreWithContacts = org.jooq.examples.sqlserver.adventureworks.sales.tables.vStoreWithContacts.vStoreWithContacts;
+
+	/**
 	 * The table Sales.vStoreWithDemographics
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.vStoreWithDemographics vStoreWithDemographics = org.jooq.examples.sqlserver.adventureworks.sales.tables.vStoreWithDemographics.vStoreWithDemographics;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

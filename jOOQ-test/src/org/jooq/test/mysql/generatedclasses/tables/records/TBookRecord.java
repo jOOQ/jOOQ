@@ -11,7 +11,7 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.mysql.generatedclasses.enums.TBookStatus> {
 
-	private static final long serialVersionUID = 252438049;
+	private static final long serialVersionUID = -1127858454;
 
 	/**
 	 * Setter for <code>test.t_book.ID</code>. The book ID
@@ -343,6 +343,104 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@Override
 	public org.jooq.test.mysql.generatedclasses.enums.TBookStatus value10() {
 		return getStatus();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value2(java.lang.Integer value) {
+		setAuthorId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value3(java.lang.Integer value) {
+		setCoAuthorId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value4(java.lang.Integer value) {
+		setDetailsId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value5(java.lang.String value) {
+		setTitle(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value6(java.lang.Integer value) {
+		setPublishedIn(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value7(java.lang.Integer value) {
+		setLanguageId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value8(java.lang.String value) {
+		setContentText(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value9(byte[] value) {
+		setContentPdf(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord value10(org.jooq.test.mysql.generatedclasses.enums.TBookStatus value) {
+		setStatus(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookRecord values(java.lang.Integer value1, java.lang.Integer value2, java.lang.Integer value3, java.lang.Integer value4, java.lang.String value5, java.lang.Integer value6, java.lang.Integer value7, java.lang.String value8, byte[] value9, org.jooq.test.mysql.generatedclasses.enums.TBookStatus value10) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

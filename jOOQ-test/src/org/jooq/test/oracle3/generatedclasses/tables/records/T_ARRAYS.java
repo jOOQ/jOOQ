@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_ARRAYS")
 public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_ARRAYS> implements java.lang.Cloneable, org.jooq.Record5<java.lang.Integer, org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY, org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_ARRAYS_INTERFACE {
 
-	private static final long serialVersionUID = -230389627;
+	private static final long serialVersionUID = 569541912;
 
 	/**
 	 * Setter for <code>T_ARRAYS.ID</code>. 
@@ -209,6 +209,59 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	@Override
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY value5() {
 		return getDATE_ARRAY();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_ARRAYS value1(java.lang.Integer value) {
+		setID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_ARRAYS value2(org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY value) {
+		setSTRING_ARRAY(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_ARRAYS value3(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY value) {
+		setNUMBER_ARRAY(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_ARRAYS value4(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY value) {
+		setNUMBER_LONG_ARRAY(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_ARRAYS value5(org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY value) {
+		setDATE_ARRAY(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_ARRAYS values(java.lang.Integer value1, org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY value2, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY value3, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY value4, org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY value5) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

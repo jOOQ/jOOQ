@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = -1913646121;
+	private static final long serialVersionUID = 1535756067;
 
 	/**
 	 * Setter for <code>public.t_author.id</code>. 
@@ -233,6 +233,68 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord value6() {
 		return getAddress();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TAuthorRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TAuthorRecord value2(java.lang.String value) {
+		setFirstName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TAuthorRecord value3(java.lang.String value) {
+		setLastName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TAuthorRecord value4(java.sql.Date value) {
+		setDateOfBirth(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TAuthorRecord value5(java.lang.Integer value) {
+		setYearOfBirth(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TAuthorRecord value6(org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord value) {
+		setAddress(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TAuthorRecord values(java.lang.Integer value1, java.lang.String value2, java.lang.String value3, java.sql.Date value4, java.lang.Integer value5, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord value6) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

@@ -9,7 +9,7 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_986_2Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.T_986_2Record> implements org.jooq.Record1<java.lang.Integer> {
 
-	private static final long serialVersionUID = 2114473223;
+	private static final long serialVersionUID = -1246344662;
 
 	/**
 	 * Setter for <code>LIBRARY.T_986_2.REF</code>. 
@@ -71,6 +71,23 @@ public class T_986_2Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public java.lang.Integer value1() {
 		return getRef();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_986_2Record value1(java.lang.Integer value) {
+		setRef(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_986_2Record values(java.lang.Integer value1) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

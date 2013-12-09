@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_2025")
 public class X_TEST_CASE_2025 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_2025> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_2025_INTERFACE {
 
-	private static final long serialVersionUID = 1571589791;
+	private static final long serialVersionUID = 111901317;
 
 	/**
 	 * Setter for <code>X_TEST_CASE_2025.REF_ID</code>. 
@@ -97,6 +97,32 @@ public class X_TEST_CASE_2025 extends org.jooq.impl.TableRecordImpl<org.jooq.tes
 	@Override
 	public java.lang.String value2() {
 		return getREF_NAME();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_TEST_CASE_2025 value1(java.lang.Integer value) {
+		setREF_ID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_TEST_CASE_2025 value2(java.lang.String value) {
+		setREF_NAME(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_TEST_CASE_2025 values(java.lang.Integer value1, java.lang.String value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

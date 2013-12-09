@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PreparedStatementRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.PreparedStatementRecord> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IPreparedStatement {
 
-	private static final long serialVersionUID = -362003838;
+	private static final long serialVersionUID = 803955179;
 
 	/**
 	 * Setter for <code>PUBLIC.PREPARED_STATEMENT.ID</code>. 
@@ -61,6 +61,23 @@ public class PreparedStatementRecord extends org.jooq.impl.TableRecordImpl<org.j
 	@Override
 	public java.lang.Integer value1() {
 		return getId();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public PreparedStatementRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public PreparedStatementRecord values(java.lang.Integer value1) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

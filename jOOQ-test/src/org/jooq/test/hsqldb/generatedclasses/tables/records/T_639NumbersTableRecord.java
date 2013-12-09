@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord> implements org.jooq.Record13<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal, java.lang.Double, java.lang.Double>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IT_639NumbersTable {
 
-	private static final long serialVersionUID = -1381951341;
+	private static final long serialVersionUID = -1123678704;
 
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.ID</code>. 
@@ -457,6 +457,131 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	@Override
 	public java.lang.Double value13() {
 		return getDouble();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639NumbersTableRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639NumbersTableRecord value2(java.lang.Byte value) {
+		setByte(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639NumbersTableRecord value3(java.lang.Short value) {
+		setShort(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639NumbersTableRecord value4(java.lang.Integer value) {
+		setInteger(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639NumbersTableRecord value5(java.lang.Long value) {
+		setLong(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639NumbersTableRecord value6(java.lang.Byte value) {
+		setByteDecimal(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639NumbersTableRecord value7(java.lang.Short value) {
+		setShortDecimal(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639NumbersTableRecord value8(java.lang.Integer value) {
+		setIntegerDecimal(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639NumbersTableRecord value9(java.lang.Long value) {
+		setLongDecimal(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639NumbersTableRecord value10(java.math.BigInteger value) {
+		setBigInteger(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639NumbersTableRecord value11(java.math.BigDecimal value) {
+		setBigDecimal(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639NumbersTableRecord value12(java.lang.Double value) {
+		setFloat(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639NumbersTableRecord value13(java.lang.Double value) {
+		setDouble(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639NumbersTableRecord values(java.lang.Integer value1, java.lang.Byte value2, java.lang.Short value3, java.lang.Integer value4, java.lang.Long value5, java.lang.Byte value6, java.lang.Short value7, java.lang.Integer value8, java.lang.Long value9, java.math.BigInteger value10, java.math.BigDecimal value11, java.lang.Double value12, java.lang.Double value13) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

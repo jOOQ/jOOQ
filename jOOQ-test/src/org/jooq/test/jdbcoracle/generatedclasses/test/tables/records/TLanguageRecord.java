@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer>, org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.ITLanguage {
 
-	private static final long serialVersionUID = 2089877308;
+	private static final long serialVersionUID = -1660808013;
 
 	/**
 	 * Setter for <code>TEST.T_LANGUAGE.CD</code>. 
@@ -169,6 +169,50 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@Override
 	public java.lang.Integer value4() {
 		return getId();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TLanguageRecord value1(java.lang.String value) {
+		setCd(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TLanguageRecord value2(java.lang.String value) {
+		setDescription(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TLanguageRecord value3(java.lang.String value) {
+		setDescriptionEnglish(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TLanguageRecord value4(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TLanguageRecord values(java.lang.String value1, java.lang.String value2, java.lang.String value3, java.lang.Integer value4) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

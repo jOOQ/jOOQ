@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_BOOK")
 public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK> implements java.lang.Cloneable, org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = 327363175;
+	private static final long serialVersionUID = -1096827926;
 
 	/**
 	 * Setter for <code>V_BOOK.ID</code>. 
@@ -328,6 +328,95 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	@Override
 	public byte[] value9() {
 		return getCONTENT_PDF();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_BOOK value1(java.lang.Integer value) {
+		setID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_BOOK value2(java.lang.Integer value) {
+		setAUTHOR_ID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_BOOK value3(java.lang.Integer value) {
+		setCO_AUTHOR_ID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_BOOK value4(java.lang.Integer value) {
+		setDETAILS_ID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_BOOK value5(java.lang.String value) {
+		setTITLE(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_BOOK value6(java.lang.Integer value) {
+		setPUBLISHED_IN(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_BOOK value7(java.lang.Integer value) {
+		setLANGUAGE_ID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_BOOK value8(java.lang.String value) {
+		setCONTENT_TEXT(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_BOOK value9(byte[] value) {
+		setCONTENT_PDF(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_BOOK values(java.lang.Integer value1, java.lang.Integer value2, java.lang.Integer value3, java.lang.Integer value4, java.lang.String value5, java.lang.Integer value6, java.lang.Integer value7, java.lang.String value8, byte[] value9) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.jdbc.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String>, org.jooq.test.jdbc.generatedclasses.tables.interfaces.IVLibrary {
 
-	private static final long serialVersionUID = -1981712671;
+	private static final long serialVersionUID = -428297370;
 
 	/**
 	 * Setter for <code>PUBLIC.V_LIBRARY.AUTHOR</code>. 
@@ -95,6 +95,32 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 		return getTitle();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VLibraryRecord value1(java.lang.String value) {
+		setAuthor(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VLibraryRecord value2(java.lang.String value) {
+		setTitle(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VLibraryRecord values(java.lang.String value1, java.lang.String value2) {
+		return this;
+	}
+
 	// -------------------------------------------------------------------------
 	// FROM and INTO
 	// -------------------------------------------------------------------------
@@ -126,5 +152,15 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 */
 	public VLibraryRecord() {
 		super(org.jooq.test.jdbc.generatedclasses.tables.VLibrary.V_LIBRARY);
+	}
+
+	/**
+	 * Create a detached, initialised VLibraryRecord
+	 */
+	public VLibraryRecord(java.lang.String author, java.lang.String title) {
+		super(org.jooq.test.jdbc.generatedclasses.tables.VLibrary.V_LIBRARY);
+
+		setValue(0, author);
+		setValue(1, title);
 	}
 }

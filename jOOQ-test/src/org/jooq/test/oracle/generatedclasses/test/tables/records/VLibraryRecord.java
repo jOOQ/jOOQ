@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "V_LIBRARY", schema = "TEST")
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 1328118942;
+	private static final long serialVersionUID = -1661230505;
 
 	/**
 	 * Setter for <code>TEST.V_LIBRARY.AUTHOR</code>. 
@@ -96,6 +96,32 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	@Override
 	public java.lang.String value2() {
 		return getTitle();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VLibraryRecord value1(java.lang.String value) {
+		setAuthor(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VLibraryRecord value2(java.lang.String value) {
+		setTitle(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VLibraryRecord values(java.lang.String value1, java.lang.String value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

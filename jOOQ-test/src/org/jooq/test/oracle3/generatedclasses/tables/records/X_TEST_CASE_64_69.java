@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_64_69")
 public class X_TEST_CASE_64_69 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_64_69_INTERFACE {
 
-	private static final long serialVersionUID = 1097040422;
+	private static final long serialVersionUID = -1469823962;
 
 	/**
 	 * Setter for <code>X_TEST_CASE_64_69.ID</code>. 
@@ -110,6 +110,32 @@ public class X_TEST_CASE_64_69 extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	@Override
 	public java.lang.Integer value2() {
 		return getUNUSED_ID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_TEST_CASE_64_69 value1(java.lang.Integer value) {
+		setID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_TEST_CASE_64_69 value2(java.lang.Integer value) {
+		setUNUSED_ID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public X_TEST_CASE_64_69 values(java.lang.Integer value1, java.lang.Integer value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

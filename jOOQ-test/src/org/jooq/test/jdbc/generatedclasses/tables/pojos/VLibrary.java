@@ -9,10 +9,20 @@ package org.jooq.test.jdbc.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary implements org.jooq.test.jdbc.generatedclasses.tables.interfaces.IVLibrary {
 
-	private static final long serialVersionUID = 909237033;
+	private static final long serialVersionUID = -369776668;
 
 	private java.lang.String author;
 	private java.lang.String title;
+
+	public VLibrary() {}
+
+	public VLibrary(
+		java.lang.String author,
+		java.lang.String title
+	) {
+		this.author = author;
+		this.title = title;
+	}
 
 	@Override
 	public java.lang.String getAuthor() {

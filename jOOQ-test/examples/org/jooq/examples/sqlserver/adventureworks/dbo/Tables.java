@@ -8,8 +8,8 @@ package org.jooq.examples.sqlserver.adventureworks.dbo;
  *
  * Convenience access to all tables in dbo
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class Tables {
 
 	/**
 	 * The table dbo.AWBuildVersion
@@ -25,9 +25,4 @@ public final class Tables {
 	 * The table dbo.ErrorLog
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.dbo.tables.ErrorLog ErrorLog = org.jooq.examples.sqlserver.adventureworks.dbo.tables.ErrorLog.ErrorLog;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

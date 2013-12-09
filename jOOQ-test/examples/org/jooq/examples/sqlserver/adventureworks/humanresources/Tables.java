@@ -8,8 +8,8 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources;
  *
  * Convenience access to all tables in HumanResources
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class Tables {
 
 	/**
 	 * The table HumanResources.Department
@@ -20,11 +20,6 @@ public final class Tables {
 	 * The table HumanResources.Employee
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee Employee = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee;
-
-	/**
-	 * The table HumanResources.EmployeeAddress
-	 */
-	public static final org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeAddress EmployeeAddress = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeAddress.EmployeeAddress;
 
 	/**
 	 * The table HumanResources.EmployeeDepartmentHistory
@@ -75,9 +70,4 @@ public final class Tables {
 	 * The table HumanResources.vJobCandidateEmployment
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment vJobCandidateEmployment = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.jdbc.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.jdbc.generatedclasses.tables.interfaces.IVAuthor {
 
-	private static final long serialVersionUID = 602528447;
+	private static final long serialVersionUID = -1309516122;
 
 	/**
 	 * Setter for <code>PUBLIC.V_AUTHOR.ID</code>. 
@@ -223,6 +223,68 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.j
 		return getAddress();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord value2(java.lang.String value) {
+		setFirstName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord value3(java.lang.String value) {
+		setLastName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord value4(java.sql.Date value) {
+		setDateOfBirth(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord value5(java.lang.Integer value) {
+		setYearOfBirth(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord value6(java.lang.String value) {
+		setAddress(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord values(java.lang.Integer value1, java.lang.String value2, java.lang.String value3, java.sql.Date value4, java.lang.Integer value5, java.lang.String value6) {
+		return this;
+	}
+
 	// -------------------------------------------------------------------------
 	// FROM and INTO
 	// -------------------------------------------------------------------------
@@ -258,5 +320,19 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.j
 	 */
 	public VAuthorRecord() {
 		super(org.jooq.test.jdbc.generatedclasses.tables.VAuthor.V_AUTHOR);
+	}
+
+	/**
+	 * Create a detached, initialised VAuthorRecord
+	 */
+	public VAuthorRecord(java.lang.Integer id, java.lang.String firstName, java.lang.String lastName, java.sql.Date dateOfBirth, java.lang.Integer yearOfBirth, java.lang.String address) {
+		super(org.jooq.test.jdbc.generatedclasses.tables.VAuthor.V_AUTHOR);
+
+		setValue(0, id);
+		setValue(1, firstName);
+		setValue(2, lastName);
+		setValue(3, dateOfBirth);
+		setValue(4, yearOfBirth);
+		setValue(5, address);
 	}
 }

@@ -11,7 +11,7 @@ package org.jooq.examples.h2.matchers.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBuchStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.h2.matchers.tables.records.TBuchStoreRecord> implements java.io.Serializable, java.lang.Cloneable, org.jooq.Record1<java.lang.String>, org.jooq.examples.h2.matchers.tables.interfaces.i_t_buch_store {
 
-	private static final long serialVersionUID = 938699008;
+	private static final long serialVersionUID = -568813139;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_STORE.NAME</code>. The books store name
@@ -75,6 +75,23 @@ public class TBuchStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@Override
 	public java.lang.String value1() {
 		return getName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBuchStoreRecord value1(java.lang.String value) {
+		setName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBuchStoreRecord values(java.lang.String value1) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

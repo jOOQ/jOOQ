@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_BOOLEANS")
 public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOLEANS> implements java.lang.Cloneable, org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOLEANS_INTERFACE {
 
-	private static final long serialVersionUID = 972082719;
+	private static final long serialVersionUID = -1230179009;
 
 	/**
 	 * Setter for <code>T_BOOLEANS.ID</code>. 
@@ -407,6 +407,113 @@ public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	@Override
 	public java.lang.Integer value11() {
 		return getN_BOOLEAN();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOLEANS value1(java.lang.Integer value) {
+		setID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOLEANS value2(java.lang.Integer value) {
+		setONE_ZERO(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOLEANS value3(java.lang.String value) {
+		setTRUE_FALSE_LC(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOLEANS value4(java.lang.String value) {
+		setTRUE_FALSE_UC(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOLEANS value5(java.lang.String value) {
+		setYES_NO_LC(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOLEANS value6(java.lang.String value) {
+		setYES_NO_UC(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOLEANS value7(java.lang.String value) {
+		setY_N_LC(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOLEANS value8(java.lang.String value) {
+		setY_N_UC(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOLEANS value9(java.lang.String value) {
+		setVC_BOOLEAN(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOLEANS value10(java.lang.String value) {
+		setC_BOOLEAN(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOLEANS value11(java.lang.Integer value) {
+		setN_BOOLEAN(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_BOOLEANS values(java.lang.Integer value1, java.lang.Integer value2, java.lang.String value3, java.lang.String value4, java.lang.String value5, java.lang.String value6, java.lang.String value7, java.lang.String value8, java.lang.String value9, java.lang.String value10, java.lang.Integer value11) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

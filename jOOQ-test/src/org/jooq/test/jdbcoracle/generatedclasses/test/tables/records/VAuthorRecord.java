@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.Object>, org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IVAuthor {
 
-	private static final long serialVersionUID = -820144738;
+	private static final long serialVersionUID = -1120823696;
 
 	/**
 	 * Setter for <code>TEST.V_AUTHOR.ID</code>. 
@@ -221,6 +221,68 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.j
 	@Override
 	public java.lang.Object value6() {
 		return getAddress();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord value2(java.lang.String value) {
+		setFirstName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord value3(java.lang.String value) {
+		setLastName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord value4(java.sql.Date value) {
+		setDateOfBirth(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord value5(java.lang.Integer value) {
+		setYearOfBirth(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord value6(java.lang.Object value) {
+		setAddress(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VAuthorRecord values(java.lang.Integer value1, java.lang.String value2, java.lang.String value3, java.sql.Date value4, java.lang.Integer value5, java.lang.Object value6) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

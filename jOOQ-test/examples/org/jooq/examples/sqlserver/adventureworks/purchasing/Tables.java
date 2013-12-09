@@ -8,8 +8,8 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing;
  *
  * Convenience access to all tables in Purchasing
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class Tables {
 
 	/**
 	 * The table Purchasing.ProductVendor
@@ -37,22 +37,12 @@ public final class Tables {
 	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor Vendor = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor;
 
 	/**
-	 * The table Purchasing.VendorAddress
+	 * The table Purchasing.vVendorWithAddresses
 	 */
-	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorAddress VendorAddress = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorAddress.VendorAddress;
+	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendorWithAddresses vVendorWithAddresses = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendorWithAddresses.vVendorWithAddresses;
 
 	/**
-	 * The table Purchasing.VendorContact
+	 * The table Purchasing.vVendorWithContacts
 	 */
-	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact VendorContact = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact;
-
-	/**
-	 * The table Purchasing.vVendor
-	 */
-	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor vVendor = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
+	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendorWithContacts vVendorWithContacts = org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendorWithContacts.vVendorWithContacts;
 }

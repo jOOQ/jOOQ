@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TInheritance_1_1Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TInheritance_1_1Record> implements org.jooq.Record2<java.lang.String, java.lang.String>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITInheritance_1_1 {
 
-	private static final long serialVersionUID = 810604035;
+	private static final long serialVersionUID = 121148176;
 
 	/**
 	 * Setter for <code>public.t_inheritance_1_1.text_1</code>. 
@@ -93,6 +93,32 @@ public class TInheritance_1_1Record extends org.jooq.impl.TableRecordImpl<org.jo
 	@Override
 	public java.lang.String value2() {
 		return getText_1_1();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TInheritance_1_1Record value1(java.lang.String value) {
+		setText_1(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TInheritance_1_1Record value2(java.lang.String value) {
+		setText_1_1(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TInheritance_1_1Record values(java.lang.String value1, java.lang.String value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

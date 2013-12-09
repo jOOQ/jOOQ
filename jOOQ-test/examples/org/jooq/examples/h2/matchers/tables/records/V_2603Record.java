@@ -9,7 +9,7 @@ package org.jooq.examples.h2.matchers.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class V_2603Record extends org.jooq.impl.TableRecordImpl<org.jooq.examples.h2.matchers.tables.records.V_2603Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.examples.h2.matchers.tables.interfaces.IV_2603 {
 
-	private static final long serialVersionUID = -127005590;
+	private static final long serialVersionUID = 1941091468;
 
 	/**
 	 * Setter for <code>PUBLIC.V_2603.COL1</code>. 
@@ -93,6 +93,32 @@ public class V_2603Record extends org.jooq.impl.TableRecordImpl<org.jooq.example
 	@Override
 	public java.lang.Integer value2() {
 		return getCol4();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_2603Record value1(java.lang.Integer value) {
+		setCol1(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_2603Record value2(java.lang.Integer value) {
+		setCol4(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public V_2603Record values(java.lang.Integer value1, java.lang.Integer value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

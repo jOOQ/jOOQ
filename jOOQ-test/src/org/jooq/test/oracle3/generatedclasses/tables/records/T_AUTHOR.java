@@ -13,7 +13,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_AUTHOR")
 public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR> implements java.lang.Cloneable, org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_AUTHOR_INTERFACE {
 
-	private static final long serialVersionUID = 1270784345;
+	private static final long serialVersionUID = -208240103;
 
 	/**
 	 * Setter for <code>T_AUTHOR.ID</code>. The author ID
@@ -244,6 +244,68 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	@Override
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE value6() {
 		return getADDRESS();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_AUTHOR value1(java.lang.Integer value) {
+		setID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_AUTHOR value2(java.lang.String value) {
+		setFIRST_NAME(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_AUTHOR value3(java.lang.String value) {
+		setLAST_NAME(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_AUTHOR value4(java.sql.Date value) {
+		setDATE_OF_BIRTH(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_AUTHOR value5(java.lang.Integer value) {
+		setYEAR_OF_BIRTH(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_AUTHOR value6(org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE value) {
+		setADDRESS(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_AUTHOR values(java.lang.Integer value1, java.lang.String value2, java.lang.String value3, java.sql.Date value4, java.lang.Integer value5, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE value6) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

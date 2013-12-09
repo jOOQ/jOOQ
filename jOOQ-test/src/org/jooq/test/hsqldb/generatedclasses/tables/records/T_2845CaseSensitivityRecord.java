@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.T_2845CaseSensitivityRecord> implements org.jooq.Record5<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IT_2845CaseSensitivity {
 
-	private static final long serialVersionUID = 1513811873;
+	private static final long serialVersionUID = -1856417375;
 
 	/**
 	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.ID</code>. 
@@ -201,6 +201,59 @@ public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordIm
 	@Override
 	public java.lang.Integer value5() {
 		return getMixed();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_2845CaseSensitivityRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_2845CaseSensitivityRecord value2(java.lang.Integer value) {
+		setInsensitive(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_2845CaseSensitivityRecord value3(java.lang.Integer value) {
+		setUpper(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_2845CaseSensitivityRecord value4(java.lang.Integer value) {
+		setLower(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_2845CaseSensitivityRecord value5(java.lang.Integer value) {
+		setMixed(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_2845CaseSensitivityRecord values(java.lang.Integer value1, java.lang.Integer value2, java.lang.Integer value3, java.lang.Integer value4, java.lang.Integer value5) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

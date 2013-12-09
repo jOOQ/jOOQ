@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_2845_CASE_sensitivity", schema = "TEST")
 public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_2845CaseSensitivityRecord> implements org.jooq.Record5<java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 737416053;
+	private static final long serialVersionUID = 318564599;
 
 	/**
 	 * Setter for <code>TEST.T_2845_CASE_sensitivity.ID</code>. 
@@ -200,6 +200,59 @@ public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordIm
 	@Override
 	public java.math.BigDecimal value5() {
 		return getMixed();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_2845CaseSensitivityRecord value1(java.math.BigDecimal value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_2845CaseSensitivityRecord value2(java.math.BigDecimal value) {
+		setInsensitive(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_2845CaseSensitivityRecord value3(java.math.BigDecimal value) {
+		setUpper(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_2845CaseSensitivityRecord value4(java.math.BigDecimal value) {
+		setLower(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_2845CaseSensitivityRecord value5(java.math.BigDecimal value) {
+		setMixed(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_2845CaseSensitivityRecord values(java.math.BigDecimal value1, java.math.BigDecimal value2, java.math.BigDecimal value3, java.math.BigDecimal value4, java.math.BigDecimal value5) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaNicerButSlowerFilmListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaNicerButSlowerFilmListRecord> implements org.jooq.Record8<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.math.BigDecimal, java.lang.Short, org.jooq.examples.mysql.sakila.enums.SakilaNicerButSlowerFilmListRating, java.lang.String> {
 
-	private static final long serialVersionUID = 1517175224;
+	private static final long serialVersionUID = -1581824273;
 
 	/**
 	 * Setter for <code>sakila.nicer_but_slower_film_list.FID</code>. 
@@ -271,6 +271,86 @@ public class SakilaNicerButSlowerFilmListRecord extends org.jooq.impl.TableRecor
 	@Override
 	public java.lang.String value8() {
 		return getActors();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaNicerButSlowerFilmListRecord value1(java.lang.Short value) {
+		setFid(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaNicerButSlowerFilmListRecord value2(java.lang.String value) {
+		setTitle(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaNicerButSlowerFilmListRecord value3(java.lang.String value) {
+		setDescription(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaNicerButSlowerFilmListRecord value4(java.lang.String value) {
+		setCategory(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaNicerButSlowerFilmListRecord value5(java.math.BigDecimal value) {
+		setPrice(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaNicerButSlowerFilmListRecord value6(java.lang.Short value) {
+		setLength(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaNicerButSlowerFilmListRecord value7(org.jooq.examples.mysql.sakila.enums.SakilaNicerButSlowerFilmListRating value) {
+		setRating(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaNicerButSlowerFilmListRecord value8(java.lang.String value) {
+		setActors(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaNicerButSlowerFilmListRecord values(java.lang.Short value1, java.lang.String value2, java.lang.String value3, java.lang.String value4, java.math.BigDecimal value5, java.lang.Short value6, org.jooq.examples.mysql.sakila.enums.SakilaNicerButSlowerFilmListRating value7, java.lang.String value8) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

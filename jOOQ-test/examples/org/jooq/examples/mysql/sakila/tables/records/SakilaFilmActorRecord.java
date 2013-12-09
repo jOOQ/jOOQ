@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaFilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmActorRecord> implements org.jooq.Record3<java.lang.Short, java.lang.Short, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1447306681;
+	private static final long serialVersionUID = 1454004957;
 
 	/**
 	 * Setter for <code>sakila.film_actor.actor_id</code>. 
@@ -131,6 +131,41 @@ public class SakilaFilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	@Override
 	public java.sql.Timestamp value3() {
 		return getLastUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaFilmActorRecord value1(java.lang.Short value) {
+		setActorId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaFilmActorRecord value2(java.lang.Short value) {
+		setFilmId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaFilmActorRecord value3(java.sql.Timestamp value) {
+		setLastUpdate(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaFilmActorRecord values(java.lang.Short value1, java.lang.Short value2, java.sql.Timestamp value3) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

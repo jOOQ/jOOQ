@@ -8,8 +8,8 @@ package org.jooq.examples.sqlserver.adventureworks.person;
  *
  * Convenience access to all tables in Person
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class Tables {
 
 	/**
 	 * The table Person.Address
@@ -22,9 +22,19 @@ public final class Tables {
 	public static final org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType AddressType = org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType;
 
 	/**
-	 * The table Person.Contact
+	 * The table Person.BusinessEntity
 	 */
-	public static final org.jooq.examples.sqlserver.adventureworks.person.tables.Contact Contact = org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.Contact;
+	public static final org.jooq.examples.sqlserver.adventureworks.person.tables.BusinessEntity BusinessEntity = org.jooq.examples.sqlserver.adventureworks.person.tables.BusinessEntity.BusinessEntity;
+
+	/**
+	 * The table Person.BusinessEntityAddress
+	 */
+	public static final org.jooq.examples.sqlserver.adventureworks.person.tables.BusinessEntityAddress BusinessEntityAddress = org.jooq.examples.sqlserver.adventureworks.person.tables.BusinessEntityAddress.BusinessEntityAddress;
+
+	/**
+	 * The table Person.BusinessEntityContact
+	 */
+	public static final org.jooq.examples.sqlserver.adventureworks.person.tables.BusinessEntityContact BusinessEntityContact = org.jooq.examples.sqlserver.adventureworks.person.tables.BusinessEntityContact.BusinessEntityContact;
 
 	/**
 	 * The table Person.ContactType
@@ -35,6 +45,31 @@ public final class Tables {
 	 * The table Person.CountryRegion
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion CountryRegion = org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion;
+
+	/**
+	 * The table Person.EmailAddress
+	 */
+	public static final org.jooq.examples.sqlserver.adventureworks.person.tables.EmailAddress EmailAddress = org.jooq.examples.sqlserver.adventureworks.person.tables.EmailAddress.EmailAddress;
+
+	/**
+	 * The table Person.Password
+	 */
+	public static final org.jooq.examples.sqlserver.adventureworks.person.tables.Password Password = org.jooq.examples.sqlserver.adventureworks.person.tables.Password.Password;
+
+	/**
+	 * The table Person.Person
+	 */
+	public static final org.jooq.examples.sqlserver.adventureworks.person.tables.Person Person = org.jooq.examples.sqlserver.adventureworks.person.tables.Person.Person;
+
+	/**
+	 * The table Person.PersonPhone
+	 */
+	public static final org.jooq.examples.sqlserver.adventureworks.person.tables.PersonPhone PersonPhone = org.jooq.examples.sqlserver.adventureworks.person.tables.PersonPhone.PersonPhone;
+
+	/**
+	 * The table Person.PhoneNumberType
+	 */
+	public static final org.jooq.examples.sqlserver.adventureworks.person.tables.PhoneNumberType PhoneNumberType = org.jooq.examples.sqlserver.adventureworks.person.tables.PhoneNumberType.PhoneNumberType;
 
 	/**
 	 * The table Person.StateProvince
@@ -50,9 +85,4 @@ public final class Tables {
 	 * The table Person.vStateProvinceCountryRegion
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion vStateProvinceCountryRegion = org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

@@ -9,14 +9,14 @@ package org.jooq.examples.sqlserver.adventureworks.dbo;
  * A class modelling foreign key relationships between tables of the <code>dbo</code> 
  * schema
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Keys {
 
 	// -------------------------------------------------------------------------
 	// IDENTITY definitions
 	// -------------------------------------------------------------------------
 
-	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion, java.lang.Byte> IDENTITY_AWBuildVersion = Identities0.IDENTITY_AWBuildVersion;
+	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion, org.jooq.types.UByte> IDENTITY_AWBuildVersion = Identities0.IDENTITY_AWBuildVersion;
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog, java.lang.Integer> IDENTITY_DatabaseLog = Identities0.IDENTITY_DatabaseLog;
 	public static final org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog, java.lang.Integer> IDENTITY_ErrorLog = Identities0.IDENTITY_ErrorLog;
 
@@ -33,17 +33,12 @@ public class Keys {
 	// -------------------------------------------------------------------------
 
 
-	/**
-	 * No further instances allowed
-	 */
-	private Keys() {}
-
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
 	// -------------------------------------------------------------------------
 
 	private static class Identities0 extends org.jooq.impl.AbstractKeys {
-		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion, java.lang.Byte> IDENTITY_AWBuildVersion = createIdentity(org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion, org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion.SystemInformationID);
+		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion, org.jooq.types.UByte> IDENTITY_AWBuildVersion = createIdentity(org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion, org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion.SystemInformationID);
 		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog, java.lang.Integer> IDENTITY_DatabaseLog = createIdentity(org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog, org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.DatabaseLogID);
 		public static org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog, java.lang.Integer> IDENTITY_ErrorLog = createIdentity(org.jooq.examples.sqlserver.adventureworks.dbo.tables.ErrorLog.ErrorLog, org.jooq.examples.sqlserver.adventureworks.dbo.tables.ErrorLog.ErrorLog.ErrorLogID);
 	}

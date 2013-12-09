@@ -77,6 +77,11 @@ public class Tables {
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_UNSIGNED T_UNSIGNED = org.jooq.test.oracle3.generatedclasses.tables.T_UNSIGNED.T_UNSIGNED;
 
 	/**
+	 * The table T_2845_CASE_sensitivity
+	 */
+	public static final org.jooq.test.oracle3.generatedclasses.tables.T_2845_CASE_sensitivity T_2845_CASE_sensitivity = org.jooq.test.oracle3.generatedclasses.tables.T_2845_CASE_sensitivity.T_2845_CASE_sensitivity;
+
+	/**
 	 * The table T_639_NUMBERS_TABLE
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE T_639_NUMBERS_TABLE = org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE;

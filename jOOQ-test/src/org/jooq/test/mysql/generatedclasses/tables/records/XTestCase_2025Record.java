@@ -11,7 +11,7 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record> implements org.jooq.Record2<java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -1915799465;
+	private static final long serialVersionUID = 715899454;
 
 	/**
 	 * Setter for <code>test.x_test_case_2025.ref_id</code>. 
@@ -91,6 +91,32 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	@Override
 	public java.lang.String value2() {
 		return getRefName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_2025Record value1(java.lang.Integer value) {
+		setRefId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_2025Record value2(java.lang.String value) {
+		setRefName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_2025Record values(java.lang.Integer value1, java.lang.String value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

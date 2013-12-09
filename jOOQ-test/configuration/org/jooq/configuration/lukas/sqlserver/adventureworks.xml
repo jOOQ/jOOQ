@@ -2,7 +2,7 @@
 <configuration>
     <jdbc>
         <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
-        <url>jdbc:sqlserver://localhost:1433;databaseName=AdventureWorks;integratedSecurity=true</url>
+        <url>jdbc:sqlserver://localhost:1433;databaseName=AdventureWorks2012;integratedSecurity=true</url>
         <user></user>
         <password></password>
     </jdbc>

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_DATES", schema = "TEST")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> implements org.jooq.Record8<java.lang.Integer, java.sql.Date, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Long, org.jooq.types.YearToMonth, org.jooq.types.DayToSecond> {
 
-	private static final long serialVersionUID = 658144016;
+	private static final long serialVersionUID = -2046112684;
 
 	/**
 	 * Setter for <code>TEST.T_DATES.ID</code>. 
@@ -293,6 +293,86 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	@Override
 	public org.jooq.types.DayToSecond value8() {
 		return getID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value2(java.sql.Date value) {
+		setD(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value3(java.sql.Timestamp value) {
+		setT(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value4(java.sql.Timestamp value) {
+		setTs(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value5(java.lang.Integer value) {
+		setDInt(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value6(java.lang.Long value) {
+		setTsBigint(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value7(org.jooq.types.YearToMonth value) {
+		setIY(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value8(org.jooq.types.DayToSecond value) {
+		setID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord values(java.lang.Integer value1, java.sql.Date value2, java.sql.Timestamp value3, java.sql.Timestamp value4, java.lang.Integer value5, java.lang.Long value6, org.jooq.types.YearToMonth value7, org.jooq.types.DayToSecond value8) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

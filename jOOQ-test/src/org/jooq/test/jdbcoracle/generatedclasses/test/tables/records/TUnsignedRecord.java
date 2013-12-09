@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TUnsignedRecord> implements org.jooq.Record4<java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger>, org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.ITUnsigned {
 
-	private static final long serialVersionUID = -1974523086;
+	private static final long serialVersionUID = 1638852767;
 
 	/**
 	 * Setter for <code>TEST.T_UNSIGNED.U_BYTE</code>. 
@@ -157,6 +157,50 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	@Override
 	public java.math.BigInteger value4() {
 		return getULong();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TUnsignedRecord value1(java.lang.Short value) {
+		setUByte(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TUnsignedRecord value2(java.lang.Integer value) {
+		setUShort(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TUnsignedRecord value3(java.lang.Long value) {
+		setUInt(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TUnsignedRecord value4(java.math.BigInteger value) {
+		setULong(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TUnsignedRecord values(java.lang.Short value1, java.lang.Integer value2, java.lang.Long value3, java.math.BigInteger value4) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

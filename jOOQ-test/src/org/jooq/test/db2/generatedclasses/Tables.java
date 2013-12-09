@@ -12,6 +12,11 @@ package org.jooq.test.db2.generatedclasses;
 public class Tables {
 
 	/**
+	 * The table LIBRARY.T_2845_CASE_sensitivity
+	 */
+	public static final org.jooq.test.db2.generatedclasses.tables.T_2845CaseSensitivity T_2845_CASE_SENSITIVITY = org.jooq.test.db2.generatedclasses.tables.T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY;
+
+	/**
 	 * The table LIBRARY.T_639_NUMBERS_TABLE
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;

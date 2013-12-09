@@ -9,7 +9,7 @@ package org.jooq.test.oracle2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DateAsTimestampT_976Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> implements org.jooq.Record4<java.lang.Integer, java.sql.Timestamp, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord> {
 
-	private static final long serialVersionUID = 2039534026;
+	private static final long serialVersionUID = 138332214;
 
 	/**
 	 * Setter for <code>TEST.T_976.ID</code>. 
@@ -161,6 +161,50 @@ public class DateAsTimestampT_976Record extends org.jooq.impl.UpdatableRecordImp
 	@Override
 	public org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord value4() {
 		return getO();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DateAsTimestampT_976Record value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DateAsTimestampT_976Record value2(java.sql.Timestamp value) {
+		setD(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DateAsTimestampT_976Record value3(org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord value) {
+		setT(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DateAsTimestampT_976Record value4(org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord value) {
+		setO(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DateAsTimestampT_976Record values(java.lang.Integer value1, java.sql.Timestamp value2, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord value3, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord value4) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

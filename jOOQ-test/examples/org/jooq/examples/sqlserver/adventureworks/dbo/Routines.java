@@ -8,8 +8,8 @@ package org.jooq.examples.sqlserver.adventureworks.dbo;
  *
  * Convenience access to all stored procedures and functions in dbo
  */
-@java.lang.SuppressWarnings("all")
-public final class Routines {
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class Routines {
 
 	/**
 	 * Call <code>dbo.ufnGetAccountingEndDate</code>
@@ -52,9 +52,9 @@ public final class Routines {
 	/**
 	 * Call <code>dbo.ufnGetContactInformation</code>
 	 */
-	public static java.lang.Object ufnGetContactInformation(org.jooq.Configuration configuration, java.lang.Integer ContactID) {
+	public static java.lang.Object ufnGetContactInformation(org.jooq.Configuration configuration, java.lang.Integer PersonID) {
 		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetContactInformation f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetContactInformation();
-		f.setContactID(ContactID);
+		f.setPersonID(PersonID);
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -63,9 +63,9 @@ public final class Routines {
 	/**
 	 * Get <code>dbo.ufnGetContactInformation</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object> ufnGetContactInformation(java.lang.Integer ContactID) {
+	public static org.jooq.Field<java.lang.Object> ufnGetContactInformation(java.lang.Integer PersonID) {
 		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetContactInformation f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetContactInformation();
-		f.setContactID(ContactID);
+		f.setPersonID(PersonID);
 
 		return f.asField();
 	}
@@ -73,9 +73,9 @@ public final class Routines {
 	/**
 	 * Get <code>dbo.ufnGetContactInformation</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object> ufnGetContactInformation(org.jooq.Field<java.lang.Integer> ContactID) {
+	public static org.jooq.Field<java.lang.Object> ufnGetContactInformation(org.jooq.Field<java.lang.Integer> PersonID) {
 		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetContactInformation f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetContactInformation();
-		f.setContactID(ContactID);
+		f.setPersonID(PersonID);
 
 		return f.asField();
 	}
@@ -83,7 +83,7 @@ public final class Routines {
 	/**
 	 * Call <code>dbo.ufnGetDocumentStatusText</code>
 	 */
-	public static java.lang.String ufnGetDocumentStatusText(org.jooq.Configuration configuration, java.lang.Byte Status) {
+	public static java.lang.String ufnGetDocumentStatusText(org.jooq.Configuration configuration, org.jooq.types.UByte Status) {
 		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetDocumentStatusText f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetDocumentStatusText();
 		f.setStatus(Status);
 
@@ -94,7 +94,7 @@ public final class Routines {
 	/**
 	 * Get <code>dbo.ufnGetDocumentStatusText</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> ufnGetDocumentStatusText(java.lang.Byte Status) {
+	public static org.jooq.Field<java.lang.String> ufnGetDocumentStatusText(org.jooq.types.UByte Status) {
 		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetDocumentStatusText f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetDocumentStatusText();
 		f.setStatus(Status);
 
@@ -104,7 +104,7 @@ public final class Routines {
 	/**
 	 * Get <code>dbo.ufnGetDocumentStatusText</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> ufnGetDocumentStatusText(org.jooq.Field<java.lang.Byte> Status) {
+	public static org.jooq.Field<java.lang.String> ufnGetDocumentStatusText(org.jooq.Field<org.jooq.types.UByte> Status) {
 		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetDocumentStatusText f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetDocumentStatusText();
 		f.setStatus(Status);
 
@@ -216,7 +216,7 @@ public final class Routines {
 	/**
 	 * Call <code>dbo.ufnGetPurchaseOrderStatusText</code>
 	 */
-	public static java.lang.String ufnGetPurchaseOrderStatusText(org.jooq.Configuration configuration, java.lang.Byte Status) {
+	public static java.lang.String ufnGetPurchaseOrderStatusText(org.jooq.Configuration configuration, org.jooq.types.UByte Status) {
 		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetPurchaseOrderStatusText f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetPurchaseOrderStatusText();
 		f.setStatus(Status);
 
@@ -227,7 +227,7 @@ public final class Routines {
 	/**
 	 * Get <code>dbo.ufnGetPurchaseOrderStatusText</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> ufnGetPurchaseOrderStatusText(java.lang.Byte Status) {
+	public static org.jooq.Field<java.lang.String> ufnGetPurchaseOrderStatusText(org.jooq.types.UByte Status) {
 		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetPurchaseOrderStatusText f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetPurchaseOrderStatusText();
 		f.setStatus(Status);
 
@@ -237,7 +237,7 @@ public final class Routines {
 	/**
 	 * Get <code>dbo.ufnGetPurchaseOrderStatusText</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> ufnGetPurchaseOrderStatusText(org.jooq.Field<java.lang.Byte> Status) {
+	public static org.jooq.Field<java.lang.String> ufnGetPurchaseOrderStatusText(org.jooq.Field<org.jooq.types.UByte> Status) {
 		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetPurchaseOrderStatusText f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetPurchaseOrderStatusText();
 		f.setStatus(Status);
 
@@ -247,7 +247,7 @@ public final class Routines {
 	/**
 	 * Call <code>dbo.ufnGetSalesOrderStatusText</code>
 	 */
-	public static java.lang.String ufnGetSalesOrderStatusText(org.jooq.Configuration configuration, java.lang.Byte Status) {
+	public static java.lang.String ufnGetSalesOrderStatusText(org.jooq.Configuration configuration, org.jooq.types.UByte Status) {
 		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetSalesOrderStatusText f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetSalesOrderStatusText();
 		f.setStatus(Status);
 
@@ -258,7 +258,7 @@ public final class Routines {
 	/**
 	 * Get <code>dbo.ufnGetSalesOrderStatusText</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> ufnGetSalesOrderStatusText(java.lang.Byte Status) {
+	public static org.jooq.Field<java.lang.String> ufnGetSalesOrderStatusText(org.jooq.types.UByte Status) {
 		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetSalesOrderStatusText f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetSalesOrderStatusText();
 		f.setStatus(Status);
 
@@ -268,7 +268,7 @@ public final class Routines {
 	/**
 	 * Get <code>dbo.ufnGetSalesOrderStatusText</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> ufnGetSalesOrderStatusText(org.jooq.Field<java.lang.Byte> Status) {
+	public static org.jooq.Field<java.lang.String> ufnGetSalesOrderStatusText(org.jooq.Field<org.jooq.types.UByte> Status) {
 		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetSalesOrderStatusText f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetSalesOrderStatusText();
 		f.setStatus(Status);
 
@@ -351,9 +351,9 @@ public final class Routines {
 	/**
 	 * Call <code>dbo.uspGetEmployeeManagers</code>
 	 */
-	public static void uspGetEmployeeManagers(org.jooq.Configuration configuration, java.lang.Integer EmployeeID) {
+	public static void uspGetEmployeeManagers(org.jooq.Configuration configuration, java.lang.Integer BusinessEntityID) {
 		org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspGetEmployeeManagers p = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspGetEmployeeManagers();
-		p.setEmployeeID(EmployeeID);
+		p.setBusinessEntityID(BusinessEntityID);
 
 		p.execute(configuration);
 	}
@@ -361,9 +361,9 @@ public final class Routines {
 	/**
 	 * Call <code>dbo.uspGetManagerEmployees</code>
 	 */
-	public static void uspGetManagerEmployees(org.jooq.Configuration configuration, java.lang.Integer ManagerID) {
+	public static void uspGetManagerEmployees(org.jooq.Configuration configuration, java.lang.Integer BusinessEntityID) {
 		org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspGetManagerEmployees p = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspGetManagerEmployees();
-		p.setManagerID(ManagerID);
+		p.setBusinessEntityID(BusinessEntityID);
 
 		p.execute(configuration);
 	}
@@ -400,7 +400,15 @@ public final class Routines {
 	}
 
 	/**
-	 * No further instances allowed
+	 * Call <code>dbo.uspSearchCandidateResumes</code>
 	 */
-	private Routines() {}
+	public static void uspSearchCandidateResumes(org.jooq.Configuration configuration, java.lang.String searchString, java.lang.Boolean useInflectional, java.lang.Boolean useThesaurus, java.lang.Integer language) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspSearchCandidateResumes p = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspSearchCandidateResumes();
+		p.setsearchString(searchString);
+		p.setuseInflectional(useInflectional);
+		p.setuseThesaurus(useThesaurus);
+		p.setlanguage(language);
+
+		p.execute(configuration);
+	}
 }

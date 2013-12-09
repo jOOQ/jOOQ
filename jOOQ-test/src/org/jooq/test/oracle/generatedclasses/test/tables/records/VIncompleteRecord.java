@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "V_INCOMPLETE", schema = "TEST")
 public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord> implements org.jooq.Record9<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object> {
 
-	private static final long serialVersionUID = 1002244030;
+	private static final long serialVersionUID = -1591082957;
 
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.ID</code>. 
@@ -310,6 +310,95 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	@Override
 	public java.lang.Object value9() {
 		return getContentPdf();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VIncompleteRecord value1(java.lang.Object value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VIncompleteRecord value2(java.lang.Object value) {
+		setAuthorId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VIncompleteRecord value3(java.lang.Object value) {
+		setCoAuthorId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VIncompleteRecord value4(java.lang.Object value) {
+		setDetailsId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VIncompleteRecord value5(java.lang.Object value) {
+		setTitle(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VIncompleteRecord value6(java.lang.Object value) {
+		setPublishedIn(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VIncompleteRecord value7(java.lang.Object value) {
+		setLanguageId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VIncompleteRecord value8(java.lang.Object value) {
+		setContentText(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VIncompleteRecord value9(java.lang.Object value) {
+		setContentPdf(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VIncompleteRecord values(java.lang.Object value1, java.lang.Object value2, java.lang.Object value3, java.lang.Object value4, java.lang.Object value5, java.lang.Object value6, java.lang.Object value7, java.lang.Object value8, java.lang.Object value9) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

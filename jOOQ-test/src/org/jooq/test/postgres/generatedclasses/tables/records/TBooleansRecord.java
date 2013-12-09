@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord> implements org.jooq.Record11<java.lang.Integer, org.jooq.test._.converters.Boolean_10, org.jooq.test._.converters.Boolean_TF_LC, org.jooq.test._.converters.Boolean_TF_UC, org.jooq.test._.converters.Boolean_YES_NO_LC, org.jooq.test._.converters.Boolean_YES_NO_UC, org.jooq.test._.converters.Boolean_YN_LC, org.jooq.test._.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBooleans {
 
-	private static final long serialVersionUID = -400205722;
+	private static final long serialVersionUID = 1559650344;
 
 	/**
 	 * Setter for <code>public.t_booleans.id</code>. 
@@ -393,6 +393,113 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@Override
 	public java.lang.Boolean value11() {
 		return getNBoolean();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBooleansRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBooleansRecord value2(org.jooq.test._.converters.Boolean_10 value) {
+		setOneZero(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBooleansRecord value3(org.jooq.test._.converters.Boolean_TF_LC value) {
+		setTrueFalseLc(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBooleansRecord value4(org.jooq.test._.converters.Boolean_TF_UC value) {
+		setTrueFalseUc(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBooleansRecord value5(org.jooq.test._.converters.Boolean_YES_NO_LC value) {
+		setYesNoLc(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBooleansRecord value6(org.jooq.test._.converters.Boolean_YES_NO_UC value) {
+		setYesNoUc(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBooleansRecord value7(org.jooq.test._.converters.Boolean_YN_LC value) {
+		setYNLc(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBooleansRecord value8(org.jooq.test._.converters.Boolean_YN_UC value) {
+		setYNUc(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBooleansRecord value9(java.lang.Boolean value) {
+		setVcBoolean(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBooleansRecord value10(java.lang.Boolean value) {
+		setCBoolean(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBooleansRecord value11(java.lang.Boolean value) {
+		setNBoolean(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBooleansRecord values(java.lang.Integer value1, org.jooq.test._.converters.Boolean_10 value2, org.jooq.test._.converters.Boolean_TF_LC value3, org.jooq.test._.converters.Boolean_TF_UC value4, org.jooq.test._.converters.Boolean_YES_NO_LC value5, org.jooq.test._.converters.Boolean_YES_NO_UC value6, org.jooq.test._.converters.Boolean_YN_LC value7, org.jooq.test._.converters.Boolean_YN_UC value8, java.lang.Boolean value9, java.lang.Boolean value10, java.lang.Boolean value11) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

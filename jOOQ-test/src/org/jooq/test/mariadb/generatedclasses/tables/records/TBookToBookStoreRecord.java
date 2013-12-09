@@ -11,7 +11,7 @@ package org.jooq.test.mariadb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mariadb.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1059827172;
+	private static final long serialVersionUID = -752459625;
 
 	/**
 	 * Setter for <code>test.t_book_to_book_store.book_store_name</code>. The book store name
@@ -133,6 +133,41 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@Override
 	public java.lang.Integer value3() {
 		return getStock();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookToBookStoreRecord value1(java.lang.String value) {
+		setBookStoreName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookToBookStoreRecord value2(java.lang.Integer value) {
+		setBookId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookToBookStoreRecord value3(java.lang.Integer value) {
+		setStock(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookToBookStoreRecord values(java.lang.String value1, java.lang.Integer value2, java.lang.Integer value3) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

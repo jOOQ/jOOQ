@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_UNSIGNED")
 public class T_UNSIGNED extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_UNSIGNED> implements java.lang.Cloneable, org.jooq.Record4<java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_UNSIGNED_INTERFACE {
 
-	private static final long serialVersionUID = -1053503735;
+	private static final long serialVersionUID = 991139178;
 
 	/**
 	 * Setter for <code>T_UNSIGNED.U_BYTE</code>. 
@@ -163,6 +163,50 @@ public class T_UNSIGNED extends org.jooq.impl.TableRecordImpl<org.jooq.test.orac
 	@Override
 	public java.math.BigInteger value4() {
 		return getU_LONG();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_UNSIGNED value1(java.lang.Short value) {
+		setU_BYTE(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_UNSIGNED value2(java.lang.Integer value) {
+		setU_SHORT(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_UNSIGNED value3(java.lang.Long value) {
+		setU_INT(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_UNSIGNED value4(java.math.BigInteger value) {
+		setU_LONG(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_UNSIGNED values(java.lang.Short value1, java.lang.Integer value2, java.lang.Long value3, java.math.BigInteger value4) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

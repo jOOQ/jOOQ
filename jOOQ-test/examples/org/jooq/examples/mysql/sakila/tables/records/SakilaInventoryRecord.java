@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaInventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaInventoryRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.Short, java.lang.Byte, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1882083896;
+	private static final long serialVersionUID = -130227859;
 
 	/**
 	 * Setter for <code>sakila.inventory.inventory_id</code>. 
@@ -161,6 +161,50 @@ public class SakilaInventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	@Override
 	public java.sql.Timestamp value4() {
 		return getLastUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaInventoryRecord value1(java.lang.Integer value) {
+		setInventoryId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaInventoryRecord value2(java.lang.Short value) {
+		setFilmId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaInventoryRecord value3(java.lang.Byte value) {
+		setStoreId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaInventoryRecord value4(java.sql.Timestamp value) {
+		setLastUpdate(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaInventoryRecord values(java.lang.Integer value1, java.lang.Short value2, java.lang.Byte value3, java.sql.Timestamp value4) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record9<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long, java.lang.String, java.sql.Timestamp, java.sql.Date> {
 
-	private static final long serialVersionUID = -1709389714;
+	private static final long serialVersionUID = -966335302;
 
 	/**
 	 * Setter for <code>dbo.t_dates.id</code>. 
@@ -311,6 +311,95 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	@Override
 	public java.sql.Date value9() {
 		return getOffset3();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value2(java.sql.Date value) {
+		setD(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value3(java.sql.Time value) {
+		setT(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value4(java.sql.Timestamp value) {
+		setTs(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value5(java.lang.Integer value) {
+		setDInt(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value6(java.lang.Long value) {
+		setTsBigint(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value7(java.lang.String value) {
+		setOffset1(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value8(java.sql.Timestamp value) {
+		setOffset2(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value9(java.sql.Date value) {
+		setOffset3(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord values(java.lang.Integer value1, java.sql.Date value2, java.sql.Time value3, java.sql.Timestamp value4, java.lang.Integer value5, java.lang.Long value6, java.lang.String value7, java.sql.Timestamp value8, java.sql.Date value9) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

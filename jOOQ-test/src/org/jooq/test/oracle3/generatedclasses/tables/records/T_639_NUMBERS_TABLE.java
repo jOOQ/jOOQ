@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_639_NUMBERS_TABLE")
 public class T_639_NUMBERS_TABLE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_639_NUMBERS_TABLE> implements java.lang.Cloneable, org.jooq.Record11<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_639_NUMBERS_TABLE_INTERFACE {
 
-	private static final long serialVersionUID = 2134674726;
+	private static final long serialVersionUID = 1313034594;
 
 	/**
 	 * Setter for <code>T_639_NUMBERS_TABLE.ID</code>. 
@@ -407,6 +407,113 @@ public class T_639_NUMBERS_TABLE extends org.jooq.impl.UpdatableRecordImpl<org.j
 	@Override
 	public java.math.BigDecimal value11() {
 		return getBIG_DECIMAL();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639_NUMBERS_TABLE value1(java.lang.Integer value) {
+		setID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639_NUMBERS_TABLE value2(java.lang.Byte value) {
+		setBYTE(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639_NUMBERS_TABLE value3(java.lang.Short value) {
+		setSHORT(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639_NUMBERS_TABLE value4(java.lang.Integer value) {
+		setINTEGER(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639_NUMBERS_TABLE value5(java.lang.Long value) {
+		setLONG(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639_NUMBERS_TABLE value6(java.lang.Byte value) {
+		setBYTE_DECIMAL(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639_NUMBERS_TABLE value7(java.lang.Short value) {
+		setSHORT_DECIMAL(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639_NUMBERS_TABLE value8(java.lang.Integer value) {
+		setINTEGER_DECIMAL(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639_NUMBERS_TABLE value9(java.lang.Long value) {
+		setLONG_DECIMAL(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639_NUMBERS_TABLE value10(java.math.BigInteger value) {
+		setBIG_INTEGER(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639_NUMBERS_TABLE value11(java.math.BigDecimal value) {
+		setBIG_DECIMAL(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639_NUMBERS_TABLE values(java.lang.Integer value1, java.lang.Byte value2, java.lang.Short value3, java.lang.Integer value4, java.lang.Long value5, java.lang.Byte value6, java.lang.Short value7, java.lang.Integer value8, java.lang.Long value9, java.math.BigInteger value10, java.math.BigDecimal value11) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

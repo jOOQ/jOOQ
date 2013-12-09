@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_TRIGGERS")
 public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS> implements java.lang.Cloneable, org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TRIGGERS_INTERFACE {
 
-	private static final long serialVersionUID = 1687989090;
+	private static final long serialVersionUID = -663691490;
 
 	/**
 	 * Setter for <code>T_TRIGGERS.ID_GENERATED</code>. 
@@ -143,6 +143,41 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	@Override
 	public java.lang.Integer value3() {
 		return getCOUNTER();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_TRIGGERS value1(java.lang.Integer value) {
+		setID_GENERATED(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_TRIGGERS value2(java.lang.Integer value) {
+		setID(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_TRIGGERS value3(java.lang.Integer value) {
+		setCOUNTER(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_TRIGGERS values(java.lang.Integer value1, java.lang.Integer value2, java.lang.Integer value3) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

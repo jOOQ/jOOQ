@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_2025Record> implements org.jooq.Record2<java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 391288003;
+	private static final long serialVersionUID = 1604635306;
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>. 
@@ -89,6 +89,32 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	@Override
 	public java.lang.String value2() {
 		return getRefName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_2025Record value1(java.lang.Integer value) {
+		setRefId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_2025Record value2(java.lang.String value) {
+		setRefName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XTestCase_2025Record values(java.lang.Integer value1, java.lang.String value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

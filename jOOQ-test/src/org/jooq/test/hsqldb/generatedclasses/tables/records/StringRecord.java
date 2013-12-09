@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class StringRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.StringRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.String>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IString {
 
-	private static final long serialVersionUID = 157042587;
+	private static final long serialVersionUID = 1368775506;
 
 	/**
 	 * Setter for <code>PUBLIC.STRING.ID</code>. 
@@ -93,6 +93,32 @@ public class StringRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	@Override
 	public java.lang.String value2() {
 		return getOther();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public StringRecord value1(java.lang.Integer value) {
+		setId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public StringRecord value2(java.lang.String value) {
+		setOther(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public StringRecord values(java.lang.Integer value1, java.lang.String value2) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

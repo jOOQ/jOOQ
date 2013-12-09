@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends org.jooq.impl.SchemaImpl implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1651730778;
+	private static final long serialVersionUID = 179640451;
 
 	/**
 	 * The singleton instance of <code></code>
@@ -62,6 +62,7 @@ public class DefaultSchema extends org.jooq.impl.SchemaImpl implements java.lang
 			org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE,
 			org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS,
 			org.jooq.test.oracle3.generatedclasses.tables.T_UNSIGNED.T_UNSIGNED,
+			org.jooq.test.oracle3.generatedclasses.tables.T_2845_CASE_sensitivity.T_2845_CASE_sensitivity,
 			org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE,
 			org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST,
 			org.jooq.test.oracle3.generatedclasses.tables.T_785.T_785,

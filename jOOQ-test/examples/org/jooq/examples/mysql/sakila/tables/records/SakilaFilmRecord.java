@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaFilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmRecord> implements org.jooq.Record13<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.lang.Byte, java.lang.Byte, java.lang.Byte, java.math.BigDecimal, java.lang.Short, java.math.BigDecimal, org.jooq.examples.mysql.sakila.enums.SakilaFilmRating, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1735538422;
+	private static final long serialVersionUID = 1796918493;
 
 	/**
 	 * Setter for <code>sakila.film.film_id</code>. 
@@ -431,6 +431,131 @@ public class SakilaFilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@Override
 	public java.sql.Timestamp value13() {
 		return getLastUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaFilmRecord value1(java.lang.Short value) {
+		setFilmId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaFilmRecord value2(java.lang.String value) {
+		setTitle(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaFilmRecord value3(java.lang.String value) {
+		setDescription(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaFilmRecord value4(java.lang.String value) {
+		setReleaseYear(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaFilmRecord value5(java.lang.Byte value) {
+		setLanguageId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaFilmRecord value6(java.lang.Byte value) {
+		setOriginalLanguageId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaFilmRecord value7(java.lang.Byte value) {
+		setRentalDuration(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaFilmRecord value8(java.math.BigDecimal value) {
+		setRentalRate(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaFilmRecord value9(java.lang.Short value) {
+		setLength(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaFilmRecord value10(java.math.BigDecimal value) {
+		setReplacementCost(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaFilmRecord value11(org.jooq.examples.mysql.sakila.enums.SakilaFilmRating value) {
+		setRating(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaFilmRecord value12(java.lang.String value) {
+		setSpecialFeatures(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaFilmRecord value13(java.sql.Timestamp value) {
+		setLastUpdate(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SakilaFilmRecord values(java.lang.Short value1, java.lang.String value2, java.lang.String value3, java.lang.String value4, java.lang.Byte value5, java.lang.Byte value6, java.lang.Byte value7, java.math.BigDecimal value8, java.lang.Short value9, java.math.BigDecimal value10, org.jooq.examples.mysql.sakila.enums.SakilaFilmRating value11, java.lang.String value12, java.sql.Timestamp value13) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

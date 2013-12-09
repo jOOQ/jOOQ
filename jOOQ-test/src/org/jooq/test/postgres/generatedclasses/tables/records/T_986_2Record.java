@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_986_2Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_986_2 {
 
-	private static final long serialVersionUID = 85759114;
+	private static final long serialVersionUID = 690275757;
 
 	/**
 	 * Setter for <code>public.t_986_2.ref</code>. 
@@ -61,6 +61,23 @@ public class T_986_2Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	@Override
 	public java.lang.Integer value1() {
 		return getRef();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_986_2Record value1(java.lang.Integer value) {
+		setRef(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_986_2Record values(java.lang.Integer value1) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

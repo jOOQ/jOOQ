@@ -15,7 +15,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -2014808840;
+	private static final long serialVersionUID = -489982961;
 
 	/**
 	 * Setter for <code>test2.t_book_to_book_store.book_store_name</code>. The book store name
@@ -140,6 +140,41 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@Override
 	public java.lang.Integer value3() {
 		return getStock();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookToBookStoreRecord value1(java.lang.String value) {
+		setBookStoreName(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookToBookStoreRecord value2(java.lang.Integer value) {
+		setBookId(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookToBookStoreRecord value3(java.lang.Integer value) {
+		setStock(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TBookToBookStoreRecord values(java.lang.String value1, java.lang.Integer value2, java.lang.Integer value3) {
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

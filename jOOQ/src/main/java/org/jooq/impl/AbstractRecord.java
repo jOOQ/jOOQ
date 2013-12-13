@@ -48,6 +48,7 @@ import static org.jooq.impl.Utils.getAnnotatedMembers;
 import static org.jooq.impl.Utils.getMatchingGetter;
 import static org.jooq.impl.Utils.getMatchingMembers;
 import static org.jooq.impl.Utils.hasColumnAnnotations;
+import static org.jooq.impl.Utils.indexOrFail;
 import static org.jooq.impl.Utils.settings;
 
 import java.lang.reflect.Method;
@@ -288,7 +289,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     final <T> Value<T> getValue0(Field<T> field) {
-        return getValue0(fieldsRow().indexOf(field));
+        return getValue0(indexOrFail(fieldsRow(), field));
     }
 
     final Value<?>[] getValues() {
@@ -305,7 +306,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> void setValue(Field<T> field, T value) {
-        setValue(fields.indexOf(field), field, value);
+        setValue(indexOrFail(fields, field), field, value);
     }
 
     private final <T> void setValue(int index, Field<T> field, T value) {
@@ -351,7 +352,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     final void setValue(Field<?> field, Value<?> value) {
-        setValue(fieldsRow().indexOf(field), value);
+        setValue(indexOrFail(fieldsRow(), field), value);
     }
 
     final void setValue(int index, Value<?> value) {
@@ -388,7 +389,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> T original(Field<T> field) {
-        return (T) original(fieldsRow().indexOf(field));
+        return (T) original(indexOrFail(fieldsRow(), field));
     }
 
     @Override
@@ -398,7 +399,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final Object original(String fieldName) {
-        return original(fieldsRow().indexOf(fieldName));
+        return original(indexOrFail(fieldsRow(), fieldName));
     }
 
     @Override
@@ -414,7 +415,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final boolean changed(Field<?> field) {
-        return changed(fieldsRow().indexOf(field));
+        return changed(indexOrFail(fieldsRow(), field));
     }
 
     @Override
@@ -424,7 +425,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final boolean changed(String fieldName) {
-        return changed(fieldsRow().indexOf(fieldName));
+        return changed(indexOrFail(fieldsRow(), fieldName));
     }
 
     @Override
@@ -436,7 +437,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void changed(Field<?> field, boolean changed) {
-        changed(fieldsRow().indexOf(field), changed);
+        changed(indexOrFail(fieldsRow(), field), changed);
     }
 
     @Override
@@ -446,7 +447,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void changed(String fieldName, boolean changed) {
-        changed(fieldsRow().indexOf(fieldName), changed);
+        changed(indexOrFail(fieldsRow(), fieldName), changed);
     }
 
     @Override
@@ -458,7 +459,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void reset(Field<?> field) {
-        reset(fieldsRow().indexOf(field));
+        reset(indexOrFail(fieldsRow(), field));
     }
 
     @Override
@@ -468,7 +469,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void reset(String fieldName) {
-        reset(fieldsRow().indexOf(fieldName));
+        reset(indexOrFail(fieldsRow(), fieldName));
     }
 
     @Override

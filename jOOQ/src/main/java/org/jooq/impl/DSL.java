@@ -4729,6 +4729,44 @@ public class DSL {
      * </pre></code>
      */
     @Support({ CUBRID, ORACLE, POSTGRES })
+    public static Table<Record1<Integer>> generateSeries(int from, Field<Integer> to) {
+        return generateSeries(val(from), nullSafe(to));
+    }
+
+    /**
+     * A table function generating a series of values from <code>from</code> to
+     * <code>to</code> (inclusive).
+     * <p>
+     * This function is inspired by PostgreSQL's
+     * <code>GENERATE_SERIES(from, to)</code> function. Other SQL dialects may
+     * be capable of emulating this behaviour, e.g. Oracle: <code><pre>
+     * -- PostgreSQL
+     * SELECT * FROM GENERATE_SERIES(a, b)
+     *
+     * -- Oracle
+     * SELECT * FROM (SELECT a + LEVEL - 1 FROM DUAL CONNECT BY a + LEVEL - 1 &lt;= b)
+     * </pre></code>
+     */
+    @Support({ CUBRID, ORACLE, POSTGRES })
+    public static Table<Record1<Integer>> generateSeries(Field<Integer> from, int to) {
+        return new GenerateSeries(nullSafe(from), val(to));
+    }
+
+    /**
+     * A table function generating a series of values from <code>from</code> to
+     * <code>to</code> (inclusive).
+     * <p>
+     * This function is inspired by PostgreSQL's
+     * <code>GENERATE_SERIES(from, to)</code> function. Other SQL dialects may
+     * be capable of emulating this behaviour, e.g. Oracle: <code><pre>
+     * -- PostgreSQL
+     * SELECT * FROM GENERATE_SERIES(a, b)
+     *
+     * -- Oracle
+     * SELECT * FROM (SELECT a + LEVEL - 1 FROM DUAL CONNECT BY a + LEVEL - 1 &lt;= b)
+     * </pre></code>
+     */
+    @Support({ CUBRID, ORACLE, POSTGRES })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, Field<Integer> to) {
         return new GenerateSeries(nullSafe(from), nullSafe(to));
     }

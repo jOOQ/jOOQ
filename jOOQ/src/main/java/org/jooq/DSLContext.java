@@ -1374,7 +1374,7 @@ public interface DSLContext {
     @Support
     SelectSelectStep<Record> select(Field<?>... fields);
 
-    // [jooq-tools] START [select]
+    // [jooq-tools] START [select]
     /**
      * Create a new DSL select statement.
      * <p>
@@ -2173,7 +2173,7 @@ public interface DSLContext {
     @Support
     SelectSelectStep<Record> selectDistinct(Field<?>... fields);
 
-    // [jooq-tools] START [selectDistinct]
+    // [jooq-tools] START [selectDistinct]
     /**
      * Create a new DSL select statement.
      * <p>
@@ -3055,7 +3055,7 @@ public interface DSLContext {
     @Support
     <R extends Record> InsertSetStep<R> insertInto(Table<R> into);
 
-    // [jooq-tools] START [insert]
+    // [jooq-tools] START [insert]
     /**
      * Create a new DSL insert statement.
      * <p>
@@ -3610,7 +3610,7 @@ public interface DSLContext {
     )
     <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table);
 
-    // [jooq-tools] START [merge]
+    // [jooq-tools] START [merge]
     /**
      * Create a new DSL merge statement (H2-specific syntax).
      * <p>

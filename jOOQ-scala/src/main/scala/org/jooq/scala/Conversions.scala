@@ -368,7 +368,7 @@ object Conversions {
   // Conversions from jOOQ Record[N] types to Scala Tuple[N] types
   // --------------------------------------------------------------------------
 
-// [jooq-tools] START [tuples]
+// [jooq-tools] START [tuples]
   /**
    * Enrich any {@link org.jooq.Record1} with the {@link Tuple1} case class
    */
@@ -554,7 +554,7 @@ object Conversions {
     def map(record: R) = f(record)
   }
 
-// [jooq-tools] START [mapper]
+// [jooq-tools] START [mapper]
   /**
    * Wrap a Scala <code>Tuple1 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */

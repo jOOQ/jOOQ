@@ -11,9 +11,7 @@ public enum U_2781 implements org.jooq.EnumType {
 
 	org_("org"),
 
-	jooq("jooq"),
-
-	;
+	jooq("jooq");
 
 	private final java.lang.String literal;
 

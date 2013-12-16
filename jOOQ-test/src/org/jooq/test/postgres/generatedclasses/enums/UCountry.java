@@ -13,9 +13,7 @@ public enum UCountry implements org.jooq.EnumType {
 
 	England("England"),
 
-	Germany("Germany"),
-
-	;
+	Germany("Germany");
 
 	private final java.lang.String literal;
 

@@ -13,9 +13,7 @@ public enum TBookStatus implements org.jooq.EnumType {
 
 	ORDERED("ORDERED"),
 
-	ON_STOCK("ON STOCK"),
-
-	;
+	ON_STOCK("ON STOCK");
 
 	private final java.lang.String literal;
 

@@ -17,9 +17,7 @@ public enum SakilaFilmRating implements org.jooq.EnumType {
 
 	R("R"),
 
-	NC_17("NC-17"),
-
-	;
+	NC_17("NC-17");
 
 	private final java.lang.String literal;
 

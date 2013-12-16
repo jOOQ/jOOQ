@@ -111,9 +111,7 @@ public enum T_959JavaKeywords implements org.jooq.EnumType {
 
 	volatile_("volatile"),
 
-	while_("while"),
-
-	;
+	while_("while");
 
 	private final java.lang.String literal;
 

@@ -13,9 +13,7 @@ public enum UBookStatus implements org.jooq.EnumType {
 
 	ON_STOCK("ON STOCK"),
 
-	ORDERED("ORDERED"),
-
-	;
+	ORDERED("ORDERED");
 
 	private final java.lang.String literal;
 

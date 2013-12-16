@@ -21,9 +21,7 @@ public enum T_959SpecialCharacters implements org.jooq.EnumType {
 
 	f(""),
 
-	g("enum"),
-
-	;
+	g("enum");
 
 	private final java.lang.String literal;
 

@@ -411,11 +411,25 @@ class Function<T> extends AbstractField<T> implements
         ctx.sql("(");
 
         if (distinct) {
-            ctx.keyword("distinct").sql(" ");
+            ctx.keyword("distinct");
+
+            // [#2883] PostgreSQL can use the DISTINCT keyword with formal row value expressions.
+            if (ctx.configuration().dialect().family() == POSTGRES && arguments.size() > 1) {
+                ctx.sql("(");
+            }
+            else {
+                ctx.sql(" ");
+            }
         }
 
         if (!arguments.isEmpty()) {
             ctx.visit(arguments);
+        }
+
+        if (distinct) {
+            if (ctx.configuration().dialect().family() == POSTGRES && arguments.size() > 1) {
+                ctx.sql(")");
+            }
         }
 
         if (ignoreNulls) {

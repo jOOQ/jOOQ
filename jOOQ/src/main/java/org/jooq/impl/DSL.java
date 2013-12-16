@@ -10122,9 +10122,13 @@ public class DSL {
     /**
      * Get the count(distinct field1, field2) function.
      * <p>
-     * Some dialects support several expressions in the <code>COUNT(DISTINCT expr1, expr2)</code> aggregate function.
+     * Some dialects support several expressions in the
+     * <code>COUNT(DISTINCT expr1, expr2)</code> aggregate function.
+     * <p>
+     * {@link SQLDialect#POSTGRES} supports this as
+     * <code>COUNT(DISTINCT(expr1, expr2))</code>.
      */
-    @Support({ HSQLDB, MYSQL })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     @Transition(
         name = "COUNT DISTINCT",
         args = "Field+"

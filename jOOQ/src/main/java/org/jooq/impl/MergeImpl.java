@@ -152,6 +152,7 @@ implements
     MergeUsingStep<R>,
 
 // [jooq-tools] START [implementsKeyStep]
+
     MergeKeyStep1<R, T1>,
     MergeKeyStep2<R, T1, T2>,
     MergeKeyStep3<R, T1, T2, T3>,
@@ -184,6 +185,7 @@ implements
     MergeNotMatchedSetMoreStep<R>,
 
 // [jooq-tools] START [implementsNotMatchedValuesStep]
+
     MergeNotMatchedValuesStep1<R, T1>,
     MergeNotMatchedValuesStep2<R, T1, T2>,
     MergeNotMatchedValuesStep3<R, T1, T2, T3>,
@@ -307,6 +309,7 @@ implements
     // -------------------------------------------------------------------------
 
 // [jooq-tools] START [values]
+
     @Override
     public final MergeImpl values(T1 value1) {
         return values(new Object[] { value1 });
@@ -751,6 +754,7 @@ implements
     }
 
 // [jooq-tools] START [whenNotMatchedThenInsert]
+
     @Override
     @SuppressWarnings("hiding")
     public final <T1> MergeImpl whenNotMatchedThenInsert(Field<T1> field1) {

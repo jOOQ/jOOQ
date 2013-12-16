@@ -99,10 +99,11 @@ public class CRUDTests<
     IPK  extends UpdatableRecord<IPK>,
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
-    T785 extends TableRecord<T785>>
-extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> {
+    T785 extends TableRecord<T785>,
+    CASE extends UpdatableRecord<CASE>>
+extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> {
 
-    public CRUDTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
+    public CRUDTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
         super(delegate);
     }
 
@@ -787,6 +788,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             fail();
         }
         catch (DataChangedException expected) {}
+    }
+
+    @Test
+    public void testStoreVsExecuteInsert() throws Exception {
+        if (TIdentityPK() == null) {
+            log.info("SKIPPING", "store() vs. executeInsert() tests");
+            return;
+        }
+
+        jOOQAbstractTest.reset = false;
+
+        // [#2835] The two means of data insertion should show exactly the same behaviour
+        // with respect to NULL values for identity columns.
+        IPK i1 = create().newRecord(TIdentityPK());
+        i1.setValue(TIdentityPK_VAL(), 1);
+        assertEquals(1, create().executeInsert(i1));
+
+        IPK i2 = create().newRecord(TIdentityPK());
+        i2.setValue(TIdentityPK_VAL(), 1);
+        assertEquals(1, i2.store());
     }
 
     @Test

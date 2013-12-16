@@ -252,6 +252,13 @@ class Val<T> extends AbstractParam<T> {
             toSQLCast(context, dataType, getValueLength(), 0, 0);
         }
 
+        /* [pro] xx
+        xx xxxxxxx xxxx xxxx xxxxx xxxxxx xxx xx xxxx xx xxx xxxxxx xx xxxx xxxxxxxx
+        xxxx xx xxxxx xx xxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxx xxxxxxxxx xx xx xxx
+        x
+        xx [/pro] */
+
         // In all other cases, the bind variable can be cast normally
         else {
             toSQLCast(context, dataType, dataType.length(), dataType.precision(), dataType.scale());

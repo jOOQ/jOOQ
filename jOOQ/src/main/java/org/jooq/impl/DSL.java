@@ -621,6 +621,7 @@ public class DSL {
     }
 
 // [jooq-tools] START [select]
+
     /**
      * Create a new DSL subselect statement.
      * <p>
@@ -1620,6 +1621,7 @@ public class DSL {
     }
 
 // [jooq-tools] START [selectDistinct]
+
     /**
      * Create a new DSL subselect statement.
      * <p>
@@ -2687,6 +2689,7 @@ public class DSL {
     }
 
     // [jooq-tools] START [insert]
+
     /**
      * Create a new DSL insert statement.
      * <p>
@@ -3486,6 +3489,7 @@ public class DSL {
     }
 
     // [jooq-tools] START [merge]
+
     /**
      * Create a new DSL merge statement (H2-specific syntax).
      * <p>
@@ -11020,6 +11024,7 @@ public class DSL {
     }
 
     // [jooq-tools] START [row-value]
+
     /**
      * Create a row value expression of degree <code>1</code>.
      * <p>
@@ -11409,6 +11414,7 @@ public class DSL {
     }
 
 // [jooq-tools] START [row-field]
+
     /**
      * Create a row value expression of degree <code>1</code>.
      * <p>
@@ -11802,6 +11808,7 @@ public class DSL {
     // -------------------------------------------------------------------------
 
 // [jooq-tools] START [values]
+
     /**
      * Create a <code>VALUES()</code> expression of degree <code>1</code>.
      * <p>

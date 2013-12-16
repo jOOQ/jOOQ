@@ -662,9 +662,7 @@ public interface DSLContext {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The results from the executed query.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the query returned more than one record
      */
@@ -1375,6 +1373,7 @@ public interface DSLContext {
     SelectSelectStep<Record> select(Field<?>... fields);
 
     // [jooq-tools] START [select]
+
     /**
      * Create a new DSL select statement.
      * <p>
@@ -2174,6 +2173,7 @@ public interface DSLContext {
     SelectSelectStep<Record> selectDistinct(Field<?>... fields);
 
     // [jooq-tools] START [selectDistinct]
+
     /**
      * Create a new DSL select statement.
      * <p>
@@ -3056,6 +3056,7 @@ public interface DSLContext {
     <R extends Record> InsertSetStep<R> insertInto(Table<R> into);
 
     // [jooq-tools] START [insert]
+
     /**
      * Create a new DSL insert statement.
      * <p>
@@ -3611,6 +3612,7 @@ public interface DSLContext {
     <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table);
 
     // [jooq-tools] START [merge]
+
     /**
      * Create a new DSL merge statement (H2-specific syntax).
      * <p>

@@ -132,6 +132,11 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
             if (identifier.equals(getJavaIdentifier(e.getContainer()))) {
                 return identifier + "_";
             }
+
+            // [#2781] Disambiguate collisions with the leading package name
+            if (identifier.equals(getJavaPackageName(e.getContainer()).replaceAll("\\..*", ""))) {
+                return identifier + "_";
+            }
         }
 
         return identifier;
@@ -316,7 +321,14 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaMemberName(Definition definition, Mode mode) {
-        return convertToJavaIdentifier(delegate.getJavaMemberName(definition, mode));
+        String identifier = convertToJavaIdentifier(delegate.getJavaMemberName(definition, mode));
+
+        // [#2781] Disambiguate collisions with the leading package name
+        if (identifier.equals(getJavaPackageName(definition, mode).replaceAll("\\..*", ""))) {
+            return identifier + "_";
+        }
+
+        return identifier;
     }
 
     @Override

@@ -9,6 +9,18 @@
     </jdbc>
     <generator>
         <name>org.jooq.util.DefaultGenerator</name>
+        <strategy>
+            <matchers>
+                <fields>
+                    <expression>(?i:(.*?.)?T_2781\.(.*))</expression>
+                    
+                    <fieldIdentifier>
+                        <transform>LOWER</transform>
+                        <expression>$2</expression>
+                    </fieldIdentifier>
+                </fields>
+            </matchers>        
+        </strategy>
         <database>
             <name>org.jooq.util.postgres.PostgresDatabase</name>
             <includes>t_.*|x_.*|v_.*|V_.*|p_.*|f_.*|u_.*|(f|p)[0-9]+|s_.*</includes>

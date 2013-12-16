@@ -76,6 +76,7 @@ import java.util.Queue;
 
 import junit.framework.Assert;
 
+import org.jooq.AttachableInternal;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -94,6 +95,7 @@ import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
@@ -141,10 +143,11 @@ public class FetchTests<
     IPK  extends UpdatableRecord<IPK>,
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
-    T785 extends TableRecord<T785>>
-extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> {
+    T785 extends TableRecord<T785>,
+    CASE extends UpdatableRecord<CASE>>
+extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> {
 
-    public FetchTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
+    public FetchTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
         super(delegate);
     }
 
@@ -1169,7 +1172,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testFetchIntoTableRecords() throws Exception {
-        jOOQAbstractTest.reset = false;
 
         // [#1819] Check if only applicable setters are used
         // JOIN two tables into a generated UpdatableRecord
@@ -1193,6 +1195,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(BOOK_TITLES.get(i), result1.get(i).getValue(TBook_TITLE()));
             assertEquals(BOOK_AUTHOR_IDS.get(i), result1.get(i).getValue(TBook_AUTHOR_ID()));
         }
+    }
+
+    @Test
+    public void testFetchAttachables() throws Exception {
+        // [#2869] DefaultRecordMapper should recognise Attachable types and attach them
+        // according to the Settings.
+
+        B b1 = create().selectFrom(TBook()).where(TBook_ID().eq(1)).fetchOne();
+        B b2 = b1.into(TBook().getRecordType());
+        
+        assertNotNull(((AttachableInternal) b1).configuration());
+        assertNotNull(((AttachableInternal) b2).configuration());
+        
+        B b3 = create(new Settings().withAttachRecords(false))
+                    .selectFrom(TBook()).where(TBook_ID().eq(1)).fetchOne();
+        B b4 = b3.into(TBook().getRecordType());
+        
+        assertNull(((AttachableInternal) b3).configuration());
+        assertNull(((AttachableInternal) b4).configuration());
     }
 
     @Test

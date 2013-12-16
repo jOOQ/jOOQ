@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1560664464;
+	private static final long serialVersionUID = -157711550;
 
 	/**
 	 * The singleton instance of <code>PUBLIC</code>
@@ -53,6 +53,7 @@ public class Public extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.hsqldb.generatedclasses.tables.PreparedStatement.PREPARED_STATEMENT,
 			org.jooq.test.hsqldb.generatedclasses.tables.String.STRING,
 			org.jooq.test.hsqldb.generatedclasses.tables.System.SYSTEM,
+			org.jooq.test.hsqldb.generatedclasses.tables.T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY,
 			org.jooq.test.hsqldb.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,
 			org.jooq.test.hsqldb.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST,
 			org.jooq.test.hsqldb.generatedclasses.tables.T_785.T_785,

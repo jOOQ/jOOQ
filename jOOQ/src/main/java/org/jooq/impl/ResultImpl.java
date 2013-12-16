@@ -43,6 +43,7 @@ package org.jooq.impl;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+import static org.jooq.impl.Utils.indexOrFail;
 import static org.jooq.tools.StringUtils.abbreviate;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.StringUtils.rightPad;
@@ -221,7 +222,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @SuppressWarnings("unchecked")
     @Override
     public final <T> List<T> getValues(Field<T> field) {
-        return (List<T>) getValues(fieldsRow().indexOf(field));
+        return (List<T>) getValues(indexOrFail(fieldsRow(), field));
     }
 
     @Override
@@ -771,7 +772,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @SuppressWarnings("unchecked")
     @Override
     public final <K> Map<K, R> intoMap(Field<K> key) {
-        int index = fieldsRow().indexOf(key);
+        int index = indexOrFail(fieldsRow(), key);
         Map<K, R> map = new LinkedHashMap<K, R>();
 
         for (R record : this) {
@@ -786,8 +787,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @SuppressWarnings("unchecked")
     @Override
     public final <K, V> Map<K, V> intoMap(Field<K> key, Field<V> value) {
-        int kIndex = fieldsRow().indexOf(key);
-        int vIndex = fieldsRow().indexOf(value);
+        int kIndex = indexOrFail(fieldsRow(), key);
+        int vIndex = indexOrFail(fieldsRow(), value);
 
         Map<K, V> map = new LinkedHashMap<K, V>();
 
@@ -852,7 +853,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @Override
     public final <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) {
         RecordMapper<R, E> mapper = Utils.configuration(this).recordMapperProvider().provide(fields, type);
-        int index = fieldsRow().indexOf(key);
+        int index = indexOrFail(fieldsRow(), key);
         Map<K, E> map = new LinkedHashMap<K, E>();
 
         for (R record : this) {
@@ -867,7 +868,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @SuppressWarnings("unchecked")
     @Override
     public final <K> Map<K, Result<R>> intoGroups(Field<K> key) {
-        int index = fieldsRow().indexOf(key);
+        int index = indexOrFail(fieldsRow(), key);
         Map<K, Result<R>> map = new LinkedHashMap<K, Result<R>>();
 
         for (R record : this) {
@@ -888,8 +889,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @SuppressWarnings("unchecked")
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(Field<K> key, Field<V> value) {
-        int kIndex = fieldsRow().indexOf(key);
-        int vIndex = fieldsRow().indexOf(value);
+        int kIndex = indexOrFail(fieldsRow(), key);
+        int vIndex = indexOrFail(fieldsRow(), value);
 
         Map<K, List<V>> map = new LinkedHashMap<K, List<V>>();
 
@@ -941,7 +942,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @Override
     public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) {
         RecordMapper<R, E> mapper = Utils.configuration(this).recordMapperProvider().provide(fields, type);
-        int index = fieldsRow().indexOf(key);
+        int index = indexOrFail(fieldsRow(), key);
         Map<K, List<E>> map = new LinkedHashMap<K, List<E>>();
 
         for (R record : this) {
@@ -1124,7 +1125,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <T> Result<R> sortAsc(Field<T> field, Comparator<? super T> comparator) {
-        return sortAsc(fieldsRow().indexOf(field), comparator);
+        return sortAsc(indexOrFail(fieldsRow(), field), comparator);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -1135,7 +1136,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final Result<R> sortAsc(String fieldName, Comparator<?> comparator) {
-        return sortAsc(fieldsRow().indexOf(fieldName), comparator);
+        return sortAsc(indexOrFail(fieldsRow(), fieldName), comparator);
     }
 
     @Override

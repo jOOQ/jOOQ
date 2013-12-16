@@ -57,6 +57,11 @@ public class Tables {
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.System SYSTEM = org.jooq.test.hsqldb.generatedclasses.tables.System.SYSTEM;
 
 	/**
+	 * The table PUBLIC.T_2845_CASE_sensitivity
+	 */
+	public static final org.jooq.test.hsqldb.generatedclasses.tables.T_2845CaseSensitivity T_2845_CASE_SENSITIVITY = org.jooq.test.hsqldb.generatedclasses.tables.T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY;
+
+	/**
 	 * The table PUBLIC.T_639_NUMBERS_TABLE
 	 */
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.hsqldb.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;

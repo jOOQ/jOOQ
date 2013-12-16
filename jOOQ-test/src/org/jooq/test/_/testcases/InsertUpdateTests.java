@@ -92,6 +92,8 @@ import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
+import org.jooq.conf.RenderNameStyle;
+import org.jooq.conf.Settings;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -116,10 +118,11 @@ public class InsertUpdateTests<
     IPK  extends UpdatableRecord<IPK>,
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
-    T785 extends TableRecord<T785>>
-extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> {
+    T785 extends TableRecord<T785>,
+    CASE extends UpdatableRecord<CASE>>
+extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> {
 
-    public InsertUpdateTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
+    public InsertUpdateTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
         super(delegate);
     }
 
@@ -720,6 +723,45 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Other test cases may have influenced this value
         return create().selectFrom(TTriggers()).fetchOne(TTriggers_ID_GENERATED());
+    }
+
+    @Test
+    public void testInsertReturningWithCaseSensitiveColumns() throws Exception {
+        if (CASE() == null) {
+            log.info("SKIPPING", "INSERT RETURNING tests with case sensitive columns");
+            return;
+        }
+
+        jOOQAbstractTest.reset = false;
+
+        CASE c =
+        create().insertInto(CASE(), CASE_ID(), CASE_insensitive(), CASE_lower(), CASE_Mixed(), CASE_UPPER())
+                .values(1, 2, 3, 4, 5)
+                .returning()
+                .fetchOne();
+
+        assertEquals(1, (int) c.getValue(CASE_ID()));
+        assertEquals(2, (int) c.getValue(CASE_insensitive()));
+        assertEquals(3, (int) c.getValue(CASE_lower()));
+        assertEquals(4, (int) c.getValue(CASE_Mixed()));
+        assertEquals(5, (int) c.getValue(CASE_UPPER()));
+    }
+
+    @Test
+    public void testInsertReturningWithRenderNameStyleAS_IS() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        // [#2845] Some SQL dialects use Connection.prepareStatement(String, String[])
+        // in case of which column names should be transformed according to RenderNameStyle
+        A author =
+        create(new Settings().withRenderNameStyle(RenderNameStyle.AS_IS))
+                .insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+                .values(5, "XMF")
+                .returning()
+                .fetchOne();
+
+        assertEquals(5, (int) author.getValue(TAuthor_ID()));
+        assertEquals("XMF", author.getValue(TAuthor_LAST_NAME()));
     }
 
     @Test

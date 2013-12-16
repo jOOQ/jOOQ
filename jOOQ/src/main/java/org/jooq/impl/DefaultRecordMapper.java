@@ -62,6 +62,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 
+import org.jooq.Attachable;
+import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -278,7 +280,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
 
         try {
-            return delegate.map(record);
+            return attach(delegate.map(record), record);
         }
 
         // Pass MappingExceptions on to client code
@@ -542,5 +544,20 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 throw new MappingException("An error ocurred when mapping record to " + type, e);
             }
         }
+    }
+
+    private static <E> E attach(E attachable, Record record) {
+        // [#2869] Attach the mapped outcome if it is Attachable and if the context's
+        // Settings.attachRecords flag is set
+        if (attachable instanceof Attachable && record instanceof AttachableInternal) {
+            Attachable a = (Attachable) attachable;
+            AttachableInternal r = (AttachableInternal) record;
+
+            if (Utils.attachRecords(r.configuration())) {
+                a.attach(r.configuration());
+            }
+        }
+
+        return attachable;
     }
 }

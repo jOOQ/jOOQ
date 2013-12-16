@@ -106,6 +106,7 @@ import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.RecordType;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Row;
@@ -383,7 +384,7 @@ final class Utils {
         return configuration(configuration).settings();
     }
 
-    private static final boolean attachRecords(Configuration configuration) {
+    static final boolean attachRecords(Configuration configuration) {
         if (configuration != null) {
             Settings settings = configuration.settings();
 
@@ -726,6 +727,58 @@ final class Utils {
                 result.add(field(values[i], types[i]));
             }
         }
+
+        return result;
+    }
+
+    /**
+     * A utility method that fails with an exception if
+     * {@link Row#indexOf(Field)} doesn't return any index.
+     */
+    static final int indexOrFail(Row row, Field<?> field) {
+        int result = row.indexOf(field);
+
+        if (result < 0)
+            throw new IllegalArgumentException("Field (" + field + ") is not contained in Row " + row);
+
+        return result;
+    }
+
+    /**
+     * A utility method that fails with an exception if
+     * {@link Row#indexOf(String)} doesn't return any index.
+     */
+    static final int indexOrFail(Row row, String fieldName) {
+        int result = row.indexOf(fieldName);
+
+        if (result < 0)
+            throw new IllegalArgumentException("Field (" + fieldName + ") is not contained in Row " + row);
+
+        return result;
+    }
+
+    /**
+     * A utility method that fails with an exception if
+     * {@link RecordType#indexOf(Field)} doesn't return any index.
+     */
+    static final int indexOrFail(RecordType<?> row, Field<?> field) {
+        int result = row.indexOf(field);
+
+        if (result < 0)
+            throw new IllegalArgumentException("Field (" + field + ") is not contained in RecordType " + row);
+
+        return result;
+    }
+
+    /**
+     * A utility method that fails with an exception if
+     * {@link RecordType#indexOf(String)} doesn't return any index.
+     */
+    static final int indexOrFail(RecordType<?> row, String fieldName) {
+        int result = row.indexOf(fieldName);
+
+        if (result < 0)
+            throw new IllegalArgumentException("Field (" + fieldName + ") is not contained in RecordType " + row);
 
         return result;
     }

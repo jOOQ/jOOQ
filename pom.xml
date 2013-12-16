@@ -12,7 +12,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-parent</artifactId>
-    <version>3.2.0</version>
+    <version>3.2.2</version>
     <packaging>pom</packaging>
 
     <name>jOOQ Parent</name>
@@ -312,9 +312,57 @@
         
         <!-- [pro] xxx
         xxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxx
+                xxxxxxxxx
+                    xxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxx
+                            xxxxxxxxxxx
+                                xxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxx
+                                    xxxxxxxxxxxxxxxx
+                                xxxxxxxx
+                            xxxxxxxxxxxx
+                        xxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxx
+                    xxxxxxxxx
+                xxxxxxxxxx
+            xxxxxxxx
+        xxxxxxxxxx
+        
+        xxxxxxxxx
             xxxxxxxxxxxxxxxxxxxx
             xxxxxxx
                 xxxxxxxxx
+                    xxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxx
+                            xxxxxxxxxxx
+                                xxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxx
+                                    xxxxxxxxxxxxxxxx
+                                xxxxxxxx
+                            xxxxxxxxxxxx
+                        xxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxx
+                    xxxxxxxxx
+
                     xxxxxxxx
                         xxxxxxxxxxxxxxxxxxxxxxxxxxx
                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

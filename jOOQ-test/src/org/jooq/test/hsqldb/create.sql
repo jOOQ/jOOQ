@@ -59,6 +59,7 @@ DROP TABLE IF EXISTS T_937/
 DROP TABLE IF EXISTS "T_941"/
 DROP TABLE IF EXISTS "t_941"/
 DROP TABLE IF EXISTS T_943/
+DROP TABLE IF EXISTS "T_2845_CASE_sensitivity"/
 DROP TABLE IF EXISTS system/
 DROP TABLE IF EXISTS class/
 DROP TABLE IF EXISTS integer/
@@ -182,6 +183,18 @@ CREATE TABLE T_937 (
   T_937 int,
 
   CONSTRAINT T_937 PRIMARY KEY (T_937)
+)
+/
+
+CREATE TABLE "T_2845_CASE_sensitivity" ( 
+  id int,
+  
+  insensitive int,
+  "UPPER" int,
+  "lower" int,
+  "Mixed" int,
+  
+  CONSTRAINT pk_t_2845_case_sensitivity PRIMARY KEY (id)
 )
 /
 

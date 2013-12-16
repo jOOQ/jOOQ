@@ -3,7 +3,7 @@
 	<property name="dir.workspace" value="${basedir}/.." />
 	<property name="dir.target" value="${basedir}/target" />
 	<property name="dir.release" value="${basedir}/release" />
-	<property name="version" value="3.2.0"/>
+	<property name="version" value="3.2.2"/>
 
 	<!-- Run a full mvn clean package install deploy first before this -->
 	<target name="copy-lib-javadoc">
@@ -67,9 +67,15 @@
         <antcall target="copy-src"/>
 		<antcall target="rest"/>
 	</target>
-	
-	<target name="release-pro" description="Release a new version">
+    
+    <target name="release-pro" description="Release a new version">
+        <antcall target="copy-lib-javadoc"/>
+        <antcall target="copy-src"/>
+        <antcall target="rest"/>
+    </target>
+    
+    <target name="release-trial" description="Release a new version">
         <antcall target="copy-lib-javadoc"/>
         <antcall target="rest"/>
-	</target>
+    </target>
 </project>

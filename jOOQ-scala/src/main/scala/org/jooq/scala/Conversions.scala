@@ -369,6 +369,7 @@ object Conversions {
   // --------------------------------------------------------------------------
 
 // [jooq-tools] START [tuples]
+
   /**
    * Enrich any {@link org.jooq.Record1} with the {@link Tuple1} case class
    */
@@ -555,6 +556,7 @@ object Conversions {
   }
 
 // [jooq-tools] START [mapper]
+
   /**
    * Wrap a Scala <code>Tuple1 => E</code> function in a jOOQ <code>RecordMapper</code> type.
    */
@@ -872,5 +874,6 @@ object Conversions {
 //    def next(record: R) = f(record)
 //  }
 
-// [jooq-tools] START [handler]// [jooq-tools] END [handler]
+// [jooq-tools] START [handler]
+// [jooq-tools] END [handler]
 }

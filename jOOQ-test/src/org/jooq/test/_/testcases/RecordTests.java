@@ -55,6 +55,7 @@ import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
+import org.jooq.tools.reflect.Reflect;
 
 import org.junit.Test;
 
@@ -77,10 +78,11 @@ public class RecordTests<
     IPK  extends UpdatableRecord<IPK>,
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
-    T785 extends TableRecord<T785>>
-extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> {
+    T785 extends TableRecord<T785>,
+    CASE extends UpdatableRecord<CASE>>
+extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> {
 
-    public RecordTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
+    public RecordTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
         super(delegate);
     }
 
@@ -150,6 +152,33 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertTrue(book.changed(TBook_TITLE().getName()));
         assertEquals("abc", book.original().getValue(TBook_TITLE()));
         assertEquals("abc", book.original(TBook_TITLE()));
+    }
+
+    @Test
+    public void testRecordChangedOnGeneratedMethods() throws Exception {
+
+        // [#2798] Generated methods might show a different behaviour with respect to changed flags,
+        // compared to regular API.
+        B b1 = create().selectFrom(TBook()).where(TBook_ID().eq(1)).fetchOne();
+        B b2 = create().selectFrom(TBook()).where(TBook_ID().eq(1)).fetchOne();
+
+        b1.setValue(TBook_ID(), 1);
+        Reflect.on(b2).call("setId", 1);
+
+        assertEquals(b1, b2);
+        assertFalse(b1.changed());
+        assertFalse(b2.changed());
+        assertFalse(b1.changed(TBook_ID()));
+        assertFalse(b2.changed(TBook_ID()));
+
+        b1.setValue(TBook_ID(), 2);
+        Reflect.on(b2).call("setId", 2);
+
+        assertEquals(b1, b2);
+        assertTrue(b1.changed());
+        assertTrue(b2.changed());
+        assertTrue(b1.changed(TBook_ID()));
+        assertTrue(b2.changed(TBook_ID()));
     }
 
     @Test

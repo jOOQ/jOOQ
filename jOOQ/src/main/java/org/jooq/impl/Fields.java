@@ -41,6 +41,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Utils.indexOrFail;
+
 import java.util.Collection;
 
 import org.jooq.BindContext;
@@ -205,7 +207,7 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
 
     @Override
     public final Class<?> type(String fieldName) {
-        return type(indexOf(fieldName));
+        return type(indexOrFail(this, fieldName));
     }
 
     @Override
@@ -227,14 +229,14 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
 
     @Override
     public final DataType<?> dataType(String fieldName) {
-        return dataType(indexOf(fieldName));
+        return dataType(indexOrFail(this, fieldName));
     }
 
     final int[] indexesOf(Field<?>... f) {
         int[] result = new int[f.length];
 
         for (int i = 0; i < f.length; i++) {
-            result[i] = indexOf(f[i]);
+            result[i] = indexOrFail(this, f[i]);
         }
 
         return result;
@@ -244,7 +246,7 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
         int[] result = new int[fieldNames.length];
 
         for (int i = 0; i < fieldNames.length; i++) {
-            result[i] = indexOf(fieldNames[i]);
+            result[i] = indexOrFail(this, fieldNames[i]);
         }
 
         return result;

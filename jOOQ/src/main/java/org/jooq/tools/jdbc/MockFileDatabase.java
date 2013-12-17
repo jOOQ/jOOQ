@@ -47,6 +47,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.io.Reader;
+import java.io.StringReader;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.ArrayList;
@@ -121,20 +123,38 @@ public class MockFileDatabase implements MockDataProvider {
 
     private static final JooqLogger              log = JooqLogger.getLogger(MockFileDatabase.class);
 
-    private final File                           file;
-    private final String                         encoding;
+    private final LineNumberReader               in;
     private final Map<String, List<MockResult>>  matchExactly;
     private final Map<Pattern, List<MockResult>> matchPattern;
-    private final DSLContext                       create;
+    private final DSLContext                     create;
 
     public MockFileDatabase(File file) throws IOException {
         this(file, "UTF-8");
     }
 
-    @SuppressWarnings("deprecation")
     public MockFileDatabase(File file, String encoding) throws IOException {
-        this.file = file;
-        this.encoding = encoding;
+        this(new FileInputStream(file), encoding);
+    }
+
+    public MockFileDatabase(InputStream stream) throws IOException {
+        this(stream, "UTF-8");
+    }
+
+    public MockFileDatabase(InputStream stream, String encoding) throws IOException {
+        this(new InputStreamReader(stream, encoding));
+    }
+
+    public MockFileDatabase(Reader reader) throws IOException {
+        this(new LineNumberReader(reader));
+    }
+
+    public MockFileDatabase(String string) throws IOException {
+        this(new StringReader(string));
+    }
+
+    @SuppressWarnings("deprecation")
+    private MockFileDatabase(LineNumberReader reader) throws IOException {
+        this.in = reader;
         this.matchExactly = new LinkedHashMap<String, List<MockResult>>();
         this.matchPattern = new LinkedHashMap<Pattern, List<MockResult>>();
         this.create = DSL.using(SQLDialect.SQL99);
@@ -146,8 +166,6 @@ public class MockFileDatabase implements MockDataProvider {
 
         // Wrap the below code in a local scope
         new Object() {
-            private InputStream      is            = new FileInputStream(file);
-            private LineNumberReader in            = new LineNumberReader(new InputStreamReader(is, encoding));
             private StringBuilder    currentSQL    = new StringBuilder();
             private StringBuilder    currentResult = new StringBuilder();
             private String           previousSQL   = null;
@@ -218,9 +236,6 @@ public class MockFileDatabase implements MockDataProvider {
                     }
                 }
                 finally {
-                    if (is != null) {
-                        is.close();
-                    }
                     if (in != null) {
                         in.close();
                     }

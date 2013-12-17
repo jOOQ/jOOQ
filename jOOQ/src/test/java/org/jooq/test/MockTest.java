@@ -52,9 +52,11 @@ import static org.jooq.test.data.Table2.FIELD_NAME2;
 import static org.jooq.test.data.Table2.TABLE2;
 
 import java.io.File;
+import java.io.RandomAccessFile;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.jooq.Constants;
 import org.jooq.DSLContext;
 import org.jooq.InsertResultStep;
 import org.jooq.Query;
@@ -87,8 +89,13 @@ public class MockTest extends AbstractTest {
 
     @BeforeClass
     public static void before() throws Exception {
-        File file = new File(MockTest.class.getResource("/org/jooq/test/data/db.txt").toURI());
-        MOCK = DSL.using(new MockConnection(new MockFileDatabase(file)), SQLDialect.POSTGRES);
+        RandomAccessFile f = new RandomAccessFile(new File(MockTest.class.getResource("/org/jooq/test/data/db.txt").toURI()), "r");
+        byte[] b = new byte[(int) f.length()];
+        f.readFully(b);
+        String s = new String(b);
+        s = s.replace("{version}", Constants.FULL_VERSION);
+
+        MOCK = DSL.using(new MockConnection(new MockFileDatabase(s)), SQLDialect.POSTGRES);
     }
 
     @Test

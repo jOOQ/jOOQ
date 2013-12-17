@@ -280,22 +280,22 @@ object Conversions {
     // Bitwise operations
     // -------------------------------------------------------------------------
 
-    def unary_~                       = bitNot(underlying)
+    def unary_~                       = DSL.bitNot(underlying)
 
-    def &(value : T)                  = bitAnd(underlying, value)
-    def &(value : Field[T])           = bitAnd(underlying, value)
+    def &(value : T)                  = DSL.bitAnd(underlying, value)
+    def &(value : Field[T])           = DSL.bitAnd(underlying, value)
 
-    def |(value : T)                  = bitOr (underlying, value)
-    def |(value : Field[T])           = bitOr (underlying, value)
+    def |(value : T)                  = DSL.bitOr (underlying, value)
+    def |(value : Field[T])           = DSL.bitOr (underlying, value)
 
-    def ^(value : T)                  = bitXor(underlying, value)
-    def ^(value : Field[T])           = bitXor(underlying, value)
+    def ^(value : T)                  = DSL.bitXor(underlying, value)
+    def ^(value : Field[T])           = DSL.bitXor(underlying, value)
 
-    def <<(value : T)                 = shl(underlying, value)
-    def <<(value : Field[T])          = shl(underlying, value)
+    def <<(value : T)                 = DSL.shl(underlying, value)
+    def <<(value : Field[T])          = DSL.shl(underlying, value)
 
-    def >>(value : T)                 = shr(underlying, value)
-    def >>(value : Field[T])          = shr(underlying, value)
+    def >>(value : T)                 = DSL.shr(underlying, value)
+    def >>(value : Field[T])          = DSL.shr(underlying, value)
   }
 
   // ------------------------------------------------------------------------

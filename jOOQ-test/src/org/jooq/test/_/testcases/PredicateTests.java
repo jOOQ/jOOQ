@@ -60,12 +60,15 @@ import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.DSL.sum;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.upper;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.zero;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -657,5 +660,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .from(TAuthor())
                 .where(TAuthor_LAST_NAME().equalIgnoreCase("abcdefghij1234567890abcdefghij1234567890"))
                 .fetchOne(TAuthor_ID()));
+    }
+
+    @Test
+    public void testBigDecimalPredicates() {
+
+        // [#2902] The Xerial (SQLite) driver binds BigDecimal values as String, internally
+        // This can lead to problems with some predicates
+
+        Record2<Integer, BigDecimal> record =
+        create().select(TBook_AUTHOR_ID(), sum(TBook_ID()))
+                .from(TBook())
+                .groupBy(TBook_AUTHOR_ID())
+                .having(sum(TBook_ID()).ge(new BigDecimal("4")))
+                .fetchOne();
+
+        assertNotNull(record);
+        assertEquals(2, record.value1().intValue());
+        assertEquals(7, record.value2().intValue());
     }
 }

@@ -1307,6 +1307,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testBigDecimalPredicates() throws Exception {
+        new PredicateTests(this).testBigDecimalPredicates();
+    }
+
+    @Test
     public void testRowValueExpressionConditions() throws Exception {
         new RowValueExpressionTests(this).testRowValueExpressionConditions();
     }

@@ -26,7 +26,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/derbytools.jar" sourcepath="/jOOQ-sources/db-derby-10.8.1.2-src.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/derbyrun.jar" sourcepath="/jOOQ-sources/db-derby-10.8.1.2-src.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/junit.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/postgresql-9.0-801.jdbc4.jar" sourcepath="/jOOQ-sources/postgresql-jdbc-9.0-801.src.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/postgresql-9.3-1100.jdbc41.jar" sourcepath="/jOOQ-sources/postgresql-jdbc-9.0-801.src.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/mysql-connector-java-5.1.15-bin.jar" sourcepath="/jOOQ-sources/mysql-connector-java-5.1.15.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/log4j-1.2.16.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/h2-1.3.170.jar" sourcepath="/h2"/>

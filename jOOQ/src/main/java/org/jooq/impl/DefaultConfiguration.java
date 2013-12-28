@@ -47,9 +47,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.StringWriter;
+import java.sql.Connection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.sql.DataSource;
 import javax.xml.bind.JAXB;
 
 import org.jooq.Configuration;
@@ -197,6 +199,22 @@ public class DefaultConfiguration implements Configuration {
     }
 
     /**
+     * Convenience method for {@link #derive(ConnectionProvider)}, using a
+     * {@link DefaultConnectionProvider}.
+     */
+    public final Configuration derive(Connection newConnection) {
+        return derive(new DefaultConnectionProvider(newConnection));
+    }
+
+    /**
+     * Convenience method for {@link #derive(ConnectionProvider)}, using a
+     * {@link DataSourceConnectionProvider}.
+     */
+    public final Configuration derive(DataSource newDataSource) {
+        return derive(new DataSourceConnectionProvider(newDataSource));
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -318,6 +336,22 @@ public class DefaultConfiguration implements Configuration {
     // -------------------------------------------------------------------------
     // XXX: Changing configurations
     // -------------------------------------------------------------------------
+
+    /**
+     * Convenience method for {@link #set(ConnectionProvider)}, using a
+     * {@link DefaultConnectionProvider}.
+     */
+    public final Configuration set(Connection newConnection) {
+        return set(new DefaultConnectionProvider(newConnection));
+    }
+
+    /**
+     * Convenience method for {@link #set(ConnectionProvider)}, using a
+     * {@link DataSourceConnectionProvider}.
+     */
+    public final Configuration set(DataSource newDataSource) {
+        return set(new DataSourceConnectionProvider(newDataSource));
+    }
 
     /**
      * {@inheritDoc}

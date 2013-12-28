@@ -202,6 +202,7 @@ import org.jooq.SelectWhereStep;
 import org.jooq.SortField;
 import org.jooq.Support;
 import org.jooq.Table;
+import org.jooq.TableLike;
 import org.jooq.TruncateIdentityStep;
 import org.jooq.UDTRecord;
 import org.jooq.Update;
@@ -4769,6 +4770,22 @@ public class DSL {
     @Support({ CUBRID, ORACLE, POSTGRES })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, Field<Integer> to) {
         return new GenerateSeries(nullSafe(from), nullSafe(to));
+    }
+
+    /**
+     * Create a <code>LATERAL</code> joined table.
+     * <p>
+     * Example:
+     * <code><pre>
+     * SELECT *
+     * FROM employees e,
+     *      LATERAL(SELECT * FROM departments d
+     *              WHERE e.department_id = d.department_id);
+     * </pre></code>
+     */
+    @Support({ ORACLE12C, POSTGRES })
+    public static <R extends Record> Table<R> lateral(TableLike<R> table) {
+        return new Lateral<R>(table.asTable());
     }
 
     // -------------------------------------------------------------------------

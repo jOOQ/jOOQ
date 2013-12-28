@@ -1967,6 +1967,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testLateralJoin() throws Exception {
+        new JoinTests(this).testLateralJoin();
+    }
+
+    @Test
     public void testNaturalJoin() throws Exception {
         new JoinTests(this).testNaturalJoin();
     }

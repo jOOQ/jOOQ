@@ -43,6 +43,7 @@ package org.jooq.util;
 
 import java.io.File;
 import java.lang.reflect.TypeVariable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -131,6 +132,12 @@ public class JavaGenerator extends AbstractGenerator {
     public final void generate(Database db) {
         this.database = db;
 
+        String url = null;
+        try {
+            url = database.getConnection().getMetaData().getURL();
+        }
+        catch (SQLException ignore) {}
+
         log.info("License parameters");
         log.info("----------------------------------------------------------");
         log.info("  Thank you for using jOOQ and jOOQ's code generator");
@@ -138,6 +145,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Database parameters");
         log.info("----------------------------------------------------------");
         log.info("  dialect", database.getDialect());
+        log.info("  URL", url);
         log.info("  target dir", getTargetDirectory());
         log.info("  target package", getTargetPackage());
         log.info("  includes", Arrays.asList(database.getIncludes()));

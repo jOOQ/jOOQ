@@ -73,6 +73,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record2;
@@ -119,6 +120,7 @@ public class PostgresDatabase extends AbstractDatabase {
     private static final JooqLogger log = JooqLogger.getLogger(PostgresDatabase.class);
 
     private static Boolean is84;
+    private static Boolean canCastToEnumType;
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
@@ -400,18 +402,8 @@ public class PostgresDatabase extends AbstractDatabase {
                 String nspname = type.getValue(PG_NAMESPACE.NSPNAME);
                 String typname = type.getValue(PG_TYPE.TYPNAME);
 
-                List<String> labels = create()
-                    .select(PG_ENUM.ENUMLABEL)
-                    .from(PG_ENUM)
-                    .join(PG_TYPE).on(PG_ENUM.ENUMTYPID.eq(oid(PG_TYPE)))
-                    .join(PG_NAMESPACE).on(PG_TYPE.TYPNAMESPACE.eq(oid(PG_NAMESPACE)))
-                    .where(PG_NAMESPACE.NSPNAME.eq(nspname))
-                    .and(PG_TYPE.TYPNAME.eq(typname))
-                    .orderBy(field("{0}::{1}", PG_ENUM.ENUMLABEL, name(nspname, typname)))
-                    .fetch(PG_ENUM.ENUMLABEL);
-
                 DefaultEnumDefinition definition = null;
-                for (String label : labels) {
+                for (String label : enumLabels(nspname, typname)) {
                     SchemaDefinition schema = getSchema(nspname);
                     String typeName = String.valueOf(typname);
 
@@ -543,5 +535,35 @@ public class PostgresDatabase extends AbstractDatabase {
         }
 
         return is84;
+    }
+
+    private List<String> enumLabels(String nspname, String typname) {
+        Field<Object> cast = field("{0}::{1}", PG_ENUM.ENUMLABEL, name(nspname, typname));
+
+        if (canCastToEnumType == null) {
+
+            // [#2917] Older versions of PostgreSQL don't support the above cast
+            try {
+                canCastToEnumType = true;
+                return enumLabels(nspname, typname, cast);
+            }
+            catch (DataAccessException e) {
+                canCastToEnumType = false;
+            }
+        }
+
+        return canCastToEnumType ? enumLabels(nspname, typname, cast) : enumLabels(nspname, typname, PG_ENUM.ENUMLABEL);
+    }
+
+    private List<String> enumLabels(String nspname, String typname, Field<?> orderBy) {
+        return
+        create().select(PG_ENUM.ENUMLABEL)
+                .from(PG_ENUM)
+                .join(PG_TYPE).on(PG_ENUM.ENUMTYPID.eq(oid(PG_TYPE)))
+                .join(PG_NAMESPACE).on(PG_TYPE.TYPNAMESPACE.eq(oid(PG_NAMESPACE)))
+                .where(PG_NAMESPACE.NSPNAME.eq(nspname))
+                .and(PG_TYPE.TYPNAME.eq(typname))
+                .orderBy(orderBy)
+                .fetch(PG_ENUM.ENUMLABEL);
     }
 }

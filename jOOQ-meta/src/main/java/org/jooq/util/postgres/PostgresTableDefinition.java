@@ -76,7 +76,6 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 COLUMNS.NUMERIC_PRECISION,
                 COLUMNS.NUMERIC_SCALE,
                 COLUMNS.IS_NULLABLE,
-                COLUMNS.IDENTITY_GENERATION,
                 COLUMNS.COLUMN_DEFAULT.nvl(""),
                 COLUMNS.UDT_NAME)
             .from(COLUMNS)

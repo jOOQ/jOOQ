@@ -42,9 +42,7 @@ package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -54,12 +52,15 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.lateral;
 import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.zero;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import java.sql.Date;
 import java.util.List;
@@ -398,6 +399,67 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     xxxxxxxxxxx xxxxxxxxxx
         xx
         xx [/pro] */
+    }
+
+    @Test
+    public void testLateralJoin() throws Exception {
+        switch (dialect()) {
+            /* [pro] xx
+            xxxx xxxxxxxxxx
+            xx [/pro] */
+
+            case POSTGRES:
+                break;
+
+            default:
+                log.info("SKIPPING", "LATERAL tests");
+                return;
+        }
+
+        assertEquals(
+            asList(2, 2),
+            create().select()
+                    .from(TAuthor(),
+                        lateral(select(count().as("c"))
+                                .from(TBook())
+                                .where(TBook_AUTHOR_ID().eq(TAuthor_ID())))
+                    )
+                    .fetch("c", int.class)
+        );
+
+        assertEquals(
+            asList(2, 2),
+            create().select()
+                    .from(TAuthor().crossJoin(
+                        lateral(select(count().as("c"))
+                            .from(TBook())
+                            .where(TBook_AUTHOR_ID().eq(TAuthor_ID())))
+                        )
+                    )
+                    .fetch("c", int.class)
+            );
+
+        assertEquals(
+            asList(2, 2),
+            create().select()
+                    .from(TAuthor(),
+                        lateral(select(count())
+                            .from(TBook())
+                            .where(TBook_AUTHOR_ID().eq(TAuthor_ID()))).as("x", "c")
+                        )
+                        .fetch("c", int.class)
+        );
+
+        assertEquals(
+            asList(2, 2),
+            create().select()
+                    .from(TAuthor(),
+                        lateral(select(count())
+                            .from(TBook())
+                            .where(TBook_AUTHOR_ID().eq(TAuthor_ID())).asTable("x", "c"))
+                        )
+                        .fetch("c", int.class)
+        );
     }
 
     @Test

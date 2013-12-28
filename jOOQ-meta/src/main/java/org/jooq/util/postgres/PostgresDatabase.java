@@ -80,6 +80,7 @@ import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractDatabase;
@@ -116,6 +117,8 @@ import org.jooq.util.postgres.pg_catalog.tables.PgNamespace;
 public class PostgresDatabase extends AbstractDatabase {
 
     private static final JooqLogger log = JooqLogger.getLogger(PostgresDatabase.class);
+
+    private static Boolean is84;
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
@@ -274,38 +277,42 @@ public class PostgresDatabase extends AbstractDatabase {
         PgClass pt = PG_CLASS.as("pt");
         PgNamespace pn = PG_NAMESPACE.as("pn");
 
-        for (Record5<String, String, String, String, Integer> inheritance : create()
-                .select(
-                    cn.NSPNAME,
-                    ct.RELNAME,
-                    pn.NSPNAME,
-                    pt.RELNAME,
-                    max(i.INHSEQNO).over().partitionBy(i.INHRELID).as("m")
-                )
-                .from(ct)
-                .join(cn).on(ct.RELNAMESPACE.eq(oid(cn)))
-                .join(i).on(i.INHRELID.eq(oid(ct)))
-                .join(pt).on(i.INHPARENT.eq(oid(pt)))
-                .join(pn).on(pt.RELNAMESPACE.eq(oid(pn)))
-                .fetch()) {
+        // [#2916] If window functions are not supported (prior to PostgreSQL 8.4), then
+        // don't execute the following query:
+        if (is84()) {
+            for (Record5<String, String, String, String, Integer> inheritance : create()
+                    .select(
+                        cn.NSPNAME,
+                        ct.RELNAME,
+                        pn.NSPNAME,
+                        pt.RELNAME,
+                        max(i.INHSEQNO).over().partitionBy(i.INHRELID).as("m")
+                    )
+                    .from(ct)
+                    .join(cn).on(ct.RELNAMESPACE.eq(oid(cn)))
+                    .join(i).on(i.INHRELID.eq(oid(ct)))
+                    .join(pt).on(i.INHPARENT.eq(oid(pt)))
+                    .join(pn).on(pt.RELNAMESPACE.eq(oid(pn)))
+                    .fetch()) {
 
-            Name child = name(inheritance.value1(), inheritance.value2());
-            Name parent = name(inheritance.value3(), inheritance.value4());
+                Name child = name(inheritance.value1(), inheritance.value2());
+                Name parent = name(inheritance.value3(), inheritance.value4());
 
-            if (inheritance.value5() > 1) {
-                log.info("Multiple inheritance",
-                    "Multiple inheritance is not supported by jOOQ: " +
-                    child +
-                    " inherits from " +
-                    parent);
-            }
-            else {
-                PostgresTableDefinition childTable = map.get(child);
-                PostgresTableDefinition parentTable = map.get(parent);
+                if (inheritance.value5() > 1) {
+                    log.info("Multiple inheritance",
+                        "Multiple inheritance is not supported by jOOQ: " +
+                        child +
+                        " inherits from " +
+                        parent);
+                }
+                else {
+                    PostgresTableDefinition childTable = map.get(child);
+                    PostgresTableDefinition parentTable = map.get(parent);
 
-                if (childTable != null && parentTable != null) {
-                    childTable.setParentTable(parentTable);
-                    parentTable.getChildTables().add(childTable);
+                    if (childTable != null && parentTable != null) {
+                        childTable.setParentTable(parentTable);
+                        parentTable.getChildTables().add(childTable);
+                    }
                 }
             }
         }
@@ -519,5 +526,22 @@ public class PostgresDatabase extends AbstractDatabase {
     @Override
     protected DSLContext create0() {
         return DSL.using(getConnection(), SQLDialect.POSTGRES);
+    }
+
+    private boolean is84() {
+        if (is84 == null) {
+
+            // [#2916] Window functions were introduced with PostgreSQL 9.0
+            try {
+                create().select(count().over()).fetch();
+
+                is84 = true;
+            }
+            catch (DataAccessException e) {
+                is84 = false;
+            }
+        }
+
+        return is84;
     }
 }

@@ -521,12 +521,13 @@ CREATE OR REPLACE FUNCTION f_search_book(p_title character varying, p_limit bigi
   RETURNS SETOF t_book AS
 $BODY$
 SELECT * FROM t_book
-WHERE (LOWER(title) LIKE LOWER('%' || p_title || '%'))
-LIMIT p_limit OFFSET p_offset;
+WHERE (LOWER(title) LIKE LOWER('%' || $1 || '%'))
+LIMIT $2 OFFSET $3;
 $BODY$
   LANGUAGE sql VOLATILE
   COST 100
   ROWS 1000;
+/
 
 CREATE FUNCTION p_unused (in1 VARCHAR, out1 OUT INT, out2 IN OUT INT)
 AS $$

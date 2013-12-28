@@ -27,7 +27,7 @@ INSERT INTO t_language (id, cd, description, description_english) VALUES (4, 'pt
 /
 
 
-INSERT INTO t_author VALUES (nextval('s_author_id'), 'George', 'Orwell', TO_DATE('1903-06-25', 'YYYY-MM-DD'), 1903, ROW(ROW('Parliament Hill', '77', '{1, 2, 3}', E'\\x7070'), 'NW31A9', 'Hampstead', 'England', '1980-01-01', null, E'\\x7171'))
+INSERT INTO t_author VALUES (nextval('s_author_id'), 'George', 'Orwell', TO_DATE('1903-06-25', 'YYYY-MM-DD'), 1903, ROW(ROW('Parliament Hill', '77', '{1, 2, 3}', E'\\160\\160'::bytea), 'NW31A9', 'Hampstead', 'England', '1980-01-01', null, E'\\161\\161'::bytea))
 /
 INSERT INTO t_author VALUES (nextval('s_author_id'), 'Paulo', 'Coelho', TO_DATE('1947-08-24', 'YYYY-MM-DD'), 1947, ROW(ROW('Caixa Postal', '43.003', null, null), null, 'Rio de Janeiro', 'Brazil', '1940-01-01', 2, null))
 /

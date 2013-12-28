@@ -430,23 +430,35 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(
             asList(2, 2),
             create().select()
-            .from(TAuthor(),
-                lateral(select(count())
-                    .from(TBook())
-                    .where(TBook_AUTHOR_ID().eq(TAuthor_ID()))).as("x", "c")
-                )
-                .fetch("c", int.class)
+                    .from(TAuthor().crossJoin(
+                        lateral(select(count().as("c"))
+                            .from(TBook())
+                            .where(TBook_AUTHOR_ID().eq(TAuthor_ID())))
+                        )
+                    )
+                    .fetch("c", int.class)
+            );
+
+        assertEquals(
+            asList(2, 2),
+            create().select()
+                    .from(TAuthor(),
+                        lateral(select(count())
+                            .from(TBook())
+                            .where(TBook_AUTHOR_ID().eq(TAuthor_ID()))).as("x", "c")
+                        )
+                        .fetch("c", int.class)
         );
 
         assertEquals(
             asList(2, 2),
             create().select()
-            .from(TAuthor(),
-                lateral(select(count())
-                    .from(TBook())
-                    .where(TBook_AUTHOR_ID().eq(TAuthor_ID())).asTable("x", "c"))
-                )
-                .fetch("c", int.class)
+                    .from(TAuthor(),
+                        lateral(select(count())
+                            .from(TBook())
+                            .where(TBook_AUTHOR_ID().eq(TAuthor_ID())).asTable("x", "c"))
+                        )
+                        .fetch("c", int.class)
         );
     }
 

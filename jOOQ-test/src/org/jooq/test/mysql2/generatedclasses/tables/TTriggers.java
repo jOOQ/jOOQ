@@ -9,7 +9,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 2122861323;
+	private static final long serialVersionUID = -1317378003;
 
 	/**
 	 * The singleton instance of <code>test2.t_triggers</code>
@@ -53,6 +53,10 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.gene
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.TTriggers.T_TRIGGERS);
 	}
 
+	private TTriggers(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql2.generatedclasses.tables.records.TTriggersRecord> aliased) {
+		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -82,6 +86,13 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.gene
 	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.TTriggers as(java.lang.String alias) {
-		return new org.jooq.test.mysql2.generatedclasses.tables.TTriggers(alias);
+		return new org.jooq.test.mysql2.generatedclasses.tables.TTriggers(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.TTriggers rename(java.lang.String name) {
+		return new org.jooq.test.mysql2.generatedclasses.tables.TTriggers(name, null);
 	}
 }

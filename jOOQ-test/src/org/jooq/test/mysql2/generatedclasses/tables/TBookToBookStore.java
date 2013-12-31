@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -1357068142;
+	private static final long serialVersionUID = 227954800;
 
 	/**
 	 * The singleton instance of <code>test2.t_book_to_book_store</code>
@@ -55,6 +55,10 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.mysq
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}
 
+	private TBookToBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> aliased) {
+		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -84,6 +88,13 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.mysq
 	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore as(java.lang.String alias) {
-		return new org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore(alias);
+		return new org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore rename(java.lang.String name) {
+		return new org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore(name, null);
 	}
 }

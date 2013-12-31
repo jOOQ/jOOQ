@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaCategory extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaCategoryRecord> {
 
-	private static final long serialVersionUID = 921148275;
+	private static final long serialVersionUID = 708695624;
 
 	/**
 	 * The singleton instance of <code>sakila.category</code>
@@ -53,6 +53,10 @@ public class SakilaCategory extends org.jooq.impl.TableImpl<org.jooq.examples.my
 		super(alias, org.jooq.examples.mysql.sakila.SakilaSakila.SAKILA, org.jooq.examples.mysql.sakila.tables.SakilaCategory.CATEGORY);
 	}
 
+	private SakilaCategory(java.lang.String alias, org.jooq.Table<org.jooq.examples.mysql.sakila.tables.records.SakilaCategoryRecord> aliased) {
+		super(alias, org.jooq.examples.mysql.sakila.SakilaSakila.SAKILA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -82,6 +86,13 @@ public class SakilaCategory extends org.jooq.impl.TableImpl<org.jooq.examples.my
 	 */
 	@Override
 	public org.jooq.examples.mysql.sakila.tables.SakilaCategory as(java.lang.String alias) {
-		return new org.jooq.examples.mysql.sakila.tables.SakilaCategory(alias);
+		return new org.jooq.examples.mysql.sakila.tables.SakilaCategory(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.examples.mysql.sakila.tables.SakilaCategory rename(java.lang.String name) {
+		return new org.jooq.examples.mysql.sakila.tables.SakilaCategory(name, null);
 	}
 }

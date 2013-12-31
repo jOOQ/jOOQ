@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaSalesByStore extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaSalesByStoreRecord> {
 
-	private static final long serialVersionUID = 491049545;
+	private static final long serialVersionUID = -2145066150;
 
 	/**
 	 * The singleton instance of <code>sakila.sales_by_store</code>
@@ -55,11 +55,22 @@ public class SakilaSalesByStore extends org.jooq.impl.TableImpl<org.jooq.example
 		super(alias, org.jooq.examples.mysql.sakila.SakilaSakila.SAKILA, org.jooq.examples.mysql.sakila.tables.SakilaSalesByStore.SALES_BY_STORE);
 	}
 
+	private SakilaSalesByStore(java.lang.String alias, org.jooq.Table<org.jooq.examples.mysql.sakila.tables.records.SakilaSalesByStoreRecord> aliased) {
+		super(alias, org.jooq.examples.mysql.sakila.SakilaSakila.SAKILA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.examples.mysql.sakila.tables.SakilaSalesByStore as(java.lang.String alias) {
-		return new org.jooq.examples.mysql.sakila.tables.SakilaSalesByStore(alias);
+		return new org.jooq.examples.mysql.sakila.tables.SakilaSalesByStore(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.examples.mysql.sakila.tables.SakilaSalesByStore rename(java.lang.String name) {
+		return new org.jooq.examples.mysql.sakila.tables.SakilaSalesByStore(name, null);
 	}
 }

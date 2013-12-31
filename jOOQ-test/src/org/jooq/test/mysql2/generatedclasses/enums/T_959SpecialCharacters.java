@@ -9,19 +9,17 @@ package org.jooq.test.mysql2.generatedclasses.enums;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public enum T_959SpecialCharacters implements org.jooq.EnumType {
 
-	a(""),
+	enum_28("enum("),
 
-	b("("),
+	_28("("),
 
-	c(""),
+	_29(")"),
 
-	d(""),
+	_2c(","),
 
-	e(""),
+	_27("'"),
 
-	f_(""),
-
-	g("enum");
+	_29enum(")enum");
 
 	private final java.lang.String literal;
 

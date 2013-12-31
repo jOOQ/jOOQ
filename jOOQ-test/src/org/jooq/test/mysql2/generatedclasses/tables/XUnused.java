@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1934331795;
+	private static final long serialVersionUID = -783656535;
 
 	/**
 	 * The singleton instance of <code>test2.x_unused</code>
@@ -110,6 +110,10 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.genera
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED);
 	}
 
+	private XUnused(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> aliased) {
+		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -139,6 +143,13 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.genera
 	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.XUnused as(java.lang.String alias) {
-		return new org.jooq.test.mysql2.generatedclasses.tables.XUnused(alias);
+		return new org.jooq.test.mysql2.generatedclasses.tables.XUnused(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.XUnused rename(java.lang.String name) {
+		return new org.jooq.test.mysql2.generatedclasses.tables.XUnused(name, null);
 	}
 }

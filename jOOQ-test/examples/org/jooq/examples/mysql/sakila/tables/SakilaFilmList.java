@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaFilmList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmListRecord> {
 
-	private static final long serialVersionUID = 59318530;
+	private static final long serialVersionUID = -1566503871;
 
 	/**
 	 * The singleton instance of <code>sakila.film_list</code>
@@ -80,11 +80,22 @@ public class SakilaFilmList extends org.jooq.impl.TableImpl<org.jooq.examples.my
 		super(alias, org.jooq.examples.mysql.sakila.SakilaSakila.SAKILA, org.jooq.examples.mysql.sakila.tables.SakilaFilmList.FILM_LIST);
 	}
 
+	private SakilaFilmList(java.lang.String alias, org.jooq.Table<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmListRecord> aliased) {
+		super(alias, org.jooq.examples.mysql.sakila.SakilaSakila.SAKILA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.examples.mysql.sakila.tables.SakilaFilmList as(java.lang.String alias) {
-		return new org.jooq.examples.mysql.sakila.tables.SakilaFilmList(alias);
+		return new org.jooq.examples.mysql.sakila.tables.SakilaFilmList(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.examples.mysql.sakila.tables.SakilaFilmList rename(java.lang.String name) {
+		return new org.jooq.examples.mysql.sakila.tables.SakilaFilmList(name, null);
 	}
 }

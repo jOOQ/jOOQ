@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaNicerButSlowerFilmList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaNicerButSlowerFilmListRecord> {
 
-	private static final long serialVersionUID = 955787358;
+	private static final long serialVersionUID = -1487279259;
 
 	/**
 	 * The singleton instance of <code>sakila.nicer_but_slower_film_list</code>
@@ -80,11 +80,22 @@ public class SakilaNicerButSlowerFilmList extends org.jooq.impl.TableImpl<org.jo
 		super(alias, org.jooq.examples.mysql.sakila.SakilaSakila.SAKILA, org.jooq.examples.mysql.sakila.tables.SakilaNicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST);
 	}
 
+	private SakilaNicerButSlowerFilmList(java.lang.String alias, org.jooq.Table<org.jooq.examples.mysql.sakila.tables.records.SakilaNicerButSlowerFilmListRecord> aliased) {
+		super(alias, org.jooq.examples.mysql.sakila.SakilaSakila.SAKILA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.examples.mysql.sakila.tables.SakilaNicerButSlowerFilmList as(java.lang.String alias) {
-		return new org.jooq.examples.mysql.sakila.tables.SakilaNicerButSlowerFilmList(alias);
+		return new org.jooq.examples.mysql.sakila.tables.SakilaNicerButSlowerFilmList(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.examples.mysql.sakila.tables.SakilaNicerButSlowerFilmList rename(java.lang.String name) {
+		return new org.jooq.examples.mysql.sakila.tables.SakilaNicerButSlowerFilmList(name, null);
 	}
 }

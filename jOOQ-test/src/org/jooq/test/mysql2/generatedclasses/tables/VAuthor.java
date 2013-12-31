@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 2114224230;
+	private static final long serialVersionUID = -1144373948;
 
 	/**
 	 * The singleton instance of <code>test2.v_author</code>
@@ -70,11 +70,22 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.genera
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.VAuthor.V_AUTHOR);
 	}
 
+	private VAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord> aliased) {
+		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.VAuthor as(java.lang.String alias) {
-		return new org.jooq.test.mysql2.generatedclasses.tables.VAuthor(alias);
+		return new org.jooq.test.mysql2.generatedclasses.tables.VAuthor(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.VAuthor rename(java.lang.String name) {
+		return new org.jooq.test.mysql2.generatedclasses.tables.VAuthor(name, null);
 	}
 }

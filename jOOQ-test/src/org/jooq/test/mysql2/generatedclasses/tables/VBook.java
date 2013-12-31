@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 902848983;
+	private static final long serialVersionUID = -586390405;
 
 	/**
 	 * The singleton instance of <code>test2.v_book</code>
@@ -90,11 +90,22 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generate
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.VBook.V_BOOK);
 	}
 
+	private VBook(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql2.generatedclasses.tables.records.VBookRecord> aliased) {
+		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.VBook as(java.lang.String alias) {
-		return new org.jooq.test.mysql2.generatedclasses.tables.VBook(alias);
+		return new org.jooq.test.mysql2.generatedclasses.tables.VBook(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.VBook rename(java.lang.String name) {
+		return new org.jooq.test.mysql2.generatedclasses.tables.VBook(name, null);
 	}
 }

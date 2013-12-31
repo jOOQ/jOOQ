@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaAddress extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaAddressRecord> {
 
-	private static final long serialVersionUID = 735372038;
+	private static final long serialVersionUID = 1638107245;
 
 	/**
 	 * The singleton instance of <code>sakila.address</code>
@@ -78,6 +78,10 @@ public class SakilaAddress extends org.jooq.impl.TableImpl<org.jooq.examples.mys
 		super(alias, org.jooq.examples.mysql.sakila.SakilaSakila.SAKILA, org.jooq.examples.mysql.sakila.tables.SakilaAddress.ADDRESS);
 	}
 
+	private SakilaAddress(java.lang.String alias, org.jooq.Table<org.jooq.examples.mysql.sakila.tables.records.SakilaAddressRecord> aliased) {
+		super(alias, org.jooq.examples.mysql.sakila.SakilaSakila.SAKILA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -115,6 +119,13 @@ public class SakilaAddress extends org.jooq.impl.TableImpl<org.jooq.examples.mys
 	 */
 	@Override
 	public org.jooq.examples.mysql.sakila.tables.SakilaAddress as(java.lang.String alias) {
-		return new org.jooq.examples.mysql.sakila.tables.SakilaAddress(alias);
+		return new org.jooq.examples.mysql.sakila.tables.SakilaAddress(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.examples.mysql.sakila.tables.SakilaAddress rename(java.lang.String name) {
+		return new org.jooq.examples.mysql.sakila.tables.SakilaAddress(name, null);
 	}
 }

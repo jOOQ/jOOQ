@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 378457842;
+	private static final long serialVersionUID = 734829818;
 
 	/**
 	 * The singleton instance of <code>test2.t_book</code>
@@ -90,6 +90,10 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generate
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK);
 	}
 
+	private TBook(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> aliased) {
+		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -119,6 +123,13 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generate
 	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.TBook as(java.lang.String alias) {
-		return new org.jooq.test.mysql2.generatedclasses.tables.TBook(alias);
+		return new org.jooq.test.mysql2.generatedclasses.tables.TBook(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.TBook rename(java.lang.String name) {
+		return new org.jooq.test.mysql2.generatedclasses.tables.TBook(name, null);
 	}
 }

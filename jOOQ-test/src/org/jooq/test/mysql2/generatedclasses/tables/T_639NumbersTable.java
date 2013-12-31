@@ -9,7 +9,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -240160998;
+	private static final long serialVersionUID = -1658517898;
 
 	/**
 	 * The singleton instance of <code>test2.t_639_numbers_table</code>
@@ -103,6 +103,10 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.mys
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE);
 	}
 
+	private T_639NumbersTable(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql2.generatedclasses.tables.records.T_639NumbersTableRecord> aliased) {
+		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -124,6 +128,13 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.mys
 	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable as(java.lang.String alias) {
-		return new org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable(alias);
+		return new org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable rename(java.lang.String name) {
+		return new org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable(name, null);
 	}
 }

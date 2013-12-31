@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaRental extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaRentalRecord> {
 
-	private static final long serialVersionUID = -864093481;
+	private static final long serialVersionUID = 1890502308;
 
 	/**
 	 * The singleton instance of <code>sakila.rental</code>
@@ -73,6 +73,10 @@ public class SakilaRental extends org.jooq.impl.TableImpl<org.jooq.examples.mysq
 		super(alias, org.jooq.examples.mysql.sakila.SakilaSakila.SAKILA, org.jooq.examples.mysql.sakila.tables.SakilaRental.RENTAL);
 	}
 
+	private SakilaRental(java.lang.String alias, org.jooq.Table<org.jooq.examples.mysql.sakila.tables.records.SakilaRentalRecord> aliased) {
+		super(alias, org.jooq.examples.mysql.sakila.SakilaSakila.SAKILA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -110,6 +114,13 @@ public class SakilaRental extends org.jooq.impl.TableImpl<org.jooq.examples.mysq
 	 */
 	@Override
 	public org.jooq.examples.mysql.sakila.tables.SakilaRental as(java.lang.String alias) {
-		return new org.jooq.examples.mysql.sakila.tables.SakilaRental(alias);
+		return new org.jooq.examples.mysql.sakila.tables.SakilaRental(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.examples.mysql.sakila.tables.SakilaRental rename(java.lang.String name) {
+		return new org.jooq.examples.mysql.sakila.tables.SakilaRental(name, null);
 	}
 }

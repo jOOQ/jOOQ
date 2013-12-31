@@ -9,7 +9,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -246961226;
+	private static final long serialVersionUID = -1798466266;
 
 	/**
 	 * The singleton instance of <code>test2.t_725_lob_test</code>
@@ -48,6 +48,10 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.g
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST);
 	}
 
+	private T_725LobTest(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql2.generatedclasses.tables.records.T_725LobTestRecord> aliased) {
+		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -69,6 +73,13 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.g
 	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.T_725LobTest as(java.lang.String alias) {
-		return new org.jooq.test.mysql2.generatedclasses.tables.T_725LobTest(alias);
+		return new org.jooq.test.mysql2.generatedclasses.tables.T_725LobTest(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.T_725LobTest rename(java.lang.String name) {
+		return new org.jooq.test.mysql2.generatedclasses.tables.T_725LobTest(name, null);
 	}
 }

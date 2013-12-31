@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaCountry extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaCountryRecord> {
 
-	private static final long serialVersionUID = -202889530;
+	private static final long serialVersionUID = -1584835003;
 
 	/**
 	 * The singleton instance of <code>sakila.country</code>
@@ -53,6 +53,10 @@ public class SakilaCountry extends org.jooq.impl.TableImpl<org.jooq.examples.mys
 		super(alias, org.jooq.examples.mysql.sakila.SakilaSakila.SAKILA, org.jooq.examples.mysql.sakila.tables.SakilaCountry.COUNTRY);
 	}
 
+	private SakilaCountry(java.lang.String alias, org.jooq.Table<org.jooq.examples.mysql.sakila.tables.records.SakilaCountryRecord> aliased) {
+		super(alias, org.jooq.examples.mysql.sakila.SakilaSakila.SAKILA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -82,6 +86,13 @@ public class SakilaCountry extends org.jooq.impl.TableImpl<org.jooq.examples.mys
 	 */
 	@Override
 	public org.jooq.examples.mysql.sakila.tables.SakilaCountry as(java.lang.String alias) {
-		return new org.jooq.examples.mysql.sakila.tables.SakilaCountry(alias);
+		return new org.jooq.examples.mysql.sakila.tables.SakilaCountry(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.examples.mysql.sakila.tables.SakilaCountry rename(java.lang.String name) {
+		return new org.jooq.examples.mysql.sakila.tables.SakilaCountry(name, null);
 	}
 }

@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 347424204;
+	private static final long serialVersionUID = -1457868558;
 
 	/**
 	 * The singleton instance of <code>test2.v_library</code>
@@ -50,11 +50,22 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.gener
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 
+	private VLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql2.generatedclasses.tables.records.VLibraryRecord> aliased) {
+		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.VLibrary as(java.lang.String alias) {
-		return new org.jooq.test.mysql2.generatedclasses.tables.VLibrary(alias);
+		return new org.jooq.test.mysql2.generatedclasses.tables.VLibrary(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.VLibrary rename(java.lang.String name) {
+		return new org.jooq.test.mysql2.generatedclasses.tables.VLibrary(name, null);
 	}
 }

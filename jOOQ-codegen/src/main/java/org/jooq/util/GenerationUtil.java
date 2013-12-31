@@ -129,15 +129,15 @@ class GenerationUtil {
             return "_";
         }
 
-        if (!Character.isJavaIdentifierStart(literal.charAt(0))) {
-            sb.append("_");
-        }
-
         for (int i = 0; i < literal.length(); i++) {
             char c = literal.charAt(i);
 
             if (!Character.isJavaIdentifierPart(c)) {
+                sb.append(escape(c));
+            }
+            else if (i == 0 && !Character.isJavaIdentifierStart(literal.charAt(0))) {
                 sb.append("_");
+                sb.append(c);
             }
             else {
                 sb.append(c);
@@ -145,6 +145,13 @@ class GenerationUtil {
         }
 
         return sb.toString();
+    }
+
+    private static String escape(char c) {
+        if (c == ' ' || c == '-')
+            return "_";
+        else
+            return "_" + Integer.toHexString(c);
     }
 
     /**

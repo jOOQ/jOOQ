@@ -66,7 +66,7 @@ import static org.jooq.SQLDialect.MYSQL;
  *
  * @author Lukas Eder
  */
-public interface InsertOnDuplicateStep<R extends Record> extends InsertFinalStep<R>, InsertReturningStep<R> {
+public interface InsertOnDuplicateStep<R extends Record> extends InsertReturningStep<R> {
 
     /**
      * Add an <code>ON DUPLICATE KEY UPDATE</code> clause to this insert query.

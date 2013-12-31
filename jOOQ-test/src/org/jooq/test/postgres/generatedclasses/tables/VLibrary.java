@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -219229115;
+	private static final long serialVersionUID = -2114003407;
 
 	/**
 	 * The singleton instance of <code>public.v_library</code>
@@ -48,11 +48,22 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gen
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 
+	private VLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord> aliased) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.VLibrary as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.VLibrary(alias);
+		return new org.jooq.test.postgres.generatedclasses.tables.VLibrary(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.VLibrary rename(java.lang.String name) {
+		return new org.jooq.test.postgres.generatedclasses.tables.VLibrary(name, null);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 321448557;
+	private static final long serialVersionUID = -1003880399;
 
 	/**
 	 * The singleton instance of <code>public.t_triggers</code>
@@ -53,6 +53,10 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.postgres.ge
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS);
 	}
 
+	private TTriggers(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord> aliased) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -82,6 +86,13 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.postgres.ge
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.TTriggers as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.TTriggers(alias);
+		return new org.jooq.test.postgres.generatedclasses.tables.TTriggers(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.TTriggers rename(java.lang.String name) {
+		return new org.jooq.test.postgres.generatedclasses.tables.TTriggers(name, null);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_986_2 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record> {
 
-	private static final long serialVersionUID = -911586084;
+	private static final long serialVersionUID = -1006284626;
 
 	/**
 	 * The singleton instance of <code>public.t_986_2</code>
@@ -43,6 +43,10 @@ public class T_986_2 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gene
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.T_986_2.T_986_2);
 	}
 
+	private T_986_2(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record> aliased) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -56,6 +60,13 @@ public class T_986_2 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gene
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.T_986_2 as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.T_986_2(alias);
+		return new org.jooq.test.postgres.generatedclasses.tables.T_986_2(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.T_986_2 rename(java.lang.String name) {
+		return new org.jooq.test.postgres.generatedclasses.tables.T_986_2(name, null);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 1593540172;
+	private static final long serialVersionUID = -935038210;
 
 	/**
 	 * The singleton instance of <code>public.v_book</code>
@@ -88,11 +88,22 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.postgres.genera
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK);
 	}
 
+	private VBook(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.VBookRecord> aliased) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.VBook as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.VBook(alias);
+		return new org.jooq.test.postgres.generatedclasses.tables.VBook(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.VBook rename(java.lang.String name) {
+		return new org.jooq.test.postgres.generatedclasses.tables.VBook(name, null);
 	}
 }

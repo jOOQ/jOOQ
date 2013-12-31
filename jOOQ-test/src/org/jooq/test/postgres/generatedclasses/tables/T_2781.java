@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2781 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record> {
 
-	private static final long serialVersionUID = 79017074;
+	private static final long serialVersionUID = -503271217;
 
 	/**
 	 * The singleton instance of <code>public.t_2781</code>
@@ -27,12 +27,12 @@ public class T_2781 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gener
 	/**
 	 * The column <code>public.t_2781.org</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record, java.lang.String> org_ = createField("org", org.jooq.impl.SQLDataType.CLOB.defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record, java.lang.String> ORG = createField("org", org.jooq.impl.SQLDataType.CLOB.defaulted(true), this);
 
 	/**
 	 * The column <code>public.t_2781.jooq</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record, java.lang.String> jooq = createField("jooq", org.jooq.impl.SQLDataType.CLOB.defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record, java.lang.String> JOOQ = createField("jooq", org.jooq.impl.SQLDataType.CLOB.defaulted(true), this);
 
 	/**
 	 * Create a <code>public.t_2781</code> table reference
@@ -48,11 +48,22 @@ public class T_2781 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gener
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.T_2781.T_2781);
 	}
 
+	private T_2781(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record> aliased) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.T_2781 as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.T_2781(alias);
+		return new org.jooq.test.postgres.generatedclasses.tables.T_2781(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.T_2781 rename(java.lang.String name) {
+		return new org.jooq.test.postgres.generatedclasses.tables.T_2781(name, null);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_959Record> {
 
-	private static final long serialVersionUID = -1785121669;
+	private static final long serialVersionUID = -1240436957;
 
 	/**
 	 * The singleton instance of <code>public.t_959</code>
@@ -43,11 +43,22 @@ public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.genera
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.T_959.T_959);
 	}
 
+	private T_959(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.T_959Record> aliased) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.T_959 as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.T_959(alias);
+		return new org.jooq.test.postgres.generatedclasses.tables.T_959(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.T_959 rename(java.lang.String name) {
+		return new org.jooq.test.postgres.generatedclasses.tables.T_959(name, null);
 	}
 }

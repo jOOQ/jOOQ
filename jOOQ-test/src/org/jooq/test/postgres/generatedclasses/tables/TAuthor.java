@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -1589195206;
+	private static final long serialVersionUID = 161284948;
 
 	/**
 	 * The singleton instance of <code>public.t_author</code>
@@ -68,6 +68,10 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gene
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR);
 	}
 
+	private TAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord> aliased) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -89,6 +93,13 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gene
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.TAuthor as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.TAuthor(alias);
+		return new org.jooq.test.postgres.generatedclasses.tables.TAuthor(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.TAuthor rename(java.lang.String name) {
+		return new org.jooq.test.postgres.generatedclasses.tables.TAuthor(name, null);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -444381816;
+	private static final long serialVersionUID = -1434721188;
 
 	/**
 	 * The singleton instance of <code>public.t_book</code>
@@ -88,6 +88,10 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.postgres.genera
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK);
 	}
 
+	private TBook(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> aliased) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -117,6 +121,13 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.postgres.genera
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.TBook as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.TBook(alias);
+		return new org.jooq.test.postgres.generatedclasses.tables.TBook(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.TBook rename(java.lang.String name) {
+		return new org.jooq.test.postgres.generatedclasses.tables.TBook(name, null);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 748249631;
+	private static final long serialVersionUID = 176154609;
 
 	/**
 	 * The singleton instance of <code>public.t_book_to_book_store</code>
@@ -53,6 +53,10 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.post
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}
 
+	private TBookToBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord> aliased) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -82,6 +86,13 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.post
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore(alias);
+		return new org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore rename(java.lang.String name) {
+		return new org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore(name, null);
 	}
 }

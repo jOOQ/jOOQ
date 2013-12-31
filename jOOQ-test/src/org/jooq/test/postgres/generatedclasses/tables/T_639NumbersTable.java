@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -1233718553;
+	private static final long serialVersionUID = 1610817379;
 
 	/**
 	 * The singleton instance of <code>public.t_639_numbers_table</code>
@@ -98,6 +98,10 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.pos
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE);
 	}
 
+	private T_639NumbersTable(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord> aliased) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -119,6 +123,13 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.pos
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable(alias);
+		return new org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable rename(java.lang.String name) {
+		return new org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable(name, null);
 	}
 }

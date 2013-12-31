@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = 873933636;
+	private static final long serialVersionUID = 66104416;
 
 	/**
 	 * The singleton instance of <code>public.t_exotic_types</code>
@@ -53,6 +53,10 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.postgres
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES);
 	}
 
+	private TExoticTypes(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TExoticTypesRecord> aliased) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -74,6 +78,13 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.postgres
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.TExoticTypes as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.TExoticTypes(alias);
+		return new org.jooq.test.postgres.generatedclasses.tables.TExoticTypes(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.TExoticTypes rename(java.lang.String name) {
+		return new org.jooq.test.postgres.generatedclasses.tables.TExoticTypes(name, null);
 	}
 }

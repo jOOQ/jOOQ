@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -248938231;
+	private static final long serialVersionUID = 1259658451;
 
 	/**
 	 * The singleton instance of <code>public.x_test_case_71</code>
@@ -48,6 +48,10 @@ public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.postgres
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71);
 	}
 
+	private XTestCase_71(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record> aliased) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -77,6 +81,13 @@ public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.postgres
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.XTestCase_71 as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.XTestCase_71(alias);
+		return new org.jooq.test.postgres.generatedclasses.tables.XTestCase_71(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.XTestCase_71 rename(java.lang.String name) {
+		return new org.jooq.test.postgres.generatedclasses.tables.XTestCase_71(name, null);
 	}
 }

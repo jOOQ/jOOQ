@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 1810344178;
+	private static final long serialVersionUID = -157347998;
 
 	/**
 	 * The singleton instance of <code>public.t_language</code>
@@ -58,6 +58,10 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.postgres.ge
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE);
 	}
 
+	private TLanguage(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord> aliased) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -79,6 +83,13 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.postgres.ge
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.TLanguage as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.TLanguage(alias);
+		return new org.jooq.test.postgres.generatedclasses.tables.TLanguage(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.TLanguage rename(java.lang.String name) {
+		return new org.jooq.test.postgres.generatedclasses.tables.TLanguage(name, null);
 	}
 }

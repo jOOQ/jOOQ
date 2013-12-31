@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = -1641135224;
+	private static final long serialVersionUID = 1280696648;
 
 	/**
 	 * The singleton instance of <code>public.t_arrays</code>
@@ -73,6 +73,10 @@ public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gene
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS);
 	}
 
+	private TArrays(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> aliased) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -94,6 +98,13 @@ public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gene
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.TArrays as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.TArrays(alias);
+		return new org.jooq.test.postgres.generatedclasses.tables.TArrays(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.TArrays rename(java.lang.String name) {
+		return new org.jooq.test.postgres.generatedclasses.tables.TArrays(name, null);
 	}
 }

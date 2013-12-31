@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TInheritance_1_2_1 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TInheritance_1_2_1Record> {
 
-	private static final long serialVersionUID = 537473294;
+	private static final long serialVersionUID = 803367528;
 
 	/**
 	 * The singleton instance of <code>public.t_inheritance_1_2_1</code>
@@ -53,11 +53,22 @@ public class TInheritance_1_2_1 extends org.jooq.impl.TableImpl<org.jooq.test.po
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2_1.T_INHERITANCE_1_2_1);
 	}
 
+	private TInheritance_1_2_1(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TInheritance_1_2_1Record> aliased) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2_1 as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2_1(alias);
+		return new org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2_1(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2_1 rename(java.lang.String name) {
+		return new org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2_1(name, null);
 	}
 }

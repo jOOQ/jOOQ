@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2781Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record> implements org.jooq.Record2<java.lang.String, java.lang.String>, org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_2781 {
 
-	private static final long serialVersionUID = -1037898596;
+	private static final long serialVersionUID = 1784439987;
 
 	/**
 	 * Setter for <code>public.t_2781.org</code>. 
@@ -68,7 +68,7 @@ public class T_2781Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.po
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field1() {
-		return org.jooq.test.postgres.generatedclasses.tables.T_2781.T_2781.org_;
+		return org.jooq.test.postgres.generatedclasses.tables.T_2781.T_2781.ORG;
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class T_2781Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.po
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field2() {
-		return org.jooq.test.postgres.generatedclasses.tables.T_2781.T_2781.jooq;
+		return org.jooq.test.postgres.generatedclasses.tables.T_2781.T_2781.JOOQ;
 	}
 
 	/**

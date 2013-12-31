@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 1765245636;
+	private static final long serialVersionUID = 571377704;
 
 	/**
 	 * The singleton instance of <code>public.t_dates</code>
@@ -68,6 +68,10 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gener
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TDates.T_DATES);
 	}
 
+	private TDates(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord> aliased) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -89,6 +93,13 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gener
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.TDates as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.TDates(alias);
+		return new org.jooq.test.postgres.generatedclasses.tables.TDates(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.TDates rename(java.lang.String name) {
+		return new org.jooq.test.postgres.generatedclasses.tables.TDates(name, null);
 	}
 }

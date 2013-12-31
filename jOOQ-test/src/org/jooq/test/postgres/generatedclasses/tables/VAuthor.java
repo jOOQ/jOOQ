@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 1042369455;
+	private static final long serialVersionUID = 1031499187;
 
 	/**
 	 * The singleton instance of <code>public.v_author</code>
@@ -68,11 +68,22 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gene
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR);
 	}
 
+	private VAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.VAuthorRecord> aliased) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.tables.VAuthor as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.VAuthor(alias);
+		return new org.jooq.test.postgres.generatedclasses.tables.VAuthor(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.postgres.generatedclasses.tables.VAuthor rename(java.lang.String name) {
+		return new org.jooq.test.postgres.generatedclasses.tables.VAuthor(name, null);
 	}
 }

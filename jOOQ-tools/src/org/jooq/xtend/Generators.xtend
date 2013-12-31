@@ -114,7 +114,8 @@ abstract class Generators {
         try {
             System::out.println("Writing " + file + (if (section != null) (" (section: " + section + ")") else ""));
             val fw = new FileWriter(file);
-            fw.append(contents);
+            // It's hard to enforce unix line separators in Xtend
+            fw.append(contents.toString().replace("\r\n", "\n"));
             fw.flush();
             fw.close();
         }

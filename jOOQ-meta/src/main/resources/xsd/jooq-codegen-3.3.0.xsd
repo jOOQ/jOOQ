@@ -116,147 +116,177 @@
         Specify 0..n schema matchers in order to provide a naming strategy for objects
         created from schemas.
         -->
-      <element name="schemas" minOccurs="0" maxOccurs="unbounded">
-        <complexType>
-          <all>
-
-            <!--
-              This schema matcher applies to all unqualified or qualified schema names
-              matched by this expression. If left empty, this matcher applies to all schemas. 
-              -->
-            <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
-            
-            <!--
-              These elements influence the naming of a generated org.jooq.Schema object. 
-              -->
-            <element name="schemaClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1" />
-            <element name="schemaIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1" />
-            <element name="schemaImplements" type="string" minOccurs="0" maxOccurs="1" />
-          </all>
-        </complexType>
-      </element>
+      <element name="schemas" type="tns:MatchersSchemasType" minOccurs="0" maxOccurs="1"/>
     
       <!--
         Specify 0..n table matchers in order to provide a naming strategy for objects
         created from database tables.
         -->
-      <element name="tables" minOccurs="0" maxOccurs="unbounded">
-        <complexType>
-          <all>
-          
-            <!--
-              This table matcher applies to all unqualified or qualified table names
-              matched by this expression. If left empty, this matcher applies to all tables. 
-              -->
-            <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
-            
-            <!--
-              These elements influence the naming of a generated org.jooq.Table object.
-              -->
-            <element name="tableClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-            <element name="tableIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-            <element name="tableImplements" type="string" minOccurs="0" maxOccurs="1"/>
-
-            <!-- 
-              These elements influence the naming of a generated org.jooq.Record object.
-              -->
-            <element name="recordClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-            <element name="recordImplements" type="string" minOccurs="0" maxOccurs="1"/>
-            
-            <!--
-              These elements influence the naming of a generated interface, implemented by
-              generated org.jooq.Record objects and by generated POJOs.
-              -->
-            <element name="interfaceClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-            <element name="interfaceImplements" type="string" minOccurs="0" maxOccurs="1"/>
-            
-            <!--
-              These elements influence the naming of a generated org.jooq.DAO object. 
-              -->
-            <element name="daoClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-            <element name="daoImplements" type="string" minOccurs="0" maxOccurs="1"/>
-            
-            <!--
-              These elements influence the naming of a generated POJO object. 
-              -->
-            <element name="pojoClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-            <element name="pojoExtends" type="string" minOccurs="0" maxOccurs="1"/>
-            <element name="pojoImplements" type="string" minOccurs="0" maxOccurs="1"/>
-          </all>
-        </complexType>
-      </element>
+      <element name="tables" type="tns:MatchersTablesType" minOccurs="0" maxOccurs="1"/>
       
       <!--
         Specify 0..n field matchers in order to provide a naming strategy for objects
         created from table fields.
         -->
-      <element name="fields" minOccurs="0" maxOccurs="unbounded">
-        <complexType>
-          <all>
-          
-            <!--
-              This field matcher applies to all unqualified or qualified field names
-              matched by this expression. If left empty, this matcher applies to all fields. 
-              -->
-            <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
-            
-            <!--
-              These elements influence the naming of a generated org.jooq.Field object.
-              -->
-            <element name="fieldIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-            <element name="fieldMember" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-            <element name="fieldSetter" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-            <element name="fieldGetter" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
-          </all>
-        </complexType>
-      </element>
+      <element name="fields" type="tns:MatchersFieldsType" minOccurs="0" maxOccurs="1"/>
       
       <!--
         Specify 0..n routine matchers in order to provide a naming strategy for objects
         created from routines.
         -->
-      <element name="routines" minOccurs="0" maxOccurs="unbounded">
-        <complexType>
-          <all>
-
-            <!--
-              This routine matcher applies to all unqualified or qualified routine names
-              matched by this expression. If left empty, this matcher applies to all routines. 
-              -->
-            <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
-            
-            <!--
-              These elements influence the naming of a generated org.jooq.Routine object. 
-              -->
-            <element name="routineClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1" />
-            <element name="routineMethod" type="tns:MatcherRule" minOccurs="0" maxOccurs="1" />
-            <element name="routineImplements" type="string" minOccurs="0" maxOccurs="1"/>
-          </all>
-        </complexType>
-      </element>
+      <element name="routines" type="tns:MatchersRoutinesType" minOccurs="0" maxOccurs="1"/>
       
       <!--
         Specify 0..n sequence matchers in order to provide a naming strategy for objects
         created from sequences.
         -->
-      <element name="sequences" minOccurs="0" maxOccurs="unbounded">
-        <complexType>
-          <all>
-
-            <!--
-              This sequence matcher applies to all unqualified or qualified sequence names
-              matched by this expression. If left empty, this matcher applies to all sequences. 
-              -->
-            <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
-            
-            <!--
-              These elements influence the naming of the generated Sequences class. 
-              -->
-            <element name="sequenceIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1" />
-          </all>
-        </complexType>
-      </element>
+      <element name="sequences" type="tns:MatchersSequencesType" minOccurs="0" maxOccurs="1"/>
     </sequence>
+  </complexType>
+  
+  <complexType name="MatchersSchemasType">
+    <sequence>
+      <element name="schema" type="tns:MatchersSchemaType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  
+  <complexType name="MatchersSchemaType">
+    <all>
+      
+      <!--
+        This schema matcher applies to all unqualified or qualified schema names
+        matched by this expression. If left empty, this matcher applies to all schemas. 
+        -->
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
+      
+      <!--
+        These elements influence the naming of a generated org.jooq.Schema object. 
+        -->
+      <element name="schemaClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1" />
+      <element name="schemaIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1" />
+      <element name="schemaImplements" type="string" minOccurs="0" maxOccurs="1" />
+    </all>
+  </complexType>
+  
+  <complexType name="MatchersTablesType">
+    <sequence>
+      <element name="table" type="tns:MatchersTableType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  
+  <complexType name="MatchersTableType">
+    <all>
+
+      <!--
+        This table matcher applies to all unqualified or qualified table names
+        matched by this expression. If left empty, this matcher applies to all tables. 
+        -->
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
+      
+      <!--
+        These elements influence the naming of a generated org.jooq.Table object.
+        -->
+      <element name="tableClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
+      <element name="tableIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
+      <element name="tableImplements" type="string" minOccurs="0" maxOccurs="1"/>
+
+      <!-- 
+        These elements influence the naming of a generated org.jooq.Record object.
+        -->
+      <element name="recordClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
+      <element name="recordImplements" type="string" minOccurs="0" maxOccurs="1"/>
+      
+      <!--
+        These elements influence the naming of a generated interface, implemented by
+        generated org.jooq.Record objects and by generated POJOs.
+        -->
+      <element name="interfaceClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
+      <element name="interfaceImplements" type="string" minOccurs="0" maxOccurs="1"/>
+      
+      <!--
+        These elements influence the naming of a generated org.jooq.DAO object. 
+        -->
+      <element name="daoClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
+      <element name="daoImplements" type="string" minOccurs="0" maxOccurs="1"/>
+      
+      <!--
+        These elements influence the naming of a generated POJO object. 
+        -->
+      <element name="pojoClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
+      <element name="pojoExtends" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="pojoImplements" type="string" minOccurs="0" maxOccurs="1"/>
+    </all>
+  </complexType>
+  
+  <complexType name="MatchersFieldsType">
+    <sequence>
+      <element name="field" type="tns:MatchersFieldType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  
+  <complexType name="MatchersFieldType">
+    <all>
+    
+      <!--
+        This field matcher applies to all unqualified or qualified field names
+        matched by this expression. If left empty, this matcher applies to all fields. 
+        -->
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
+      
+      <!--
+        These elements influence the naming of a generated org.jooq.Field object.
+        -->
+      <element name="fieldIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
+      <element name="fieldMember" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
+      <element name="fieldSetter" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
+      <element name="fieldGetter" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
+    </all>
+  </complexType>
+  
+  <complexType name="MatchersRoutinesType">
+    <sequence>
+      <element name="routine" type="tns:MatchersRoutineType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  
+  <complexType name="MatchersRoutineType">
+    <all>
+    
+      <!--
+        This routine matcher applies to all unqualified or qualified routine names
+        matched by this expression. If left empty, this matcher applies to all routines. 
+        -->
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
+      
+      <!--
+        These elements influence the naming of a generated org.jooq.Routine object. 
+        -->
+      <element name="routineClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1" />
+      <element name="routineMethod" type="tns:MatcherRule" minOccurs="0" maxOccurs="1" />
+      <element name="routineImplements" type="string" minOccurs="0" maxOccurs="1"/>
+    </all>
+  </complexType>
+  
+  <complexType name="MatchersSequencesType">
+    <sequence>
+      <element name="sequence" type="tns:MatchersSequenceType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  
+  <complexType name="MatchersSequenceType">
+    <all>
+
+      <!--
+        This sequence matcher applies to all unqualified or qualified sequence names
+        matched by this expression. If left empty, this matcher applies to all sequences. 
+        -->
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
+      
+      <!--
+        These elements influence the naming of the generated Sequences class. 
+        -->
+      <element name="sequenceIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1" />
+    </all>
   </complexType>
   
   <complexType name="MatcherRule">

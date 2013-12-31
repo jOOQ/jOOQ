@@ -97,6 +97,20 @@
                                     <instanceFields>true</instanceFields>
                                     <pojos>true</pojos>
                                 </generate>
+                                
+                                <!-- [#2910] This strategy only checks if relevant XML configuration works
+                                             for the Maven plugin as well -->
+                                <strategy>
+                                    <matchers>
+                                        <fields>
+                                            <field>
+                                                <expression>DUMMY</expression>
+                                                <fieldSetter><expression>DUMMY</expression></fieldSetter>
+                                                <fieldGetter><expression>DUMMY</expression></fieldGetter>
+                                            </field>
+                                        </fields>
+                                    </matchers>
+                                </strategy>
                                 <target>
                                     <packageName>org.jooq.scala.example.h2</packageName>
                                     <directory>target/generated-test-sources/jooq-h2</directory>

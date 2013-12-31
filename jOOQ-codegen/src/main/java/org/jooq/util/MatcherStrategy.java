@@ -48,11 +48,11 @@ import org.jooq.tools.StringUtils;
 import org.jooq.util.jaxb.MatcherRule;
 import org.jooq.util.jaxb.MatcherTransformType;
 import org.jooq.util.jaxb.Matchers;
-import org.jooq.util.jaxb.Matchers.Fields;
-import org.jooq.util.jaxb.Matchers.Routines;
-import org.jooq.util.jaxb.Matchers.Schemas;
-import org.jooq.util.jaxb.Matchers.Sequences;
-import org.jooq.util.jaxb.Matchers.Tables;
+import org.jooq.util.jaxb.MatchersFieldType;
+import org.jooq.util.jaxb.MatchersRoutineType;
+import org.jooq.util.jaxb.MatchersSchemaType;
+import org.jooq.util.jaxb.MatchersSequenceType;
+import org.jooq.util.jaxb.MatchersTableType;
 
 /**
  * A generator strategy that names objects according to a {@link Matchers}
@@ -124,7 +124,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
         }
     }
 
-    private final List<Schemas> schemas(Definition definition) {
+    private final List<MatchersSchemaType> schemas(Definition definition) {
         if (definition instanceof SchemaDefinition) {
             return matchers.getSchemas();
         }
@@ -132,7 +132,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
         return emptyList();
     }
 
-    private final List<Tables> tables(Definition definition) {
+    private final List<MatchersTableType> tables(Definition definition) {
         if (definition instanceof TableDefinition) {
             return matchers.getTables();
         }
@@ -140,7 +140,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
         return emptyList();
     }
 
-    private final List<Fields> fields(Definition definition) {
+    private final List<MatchersFieldType> fields(Definition definition) {
         if (definition instanceof ColumnDefinition) {
             return matchers.getFields();
         }
@@ -148,7 +148,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
         return emptyList();
     }
 
-    private final List<Routines> routines(Definition definition) {
+    private final List<MatchersRoutineType> routines(Definition definition) {
         if (definition instanceof RoutineDefinition) {
             return matchers.getRoutines();
         }
@@ -156,7 +156,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
         return emptyList();
     }
 
-    private final List<Sequences> sequences(Definition definition) {
+    private final List<MatchersSequenceType> sequences(Definition definition) {
         if (definition instanceof SequenceDefinition) {
             return matchers.getSequences();
         }
@@ -176,25 +176,25 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaIdentifier(Definition definition) {
-        for (Schemas schemas : schemas(definition)) {
+        for (MatchersSchemaType schemas : schemas(definition)) {
             String result = match(definition, schemas.getExpression(), schemas.getSchemaIdentifier());
             if (result != null)
                 return result;
         }
 
-        for (Tables tables : tables(definition)) {
+        for (MatchersTableType tables : tables(definition)) {
             String result = match(definition, tables.getExpression(), tables.getTableIdentifier());
             if (result != null)
                 return result;
         }
 
-        for (Fields fields : fields(definition)) {
+        for (MatchersFieldType fields : fields(definition)) {
             String result = match(definition, fields.getExpression(), fields.getFieldIdentifier());
             if (result != null)
                 return result;
         }
 
-        for (Sequences sequences : sequences(definition)) {
+        for (MatchersSequenceType sequences : sequences(definition)) {
             String result = match(definition, sequences.getExpression(), sequences.getSequenceIdentifier());
             if (result != null)
                 return result;
@@ -206,7 +206,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaSetterName(Definition definition, Mode mode) {
-        for (Fields fields : fields(definition)) {
+        for (MatchersFieldType fields : fields(definition)) {
             String result = match(definition, fields.getExpression(), fields.getFieldSetter());
             if (result != null)
                 return result;
@@ -218,7 +218,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaGetterName(Definition definition, Mode mode) {
-        for (Fields fields : fields(definition)) {
+        for (MatchersFieldType fields : fields(definition)) {
             String result = match(definition, fields.getExpression(), fields.getFieldGetter());
             if (result != null)
                 return result;
@@ -230,7 +230,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaMethodName(Definition definition, Mode mode) {
-        for (Routines routines : routines(definition)) {
+        for (MatchersRoutineType routines : routines(definition)) {
             String result = match(definition, routines.getExpression(), routines.getRoutineMethod());
             if (result != null)
                 return result;
@@ -242,7 +242,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaClassExtends(Definition definition, Mode mode) {
-        for (Tables tables : tables(definition)) {
+        for (MatchersTableType tables : tables(definition)) {
             String result = null;
 
             switch (mode) {
@@ -259,13 +259,13 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public List<String> getJavaClassImplements(Definition definition, Mode mode) {
-        for (Schemas schemas : schemas(definition)) {
+        for (MatchersSchemaType schemas : schemas(definition)) {
             String result = match(definition, schemas.getExpression(), schemas.getSchemaImplements());
             if (result != null)
                 return split(result);
         }
 
-        for (Tables tables : tables(definition)) {
+        for (MatchersTableType tables : tables(definition)) {
             String result = null;
 
             switch (mode) {
@@ -281,7 +281,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
             }
         }
 
-        for (Routines routines : routines(definition)) {
+        for (MatchersRoutineType routines : routines(definition)) {
             String result = match(definition, routines.getExpression(), routines.getRoutineImplements());
             if (result != null)
                 return split(result);
@@ -293,13 +293,13 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaClassName(Definition definition, Mode mode) {
-        for (Schemas schemas : schemas(definition)) {
+        for (MatchersSchemaType schemas : schemas(definition)) {
             String result = match(definition, schemas.getExpression(), schemas.getSchemaClass());
             if (result != null)
                 return result;
         }
 
-        for (Tables tables : tables(definition)) {
+        for (MatchersTableType tables : tables(definition)) {
             String result = null;
 
             switch (mode) {
@@ -314,7 +314,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
                 return result;
         }
 
-        for (Routines routines : routines(definition)) {
+        for (MatchersRoutineType routines : routines(definition)) {
             String result = match(definition, routines.getExpression(), routines.getRoutineClass());
             if (result != null)
                 return result;
@@ -331,7 +331,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaMemberName(Definition definition, Mode mode) {
-        for (Fields fields : fields(definition)) {
+        for (MatchersFieldType fields : fields(definition)) {
             String result = match(definition, fields.getExpression(), fields.getFieldMember());
             if (result != null)
                 return result;

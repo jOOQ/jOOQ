@@ -1615,6 +1615,11 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("public %s(%s alias) {", className, String.class);
             out.tab(2).println("super(alias, %s, %s);", schemaId, fullTableId);
             out.tab(1).println("}");
+
+            out.println();
+            out.tab(1).println("private %s(%s alias, %s<%s> aliased) {", className, String.class, Table.class, recordType);
+            out.tab(2).println("super(alias, %s, aliased);", schemaId);
+            out.tab(1).println("}");
         }
 
         // Add primary / unique / foreign key information
@@ -1712,7 +1717,15 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateInstanceFields()) {
             out.tab(1).overrideInherit();
             out.tab(1).println("public %s as(%s alias) {", fullClassName, String.class);
-            out.tab(2).println("return new %s(alias);", fullClassName);
+            out.tab(2).println("return new %s(alias, this);", fullClassName);
+            out.tab(1).println("}");
+        }
+
+        // [#2921] With instance fields, tables can be renamed.
+        if (generateInstanceFields()) {
+            out.tab(1).javadoc("Rename this table");
+            out.tab(1).println("public %s rename(%s name) {", fullClassName, String.class);
+            out.tab(2).println("return new %s(name, null);", fullClassName);
             out.tab(1).println("}");
         }
 

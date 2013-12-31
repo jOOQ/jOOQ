@@ -42,6 +42,9 @@
 package org.jooq.test;
 
 import static java.util.Arrays.asList;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.test.postgres.generatedclasses.Routines.fSearchBook;
@@ -86,6 +89,7 @@ import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -1085,5 +1089,63 @@ public class PostgresTest extends jOOQAbstractTest<
                 .values(3, "[]")
                 .values(4, "{\"hello\":\"world\"}")
                 .execute();
+    }
+
+    @Test
+    public void testPostgresTableRename() throws Exception {
+        Name b1 = name("b1");
+        Name b2 = name("b2");
+
+        String create = "create or replace view {0} as select * from {1} where {2} = {3}";
+        String drop = "drop view if exists {0}";
+
+        try {
+            create().execute(create, b1, T_BOOK, T_BOOK.ID, inline(1));
+            create().execute(create, b2, T_BOOK, T_BOOK.ID, inline(2));
+
+            org.jooq.test.postgres.generatedclasses.tables.TBook book1 = T_BOOK.rename("b1");
+            org.jooq.test.postgres.generatedclasses.tables.TBook book2 = T_BOOK.rename("b2");
+
+            org.jooq.test.postgres.generatedclasses.tables.TBook x1 = book1.as("x1");
+            org.jooq.test.postgres.generatedclasses.tables.TBook x2 = book2.as("x2");
+
+            assertEquals(2,
+            create().select()
+                    .from(book1)
+                    .union(
+                     select()
+                    .from(book2))
+                    .fetchCount());
+
+            assertEquals(
+                asList(1, 2),
+                create().select()
+                        .from(
+                             select(book1.ID)
+                            .from(book1)
+                            .union(
+                             select(book2.ID)
+                            .from(book2))
+                        )
+                        .orderBy(1)
+                        .fetch(0, int.class));
+
+            assertEquals(
+                asList(1, 2),
+                create().select()
+                        .from(
+                             select(x1.ID)
+                            .from(x1)
+                            .union(
+                             select(x2.ID)
+                            .from(x2))
+                        )
+                        .orderBy(1)
+                        .fetch(0, int.class));
+        }
+        finally {
+            create().execute(drop, b1);
+            create().execute(drop, b2);
+        }
     }
 }

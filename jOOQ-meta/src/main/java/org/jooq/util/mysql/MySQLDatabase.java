@@ -50,6 +50,7 @@ import static org.jooq.util.mysql.information_schema.Tables.TABLE_CONSTRAINTS;
 import static org.jooq.util.mysql.mysql.tables.Proc.DB;
 import static org.jooq.util.mysql.mysql.tables.Proc.PROC;
 
+import java.io.StringReader;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,7 @@ import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
+import org.jooq.tools.csv.CSVReader;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -284,8 +286,16 @@ public class MySQLDatabase extends AbstractDatabase {
                 	// are explicitly forced to another type
                     if (getConfiguredForcedType(columnDefinition) == null) {
                         DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, comment);
-                        for (String string : columnType.replaceAll("enum\\(|\\)", "").split(",")) {
-                            definition.addLiteral(string.trim().replaceAll("'", ""));
+
+                        CSVReader reader = new CSVReader(
+                            new StringReader(columnType.replaceAll("(^enum\\()|(\\)$)", ""))
+                           ,','  // Separator
+                           ,'\'' // Quote character
+                           ,true // Strict quotes
+                        );
+
+                        for (String string : reader.next()) {
+                            definition.addLiteral(string);
                         }
 
                         result.add(definition);

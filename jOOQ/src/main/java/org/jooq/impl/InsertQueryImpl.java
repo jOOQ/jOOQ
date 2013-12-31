@@ -84,6 +84,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     private final FieldMapForUpdate  updateMap;
     private final FieldMapsForInsert insertMaps;
+    private boolean                  defaultValues;
     private boolean                  onDuplicateKeyUpdate;
     private boolean                  onDuplicateKeyIgnore;
 
@@ -135,6 +136,11 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     @Override
     public final void addValuesForUpdate(Map<? extends Field<?>, ?> map) {
         updateMap.set(map);
+    }
+
+    @Override
+    public final void setDefaultValues() {
+        defaultValues = true;
     }
 
     @Override
@@ -387,11 +393,48 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                .keyword((onDuplicateKeyIgnore && asList(MARIADB, MYSQL).contains(context.configuration().dialect())) ? "ignore " : "")
                .keyword("into")
                .sql(" ")
-               .visit(getInto())
-               .sql(" ");
-        insertMaps.insertMaps.get(0).toSQLReferenceKeys(context);
-        context.end(INSERT_INSERT_INTO)
-               .visit(insertMaps);
+               .visit(getInto());
+
+        // [#1506] with DEFAULT VALUES, we might not have any columns to render
+        if (insertMaps.isExecutable()) {
+            context.sql(" ");
+            insertMaps.insertMaps.get(0).toSQLReferenceKeys(context);
+        }
+
+        context.end(INSERT_INSERT_INTO);
+
+        if (defaultValues) {
+            switch (context.configuration().dialect().family()) {
+                /* [pro] */
+                case DB2:
+                case ORACLE:
+                /* [/pro] */
+
+                case DERBY:
+                case MARIADB:
+                case MYSQL:
+                    context.sql(" ").keyword("values").sql("(");
+
+                    int count = getInto().fields().length;
+                    String separator = "";
+
+                    for (int i = 0; i < count; i++) {
+                        context.sql(separator);
+                        context.keyword("default");
+                        separator = ", ";
+                    }
+
+                    context.sql(")");
+                    break;
+
+                default:
+                    context.sql(" ").keyword("default values");
+                    break;
+            }
+        }
+        else {
+            context.visit(insertMaps);
+        }
     }
 
     private final void bindInsert(BindContext context) {
@@ -448,6 +491,6 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     public final boolean isExecutable() {
-        return insertMaps.isExecutable();
+        return insertMaps.isExecutable() || defaultValues;
     }
 }

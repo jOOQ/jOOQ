@@ -123,6 +123,12 @@ public interface InsertSetStep<R extends Record> {
     InsertValuesStepN<R> values(Collection<?> values);
 
     /**
+     * Add an empty record with default values.
+     */
+    @Support
+    InsertReturningStep<R> defaultValues();
+
+    /**
      * Use a <code>SELECT</code> statement as the source of values for the
      * <code>INSERT</code> statement.
      * <p>

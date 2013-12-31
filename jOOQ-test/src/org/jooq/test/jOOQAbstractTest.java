@@ -1007,6 +1007,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testInsertDefaultValues() throws Exception {
+        new InsertUpdateTests(this).testInsertDefaultValues();
+    }
+
+    @Test
     public void testTableMapping() throws Exception {
         new SchemaAndMappingTests(this).testTableMapping();
     }

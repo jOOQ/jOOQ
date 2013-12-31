@@ -133,6 +133,8 @@ class InsertDSL extends Generators {
         import java.util.List;
         import java.util.Map;
         
+        import javax.annotation.Generated;
+        
         import org.jooq.AttachableInternal;
         import org.jooq.Configuration;
         import org.jooq.Field;
@@ -155,7 +157,8 @@ class InsertDSL extends Generators {
         /**
          * @author Lukas Eder
          */
-        @SuppressWarnings({ "rawtypes", "unchecked" })        
+        @SuppressWarnings({ "rawtypes", "unchecked" })
+        «generatedAnnotation»
         class InsertImpl<R extends Record, «TN(Constants::MAX_ROW_DEGREE)»>
             extends AbstractDelegatingQuery<InsertQuery<R>>
             implements
@@ -259,7 +262,16 @@ class InsertDSL extends Generators {
         
                 return this;
             }
-        
+
+            /**
+             * Add an empty record with default values.
+             */
+            @Override
+            public final InsertImpl defaultValues() {
+                getDelegate().setDefaultValues();
+                return this;
+            }
+
             @Override
             public final InsertImpl onDuplicateKeyUpdate() {
                 onDuplicateKeyUpdate = true;

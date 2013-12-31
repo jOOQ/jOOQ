@@ -176,6 +176,12 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
     void addValuesForUpdate(Map<? extends Field<?>, ?> map);
 
     /**
+     * Set an empty record with the <code>DEFAULT VALUES</code> clause.
+     */
+    @Support
+    void setDefaultValues();
+
+    /**
      * {@inheritDoc}
      * <p>
      * This feature works with <code>INSERT</code> statements for all SQL dialects

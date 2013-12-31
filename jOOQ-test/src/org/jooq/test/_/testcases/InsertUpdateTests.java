@@ -67,6 +67,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectCount;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.trueCondition;
@@ -223,6 +224,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(firstId + 2, (int) r3.getValue(0, id));
             assertEquals(firstId + 3, (int) r3.getValue(1, id));
         }
+    }
+
+    @Test
+    public void testInsertDefaultValues() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        assertEquals(1,
+        create().insertInto(TTriggers())
+                .defaultValues()
+                .execute());
+
+        assertEquals(1, (int) create().fetchOne(selectCount().from(TTriggers())).getValue(0, int.class));
+        assertEquals(1, create().delete(TTriggers()).execute());
     }
 
     @Test

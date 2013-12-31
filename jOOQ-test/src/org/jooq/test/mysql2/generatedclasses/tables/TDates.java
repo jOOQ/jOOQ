@@ -9,7 +9,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -1285371796;
+	private static final long serialVersionUID = 1706725382;
 
 	/**
 	 * The singleton instance of <code>test2.t_dates</code>
@@ -78,6 +78,10 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generat
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.TDates.T_DATES);
 	}
 
+	private TDates(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord> aliased) {
+		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -99,6 +103,13 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generat
 	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.TDates as(java.lang.String alias) {
-		return new org.jooq.test.mysql2.generatedclasses.tables.TDates(alias);
+		return new org.jooq.test.mysql2.generatedclasses.tables.TDates(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.TDates rename(java.lang.String name) {
+		return new org.jooq.test.mysql2.generatedclasses.tables.TDates(name, null);
 	}
 }

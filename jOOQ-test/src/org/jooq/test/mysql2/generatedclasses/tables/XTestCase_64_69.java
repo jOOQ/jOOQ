@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = -154468704;
+	private static final long serialVersionUID = 1144316096;
 
 	/**
 	 * The singleton instance of <code>test2.x_test_case_64_69</code>
@@ -50,6 +50,10 @@ public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.mysql
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69);
 	}
 
+	private XTestCase_64_69(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_64_69Record> aliased) {
+		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -79,6 +83,13 @@ public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.mysql
 	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69 as(java.lang.String alias) {
-		return new org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69(alias);
+		return new org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69 rename(java.lang.String name) {
+		return new org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69(name, null);
 	}
 }

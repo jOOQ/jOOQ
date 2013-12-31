@@ -9,7 +9,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = -982052277;
+	private static final long serialVersionUID = 475975391;
 
 	/**
 	 * The singleton instance of <code>test2.t_785</code>
@@ -53,11 +53,22 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generate
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.T_785.T_785);
 	}
 
+	private T_785(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql2.generatedclasses.tables.records.T_785Record> aliased) {
+		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.T_785 as(java.lang.String alias) {
-		return new org.jooq.test.mysql2.generatedclasses.tables.T_785(alias);
+		return new org.jooq.test.mysql2.generatedclasses.tables.T_785(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.T_785 rename(java.lang.String name) {
+		return new org.jooq.test.mysql2.generatedclasses.tables.T_785(name, null);
 	}
 }

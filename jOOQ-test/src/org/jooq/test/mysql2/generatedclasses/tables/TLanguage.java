@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 1302299704;
+	private static final long serialVersionUID = 2088125362;
 
 	/**
 	 * The singleton instance of <code>test2.t_language</code>
@@ -60,6 +60,10 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.gene
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.TLanguage.T_LANGUAGE);
 	}
 
+	private TLanguage(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql2.generatedclasses.tables.records.TLanguageRecord> aliased) {
+		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -81,6 +85,13 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.gene
 	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.TLanguage as(java.lang.String alias) {
-		return new org.jooq.test.mysql2.generatedclasses.tables.TLanguage(alias);
+		return new org.jooq.test.mysql2.generatedclasses.tables.TLanguage(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.TLanguage rename(java.lang.String name) {
+		return new org.jooq.test.mysql2.generatedclasses.tables.TLanguage(name, null);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -1263499011;
+	private static final long serialVersionUID = -1980346263;
 
 	/**
 	 * The singleton instance of <code>test2.t_exotic_types</code>
@@ -48,6 +48,10 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.g
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES);
 	}
 
+	private TExoticTypes(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql2.generatedclasses.tables.records.TExoticTypesRecord> aliased) {
+		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -69,6 +73,13 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.g
 	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.TExoticTypes as(java.lang.String alias) {
-		return new org.jooq.test.mysql2.generatedclasses.tables.TExoticTypes(alias);
+		return new org.jooq.test.mysql2.generatedclasses.tables.TExoticTypes(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.TExoticTypes rename(java.lang.String name) {
+		return new org.jooq.test.mysql2.generatedclasses.tables.TExoticTypes(name, null);
 	}
 }

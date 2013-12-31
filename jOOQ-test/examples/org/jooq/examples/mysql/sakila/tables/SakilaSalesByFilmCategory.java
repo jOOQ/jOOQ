@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaSalesByFilmCategory extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaSalesByFilmCategoryRecord> {
 
-	private static final long serialVersionUID = -1929506146;
+	private static final long serialVersionUID = 1564175945;
 
 	/**
 	 * The singleton instance of <code>sakila.sales_by_film_category</code>
@@ -50,11 +50,22 @@ public class SakilaSalesByFilmCategory extends org.jooq.impl.TableImpl<org.jooq.
 		super(alias, org.jooq.examples.mysql.sakila.SakilaSakila.SAKILA, org.jooq.examples.mysql.sakila.tables.SakilaSalesByFilmCategory.SALES_BY_FILM_CATEGORY);
 	}
 
+	private SakilaSalesByFilmCategory(java.lang.String alias, org.jooq.Table<org.jooq.examples.mysql.sakila.tables.records.SakilaSalesByFilmCategoryRecord> aliased) {
+		super(alias, org.jooq.examples.mysql.sakila.SakilaSakila.SAKILA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.examples.mysql.sakila.tables.SakilaSalesByFilmCategory as(java.lang.String alias) {
-		return new org.jooq.examples.mysql.sakila.tables.SakilaSalesByFilmCategory(alias);
+		return new org.jooq.examples.mysql.sakila.tables.SakilaSalesByFilmCategory(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.examples.mysql.sakila.tables.SakilaSalesByFilmCategory rename(java.lang.String name) {
+		return new org.jooq.examples.mysql.sakila.tables.SakilaSalesByFilmCategory(name, null);
 	}
 }

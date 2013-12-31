@@ -9,7 +9,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = 539974645;
+	private static final long serialVersionUID = 1772409135;
 
 	/**
 	 * The singleton instance of <code>test2.t_identity_pk</code>
@@ -48,6 +48,10 @@ public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.ge
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
 	}
 
+	private TIdentityPk(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord> aliased) {
+		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -77,6 +81,13 @@ public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.ge
 	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk as(java.lang.String alias) {
-		return new org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk(alias);
+		return new org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk rename(java.lang.String name) {
+		return new org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk(name, null);
 	}
 }

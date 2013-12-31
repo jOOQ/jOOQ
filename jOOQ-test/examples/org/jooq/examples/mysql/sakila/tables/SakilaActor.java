@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaActor extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaActorRecord> {
 
-	private static final long serialVersionUID = 1784460568;
+	private static final long serialVersionUID = 667444693;
 
 	/**
 	 * The singleton instance of <code>sakila.actor</code>
@@ -58,6 +58,10 @@ public class SakilaActor extends org.jooq.impl.TableImpl<org.jooq.examples.mysql
 		super(alias, org.jooq.examples.mysql.sakila.SakilaSakila.SAKILA, org.jooq.examples.mysql.sakila.tables.SakilaActor.ACTOR);
 	}
 
+	private SakilaActor(java.lang.String alias, org.jooq.Table<org.jooq.examples.mysql.sakila.tables.records.SakilaActorRecord> aliased) {
+		super(alias, org.jooq.examples.mysql.sakila.SakilaSakila.SAKILA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -87,6 +91,13 @@ public class SakilaActor extends org.jooq.impl.TableImpl<org.jooq.examples.mysql
 	 */
 	@Override
 	public org.jooq.examples.mysql.sakila.tables.SakilaActor as(java.lang.String alias) {
-		return new org.jooq.examples.mysql.sakila.tables.SakilaActor(alias);
+		return new org.jooq.examples.mysql.sakila.tables.SakilaActor(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.examples.mysql.sakila.tables.SakilaActor rename(java.lang.String name) {
+		return new org.jooq.examples.mysql.sakila.tables.SakilaActor(name, null);
 	}
 }

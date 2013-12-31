@@ -9,7 +9,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 632325308;
+	private static final long serialVersionUID = -1672584804;
 
 	/**
 	 * The singleton instance of <code>test2.t_booleans</code>
@@ -93,6 +93,10 @@ public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.gene
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.TBooleans.T_BOOLEANS);
 	}
 
+	private TBooleans(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql2.generatedclasses.tables.records.TBooleansRecord> aliased) {
+		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -114,6 +118,13 @@ public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.gene
 	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.TBooleans as(java.lang.String alias) {
-		return new org.jooq.test.mysql2.generatedclasses.tables.TBooleans(alias);
+		return new org.jooq.test.mysql2.generatedclasses.tables.TBooleans(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.TBooleans rename(java.lang.String name) {
+		return new org.jooq.test.mysql2.generatedclasses.tables.TBooleans(name, null);
 	}
 }

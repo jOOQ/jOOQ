@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 2041720033;
+	private static final long serialVersionUID = 1569262167;
 
 	/**
 	 * The singleton instance of <code>test2.t_author</code>
@@ -70,6 +70,10 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.genera
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR);
 	}
 
+	private TAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> aliased) {
+		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -91,6 +95,13 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.genera
 	 */
 	@Override
 	public org.jooq.test.mysql2.generatedclasses.tables.TAuthor as(java.lang.String alias) {
-		return new org.jooq.test.mysql2.generatedclasses.tables.TAuthor(alias);
+		return new org.jooq.test.mysql2.generatedclasses.tables.TAuthor(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.mysql2.generatedclasses.tables.TAuthor rename(java.lang.String name) {
+		return new org.jooq.test.mysql2.generatedclasses.tables.TAuthor(name, null);
 	}
 }

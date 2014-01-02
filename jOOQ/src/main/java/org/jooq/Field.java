@@ -2723,7 +2723,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#sqrt(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> sqrt();
 
     /**
@@ -2733,7 +2733,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#exp(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> exp();
 
     /**
@@ -2743,7 +2743,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#ln(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> ln();
 
     /**
@@ -2753,7 +2753,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#log(Field, int)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> log(int base);
 
     /**
@@ -2763,7 +2763,7 @@ public interface Field<T> extends GroupField {
      *
      * @see DSL#power(Field, Number)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> pow(Number exponent);
 
     /**
@@ -2771,7 +2771,7 @@ public interface Field<T> extends GroupField {
      *
      * @see #power(Number)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> power(Number exponent);
 
     /**

@@ -77,6 +77,7 @@ class Ln extends AbstractFunction<BigDecimal> {
         if (base == null) {
             switch (configuration.dialect().family()) {
                 /* [pro] */
+                case ACCESS:
                 case ASE:
                 case SQLSERVER:
                 /* [/pro] */
@@ -90,6 +91,7 @@ class Ln extends AbstractFunction<BigDecimal> {
         else {
             switch (configuration.dialect().family()) {
                 /* [pro] */
+                case ACCESS:
                 case ASE:
                 case DB2:
                 case INGRES:

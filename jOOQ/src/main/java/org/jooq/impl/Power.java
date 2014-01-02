@@ -40,7 +40,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.field;
 
 import java.math.BigDecimal;
 
@@ -69,13 +69,18 @@ class Power extends AbstractFunction<BigDecimal> {
 
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
-        switch (configuration.dialect()) {
+        switch (configuration.dialect().family()) {
+            /* [pro] */
+            case ACCESS:
+                return field("({0} ^ {1})", SQLDataType.NUMERIC, arg1, arg2);
+            /* [/pro] */
+
             case DERBY:
             case SQLITE:
                 return DSL.exp(DSL.ln(arg1).mul(arg2));
 
             default:
-                return function("power", SQLDataType.NUMERIC, getArguments());
+                return field("{power}({0})", SQLDataType.NUMERIC, getArguments());
         }
     }
 }

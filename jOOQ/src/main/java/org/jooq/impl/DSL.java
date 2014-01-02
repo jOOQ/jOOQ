@@ -9306,7 +9306,7 @@ public class DSL {
      *
      * @see #sqrt(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "SQRT",
         args = "Field",
@@ -9324,7 +9324,7 @@ public class DSL {
      * power (which in turn may also be simulated using ln and exp functions):
      * <code><pre>power([field], 0.5)</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "SQRT",
         args = "Field",
@@ -9339,7 +9339,7 @@ public class DSL {
      *
      * @see #exp(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "EXP",
         args = "Field",
@@ -9355,7 +9355,7 @@ public class DSL {
      * This renders the same on all dialects:
      * <code><pre>exp([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "EXP",
         args = "Field",
@@ -9370,7 +9370,7 @@ public class DSL {
      *
      * @see #ln(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "LN",
         args = "Field",
@@ -9387,7 +9387,7 @@ public class DSL {
      * <code><pre>ln([field]) or
      * log([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "LN",
         args = "Field",
@@ -9402,7 +9402,7 @@ public class DSL {
      *
      * @see #log(Field, int)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "LOG",
         args = {
@@ -9423,7 +9423,7 @@ public class DSL {
      * most RDBMS) using the natural logarithm:
      * <code><pre>ln([field]) / ln([base])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "LOG",
         args = {
@@ -9441,7 +9441,7 @@ public class DSL {
      *
      * @see #power(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "POWER",
         args = {
@@ -9459,7 +9459,7 @@ public class DSL {
      *
      * @see #power(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "POWER",
         args = {
@@ -9477,7 +9477,7 @@ public class DSL {
      *
      * @see #power(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "POWER",
         args = {
@@ -9498,7 +9498,7 @@ public class DSL {
      * elsewhere using ln and exp:
      * <code><pre>exp(ln([field]) * [exponent])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "POWER",
         args = {
@@ -9683,7 +9683,7 @@ public class DSL {
      *
      * @see #cos(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "COS",
         args = "Field",
@@ -9699,7 +9699,7 @@ public class DSL {
      * This renders the cos function where available:
      * <code><pre>cos([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "COS",
         args = "Field",
@@ -9714,7 +9714,7 @@ public class DSL {
      *
      * @see #sin(Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "SIN",
         args = "Field",
@@ -9730,7 +9730,7 @@ public class DSL {
      * This renders the sin function where available:
      * <code><pre>sin([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "SIN",
         args = "Field",

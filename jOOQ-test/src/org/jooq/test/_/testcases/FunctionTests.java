@@ -702,15 +702,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
-    public void testFunctionsOnNumbers() throws Exception {
-
-        // Some databases are limited or buggy
-        boolean sqlite = (dialect() == SQLITE);
-        boolean ingres = false/* [pro] xx xx xxxxxxxxxx xx xxxxxxxxx [/pro] */;
+    public void testFunctionsOnNumbers_RAND() throws Exception {
 
         // The random function
         BigDecimal rand = create().select(rand()).fetchOne(rand());
         assertNotNull(rand);
+    }
+
+    @Test
+    public void testFunctionsOnNumbers_ROUND_FLOOR_CEIL_TRUNC() throws Exception {
+
+        // Some databases are limited or buggy
+        boolean sqlite = (dialect() == SQLITE);
+        boolean ingres = false/* [pro] xx xx xxxxxxxxxx xx xxxxxxxxx [/pro] */;
 
         // Some rounding functions
         Field<Float> f1a = round(1.111f);
@@ -796,9 +800,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("0.0", record.getValue(f2f, String.class));
         assertEquals("0.0", record.getValue(f3f, String.class));
         assertEquals("0.0", record.getValue(f4f, String.class));
+    }
+
+    @Test
+    public void testFunctionsOnNumbers_GREATEST_LEAST() throws Exception {
 
         // Greatest and least
-        record = create().select(
+        Record record = create().select(
             greatest(1, 2, 3, 4),
             least(1, 2, 3),
             greatest("1", "2", "3", "4"),
@@ -828,11 +836,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(BOOK_IDS, result.getValues(TBook_ID()));
         assertEquals(asList(1, 2, 4, 4), result.getValues(1));
         assertEquals(asList(1, 1, 2, 2), result.getValues(2));
+    }
+
+    @Test
+    public void testFunctionsOnNumbers_TRIGONOMETRY() throws Exception {
 
         // Mathematical functions
         switch (dialect()) {
             case SQLITE:
-                log.info("SKIPPING", "Tests for mathematical functions");
+                log.info("SKIPPING", "Tests for trigonometric functions");
                 break;
 
             default: {
@@ -848,7 +860,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 Field<BigDecimal> m8 = round(power(2, 4));
                 Field<BigDecimal> m9 = round(power(sqrt(power(sqrt(2), 2)), 2));
 
-                record = create().select(m1, m2, m3, m4, m5, m6, m7, m8, m9).fetchOne();
+                Record record = create().select(m1, m2, m3, m4, m5, m6, m7, m8, m9).fetchOne();
 
                 // Rounding issues are circumvented by using substring()
                 assertNotNull(record);
@@ -881,7 +893,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .mul(tanh(1.0))
                     .mul(power(coth(1.0), 2).add(0.1));
 
-                record = create().select(t1, t2, t3, t4, t6, t7, t8, t9, ta, tb).fetchOne();
+                record = create().select(t1, t2, t3, t4, t6, t7, t8, t9, tb).fetchOne();
 
                 // Rounding issues are circumvented by using substring()
                 assertNotNull(record);
@@ -899,9 +911,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 break;
             }
         }
+    }
+
+    @Test
+    public void testFunctionsOnNumbers_SIGN() throws Exception {
 
         // The sign function
-        record = create().select(
+        Record record = create().select(
             sign(2),
             sign(1),
             sign(0),
@@ -914,9 +930,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(0), record.getValue(2));
         assertEquals(Integer.valueOf(-1), record.getValue(3));
         assertEquals(Integer.valueOf(-1), record.getValue(4));
+    }
+
+    @Test
+    public void testFunctionsOnNumbers_ABS() throws Exception {
 
         // The abs function
-        record = create().select(
+        Record record = create().select(
             abs(2),
             abs(1),
             abs(0),
@@ -1102,8 +1122,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testBitwiseOperations() throws Exception {
-        switch (dialect()) {
+        switch (dialect().family()) {
             /* [pro] xx
+            xxxx xxxxxxx
             xxxx xxxxxxx
             xx [/pro] */
             case DERBY:

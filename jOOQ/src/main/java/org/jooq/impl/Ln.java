@@ -77,6 +77,7 @@ class Ln extends AbstractFunction<BigDecimal> {
         if (base == null) {
             switch (configuration.dialect().family()) {
                 /* [pro] xx
+                xxxx xxxxxxx
                 xxxx xxxx
                 xxxx xxxxxxxxxx
                 xx [/pro] */
@@ -90,6 +91,7 @@ class Ln extends AbstractFunction<BigDecimal> {
         else {
             switch (configuration.dialect().family()) {
                 /* [pro] xx
+                xxxx xxxxxxx
                 xxxx xxxx
                 xxxx xxxx
                 xxxx xxxxxxx

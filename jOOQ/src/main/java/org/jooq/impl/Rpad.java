@@ -77,6 +77,10 @@ class Rpad extends AbstractFunction<String> {
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx
+            xxxx xxxxxxx x
+                xxxxxx xxxxxxxxxx x xxxxxxxxxxxxxxxxx x xxxxxxxxxx x xx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxx xxxxxxxxxxx
+            x
+
             xxxx xxxx
             xxxx xxxxxxxxxx
             xxxx xxxxxxx x

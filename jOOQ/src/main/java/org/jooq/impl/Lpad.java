@@ -77,6 +77,10 @@ class Lpad extends AbstractFunction<String> {
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx
+            xxxx xxxxxxx x
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxx x xx xxxx x xxxxx xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxx xxxxxxxxxxx
+            x
+
             xxxx xxxx
             xxxx xxxxxxxxxx
             xxxx xxxxxxx x

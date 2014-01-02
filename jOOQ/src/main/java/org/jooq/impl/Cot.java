@@ -71,6 +71,7 @@ class Cot extends AbstractFunction<BigDecimal> {
             /* [pro] xx
             xxxx xxxxxxx
             xxxx xxxxxxx
+            xxxx xxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
             xx [/pro] */

@@ -40,61 +40,41 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.castAll;
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.ExpressionOperator.ADD;
-import static org.jooq.impl.ExpressionOperator.BIT_AND;
-import static org.jooq.impl.ExpressionOperator.CONCAT;
+import static org.jooq.impl.DSL.field;
+
+import java.math.BigDecimal;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-class Concat extends AbstractFunction<String> {
+class Atan extends AbstractFunction<BigDecimal> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long             serialVersionUID = 3117002829857089691L;
+    private final Field<? extends Number> arg;
 
-    Concat(Field<?>... arguments) {
-        super("concat", SQLDataType.VARCHAR, arguments);
+    Atan(Field<? extends Number> arg) {
+        super("atan", SQLDataType.NUMERIC);
+
+        this.arg = arg;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    final Field<String> getFunction0(Configuration configuration) {
-
-        // [#461] Type cast the concat expression, if this isn't a VARCHAR field
-        Field<String>[] cast = castAll(String.class, getArguments());
-
-        // If there is only one argument, return it immediately
-        if (cast.length == 1) {
-            return cast[0];
-        }
-
-        Field<String> first = cast[0];
-        Field<String>[] others = new Field[cast.length - 1];
-        System.arraycopy(cast, 1, others, 0, others.length);
-
+    final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            case MARIADB:
-            case MYSQL:
-                return function("concat", SQLDataType.VARCHAR, cast);
-
             /* [pro] xx
             xxxx xxxxxxx
-                xx xxx xxxxxx x xxxxxxx xxxxxxxxxx xxx xxxxx xxx xxxxxxxxxx
-                xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxx
-
-            xxxx xxxxxxxxxx
-                xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxx
-
+                xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxx
             xx [/pro] */
+
             default:
-                return new Expression<String>(CONCAT, first, others);
+                return field("{atan}({0})", getDataType(), arg);
         }
     }
 }

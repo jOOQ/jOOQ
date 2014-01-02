@@ -115,6 +115,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                 xxxx xxxx
 
                 xx xxxxx xxxxxxxxxx xxxxxxxx xxxxx xxxxxxx xxxx xxxxxx xx xxx
+                xxxx xxxxxxx
                 xxxx xxxx
                 xxxx xxxxxxx
                 xxxx xxxxxxxxxx
@@ -170,6 +171,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
         if (nullsFirst || nullsLast) {
             switch (context.configuration().dialect().family()) {
                 /* [pro] xx
+                xxxx xxxxxxx
                 xxxx xxxx
                 xxxx xxxx
                 xxxx xxxxxxx

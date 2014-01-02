@@ -73,6 +73,7 @@ class Radians extends AbstractFunction<BigDecimal> {
             /* [pro] xx
             xxxx xxxxxxx
             xxxx xxxxxxx
+            xxxx xxxxxxx
             xx [/pro] */
             case FIREBIRD:
             case SQLITE:

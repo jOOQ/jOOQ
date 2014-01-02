@@ -71,6 +71,7 @@ class Cosh extends AbstractFunction<BigDecimal> {
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx
+            xxxx xxxxxxx
             xxxx xxxx
             xxxx xxxxxxx
             xxxx xxxxxxxxxx

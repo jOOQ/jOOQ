@@ -40,7 +40,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.pi;
 
@@ -72,6 +72,9 @@ class Degrees extends AbstractFunction<BigDecimal> {
         switch (configuration.dialect().family()) {
             /* [pro] xx
             xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+            xxxx xxxxxxx
             xxxx xxxxxxx
             xx [/pro] */
             case FIREBIRD:
@@ -79,7 +82,7 @@ class Degrees extends AbstractFunction<BigDecimal> {
                 return argument.cast(BigDecimal.class).mul(inline(180)).div(pi());
 
             default:
-                return function("degrees", SQLDataType.NUMERIC, argument);
+                return field("{degrees}({0})", SQLDataType.NUMERIC, argument);
         }
     }
 }

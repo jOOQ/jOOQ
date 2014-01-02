@@ -108,6 +108,10 @@ class Substring extends AbstractFunction<String> {
                 x
             x
 
+            xxxx xxxxxxx
+                xxxxxxxxxxxx x xxxxxx
+                xxxxxx
+
             xxxx xxxx
             xxxx xxxxxxx
             xx [/pro] */

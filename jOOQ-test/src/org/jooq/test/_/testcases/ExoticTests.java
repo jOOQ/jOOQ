@@ -153,6 +153,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testPivotClause() throws Exception {
         /* [pro] xx
         xxxxxx xxxxxxxxxxxxxxxxxxxx x
+            xxxx xxxxxxx
             xxxx xxxx
             xxxx xxxx
             xxxx xxxxxxx

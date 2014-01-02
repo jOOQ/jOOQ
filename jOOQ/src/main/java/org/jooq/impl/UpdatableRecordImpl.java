@@ -41,6 +41,9 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
+// ...
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.DELETE;
@@ -65,7 +68,6 @@ import org.jooq.Identity;
 import org.jooq.InsertQuery;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
 import org.jooq.StoreQuery;
 import org.jooq.Table;
@@ -525,9 +527,9 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         SelectQuery<R> select = create().selectQuery(getTable());
         Utils.addConditions(select, this, keys);
 
-        // [#1547] SQLite doesn't support FOR UPDATE. CUBRID and SQL Server
+        // [#1547] MS Access and SQLite doesn't support FOR UPDATE. CUBRID and SQL Server
         // can simulate it, though!
-        if (create().configuration().dialect() != SQLDialect.SQLITE) {
+        if (!asList(SQLITE).contains(create().configuration().dialect().family())) {
             select.setForUpdate(true);
         }
 

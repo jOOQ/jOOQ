@@ -163,28 +163,15 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         x
         xx [/pro] */
 
-        context.visit(lhs)
-               .formatIndentStart()
+        toSQLTable(context, lhs);
+
+        context.formatIndentStart()
                .formatSeparator()
                .start(translatedClause)
                .keyword(keyword)
                .sql(" ");
 
-        // [#671] Some databases formally require nested JOINS to be
-        // wrapped in parentheses (e.g. MySQL)
-        if (rhs instanceof JoinTable) {
-            context.sql("(")
-                   .formatIndentStart()
-                   .formatNewLine();
-        }
-
-        context.visit(rhs);
-
-        if (rhs instanceof JoinTable) {
-            context.formatIndentEnd()
-                   .formatNewLine()
-                   .sql(")");
-        }
+        toSQLTable(context, rhs);
 
         // [#1645] The Oracle PARTITION BY clause can be put to the right of an
         // OUTER JOINed table
@@ -210,6 +197,29 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
 
         context.end(translatedClause)
                .formatIndentEnd();
+    }
+
+    private void toSQLTable(RenderContext context, Table<?> table) {
+
+        // [#671] Some databases formally require nested JOINS on the right hand
+        // side of the join expression to be wrapped in parentheses (e.g. MySQL).
+        // In other databases, it's a good idea to wrap them all
+        boolean wrap = table instanceof JoinTable &&
+            (table == rhs || asList().contains(context.configuration().dialect().family()));
+
+        if (wrap) {
+            context.sql("(")
+                   .formatIndentStart()
+                   .formatNewLine();
+        }
+
+        context.visit(table);
+
+        if (wrap) {
+            context.formatIndentEnd()
+                   .formatNewLine()
+                   .sql(")");
+        }
     }
 
     /**
@@ -253,7 +263,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     }
 
     private final boolean simulateCrossJoin(RenderContext context) {
-        return false/* [pro] xx xx xxxx xx xxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx [/pro] */;
+        return type == CROSS_JOIN && asList().contains(context.configuration().dialect().family());
     }
 
     private final boolean simulateNaturalJoin(RenderContext context) {

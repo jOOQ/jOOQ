@@ -9539,7 +9539,7 @@ public class DSL {
         to = "MathFunction"
     )
     public static Field<BigDecimal> acos(Field<? extends Number> field) {
-        return function("acos", SQLDataType.NUMERIC, nullSafe(field));
+        return new Acos(nullSafe(field));
     }
 
     /**
@@ -9570,7 +9570,7 @@ public class DSL {
         to = "MathFunction"
     )
     public static Field<BigDecimal> asin(Field<? extends Number> field) {
-        return function("asin", SQLDataType.NUMERIC, nullSafe(field));
+        return new Asin(nullSafe(field));
     }
 
     /**
@@ -9601,7 +9601,7 @@ public class DSL {
         to = "MathFunction"
     )
     public static Field<BigDecimal> atan(Field<? extends Number> field) {
-        return function("atan", SQLDataType.NUMERIC, nullSafe(field));
+        return new Atan(nullSafe(field));
     }
 
     /**

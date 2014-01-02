@@ -949,6 +949,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testListAgg() throws Exception {
         switch (dialect().family()) {
             /* [pro] xx
+            xxxx xxxxxxx
             xxxx xxxx
             xxxx xxxxxxx
             xxxx xxxxxxxxxx

@@ -115,6 +115,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                 case DB2:
 
                 // These commercial dialects don't support this syntax at all
+                case ACCESS:
                 case ASE:
                 case INGRES:
                 case SQLSERVER:
@@ -170,6 +171,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
         if (nullsFirst || nullsLast) {
             switch (context.configuration().dialect().family()) {
                 /* [pro] */
+                case ACCESS:
                 case ASE:
                 case DB2:
                 case INGRES:

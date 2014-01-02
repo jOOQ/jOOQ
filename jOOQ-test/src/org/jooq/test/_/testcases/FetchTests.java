@@ -438,6 +438,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFetchMany() throws Exception {
         switch (dialect().family()) {
             /* [pro] */
+            case ACCESS:
             case ORACLE:
             case SYBASE:
             /* [/pro] */

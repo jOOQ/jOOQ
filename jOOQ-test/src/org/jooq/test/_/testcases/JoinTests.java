@@ -797,12 +797,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 break;
             }
         }
+    }
+
+    @Test
+    public void testFullOuterJoin() throws Exception {
 
         // Test FULL OUTER JOIN
         // --------------------
 
-        switch (dialect()) {
+        switch (dialect().family()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             /* [/pro] */
             case CUBRID:

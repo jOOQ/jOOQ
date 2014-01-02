@@ -2007,6 +2007,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFullOuterJoin() throws Exception {
+        new JoinTests(this).testFullOuterJoin();
+    }
+
+    @Test
     public void testAliasingSimple() throws Exception {
         new AliasTests(this).testAliasingSimple();
     }

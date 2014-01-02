@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.castAll;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.ExpressionOperator.ADD;
+import static org.jooq.impl.ExpressionOperator.BIT_AND;
 import static org.jooq.impl.ExpressionOperator.CONCAT;
 
 import org.jooq.Configuration;
@@ -85,6 +86,9 @@ class Concat extends AbstractFunction<String> {
 
             /* [pro] */
             case ACCESS:
+                // Not really a bit-and operation, but using the ampersand:
+                return new Expression<String>(BIT_AND, first, others);
+
             case SQLSERVER:
                 return new Expression<String>(ADD, first, others);
 

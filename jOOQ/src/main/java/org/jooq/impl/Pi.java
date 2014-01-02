@@ -72,6 +72,7 @@ class Pi extends AbstractFunction<BigDecimal> {
             case ORACLE:
                 return DSL.asin(one()).mul(two());
 
+            case ACCESS:
             /* [/pro] */
             case SQLITE:
                 return inline(Math.PI, BigDecimal.class);

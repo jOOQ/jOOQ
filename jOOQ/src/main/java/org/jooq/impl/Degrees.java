@@ -71,6 +71,7 @@ class Degrees extends AbstractFunction<BigDecimal> {
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] */
+            case ACCESS:
             case INGRES:
             case ORACLE:
             /* [/pro] */

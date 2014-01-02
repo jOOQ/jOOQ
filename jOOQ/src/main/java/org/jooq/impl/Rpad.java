@@ -77,6 +77,10 @@ class Rpad extends AbstractFunction<String> {
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] */
+            case ACCESS: {
+                return field("{0} & replace(space({1} - len({0})), ' ', {2})", SQLDataType.VARCHAR, field, length, character);
+            }
+
             case ASE:
             case SQLSERVER:
             case SYBASE: {

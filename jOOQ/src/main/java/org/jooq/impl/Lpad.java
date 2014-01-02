@@ -77,6 +77,10 @@ class Lpad extends AbstractFunction<String> {
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] */
+            case ACCESS: {
+                return field("replace(space({1} - len({0})), ' ', {2}) & {0}", SQLDataType.VARCHAR, field, length, character);
+            }
+
             case ASE:
             case SQLSERVER:
             case SYBASE: {

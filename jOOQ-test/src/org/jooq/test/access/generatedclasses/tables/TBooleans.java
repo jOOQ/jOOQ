@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 888445791;
+	private static final long serialVersionUID = 1934901356;
 
 	/**
 	 * The singleton instance of <code>t_booleans</code>
@@ -93,6 +93,10 @@ public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.access.gene
 		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.TBooleans.T_BOOLEANS);
 	}
 
+	private TBooleans(java.lang.String alias, org.jooq.Table<org.jooq.test.access.generatedclasses.tables.records.TBooleansRecord> aliased) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -114,6 +118,13 @@ public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.access.gene
 	 */
 	@Override
 	public org.jooq.test.access.generatedclasses.tables.TBooleans as(java.lang.String alias) {
-		return new org.jooq.test.access.generatedclasses.tables.TBooleans(alias);
+		return new org.jooq.test.access.generatedclasses.tables.TBooleans(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.access.generatedclasses.tables.TBooleans rename(java.lang.String name) {
+		return new org.jooq.test.access.generatedclasses.tables.TBooleans(name, null);
 	}
 }

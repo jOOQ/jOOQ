@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 599528704;
+	private static final long serialVersionUID = 1067120281;
 
 	/**
 	 * The singleton instance of <code>v_library</code>
@@ -48,11 +48,22 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.access.gener
 		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 
+	private VLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.access.generatedclasses.tables.records.VLibraryRecord> aliased) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.access.generatedclasses.tables.VLibrary as(java.lang.String alias) {
-		return new org.jooq.test.access.generatedclasses.tables.VLibrary(alias);
+		return new org.jooq.test.access.generatedclasses.tables.VLibrary(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.access.generatedclasses.tables.VLibrary rename(java.lang.String name) {
+		return new org.jooq.test.access.generatedclasses.tables.VLibrary(name, null);
 	}
 }

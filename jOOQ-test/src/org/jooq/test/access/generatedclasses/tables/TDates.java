@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 235012643;
+	private static final long serialVersionUID = 895231356;
 
 	/**
 	 * The singleton instance of <code>t_dates</code>
@@ -68,6 +68,10 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.access.generat
 		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.TDates.T_DATES);
 	}
 
+	private TDates(java.lang.String alias, org.jooq.Table<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord> aliased) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -89,6 +93,13 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.access.generat
 	 */
 	@Override
 	public org.jooq.test.access.generatedclasses.tables.TDates as(java.lang.String alias) {
-		return new org.jooq.test.access.generatedclasses.tables.TDates(alias);
+		return new org.jooq.test.access.generatedclasses.tables.TDates(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.access.generatedclasses.tables.TDates rename(java.lang.String name) {
+		return new org.jooq.test.access.generatedclasses.tables.TDates(name, null);
 	}
 }

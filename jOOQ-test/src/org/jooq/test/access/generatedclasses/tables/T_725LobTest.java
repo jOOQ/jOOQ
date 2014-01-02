@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -1184604760;
+	private static final long serialVersionUID = 1769069249;
 
 	/**
 	 * The singleton instance of <code>t_725_lob_test</code>
@@ -48,6 +48,10 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.access.g
 		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST);
 	}
 
+	private T_725LobTest(java.lang.String alias, org.jooq.Table<org.jooq.test.access.generatedclasses.tables.records.T_725LobTestRecord> aliased) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -69,6 +73,13 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.access.g
 	 */
 	@Override
 	public org.jooq.test.access.generatedclasses.tables.T_725LobTest as(java.lang.String alias) {
-		return new org.jooq.test.access.generatedclasses.tables.T_725LobTest(alias);
+		return new org.jooq.test.access.generatedclasses.tables.T_725LobTest(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.access.generatedclasses.tables.T_725LobTest rename(java.lang.String name) {
+		return new org.jooq.test.access.generatedclasses.tables.T_725LobTest(name, null);
 	}
 }

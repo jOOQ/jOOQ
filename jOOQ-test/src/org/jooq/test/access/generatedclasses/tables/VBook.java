@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 1008787979;
+	private static final long serialVersionUID = -2121122844;
 
 	/**
 	 * The singleton instance of <code>v_book</code>
@@ -83,11 +83,22 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.access.generate
 		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.VBook.V_BOOK);
 	}
 
+	private VBook(java.lang.String alias, org.jooq.Table<org.jooq.test.access.generatedclasses.tables.records.VBookRecord> aliased) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.access.generatedclasses.tables.VBook as(java.lang.String alias) {
-		return new org.jooq.test.access.generatedclasses.tables.VBook(alias);
+		return new org.jooq.test.access.generatedclasses.tables.VBook(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.access.generatedclasses.tables.VBook rename(java.lang.String name) {
+		return new org.jooq.test.access.generatedclasses.tables.VBook(name, null);
 	}
 }

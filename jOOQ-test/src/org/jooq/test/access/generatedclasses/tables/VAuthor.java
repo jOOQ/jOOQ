@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = -824112765;
+	private static final long serialVersionUID = 1575872604;
 
 	/**
 	 * The singleton instance of <code>v_author</code>
@@ -68,11 +68,22 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.access.genera
 		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.VAuthor.V_AUTHOR);
 	}
 
+	private VAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.access.generatedclasses.tables.records.VAuthorRecord> aliased) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.access.generatedclasses.tables.VAuthor as(java.lang.String alias) {
-		return new org.jooq.test.access.generatedclasses.tables.VAuthor(alias);
+		return new org.jooq.test.access.generatedclasses.tables.VAuthor(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.access.generatedclasses.tables.VAuthor rename(java.lang.String name) {
+		return new org.jooq.test.access.generatedclasses.tables.VAuthor(name, null);
 	}
 }

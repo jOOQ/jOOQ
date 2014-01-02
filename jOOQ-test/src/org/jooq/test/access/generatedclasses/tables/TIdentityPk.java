@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = 624431332;
+	private static final long serialVersionUID = 701923449;
 
 	/**
 	 * The singleton instance of <code>t_identity_pk</code>
@@ -48,6 +48,10 @@ public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.access.ge
 		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
 	}
 
+	private TIdentityPk(java.lang.String alias, org.jooq.Table<org.jooq.test.access.generatedclasses.tables.records.TIdentityPkRecord> aliased) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -69,6 +73,13 @@ public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.access.ge
 	 */
 	@Override
 	public org.jooq.test.access.generatedclasses.tables.TIdentityPk as(java.lang.String alias) {
-		return new org.jooq.test.access.generatedclasses.tables.TIdentityPk(alias);
+		return new org.jooq.test.access.generatedclasses.tables.TIdentityPk(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.access.generatedclasses.tables.TIdentityPk rename(java.lang.String name) {
+		return new org.jooq.test.access.generatedclasses.tables.TIdentityPk(name, null);
 	}
 }

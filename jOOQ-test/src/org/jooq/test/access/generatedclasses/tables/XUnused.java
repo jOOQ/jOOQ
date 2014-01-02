@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 354154640;
+	private static final long serialVersionUID = -1790477855;
 
 	/**
 	 * The singleton instance of <code>x_unused</code>
@@ -108,6 +108,10 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.access.genera
 		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.XUnused.X_UNUSED);
 	}
 
+	private XUnused(java.lang.String alias, org.jooq.Table<org.jooq.test.access.generatedclasses.tables.records.XUnusedRecord> aliased) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -129,6 +133,13 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.access.genera
 	 */
 	@Override
 	public org.jooq.test.access.generatedclasses.tables.XUnused as(java.lang.String alias) {
-		return new org.jooq.test.access.generatedclasses.tables.XUnused(alias);
+		return new org.jooq.test.access.generatedclasses.tables.XUnused(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.access.generatedclasses.tables.XUnused rename(java.lang.String name) {
+		return new org.jooq.test.access.generatedclasses.tables.XUnused(name, null);
 	}
 }

@@ -71,6 +71,7 @@ class Tanh extends AbstractFunction<BigDecimal> {
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case INGRES:
             case SQLSERVER:

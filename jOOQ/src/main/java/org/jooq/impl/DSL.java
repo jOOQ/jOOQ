@@ -6960,7 +6960,7 @@ public class DSL {
      *
      * @see #ascii(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> ascii(String field) {
         return ascii(Utils.field(field, String.class));
     }
@@ -6971,7 +6971,7 @@ public class DSL {
      * This renders the ascii function:
      * <code><pre>ascii([field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> ascii(Field<String> field) {
         return new Ascii(nullSafe(field));
     }

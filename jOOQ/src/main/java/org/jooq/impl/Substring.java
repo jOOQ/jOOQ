@@ -108,6 +108,10 @@ class Substring extends AbstractFunction<String> {
                 }
             }
 
+            case ACCESS:
+                functionName = "mid";
+                break;
+
             case DB2:
             case ORACLE:
             /* [/pro] */

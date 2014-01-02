@@ -406,6 +406,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         if (defaultValues) {
             switch (context.configuration().dialect().family()) {
                 /* [pro] */
+                case ACCESS:
                 case DB2:
                 case ORACLE:
                 /* [/pro] */

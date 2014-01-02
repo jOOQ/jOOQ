@@ -2117,8 +2117,33 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testFunctionsOnNumbers() throws Exception {
-        new FunctionTests(this).testFunctionsOnNumbers();
+    public void testFunctionsOnNumbers_RAND() throws Exception {
+        new FunctionTests(this).testFunctionsOnNumbers_RAND();
+    }
+
+    @Test
+    public void testFunctionsOnNumbers_ROUND_FLOOR_CEIL_TRUNC() throws Exception {
+        new FunctionTests(this).testFunctionsOnNumbers_ROUND_FLOOR_CEIL_TRUNC();
+    }
+
+    @Test
+    public void testFunctionsOnNumbers_GREATEST_LEAST() throws Exception {
+        new FunctionTests(this).testFunctionsOnNumbers_GREATEST_LEAST();
+    }
+
+    @Test
+    public void testFunctionsOnNumbers_TRIGONOMETRY() throws Exception {
+        new FunctionTests(this).testFunctionsOnNumbers_TRIGONOMETRY();
+    }
+
+    @Test
+    public void testFunctionsOnNumbers_SIGN() throws Exception {
+        new FunctionTests(this).testFunctionsOnNumbers_SIGN();
+    }
+
+    @Test
+    public void testFunctionsOnNumbers_ABS() throws Exception {
+        new FunctionTests(this).testFunctionsOnNumbers_ABS();
     }
 
     @Test

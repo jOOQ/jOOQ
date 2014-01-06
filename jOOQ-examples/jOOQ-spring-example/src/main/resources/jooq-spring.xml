@@ -3,40 +3,39 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
-            http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd">     
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">     
 
+    <!-- This is needed if you want to use the @Transactional annotation -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <!-- Using BoneCP as a connection pooling library.
-         Replace this with your preferred DataSource implementation -->
     <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+        <!-- These properties are replaced by Maven "resources" -->
         <property name="driverClass" value="${db.driver}"/>
         <property name="jdbcUrl" value="${db.url}"/>
         <property name="username" value="${db.username}"/>
         <property name="password" value="${db.password}"/>
     </bean>
 
-    <!-- Using Spring JDBC for transaction management -->
+    <!-- Configure Spring's transaction manager to use a DataSource -->
     <bean id="transactionManager"
         class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
 
+    <!-- Configure jOOQ's ConnectionProvider to use Spring's TransactionAwareDataSourceProxy,
+         which can dynamically discover the transaction context -->
     <bean id="transactionAwareDataSource"
         class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
         <constructor-arg ref="dataSource" />
     </bean>
 
-    <!-- Bridging Spring JDBC data sources to jOOQ's ConnectionProvider -->
     <bean class="org.jooq.impl.DataSourceConnectionProvider" name="connectionProvider">
         <constructor-arg ref="transactionAwareDataSource" />
     </bean>
 
+    <!-- Configure the DSL object, optionally overriding jOOQ Exceptions with Spring Exceptions -->
     <bean id="dsl" class="org.jooq.impl.DefaultDSLContext">
         <constructor-arg ref="config" />
     </bean>
@@ -62,5 +61,6 @@
         <constructor-arg index="7"><null /></constructor-arg>
     </bean>
     
+    <!-- This is the "business-logic" -->
     <bean id="books" class="org.jooq.example.spring.impl.DefaultBookService"/>
 </beans>

@@ -1808,6 +1808,16 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
+    public int fetchCount(Table<?> table) {
+        return fetchCount(table, trueCondition());
+    }
+
+    @Override
+    public int fetchCount(Table<?> table, Condition condition) {
+        return selectCount().from(table).where(condition).fetchOne(0, int.class);
+    }
+
+    @Override
     public int execute(Query query) {
         final Configuration previous = Utils.getConfiguration(query);
 

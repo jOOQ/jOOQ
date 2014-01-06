@@ -38,44 +38,25 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.test.spring;
+package org.jooq.example.spring;
 
-import org.jooq.DSLContext;
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * This Book Service (or DAO or Repository) is used by this example to interact
+ * with the library's T_BOOK table.
+ *
  * @author Lukas Eder
  */
-public class Test {
-    public static void main(String[] args) {
+public interface BookService {
 
-        // Configure the Spring application context, loading the bean configuration
-        ApplicationContext context =
-        new ClassPathXmlApplicationContext(new String[] {
-            "jooq-spring-config-minimal.xml"
-        });
+    /**
+     * Create a new book.
+     * <p>
+     * The implementation of this method has a bug, which causes this method to
+     * fail and roll back the transaction.
+     */
+    @Transactional
+    void create(int id, int authorId, String title);
 
-        // Fetch a DSLContext reference
-        DSLContext dsl = context.getBean("dsl", DSLContext.class);
-
-        // Execute a jOOQ query in its isolated "ad-hoc" transaction
-        // ---------------------------------------------------------
-        System.out.println(dsl.selectOne().fetch());
-
-        // Execute some jOOQ queries in an explicit transaction
-        // ----------------------------------------------------
-        PlatformTransactionManager transactionManager =
-            context.getBean("transactionManager", PlatformTransactionManager.class);
-
-        TransactionStatus tx = transactionManager.getTransaction(new DefaultTransactionDefinition());
-        dsl.selectOne().fetch();
-        dsl.selectOne().fetch();
-        dsl.selectOne().fetch();
-        transactionManager.commit(tx);
-    }
 }

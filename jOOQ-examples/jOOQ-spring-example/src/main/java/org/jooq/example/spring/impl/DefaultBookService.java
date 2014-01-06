@@ -38,17 +38,35 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.test.util.maven;
+package org.jooq.example.spring.impl;
 
-import java.util.Arrays;
-import java.util.List;
+import static org.jooq.example.db.h2.Tables.T_BOOK;
+
+import org.jooq.DSLContext;
+import org.jooq.example.spring.BookService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Lukas Eder
  */
-class Data {
+public class DefaultBookService implements BookService {
 
-    static final List<Integer> BOOK_IDS    = Arrays.asList(1, 2, 3, 4);
-    static final List<String>  BOOK_TITLES = Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida");
+    @Autowired
+    DSLContext dsl;
 
+    @Override
+    @Transactional
+    public void create(int id, int authorId, String title) {
+
+        // This method has a "bug". It creates the same book twice. The second insert
+        // should lead to a constraint violation, which should roll back the whole transaction
+        for (int i = 0; i < 2; i++)
+            dsl.insertInto(T_BOOK)
+               .set(T_BOOK.ID, id)
+               .set(T_BOOK.AUTHOR_ID, authorId)
+               .set(T_BOOK.TITLE, title)
+               .execute();
+    }
 }

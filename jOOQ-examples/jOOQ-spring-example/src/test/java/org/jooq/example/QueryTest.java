@@ -38,56 +38,43 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.test.util.maven;
+package org.jooq.example;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
+import static org.jooq.example.db.h2.Tables.T_AUTHOR;
+import static org.jooq.example.db.h2.Tables.T_BOOK;
+import static org.jooq.example.db.h2.Tables.T_BOOK_STORE;
+import static org.jooq.example.db.h2.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.impl.DSL.countDistinct;
-import static org.jooq.maven.example.h2.tables.TAuthor.T_AUTHOR;
-import static org.jooq.maven.example.h2.tables.TBook.T_BOOK;
-import static org.jooq.maven.example.h2.tables.TBookStore.T_BOOK_STORE;
-import static org.jooq.maven.example.h2.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
 
 import org.jooq.DSLContext;
 import org.jooq.Record3;
 import org.jooq.Result;
-import org.jooq.SQLDialect;
-import org.jooq.impl.DSL;
-import org.jooq.maven.example.h2.tables.TAuthor;
-import org.jooq.maven.example.h2.tables.TBook;
-import org.jooq.maven.example.h2.tables.TBookStore;
-import org.jooq.maven.example.h2.tables.TBookToBookStore;
-import org.jooq.maven.example.h2.tables.records.TBookRecord;
+import org.jooq.example.db.h2.tables.TAuthor;
+import org.jooq.example.db.h2.tables.TBook;
+import org.jooq.example.db.h2.tables.TBookStore;
+import org.jooq.example.db.h2.tables.TBookToBookStore;
+import org.jooq.example.db.h2.tables.records.TBookRecord;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * @author Lukas Eder
  */
-public class TestH2 {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"/jooq-spring.xml"})
+public class QueryTest {
 
-    private static DSLContext create;
-    private static Connection connection;
-
-    @BeforeClass
-    public static void start() throws Exception {
-        Class.forName("org.h2.Driver");
-        connection = DriverManager.getConnection("jdbc:h2:~/maven-test", "sa", "");
-        create = DSL.using(connection, SQLDialect.H2);
-    }
-
-    @AfterClass
-    public static void stop() throws Exception {
-        connection.close();
-    }
+    @Autowired
+    DSLContext create;
 
     @Test
-    public void testInstanceModel() throws Exception {
+    public void testJoin() throws Exception {
         TBook b = T_BOOK.as("b");
         TAuthor a = T_AUTHOR.as("a");
         TBookStore s = T_BOOK_STORE.as("s");
@@ -115,7 +102,7 @@ public class TestH2 {
     }
 
     @Test
-    public void testTypedRecords() throws Exception {
+    public void testActiveRecords() throws Exception {
         Result<TBookRecord> result = create.selectFrom(T_BOOK).orderBy(T_BOOK.ID).fetch();
 
         assertEquals(4, result.size());

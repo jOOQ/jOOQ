@@ -9,7 +9,7 @@ package org.jooq.test.mysql.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1745144642;
+	private static final long serialVersionUID = 964923128;
 
 	/**
 	 * The singleton instance of <code>test</code>
@@ -32,6 +32,7 @@ public class Test extends org.jooq.impl.SchemaImpl {
 
 	private final java.util.List<org.jooq.Table<?>> getTables0() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
+			org.jooq.test.mysql.generatedclasses.tables.T_2926.T_2926,
 			org.jooq.test.mysql.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,
 			org.jooq.test.mysql.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST,
 			org.jooq.test.mysql.generatedclasses.tables.T_785.T_785,

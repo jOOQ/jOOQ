@@ -12,6 +12,11 @@ package org.jooq.test.mariadb.generatedclasses;
 public class Tables {
 
 	/**
+	 * The table test.t_2926
+	 */
+	public static final org.jooq.test.mariadb.generatedclasses.tables.T_2926 T_2926 = org.jooq.test.mariadb.generatedclasses.tables.T_2926.T_2926;
+
+	/**
 	 * The table test.t_639_numbers_table
 	 */
 	public static final org.jooq.test.mariadb.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.mariadb.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;

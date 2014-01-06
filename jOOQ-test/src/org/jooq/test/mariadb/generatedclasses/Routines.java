@@ -54,6 +54,17 @@ public class Routines {
 	/**
 	 * Call <code>test.fp1908</code>
 	 */
+	public static java.lang.Integer fp1908_PROCEDURE(org.jooq.Configuration configuration, java.lang.Integer p1) {
+		org.jooq.test.mariadb.generatedclasses.routines.Fp1908_PROCEDURE p = new org.jooq.test.mariadb.generatedclasses.routines.Fp1908_PROCEDURE();
+		p.setP1(p1);
+
+		p.execute(configuration);
+		return p.getP2();
+	}
+
+	/**
+	 * Call <code>test.fp1908</code>
+	 */
 	public static java.lang.Integer fp1908_FUNCTION(org.jooq.Configuration configuration, java.lang.Integer p1) {
 		org.jooq.test.mariadb.generatedclasses.routines.Fp1908_FUNCTION f = new org.jooq.test.mariadb.generatedclasses.routines.Fp1908_FUNCTION();
 		f.setP1(p1);
@@ -80,17 +91,6 @@ public class Routines {
 		f.setP1(p1);
 
 		return f.asField();
-	}
-
-	/**
-	 * Call <code>test.fp1908</code>
-	 */
-	public static java.lang.Integer fp1908_PROCEDURE(org.jooq.Configuration configuration, java.lang.Integer p1) {
-		org.jooq.test.mariadb.generatedclasses.routines.Fp1908_PROCEDURE p = new org.jooq.test.mariadb.generatedclasses.routines.Fp1908_PROCEDURE();
-		p.setP1(p1);
-
-		p.execute(configuration);
-		return p.getP2();
 	}
 
 	/**

@@ -3,5 +3,5 @@ jdk:
   - oraclejdk7
   - openjdk7
   - openjdk6
-install: sh -c 'cd jOOQ' && mvn install -DskipTests=true
-script: sh -c 'cd jOOQ' && mvn test
+install: sh -c 'mvn install -DskipTests=true'
+script: sh -c 'mvn test'

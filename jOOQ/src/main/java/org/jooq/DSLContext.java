@@ -5192,6 +5192,28 @@ public interface DSLContext {
     int fetchCount(Select<?> query) throws DataAccessException;
 
     /**
+     * Count the number of records in a table.
+     * <p>
+     * This executes <code><pre>SELECT COUNT(*) FROM table</pre></code>
+     *
+     * @param table The table whose records to count
+     * @return The number or records in the table
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    int fetchCount(Table<?> table) throws DataAccessException;
+
+    /**
+     * Count the number of records in a table.
+     * <p>
+     * This executes <code><pre>SELECT COUNT(*) FROM table WHERE condition</pre></code>
+     *
+     * @param table The table whose records to count
+     * @return The number or records in the table
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    int fetchCount(Table<?> table, Condition condition) throws DataAccessException;
+
+    /**
      * Execute a {@link Query} in the context of this <code>DSLContext</code>.
      *
      * @param query The query to execute

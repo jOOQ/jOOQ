@@ -4,7 +4,6 @@
 	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d{ABSOLUTE} %5p [%-50c{4}] - %m%n" />
-
 		</layout>
 	</appender>
 

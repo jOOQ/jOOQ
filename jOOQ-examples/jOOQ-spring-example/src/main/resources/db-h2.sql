@@ -22,8 +22,8 @@ CREATE TABLE t_book (
   co_author_id INT,
   details_id INT,
   title VARCHAR(400) NOT NULL,
-  published_in INT NOT NULL,
-  language_id INT NOT NULL,
+  published_in INT,
+  language_id INT,
   content_text CLOB,
   content_pdf BLOB,
 

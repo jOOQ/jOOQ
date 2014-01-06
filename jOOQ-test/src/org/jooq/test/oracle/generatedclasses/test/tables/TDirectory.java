@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDirectory extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> {
 
-	private static final long serialVersionUID = 349843789;
+	private static final long serialVersionUID = -45328081;
 
 	/**
 	 * The singleton instance of <code>TEST.T_DIRECTORY</code>
@@ -58,6 +58,10 @@ public class TDirectory extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gen
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY);
 	}
 
+	private TDirectory(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> aliased) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -87,6 +91,13 @@ public class TDirectory extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gen
 	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.TDirectory as(java.lang.String alias) {
-		return new org.jooq.test.oracle.generatedclasses.test.tables.TDirectory(alias);
+		return new org.jooq.test.oracle.generatedclasses.test.tables.TDirectory(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle.generatedclasses.test.tables.TDirectory rename(java.lang.String name) {
+		return new org.jooq.test.oracle.generatedclasses.test.tables.TDirectory(name, null);
 	}
 }

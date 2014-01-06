@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1282606427;
+	private static final long serialVersionUID = 1647044654;
 
 	/**
 	 * The singleton instance of <code>MULTI_SCHEMA.T_BOOK</code>
@@ -83,6 +83,10 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generate
 		super(alias, org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA, org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK);
 	}
 
+	private TBook(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> aliased) {
+		super(alias, org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -112,6 +116,13 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generate
 	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook as(java.lang.String alias) {
-		return new org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook(alias);
+		return new org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook rename(java.lang.String name) {
+		return new org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook(name, null);
 	}
 }

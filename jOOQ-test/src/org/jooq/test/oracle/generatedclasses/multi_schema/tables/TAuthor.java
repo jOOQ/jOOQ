@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -1723160482;
+	private static final long serialVersionUID = -215339279;
 
 	/**
 	 * The singleton instance of <code>MULTI_SCHEMA.T_AUTHOR</code>
@@ -68,6 +68,10 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.oracle.genera
 		super(alias, org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA, org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR);
 	}
 
+	private TAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> aliased) {
+		super(alias, org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -89,6 +93,13 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.oracle.genera
 	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor as(java.lang.String alias) {
-		return new org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor(alias);
+		return new org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor rename(java.lang.String name) {
+		return new org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor(name, null);
 	}
 }

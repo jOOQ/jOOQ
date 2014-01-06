@@ -9,9 +9,9 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "V_INCOMPLETE", schema = "TEST")
-public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord> implements org.jooq.Record9<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object> {
+public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord> implements org.jooq.Record11<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object> {
 
-	private static final long serialVersionUID = -1591082957;
+	private static final long serialVersionUID = -69200481;
 
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.ID</code>. 
@@ -148,24 +148,54 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 		return (java.lang.Object) getValue(8);
 	}
 
+	/**
+	 * Setter for <code>TEST.V_INCOMPLETE.REC_VERSION</code>. 
+	 */
+	public void setRecVersion(java.lang.Object value) {
+		setValue(9, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.V_INCOMPLETE.REC_VERSION</code>. 
+	 */
+	@javax.persistence.Column(name = "REC_VERSION")
+	public java.lang.Object getRecVersion() {
+		return (java.lang.Object) getValue(9);
+	}
+
+	/**
+	 * Setter for <code>TEST.V_INCOMPLETE.REC_TIMESTAMP</code>. 
+	 */
+	public void setRecTimestamp(java.lang.Object value) {
+		setValue(10, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.V_INCOMPLETE.REC_TIMESTAMP</code>. 
+	 */
+	@javax.persistence.Column(name = "REC_TIMESTAMP")
+	public java.lang.Object getRecTimestamp() {
+		return (java.lang.Object) getValue(10);
+	}
+
 	// -------------------------------------------------------------------------
-	// Record9 type implementation
+	// Record11 type implementation
 	// -------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row9<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object> fieldsRow() {
-		return (org.jooq.Row9) super.fieldsRow();
+	public org.jooq.Row11<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object> fieldsRow() {
+		return (org.jooq.Row11) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row9<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object> valuesRow() {
-		return (org.jooq.Row9) super.valuesRow();
+	public org.jooq.Row11<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object> valuesRow() {
+		return (org.jooq.Row11) super.valuesRow();
 	}
 
 	/**
@@ -244,6 +274,22 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
+	public org.jooq.Field<java.lang.Object> field10() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.REC_VERSION;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Object> field11() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.REC_TIMESTAMP;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public java.lang.Object value1() {
 		return getId();
 	}
@@ -310,6 +356,22 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	@Override
 	public java.lang.Object value9() {
 		return getContentPdf();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Object value10() {
+		return getRecVersion();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Object value11() {
+		return getRecTimestamp();
 	}
 
 	/**
@@ -397,7 +459,25 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public VIncompleteRecord values(java.lang.Object value1, java.lang.Object value2, java.lang.Object value3, java.lang.Object value4, java.lang.Object value5, java.lang.Object value6, java.lang.Object value7, java.lang.Object value8, java.lang.Object value9) {
+	public VIncompleteRecord value10(java.lang.Object value) {
+		setRecVersion(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VIncompleteRecord value11(java.lang.Object value) {
+		setRecTimestamp(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VIncompleteRecord values(java.lang.Object value1, java.lang.Object value2, java.lang.Object value3, java.lang.Object value4, java.lang.Object value5, java.lang.Object value6, java.lang.Object value7, java.lang.Object value8, java.lang.Object value9, java.lang.Object value10, java.lang.Object value11) {
 		return this;
 	}
 
@@ -415,7 +495,7 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	/**
 	 * Create a detached, initialised VIncompleteRecord
 	 */
-	public VIncompleteRecord(java.lang.Object id, java.lang.Object authorId, java.lang.Object coAuthorId, java.lang.Object detailsId, java.lang.Object title, java.lang.Object publishedIn, java.lang.Object languageId, java.lang.Object contentText, java.lang.Object contentPdf) {
+	public VIncompleteRecord(java.lang.Object id, java.lang.Object authorId, java.lang.Object coAuthorId, java.lang.Object detailsId, java.lang.Object title, java.lang.Object publishedIn, java.lang.Object languageId, java.lang.Object contentText, java.lang.Object contentPdf, java.lang.Object recVersion, java.lang.Object recTimestamp) {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE);
 
 		setValue(0, id);
@@ -427,5 +507,7 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 		setValue(6, languageId);
 		setValue(7, contentText);
 		setValue(8, contentPdf);
+		setValue(9, recVersion);
+		setValue(10, recTimestamp);
 	}
 }

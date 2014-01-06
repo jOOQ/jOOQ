@@ -9,9 +9,9 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "V_BOOK", schema = "TEST")
-public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord> implements org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]> {
+public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.math.BigDecimal, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1975002284;
+	private static final long serialVersionUID = 402839375;
 
 	/**
 	 * Setter for <code>TEST.V_BOOK.ID</code>. 
@@ -154,24 +154,54 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 		return (byte[]) getValue(8);
 	}
 
+	/**
+	 * Setter for <code>TEST.V_BOOK.REC_VERSION</code>. 
+	 */
+	public void setRecVersion(java.math.BigDecimal value) {
+		setValue(9, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.V_BOOK.REC_VERSION</code>. 
+	 */
+	@javax.persistence.Column(name = "REC_VERSION", length = 22)
+	public java.math.BigDecimal getRecVersion() {
+		return (java.math.BigDecimal) getValue(9);
+	}
+
+	/**
+	 * Setter for <code>TEST.V_BOOK.REC_TIMESTAMP</code>. 
+	 */
+	public void setRecTimestamp(java.sql.Timestamp value) {
+		setValue(10, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.V_BOOK.REC_TIMESTAMP</code>. 
+	 */
+	@javax.persistence.Column(name = "REC_TIMESTAMP", length = 11)
+	public java.sql.Timestamp getRecTimestamp() {
+		return (java.sql.Timestamp) getValue(10);
+	}
+
 	// -------------------------------------------------------------------------
-	// Record9 type implementation
+	// Record11 type implementation
 	// -------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]> fieldsRow() {
-		return (org.jooq.Row9) super.fieldsRow();
+	public org.jooq.Row11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.math.BigDecimal, java.sql.Timestamp> fieldsRow() {
+		return (org.jooq.Row11) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]> valuesRow() {
-		return (org.jooq.Row9) super.valuesRow();
+	public org.jooq.Row11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.math.BigDecimal, java.sql.Timestamp> valuesRow() {
+		return (org.jooq.Row11) super.valuesRow();
 	}
 
 	/**
@@ -250,6 +280,22 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	 * {@inheritDoc}
 	 */
 	@Override
+	public org.jooq.Field<java.math.BigDecimal> field10() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.REC_VERSION;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.sql.Timestamp> field11() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.REC_TIMESTAMP;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public java.lang.Integer value1() {
 		return getId();
 	}
@@ -316,6 +362,22 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	@Override
 	public byte[] value9() {
 		return getContentPdf();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value10() {
+		return getRecVersion();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.sql.Timestamp value11() {
+		return getRecTimestamp();
 	}
 
 	/**
@@ -403,7 +465,25 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	 * {@inheritDoc}
 	 */
 	@Override
-	public VBookRecord values(java.lang.Integer value1, java.lang.Integer value2, java.lang.Integer value3, java.lang.Integer value4, java.lang.String value5, java.lang.Integer value6, java.lang.Integer value7, java.lang.String value8, byte[] value9) {
+	public VBookRecord value10(java.math.BigDecimal value) {
+		setRecVersion(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VBookRecord value11(java.sql.Timestamp value) {
+		setRecTimestamp(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VBookRecord values(java.lang.Integer value1, java.lang.Integer value2, java.lang.Integer value3, java.lang.Integer value4, java.lang.String value5, java.lang.Integer value6, java.lang.Integer value7, java.lang.String value8, byte[] value9, java.math.BigDecimal value10, java.sql.Timestamp value11) {
 		return this;
 	}
 
@@ -421,7 +501,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	/**
 	 * Create a detached, initialised VBookRecord
 	 */
-	public VBookRecord(java.lang.Integer id, java.lang.Integer authorId, java.lang.Integer coAuthorId, java.lang.Integer detailsId, java.lang.String title, java.lang.Integer publishedIn, java.lang.Integer languageId, java.lang.String contentText, byte[] contentPdf) {
+	public VBookRecord(java.lang.Integer id, java.lang.Integer authorId, java.lang.Integer coAuthorId, java.lang.Integer detailsId, java.lang.String title, java.lang.Integer publishedIn, java.lang.Integer languageId, java.lang.String contentText, byte[] contentPdf, java.math.BigDecimal recVersion, java.sql.Timestamp recTimestamp) {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK);
 
 		setValue(0, id);
@@ -433,5 +513,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 		setValue(6, languageId);
 		setValue(7, contentText);
 		setValue(8, contentPdf);
+		setValue(9, recVersion);
+		setValue(10, recTimestamp);
 	}
 }

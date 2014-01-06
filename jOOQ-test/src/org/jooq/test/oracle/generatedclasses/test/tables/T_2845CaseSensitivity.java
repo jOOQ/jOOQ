@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2845CaseSensitivity extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_2845CaseSensitivityRecord> {
 
-	private static final long serialVersionUID = 1062951561;
+	private static final long serialVersionUID = 1812457403;
 
 	/**
 	 * The singleton instance of <code>TEST.T_2845_CASE_sensitivity</code>
@@ -63,6 +63,10 @@ public class T_2845CaseSensitivity extends org.jooq.impl.TableImpl<org.jooq.test
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY);
 	}
 
+	private T_2845CaseSensitivity(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.T_2845CaseSensitivityRecord> aliased) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -84,6 +88,13 @@ public class T_2845CaseSensitivity extends org.jooq.impl.TableImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.T_2845CaseSensitivity as(java.lang.String alias) {
-		return new org.jooq.test.oracle.generatedclasses.test.tables.T_2845CaseSensitivity(alias);
+		return new org.jooq.test.oracle.generatedclasses.test.tables.T_2845CaseSensitivity(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle.generatedclasses.test.tables.T_2845CaseSensitivity rename(java.lang.String name) {
+		return new org.jooq.test.oracle.generatedclasses.test.tables.T_2845CaseSensitivity(name, null);
 	}
 }

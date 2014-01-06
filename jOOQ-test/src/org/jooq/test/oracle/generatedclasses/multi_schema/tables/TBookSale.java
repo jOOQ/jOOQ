@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookSale extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> {
 
-	private static final long serialVersionUID = -134081604;
+	private static final long serialVersionUID = 350343375;
 
 	/**
 	 * The singleton instance of <code>MULTI_SCHEMA.T_BOOK_SALE</code>
@@ -63,6 +63,10 @@ public class TBookSale extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gene
 		super(alias, org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA, org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE);
 	}
 
+	private TBookSale(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> aliased) {
+		super(alias, org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -92,6 +96,13 @@ public class TBookSale extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gene
 	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale as(java.lang.String alias) {
-		return new org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale(alias);
+		return new org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale rename(java.lang.String name) {
+		return new org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale(name, null);
 	}
 }

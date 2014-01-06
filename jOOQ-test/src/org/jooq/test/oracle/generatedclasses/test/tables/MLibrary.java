@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MLibrary extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord> {
 
-	private static final long serialVersionUID = 443863749;
+	private static final long serialVersionUID = -1817789857;
 
 	/**
 	 * The singleton instance of <code>TEST.M_LIBRARY</code>
@@ -50,11 +50,22 @@ public class MLibrary extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gener
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY);
 	}
 
+	private MLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord> aliased) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.MLibrary as(java.lang.String alias) {
-		return new org.jooq.test.oracle.generatedclasses.test.tables.MLibrary(alias);
+		return new org.jooq.test.oracle.generatedclasses.test.tables.MLibrary(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle.generatedclasses.test.tables.MLibrary rename(java.lang.String name) {
+		return new org.jooq.test.oracle.generatedclasses.test.tables.MLibrary(name, null);
 	}
 }

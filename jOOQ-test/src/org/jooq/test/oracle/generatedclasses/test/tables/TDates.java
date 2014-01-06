@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 1398786268;
+	private static final long serialVersionUID = 79806874;
 
 	/**
 	 * The singleton instance of <code>TEST.T_DATES</code>
@@ -78,6 +78,10 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generat
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES);
 	}
 
+	private TDates(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> aliased) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -99,6 +103,13 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generat
 	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.TDates as(java.lang.String alias) {
-		return new org.jooq.test.oracle.generatedclasses.test.tables.TDates(alias);
+		return new org.jooq.test.oracle.generatedclasses.test.tables.TDates(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle.generatedclasses.test.tables.TDates rename(java.lang.String name) {
+		return new org.jooq.test.oracle.generatedclasses.test.tables.TDates(name, null);
 	}
 }

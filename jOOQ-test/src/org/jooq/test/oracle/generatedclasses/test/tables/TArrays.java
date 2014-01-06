@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = 1515065094;
+	private static final long serialVersionUID = 999715920;
 
 	/**
 	 * The singleton instance of <code>TEST.T_ARRAYS</code>
@@ -63,6 +63,10 @@ public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.oracle.genera
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TArrays.T_ARRAYS);
 	}
 
+	private TArrays(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord> aliased) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -84,6 +88,13 @@ public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.oracle.genera
 	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.TArrays as(java.lang.String alias) {
-		return new org.jooq.test.oracle.generatedclasses.test.tables.TArrays(alias);
+		return new org.jooq.test.oracle.generatedclasses.test.tables.TArrays(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle.generatedclasses.test.tables.TArrays rename(java.lang.String name) {
+		return new org.jooq.test.oracle.generatedclasses.test.tables.TArrays(name, null);
 	}
 }

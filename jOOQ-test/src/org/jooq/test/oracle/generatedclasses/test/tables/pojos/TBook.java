@@ -13,30 +13,34 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_BOOK", schema = "TEST")
 public class TBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = -335592396;
+	private static final long serialVersionUID = 444578934;
 
-	private java.lang.Integer id;
-	private java.lang.Integer authorId;
-	private java.lang.Integer coAuthorId;
-	private java.lang.Integer detailsId;
-	private java.lang.String  title;
-	private java.lang.Integer publishedIn;
-	private java.lang.Integer languageId;
-	private java.lang.String  contentText;
-	private byte[]            contentPdf;
+	private java.lang.Integer    id;
+	private java.lang.Integer    authorId;
+	private java.lang.Integer    coAuthorId;
+	private java.lang.Integer    detailsId;
+	private java.lang.String     title;
+	private java.lang.Integer    publishedIn;
+	private java.lang.Integer    languageId;
+	private java.lang.String     contentText;
+	private byte[]               contentPdf;
+	private java.math.BigDecimal recVersion;
+	private java.sql.Timestamp   recTimestamp;
 
 	public TBook() {}
 
 	public TBook(
-		java.lang.Integer id,
-		java.lang.Integer authorId,
-		java.lang.Integer coAuthorId,
-		java.lang.Integer detailsId,
-		java.lang.String  title,
-		java.lang.Integer publishedIn,
-		java.lang.Integer languageId,
-		java.lang.String  contentText,
-		byte[]            contentPdf
+		java.lang.Integer    id,
+		java.lang.Integer    authorId,
+		java.lang.Integer    coAuthorId,
+		java.lang.Integer    detailsId,
+		java.lang.String     title,
+		java.lang.Integer    publishedIn,
+		java.lang.Integer    languageId,
+		java.lang.String     contentText,
+		byte[]               contentPdf,
+		java.math.BigDecimal recVersion,
+		java.sql.Timestamp   recTimestamp
 	) {
 		this.id = id;
 		this.authorId = authorId;
@@ -47,6 +51,8 @@ public class TBook implements java.io.Serializable {
 		this.languageId = languageId;
 		this.contentText = contentText;
 		this.contentPdf = contentPdf;
+		this.recVersion = recVersion;
+		this.recTimestamp = recTimestamp;
 	}
 
 	@javax.persistence.Id
@@ -135,5 +141,23 @@ public class TBook implements java.io.Serializable {
 
 	public void setContentPdf(byte[] contentPdf) {
 		this.contentPdf = contentPdf;
+	}
+
+	@javax.persistence.Column(name = "REC_VERSION", length = 22)
+	public java.math.BigDecimal getRecVersion() {
+		return this.recVersion;
+	}
+
+	public void setRecVersion(java.math.BigDecimal recVersion) {
+		this.recVersion = recVersion;
+	}
+
+	@javax.persistence.Column(name = "REC_TIMESTAMP", length = 11)
+	public java.sql.Timestamp getRecTimestamp() {
+		return this.recTimestamp;
+	}
+
+	public void setRecTimestamp(java.sql.Timestamp recTimestamp) {
+		this.recTimestamp = recTimestamp;
 	}
 }

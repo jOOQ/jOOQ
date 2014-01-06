@@ -500,6 +500,9 @@ CREATE TABLE t_book (
   content_text CLOB,
   content_pdf BLOB,
 
+  rec_version INT,
+  rec_timestamp TIMESTAMP,
+
   CONSTRAINT pk_t_book PRIMARY KEY (ID),
   CONSTRAINT fk_t_book_author_id FOREIGN KEY (AUTHOR_ID) REFERENCES T_AUTHOR(ID) ON DELETE CASCADE,
   CONSTRAINT fk_t_book_co_author_id FOREIGN KEY (CO_AUTHOR_ID) REFERENCES T_AUTHOR(ID) ON DELETE CASCADE,

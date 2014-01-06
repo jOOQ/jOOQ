@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -1092039998;
+	private static final long serialVersionUID = 1684562720;
 
 	/**
 	 * The singleton instance of <code>TEST.V_BOOK</code>
@@ -70,6 +70,16 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generate
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, this);
 
 	/**
+	 * The column <code>TEST.V_BOOK.REC_VERSION</code>. 
+	 */
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord, java.math.BigDecimal> REC_VERSION = createField("REC_VERSION", org.jooq.impl.SQLDataType.NUMERIC, this);
+
+	/**
+	 * The column <code>TEST.V_BOOK.REC_TIMESTAMP</code>. 
+	 */
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord, java.sql.Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP, this);
+
+	/**
 	 * Create a <code>TEST.V_BOOK</code> table reference
 	 */
 	public VBook() {
@@ -83,11 +93,22 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generate
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK);
 	}
 
+	private VBook(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord> aliased) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.VBook as(java.lang.String alias) {
-		return new org.jooq.test.oracle.generatedclasses.test.tables.VBook(alias);
+		return new org.jooq.test.oracle.generatedclasses.test.tables.VBook(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle.generatedclasses.test.tables.VBook rename(java.lang.String name) {
+		return new org.jooq.test.oracle.generatedclasses.test.tables.VBook(name, null);
 	}
 }

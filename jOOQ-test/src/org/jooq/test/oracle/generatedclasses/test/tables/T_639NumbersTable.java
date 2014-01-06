@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 1347137384;
+	private static final long serialVersionUID = -1252262388;
 
 	/**
 	 * The singleton instance of <code>TEST.T_639_NUMBERS_TABLE</code>
@@ -93,6 +93,10 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.ora
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE);
 	}
 
+	private T_639NumbersTable(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord> aliased) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -114,6 +118,13 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.ora
 	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable as(java.lang.String alias) {
-		return new org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable(alias);
+		return new org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable rename(java.lang.String name) {
+		return new org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable(name, null);
 	}
 }

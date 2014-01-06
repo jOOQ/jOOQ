@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -338792216;
+	private static final long serialVersionUID = -1987170458;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOK_TO_BOOK_STORE</code>
@@ -55,6 +55,10 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.orac
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}
 
+	private TBookToBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> aliased) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -84,6 +88,13 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.orac
 	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore as(java.lang.String alias) {
-		return new org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore(alias);
+		return new org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore rename(java.lang.String name) {
+		return new org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore(name, null);
 	}
 }

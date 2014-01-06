@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 412411533;
+	private static final long serialVersionUID = -1231332108;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOK</code>
@@ -72,6 +72,16 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generate
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, this);
 
 	/**
+	 * The column <code>TEST.T_BOOK.REC_VERSION</code>. 
+	 */
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, java.math.BigDecimal> REC_VERSION = createField("REC_VERSION", org.jooq.impl.SQLDataType.NUMERIC, this);
+
+	/**
+	 * The column <code>TEST.T_BOOK.REC_TIMESTAMP</code>. 
+	 */
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, java.sql.Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP, this);
+
+	/**
 	 * Create a <code>TEST.T_BOOK</code> table reference
 	 */
 	public TBook() {
@@ -83,6 +93,10 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generate
 	 */
 	public TBook(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK);
+	}
+
+	private TBook(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord> aliased) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
 	}
 
 	/**
@@ -113,7 +127,30 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generate
 	 * {@inheritDoc}
 	 */
 	@Override
+	public org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, java.math.BigDecimal> getRecordVersion() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.REC_VERSION;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, java.sql.Timestamp> getRecordTimestamp() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.REC_TIMESTAMP;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.TBook as(java.lang.String alias) {
-		return new org.jooq.test.oracle.generatedclasses.test.tables.TBook(alias);
+		return new org.jooq.test.oracle.generatedclasses.test.tables.TBook(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle.generatedclasses.test.tables.TBook rename(java.lang.String name) {
+		return new org.jooq.test.oracle.generatedclasses.test.tables.TBook(name, null);
 	}
 }

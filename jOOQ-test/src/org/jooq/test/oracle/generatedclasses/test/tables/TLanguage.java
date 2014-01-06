@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -1003407276;
+	private static final long serialVersionUID = 2138575246;
 
 	/**
 	 * The singleton instance of <code>TEST.T_LANGUAGE</code>
@@ -60,6 +60,10 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gene
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE);
 	}
 
+	private TLanguage(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord> aliased) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -81,6 +85,13 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gene
 	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.TLanguage as(java.lang.String alias) {
-		return new org.jooq.test.oracle.generatedclasses.test.tables.TLanguage(alias);
+		return new org.jooq.test.oracle.generatedclasses.test.tables.TLanguage(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle.generatedclasses.test.tables.TLanguage rename(java.lang.String name) {
+		return new org.jooq.test.oracle.generatedclasses.test.tables.TLanguage(name, null);
 	}
 }

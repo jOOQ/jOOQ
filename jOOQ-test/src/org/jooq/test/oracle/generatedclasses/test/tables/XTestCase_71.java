@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 1474892522;
+	private static final long serialVersionUID = -399582814;
 
 	/**
 	 * The singleton instance of <code>TEST.X_TEST_CASE_71</code>
@@ -48,6 +48,10 @@ public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.oracle.g
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_71.X_TEST_CASE_71);
 	}
 
+	private XTestCase_71(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_71Record> aliased) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -77,6 +81,13 @@ public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.oracle.g
 	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_71 as(java.lang.String alias) {
-		return new org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_71(alias);
+		return new org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_71(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_71 rename(java.lang.String name) {
+		return new org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_71(name, null);
 	}
 }

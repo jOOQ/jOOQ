@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "V_INCOMPLETE", schema = "TEST")
 public class VIncomplete implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1787683761;
+	private static final long serialVersionUID = 1585535375;
 
 	private java.lang.Object id;
 	private java.lang.Object authorId;
@@ -22,6 +22,8 @@ public class VIncomplete implements java.io.Serializable {
 	private java.lang.Object languageId;
 	private java.lang.Object contentText;
 	private java.lang.Object contentPdf;
+	private java.lang.Object recVersion;
+	private java.lang.Object recTimestamp;
 
 	public VIncomplete() {}
 
@@ -34,7 +36,9 @@ public class VIncomplete implements java.io.Serializable {
 		java.lang.Object publishedIn,
 		java.lang.Object languageId,
 		java.lang.Object contentText,
-		java.lang.Object contentPdf
+		java.lang.Object contentPdf,
+		java.lang.Object recVersion,
+		java.lang.Object recTimestamp
 	) {
 		this.id = id;
 		this.authorId = authorId;
@@ -45,6 +49,8 @@ public class VIncomplete implements java.io.Serializable {
 		this.languageId = languageId;
 		this.contentText = contentText;
 		this.contentPdf = contentPdf;
+		this.recVersion = recVersion;
+		this.recTimestamp = recTimestamp;
 	}
 
 	@javax.persistence.Column(name = "ID")
@@ -126,5 +132,23 @@ public class VIncomplete implements java.io.Serializable {
 
 	public void setContentPdf(java.lang.Object contentPdf) {
 		this.contentPdf = contentPdf;
+	}
+
+	@javax.persistence.Column(name = "REC_VERSION")
+	public java.lang.Object getRecVersion() {
+		return this.recVersion;
+	}
+
+	public void setRecVersion(java.lang.Object recVersion) {
+		this.recVersion = recVersion;
+	}
+
+	@javax.persistence.Column(name = "REC_TIMESTAMP")
+	public java.lang.Object getRecTimestamp() {
+		return this.recTimestamp;
+	}
+
+	public void setRecTimestamp(java.lang.Object recTimestamp) {
+		this.recTimestamp = recTimestamp;
 	}
 }

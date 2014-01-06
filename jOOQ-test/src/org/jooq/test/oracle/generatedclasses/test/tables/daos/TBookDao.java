@@ -102,4 +102,18 @@ public class TBookDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.generat
 	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBook> fetchByContentPdf(byte[]... values) {
 		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.CONTENT_PDF, values);
 	}
+
+	/**
+	 * Fetch records that have <code>REC_VERSION IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBook> fetchByRecVersion(java.math.BigDecimal... values) {
+		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.REC_VERSION, values);
+	}
+
+	/**
+	 * Fetch records that have <code>REC_TIMESTAMP IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBook> fetchByRecTimestamp(java.sql.Timestamp... values) {
+		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.REC_TIMESTAMP, values);
+	}
 }

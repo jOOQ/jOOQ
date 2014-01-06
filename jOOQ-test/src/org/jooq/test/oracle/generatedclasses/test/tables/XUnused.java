@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -886482399;
+	private static final long serialVersionUID = 354476399;
 
 	/**
 	 * The singleton instance of <code>TEST.X_UNUSED</code>
@@ -120,6 +120,10 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.oracle.genera
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED);
 	}
 
+	private XUnused(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> aliased) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -149,6 +153,13 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.oracle.genera
 	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.XUnused as(java.lang.String alias) {
-		return new org.jooq.test.oracle.generatedclasses.test.tables.XUnused(alias);
+		return new org.jooq.test.oracle.generatedclasses.test.tables.XUnused(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle.generatedclasses.test.tables.XUnused rename(java.lang.String name) {
+		return new org.jooq.test.oracle.generatedclasses.test.tables.XUnused(name, null);
 	}
 }

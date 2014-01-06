@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -909536410;
+	private static final long serialVersionUID = 1962694494;
 
 	/**
 	 * The singleton instance of <code>TEST.V_LIBRARY</code>
@@ -48,11 +48,22 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gener
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.VLibrary.V_LIBRARY);
 	}
 
+	private VLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.VLibraryRecord> aliased) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.VLibrary as(java.lang.String alias) {
-		return new org.jooq.test.oracle.generatedclasses.test.tables.VLibrary(alias);
+		return new org.jooq.test.oracle.generatedclasses.test.tables.VLibrary(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle.generatedclasses.test.tables.VLibrary rename(java.lang.String name) {
+		return new org.jooq.test.oracle.generatedclasses.test.tables.VLibrary(name, null);
 	}
 }

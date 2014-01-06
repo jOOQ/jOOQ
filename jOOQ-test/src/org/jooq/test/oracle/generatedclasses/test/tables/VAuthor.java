@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = -1147606158;
+	private static final long serialVersionUID = 711888222;
 
 	/**
 	 * The singleton instance of <code>TEST.V_AUTHOR</code>
@@ -68,11 +68,22 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.oracle.genera
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.VAuthor.V_AUTHOR);
 	}
 
+	private VAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.VAuthorRecord> aliased) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.oracle.generatedclasses.test.tables.VAuthor as(java.lang.String alias) {
-		return new org.jooq.test.oracle.generatedclasses.test.tables.VAuthor(alias);
+		return new org.jooq.test.oracle.generatedclasses.test.tables.VAuthor(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle.generatedclasses.test.tables.VAuthor rename(java.lang.String name) {
+		return new org.jooq.test.oracle.generatedclasses.test.tables.VAuthor(name, null);
 	}
 }

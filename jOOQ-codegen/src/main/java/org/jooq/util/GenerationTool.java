@@ -120,11 +120,19 @@ public class GenerationTool {
         InputStream in = GenerationTool.class.getResourceAsStream(args[0]);
 
         if (in == null) {
-            log.error("Cannot find " + args[0]);
-            log.error("-----------");
-            log.error("Please be sure it is located on the classpath and qualified as a classpath location.");
-            log.error("If it is located at the current working directory, try adding a '/' to the path");
-            error();
+
+            // [#2932] Retry loading the file, if it wasn't found. This may be helpful
+            // to some users who were unaware that this file is loaded from the classpath
+            if (!args[0].startsWith("/"))
+                in = GenerationTool.class.getResourceAsStream("/" + args[0]);
+
+            if (in == null) {
+                log.error("Cannot find " + args[0]);
+                log.error("-----------");
+                log.error("Please be sure it is located on the classpath and qualified as a classpath location.");
+                log.error("If it is located at the current working directory, try adding a '/' to the path");
+                error();
+            }
         }
 
         log.info("Initialising properties", args[0]);

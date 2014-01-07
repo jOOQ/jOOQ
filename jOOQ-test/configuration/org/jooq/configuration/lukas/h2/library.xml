@@ -9,7 +9,6 @@
   <generator>
     <name>org.jooq.util.DefaultGenerator</name>
     <database>
-      <name>org.jooq.util.h2.H2Database</name>
       <includes>.*</includes>
       <excludes>T_BOOK_DETAILS|SYSTEM_SEQUENCE.*|.*\.COL2|COL3</excludes>
       <includeExcludeColumns>true</includeExcludeColumns>

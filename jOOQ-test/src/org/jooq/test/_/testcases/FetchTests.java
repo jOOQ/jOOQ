@@ -2191,6 +2191,92 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testFetchGroupsMapper() throws Exception {
+        RecordMapper<Record, String> bookIdMapper = new RecordMapper<Record, String>() {
+            @Override
+            public String map(Record record) {
+                return record.getValue(TBook_ID(), String.class);
+            }
+        };
+        RecordMapper<Record, String> authorIdMapper = new RecordMapper<Record, String>() {
+            @Override
+            public String map(Record record) {
+                return record.getValue(TBook_AUTHOR_ID(), String.class);
+            }
+        };
+
+        Map<Integer, List<String>> groups1 =
+        create().select(TBook_AUTHOR_ID(), TBook_ID())
+                .from(TBook())
+                .orderBy(TBook_AUTHOR_ID(), TBook_ID())
+                .fetchGroups(TBook_AUTHOR_ID(), bookIdMapper);
+
+        assertEquals(asList(1, 2), new ArrayList<Integer>(groups1.keySet()));
+        assertEquals(asList("1", "2"), groups1.get(1));
+        assertEquals(asList("3", "4"), groups1.get(2));
+
+        Map<Record, List<String>> groups2 =
+        create().select(TBook_AUTHOR_ID(), TBook_ID())
+                .from(TBook())
+                .orderBy(TBook_AUTHOR_ID(), TBook_ID())
+                .fetchGroups(new Field[] {
+                    TBook_ID(),
+                    TBook_AUTHOR_ID()
+                }, bookIdMapper);
+
+        assertEquals(4, groups2.size());
+        assertEquals(1, (int) new ArrayList<Record>(groups2.keySet()).get(0).getValue(TBook_ID()));
+        assertEquals(2, (int) new ArrayList<Record>(groups2.keySet()).get(1).getValue(TBook_ID()));
+        assertEquals(3, (int) new ArrayList<Record>(groups2.keySet()).get(2).getValue(TBook_ID()));
+        assertEquals(4, (int) new ArrayList<Record>(groups2.keySet()).get(3).getValue(TBook_ID()));
+        assertEquals(1, (int) new ArrayList<Record>(groups2.keySet()).get(0).getValue(TBook_AUTHOR_ID()));
+        assertEquals(1, (int) new ArrayList<Record>(groups2.keySet()).get(1).getValue(TBook_AUTHOR_ID()));
+        assertEquals(2, (int) new ArrayList<Record>(groups2.keySet()).get(2).getValue(TBook_AUTHOR_ID()));
+        assertEquals(2, (int) new ArrayList<Record>(groups2.keySet()).get(3).getValue(TBook_AUTHOR_ID()));
+        assertEquals("1", new ArrayList<List<String>>(groups2.values()).get(0).get(0));
+        assertEquals("2", new ArrayList<List<String>>(groups2.values()).get(1).get(0));
+        assertEquals("3", new ArrayList<List<String>>(groups2.values()).get(2).get(0));
+        assertEquals("4", new ArrayList<List<String>>(groups2.values()).get(3).get(0));
+        assertEquals(1, new ArrayList<List<String>>(groups2.values()).get(0).size());
+        assertEquals(1, new ArrayList<List<String>>(groups2.values()).get(1).size());
+        assertEquals(1, new ArrayList<List<String>>(groups2.values()).get(2).size());
+        assertEquals(1, new ArrayList<List<String>>(groups2.values()).get(3).size());
+
+
+        Map<Integer, String> maps1 =
+        create().select(TBook_AUTHOR_ID(), TBook_ID())
+                .from(TBook())
+                .orderBy(TBook_AUTHOR_ID(), TBook_ID())
+                .fetchMap(TBook_ID(), authorIdMapper);
+
+        assertEquals(asList(1, 2, 3, 4), new ArrayList<Integer>(maps1.keySet()));
+        assertEquals(asList("1", "1", "2", "2"), new ArrayList<String>(maps1.values()));
+
+        Map<List<?>, String> maps2 =
+        create().select(TBook_AUTHOR_ID(), TBook_ID())
+                .from(TBook())
+                .orderBy(TBook_AUTHOR_ID(), TBook_ID())
+                .fetchMap(new Field[] {
+                    TBook_ID(),
+                    TBook_AUTHOR_ID()
+                }, bookIdMapper);
+
+        assertEquals(4, maps2.size());
+        assertEquals(1, new ArrayList<List<?>>(maps2.keySet()).get(0).get(0));
+        assertEquals(2, new ArrayList<List<?>>(maps2.keySet()).get(1).get(0));
+        assertEquals(3, new ArrayList<List<?>>(maps2.keySet()).get(2).get(0));
+        assertEquals(4, new ArrayList<List<?>>(maps2.keySet()).get(3).get(0));
+        assertEquals(1, new ArrayList<List<?>>(maps2.keySet()).get(0).get(1));
+        assertEquals(1, new ArrayList<List<?>>(maps2.keySet()).get(1).get(1));
+        assertEquals(2, new ArrayList<List<?>>(maps2.keySet()).get(2).get(1));
+        assertEquals(2, new ArrayList<List<?>>(maps2.keySet()).get(3).get(1));
+        assertEquals("1", new ArrayList<String>(maps2.values()).get(0));
+        assertEquals("2", new ArrayList<String>(maps2.values()).get(1));
+        assertEquals("3", new ArrayList<String>(maps2.values()).get(2));
+        assertEquals("4", new ArrayList<String>(maps2.values()).get(3));
+    }
+
+    @Test
     public void testFetchWithMaxRows() throws Exception {
         Result<B> books =
         create().selectFrom(TBook())

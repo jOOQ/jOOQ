@@ -158,6 +158,7 @@ public abstract class BaseTest<
 
     protected static final List<Short>     BOOK_IDS_SHORT     = Arrays.asList((short) 1, (short) 2, (short) 3, (short) 4);
     protected static final List<Integer>   BOOK_IDS           = Arrays.asList(1, 2, 3, 4);
+    protected static final List<String>    BOOK_IDS_STRING    = Arrays.asList("1", "2", "3", "4");
     protected static final List<Integer>   BOOK_AUTHOR_IDS    = Arrays.asList(1, 1, 2, 2);
     protected static final List<String>    BOOK_TITLES        = Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida");
     protected static final List<String>    BOOK_FIRST_NAMES   = Arrays.asList("George", "George", "Paulo", "Paulo");

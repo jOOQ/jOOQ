@@ -503,8 +503,18 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    public final <E> Map<List<?>, E> fetchMap(Field<?>[] keys, RecordMapper<? super R, E> mapper) {
+        return fetch().intoMap(keys, mapper);
+    }
+
+    @Override
     public final <K, E> Map<K, E> fetchMap(Field<K> key, Class<? extends E> type) {
         return fetch().intoMap(key, type);
+    }
+
+    @Override
+    public final <K, E> Map<K, E> fetchMap(Field<K> key, RecordMapper<? super R, E> mapper) {
+        return fetch().intoMap(key, mapper);
     }
 
     @Override
@@ -536,6 +546,21 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final <E> Map<Record, List<E>> fetchGroups(Field<?>[] keys, Class<? extends E> type) {
         return fetch().intoGroups(keys, type);
+    }
+
+    @Override
+    public final <E> Map<Record, List<E>> fetchGroups(Field<?>[] keys, RecordMapper<? super R, E> mapper) {
+        return fetch().intoGroups(keys, mapper);
+    }
+
+    @Override
+    public final <K, E> Map<K, List<E>> fetchGroups(Field<K> key, Class<? extends E> type) {
+        return fetch().intoGroups(key, type);
+    }
+
+    @Override
+    public final <K, E> Map<K, List<E>> fetchGroups(Field<K> key, RecordMapper<? super R, E> mapper) {
+        return fetch().intoGroups(key, mapper);
     }
 
     @Override
@@ -634,11 +659,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final <E> List<E> fetch(RecordMapper<? super R, E> mapper) {
         return fetch().map(mapper);
-    }
-
-    @Override
-    public final <K, E> Map<K, List<E>> fetchGroups(Field<K> key, Class<? extends E> type) {
-        return fetch().intoGroups(key, type);
     }
 
     @Override

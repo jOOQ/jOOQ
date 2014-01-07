@@ -1087,6 +1087,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchGroupsMapper() throws Exception {
+        new FetchTests(this).testFetchGroupsMapper();
+    }
+
+    @Test
     public void testFetchWithMaxRows() throws Exception {
         new FetchTests(this).testFetchWithMaxRows();
     }

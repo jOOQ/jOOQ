@@ -2398,8 +2398,18 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public final <E> Map<List<?>, E> fetchMap(Field<?>[] keys, RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetchMap(keys, mapper);
+    }
+
+    @Override
     public final <K, E> Map<K, E> fetchMap(Field<K> key, Class<? extends E> type) {
         return getDelegate().fetchMap(key, type);
+    }
+
+    @Override
+    public final <K, E> Map<K, E> fetchMap(Field<K> key, RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetchMap(key, mapper);
     }
 
     @Override
@@ -2430,6 +2440,21 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final <E> Map<Record, List<E>> fetchGroups(Field<?>[] keys, Class<? extends E> type) {
         return getDelegate().fetchGroups(keys, type);
+    }
+
+    @Override
+    public final <E> Map<Record, List<E>> fetchGroups(Field<?>[] keys, RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetchGroups(keys, mapper);
+    }
+
+    @Override
+    public final <K, E> Map<K, List<E>> fetchGroups(Field<K> key, Class<? extends E> type) {
+        return getDelegate().fetchGroups(key, type);
+    }
+
+    @Override
+    public final <K, E> Map<K, List<E>> fetchGroups(Field<K> key, RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetchGroups(key, mapper);
     }
 
     @Override
@@ -2515,11 +2540,6 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final <E> List<E> fetch(RecordMapper<? super R, E> mapper) {
         return getDelegate().fetch(mapper);
-    }
-
-    @Override
-    public final <K, E> Map<K, List<E>> fetchGroups(Field<K> key, Class<? extends E> type) {
-        return getDelegate().fetchGroups(key, type);
     }
 
     @Override

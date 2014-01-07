@@ -537,6 +537,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *
      * @param key The key. Client code must assure that key is unique in the
      *            result set.
+     * @param type The entity type.
      * @return A Map containing the result.
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
@@ -550,6 +551,29 @@ public interface Result<R extends Record> extends List<R>, Attachable {
         InvalidResultException, MappingException;
 
     /**
+     * Return a {@link Map} with results grouped by the given key and mapped by
+     * the given mapper.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the key is non-unique in
+     * the result set. Use {@link #intoGroups(Field, Class)} instead, if your
+     * key is non-unique.
+     *
+     * @param key The key. Client code must assure that key is unique in the
+     *            result set.
+     * @param mapper The mapper callback.
+     * @return A Map containing the result.
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #fieldsRow()}
+     * @throws InvalidResultException if the key is non-unique in the result
+     *             set.
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <K, E> Map<K, E> intoMap(Field<K> key, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
+        InvalidResultException, MappingException;
+
+    /**
      * Return a {@link Map} with results grouped by the given keys and mapped
      * into the given entity type.
      * <p>
@@ -560,6 +584,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @param keys The keys. Client code must assure that keys are unique in the
      *            result set. If this is <code>null</code> or an empty array,
      *            the resulting map will contain at most one entry.
+     * @param type The entity type.
      * @return A Map containing the results.
      * @throws IllegalArgumentException If any of the argument fields is not
      *             contained in {@link #fieldsRow()}
@@ -570,6 +595,29 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @see DefaultRecordMapper
      */
     <E> Map<List<?>, E> intoMap(Field<?>[] keys, Class<? extends E> type) throws IllegalArgumentException,
+        InvalidResultException, MappingException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given keys and mapped by
+     * the given mapper.     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #intoGroups(Field[], Class)} instead, if
+     * your keys are non-unique.
+     *
+     * @param keys The keys. Client code must assure that keys are unique in the
+     *            result set. If this is <code>null</code> or an empty array,
+     *            the resulting map will contain at most one entry.
+     * @param mapper The mapper callback.
+     * @return A Map containing the results.
+     * @throws IllegalArgumentException If any of the argument fields is not
+     *             contained in {@link #fieldsRow()}
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <E> Map<List<?>, E> intoMap(Field<?>[] keys, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
         InvalidResultException, MappingException;
 
     /**
@@ -637,6 +685,22 @@ public interface Result<R extends Record> extends List<R>, Attachable {
         MappingException;
 
     /**
+     * Return a {@link Map} with results grouped by the given key and mapped by
+     * the given mapper.
+     *
+     * @param <K> The key's generic field type
+     * @param <E> The generic entity type.
+     * @param key The key field.
+     * @param mapper The mapper callback.
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #fieldsRow()}
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     */
+    <K, E> Map<K, List<E>> intoGroups(Field<K> key, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
+        MappingException;
+
+    /**
      * Return a {@link Map} with results grouped by the given keys and mapped
      * into the given entity type.
      * <p>
@@ -645,6 +709,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *
      * @param keys The keys. If this is <code>null</code> or an empty array, the
      *            resulting map will contain at most one entry.
+     * @param type The entity type.
      * @return A Map containing grouped results
      * @throws IllegalArgumentException If the any of the argument fields is not
      *             contained in {@link #fieldsRow()}
@@ -654,6 +719,26 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      */
     <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) throws IllegalArgumentException,
         MappingException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given keys and mapped
+     * into the given entity type.
+     * <p>
+     * Unlike {@link #intoMap(Field[], Class)}, this method allows for
+     * non-unique keys in the result set.
+     *
+     * @param keys The keys. If this is <code>null</code> or an empty array, the
+     *            resulting map will contain at most one entry.
+     * @param mapper The mapper callback.
+     * @return A Map containing grouped results
+     * @throws IllegalArgumentException If the any of the argument fields is not
+     *             contained in {@link #fieldsRow()}
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, RecordMapper<? super R, E> mapper)
+        throws IllegalArgumentException, MappingException;
 
     /**
      * Convert this result into an array of arrays.

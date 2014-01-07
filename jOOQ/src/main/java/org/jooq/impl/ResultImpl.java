@@ -830,8 +830,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <E> Map<List<?>, E> intoMap(Field<?>[] keys, Class<? extends E> type) {
-        RecordMapper<R, E> mapper = Utils.configuration(this).recordMapperProvider().provide(fields, type);
+        return intoMap(keys, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+    }
 
+    @Override
+    public final <E> Map<List<?>, E> intoMap(Field<?>[] keys, RecordMapper<? super R, E> mapper) {
         if (keys == null) {
             keys = new Field[0];
         }
@@ -852,10 +855,14 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return map;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) {
-        RecordMapper<R, E> mapper = Utils.configuration(this).recordMapperProvider().provide(fields, type);
+        return intoMap(key, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <K, E> Map<K, E> intoMap(Field<K> key, RecordMapper<? super R, E> mapper) {
         int index = indexOrFail(fieldsRow(), key);
         Map<K, E> map = new LinkedHashMap<K, E>();
 
@@ -941,10 +948,14 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return map;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) {
-        RecordMapper<R, E> mapper = Utils.configuration(this).recordMapperProvider().provide(fields, type);
+        return intoGroups(key, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, RecordMapper<? super R, E> mapper) {
         int index = indexOrFail(fieldsRow(), key);
         Map<K, List<E>> map = new LinkedHashMap<K, List<E>>();
 
@@ -965,8 +976,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) {
-        RecordMapper<R, E> mapper = Utils.configuration(this).recordMapperProvider().provide(fields, type);
+        return intoGroups(keys, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+    }
 
+    @Override
+    public final <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, RecordMapper<? super R, E> mapper) {
         if (keys == null) {
             keys = new Field[0];
         }

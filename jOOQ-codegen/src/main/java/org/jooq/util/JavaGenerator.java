@@ -174,6 +174,14 @@ public class JavaGenerator extends AbstractGenerator {
             + ((!generateRelations && generateDaos) ? " (forced to true because of <daos/>)" : ""));
         log.info("  global references", generateGlobalObjectReferences());
         log.info("----------------------------------------------------------");
+
+        if (!generateInstanceFields()) {
+            log.warn("");
+            log.warn("Deprecation warnings");
+            log.warn("----------------------------------------------------------");
+            log.warn("  <generateInstanceFields/> = false is deprecated! Please adapt your configuration.");
+        }
+
         log.info("");
         log.info("Generation remarks");
         log.info("----------------------------------------------------------");

@@ -522,8 +522,7 @@
       <element name="deprecated" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
 
       <!--
-        Generate instance fields in your tables, as opposed to static
-        fields. This simplifies aliasing
+        Do not reuse this property. It is deprecated as of jOOQ 3.3.0
         -->
       <element name="instanceFields" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
 

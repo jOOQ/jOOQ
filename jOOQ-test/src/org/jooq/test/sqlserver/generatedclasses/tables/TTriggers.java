@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 362682730;
+	private static final long serialVersionUID = -1061309462;
 
 	/**
 	 * The singleton instance of <code>dbo.t_triggers</code>
@@ -53,6 +53,10 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.g
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS);
 	}
 
+	private TTriggers(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord> aliased) {
+		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -82,6 +86,13 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.g
 	 */
 	@Override
 	public org.jooq.test.sqlserver.generatedclasses.tables.TTriggers as(java.lang.String alias) {
-		return new org.jooq.test.sqlserver.generatedclasses.tables.TTriggers(alias);
+		return new org.jooq.test.sqlserver.generatedclasses.tables.TTriggers(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.sqlserver.generatedclasses.tables.TTriggers rename(java.lang.String name) {
+		return new org.jooq.test.sqlserver.generatedclasses.tables.TTriggers(name, null);
 	}
 }

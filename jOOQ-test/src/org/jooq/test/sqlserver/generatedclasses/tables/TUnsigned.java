@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TUnsignedRecord> {
 
-	private static final long serialVersionUID = -317621387;
+	private static final long serialVersionUID = 1955193941;
 
 	/**
 	 * The singleton instance of <code>dbo.t_unsigned</code>
@@ -58,11 +58,22 @@ public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.g
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.TUnsigned.T_UNSIGNED);
 	}
 
+	private TUnsigned(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.TUnsignedRecord> aliased) {
+		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.sqlserver.generatedclasses.tables.TUnsigned as(java.lang.String alias) {
-		return new org.jooq.test.sqlserver.generatedclasses.tables.TUnsigned(alias);
+		return new org.jooq.test.sqlserver.generatedclasses.tables.TUnsigned(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.sqlserver.generatedclasses.tables.TUnsigned rename(java.lang.String name) {
+		return new org.jooq.test.sqlserver.generatedclasses.tables.TUnsigned(name, null);
 	}
 }

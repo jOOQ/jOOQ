@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = 2109381247;
+	private static final long serialVersionUID = 1104562219;
 
 	/**
 	 * The singleton instance of <code>dbo.t_identity</code>
@@ -48,6 +48,10 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.g
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY);
 	}
 
+	private TIdentity(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord> aliased) {
+		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -61,6 +65,13 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.g
 	 */
 	@Override
 	public org.jooq.test.sqlserver.generatedclasses.tables.TIdentity as(java.lang.String alias) {
-		return new org.jooq.test.sqlserver.generatedclasses.tables.TIdentity(alias);
+		return new org.jooq.test.sqlserver.generatedclasses.tables.TIdentity(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.sqlserver.generatedclasses.tables.TIdentity rename(java.lang.String name) {
+		return new org.jooq.test.sqlserver.generatedclasses.tables.TIdentity(name, null);
 	}
 }

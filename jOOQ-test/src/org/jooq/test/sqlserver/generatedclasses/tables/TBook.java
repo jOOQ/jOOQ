@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -500827801;
+	private static final long serialVersionUID = -1736951599;
 
 	/**
 	 * The singleton instance of <code>dbo.t_book</code>
@@ -83,6 +83,10 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gener
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK);
 	}
 
+	private TBook(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord> aliased) {
+		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -112,6 +116,13 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gener
 	 */
 	@Override
 	public org.jooq.test.sqlserver.generatedclasses.tables.TBook as(java.lang.String alias) {
-		return new org.jooq.test.sqlserver.generatedclasses.tables.TBook(alias);
+		return new org.jooq.test.sqlserver.generatedclasses.tables.TBook(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.sqlserver.generatedclasses.tables.TBook rename(java.lang.String name) {
+		return new org.jooq.test.sqlserver.generatedclasses.tables.TBook(name, null);
 	}
 }

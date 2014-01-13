@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = -1491058134;
+	private static final long serialVersionUID = 520175264;
 
 	/**
 	 * The singleton instance of <code>dbo.v_author</code>
@@ -68,11 +68,22 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gen
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.VAuthor.V_AUTHOR);
 	}
 
+	private VAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.VAuthorRecord> aliased) {
+		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.sqlserver.generatedclasses.tables.VAuthor as(java.lang.String alias) {
-		return new org.jooq.test.sqlserver.generatedclasses.tables.VAuthor(alias);
+		return new org.jooq.test.sqlserver.generatedclasses.tables.VAuthor(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.sqlserver.generatedclasses.tables.VAuthor rename(java.lang.String name) {
+		return new org.jooq.test.sqlserver.generatedclasses.tables.VAuthor(name, null);
 	}
 }

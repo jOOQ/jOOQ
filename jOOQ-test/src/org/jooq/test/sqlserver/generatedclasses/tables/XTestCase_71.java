@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -2120236962;
+	private static final long serialVersionUID = 1608629140;
 
 	/**
 	 * The singleton instance of <code>dbo.x_test_case_71</code>
@@ -48,6 +48,10 @@ public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserve
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71);
 	}
 
+	private XTestCase_71(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_71Record> aliased) {
+		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -77,6 +81,13 @@ public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserve
 	 */
 	@Override
 	public org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_71 as(java.lang.String alias) {
-		return new org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_71(alias);
+		return new org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_71(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_71 rename(java.lang.String name) {
+		return new org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_71(name, null);
 	}
 }

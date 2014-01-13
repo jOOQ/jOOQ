@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 740685779;
+	private static final long serialVersionUID = -2002422267;
 
 	/**
 	 * The singleton instance of <code>dbo.t_author</code>
@@ -68,6 +68,10 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gen
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR);
 	}
 
+	private TAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord> aliased) {
+		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -89,6 +93,13 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gen
 	 */
 	@Override
 	public org.jooq.test.sqlserver.generatedclasses.tables.TAuthor as(java.lang.String alias) {
-		return new org.jooq.test.sqlserver.generatedclasses.tables.TAuthor(alias);
+		return new org.jooq.test.sqlserver.generatedclasses.tables.TAuthor(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.sqlserver.generatedclasses.tables.TAuthor rename(java.lang.String name) {
+		return new org.jooq.test.sqlserver.generatedclasses.tables.TAuthor(name, null);
 	}
 }

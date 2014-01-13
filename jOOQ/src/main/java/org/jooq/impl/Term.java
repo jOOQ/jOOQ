@@ -135,6 +135,7 @@ enum Term {
                 case HSQLDB:
                 case MARIADB:
                 case MYSQL:
+                case SQLITE:
                     return "group_concat";
 
                 case POSTGRES:

@@ -12,6 +12,31 @@ package org.jooq.test.sqlserver.generatedclasses;
 public class Tables {
 
 	/**
+	 * The table dbo.f_tables1
+	 */
+	public static final org.jooq.test.sqlserver.generatedclasses.tables.FTables1 F_TABLES1 = org.jooq.test.sqlserver.generatedclasses.tables.FTables1.F_TABLES1;
+
+	/**
+	 * The table dbo.f_tables2
+	 */
+	public static final org.jooq.test.sqlserver.generatedclasses.tables.FTables2 F_TABLES2 = org.jooq.test.sqlserver.generatedclasses.tables.FTables2.F_TABLES2;
+
+	/**
+	 * The table dbo.f_tables3
+	 */
+	public static final org.jooq.test.sqlserver.generatedclasses.tables.FTables3 F_TABLES3 = org.jooq.test.sqlserver.generatedclasses.tables.FTables3.F_TABLES3;
+
+	/**
+	 * The table dbo.f_tables4
+	 */
+	public static final org.jooq.test.sqlserver.generatedclasses.tables.FTables4 F_TABLES4 = org.jooq.test.sqlserver.generatedclasses.tables.FTables4.F_TABLES4;
+
+	/**
+	 * The table dbo.f_tables5
+	 */
+	public static final org.jooq.test.sqlserver.generatedclasses.tables.FTables5 F_TABLES5 = org.jooq.test.sqlserver.generatedclasses.tables.FTables5.F_TABLES5;
+
+	/**
 	 * The table dbo.t_639_numbers_table
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;

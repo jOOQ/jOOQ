@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Dbo extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 754782530;
+	private static final long serialVersionUID = -883474994;
 
 	/**
 	 * The singleton instance of <code>dbo</code>
@@ -44,6 +44,11 @@ public class Dbo extends org.jooq.impl.SchemaImpl {
 
 	private final java.util.List<org.jooq.Table<?>> getTables0() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
+			org.jooq.test.sqlserver.generatedclasses.tables.FTables1.F_TABLES1,
+			org.jooq.test.sqlserver.generatedclasses.tables.FTables2.F_TABLES2,
+			org.jooq.test.sqlserver.generatedclasses.tables.FTables3.F_TABLES3,
+			org.jooq.test.sqlserver.generatedclasses.tables.FTables4.F_TABLES4,
+			org.jooq.test.sqlserver.generatedclasses.tables.FTables5.F_TABLES5,
 			org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,
 			org.jooq.test.sqlserver.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST,
 			org.jooq.test.sqlserver.generatedclasses.tables.T_785.T_785,

@@ -86,7 +86,6 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
-import org.jooq.test.access.generatedclasses.Keys;
 import org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.access.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.access.generatedclasses.tables.records.TBookStoreRecord;
@@ -261,12 +260,14 @@ public class AccessTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<T_639NumbersTableRecord, BigDecimal> T639_BIG_DECIMAL() {
-        return T_639_NUMBERS_TABLE.BIG_DECIMAL;
+        return null;
+        // return T_639_NUMBERS_TABLE.BIG_DECIMAL;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, BigInteger> T639_BIG_INTEGER() {
-        return T_639_NUMBERS_TABLE.BIG_INTEGER;
+        return null;
+        // return T_639_NUMBERS_TABLE.BIG_INTEGER;
     }
 
     @Override
@@ -526,12 +527,14 @@ public class AccessTest extends jOOQAbstractTest<
 
     @Override
     protected ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_AUTHOR_ID() {
-        return Keys.FK_T_BOOK_AUTHOR_ID;
+        return null;
+        // return Keys.FK_T_BOOK_AUTHOR_ID;
     }
 
     @Override
     protected ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID() {
-        return Keys.FK_T_BOOK_CO_AUTHOR_ID;
+        return null;
+        // return Keys.FK_T_BOOK_CO_AUTHOR_ID;
     }
 
     @Override

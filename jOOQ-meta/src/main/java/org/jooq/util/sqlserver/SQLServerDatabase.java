@@ -41,6 +41,8 @@
 
 package org.jooq.util.sqlserver;
 
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.util.sqlserver.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.util.sqlserver.information_schema.Tables.KEY_COLUMN_USAGE;
 import static org.jooq.util.sqlserver.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
@@ -286,21 +288,38 @@ public class SQLServerDatabase extends AbstractDatabase {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
 
         for (Record record : create()
-                .select(
-                    TABLES.TABLE_SCHEMA,
-                    TABLES.TABLE_NAME)
-                .from(TABLES)
-                .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()))
-                .orderBy(
-                    TABLES.TABLE_SCHEMA,
-                    TABLES.TABLE_NAME)
+                .select()
+                .from(
+                    select(
+                        TABLES.TABLE_SCHEMA,
+                        TABLES.TABLE_NAME,
+                        inline(false).as("table_valued_function"))
+                    .from(TABLES)
+                    .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()))
+                .unionAll(
+                    select(
+                        ROUTINES.ROUTINE_SCHEMA,
+                        ROUTINES.ROUTINE_NAME,
+                        inline(true))
+                    .from(ROUTINES)
+                    .where(ROUTINES.ROUTINE_SCHEMA.in(getInputSchemata()))
+                    .and(ROUTINES.ROUTINE_TYPE.eq("FUNCTION"))
+                    .and(ROUTINES.DATA_TYPE.eq("TABLE")))
+                .asTable("tables"))
+                .orderBy(1, 2)
                 .fetch()) {
 
             SchemaDefinition schema = getSchema(record.getValue(TABLES.TABLE_SCHEMA));
             String name = record.getValue(TABLES.TABLE_NAME);
+            boolean tableValuedFunction = record.getValue("table_valued_function", boolean.class);
             String comment = "";
 
-            result.add(new SQLServerTableDefinition(schema, name, comment));
+            if (tableValuedFunction) {
+                result.add(new SQLServerTableValuedFunction(schema, name, comment));
+            }
+            else {
+                result.add(new SQLServerTableDefinition(schema, name, comment));
+            }
         }
 
         return result;
@@ -339,6 +358,8 @@ public class SQLServerDatabase extends AbstractDatabase {
                 ROUTINES.NUMERIC_SCALE)
             .from(ROUTINES)
             .where(ROUTINES.ROUTINE_SCHEMA.in(getInputSchemata()))
+            .andNot(ROUTINES.ROUTINE_TYPE.eq("FUNCTION")
+                .and(ROUTINES.DATA_TYPE.eq("TABLE")))
             .orderBy(
                 ROUTINES.ROUTINE_SCHEMA,
                 ROUTINES.ROUTINE_NAME)

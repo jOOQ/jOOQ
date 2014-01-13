@@ -2,16 +2,7 @@ DROP VIEW v_library/
 DROP VIEW v_author/
 DROP VIEW v_book/
 
-DROP PROCEDURE p_arrays1/
-DROP PROCEDURE p_arrays2/
-DROP PROCEDURE p_arrays3/
 DROP PROCEDURE p_many_parameters/
-DROP FUNCTION f_arrays1/
-DROP FUNCTION f_arrays2/
-DROP FUNCTION f_arrays3/
-DROP PROCEDURE p_enhance_address1/
-DROP PROCEDURE p_enhance_address2/
-DROP PROCEDURE p_enhance_address3/
 DROP PROCEDURE p_unused/
 DROP PROCEDURE p_create_author/
 DROP PROCEDURE p_create_author_by_name/
@@ -19,12 +10,16 @@ DROP PROCEDURE p_author_exists/
 DROP PROCEDURE p391/
 DROP PROCEDURE p_default/
 DROP PROCEDURE p1490/
+DROP FUNCTION f_tables1/ 
+DROP FUNCTION f_tables2/ 
+DROP FUNCTION f_tables3/ 
+DROP FUNCTION f_tables4/ 
+DROP FUNCTION f_tables5/ 
 DROP FUNCTION f_many_parameters/
 DROP FUNCTION f_author_exists/
 DROP FUNCTION f_one/
 DROP FUNCTION f_number/
 DROP FUNCTION f317/
-DROP FUNCTION f378/
 
 DROP TRIGGER t_triggers_trigger/
 
@@ -34,7 +29,6 @@ DROP TABLE multi_schema.t_author/
 
 DROP TABLE t_dates/
 DROP TABLE t_triggers/
-DROP TABLE t_arrays/
 DROP TABLE t_book_to_book_store/
 DROP TABLE t_book_store/
 DROP TABLE t_book/
@@ -47,21 +41,30 @@ DROP TABLE x_test_case_64_69/
 DROP TABLE x_test_case_85/
 DROP TABLE t_exotic_types/
 DROP TABLE x_unused/
-DROP TABLE x_many_fields/
 DROP TABLE t_639_numbers_table/
-DROP TABLE t_658_ref/
-DROP TABLE t_658_11/
-DROP TABLE t_658_21/
-DROP TABLE t_658_31/
-DROP TABLE t_658_12/
-DROP TABLE t_658_22/
-DROP TABLE t_658_32/
 DROP TABLE t_725_lob_test/
 DROP TABLE t_785/
 DROP TABLE t_unsigned/
 DROP TABLE t_booleans/
 DROP TABLE t_identity/
 DROP TABLE t_identity_pk/
+
+DROP TYPE u_date_table/
+DROP TYPE u_number_long_table/
+DROP TYPE u_number_table/
+DROP TYPE u_string_table/
+DROP TYPE u_book_table/
+
+CREATE TYPE u_book_table AS TABLE (
+  id INTEGER,
+  title VARCHAR(400)
+)
+/
+
+CREATE TYPE u_string_table      AS TABLE (column_value VARCHAR(20))/
+CREATE TYPE u_number_table      AS TABLE (column_value INTEGER)/
+CREATE TYPE u_number_long_table AS TABLE (column_value BIGINT)/
+CREATE TYPE u_date_table        AS TABLE (column_value DATE)/
 
 CREATE TABLE t_identity_pk (
   id INTEGER IDENTITY(1,1) NOT NULL,
@@ -356,6 +359,67 @@ CREATE PROCEDURE p_create_author
 AS
 BEGIN
 	EXEC p_create_author_by_name 'William', 'Shakespeare';
+END
+/
+
+CREATE FUNCTION f_tables1 ()
+RETURNS @out_table TABLE (
+    column_value INTEGER
+)
+AS
+BEGIN
+    INSERT @out_table
+    VALUES (1)
+    RETURN
+END
+/
+
+CREATE FUNCTION f_tables2 ()
+RETURNS @out_table TABLE (
+    column_value BIGINT
+)
+AS
+BEGIN
+    INSERT @out_table
+    VALUES (1)
+    RETURN
+END
+/
+
+CREATE FUNCTION f_tables3 ()
+RETURNS TABLE
+AS RETURN
+SELECT '1' column_value
+/
+
+CREATE FUNCTION f_tables4 (@id INTEGER)
+RETURNS @out_table TABLE (
+    id INTEGER,
+    title VARCHAR(400)
+)
+AS
+BEGIN
+    INSERT @out_table
+    SELECT id, title
+    FROM t_book
+    WHERE @id IS NULL OR id = @id
+    ORDER BY id
+    RETURN
+END
+/
+
+CREATE FUNCTION f_tables5 (@v1 INTEGER, @v2 INTEGER, @v3 INTEGER)
+RETURNS @out_table TABLE (
+    v INTEGER,
+    s INTEGER
+)
+AS
+BEGIN
+    INSERT @out_table
+    VALUES(@v1, @v1),
+          (@v2, @v1 + @v2),
+          (@v3, @v1 + @v2 + @v3)
+    RETURN
 END
 /
 

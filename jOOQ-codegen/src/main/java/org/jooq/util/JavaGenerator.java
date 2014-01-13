@@ -74,6 +74,7 @@ import org.jooq.impl.AbstractKeys;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.ArrayRecordImpl;
 import org.jooq.impl.DAOImpl;
+import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.PackageImpl;
 import org.jooq.impl.SQLDataType;
@@ -267,7 +268,7 @@ public class JavaGenerator extends AbstractGenerator {
             generateEnums(schema);
         }
 
-        if (database.getRoutines(schema).size() > 0) {
+        if (database.getRoutines(schema).size() > 0 || database.getTables(schema).size() > 0) {
             generateRoutines(schema);
         }
 
@@ -1163,7 +1164,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateEnumClassFooter(EnumDefinition e, JavaWriter out) {}
 
     protected void generateRoutines(SchemaDefinition schema) {
-        log.info("Generating routines");
+        log.info("Generating routines and table-valued functions");
 
         JavaWriter outR = new JavaWriter(new File(getStrategy().getFile(schema).getParentFile(), "Routines.java"));
         printPackage(outR, schema);
@@ -1177,6 +1178,12 @@ public class JavaGenerator extends AbstractGenerator {
                 generateRoutine(schema, routine);
             } catch (Exception e) {
                 log.error("Error while generating routine " + routine, e);
+            }
+        }
+
+        for (TableDefinition table : database.getTables(schema)) {
+            if (table.isTableValuedFunction()) {
+                printTableValuedFunction(outR, table);
             }
         }
 
@@ -1204,6 +1211,11 @@ public class JavaGenerator extends AbstractGenerator {
             printConvenienceMethodFunctionAsField(out, routine, false);
             printConvenienceMethodFunctionAsField(out, routine, true);
         }
+    }
+
+    protected void printTableValuedFunction(JavaWriter out, TableDefinition table) {
+        printConvenienceMethodTableValuedFunctionAsField(out, table, false);
+        printConvenienceMethodTableValuedFunctionAsField(out, table, true);
     }
 
     protected void generatePackages(SchemaDefinition schema) {
@@ -1608,14 +1620,22 @@ public class JavaGenerator extends AbstractGenerator {
         // type-safe table alias
         // [#1255] With instance fields, the table constructor may
         // be public, as tables are no longer singletons
-        if (generateInstanceFields()) {
-            final String schemaId = getStrategy().getFullJavaIdentifier(schema);
+        final String schemaId = getStrategy().getFullJavaIdentifier(schema);
 
+        if (generateInstanceFields()) {
             out.tab(1).javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
             out.tab(1).println("public %s(%s alias) {", className, String.class);
             out.tab(2).println("super(alias, %s, %s);", schemaId, fullTableId);
             out.tab(1).println("}");
+        }
 
+        if (table.isTableValuedFunction()) {
+            out.println();
+            out.tab(1).println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters) {", className, String.class, Table.class, recordType, Field.class);
+            out.tab(2).println("super(alias, %s, aliased, parameters);", schemaId);
+            out.tab(1).println("}");
+        }
+        else {
             out.println();
             out.tab(1).println("private %s(%s alias, %s<%s> aliased) {", className, String.class, Table.class, recordType);
             out.tab(2).println("super(alias, %s, aliased);", schemaId);
@@ -1717,7 +1737,12 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateInstanceFields()) {
             out.tab(1).overrideInherit();
             out.tab(1).println("public %s as(%s alias) {", fullClassName, String.class);
-            out.tab(2).println("return new %s(alias, this);", fullClassName);
+
+            if (table.isTableValuedFunction())
+                out.tab(2).println("return new %s(alias, this, parameters);", fullClassName);
+            else
+                out.tab(2).println("return new %s(alias, this);", fullClassName);
+
             out.tab(1).println("}");
         }
 
@@ -1725,8 +1750,46 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateInstanceFields()) {
             out.tab(1).javadoc("Rename this table");
             out.tab(1).println("public %s rename(%s name) {", fullClassName, String.class);
-            out.tab(2).println("return new %s(name, null);", fullClassName);
+
+            if (table.isTableValuedFunction())
+                out.tab(2).println("return new %s(name, null, parameters);", fullClassName);
+            else
+                out.tab(2).println("return new %s(name, null);", fullClassName);
+
             out.tab(1).println("}");
+        }
+
+        // [#1070] Table-valued functions should generate an additional set of call() methods
+        if (table.isTableValuedFunction()) {
+            for (boolean parametersAsField : new boolean[] { false, true }) {
+
+                // Don't overload no-args call() methods
+                if (parametersAsField && table.getParameters().size() == 0)
+                    break;
+
+                out.tab(1).javadoc("Call this table-valued function");
+                out.tab(1).print("public %s call(", fullClassName);
+                printParameterDeclarations(out, table, parametersAsField);
+                out.println(") {");
+
+                out.tab(2).print("return new %s(getName(), null, new %s[] { ", fullClassName, Field.class);
+                String separator = "";
+                for (ParameterDefinition parameter : table.getParameters()) {
+                    out.print(separator);
+
+                    if (parametersAsField) {
+                        out.print("%s", getStrategy().getJavaMemberName(parameter));
+                    }
+                    else {
+                        out.print("%s.val(%s)", DSL.class, getStrategy().getJavaMemberName(parameter));
+                    }
+
+                    separator = ", ";
+                }
+                out.println(" });");
+
+                out.tab(1).println("}");
+            }
         }
 
         generateTableClassFooter(table, out);
@@ -2147,6 +2210,60 @@ public class JavaGenerator extends AbstractGenerator {
         out.println();
         out.tab(2).println("return f.as%s();", function.isAggregate() ? "AggregateFunction" : "Field");
         out.tab(1).println("}");
+    }
+
+    protected void printConvenienceMethodTableValuedFunctionAsField(JavaWriter out, TableDefinition function, boolean parametersAsField) {
+        // [#281] - Java can't handle more than 255 method parameters
+        if (function.getParameters().size() > 254) {
+            log.warn("Too many parameters", "Function " + function + " has more than 254 in parameters. Skipping generation of convenience method.");
+            return;
+        }
+
+        // Do not generate separate convenience methods, if there are no IN
+        // parameters. They would have the same signature and no additional
+        // meaning
+        if (parametersAsField && function.getParameters().isEmpty()) {
+            return;
+        }
+
+        final String className = getStrategy().getFullJavaClassName(function);
+
+        out.tab(1).javadoc("Get <code>%s</code> as a field", function.getQualifiedOutputName());
+        out.tab(1).print("public static %s %s(",
+            className,
+            getStrategy().getJavaMethodName(function, Mode.DEFAULT));
+
+        printParameterDeclarations(out, function, parametersAsField);
+
+        out.println(") {");
+        out.tab(2).print("return %s.call(", getStrategy().getFullJavaIdentifier(function));
+
+        String separator = "";
+        for (ParameterDefinition parameter : function.getParameters()) {
+            out.print(separator);
+            out.print("%s", getStrategy().getJavaMemberName(parameter));
+
+            separator = ", ";
+        }
+
+        out.println(");");
+        out.tab(1).println("}");
+    }
+
+    private void printParameterDeclarations(JavaWriter out, TableDefinition function, boolean parametersAsField) {
+        String sep1 = "";
+        for (ParameterDefinition parameter : function.getParameters()) {
+            out.print(sep1);
+
+            if (parametersAsField) {
+                out.print("%s<%s>", Field.class, getExtendsNumberType(parameter.getType()));
+            } else {
+                out.print(getNumberType(parameter.getType()));
+            }
+
+            out.print(" %s", getStrategy().getJavaMemberName(parameter));
+            sep1 = ", ";
+        }
     }
 
     private String disambiguateJavaMemberName(Collection<? extends Definition> definitions, String defaultName) {

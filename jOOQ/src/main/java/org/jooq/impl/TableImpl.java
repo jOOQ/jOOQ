@@ -45,9 +45,12 @@ import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_ALIAS;
 import static org.jooq.Clause.TABLE_REFERENCE;
 
+import java.util.Arrays;
+
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Schema;
@@ -68,17 +71,22 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     private static final Clause[] CLAUSES_TABLE_ALIAS     = { TABLE, TABLE_ALIAS };
 
     private final Fields<R>       fields;
+    protected final Field<?>[]    parameters;
     private final Alias<Table<R>> alias;
 
     public TableImpl(String name) {
-        this(name, null, null);
+        this(name, null, null, null);
     }
 
     public TableImpl(String name, Schema schema) {
-        this(name, schema, null);
+        this(name, schema, null, null);
     }
 
     public TableImpl(String name, Schema schema, Table<R> aliased) {
+        this(name, schema, aliased, null);
+    }
+
+    protected TableImpl(String name, Schema schema, Table<R> aliased, Field<?>[] parameters) {
         super(name, schema);
 
         this.fields = new Fields<R>();
@@ -89,6 +97,8 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         else {
             alias = null;
         }
+
+        this.parameters = parameters;
     }
 
     /**
@@ -117,6 +127,11 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         if (alias != null) {
             alias.bind(context);
         }
+        else if (parameters != null && context.declareTables()) {
+            for (Field<?> parameter : parameters) {
+                context.visit(parameter);
+            }
+        }
     }
 
     @Override
@@ -135,6 +150,12 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
             }
 
             context.literal(Utils.getMappedTable(context.configuration(), this).getName());
+
+            if (parameters != null && context.declareTables()) {
+                context.sql("(")
+                       .visit(new QueryPartList<Field<?>>(parameters))
+                       .sql(")");
+            }
         }
     }
 
@@ -184,12 +205,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
     @Override
     public boolean declaresTables() {
-        if (alias != null) {
-            return true;
-        }
-        else {
-            return super.declaresTables();
-        }
+        return (alias != null) || (parameters != null) || super.declaresTables();
     }
 
     // ------------------------------------------------------------------------
@@ -208,7 +224,8 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
             TableImpl<?> other = (TableImpl<?>) that;
             return
                 StringUtils.equals(getSchema(), other.getSchema()) &&
-                StringUtils.equals(getName(), other.getName());
+                StringUtils.equals(getName(), other.getName()) &&
+                Arrays.equals(parameters, other.parameters);
         }
 
         return super.equals(that);

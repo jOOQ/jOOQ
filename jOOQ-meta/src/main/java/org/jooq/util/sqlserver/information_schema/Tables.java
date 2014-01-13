@@ -49,6 +49,11 @@ public class Tables {
 	public static final org.jooq.util.sqlserver.information_schema.tables.Routines ROUTINES = org.jooq.util.sqlserver.information_schema.tables.Routines.ROUTINES;
 
 	/**
+	 * The table INFORMATION_SCHEMA.ROUTINE_COLUMNS
+	 */
+	public static final org.jooq.util.sqlserver.information_schema.tables.RoutineColumns ROUTINE_COLUMNS = org.jooq.util.sqlserver.information_schema.tables.RoutineColumns.ROUTINE_COLUMNS;
+
+	/**
 	 * The table INFORMATION_SCHEMA.SCHEMATA
 	 */
 	public static final org.jooq.util.sqlserver.information_schema.tables.Schemata SCHEMATA = org.jooq.util.sqlserver.information_schema.tables.Schemata.SCHEMATA;

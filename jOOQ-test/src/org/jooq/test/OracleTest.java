@@ -1443,6 +1443,18 @@ public class OracleTest extends jOOQAbstractTest<
                               .andMaxvalue())
                 .fetch();
     }
+
+    @Test
+    public void testOracleCursorResultsIntoUDTRecords() throws Exception {
+        Result<Record> result = Routines.f691cursorOut(create().configuration());
+        List<UBookTypeRecord> list = result.into(UBookTypeRecord.class);
+
+        assertEquals(4, list.size());
+        for (int i = 0; i < 4; i++) {
+            assertEquals(BOOK_IDS.get(0), list.get(0).getId());
+            assertEquals(BOOK_TITLES.get(0), list.get(0).getTitle());
+        }
+    }
 }
 
 /* [/pro] */

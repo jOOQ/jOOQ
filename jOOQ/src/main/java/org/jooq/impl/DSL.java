@@ -10586,6 +10586,7 @@ public class DSL {
      * <li> {@link SQLDialect#H2}</li>
      * <li> {@link SQLDialect#HSQLDB}</li>
      * <li> {@link SQLDialect#MYSQL}</li>
+     * <li> {@link SQLDialect#SQLITE} (but without <code>ORDER BY</code>)</li>
      * </ul>
      * <p>
      * It is simulated by the following dialects:
@@ -10598,13 +10599,44 @@ public class DSL {
      *
      * @see #listAgg(Field)
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SYBASE, SQLITE })
     @Transition(
         name = "GROUP_CONCAT",
         args = "Field"
     )
     public static GroupConcatOrderByStep groupConcat(Field<?> field) {
         return new GroupConcat(nullSafe(field));
+    }
+
+    /**
+     * Get the aggregated concatenation for a field.
+     * <p>
+     * This is natively supported by
+     * <ul>
+     * <li> {@link SQLDialect#CUBRID}</li>
+     * <li> {@link SQLDialect#H2}</li>
+     * <li> {@link SQLDialect#HSQLDB}</li>
+     * <li> {@link SQLDialect#MYSQL}</li>
+     * <li> {@link SQLDialect#SQLITE}</li>
+     * </ul>
+     * <p>
+     * It is simulated by the following dialects:
+     * <ul>
+     * <li> {@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
+     * <li> {@link SQLDialect#ORACLE}: Using <code>LISTAGG()</code></li>
+     * <li> {@link SQLDialect#POSTGRES}: Using <code>STRING_AGG()</code></li>
+     * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
+     * </ul>
+     *
+     * @see #listAgg(Field)
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SYBASE, SQLITE })
+    @Transition(
+        name = "GROUP_CONCAT",
+        args = "Field+"
+    )
+    public static AggregateFunction<String> groupConcat(Field<?> field, String separator) {
+        return new GroupConcat(nullSafe(field)).separator(separator);
     }
 
     /**

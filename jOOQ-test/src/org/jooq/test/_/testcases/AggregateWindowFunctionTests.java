@@ -955,12 +955,39 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case SQLSERVER:
             /* [/pro] */
             case DERBY:
-            case SQLITE:
                 log.info("SKIPPING", "LISTAGG tests");
                 return;
         }
 
         Result<?> result1 = create().select(
+                TAuthor_FIRST_NAME(),
+                TAuthor_LAST_NAME(),
+                groupConcat(TBook_ID(), ", ")
+                    .as("books"))
+            .from(TAuthor())
+            .join(TBook()).on(TAuthor_ID().equal(TBook_AUTHOR_ID()))
+            .groupBy(
+                TAuthor_ID(),
+                TAuthor_FIRST_NAME(),
+                TAuthor_LAST_NAME())
+            .orderBy(TAuthor_ID())
+            .fetch();
+
+        assertEquals(2, result1.size());
+        assertEquals(AUTHOR_FIRST_NAMES, result1.getValues(TAuthor_FIRST_NAME()));
+        assertEquals(AUTHOR_LAST_NAMES, result1.getValues(TAuthor_LAST_NAME()));
+
+        // [#2944] SQLite cannot guarantee any order among aggregated values...
+        assertTrue(asList("1, 2", "2, 1").contains(result1.getValue(0, "books")));
+        assertTrue(asList("3, 4", "4, 3").contains(result1.getValue(1, "books")));
+
+        switch (dialect().family()) {
+            case SQLITE:
+                log.info("SKIPPING", "LISTAGG ordered tests");
+                return;
+        }
+
+        Result<?> result2 = create().select(
                 TAuthor_FIRST_NAME(),
                 TAuthor_LAST_NAME(),
                 listAgg(TBook_ID(), ", ")
@@ -979,13 +1006,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .orderBy(TAuthor_ID())
             .fetch();
 
-        assertEquals(2, result1.size());
-        assertEquals(AUTHOR_FIRST_NAMES, result1.getValues(TAuthor_FIRST_NAME()));
-        assertEquals(AUTHOR_LAST_NAMES, result1.getValues(TAuthor_LAST_NAME()));
-        assertEquals("2, 1", result1.getValue(0, "books1"));
-        assertEquals("2, 1", result1.getValue(0, "books2"));
-        assertEquals("4, 3", result1.getValue(1, "books1"));
-        assertEquals("4, 3", result1.getValue(1, "books2"));
+        assertEquals(2, result2.size());
+        assertEquals(AUTHOR_FIRST_NAMES, result2.getValues(TAuthor_FIRST_NAME()));
+        assertEquals(AUTHOR_LAST_NAMES, result2.getValues(TAuthor_LAST_NAME()));
+        assertEquals("2, 1", result2.getValue(0, "books1"));
+        assertEquals("2, 1", result2.getValue(0, "books2"));
+        assertEquals("4, 3", result2.getValue(1, "books1"));
+        assertEquals("4, 3", result2.getValue(1, "books2"));
 
         switch (dialect()) {
             /* [pro] */
@@ -1002,7 +1029,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 return;
         }
 
-        Result<?> result2 = create().select(
+        Result<?> result3 = create().select(
                 TAuthor_FIRST_NAME(),
                 TAuthor_LAST_NAME(),
                 listAgg(TBook_TITLE())
@@ -1013,13 +1040,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
            .orderBy(TBook_ID())
            .fetch();
 
-        assertEquals(4, result2.size());
-        assertEquals(BOOK_FIRST_NAMES, result2.getValues(TAuthor_FIRST_NAME()));
-        assertEquals(BOOK_LAST_NAMES, result2.getValues(TAuthor_LAST_NAME()));
-        assertEquals("1984Animal Farm", result2.getValue(0, 2));
-        assertEquals("1984Animal Farm", result2.getValue(1, 2));
-        assertEquals("O AlquimistaBrida", result2.getValue(2, 2));
-        assertEquals("O AlquimistaBrida", result2.getValue(3, 2));
+        assertEquals(4, result3.size());
+        assertEquals(BOOK_FIRST_NAMES, result3.getValues(TAuthor_FIRST_NAME()));
+        assertEquals(BOOK_LAST_NAMES, result3.getValues(TAuthor_LAST_NAME()));
+        assertEquals("1984Animal Farm", result3.getValue(0, 2));
+        assertEquals("1984Animal Farm", result3.getValue(1, 2));
+        assertEquals("O AlquimistaBrida", result3.getValue(2, 2));
+        assertEquals("O AlquimistaBrida", result3.getValue(3, 2));
     }
 
     @Test

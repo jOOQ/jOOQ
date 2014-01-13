@@ -1252,7 +1252,7 @@ RETURN library_types.t_cursor_type
 IS
     books library_types.t_cursor_type;
 BEGIN
-	OPEN books FOR SELECT * FROM t_book;
+	OPEN books FOR SELECT * FROM t_book ORDER BY ID;
 	RETURN books;
 END f691cursor_out;
 /

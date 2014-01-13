@@ -43,7 +43,12 @@ package org.jooq.test;
 
 /* [pro] xx
 
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -61,6 +66,8 @@ xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 xxxxxx xxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxxxxxxxxxxxxxxxxx
@@ -90,6 +97,10 @@ xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -783,6 +794,37 @@ xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxx
             xxxxxxxx
             xxxxxxxxx
+    x
+
+    xxxxx
+    xxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxx x
+        xxxxxxxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxx xxxxxxxxxxx
+        xxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+        xxxxxxxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxx xxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+        xxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+
+        xxxxxxxx xxx x xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
+        xxxxxxxx xxx x xxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxx
+
+        xxxxxxxxxxxxx
+            xxxxxxxxx xx xx xx xx xx xx xx xx xx xx xxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+                xxxxxxxxxx
+                xxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxx
+
+        xxxxx xxx xxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxx xxxxxxxxx
     x
 x
 

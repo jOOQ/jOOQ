@@ -45,6 +45,7 @@ import static org.jooq.impl.DSL.table;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Record;
@@ -62,6 +63,7 @@ implements TableDefinition {
     private List<UniqueKeyDefinition>       uniqueKeys;
     private List<ForeignKeyDefinition>      foreignKeys;
     private List<CheckConstraintDefinition> checkConstraints;
+    private List<ParameterDefinition>       parameters;
     private boolean                         primaryKeyLoaded;
     private UniqueKeyDefinition             primaryKey;
     private boolean                         identityLoaded;
@@ -72,8 +74,8 @@ implements TableDefinition {
     public AbstractTableDefinition(SchemaDefinition schema, String name, String comment) {
         super(schema, name, comment);
 
-        parentTable = null;
-        childTables = new ArrayList<TableDefinition>();
+        this.parentTable = null;
+        this.childTables = new ArrayList<TableDefinition>();
     }
 
     @Override
@@ -171,12 +173,30 @@ implements TableDefinition {
     }
 
     @Override
+    public final ColumnDefinition getColumn(int columnIndex) {
+        return getElement(columnIndex);
+    }
+
+    @Override
+    public final List<ParameterDefinition> getParameters() {
+        if (parameters == null) {
+            parameters = getParameters0();
+        }
+
+        return parameters;
+    }
+
+    @Override
+    public /* non-final */ boolean isTableValuedFunction() {
+        return false;
+    }
+
+    @Override
     protected List<ColumnDefinition> getElements0() throws SQLException {
         return null;
     }
 
-    @Override
-    public final ColumnDefinition getColumn(int columnIndex) {
-        return getElement(columnIndex);
+    protected List<ParameterDefinition> getParameters0() {
+        return Collections.emptyList();
     }
 }

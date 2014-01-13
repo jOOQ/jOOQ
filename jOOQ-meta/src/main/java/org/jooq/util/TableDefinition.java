@@ -114,4 +114,14 @@ public interface TableDefinition extends Definition {
      */
     Table<Record> getTable();
 
+    /**
+     * The parameters of this table if this is a table-valued function.
+     */
+    List<ParameterDefinition> getParameters();
+
+    /**
+     * Whether this table is a table-valued function.
+     */
+    boolean isTableValuedFunction();
+
 }

@@ -276,7 +276,7 @@ public class JavaGenerator extends AbstractGenerator {
             generateEnums(schema);
         }
 
-        if (database.getRoutines(schema).size() > 0 || database.getTables(schema).size() > 0) {
+        if (database.getRoutines(schema).size() > 0 || hasTableValuedFunctions(schema)) {
             generateRoutines(schema);
         }
 
@@ -286,6 +286,16 @@ public class JavaGenerator extends AbstractGenerator {
 
         // XXX [#651] Refactoring-cursor
         watch.splitInfo("GENERATION FINISHED!");
+    }
+
+    private boolean hasTableValuedFunctions(SchemaDefinition schema) {
+        for (TableDefinition table : database.getTables(schema)) {
+            if (table.isTableValuedFunction()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     protected void generateRelations(SchemaDefinition schema) {

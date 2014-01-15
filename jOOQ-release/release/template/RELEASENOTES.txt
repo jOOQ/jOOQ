@@ -10,24 +10,158 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 3.2.1 - November 11, 2013
+Version 3.3.0-SNAPSHOT - January 15, 2014
 ================================================================================
 
-This is a patch release with some useful fixes for the 3.2 branch
+This is a SNAPSHOT preview for jOOQ Professional and jOOQ Enterprise customers.
+It is intended to be used as a preview of the upcoming jOOQ 3.3.0 release. It is
+not yet fully integration-tested on all supported databases. Use it at your own
+risk!
+
+Features and improvements
+-------------------------
+#531  - Add support for the WINDOW clause
+#845  - Add support for the T-SQL and Oracle 12c CROSS APPLY clause
+#846  - Add support for the T-SQL and Oracle 12c OUTER APPLY clause
+#1070 - Add support for SQL Server table-valued functions
+#1506 - Allow for inserting empty records through INSERT INTO .. DEFAULT VALUES
+#2093 - Add comment functionality from DISQUS to website
+#2246 - Add <T> T DSLContext.fetchValue(Select<Record1<T>>) to support more
+        typesafety when fetching single values
+#2576 - Integrate with Travis-CI to run automated builds
+#2657 - Add support for ORDER BY .. SEEK .. LIMIT to implement the "seek method"
+        for faster offsets 
+#2709 - Add Record[N].value1(xx), value2(xx) setter methods
+#2734 - Add support for lateral derived tables
+#2744 - Emulate INSERT .. RETURNING through SELECT FROM FINAL TABLE (INSERT ...)
+        in DB2
+#2767 - Add support for CUBRID 9.2 features
+#2776 - Add support for the PostgreSQL ONLY clause
+#2778 - Add detailed section to the manual about settings.xml
+#2779 - Add support for LEFT(), RIGHT() functions
+#2780 - Add PostgresDSL.oid(Table<?>) to produce table.oid references
+#2784 - Add DSL.row(Collection<?>) to allow for interacting with collections of
+        values or Fields
+#2790 - Add a Context data map scoped to the current subquery
+#2801 - Mention licensing options from the manual, add help message to
+        jOOQ-Codegen when OSS users try using commercial databases
+#2805 - Add seekAfter() and seekBefore() to allow for paging in both directions
+#2806 - Add ResultQuery.fetchSize() to influence the JDBC Statement's fetch size
+#2809 - Add support for MySQL's MID() function, which is a synonym for
+        SUBSTRING() 
+#2810 - Add support for the REVERSE() function, where it is supported
+#2824 - Log 500 records on TRACE level, instead of just 5
+#2828 - Use a default Database for code generation, in the absence of an
+        explicit database
+#2829 - Enhance Loader API to allow for importing JSON data in addition to CSV
+        data
+#2832 - Add OracleDSL.toChar()
+#2838 - Add more sophisticated CustomField example to the manual
+#2840 - Add DSL.date(), DSL.time(), and DSL.timestamp() to extract date, time,
+        timestamp parts from a TIMESTAMP
+#2844 - Let JAXB emit more warnings when loading the code generation
+        configuration
+#2848 - Add support for infix-notation for bitwise operations
+#2851 - Add some documentation to the manual about custom code sections in
+        generated code
+#2853 - Add DSLContext.fetchFromJSON()
+#2854 - Add a JAX-RS (with Spring) and jOOQ example to the manual
+#2860 - Add manual section about using jOOQ with Groovy
+#2876 - Add some Javadoc about the fact that some SQLDialects are available in
+        commercial distributions only.
+#2883 - Add support for PostgreSQL COUNT(DISTINCT(a, b, ...)) through
+        DSL.countDistinct()
+#2885 - Generated enum values contain extra comma
+#2891 - Add a jOOQ / Spring-TX example to GitHub under jOOQ-examples
+#2894 - Enable automated CI on github 
+#2898 - Add DSL.generateSeries(int, Field<Integer>) and (Field<Integer>, int)
+        overloads
+#2900 - Overload MockFileDatabase constructor to allow for Readers,
+        InputStreams, and Strings
+#2909 - Improve manual's jOOQ syntax highlighting: Highlight SQL keywords
+#2912 - Add convenience methods set(Connection), set(DataSource),
+        derive(Connection), derive(DataSource) to DefaultConfiguration
+#2915 - Log JDBC URL in code generator configuration log
+#2921 - Add support for ad-hoc table renaming
+#2931 - Add DSLContext.fetchCount(Table<?>) and fetchCount(Table<?>, Condition)
+#2932 - Retry loading the GenerationTool configuration file with a / prepended
+        if it fails
+#2933 - Add {Result.into|ResultQuery.fetch}{Map|Group}({Field<?>|Field[]},
+        RecordMapper<R, E>) 
+#2944 - Add support for GROUP_CONCAT in SQLite
+#2945 - Deprecate the <generateInstanceFields/> code generation flag
+#2946 - Add a section to the manual explaining how to programmatically
+        configure the code generator
+
+API changes (backwards-compatible)
+----------------------------------
+#2811 - Deprecate ResultQuery.fetchLazy(int) - fetchSize is now passed to
+        ResultQuery.fetchSize() not only for lazy fetching
+#2837 - Deprecate code generation configuration's <expressions/> in favour of
+        <expression/>
+#2878 - Deprecate Record.getValue() and Result.getValue() methods that take a
+        defaultValue argument 
+
+API changes (backwards-incompatible)
+------------------------------------
+#2910 - The new matchers configuration cannot be used with Maven
+
+Behavioural changes (backwards-incompatible)
+--------------------------------------------
+#2863 - Remove unnecessarily cached Connection in DataSourceConnectionProvider
 
 Bug fixes
 ---------
-#2658 - Inefficient emulation of row value expression comparison predicates 
-        <, <=, >, >=. Factor out predicates for improved index usage
+#2016 - Bad parsing of MySQL ENUM literals by jooq-meta, if they contain special
+        characters
+#2152 - Invalid column type: 16, when binding null as java.lang.Boolean onto a
+        NUMBER(..) column in Oracle
+#2633 - Fix manual to link to appropriate Javadoc
+#2655 - Improve ArrayIndexOutOfBoundsException: -1 error message when unknown
+        field is accessed from a record 
+#2658 - Inefficient emulation of row value expression comparison predicates <,
+        <=, >, >=. Factor out predicates for improved index usage
+#2773 - Confusion of Unix vs Windows style line terminators in source code
+#2781 - Disambiguate collisions between enum literals and package names
 #2792 - data(Object, Object) methods do not unset the value if null is passed
-#2795 - Bad Javadoc on various fetchOne() methods
+#2795 - Bad Javadoc on DSLContext.fetchOne(String) method
+#2798 - Inconsistent logic executed between Record.setValue(Field<T>, T) and
+        BookRecord.setId(Integer) (generated)
 #2816 - Manual shows wrong DefaultConfiguration constructor call for use with
-        Spring
+        Spring 
 #2819 - Invalid SQL rendered for Ingres row value expression predicates
 #2820 - Invalid SQL rendered for Ingres derived column lists
 #2825 - IngresDatabase treats unique keys as primary keys
 #2831 - Bad Javadoc formatting on MySQLDSL's and MariaDBDSL's enumType() method
+#2835 - UpdatableRecord.store() and DSLContext.executeInsert() show different 
+        behaviour with respect to NULL value insertion
 #2842 - Sybase CAST(? AS LONG VARCHAR) must not contain a length
+#2845 - AbstractStoreQuery.prepare() does not apply RenderKeywordStyle when
+        specifying column names for return after INSERT
+#2857 - Unnecessary whitespace rendered in USING() clause
+#2858 - Bad example in manual related to stored procedure call
+#2864 - Check if ALL_MVIEW_COMMENTS exists before using it (e.g. against an
+        Oracle 9i database)
+#2866 - Wrong implementation for check if ALL_COLUMNS.DEFAULTED exists
+#2869 - DefaultRecordMapper should attach resulting records according to
+        Settings.attachRecords, if target type implements Attachable
+#2872 - Possible StackOverflowError when using plain SQL tables with inlined
+        QueryParts
+#2879 - An exception in the check constraint loader can cause all constraint
+        loading to fail
+#2881 - Throw IllegalArgumentException when calling SelectQuery.addJoinOnKey()
+        and addJoinUsing() with bad JoinType
+#2887 - jooq-codegen-maven should use a target directory relative to the module
+#2913 - Improve code generator compatibility with PostgreSQL 8.x by removing the
+        selection of INFORMATION_SCHEMA.COLUMNS.IDENTITY_GENERATION
+#2916 - Improve code generator compatibility with PostgreSQL 8.x by avoiding the
+        use of window functions
+#2917 - Improve code generator compatibility with PostgreSQL 8.x by avoiding
+        casting to enum types
+#2922 - Manual Bug: SQL Builder example does not compile
+#2923 - Manual Bug: It is not clear where FK_BOOK_AUTHOR is imported from
+#2926 - Add code-generation support for the MySQL / MariaDB TINYTEXT data type
+#2942 - Error in the manual: Wrong class linked
 
 Version 3.2.0 - October 9, 2013
 ================================================================================
@@ -127,6 +261,8 @@ Features and improvements
 #2733 - Add the default log4j.xml configuration file to the maven plugin
 #2745 - Generate default constructor and "assignment-constructor" in POJOs
 #2757 - Add support for DB2 10.5
+#2761 - Add some documentation to the manual showing how GeneratorStrategy SPI
+        is used by jOOQ-codegen
 #2764 - Let CRUD operations be able to perform UPDATEs on primary keys
 #2765 - Add support for a database-agnostic GENERATE_SERIES(FROM, TO) table
         function

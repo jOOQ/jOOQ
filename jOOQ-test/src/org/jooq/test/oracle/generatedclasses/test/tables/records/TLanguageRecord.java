@@ -13,7 +13,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_LANGUAGE", schema = "TEST")
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = 13837141;
+	private static final long serialVersionUID = -180244359;
 
 	/**
 	 * Setter for <code>TEST.T_LANGUAGE.CD</code>. The language ISO code
@@ -49,14 +49,14 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * Setter for <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
 	public void setDescriptionEnglish(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * Getter for <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
 	@javax.persistence.Column(name = "DESCRIPTION_ENGLISH", length = 50)
 	@javax.validation.constraints.Size(max = 50)

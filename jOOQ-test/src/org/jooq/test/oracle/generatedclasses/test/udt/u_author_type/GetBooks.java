@@ -9,25 +9,25 @@ package org.jooq.test.oracle.generatedclasses.test.udt.u_author_type;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class GetBooks extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 74012320;
+	private static final long serialVersionUID = -487899172;
 
 	/**
-	 * The parameter <code>TEST.U_AUTHOR_TYPE.GET_BOOKS.SELF</code>. 
+	 * The parameter <code>TEST.U_AUTHOR_TYPE.GET_BOOKS.SELF</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> SELF = createParameter("SELF", org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.U_AUTHOR_TYPE.getDataType());
 
 	/**
-	 * The parameter <code>TEST.U_AUTHOR_TYPE.GET_BOOKS.BOOK1</code>. 
+	 * The parameter <code>TEST.U_AUTHOR_TYPE.GET_BOOKS.BOOK1</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord> BOOK1 = createParameter("BOOK1", org.jooq.test.oracle.generatedclasses.test.udt.UBookType.U_BOOK_TYPE.getDataType());
 
 	/**
-	 * The parameter <code>TEST.U_AUTHOR_TYPE.GET_BOOKS.BOOK2</code>. 
+	 * The parameter <code>TEST.U_AUTHOR_TYPE.GET_BOOKS.BOOK2</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord> BOOK2 = createParameter("BOOK2", org.jooq.test.oracle.generatedclasses.test.udt.UBookType.U_BOOK_TYPE.getDataType());
 
 	/**
-	 * The parameter <code>TEST.U_AUTHOR_TYPE.GET_BOOKS.BOOKS</code>. 
+	 * The parameter <code>TEST.U_AUTHOR_TYPE.GET_BOOKS.BOOKS</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTableRecord> BOOKS = createParameter("BOOKS", org.jooq.test.oracle.generatedclasses.test.udt.UBookType.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTableRecord.class));
 

@@ -9,15 +9,15 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -219177903;
+	private static final long serialVersionUID = -1098379473;
 
 	/**
-	 * The parameter <code>TEST.P_AUTHOR_EXISTS.AUTHOR_NAME</code>. 
+	 * The parameter <code>TEST.P_AUTHOR_EXISTS.AUTHOR_NAME</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("AUTHOR_NAME", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The parameter <code>TEST.P_AUTHOR_EXISTS.RESULT</code>. 
+	 * The parameter <code>TEST.P_AUTHOR_EXISTS.RESULT</code>.
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RESULT = createParameter("RESULT", org.jooq.impl.SQLDataType.NUMERIC);
 

@@ -11,17 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_71", schema = "TEST")
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_71Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Short> {
 
-	private static final long serialVersionUID = -915084909;
+	private static final long serialVersionUID = 1993516201;
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_71.ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_71.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_71.ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_71.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -31,14 +31,14 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>.
 	 */
 	public void setTestCase_64_69Id(java.lang.Short value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>.
 	 */
 	@javax.persistence.Column(name = "TEST_CASE_64_69_ID", precision = 4)
 	public java.lang.Short getTestCase_64_69Id() {

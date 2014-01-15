@@ -11,17 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_EXOTIC_TYPES", schema = "TEST")
 public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRecord> implements org.jooq.Record2<java.lang.Integer, java.util.UUID> {
 
-	private static final long serialVersionUID = 719768217;
+	private static final long serialVersionUID = -1374566431;
 
 	/**
-	 * Setter for <code>TEST.T_EXOTIC_TYPES.ID</code>. 
+	 * Setter for <code>TEST.T_EXOTIC_TYPES.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_EXOTIC_TYPES.ID</code>. 
+	 * Getter for <code>TEST.T_EXOTIC_TYPES.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -31,14 +31,14 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Setter for <code>TEST.T_EXOTIC_TYPES.UU</code>. 
+	 * Setter for <code>TEST.T_EXOTIC_TYPES.UU</code>.
 	 */
 	public void setUu(java.util.UUID value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_EXOTIC_TYPES.UU</code>. 
+	 * Getter for <code>TEST.T_EXOTIC_TYPES.UU</code>.
 	 */
 	@javax.persistence.Column(name = "UU", length = 36)
 	public java.util.UUID getUu() {

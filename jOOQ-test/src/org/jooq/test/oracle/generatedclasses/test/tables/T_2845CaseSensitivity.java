@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2845CaseSensitivity extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_2845CaseSensitivityRecord> {
 
-	private static final long serialVersionUID = 1056663989;
+	private static final long serialVersionUID = 1107220479;
 
 	/**
 	 * The singleton instance of <code>TEST.T_2845_CASE_sensitivity</code>
@@ -25,27 +25,27 @@ public class T_2845CaseSensitivity extends org.jooq.impl.TableImpl<org.jooq.test
 	}
 
 	/**
-	 * The column <code>TEST.T_2845_CASE_sensitivity.ID</code>. 
+	 * The column <code>TEST.T_2845_CASE_sensitivity.ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.T_2845CaseSensitivityRecord, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.T_2845_CASE_sensitivity.INSENSITIVE</code>. 
+	 * The column <code>TEST.T_2845_CASE_sensitivity.INSENSITIVE</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.T_2845CaseSensitivityRecord, java.math.BigDecimal> INSENSITIVE = createField("INSENSITIVE", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * The column <code>TEST.T_2845_CASE_sensitivity.UPPER</code>. 
+	 * The column <code>TEST.T_2845_CASE_sensitivity.UPPER</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.T_2845CaseSensitivityRecord, java.math.BigDecimal> UPPER = createField("UPPER", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * The column <code>TEST.T_2845_CASE_sensitivity.lower</code>. 
+	 * The column <code>TEST.T_2845_CASE_sensitivity.lower</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.T_2845CaseSensitivityRecord, java.math.BigDecimal> LOWER = createField("lower", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * The column <code>TEST.T_2845_CASE_sensitivity.Mixed</code>. 
+	 * The column <code>TEST.T_2845_CASE_sensitivity.Mixed</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.T_2845CaseSensitivityRecord, java.math.BigDecimal> MIXED = createField("Mixed", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 

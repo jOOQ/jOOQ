@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -1015861449;
+	private static final long serialVersionUID = 1441167801;
 
 	/**
 	 * The singleton instance of <code>TEST.T_LANGUAGE</code>
@@ -37,7 +37,7 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gene
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "The language description");
 
 	/**
-	 * The column <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * The column <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("DESCRIPTION_ENGLISH", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 

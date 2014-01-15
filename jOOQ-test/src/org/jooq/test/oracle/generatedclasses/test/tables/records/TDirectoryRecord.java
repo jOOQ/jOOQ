@@ -11,17 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_DIRECTORY", schema = "TEST")
 public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 1202846631;
+	private static final long serialVersionUID = 1914519069;
 
 	/**
-	 * Setter for <code>TEST.T_DIRECTORY.ID</code>. 
+	 * Setter for <code>TEST.T_DIRECTORY.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DIRECTORY.ID</code>. 
+	 * Getter for <code>TEST.T_DIRECTORY.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -31,14 +31,14 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DIRECTORY.PARENT_ID</code>. 
+	 * Setter for <code>TEST.T_DIRECTORY.PARENT_ID</code>.
 	 */
 	public void setParentId(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DIRECTORY.PARENT_ID</code>. 
+	 * Getter for <code>TEST.T_DIRECTORY.PARENT_ID</code>.
 	 */
 	@javax.persistence.Column(name = "PARENT_ID", precision = 7)
 	public java.lang.Integer getParentId() {
@@ -46,14 +46,14 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>. 
+	 * Setter for <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>.
 	 */
 	public void setIsDirectory(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>. 
+	 * Getter for <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>.
 	 */
 	@javax.persistence.Column(name = "IS_DIRECTORY", precision = 7)
 	public java.lang.Integer getIsDirectory() {
@@ -61,14 +61,14 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DIRECTORY.name</code>. 
+	 * Setter for <code>TEST.T_DIRECTORY.name</code>.
 	 */
 	public void setName(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DIRECTORY.name</code>. 
+	 * Getter for <code>TEST.T_DIRECTORY.name</code>.
 	 */
 	@javax.persistence.Column(name = "name", length = 50)
 	@javax.validation.constraints.Size(max = 50)

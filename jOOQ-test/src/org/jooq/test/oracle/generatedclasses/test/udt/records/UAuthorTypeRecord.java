@@ -9,46 +9,46 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAuthorTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> {
 
-	private static final long serialVersionUID = -919025665;
+	private static final long serialVersionUID = 347058161;
 
 
 	/**
-	 * Setter for <code>TEST.U_AUTHOR_TYPE.ID</code>. 
+	 * Setter for <code>TEST.U_AUTHOR_TYPE.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.ID, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_AUTHOR_TYPE.ID</code>. 
+	 * Getter for <code>TEST.U_AUTHOR_TYPE.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.ID);
 	}
 
 	/**
-	 * Setter for <code>TEST.U_AUTHOR_TYPE.FIRST_NAME</code>. 
+	 * Setter for <code>TEST.U_AUTHOR_TYPE.FIRST_NAME</code>.
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.FIRST_NAME, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_AUTHOR_TYPE.FIRST_NAME</code>. 
+	 * Getter for <code>TEST.U_AUTHOR_TYPE.FIRST_NAME</code>.
 	 */
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.FIRST_NAME);
 	}
 
 	/**
-	 * Setter for <code>TEST.U_AUTHOR_TYPE.LAST_NAME</code>. 
+	 * Setter for <code>TEST.U_AUTHOR_TYPE.LAST_NAME</code>.
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.LAST_NAME, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_AUTHOR_TYPE.LAST_NAME</code>. 
+	 * Getter for <code>TEST.U_AUTHOR_TYPE.LAST_NAME</code>.
 	 */
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.LAST_NAME);

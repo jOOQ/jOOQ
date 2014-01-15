@@ -11,17 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "V_LIBRARY", schema = "TEST")
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -1661230505;
+	private static final long serialVersionUID = -1801242215;
 
 	/**
-	 * Setter for <code>TEST.V_LIBRARY.AUTHOR</code>. 
+	 * Setter for <code>TEST.V_LIBRARY.AUTHOR</code>.
 	 */
 	public void setAuthor(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_LIBRARY.AUTHOR</code>. 
+	 * Getter for <code>TEST.V_LIBRARY.AUTHOR</code>.
 	 */
 	@javax.persistence.Column(name = "AUTHOR", length = 101)
 	@javax.validation.constraints.Size(max = 101)
@@ -30,14 +30,14 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Setter for <code>TEST.V_LIBRARY.TITLE</code>. 
+	 * Setter for <code>TEST.V_LIBRARY.TITLE</code>.
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_LIBRARY.TITLE</code>. 
+	 * Getter for <code>TEST.V_LIBRARY.TITLE</code>.
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
 	@javax.validation.constraints.NotNull

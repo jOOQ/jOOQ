@@ -11,17 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "V_BOOK", schema = "TEST")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.math.BigDecimal, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 402839375;
+	private static final long serialVersionUID = -557999361;
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.ID</code>. 
+	 * Setter for <code>TEST.V_BOOK.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.ID</code>. 
+	 * Getter for <code>TEST.V_BOOK.ID</code>.
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	@javax.validation.constraints.NotNull
@@ -30,14 +30,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.AUTHOR_ID</code>. 
+	 * Setter for <code>TEST.V_BOOK.AUTHOR_ID</code>.
 	 */
 	public void setAuthorId(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.AUTHOR_ID</code>. 
+	 * Getter for <code>TEST.V_BOOK.AUTHOR_ID</code>.
 	 */
 	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 7)
 	@javax.validation.constraints.NotNull
@@ -46,14 +46,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.CO_AUTHOR_ID</code>. 
+	 * Setter for <code>TEST.V_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.CO_AUTHOR_ID</code>. 
+	 * Getter for <code>TEST.V_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	@javax.persistence.Column(name = "CO_AUTHOR_ID", precision = 7)
 	public java.lang.Integer getCoAuthorId() {
@@ -61,14 +61,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.DETAILS_ID</code>. 
+	 * Setter for <code>TEST.V_BOOK.DETAILS_ID</code>.
 	 */
 	public void setDetailsId(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.DETAILS_ID</code>. 
+	 * Getter for <code>TEST.V_BOOK.DETAILS_ID</code>.
 	 */
 	@javax.persistence.Column(name = "DETAILS_ID", precision = 7)
 	public java.lang.Integer getDetailsId() {
@@ -76,14 +76,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.TITLE</code>. 
+	 * Setter for <code>TEST.V_BOOK.TITLE</code>.
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.TITLE</code>. 
+	 * Getter for <code>TEST.V_BOOK.TITLE</code>.
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
 	@javax.validation.constraints.NotNull
@@ -93,14 +93,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.PUBLISHED_IN</code>. 
+	 * Setter for <code>TEST.V_BOOK.PUBLISHED_IN</code>.
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.PUBLISHED_IN</code>. 
+	 * Getter for <code>TEST.V_BOOK.PUBLISHED_IN</code>.
 	 */
 	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false, precision = 7)
 	@javax.validation.constraints.NotNull
@@ -109,14 +109,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.LANGUAGE_ID</code>. 
+	 * Setter for <code>TEST.V_BOOK.LANGUAGE_ID</code>.
 	 */
 	public void setLanguageId(java.lang.Integer value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.LANGUAGE_ID</code>. 
+	 * Getter for <code>TEST.V_BOOK.LANGUAGE_ID</code>.
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
 	@javax.validation.constraints.NotNull
@@ -125,14 +125,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.CONTENT_TEXT</code>. 
+	 * Setter for <code>TEST.V_BOOK.CONTENT_TEXT</code>.
 	 */
 	public void setContentText(java.lang.String value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.CONTENT_TEXT</code>. 
+	 * Getter for <code>TEST.V_BOOK.CONTENT_TEXT</code>.
 	 */
 	@javax.persistence.Column(name = "CONTENT_TEXT")
 	public java.lang.String getContentText() {
@@ -140,14 +140,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.CONTENT_PDF</code>. 
+	 * Setter for <code>TEST.V_BOOK.CONTENT_PDF</code>.
 	 */
 	public void setContentPdf(byte[] value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.CONTENT_PDF</code>. 
+	 * Getter for <code>TEST.V_BOOK.CONTENT_PDF</code>.
 	 */
 	@javax.persistence.Column(name = "CONTENT_PDF")
 	public byte[] getContentPdf() {
@@ -155,14 +155,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.REC_VERSION</code>. 
+	 * Setter for <code>TEST.V_BOOK.REC_VERSION</code>.
 	 */
 	public void setRecVersion(java.math.BigDecimal value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.REC_VERSION</code>. 
+	 * Getter for <code>TEST.V_BOOK.REC_VERSION</code>.
 	 */
 	@javax.persistence.Column(name = "REC_VERSION", length = 22)
 	public java.math.BigDecimal getRecVersion() {
@@ -170,14 +170,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.REC_TIMESTAMP</code>. 
+	 * Setter for <code>TEST.V_BOOK.REC_TIMESTAMP</code>.
 	 */
 	public void setRecTimestamp(java.sql.Timestamp value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.REC_TIMESTAMP</code>. 
+	 * Getter for <code>TEST.V_BOOK.REC_TIMESTAMP</code>.
 	 */
 	@javax.persistence.Column(name = "REC_TIMESTAMP", length = 11)
 	public java.sql.Timestamp getRecTimestamp() {

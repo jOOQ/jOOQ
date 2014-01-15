@@ -11,17 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "V_INCOMPLETE", schema = "TEST")
 public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord> implements org.jooq.Record11<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object> {
 
-	private static final long serialVersionUID = -69200481;
+	private static final long serialVersionUID = -269629963;
 
 	/**
-	 * Setter for <code>TEST.V_INCOMPLETE.ID</code>. 
+	 * Setter for <code>TEST.V_INCOMPLETE.ID</code>.
 	 */
 	public void setId(java.lang.Object value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_INCOMPLETE.ID</code>. 
+	 * Getter for <code>TEST.V_INCOMPLETE.ID</code>.
 	 */
 	@javax.persistence.Column(name = "ID")
 	public java.lang.Object getId() {
@@ -29,14 +29,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Setter for <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>. 
+	 * Setter for <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>.
 	 */
 	public void setAuthorId(java.lang.Object value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>. 
+	 * Getter for <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>.
 	 */
 	@javax.persistence.Column(name = "AUTHOR_ID")
 	public java.lang.Object getAuthorId() {
@@ -44,14 +44,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Setter for <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>. 
+	 * Setter for <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>.
 	 */
 	public void setCoAuthorId(java.lang.Object value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>. 
+	 * Getter for <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>.
 	 */
 	@javax.persistence.Column(name = "CO_AUTHOR_ID")
 	public java.lang.Object getCoAuthorId() {
@@ -59,14 +59,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Setter for <code>TEST.V_INCOMPLETE.DETAILS_ID</code>. 
+	 * Setter for <code>TEST.V_INCOMPLETE.DETAILS_ID</code>.
 	 */
 	public void setDetailsId(java.lang.Object value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_INCOMPLETE.DETAILS_ID</code>. 
+	 * Getter for <code>TEST.V_INCOMPLETE.DETAILS_ID</code>.
 	 */
 	@javax.persistence.Column(name = "DETAILS_ID")
 	public java.lang.Object getDetailsId() {
@@ -74,14 +74,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Setter for <code>TEST.V_INCOMPLETE.TITLE</code>. 
+	 * Setter for <code>TEST.V_INCOMPLETE.TITLE</code>.
 	 */
 	public void setTitle(java.lang.Object value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_INCOMPLETE.TITLE</code>. 
+	 * Getter for <code>TEST.V_INCOMPLETE.TITLE</code>.
 	 */
 	@javax.persistence.Column(name = "TITLE")
 	public java.lang.Object getTitle() {
@@ -89,14 +89,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Setter for <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>. 
+	 * Setter for <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>.
 	 */
 	public void setPublishedIn(java.lang.Object value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>. 
+	 * Getter for <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>.
 	 */
 	@javax.persistence.Column(name = "PUBLISHED_IN")
 	public java.lang.Object getPublishedIn() {
@@ -104,14 +104,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Setter for <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>. 
+	 * Setter for <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>.
 	 */
 	public void setLanguageId(java.lang.Object value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>. 
+	 * Getter for <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>.
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID")
 	public java.lang.Object getLanguageId() {
@@ -119,14 +119,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Setter for <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>. 
+	 * Setter for <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>.
 	 */
 	public void setContentText(java.lang.Object value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>. 
+	 * Getter for <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>.
 	 */
 	@javax.persistence.Column(name = "CONTENT_TEXT")
 	public java.lang.Object getContentText() {
@@ -134,14 +134,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Setter for <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>. 
+	 * Setter for <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>.
 	 */
 	public void setContentPdf(java.lang.Object value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>. 
+	 * Getter for <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>.
 	 */
 	@javax.persistence.Column(name = "CONTENT_PDF")
 	public java.lang.Object getContentPdf() {
@@ -149,14 +149,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Setter for <code>TEST.V_INCOMPLETE.REC_VERSION</code>. 
+	 * Setter for <code>TEST.V_INCOMPLETE.REC_VERSION</code>.
 	 */
 	public void setRecVersion(java.lang.Object value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_INCOMPLETE.REC_VERSION</code>. 
+	 * Getter for <code>TEST.V_INCOMPLETE.REC_VERSION</code>.
 	 */
 	@javax.persistence.Column(name = "REC_VERSION")
 	public java.lang.Object getRecVersion() {
@@ -164,14 +164,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Setter for <code>TEST.V_INCOMPLETE.REC_TIMESTAMP</code>. 
+	 * Setter for <code>TEST.V_INCOMPLETE.REC_TIMESTAMP</code>.
 	 */
 	public void setRecTimestamp(java.lang.Object value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_INCOMPLETE.REC_TIMESTAMP</code>. 
+	 * Getter for <code>TEST.V_INCOMPLETE.REC_TIMESTAMP</code>.
 	 */
 	@javax.persistence.Column(name = "REC_TIMESTAMP")
 	public java.lang.Object getRecTimestamp() {

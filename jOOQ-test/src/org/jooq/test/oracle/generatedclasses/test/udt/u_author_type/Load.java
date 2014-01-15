@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.udt.u_author_type;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Load extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -555596705;
+	private static final long serialVersionUID = 627948809;
 
 	/**
-	 * The parameter <code>TEST.U_AUTHOR_TYPE.LOAD.SELF</code>. 
+	 * The parameter <code>TEST.U_AUTHOR_TYPE.LOAD.SELF</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> SELF = createParameter("SELF", org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.U_AUTHOR_TYPE.getDataType());
 

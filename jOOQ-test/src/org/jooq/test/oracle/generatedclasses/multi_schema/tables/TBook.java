@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -410707479;
+	private static final long serialVersionUID = -1371136123;
 
 	/**
 	 * The singleton instance of <code>MULTI_SCHEMA.T_BOOK</code>
@@ -25,47 +25,47 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generate
 	}
 
 	/**
-	 * The column <code>MULTI_SCHEMA.T_BOOK.ID</code>. 
+	 * The column <code>MULTI_SCHEMA.T_BOOK.ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>MULTI_SCHEMA.T_BOOK.AUTHOR_ID</code>. 
+	 * The column <code>MULTI_SCHEMA.T_BOOK.AUTHOR_ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>MULTI_SCHEMA.T_BOOK.CO_AUTHOR_ID</code>. 
+	 * The column <code>MULTI_SCHEMA.T_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>MULTI_SCHEMA.T_BOOK.DETAILS_ID</code>. 
+	 * The column <code>MULTI_SCHEMA.T_BOOK.DETAILS_ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>MULTI_SCHEMA.T_BOOK.TITLE</code>. 
+	 * The column <code>MULTI_SCHEMA.T_BOOK.TITLE</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
-	 * The column <code>MULTI_SCHEMA.T_BOOK.PUBLISHED_IN</code>. 
+	 * The column <code>MULTI_SCHEMA.T_BOOK.PUBLISHED_IN</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>MULTI_SCHEMA.T_BOOK.LANGUAGE_ID</code>. 
+	 * The column <code>MULTI_SCHEMA.T_BOOK.LANGUAGE_ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>MULTI_SCHEMA.T_BOOK.CONTENT_TEXT</code>. 
+	 * The column <code>MULTI_SCHEMA.T_BOOK.CONTENT_TEXT</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB, this, "");
 
 	/**
-	 * The column <code>MULTI_SCHEMA.T_BOOK.CONTENT_PDF</code>. 
+	 * The column <code>MULTI_SCHEMA.T_BOOK.CONTENT_PDF</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, this, "");
 

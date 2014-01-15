@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -1127648528;
+	private static final long serialVersionUID = 1353597314;
 
 	/**
 	 * The singleton instance of <code>TEST.T_TRIGGERS</code>
@@ -25,17 +25,17 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gene
 	}
 
 	/**
-	 * The column <code>TEST.T_TRIGGERS.ID_GENERATED</code>. 
+	 * The column <code>TEST.T_TRIGGERS.ID_GENERATED</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.T_TRIGGERS.ID</code>. 
+	 * The column <code>TEST.T_TRIGGERS.ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.T_TRIGGERS.COUNTER</code>. 
+	 * The column <code>TEST.T_TRIGGERS.COUNTER</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("COUNTER", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 

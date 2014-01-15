@@ -11,17 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_2025", schema = "TEST")
 public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_2025Record> implements org.jooq.Record2<java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -2101488310;
+	private static final long serialVersionUID = 1474786058;
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>.
 	 */
 	public void setRefId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>.
 	 */
 	@javax.persistence.Column(name = "REF_ID", nullable = false, precision = 7)
 	@javax.validation.constraints.NotNull
@@ -30,14 +30,14 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	}
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_NAME</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_NAME</code>.
 	 */
 	public void setRefName(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_2025.REF_NAME</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_2025.REF_NAME</code>.
 	 */
 	@javax.persistence.Column(name = "REF_NAME", nullable = false, length = 10)
 	@javax.validation.constraints.NotNull

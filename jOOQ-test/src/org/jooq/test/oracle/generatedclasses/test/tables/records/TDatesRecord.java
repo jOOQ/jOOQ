@@ -11,17 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_DATES", schema = "TEST")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> implements org.jooq.Record8<java.lang.Integer, java.sql.Date, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Long, org.jooq.types.YearToMonth, org.jooq.types.DayToSecond> {
 
-	private static final long serialVersionUID = -2046112684;
+	private static final long serialVersionUID = -733399546;
 
 	/**
-	 * Setter for <code>TEST.T_DATES.ID</code>. 
+	 * Setter for <code>TEST.T_DATES.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.ID</code>. 
+	 * Getter for <code>TEST.T_DATES.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -31,14 +31,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.D</code>. 
+	 * Setter for <code>TEST.T_DATES.D</code>.
 	 */
 	public void setD(java.sql.Date value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.D</code>. 
+	 * Getter for <code>TEST.T_DATES.D</code>.
 	 */
 	@javax.persistence.Column(name = "D", length = 7)
 	public java.sql.Date getD() {
@@ -46,14 +46,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.T</code>. 
+	 * Setter for <code>TEST.T_DATES.T</code>.
 	 */
 	public void setT(java.sql.Timestamp value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.T</code>. 
+	 * Getter for <code>TEST.T_DATES.T</code>.
 	 */
 	@javax.persistence.Column(name = "T", length = 11)
 	public java.sql.Timestamp getT() {
@@ -61,14 +61,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.TS</code>. 
+	 * Setter for <code>TEST.T_DATES.TS</code>.
 	 */
 	public void setTs(java.sql.Timestamp value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.TS</code>. 
+	 * Getter for <code>TEST.T_DATES.TS</code>.
 	 */
 	@javax.persistence.Column(name = "TS", length = 11)
 	public java.sql.Timestamp getTs() {
@@ -76,14 +76,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.D_INT</code>. 
+	 * Setter for <code>TEST.T_DATES.D_INT</code>.
 	 */
 	public void setDInt(java.lang.Integer value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.D_INT</code>. 
+	 * Getter for <code>TEST.T_DATES.D_INT</code>.
 	 */
 	@javax.persistence.Column(name = "D_INT", precision = 7)
 	public java.lang.Integer getDInt() {
@@ -91,14 +91,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.TS_BIGINT</code>. 
+	 * Setter for <code>TEST.T_DATES.TS_BIGINT</code>.
 	 */
 	public void setTsBigint(java.lang.Long value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.TS_BIGINT</code>. 
+	 * Getter for <code>TEST.T_DATES.TS_BIGINT</code>.
 	 */
 	@javax.persistence.Column(name = "TS_BIGINT", precision = 18)
 	public java.lang.Long getTsBigint() {
@@ -106,14 +106,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.I_Y</code>. 
+	 * Setter for <code>TEST.T_DATES.I_Y</code>.
 	 */
 	public void setIY(org.jooq.types.YearToMonth value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.I_Y</code>. 
+	 * Getter for <code>TEST.T_DATES.I_Y</code>.
 	 */
 	@javax.persistence.Column(name = "I_Y", precision = 2)
 	public org.jooq.types.YearToMonth getIY() {
@@ -121,14 +121,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.I_D</code>. 
+	 * Setter for <code>TEST.T_DATES.I_D</code>.
 	 */
 	public void setID(org.jooq.types.DayToSecond value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.I_D</code>. 
+	 * Getter for <code>TEST.T_DATES.I_D</code>.
 	 */
 	@javax.persistence.Column(name = "I_D", precision = 2, scale = 6)
 	public org.jooq.types.DayToSecond getID() {

@@ -11,17 +11,17 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @javax.persistence.Table(name = "T_BOOK_SALE", schema = "MULTI_SCHEMA")
 public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> implements org.jooq.Record5<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Date, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -1044447370;
+	private static final long serialVersionUID = -121714832;
 
 	/**
-	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>. 
+	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>. 
+	 * Getter for <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -31,14 +31,14 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>. 
+	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>.
 	 */
 	public void setBookId(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>. 
+	 * Getter for <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>.
 	 */
 	@javax.persistence.Column(name = "BOOK_ID", nullable = false, precision = 7)
 	@javax.validation.constraints.NotNull
@@ -47,14 +47,14 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_STORE_NAME</code>. 
+	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_STORE_NAME</code>.
 	 */
 	public void setBookStoreName(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_STORE_NAME</code>. 
+	 * Getter for <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_STORE_NAME</code>.
 	 */
 	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
 	@javax.validation.constraints.NotNull
@@ -64,14 +64,14 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_AT</code>. 
+	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_AT</code>.
 	 */
 	public void setSoldAt(java.sql.Date value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_AT</code>. 
+	 * Getter for <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_AT</code>.
 	 */
 	@javax.persistence.Column(name = "SOLD_AT", nullable = false, length = 7)
 	@javax.validation.constraints.NotNull
@@ -80,14 +80,14 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_FOR</code>. 
+	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_FOR</code>.
 	 */
 	public void setSoldFor(java.math.BigDecimal value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_FOR</code>. 
+	 * Getter for <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_FOR</code>.
 	 */
 	@javax.persistence.Column(name = "SOLD_FOR", nullable = false, precision = 10, scale = 2)
 	@javax.validation.constraints.NotNull

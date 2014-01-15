@@ -11,17 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_85", schema = "TEST")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 663617377;
+	private static final long serialVersionUID = -1173303489;
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_85.ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_85.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_85.ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_85.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -31,14 +31,14 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>.
 	 */
 	public void setXUnusedId(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>.
 	 */
 	@javax.persistence.Column(name = "X_UNUSED_ID", precision = 7)
 	public java.lang.Integer getXUnusedId() {
@@ -46,14 +46,14 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>.
 	 */
 	public void setXUnusedName(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>.
 	 */
 	@javax.persistence.Column(name = "X_UNUSED_NAME", length = 10)
 	@javax.validation.constraints.Size(max = 10)

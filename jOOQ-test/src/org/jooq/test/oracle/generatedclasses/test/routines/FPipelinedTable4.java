@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FPipelinedTable4 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTableRecord> {
 
-	private static final long serialVersionUID = -723966965;
+	private static final long serialVersionUID = -1775226839;
 
 	/**
-	 * The parameter <code>TEST.F_PIPELINED_TABLE4.RETURN_VALUE</code>. 
+	 * The parameter <code>TEST.F_PIPELINED_TABLE4.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.test.oracle.generatedclasses.test.udt.UBookType.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTableRecord.class));
 

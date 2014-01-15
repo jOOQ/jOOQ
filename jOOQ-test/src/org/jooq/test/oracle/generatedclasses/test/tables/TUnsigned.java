@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TUnsignedRecord> {
 
-	private static final long serialVersionUID = 1969761251;
+	private static final long serialVersionUID = 96147889;
 
 	/**
 	 * The singleton instance of <code>TEST.T_UNSIGNED</code>
@@ -25,22 +25,22 @@ public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gene
 	}
 
 	/**
-	 * The column <code>TEST.T_UNSIGNED.U_BYTE</code>. 
+	 * The column <code>TEST.T_UNSIGNED.U_BYTE</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TUnsignedRecord, org.jooq.types.UByte> U_BYTE = createField("U_BYTE", org.jooq.impl.SQLDataType.TINYINTUNSIGNED, this, "");
 
 	/**
-	 * The column <code>TEST.T_UNSIGNED.U_SHORT</code>. 
+	 * The column <code>TEST.T_UNSIGNED.U_SHORT</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TUnsignedRecord, org.jooq.types.UShort> U_SHORT = createField("U_SHORT", org.jooq.impl.SQLDataType.SMALLINTUNSIGNED, this, "");
 
 	/**
-	 * The column <code>TEST.T_UNSIGNED.U_INT</code>. 
+	 * The column <code>TEST.T_UNSIGNED.U_INT</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TUnsignedRecord, org.jooq.types.UInteger> U_INT = createField("U_INT", org.jooq.impl.SQLDataType.INTEGERUNSIGNED, this, "");
 
 	/**
-	 * The column <code>TEST.T_UNSIGNED.U_LONG</code>. 
+	 * The column <code>TEST.T_UNSIGNED.U_LONG</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TUnsignedRecord, org.jooq.types.ULong> U_LONG = createField("U_LONG", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, this, "");
 

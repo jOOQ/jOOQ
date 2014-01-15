@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VIncomplete extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord> {
 
-	private static final long serialVersionUID = -1858580085;
+	private static final long serialVersionUID = -2102901789;
 
 	/**
 	 * The singleton instance of <code>TEST.V_INCOMPLETE</code>
@@ -25,57 +25,57 @@ public class VIncomplete extends org.jooq.impl.TableImpl<org.jooq.test.oracle.ge
 	}
 
 	/**
-	 * The column <code>TEST.V_INCOMPLETE.ID</code>. 
+	 * The column <code>TEST.V_INCOMPLETE.ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord, java.lang.Object> ID = createField("ID", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this, "");
 
 	/**
-	 * The column <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>. 
+	 * The column <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord, java.lang.Object> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this, "");
 
 	/**
-	 * The column <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>. 
+	 * The column <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord, java.lang.Object> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this, "");
 
 	/**
-	 * The column <code>TEST.V_INCOMPLETE.DETAILS_ID</code>. 
+	 * The column <code>TEST.V_INCOMPLETE.DETAILS_ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord, java.lang.Object> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this, "");
 
 	/**
-	 * The column <code>TEST.V_INCOMPLETE.TITLE</code>. 
+	 * The column <code>TEST.V_INCOMPLETE.TITLE</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord, java.lang.Object> TITLE = createField("TITLE", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this, "");
 
 	/**
-	 * The column <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>. 
+	 * The column <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord, java.lang.Object> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this, "");
 
 	/**
-	 * The column <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>. 
+	 * The column <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord, java.lang.Object> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this, "");
 
 	/**
-	 * The column <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>. 
+	 * The column <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord, java.lang.Object> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this, "");
 
 	/**
-	 * The column <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>. 
+	 * The column <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord, java.lang.Object> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this, "");
 
 	/**
-	 * The column <code>TEST.V_INCOMPLETE.REC_VERSION</code>. 
+	 * The column <code>TEST.V_INCOMPLETE.REC_VERSION</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord, java.lang.Object> REC_VERSION = createField("REC_VERSION", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this, "");
 
 	/**
-	 * The column <code>TEST.V_INCOMPLETE.REC_TIMESTAMP</code>. 
+	 * The column <code>TEST.V_INCOMPLETE.REC_TIMESTAMP</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord, java.lang.Object> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this, "");
 

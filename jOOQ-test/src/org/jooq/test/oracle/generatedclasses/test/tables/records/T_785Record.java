@@ -11,17 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_785", schema = "TEST")
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -1849943036;
+	private static final long serialVersionUID = 756147930;
 
 	/**
-	 * Setter for <code>TEST.T_785.ID</code>. 
+	 * Setter for <code>TEST.T_785.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_785.ID</code>. 
+	 * Getter for <code>TEST.T_785.ID</code>.
 	 */
 	@javax.persistence.Column(name = "ID", precision = 7)
 	public java.lang.Integer getId() {
@@ -29,14 +29,14 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>TEST.T_785.NAME</code>. 
+	 * Setter for <code>TEST.T_785.NAME</code>.
 	 */
 	public void setName(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_785.NAME</code>. 
+	 * Getter for <code>TEST.T_785.NAME</code>.
 	 */
 	@javax.persistence.Column(name = "NAME", length = 50)
 	@javax.validation.constraints.Size(max = 50)
@@ -45,14 +45,14 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>TEST.T_785.VALUE</code>. 
+	 * Setter for <code>TEST.T_785.VALUE</code>.
 	 */
 	public void setValue(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_785.VALUE</code>. 
+	 * Getter for <code>TEST.T_785.VALUE</code>.
 	 */
 	@javax.persistence.Column(name = "VALUE", length = 50)
 	@javax.validation.constraints.Size(max = 50)

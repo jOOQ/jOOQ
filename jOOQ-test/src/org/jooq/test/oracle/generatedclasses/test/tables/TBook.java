@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -1311844618;
+	private static final long serialVersionUID = -1553520956;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOK</code>
@@ -37,12 +37,12 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generate
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The author ID in entity 'author'");
 
 	/**
-	 * The column <code>TEST.T_BOOK.CO_AUTHOR_ID</code>. 
+	 * The column <code>TEST.T_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>TEST.T_BOOK.DETAILS_ID</code>. 
+	 * The column <code>TEST.T_BOOK.DETAILS_ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
@@ -72,12 +72,12 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generate
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, this, "Some binary content of the book");
 
 	/**
-	 * The column <code>TEST.T_BOOK.REC_VERSION</code>. 
+	 * The column <code>TEST.T_BOOK.REC_VERSION</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, java.math.BigDecimal> REC_VERSION = createField("REC_VERSION", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * The column <code>TEST.T_BOOK.REC_TIMESTAMP</code>. 
+	 * The column <code>TEST.T_BOOK.REC_TIMESTAMP</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, java.sql.Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 

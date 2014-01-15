@@ -9,15 +9,15 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FTables2 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord> {
 
-	private static final long serialVersionUID = 14894970;
+	private static final long serialVersionUID = 915871490;
 
 	/**
-	 * The parameter <code>TEST.F_TABLES2.RETURN_VALUE</code>. 
+	 * The parameter <code>TEST.F_TABLES2.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord.class));
 
 	/**
-	 * The parameter <code>TEST.F_TABLES2.IN_TABLE</code>. 
+	 * The parameter <code>TEST.F_TABLES2.IN_TABLE</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord> IN_TABLE = createParameter("IN_TABLE", org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRecord.class));
 

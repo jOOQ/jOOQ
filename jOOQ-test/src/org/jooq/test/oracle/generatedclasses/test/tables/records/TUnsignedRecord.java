@@ -11,17 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_UNSIGNED", schema = "TEST")
 public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TUnsignedRecord> implements org.jooq.Record4<org.jooq.types.UByte, org.jooq.types.UShort, org.jooq.types.UInteger, org.jooq.types.ULong> {
 
-	private static final long serialVersionUID = 1270630572;
+	private static final long serialVersionUID = -1497047976;
 
 	/**
-	 * Setter for <code>TEST.T_UNSIGNED.U_BYTE</code>. 
+	 * Setter for <code>TEST.T_UNSIGNED.U_BYTE</code>.
 	 */
 	public void setUByte(org.jooq.types.UByte value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_UNSIGNED.U_BYTE</code>. 
+	 * Getter for <code>TEST.T_UNSIGNED.U_BYTE</code>.
 	 */
 	@javax.persistence.Column(name = "U_BYTE", precision = 3)
 	public org.jooq.types.UByte getUByte() {
@@ -29,14 +29,14 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Setter for <code>TEST.T_UNSIGNED.U_SHORT</code>. 
+	 * Setter for <code>TEST.T_UNSIGNED.U_SHORT</code>.
 	 */
 	public void setUShort(org.jooq.types.UShort value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_UNSIGNED.U_SHORT</code>. 
+	 * Getter for <code>TEST.T_UNSIGNED.U_SHORT</code>.
 	 */
 	@javax.persistence.Column(name = "U_SHORT", precision = 5)
 	public org.jooq.types.UShort getUShort() {
@@ -44,14 +44,14 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Setter for <code>TEST.T_UNSIGNED.U_INT</code>. 
+	 * Setter for <code>TEST.T_UNSIGNED.U_INT</code>.
 	 */
 	public void setUInt(org.jooq.types.UInteger value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_UNSIGNED.U_INT</code>. 
+	 * Getter for <code>TEST.T_UNSIGNED.U_INT</code>.
 	 */
 	@javax.persistence.Column(name = "U_INT", precision = 10)
 	public org.jooq.types.UInteger getUInt() {
@@ -59,14 +59,14 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Setter for <code>TEST.T_UNSIGNED.U_LONG</code>. 
+	 * Setter for <code>TEST.T_UNSIGNED.U_LONG</code>.
 	 */
 	public void setULong(org.jooq.types.ULong value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_UNSIGNED.U_LONG</code>. 
+	 * Getter for <code>TEST.T_UNSIGNED.U_LONG</code>.
 	 */
 	@javax.persistence.Column(name = "U_LONG", precision = 20)
 	public org.jooq.types.ULong getULong() {

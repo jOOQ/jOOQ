@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -952564806;
+	private static final long serialVersionUID = 1097834790;
 
 	/**
 	 * The singleton instance of <code>TEST.T_DATES</code>
@@ -25,42 +25,42 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generat
 	}
 
 	/**
-	 * The column <code>TEST.T_DATES.ID</code>. 
+	 * The column <code>TEST.T_DATES.ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.T_DATES.D</code>. 
+	 * The column <code>TEST.T_DATES.D</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord, java.sql.Date> D = createField("D", org.jooq.impl.SQLDataType.DATE, this, "");
 
 	/**
-	 * The column <code>TEST.T_DATES.T</code>. 
+	 * The column <code>TEST.T_DATES.T</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord, java.sql.Timestamp> T = createField("T", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
-	 * The column <code>TEST.T_DATES.TS</code>. 
+	 * The column <code>TEST.T_DATES.TS</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("TS", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
-	 * The column <code>TEST.T_DATES.D_INT</code>. 
+	 * The column <code>TEST.T_DATES.D_INT</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord, java.lang.Integer> D_INT = createField("D_INT", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>TEST.T_DATES.TS_BIGINT</code>. 
+	 * The column <code>TEST.T_DATES.TS_BIGINT</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("TS_BIGINT", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
 	/**
-	 * The column <code>TEST.T_DATES.I_Y</code>. 
+	 * The column <code>TEST.T_DATES.I_Y</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord, org.jooq.types.YearToMonth> I_Y = createField("I_Y", org.jooq.impl.SQLDataType.INTERVALYEARTOMONTH, this, "");
 
 	/**
-	 * The column <code>TEST.T_DATES.I_D</code>. 
+	 * The column <code>TEST.T_DATES.I_D</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord, org.jooq.types.DayToSecond> I_D = createField("I_D", org.jooq.impl.SQLDataType.INTERVALDAYTOSECOND, this, "");
 

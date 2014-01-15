@@ -9,15 +9,15 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PTables4 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 168269728;
+	private static final long serialVersionUID = -722943682;
 
 	/**
-	 * The parameter <code>TEST.P_TABLES4.IN_TABLE</code>. 
+	 * The parameter <code>TEST.P_TABLES4.IN_TABLE</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTableRecord> IN_TABLE = createParameter("IN_TABLE", org.jooq.test.oracle.generatedclasses.test.udt.UBookType.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTableRecord.class));
 
 	/**
-	 * The parameter <code>TEST.P_TABLES4.OUT_TABLE</code>. 
+	 * The parameter <code>TEST.P_TABLES4.OUT_TABLE</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTableRecord> OUT_TABLE = createParameter("OUT_TABLE", org.jooq.test.oracle.generatedclasses.test.udt.UBookType.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTableRecord.class));
 

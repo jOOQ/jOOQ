@@ -11,17 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_64_69", schema = "TEST")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 2110714696;
+	private static final long serialVersionUID = 1308419932;
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_64_69.ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_64_69.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_64_69.ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_64_69.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -31,14 +31,14 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>.
 	 */
 	public void setUnusedId(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>.
 	 */
 	@javax.persistence.Column(name = "UNUSED_ID", precision = 7)
 	public java.lang.Integer getUnusedId() {

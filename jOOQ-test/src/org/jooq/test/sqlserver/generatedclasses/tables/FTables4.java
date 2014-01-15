@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FTables4 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.FTables4Record> {
 
-	private static final long serialVersionUID = 1801417371;
+	private static final long serialVersionUID = 41294126;
 
 	/**
 	 * The singleton instance of <code>dbo.f_tables4</code>
@@ -25,31 +25,35 @@ public class FTables4 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.ge
 	}
 
 	/**
-	 * The column <code>dbo.f_tables4.id</code>. 
+	 * The column <code>dbo.f_tables4.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.FTables4Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.FTables4Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>dbo.f_tables4.title</code>. 
+	 * The column <code>dbo.f_tables4.title</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.FTables4Record, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400), this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.FTables4Record, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400), this, "");
 
 	/**
 	 * Create a <code>dbo.f_tables4</code> table reference
 	 */
 	public FTables4() {
-		super("f_tables4", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
+		this("f_tables4", null);
 	}
 
 	/**
 	 * Create an aliased <code>dbo.f_tables4</code> table reference
 	 */
 	public FTables4(java.lang.String alias) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.FTables4.F_TABLES4);
+		this(alias, org.jooq.test.sqlserver.generatedclasses.tables.FTables4.F_TABLES4);
+	}
+
+	private FTables4(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.FTables4Record> aliased) {
+		this(alias, aliased, null);
 	}
 
 	private FTables4(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.FTables4Record> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased, parameters);
+		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased, parameters, "");
 	}
 
 	/**

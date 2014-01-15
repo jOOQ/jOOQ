@@ -9,17 +9,17 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FTables3Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.FTables3Record> implements org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = 2028463990;
+	private static final long serialVersionUID = 323660416;
 
 	/**
-	 * Setter for <code>dbo.f_tables3.column_value</code>. 
+	 * Setter for <code>dbo.f_tables3.column_value</code>.
 	 */
 	public void setColumnValue(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>dbo.f_tables3.column_value</code>. 
+	 * Getter for <code>dbo.f_tables3.column_value</code>.
 	 */
 	public java.lang.String getColumnValue() {
 		return (java.lang.String) getValue(0);

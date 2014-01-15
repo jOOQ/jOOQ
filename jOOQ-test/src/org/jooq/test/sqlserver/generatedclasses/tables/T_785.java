@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = -697876391;
+	private static final long serialVersionUID = 1146771200;
 
 	/**
 	 * The singleton instance of <code>dbo.t_785</code>
@@ -25,36 +25,40 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gener
 	}
 
 	/**
-	 * The column <code>dbo.t_785.ID</code>. 
+	 * The column <code>dbo.t_785.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>dbo.t_785.NAME</code>. 
+	 * The column <code>dbo.t_785.NAME</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
-	 * The column <code>dbo.t_785.VALUE</code>. 
+	 * The column <code>dbo.t_785.VALUE</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
 	 * Create a <code>dbo.t_785</code> table reference
 	 */
 	public T_785() {
-		super("t_785", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
+		this("t_785", null);
 	}
 
 	/**
 	 * Create an aliased <code>dbo.t_785</code> table reference
 	 */
 	public T_785(java.lang.String alias) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.T_785.T_785);
+		this(alias, org.jooq.test.sqlserver.generatedclasses.tables.T_785.T_785);
 	}
 
 	private T_785(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record> aliased) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased);
+		this(alias, aliased, null);
+	}
+
+	private T_785(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased, parameters, "");
 	}
 
 	/**

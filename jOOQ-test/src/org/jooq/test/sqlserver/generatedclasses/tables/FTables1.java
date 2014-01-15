@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FTables1 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.FTables1Record> {
 
-	private static final long serialVersionUID = 2083032465;
+	private static final long serialVersionUID = -606034996;
 
 	/**
 	 * The singleton instance of <code>dbo.f_tables1</code>
@@ -25,26 +25,30 @@ public class FTables1 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.ge
 	}
 
 	/**
-	 * The column <code>dbo.f_tables1.column_value</code>. 
+	 * The column <code>dbo.f_tables1.column_value</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.FTables1Record, java.lang.Integer> COLUMN_VALUE = createField("column_value", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.FTables1Record, java.lang.Integer> COLUMN_VALUE = createField("column_value", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>dbo.f_tables1</code> table reference
 	 */
 	public FTables1() {
-		super("f_tables1", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
+		this("f_tables1", null);
 	}
 
 	/**
 	 * Create an aliased <code>dbo.f_tables1</code> table reference
 	 */
 	public FTables1(java.lang.String alias) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.FTables1.F_TABLES1);
+		this(alias, org.jooq.test.sqlserver.generatedclasses.tables.FTables1.F_TABLES1);
+	}
+
+	private FTables1(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.FTables1Record> aliased) {
+		this(alias, aliased, null);
 	}
 
 	private FTables1(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.FTables1Record> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased, parameters);
+		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased, parameters, "");
 	}
 
 	/**

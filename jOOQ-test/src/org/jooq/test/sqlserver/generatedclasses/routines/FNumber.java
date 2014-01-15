@@ -9,15 +9,15 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -652827398;
+	private static final long serialVersionUID = -1036409222;
 
 	/**
-	 * The parameter <code>dbo.f_number.RETURN_VALUE</code>. 
+	 * The parameter <code>dbo.f_number.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>dbo.f_number.n</code>. 
+	 * The parameter <code>dbo.f_number.n</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> N = createParameter("n", org.jooq.impl.SQLDataType.INTEGER);
 

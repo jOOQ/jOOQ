@@ -9,45 +9,45 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -645231012;
+	private static final long serialVersionUID = 824553464;
 
 	/**
-	 * Setter for <code>dbo.t_785.ID</code>. 
+	 * Setter for <code>dbo.t_785.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>dbo.t_785.ID</code>. 
+	 * Getter for <code>dbo.t_785.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>dbo.t_785.NAME</code>. 
+	 * Setter for <code>dbo.t_785.NAME</code>.
 	 */
 	public void setName(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>dbo.t_785.NAME</code>. 
+	 * Getter for <code>dbo.t_785.NAME</code>.
 	 */
 	public java.lang.String getName() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>dbo.t_785.VALUE</code>. 
+	 * Setter for <code>dbo.t_785.VALUE</code>.
 	 */
 	public void setValue(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>dbo.t_785.VALUE</code>. 
+	 * Getter for <code>dbo.t_785.VALUE</code>.
 	 */
 	public java.lang.String getValue() {
 		return (java.lang.String) getValue(2);

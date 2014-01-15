@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = 1117015835;
+	private static final long serialVersionUID = -1263331296;
 
 	/**
 	 * The singleton instance of <code>dbo.t_exotic_types</code>
@@ -25,31 +25,35 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.sqlserve
 	}
 
 	/**
-	 * The column <code>dbo.t_exotic_types.ID</code>. 
+	 * The column <code>dbo.t_exotic_types.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TExoticTypesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TExoticTypesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>dbo.t_exotic_types.UU</code>. 
+	 * The column <code>dbo.t_exotic_types.UU</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("UU", org.jooq.impl.SQLDataType.UUID, this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("UU", org.jooq.impl.SQLDataType.UUID, this, "");
 
 	/**
 	 * Create a <code>dbo.t_exotic_types</code> table reference
 	 */
 	public TExoticTypes() {
-		super("t_exotic_types", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
+		this("t_exotic_types", null);
 	}
 
 	/**
 	 * Create an aliased <code>dbo.t_exotic_types</code> table reference
 	 */
 	public TExoticTypes(java.lang.String alias) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES);
+		this(alias, org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES);
 	}
 
 	private TExoticTypes(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.TExoticTypesRecord> aliased) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased);
+		this(alias, aliased, null);
+	}
+
+	private TExoticTypes(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.TExoticTypesRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased, parameters, "");
 	}
 
 	/**

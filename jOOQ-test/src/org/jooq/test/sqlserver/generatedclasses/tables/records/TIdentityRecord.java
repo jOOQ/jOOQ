@@ -9,31 +9,31 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 83116577;
+	private static final long serialVersionUID = 2117805791;
 
 	/**
-	 * Setter for <code>dbo.t_identity.id</code>. 
+	 * Setter for <code>dbo.t_identity.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>dbo.t_identity.id</code>. 
+	 * Getter for <code>dbo.t_identity.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>dbo.t_identity.val</code>. 
+	 * Setter for <code>dbo.t_identity.val</code>.
 	 */
 	public void setVal(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>dbo.t_identity.val</code>. 
+	 * Getter for <code>dbo.t_identity.val</code>.
 	 */
 	public java.lang.Integer getVal() {
 		return (java.lang.Integer) getValue(1);

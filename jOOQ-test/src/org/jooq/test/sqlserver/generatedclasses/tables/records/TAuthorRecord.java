@@ -9,87 +9,87 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -263043668;
+	private static final long serialVersionUID = 1205526676;
 
 	/**
-	 * Setter for <code>dbo.t_author.ID</code>. 
+	 * Setter for <code>dbo.t_author.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>dbo.t_author.ID</code>. 
+	 * Getter for <code>dbo.t_author.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>dbo.t_author.FIRST_NAME</code>. 
+	 * Setter for <code>dbo.t_author.FIRST_NAME</code>.
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>dbo.t_author.FIRST_NAME</code>. 
+	 * Getter for <code>dbo.t_author.FIRST_NAME</code>.
 	 */
 	public java.lang.String getFirstName() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>dbo.t_author.LAST_NAME</code>. 
+	 * Setter for <code>dbo.t_author.LAST_NAME</code>.
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>dbo.t_author.LAST_NAME</code>. 
+	 * Getter for <code>dbo.t_author.LAST_NAME</code>.
 	 */
 	public java.lang.String getLastName() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>dbo.t_author.DATE_OF_BIRTH</code>. 
+	 * Setter for <code>dbo.t_author.DATE_OF_BIRTH</code>.
 	 */
 	public void setDateOfBirth(java.sql.Date value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>dbo.t_author.DATE_OF_BIRTH</code>. 
+	 * Getter for <code>dbo.t_author.DATE_OF_BIRTH</code>.
 	 */
 	public java.sql.Date getDateOfBirth() {
 		return (java.sql.Date) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>dbo.t_author.YEAR_OF_BIRTH</code>. 
+	 * Setter for <code>dbo.t_author.YEAR_OF_BIRTH</code>.
 	 */
 	public void setYearOfBirth(java.lang.Integer value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>dbo.t_author.YEAR_OF_BIRTH</code>. 
+	 * Getter for <code>dbo.t_author.YEAR_OF_BIRTH</code>.
 	 */
 	public java.lang.Integer getYearOfBirth() {
 		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>dbo.t_author.ADDRESS</code>. 
+	 * Setter for <code>dbo.t_author.ADDRESS</code>.
 	 */
 	public void setAddress(java.lang.String value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>dbo.t_author.ADDRESS</code>. 
+	 * Getter for <code>dbo.t_author.ADDRESS</code>.
 	 */
 	public java.lang.String getAddress() {
 		return (java.lang.String) getValue(5);

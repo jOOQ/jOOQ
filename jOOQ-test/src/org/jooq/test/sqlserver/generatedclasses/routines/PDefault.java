@@ -9,35 +9,35 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1445152769;
+	private static final long serialVersionUID = 331608375;
 
 	/**
-	 * The parameter <code>dbo.p_default.p_in_number</code>. 
+	 * The parameter <code>dbo.p_default.p_in_number</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P_IN_NUMBER = createParameter("p_in_number", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>dbo.p_default.p_out_number</code>. 
+	 * The parameter <code>dbo.p_default.p_out_number</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P_OUT_NUMBER = createParameter("p_out_number", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>dbo.p_default.p_in_varchar</code>. 
+	 * The parameter <code>dbo.p_default.p_in_varchar</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> P_IN_VARCHAR = createParameter("p_in_varchar", org.jooq.impl.SQLDataType.VARCHAR.length(10));
 
 	/**
-	 * The parameter <code>dbo.p_default.p_out_varchar</code>. 
+	 * The parameter <code>dbo.p_default.p_out_varchar</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> P_OUT_VARCHAR = createParameter("p_out_varchar", org.jooq.impl.SQLDataType.VARCHAR.length(10));
 
 	/**
-	 * The parameter <code>dbo.p_default.p_in_date</code>. 
+	 * The parameter <code>dbo.p_default.p_in_date</code>.
 	 */
 	public static final org.jooq.Parameter<java.sql.Date> P_IN_DATE = createParameter("p_in_date", org.jooq.impl.SQLDataType.DATE);
 
 	/**
-	 * The parameter <code>dbo.p_default.p_out_date</code>. 
+	 * The parameter <code>dbo.p_default.p_out_date</code>.
 	 */
 	public static final org.jooq.Parameter<java.sql.Date> P_OUT_DATE = createParameter("p_out_date", org.jooq.impl.SQLDataType.DATE);
 

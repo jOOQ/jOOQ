@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -1602568930;
+	private static final long serialVersionUID = 1212066619;
 
 	/**
 	 * The singleton instance of <code>dbo.t_book_store</code>
@@ -25,26 +25,30 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.
 	}
 
 	/**
-	 * The column <code>dbo.t_book_store.NAME</code>. 
+	 * The column <code>dbo.t_book_store.NAME</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
 	 * Create a <code>dbo.t_book_store</code> table reference
 	 */
 	public TBookStore() {
-		super("t_book_store", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
+		this("t_book_store", null);
 	}
 
 	/**
 	 * Create an aliased <code>dbo.t_book_store</code> table reference
 	 */
 	public TBookStore(java.lang.String alias) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.TBookStore.T_BOOK_STORE);
+		this(alias, org.jooq.test.sqlserver.generatedclasses.tables.TBookStore.T_BOOK_STORE);
 	}
 
 	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord> aliased) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased);
+		this(alias, aliased, null);
+	}
+
+	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased, parameters, "");
 	}
 
 	/**

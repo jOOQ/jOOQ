@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -754022370;
+	private static final long serialVersionUID = -1565211471;
 
 	/**
 	 * The singleton instance of <code>dbo.t_725_lob_test</code>
@@ -25,31 +25,35 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.sqlserve
 	}
 
 	/**
-	 * The column <code>dbo.t_725_lob_test.ID</code>. 
+	 * The column <code>dbo.t_725_lob_test.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>dbo.t_725_lob_test.LOB</code>. 
+	 * The column <code>dbo.t_725_lob_test.LOB</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.VARBINARY, this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.VARBINARY, this, "");
 
 	/**
 	 * Create a <code>dbo.t_725_lob_test</code> table reference
 	 */
 	public T_725LobTest() {
-		super("t_725_lob_test", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
+		this("t_725_lob_test", null);
 	}
 
 	/**
 	 * Create an aliased <code>dbo.t_725_lob_test</code> table reference
 	 */
 	public T_725LobTest(java.lang.String alias) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST);
+		this(alias, org.jooq.test.sqlserver.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST);
 	}
 
 	private T_725LobTest(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.T_725LobTestRecord> aliased) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased);
+		this(alias, aliased, null);
+	}
+
+	private T_725LobTest(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.T_725LobTestRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased, parameters, "");
 	}
 
 	/**

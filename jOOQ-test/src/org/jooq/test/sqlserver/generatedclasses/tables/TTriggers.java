@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -1061309462;
+	private static final long serialVersionUID = -863670161;
 
 	/**
 	 * The singleton instance of <code>dbo.t_triggers</code>
@@ -25,36 +25,40 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.g
 	}
 
 	/**
-	 * The column <code>dbo.t_triggers.id_generated</code>. 
+	 * The column <code>dbo.t_triggers.id_generated</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("id_generated", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("id_generated", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>dbo.t_triggers.id</code>. 
+	 * The column <code>dbo.t_triggers.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>dbo.t_triggers.counter</code>. 
+	 * The column <code>dbo.t_triggers.counter</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("counter", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("counter", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>dbo.t_triggers</code> table reference
 	 */
 	public TTriggers() {
-		super("t_triggers", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
+		this("t_triggers", null);
 	}
 
 	/**
 	 * Create an aliased <code>dbo.t_triggers</code> table reference
 	 */
 	public TTriggers(java.lang.String alias) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS);
+		this(alias, org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS);
 	}
 
 	private TTriggers(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord> aliased) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased);
+		this(alias, aliased, null);
+	}
+
+	private TTriggers(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased, parameters, "");
 	}
 
 	/**

@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 2041061047;
+	private static final long serialVersionUID = -588207046;
 
 	/**
 	 * The singleton instance of <code>dbo.x_test_case_64_69</code>
@@ -25,31 +25,35 @@ public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.sqlse
 	}
 
 	/**
-	 * The column <code>dbo.x_test_case_64_69.id</code>. 
+	 * The column <code>dbo.x_test_case_64_69.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>dbo.x_test_case_64_69.unused_id</code>. 
+	 * The column <code>dbo.x_test_case_64_69.unused_id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> UNUSED_ID = createField("unused_id", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> UNUSED_ID = createField("unused_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>dbo.x_test_case_64_69</code> table reference
 	 */
 	public XTestCase_64_69() {
-		super("x_test_case_64_69", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
+		this("x_test_case_64_69", null);
 	}
 
 	/**
 	 * Create an aliased <code>dbo.x_test_case_64_69</code> table reference
 	 */
 	public XTestCase_64_69(java.lang.String alias) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69);
+		this(alias, org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69);
 	}
 
 	private XTestCase_64_69(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record> aliased) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased);
+		this(alias, aliased, null);
+	}
+
+	private XTestCase_64_69(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased, parameters, "");
 	}
 
 	/**

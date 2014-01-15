@@ -9,31 +9,31 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_2025Record> implements org.jooq.Record2<java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 596747062;
+	private static final long serialVersionUID = -1330504650;
 
 	/**
-	 * Setter for <code>dbo.x_test_case_2025.ref_id</code>. 
+	 * Setter for <code>dbo.x_test_case_2025.ref_id</code>.
 	 */
 	public void setRefId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>dbo.x_test_case_2025.ref_id</code>. 
+	 * Getter for <code>dbo.x_test_case_2025.ref_id</code>.
 	 */
 	public java.lang.Integer getRefId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>dbo.x_test_case_2025.ref_name</code>. 
+	 * Setter for <code>dbo.x_test_case_2025.ref_name</code>.
 	 */
 	public void setRefName(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>dbo.x_test_case_2025.ref_name</code>. 
+	 * Getter for <code>dbo.x_test_case_2025.ref_name</code>.
 	 */
 	public java.lang.String getRefName() {
 		return (java.lang.String) getValue(1);

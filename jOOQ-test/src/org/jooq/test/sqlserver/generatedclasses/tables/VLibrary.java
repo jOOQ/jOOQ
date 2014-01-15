@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 979360918;
+	private static final long serialVersionUID = 1477574129;
 
 	/**
 	 * The singleton instance of <code>dbo.v_library</code>
@@ -25,31 +25,35 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.ge
 	}
 
 	/**
-	 * The column <code>dbo.v_library.author</code>. 
+	 * The column <code>dbo.v_library.author</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("author", org.jooq.impl.SQLDataType.VARCHAR.length(101), this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("author", org.jooq.impl.SQLDataType.VARCHAR.length(101), this, "");
 
 	/**
-	 * The column <code>dbo.v_library.title</code>. 
+	 * The column <code>dbo.v_library.title</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
 	 * Create a <code>dbo.v_library</code> table reference
 	 */
 	public VLibrary() {
-		super("v_library", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
+		this("v_library", null);
 	}
 
 	/**
 	 * Create an aliased <code>dbo.v_library</code> table reference
 	 */
 	public VLibrary(java.lang.String alias) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.VLibrary.V_LIBRARY);
+		this(alias, org.jooq.test.sqlserver.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 
 	private VLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.VLibraryRecord> aliased) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased);
+		this(alias, aliased, null);
+	}
+
+	private VLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.VLibraryRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased, parameters, "");
 	}
 
 	/**

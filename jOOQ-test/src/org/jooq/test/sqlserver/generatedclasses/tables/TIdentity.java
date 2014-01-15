@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = 1104562219;
+	private static final long serialVersionUID = 735738864;
 
 	/**
 	 * The singleton instance of <code>dbo.t_identity</code>
@@ -25,31 +25,35 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.g
 	}
 
 	/**
-	 * The column <code>dbo.t_identity.id</code>. 
+	 * The column <code>dbo.t_identity.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>dbo.t_identity.val</code>. 
+	 * The column <code>dbo.t_identity.val</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>dbo.t_identity</code> table reference
 	 */
 	public TIdentity() {
-		super("t_identity", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
+		this("t_identity", null);
 	}
 
 	/**
 	 * Create an aliased <code>dbo.t_identity</code> table reference
 	 */
 	public TIdentity(java.lang.String alias) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY);
+		this(alias, org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY);
 	}
 
 	private TIdentity(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord> aliased) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased);
+		this(alias, aliased, null);
+	}
+
+	private TIdentity(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased, parameters, "");
 	}
 
 	/**

@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FOne extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1909166496;
+	private static final long serialVersionUID = -1162686672;
 
 	/**
-	 * The parameter <code>dbo.f_one.RETURN_VALUE</code>. 
+	 * The parameter <code>dbo.f_one.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 

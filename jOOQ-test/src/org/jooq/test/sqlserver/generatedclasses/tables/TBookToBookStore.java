@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -956988454;
+	private static final long serialVersionUID = -678716197;
 
 	/**
 	 * The singleton instance of <code>dbo.t_book_to_book_store</code>
@@ -25,36 +25,40 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.sqls
 	}
 
 	/**
-	 * The column <code>dbo.t_book_to_book_store.BOOK_STORE_NAME</code>. 
+	 * The column <code>dbo.t_book_to_book_store.BOOK_STORE_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
-	 * The column <code>dbo.t_book_to_book_store.BOOK_ID</code>. 
+	 * The column <code>dbo.t_book_to_book_store.BOOK_ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>dbo.t_book_to_book_store.STOCK</code>. 
+	 * The column <code>dbo.t_book_to_book_store.STOCK</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("STOCK", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("STOCK", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>dbo.t_book_to_book_store</code> table reference
 	 */
 	public TBookToBookStore() {
-		super("t_book_to_book_store", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
+		this("t_book_to_book_store", null);
 	}
 
 	/**
 	 * Create an aliased <code>dbo.t_book_to_book_store</code> table reference
 	 */
 	public TBookToBookStore(java.lang.String alias) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+		this(alias, org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}
 
 	private TBookToBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookToBookStoreRecord> aliased) {
-		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased);
+		this(alias, aliased, null);
+	}
+
+	private TBookToBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookToBookStoreRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased, parameters, "");
 	}
 
 	/**

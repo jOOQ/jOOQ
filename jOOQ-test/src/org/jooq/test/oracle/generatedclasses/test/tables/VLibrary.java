@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 1962694494;
+	private static final long serialVersionUID = -1033781458;
 
 	/**
 	 * The singleton instance of <code>TEST.V_LIBRARY</code>
@@ -27,29 +27,33 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gener
 	/**
 	 * The column <code>TEST.V_LIBRARY.AUTHOR</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR.length(101), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR.length(101), this, "");
 
 	/**
 	 * The column <code>TEST.V_LIBRARY.TITLE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
 	 * Create a <code>TEST.V_LIBRARY</code> table reference
 	 */
 	public VLibrary() {
-		super("V_LIBRARY", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+		this("V_LIBRARY", null);
 	}
 
 	/**
 	 * Create an aliased <code>TEST.V_LIBRARY</code> table reference
 	 */
 	public VLibrary(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.VLibrary.V_LIBRARY);
+		this(alias, org.jooq.test.oracle.generatedclasses.test.tables.VLibrary.V_LIBRARY);
 	}
 
 	private VLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.VLibraryRecord> aliased) {
-		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+		this(alias, aliased, null);
+	}
+
+	private VLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.VLibraryRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased, parameters, "");
 	}
 
 	/**

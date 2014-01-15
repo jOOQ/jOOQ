@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDirectory extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> {
 
-	private static final long serialVersionUID = -45328081;
+	private static final long serialVersionUID = 309257383;
 
 	/**
 	 * The singleton instance of <code>TEST.T_DIRECTORY</code>
@@ -27,39 +27,43 @@ public class TDirectory extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gen
 	/**
 	 * The column <code>TEST.T_DIRECTORY.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>TEST.T_DIRECTORY.PARENT_ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord, java.lang.Integer> PARENT_ID = createField("PARENT_ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord, java.lang.Integer> PARENT_ID = createField("PARENT_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord, java.lang.Integer> IS_DIRECTORY = createField("IS_DIRECTORY", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord, java.lang.Integer> IS_DIRECTORY = createField("IS_DIRECTORY", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>TEST.T_DIRECTORY.name</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
 	 * Create a <code>TEST.T_DIRECTORY</code> table reference
 	 */
 	public TDirectory() {
-		super("T_DIRECTORY", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+		this("T_DIRECTORY", null);
 	}
 
 	/**
 	 * Create an aliased <code>TEST.T_DIRECTORY</code> table reference
 	 */
 	public TDirectory(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY);
+		this(alias, org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY);
 	}
 
 	private TDirectory(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> aliased) {
-		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+		this(alias, aliased, null);
+	}
+
+	private TDirectory(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased, parameters, "");
 	}
 
 	/**

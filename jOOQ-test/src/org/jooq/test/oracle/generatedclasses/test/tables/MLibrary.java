@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MLibrary extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord> {
 
-	private static final long serialVersionUID = -1817789857;
+	private static final long serialVersionUID = -371746765;
 
 	/**
 	 * The singleton instance of <code>TEST.M_LIBRARY</code>
@@ -29,29 +29,33 @@ public class MLibrary extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gener
 	/**
 	 * The column <code>TEST.M_LIBRARY.AUTHOR</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR.length(101), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR.length(101), this, "");
 
 	/**
 	 * The column <code>TEST.M_LIBRARY.TITLE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
 	 * Create a <code>TEST.M_LIBRARY</code> table reference
 	 */
 	public MLibrary() {
-		super("M_LIBRARY", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+		this("M_LIBRARY", null);
 	}
 
 	/**
 	 * Create an aliased <code>TEST.M_LIBRARY</code> table reference
 	 */
 	public MLibrary(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY);
+		this(alias, org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY);
 	}
 
 	private MLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord> aliased) {
-		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+		this(alias, aliased, null);
+	}
+
+	private MLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased, parameters, "snapshot table for snapshot TEST.M_LIBRARY");
 	}
 
 	/**

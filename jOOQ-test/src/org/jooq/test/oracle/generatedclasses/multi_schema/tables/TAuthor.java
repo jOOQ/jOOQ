@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -215339279;
+	private static final long serialVersionUID = -1676463668;
 
 	/**
 	 * The singleton instance of <code>MULTI_SCHEMA.T_AUTHOR</code>
@@ -27,49 +27,53 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.oracle.genera
 	/**
 	 * The column <code>MULTI_SCHEMA.T_AUTHOR.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_AUTHOR.FIRST_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_AUTHOR.LAST_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this, "");
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_AUTHOR.DATE_OF_BIRTH</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, this, "");
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_AUTHOR.ADDRESS</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.Object> ADDRESS = createField("ADDRESS", org.jooq.impl.DefaultDataType.getDefaultDataType("U_ADDRESS_TYPE"), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.Object> ADDRESS = createField("ADDRESS", org.jooq.impl.DefaultDataType.getDefaultDataType("U_ADDRESS_TYPE"), this, "");
 
 	/**
 	 * Create a <code>MULTI_SCHEMA.T_AUTHOR</code> table reference
 	 */
 	public TAuthor() {
-		super("T_AUTHOR", org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA);
+		this("T_AUTHOR", null);
 	}
 
 	/**
 	 * Create an aliased <code>MULTI_SCHEMA.T_AUTHOR</code> table reference
 	 */
 	public TAuthor(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA, org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR);
+		this(alias, org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR);
 	}
 
 	private TAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> aliased) {
-		super(alias, org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA, aliased);
+		this(alias, aliased, null);
+	}
+
+	private TAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

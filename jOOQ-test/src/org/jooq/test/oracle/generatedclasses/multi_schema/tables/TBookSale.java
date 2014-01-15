@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookSale extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> {
 
-	private static final long serialVersionUID = 350343375;
+	private static final long serialVersionUID = 409475488;
 
 	/**
 	 * The singleton instance of <code>MULTI_SCHEMA.T_BOOK_SALE</code>
@@ -27,44 +27,48 @@ public class TBookSale extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gene
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_STORE_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_AT</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.sql.Date> SOLD_AT = createField("SOLD_AT", org.jooq.impl.SQLDataType.DATE.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.sql.Date> SOLD_AT = createField("SOLD_AT", org.jooq.impl.SQLDataType.DATE.nullable(false), this, "");
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_FOR</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.math.BigDecimal> SOLD_FOR = createField("SOLD_FOR", org.jooq.impl.SQLDataType.NUMERIC.precision(10, 2).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.math.BigDecimal> SOLD_FOR = createField("SOLD_FOR", org.jooq.impl.SQLDataType.NUMERIC.precision(10, 2).nullable(false), this, "");
 
 	/**
 	 * Create a <code>MULTI_SCHEMA.T_BOOK_SALE</code> table reference
 	 */
 	public TBookSale() {
-		super("T_BOOK_SALE", org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA);
+		this("T_BOOK_SALE", null);
 	}
 
 	/**
 	 * Create an aliased <code>MULTI_SCHEMA.T_BOOK_SALE</code> table reference
 	 */
 	public TBookSale(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA, org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE);
+		this(alias, org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE);
 	}
 
 	private TBookSale(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> aliased) {
-		super(alias, org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA, aliased);
+		this(alias, aliased, null);
+	}
+
+	private TBookSale(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

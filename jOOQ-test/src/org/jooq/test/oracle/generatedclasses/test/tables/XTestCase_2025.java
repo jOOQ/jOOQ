@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_2025Record> {
 
-	private static final long serialVersionUID = -1833815231;
+	private static final long serialVersionUID = -1145541527;
 
 	/**
 	 * The singleton instance of <code>TEST.X_TEST_CASE_2025</code>
@@ -27,29 +27,33 @@ public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.oracle
 	/**
 	 * The column <code>TEST.X_TEST_CASE_2025.REF_ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_2025Record, java.lang.Integer> REF_ID = createField("REF_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_2025Record, java.lang.Integer> REF_ID = createField("REF_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>TEST.X_TEST_CASE_2025.REF_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_2025Record, java.lang.String> REF_NAME = createField("REF_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_2025Record, java.lang.String> REF_NAME = createField("REF_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), this, "");
 
 	/**
 	 * Create a <code>TEST.X_TEST_CASE_2025</code> table reference
 	 */
 	public XTestCase_2025() {
-		super("X_TEST_CASE_2025", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+		this("X_TEST_CASE_2025", null);
 	}
 
 	/**
 	 * Create an aliased <code>TEST.X_TEST_CASE_2025</code> table reference
 	 */
 	public XTestCase_2025(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025);
+		this(alias, org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025);
 	}
 
 	private XTestCase_2025(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_2025Record> aliased) {
-		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+		this(alias, aliased, null);
+	}
+
+	private XTestCase_2025(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_2025Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased, parameters, "");
 	}
 
 	/**

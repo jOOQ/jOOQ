@@ -137,7 +137,9 @@ public class Tables {
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85 X_TEST_CASE_85 = org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85;
 
 	/**
-	 * An unused table in the same schema.
+	 * An unused table in the same schema. 
+
+"Its comments contain special characters"
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.XUnused X_UNUSED = org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED;
 }

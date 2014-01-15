@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -295736725;
+	private static final long serialVersionUID = -59252027;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOK_STORE</code>
@@ -29,24 +29,28 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gen
 	/**
 	 * The column <code>TEST.T_BOOK_STORE.NAME</code>. The books store name
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "The books store name");
 
 	/**
 	 * Create a <code>TEST.T_BOOK_STORE</code> table reference
 	 */
 	public TBookStore() {
-		super("T_BOOK_STORE", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+		this("T_BOOK_STORE", null);
 	}
 
 	/**
 	 * Create an aliased <code>TEST.T_BOOK_STORE</code> table reference
 	 */
 	public TBookStore(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TBookStore.T_BOOK_STORE);
+		this(alias, org.jooq.test.oracle.generatedclasses.test.tables.TBookStore.T_BOOK_STORE);
 	}
 
 	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord> aliased) {
-		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+		this(alias, aliased, null);
+	}
+
+	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased, parameters, "A book store");
 	}
 
 	/**

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -1987170458;
+	private static final long serialVersionUID = 65224049;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOK_TO_BOOK_STORE</code>
@@ -29,34 +29,38 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.orac
 	/**
 	 * The column <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "The book store name");
 
 	/**
 	 * The column <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The book ID");
 
 	/**
 	 * The column <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("STOCK", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("STOCK", org.jooq.impl.SQLDataType.INTEGER, this, "The number of books on stock");
 
 	/**
 	 * Create a <code>TEST.T_BOOK_TO_BOOK_STORE</code> table reference
 	 */
 	public TBookToBookStore() {
-		super("T_BOOK_TO_BOOK_STORE", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+		this("T_BOOK_TO_BOOK_STORE", null);
 	}
 
 	/**
 	 * Create an aliased <code>TEST.T_BOOK_TO_BOOK_STORE</code> table reference
 	 */
 	public TBookToBookStore(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+		this(alias, org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}
 
 	private TBookToBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> aliased) {
-		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased);
+		this(alias, aliased, null);
+	}
+
+	private TBookToBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased, parameters, "An m:n relation between books and book stores");
 	}
 
 	/**

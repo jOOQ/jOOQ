@@ -75,19 +75,23 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     private final Alias<Table<R>> alias;
 
     public TableImpl(String name) {
-        this(name, null, null, null);
+        this(name, null, null, null, null);
     }
 
     public TableImpl(String name, Schema schema) {
-        this(name, schema, null, null);
+        this(name, schema, null, null, null);
     }
 
     public TableImpl(String name, Schema schema, Table<R> aliased) {
-        this(name, schema, aliased, null);
+        this(name, schema, aliased, null, null);
     }
 
-    protected TableImpl(String name, Schema schema, Table<R> aliased, Field<?>[] parameters) {
-        super(name, schema);
+    public TableImpl(String name, Schema schema, Table<R> aliased, Field<?>[] parameters) {
+        this(name, schema, aliased, parameters, null);
+    }
+
+    public TableImpl(String name, Schema schema, Table<R> aliased, Field<?>[] parameters, String comment) {
+        super(name, schema, comment);
 
         this.fields = new Fields<R>();
 

@@ -98,6 +98,16 @@ public interface Table<R extends Record> extends TableLike<R> {
     String getName();
 
     /**
+     * The comment given to the table.
+     * <p>
+     * If this <code>Table</code> is a generated table from your database, it
+     * may provide its DDL comment through this method. All other table
+     * expressions return the empty string <code>""</code> here, never
+     * <code>null</code>.
+     */
+    String getComment();
+
+    /**
      * The record type produced by this table.
      */
     RecordType<R> recordType();

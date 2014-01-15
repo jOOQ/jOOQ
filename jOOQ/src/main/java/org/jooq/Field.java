@@ -117,6 +117,16 @@ public interface Field<T> extends GroupField {
     String getName();
 
     /**
+     * The comment given to the field.
+     * <p>
+     * If this <code>Field</code> is a generated field from your database, it
+     * may provide its DDL comment through this method. All other column
+     * expressions return the empty string <code>""</code> here, never
+     * <code>null</code>.
+     */
+    String getComment();
+
+    /**
      * The Java type of the field.
      */
     Class<T> getType();

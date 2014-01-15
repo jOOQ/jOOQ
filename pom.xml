@@ -307,7 +307,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <maxmemory>512</maxmemory>
+                            <maxmemory>1024</maxmemory>
                             <encoding>UTF-8</encoding>
                             <show>protected</show>
                             <notree>true</notree>
@@ -356,7 +356,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <maxmemory>512</maxmemory>
+                            <maxmemory>1024</maxmemory>
                             <encoding>UTF-8</encoding>
                             <show>protected</show>
                             <notree>true</notree>
@@ -385,7 +385,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <maxmemory>512</maxmemory>
+                            <maxmemory>1024</maxmemory>
                             <encoding>UTF-8</encoding>
                             <show>protected</show>
                             <notree>true</notree>

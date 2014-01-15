@@ -1455,6 +1455,14 @@ public class OracleTest extends jOOQAbstractTest<
             assertEquals(BOOK_TITLES.get(0), list.get(0).getTitle());
         }
     }
+
+    @Test
+    public void testOracleComments() throws Exception {
+        assertEquals("An entity holding books", T_BOOK.getComment());
+        assertEquals("The book's title", T_BOOK.TITLE.getComment());
+        assertEquals("The year the book was published in", T_BOOK.PUBLISHED_IN.getComment());
+        assertEquals("An entity holding authors of books", T_AUTHOR.getComment());
+    }
 }
 
 /* [/pro] */

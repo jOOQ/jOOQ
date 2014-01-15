@@ -64,6 +64,7 @@ import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.DIVIDE;
 import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
+import static org.jooq.tools.StringUtils.defaultString;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -109,13 +110,19 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     private static final long     serialVersionUID = 2884811923648354905L;
     private static final Clause[] CLAUSES          = { FIELD };
 
-    private final String      name;
-    private final DataType<T> dataType;
+    private final String          name;
+    private final String          comment;
+    private final DataType<T>     dataType;
 
     AbstractField(String name, DataType<T> type) {
+        this(name, type, null);
+    }
+
+    AbstractField(String name, DataType<T> type, String comment) {
         super();
 
         this.name = name;
+        this.comment = defaultString(comment);
         this.dataType = type;
     }
 
@@ -146,6 +153,11 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Override
     public final String getName() {
         return name;
+    }
+
+    @Override
+    public final String getComment() {
+        return comment;
     }
 
     @Override

@@ -647,7 +647,13 @@ CREATE TABLE x_unused (
     REFERENCES MULTI_SCHEMA_UNUSED.X_UNUSED(ID, NAME)
 )
 /
-COMMENT ON TABLE x_unused IS 'An unused table in the same schema.'
+COMMENT ON TABLE x_unused IS 'An unused table in the same schema. 
+
+"Its comments contain special characters"'
+/
+COMMENT ON COLUMN x_unused.id IS 'An unused column of an unused table in the same schema. 
+
+"Its comments contain special characters"'
 /
 
 CREATE TABLE t_exotic_types (

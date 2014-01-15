@@ -96,18 +96,24 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     private static final long     serialVersionUID = 3155496238969274871L;
     private static final Clause[] CLAUSES          = { TABLE };
 
-    private final Schema      schema;
-    private final String      name;
+    private final Schema          schema;
+    private final String          name;
+    private final String          comment;
 
     AbstractTable(String name) {
-        this(name, null);
+        this(name, null, null);
     }
 
     AbstractTable(String name, Schema schema) {
+        this(name, schema, null);
+    }
+
+    AbstractTable(String name, Schema schema, String comment) {
         super();
 
         this.schema = schema;
         this.name = name;
+        this.comment = comment;
     }
 
     // ------------------------------------------------------------------------
@@ -189,6 +195,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     @Override
     public final String getName() {
         return name;
+    }
+
+    @Override
+    public final String getComment() {
+        return comment;
     }
 
     /**
@@ -303,7 +314,18 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      * @param type The data type of the field
      */
     protected static final <R extends Record, T> TableField<R, T> createField(String name, DataType<T> type, Table<R> table) {
-        final TableFieldImpl<R, T> tableField = new TableFieldImpl<R, T>(name, type, table);
+        return createField(name, type, table, null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected static final <R extends Record, T> TableField<R, T> createField(String name, DataType<T> type, Table<R> table, String comment) {
+        final TableFieldImpl<R, T> tableField = new TableFieldImpl<R, T>(name, type, table, comment);
 
         // [#1199] The public API of Table returns immutable field lists
         if (table instanceof TableImpl) {

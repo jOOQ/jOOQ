@@ -67,8 +67,8 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
 
     private final Table<R>    table;
 
-    TableFieldImpl(String name, DataType<T> type, Table<R> table) {
-        super(name, type);
+    TableFieldImpl(String name, DataType<T> type, Table<R> table, String comment) {
+        super(name, type, comment);
 
         this.table = table;
     }

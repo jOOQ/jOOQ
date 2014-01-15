@@ -41,6 +41,8 @@
 package org.jooq.util;
 
 
+import static org.jooq.tools.StringUtils.defaultString;
+
 import java.io.File;
 import java.lang.reflect.TypeVariable;
 import java.sql.SQLException;
@@ -1589,6 +1591,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String fullTableId = getStrategy().getFullJavaIdentifier(table);
         final String recordType = getStrategy().getFullJavaClassName(table, Mode.RECORD);
         final List<String> interfaces = getStrategy().getJavaClassImplements(table, Mode.DEFAULT);
+        final String comment = defaultString(table.getComment());
 
         log.info("Generating table", getStrategy().getFileName(table) +
             " [input=" + table.getInputName() +
@@ -1616,8 +1619,8 @@ public class JavaGenerator extends AbstractGenerator {
             String tableRef = generateInstanceFields() ? "this" : getStrategy().getJavaIdentifier(table);
 
             out.tab(1).javadoc("The column <code>%s</code>. %s", column.getQualifiedOutputName(), columnComment);
-            out.tab(1).println("public %sfinal %s<%s, %s> %s = createField(\"%s\", %s, %s);",
-                isStatic, TableField.class, recordType, columnType, columnId, columnName, columnTypeRef, tableRef);
+            out.tab(1).println("public %sfinal %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\");",
+                isStatic, TableField.class, recordType, columnType, columnId, columnName, columnTypeRef, tableRef, escapeString(columnComment));
         }
 
         // [#1255] With instance fields, the table constructor may
@@ -1631,7 +1634,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("private %s() {", className);
         }
 
-        out.tab(2).println("super(\"%s\", %s);", table.getOutputName(), getStrategy().getFullJavaIdentifier(schema));
+        out.tab(2).println("this(\"%s\", null);", table.getOutputName());
         out.tab(1).println("}");
 
         // [#117] With instance fields, it makes sense to create a
@@ -1643,22 +1646,19 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateInstanceFields()) {
             out.tab(1).javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
             out.tab(1).println("public %s(%s alias) {", className, String.class);
-            out.tab(2).println("super(alias, %s, %s);", schemaId, fullTableId);
+            out.tab(2).println("this(alias, %s);", fullTableId);
             out.tab(1).println("}");
         }
 
-        if (table.isTableValuedFunction()) {
-            out.println();
-            out.tab(1).println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters) {", className, String.class, Table.class, recordType, Field.class);
-            out.tab(2).println("super(alias, %s, aliased, parameters);", schemaId);
-            out.tab(1).println("}");
-        }
-        else {
-            out.println();
-            out.tab(1).println("private %s(%s alias, %s<%s> aliased) {", className, String.class, Table.class, recordType);
-            out.tab(2).println("super(alias, %s, aliased);", schemaId);
-            out.tab(1).println("}");
-        }
+        out.println();
+        out.tab(1).println("private %s(%s alias, %s<%s> aliased) {", className, String.class, Table.class, recordType);
+        out.tab(2).println("this(alias, aliased, null);");
+        out.tab(1).println("}");
+
+        out.println();
+        out.tab(1).println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters) {", className, String.class, Table.class, recordType, Field.class);
+        out.tab(2).println("super(alias, %s, aliased, parameters, \"%s\");", schemaId, escapeString(comment));
+        out.tab(1).println("}");
 
         // Add primary / unique / foreign key information
         if (generateRelations()) {
@@ -1813,6 +1813,10 @@ public class JavaGenerator extends AbstractGenerator {
         generateTableClassFooter(table, out);
         out.println("}");
         out.close();
+    }
+
+    private String escapeString(String comment) {
+        return comment.replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "\\r");
     }
 
     /**

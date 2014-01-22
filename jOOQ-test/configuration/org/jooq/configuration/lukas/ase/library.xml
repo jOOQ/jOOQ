@@ -2,7 +2,7 @@
 <configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd">
     <jdbc>
         <driver>net.sourceforge.jtds.jdbc.Driver</driver>
-        <url>jdbc:jtds:sybase://lukas-hp:5000/TEST</url>
+        <url>jdbc:jtds:sybase://localhost:5000/TEST</url>
         <schema>dbo</schema>
         <user>sa</user>
         <password></password>

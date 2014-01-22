@@ -64,6 +64,8 @@ import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.DIVIDE;
 import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
+import static org.jooq.tools.Convert.FALSE_VALUES;
+import static org.jooq.tools.Convert.TRUE_VALUES;
 import static org.jooq.tools.StringUtils.defaultString;
 
 import java.math.BigDecimal;
@@ -96,7 +98,6 @@ import org.jooq.SortField;
 import org.jooq.SortOrder;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowPartitionByStep;
-import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -591,16 +592,16 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         Class<?> type = getType();
 
         if (type == String.class) {
-            return ((Field<String>) this).in(Convert.TRUE_VALUES);
+            return ((Field<String>) this).in((Collection) Utils.inline(TRUE_VALUES.toArray(new String[TRUE_VALUES.size()])));
         }
         else if (Number.class.isAssignableFrom(type)) {
-            return ((Field<Number>) this).equal((Number) getDataType().convert(1));
+            return ((Field<Number>) this).equal(inline((Number) getDataType().convert(1)));
         }
         else if (Boolean.class.isAssignableFrom(type)) {
-            return ((Field<Boolean>) this).equal(true);
+            return ((Field<Boolean>) this).equal(inline(true));
         }
         else {
-            return cast(String.class).in(Convert.TRUE_VALUES);
+            return cast(String.class).in(TRUE_VALUES);
         }
     }
 
@@ -610,16 +611,16 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         Class<?> type = getType();
 
         if (type == String.class) {
-            return ((Field<String>) this).in(Convert.FALSE_VALUES);
+            return ((Field<String>) this).in((Collection) Utils.inline(FALSE_VALUES.toArray(new String[FALSE_VALUES.size()])));
         }
         else if (Number.class.isAssignableFrom(type)) {
-            return ((Field<Number>) this).equal((Number) getDataType().convert(0));
+            return ((Field<Number>) this).equal(inline((Number) getDataType().convert(0)));
         }
         else if (Boolean.class.isAssignableFrom(type)) {
-            return ((Field<Boolean>) this).equal(false);
+            return ((Field<Boolean>) this).equal(inline(false));
         }
         else {
-            return cast(String.class).in(Convert.FALSE_VALUES);
+            return cast(String.class).in((Collection) Utils.inline(FALSE_VALUES.toArray(new String[FALSE_VALUES.size()])));
         }
     }
 

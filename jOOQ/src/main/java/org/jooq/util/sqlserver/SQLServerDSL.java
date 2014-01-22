@@ -40,7 +40,11 @@
  */
 package org.jooq.util.sqlserver;
 
+import static org.jooq.SQLDialect.SQLSERVER;
+
+import org.jooq.Field;
 import org.jooq.SQLDialect;
+import org.jooq.Support;
 import org.jooq.impl.DSL;
 
 /**
@@ -54,5 +58,65 @@ public class SQLServerDSL extends DSL {
      * No instances
      */
     private SQLServerDSL() {
+    }
+
+    /**
+     * The SQL Server specific <code>SOUNDEX()</code> function.
+     *
+     * @see <a href="http://technet.microsoft.com/en-us/library/ms187384.aspx">http://technet.microsoft.com/en-us/library/ms187384.aspx</a>
+     */
+    @Support(SQLSERVER)
+    public static Field<String> soundex(String string) {
+        return soundex(val(string, String.class));
+    }
+
+    /**
+     * The SQL Server specific <code>SOUNDEX()</code> function.
+     *
+     * @see <a href="http://technet.microsoft.com/en-us/library/ms187384.aspx">http://technet.microsoft.com/en-us/library/ms187384.aspx</a>
+     */
+    @Support(SQLSERVER)
+    public static Field<String> soundex(Field<String> field) {
+        return field("{soundex}({0})", String.class, nullSafe(field));
+    }
+
+    /**
+     * The SQL Server specific <code>DIFFERENCE()</code> function.
+     *
+     * @see <a href="http://technet.microsoft.com/en-us/library/ms188753.aspx">http://technet.microsoft.com/en-us/library/ms188753.aspx</a>
+     */
+    @Support(SQLSERVER)
+    public static Field<Integer> difference(String value1, String value2) {
+        return difference(val(value1, String.class), val(value2, String.class));
+    }
+
+    /**
+     * The SQL Server specific <code>DIFFERENCE()</code> function.
+     *
+     * @see <a href="http://technet.microsoft.com/en-us/library/ms188753.aspx">http://technet.microsoft.com/en-us/library/ms188753.aspx</a>
+     */
+    @Support(SQLSERVER)
+    public static Field<Integer> difference(Field<String> value1, String value2) {
+        return difference(nullSafe(value1), val(value2, String.class));
+    }
+
+    /**
+     * The SQL Server specific <code>DIFFERENCE()</code> function.
+     *
+     * @see <a href="http://technet.microsoft.com/en-us/library/ms188753.aspx">http://technet.microsoft.com/en-us/library/ms188753.aspx</a>
+     */
+    @Support(SQLSERVER)
+    public static Field<Integer> difference(String value1, Field<String> value2) {
+        return difference(val(value1, String.class), nullSafe(value2));
+    }
+
+    /**
+     * The SQL Server specific <code>DIFFERENCE()</code> function.
+     *
+     * @see <a href="http://technet.microsoft.com/en-us/library/ms188753.aspx">http://technet.microsoft.com/en-us/library/ms188753.aspx</a>
+     */
+    @Support(SQLSERVER)
+    public static Field<Integer> difference(Field<String> value1, Field<String> value2) {
+        return field("{difference}({0}, {1})", Integer.class, nullSafe(value1), nullSafe(value2));
     }
 }

@@ -68,6 +68,8 @@ import static org.jooq.test.sqlserver.generatedclasses.Tables.V_BOOK;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.V_LIBRARY;
 import static org.jooq.test.sqlserver.generatedclasses.tables.FTables1.F_TABLES1;
 import static org.jooq.test.sqlserver.generatedclasses.tables.FTables4.F_TABLES4;
+import static org.jooq.util.sqlserver.SQLServerDSL.difference;
+import static org.jooq.util.sqlserver.SQLServerDSL.soundex;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -825,6 +827,26 @@ public class SQLServerTest extends jOOQAbstractTest<
                 .fetch(ft5.V));
 
         throw new RuntimeException("Add more integration tests!");
+    }
+
+    @Test
+    public void testSQLServerStringFunctions() throws Exception {
+        assertEquals(4,
+        create().select(soundex("abc"), soundex(T_BOOK.TITLE))
+                .from(T_BOOK)
+                .fetch()
+                .size());
+
+        assertEquals(4,
+        create().select(
+                    difference("abc", "abcd"),
+                    difference("abc", T_BOOK.TITLE),
+                    difference(T_BOOK.TITLE, "abcd"),
+                    difference(T_BOOK.TITLE, T_BOOK.TITLE)
+                )
+                .from(T_BOOK)
+                .fetch()
+                .size());
     }
 }
 

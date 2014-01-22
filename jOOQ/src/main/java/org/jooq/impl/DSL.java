@@ -6885,6 +6885,34 @@ public class DSL {
     }
 
     /**
+     * Get the SQL Server specific <code>SPACE()</code> function.
+     * <p>
+     * This function can be emulated using {@link #repeat(String, int)} in
+     * dialects that do not ship with a native <code>SPACE()</code> function.
+     *
+     * @see <a
+     *      href="http://technet.microsoft.com/en-us/library/ms187950.aspx">http://technet.microsoft.com/en-us/library/ms187950.aspx</a>
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    public static Field<String> space(int value) {
+        return space(val(value));
+    }
+
+    /**
+     * Get the SQL Server specific <code>SPACE()</code> function.
+     * <p>
+     * This function can be emulated using {@link #repeat(String, int)} in
+     * dialects that do not ship with a native <code>SPACE()</code> function.
+     *
+     * @see <a
+     *      href="http://technet.microsoft.com/en-us/library/ms187950.aspx">http://technet.microsoft.com/en-us/library/ms187950.aspx</a>
+     */
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    public static Field<String> space(Field<Integer> value) {
+        return new Space(nullSafe(value));
+    }
+
+    /**
      * Get the <code>reverse(field)</code> function.
      */
     @Support({ ASE, CUBRID, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER })

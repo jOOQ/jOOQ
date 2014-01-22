@@ -2192,6 +2192,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFunctionsOnStrings_SPACE() throws Exception {
+        new FunctionTests(this).testFunctionsOnStrings_SPACE();
+    }
+
+    @Test
     public void testFunctionsOnStrings_REVERSE() throws Exception {
         new FunctionTests(this).testFunctionsOnStrings_REVERSE();
     }

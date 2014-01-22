@@ -120,6 +120,7 @@ import static org.jooq.impl.DSL.shr;
 import static org.jooq.impl.DSL.sign;
 import static org.jooq.impl.DSL.sin;
 import static org.jooq.impl.DSL.sinh;
+import static org.jooq.impl.DSL.space;
 import static org.jooq.impl.DSL.sqrt;
 import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.tan;
@@ -603,6 +604,32 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 assertEquals("a", result.getValue(0));
                 assertEquals("abab", result.getValue(1));
                 assertEquals("abcabcabc", result.getValue(2));
+                break;
+            }
+        }
+    }
+
+    @Test
+    public void testFunctionsOnStrings_SPACE() throws Exception {
+
+        switch (dialect()) {
+            case DERBY:
+                log.info("SKIPPING", "SPACE function");
+                break;
+
+            default: {
+                Result<Record2<String, String>> result =
+                create().select(
+                            space(1),
+                            space(TAuthor_ID().mul(2)))
+                        .from(TAuthor())
+                        .orderBy(TAuthor_ID())
+                        .fetch();
+
+                assertEquals(" ", result.get(0).value1());
+                assertEquals("  ", result.get(0).value2());
+                assertEquals(" ", result.get(1).value1());
+                assertEquals("    ", result.get(1).value2());
                 break;
             }
         }

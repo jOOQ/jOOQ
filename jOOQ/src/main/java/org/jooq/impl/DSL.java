@@ -6142,6 +6142,78 @@ public class DSL {
     }
 
     /**
+     * Gets the SQL Server-style ISNULL(value, defaultValue) function.
+     *
+     * @see #nvl(Field, Field)
+     */
+    @Support
+    @Transition(
+        name = "ISNULL",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "Function"
+    )
+    public static <T> Field<T> isnull(T value, T defaultValue) {
+        return nvl(value, defaultValue);
+    }
+
+    /**
+     * Gets the SQL Server-style ISNULL(value, defaultValue) function.
+     *
+     * @see #nvl(Field, Field)
+     */
+    @Support
+    @Transition(
+        name = "ISNULL",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "Function"
+    )
+    public static <T> Field<T> isnull(T value, Field<T> defaultValue) {
+        return nvl(value, defaultValue);
+    }
+
+    /**
+     * Gets the SQL Server-style ISNULL(value, defaultValue) function.
+     *
+     * @see #nvl(Field, Field)
+     */
+    @Support
+    @Transition(
+        name = "ISNULL",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "Function"
+    )
+    public static <T> Field<T> isnull(Field<T> value, T defaultValue) {
+        return nvl(value, defaultValue);
+    }
+
+    /**
+     * Gets the SQL Server-style ISNULL(value, defaultValue) function.
+     *
+     * @see #nvl(Field, Field)
+     */
+    @Support
+    @Transition(
+        name = "ISNULL",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "Function"
+    )
+    public static <T> Field<T> isnull(Field<T> value, Field<T> defaultValue) {
+        return nvl(value, defaultValue);
+    }
+
+    /**
      * Gets the Oracle-style NVL(value, defaultValue) function.
      *
      * @see #nvl(Field, Field)

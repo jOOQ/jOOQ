@@ -90,7 +90,7 @@
     	<antcall target="copy-trial"/>
         <antcall target="rest"/>
     </target>
-    <!-- [trial] -->
+    <!-- [/trial] -->
 	
     <target name="release-pro" description="Release a new version">
         <antcall target="copy-lib-javadoc"/>

@@ -92,6 +92,13 @@ Features and improvements
 #2945 - Deprecate the <generateInstanceFields/> code generation flag
 #2946 - Add a section to the manual explaining how to programmatically
         configure the code generator
+#2950 - Add Table.getComment() and Field.getComment() to access comment meta
+        information from the schema
+#2969 - Add support for SQL Server SOUNDEX() and DIFFERENCE() functions
+#2970 - Add DSL.isnull() as a synonym for NVL() for the SQL Server dialect
+#2971 - Add DSL.space() to support the SQL Server specific SPACE() function
+#2976 - Add bookmarks to the PDF manual
+#2979 - Add Maven install scripts (.bat and .sh) to deliverables
 
 API changes (backwards-compatible)
 ----------------------------------
@@ -161,7 +168,14 @@ Bug fixes
 #2922 - Manual Bug: SQL Builder example does not compile
 #2923 - Manual Bug: It is not clear where FK_BOOK_AUTHOR is imported from
 #2926 - Add code-generation support for the MySQL / MariaDB TINYTEXT data type
+#2937 - Fix trailing whitespaces in generated code
 #2942 - Error in the manual: Wrong class linked
+#2956 - Field.isFalse() / isTrue() result in extra parameters
+#2958 - Error when the code-generation database user has insufficient grants to
+        read the "mysql" meta schema
+#2963 - Lower log level for warnings about unknown SQL data types from
+        MetaDataFieldProvider (plain SQL)
+#2977 - Missing parent pom.xml file in deliverables
 
 Version 3.2.0 - October 9, 2013
 ================================================================================

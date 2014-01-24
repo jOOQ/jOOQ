@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+   
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jooq</groupId>
-    <artifactId>jooq-spring-example</artifactId>
+    <artifactId>jooq-spring-guice-example</artifactId>
     <version>1.0</version>
     <name>jOOQ Spring Example</name>
 
@@ -21,7 +21,7 @@
         <org.springframework.version>3.2.6.RELEASE</org.springframework.version>
         <org.jooq.version>3.3.0-SNAPSHOT</org.jooq.version>
     </properties>
-    
+
     <dependencies>
     
         <!-- Database access -->
@@ -40,7 +40,7 @@
             <artifactId>h2</artifactId>
             <version>1.3.168</version>
         </dependency>
-
+        
         <!-- Logging -->
         <dependency>
             <groupId>log4j</groupId>
@@ -51,6 +51,13 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.5</version>
+        </dependency>
+        
+        <!-- Guice dependency injection -->
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>3.0</version>
         </dependency>
 
         <!-- Spring (transitive dependencies are not listed explicitly) -->
@@ -73,29 +80,9 @@
             <type>jar</type>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${org.springframework.version}</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
-    
-        <!-- The resources element will replace available properties in all matching
-             resources. We use this to provide H2 connection configuration to various
-             configuration elements -->
-        <resources>
-            <resource>
-                <filtering>true</filtering>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.xml</include>
-                </includes>
-            </resource>
-        </resources>
-        
         <plugins>
         
             <!-- We're using the properties plugin to load external properties into Maven.
@@ -194,6 +181,7 @@
                                     <deprecated>false</deprecated>
                                     <instanceFields>true</instanceFields>
                                     <pojos>true</pojos>
+                                    <daos>true</daos>
                                 </generate>
                                 <target>
                                     <packageName>org.jooq.example.db.h2</packageName>

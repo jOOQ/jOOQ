@@ -56,6 +56,7 @@ import com.jolbox.bonecp.BoneCPDataSource;
  * A static utility providing a {@link DataSource} for this example.
  * <p>
  * Your actual data source might originate from a container, or from Spring.
+ * Also, your transaction manager might be more sophisticated than this.
  *
  * @author Lukas Eder
  */
@@ -83,6 +84,7 @@ public class DataSources extends AbstractModule {
 
     static {
         try {
+            // We're using BoneCP here to configure a connection pool
             Properties p = new Properties();
             p.load(DataSources.class.getResourceAsStream("/config.properties"));
 

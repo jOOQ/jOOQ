@@ -59,7 +59,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.inject.Inject;
 
-
+/**
+ * A fully transactional service class offering various API methods for data
+ * manipulation.
+ *
+ * @author Lukas Eder
+ */
 @Transactional
 public class Service {
 
@@ -101,6 +106,12 @@ public class Service {
            .execute();
     }
 
+    /**
+     * A utility method to allow for nested transactions.
+     * <p>
+     * All code wrapped by the <code>runnable</code> argument is automatically
+     * executed in a transaction.
+     */
     public void transactional(Runnable runnable) {
         runnable.run();
     }

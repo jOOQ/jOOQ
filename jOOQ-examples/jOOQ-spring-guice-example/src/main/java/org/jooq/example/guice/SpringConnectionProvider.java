@@ -48,7 +48,15 @@ import org.jooq.ConnectionProvider;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 
+/**
+ * This connection provider uses Spring to extract the
+ * {@link TransactionAwareDataSourceProxy} from our BoneCP pooled connection
+ * {@link DataSource}.
+ *
+ * @author Lukas Eder
+ */
 public class SpringConnectionProvider implements ConnectionProvider {
 
     private final DataSource dataSource;

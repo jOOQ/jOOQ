@@ -73,10 +73,10 @@ public class ExceptionTranslator extends DefaultExecuteListener {
 
     @Override
     public void exception(ExecuteContext ctx) {
-        ctx.exception(translator(ds).translate("jOOQ", ctx.sql(), ctx.sqlException()));
+        ctx.exception(translator().translate("jOOQ", ctx.sql(), ctx.sqlException()));
     }
 
-    private SQLExceptionTranslator translator(DataSource ds) {
+    private SQLExceptionTranslator translator() {
         return ds == null
             ? new SQLStateSQLExceptionTranslator()
             : new SQLErrorCodeSQLExceptionTranslator(ds);

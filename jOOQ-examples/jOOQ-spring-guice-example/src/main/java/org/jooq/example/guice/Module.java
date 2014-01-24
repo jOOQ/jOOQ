@@ -43,16 +43,9 @@ package org.jooq.example.guice;
 import static com.google.inject.matcher.Matchers.annotatedWith;
 import static com.google.inject.matcher.Matchers.any;
 
-import org.aopalliance.intercept.MethodInterceptor;
-import org.aopalliance.intercept.MethodInvocation;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 /**
@@ -74,33 +67,5 @@ public class Module extends AbstractModule {
         bindInterceptor(any(), annotatedWith(Transactional.class), interceptor);
 
         install(new DataSources());
-    }
-}
-
-class TransactionalMethodInterceptor implements MethodInterceptor {
-
-    @Inject
-    private DataSourceTransactionManager transactionManager;
-
-    @Override
-    public Object invoke(MethodInvocation invocation) throws Throwable {
-        DefaultTransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
-        TransactionStatus transaction = transactionManager.getTransaction(transactionDefinition);
-
-        try {
-            Object result = invocation.proceed();
-            try {
-                if (transaction.isNewTransaction())
-                    transactionManager.commit(transaction);
-            }
-            catch (UnexpectedRollbackException ignore) {}
-            return result;
-        }
-        catch (Exception e) {
-            if (transaction.isNewTransaction())
-                transactionManager.rollback(transaction);
-
-            throw e;
-        }
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="jOOQ-release" basedir="." default="release-pro">
+<project name="jOOQ-release" basedir=".">
 	<property name="dir.workspace" value="${basedir}/.." />
 	<property name="dir.target" value="${basedir}/target" />
 	<property name="dir.release" value="${basedir}/release" />
@@ -10,16 +10,22 @@
         <mkdir dir="${dir.release}/versions" />
         <mkdir dir="${dir.release}/${version}" />
         <mkdir dir="${dir.release}/${version}/lib" />
+		<mkdir dir="${dir.release}/${version}/pom"/>
+		<mkdir dir="${dir.release}/${version}/pom/jooq-parent"/>
 		
         <copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ/target/jooq-${version}.jar"/>
         <copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}.jar"/>
         <copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}.jar"/>
+        <copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version}.jar"/>
         <copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version}.jar"/>
         
         <copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ/target/jooq-${version}-javadoc.jar"/>
         <copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}-javadoc.jar"/>
         <copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}-javadoc.jar"/>
+        <copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version}-javadoc.jar"/>
         <copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version}-javadoc.jar"/>
+		
+		<copy todir="${dir.release}/${version}/pom/jooq-parent" file="${dir.workspace}/pom.xml"/>
 	</target>
     
     <target name="copy-src">
@@ -29,6 +35,7 @@
         <copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ/target/jooq-${version}-sources.jar"/>
         <copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}-sources.jar"/>
         <copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}-sources.jar"/>
+        <copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version}-sources.jar"/>
         <copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version}-sources.jar"/>
     </target>
         
@@ -69,22 +76,26 @@
 
         <delete dir="${dir.release}/${version}"/>
 	</target>
-	
+
+	<!-- [trial] -->
 	<target name="release-oss" description="Release a new version">
         <antcall target="copy-lib-javadoc"/>
         <antcall target="copy-src"/>
 		<antcall target="rest"/>
 	</target>
     
-    <target name="release-pro" description="Release a new version">
-        <antcall target="copy-lib-javadoc"/>
-        <antcall target="copy-src"/>
-        <antcall target="rest"/>
-    </target>
-    
-    <target name="release-trial" description="Release a new version">
-        <antcall target="copy-lib-javadoc"/>
-    	<antcall target="copy-src-trial"/>
-        <antcall target="rest"/>
-    </target>
+	<!-- [pro] xxx
+    xxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx x xxx xxxxxxxxx
+        xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+    	xxxxxxxx xxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxx xxxxxxxxxxxxxxx
+    xxxxxxxxx
+    xxxx xxxxxxx xxx
+	
+    xxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx x xxx xxxxxxxxx
+        xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxx xxxxxxxxxxxxxxxxxxx
+        xxxxxxxx xxxxxxxxxxxxxxx
+    xxxxxxxxx
+	xxxx [/pro] -->
 </project>

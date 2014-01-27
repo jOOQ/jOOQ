@@ -88,6 +88,7 @@ import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.Result;
+import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
@@ -1320,10 +1321,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .where(TBook_ID().eq(1))
                 .execute();
 
-        A author = getAuthor(1);
-        B book = getBook(1);
+        A a1 = getAuthor(1);
+        B b1 = getBook(1);
 
-        assertEquals("XX", author.getValue(TAuthor_LAST_NAME()));
-        assertEquals("YY", book.getValue(TBook_TITLE()));
+        assertEquals("XX", a1.getValue(TAuthor_LAST_NAME()));
+        assertEquals("YY", b1.getValue(TBook_TITLE()));
+
+        // [#2982] Check if variable binding takes place correctly in this situation
+        Select<?> subquery = select(TAuthor_ID()).from(TAuthor()).where(TAuthor_LAST_NAME().eq("Orwell"));
+        assertEquals(2,
+        create().update(TBook()
+                    .join(subquery)
+                    .on(TBook_AUTHOR_ID().eq(subquery.field(TAuthor_ID()))))
+                .set(TBook_TITLE(), "ABC")
+                .execute());
+
+        A a2 = getAuthor(1);
+        B b21 = getBook(1);
+        B b22 = getBook(2);
+        assertEquals(a1, a2);
+        assertEquals("ABC", b21.getValue(TBook_TITLE()));
+        assertEquals("ABC", b22.getValue(TBook_TITLE()));
     }
 }

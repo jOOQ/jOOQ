@@ -1328,7 +1328,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("YY", b1.getValue(TBook_TITLE()));
 
         // [#2982] Check if variable binding takes place correctly in this situation
-        Select<?> subquery = select(TAuthor_ID()).from(TAuthor()).where(TAuthor_LAST_NAME().eq("Orwell"));
+        Select<?> subquery = select(TAuthor_ID()).from(TAuthor()).where(TAuthor_ID().eq(1));
         assertEquals(2,
         create().update(TBook()
                     .join(subquery)

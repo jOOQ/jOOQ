@@ -526,7 +526,11 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     public final void bind(BindContext context) {
-        context.visit(getInto());
+        boolean declareTables = context.declareTables();
+
+        context.declareTables(true)
+               .visit(getInto())
+               .declareTables(declareTables);
 
         // A multi-row update was specified
         if (multiRow != null) {

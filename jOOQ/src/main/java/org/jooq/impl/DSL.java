@@ -4479,6 +4479,7 @@ public class DSL {
      *
      * @see Select#asTable()
      */
+    @Support
     @Transition(
         name = "TABLE",
         args = "Select",

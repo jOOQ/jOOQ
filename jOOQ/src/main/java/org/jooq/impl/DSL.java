@@ -4475,7 +4475,7 @@ public class DSL {
 
     /**
      * A synonym for {@link Select#asTable()}, which might look a bit more fluent
-     * like this, to some users
+     * like this, to some users.
      *
      * @see Select#asTable()
      */
@@ -12329,8 +12329,48 @@ public class DSL {
     }
 
     // -------------------------------------------------------------------------
-    // [#915] TODO: These are experimental VALUES() table constructors
+    // XXX [#915] VALUES() table constructors
     // -------------------------------------------------------------------------
+
+    /**
+     * Create a <code>VALUES()</code> expression of arbitrary degree.
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(val1_1, val1_2),
+     *       (val2_1, val2_2),
+     *       (val3_1, val3_2)
+     * AS "v"("c1"  , "c2"  )
+     *
+     * -- Using UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2")
+     * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
+     */
+    @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
+    public static Table<Record> values(RowN... rows) {
+        String[] columns = new String[rows.length];
+
+        for (int i = 0; i < rows.length; i++)
+            columns[i] = "c" + i;
+
+        return new Values<Record>(rows).as("v", columns);
+    }
 
 // [jooq-tools] START [values]
 

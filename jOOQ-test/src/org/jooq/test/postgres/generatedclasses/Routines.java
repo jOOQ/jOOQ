@@ -45,37 +45,6 @@ public class Routines {
 	/**
 	 * Call <code>public.f_arrays</code>
 	 */
-	public static java.lang.Long[] fArrays2(org.jooq.Configuration configuration, java.lang.Long[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.FArrays2 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays2();
-		f.setInArray(inArray);
-
-		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Get <code>public.f_arrays</code> as a field
-	 */
-	public static org.jooq.Field<java.lang.Long[]> fArrays2(java.lang.Long[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.FArrays2 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays2();
-		f.setInArray(inArray);
-
-		return f.asField();
-	}
-
-	/**
-	 * Get <code>public.f_arrays</code> as a field
-	 */
-	public static org.jooq.Field<java.lang.Long[]> fArrays2(org.jooq.Field<java.lang.Long[]> inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.FArrays2 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays2();
-		f.setInArray(inArray);
-
-		return f.asField();
-	}
-
-	/**
-	 * Call <code>public.f_arrays</code>
-	 */
 	public static java.lang.Integer[] fArrays1(org.jooq.Configuration configuration, java.lang.Integer[] inArray) {
 		org.jooq.test.postgres.generatedclasses.routines.FArrays1 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays1();
 		f.setInArray(inArray);
@@ -99,6 +68,37 @@ public class Routines {
 	 */
 	public static org.jooq.Field<java.lang.Integer[]> fArrays1(org.jooq.Field<java.lang.Integer[]> inArray) {
 		org.jooq.test.postgres.generatedclasses.routines.FArrays1 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays1();
+		f.setInArray(inArray);
+
+		return f.asField();
+	}
+
+	/**
+	 * Call <code>public.f_arrays</code>
+	 */
+	public static java.lang.Long[] fArrays2(org.jooq.Configuration configuration, java.lang.Long[] inArray) {
+		org.jooq.test.postgres.generatedclasses.routines.FArrays2 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays2();
+		f.setInArray(inArray);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get <code>public.f_arrays</code> as a field
+	 */
+	public static org.jooq.Field<java.lang.Long[]> fArrays2(java.lang.Long[] inArray) {
+		org.jooq.test.postgres.generatedclasses.routines.FArrays2 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays2();
+		f.setInArray(inArray);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get <code>public.f_arrays</code> as a field
+	 */
+	public static org.jooq.Field<java.lang.Long[]> fArrays2(org.jooq.Field<java.lang.Long[]> inArray) {
+		org.jooq.test.postgres.generatedclasses.routines.FArrays2 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays2();
 		f.setInArray(inArray);
 
 		return f.asField();
@@ -296,6 +296,17 @@ public class Routines {
 	/**
 	 * Call <code>public.p_arrays</code>
 	 */
+	public static java.lang.Long[] pArrays2(org.jooq.Configuration configuration, java.lang.Long[] inArray) {
+		org.jooq.test.postgres.generatedclasses.routines.PArrays2 p = new org.jooq.test.postgres.generatedclasses.routines.PArrays2();
+		p.setInArray(inArray);
+
+		p.execute(configuration);
+		return p.getOutArray();
+	}
+
+	/**
+	 * Call <code>public.p_arrays</code>
+	 */
 	public static java.lang.Integer[] pArrays1(org.jooq.Configuration configuration, java.lang.Integer[] inArray) {
 		org.jooq.test.postgres.generatedclasses.routines.PArrays1 p = new org.jooq.test.postgres.generatedclasses.routines.PArrays1();
 		p.setInArray(inArray);
@@ -309,17 +320,6 @@ public class Routines {
 	 */
 	public static java.lang.String[] pArrays3(org.jooq.Configuration configuration, java.lang.String[] inArray) {
 		org.jooq.test.postgres.generatedclasses.routines.PArrays3 p = new org.jooq.test.postgres.generatedclasses.routines.PArrays3();
-		p.setInArray(inArray);
-
-		p.execute(configuration);
-		return p.getOutArray();
-	}
-
-	/**
-	 * Call <code>public.p_arrays</code>
-	 */
-	public static java.lang.Long[] pArrays2(org.jooq.Configuration configuration, java.lang.Long[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.PArrays2 p = new org.jooq.test.postgres.generatedclasses.routines.PArrays2();
 		p.setInArray(inArray);
 
 		p.execute(configuration);

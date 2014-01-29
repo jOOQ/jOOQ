@@ -17,8 +17,10 @@ This is a patch release with some useful fixes for the 3.0 branch
 
 Features and improvements
 -------------------------
-#2979 - Add Maven install scripts (.bat and .sh) to deliverables
 #2780 - Add PostgresDSL.oid(Table<?>) to produce table.oid references
+#2979 - Add Maven install scripts (.bat and .sh) to deliverables
+#2900 - Overload MockFileDatabase constructor to allow for Readers, 
+        InputStreams, and Strings
 
 Bug fixes
 ---------

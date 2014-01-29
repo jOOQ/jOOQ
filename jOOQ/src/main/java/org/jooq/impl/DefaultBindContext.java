@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
@@ -151,6 +152,13 @@ class DefaultBindContext extends AbstractBindContext {
                 stmt.setNull(nextIndex(), Types.BINARY);
             }
 
+            // [#2152] Oracle cannot bind the type BOOLEAN. Let the JDBC driver
+            // figure out the correct type.
+            else if (sqlType == Types.BOOLEAN && configuration.dialect().family() == ORACLE) {
+                stmt.setObject(nextIndex(), null);
+            }
+
+            /* [/pro] */
             // All other types can be set to null if the JDBC type is known
             else if (sqlType != Types.OTHER) {
                 stmt.setNull(nextIndex(), sqlType);

@@ -124,6 +124,7 @@ public class MySQLDataType {
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
+    public static final DataType<String>     TINYTEXT           = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.CLOB, "tinytext", "char");
     public static final DataType<String>     MEDIUMTEXT         = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.CLOB, "mediumtext", "char");
     public static final DataType<String>     LONGTEXT           = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.CLOB, "longtext", "char");
     public static final DataType<String>     ENUM               = new DefaultDataType<String>(SQLDialect.MYSQL, SQLDataType.VARCHAR, "enum", "char");

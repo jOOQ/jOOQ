@@ -64,7 +64,9 @@ import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
+import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -90,6 +92,8 @@ import org.jooq.util.mysql.mysql.tables.Proc;
  * @author Lukas Eder
  */
 public class MySQLDatabase extends AbstractDatabase {
+
+    private static final JooqLogger log = JooqLogger.getLogger(MySQLDatabase.class);
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
@@ -312,6 +316,14 @@ public class MySQLDatabase extends AbstractDatabase {
     @Override
     protected List<RoutineDefinition> getRoutines0() throws SQLException {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
+
+        try {
+            create().selectCount().from(PROC).fetch();
+        }
+        catch (DataAccessException e) {
+            log.warn("Table unavailable", "The `mysql`.`proc` table is unavailable. Stored procedures cannot be loaded. Check if you have sufficient grants");
+            return result;
+        }
 
         Result<Record6<String, String, String, byte[], byte[], ProcType>> records =
         create().select(

@@ -49,6 +49,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.upper;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.util.postgres.PostgresDSL.oid;
 import static org.jooq.util.postgres.information_schema.Tables.ATTRIBUTES;
 import static org.jooq.util.postgres.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.util.postgres.information_schema.Tables.KEY_COLUMN_USAGE;
@@ -67,11 +68,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record2;
 import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -102,6 +105,8 @@ import org.jooq.util.postgres.information_schema.tables.TableConstraints;
  * @author Lukas Eder
  */
 public class PostgresDatabase extends AbstractDatabase {
+
+    private static Boolean canCastToEnumType;
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
@@ -322,9 +327,9 @@ public class PostgresDatabase extends AbstractDatabase {
                     PG_NAMESPACE.NSPNAME,
                     PG_TYPE.TYPNAME)
                 .from(PG_TYPE)
-                .join(PG_NAMESPACE).on("pg_type.typnamespace = pg_namespace.oid")
+                .join(PG_NAMESPACE).on(PG_TYPE.TYPNAMESPACE.eq(oid(PG_NAMESPACE)))
                 .where(PG_NAMESPACE.NSPNAME.in(getInputSchemata()))
-                .and(field("pg_type.oid", Long.class).in(select(PG_ENUM.ENUMTYPID).from(PG_ENUM)))
+                .and(oid(PG_TYPE).in(select(PG_ENUM.ENUMTYPID).from(PG_ENUM)))
                 .orderBy(
                     PG_NAMESPACE.NSPNAME,
                     PG_TYPE.TYPNAME)
@@ -334,18 +339,8 @@ public class PostgresDatabase extends AbstractDatabase {
                 String nspname = type.getValue(PG_NAMESPACE.NSPNAME);
                 String typname = type.getValue(PG_TYPE.TYPNAME);
 
-                List<String> labels = create()
-                    .select(PG_ENUM.ENUMLABEL)
-                    .from(PG_ENUM)
-                    .join(PG_TYPE).on("pg_enum.enumtypid = pg_type.oid")
-                    .join(PG_NAMESPACE).on("pg_type.typnamespace = pg_namespace.oid")
-                    .where(PG_NAMESPACE.NSPNAME.eq(nspname))
-                    .and(PG_TYPE.TYPNAME.eq(typname))
-                    .orderBy(field("{0}::{1}", PG_ENUM.ENUMLABEL, name(nspname, typname)))
-                    .fetch(PG_ENUM.ENUMLABEL);
-
                 DefaultEnumDefinition definition = null;
-                for (String label : labels) {
+                for (String label : enumLabels(nspname, typname)) {
                     SchemaDefinition schema = getSchema(nspname);
                     String typeName = String.valueOf(typname);
 
@@ -460,5 +455,35 @@ public class PostgresDatabase extends AbstractDatabase {
     @Override
     protected DSLContext create0() {
         return DSL.using(getConnection(), SQLDialect.POSTGRES);
+    }
+
+    private List<String> enumLabels(String nspname, String typname) {
+        Field<Object> cast = field("{0}::{1}", PG_ENUM.ENUMLABEL, name(nspname, typname));
+
+        if (canCastToEnumType == null) {
+
+            // [#2917] Older versions of PostgreSQL don't support the above cast
+            try {
+                canCastToEnumType = true;
+                return enumLabels(nspname, typname, cast);
+            }
+            catch (DataAccessException e) {
+                canCastToEnumType = false;
+            }
+        }
+
+        return canCastToEnumType ? enumLabels(nspname, typname, cast) : enumLabels(nspname, typname, PG_ENUM.ENUMLABEL);
+    }
+
+    private List<String> enumLabels(String nspname, String typname, Field<?> orderBy) {
+        return
+        create().select(PG_ENUM.ENUMLABEL)
+                .from(PG_ENUM)
+                .join(PG_TYPE).on(PG_ENUM.ENUMTYPID.eq(oid(PG_TYPE)))
+                .join(PG_NAMESPACE).on(PG_TYPE.TYPNAMESPACE.eq(oid(PG_NAMESPACE)))
+                .where(PG_NAMESPACE.NSPNAME.eq(nspname))
+                .and(PG_TYPE.TYPNAME.eq(typname))
+                .orderBy(orderBy)
+                .fetch(PG_ENUM.ENUMLABEL);
     }
 }

@@ -731,6 +731,18 @@ final class Utils {
         return result;
     }
 
+    static final <T> List<Field<T>> inline(T[] values) {
+        List<Field<T>> result = new ArrayList<Field<T>>();
+
+        if (values != null) {
+            for (T value : values) {
+                result.add(DSL.inline(value));
+            }
+        }
+
+        return result;
+    }
+
     /**
      * A utility method that fails with an exception if
      * {@link Row#indexOf(Field)} doesn't return any index.

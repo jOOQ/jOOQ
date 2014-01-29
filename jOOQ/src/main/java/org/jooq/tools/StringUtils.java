@@ -194,6 +194,27 @@ public final class StringUtils {
         return StringUtils.isEmpty(str) ? defaultStr : str;
     }
 
+    /**
+     * <p>Returns either the passed in CharSequence, or if the CharSequence is
+     * whitespace, empty ("") or {@code null}, the value of {@code defaultStr}.</p>
+     *
+     * <pre>
+     * StringUtils.defaultIfBlank(null, "NULL")  = "NULL"
+     * StringUtils.defaultIfBlank("", "NULL")    = "NULL"
+     * StringUtils.defaultIfBlank(" ", "NULL")   = "NULL"
+     * StringUtils.defaultIfBlank("bat", "NULL") = "bat"
+     * StringUtils.defaultIfBlank("", null)      = null
+     * </pre>
+     * @param str the CharSequence to check, may be null
+     * @param defaultStr  the default CharSequence to return
+     *  if the input is whitespace, empty ("") or {@code null}, may be null
+     * @return the passed in CharSequence, or the default
+     * @see StringUtils#defaultString(String, String)
+     */
+    public static String defaultIfBlank(String str, String defaultStr) {
+        return StringUtils.isBlank(str) ? defaultStr : str;
+    }
+
     // Empty checks
     // -----------------------------------------------------------------------
     /**

@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.Support;
+import org.jooq.Table;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 
@@ -302,5 +303,13 @@ public class PostgresDSL extends DSL {
     @Support({ POSTGRES })
     public static Field<String[]> stringToArray(Field<String> string, Field<String> delimiter) {
         return field("{string_to_array}({0}, {1})", SQLDataType.VARCHAR.getArrayDataType(), nullSafe(string), nullSafe(delimiter));
+    }
+
+    /**
+     * Get the PostgreSQL-specific <code>[table].oid</code> column from any table.
+     */
+    @Support({ POSTGRES })
+    public static Field<Long> oid(Table<?> table) {
+        return field("{0}.oid", Long.class, table);
     }
 }

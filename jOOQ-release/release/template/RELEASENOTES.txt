@@ -10,6 +10,40 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.2.3 - January 29, 2013
+================================================================================
+
+This is a patch release with some useful fixes for the 3.0 branch
+
+Features and improvements
+-------------------------
+#2979 - Add Maven install scripts (.bat and .sh) to deliverables
+#2780 - Add PostgresDSL.oid(Table<?>) to produce table.oid references
+
+Bug fixes
+---------
+#2152 - Invalid column type: 16, when binding null as java.lang.Boolean onto a
+        NUMBER(..) column in Oracle
+#2887 - jooq-codegen-maven should use a target directory relative to the module
+#2910 - The new matchers configuration cannot be used with Maven (added 
+        documentation)
+#2913 - Improve code generator compatibility with PostgreSQL 8.x by removing the
+        selection of INFORMATION_SCHEMA.COLUMNS.IDENTITY_GENERATION
+#2917 - Improve code generator compatibility with PostgreSQL 8.x by avoiding
+        casting to enum types
+#2926 - Add code-generation support for the MySQL TINYTEXT data type
+#2937 - Fix trailing whitespaces in generated code
+#2956 - isFalse()/isTrue() result in extra parameters
+#2958 - Error when the code-generation database user has insufficient grants to
+        read the "mysql" meta schema
+#2963 - Lower log level for warnings about unknown SQL data types from
+        MetaDataFieldProvider (plain SQL)
+#2977 - Missing parent pom.xml file in deliverables
+#2982 - Variable binding doesn't work in vendor-specific UPDATE t1 JOIN t2
+        queries, when joined tables are subqueries with bind values
+#2987 - Bind values are not debug-logged for standalone stored procedure or
+        function calls
+
 Version 3.2.2 - December 16, 2013
 ================================================================================
 

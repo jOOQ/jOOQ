@@ -40,6 +40,7 @@
  */
 package org.jooq.util.maven;
 
+import java.io.File;
 import java.io.StringWriter;
 
 import javax.xml.bind.JAXB;
@@ -85,6 +86,13 @@ public class Plugin extends AbstractMojo {
     @Override
     public void execute() throws MojoExecutionException {
         try {
+
+            // [#2887] Patch relative paths to take plugin execution basedir into accountcd joo
+            String dir = generator.getTarget().getDirectory();
+            if (!new File(dir).isAbsolute()) {
+                generator.getTarget().setDirectory(project.getBasedir() + File.separator + dir);
+            }
+
             Configuration configuration = new Configuration();
             configuration.setJdbc(jdbc);
             configuration.setGenerator(generator);

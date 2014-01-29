@@ -4490,6 +4490,33 @@ public class DSL {
     }
 
     /**
+     * Use a previously obtained result as a new {@link Table} that can be used
+     * in SQL statements through {@link #values(RowN...)}.
+     *
+     * @see #values(RowN...)
+     */
+    @Support
+    @Transition(
+        name = "TABLE",
+        args = "Result"
+    )
+    public static <R extends Record> Table<R> table(Result<R> result) {
+        int size = result.size();
+
+        RowN[] rows = new RowN[size];
+        for (int i = 0; i < size; i++)
+            rows[i] = (RowN) result.get(i).valuesRow();
+
+        Field<?>[] fields = result.fields();
+        String[] columns = new String[fields.length];
+        for (int i = 0; i < fields.length; i++)
+            columns[i] = fields[i].getName();
+
+        // TODO [#2986] Coerce the record type upon the resulting table.
+        return (Table<R>) values(rows).as("v", columns);
+    }
+
+    /**
      * A synonym for {@link #unnest(List)}.
      *
      * @see #unnest(List)
@@ -12364,9 +12391,12 @@ public class DSL {
         args = "Row+"
     )
     public static Table<Record> values(RowN... rows) {
-        String[] columns = new String[rows.length];
+        Values.assertNotEmpty(rows);
+        int size = rows[0].size();
 
-        for (int i = 0; i < rows.length; i++)
+        String[] columns = new String[size];
+
+        for (int i = 0; i < size; i++)
             columns[i] = "c" + i;
 
         return new Values<Record>(rows).as("v", columns);

@@ -12,6 +12,11 @@ package org.jooq.test.postgres.generatedclasses;
 public class Tables {
 
 	/**
+	 * The table public.t_2781
+	 */
+	public static final org.jooq.test.postgres.generatedclasses.tables.T_2781 T_2781 = org.jooq.test.postgres.generatedclasses.tables.T_2781.T_2781;
+
+	/**
 	 * The table public.t_639_numbers_table
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;

@@ -11,7 +11,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 90589288;
+	private static final long serialVersionUID = -254601552;
 
 	/**
 	 * The singleton instance of <code>test.t_book</code>
@@ -37,7 +37,7 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generated
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK);
 
 	/**
-	 * The column <code>test.t_book.co_author_id</code>. 
+	 * The column <code>test.t_book.co_author_id</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 

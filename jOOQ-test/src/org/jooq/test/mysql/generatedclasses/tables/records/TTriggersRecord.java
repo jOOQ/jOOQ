@@ -9,45 +9,45 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.TTriggersRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1026645275;
+	private static final long serialVersionUID = -95204257;
 
 	/**
-	 * Setter for <code>test.t_triggers.id_generated</code>. 
+	 * Setter for <code>test.t_triggers.id_generated</code>.
 	 */
 	public void setIdGenerated(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_triggers.id_generated</code>. 
+	 * Getter for <code>test.t_triggers.id_generated</code>.
 	 */
 	public java.lang.Integer getIdGenerated() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>test.t_triggers.id</code>. 
+	 * Setter for <code>test.t_triggers.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_triggers.id</code>. 
+	 * Getter for <code>test.t_triggers.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>test.t_triggers.counter</code>. 
+	 * Setter for <code>test.t_triggers.counter</code>.
 	 */
 	public void setCounter(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_triggers.counter</code>. 
+	 * Getter for <code>test.t_triggers.counter</code>.
 	 */
 	public java.lang.Integer getCounter() {
 		return (java.lang.Integer) getValue(2);

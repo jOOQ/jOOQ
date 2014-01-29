@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord> implements org.jooq.Record12<java.lang.Integer, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal, java.lang.Float, java.lang.Double>, org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_639NumbersTable {
 
-	private static final long serialVersionUID = -1744210460;
+	private static final long serialVersionUID = -1506917496;
 
 	/**
-	 * Setter for <code>public.t_639_numbers_table.id</code>. 
+	 * Setter for <code>public.t_639_numbers_table.id</code>.
 	 */
 	public T_639NumbersTableRecord setId(java.lang.Integer value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>public.t_639_numbers_table.id</code>. 
+	 * Getter for <code>public.t_639_numbers_table.id</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>public.t_639_numbers_table.short</code>. 
+	 * Setter for <code>public.t_639_numbers_table.short</code>.
 	 */
 	public T_639NumbersTableRecord setShort(java.lang.Short value) {
 		setValue(1, value);
@@ -36,7 +36,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>public.t_639_numbers_table.short</code>. 
+	 * Getter for <code>public.t_639_numbers_table.short</code>.
 	 */
 	@Override
 	public java.lang.Short getShort() {
@@ -44,7 +44,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>public.t_639_numbers_table.integer</code>. 
+	 * Setter for <code>public.t_639_numbers_table.integer</code>.
 	 */
 	public T_639NumbersTableRecord setInteger(java.lang.Integer value) {
 		setValue(2, value);
@@ -52,7 +52,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>public.t_639_numbers_table.integer</code>. 
+	 * Getter for <code>public.t_639_numbers_table.integer</code>.
 	 */
 	@Override
 	public java.lang.Integer getInteger() {
@@ -60,7 +60,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>public.t_639_numbers_table.long</code>. 
+	 * Setter for <code>public.t_639_numbers_table.long</code>.
 	 */
 	public T_639NumbersTableRecord setLong(java.lang.Long value) {
 		setValue(3, value);
@@ -68,7 +68,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>public.t_639_numbers_table.long</code>. 
+	 * Getter for <code>public.t_639_numbers_table.long</code>.
 	 */
 	@Override
 	public java.lang.Long getLong() {
@@ -76,7 +76,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>public.t_639_numbers_table.byte_decimal</code>. 
+	 * Setter for <code>public.t_639_numbers_table.byte_decimal</code>.
 	 */
 	public T_639NumbersTableRecord setByteDecimal(java.lang.Byte value) {
 		setValue(4, value);
@@ -84,7 +84,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>public.t_639_numbers_table.byte_decimal</code>. 
+	 * Getter for <code>public.t_639_numbers_table.byte_decimal</code>.
 	 */
 	@Override
 	public java.lang.Byte getByteDecimal() {
@@ -92,7 +92,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>public.t_639_numbers_table.short_decimal</code>. 
+	 * Setter for <code>public.t_639_numbers_table.short_decimal</code>.
 	 */
 	public T_639NumbersTableRecord setShortDecimal(java.lang.Short value) {
 		setValue(5, value);
@@ -100,7 +100,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>public.t_639_numbers_table.short_decimal</code>. 
+	 * Getter for <code>public.t_639_numbers_table.short_decimal</code>.
 	 */
 	@Override
 	public java.lang.Short getShortDecimal() {
@@ -108,7 +108,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>public.t_639_numbers_table.integer_decimal</code>. 
+	 * Setter for <code>public.t_639_numbers_table.integer_decimal</code>.
 	 */
 	public T_639NumbersTableRecord setIntegerDecimal(java.lang.Integer value) {
 		setValue(6, value);
@@ -116,7 +116,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>public.t_639_numbers_table.integer_decimal</code>. 
+	 * Getter for <code>public.t_639_numbers_table.integer_decimal</code>.
 	 */
 	@Override
 	public java.lang.Integer getIntegerDecimal() {
@@ -124,7 +124,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>public.t_639_numbers_table.long_decimal</code>. 
+	 * Setter for <code>public.t_639_numbers_table.long_decimal</code>.
 	 */
 	public T_639NumbersTableRecord setLongDecimal(java.lang.Long value) {
 		setValue(7, value);
@@ -132,7 +132,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>public.t_639_numbers_table.long_decimal</code>. 
+	 * Getter for <code>public.t_639_numbers_table.long_decimal</code>.
 	 */
 	@Override
 	public java.lang.Long getLongDecimal() {
@@ -140,7 +140,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>public.t_639_numbers_table.big_integer</code>. 
+	 * Setter for <code>public.t_639_numbers_table.big_integer</code>.
 	 */
 	public T_639NumbersTableRecord setBigInteger(java.math.BigInteger value) {
 		setValue(8, value);
@@ -148,7 +148,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>public.t_639_numbers_table.big_integer</code>. 
+	 * Getter for <code>public.t_639_numbers_table.big_integer</code>.
 	 */
 	@Override
 	public java.math.BigInteger getBigInteger() {
@@ -156,7 +156,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>public.t_639_numbers_table.big_decimal</code>. 
+	 * Setter for <code>public.t_639_numbers_table.big_decimal</code>.
 	 */
 	public T_639NumbersTableRecord setBigDecimal(java.math.BigDecimal value) {
 		setValue(9, value);
@@ -164,7 +164,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>public.t_639_numbers_table.big_decimal</code>. 
+	 * Getter for <code>public.t_639_numbers_table.big_decimal</code>.
 	 */
 	@Override
 	public java.math.BigDecimal getBigDecimal() {
@@ -172,7 +172,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>public.t_639_numbers_table.float</code>. 
+	 * Setter for <code>public.t_639_numbers_table.float</code>.
 	 */
 	public T_639NumbersTableRecord setFloat(java.lang.Float value) {
 		setValue(10, value);
@@ -180,7 +180,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>public.t_639_numbers_table.float</code>. 
+	 * Getter for <code>public.t_639_numbers_table.float</code>.
 	 */
 	@Override
 	public java.lang.Float getFloat() {
@@ -188,7 +188,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>public.t_639_numbers_table.double</code>. 
+	 * Setter for <code>public.t_639_numbers_table.double</code>.
 	 */
 	public T_639NumbersTableRecord setDouble(java.lang.Double value) {
 		setValue(11, value);
@@ -196,7 +196,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>public.t_639_numbers_table.double</code>. 
+	 * Getter for <code>public.t_639_numbers_table.double</code>.
 	 */
 	@Override
 	public java.lang.Double getDouble() {

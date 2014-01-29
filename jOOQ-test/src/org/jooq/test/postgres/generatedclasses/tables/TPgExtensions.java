@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TPgExtensions extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord> {
 
-	private static final long serialVersionUID = -585589541;
+	private static final long serialVersionUID = 1934592117;
 
 	/**
 	 * The singleton instance of <code>public.t_pg_extensions</code>
@@ -25,27 +25,27 @@ public class TPgExtensions extends org.jooq.impl.TableImpl<org.jooq.test.postgre
 	}
 
 	/**
-	 * The column <code>public.t_pg_extensions.id</code>. 
+	 * The column <code>public.t_pg_extensions.id</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this);
 
 	/**
-	 * The column <code>public.t_pg_extensions.pg_interval</code>. 
+	 * The column <code>public.t_pg_extensions.pg_interval</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord, java.lang.Object> PG_INTERVAL = createField("pg_interval", org.jooq.impl.DefaultDataType.getDefaultDataType("interval"), this);
 
 	/**
-	 * The column <code>public.t_pg_extensions.pg_box</code>. 
+	 * The column <code>public.t_pg_extensions.pg_box</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord, java.lang.Object> PG_BOX = createField("pg_box", org.jooq.impl.DefaultDataType.getDefaultDataType("box"), this);
 
 	/**
-	 * The column <code>public.t_pg_extensions.pg_hstore</code>. 
+	 * The column <code>public.t_pg_extensions.pg_hstore</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord, java.lang.Object> PG_HSTORE = createField("pg_hstore", org.jooq.impl.DefaultDataType.getDefaultDataType("USER-DEFINED"), this);
 
 	/**
-	 * The column <code>public.t_pg_extensions.pg_geometry</code>. 
+	 * The column <code>public.t_pg_extensions.pg_geometry</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord, java.lang.Object> PG_GEOMETRY = createField("pg_geometry", org.jooq.impl.DefaultDataType.getDefaultDataType("USER-DEFINED"), this);
 

@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITIdentity {
 
-	private static final long serialVersionUID = 678987955;
+	private static final long serialVersionUID = 2017561165;
 
 	/**
-	 * Setter for <code>public.t_identity.id</code>. 
+	 * Setter for <code>public.t_identity.id</code>.
 	 */
 	public TIdentityRecord setId(java.lang.Integer value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Getter for <code>public.t_identity.id</code>. 
+	 * Getter for <code>public.t_identity.id</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Setter for <code>public.t_identity.val</code>. 
+	 * Setter for <code>public.t_identity.val</code>.
 	 */
 	public TIdentityRecord setVal(java.lang.Integer value) {
 		setValue(1, value);
@@ -36,7 +36,7 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Getter for <code>public.t_identity.val</code>. 
+	 * Getter for <code>public.t_identity.val</code>.
 	 */
 	@Override
 	public java.lang.Integer getVal() {

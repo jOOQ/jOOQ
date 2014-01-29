@@ -10,37 +10,37 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 public interface ITArrays extends java.io.Serializable {
 
 	/**
-	 * Getter for <code>public.t_arrays.id</code>. 
+	 * Getter for <code>public.t_arrays.id</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Getter for <code>public.t_arrays.string_array</code>. 
+	 * Getter for <code>public.t_arrays.string_array</code>.
 	 */
 	public java.lang.String[] getStringArray();
 
 	/**
-	 * Getter for <code>public.t_arrays.number_array</code>. 
+	 * Getter for <code>public.t_arrays.number_array</code>.
 	 */
 	public java.lang.Integer[] getNumberArray();
 
 	/**
-	 * Getter for <code>public.t_arrays.date_array</code>. 
+	 * Getter for <code>public.t_arrays.date_array</code>.
 	 */
 	public java.sql.Date[] getDateArray();
 
 	/**
-	 * Getter for <code>public.t_arrays.udt_array</code>. 
+	 * Getter for <code>public.t_arrays.udt_array</code>.
 	 */
 	public org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord[] getUdtArray();
 
 	/**
-	 * Getter for <code>public.t_arrays.enum_array</code>. 
+	 * Getter for <code>public.t_arrays.enum_array</code>.
 	 */
 	public org.jooq.test.postgres.generatedclasses.enums.UCountry[] getEnumArray();
 
 	/**
-	 * Getter for <code>public.t_arrays.array_array</code>. 
+	 * Getter for <code>public.t_arrays.array_array</code>.
 	 */
 	public java.lang.Integer[] getArrayArray();
 }

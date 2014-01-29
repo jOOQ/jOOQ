@@ -9,11 +9,11 @@ package org.jooq.test.postgres.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UStreetTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord> {
 
-	private static final long serialVersionUID = -657777832;
+	private static final long serialVersionUID = 14436762;
 
 
 	/**
-	 * Setter for <code>public.u_street_type.street</code>. 
+	 * Setter for <code>public.u_street_type.street</code>.
 	 */
 	public UStreetTypeRecord setStreet(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.STREET, value);
@@ -21,14 +21,14 @@ public class UStreetTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Getter for <code>public.u_street_type.street</code>. 
+	 * Getter for <code>public.u_street_type.street</code>.
 	 */
 	public java.lang.String getStreet() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.STREET);
 	}
 
 	/**
-	 * Setter for <code>public.u_street_type.no</code>. 
+	 * Setter for <code>public.u_street_type.no</code>.
 	 */
 	public UStreetTypeRecord setNo(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.NO, value);
@@ -36,14 +36,14 @@ public class UStreetTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Getter for <code>public.u_street_type.no</code>. 
+	 * Getter for <code>public.u_street_type.no</code>.
 	 */
 	public java.lang.String getNo() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.NO);
 	}
 
 	/**
-	 * Setter for <code>public.u_street_type.floors</code>. 
+	 * Setter for <code>public.u_street_type.floors</code>.
 	 */
 	public UStreetTypeRecord setFloors(java.lang.Integer[] value) {
 		setValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.FLOORS, value);
@@ -51,14 +51,14 @@ public class UStreetTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Getter for <code>public.u_street_type.floors</code>. 
+	 * Getter for <code>public.u_street_type.floors</code>.
 	 */
 	public java.lang.Integer[] getFloors() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.FLOORS);
 	}
 
 	/**
-	 * Setter for <code>public.u_street_type.f_1323</code>. 
+	 * Setter for <code>public.u_street_type.f_1323</code>.
 	 */
 	public UStreetTypeRecord setF_1323(byte[] value) {
 		setValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.F_1323, value);
@@ -66,7 +66,7 @@ public class UStreetTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Getter for <code>public.u_street_type.f_1323</code>. 
+	 * Getter for <code>public.u_street_type.f_1323</code>.
 	 */
 	public byte[] getF_1323() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UStreetType.F_1323);

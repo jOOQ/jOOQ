@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String>, org.jooq.test.postgres.generatedclasses.tables.interfaces.IVLibrary {
 
-	private static final long serialVersionUID = 143482458;
+	private static final long serialVersionUID = -1269296464;
 
 	/**
-	 * Setter for <code>public.v_library.author</code>. 
+	 * Setter for <code>public.v_library.author</code>.
 	 */
 	public VLibraryRecord setAuthor(java.lang.String value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Getter for <code>public.v_library.author</code>. 
+	 * Getter for <code>public.v_library.author</code>.
 	 */
 	@Override
 	public java.lang.String getAuthor() {
@@ -28,7 +28,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Setter for <code>public.v_library.title</code>. 
+	 * Setter for <code>public.v_library.title</code>.
 	 */
 	public VLibraryRecord setTitle(java.lang.String value) {
 		setValue(1, value);
@@ -36,7 +36,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Getter for <code>public.v_library.title</code>. 
+	 * Getter for <code>public.v_library.title</code>.
 	 */
 	@Override
 	public java.lang.String getTitle() {

@@ -9,20 +9,20 @@ package org.jooq.test.mysql.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -991637223;
+	private static final long serialVersionUID = -1240874829;
 
 	/**
-	 * The parameter <code>test.p_unused.in1</code>. 
+	 * The parameter <code>test.p_unused.in1</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> IN1 = createParameter("in1", org.jooq.impl.SQLDataType.VARCHAR.length(50));
 
 	/**
-	 * The parameter <code>test.p_unused.out1</code>. 
+	 * The parameter <code>test.p_unused.out1</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Byte> OUT1 = createParameter("out1", org.jooq.impl.SQLDataType.TINYINT);
 
 	/**
-	 * The parameter <code>test.p_unused.out2</code>. 
+	 * The parameter <code>test.p_unused.out2</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Byte> OUT2 = createParameter("out2", org.jooq.impl.SQLDataType.TINYINT);
 

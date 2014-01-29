@@ -9,31 +9,31 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1643457273;
+	private static final long serialVersionUID = -7967099;
 
 	/**
-	 * Setter for <code>test.t_identity_pk.id</code>. 
+	 * Setter for <code>test.t_identity_pk.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_identity_pk.id</code>. 
+	 * Getter for <code>test.t_identity_pk.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>test.t_identity_pk.val</code>. 
+	 * Setter for <code>test.t_identity_pk.val</code>.
 	 */
 	public void setVal(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_identity_pk.val</code>. 
+	 * Getter for <code>test.t_identity_pk.val</code>.
 	 */
 	public java.lang.Integer getVal() {
 		return (java.lang.Integer) getValue(1);

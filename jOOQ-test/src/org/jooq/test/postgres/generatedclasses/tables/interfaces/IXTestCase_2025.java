@@ -10,12 +10,12 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 public interface IXTestCase_2025 extends java.io.Serializable {
 
 	/**
-	 * Getter for <code>public.x_test_case_2025.ref_id</code>. 
+	 * Getter for <code>public.x_test_case_2025.ref_id</code>.
 	 */
 	public java.lang.Integer getRefId();
 
 	/**
-	 * Getter for <code>public.x_test_case_2025.ref_name</code>. 
+	 * Getter for <code>public.x_test_case_2025.ref_name</code>.
 	 */
 	public java.lang.String getRefName();
 }

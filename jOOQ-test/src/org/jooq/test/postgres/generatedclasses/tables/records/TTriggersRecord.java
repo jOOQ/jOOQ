@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITTriggers {
 
-	private static final long serialVersionUID = 986892432;
+	private static final long serialVersionUID = 2074264642;
 
 	/**
-	 * Setter for <code>public.t_triggers.id_generated</code>. 
+	 * Setter for <code>public.t_triggers.id_generated</code>.
 	 */
 	public TTriggersRecord setIdGenerated(java.lang.Integer value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>public.t_triggers.id_generated</code>. 
+	 * Getter for <code>public.t_triggers.id_generated</code>.
 	 */
 	@Override
 	public java.lang.Integer getIdGenerated() {
@@ -28,7 +28,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>public.t_triggers.id</code>. 
+	 * Setter for <code>public.t_triggers.id</code>.
 	 */
 	public TTriggersRecord setId(java.lang.Integer value) {
 		setValue(1, value);
@@ -36,7 +36,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>public.t_triggers.id</code>. 
+	 * Getter for <code>public.t_triggers.id</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -44,7 +44,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>public.t_triggers.counter</code>. 
+	 * Setter for <code>public.t_triggers.counter</code>.
 	 */
 	public TTriggersRecord setCounter(java.lang.Integer value) {
 		setValue(2, value);
@@ -52,7 +52,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>public.t_triggers.counter</code>. 
+	 * Getter for <code>public.t_triggers.counter</code>.
 	 */
 	@Override
 	public java.lang.Integer getCounter() {

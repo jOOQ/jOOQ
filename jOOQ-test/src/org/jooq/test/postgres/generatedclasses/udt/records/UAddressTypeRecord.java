@@ -9,11 +9,11 @@ package org.jooq.test.postgres.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAddressTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = -279987123;
+	private static final long serialVersionUID = -745009023;
 
 
 	/**
-	 * Setter for <code>public.u_address_type.street</code>. 
+	 * Setter for <code>public.u_address_type.street</code>.
 	 */
 	public UAddressTypeRecord setStreet(org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord value) {
 		setValue(org.jooq.test.postgres.generatedclasses.udt.UAddressType.STREET, value);
@@ -21,14 +21,14 @@ public class UAddressTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>public.u_address_type.street</code>. 
+	 * Getter for <code>public.u_address_type.street</code>.
 	 */
 	public org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord getStreet() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UAddressType.STREET);
 	}
 
 	/**
-	 * Setter for <code>public.u_address_type.zip</code>. 
+	 * Setter for <code>public.u_address_type.zip</code>.
 	 */
 	public UAddressTypeRecord setZip(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.udt.UAddressType.ZIP, value);
@@ -36,14 +36,14 @@ public class UAddressTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>public.u_address_type.zip</code>. 
+	 * Getter for <code>public.u_address_type.zip</code>.
 	 */
 	public java.lang.String getZip() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UAddressType.ZIP);
 	}
 
 	/**
-	 * Setter for <code>public.u_address_type.city</code>. 
+	 * Setter for <code>public.u_address_type.city</code>.
 	 */
 	public UAddressTypeRecord setCity(java.lang.String value) {
 		setValue(org.jooq.test.postgres.generatedclasses.udt.UAddressType.CITY, value);
@@ -51,14 +51,14 @@ public class UAddressTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>public.u_address_type.city</code>. 
+	 * Getter for <code>public.u_address_type.city</code>.
 	 */
 	public java.lang.String getCity() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UAddressType.CITY);
 	}
 
 	/**
-	 * Setter for <code>public.u_address_type.country</code>. 
+	 * Setter for <code>public.u_address_type.country</code>.
 	 */
 	public UAddressTypeRecord setCountry(org.jooq.test.postgres.generatedclasses.enums.UCountry value) {
 		setValue(org.jooq.test.postgres.generatedclasses.udt.UAddressType.COUNTRY, value);
@@ -66,14 +66,14 @@ public class UAddressTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>public.u_address_type.country</code>. 
+	 * Getter for <code>public.u_address_type.country</code>.
 	 */
 	public org.jooq.test.postgres.generatedclasses.enums.UCountry getCountry() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UAddressType.COUNTRY);
 	}
 
 	/**
-	 * Setter for <code>public.u_address_type.since</code>. 
+	 * Setter for <code>public.u_address_type.since</code>.
 	 */
 	public UAddressTypeRecord setSince(java.sql.Date value) {
 		setValue(org.jooq.test.postgres.generatedclasses.udt.UAddressType.SINCE, value);
@@ -81,14 +81,14 @@ public class UAddressTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>public.u_address_type.since</code>. 
+	 * Getter for <code>public.u_address_type.since</code>.
 	 */
 	public java.sql.Date getSince() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UAddressType.SINCE);
 	}
 
 	/**
-	 * Setter for <code>public.u_address_type.code</code>. 
+	 * Setter for <code>public.u_address_type.code</code>.
 	 */
 	public UAddressTypeRecord setCode(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.udt.UAddressType.CODE, value);
@@ -96,14 +96,14 @@ public class UAddressTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>public.u_address_type.code</code>. 
+	 * Getter for <code>public.u_address_type.code</code>.
 	 */
 	public java.lang.Integer getCode() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UAddressType.CODE);
 	}
 
 	/**
-	 * Setter for <code>public.u_address_type.f_1323</code>. 
+	 * Setter for <code>public.u_address_type.f_1323</code>.
 	 */
 	public UAddressTypeRecord setF_1323(byte[] value) {
 		setValue(org.jooq.test.postgres.generatedclasses.udt.UAddressType.F_1323, value);
@@ -111,7 +111,7 @@ public class UAddressTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>public.u_address_type.f_1323</code>. 
+	 * Getter for <code>public.u_address_type.f_1323</code>.
 	 */
 	public byte[] getF_1323() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UAddressType.F_1323);

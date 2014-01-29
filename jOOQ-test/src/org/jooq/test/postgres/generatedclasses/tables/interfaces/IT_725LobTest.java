@@ -10,12 +10,12 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 public interface IT_725LobTest extends java.io.Serializable {
 
 	/**
-	 * Getter for <code>public.t_725_lob_test.id</code>. 
+	 * Getter for <code>public.t_725_lob_test.id</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Getter for <code>public.t_725_lob_test.lob</code>. 
+	 * Getter for <code>public.t_725_lob_test.lob</code>.
 	 */
 	public byte[] getLob();
 }

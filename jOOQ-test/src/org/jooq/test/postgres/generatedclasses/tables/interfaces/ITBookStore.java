@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 public interface ITBookStore extends java.io.Serializable {
 
 	/**
-	 * Getter for <code>public.t_book_store.name</code>. 
+	 * Getter for <code>public.t_book_store.name</code>.
 	 */
 	public java.lang.String getName();
 }

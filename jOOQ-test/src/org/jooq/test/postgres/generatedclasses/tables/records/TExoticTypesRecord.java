@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TExoticTypesRecord> implements org.jooq.Record2<java.lang.Integer, java.util.UUID>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITExoticTypes {
 
-	private static final long serialVersionUID = 1485225822;
+	private static final long serialVersionUID = 907742402;
 
 	/**
-	 * Setter for <code>public.t_exotic_types.id</code>. 
+	 * Setter for <code>public.t_exotic_types.id</code>.
 	 */
 	public TExoticTypesRecord setId(java.lang.Integer value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Getter for <code>public.t_exotic_types.id</code>. 
+	 * Getter for <code>public.t_exotic_types.id</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Setter for <code>public.t_exotic_types.uu</code>. 
+	 * Setter for <code>public.t_exotic_types.uu</code>.
 	 */
 	public TExoticTypesRecord setUu(java.util.UUID value) {
 		setValue(1, value);
@@ -36,7 +36,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Getter for <code>public.t_exotic_types.uu</code>. 
+	 * Getter for <code>public.t_exotic_types.uu</code>.
 	 */
 	@Override
 	public java.util.UUID getUu() {

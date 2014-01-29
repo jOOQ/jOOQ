@@ -10,12 +10,12 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 public interface ITExoticTypes extends java.io.Serializable {
 
 	/**
-	 * Getter for <code>public.t_exotic_types.id</code>. 
+	 * Getter for <code>public.t_exotic_types.id</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Getter for <code>public.t_exotic_types.uu</code>. 
+	 * Getter for <code>public.t_exotic_types.uu</code>.
 	 */
 	public java.util.UUID getUu();
 }

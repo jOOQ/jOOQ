@@ -9,15 +9,15 @@ package org.jooq.test.mysql.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Fp1908_PROCEDURE extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 233505146;
+	private static final long serialVersionUID = 1649513364;
 
 	/**
-	 * The parameter <code>test.fp1908.p1</code>. 
+	 * The parameter <code>test.fp1908.p1</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P1 = createParameter("p1", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>test.fp1908.p2</code>. 
+	 * The parameter <code>test.fp1908.p2</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P2 = createParameter("p2", org.jooq.impl.SQLDataType.INTEGER);
 

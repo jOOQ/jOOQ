@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBookStore {
 
-	private static final long serialVersionUID = -1108474121;
+	private static final long serialVersionUID = 520182333;
 
 	/**
-	 * Setter for <code>public.t_book_store.name</code>. 
+	 * Setter for <code>public.t_book_store.name</code>.
 	 */
 	public TBookStoreRecord setName(java.lang.String value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * Getter for <code>public.t_book_store.name</code>. 
+	 * Getter for <code>public.t_book_store.name</code>.
 	 */
 	@Override
 	public java.lang.String getName() {

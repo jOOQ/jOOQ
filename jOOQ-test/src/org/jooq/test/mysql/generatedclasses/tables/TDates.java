@@ -9,7 +9,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 1432051254;
+	private static final long serialVersionUID = 951281856;
 
 	/**
 	 * The singleton instance of <code>test.t_dates</code>
@@ -25,42 +25,42 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generate
 	}
 
 	/**
-	 * The column <code>test.t_dates.id</code>. 
+	 * The column <code>test.t_dates.id</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), T_DATES);
 
 	/**
-	 * The column <code>test.t_dates.d</code>. 
+	 * The column <code>test.t_dates.d</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TDatesRecord, java.sql.Date> D = createField("d", org.jooq.impl.SQLDataType.DATE, T_DATES);
 
 	/**
-	 * The column <code>test.t_dates.t</code>. 
+	 * The column <code>test.t_dates.t</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TDatesRecord, java.sql.Time> T = createField("t", org.jooq.impl.SQLDataType.TIME, T_DATES);
 
 	/**
-	 * The column <code>test.t_dates.ts</code>. 
+	 * The column <code>test.t_dates.ts</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("ts", org.jooq.impl.SQLDataType.TIMESTAMP, T_DATES);
 
 	/**
-	 * The column <code>test.t_dates.d_int</code>. 
+	 * The column <code>test.t_dates.d_int</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> D_INT = createField("d_int", org.jooq.impl.SQLDataType.INTEGER, T_DATES);
 
 	/**
-	 * The column <code>test.t_dates.ts_bigint</code>. 
+	 * The column <code>test.t_dates.ts_bigint</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.BIGINT, T_DATES);
 
 	/**
-	 * The column <code>test.t_dates.y2</code>. 
+	 * The column <code>test.t_dates.y2</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TDatesRecord, java.sql.Date> Y2 = createField("y2", org.jooq.impl.SQLDataType.DATE, T_DATES);
 
 	/**
-	 * The column <code>test.t_dates.y4</code>. 
+	 * The column <code>test.t_dates.y4</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TDatesRecord, java.sql.Date> Y4 = createField("y4", org.jooq.impl.SQLDataType.DATE, T_DATES);
 

@@ -47,6 +47,7 @@ import java.util.logging.Level;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.ExecuteType;
+import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
 
 /**
@@ -81,6 +82,19 @@ public class LoggerListener extends DefaultExecuteListener {
                     log.debug("-> with bind values", inlined);
                 }
             }
+
+            // [#2987] Log routines
+            else if (ctx.routine() != null) {
+                log.debug("Calling routine", ctx.sql());
+
+                String inlined = DSL.using(ctx.configuration())
+                                    .renderInlined(ctx.routine());
+
+                if (!ctx.sql().equals(inlined)) {
+                    log.debug("-> with bind values", inlined);
+                }
+            }
+
             else if (!StringUtils.isBlank(ctx.sql())) {
 
                 // [#1529] Batch queries should be logged specially

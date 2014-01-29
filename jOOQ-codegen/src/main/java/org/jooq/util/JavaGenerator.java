@@ -1547,8 +1547,8 @@ public class JavaGenerator extends AbstractGenerator {
             String tableRef = generateInstanceFields() ? "this" : getStrategy().getJavaIdentifier(table);
 
             out.tab(1).javadoc("The column <code>%s</code>.%s", column.getQualifiedOutputName(), defaultIfBlank(" " + columnComment, ""));
-            out.tab(1).println("public %sfinal %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\");",
-                isStatic, TableField.class, recordType, columnType, columnId, columnName, columnTypeRef, tableRef, escapeString(columnComment));
+            out.tab(1).println("public %sfinal %s<%s, %s> %s = createField(\"%s\", %s, %s);",
+                isStatic, TableField.class, recordType, columnType, columnId, columnName, columnTypeRef, tableRef);
         }
 
         // [#1255] With instance fields, the table constructor may

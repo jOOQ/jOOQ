@@ -152,13 +152,14 @@ class DefaultBindContext extends AbstractBindContext {
                 stmt.setNull(nextIndex(), Types.BINARY);
             }
 
-            // [#2152] Oracle cannot bind the type BOOLEAN. Let the JDBC driver
-            // figure out the correct type.
-            else if (sqlType == Types.BOOLEAN && configuration.dialect().family() == ORACLE) {
-                stmt.setObject(nextIndex(), null);
-            }
+            /* [pro] xx
+            xx xxxxxxx xxxxxx xxxxxx xxxx xxx xxxx xxxxxxxx xxx xxx xxxx xxxxxx
+            xx xxxxxx xxx xxx xxxxxxx xxxxx
+            xxxx xx xxxxxxxx xx xxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+            x
 
-            /* [/pro] */
+            xx [/pro] */
             // All other types can be set to null if the JDBC type is known
             else if (sqlType != Types.OTHER) {
                 stmt.setNull(nextIndex(), sqlType);

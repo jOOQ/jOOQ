@@ -58,6 +58,6 @@ import org.jooq.api.annotation.State;
  * @author Lukas Eder
  */
 @State
-public interface UpdateSetMoreStep<R extends Record> extends UpdateSetStep<R>, UpdateWhereStep<R> {
+public interface UpdateSetMoreStep<R extends Record> extends UpdateSetStep<R>, UpdateFromStep<R> {
 
 }

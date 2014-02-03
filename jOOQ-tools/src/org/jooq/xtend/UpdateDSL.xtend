@@ -159,7 +159,7 @@ class UpdateDSL extends Generators {
                 	"Row"
             	}
             )
-            <«TN(degree)»> UpdateWhereStep<R> set(Row«degree»<«TN(degree)»> row, Row«degree»<«TN(degree)»> value);
+            <«TN(degree)»> UpdateFromStep<R> set(Row«degree»<«TN(degree)»> row, Row«degree»<«TN(degree)»> value);
         «ENDFOR»
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
         
@@ -174,7 +174,7 @@ class UpdateDSL extends Generators {
                 	"Select"
             	}
             )
-            <«TN(degree)»> UpdateWhereStep<R> set(Row«degree»<«TN(degree)»> row, Select<? extends Record«degree»<«TN(degree)»>> select);
+            <«TN(degree)»> UpdateFromStep<R> set(Row«degree»<«TN(degree)»> row, Select<? extends Record«degree»<«TN(degree)»>> select);
         «ENDFOR»
         
         }
@@ -191,7 +191,7 @@ class UpdateDSL extends Generators {
         
             «generatedMethod»
             @Override
-            public final <«TN(degree)»> UpdateWhereStep<R> set(Row«degree»<«TN(degree)»> row, Row«degree»<«TN(degree)»> value) {
+            public final <«TN(degree)»> UpdateFromStep<R> set(Row«degree»<«TN(degree)»> row, Row«degree»<«TN(degree)»> value) {
                 getDelegate().addValues(row, value);
                 return this;
             }
@@ -200,7 +200,7 @@ class UpdateDSL extends Generators {
         
             «generatedMethod»
             @Override
-            public final <«TN(degree)»> UpdateWhereStep<R> set(Row«degree»<«TN(degree)»> row, Select<? extends Record«degree»<«TN(degree)»>> select) {
+            public final <«TN(degree)»> UpdateFromStep<R> set(Row«degree»<«TN(degree)»> row, Select<? extends Record«degree»<«TN(degree)»>> select) {
                 getDelegate().addValues(row, select);
                 return this;
             }

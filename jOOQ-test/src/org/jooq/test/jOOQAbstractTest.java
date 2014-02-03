@@ -1702,6 +1702,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testUpdateFrom() throws Exception {
+        new InsertUpdateTests(this).testUpdateFrom();
+    }
+
+    @Test
     public void testInsertOnDuplicateKeyUpdate() throws Exception {
         new InsertUpdateTests(this).testInsertOnDuplicateKeyUpdate();
     }

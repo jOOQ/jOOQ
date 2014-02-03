@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.castNull;
+import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.falseCondition;
@@ -1342,5 +1343,76 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(a1, a2);
         assertEquals("ABC", b21.getValue(TBook_TITLE()));
         assertEquals("ABC", b22.getValue(TBook_TITLE()));
+    }
+
+    @Test
+    public void testUpdateFrom() throws Exception {
+        switch (dialect().family()) {
+            /* [pro] */
+            case ACCESS:
+            case DB2:
+            case ORACLE:
+            /* [/pro] */
+
+            case CUBRID:
+            case DERBY:
+            case FIREBIRD:
+            case H2:
+            case HSQLDB:
+            case MARIADB:
+            case MYSQL:
+            case SQLITE:
+                log.info("SKIPPING", "UPDATE .. FROM integration test. This syntax is not supported by " + dialect());
+                return;
+        }
+
+        jOOQAbstractTest.reset = false;
+
+        switch (dialect().family()) {
+            /* [pro] */
+            // Ingres has yet another understanding of this FROM clause.
+            case INGRES:
+            /* [/pro] */
+
+            case POSTGRES:
+                Table<B> b1 = TBook().as("b1");
+
+                assertEquals(4,
+                create().update(b1)
+                        .set(b1.field(TBook_TITLE()), concat(TAuthor_FIRST_NAME(), inline(" "), TAuthor_LAST_NAME(), inline(": "), TBook_TITLE()))
+                        .from(TBook().join(
+                            TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID())
+                                      .and(TBook_ID().lt(5))))
+                        .where(TBook_ID().eq(b1.field(TBook_ID())))
+                        .execute());
+                break;
+
+            /* [pro] */
+            case SQLSERVER:
+            case SYBASE:
+            /* [/pro] */
+
+            default:
+                assertEquals(4,
+                create().update(TBook())
+                        .set(TBook_TITLE(), concat(TAuthor_FIRST_NAME(), inline(" "), TAuthor_LAST_NAME(), inline(": "), TBook_TITLE()))
+                        .from(TBook().join(
+                            TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID())
+                                      .and(TBook_ID().lt(5))))
+                        .execute());
+
+                break;
+        }
+
+        Result<B> result =
+        create().selectFrom(TBook())
+                .orderBy(TBook_ID())
+                .fetch();
+
+        assertEquals(BOOK_AUTHOR_IDS, result.getValues(TBook_AUTHOR_ID()));
+        assertEquals(AUTHOR_FIRST_NAMES.get(0) + " " + AUTHOR_LAST_NAMES.get(0) + ": " + BOOK_TITLES.get(0), result.get(0).getValue(TBook_TITLE()));
+        assertEquals(AUTHOR_FIRST_NAMES.get(0) + " " + AUTHOR_LAST_NAMES.get(0) + ": " + BOOK_TITLES.get(1), result.get(1).getValue(TBook_TITLE()));
+        assertEquals(AUTHOR_FIRST_NAMES.get(1) + " " + AUTHOR_LAST_NAMES.get(1) + ": " + BOOK_TITLES.get(2), result.get(2).getValue(TBook_TITLE()));
+        assertEquals(AUTHOR_FIRST_NAMES.get(1) + " " + AUTHOR_LAST_NAMES.get(1) + ": " + BOOK_TITLES.get(3), result.get(3).getValue(TBook_TITLE()));
     }
 }

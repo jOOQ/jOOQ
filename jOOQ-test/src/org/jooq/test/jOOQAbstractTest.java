@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2013, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * This work is dual-licensed
@@ -1699,6 +1699,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testUpdateJoin() throws Exception {
         new InsertUpdateTests(this).testUpdateJoin();
+    }
+
+    @Test
+    public void testUpdateFrom() throws Exception {
+        new InsertUpdateTests(this).testUpdateFrom();
     }
 
     @Test

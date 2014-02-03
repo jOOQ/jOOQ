@@ -536,6 +536,19 @@ public enum Clause {
     UPDATE_SET_ASSIGNMENT,
 
     /**
+     * A vendor-specific <code>FROM</code> clause within an {@link #UPDATE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>FROM</code> keyword</li>
+     * <li>the table reference list</li>
+     * </ul>
+     * <p>
+     * See {@link #TABLE} and related clauses for possible table references.
+     */
+    UPDATE_FROM,
+
+    /**
      * A <code>WHERE</code> clause within an {@link #UPDATE} statement.
      * <p>
      * This clause surrounds

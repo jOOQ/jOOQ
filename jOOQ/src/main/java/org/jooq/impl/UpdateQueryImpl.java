@@ -43,6 +43,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.UPDATE;
+import static org.jooq.Clause.UPDATE_FROM;
 import static org.jooq.Clause.UPDATE_RETURNING;
 import static org.jooq.Clause.UPDATE_SET;
 import static org.jooq.Clause.UPDATE_SET_ASSIGNMENT;
@@ -52,6 +53,7 @@ import static org.jooq.Clause.UPDATE_WHERE;
 // ...
 import static org.jooq.impl.DSL.select;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
@@ -113,6 +115,7 @@ import org.jooq.Row8;
 import org.jooq.Row9;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.TableLike;
 import org.jooq.UpdateQuery;
 
 /**
@@ -124,6 +127,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     private static final Clause[]       CLAUSES          = { UPDATE };
 
     private final FieldMapForUpdate     updateMap;
+    private final TableList             from;
     private final ConditionProviderImpl condition;
     private Row                         multiRow;
     private Row                         multiValue;
@@ -132,8 +136,9 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     UpdateQueryImpl(Configuration configuration, Table<R> table) {
         super(configuration, table);
 
-        this.condition = new ConditionProviderImpl();
         this.updateMap = new FieldMapForUpdate(UPDATE_SET_ASSIGNMENT);
+        this.from = new TableList();
+        this.condition = new ConditionProviderImpl();
     }
 
     @Override
@@ -425,6 +430,18 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     @Override
+    public final void addFrom(Collection<? extends TableLike<?>> f) {
+        for (TableLike<?> provider : f) {
+            from.add(provider.asTable());
+        }
+    }
+
+    @Override
+    public final void addFrom(TableLike<?>... f) {
+        addFrom(Arrays.asList(f));
+    }
+
+    @Override
     public final void addConditions(Collection<? extends Condition> conditions) {
         condition.addConditions(conditions);
     }
@@ -456,8 +473,24 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                .declareTables(true)
                .visit(getInto())
                .declareTables(false)
-               .end(UPDATE_UPDATE)
-               .formatSeparator()
+               .end(UPDATE_UPDATE);
+
+        /* [pro] xx
+        xx xxxxxxx xxxxxx xxx x xxxxxxx xxxxxxxxxxxxx xx xxx xxxxxx xx xxxx xxxxxx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+            xx xxxxxxxxxxxxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxxxxxx xx
+                       xxxxxxxxxxxxx
+            x
+
+            xxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+        xx [/pro] */
+
+        context.formatSeparator()
                .start(UPDATE_SET)
                .keyword("set")
                .sql(" ");
@@ -507,8 +540,30 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                    .formatIndentLockEnd();
         }
 
-        context.end(UPDATE_SET)
-               .start(UPDATE_WHERE);
+        context.end(UPDATE_SET);
+
+        switch (context.configuration().dialect().family()) {
+
+            /* [pro] xx
+            xx xxxxxxx xxxxxx xxx x xxxxxxx xxxxxxxxxxxxx xx xxx xxxxxx xx xxxx xxxxxx
+            xxxx xxxxxxx
+                xxxxxx
+            xx [/pro] */
+
+            default:
+                context.start(UPDATE_FROM);
+
+                if (!from.isEmpty()) {
+                    context.formatSeparator()
+                           .keyword("from").sql(" ")
+                           .visit(from);
+                }
+
+                context.end(UPDATE_FROM);
+                break;
+        }
+
+        context.start(UPDATE_WHERE);
 
         if (!(getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
@@ -532,6 +587,14 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                .visit(getInto())
                .declareTables(declareTables);
 
+
+        /* [pro] xx
+        xx xxxxxxx xxxxxx xxx x xxxxxxx xxxxxxxxxxxxx xx xxx xxxxxx xx xxxx xxxxxx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+            xxxxxxxxxxxxxxxxxxxx
+        x
+        xx [/pro] */
+
         // A multi-row update was specified
         if (multiRow != null) {
             context.visit(multiRow);
@@ -549,6 +612,19 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         // A regular (non-multi-row) update was specified
         else {
             context.visit(updateMap);
+        }
+
+        switch (context.configuration().dialect().family()) {
+
+            /* [pro] xx
+            xx xxxxxxx xxxxxx xxx x xxxxxxx xxxxxxxxxxxxx xx xxx xxxxxx xx xxxx xxxxxx
+            xxxx xxxxxxx
+                xxxxxx
+            xx [/pro] */
+
+            default:
+                context.visit(from);
+                break;
         }
 
         context.visit(condition);

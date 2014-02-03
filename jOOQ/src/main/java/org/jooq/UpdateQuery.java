@@ -48,6 +48,8 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
 
 import java.util.Collection;
 
@@ -373,6 +375,22 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> void addValues(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row, Select<? extends Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select);
 
 // [jooq-tools] END [addValues]
+
+    /**
+     * Add tables to the table product.
+     *
+     * @param from The added tables
+     */
+    @Support({ POSTGRES })
+    void addFrom(TableLike<?>... from);
+
+    /**
+     * Add tables to the table product.
+     *
+     * @param from The added tables
+     */
+    @Support({ POSTGRES })
+    void addFrom(Collection<? extends TableLike<?>> from);
 
     // ------------------------------------------------------------------------
     // XXX: Methods from ConditionProvider

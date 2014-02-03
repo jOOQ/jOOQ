@@ -92,7 +92,7 @@ import org.jooq.impl.DSL;
 public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
 
     /**
-     * Add a <code>FROM</code> clause to the query
+     * Add a <code>FROM</code> clause to the query.
      */
     @Support
     @Transition(
@@ -102,7 +102,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinStep<R> from(TableLike<?>... table);
 
     /**
-     * Add a <code>FROM</code> clause to the query
+     * Add a <code>FROM</code> clause to the query.
      */
     @Support
     @Transition(
@@ -112,7 +112,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinStep<R> from(Collection<? extends TableLike<?>> tables);
 
     /**
-     * Add a <code>FROM</code> clause to the query
+     * Add a <code>FROM</code> clause to the query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -125,7 +125,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinStep<R> from(String sql);
 
     /**
-     * Add a <code>FROM</code> clause to the query
+     * Add a <code>FROM</code> clause to the query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -138,7 +138,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinStep<R> from(String sql, Object... bindings);
 
     /**
-     * Add a <code>FROM</code> clause to the query
+     * Add a <code>FROM</code> clause to the query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -151,7 +151,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinStep<R> from(String sql, QueryPart... parts);
 
     /**
-     * Add an Oracle-style hint to the preceding select clause
+     * Add an Oracle-style hint to the preceding select clause.
      * <p>
      * Example: <code><pre>
      * DSLContext create = DSL.using(configuration);

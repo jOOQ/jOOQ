@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2013, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * This work is dual-licensed
@@ -134,7 +134,7 @@ class Splitter extends Generators {
         else if (token == "pro" && in.name.equals("LICENSE.txt")) {
             ex.submit[ |
                 write(out, '''
-Copyright (c) 2009-2013, Data Geekery GmbH (http://www.datageekery.com)
+Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
 All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -213,7 +213,7 @@ For more information, please visit: http://www.jooq.org/licenses''');
             // Replace the Java / Scala / Xtend license header
             replaceFirst.add(new ImmutablePair(compile('''(?s:/\*\*[\r\n] \* Copyright.*?eula[\r\n] \*/)'''), '''
 /**
- * Copyright (c) 2009-2013, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");

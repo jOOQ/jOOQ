@@ -459,7 +459,7 @@ public abstract class jOOQAbstractTest<
     }
 
     @BeforeClass
-    public static void testStart() {
+    public static void testStart() throws Exception {
         log.info("STARTING");
     }
 

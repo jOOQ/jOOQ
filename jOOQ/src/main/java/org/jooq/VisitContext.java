@@ -111,6 +111,11 @@ public interface VisitContext {
     Clause[] clauses();
 
     /**
+     * This is the same as calling {@link #clauses()}<code>.length</code>.
+     */
+    int clausesLength();
+
+    /**
      * The most recent {@link QueryPart} that was encountered through
      * {@link Context#visit(QueryPart)}.
      */
@@ -135,6 +140,11 @@ public interface VisitContext {
      * <code>VisitContext</code> contains a stack of <code>QueryParts</code>.
      */
     QueryPart[] queryParts();
+
+    /**
+     * This is the same as calling {@link #queryParts()}<code>.length</code>.
+     */
+    int queryPartsLength();
 
     /**
      * The underlying {@link RenderContext} or {@link BindContext} object.

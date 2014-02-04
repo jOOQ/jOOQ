@@ -213,7 +213,7 @@ public class LoggerListener extends DefaultExecuteListener {
         @Override
         public void visitEnd(VisitContext context) {
             if (anyAbbreviations) {
-                if (context.queryParts().length == 1) {
+                if (context.queryPartsLength() == 1) {
                     context.renderContext().sql(" -- Bind values may have been abbreviated for DEBUG logging. Use TRACE logging for very large bind variables.");
                 }
             }

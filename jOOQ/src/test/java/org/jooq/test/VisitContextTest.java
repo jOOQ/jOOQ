@@ -101,6 +101,7 @@ import static org.jooq.Clause.TABLE_VALUES;
 import static org.jooq.Clause.TRUNCATE;
 import static org.jooq.Clause.TRUNCATE_TRUNCATE;
 import static org.jooq.Clause.UPDATE;
+import static org.jooq.Clause.UPDATE_FROM;
 import static org.jooq.Clause.UPDATE_RETURNING;
 import static org.jooq.Clause.UPDATE_SET;
 import static org.jooq.Clause.UPDATE_SET_ASSIGNMENT;
@@ -599,6 +600,7 @@ public class VisitContextTest extends AbstractTest {
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_REFERENCE),
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD),
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_VALUE),
+            asList(UPDATE, UPDATE_FROM),
             asList(UPDATE, UPDATE_WHERE),
             asList(UPDATE, UPDATE_RETURNING)
         ),
@@ -624,6 +626,7 @@ public class VisitContextTest extends AbstractTest {
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_REFERENCE),
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD),
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_REFERENCE),
+            asList(UPDATE, UPDATE_FROM),
             asList(UPDATE, UPDATE_WHERE),
             asList(UPDATE, UPDATE_RETURNING)
         ),
@@ -654,6 +657,7 @@ public class VisitContextTest extends AbstractTest {
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD_ROW, FIELD, FIELD_VALUE),
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD_ROW, FIELD),
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD_ROW, FIELD, FIELD_REFERENCE),
+            asList(UPDATE, UPDATE_FROM),
             asList(UPDATE, UPDATE_WHERE),
             asList(UPDATE, UPDATE_RETURNING)
         ),
@@ -675,6 +679,7 @@ public class VisitContextTest extends AbstractTest {
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_REFERENCE),
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD),
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_VALUE),
+            asList(UPDATE, UPDATE_FROM),
             asList(UPDATE, UPDATE_WHERE),
             asList(UPDATE, UPDATE_WHERE, CONDITION),
             asList(UPDATE, UPDATE_WHERE, CONDITION, CONDITION_COMPARISON),
@@ -705,6 +710,7 @@ public class VisitContextTest extends AbstractTest {
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_REFERENCE),
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD),
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_VALUE),
+            asList(UPDATE, UPDATE_FROM),
             asList(UPDATE, UPDATE_WHERE),
             asList(UPDATE, UPDATE_RETURNING),
             asList(UPDATE, UPDATE_RETURNING, FIELD),

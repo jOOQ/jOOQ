@@ -242,6 +242,11 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
         }
 
         @Override
+        public final int clausesLength() {
+            return visitClauses.size();
+        }
+
+        @Override
         public final QueryPart queryPart() {
             return visitParts.peekLast();
         }
@@ -255,6 +260,11 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
         @Override
         public final QueryPart[] queryParts() {
             return visitParts.toArray(new QueryPart[visitParts.size()]);
+        }
+
+        @Override
+        public final int queryPartsLength() {
+            return visitParts.size();
         }
 
         @Override

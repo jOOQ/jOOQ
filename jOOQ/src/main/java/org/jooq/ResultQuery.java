@@ -60,16 +60,15 @@ import org.jooq.impl.DefaultRecordMapper;
  * A query that can return results. Mostly, this is a {@link Select} query used
  * for a <code>SELECT</code> statement.
  * <p>
- * However, some RDBMS also allow for other constructs, such as Postgres'
- * <code>FETCH ALL IN {cursor-name}</code>. The easiest way to execute such a
- * query is by using
+ * <h3>Lifecycle guarantees</h3> Most methods in this type are based on
+ * {@link #fetch()}, which completes the whole {@link ConnectionProvider} and
+ * {@link ExecuteListener} lifecycles, eagerly fetching all results into memory.
+ * Underlying JDBC {@link ResultSet}s are always closed. Underlying JDBC
+ * {@link PreparedStatement}s are closed, unless {@link #keepStatement(boolean)}
+ * is set.
  * <p>
- * <code><pre>
- * DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
- * Result&lt;Record&gt; result = create.fetch("FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"");
- * </pre></code> Another example (for SQLite): <code><pre>
- * Result&lt;Record&gt; result = create.fetch("pragma table_info('my_table')");
- * </pre></code>
+ * In order to keep open {@link ResultSet}s and fetch records lazily, use
+ * {@link #fetchLazy()} instead and then operate on {@link Cursor}.
  *
  * @author Lukas Eder
  */
@@ -93,6 +92,15 @@ public interface ResultQuery<R extends Record> extends Query {
      * The result and its contained records are attached to the original
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
      * to override this behaviour.
+     * <h3>Lifecycle guarantees</h3> This method completes the whole
+     * {@link ConnectionProvider} and {@link ExecuteListener} lifecycles,
+     * eagerly fetching all results into memory. Underlying JDBC
+     * {@link ResultSet}s are always closed. Underlying JDBC
+     * {@link PreparedStatement}s are closed, unless
+     * {@link #keepStatement(boolean)} is set.
+     * <p>
+     * In order to keep open {@link ResultSet}s and fetch records lazily, use
+     * {@link #fetchLazy()} instead and then operate on {@link Cursor}.
      *
      * @return The result.
      * @throws DataAccessException if something went wrong executing the query
@@ -103,10 +111,12 @@ public interface ResultQuery<R extends Record> extends Query {
      * Execute the query and return the generated result as a JDBC
      * {@link ResultSet}.
      * <p>
-     * This will return a {@link ResultSet} wrapping the JDBC driver's
-     * <code>ResultSet</code>. Closing this <code>ResultSet</code> may close the
-     * producing {@link Statement} or {@link PreparedStatement}, depending on
-     * your setting for {@link #keepStatement(boolean)}.
+     * This is the same as calling {@link #fetchLazy()}.
+     * {@link Cursor#resultSet() resultSet()} and will return a
+     * {@link ResultSet} wrapping the JDBC driver's <code>ResultSet</code>.
+     * Closing this <code>ResultSet</code> may close the producing
+     * {@link Statement} or {@link PreparedStatement}, depending on your setting
+     * for {@link #keepStatement(boolean)}.
      * <p>
      * You can use this method when you want to use jOOQ for query execution,
      * but not for result fetching. The returned <code>ResultSet</code> can also

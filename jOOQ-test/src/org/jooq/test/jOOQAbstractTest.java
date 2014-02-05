@@ -1527,6 +1527,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchIntoRecordClass() throws Exception {
+        new FetchTests(this).testFetchIntoRecordClass();
+    }
+
+    @Test
     public void testFetchIntoTable() throws Exception {
         new FetchTests(this).testFetchIntoTable();
     }

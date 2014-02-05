@@ -522,48 +522,53 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public final <R extends Record> R into(final Table<R> table) {
-        return Utils.newRecord(table, configuration())
-                    .operate(new RecordOperation<R, MappingException>() {
+    public final <R extends Record> R into(Table<R> table) {
+        return Utils.newRecord(table, configuration()).operate(new RecordCopyOperation<R>());
+    }
 
-            @Override
-            public R operate(R record) throws MappingException {
-                try {
-                    for (Field<?> targetField : table.fields()) {
-                        Field<?> sourceField = field(targetField);
+    final <R extends Record> R intoRecord(Class<R> type) {
+        return Utils.newRecord(type, fields(), configuration()).operate(new RecordCopyOperation<R>());
+    }
 
-                        if (sourceField != null) {
-                            Utils.setValue(record, targetField, AbstractRecord.this, sourceField);
+    private class RecordCopyOperation<R extends Record> implements RecordOperation<R, MappingException> {
+
+        @Override
+        public R operate(R record) throws MappingException {
+            try {
+                for (Field<?> targetField : record.fields()) {
+                    Field<?> sourceField = field(targetField);
+
+                    if (sourceField != null) {
+                        Utils.setValue(record, targetField, AbstractRecord.this, sourceField);
+                    }
+                }
+
+                // [#1522] If the primary key has been fully fetched, then changed
+                // flags should all be reset in order for the returned record to be
+                // updatable using store()
+                if (record instanceof AbstractRecord) {
+                    UniqueKey<?> key = ((AbstractRecord) record).getPrimaryKey();
+
+                    if (key != null) {
+                        boolean isKeySet = true;
+
+                        for (Field<?> field : key.getFields()) {
+                            isKeySet = isKeySet && (field(field) != null);
+                        }
+
+                        if (isKeySet) {
+                            record.changed(false);
                         }
                     }
-
-                    // [#1522] If the primary key has been fully fetched, then changed
-                    // flags should all be reset in order for the returned record to be
-                    // updatable using store()
-                    if (record instanceof AbstractRecord) {
-                        UniqueKey<?> key = ((AbstractRecord) record).getPrimaryKey();
-
-                        if (key != null) {
-                            boolean isKeySet = true;
-
-                            for (Field<?> field : key.getFields()) {
-                                isKeySet = isKeySet && (field(field) != null);
-                            }
-
-                            if (isKeySet) {
-                                record.changed(false);
-                            }
-                        }
-                    }
-
-                    return record;
-                    // All reflection exceptions are intercepted
                 }
-                catch (Exception e) {
-                    throw new MappingException("An error ocurred when mapping record to " + table, e);
-                }
+
+                return record;
+                // All reflection exceptions are intercepted
             }
-        });
+            catch (Exception e) {
+                throw new MappingException("An error ocurred when mapping record to " + record, e);
+            }
+        }
     }
 
     @Override

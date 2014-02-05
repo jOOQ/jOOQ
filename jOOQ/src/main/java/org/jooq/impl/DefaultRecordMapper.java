@@ -235,6 +235,12 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             return;
         }
 
+        // [#2989] [#2836] Records are mapped
+        if (AbstractRecord.class.isAssignableFrom(type)) {
+            delegate = (RecordMapper<R, E>) new RecordToRecordMapper();
+            return;
+        }
+
         // [#1340] Allow for using non-public default constructors
         try {
             delegate = new MutablePOJOMapper(type.getDeclaredConstructor());
@@ -348,6 +354,26 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
             finally {
                 instance = previous;
+            }
+        }
+    }
+
+    /**
+     * Convert a record into another record type.
+     */
+    private class RecordToRecordMapper implements RecordMapper<R, AbstractRecord> {
+
+        @Override
+        public final AbstractRecord map(R record) {
+            try {
+                if (record instanceof AbstractRecord) {
+                    return ((AbstractRecord) record).intoRecord((Class<AbstractRecord>) type);
+                }
+
+                throw new MappingException("Cannot map record " + record + " to type " + type);
+            }
+            catch (Exception e) {
+                throw new MappingException("An error ocurred when mapping record to " + type, e);
             }
         }
     }

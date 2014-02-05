@@ -920,7 +920,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .mul(tanh(1.0))
                     .mul(power(coth(1.0), 2).add(0.1));
 
-                record = create().select(t1, t2, t3, t4, t6, t7, t8, t9, tb).fetchOne();
+                record = create().select(t1, t2, t3, t4, t6, t7, t8, t9, ta, tb).fetchOne();
 
                 // Rounding issues are circumvented by using substring()
                 assertNotNull(record);

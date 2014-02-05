@@ -80,7 +80,7 @@ class Power extends AbstractFunction<BigDecimal> {
                 return DSL.exp(DSL.ln(arg1).mul(arg2));
 
             default:
-                return field("{power}({0})", SQLDataType.NUMERIC, getArguments());
+                return field("{power}({0}, {1})", SQLDataType.NUMERIC, getArguments());
         }
     }
 }

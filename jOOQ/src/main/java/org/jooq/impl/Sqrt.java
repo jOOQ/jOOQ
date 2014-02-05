@@ -77,7 +77,7 @@ class Sqrt extends AbstractFunction<BigDecimal> {
                 return DSL.power(argument, 0.5);
 
             default:
-                return field("sqrt", SQLDataType.NUMERIC, argument);
+                return field("{sqrt}({0})", SQLDataType.NUMERIC, argument);
         }
     }
 }

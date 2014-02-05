@@ -7566,6 +7566,46 @@ public class DSL {
     }
 
     /**
+     * Add an interval to a date, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Date> dateAdd(Date date, Number interval, DatePart datePart) {
+        return new DateAdd<Date>(Utils.field(date), Utils.field(interval), datePart);
+    }
+
+    /**
+     * Add an interval to a date, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Date> dateAdd(Date date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd<Date>(Utils.field(date), nullSafe(interval), datePart);
+    }
+
+    /**
+     * Add an interval to a date, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Date> dateAdd(Field<Date> date, Number interval, DatePart datePart) {
+        return new DateAdd<Date>(nullSafe(date), Utils.field(interval), datePart);
+    }
+
+    /**
+     * Add an interval to a date, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Date> dateAdd(Field<Date> date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd<Date>(nullSafe(date), nullSafe(interval), datePart);
+    }
+
+    /**
      * Get the date difference in number of days.
      * <p>
      * This translates into any dialect
@@ -7643,6 +7683,46 @@ public class DSL {
     )
     public static Field<Timestamp> timestampAdd(Field<Timestamp> timestamp, Field<? extends Number> interval) {
         return nullSafe(timestamp).add(interval);
+    }
+
+    /**
+     * Add an interval to a timestamp, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Timestamp> timestampAdd(Timestamp date, Number interval, DatePart datePart) {
+        return new DateAdd<Timestamp>(Utils.field(date), Utils.field(interval), datePart);
+    }
+
+    /**
+     * Add an interval to a timestamp, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Timestamp> timestampAdd(Timestamp date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd<Timestamp>(Utils.field(date), nullSafe(interval), datePart);
+    }
+
+    /**
+     * Add an interval to a timestamp, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Timestamp> timestampAdd(Field<Timestamp> date, Number interval, DatePart datePart) {
+        return new DateAdd<Timestamp>(nullSafe(date), Utils.field(interval), datePart);
+    }
+
+    /**
+     * Add an interval to a timestamp, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Timestamp> timestampAdd(Field<Timestamp> date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd<Timestamp>(nullSafe(date), nullSafe(interval), datePart);
     }
 
     /**

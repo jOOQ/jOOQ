@@ -1280,6 +1280,34 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testFetchIntoRecordClass() throws Exception {
+        B b1 = create().selectFrom(TBook()).where(TBook_ID().eq(1)).fetchOne();
+        B b2 = b1.into(TBook().getRecordType());
+
+        assertEquals(b1, b2);
+        assertEquals(b1.getValue(TBook_TITLE()), b2.getValue(TBook_TITLE()));
+        assertEquals(b1.changed(), b2.changed());
+        assertEquals(b1.changed(TBook_TITLE()), b2.changed(TBook_TITLE()));
+        assertEquals(b1.original(), b2.original());
+        assertEquals(b1.original(TBook_TITLE()), b2.original(TBook_TITLE()));
+
+        b1.setValue(TBook_TITLE(), "abc");
+        b2 = b1.into(TBook().getRecordType());
+        assertEquals("abc", b1.getValue(TBook_TITLE()));
+        assertEquals("abc", b2.getValue(TBook_TITLE()));
+        assertEquals(b1.changed(), b2.changed());
+        assertTrue(b1.changed());
+        assertTrue(b2.changed());
+        assertFalse(b1.changed(TBook_ID()));
+        assertFalse(b2.changed(TBook_ID()));
+        assertTrue(b1.changed(TBook_TITLE()));
+        assertTrue(b2.changed(TBook_TITLE()));
+        assertEquals(b1.original(), b2.original());
+        assertEquals("1984", b1.original(TBook_TITLE()));
+        assertEquals("1984", b2.original(TBook_TITLE()));
+    }
+
+    @Test
     public void testFetchIntoTable() throws Exception {
         jOOQAbstractTest.reset = false;
 

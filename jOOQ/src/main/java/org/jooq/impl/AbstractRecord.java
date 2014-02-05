@@ -61,6 +61,7 @@ import java.util.Map;
 
 import org.jooq.Attachable;
 import org.jooq.Converter;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
@@ -523,50 +524,59 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <R extends Record> R into(Table<R> table) {
-        return Utils.newRecord(table, configuration()).operate(new RecordCopyOperation<R>());
+        return Utils.newRecord(table, configuration()).operate(new TransferRecordState<R>());
     }
 
     final <R extends Record> R intoRecord(Class<R> type) {
-        return Utils.newRecord(type, fields(), configuration()).operate(new RecordCopyOperation<R>());
+        return Utils.newRecord(type, fields(), configuration()).operate(new TransferRecordState<R>());
     }
 
-    private class RecordCopyOperation<R extends Record> implements RecordOperation<R, MappingException> {
+    private class TransferRecordState<R extends Record> implements RecordOperation<R, MappingException> {
 
         @Override
-        public R operate(R record) throws MappingException {
+        public R operate(R target) throws MappingException {
+            AbstractRecord source = AbstractRecord.this;
+
             try {
-                for (Field<?> targetField : record.fields()) {
-                    Field<?> sourceField = field(targetField);
 
-                    if (sourceField != null) {
-                        Utils.setValue(record, targetField, AbstractRecord.this, sourceField);
-                    }
-                }
+                // [#1522] [#2989] If possible the complete state of this record should be copied onto the other record
+                if (target instanceof AbstractRecord) {
+                    AbstractRecord t = (AbstractRecord) target;
 
-                // [#1522] If the primary key has been fully fetched, then changed
-                // flags should all be reset in order for the returned record to be
-                // updatable using store()
-                if (record instanceof AbstractRecord) {
-                    UniqueKey<?> key = ((AbstractRecord) record).getPrimaryKey();
+                    // Iterate over target fields, to avoid ambiguities when two source fields share the same name.
+                    for (int targetIndex = 0; targetIndex < t.size(); targetIndex++) {
+                        Field<?> targetField = t.field(targetIndex);
+                        int sourceIndex = fields.indexOf(targetField);
 
-                    if (key != null) {
-                        boolean isKeySet = true;
+                        if (sourceIndex >= 0) {
+                            DataType<?> targetType = targetField.getDataType();
+                            Value<?> sourceValue = values[sourceIndex];
 
-                        for (Field<?> field : key.getFields()) {
-                            isKeySet = isKeySet && (field(field) != null);
-                        }
-
-                        if (isKeySet) {
-                            record.changed(false);
+                            t.values[targetIndex] = new Value<Object>(
+                                targetType.convert(sourceValue.getValue()),
+                                targetType.convert(sourceValue.getOriginal()),
+                                sourceValue.isChanged()
+                            );
                         }
                     }
                 }
 
-                return record;
-                // All reflection exceptions are intercepted
+                else {
+                    for (Field<?> targetField : target.fields()) {
+                        Field<?> sourceField = field(targetField);
+
+                        if (sourceField != null) {
+                            Utils.setValue(target, targetField, source, sourceField);
+                        }
+                    }
+                }
+
+                return target;
             }
+
+            // All reflection exceptions are intercepted
             catch (Exception e) {
-                throw new MappingException("An error ocurred when mapping record to " + record, e);
+                throw new MappingException("An error ocurred when mapping record to " + target, e);
             }
         }
     }

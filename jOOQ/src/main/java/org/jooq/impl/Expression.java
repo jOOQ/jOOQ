@@ -414,7 +414,7 @@ class Expression<T> extends AbstractFunction<T> {
                 }
 
                 case INGRES: {
-                    throw new SQLDialectNotSupportedException("Date time arithmetic not supported in Ingres. Contributions welcome!");
+                    throw new SQLDialectNotSupportedException("The SQLite integration is not yet implemented");
                 }
 
                 case ORACLE:

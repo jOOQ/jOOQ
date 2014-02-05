@@ -825,8 +825,6 @@ public class SQLServerTest extends jOOQAbstractTest<
                 .crossApply(ft5)
                 .orderBy(ft4.ID)
                 .fetch(ft5.V));
-
-        throw new RuntimeException("Add more integration tests!");
     }
 
     @Test

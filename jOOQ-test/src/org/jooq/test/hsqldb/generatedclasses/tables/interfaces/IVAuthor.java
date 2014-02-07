@@ -10,62 +10,62 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IVAuthor extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.V_AUTHOR.ID</code>. 
+	 * Setter for <code>PUBLIC.V_AUTHOR.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_AUTHOR.ID</code>. 
+	 * Getter for <code>PUBLIC.V_AUTHOR.ID</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Setter for <code>PUBLIC.V_AUTHOR.FIRST_NAME</code>. 
+	 * Setter for <code>PUBLIC.V_AUTHOR.FIRST_NAME</code>.
 	 */
 	public void setFirstName(java.lang.String value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_AUTHOR.FIRST_NAME</code>. 
+	 * Getter for <code>PUBLIC.V_AUTHOR.FIRST_NAME</code>.
 	 */
 	public java.lang.String getFirstName();
 
 	/**
-	 * Setter for <code>PUBLIC.V_AUTHOR.LAST_NAME</code>. 
+	 * Setter for <code>PUBLIC.V_AUTHOR.LAST_NAME</code>.
 	 */
 	public void setLastName(java.lang.String value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_AUTHOR.LAST_NAME</code>. 
+	 * Getter for <code>PUBLIC.V_AUTHOR.LAST_NAME</code>.
 	 */
 	public java.lang.String getLastName();
 
 	/**
-	 * Setter for <code>PUBLIC.V_AUTHOR.DATE_OF_BIRTH</code>. 
+	 * Setter for <code>PUBLIC.V_AUTHOR.DATE_OF_BIRTH</code>.
 	 */
 	public void setDateOfBirth(java.sql.Date value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_AUTHOR.DATE_OF_BIRTH</code>. 
+	 * Getter for <code>PUBLIC.V_AUTHOR.DATE_OF_BIRTH</code>.
 	 */
 	public java.sql.Date getDateOfBirth();
 
 	/**
-	 * Setter for <code>PUBLIC.V_AUTHOR.YEAR_OF_BIRTH</code>. 
+	 * Setter for <code>PUBLIC.V_AUTHOR.YEAR_OF_BIRTH</code>.
 	 */
 	public void setYearOfBirth(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_AUTHOR.YEAR_OF_BIRTH</code>. 
+	 * Getter for <code>PUBLIC.V_AUTHOR.YEAR_OF_BIRTH</code>.
 	 */
 	public java.lang.Integer getYearOfBirth();
 
 	/**
-	 * Setter for <code>PUBLIC.V_AUTHOR.ADDRESS</code>. 
+	 * Setter for <code>PUBLIC.V_AUTHOR.ADDRESS</code>.
 	 */
 	public void setAddress(java.lang.String value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_AUTHOR.ADDRESS</code>. 
+	 * Getter for <code>PUBLIC.V_AUTHOR.ADDRESS</code>.
 	 */
 	public java.lang.String getAddress();
 

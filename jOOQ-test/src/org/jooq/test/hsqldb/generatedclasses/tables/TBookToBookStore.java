@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -1561635563;
+	private static final long serialVersionUID = -360221907;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code>
@@ -25,32 +25,40 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.hsql
 	}
 
 	/**
-	 * The column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
+	 * The column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
-	 * The column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
+	 * The column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>. 
+	 * The column <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("STOCK", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("STOCK", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code> table reference
 	 */
 	public TBookToBookStore() {
-		super("T_BOOK_TO_BOOK_STORE", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
+		this("T_BOOK_TO_BOOK_STORE", null);
 	}
 
 	/**
 	 * Create an aliased <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code> table reference
 	 */
 	public TBookToBookStore(java.lang.String alias) {
-		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+		this(alias, org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+	}
+
+	private TBookToBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TBookToBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**
@@ -82,6 +90,13 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.hsql
 	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore as(java.lang.String alias) {
-		return new org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore(alias);
+		return new org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore rename(java.lang.String name) {
+		return new org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore(name, null);
 	}
 }

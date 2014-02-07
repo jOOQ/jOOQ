@@ -10,22 +10,22 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IVLibrary extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.V_LIBRARY.AUTHOR</code>. 
+	 * Setter for <code>PUBLIC.V_LIBRARY.AUTHOR</code>.
 	 */
 	public void setAuthor(java.lang.String value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_LIBRARY.AUTHOR</code>. 
+	 * Getter for <code>PUBLIC.V_LIBRARY.AUTHOR</code>.
 	 */
 	public java.lang.String getAuthor();
 
 	/**
-	 * Setter for <code>PUBLIC.V_LIBRARY.TITLE</code>. 
+	 * Setter for <code>PUBLIC.V_LIBRARY.TITLE</code>.
 	 */
 	public void setTitle(java.lang.String value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_LIBRARY.TITLE</code>. 
+	 * Getter for <code>PUBLIC.V_LIBRARY.TITLE</code>.
 	 */
 	public java.lang.String getTitle();
 

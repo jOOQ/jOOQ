@@ -10,22 +10,22 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ITIdentity extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.T_IDENTITY.ID</code>. 
+	 * Setter for <code>PUBLIC.T_IDENTITY.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_IDENTITY.ID</code>. 
+	 * Getter for <code>PUBLIC.T_IDENTITY.ID</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Setter for <code>PUBLIC.T_IDENTITY.VAL</code>. 
+	 * Setter for <code>PUBLIC.T_IDENTITY.VAL</code>.
 	 */
 	public void setVal(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_IDENTITY.VAL</code>. 
+	 * Getter for <code>PUBLIC.T_IDENTITY.VAL</code>.
 	 */
 	public java.lang.Integer getVal();
 

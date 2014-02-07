@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Object>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IObject {
 
-	private static final long serialVersionUID = 1015438700;
+	private static final long serialVersionUID = 138385636;
 
 	/**
-	 * Setter for <code>PUBLIC.OBJECT.ID</code>. 
+	 * Setter for <code>PUBLIC.OBJECT.ID</code>.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,7 +20,7 @@ public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.OBJECT.ID</code>. 
+	 * Getter for <code>PUBLIC.OBJECT.ID</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	}
 
 	/**
-	 * Setter for <code>PUBLIC.OBJECT.OTHER</code>. 
+	 * Setter for <code>PUBLIC.OBJECT.OTHER</code>.
 	 */
 	@Override
 	public void setOther(java.lang.Object value) {
@@ -36,7 +36,7 @@ public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.OBJECT.OTHER</code>. 
+	 * Getter for <code>PUBLIC.OBJECT.OTHER</code>.
 	 */
 	@Override
 	public java.lang.Object getOther() {

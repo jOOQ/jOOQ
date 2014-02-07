@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = -355964637;
+	private static final long serialVersionUID = 1085662455;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_ARRAYS</code>
@@ -25,37 +25,45 @@ public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.genera
 	}
 
 	/**
-	 * The column <code>PUBLIC.T_ARRAYS.ID</code>. 
+	 * The column <code>PUBLIC.T_ARRAYS.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>. 
+	 * The column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord, java.lang.String[]> STRING_ARRAY = createField("STRING_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType(), this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord, java.lang.String[]> STRING_ARRAY = createField("STRING_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType(), this, "");
 
 	/**
-	 * The column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>. 
+	 * The column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord, java.lang.Integer[]> NUMBER_ARRAY = createField("NUMBER_ARRAY", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType(), this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord, java.lang.Integer[]> NUMBER_ARRAY = createField("NUMBER_ARRAY", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType(), this, "");
 
 	/**
-	 * The column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>. 
+	 * The column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord, java.sql.Date[]> DATE_ARRAY = createField("DATE_ARRAY", org.jooq.impl.SQLDataType.DATE.getArrayDataType(), this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord, java.sql.Date[]> DATE_ARRAY = createField("DATE_ARRAY", org.jooq.impl.SQLDataType.DATE.getArrayDataType(), this, "");
 
 	/**
 	 * Create a <code>PUBLIC.T_ARRAYS</code> table reference
 	 */
 	public TArrays() {
-		super("T_ARRAYS", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
+		this("T_ARRAYS", null);
 	}
 
 	/**
 	 * Create an aliased <code>PUBLIC.T_ARRAYS</code> table reference
 	 */
 	public TArrays(java.lang.String alias) {
-		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.TArrays.T_ARRAYS);
+		this(alias, org.jooq.test.hsqldb.generatedclasses.tables.TArrays.T_ARRAYS);
+	}
+
+	private TArrays(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TArrays(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**
@@ -79,6 +87,13 @@ public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.genera
 	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.TArrays as(java.lang.String alias) {
-		return new org.jooq.test.hsqldb.generatedclasses.tables.TArrays(alias);
+		return new org.jooq.test.hsqldb.generatedclasses.tables.TArrays(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.hsqldb.generatedclasses.tables.TArrays rename(java.lang.String name) {
+		return new org.jooq.test.hsqldb.generatedclasses.tables.TArrays(name, null);
 	}
 }

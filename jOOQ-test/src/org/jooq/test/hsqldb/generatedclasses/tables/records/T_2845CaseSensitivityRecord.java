@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.T_2845CaseSensitivityRecord> implements org.jooq.Record5<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IT_2845CaseSensitivity {
 
-	private static final long serialVersionUID = -1856417375;
+	private static final long serialVersionUID = -430805919;
 
 	/**
-	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.ID</code>. 
+	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.ID</code>.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,7 +20,7 @@ public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordIm
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.ID</code>. 
+	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.ID</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordIm
 	}
 
 	/**
-	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.INSENSITIVE</code>. 
+	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.INSENSITIVE</code>.
 	 */
 	@Override
 	public void setInsensitive(java.lang.Integer value) {
@@ -36,7 +36,7 @@ public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordIm
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.INSENSITIVE</code>. 
+	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.INSENSITIVE</code>.
 	 */
 	@Override
 	public java.lang.Integer getInsensitive() {
@@ -44,7 +44,7 @@ public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordIm
 	}
 
 	/**
-	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.UPPER</code>. 
+	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.UPPER</code>.
 	 */
 	@Override
 	public void setUpper(java.lang.Integer value) {
@@ -52,7 +52,7 @@ public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordIm
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.UPPER</code>. 
+	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.UPPER</code>.
 	 */
 	@Override
 	public java.lang.Integer getUpper() {
@@ -60,7 +60,7 @@ public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordIm
 	}
 
 	/**
-	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.lower</code>. 
+	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.lower</code>.
 	 */
 	@Override
 	public void setLower(java.lang.Integer value) {
@@ -68,7 +68,7 @@ public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordIm
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.lower</code>. 
+	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.lower</code>.
 	 */
 	@Override
 	public java.lang.Integer getLower() {
@@ -76,7 +76,7 @@ public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordIm
 	}
 
 	/**
-	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.Mixed</code>. 
+	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.Mixed</code>.
 	 */
 	@Override
 	public void setMixed(java.lang.Integer value) {
@@ -84,7 +84,7 @@ public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordIm
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.Mixed</code>. 
+	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.Mixed</code>.
 	 */
 	@Override
 	public java.lang.Integer getMixed() {

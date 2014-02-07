@@ -10,42 +10,42 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ITArrays extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.T_ARRAYS.ID</code>. 
+	 * Setter for <code>PUBLIC.T_ARRAYS.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_ARRAYS.ID</code>. 
+	 * Getter for <code>PUBLIC.T_ARRAYS.ID</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Setter for <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>. 
+	 * Setter for <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>.
 	 */
 	public void setStringArray(java.lang.String[] value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>. 
+	 * Getter for <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>.
 	 */
 	public java.lang.String[] getStringArray();
 
 	/**
-	 * Setter for <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>. 
+	 * Setter for <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>.
 	 */
 	public void setNumberArray(java.lang.Integer[] value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>. 
+	 * Getter for <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>.
 	 */
 	public java.lang.Integer[] getNumberArray();
 
 	/**
-	 * Setter for <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>. 
+	 * Setter for <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>.
 	 */
 	public void setDateArray(java.sql.Date[] value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>. 
+	 * Getter for <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>.
 	 */
 	public java.sql.Date[] getDateArray();
 

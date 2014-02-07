@@ -9,15 +9,15 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -742077983;
+	private static final long serialVersionUID = -577873413;
 
 	/**
-	 * The parameter <code>PUBLIC.P_CREATE_AUTHOR_BY_NAME.FIRST_NAME</code>. 
+	 * The parameter <code>PUBLIC.P_CREATE_AUTHOR_BY_NAME.FIRST_NAME</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FIRST_NAME = createParameter("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50));
 
 	/**
-	 * The parameter <code>PUBLIC.P_CREATE_AUTHOR_BY_NAME.LAST_NAME</code>. 
+	 * The parameter <code>PUBLIC.P_CREATE_AUTHOR_BY_NAME.LAST_NAME</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> LAST_NAME = createParameter("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50));
 

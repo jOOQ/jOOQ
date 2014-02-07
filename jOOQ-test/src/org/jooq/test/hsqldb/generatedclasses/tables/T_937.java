@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_937 extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record> {
 
-	private static final long serialVersionUID = -343891279;
+	private static final long serialVersionUID = 1604394147;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_937</code>
@@ -25,22 +25,30 @@ public class T_937 extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generate
 	}
 
 	/**
-	 * The column <code>PUBLIC.T_937.T_937</code>. 
+	 * The column <code>PUBLIC.T_937.T_937</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record, java.lang.Integer> T_937_ = createField("T_937", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record, java.lang.Integer> T_937_ = createField("T_937", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>PUBLIC.T_937</code> table reference
 	 */
 	public T_937() {
-		super("T_937", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
+		this("T_937", null);
 	}
 
 	/**
 	 * Create an aliased <code>PUBLIC.T_937</code> table reference
 	 */
 	public T_937(java.lang.String alias) {
-		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.T_937.T_937);
+		this(alias, org.jooq.test.hsqldb.generatedclasses.tables.T_937.T_937);
+	}
+
+	private T_937(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_937(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**
@@ -64,6 +72,13 @@ public class T_937 extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generate
 	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.T_937 as(java.lang.String alias) {
-		return new org.jooq.test.hsqldb.generatedclasses.tables.T_937(alias);
+		return new org.jooq.test.hsqldb.generatedclasses.tables.T_937(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.hsqldb.generatedclasses.tables.T_937 rename(java.lang.String name) {
+		return new org.jooq.test.hsqldb.generatedclasses.tables.T_937(name, null);
 	}
 }

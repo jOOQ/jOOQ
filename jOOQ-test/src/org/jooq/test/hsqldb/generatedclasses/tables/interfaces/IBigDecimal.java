@@ -10,22 +10,22 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IBigDecimal extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.BIG_DECIMAL.ID</code>. 
+	 * Setter for <code>PUBLIC.BIG_DECIMAL.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.BIG_DECIMAL.ID</code>. 
+	 * Getter for <code>PUBLIC.BIG_DECIMAL.ID</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Setter for <code>PUBLIC.BIG_DECIMAL.OTHER</code>. 
+	 * Setter for <code>PUBLIC.BIG_DECIMAL.OTHER</code>.
 	 */
 	public void setOther(java.math.BigInteger value);
 
 	/**
-	 * Getter for <code>PUBLIC.BIG_DECIMAL.OTHER</code>. 
+	 * Getter for <code>PUBLIC.BIG_DECIMAL.OTHER</code>.
 	 */
 	public java.math.BigInteger getOther();
 

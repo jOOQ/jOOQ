@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PreparedStatement extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.PreparedStatementRecord> {
 
-	private static final long serialVersionUID = 1890385407;
+	private static final long serialVersionUID = 1337671493;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.PREPARED_STATEMENT</code>
@@ -25,22 +25,30 @@ public class PreparedStatement extends org.jooq.impl.TableImpl<org.jooq.test.hsq
 	}
 
 	/**
-	 * The column <code>PUBLIC.PREPARED_STATEMENT.ID</code>. 
+	 * The column <code>PUBLIC.PREPARED_STATEMENT.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.PreparedStatementRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.PreparedStatementRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>PUBLIC.PREPARED_STATEMENT</code> table reference
 	 */
 	public PreparedStatement() {
-		super("PREPARED_STATEMENT", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
+		this("PREPARED_STATEMENT", null);
 	}
 
 	/**
 	 * Create an aliased <code>PUBLIC.PREPARED_STATEMENT</code> table reference
 	 */
 	public PreparedStatement(java.lang.String alias) {
-		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.PreparedStatement.PREPARED_STATEMENT);
+		this(alias, org.jooq.test.hsqldb.generatedclasses.tables.PreparedStatement.PREPARED_STATEMENT);
+	}
+
+	private PreparedStatement(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.PreparedStatementRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private PreparedStatement(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.PreparedStatementRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**
@@ -48,6 +56,13 @@ public class PreparedStatement extends org.jooq.impl.TableImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.PreparedStatement as(java.lang.String alias) {
-		return new org.jooq.test.hsqldb.generatedclasses.tables.PreparedStatement(alias);
+		return new org.jooq.test.hsqldb.generatedclasses.tables.PreparedStatement(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.hsqldb.generatedclasses.tables.PreparedStatement rename(java.lang.String name) {
+		return new org.jooq.test.hsqldb.generatedclasses.tables.PreparedStatement(name, null);
 	}
 }

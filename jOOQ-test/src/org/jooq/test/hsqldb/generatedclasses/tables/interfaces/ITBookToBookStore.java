@@ -10,32 +10,32 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ITBookToBookStore extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
+	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>.
 	 */
 	public void setBookStoreName(java.lang.String value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
+	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>.
 	 */
 	public java.lang.String getBookStoreName();
 
 	/**
-	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
+	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>.
 	 */
 	public void setBookId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
+	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>.
 	 */
 	public java.lang.Integer getBookId();
 
 	/**
-	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>. 
+	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>.
 	 */
 	public void setStock(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>. 
+	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>.
 	 */
 	public java.lang.Integer getStock();
 

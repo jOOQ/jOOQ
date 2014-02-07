@@ -10,12 +10,12 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IT_937 extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.T_937.T_937</code>. 
+	 * Setter for <code>PUBLIC.T_937.T_937</code>.
 	 */
 	public void setT_937(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_937.T_937</code>. 
+	 * Getter for <code>PUBLIC.T_937.T_937</code>.
 	 */
 	public java.lang.Integer getT_937();
 

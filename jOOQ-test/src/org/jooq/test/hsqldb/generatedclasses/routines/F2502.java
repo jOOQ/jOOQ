@@ -9,15 +9,15 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class F2502 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -1970290514;
+	private static final long serialVersionUID = -2041637012;
 
 	/**
-	 * The parameter <code>PUBLIC.F2502.RETURN_VALUE</code>. 
+	 * The parameter <code>PUBLIC.F2502.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>PUBLIC.F2502.CONFIGURATION</code>. 
+	 * The parameter <code>PUBLIC.F2502.CONFIGURATION</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> CONFIGURATION = createParameter("CONFIGURATION", org.jooq.impl.SQLDataType.INTEGER);
 

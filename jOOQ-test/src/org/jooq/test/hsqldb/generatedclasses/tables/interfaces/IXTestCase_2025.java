@@ -10,22 +10,22 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IXTestCase_2025 extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.X_TEST_CASE_2025.REF_ID</code>. 
+	 * Setter for <code>PUBLIC.X_TEST_CASE_2025.REF_ID</code>.
 	 */
 	public void setRefId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.X_TEST_CASE_2025.REF_ID</code>. 
+	 * Getter for <code>PUBLIC.X_TEST_CASE_2025.REF_ID</code>.
 	 */
 	public java.lang.Integer getRefId();
 
 	/**
-	 * Setter for <code>PUBLIC.X_TEST_CASE_2025.REF_NAME</code>. 
+	 * Setter for <code>PUBLIC.X_TEST_CASE_2025.REF_NAME</code>.
 	 */
 	public void setRefName(java.lang.String value);
 
 	/**
-	 * Getter for <code>PUBLIC.X_TEST_CASE_2025.REF_NAME</code>. 
+	 * Getter for <code>PUBLIC.X_TEST_CASE_2025.REF_NAME</code>.
 	 */
 	public java.lang.String getRefName();
 

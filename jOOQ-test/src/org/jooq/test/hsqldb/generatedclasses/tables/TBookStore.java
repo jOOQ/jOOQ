@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -2121904133;
+	private static final long serialVersionUID = -57470399;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOK_STORE</code>
@@ -25,22 +25,30 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.gen
 	}
 
 	/**
-	 * The column <code>PUBLIC.T_BOOK_STORE.NAME</code>. 
+	 * The column <code>PUBLIC.T_BOOK_STORE.NAME</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
 	 * Create a <code>PUBLIC.T_BOOK_STORE</code> table reference
 	 */
 	public TBookStore() {
-		super("T_BOOK_STORE", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
+		this("T_BOOK_STORE", null);
 	}
 
 	/**
 	 * Create an aliased <code>PUBLIC.T_BOOK_STORE</code> table reference
 	 */
 	public TBookStore(java.lang.String alias) {
-		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.TBookStore.T_BOOK_STORE);
+		this(alias, org.jooq.test.hsqldb.generatedclasses.tables.TBookStore.T_BOOK_STORE);
+	}
+
+	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookStoreRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookStoreRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**
@@ -64,6 +72,13 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.gen
 	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.TBookStore as(java.lang.String alias) {
-		return new org.jooq.test.hsqldb.generatedclasses.tables.TBookStore(alias);
+		return new org.jooq.test.hsqldb.generatedclasses.tables.TBookStore(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.hsqldb.generatedclasses.tables.TBookStore rename(java.lang.String name) {
+		return new org.jooq.test.hsqldb.generatedclasses.tables.TBookStore(name, null);
 	}
 }

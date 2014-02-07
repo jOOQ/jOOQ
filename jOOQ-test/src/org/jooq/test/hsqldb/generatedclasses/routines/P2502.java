@@ -9,15 +9,15 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class P2502 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 306105743;
+	private static final long serialVersionUID = 1301641219;
 
 	/**
-	 * The parameter <code>PUBLIC.P2502.CONFIGURATION</code>. 
+	 * The parameter <code>PUBLIC.P2502.CONFIGURATION</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> CONFIGURATION = createParameter("CONFIGURATION", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>PUBLIC.P2502.CONFIGURATION_</code>. 
+	 * The parameter <code>PUBLIC.P2502.CONFIGURATION_</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> CONFIGURATION_ = createParameter("CONFIGURATION_", org.jooq.impl.SQLDataType.INTEGER);
 

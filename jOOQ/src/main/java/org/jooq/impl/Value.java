@@ -89,7 +89,7 @@ class Value<T> implements Serializable {
 
     final void setValue(T val) {
 
-        // The flag is always set to true:
+        // The flag is always set to false:
         // [#945] To avoid bugs resulting from setting the same value twice
         // [#948] To allow for controlling the number of hard-parses
         //        To allow for explicitly overriding default values

@@ -106,6 +106,7 @@ import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -122,6 +123,7 @@ import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
+import org.jooq.impl.DSL;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -161,17 +163,63 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
-    public void testAggregateFunctions() throws Exception {
+    public void testUserDefinedAggregateFunctions() throws Exception {
+        if (secondMax(null) == null) {
+            log.info("SKIPPING", "User-defined aggregate function tests");
+            return;
+        }
 
-        // Standard aggregate functions, available in all dialects:
-        // --------------------------------------------------------
-        Field<BigDecimal> median = median(TBook_ID());
+        // Check the correctness of the aggregate function
+        List<Integer> result1 =
+        create().select(secondMax(TBook_ID()))
+                .from(TBook())
+                .groupBy(TBook_AUTHOR_ID())
+                .orderBy(TBook_AUTHOR_ID().asc())
+                .fetch(0, Integer.class);
 
-        // Some dialects don't support a median function or a simulation thereof
-        // Use AVG instead, as in this example the values of MEDIAN and AVG
-        // are the same
-        switch (dialect().family()) {
-            /* [pro] xx
+        assertEquals(asList(1, 3), result1);
+
+        /* [pro] xx
+        xxxxxx xxxxxxxxxxxxxxxxxxxx x
+            xxxx xxxxxxx x
+                xx xxxxx xxx xxxxxxxxxxx xx xxx xxxxxxxxxx xxxxxxxx
+                xxxxxxxxxxxxx xxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxx xxxxxxxxxxxxxxx
+
+                xxxxxxxxxxxxxxxxxxxxxx xx xx xxx xxxxxxxxx
+
+                xx xxxxxxx xxxxx xx xxxxx xxxxxxxxxx xxx xxxxxxxxx xxxxxxxx xxxxxx xxx
+                xxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
+
+                xxxxxxxxxxxxx xxxxxxx x
+                xxxxxx  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxx xxxxxxxxxxxxxxx
+
+                xxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxx
+                xxxxxx
+            x
+        x
+        xx xxxxx xx
+    x
+
+    xxxxx
+    xxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxx x
+
+        xx xxxxxxxx xxxxxxxxx xxxxxxxxxx xxxxxxxxx xx xxx xxxxxxxxx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxx
+
+        xx xxxx xxxxxxxx xxxxx xxxxxxx x xxxxxx xxxxxxxx xx x xxxxxxxxxx xxxxxxx
+        xx xxx xxx xxxxxxxx xx xx xxxx xxxxxxx xxx xxxxxx xx xxxxxx xxx xxx
+        xx xxx xxx xxxx
+        xxxxxx xxxxxxxxxxxxxxxxxxxx x
+            xx xxxxx xx
             xxxx xxxx
             xxxx xxxxxxx
             xxxx xxxx

@@ -40,7 +40,9 @@
  */
 package org.jooq.util.hsqldb;
 
+import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.nvl;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.util.hsqldb.information_schema.Tables.ELEMENT_TYPES;
 import static org.jooq.util.hsqldb.information_schema.Tables.PARAMETERS;
 import static org.jooq.util.hsqldb.information_schema.Tables.ROUTINES;
@@ -69,7 +71,11 @@ public class HSQLDBRoutineDefinition extends AbstractRoutineDefinition {
     private final String specificName; // internal name for the function used by HSQLDB
 
     public HSQLDBRoutineDefinition(SchemaDefinition schema, String name, String specificName, String dataType, Number precision, Number scale) {
-        super(schema, null, name, null, null);
+        this(schema, name, specificName, dataType, precision, scale, false);
+    }
+
+    public HSQLDBRoutineDefinition(SchemaDefinition schema, String name, String specificName, String dataType, Number precision, Number scale, boolean aggregate) {
+        super(schema, null, name, null, null, aggregate);
 
         if (!StringUtils.isBlank(dataType)) {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
@@ -109,6 +115,10 @@ public class HSQLDBRoutineDefinition extends AbstractRoutineDefinition {
             .and(PARAMETERS.DTD_IDENTIFIER.equal(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER))
             .where(PARAMETERS.SPECIFIC_SCHEMA.equal(getSchema().getName()))
             .and(PARAMETERS.SPECIFIC_NAME.equal(this.specificName))
+
+            // [#3015] HSQLDB user-defined AGGREGATE functions have four parameters, but only one
+            // is relevant to client code
+            .and(condition(val(!isAggregate())).or(PARAMETERS.ORDINAL_POSITION.eq(1L)))
             .orderBy(PARAMETERS.ORDINAL_POSITION.asc()).fetch();
 
         for (Record record : result) {

@@ -41,6 +41,7 @@
 
 package org.jooq.util.hsqldb;
 
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.util.hsqldb.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.util.hsqldb.information_schema.Tables.ELEMENT_TYPES;
@@ -316,7 +317,8 @@ public class HSQLDBDatabase extends AbstractDatabase {
                     ROUTINES.SPECIFIC_NAME,
                     nvl(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER, ROUTINES.DATA_TYPE).as("datatype"),
                     ROUTINES.NUMERIC_PRECISION,
-                    ROUTINES.NUMERIC_SCALE)
+                    ROUTINES.NUMERIC_SCALE,
+                    field(ROUTINES.ROUTINE_DEFINITION.likeRegex(".*(?i:(\\w+\\s+)+aggregate\\s+function).*")).as("aggregate"))
                 .from(ROUTINES)
                 .leftOuterJoin(ELEMENT_TYPES)
                 .on(ROUTINES.ROUTINE_SCHEMA.equal(ELEMENT_TYPES.OBJECT_SCHEMA))
@@ -334,7 +336,8 @@ public class HSQLDBDatabase extends AbstractDatabase {
                 record.getValue(ROUTINES.SPECIFIC_NAME),
                 record.getValue("datatype", String.class),
                 record.getValue(ROUTINES.NUMERIC_PRECISION),
-                record.getValue(ROUTINES.NUMERIC_SCALE)));
+                record.getValue(ROUTINES.NUMERIC_SCALE),
+                record.getValue("aggregate", boolean.class)));
         }
 
         return result;

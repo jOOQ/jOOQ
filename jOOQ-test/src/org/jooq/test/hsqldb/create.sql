@@ -22,6 +22,7 @@ DROP FUNCTION IF EXISTS f2502_2/
 DROP PROCEDURE IF EXISTS p2502/
 DROP FUNCTION IF EXISTS f2515/
 DROP FUNCTION IF EXISTS f2515_/
+DROP FUNCTION IF EXISTS second_max/
 
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
@@ -539,5 +540,29 @@ BEGIN ATOMIC
 
   SET o2 = io2;
   SET io2 = i2;
+END
+/
+
+CREATE AGGREGATE FUNCTION second_max(
+    IN val INTEGER, 
+    IN flag BOOLEAN, 
+    INOUT highest INTEGER, 
+    INOUT second_highest INTEGER
+)
+RETURNS INTEGER
+CONTAINS SQL
+BEGIN ATOMIC
+  DECLARE temp INTEGER;
+  
+  IF flag THEN
+    RETURN second_highest;
+  ELSE
+    SET temp = highest;
+    SET highest = GREATEST(COALESCE(highest, -2147483648), val);
+    SET second_highest = CASE WHEN temp < highest THEN temp ELSE second_highest END;
+     
+    SET temp = GREATEST(COALESCE(second_highest, -2147483648), val);
+    SET second_highest = CASE WHEN temp < highest THEN temp ELSE second_highest END; 
+  END IF;
 END
 /

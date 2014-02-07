@@ -72,6 +72,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 
+import org.jooq.AggregateFunction;
 // ...
 import org.jooq.DAO;
 import org.jooq.DSLContext;
@@ -915,6 +916,9 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<IPK, Integer> TIdentityPK_ID();
     protected abstract TableField<IPK, Integer> TIdentityPK_VAL();
 
+    protected <N extends Number> AggregateFunction<N> secondMax(Field<N> val) {
+        return null;
+    }
     protected abstract Field<? extends Number> FAuthorExistsField(String authorName);
     protected abstract Field<? extends Number> FOneField();
     protected abstract Field<? extends Number> FNumberField(Number n);
@@ -2079,6 +2083,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testBitwiseOperations() throws Exception {
         new FunctionTests(this).testBitwiseOperations();
+    }
+
+    @Test
+    public void testUserDefinedAggregateFunctions() throws Exception {
+        new AggregateWindowFunctionTests(this).testUserDefinedAggregateFunctions();
     }
 
     @Test

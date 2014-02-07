@@ -62,7 +62,6 @@ import static org.jooq.test.oracle.generatedclasses.test.Routines.fTables1;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.fTables4;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.pArrays1;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.pTables1;
-import static org.jooq.test.oracle.generatedclasses.test.Routines.secondMax;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_725_LOB_TEST;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_785;
@@ -110,6 +109,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
 
+import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
 import org.jooq.DAO;
 import org.jooq.DSLContext;
@@ -738,6 +738,12 @@ public class OracleTest extends jOOQAbstractTest<
     @Override
     protected TableField<XUnusedRecord, Integer> TIdentityPK_VAL() {
         return null;
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @Override
+    protected AggregateFunction secondMax(Field val) {
+        return Routines.secondMax(val);
     }
 
     @Override
@@ -1373,42 +1379,6 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals(1, result1.size());
         assertEquals("O Alquimista", result1.getValue(0, TBook_TITLE()));
         assertEquals(1, result1.getValue(0, score(2)).compareTo(BigDecimal.ZERO));
-    }
-
-    @Test
-    public void testOracleUserDefinedAggregateFunctions() throws Exception {
-
-        // Check the correctness of the aggregate function
-        List<Integer> result1 =
-        create().select(secondMax(TBook_ID()))
-                .from(TBook())
-                .groupBy(TBook_AUTHOR_ID())
-                .orderBy(TBook_AUTHOR_ID().asc())
-                .fetch(0, Integer.class);
-
-        assertEquals(asList(1, 3), result1);
-
-        // Check the correctness of the analytical function
-        List<Integer> result2 =
-        create().select(secondMax(TBook_ID()).over().partitionByOne())
-                .from(TBook())
-                .orderBy(TBook_AUTHOR_ID().asc())
-                .fetch(0, Integer.class);
-
-        assertEquals(asList(3, 3, 3, 3), result2);
-
-        // [#2393] Check if fully qualifying the aggregate function works, too
-        DSLContext create = DSL.using(getConnectionMultiSchema(), SQLDialect.ORACLE);
-
-        List<Integer> result3 =
-        create  .select(secondMax(TBook_ID()))
-                .from(TBook())
-                .groupBy(TBook_AUTHOR_ID())
-                .orderBy(TBook_AUTHOR_ID().asc())
-                .fetch(0, Integer.class);
-
-        assertEquals(asList(1, 3), result3);
-
     }
 
     @Test

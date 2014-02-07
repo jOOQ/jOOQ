@@ -106,6 +106,7 @@ import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -122,6 +123,7 @@ import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
+import org.jooq.impl.DSL;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -158,6 +160,52 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testSelectCountQuery() throws Exception {
         assertEquals(4, create().selectCount().from(TBook()).fetchOne(0));
         assertEquals(2, create().selectCount().from(TAuthor()).fetchOne(0));
+    }
+
+    @Test
+    public void testUserDefinedAggregateFunctions() throws Exception {
+        if (secondMax(null) == null) {
+            log.info("SKIPPING", "User-defined aggregate function tests");
+            return;
+        }
+
+        // Check the correctness of the aggregate function
+        List<Integer> result1 =
+        create().select(secondMax(TBook_ID()))
+                .from(TBook())
+                .groupBy(TBook_AUTHOR_ID())
+                .orderBy(TBook_AUTHOR_ID().asc())
+                .fetch(0, Integer.class);
+
+        assertEquals(asList(1, 3), result1);
+
+        /* [pro] */
+        switch (dialect().family()) {
+            case ORACLE: {
+                // Check the correctness of the analytical function
+                List<Integer> result2 =
+                create().select(secondMax(TBook_ID()).over().partitionByOne())
+                        .from(TBook())
+                        .orderBy(TBook_AUTHOR_ID().asc())
+                        .fetch(0, Integer.class);
+
+                assertEquals(asList(3, 3, 3, 3), result2);
+
+                // [#2393] Check if fully qualifying the aggregate function works, too
+                DSLContext create = DSL.using(getConnectionMultiSchema(), SQLDialect.ORACLE);
+
+                List<Integer> result3 =
+                create  .select(secondMax(TBook_ID()))
+                        .from(TBook())
+                        .groupBy(TBook_AUTHOR_ID())
+                        .orderBy(TBook_AUTHOR_ID().asc())
+                        .fetch(0, Integer.class);
+
+                assertEquals(asList(1, 3), result3);
+                break;
+            }
+        }
+        /* [pro] */
     }
 
     @Test

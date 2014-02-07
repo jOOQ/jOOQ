@@ -1617,13 +1617,90 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         cal = cal(); cal.add(Calendar.HOUR       , -2); assertEquals(new Timestamp(cal.getTimeInMillis()), r2.value4());
         cal = cal(); cal.add(Calendar.MINUTE     , -2); assertEquals(new Timestamp(cal.getTimeInMillis()), r2.value5());
         cal = cal(); cal.add(Calendar.SECOND     , -2); assertEquals(new Timestamp(cal.getTimeInMillis()), r2.value6());
-
     }
 
     private Calendar cal() {
+        return cal(0);
+    }
+
+    private Calendar cal(long offset) {
         Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(-3600000);
+        cal.setTimeInMillis(-3600000 + offset);
         return cal;
+    }
+
+    @Test
+    public void testFunctionsOnDates_TRUNC() throws Exception {
+        switch (dialect().family()) {
+            /* [pro] */
+            case ACCESS:
+            case ASE:
+            case INGRES:
+            case SQLSERVER:
+            case SYBASE:
+            /* [/pro] */
+
+            case DERBY:
+            case FIREBIRD:
+            case H2:
+            case MARIADB:
+            case MYSQL:
+            case SQLITE:
+                log.info("SKIPPING", "TRUNC(datetime) tests");
+                return;
+        }
+
+        Calendar cal;
+
+        cal = cal(-1);
+
+        Record6<Timestamp, Timestamp, Timestamp, Timestamp, Timestamp, Timestamp> r1 = create().select(
+            DSL.trunc(new Timestamp(cal.getTimeInMillis()), DatePart.YEAR)  .as("yy"),
+            DSL.trunc(new Timestamp(cal.getTimeInMillis()), DatePart.MONTH) .as("mm"),
+            DSL.trunc(new Timestamp(cal.getTimeInMillis()), DatePart.DAY)   .as("dd"),
+            DSL.trunc(new Timestamp(cal.getTimeInMillis()), DatePart.HOUR)  .as("hh"),
+            DSL.trunc(new Timestamp(cal.getTimeInMillis()), DatePart.MINUTE).as("mi"),
+            DSL.trunc(new Timestamp(cal.getTimeInMillis()), DatePart.SECOND).as("ss")
+        ).fetchOne();
+
+        cal = cal(-1);
+        cal.set(Calendar.MONTH       , 0);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        cal.set(Calendar.HOUR_OF_DAY , 0);
+        cal.set(Calendar.MINUTE      , 0);
+        cal.set(Calendar.SECOND      , 0);
+        cal.set(Calendar.MILLISECOND , 0);
+        assertEquals(new Timestamp(cal.getTimeInMillis()), r1.value1());
+
+        cal = cal(-1);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        cal.set(Calendar.HOUR_OF_DAY , 0);
+        cal.set(Calendar.MINUTE      , 0);
+        cal.set(Calendar.SECOND      , 0);
+        cal.set(Calendar.MILLISECOND , 0);
+        assertEquals(new Timestamp(cal.getTimeInMillis()), r1.value2());
+
+        cal = cal(-1);
+        cal.set(Calendar.HOUR_OF_DAY , 0);
+        cal.set(Calendar.MINUTE      , 0);
+        cal.set(Calendar.SECOND      , 0);
+        cal.set(Calendar.MILLISECOND , 0);
+        assertEquals(new Timestamp(cal.getTimeInMillis()), r1.value3());
+
+        cal = cal(-1);
+        cal.set(Calendar.MINUTE      , 0);
+        cal.set(Calendar.SECOND      , 0);
+        cal.set(Calendar.MILLISECOND , 0);
+        assertEquals(new Timestamp(cal.getTimeInMillis()), r1.value4());
+
+        cal = cal(-1);
+        cal.set(Calendar.SECOND      , 0);
+        cal.set(Calendar.MILLISECOND , 0);
+        assertEquals(new Timestamp(cal.getTimeInMillis()), r1.value5());
+
+        cal = cal(-1);
+        cal.set(Calendar.MILLISECOND , 0);
+        assertEquals(new Timestamp(cal.getTimeInMillis()), r1.value6());
     }
 
     @Test

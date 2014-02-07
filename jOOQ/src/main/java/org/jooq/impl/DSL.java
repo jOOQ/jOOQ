@@ -7809,51 +7809,52 @@ public class DSL {
         return new TimestampDiff(nullSafe(timestamp1), nullSafe(timestamp2));
     }
 
-    // -------------------------------------------------------------------------
-    // [#470] TRUNC(datetime) will be implemented in a future release
-    // -------------------------------------------------------------------------
-
     /**
-     * This is not yet implemented.
+     * Truncate a date to the beginning of the day.
      */
-    static Field<Date> trunc(Date date) {
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, POSTGRES })
+    public static Field<Date> trunc(Date date) {
         return trunc(date, DatePart.DAY);
     }
 
     /**
-     * This is not yet implemented.
+     * Truncate a date to a given datepart.
      */
-    static Field<Date> trunc(Date date, DatePart part) {
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, POSTGRES })
+    public static Field<Date> trunc(Date date, DatePart part) {
         return trunc(Utils.field(date), part);
     }
 
     /**
-     * This is not yet implemented.
+     * Truncate a timestamp to the beginning of the day.
      */
-    static Field<Timestamp> trunc(Timestamp timestamp) {
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, POSTGRES })
+    public static Field<Timestamp> trunc(Timestamp timestamp) {
         return trunc(timestamp, DatePart.DAY);
     }
 
     /**
-     * This is not yet implemented.
+     * Truncate a timestamp to a given datepart.
      */
-    static Field<Timestamp> trunc(Timestamp timestamp, DatePart part) {
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, POSTGRES })
+    public static Field<Timestamp> trunc(Timestamp timestamp, DatePart part) {
         return trunc(Utils.field(timestamp), part);
     }
 
     /**
-     * This is not yet implemented.
+     * Truncate a date or a timestamp to the beginning of the day.
      */
-    static <T extends java.util.Date> Field<T> trunc(Field<T> date) {
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, POSTGRES })
+    public static <T extends java.util.Date> Field<T> trunc(Field<T> date) {
         return trunc(date, DatePart.DAY);
     }
 
     /**
-     * This is not yet implemented.
+     * Truncate a date or a timestamp to a given datepart.
      */
-    @SuppressWarnings("unused")
-    static <T extends java.util.Date> Field<T> trunc(Field<T> date, DatePart part) {
-        throw new UnsupportedOperationException("This is not yet implemented");
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, POSTGRES })
+    public static <T extends java.util.Date> Field<T> trunc(Field<T> date, DatePart part) {
+        return new TruncDate<T>(date, part);
     }
 
     // -------------------------------------------------------------------------

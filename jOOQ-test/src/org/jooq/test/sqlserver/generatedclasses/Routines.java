@@ -181,6 +181,16 @@ public class Routines {
 	}
 
 	/**
+	 * Call <code>dbo.p_raise</code>
+	 */
+	public static void pRaise(org.jooq.Configuration configuration, java.lang.Integer mode) {
+		org.jooq.test.sqlserver.generatedclasses.routines.PRaise p = new org.jooq.test.sqlserver.generatedclasses.routines.PRaise();
+		p.setMode(mode);
+
+		p.execute(configuration);
+	}
+
+	/**
 	 * Call <code>dbo.p_unused</code>
 	 */
 	public static org.jooq.test.sqlserver.generatedclasses.routines.PUnused pUnused(org.jooq.Configuration configuration, java.lang.String in1, java.lang.Integer out1, java.lang.Integer out2) {

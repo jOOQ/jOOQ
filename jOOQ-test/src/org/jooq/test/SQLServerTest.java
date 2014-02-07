@@ -70,10 +70,12 @@ import static org.jooq.test.sqlserver.generatedclasses.tables.FTables1.F_TABLES1
 import static org.jooq.test.sqlserver.generatedclasses.tables.FTables4.F_TABLES4;
 import static org.jooq.util.sqlserver.SQLServerDSL.difference;
 import static org.jooq.util.sqlserver.SQLServerDSL.soundex;
+import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
@@ -88,6 +90,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.conf.Settings;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
@@ -845,6 +848,37 @@ public class SQLServerTest extends jOOQAbstractTest<
                 .from(T_BOOK)
                 .fetch()
                 .size());
+    }
+
+    @Test
+    public void testSQLServerRaiserror() throws Exception {
+
+        // [#3011] TODO Fix this for sqljdbc_4.0. It works with jTDS
+        try {
+            Routines.pRaise(create().configuration(), 0);
+            fail();
+        }
+        catch (DataAccessException e) {
+            SQLException cause = (SQLException) e.getCause();
+            assertEquals("message", cause.getMessage());
+            assertEquals(50000, cause.getErrorCode());
+        }
+
+        try {
+            Routines.pRaise(create().configuration(), 1);
+            fail();
+        }
+        catch (DataAccessException e) {
+            SQLException cause = (SQLException) e.getCause();
+
+            assertEquals("message 1", cause.getMessage());
+            assertEquals(50000, cause.getErrorCode());
+
+            cause = cause.getNextException();
+
+            assertEquals("message 2", cause.getMessage());
+            assertEquals(50000, cause.getErrorCode());
+        }
     }
 }
 

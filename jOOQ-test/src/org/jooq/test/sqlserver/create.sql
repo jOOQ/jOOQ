@@ -10,6 +10,7 @@ DROP PROCEDURE p_author_exists/
 DROP PROCEDURE p391/
 DROP PROCEDURE p_default/
 DROP PROCEDURE p1490/
+DROP PROCEDURE p_raise/
 DROP FUNCTION f_tables1/ 
 DROP FUNCTION f_tables2/ 
 DROP FUNCTION f_tables3/ 
@@ -645,6 +646,19 @@ END;
 CREATE PROCEDURE p1490 (@value int) AS
 BEGIN
 	RETURN;
+END;
+/
+
+CREATE PROCEDURE p_raise(@mode int)
+AS
+BEGIN
+    IF @mode = 1
+    BEGIN
+        RAISERROR('message 1', 16, 2, 3);
+        RAISERROR('message 2', 16, 2, 3);
+    END
+    ELSE
+        THROW 50000, 'message', 2;
 END;
 /
 

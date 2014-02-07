@@ -526,4 +526,24 @@ public class Routines {
 		p.execute(configuration);
 		return p;
 	}
+
+	/**
+	 * Get <code>PUBLIC.SECOND_MAX</code> as a field
+	 */
+	public static org.jooq.AggregateFunction<java.lang.Integer> secondMax(java.lang.Integer val) {
+		org.jooq.test.hsqldb.generatedclasses.routines.SecondMax f = new org.jooq.test.hsqldb.generatedclasses.routines.SecondMax();
+		f.setVal(val);
+
+		return f.asAggregateFunction();
+	}
+
+	/**
+	 * Get <code>PUBLIC.SECOND_MAX</code> as a field
+	 */
+	public static org.jooq.AggregateFunction<java.lang.Integer> secondMax(org.jooq.Field<java.lang.Integer> val) {
+		org.jooq.test.hsqldb.generatedclasses.routines.SecondMax f = new org.jooq.test.hsqldb.generatedclasses.routines.SecondMax();
+		f.setVal(val);
+
+		return f.asAggregateFunction();
+	}
 }

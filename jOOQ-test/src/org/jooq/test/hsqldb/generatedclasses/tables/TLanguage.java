@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 1896173478;
+	private static final long serialVersionUID = -1844784826;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_LANGUAGE</code>
@@ -25,37 +25,45 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.gene
 	}
 
 	/**
-	 * The column <code>PUBLIC.T_LANGUAGE.CD</code>. 
+	 * The column <code>PUBLIC.T_LANGUAGE.CD</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2).nullable(false), this, "");
 
 	/**
-	 * The column <code>PUBLIC.T_LANGUAGE.DESCRIPTION</code>. 
+	 * The column <code>PUBLIC.T_LANGUAGE.DESCRIPTION</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
-	 * The column <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * The column <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("DESCRIPTION_ENGLISH", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("DESCRIPTION_ENGLISH", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
-	 * The column <code>PUBLIC.T_LANGUAGE.ID</code>. 
+	 * The column <code>PUBLIC.T_LANGUAGE.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>PUBLIC.T_LANGUAGE</code> table reference
 	 */
 	public TLanguage() {
-		super("T_LANGUAGE", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
+		this("T_LANGUAGE", null);
 	}
 
 	/**
 	 * Create an aliased <code>PUBLIC.T_LANGUAGE</code> table reference
 	 */
 	public TLanguage(java.lang.String alias) {
-		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.TLanguage.T_LANGUAGE);
+		this(alias, org.jooq.test.hsqldb.generatedclasses.tables.TLanguage.T_LANGUAGE);
+	}
+
+	private TLanguage(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.TLanguageRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TLanguage(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.TLanguageRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**
@@ -79,6 +87,13 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.gene
 	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.TLanguage as(java.lang.String alias) {
-		return new org.jooq.test.hsqldb.generatedclasses.tables.TLanguage(alias);
+		return new org.jooq.test.hsqldb.generatedclasses.tables.TLanguage(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.hsqldb.generatedclasses.tables.TLanguage rename(java.lang.String name) {
+		return new org.jooq.test.hsqldb.generatedclasses.tables.TLanguage(name, null);
 	}
 }

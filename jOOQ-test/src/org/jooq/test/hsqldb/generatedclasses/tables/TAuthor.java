@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -1745392054;
+	private static final long serialVersionUID = -1612643672;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_AUTHOR</code>
@@ -25,47 +25,55 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.genera
 	}
 
 	/**
-	 * The column <code>PUBLIC.T_AUTHOR.ID</code>. 
+	 * The column <code>PUBLIC.T_AUTHOR.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>. 
+	 * The column <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
-	 * The column <code>PUBLIC.T_AUTHOR.LAST_NAME</code>. 
+	 * The column <code>PUBLIC.T_AUTHOR.LAST_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this, "");
 
 	/**
-	 * The column <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>. 
+	 * The column <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, this, "");
 
 	/**
-	 * The column <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>. 
+	 * The column <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>PUBLIC.T_AUTHOR.ADDRESS</code>. 
+	 * The column <code>PUBLIC.T_AUTHOR.ADDRESS</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
 	 * Create a <code>PUBLIC.T_AUTHOR</code> table reference
 	 */
 	public TAuthor() {
-		super("T_AUTHOR", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
+		this("T_AUTHOR", null);
 	}
 
 	/**
 	 * Create an aliased <code>PUBLIC.T_AUTHOR</code> table reference
 	 */
 	public TAuthor(java.lang.String alias) {
-		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.TAuthor.T_AUTHOR);
+		this(alias, org.jooq.test.hsqldb.generatedclasses.tables.TAuthor.T_AUTHOR);
+	}
+
+	private TAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**
@@ -89,6 +97,13 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.genera
 	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.TAuthor as(java.lang.String alias) {
-		return new org.jooq.test.hsqldb.generatedclasses.tables.TAuthor(alias);
+		return new org.jooq.test.hsqldb.generatedclasses.tables.TAuthor(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.hsqldb.generatedclasses.tables.TAuthor rename(java.lang.String name) {
+		return new org.jooq.test.hsqldb.generatedclasses.tables.TAuthor(name, null);
 	}
 }

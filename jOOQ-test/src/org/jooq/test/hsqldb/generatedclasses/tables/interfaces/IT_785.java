@@ -10,32 +10,32 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IT_785 extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.T_785.ID</code>. 
+	 * Setter for <code>PUBLIC.T_785.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_785.ID</code>. 
+	 * Getter for <code>PUBLIC.T_785.ID</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Setter for <code>PUBLIC.T_785.NAME</code>. 
+	 * Setter for <code>PUBLIC.T_785.NAME</code>.
 	 */
 	public void setName(java.lang.String value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_785.NAME</code>. 
+	 * Getter for <code>PUBLIC.T_785.NAME</code>.
 	 */
 	public java.lang.String getName();
 
 	/**
-	 * Setter for <code>PUBLIC.T_785.VALUE</code>. 
+	 * Setter for <code>PUBLIC.T_785.VALUE</code>.
 	 */
 	public void setValue(java.lang.String value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_785.VALUE</code>. 
+	 * Getter for <code>PUBLIC.T_785.VALUE</code>.
 	 */
 	public java.lang.String getValue();
 

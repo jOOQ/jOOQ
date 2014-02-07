@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IXTestCase_64_69 {
 
-	private static final long serialVersionUID = -250011646;
+	private static final long serialVersionUID = 891359214;
 
 	/**
-	 * Setter for <code>PUBLIC.X_TEST_CASE_64_69.ID</code>. 
+	 * Setter for <code>PUBLIC.X_TEST_CASE_64_69.ID</code>.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,7 +20,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.X_TEST_CASE_64_69.ID</code>. 
+	 * Getter for <code>PUBLIC.X_TEST_CASE_64_69.ID</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * Setter for <code>PUBLIC.X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 * Setter for <code>PUBLIC.X_TEST_CASE_64_69.UNUSED_ID</code>.
 	 */
 	@Override
 	public void setUnusedId(java.lang.Integer value) {
@@ -36,7 +36,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 * Getter for <code>PUBLIC.X_TEST_CASE_64_69.UNUSED_ID</code>.
 	 */
 	@Override
 	public java.lang.Integer getUnusedId() {

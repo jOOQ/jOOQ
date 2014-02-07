@@ -10,12 +10,12 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IInteger extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.INTEGER.ID</code>. 
+	 * Setter for <code>PUBLIC.INTEGER.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.INTEGER.ID</code>. 
+	 * Getter for <code>PUBLIC.INTEGER.ID</code>.
 	 */
 	public java.lang.Integer getId();
 

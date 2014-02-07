@@ -9,15 +9,15 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> {
 
-	private static final long serialVersionUID = -540480019;
+	private static final long serialVersionUID = -1800487431;
 
 	/**
-	 * The parameter <code>PUBLIC.F_GET_ONE_CURSOR.RETURN_VALUE</code>. 
+	 * The parameter <code>PUBLIC.F_GET_ONE_CURSOR.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * The parameter <code>PUBLIC.F_GET_ONE_CURSOR.BOOK_IDS</code>. 
+	 * The parameter <code>PUBLIC.F_GET_ONE_CURSOR.BOOK_IDS</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer[]> BOOK_IDS = createParameter("BOOK_IDS", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType());
 

@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BigDecimal extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.BigDecimalRecord> {
 
-	private static final long serialVersionUID = 649603576;
+	private static final long serialVersionUID = -1163640516;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.BIG_DECIMAL</code>
@@ -25,27 +25,35 @@ public class BigDecimal extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.gen
 	}
 
 	/**
-	 * The column <code>PUBLIC.BIG_DECIMAL.ID</code>. 
+	 * The column <code>PUBLIC.BIG_DECIMAL.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.BigDecimalRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.BigDecimalRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>PUBLIC.BIG_DECIMAL.OTHER</code>. 
+	 * The column <code>PUBLIC.BIG_DECIMAL.OTHER</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.BigDecimalRecord, java.math.BigInteger> OTHER = createField("OTHER", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(128), this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.BigDecimalRecord, java.math.BigInteger> OTHER = createField("OTHER", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(128), this, "");
 
 	/**
 	 * Create a <code>PUBLIC.BIG_DECIMAL</code> table reference
 	 */
 	public BigDecimal() {
-		super("BIG_DECIMAL", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
+		this("BIG_DECIMAL", null);
 	}
 
 	/**
 	 * Create an aliased <code>PUBLIC.BIG_DECIMAL</code> table reference
 	 */
 	public BigDecimal(java.lang.String alias) {
-		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal.BIG_DECIMAL);
+		this(alias, org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal.BIG_DECIMAL);
+	}
+
+	private BigDecimal(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.BigDecimalRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private BigDecimal(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.BigDecimalRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**
@@ -53,6 +61,13 @@ public class BigDecimal extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.gen
 	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal as(java.lang.String alias) {
-		return new org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal(alias);
+		return new org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal rename(java.lang.String name) {
+		return new org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal(name, null);
 	}
 }

@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ConnectionRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.ConnectionRecord> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IConnection {
 
-	private static final long serialVersionUID = -559314720;
+	private static final long serialVersionUID = -1224638770;
 
 	/**
-	 * Setter for <code>PUBLIC.CONNECTION.ID</code>. 
+	 * Setter for <code>PUBLIC.CONNECTION.ID</code>.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,7 +20,7 @@ public class ConnectionRecord extends org.jooq.impl.TableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.CONNECTION.ID</code>. 
+	 * Getter for <code>PUBLIC.CONNECTION.ID</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {

@@ -10,32 +10,32 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ITTriggers extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>. 
+	 * Setter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>.
 	 */
 	public void setIdGenerated(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>. 
+	 * Getter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>.
 	 */
 	public java.lang.Integer getIdGenerated();
 
 	/**
-	 * Setter for <code>PUBLIC.T_TRIGGERS.ID</code>. 
+	 * Setter for <code>PUBLIC.T_TRIGGERS.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_TRIGGERS.ID</code>. 
+	 * Getter for <code>PUBLIC.T_TRIGGERS.ID</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Setter for <code>PUBLIC.T_TRIGGERS.COUNTER</code>. 
+	 * Setter for <code>PUBLIC.T_TRIGGERS.COUNTER</code>.
 	 */
 	public void setCounter(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_TRIGGERS.COUNTER</code>. 
+	 * Getter for <code>PUBLIC.T_TRIGGERS.COUNTER</code>.
 	 */
 	public java.lang.Integer getCounter();
 

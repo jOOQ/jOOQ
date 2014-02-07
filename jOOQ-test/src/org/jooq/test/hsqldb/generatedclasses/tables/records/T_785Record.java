@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IT_785 {
 
-	private static final long serialVersionUID = -1729872732;
+	private static final long serialVersionUID = -472532346;
 
 	/**
-	 * Setter for <code>PUBLIC.T_785.ID</code>. 
+	 * Setter for <code>PUBLIC.T_785.ID</code>.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,7 +20,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.T_785.ID</code>. 
+	 * Getter for <code>PUBLIC.T_785.ID</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	}
 
 	/**
-	 * Setter for <code>PUBLIC.T_785.NAME</code>. 
+	 * Setter for <code>PUBLIC.T_785.NAME</code>.
 	 */
 	@Override
 	public void setName(java.lang.String value) {
@@ -36,7 +36,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.T_785.NAME</code>. 
+	 * Getter for <code>PUBLIC.T_785.NAME</code>.
 	 */
 	@Override
 	public java.lang.String getName() {
@@ -44,7 +44,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	}
 
 	/**
-	 * Setter for <code>PUBLIC.T_785.VALUE</code>. 
+	 * Setter for <code>PUBLIC.T_785.VALUE</code>.
 	 */
 	@Override
 	public void setValue(java.lang.String value) {
@@ -52,7 +52,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.T_785.VALUE</code>. 
+	 * Getter for <code>PUBLIC.T_785.VALUE</code>.
 	 */
 	@Override
 	public java.lang.String getValue() {

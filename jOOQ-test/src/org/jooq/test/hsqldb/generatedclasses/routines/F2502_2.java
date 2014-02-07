@@ -9,25 +9,25 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class F2502_2 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1934280052;
+	private static final long serialVersionUID = -1896478384;
 
 	/**
-	 * The parameter <code>PUBLIC.F2502_2.RETURN_VALUE</code>. 
+	 * The parameter <code>PUBLIC.F2502_2.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>PUBLIC.F2502_2.CONFIGURATION</code>. 
+	 * The parameter <code>PUBLIC.F2502_2.CONFIGURATION</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> CONFIGURATION = createParameter("CONFIGURATION", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>PUBLIC.F2502_2.CONFIGURATION_</code>. 
+	 * The parameter <code>PUBLIC.F2502_2.CONFIGURATION_</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> CONFIGURATION_ = createParameter("CONFIGURATION_", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>PUBLIC.F2502_2.CONFIGURATION__</code>. 
+	 * The parameter <code>PUBLIC.F2502_2.CONFIGURATION__</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> CONFIGURATION__ = createParameter("CONFIGURATION__", org.jooq.impl.SQLDataType.INTEGER);
 

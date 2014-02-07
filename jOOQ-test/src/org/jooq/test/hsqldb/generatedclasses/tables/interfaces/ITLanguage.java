@@ -10,42 +10,42 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface ITLanguage extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.T_LANGUAGE.CD</code>. 
+	 * Setter for <code>PUBLIC.T_LANGUAGE.CD</code>.
 	 */
 	public void setCd(java.lang.String value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_LANGUAGE.CD</code>. 
+	 * Getter for <code>PUBLIC.T_LANGUAGE.CD</code>.
 	 */
 	public java.lang.String getCd();
 
 	/**
-	 * Setter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION</code>. 
+	 * Setter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION</code>.
 	 */
 	public void setDescription(java.lang.String value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION</code>. 
+	 * Getter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION</code>.
 	 */
 	public java.lang.String getDescription();
 
 	/**
-	 * Setter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * Setter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
 	public void setDescriptionEnglish(java.lang.String value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * Getter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
 	public java.lang.String getDescriptionEnglish();
 
 	/**
-	 * Setter for <code>PUBLIC.T_LANGUAGE.ID</code>. 
+	 * Setter for <code>PUBLIC.T_LANGUAGE.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_LANGUAGE.ID</code>. 
+	 * Getter for <code>PUBLIC.T_LANGUAGE.ID</code>.
 	 */
 	public java.lang.Integer getId();
 

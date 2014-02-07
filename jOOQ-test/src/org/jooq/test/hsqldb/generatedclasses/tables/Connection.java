@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Connection extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.ConnectionRecord> {
 
-	private static final long serialVersionUID = 282395954;
+	private static final long serialVersionUID = 518236012;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.CONNECTION</code>
@@ -25,22 +25,30 @@ public class Connection extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.gen
 	}
 
 	/**
-	 * The column <code>PUBLIC.CONNECTION.ID</code>. 
+	 * The column <code>PUBLIC.CONNECTION.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.ConnectionRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.ConnectionRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>PUBLIC.CONNECTION</code> table reference
 	 */
 	public Connection() {
-		super("CONNECTION", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
+		this("CONNECTION", null);
 	}
 
 	/**
 	 * Create an aliased <code>PUBLIC.CONNECTION</code> table reference
 	 */
 	public Connection(java.lang.String alias) {
-		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.Connection.CONNECTION);
+		this(alias, org.jooq.test.hsqldb.generatedclasses.tables.Connection.CONNECTION);
+	}
+
+	private Connection(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.ConnectionRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private Connection(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.ConnectionRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**
@@ -48,6 +56,13 @@ public class Connection extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.gen
 	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.Connection as(java.lang.String alias) {
-		return new org.jooq.test.hsqldb.generatedclasses.tables.Connection(alias);
+		return new org.jooq.test.hsqldb.generatedclasses.tables.Connection(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.hsqldb.generatedclasses.tables.Connection rename(java.lang.String name) {
+		return new org.jooq.test.hsqldb.generatedclasses.tables.Connection(name, null);
 	}
 }

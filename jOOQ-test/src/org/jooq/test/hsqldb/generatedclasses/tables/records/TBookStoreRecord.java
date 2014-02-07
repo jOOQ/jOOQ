@@ -9,10 +9,10 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITBookStore {
 
-	private static final long serialVersionUID = -1871880041;
+	private static final long serialVersionUID = 513088427;
 
 	/**
-	 * Setter for <code>PUBLIC.T_BOOK_STORE.NAME</code>. 
+	 * Setter for <code>PUBLIC.T_BOOK_STORE.NAME</code>.
 	 */
 	@Override
 	public void setName(java.lang.String value) {
@@ -20,7 +20,7 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.T_BOOK_STORE.NAME</code>. 
+	 * Getter for <code>PUBLIC.T_BOOK_STORE.NAME</code>.
 	 */
 	@Override
 	public java.lang.String getName() {

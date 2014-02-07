@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Object extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord> {
 
-	private static final long serialVersionUID = -1535684863;
+	private static final long serialVersionUID = -2010684971;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.OBJECT</code>
@@ -25,27 +25,35 @@ public class Object extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generat
 	}
 
 	/**
-	 * The column <code>PUBLIC.OBJECT.ID</code>. 
+	 * The column <code>PUBLIC.OBJECT.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>PUBLIC.OBJECT.OTHER</code>. 
+	 * The column <code>PUBLIC.OBJECT.OTHER</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord, java.lang.Object> OTHER = createField("OTHER", org.jooq.impl.SQLDataType.OTHER, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord, java.lang.Object> OTHER = createField("OTHER", org.jooq.impl.SQLDataType.OTHER, this, "");
 
 	/**
 	 * Create a <code>PUBLIC.OBJECT</code> table reference
 	 */
 	public Object() {
-		super("OBJECT", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
+		this("OBJECT", null);
 	}
 
 	/**
 	 * Create an aliased <code>PUBLIC.OBJECT</code> table reference
 	 */
 	public Object(java.lang.String alias) {
-		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.Object.OBJECT);
+		this(alias, org.jooq.test.hsqldb.generatedclasses.tables.Object.OBJECT);
+	}
+
+	private Object(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private Object(java.lang.String alias, org.jooq.Table<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**
@@ -53,6 +61,13 @@ public class Object extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generat
 	 */
 	@Override
 	public org.jooq.test.hsqldb.generatedclasses.tables.Object as(java.lang.String alias) {
-		return new org.jooq.test.hsqldb.generatedclasses.tables.Object(alias);
+		return new org.jooq.test.hsqldb.generatedclasses.tables.Object(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.hsqldb.generatedclasses.tables.Object rename(java.lang.String name) {
+		return new org.jooq.test.hsqldb.generatedclasses.tables.Object(name, null);
 	}
 }

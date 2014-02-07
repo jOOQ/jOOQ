@@ -10,52 +10,52 @@ package org.jooq.test.hsqldb.generatedclasses.tables.interfaces;
 public interface IT_2845CaseSensitivity extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.ID</code>. 
+	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.ID</code>. 
+	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.ID</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.INSENSITIVE</code>. 
+	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.INSENSITIVE</code>.
 	 */
 	public void setInsensitive(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.INSENSITIVE</code>. 
+	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.INSENSITIVE</code>.
 	 */
 	public java.lang.Integer getInsensitive();
 
 	/**
-	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.UPPER</code>. 
+	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.UPPER</code>.
 	 */
 	public void setUpper(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.UPPER</code>. 
+	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.UPPER</code>.
 	 */
 	public java.lang.Integer getUpper();
 
 	/**
-	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.lower</code>. 
+	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.lower</code>.
 	 */
 	public void setLower(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.lower</code>. 
+	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.lower</code>.
 	 */
 	public java.lang.Integer getLower();
 
 	/**
-	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.Mixed</code>. 
+	 * Setter for <code>PUBLIC.T_2845_CASE_sensitivity.Mixed</code>.
 	 */
 	public void setMixed(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.Mixed</code>. 
+	 * Getter for <code>PUBLIC.T_2845_CASE_sensitivity.Mixed</code>.
 	 */
 	public java.lang.Integer getMixed();
 

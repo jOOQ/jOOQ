@@ -16,5 +16,5 @@
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit4"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.jooq.test.SQLServerTestInline"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="jOOQ-test"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.jooq.configuration=/org/jooq/configuration/${env_var:USERNAME}/sqlserver/library.xml&#13;&#10;-Djava.library.path=C:\sqljdbc_4.0\enu\auth\x64"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.jooq.configuration=/org/jooq/configuration/${env_var:USERNAME}/sqlserver/library.xml -XX:+UnlockCommercialFeatures -XX:+FlightRecorder&#13;&#10;-Djava.library.path=C:\sqljdbc_4.0\enu\auth\x64"/>
 </launchConfiguration>

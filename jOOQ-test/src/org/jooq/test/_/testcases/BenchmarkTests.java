@@ -120,12 +120,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testBenchmarkRecordIntoWithAnnotations() throws Exception {
-        System.out.print("X:");
-        System.out.println(System.in.read());
-        System.out.println(System.in.read());
-
-        StopWatch watch = new StopWatch();
-        watch.splitInfo("Start");
+//        System.out.print("X:");
+//        System.out.println(System.in.read());
+//        System.out.println(System.in.read());
+//
+//        StopWatch watch = new StopWatch();
+//        watch.splitInfo("Start");
 
         Result<B> books = create().fetch(TBook());
 
@@ -133,10 +133,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             books.into(BookWithAnnotations.class);
         }
 
-        watch.splitInfo("Stop");
-        System.out.print("Y:");
-        System.out.println(System.in.read());
-        System.out.println(System.in.read());
+//        watch.splitInfo("Stop");
+//        System.out.print("Y:");
+//        System.out.println(System.in.read());
+//        System.out.println(System.in.read());
     }
 
     @Test

@@ -40,6 +40,7 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Configuration;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
@@ -53,8 +54,23 @@ import org.jooq.RecordType;
  */
 public class DefaultRecordMapperProvider implements RecordMapperProvider {
 
+    private final Configuration configuration;
+
+    public DefaultRecordMapperProvider() {
+        this(null);
+    }
+
+    /**
+     * Create a new {@link RecordMapperProvider} with a {@link Configuration}
+     * that can be used by jOOQ for caching reflection information.
+     */
+    protected DefaultRecordMapperProvider(Configuration configuration) {
+        // The configuration parameter may not yet be fully initialised at this point!
+        this.configuration = configuration;
+    }
+
     @Override
     public final <R extends Record, E> RecordMapper<R, E> provide(RecordType<R> rowType, Class<? extends E> type) {
-        return new DefaultRecordMapper<R, E>(rowType, type);
+        return new DefaultRecordMapper<R, E>(rowType, type, configuration);
     }
 }

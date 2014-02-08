@@ -513,7 +513,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         Class<E> type = (Class<E>) object.getClass();
 
         try {
-            return new DefaultRecordMapper<Record, E>(fields.fields, type, object).map(this);
+            return new DefaultRecordMapper<Record, E>(fields.fields, type, object, configuration()).map(this);
         }
 
         // Pass MappingExceptions on to client code
@@ -639,7 +639,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             Class<?> type = source.getClass();
 
             try {
-                boolean useAnnotations = hasColumnAnnotations(type);
+                boolean useAnnotations = hasColumnAnnotations(configuration(), type);
 
                 for (Field<?> field : f) {
                     List<java.lang.reflect.Field> members;
@@ -647,14 +647,14 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
                     // Annotations are available and present
                     if (useAnnotations) {
-                        members = getAnnotatedMembers(type, field.getName());
-                        method = getAnnotatedGetter(type, field.getName());
+                        members = getAnnotatedMembers(configuration(), type, field.getName());
+                        method = getAnnotatedGetter(configuration(), type, field.getName());
                     }
 
                     // No annotations are present
                     else {
-                        members = getMatchingMembers(type, field.getName());
-                        method = getMatchingGetter(type, field.getName());
+                        members = getMatchingMembers(configuration(), type, field.getName());
+                        method = getMatchingGetter(configuration(), type, field.getName());
                     }
 
                     // Use only the first applicable method or member

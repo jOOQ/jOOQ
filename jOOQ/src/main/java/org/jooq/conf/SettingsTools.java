@@ -152,6 +152,13 @@ public final class SettingsTools {
     }
 
     /**
+     * Whether primary keys should be updatable.
+     */
+    public static final boolean reflectionCaching(Settings settings) {
+        return defaultIfNull(settings.isReflectionCaching(), true);
+    }
+
+    /**
      * Lazy access to {@link RenderMapping}.
      */
     public static final RenderMapping getRenderMapping(Settings settings) {

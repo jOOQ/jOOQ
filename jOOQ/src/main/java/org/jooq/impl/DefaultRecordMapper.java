@@ -190,33 +190,49 @@ import org.jooq.tools.reflect.Reflect;
 public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R, E> {
 
     /**
-     * The record type
+     * The record type.
      */
     private final Field<?>[]         fields;
 
     /**
-     * The target type
+     * The target type.
      */
     private final Class<? extends E> type;
 
     /**
-     * An optional target instance to use instead of creating new instances
+     * The configuration in whose context this {@link RecordMapper} operates.
+     * <p>
+     * This configuration can be used for caching reflection information.
+     */
+    private final Configuration      configuration;
+
+    /**
+     * An optional target instance to use instead of creating new instances.
      */
     private transient E              instance;
 
     /**
-     * A delegate mapper created from type information in <code>type</code>
+     * A delegate mapper created from type information in <code>type</code>.
      */
     private RecordMapper<R, E>       delegate;
 
     public DefaultRecordMapper(RecordType<R> rowType, Class<? extends E> type) {
-        this(rowType, type, null);
+        this(rowType, type, null, null);
+    }
+
+    DefaultRecordMapper(RecordType<R> rowType, Class<? extends E> type, Configuration configuration) {
+        this(rowType, type, null, configuration);
     }
 
     DefaultRecordMapper(RecordType<R> rowType, Class<? extends E> type, E instance) {
+        this(rowType, type, instance, null);
+    }
+
+    DefaultRecordMapper(RecordType<R> rowType, Class<? extends E> type, E instance, Configuration configuration) {
         this.fields = rowType.fields();
         this.type = type;
         this.instance = instance;
+        this.configuration = configuration;
 
         init();
     }
@@ -393,7 +409,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
         MutablePOJOMapper(Constructor<? extends E> constructor) {
             this.constructor = accessible(constructor);
-            this.useAnnotations = hasColumnAnnotations(type);
+            this.useAnnotations = hasColumnAnnotations(configuration, type);
             this.members = new List[fields.length];
             this.methods = new List[fields.length];
 
@@ -402,14 +418,14 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                 // Annotations are available and present
                 if (useAnnotations) {
-                    members[i] = getAnnotatedMembers(type, field.getName());
-                    methods[i] = getAnnotatedSetters(type, field.getName());
+                    members[i] = getAnnotatedMembers(configuration, type, field.getName());
+                    methods[i] = getAnnotatedSetters(configuration, type, field.getName());
                 }
 
                 // No annotations are present
                 else {
-                    members[i] = getMatchingMembers(type, field.getName());
-                    methods[i] = getMatchingSetters(type, field.getName());
+                    members[i] = getMatchingMembers(configuration, type, field.getName());
+                    methods[i] = getMatchingSetters(configuration, type, field.getName());
                 }
             }
         }
@@ -518,7 +534,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         ImmutablePOJOMapperWithConstructorProperties(Constructor<E> constructor, ConstructorProperties properties) {
             this.constructor = constructor;
             this.propertyNames = Arrays.asList(properties.value());
-            this.useAnnotations = hasColumnAnnotations(type);
+            this.useAnnotations = hasColumnAnnotations(configuration, type);
             this.parameterTypes = constructor.getParameterTypes();
             this.parameterValues = new Object[parameterTypes.length];
             this.members = new List[fields.length];
@@ -529,14 +545,14 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                 // Annotations are available and present
                 if (useAnnotations) {
-                    members[i] = getAnnotatedMembers(type, field.getName());
-                    methods[i] = getAnnotatedGetter(type, field.getName());
+                    members[i] = getAnnotatedMembers(configuration, type, field.getName());
+                    methods[i] = getAnnotatedGetter(configuration, type, field.getName());
                 }
 
                 // No annotations are present
                 else {
-                    members[i] = getMatchingMembers(type, field.getName());
-                    methods[i] = getMatchingGetter(type, field.getName());
+                    members[i] = getMatchingMembers(configuration, type, field.getName());
+                    methods[i] = getMatchingGetter(configuration, type, field.getName());
                 }
             }
         }

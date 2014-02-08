@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.conf.SettingsTools.reflectionCaching;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.escape;
@@ -85,6 +86,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -122,6 +124,7 @@ import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
+import org.jooq.impl.Utils.Cache.CachedOperation;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -242,6 +245,21 @@ final class Utils {
      */
     static final String          DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE        = "org.jooq.configuration.rendering-db2-final-table-clause";
 
+    /**
+     * [#2965] These are {@link ConcurrentHashMap}s containing caches for
+     * reflection information.
+     * <p>
+     * <code>new String()</code> is used to allow for synchronizing on these
+     * objects.
+     */
+    static final String          DATA_REFLECTION_CACHE_GET_ANNOTATED_GETTER   = new String("org.jooq.configuration.reflection-cache.get-annotated-getter");
+    static final String          DATA_REFLECTION_CACHE_GET_ANNOTATED_MEMBERS  = new String("org.jooq.configuration.reflection-cache.get-annotated-members");
+    static final String          DATA_REFLECTION_CACHE_GET_ANNOTATED_SETTERS  = new String("org.jooq.configuration.reflection-cache.get-annotated-setters");
+    static final String          DATA_REFLECTION_CACHE_GET_MATCHING_GETTER    = new String("org.jooq.configuration.reflection-cache.get-matching-getter");
+    static final String          DATA_REFLECTION_CACHE_GET_MATCHING_MEMBERS   = new String("org.jooq.configuration.reflection-cache.get-matching-members");
+    static final String          DATA_REFLECTION_CACHE_GET_MATCHING_SETTERS   = new String("org.jooq.configuration.reflection-cache.get-matching-setters");
+    static final String          DATA_REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS = new String("org.jooq.configuration.reflection-cache.has-column-annotations");
+
     // ------------------------------------------------------------------------
     // Other constants
     // ------------------------------------------------------------------------
@@ -261,12 +279,12 @@ final class Utils {
     /**
      * A pattern for the dash line syntax
      */
-    private static final Pattern DASH_PATTERN                                 = Pattern.compile("(-+)");                                ;
+    private static final Pattern DASH_PATTERN                                 = Pattern.compile("(-+)");
 
     /**
      * A pattern for the dash line syntax
      */
-    private static final Pattern PLUS_PATTERN                                 = Pattern.compile("\\+(-+)(?=\\+)");                                ;
+    private static final Pattern PLUS_PATTERN                                 = Pattern.compile("\\+(-+)(?=\\+)");
 
     /**
      * A pattern for the JDBC escape syntax
@@ -1468,6 +1486,125 @@ final class Utils {
     }
 
     // ------------------------------------------------------------------------
+    // XXX: [#2965] Reflection cache
+    // ------------------------------------------------------------------------
+
+    /**
+     * [#2965] This is a {@link Configuration}-based cache that can cache reflection information and other things
+     */
+    static class Cache {
+
+        /**
+         * A callback wrapping expensive operations.
+         */
+        static interface CachedOperation<V> {
+
+            /**
+             * An expensive operation.
+             */
+            V call();
+        }
+
+        /**
+         * Run a {@link CachedOperation} in the context of a
+         * {@link Configuration}.
+         *
+         * @param configuration The configuration that may cache the outcome of
+         *            the {@link CachedOperation}.
+         * @param operation The expensive operation.
+         * @param type The cache type to be used.
+         * @param keys The cache keys.
+         * @return The cached value or the outcome of the cached operation.
+         */
+        @SuppressWarnings("unchecked")
+        static final <V> V run(Configuration configuration, CachedOperation<V> operation, String type, Object... keys) {
+
+            // Shortcut caching when the relevant Settings flag isn't set.
+            if (!reflectionCaching(configuration.settings()))
+                return operation.call();
+
+            Map<Object, Object> cache = (Map<Object, Object>) configuration.data(type);
+            if (cache == null) {
+
+                // String synchronization is OK as all type literals were created using new String()
+                synchronized (type) {
+                    cache = (Map<Object, Object>) configuration.data(type);
+
+                    if (cache == null) {
+                        cache = new ConcurrentHashMap<Object, Object>();
+                        configuration.data(type, cache);
+                    }
+                }
+            }
+
+            Object key = key(keys);
+            Object result = cache.get(key);
+
+            if (result == null) {
+
+                synchronized (cache) {
+                    result = cache.get(key);
+
+                    if (result == null) {
+                        result = operation.call();
+                        cache.put(key, result == null ? NULL : result);
+                    }
+                }
+            }
+
+            return (V) (result == NULL ? null : result);
+        }
+
+        /**
+         * A <code>null</code> placeholder to be put in {@link ConcurrentHashMap}.
+         */
+        private static final Object NULL = new Object();
+
+        /**
+         * Create a single-value or multi-value key for caching.
+         */
+        private static final Object key(final Object... key) {
+            if (key == null || key.length == 0)
+                return key;
+
+            if (key.length == 1)
+                return key[0];
+
+            return new Key(key);
+        }
+
+        /**
+         * A multi-value key for caching.
+         */
+        private static class Key {
+
+            private final Object[] key;
+
+            Key(Object[] key) {
+                this.key = key;
+            }
+
+            @Override
+            public int hashCode() {
+                return Arrays.hashCode(key);
+            }
+
+            @Override
+            public boolean equals(Object obj) {
+                if (obj instanceof Key)
+                    return Arrays.equals(key, ((Key) obj).key);
+
+                return false;
+            }
+
+            @Override
+            public String toString() {
+                return Arrays.asList(key).toString();
+            }
+        }
+    }
+
+    // ------------------------------------------------------------------------
     // XXX: Reflection utilities used for POJO mapping
     // ------------------------------------------------------------------------
 
@@ -1492,225 +1629,273 @@ final class Utils {
      * Check whether <code>type</code> has any {@link Column} annotated members
      * or methods
      */
-    static final boolean hasColumnAnnotations(Class<?> type) {
-        if (!isJPAAvailable()) {
-            return false;
-        }
+    static final boolean hasColumnAnnotations(final Configuration configuration, final Class<?> type) {
+        return Cache.run(configuration, new CachedOperation<Boolean>() {
 
-        // An @Entity or @Table usually has @Column annotations, too
-        if (type.getAnnotation(Entity.class) != null ||
-            type.getAnnotation(javax.persistence.Table.class) != null) {
-            return true;
-        }
+            @Override
+            public Boolean call() {
+                if (!isJPAAvailable()) {
+                    return false;
+                }
 
-        for (java.lang.reflect.Field member : getInstanceMembers(type)) {
-            if (member.getAnnotation(Column.class) != null) {
-                return true;
+                // An @Entity or @Table usually has @Column annotations, too
+                if (type.getAnnotation(Entity.class) != null ||
+                    type.getAnnotation(javax.persistence.Table.class) != null) {
+                    return true;
+                }
+
+                for (java.lang.reflect.Field member : getInstanceMembers(type)) {
+                    if (member.getAnnotation(Column.class) != null) {
+                        return true;
+                    }
+                }
+
+                for (Method method : getInstanceMethods(type)) {
+                    if (method.getAnnotation(Column.class) != null) {
+                        return true;
+                    }
+                }
+
+                return false;
             }
-        }
 
-        for (Method method : getInstanceMethods(type)) {
-            if (method.getAnnotation(Column.class) != null) {
-                return true;
-            }
-        }
-
-        return false;
+        }, DATA_REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS, type);
     }
 
     /**
      * Get all members annotated with a given column name
      */
-    static final List<java.lang.reflect.Field> getAnnotatedMembers(Class<?> type, String name) {
-        List<java.lang.reflect.Field> result = new ArrayList<java.lang.reflect.Field>();
+    static final List<java.lang.reflect.Field> getAnnotatedMembers(final Configuration configuration, final Class<?> type, final String name) {
+        return Cache.run(configuration, new CachedOperation<List<java.lang.reflect.Field>>() {
 
-        for (java.lang.reflect.Field member : getInstanceMembers(type)) {
-            Column annotation = member.getAnnotation(Column.class);
+            @Override
+            public List<java.lang.reflect.Field> call() {
+                List<java.lang.reflect.Field> result = new ArrayList<java.lang.reflect.Field>();
 
-            if (annotation != null) {
-                if (name.equals(annotation.name())) {
-                    result.add(accessible(member));
+                for (java.lang.reflect.Field member : getInstanceMembers(type)) {
+                    Column annotation = member.getAnnotation(Column.class);
+
+                    if (annotation != null) {
+                        if (name.equals(annotation.name())) {
+                            result.add(accessible(member));
+                        }
+                    }
                 }
-            }
-        }
 
-        return result;
+                return result;
+            }
+
+        }, DATA_REFLECTION_CACHE_GET_ANNOTATED_MEMBERS, type, name);
     }
 
     /**
      * Get all members matching a given column name
      */
-    static final List<java.lang.reflect.Field> getMatchingMembers(Class<?> type, String name) {
-        List<java.lang.reflect.Field> result = new ArrayList<java.lang.reflect.Field>();
+    static final List<java.lang.reflect.Field> getMatchingMembers(final Configuration configuration, final Class<?> type, final String name) {
+        return Cache.run(configuration, new CachedOperation<List<java.lang.reflect.Field>>() {
 
-        // [#1942] Caching these values before the field-loop significantly
-        // accerates POJO mapping
-        String camelCaseLC = StringUtils.toCamelCaseLC(name);
+            @Override
+            public List<java.lang.reflect.Field> call() {
+                List<java.lang.reflect.Field> result = new ArrayList<java.lang.reflect.Field>();
 
-        for (java.lang.reflect.Field member : getInstanceMembers(type)) {
-            if (name.equals(member.getName())) {
-                result.add(accessible(member));
+                // [#1942] Caching these values before the field-loop significantly
+                // accerates POJO mapping
+                String camelCaseLC = StringUtils.toCamelCaseLC(name);
+
+                for (java.lang.reflect.Field member : getInstanceMembers(type)) {
+                    if (name.equals(member.getName())) {
+                        result.add(accessible(member));
+                    }
+                    else if (camelCaseLC.equals(member.getName())) {
+                        result.add(accessible(member));
+                    }
+                }
+
+                return result;
             }
-            else if (camelCaseLC.equals(member.getName())) {
-                result.add(accessible(member));
-            }
-        }
 
-        return result;
+        }, DATA_REFLECTION_CACHE_GET_MATCHING_MEMBERS, type, name);
     }
 
     /**
      * Get all setter methods annotated with a given column name
      */
-    static final List<Method> getAnnotatedSetters(Class<?> type, String name) {
-        List<Method> result = new ArrayList<Method>();
+    static final List<Method> getAnnotatedSetters(final Configuration configuration, final Class<?> type, final String name) {
+        return Cache.run(configuration, new CachedOperation<List<Method>>() {
 
-        for (Method method : getInstanceMethods(type)) {
-            Column annotation = method.getAnnotation(Column.class);
+            @Override
+            public List<Method> call() {
+                List<Method> result = new ArrayList<Method>();
 
-            if (annotation != null && name.equals(annotation.name())) {
+                for (Method method : getInstanceMethods(type)) {
+                    Column annotation = method.getAnnotation(Column.class);
 
-                // Annotated setter
-                if (method.getParameterTypes().length == 1) {
-                    result.add(accessible(method));
-                }
+                    if (annotation != null && name.equals(annotation.name())) {
 
-                // Annotated getter with matching setter
-                else if (method.getParameterTypes().length == 0) {
-                    String m = method.getName();
+                        // Annotated setter
+                        if (method.getParameterTypes().length == 1) {
+                            result.add(accessible(method));
+                        }
 
-                    if (m.startsWith("get") || m.startsWith("is")) {
-                        try {
-                            Method setter = type.getMethod("set" + m.substring(3), method.getReturnType());
+                        // Annotated getter with matching setter
+                        else if (method.getParameterTypes().length == 0) {
+                            String m = method.getName();
 
-                            // Setter annotation is more relevant
-                            if (setter.getAnnotation(Column.class) == null) {
-                                result.add(accessible(setter));
+                            if (m.startsWith("get") || m.startsWith("is")) {
+                                try {
+                                    Method setter = type.getMethod("set" + m.substring(3), method.getReturnType());
+
+                                    // Setter annotation is more relevant
+                                    if (setter.getAnnotation(Column.class) == null) {
+                                        result.add(accessible(setter));
+                                    }
+                                }
+                                catch (NoSuchMethodException ignore) {}
                             }
                         }
-                        catch (NoSuchMethodException ignore) {}
                     }
                 }
-            }
-        }
 
-        return result;
+                return result;
+            }
+
+        }, DATA_REFLECTION_CACHE_GET_ANNOTATED_SETTERS, type, name);
     }
 
     /**
      * Get the first getter method annotated with a given column name
      */
-    static final Method getAnnotatedGetter(Class<?> type, String name) {
-        for (Method method : getInstanceMethods(type)) {
-            Column annotation = method.getAnnotation(Column.class);
+    static final Method getAnnotatedGetter(final Configuration configuration, final Class<?> type, final String name) {
+        return Cache.run(configuration, new CachedOperation<Method>() {
 
-            if (annotation != null && name.equals(annotation.name())) {
+            @Override
+            public Method call() {
+                for (Method method : getInstanceMethods(type)) {
+                    Column annotation = method.getAnnotation(Column.class);
 
-                // Annotated getter
-                if (method.getParameterTypes().length == 0) {
-                    return accessible(method);
-                }
+                    if (annotation != null && name.equals(annotation.name())) {
 
-                // Annotated setter with matching getter
-                else if (method.getParameterTypes().length == 1) {
-                    String m = method.getName();
+                        // Annotated getter
+                        if (method.getParameterTypes().length == 0) {
+                            return accessible(method);
+                        }
 
-                    if (m.startsWith("set")) {
-                        try {
-                            Method getter = type.getMethod("get" + m.substring(3));
+                        // Annotated setter with matching getter
+                        else if (method.getParameterTypes().length == 1) {
+                            String m = method.getName();
 
-                            // Getter annotation is more relevant
-                            if (getter.getAnnotation(Column.class) == null) {
-                                return accessible(getter);
+                            if (m.startsWith("set")) {
+                                try {
+                                    Method getter = type.getMethod("get" + m.substring(3));
+
+                                    // Getter annotation is more relevant
+                                    if (getter.getAnnotation(Column.class) == null) {
+                                        return accessible(getter);
+                                    }
+                                }
+                                catch (NoSuchMethodException ignore) {}
+
+                                try {
+                                    Method getter = type.getMethod("is" + m.substring(3));
+
+                                    // Getter annotation is more relevant
+                                    if (getter.getAnnotation(Column.class) == null) {
+                                        return accessible(getter);
+                                    }
+                                }
+                                catch (NoSuchMethodException ignore) {}
                             }
                         }
-                        catch (NoSuchMethodException ignore) {}
-
-                        try {
-                            Method getter = type.getMethod("is" + m.substring(3));
-
-                            // Getter annotation is more relevant
-                            if (getter.getAnnotation(Column.class) == null) {
-                                return accessible(getter);
-                            }
-                        }
-                        catch (NoSuchMethodException ignore) {}
                     }
                 }
-            }
-        }
 
-        return null;
+                return null;
+            }
+
+        }, DATA_REFLECTION_CACHE_GET_ANNOTATED_GETTER, name);
     }
 
     /**
      * Get all setter methods matching a given column name
      */
-    static final List<Method> getMatchingSetters(Class<?> type, String name) {
-        List<Method> result = new ArrayList<Method>();
+    static final List<Method> getMatchingSetters(final Configuration configuration, final Class<?> type, final String name) {
+        return Cache.run(configuration, new CachedOperation<List<Method>>() {
 
-        // [#1942] Caching these values before the method-loop significantly
-        // accerates POJO mapping
-        String camelCase = StringUtils.toCamelCase(name);
-        String camelCaseLC = StringUtils.toLC(camelCase);
+            @Override
+            public List<Method> call() {
+                List<Method> result = new ArrayList<Method>();
 
-        for (Method method : getInstanceMethods(type)) {
-            Class<?>[] parameterTypes = method.getParameterTypes();
+                // [#1942] Caching these values before the method-loop significantly
+                // accerates POJO mapping
+                String camelCase = StringUtils.toCamelCase(name);
+                String camelCaseLC = StringUtils.toLC(camelCase);
 
-            if (parameterTypes.length == 1) {
-                if (name.equals(method.getName())) {
-                    result.add(accessible(method));
+                for (Method method : getInstanceMethods(type)) {
+                    Class<?>[] parameterTypes = method.getParameterTypes();
+
+                    if (parameterTypes.length == 1) {
+                        if (name.equals(method.getName())) {
+                            result.add(accessible(method));
+                        }
+                        else if (camelCaseLC.equals(method.getName())) {
+                            result.add(accessible(method));
+                        }
+                        else if (("set" + name).equals(method.getName())) {
+                            result.add(accessible(method));
+                        }
+                        else if (("set" + camelCase).equals(method.getName())) {
+                            result.add(accessible(method));
+                        }
+                    }
                 }
-                else if (camelCaseLC.equals(method.getName())) {
-                    result.add(accessible(method));
-                }
-                else if (("set" + name).equals(method.getName())) {
-                    result.add(accessible(method));
-                }
-                else if (("set" + camelCase).equals(method.getName())) {
-                    result.add(accessible(method));
-                }
+
+                return result;
             }
-        }
 
-        return result;
+        }, DATA_REFLECTION_CACHE_GET_MATCHING_SETTERS, type, name);
     }
 
 
     /**
      * Get the first getter method matching a given column name
      */
-    static final Method getMatchingGetter(Class<?> type, String name) {
+    static final Method getMatchingGetter(final Configuration configuration, final Class<?> type, final String name) {
+        return Cache.run(configuration, new CachedOperation<Method>() {
 
-        // [#1942] Caching these values before the method-loop significantly
-        // accerates POJO mapping
-        String camelCase = StringUtils.toCamelCase(name);
-        String camelCaseLC = StringUtils.toLC(camelCase);
+            @Override
+            public Method call() {
+                // [#1942] Caching these values before the method-loop significantly
+                // accerates POJO mapping
+                String camelCase = StringUtils.toCamelCase(name);
+                String camelCaseLC = StringUtils.toLC(camelCase);
 
-        for (Method method : getInstanceMethods(type)) {
-            if (method.getParameterTypes().length == 0) {
-                if (name.equals(method.getName())) {
-                    return accessible(method);
+                for (Method method : getInstanceMethods(type)) {
+                    if (method.getParameterTypes().length == 0) {
+                        if (name.equals(method.getName())) {
+                            return accessible(method);
+                        }
+                        else if (camelCaseLC.equals(method.getName())) {
+                            return accessible(method);
+                        }
+                        else if (("get" + name).equals(method.getName())) {
+                            return accessible(method);
+                        }
+                        else if (("get" + camelCase).equals(method.getName())) {
+                            return accessible(method);
+                        }
+                        else if (("is" + name).equals(method.getName())) {
+                            return accessible(method);
+                        }
+                        else if (("is" + camelCase).equals(method.getName())) {
+                            return accessible(method);
+                        }
+                    }
                 }
-                else if (camelCaseLC.equals(method.getName())) {
-                    return accessible(method);
-                }
-                else if (("get" + name).equals(method.getName())) {
-                    return accessible(method);
-                }
-                else if (("get" + camelCase).equals(method.getName())) {
-                    return accessible(method);
-                }
-                else if (("is" + name).equals(method.getName())) {
-                    return accessible(method);
-                }
-                else if (("is" + camelCase).equals(method.getName())) {
-                    return accessible(method);
-                }
+
+                return null;
             }
-        }
 
-        return null;
+        }, DATA_REFLECTION_CACHE_GET_MATCHING_GETTER, type, name);
     }
 
     private static final List<Method> getInstanceMethods(Class<?> type) {

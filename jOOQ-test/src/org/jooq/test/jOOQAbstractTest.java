@@ -2561,8 +2561,18 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testBenchmarkRecordInto() throws Exception {
-        new BenchmarkTests(this).testBenchmarkRecordInto();
+    public void testBenchmarkRecordIntoWithAnnotations() throws Exception {
+        new BenchmarkTests(this).testBenchmarkRecordIntoWithAnnotations();
+    }
+
+    @Test
+    public void testBenchmarkRecordIntoWithoutAnnotations() throws Exception {
+        new BenchmarkTests(this).testBenchmarkRecordIntoWithoutAnnotations();
+    }
+
+    @Test
+    public void testBenchmarkRecordIntoTableRecord() throws Exception {
+        new BenchmarkTests(this).testBenchmarkRecordIntoTableRecord();
     }
 
     @Test

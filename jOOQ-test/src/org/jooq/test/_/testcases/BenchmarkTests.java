@@ -60,6 +60,8 @@ import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
+import org.jooq.test._.BookWithAnnotations;
+import org.jooq.test._.BookWithoutAnnotations;
 import org.jooq.tools.StopWatch;
 
 import org.junit.Test;
@@ -87,11 +89,12 @@ public class BenchmarkTests<
     CASE extends UpdatableRecord<CASE>>
 extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> {
 
-    private static final int    REPETITIONS_NEW_RECORD   = 1000000;
-    private static final int    REPETITIONS_RECORD_INTO  = 2000;
-    private static final int    REPETITIONS_FIELD_ACCESS = 1000000;
-    private static final int    REPETITIONS_SELECT       = 100;
-    private static final String RANDOM                   = "" + new Random().nextLong();
+    private static final int    REPETITIONS_NEW_RECORD               = 1000000;
+    private static final int    REPETITIONS_RECORD_INTO              = 20000;
+    private static final int    REPETITIONS_RECORD_INTO_TABLE_RECORD = 20000;
+    private static final int    REPETITIONS_FIELD_ACCESS             = 1000000;
+    private static final int    REPETITIONS_SELECT                   = 100;
+    private static final String RANDOM                               = "" + new Random().nextLong();
 
     public BenchmarkTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
         super(delegate);
@@ -107,10 +110,42 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
-    public void testBenchmarkRecordInto() throws Exception {
+    public void testBenchmarkRecordIntoWithoutAnnotations() throws Exception {
         Result<B> books = create().fetch(TBook());
 
         for (int i = 0; i < REPETITIONS_RECORD_INTO; i++) {
+            books.into(BookWithoutAnnotations.class);
+        }
+    }
+
+    @Test
+    public void testBenchmarkRecordIntoWithAnnotations() throws Exception {
+        System.out.print("X:");
+        System.out.println(System.in.read());
+        System.out.println(System.in.read());
+
+        StopWatch watch = new StopWatch();
+        watch.splitInfo("Start");
+
+        Result<B> books = create().fetch(TBook());
+
+        for (int i = 0; i < REPETITIONS_RECORD_INTO; i++) {
+            books.into(BookWithAnnotations.class);
+        }
+
+        watch.splitInfo("Stop");
+        System.out.print("Y:");
+        System.out.println(System.in.read());
+        System.out.println(System.in.read());
+    }
+
+    @Test
+    public void testBenchmarkRecordIntoTableRecord() throws Exception {
+
+        // This benchmark should heavily outperform the preceding one due to the optimisations done in [#2989]
+        Result<B> books = create().fetch(TBook());
+
+        for (int i = 0; i < REPETITIONS_RECORD_INTO_TABLE_RECORD; i++) {
             books.into(TBook().getRecordType());
         }
     }

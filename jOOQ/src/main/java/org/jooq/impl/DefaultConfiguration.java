@@ -123,11 +123,11 @@ public class DefaultConfiguration implements Configuration {
      */
     DefaultConfiguration(SQLDialect dialect) {
         this(
-            new NoConnectionProvider(),
-            new DefaultRecordMapperProvider(),
-            new RecordListenerProvider[0],
-            new ExecuteListenerProvider[0],
-            new VisitListenerProvider[0],
+            null,
+            null,
+            null,
+            null,
+            null,
             dialect,
             SettingsTools.defaultSettings(),
             null
@@ -358,7 +358,10 @@ public class DefaultConfiguration implements Configuration {
      */
     @Override
     public final Configuration set(ConnectionProvider newConnectionProvider) {
-        this.connectionProvider = newConnectionProvider;
+        this.connectionProvider = newConnectionProvider != null
+            ? newConnectionProvider
+            : new NoConnectionProvider();
+
         return this;
     }
 
@@ -369,7 +372,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration set(RecordMapperProvider newRecordMapperProvider) {
         this.recordMapperProvider = newRecordMapperProvider != null
             ? newRecordMapperProvider
-            : new DefaultRecordMapperProvider();
+            : new DefaultRecordMapperProvider(this);
 
         return this;
     }

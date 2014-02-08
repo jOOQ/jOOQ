@@ -16,5 +16,5 @@
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit4"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.jooq.test.SybaseTest"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="jOOQ-test"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.jooq.configuration=/org/jooq/configuration/${env_var:USERNAME}/sybase/library.xml"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.jooq.configuration=/org/jooq/configuration/${env_var:USERNAME}/sybase/library.xml -XX:+UnlockCommercialFeatures -XX:+FlightRecorder"/>
 </launchConfiguration>

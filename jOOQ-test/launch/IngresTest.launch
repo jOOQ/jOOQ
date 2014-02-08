@@ -27,5 +27,5 @@
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.jooq.test.IngresTest"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="jOOQ-test"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.jooq.configuration=/org/jooq/configuration/${env_var:USERNAME}/ingres/library.xml"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.jooq.configuration=/org/jooq/configuration/${env_var:USERNAME}/ingres/library.xml -XX:+UnlockCommercialFeatures -XX:+FlightRecorder"/>
 </launchConfiguration>

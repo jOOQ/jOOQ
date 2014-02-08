@@ -22,5 +22,5 @@
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.jooq.test.CUBRIDTest"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="jOOQ-test"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.jooq.configuration=/org/jooq/configuration/${env_var:USERNAME}/cubrid/library.xml"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.jooq.configuration=/org/jooq/configuration/${env_var:USERNAME}/cubrid/library.xml -XX:+UnlockCommercialFeatures -XX:+FlightRecorder"/>
 </launchConfiguration>

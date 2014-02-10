@@ -44,6 +44,7 @@ import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -230,6 +231,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testInsertDefaultValues() throws Exception {
+        /* [pro] */
+        if (dialect().family() == ACCESS) {
+            log.info("SKIPPING", "Default values test");
+            return;
+        }
+        /* [/pro] */
+
         jOOQAbstractTest.reset = false;
 
         assertEquals(1,

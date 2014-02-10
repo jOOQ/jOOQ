@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static java.lang.Integer.toOctalString;
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -424,6 +425,12 @@ class Val<T> extends AbstractParam<T> {
                     context.sql("'").sql(escape(val)).sql("'");
                 }
 
+                /* [pro] */
+                else if (asList(ACCESS).contains(family)) {
+                    context.sql("{d '").sql(escape(val)).sql("'}");
+                }
+                /* [/pro] */
+
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
                     context.keyword("date('").sql(escape(val)).sql("')");
@@ -441,6 +448,12 @@ class Val<T> extends AbstractParam<T> {
                 if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(family)) {
                     context.sql("'").sql(escape(val)).sql("'");
                 }
+
+                /* [pro] */
+                else if (asList(ACCESS).contains(family)) {
+                    context.sql("{ts '").sql(escape(val)).sql("'}");
+                }
+                /* [/pro] */
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
@@ -464,6 +477,12 @@ class Val<T> extends AbstractParam<T> {
                 if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(family)) {
                     context.sql("'").sql(escape(val)).sql("'");
                 }
+
+                /* [pro] */
+                else if (asList(ACCESS).contains(family)) {
+                    context.sql("{t '").sql(escape(val)).sql("'}");
+                }
+                /* [/pro] */
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {

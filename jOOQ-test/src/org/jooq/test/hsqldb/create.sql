@@ -116,7 +116,8 @@ CREATE TABLE t_booleans (
   c_boolean char(1),
   n_boolean int,
 
-  CONSTRAINT pk_t_booleans PRIMARY KEY (id)
+  CONSTRAINT pk_t_booleans PRIMARY KEY (id),
+  CONSTRAINT ck_one_zero CHECK (one_zero IN (0, 1))
 )
 /
 

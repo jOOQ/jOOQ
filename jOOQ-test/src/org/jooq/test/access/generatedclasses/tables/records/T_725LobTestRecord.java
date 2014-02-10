@@ -9,31 +9,31 @@ package org.jooq.test.access.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.access.generatedclasses.tables.records.T_725LobTestRecord> implements org.jooq.Record2<java.lang.Integer, byte[]> {
 
-	private static final long serialVersionUID = 1920817258;
+	private static final long serialVersionUID = 1017029612;
 
 	/**
-	 * Setter for <code>t_725_lob_test.id</code>. 
+	 * Setter for <code>t_725_lob_test.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>t_725_lob_test.id</code>. 
+	 * Getter for <code>t_725_lob_test.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>t_725_lob_test.lob</code>. 
+	 * Setter for <code>t_725_lob_test.lob</code>.
 	 */
 	public void setLob(byte[] value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>t_725_lob_test.lob</code>. 
+	 * Getter for <code>t_725_lob_test.lob</code>.
 	 */
 	public byte[] getLob() {
 		return (byte[]) getValue(1);

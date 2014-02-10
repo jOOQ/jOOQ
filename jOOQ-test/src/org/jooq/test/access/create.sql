@@ -145,7 +145,7 @@ CREATE TABLE t_book (
   title VARCHAR(200) NOT NULL,
   published_in INT NOT NULL,
   language_id INT NOT NULL,
-  content_text TEXT,
+  content_text LONGTEXT,
   content_pdf VARBINARY(500),
 
   CONSTRAINT pk_t_book PRIMARY KEY (id),

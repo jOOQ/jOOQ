@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 1067120281;
+	private static final long serialVersionUID = 373038891;
 
 	/**
 	 * The singleton instance of <code>v_library</code>
@@ -25,31 +25,35 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.access.gener
 	}
 
 	/**
-	 * The column <code>v_library.author</code>. 
+	 * The column <code>v_library.author</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("author", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("author", org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
 	/**
-	 * The column <code>v_library.title</code>. 
+	 * The column <code>v_library.title</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(200), this);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(200), this, "");
 
 	/**
 	 * Create a <code>v_library</code> table reference
 	 */
 	public VLibrary() {
-		super("v_library", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("v_library", null);
 	}
 
 	/**
 	 * Create an aliased <code>v_library</code> table reference
 	 */
 	public VLibrary(java.lang.String alias) {
-		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.VLibrary.V_LIBRARY);
+		this(alias, org.jooq.test.access.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 
 	private VLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.access.generatedclasses.tables.records.VLibraryRecord> aliased) {
-		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased);
+		this(alias, aliased, null);
+	}
+
+	private VLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.access.generatedclasses.tables.records.VLibraryRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -2145014484;
+	private static final long serialVersionUID = 1624453226;
 
 	/**
 	 * The singleton instance of <code>t_author</code>
@@ -25,51 +25,55 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.access.genera
 	}
 
 	/**
-	 * The column <code>t_author.id</code>. 
+	 * The column <code>t_author.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>t_author.first_name</code>. 
+	 * The column <code>t_author.first_name</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
-	 * The column <code>t_author.last_name</code>. 
+	 * The column <code>t_author.last_name</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
-	 * The column <code>t_author.date_of_birth</code>. 
+	 * The column <code>t_author.date_of_birth</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("date_of_birth", org.jooq.impl.SQLDataType.DATE, this);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("date_of_birth", org.jooq.impl.SQLDataType.DATE, this, "");
 
 	/**
-	 * The column <code>t_author.year_of_birth</code>. 
+	 * The column <code>t_author.year_of_birth</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("year_of_birth", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("year_of_birth", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>t_author.address</code>. 
+	 * The column <code>t_author.address</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord, java.lang.String> ADDRESS = createField("address", org.jooq.impl.SQLDataType.VARCHAR.length(200), this);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord, java.lang.String> ADDRESS = createField("address", org.jooq.impl.SQLDataType.VARCHAR.length(200), this, "");
 
 	/**
 	 * Create a <code>t_author</code> table reference
 	 */
 	public TAuthor() {
-		super("t_author", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("t_author", null);
 	}
 
 	/**
 	 * Create an aliased <code>t_author</code> table reference
 	 */
 	public TAuthor(java.lang.String alias) {
-		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.TAuthor.T_AUTHOR);
+		this(alias, org.jooq.test.access.generatedclasses.tables.TAuthor.T_AUTHOR);
 	}
 
 	private TAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord> aliased) {
-		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased);
+		this(alias, aliased, null);
+	}
+
+	private TAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

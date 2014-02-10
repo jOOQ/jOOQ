@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 1780085561;
+	private static final long serialVersionUID = -1701479191;
 
 	/**
 	 * The singleton instance of <code>t_book_store</code>
@@ -25,26 +25,30 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.access.gen
 	}
 
 	/**
-	 * The column <code>t_book_store.name</code>. 
+	 * The column <code>t_book_store.name</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(200), this);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(200), this, "");
 
 	/**
 	 * Create a <code>t_book_store</code> table reference
 	 */
 	public TBookStore() {
-		super("t_book_store", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("t_book_store", null);
 	}
 
 	/**
 	 * Create an aliased <code>t_book_store</code> table reference
 	 */
 	public TBookStore(java.lang.String alias) {
-		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.TBookStore.T_BOOK_STORE);
+		this(alias, org.jooq.test.access.generatedclasses.tables.TBookStore.T_BOOK_STORE);
 	}
 
 	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.access.generatedclasses.tables.records.TBookStoreRecord> aliased) {
-		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased);
+		this(alias, aliased, null);
+	}
+
+	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.access.generatedclasses.tables.records.TBookStoreRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

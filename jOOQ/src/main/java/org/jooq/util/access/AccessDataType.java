@@ -82,7 +82,9 @@ public class AccessDataType {
     public static final DataType<Short>      SMALLINT         = new DefaultDataType<Short>(SQLDialect.ACCESS, SQLDataType.SMALLINT, "smallint");
     public static final DataType<Integer>    INTEGER          = new DefaultDataType<Integer>(SQLDialect.ACCESS, SQLDataType.INTEGER, "integer");
     public static final DataType<BigDecimal> NUMERIC          = new DefaultDataType<BigDecimal>(SQLDialect.ACCESS, SQLDataType.NUMERIC, "numeric");
-    public static final DataType<String>     TEXT             = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.CLOB, "text");
+    public static final DataType<String>     TEXT             = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.VARCHAR, "text");
+    public static final DataType<String>     LONGTEXT         = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.CLOB, "longtext");
+    public static final DataType<String>     LONGCHAR         = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.CLOB, "longchar");
     public static final DataType<String>     CHAR             = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.CHAR, "character");
     public static final DataType<Timestamp>  DATETIME         = new DefaultDataType<Timestamp>(SQLDialect.ACCESS, SQLDataType.TIMESTAMP, "datetime");
 
@@ -98,16 +100,16 @@ public class AccessDataType {
     protected static final DataType<String>     __VARCHAR     = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.VARCHAR, "text");
     protected static final DataType<String>     __NVARCHAR    = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.NVARCHAR, "text");
     protected static final DataType<String>     __NCHAR       = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.NCHAR, "text");
-    protected static final DataType<String>     __NTEXT       = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.NCLOB, "text");
+    protected static final DataType<String>     __NTEXT       = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.NCLOB, "longtext");
 
 
     protected static final DataType<byte[]>  __BLOB           = new DefaultDataType<byte[]>(SQLDialect.ACCESS, SQLDataType.BLOB, "binary");
     protected static final DataType<Boolean> __BOOLEAN        = new DefaultDataType<Boolean>(SQLDialect.ACCESS, SQLDataType.BOOLEAN, "bit");
     protected static final DataType<Double>  __DOUBLE         = new DefaultDataType<Double>(SQLDialect.ACCESS, SQLDataType.DOUBLE, "float");
     protected static final DataType<byte[]>  __LONGVARBINARY  = new DefaultDataType<byte[]>(SQLDialect.ACCESS, SQLDataType.LONGVARBINARY, "binary");
-    protected static final DataType<String>  __LONGVARCHAR    = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.LONGVARCHAR, "text");
-    protected static final DataType<String>  __NCLOB          = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.NCLOB, "text");
-    protected static final DataType<String>  __LONGNVARCHAR   = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.LONGNVARCHAR, "text");
+    protected static final DataType<String>  __LONGVARCHAR    = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.LONGVARCHAR, "longtext");
+    protected static final DataType<String>  __NCLOB          = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.NCLOB, "longtext");
+    protected static final DataType<String>  __LONGNVARCHAR   = new DefaultDataType<String>(SQLDialect.ACCESS, SQLDataType.LONGNVARCHAR, "longtext");
     protected static final DataType<Byte>    __BYTE           = new DefaultDataType<Byte>(SQLDialect.ACCESS, SQLDataType.TINYINT, "signed tinyint", "smallint");
 
     // -------------------------------------------------------------------------

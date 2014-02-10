@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = 1924738098;
+	private static final long serialVersionUID = -226243630;
 
 	/**
 	 * The singleton instance of <code>t_identity</code>
@@ -25,31 +25,35 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.access.gene
 	}
 
 	/**
-	 * The column <code>t_identity.id</code>. 
+	 * The column <code>t_identity.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>t_identity.val</code>. 
+	 * The column <code>t_identity.val</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>t_identity</code> table reference
 	 */
 	public TIdentity() {
-		super("t_identity", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("t_identity", null);
 	}
 
 	/**
 	 * Create an aliased <code>t_identity</code> table reference
 	 */
 	public TIdentity(java.lang.String alias) {
-		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.TIdentity.T_IDENTITY);
+		this(alias, org.jooq.test.access.generatedclasses.tables.TIdentity.T_IDENTITY);
 	}
 
 	private TIdentity(java.lang.String alias, org.jooq.Table<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord> aliased) {
-		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased);
+		this(alias, aliased, null);
+	}
+
+	private TIdentity(java.lang.String alias, org.jooq.Table<org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

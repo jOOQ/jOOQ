@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 895231356;
+	private static final long serialVersionUID = 1338559456;
 
 	/**
 	 * The singleton instance of <code>t_dates</code>
@@ -25,51 +25,55 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.access.generat
 	}
 
 	/**
-	 * The column <code>t_dates.id</code>. 
+	 * The column <code>t_dates.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>t_dates.d</code>. 
+	 * The column <code>t_dates.d</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.sql.Date> D = createField("d", org.jooq.impl.SQLDataType.DATE, this);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.sql.Date> D = createField("d", org.jooq.impl.SQLDataType.DATE, this, "");
 
 	/**
-	 * The column <code>t_dates.t</code>. 
+	 * The column <code>t_dates.t</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.sql.Time> T = createField("t", org.jooq.impl.SQLDataType.TIME, this);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.sql.Time> T = createField("t", org.jooq.impl.SQLDataType.TIME, this, "");
 
 	/**
-	 * The column <code>t_dates.ts</code>. 
+	 * The column <code>t_dates.ts</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("ts", org.jooq.impl.SQLDataType.TIMESTAMP, this);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("ts", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
-	 * The column <code>t_dates.d_int</code>. 
+	 * The column <code>t_dates.d_int</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> D_INT = createField("d_int", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> D_INT = createField("d_int", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>t_dates.ts_bigint</code>. 
+	 * The column <code>t_dates.ts_bigint</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.lang.Double> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.DOUBLE, this);
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord, java.lang.Double> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
 	/**
 	 * Create a <code>t_dates</code> table reference
 	 */
 	public TDates() {
-		super("t_dates", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("t_dates", null);
 	}
 
 	/**
 	 * Create an aliased <code>t_dates</code> table reference
 	 */
 	public TDates(java.lang.String alias) {
-		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.access.generatedclasses.tables.TDates.T_DATES);
+		this(alias, org.jooq.test.access.generatedclasses.tables.TDates.T_DATES);
 	}
 
 	private TDates(java.lang.String alias, org.jooq.Table<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord> aliased) {
-		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased);
+		this(alias, aliased, null);
+	}
+
+	private TDates(java.lang.String alias, org.jooq.Table<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

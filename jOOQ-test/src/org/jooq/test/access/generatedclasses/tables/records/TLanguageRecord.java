@@ -9,59 +9,59 @@ package org.jooq.test.access.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.access.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1667587022;
+	private static final long serialVersionUID = -1694858942;
 
 	/**
-	 * Setter for <code>t_language.cd</code>. 
+	 * Setter for <code>t_language.cd</code>.
 	 */
 	public void setCd(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>t_language.cd</code>. 
+	 * Getter for <code>t_language.cd</code>.
 	 */
 	public java.lang.String getCd() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>t_language.descr</code>. 
+	 * Setter for <code>t_language.descr</code>.
 	 */
 	public void setDescr(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>t_language.descr</code>. 
+	 * Getter for <code>t_language.descr</code>.
 	 */
 	public java.lang.String getDescr() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>t_language.description_english</code>. 
+	 * Setter for <code>t_language.description_english</code>.
 	 */
 	public void setDescriptionEnglish(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>t_language.description_english</code>. 
+	 * Getter for <code>t_language.description_english</code>.
 	 */
 	public java.lang.String getDescriptionEnglish() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>t_language.id</code>. 
+	 * Setter for <code>t_language.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>t_language.id</code>. 
+	 * Getter for <code>t_language.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(3);

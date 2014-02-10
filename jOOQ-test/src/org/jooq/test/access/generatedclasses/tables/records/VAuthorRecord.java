@@ -9,87 +9,87 @@ package org.jooq.test.access.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.access.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Timestamp, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -718428373;
+	private static final long serialVersionUID = -2104191385;
 
 	/**
-	 * Setter for <code>v_author.id</code>. 
+	 * Setter for <code>v_author.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>v_author.id</code>. 
+	 * Getter for <code>v_author.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>v_author.first_name</code>. 
+	 * Setter for <code>v_author.first_name</code>.
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>v_author.first_name</code>. 
+	 * Getter for <code>v_author.first_name</code>.
 	 */
 	public java.lang.String getFirstName() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>v_author.last_name</code>. 
+	 * Setter for <code>v_author.last_name</code>.
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>v_author.last_name</code>. 
+	 * Getter for <code>v_author.last_name</code>.
 	 */
 	public java.lang.String getLastName() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>v_author.date_of_birth</code>. 
+	 * Setter for <code>v_author.date_of_birth</code>.
 	 */
 	public void setDateOfBirth(java.sql.Timestamp value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>v_author.date_of_birth</code>. 
+	 * Getter for <code>v_author.date_of_birth</code>.
 	 */
 	public java.sql.Timestamp getDateOfBirth() {
 		return (java.sql.Timestamp) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>v_author.year_of_birth</code>. 
+	 * Setter for <code>v_author.year_of_birth</code>.
 	 */
 	public void setYearOfBirth(java.lang.Integer value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>v_author.year_of_birth</code>. 
+	 * Getter for <code>v_author.year_of_birth</code>.
 	 */
 	public java.lang.Integer getYearOfBirth() {
 		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>v_author.address</code>. 
+	 * Setter for <code>v_author.address</code>.
 	 */
 	public void setAddress(java.lang.String value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>v_author.address</code>. 
+	 * Getter for <code>v_author.address</code>.
 	 */
 	public java.lang.String getAddress() {
 		return (java.lang.String) getValue(5);

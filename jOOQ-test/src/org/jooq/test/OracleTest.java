@@ -108,6 +108,7 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
@@ -119,6 +120,9 @@ import org.jooq.ForeignKey;
 import org.jooq.Record;
 import org.jooq.Record2;
 import org.jooq.Record3;
+import org.jooq.RecordMapper;
+import org.jooq.RecordMapperProvider;
+import org.jooq.RecordType;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
@@ -127,6 +131,7 @@ import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultRecordMapper;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -1465,7 +1470,46 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals("England", author.address.country);
         assertEquals("Parliament Hill", author.address.street.street);
         assertEquals("77", author.address.street.no);
-        System.out.println(author);
+    }
+
+    @Test
+    public void testOracleUDTRecordMappingWithCustomRecordMapperProvider() throws Exception {
+        final AtomicInteger i = new AtomicInteger();
+
+        DSLContext ctx = create();
+        ctx.configuration().set(new RecordMapperProvider() {
+            @Override
+            public <R extends Record, E> RecordMapper<R, E> provide(final RecordType<R> recordType, final Class<? extends E> type) {
+                return new RecordMapper<R, E>() {
+                    @Override
+                    public E map(R record) {
+
+                        // Don't map this type for this test
+                        if (record instanceof UStreetType) {
+                            i.incrementAndGet();
+                            return null;
+                        }
+
+                        return new DefaultRecordMapper<R, E>(recordType, type).map(record);
+                    }
+                };
+            }
+        });
+
+        TAuthorRecord record = ctx
+            .selectFrom(T_AUTHOR)
+            .where(T_AUTHOR.ID.eq(1))
+            .fetchOne();
+
+        Author author = record.into(Author.class);
+        assertEquals("George", author.firstName);
+        assertEquals("Orwell", author.lastName);
+        assertEquals("Hampstead", author.address.city);
+        assertEquals("England", author.address.country);
+
+        // The UStreetType type should have been encountered exactly once
+        assertEquals(1, i.intValue());
+        assertNull(author.address.street);
     }
 }
 

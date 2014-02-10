@@ -146,7 +146,7 @@ CREATE TABLE t_book (
   published_in INT NOT NULL,
   language_id INT NOT NULL,
   content_text TEXT,
-  content_pdf BINARY,
+  content_pdf VARBINARY(500),
 
   CONSTRAINT pk_t_book PRIMARY KEY (id),
   CONSTRAINT fk_t_book_author_id FOREIGN KEY (author_id) REFERENCES t_author(id),

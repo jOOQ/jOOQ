@@ -171,8 +171,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .and(row(1).between(0).and(2))
                 .and(row(1).betweenSymmetric(row(2), row(0)))
                 .and(row(1).betweenSymmetric(2).and(0))
-                .and(row(1).notBetween(row(2), row(0)))
-                .and(row(1).notBetween(2).and(0))
+                .and(row(1).notBetween(row(2), row(4)))
+                .and(row(1).notBetween(2).and(4))
                 .and(row(1).notBetweenSymmetric(row(3), row(5)))
                 .and(row(1).notBetweenSymmetric(3).and(5))
                 .fetchOne(0, Integer.class));

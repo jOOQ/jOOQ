@@ -45,6 +45,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -230,6 +231,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testInsertDefaultValues() throws Exception {
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+            xxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxx xxxxxxx
+            xxxxxxx
+        x
+        xx [/pro] */
+
         jOOQAbstractTest.reset = false;
 
         assertEquals(1,

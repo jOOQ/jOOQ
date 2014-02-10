@@ -40,6 +40,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
@@ -69,6 +70,11 @@ class Sign extends AbstractFunction<Integer> {
     @Override
     final Field<Integer> getFunction0(Configuration configuration) {
         switch (configuration.dialect()) {
+            /* [pro] xx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxx
+            xx [/pro] */
+
             case SQLITE:
                 return DSL.decode()
                     .when(((Field<Integer>) argument).greaterThan(zero()), one())

@@ -91,6 +91,7 @@ class Trunc<T> extends AbstractFunction<T> {
     private final Field<T> getNumericFunction(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx
+            xxxx xxxxxxx
             xxxx xxxx
             xx [/pro] */
             case DERBY: {

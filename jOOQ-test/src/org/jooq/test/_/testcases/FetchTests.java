@@ -47,6 +47,7 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -1619,21 +1620,29 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             ResultSet rs = create().resultQuery("select * from t_author order by id").fetchResultSet();
             assertTrue(rs.next());
             assertEquals(1, rs.getInt(1));
-            assertEquals(1, rs.getInt(1));
             assertFalse(rs.wasNull());
-            assertEquals(1, rs.getInt(TAuthor_ID().getName()));
-            assertEquals((short) 1, rs.getShort(TAuthor_ID().getName()));
-            assertEquals(1L, rs.getLong(TAuthor_ID().getName()));
             assertEquals(AUTHOR_FIRST_NAMES.get(0), rs.getString(2));
-            assertEquals(AUTHOR_FIRST_NAMES.get(0), rs.getString(TAuthor_FIRST_NAME().getName()));
             assertEquals(AUTHOR_LAST_NAMES.get(0), rs.getString(3));
-            assertEquals(AUTHOR_LAST_NAMES.get(0), rs.getString(TAuthor_LAST_NAME().getName()));
+
+            // Some JDBC drivers don't cache ResultSet. The same value cannot be fetched twice, then.
+            if (!asList(ACCESS).contains(dialect().family())) {
+                assertEquals(1, rs.getInt(1));
+                assertEquals(1, rs.getInt(TAuthor_ID().getName()));
+                assertEquals((short) 1, rs.getShort(TAuthor_ID().getName()));
+                assertEquals(1L, rs.getLong(TAuthor_ID().getName()));
+                assertEquals(AUTHOR_FIRST_NAMES.get(0), rs.getString(TAuthor_FIRST_NAME().getName()));
+                assertEquals(AUTHOR_LAST_NAMES.get(0), rs.getString(TAuthor_LAST_NAME().getName()));
+            }
 
             assertTrue(rs.next());
             assertEquals(2, rs.getInt(1));
-            assertEquals(2, rs.getInt(1));
             assertFalse(rs.wasNull());
-            assertEquals(2, rs.getInt(TAuthor_ID().getName()));
+
+            // Some JDBC drivers don't cache ResultSet. The same value cannot be fetched twice, then.
+            if (!asList(ACCESS).contains(dialect().family())) {
+                assertEquals(2, rs.getInt(1));
+                assertEquals(2, rs.getInt(TAuthor_ID().getName()));
+            }
 
             assertFalse(rs.next());
             rs.close();

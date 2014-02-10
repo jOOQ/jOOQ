@@ -47,6 +47,8 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
+import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.table;
@@ -409,8 +411,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("1985", book2.getValue(TBook_TITLE()));
 
         /* [pro] */
-        // No ON DELETE CASCADE constraints for Sybase ASE
-        if (dialect() == SQLDialect.ASE) {
+        // No ON DELETE CASCADE constraints for Sybase ASE or MS Access
+        if (asList(ACCESS, ASE).contains(dialect().family())) {
             create().truncate(table("t_book_to_book_store")).execute();
         }
         /* [/pro] */

@@ -725,7 +725,7 @@ public class AccessTest extends jOOQAbstractTest<
 
     @Override
     protected boolean supportsReferences() {
-        return true;
+        return false;
     }
 
     @Override

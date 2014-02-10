@@ -752,6 +752,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Field<Float> f6a = sqlite || ingres ? inline(1.11f) : trunc(1.111f, 2);
         Field<Float> f7a = sqlite || ingres ? inline(10.0f) : trunc(11.111f, -1);
 
+        Record r1 =
+        create().select(f1a)
+                .select(f2a, f3a)
+                .select(f4a)
+                .select(f5a, f6a, f7a)
+                .fetchOne();
+
+        assertNotNull(r1);
+        assertEquals("1.0", r1.getValue(f1a, String.class));
+        assertEquals("1.11", r1.getValue(f2a, String.class));
+        assertEquals("1.0", r1.getValue(f3a, String.class));
+        assertEquals("2.0", r1.getValue(f4a, String.class));
+        assertEquals("1.0", r1.getValue(f5a, String.class));
+        assertEquals("1.11", r1.getValue(f6a, String.class));
+        assertEquals("10.0", r1.getValue(f7a, String.class));
+
+
+
         Field<Double> f1b = round(-1.111);
         Field<Double> f2b = round(-1.111, 2);
         Field<Double> f3b = floor(-1.111);
@@ -759,6 +777,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Field<Double> f5b = sqlite || ingres ? inline(1.0) : trunc(1.111);
         Field<Double> f6b = sqlite || ingres ? inline(1.11) : trunc(1.111, 2);
         Field<Double> f7b = sqlite || ingres ? inline(10.0) : trunc(11.111, -1);
+
+        Record r2 =
+        create().select(f1b, f2b, f3b, f4b, f6b, f6b, f7b)
+                .fetchOne();
+
+        assertEquals("-1.0", r2.getValue(f1b, String.class));
+        assertEquals("-1.11", r2.getValue(f2b, String.class));
+        assertEquals("-2.0", r2.getValue(f3b, String.class));
+        assertEquals("-1.0", r2.getValue(f4b, String.class));
+        assertEquals("1.0", r2.getValue(f5b, String.class));
+        assertEquals("1.11", r2.getValue(f6b, String.class));
+        assertEquals("10.0", r2.getValue(f7b, String.class));
+
+
 
         Field<Float> f1c = round(2.0f);
         Field<Float> f2c = round(2.0f, 2);
@@ -778,35 +810,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Field<Double> f3f = floor(0.0);
         Field<Double> f4f = ceil(0.0);
 
-        // Some arbitrary checks on having multiple select clauses
         Record record =
-        create().select(f1a)
-                .select(f2a, f3a)
-                .select(f4a)
-                .select(f5a, f6a, f7a)
-                .select(f1b, f2b, f3b, f4b, f6b, f6b, f7b)
-                .select(f1c, f2c, f3c, f4c)
+        create().select(f1c, f2c, f3c, f4c)
                 .select(f1d, f2d, f3d, f4d)
                 .select(f1e, f2e, f3e, f4e)
                 .select(f1f, f2f, f3f, f4f)
                 .fetchOne();
-
-        assertNotNull(record);
-        assertEquals("1.0", record.getValue(f1a, String.class));
-        assertEquals("1.11", record.getValue(f2a, String.class));
-        assertEquals("1.0", record.getValue(f3a, String.class));
-        assertEquals("2.0", record.getValue(f4a, String.class));
-        assertEquals("1.0", record.getValue(f5a, String.class));
-        assertEquals("1.11", record.getValue(f6a, String.class));
-        assertEquals("10.0", record.getValue(f7a, String.class));
-
-        assertEquals("-1.0", record.getValue(f1b, String.class));
-        assertEquals("-1.11", record.getValue(f2b, String.class));
-        assertEquals("-2.0", record.getValue(f3b, String.class));
-        assertEquals("-1.0", record.getValue(f4b, String.class));
-        assertEquals("1.0", record.getValue(f5b, String.class));
-        assertEquals("1.11", record.getValue(f6b, String.class));
-        assertEquals("10.0", record.getValue(f7b, String.class));
 
         assertEquals("2.0", record.getValue(f1c, String.class));
         assertEquals("2.0", record.getValue(f2c, String.class));

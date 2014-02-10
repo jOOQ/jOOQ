@@ -40,7 +40,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.field;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -67,6 +67,11 @@ class Ceil<T extends Number> extends AbstractFunction<T> {
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
 
+            /* [pro] */
+            case ACCESS:
+                return field("({clng}({0}) - ({0} - clng({0}) > 0))", getDataType(), argument);
+            /* [/pro] */
+
             // evaluate "ceil" if unavailable
             case SQLITE:
                 return DSL.round(argument.add(0.499999999999999));
@@ -76,10 +81,10 @@ class Ceil<T extends Number> extends AbstractFunction<T> {
             case SQLSERVER:
             /* [/pro] */
             case H2:
-                return function("ceiling", getDataType(), argument);
+                return field("{ceiling}({0})", getDataType(), argument);
 
             default:
-                return function("ceil", getDataType(), argument);
+                return field("{ceil}({0})", getDataType(), argument);
         }
     }
 }

@@ -40,7 +40,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.field;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -67,12 +67,15 @@ class Floor<T extends Number> extends AbstractFunction<T> {
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.dialect()) {
 
-            // evaluate "floor" if unavailable
+            /* [pro] */
+            case ACCESS:
+            /* [/pro] */
+
             case SQLITE:
                 return DSL.round(argument.sub(0.499999999999999));
 
             default:
-                return function("floor", getDataType(), argument);
+                return field("{floor}({0})", getDataType(), argument);
         }
     }
 }

@@ -42,6 +42,7 @@
 package org.jooq.test;
 
 import static java.util.Arrays.asList;
+import static junit.framework.Assert.assertEquals;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
@@ -75,7 +76,6 @@ import static org.jooq.util.postgres.PostgresDSL.arrayPrepend;
 import static org.jooq.util.postgres.PostgresDSL.arrayToString;
 import static org.jooq.util.postgres.PostgresDSL.only;
 import static org.jooq.util.postgres.PostgresDSL.stringToArray;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import java.math.BigDecimal;
@@ -1147,5 +1147,40 @@ public class PostgresTest extends jOOQAbstractTest<
             create().execute(drop, b1);
             create().execute(drop, b2);
         }
+    }
+
+
+    static class Street {
+        public String street;
+        public String no;
+    }
+
+    static class Address {
+        public Street street;
+        public String city;
+        public String country;
+    }
+
+    static class Author {
+        public String firstName;
+        public String lastName;
+        public Address address;
+    }
+
+    @Test
+    public void testPostgresUDTRecordMapping() throws Exception {
+        TAuthorRecord record = create()
+            .selectFrom(T_AUTHOR)
+            .where(T_AUTHOR.ID.eq(1))
+            .fetchOne();
+
+        Author author = record.into(Author.class);
+        assertEquals("George", author.firstName);
+        assertEquals("Orwell", author.lastName);
+        assertEquals("Hampstead", author.address.city);
+        assertEquals("England", author.address.country);
+        assertEquals("Parliament Hill", author.address.street.street);
+        assertEquals("77", author.address.street.no);
+        System.out.println(author);
     }
 }

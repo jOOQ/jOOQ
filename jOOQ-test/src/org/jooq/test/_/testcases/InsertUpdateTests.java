@@ -446,13 +446,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testInsertWithSelectAsField() throws Exception {
-        jOOQAbstractTest.reset = false;
 
         Field<Integer> ID3;
         Field<Integer> ID4;
 
         switch (dialect()) {
             /* [pro] */
+            case ACCESS:
+                // [#3029] Re-enable this test for MS Access, once the feature is implemented.
+                log.info("SKIPPING", "Insert with subselects");
+                return;
+
             // Sybase ASE doesn't allow for selecting data inside VALUES()
             case ASE:
 
@@ -472,6 +476,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .from(TAuthor()).asField();
                 break;
         }
+
+        jOOQAbstractTest.reset = false;
 
         create().insertInto(TAuthor(),
                     TAuthor_ID(),

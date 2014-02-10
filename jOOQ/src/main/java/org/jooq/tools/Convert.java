@@ -69,6 +69,7 @@ import java.util.regex.Pattern;
 import org.jooq.Converter;
 import org.jooq.EnumType;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.exception.DataTypeException;
 import org.jooq.types.UByte;
@@ -742,6 +743,15 @@ public final class Convert {
                         return null;
                     }
                 }
+
+                // [#3023] Record types can be converted using the supplied Configuration's
+                // RecordMapperProvider
+                else if (Record.class.isAssignableFrom(fromClass)) {
+                    Record record = (Record) from;
+                    return record.into(toClass);
+                }
+
+                // TODO [#2520] When RecordUnmappers are supported, they should also be considered here
             }
 
             throw fail(from, toClass);

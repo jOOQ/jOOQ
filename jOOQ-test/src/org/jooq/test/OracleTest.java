@@ -1433,6 +1433,40 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals("The year the book was published in", T_BOOK.PUBLISHED_IN.getComment());
         assertEquals("An entity holding authors of books", T_AUTHOR.getComment());
     }
+
+    static class Street {
+        public String street;
+        public String no;
+    }
+
+    static class Address {
+        public Street street;
+        public String city;
+        public String country;
+    }
+
+    static class Author {
+        public String firstName;
+        public String lastName;
+        public Address address;
+    }
+
+    @Test
+    public void testOracleUDTRecordMapping() throws Exception {
+        TAuthorRecord record = create()
+            .selectFrom(T_AUTHOR)
+            .where(T_AUTHOR.ID.eq(1))
+            .fetchOne();
+
+        Author author = record.into(Author.class);
+        assertEquals("George", author.firstName);
+        assertEquals("Orwell", author.lastName);
+        assertEquals("Hampstead", author.address.city);
+        assertEquals("England", author.address.country);
+        assertEquals("Parliament Hill", author.address.street.street);
+        assertEquals("77", author.address.street.no);
+        System.out.println(author);
+    }
 }
 
 /* [/pro] */

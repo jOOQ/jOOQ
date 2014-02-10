@@ -104,7 +104,8 @@ class FieldMapsForInsert extends AbstractQueryPart {
                 /* [/pro] */
                 case FIREBIRD:
                 case SQLITE:
-                    context.start(INSERT_SELECT);
+                    context.formatSeparator()
+                           .start(INSERT_SELECT);
                     toSQLInsertSelect(context);
                     context.end(INSERT_SELECT);
 

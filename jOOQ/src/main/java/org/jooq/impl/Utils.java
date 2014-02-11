@@ -2296,20 +2296,16 @@ final class Utils {
             }
         }
         else if (type == UByte.class) {
-            String string = rs.getString(index);
-            return (T) (string == null ? null : UByte.valueOf(string));
+            return (T) Convert.convert(rs.getString(index), UByte.class);
         }
         else if (type == UShort.class) {
-            String string = rs.getString(index);
-            return (T) (string == null ? null : UShort.valueOf(string));
+            return (T) Convert.convert(rs.getString(index), UShort.class);
         }
         else if (type == UInteger.class) {
-            String string = rs.getString(index);
-            return (T) (string == null ? null : UInteger.valueOf(string));
+            return (T) Convert.convert(rs.getString(index), UInteger.class);
         }
         else if (type == ULong.class) {
-            String string = rs.getString(index);
-            return (T) (string == null ? null : ULong.valueOf(string));
+            return (T) Convert.convert(rs.getString(index), ULong.class);
         }
         else if (type == UUID.class) {
             switch (ctx.configuration().dialect().family()) {

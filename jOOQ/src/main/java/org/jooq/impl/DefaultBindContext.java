@@ -245,14 +245,11 @@ class DefaultBindContext extends AbstractBindContext {
         }
         else if (type == Long.class) {
             /* [pro] */
-            if (dialect.family() == ACCESS) {
+            if (dialect.family() == ACCESS)
                 stmt.setString(nextIndex(), value.toString());
-            }
             else
             /* [/pro] */
-            {
-                stmt.setLong(nextIndex(), (Long) value);
-            }
+            stmt.setLong(nextIndex(), (Long) value);
         }
         else if (type == Short.class) {
             stmt.setShort(nextIndex(), (Short) value);
@@ -312,9 +309,19 @@ class DefaultBindContext extends AbstractBindContext {
             stmt.setInt(nextIndex(), ((UShort) value).intValue());
         }
         else if (type == UInteger.class) {
-            stmt.setLong(nextIndex(), ((UInteger) value).longValue());
+            /* [pro] */
+            if (dialect.family() == ACCESS)
+                stmt.setString(nextIndex(), value.toString());
+            else
+            /* [/pro] */
+            stmt.setLong(nextIndex(), (Long) value);
         }
         else if (type == ULong.class) {
+            /* [pro] */
+            if (dialect.family() == ACCESS)
+                stmt.setString(nextIndex(), value.toString());
+            else
+            /* [/pro] */
             stmt.setBigDecimal(nextIndex(), new BigDecimal(value.toString()));
         }
         else if (type == UUID.class) {

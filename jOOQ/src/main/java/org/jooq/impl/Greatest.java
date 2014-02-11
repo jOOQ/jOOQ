@@ -75,6 +75,7 @@ class Greatest<T> extends AbstractFunction<T> {
             // [#1049] TODO Fix this!
 
             /* [pro] */
+            case ACCESS:
             case ASE:
             case SQLSERVER:
             case SYBASE:

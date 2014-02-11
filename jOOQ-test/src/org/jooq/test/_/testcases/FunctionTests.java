@@ -592,6 +592,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // REPEAT
         switch (dialect()) {
+            /* [pro] xx
+            xxxx xxxxxxx
+            xx [/pro] */
             case DERBY:
                 log.info("SKIPPING", "REPEAT function");
                 break;

@@ -67,7 +67,10 @@ class CurrentTime extends AbstractFunction<Time> {
         switch (configuration.dialect().family()) {
             /* [pro] xx
             xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
 
             xxxx xxxx
             xxxx xxxxxxx
@@ -77,14 +80,14 @@ class CurrentTime extends AbstractFunction<Time> {
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                return field("current_time", SQLDataType.TIME);
+                return field("{current_time}", SQLDataType.TIME);
 
             /* [pro] xx
             xxxx xxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
 
             xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxx
+                xxxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxx
             xx [/pro] */
         }
 

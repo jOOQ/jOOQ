@@ -66,14 +66,17 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
     final Field<Timestamp> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+
             xxxx xxxx
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 
             xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 
             xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 
             xxxx xxxx
             xxxx xxxxxxx
@@ -84,7 +87,7 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                return field("current_timestamp", SQLDataType.TIMESTAMP);
+                return field("{current_timestamp}", SQLDataType.TIMESTAMP);
         }
 
         return function("current_timestamp", SQLDataType.TIMESTAMP);

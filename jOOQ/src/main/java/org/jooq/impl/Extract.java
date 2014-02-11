@@ -109,6 +109,25 @@ class Extract extends AbstractFunction<Integer> {
                 }
 
             /* [pro] xx
+
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxx x
+                    xxxx xxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxxxxxx
+                        xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxx x x xxxxxxxxxx
+                x
+
             xxxx xxxxxxx
                 xxxxxx xxxxxxxxxx x
                     xxxx xxxxx

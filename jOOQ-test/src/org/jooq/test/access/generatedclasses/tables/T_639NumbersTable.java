@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 243625427;
+	private static final long serialVersionUID = -2100503323;
 
 	/**
 	 * The singleton instance of <code>t_639_numbers_table</code>
@@ -72,12 +72,12 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.acc
 	/**
 	 * The column <code>t_639_numbers_table.BIG_INTEGER</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Double> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.impl.SQLDataType.DOUBLE, this, "");
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigInteger> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(15), this, "");
 
 	/**
 	 * The column <code>t_639_numbers_table.BIG_DECIMAL</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> BIG_DECIMAL = createField("BIG_DECIMAL", org.jooq.impl.SQLDataType.BIGINT, this, "");
+	public final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigDecimal> BIG_DECIMAL = createField("BIG_DECIMAL", org.jooq.impl.SQLDataType.DOUBLE.asConvertedDataType(new org.jooq.test._.converters.BigDecimalConverter()), this, "");
 
 	/**
 	 * The column <code>t_639_numbers_table.FLOAT</code>.

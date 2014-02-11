@@ -17,6 +17,10 @@
 
             <customTypes>
                 <customType>
+            		<name>java.math.BigDecimal</name>
+            		<converter>org.jooq.test._.converters.BigDecimalConverter</converter>
+            	</customType>
+                <customType>
             		<name>org.jooq.test._.converters.Boolean_10</name>
             		<converter>org.jooq.test._.converters.Boolean_10_Converter</converter>
             	</customType>
@@ -78,11 +82,11 @@
                     <expression>(?i:(.*?.)?T_639_NUMBERS_TABLE.LONG(_DECIMAL)?)</expression>
                 </forcedType>
                 <forcedType>
-                    <name>DECIMAL</name>
+                    <name>java.math.BigDecimal</name>
                     <expression>(?i:(.*?.)?T_639_NUMBERS_TABLE.BIG_DECIMAL)</expression>
                 </forcedType>
                 <forcedType>
-                    <name>DECIMAL INTEGER</name>
+                    <name>DECIMAL_INTEGER</name>
                     <expression>(?i:(.*?.)?T_639_NUMBERS_TABLE.BIG_INTEGER)</expression>
                 </forcedType>
 

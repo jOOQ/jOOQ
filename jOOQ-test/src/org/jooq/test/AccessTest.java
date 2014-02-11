@@ -260,14 +260,12 @@ public class AccessTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<T_639NumbersTableRecord, BigDecimal> T639_BIG_DECIMAL() {
-        return null;
-        // return T_639_NUMBERS_TABLE.BIG_DECIMAL;
+        return T_639_NUMBERS_TABLE.BIG_DECIMAL;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, BigInteger> T639_BIG_INTEGER() {
-        return null;
-        // return T_639_NUMBERS_TABLE.BIG_INTEGER;
+        return T_639_NUMBERS_TABLE.BIG_INTEGER;
     }
 
     @Override

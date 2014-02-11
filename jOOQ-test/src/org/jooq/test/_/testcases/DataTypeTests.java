@@ -1372,6 +1372,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Interval tests
         // --------------
         if (/* [pro] */
+            dialect() == ACCESS ||
             dialect() == ASE ||
             dialect() == DB2 ||
             dialect() == INGRES || // [#1285] TODO: Fix this for Ingres

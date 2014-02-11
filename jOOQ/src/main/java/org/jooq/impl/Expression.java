@@ -41,6 +41,8 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.DatePart.MONTH;
+import static org.jooq.DatePart.SECOND;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -74,6 +76,7 @@ import java.sql.Timestamp;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.DataType;
+import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.RenderContext;
@@ -286,6 +289,7 @@ class Expression<T> extends AbstractFunction<T> {
         /**
          * Return the expression to be rendered when the RHS is an interval type
          */
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         private final Field<T> getIntervalExpression(Configuration configuration) {
             SQLDialect dialect = configuration.dialect();
             int sign = (operator == ADD) ? 1 : -1;
@@ -362,6 +366,15 @@ class Expression<T> extends AbstractFunction<T> {
                 }
 
                 /* [pro] */
+                case ACCESS: {
+                    if (rhs.get(0).getType() == YearToMonth.class) {
+                        return (Field) DSL.timestampAdd((Field) lhs, val(sign * rhsAsYTM().intValue()), MONTH);
+                    }
+                    else {
+                        return (Field) DSL.timestampAdd((Field) lhs, val(sign * rhsAsDTS().getTotalSeconds()), SECOND);
+                    }
+                }
+
                 case ASE:
                 case SYBASE:
                 case SQLSERVER: {
@@ -440,9 +453,19 @@ class Expression<T> extends AbstractFunction<T> {
         /**
          * Return the expression to be rendered when the RHS is a number type
          */
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         private final Field<T> getNumberExpression(Configuration configuration) {
             switch (configuration.dialect().family()) {
                 /* [pro] */
+                case ACCESS: {
+                    if (operator == ADD) {
+                        return (Field) DSL.timestampAdd((Field) lhs, rhsAsNumber(), DatePart.DAY);
+                    }
+                    else {
+                        return (Field) DSL.timestampAdd((Field) lhs, rhsAsNumber().neg(), DatePart.DAY);
+                    }
+                }
+
                 case ASE:
                 case SQLSERVER:
                 case SYBASE:

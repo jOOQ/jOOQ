@@ -68,6 +68,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 import org.jooq.ArrayRecord;
 import org.jooq.BindContext;
@@ -427,7 +428,7 @@ class Val<T> extends AbstractParam<T> {
 
                 /* [pro] */
                 else if (asList(ACCESS).contains(family)) {
-                    context.sql("{d '").sql(escape(val)).sql("'}");
+                    context.sql("#").sql(new SimpleDateFormat("yyyy/MM/dd").format((Date) val)).sql("#");
                 }
                 /* [/pro] */
 
@@ -451,7 +452,7 @@ class Val<T> extends AbstractParam<T> {
 
                 /* [pro] */
                 else if (asList(ACCESS).contains(family)) {
-                    context.sql("{ts '").sql(escape(val)).sql("'}");
+                    context.sql("#").sql(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format((Timestamp) val)).sql("#");
                 }
                 /* [/pro] */
 
@@ -475,7 +476,7 @@ class Val<T> extends AbstractParam<T> {
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement time literals
                 if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(family)) {
-                    context.sql("'").sql(escape(val)).sql("'");
+                    context.sql("'").sql(new SimpleDateFormat("HH:mm:ss").format((Time) val)).sql("'");
                 }
 
                 /* [pro] */

@@ -96,6 +96,9 @@ class DateDiff extends AbstractFunction<Integer> {
                 return field("{0} - {1}", getDataType(), date1, date2);
 
             /* [pro] */
+            case ACCESS:
+                return field("{datediff}('d', {0}, {1})", getDataType(), date2, date1);
+
             case ASE:
             case SQLSERVER:
             case SYBASE:

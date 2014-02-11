@@ -76,6 +76,10 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
         switch (configuration.dialect().family()) {
             /* [pro] */
 
+            // MS Access does not support milliseconds in timestamps
+            case ACCESS:
+                return field("{datediff}('s', {0}, {1})", getDataType(), timestamp2, timestamp1).mul(1000);
+
             // Sybase ASE's datediff incredibly overflows on 3 days' worth of
             // microseconds. That's why the days have to be leveled at first
             case ASE:

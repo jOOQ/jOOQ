@@ -166,6 +166,20 @@ class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
             }
 
             /* [pro] */
+            case ACCESS: {
+                switch (datePart) {
+                    case YEAR:   keyword = "yyyy"; break;
+                    case MONTH:  keyword = "m";    break;
+                    case DAY:    keyword = "d";    break;
+                    case HOUR:   keyword = "h";    break;
+                    case MINUTE: keyword = "n";    break;
+                    case SECOND: keyword = "s";    break;
+                    default: throwUnsupported();
+                }
+
+                return field("{dateadd}({0}, {1}, {2})", getDataType(), inline(keyword), interval, date);
+            }
+
             case ASE:
             case SYBASE:
             case SQLSERVER: {

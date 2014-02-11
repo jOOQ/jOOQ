@@ -1786,7 +1786,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .from(TBook())
                 .where(id1.in(val(1).coerce(Long.class), val(2).coerce(Long.class)))
                 .and(id2.in(val(1).coerce(String.class), val(2).coerce(String.class)))
-                .orderBy(id1.as("id1"), id2.as("id2"))
+                .orderBy(1, 2)
                 .fetch();
 
         assertEquals(2, result.size());

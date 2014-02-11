@@ -1283,6 +1283,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testUpdateSelect() throws Exception {
         switch (dialect()) {
+            /* [pro] */
+            case ACCESS:
+            /* [/pro] */
+
             case SQLITE:
             case MARIADB:
             case MYSQL:

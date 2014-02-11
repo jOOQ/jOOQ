@@ -97,21 +97,37 @@ class FieldMapsForInsert extends AbstractQueryPart {
 
                 // Some dialects don't support multi-record inserts
                 /* [pro] */
-                case ACCESS:
+                case ACCESS: {
+                    Select<Record> select = insertSelect(context);
+
+                    // MS Access does not support INSERT .. SELECT a1, b1 UNION SELECT a2, b2 statements. This
+                    // can be emulated using INSERT .. SELECT a, b FROM (SELECT a1, b1 UNION SELECT a2, b2) t(a, b)
+                    // http://blog.jooq.org/2014/02/19/an-ms-access-sql-transformation-odyssey/
+                    select = DSL.select().from(select.asTable("t", Utils.fieldNames(select.getSelect().size())));
+
+                    context.formatSeparator()
+                           .start(INSERT_SELECT);
+                    context.visit(select);
+                    context.end(INSERT_SELECT);
+
+                    break;
+                }
+
                 case ASE:
                 case INGRES:
                 case ORACLE:
                 /* [/pro] */
                 case FIREBIRD:
-                case SQLITE:
+                case SQLITE: {
                     context.formatSeparator()
                            .start(INSERT_SELECT);
-                    toSQLInsertSelect(context);
+                    context.visit(insertSelect(context));
                     context.end(INSERT_SELECT);
 
                     break;
+                }
 
-                default:
+                default: {
                     context.formatSeparator()
                            .start(INSERT_VALUES)
                            .keyword("values")
@@ -120,12 +136,14 @@ class FieldMapsForInsert extends AbstractQueryPart {
                     context.end(INSERT_VALUES);
 
                     break;
+                }
             }
         }
     }
 
-    private void toSQLInsertSelect(RenderContext context) {
+    private final Select<Record> insertSelect(RenderContext context) {
         Select<Record> select = null;
+
         for (FieldMapForInsert map : insertMaps) {
             if (map != null) {
                 Select<Record> iteration = DSL.using(context.configuration()).select(map.values());
@@ -139,10 +157,10 @@ class FieldMapsForInsert extends AbstractQueryPart {
             }
         }
 
-        context.visit(select);
+        return select;
     }
 
-    private void toSQL92Values(RenderContext context) {
+    private final void toSQL92Values(RenderContext context) {
         context.visit(insertMaps.get(0));
 
         int i = 0;

@@ -561,6 +561,15 @@ final class Utils {
     // XXX: General utility methods
     // ------------------------------------------------------------------------
 
+    static final String[] fieldNames(int length) {
+        String[] result = new String[length];
+
+        for (int i = 0; i < length; i++)
+            result[i] = "v" + i;
+
+        return result;
+    }
+
     /**
      * Be sure that a given object is a field.
      *

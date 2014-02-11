@@ -171,6 +171,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // databases is non-trivial in some of them.
         switch (dialect().family()) {
             /* [pro] */
+            case ACCESS:
             case ASE:
             case DB2:
             case INGRES:

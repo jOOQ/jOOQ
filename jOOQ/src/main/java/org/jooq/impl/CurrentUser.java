@@ -64,9 +64,12 @@ class CurrentUser extends AbstractFunction<String> {
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] */
+            case ACCESS:
+                return field("{currentuser}()", SQLDataType.VARCHAR);
+
             case ASE:
             case ORACLE:
-                return field("user", SQLDataType.VARCHAR);
+                return field("{user}", SQLDataType.VARCHAR);
 
             case DB2:
             case INGRES:
@@ -78,7 +81,7 @@ class CurrentUser extends AbstractFunction<String> {
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                return field("current_user", String.class);
+                return field("{current_user}", String.class);
         }
 
         return function("current_user", SQLDataType.VARCHAR);

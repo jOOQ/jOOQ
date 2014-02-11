@@ -182,7 +182,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // This query causes a failure in Ingres. Potentially a bug. See E_OP039F_BOOLFACT on
         // http://docs.ingres.com/ingres/9.2/ingres-92-message-guide/1283-errors-from-opf#E_OP039F_BOOLFACT
-        if (!asList(CUBRID, DB2, INGRES).contains(dialect())) {
+        if (!asList(ACCESS, CUBRID, DB2, INGRES).contains(dialect())) {
 
             // Advanced JOIN usages with single JOIN condition
             Result<Record> result = create().select()

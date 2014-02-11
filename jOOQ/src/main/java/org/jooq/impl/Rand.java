@@ -66,6 +66,9 @@ class Rand extends AbstractFunction<BigDecimal> {
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] */
+            case ACCESS:
+                return field("{rnd}", BigDecimal.class);
+
             case ORACLE:
                 return field("dbms_random.random", BigDecimal.class);
 

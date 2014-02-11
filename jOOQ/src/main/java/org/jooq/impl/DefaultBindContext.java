@@ -207,7 +207,13 @@ class DefaultBindContext extends AbstractBindContext {
             stmt.setBlob(nextIndex(), (Blob) value);
         }
         else if (type == Boolean.class) {
-            stmt.setBoolean(nextIndex(), (Boolean) value);
+            /* [pro] */
+            // MS Access treats "true" as "-1", which might be truncated in VARCHAR(1) or CHAR(1) columns
+            if (dialect.family() == ACCESS)
+                stmt.setInt(nextIndex(), (Boolean) value ? 1 : 0);
+            /* [/pro] */
+            else
+                stmt.setBoolean(nextIndex(), (Boolean) value);
         }
         else if (type == BigDecimal.class) {
             if (asList(ACCESS, SQLITE).contains(dialect.family())) {

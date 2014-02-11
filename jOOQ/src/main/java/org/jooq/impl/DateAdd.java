@@ -166,6 +166,20 @@ class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
             }
 
             /* [pro] xx
+            xxxx xxxxxxx x
+                xxxxxx xxxxxxxxxx x
+                    xxxx xxxxx   xxxxxxx x xxxxxxx xxxxxx
+                    xxxx xxxxxx  xxxxxxx x xxxx    xxxxxx
+                    xxxx xxxx    xxxxxxx x xxxx    xxxxxx
+                    xxxx xxxxx   xxxxxxx x xxxx    xxxxxx
+                    xxxx xxxxxxx xxxxxxx x xxxx    xxxxxx
+                    xxxx xxxxxxx xxxxxxx x xxxx    xxxxxx
+                    xxxxxxxx xxxxxxxxxxxxxxxxxxx
+                x
+
+                xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxx xxxxxx
+            x
+
             xxxx xxxx
             xxxx xxxxxxx
             xxxx xxxxxxxxxx x

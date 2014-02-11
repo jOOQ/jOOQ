@@ -230,6 +230,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(5, (int) books.get(0).getValue(TBook_ID()));
         }
 
+        else {
+            log.info("SKIPPING", "Most LIKE tests");
+            return;
+        }
+
         // DERBY doesn't know any REPLACE function, hence only test those
         // conditions that do not use REPLACE internally
         boolean derby = dialect() == DERBY;
@@ -248,21 +253,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1106] Add checks for Factory.escape() function
         // ------------------------------------------------
-        // [#2818] TODO: Re-enable this test for MS Access
-        if (!asList().contains(dialect().family())) {
-            books =
-            create().selectFrom(TBook())
-                    .where(TBook_TITLE().like(concat("%", escape("(%)", '!'), "%"), '!'))
-                    .and(derby ? trueCondition() :
-                         TBook_TITLE().like(concat(val("%"), escape(val("(_)"), '#'), val("%")), '#'))
-                    .and(TBook_TITLE().notLike(concat("%", escape("(!%)", '#'), "%"), '#'))
-                    .and(derby ? trueCondition() :
-                         TBook_TITLE().notLike(concat(val("%"), escape(val("(#_)"), '!'), val("%")), '!'))
-                    .fetch();
+        books =
+        create().selectFrom(TBook())
+                .where(TBook_TITLE().like(concat("%", escape("(%)", '!'), "%"), '!'))
+                .and(derby ? trueCondition() :
+                     TBook_TITLE().like(concat(val("%"), escape(val("(_)"), '#'), val("%")), '#'))
+                .and(TBook_TITLE().notLike(concat("%", escape("(!%)", '#'), "%"), '#'))
+                .and(derby ? trueCondition() :
+                     TBook_TITLE().notLike(concat(val("%"), escape(val("(#_)"), '!'), val("%")), '!'))
+                .fetch();
 
-            assertEquals(1, books.size());
-            assertEquals(5, (int) books.get(0).getValue(TBook_ID()));
-        }
+        assertEquals(1, books.size());
+        assertEquals(5, (int) books.get(0).getValue(TBook_ID()));
 
         // [#1089] Add checks for convenience methods
         // ------------------------------------------
@@ -335,6 +337,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testLikeRegex() throws Exception {
         switch (dialect().family()) {
             /* [pro] xx
+            xxxx xxxxxxx
             xxxx xxxx
             xxxx xxxx
             xxxx xxxxxxx

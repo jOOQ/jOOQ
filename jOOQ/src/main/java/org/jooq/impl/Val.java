@@ -44,6 +44,7 @@ import static java.lang.Boolean.TRUE;
 import static java.lang.Integer.toOctalString;
 import static java.util.Arrays.asList;
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -67,6 +68,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 // ...
 import org.jooq.BindContext;
@@ -424,6 +426,12 @@ class Val<T> extends AbstractParam<T> {
                     context.sql("'").sql(escape(val)).sql("'");
                 }
 
+                /* [pro] xx
+                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                    xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+                x
+                xx [/pro] */
+
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
                     context.keyword("date('").sql(escape(val)).sql("')");
@@ -441,6 +449,12 @@ class Val<T> extends AbstractParam<T> {
                 if (asList(SQLITE).contains(family)) {
                     context.sql("'").sql(escape(val)).sql("'");
                 }
+
+                /* [pro] xx
+                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                    xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+                x
+                xx [/pro] */
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
@@ -462,8 +476,14 @@ class Val<T> extends AbstractParam<T> {
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement time literals
                 if (asList(SQLITE).contains(family)) {
-                    context.sql("'").sql(escape(val)).sql("'");
+                    context.sql("'").sql(new SimpleDateFormat("HH:mm:ss").format((Time) val)).sql("'");
                 }
+
+                /* [pro] xx
+                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                    xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                x
+                xx [/pro] */
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {

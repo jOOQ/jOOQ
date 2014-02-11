@@ -41,6 +41,8 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.DatePart.MONTH;
+import static org.jooq.DatePart.SECOND;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -74,6 +76,7 @@ import java.sql.Timestamp;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.DataType;
+import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.RenderContext;
@@ -286,6 +289,7 @@ class Expression<T> extends AbstractFunction<T> {
         /**
          * Return the expression to be rendered when the RHS is an interval type
          */
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         private final Field<T> getIntervalExpression(Configuration configuration) {
             SQLDialect dialect = configuration.dialect();
             int sign = (operator == ADD) ? 1 : -1;
@@ -362,6 +366,15 @@ class Expression<T> extends AbstractFunction<T> {
                 }
 
                 /* [pro] xx
+                xxxx xxxxxxx x
+                    xx xxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxx x
+                        xxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    x
+                    xxxx x
+                        xxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+                    x
+                x
+
                 xxxx xxxx
                 xxxx xxxxxxx
                 xxxx xxxxxxxxxx x
@@ -440,9 +453,19 @@ class Expression<T> extends AbstractFunction<T> {
         /**
          * Return the expression to be rendered when the RHS is a number type
          */
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         private final Field<T> getNumberExpression(Configuration configuration) {
             switch (configuration.dialect().family()) {
                 /* [pro] xx
+                xxxx xxxxxxx x
+                    xx xxxxxxxxx xx xxxx x
+                        xxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxx
+                    x
+                    xxxx x
+                        xxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
+                    x
+                x
+
                 xxxx xxxx
                 xxxx xxxxxxxxxx
                 xxxx xxxxxxx

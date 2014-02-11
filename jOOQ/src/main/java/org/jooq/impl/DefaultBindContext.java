@@ -207,7 +207,13 @@ class DefaultBindContext extends AbstractBindContext {
             stmt.setBlob(nextIndex(), (Blob) value);
         }
         else if (type == Boolean.class) {
-            stmt.setBoolean(nextIndex(), (Boolean) value);
+            /* [pro] xx
+            xx xx xxxxxx xxxxxx xxxxxx xx xxxxx xxxxx xxxxx xx xxxxxxxxx xx xxxxxxxxxx xx xxxxxxx xxxxxxx
+            xx xxxxxxxxxxxxxxxxx xx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxx x x x xxx
+            xx [/pro] */
+            else
+                stmt.setBoolean(nextIndex(), (Boolean) value);
         }
         else if (type == BigDecimal.class) {
             if (asList(SQLITE).contains(dialect.family())) {
@@ -245,14 +251,11 @@ class DefaultBindContext extends AbstractBindContext {
         }
         else if (type == Long.class) {
             /* [pro] xx
-            xx xxxxxxxxxxxxxxxxx xx xxxxxxx x
+            xx xxxxxxxxxxxxxxxxx xx xxxxxxx
                 xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-            x
             xxxx
             xx [/pro] */
-            {
-                stmt.setLong(nextIndex(), (Long) value);
-            }
+            stmt.setLong(nextIndex(), (Long) value);
         }
         else if (type == Short.class) {
             stmt.setShort(nextIndex(), (Short) value);
@@ -312,9 +315,19 @@ class DefaultBindContext extends AbstractBindContext {
             stmt.setInt(nextIndex(), ((UShort) value).intValue());
         }
         else if (type == UInteger.class) {
-            stmt.setLong(nextIndex(), ((UInteger) value).longValue());
+            /* [pro] xx
+            xx xxxxxxxxxxxxxxxxx xx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+            xxxx
+            xx [/pro] */
+            stmt.setLong(nextIndex(), (Long) value);
         }
         else if (type == ULong.class) {
+            /* [pro] xx
+            xx xxxxxxxxxxxxxxxxx xx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+            xxxx
+            xx [/pro] */
             stmt.setBigDecimal(nextIndex(), new BigDecimal(value.toString()));
         }
         else if (type == UUID.class) {

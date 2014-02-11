@@ -144,7 +144,23 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
                 SelectFieldList fields = new SelectFieldList();
                 for (String fieldAlias : fieldAliases) {
-                    fields.add(field("null").as(fieldAlias));
+
+                    switch (dialect.family()) {
+
+                        /* [pro] xx
+                        xxxx xxxxxxx x
+                            xx xxxxxxxxxxx xx xxxxxx xxxxxxx xxxx xxxxx xxxxxxxxx xxxxx xx x xxxxxxx xxxxxxxxx
+                            xx xx xxx xxxxx xxxxxxxxx xxxxxxx xx xxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxx
+                        x
+                        xx [/pro] */
+
+                        default: {
+                            fields.add(field("null").as(fieldAlias));
+                            break;
+                        }
+                    }
                 }
 
                 Select<Record> select =

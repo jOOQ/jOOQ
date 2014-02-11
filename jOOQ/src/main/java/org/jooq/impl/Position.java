@@ -42,7 +42,6 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.function;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -71,19 +70,20 @@ class Position extends AbstractFunction<Integer> {
             xxxx xxxx
             xx [/pro] */
             case DERBY:
-                return function("locate", SQLDataType.INTEGER, search, in);
+                return field("{locate}({0}, {1})", SQLDataType.INTEGER, search, in);
 
             /* [pro] xx
             xxxx xxxxxxx
             xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxx
 
             xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxx
 
             xxxx xxxx
             xxxx xxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx xxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx xxxx
 
             xx [/pro] */
             default:

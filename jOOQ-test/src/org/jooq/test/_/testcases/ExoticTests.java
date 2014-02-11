@@ -116,6 +116,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testTableWithHint() throws Exception {
         /* [pro] xx
         xxxxxx xxxxxxxxxxxxxxxxxxxx x
+            xxxx xxxxxxx
             xxxx xxxx
             xxxx xxxx
             xxxx xxxxxxx
@@ -409,6 +410,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testConnectBySimple() throws Exception {
         switch (dialect().family()) {
             /* [pro] xx
+            xxxx xxxxxxx
             xxxx xxxx
             xxxx xxxx
             xxxx xxxxxxx

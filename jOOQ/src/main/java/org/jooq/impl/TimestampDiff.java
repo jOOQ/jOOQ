@@ -76,6 +76,10 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
         switch (configuration.dialect().family()) {
             /* [pro] xx
 
+            xx xx xxxxxx xxxx xxx xxxxxxx xxxxxxxxxxxx xx xxxxxxxxxx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx
+
             xx xxxxxx xxxxx xxxxxxxx xxxxxxxxxx xxxxxxxxx xx x xxxxx xxxxx xx
             xx xxxxxxxxxxxxx xxxxxx xxx xxx xxxx xxxx xx xx xxxxxxx xx xxxxx
             xxxx xxxx

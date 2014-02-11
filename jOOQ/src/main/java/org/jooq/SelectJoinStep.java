@@ -54,6 +54,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 
@@ -187,7 +188,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#crossJoin(TableLike)
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectJoinStep<R> crossJoin(TableLike<?> table);
 
     /**
@@ -210,7 +211,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(String)
      * @see Table#crossJoin(String)
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectJoinStep<R> crossJoin(String sql);
 
     /**
@@ -233,7 +234,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(String, Object...)
      * @see Table#crossJoin(String, Object...)
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectJoinStep<R> crossJoin(String sql, Object... bindings);
 
     /**
@@ -256,7 +257,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(String, QueryPart...)
      * @see Table#crossJoin(String, QueryPart...)
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectJoinStep<R> crossJoin(String sql, QueryPart... parts);
 
     /**

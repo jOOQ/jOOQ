@@ -43,6 +43,7 @@ package org.jooq.test._.testcases;
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -239,6 +240,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testCrossJoin() throws Exception {
+        if (dialect().family() == ACCESS) {
+            log.info("SKIPPING", "CROSS JOIN tests");
+            return;
+        }
+
         Result<Record> result;
 
         // Using the CROSS JOIN clause

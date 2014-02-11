@@ -67,6 +67,9 @@ class Rand extends AbstractFunction<BigDecimal> {
         switch (configuration.dialect().family()) {
             /* [pro] xx
             xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+
+            xxxx xxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
 
             xxxx xxxxxxx

@@ -96,6 +96,9 @@ class DateDiff extends AbstractFunction<Integer> {
                 return field("{0} - {1}", getDataType(), date1, date2);
 
             /* [pro] xx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxx xxxxxxx
+
             xxxx xxxx
             xxxx xxxxxxxxxx
             xxxx xxxxxxx

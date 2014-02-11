@@ -42,12 +42,14 @@ package org.jooq.test._.testcases;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.selectZero;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.two;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.zero;
 
 import java.sql.Date;
@@ -152,13 +154,35 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(1, r1.getValue("v"));
         assertEquals(1, r1.getValue(r1.field(0)));
 
-        Record r2 = create()
-            .select()
-            .from(table(selectOne()).as("t1", "v1"))
-            .crossJoin(table(select(two(), zero())).as("t2", "v2a", "v2b"))
-            .leftOuterJoin(table(selectOne()).as("t3", "v3"))
-            .on("1 = 0")
-            .fetchOne();
+        Record r2 = null;
+
+        switch (dialect().family()) {
+            /* [pro] xx
+            xx xx xxxxx xxxxx xxx xxxxxxxxx xx xx xxxxxxx xxxx xxxxx xxxx xxxxx xxxx xxxx xxxxxxxxxxxxx
+            xxxx xxxxxxx x
+                xx x xxxxxxxx
+                    xxxxxxxxx
+                    xxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+                    xxxxxxxxxxxx
+                xxxxxx
+            x
+            xx [/pro] */
+
+            default: {
+                r2 = create()
+                    .select()
+                    .from(table(selectOne()).as("t1", "v1"))
+                    .crossJoin(table(select(two(), zero())).as("t2", "v2a", "v2b"))
+                    .leftOuterJoin(table(selectOne()).as("t3", "v3"))
+                    .on("1 = 0")
+                    .fetchOne();
+
+                break;
+            }
+        }
         assertEquals("v1", r2.field(0).getName());
         assertEquals("v2a", r2.field(1).getName());
         assertEquals("v2b", r2.field(2).getName());

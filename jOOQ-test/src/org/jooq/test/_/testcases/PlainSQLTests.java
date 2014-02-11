@@ -185,14 +185,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Field, Table and Condition
         // --------------------------
         Field<?> LAST_NAME = field(TAuthor_LAST_NAME().getName());
-        Field<?> COUNT1 = field("count(*) x");
-        Field<?> COUNT2 = field("count(*) y", Integer.class);
+        Field<?> COUNT1 = field("count(*)").as("x");
+        Field<?> COUNT2 = field("count(*)", Integer.class).as("y");
 
         Result<?> result6 = create()
             .select(LAST_NAME, COUNT1, COUNT2)
             .from("t_author a")
             .join("t_book b").on("a.id = b.author_id")
-            .where("b.title != 'Brida'")
+            .where("b.title <> 'Brida'")
             .groupBy(LAST_NAME)
             .orderBy(LAST_NAME).fetch();
 
@@ -209,7 +209,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Result<?> result7 = create().select(LAST_NAME, COUNT1, COUNT2)
             .from("t_author a")
             .join("t_book b").on("a.id = b.author_id")
-            .where("b.title != 'Brida'")
+            .where("b.title <> 'Brida'")
             .groupBy(LAST_NAME)
             .having("{count}(*) = ?", 1).fetch();
 
@@ -260,8 +260,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Function
         // --------
-        assertEquals("ABC", create().select(function("upper", String.class, val("aBc"))).fetchOne(0));
-        assertEquals("abc", create().select(function("lower", SQLDataType.VARCHAR, val("aBc"))).fetchOne(0));
+        assertEquals("4", create().select(function("max", String.class, field("id"))).from("t_book").fetchOne(0));
+        assertEquals("1", create().select(function("min", SQLDataType.VARCHAR, field("id"))).from("t_book").fetchOne(0));
 
         // Fetch
         // -----

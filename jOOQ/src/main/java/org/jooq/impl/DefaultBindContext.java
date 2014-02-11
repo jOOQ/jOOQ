@@ -218,8 +218,8 @@ class DefaultBindContext extends AbstractBindContext {
                 // MS Access treats "true" as "-1", which might be truncated in VARCHAR(1) or CHAR(1) columns
                 if (dialect.family() == ACCESS)
                     stmt.setInt(nextIndex(), (Boolean) value ? 1 : 0);
-                /* [/pro] */
                 else
+                /* [/pro] */
                     stmt.setBoolean(nextIndex(), (Boolean) value);
             }
             else if (type == BigDecimal.class) {

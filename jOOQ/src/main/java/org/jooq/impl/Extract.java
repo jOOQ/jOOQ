@@ -109,6 +109,25 @@ class Extract extends AbstractFunction<Integer> {
                 }
 
             /* [pro] */
+
+            case ACCESS:
+                switch (datePart) {
+                    case YEAR:
+                        return field("{datepart}('yyyy', {0})", SQLDataType.INTEGER, field);
+                    case MONTH:
+                        return field("{datepart}('m', {0})", SQLDataType.INTEGER, field);
+                    case DAY:
+                        return field("{datepart}('d', {0})", SQLDataType.INTEGER, field);
+                    case HOUR:
+                        return field("{datepart}('h', {0})", SQLDataType.INTEGER, field);
+                    case MINUTE:
+                        return field("{datepart}('n', {0})", SQLDataType.INTEGER, field);
+                    case SECOND:
+                        return field("{datepart}('s', {0})", SQLDataType.INTEGER, field);
+                    default:
+                        throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
+                }
+
             case ORACLE:
                 switch (datePart) {
                     case YEAR:

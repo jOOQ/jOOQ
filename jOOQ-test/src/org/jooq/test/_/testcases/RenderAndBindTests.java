@@ -292,7 +292,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     // [#724] Check for API misuse
                     field("?", Integer.class, (Object[]) null),
                     field("?", Integer.class, (Object[]) null)))
-                .and(TAuthor_ID().getName() + " != ? or 'abc' = '???'", 37)
+                .and(TAuthor_ID().getName() + " <> ? or 'abc' = '???'", 37)
                 .orderBy(TAuthor_ID().asc());
 
         // Should execute fine, but no results due to IN (null, null) filter

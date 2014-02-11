@@ -66,14 +66,17 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
     final Field<Timestamp> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] */
+            case ACCESS:
+                return field("{now}()", SQLDataType.TIMESTAMP);
+
             case ASE:
                 return function("current_bigdatetime", SQLDataType.TIMESTAMP);
 
             case ORACLE:
-                return field("sysdate", SQLDataType.TIMESTAMP);
+                return field("{sysdate}", SQLDataType.TIMESTAMP);
 
             case SYBASE:
-                return field("current timestamp", SQLDataType.TIMESTAMP);
+                return field("{current timestamp}", SQLDataType.TIMESTAMP);
 
             case DB2:
             case INGRES:
@@ -84,7 +87,7 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                return field("current_timestamp", SQLDataType.TIMESTAMP);
+                return field("{current_timestamp}", SQLDataType.TIMESTAMP);
         }
 
         return function("current_timestamp", SQLDataType.TIMESTAMP);

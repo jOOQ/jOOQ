@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.ORACLE11G;
 import static org.jooq.SQLDialect.ORACLE12C;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
@@ -605,7 +606,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * A join B on 1 = 1
      * </pre></code>
      */
-    @Support
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     @Transition(
         name = "CROSS JOIN",
         args = "Table",
@@ -630,7 +631,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String)
      */
-    @Support
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     @Transition(
         name = "CROSS JOIN",
         args = "Table",
@@ -655,7 +656,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String, Object...)
      */
-    @Support
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     @Transition(
         name = "CROSS JOIN",
         args = "Table",
@@ -680,7 +681,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String, QueryPart...)
      */
-    @Support
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     @Transition(
         name = "CROSS JOIN",
         args = "Table",

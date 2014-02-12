@@ -110,6 +110,13 @@ class Cast<T> extends AbstractFunction<T> {
 
         @Override
         public final void toSQL(RenderContext ctx) {
+
+            // MS Access does not know Null values for most types. Render null as a syntactic element instead.
+            if ("null".equals(field.toString())) {
+                ctx.visit(field);
+                return;
+            }
+
             final Class<T> type = getType();
             final String function =
                   (type == Boolean.class || type == boolean.class)

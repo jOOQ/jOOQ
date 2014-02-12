@@ -489,7 +489,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1073] Some dialects incorrectly handle NULL in NOT IN predicates
         /* [pro] */
-        if (asList(ASE).contains(dialect())) {
+        if (asList(ACCESS, ASE).contains(dialect())) {
             assertEquals(
             asList(2, 3, 4),
             create().select(TBook_ID())

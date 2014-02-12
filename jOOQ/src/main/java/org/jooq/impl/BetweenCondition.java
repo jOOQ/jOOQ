@@ -47,6 +47,7 @@ import static org.jooq.Clause.CONDITION_BETWEEN;
 import static org.jooq.Clause.CONDITION_BETWEEN_SYMMETRIC;
 import static org.jooq.Clause.CONDITION_NOT_BETWEEN;
 import static org.jooq.Clause.CONDITION_NOT_BETWEEN_SYMMETRIC;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -128,7 +129,7 @@ class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
-        if (symmetric && asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, MARIADB, MYSQL, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(configuration.dialect().family())) {
+        if (symmetric && asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, MARIADB, MYSQL, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(configuration.dialect().family())) {
             if (not) {
                 return (QueryPartInternal) field.notBetween(minValue, maxValue).and(field.notBetween(maxValue, minValue));
             }

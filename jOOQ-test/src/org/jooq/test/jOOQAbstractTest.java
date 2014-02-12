@@ -1306,6 +1306,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testBetweenConditions() throws Exception {
+        new PredicateTests(this).testBetweenConditions();
+    }
+
+    @Test
     public void testConditionsAsFields() throws Exception {
         new PredicateTests(this).testConditionsAsFields();
     }

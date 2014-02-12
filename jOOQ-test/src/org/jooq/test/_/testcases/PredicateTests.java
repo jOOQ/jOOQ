@@ -431,7 +431,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
-    public void testConditions() throws Exception {
+    public void testBetweenConditions() throws Exception {
+
         // The BETWEEN clause
         assertEquals(Arrays.asList(2, 3), create().select()
             .from(TBook())
@@ -457,6 +458,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .from(TBook())
             .where(val(3).notBetween(TBook_AUTHOR_ID(), TBook_ID()))
             .orderBy(TBook_ID()).fetch(TBook_ID()));
+    }
+
+    @Test
+    public void testConditions() throws Exception {
 
         // The IN clause
         // [#502] empty set checks

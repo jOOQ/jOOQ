@@ -82,10 +82,12 @@ class RecordDelegate<R extends Record> {
         return new RecordDelegate<R>(configuration, record, type);
     }
 
+    @SuppressWarnings("unchecked")
     final <E extends Exception> R operate(RecordOperation<R, E> operation) throws E {
         RecordListenerProvider[] providers = null;
         RecordListener[] listeners = null;
         RecordContext ctx = null;
+        E exception = null;
 
         if (configuration != null) {
             providers = configuration.recordListenerProviders();
@@ -116,7 +118,14 @@ class RecordDelegate<R extends Record> {
         }
 
         if (operation != null) {
-            operation.operate(record);
+            try {
+                operation.operate(record);
+            }
+
+            // [#2770][#3036] Exceptions must not propagate before listeners receive "end" events
+            catch (Exception e) {
+                exception = (E) e;
+            }
         }
 
         if (listeners != null) {
@@ -132,6 +141,10 @@ class RecordDelegate<R extends Record> {
                         throw new IllegalStateException("Type not supported: " + type);
                 }
             }
+        }
+
+        if (exception != null) {
+            throw exception;
         }
 
         return record;

@@ -1606,6 +1606,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRecordListenerWithException() throws Exception {
+        new RecordListenerTests(this).testRecordListenerWithException();
+    }
+
+    @Test
     public void testRecordListenerBatchStore() throws Exception {
         new RecordListenerTests(this).testRecordListenerBatchStore();
     }

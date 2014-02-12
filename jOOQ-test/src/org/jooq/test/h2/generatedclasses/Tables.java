@@ -157,11 +157,6 @@ public class Tables {
 	public static final org.jooq.test.h2.generatedclasses.tables.Ää ÄÄ = org.jooq.test.h2.generatedclasses.tables.Ää.ÄÄ;
 
 	/**
-	 * The table PUBLIC.Ã„Ã¤
-	 */
-	public static final org.jooq.test.h2.generatedclasses.tables.Ã_201eã¤ Ã_201eÃ¤ = org.jooq.test.h2.generatedclasses.tables.Ã_201eã¤.Ã_201eÃ¤;
-
-	/**
 	 * The table PUBLIC.V_2603
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.V_2603 V_2603 = org.jooq.test.h2.generatedclasses.tables.V_2603.V_2603;

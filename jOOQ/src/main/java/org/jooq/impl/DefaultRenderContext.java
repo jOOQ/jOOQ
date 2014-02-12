@@ -413,6 +413,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
             switch (configuration().dialect().family()) {
                 /* [pro] */
+                case ACCESS:
+
+                    // Experiments have shown that the limit seems to be 998 bind variables for MS Access
+                    // We've lowered that number to stay on the safe side
+                    checkForceInline(768);
+                    return;
+
                 case ASE:
                     checkForceInline(2000);
                     return;

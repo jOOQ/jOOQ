@@ -993,6 +993,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testDateOrTimeFunction() throws Exception {
+
+        // [#3041] TODO
+        switch (dialect().family()) {
+            case DERBY:
+                log.info("SKIPPING", "Derby date or time function");
+                return;
+        }
+
         Field<Date> d = date(inline(Timestamp.valueOf("1970-01-01 02:00:00.0")));
         Field<Time> t = time(inline(Timestamp.valueOf("1970-01-01 02:00:00.0")));
         Field<Timestamp> ts = timestamp(inline(Date.valueOf("1970-01-01")));

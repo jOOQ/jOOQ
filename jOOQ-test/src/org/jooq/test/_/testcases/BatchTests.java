@@ -346,13 +346,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testBatchDelete() throws Exception {
         jOOQAbstractTest.reset = false;
 
-        Result<B> books = create().selectFrom(TBook()).where(TBook_ID().in(1, 3, 4)).fetch();
+        Result<B2S> books = create().selectFrom(TBookToBookStore()).where(TBookToBookStore_BOOK_ID().in(1, 3, 4)).fetch();
         Batch batch = create().batchDelete(books);
-        assertEquals(3, batch.size());
+        assertEquals(5, batch.size());
 
         int[] result = batch.execute();
-        assertEquals(3, result.length);
-        assertEquals(1, create().selectFrom(TBook()).fetch().size());
+        assertEquals(5, result.length);
+        assertEquals(1, create().selectFrom(TBookToBookStore()).fetch().size());
     }
 
     private void testBatchAuthors(String... names) throws Exception {

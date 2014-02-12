@@ -1708,6 +1708,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testCurrentDate() throws Exception {
+
+        // Skip this test for Derby
+        // https://issues.apache.org/jira/browse/DERBY-896
+        switch (dialect().family()) {
+            case DERBY:
+                log.info("SKIPPING", "Unsupported cast in Derby");
+                return;
+        }
+
         Field<Timestamp> ts = currentDate().cast(Timestamp.class).as("ts");
         Field<Date> d = currentDate().as("d");
 

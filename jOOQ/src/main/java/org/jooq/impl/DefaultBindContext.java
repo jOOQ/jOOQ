@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
@@ -173,9 +174,9 @@ class DefaultBindContext extends AbstractBindContext {
                 }
             }
 
-            // [#2152] Oracle cannot bind the type BOOLEAN. Let the JDBC driver
+            // [#2152] [#3039] DB2 and Oracle cannot bind the type BOOLEAN. Let the JDBC driver
             // figure out the correct type.
-            else if (sqlType == Types.BOOLEAN && configuration.dialect().family() == ORACLE) {
+            else if (sqlType == Types.BOOLEAN && asList(DB2, ORACLE).contains(configuration.dialect().family())) {
                 stmt.setObject(nextIndex(), null);
             }
 

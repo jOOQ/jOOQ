@@ -327,7 +327,7 @@ class DefaultBindContext extends AbstractBindContext {
                     stmt.setString(nextIndex(), value.toString());
                 else
                 /* [/pro] */
-                stmt.setLong(nextIndex(), (Long) value);
+                stmt.setLong(nextIndex(), ((UInteger) value).longValue());
             }
             else if (type == ULong.class) {
                 /* [pro] */

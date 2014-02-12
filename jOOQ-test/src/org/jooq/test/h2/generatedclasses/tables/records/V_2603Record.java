@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class V_2603Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.V_2603Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.IV_2603 {
 
-	private static final long serialVersionUID = 1285399593;
+	private static final long serialVersionUID = 94921847;
 
 	/**
-	 * Setter for <code>PUBLIC.V_2603.COL1</code>. 
+	 * Setter for <code>PUBLIC.V_2603.COL1</code>.
 	 */
 	@Override
 	public void setCol1(java.lang.Integer value) {
@@ -20,7 +20,7 @@ public class V_2603Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.V_2603.COL1</code>. 
+	 * Getter for <code>PUBLIC.V_2603.COL1</code>.
 	 */
 	@Override
 	public java.lang.Integer getCol1() {
@@ -28,7 +28,7 @@ public class V_2603Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2
 	}
 
 	/**
-	 * Setter for <code>PUBLIC.V_2603.COL4</code>. 
+	 * Setter for <code>PUBLIC.V_2603.COL4</code>.
 	 */
 	@Override
 	public void setCol4(java.lang.Integer value) {
@@ -36,7 +36,7 @@ public class V_2603Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.V_2603.COL4</code>. 
+	 * Getter for <code>PUBLIC.V_2603.COL4</code>.
 	 */
 	@Override
 	public java.lang.Integer getCol4() {

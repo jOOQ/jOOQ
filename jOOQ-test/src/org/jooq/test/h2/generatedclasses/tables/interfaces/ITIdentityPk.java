@@ -10,22 +10,22 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
 public interface ITIdentityPk extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.T_IDENTITY_PK.ID</code>. 
+	 * Setter for <code>PUBLIC.T_IDENTITY_PK.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_IDENTITY_PK.ID</code>. 
+	 * Getter for <code>PUBLIC.T_IDENTITY_PK.ID</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Setter for <code>PUBLIC.T_IDENTITY_PK.VAL</code>. 
+	 * Setter for <code>PUBLIC.T_IDENTITY_PK.VAL</code>.
 	 */
 	public void setVal(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_IDENTITY_PK.VAL</code>. 
+	 * Getter for <code>PUBLIC.T_IDENTITY_PK.VAL</code>.
 	 */
 	public java.lang.Integer getVal();
 

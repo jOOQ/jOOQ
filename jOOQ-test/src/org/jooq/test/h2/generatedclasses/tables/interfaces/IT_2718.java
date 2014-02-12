@@ -10,22 +10,22 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
 public interface IT_2718 extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.T_2718.EXCLUDE_ME</code>. 
+	 * Setter for <code>PUBLIC.T_2718.EXCLUDE_ME</code>.
 	 */
 	public void setExcludeMe(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_2718.EXCLUDE_ME</code>. 
+	 * Getter for <code>PUBLIC.T_2718.EXCLUDE_ME</code>.
 	 */
 	public java.lang.Integer getExcludeMe();
 
 	/**
-	 * Setter for <code>PUBLIC.T_2718.XX</code>. 
+	 * Setter for <code>PUBLIC.T_2718.XX</code>.
 	 */
 	public void setXx(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_2718.XX</code>. 
+	 * Getter for <code>PUBLIC.T_2718.XX</code>.
 	 */
 	public java.lang.Integer getXx();
 

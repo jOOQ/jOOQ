@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_85 {
 
-	private static final long serialVersionUID = -681231441;
+	private static final long serialVersionUID = 1623784637;
 
 	/**
-	 * Setter for <code>PUBLIC.X_TEST_CASE_85.ID</code>. 
+	 * Setter for <code>PUBLIC.X_TEST_CASE_85.ID</code>.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,7 +20,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.X_TEST_CASE_85.ID</code>. 
+	 * Getter for <code>PUBLIC.X_TEST_CASE_85.ID</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Setter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_ID</code>. 
+	 * Setter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_ID</code>.
 	 */
 	@Override
 	public void setXUnusedId(java.lang.Integer value) {
@@ -36,7 +36,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_ID</code>. 
+	 * Getter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_ID</code>.
 	 */
 	@Override
 	public java.lang.Integer getXUnusedId() {
@@ -44,7 +44,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Setter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 * Setter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_NAME</code>.
 	 */
 	@Override
 	public void setXUnusedName(java.lang.String value) {
@@ -52,7 +52,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 * Getter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_NAME</code>.
 	 */
 	@Override
 	public java.lang.String getXUnusedName() {

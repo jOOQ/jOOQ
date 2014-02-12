@@ -32,22 +32,22 @@ public interface ITBook extends java.io.Serializable {
 	public java.lang.Integer getAuthorId();
 
 	/**
-	 * Setter for <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>. 
+	 * Setter for <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	public void setCoAuthorId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>. 
+	 * Getter for <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	public java.lang.Integer getCoAuthorId();
 
 	/**
-	 * Setter for <code>PUBLIC.T_BOOK.DETAILS_ID</code>. 
+	 * Setter for <code>PUBLIC.T_BOOK.DETAILS_ID</code>.
 	 */
 	public void setDetailsId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_BOOK.DETAILS_ID</code>. 
+	 * Getter for <code>PUBLIC.T_BOOK.DETAILS_ID</code>.
 	 */
 	public java.lang.Integer getDetailsId();
 
@@ -102,22 +102,22 @@ public interface ITBook extends java.io.Serializable {
 	public byte[] getContentPdf();
 
 	/**
-	 * Setter for <code>PUBLIC.T_BOOK.REC_VERSION</code>. 
+	 * Setter for <code>PUBLIC.T_BOOK.REC_VERSION</code>.
 	 */
 	public void setRecVersion(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_BOOK.REC_VERSION</code>. 
+	 * Getter for <code>PUBLIC.T_BOOK.REC_VERSION</code>.
 	 */
 	public java.lang.Integer getRecVersion();
 
 	/**
-	 * Setter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>. 
+	 * Setter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>.
 	 */
 	public void setRecTimestamp(java.sql.Timestamp value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>. 
+	 * Getter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>.
 	 */
 	public java.sql.Timestamp getRecTimestamp();
 

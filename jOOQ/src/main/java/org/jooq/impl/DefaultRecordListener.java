@@ -89,4 +89,7 @@ public class DefaultRecordListener implements RecordListener {
     @Override
     public void refreshEnd(RecordContext ctx) {}
 
+    @Override
+    public void exception(RecordContext ctx) {}
+
 }

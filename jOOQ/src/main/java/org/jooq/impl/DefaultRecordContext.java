@@ -59,6 +59,7 @@ class DefaultRecordContext implements RecordContext {
     private final HashMap<Object, Object> data;
     private final ExecuteType             type;
     private final Record[]                records;
+    Exception                             exception;
 
     DefaultRecordContext(Configuration configuration, ExecuteType type, Record... records) {
         this.configuration = configuration;
@@ -100,5 +101,10 @@ class DefaultRecordContext implements RecordContext {
     @Override
     public final Record[] batchRecords() {
         return records;
+    }
+
+    @Override
+    public final Exception exception() {
+        return exception;
     }
 }

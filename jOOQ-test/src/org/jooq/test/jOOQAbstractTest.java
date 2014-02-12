@@ -2106,6 +2106,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchCountWithLimitOffset() throws Exception {
+        new AggregateWindowFunctionTests(this).testFetchCountWithLimitOffset();
+    }
+
+    @Test
     public void testCountDistinct() throws Exception {
         new AggregateWindowFunctionTests(this).testCountDistinct();
     }

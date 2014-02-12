@@ -46,6 +46,7 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
+import static org.jooq.SQLDialect.DB2;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.tools.reflect.Reflect.on;
@@ -391,6 +392,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             log.info("SKIPPING", "functions test with no schema");
             return;
         }
+
+        /* [pro] */
+        // DB2 seems not to allow unqualified function calls, even in the local schema
+        if (dialect().family() == DB2) {
+            log.info("SKIPPING", "functions test with no schema");
+            return;
+        }
+        /* [/pro] */
 
         assertEquals(42, (int) create(new Settings().withRenderSchema(false))
             .select(FNumberField(42).cast(Integer.class))

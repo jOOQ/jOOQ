@@ -170,9 +170,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .groupBy(VLibrary_AUTHOR())
 
             // MySQL seems to have a bug with fully qualified view names in the
-            // having clause. TODO: Fully analyse this issue
-            // https://sourceforge.net/apps/trac/jooq/ticket/277
-            .having("v_library.author like ?", "Paulo%")
+            // having clause. TODO: [#277] Fully analyse this issue
+            .having("count(*) >= ?", 2)
             .fetch();
 
         assertEquals(1, result4.size());

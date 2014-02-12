@@ -199,10 +199,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         create(listener1).batchStore(book1, book2).execute();
         assertEquals(asList(
-            "storeStart", "storeStart",
-            "insertStart", "insertStart",
-            "insertEnd", "insertEnd",
-            "storeEnd", "storeEnd"),
+            "storeStart",
+            "insertStart",
+            "insertEnd",
+            "storeEnd",
+            "storeStart",
+            "insertStart",
+            "insertEnd",
+            "storeEnd"),
         listener1.events);
     }
 

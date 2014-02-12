@@ -783,7 +783,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Field<Double> f7b = sqlite || ingres ? inline(10.0) : trunc(11.111, -1);
 
         Record r2 =
-        create().select(f1b, f2b, f3b, f4b, f6b, f6b, f7b)
+        create().select(f1b, f2b, f3b, f4b, f5b, f6b, f7b)
                 .fetchOne();
 
         assertEquals("-1.0", r2.getValue(f1b, String.class));

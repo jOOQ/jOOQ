@@ -363,16 +363,30 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals(3, create().fetchCount(selectDistinct(TBook_ID(), TBook_TITLE()).from(TBook()).where(TBook_ID().in(1, 2, 3))));
 
-        // Ingres doesn't allow for LIMIT .. OFFSET in nested selects or derived tables.
-        if (!asList().contains(dialect().family())) {
-            assertEquals(2, create().fetchCount(selectFrom(TBook()).limit(2)));
-            assertEquals(2, create().fetchCount(selectFrom(TBook()).limit(2).offset(1)));
-        }
-
         assertEquals(2, create().fetchCount(
             select(TBook_TITLE()).from(TBook()).where(TBook_ID().eq(1))
             .union(
             select(inline("abc")))));
+    }
+
+    @Test
+    public void testFetchCountWithLimitOffset() throws Exception {
+
+        /* [pro] xx
+        xxxxxx xxxxxxxxxxxxxxxxxxxx x
+            xxxx xxxxxxx
+            xxxx xxxx
+            xxxx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxx xx xxxxxx xxxxxxxx
+                xxxxxxx
+        x
+        xx [/pro] */
+
+        // Some databases don't allow for LIMIT .. OFFSET in nested selects or derived tables.
+        if (!asList().contains(dialect().family())) {
+            assertEquals(2, create().fetchCount(selectFrom(TBook()).limit(2)));
+            assertEquals(2, create().fetchCount(selectFrom(TBook()).limit(2).offset(1)));
+        }
     }
 
     @Test

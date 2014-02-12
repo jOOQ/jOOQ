@@ -451,6 +451,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testLimitDistinct() throws Exception {
+
+        /* [pro] xx
+        xx xxxxxxxxxx xx xxxxxxxxxxxxxxxxx xx
+            xxxxxxxxx xx xxxxxxxxxxxxxxx x
+
+            xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxx xx xxxxxx xxxxxxxxxx
+            xxxxxxx
+        x
+        xx [/pro] */
+
         assertEquals(asList(1, 2),
         create().selectDistinct(TBookToBookStore_BOOK_ID())
                 .from(TBookToBookStore())
@@ -473,14 +483,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .limit(2)
                 .offset(1)
                 .fetch(TBook_AUTHOR_ID()));
-
-        throw new RuntimeException("#2580: Add more test cases!");
     }
 
     @Test
     public void testLimitAliased() throws Exception {
         /* [pro] xx
-        xx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+        xx xxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxxxxxxxxxxxxxxxx xxxxxx xx xxxxxx xxxxxxxx
             xxxxxxx
         x
@@ -620,6 +628,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         /* [pro] xx
         xx xxxx xxxxxx xxxx xx xxx xxxxxxxxx xx xxxxxx
         xx xxxxxxxxxx xx xxxxxxxxxxxxxxxxx xx
+            xxxxxxxxx xx xxxxxxxxxxxxxxxxx xx
             xxxxxxxxx xx xxxxxxxxxxxxxxx x
 
             xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxx xx xxxxxx xxxxxxxxxx

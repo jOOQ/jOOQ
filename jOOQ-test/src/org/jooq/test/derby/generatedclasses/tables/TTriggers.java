@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -672198195;
+	private static final long serialVersionUID = 8899085;
 
 	/**
 	 * The singleton instance of <code>TEST.T_TRIGGERS</code>
@@ -25,25 +25,33 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.derby.gener
 	}
 
 	/**
-	 * The column <code>TEST.T_TRIGGERS.ID_GENERATED</code>. 
+	 * The column <code>TEST.T_TRIGGERS.ID_GENERATED</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_TRIGGERS);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_TRIGGERS, "");
 
 	/**
-	 * The column <code>TEST.T_TRIGGERS.ID</code>. 
+	 * The column <code>TEST.T_TRIGGERS.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS, "");
 
 	/**
-	 * The column <code>TEST.T_TRIGGERS.COUNTER</code>. 
+	 * The column <code>TEST.T_TRIGGERS.COUNTER</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("COUNTER", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("COUNTER", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TTriggers() {
-		super("T_TRIGGERS", org.jooq.test.derby.generatedclasses.Test.TEST);
+		this("T_TRIGGERS", null);
+	}
+
+	private TTriggers(java.lang.String alias, org.jooq.Table<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TTriggers(java.lang.String alias, org.jooq.Table<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.derby.generatedclasses.Test.TEST, aliased, parameters, "");
 	}
 
 	/**

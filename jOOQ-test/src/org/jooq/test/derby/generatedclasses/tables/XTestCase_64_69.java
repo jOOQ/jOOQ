@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = -2070098689;
+	private static final long serialVersionUID = -1264188189;
 
 	/**
 	 * The singleton instance of <code>TEST.X_TEST_CASE_64_69</code>
@@ -25,20 +25,28 @@ public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.derby
 	}
 
 	/**
-	 * The column <code>TEST.X_TEST_CASE_64_69.ID</code>. 
+	 * The column <code>TEST.X_TEST_CASE_64_69.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_64_69);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_64_69, "");
 
 	/**
-	 * The column <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 * The column <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> UNUSED_ID = createField("UNUSED_ID", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_64_69);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> UNUSED_ID = createField("UNUSED_ID", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_64_69, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private XTestCase_64_69() {
-		super("X_TEST_CASE_64_69", org.jooq.test.derby.generatedclasses.Test.TEST);
+		this("X_TEST_CASE_64_69", null);
+	}
+
+	private XTestCase_64_69(java.lang.String alias, org.jooq.Table<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private XTestCase_64_69(java.lang.String alias, org.jooq.Table<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.derby.generatedclasses.Test.TEST, aliased, parameters, "");
 	}
 
 	/**

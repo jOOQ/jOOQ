@@ -186,6 +186,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         catch (DataAccessException expected) {}
 
         assertEquals(asList("insertStart", "insertEnd"), listener1.events);
+        assertEquals(1, listener1.exceptions.size());
     }
 
     @Test
@@ -224,6 +225,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     private static class WriteListener extends DefaultRecordListener {
         List<String> events = new ArrayList<String>();
+        List<Exception> exceptions = new ArrayList<Exception>();
 
         @Override
         public void storeStart(RecordContext ctx) {
@@ -263,6 +265,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         @Override
         public void deleteEnd(RecordContext ctx) {
             events.add("deleteEnd");
+        }
+
+        @Override
+        public void exception(RecordContext ctx) {
+            exceptions.add(ctx.exception());
         }
     }
 }

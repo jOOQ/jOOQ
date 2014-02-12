@@ -43,8 +43,8 @@ package org.jooq;
 import java.util.Map;
 
 /**
- * A context object for {@link Record} manipulation passed to
- * registered {@link RecordListener}'s.
+ * A context object for {@link Record} manipulation passed to registered
+ * {@link RecordListener}'s.
  *
  * @author Lukas Eder
  */
@@ -137,15 +137,20 @@ public interface RecordContext {
     Record record();
 
     /**
-     * The <code>Record</code>(s) that are being manipulated in batch
-     * mode.
+     * The <code>Record</code>(s) that are being manipulated in batch mode.
      * <p>
-     * If a single <code>Record</code> is being manipulated in
-     * non-batch mode, this will return an array of length <code>1</code>,
-     * containing that <code>Record</code>.
+     * If a single <code>Record</code> is being manipulated in non-batch mode,
+     * this will return an array of length <code>1</code>, containing that
+     * <code>Record</code>.
      *
-     * @return The <code>Record</code>(s) being manipulated. This is
-     *         never <code>null</code>
+     * @return The <code>Record</code>(s) being manipulated. This is never
+     *         <code>null</code>
      */
     Record[] batchRecords();
+
+    /**
+     * The {@link Exception} being thrown or <code>null</code>.
+     */
+    Exception exception();
+
 }

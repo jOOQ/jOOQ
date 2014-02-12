@@ -48,9 +48,9 @@ import static org.jooq.impl.RecordDelegate.RecordLifecycleType.REFRESH;
 import org.jooq.Configuration;
 import org.jooq.ExecuteType;
 import org.jooq.Record;
-import org.jooq.RecordContext;
 import org.jooq.RecordListener;
 import org.jooq.RecordListenerProvider;
+import org.jooq.exception.ControlFlowSignal;
 
 /**
  * A stub for {@link Record} objects, abstracting {@link RecordListener}
@@ -86,7 +86,7 @@ class RecordDelegate<R extends Record> {
     final <E extends Exception> R operate(RecordOperation<R, E> operation) throws E {
         RecordListenerProvider[] providers = null;
         RecordListener[] listeners = null;
-        RecordContext ctx = null;
+        DefaultRecordContext ctx = null;
         E exception = null;
 
         if (configuration != null) {
@@ -103,7 +103,7 @@ class RecordDelegate<R extends Record> {
         }
 
         if (listeners != null) {
-            for (RecordListener listener  : listeners) {
+            for (RecordListener listener : listeners) {
                 switch (type) {
                     case LOAD:    listener.loadStart(ctx);    break;
                     case REFRESH: listener.refreshStart(ctx); break;
@@ -125,11 +125,21 @@ class RecordDelegate<R extends Record> {
             // [#2770][#3036] Exceptions must not propagate before listeners receive "end" events
             catch (Exception e) {
                 exception = (E) e;
+
+                // Do not propagate these exception types to client code as they're not really "exceptions"
+                if (!(e instanceof ControlFlowSignal)) {
+                    if (ctx != null)
+                        ctx.exception = e;
+
+                    if (listeners != null)
+                        for (RecordListener listener : listeners)
+                            listener.exception(ctx);
+                }
             }
         }
 
         if (listeners != null) {
-            for (RecordListener listener  : listeners) {
+            for (RecordListener listener : listeners) {
                 switch (type) {
                     case LOAD:    listener.loadEnd(ctx);    break;
                     case REFRESH: listener.refreshEnd(ctx); break;

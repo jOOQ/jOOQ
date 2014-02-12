@@ -191,4 +191,9 @@ public interface RecordListener extends EventListener {
      * @see UpdatableRecord#refresh()
      */
     void refreshEnd(RecordContext ctx);
+
+    /**
+     * Called when an exception occurs.
+     */
+    void exception(RecordContext ctx);
 }

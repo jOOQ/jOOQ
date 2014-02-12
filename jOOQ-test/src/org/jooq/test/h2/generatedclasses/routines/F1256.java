@@ -9,15 +9,15 @@ package org.jooq.test.h2.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class F1256 extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = -2089892815;
+	private static final long serialVersionUID = -1681231703;
 
 	/**
-	 * The parameter <code>PUBLIC.F1256.RETURN_VALUE</code>. 
+	 * The parameter <code>PUBLIC.F1256.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647));
 
 	/**
-	 * The parameter <code>PUBLIC.F1256.P1</code>. 
+	 * The parameter <code>PUBLIC.F1256.P1</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> P1 = createParameter("P1", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647));
 

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class V_2603 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.V_2603Record> {
 
-	private static final long serialVersionUID = -575713597;
+	private static final long serialVersionUID = -892644003;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.V_2603</code>
@@ -25,19 +25,27 @@ public class V_2603 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedcl
 	}
 
 	/**
-	 * The column <code>PUBLIC.V_2603.COL1</code>. 
+	 * The column <code>PUBLIC.V_2603.COL1</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.V_2603Record, java.lang.Integer> COL1 = createField("COL1", org.jooq.impl.SQLDataType.INTEGER, V_2603);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.V_2603Record, java.lang.Integer> COL1 = createField("COL1", org.jooq.impl.SQLDataType.INTEGER, V_2603, "");
 
 	/**
-	 * The column <code>PUBLIC.V_2603.COL4</code>. 
+	 * The column <code>PUBLIC.V_2603.COL4</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.V_2603Record, java.lang.Integer> COL4 = createField("COL4", org.jooq.impl.SQLDataType.INTEGER, V_2603);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.V_2603Record, java.lang.Integer> COL4 = createField("COL4", org.jooq.impl.SQLDataType.INTEGER, V_2603, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private V_2603() {
-		super("V_2603", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
+		this("V_2603", null);
+	}
+
+	private V_2603(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.V_2603Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private V_2603(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.V_2603Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.h2.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 }

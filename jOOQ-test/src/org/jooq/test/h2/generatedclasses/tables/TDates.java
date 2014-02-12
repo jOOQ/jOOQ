@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -816401466;
+	private static final long serialVersionUID = -1537549818;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_DATES</code>
@@ -25,40 +25,48 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedcl
 	}
 
 	/**
-	 * The column <code>PUBLIC.T_DATES.ID</code>. 
+	 * The column <code>PUBLIC.T_DATES.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_DATES, "");
 
 	/**
-	 * The column <code>PUBLIC.T_DATES.D</code>. 
+	 * The column <code>PUBLIC.T_DATES.D</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, java.sql.Date> D = createField("D", org.jooq.impl.SQLDataType.DATE, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, java.sql.Date> D = createField("D", org.jooq.impl.SQLDataType.DATE, T_DATES, "");
 
 	/**
-	 * The column <code>PUBLIC.T_DATES.T</code>. 
+	 * The column <code>PUBLIC.T_DATES.T</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, java.sql.Time> T = createField("T", org.jooq.impl.SQLDataType.TIME, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, java.sql.Time> T = createField("T", org.jooq.impl.SQLDataType.TIME, T_DATES, "");
 
 	/**
-	 * The column <code>PUBLIC.T_DATES.TS</code>. 
+	 * The column <code>PUBLIC.T_DATES.TS</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("TS", org.jooq.impl.SQLDataType.TIMESTAMP, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("TS", org.jooq.impl.SQLDataType.TIMESTAMP, T_DATES, "");
 
 	/**
-	 * The column <code>PUBLIC.T_DATES.D_INT</code>. 
+	 * The column <code>PUBLIC.T_DATES.D_INT</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> D_INT = createField("D_INT", org.jooq.impl.SQLDataType.INTEGER, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> D_INT = createField("D_INT", org.jooq.impl.SQLDataType.INTEGER, T_DATES, "");
 
 	/**
-	 * The column <code>PUBLIC.T_DATES.TS_BIGINT</code>. 
+	 * The column <code>PUBLIC.T_DATES.TS_BIGINT</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("TS_BIGINT", org.jooq.impl.SQLDataType.BIGINT, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("TS_BIGINT", org.jooq.impl.SQLDataType.BIGINT, T_DATES, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TDates() {
-		super("T_DATES", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
+		this("T_DATES", null);
+	}
+
+	private TDates(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TDates(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.h2.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**

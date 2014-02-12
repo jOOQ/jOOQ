@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITTriggers {
 
-	private static final long serialVersionUID = 1968438765;
+	private static final long serialVersionUID = -1292790893;
 
 	/**
-	 * Setter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>. 
+	 * Setter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>.
 	 */
 	@Override
 	public void setIdGenerated(java.lang.Integer value) {
@@ -20,7 +20,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>. 
+	 * Getter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>.
 	 */
 	@Override
 	public java.lang.Integer getIdGenerated() {
@@ -28,7 +28,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>PUBLIC.T_TRIGGERS.ID</code>. 
+	 * Setter for <code>PUBLIC.T_TRIGGERS.ID</code>.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -36,7 +36,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.T_TRIGGERS.ID</code>. 
+	 * Getter for <code>PUBLIC.T_TRIGGERS.ID</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -44,7 +44,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>PUBLIC.T_TRIGGERS.COUNTER</code>. 
+	 * Setter for <code>PUBLIC.T_TRIGGERS.COUNTER</code>.
 	 */
 	@Override
 	public void setCounter(java.lang.Integer value) {
@@ -52,7 +52,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.T_TRIGGERS.COUNTER</code>. 
+	 * Getter for <code>PUBLIC.T_TRIGGERS.COUNTER</code>.
 	 */
 	@Override
 	public java.lang.Integer getCounter() {

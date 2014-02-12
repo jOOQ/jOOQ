@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2327UkOnly extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.T_2327UkOnlyRecord> {
 
-	private static final long serialVersionUID = -274000928;
+	private static final long serialVersionUID = -1801962018;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_2327_UK_ONLY</code>
@@ -25,15 +25,23 @@ public class T_2327UkOnly extends org.jooq.impl.TableImpl<org.jooq.test.h2.gener
 	}
 
 	/**
-	 * The column <code>PUBLIC.T_2327_UK_ONLY.ID</code>. 
+	 * The column <code>PUBLIC.T_2327_UK_ONLY.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_2327UkOnlyRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_2327_UK_ONLY);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_2327UkOnlyRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_2327_UK_ONLY, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private T_2327UkOnly() {
-		super("T_2327_UK_ONLY", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
+		this("T_2327_UK_ONLY", null);
+	}
+
+	private T_2327UkOnly(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.T_2327UkOnlyRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_2327UkOnly(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.T_2327UkOnlyRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.h2.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**

@@ -32,12 +32,12 @@ public interface ITLanguage extends java.io.Serializable {
 	public java.lang.String getDescription();
 
 	/**
-	 * Setter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * Setter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
 	public void setDescriptionEnglish(java.lang.String value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * Getter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
 	public java.lang.String getDescriptionEnglish();
 

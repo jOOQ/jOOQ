@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2698Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.T_2698Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2698 {
 
-	private static final long serialVersionUID = -1090263476;
+	private static final long serialVersionUID = 1725256862;
 
 	/**
-	 * Setter for <code>PUBLIC.T_2698.ID</code>. 
+	 * Setter for <code>PUBLIC.T_2698.ID</code>.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,7 +20,7 @@ public class T_2698Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.T_2698.ID</code>. 
+	 * Getter for <code>PUBLIC.T_2698.ID</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class T_2698Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>PUBLIC.T_2698.XX</code>. 
+	 * Setter for <code>PUBLIC.T_2698.XX</code>.
 	 */
 	@Override
 	public void setXx(java.lang.Integer value) {
@@ -36,7 +36,7 @@ public class T_2698Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.T_2698.XX</code>. 
+	 * Getter for <code>PUBLIC.T_2698.XX</code>.
 	 */
 	@Override
 	public java.lang.Integer getXx() {

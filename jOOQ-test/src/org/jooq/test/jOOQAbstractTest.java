@@ -1306,6 +1306,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testBetweenConditions() throws Exception {
+        new PredicateTests(this).testBetweenConditions();
+    }
+
+    @Test
     public void testConditionsAsFields() throws Exception {
         new PredicateTests(this).testConditionsAsFields();
     }
@@ -2030,7 +2035,7 @@ public abstract class jOOQAbstractTest<
         new JoinTests(this).testJoinOnKey();
     }
 
-    @Test
+    // TODO [#2870] @Test
     public void testJoinOnKeyWithAlias() throws Exception {
         new JoinTests(this).testJoinOnKeyWithAlias();
     }

@@ -10,32 +10,32 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
 public interface IXTestCase_85 extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.X_TEST_CASE_85.ID</code>. 
+	 * Setter for <code>PUBLIC.X_TEST_CASE_85.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.X_TEST_CASE_85.ID</code>. 
+	 * Getter for <code>PUBLIC.X_TEST_CASE_85.ID</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Setter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_ID</code>. 
+	 * Setter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_ID</code>.
 	 */
 	public void setXUnusedId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_ID</code>. 
+	 * Getter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_ID</code>.
 	 */
 	public java.lang.Integer getXUnusedId();
 
 	/**
-	 * Setter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 * Setter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_NAME</code>.
 	 */
 	public void setXUnusedName(java.lang.String value);
 
 	/**
-	 * Getter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 * Getter for <code>PUBLIC.X_TEST_CASE_85.X_UNUSED_NAME</code>.
 	 */
 	public java.lang.String getXUnusedName();
 

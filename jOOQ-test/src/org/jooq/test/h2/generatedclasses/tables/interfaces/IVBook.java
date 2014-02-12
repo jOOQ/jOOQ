@@ -10,112 +10,112 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
 public interface IVBook extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.V_BOOK.ID</code>. 
+	 * Setter for <code>PUBLIC.V_BOOK.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_BOOK.ID</code>. 
+	 * Getter for <code>PUBLIC.V_BOOK.ID</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Setter for <code>PUBLIC.V_BOOK.AUTHOR_ID</code>. 
+	 * Setter for <code>PUBLIC.V_BOOK.AUTHOR_ID</code>.
 	 */
 	public void setAuthorId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_BOOK.AUTHOR_ID</code>. 
+	 * Getter for <code>PUBLIC.V_BOOK.AUTHOR_ID</code>.
 	 */
 	public java.lang.Integer getAuthorId();
 
 	/**
-	 * Setter for <code>PUBLIC.V_BOOK.CO_AUTHOR_ID</code>. 
+	 * Setter for <code>PUBLIC.V_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	public void setCoAuthorId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_BOOK.CO_AUTHOR_ID</code>. 
+	 * Getter for <code>PUBLIC.V_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	public java.lang.Integer getCoAuthorId();
 
 	/**
-	 * Setter for <code>PUBLIC.V_BOOK.DETAILS_ID</code>. 
+	 * Setter for <code>PUBLIC.V_BOOK.DETAILS_ID</code>.
 	 */
 	public void setDetailsId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_BOOK.DETAILS_ID</code>. 
+	 * Getter for <code>PUBLIC.V_BOOK.DETAILS_ID</code>.
 	 */
 	public java.lang.Integer getDetailsId();
 
 	/**
-	 * Setter for <code>PUBLIC.V_BOOK.TITLE</code>. 
+	 * Setter for <code>PUBLIC.V_BOOK.TITLE</code>.
 	 */
 	public void setTitle(java.lang.String value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_BOOK.TITLE</code>. 
+	 * Getter for <code>PUBLIC.V_BOOK.TITLE</code>.
 	 */
 	public java.lang.String getTitle();
 
 	/**
-	 * Setter for <code>PUBLIC.V_BOOK.PUBLISHED_IN</code>. 
+	 * Setter for <code>PUBLIC.V_BOOK.PUBLISHED_IN</code>.
 	 */
 	public void setPublishedIn(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_BOOK.PUBLISHED_IN</code>. 
+	 * Getter for <code>PUBLIC.V_BOOK.PUBLISHED_IN</code>.
 	 */
 	public java.lang.Integer getPublishedIn();
 
 	/**
-	 * Setter for <code>PUBLIC.V_BOOK.LANGUAGE_ID</code>. 
+	 * Setter for <code>PUBLIC.V_BOOK.LANGUAGE_ID</code>.
 	 */
 	public void setLanguageId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_BOOK.LANGUAGE_ID</code>. 
+	 * Getter for <code>PUBLIC.V_BOOK.LANGUAGE_ID</code>.
 	 */
 	public java.lang.Integer getLanguageId();
 
 	/**
-	 * Setter for <code>PUBLIC.V_BOOK.CONTENT_TEXT</code>. 
+	 * Setter for <code>PUBLIC.V_BOOK.CONTENT_TEXT</code>.
 	 */
 	public void setContentText(java.lang.String value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_BOOK.CONTENT_TEXT</code>. 
+	 * Getter for <code>PUBLIC.V_BOOK.CONTENT_TEXT</code>.
 	 */
 	public java.lang.String getContentText();
 
 	/**
-	 * Setter for <code>PUBLIC.V_BOOK.CONTENT_PDF</code>. 
+	 * Setter for <code>PUBLIC.V_BOOK.CONTENT_PDF</code>.
 	 */
 	public void setContentPdf(byte[] value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_BOOK.CONTENT_PDF</code>. 
+	 * Getter for <code>PUBLIC.V_BOOK.CONTENT_PDF</code>.
 	 */
 	public byte[] getContentPdf();
 
 	/**
-	 * Setter for <code>PUBLIC.V_BOOK.REC_VERSION</code>. 
+	 * Setter for <code>PUBLIC.V_BOOK.REC_VERSION</code>.
 	 */
 	public void setRecVersion(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_BOOK.REC_VERSION</code>. 
+	 * Getter for <code>PUBLIC.V_BOOK.REC_VERSION</code>.
 	 */
 	public java.lang.Integer getRecVersion();
 
 	/**
-	 * Setter for <code>PUBLIC.V_BOOK.REC_TIMESTAMP</code>. 
+	 * Setter for <code>PUBLIC.V_BOOK.REC_TIMESTAMP</code>.
 	 */
 	public void setRecTimestamp(java.sql.Timestamp value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_BOOK.REC_TIMESTAMP</code>. 
+	 * Getter for <code>PUBLIC.V_BOOK.REC_TIMESTAMP</code>.
 	 */
 	public java.sql.Timestamp getRecTimestamp();
 

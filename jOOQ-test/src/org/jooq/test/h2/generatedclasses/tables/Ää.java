@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Ää extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.ÄäRecord> {
 
-	private static final long serialVersionUID = 309601669;
+	private static final long serialVersionUID = 1291680637;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.Ää</code>
@@ -25,14 +25,22 @@ public class Ää extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclas
 	}
 
 	/**
-	 * The column <code>PUBLIC.Ää.Öö</code>. 
+	 * The column <code>PUBLIC.Ää.Öö</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.ÄäRecord, java.lang.Integer> ÖÖ = createField("Öö", org.jooq.impl.SQLDataType.INTEGER, ÄÄ);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.ÄäRecord, java.lang.Integer> ÖÖ = createField("Öö", org.jooq.impl.SQLDataType.INTEGER, ÄÄ, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private Ää() {
-		super("Ää", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
+		this("Ää", null);
+	}
+
+	private Ää(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.ÄäRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private Ää(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.ÄäRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.h2.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 }

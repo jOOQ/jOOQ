@@ -110,6 +110,13 @@ class Cast<T> extends AbstractFunction<T> {
 
         xxxxxxxxx
         xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxx xxxx x
+
+            xx xx xxxxxx xxxx xxx xxxx xxxx xxxxxx xxx xxxx xxxxxx xxxxxx xxxx xx x xxxxxxxxx xxxxxxx xxxxxxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                xxxxxxxxxxxxxxxxx
+                xxxxxxx
+            x
+
             xxxxx xxxxxxxx xxxx x xxxxxxxxxx
             xxxxx xxxxxx xxxxxxxx x
                   xxxxx xx xxxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxx

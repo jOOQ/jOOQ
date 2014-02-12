@@ -10,42 +10,42 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
 public interface ITUnsigned extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.T_UNSIGNED.U_BYTE</code>. 
+	 * Setter for <code>PUBLIC.T_UNSIGNED.U_BYTE</code>.
 	 */
 	public void setUByte(org.jooq.types.UByte value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_UNSIGNED.U_BYTE</code>. 
+	 * Getter for <code>PUBLIC.T_UNSIGNED.U_BYTE</code>.
 	 */
 	public org.jooq.types.UByte getUByte();
 
 	/**
-	 * Setter for <code>PUBLIC.T_UNSIGNED.U_SHORT</code>. 
+	 * Setter for <code>PUBLIC.T_UNSIGNED.U_SHORT</code>.
 	 */
 	public void setUShort(org.jooq.types.UShort value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_UNSIGNED.U_SHORT</code>. 
+	 * Getter for <code>PUBLIC.T_UNSIGNED.U_SHORT</code>.
 	 */
 	public org.jooq.types.UShort getUShort();
 
 	/**
-	 * Setter for <code>PUBLIC.T_UNSIGNED.U_INT</code>. 
+	 * Setter for <code>PUBLIC.T_UNSIGNED.U_INT</code>.
 	 */
 	public void setUInt(org.jooq.types.UInteger value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_UNSIGNED.U_INT</code>. 
+	 * Getter for <code>PUBLIC.T_UNSIGNED.U_INT</code>.
 	 */
 	public org.jooq.types.UInteger getUInt();
 
 	/**
-	 * Setter for <code>PUBLIC.T_UNSIGNED.U_LONG</code>. 
+	 * Setter for <code>PUBLIC.T_UNSIGNED.U_LONG</code>.
 	 */
 	public void setULong(org.jooq.types.ULong value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_UNSIGNED.U_LONG</code>. 
+	 * Getter for <code>PUBLIC.T_UNSIGNED.U_LONG</code>.
 	 */
 	public org.jooq.types.ULong getULong();
 

@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer, java.sql.Timestamp>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = 1896240556;
+	private static final long serialVersionUID = -1189866200;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.ID</code>. The book ID
@@ -46,7 +46,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Setter for <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>. 
+	 * Setter for <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	@Override
 	public void setCoAuthorId(java.lang.Integer value) {
@@ -54,7 +54,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>. 
+	 * Getter for <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	@Override
 	public java.lang.Integer getCoAuthorId() {
@@ -62,7 +62,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Setter for <code>PUBLIC.T_BOOK.DETAILS_ID</code>. 
+	 * Setter for <code>PUBLIC.T_BOOK.DETAILS_ID</code>.
 	 */
 	@Override
 	public void setDetailsId(java.lang.Integer value) {
@@ -70,7 +70,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.T_BOOK.DETAILS_ID</code>. 
+	 * Getter for <code>PUBLIC.T_BOOK.DETAILS_ID</code>.
 	 */
 	@Override
 	public java.lang.Integer getDetailsId() {
@@ -158,7 +158,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Setter for <code>PUBLIC.T_BOOK.REC_VERSION</code>. 
+	 * Setter for <code>PUBLIC.T_BOOK.REC_VERSION</code>.
 	 */
 	@Override
 	public void setRecVersion(java.lang.Integer value) {
@@ -166,7 +166,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.T_BOOK.REC_VERSION</code>. 
+	 * Getter for <code>PUBLIC.T_BOOK.REC_VERSION</code>.
 	 */
 	@Override
 	public java.lang.Integer getRecVersion() {
@@ -174,7 +174,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Setter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>. 
+	 * Setter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>.
 	 */
 	@Override
 	public void setRecTimestamp(java.sql.Timestamp value) {
@@ -182,7 +182,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Getter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>. 
+	 * Getter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>.
 	 */
 	@Override
 	public java.sql.Timestamp getRecTimestamp() {

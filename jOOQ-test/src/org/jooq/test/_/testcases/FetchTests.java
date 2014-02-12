@@ -1365,6 +1365,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(book.getValue(TBook_ID()));
 
         book.setValue(TBook_ID(), 5);
+        book.changed(true);
         assertEquals(1, book.store());
         Result<B> books2 = create().selectFrom(TBook()).orderBy(TBook_ID()).fetch();
         assertEquals(5, books2.size());

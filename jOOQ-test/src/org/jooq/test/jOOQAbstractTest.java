@@ -2030,7 +2030,7 @@ public abstract class jOOQAbstractTest<
         new JoinTests(this).testJoinOnKey();
     }
 
-    @Test
+    // TODO [#2870] @Test
     public void testJoinOnKeyWithAlias() throws Exception {
         new JoinTests(this).testJoinOnKeyWithAlias();
     }

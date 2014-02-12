@@ -1935,7 +1935,7 @@ public abstract class jOOQAbstractTest<
         new OrderByTests(this).testOrderByInSubquery();
     }
 
-    @Test
+    // TODO [#2815] @Test
     public void testOrderByWithDual() throws Exception {
         new OrderByTests(this).testOrderByWithDual();
     }

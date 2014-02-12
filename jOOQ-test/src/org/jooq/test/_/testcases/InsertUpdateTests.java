@@ -779,6 +779,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testInsertReturningWithRenderNameStyleAS_IS() throws Exception {
+        // [#3035] TODO: Re-enable this test
+        switch (dialect().family()) {
+            case H2:
+                log.info("SKIPPING", "Insert Returning Test");
+                return;
+        }
+
         jOOQAbstractTest.reset = false;
 
         // [#2845] Some SQL dialects use Connection.prepareStatement(String, String[])

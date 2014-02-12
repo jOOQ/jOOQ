@@ -451,6 +451,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testLimitDistinct() throws Exception {
+
+        /* [pro] */
+        if (dialect() == SQLDialect.ACCESS ||
+            dialect() == SQLDialect.ASE) {
+
+            log.info("SKIPPING", "LIMIT clauses in nested SELECTs");
+            return;
+        }
+        /* [/pro] */
+
         assertEquals(asList(1, 2),
         create().selectDistinct(TBookToBookStore_BOOK_ID())
                 .from(TBookToBookStore())
@@ -473,14 +483,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .limit(2)
                 .offset(1)
                 .fetch(TBook_AUTHOR_ID()));
-
-        throw new RuntimeException("#2580: Add more test cases!");
     }
 
     @Test
     public void testLimitAliased() throws Exception {
         /* [pro] */
-        if (asList(ASE, SQLSERVER).contains(dialect().family())) {
+        if (asList(ACCESS, ASE, SQLSERVER).contains(dialect().family())) {
             log.info("SKIPPING", "LIMIT .. OFFSET tests");
             return;
         }
@@ -619,7 +627,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testLimitNested() throws Exception {
         /* [pro] */
         // TODO [#780] This is not supported in Ingres
-        if (dialect() == SQLDialect.INGRES ||
+        if (dialect() == SQLDialect.ACCESS ||
+            dialect() == SQLDialect.INGRES ||
             dialect() == SQLDialect.ASE) {
 
             log.info("SKIPPING", "LIMIT clauses in nested SELECTs");

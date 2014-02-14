@@ -10,12 +10,76 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 3.3.0 - January 15, 2014
+Version 3.3.0 - February 14, 2014
 ================================================================================
 
-- SQL features, like WINDOW, APPLY, DEFAULT
-- SEEK method
-- SQL 2 jOOQ
+Finally, a new awesome jOOQ release is ready for you to download! The most
+important feature first:
+
+  The SEEK method
+  ---------------
+  
+We've been blogging about keyset paging before:
+
+- http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/
+- http://blog.jooq.org/2013/11/18/faster-sql-pagination-with-keysets-continued/
+
+Every SQL developer should have this tool in their toolchain. And now, with
+jOOQ 3.3, we natively support a synthetic SQL clause for you to express keyset
+paging very easily. jOOQ is the only database software out there to do so!
+
+  Gudu Software's SQL 2 jOOQ Parser
+  ---------------------------------
+  
+We're very happy to announce our collaboration with Gudu Software Ltd who have
+implemented a very powerful SQL parser and transformer for enterprise databases.
+
+Together with Gudu Software, we have created an Open Source SQL 2 jOOQ parser
+that takes native SQL statements as input and generates jOOQ code as output.
+
+The source code can be found here:
+
+- https://github.com/sqlparser/sql2jooq
+
+And our manual features a tutorial here:
+
+- http://www.jooq.org/doc/3.2/manual/tools/sql2jooq/
+
+We will ship, test and maintain this awesome new addition with our own
+deliverables. So far, SQL 2 jOOQ supports the MySQL and PostgreSQL dialects and
+it is in an alpha stadium. Please, community, provide as much feedback as possible
+to make this great tool rock even more!
+
+Please take note of the fact that the sql2jooq library is Open Source, but it depends
+on the commercial gsp.jar parser, whose trial licensing terms can be seen here:
+
+- https://github.com/sqlparser/sql2jooq/blob/master/sql2jooq/LICENSE-GSQLPARSER.txt
+
+  Great new SQL Feature Support
+  -----------------------------
+  
+We've been looking around for SQL standard and vendor-specific features, such as
+the WINDOW clause (standard!), CROSS APPLY, OUTER APPLY, LATERAL join, DEFAULTs
+for inserts, and nice datetime arithmetic functions and emulations thereof. 
+
+As always, we've also blogged about all these features. See the following links
+for more details:
+
+- http://blog.jooq.org/2013/11/03/probably-the-coolest-sql-feature-window-functions/
+- http://blog.jooq.org/2013/12/18/add-lateral-joins-or-cross-apply-to-your-sql-tool-chain/
+- http://blog.jooq.org/2014/01/08/lesser-known-sql-features-default-values/
+- http://blog.jooq.org/2014/02/06/youre-very-likely-to-have-gotten-sql-date-time-arithmetic-wrong/
+
+  Formal Spring integration support
+  ---------------------------------
+  
+Spring is one of the most popular frameworks to handle transactions, and it does
+so very well. With the help of our community, we've established new standards and
+examples of how to get started very quickly with jOOQ and Spring. See the following
+resources for details:
+
+- http://www.jooq.org/doc/latest/manual/getting-started/tutorials/jooq-with-spring/
+- https://github.com/jOOQ/jOOQ/tree/master/jOOQ-examples/jOOQ-spring-example
 
 Features and improvements
 -------------------------

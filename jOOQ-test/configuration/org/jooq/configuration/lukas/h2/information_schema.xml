@@ -11,7 +11,7 @@
         <name>org.jooq.util.DefaultGenerator</name>
         <database>
             <name>org.jooq.util.h2.H2Database</name>
-            <includes>SCHEMATA|TABLES|COLUMNS|CONSTRAINTS|CROSS_REFERENCES|TYPE_INFO|FUNCTION_ALIASES|FUNCTION_COLUMNS|SEQUENCES</includes>
+            <includes>COLUMNS|CONSTRAINTS|CROSS_REFERENCES|FUNCTION_ALIASES|FUNCTION_COLUMNS|INDEXES|SCHEMATA|SEQUENCES|TABLES|TYPE_INFO</includes>
             <excludes></excludes>
             <recordVersionFields></recordVersionFields>
             <recordTimestampFields></recordTimestampFields>

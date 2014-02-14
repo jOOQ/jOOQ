@@ -10,13 +10,12 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 3.3.0-SNAPSHOT - January 15, 2014
+Version 3.3.0 - January 15, 2014
 ================================================================================
 
-This is a SNAPSHOT preview for jOOQ Professional and jOOQ Enterprise customers.
-It is intended to be used as a preview of the upcoming jOOQ 3.3.0 release. It is
-not yet fully integration-tested on all supported databases. Use it at your own
-risk!
+- SQL features, like WINDOW, APPLY, DEFAULT
+- SEEK method
+- SQL 2 jOOQ
 
 Features and improvements
 -------------------------
@@ -99,6 +98,18 @@ Features and improvements
 #2971 - Add DSL.space() to support the SQL Server specific SPACE() function
 #2976 - Add bookmarks to the PDF manual
 #2979 - Add Maven install scripts (.bat and .sh) to deliverables
+#2981 - Add an official Spring / Guice example
+#2984 - Add <R extends Record> Table<R> table(Result<R>) to allow to fetch
+        from / join / etc in-memory tables
+#2985 - Add DSL.values(RowN...) 
+#3001 - Add VisitContext.clausesLength() and queryPartsLength() to indicate
+        the depth of the currently visited QueryPart tree
+#3002 - Add the BindVariableAbbreviator VisitListener example to the manual
+#3009 - Add DSL.dateAdd(Field<Date>, Field<? extends Number>, DatePart) and
+        timestampAdd(Field<Timestamp>, Field<? extends Number>, DatePart) for
+        better cross-database datetime arithmetic
+#3015 - Add support for HSQLDB user-defined aggregate functions
+#3044 - Integrate SQL 2 jOOQ beta in deliverable
 
 API changes (backwards-compatible)
 ----------------------------------
@@ -108,10 +119,14 @@ API changes (backwards-compatible)
         <expression/>
 #2878 - Deprecate Record.getValue() and Result.getValue() methods that take a
         defaultValue argument 
+#3007 - Add API guarantee to ResultQuery.fetch() methods indicating that all
+        JDBC resources are freed
 
 API changes (backwards-incompatible)
 ------------------------------------
 #2910 - The new matchers configuration cannot be used with Maven
+#3038 - Add RecordListener.exception(RecordContext) and
+        RecordContext.exception()
 
 Behavioural changes (backwards-incompatible)
 --------------------------------------------
@@ -176,6 +191,27 @@ Bug fixes
 #2963 - Lower log level for warnings about unknown SQL data types from
         MetaDataFieldProvider (plain SQL)
 #2977 - Missing parent pom.xml file in deliverables
+#2982 - Variable binding doesn't work in vendor-specific UPDATE t1 JOIN t2
+        queries, when joined tables are subqueries with bind values
+#2987 - Bind values are not debug-logged for standalone stored procedure or
+        function calls
+#2989 - Inherit complete Record state when calling Record.into(Class<? extends
+        Record>)
+#2994 - Manual Bug: The jOOQ 2.x Table.getFields() method is used, which doesn't
+        exist 
+#3013 - The Configuration's RecordMapperProvider is not used when mapping
+        UDTRecords
+#3019 - Bad SQL rendered from HSQLDBDatabase when loading check constraints
+#3023 - DefaultRecordMapper does not map nested UDTs onto nested POJOs
+#3027 - Missing whitespace / newline on emulated multi-value INSERT
+#3036 - RecordListeners don't receive "end" events when exceptions occur
+#3039 - Cannot bind NULL with JDBC Types.BOOLEAN in DB2
+#3042 - Work around flaws in H2's INFORMATION_SCHEMA.CONSTRAINTS.COLUMN_LIST
+#3046 - UDTRecordImpl.toString() may throw NullPointerException, if custom
+        RecordMapperProvider maps Record to null
+#3048 - Nested UDTs are no longer attached when fetched from queries (as opposed
+        to procedures)
+#3050 - DefaultRecordMapperProvider should implement Serializable
 
 Version 3.2.0 - October 9, 2013
 ================================================================================

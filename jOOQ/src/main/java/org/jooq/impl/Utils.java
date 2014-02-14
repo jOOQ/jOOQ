@@ -375,11 +375,6 @@ final class Utils {
                 record = Reflect.accessible(type.getDeclaredConstructor()).newInstance();
             }
 
-            // [#1684] TODO: Do not attach configuration if settings say no
-            if (attachRecords(configuration)) {
-                record.attach(configuration);
-            }
-
             return new RecordDelegate<R>(configuration, record);
         }
         catch (Exception e) {

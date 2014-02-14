@@ -1485,7 +1485,7 @@ public class OracleTest extends jOOQAbstractTest<
                     public E map(R record) {
 
                         // Don't map this type for this test
-                        if (record instanceof UStreetType) {
+                        if (record instanceof UStreetTypeRecord) {
                             i.incrementAndGet();
                             return null;
                         }
@@ -1507,8 +1507,8 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals("Hampstead", author.address.city);
         assertEquals("England", author.address.country);
 
-        // The UStreetType type should have been encountered exactly once
-        assertEquals(1, i.intValue());
+        // The UStreetType type should have been encountered more than once (logger.format, map, etc.)
+        assertTrue(i.intValue() > 0);
         assertNull(author.address.street);
     }
 }

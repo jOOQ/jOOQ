@@ -1523,6 +1523,10 @@ final class Utils {
         @SuppressWarnings("unchecked")
         static final <V> V run(Configuration configuration, CachedOperation<V> operation, String type, Object... keys) {
 
+            // If no configuration is provided take the default configuration that loads the default Settings
+            if (configuration == null)
+                configuration = new DefaultConfiguration();
+
             // Shortcut caching when the relevant Settings flag isn't set.
             if (!reflectionCaching(configuration.settings()))
                 return operation.call();

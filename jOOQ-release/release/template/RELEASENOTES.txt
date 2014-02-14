@@ -43,7 +43,7 @@ The source code can be found here:
 
 And our manual features a tutorial here:
 
-- http://www.jooq.org/doc/3.2/manual/tools/sql2jooq/
+- http://www.jooq.org/doc/latest/manual/tools/sql2jooq/
 
 We will ship, test and maintain this awesome new addition with our own
 deliverables. So far, SQL 2 jOOQ supports the MySQL and PostgreSQL dialects and

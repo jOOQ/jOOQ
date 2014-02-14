@@ -9,143 +9,143 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1309623390;
+	private static final long serialVersionUID = -1097849386;
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.ID</code>. 
+	 * Setter for <code>TEST.V_BOOK.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.ID</code>. 
+	 * Getter for <code>TEST.V_BOOK.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.AUTHOR_ID</code>. 
+	 * Setter for <code>TEST.V_BOOK.AUTHOR_ID</code>.
 	 */
 	public void setAuthorId(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.AUTHOR_ID</code>. 
+	 * Getter for <code>TEST.V_BOOK.AUTHOR_ID</code>.
 	 */
 	public java.lang.Integer getAuthorId() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.CO_AUTHOR_ID</code>. 
+	 * Setter for <code>TEST.V_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.CO_AUTHOR_ID</code>. 
+	 * Getter for <code>TEST.V_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	public java.lang.Integer getCoAuthorId() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.DETAILS_ID</code>. 
+	 * Setter for <code>TEST.V_BOOK.DETAILS_ID</code>.
 	 */
 	public void setDetailsId(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.DETAILS_ID</code>. 
+	 * Getter for <code>TEST.V_BOOK.DETAILS_ID</code>.
 	 */
 	public java.lang.Integer getDetailsId() {
 		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.TITLE</code>. 
+	 * Setter for <code>TEST.V_BOOK.TITLE</code>.
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.TITLE</code>. 
+	 * Getter for <code>TEST.V_BOOK.TITLE</code>.
 	 */
 	public java.lang.String getTitle() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.PUBLISHED_IN</code>. 
+	 * Setter for <code>TEST.V_BOOK.PUBLISHED_IN</code>.
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.PUBLISHED_IN</code>. 
+	 * Getter for <code>TEST.V_BOOK.PUBLISHED_IN</code>.
 	 */
 	public java.lang.Integer getPublishedIn() {
 		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.LANGUAGE_ID</code>. 
+	 * Setter for <code>TEST.V_BOOK.LANGUAGE_ID</code>.
 	 */
 	public void setLanguageId(java.lang.Integer value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.LANGUAGE_ID</code>. 
+	 * Getter for <code>TEST.V_BOOK.LANGUAGE_ID</code>.
 	 */
 	public java.lang.Integer getLanguageId() {
 		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.CONTENT_TEXT</code>. 
+	 * Setter for <code>TEST.V_BOOK.CONTENT_TEXT</code>.
 	 */
 	public void setContentText(java.lang.String value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.CONTENT_TEXT</code>. 
+	 * Getter for <code>TEST.V_BOOK.CONTENT_TEXT</code>.
 	 */
 	public java.lang.String getContentText() {
 		return (java.lang.String) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.CONTENT_PDF</code>. 
+	 * Setter for <code>TEST.V_BOOK.CONTENT_PDF</code>.
 	 */
 	public void setContentPdf(byte[] value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.CONTENT_PDF</code>. 
+	 * Getter for <code>TEST.V_BOOK.CONTENT_PDF</code>.
 	 */
 	public byte[] getContentPdf() {
 		return (byte[]) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.REC_TIMESTAMP</code>. 
+	 * Setter for <code>TEST.V_BOOK.REC_TIMESTAMP</code>.
 	 */
 	public void setRecTimestamp(java.sql.Timestamp value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.REC_TIMESTAMP</code>. 
+	 * Getter for <code>TEST.V_BOOK.REC_TIMESTAMP</code>.
 	 */
 	public java.sql.Timestamp getRecTimestamp() {
 		return (java.sql.Timestamp) getValue(9);

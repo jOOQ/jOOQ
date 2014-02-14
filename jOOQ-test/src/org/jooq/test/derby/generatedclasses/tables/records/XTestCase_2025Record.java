@@ -9,31 +9,31 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_2025Record> implements org.jooq.Record2<java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 1604635306;
+	private static final long serialVersionUID = 1956835754;
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>.
 	 */
 	public void setRefId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>.
 	 */
 	public java.lang.Integer getRefId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_NAME</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_NAME</code>.
 	 */
 	public void setRefName(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_2025.REF_NAME</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_2025.REF_NAME</code>.
 	 */
 	public java.lang.String getRefName() {
 		return (java.lang.String) getValue(1);

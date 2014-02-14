@@ -8090,6 +8090,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>DATE</code>.
      */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Date> date(java.util.Date value) {
         return date(Utils.field(value));
     }
@@ -8097,6 +8098,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>DATE</code>.
      */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Date> date(Field<? extends java.util.Date> field) {
         return new DateOrTime<Date>(field, SQLDataType.DATE);
     }
@@ -8104,6 +8106,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>TIME</code>.
      */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Time> time(java.util.Date value) {
         return time(Utils.field(value));
     }
@@ -8111,6 +8114,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>TIME</code>.
      */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Time> time(Field<? extends java.util.Date> field) {
         return new DateOrTime<Time>(field, SQLDataType.TIME);
     }
@@ -8118,6 +8122,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>TIMESTAMP</code>.
      */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Timestamp> timestamp(java.util.Date value) {
         return timestamp(Utils.field(value));
     }
@@ -8125,6 +8130,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>TIMESTAMP</code>.
      */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Timestamp> timestamp(Field<? extends java.util.Date> field) {
         return new DateOrTime<Timestamp>(field, SQLDataType.TIMESTAMP);
     }

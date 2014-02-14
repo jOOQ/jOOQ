@@ -781,6 +781,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testInsertReturningWithRenderNameStyleAS_IS() throws Exception {
         // [#3035] TODO: Re-enable this test
         switch (dialect().family()) {
+            case DERBY:
             case H2:
                 log.info("SKIPPING", "Insert Returning Test");
                 return;

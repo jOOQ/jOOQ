@@ -435,8 +435,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testPlainSQLFetchValue() throws Exception {
         assertEquals("1", "" + create().fetchValue("select 1 from " + TBook().getName() + " where " + TBook_ID().getName() + " = 1"));
-        assertEquals("1", "" + create().fetchValue("select ? from " + TBook().getName() + " where " + TBook_ID().getName() + " = 1", 1));
-        assertEquals("1", "" + create().fetchValue("select {0} from {1} where {2} = 1", val(1), TBook(), TBook_ID()));
+        assertEquals("1", "" + create().fetchValue("select 1 from " + TBook().getName() + " where " + TBook_ID().getName() + " = ?", 1));
+        assertEquals("1", "" + create().fetchValue("select {0} from {1} where {2} = {3}", inline(1), TBook(), TBook_ID(), val(1)));
     }
 
     @Test

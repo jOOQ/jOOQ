@@ -9,157 +9,157 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.TBooleansRecord> implements org.jooq.Record11<java.lang.Integer, org.jooq.test._.converters.Boolean_10, org.jooq.test._.converters.Boolean_TF_LC, org.jooq.test._.converters.Boolean_TF_UC, org.jooq.test._.converters.Boolean_YES_NO_LC, org.jooq.test._.converters.Boolean_YES_NO_UC, org.jooq.test._.converters.Boolean_YN_LC, org.jooq.test._.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean> {
 
-	private static final long serialVersionUID = 1714583741;
+	private static final long serialVersionUID = -1138291341;
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.ID</code>. 
+	 * Setter for <code>TEST.T_BOOLEANS.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.ID</code>. 
+	 * Getter for <code>TEST.T_BOOLEANS.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.ONE_ZERO</code>. 
+	 * Setter for <code>TEST.T_BOOLEANS.ONE_ZERO</code>.
 	 */
 	public void setOneZero(org.jooq.test._.converters.Boolean_10 value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.ONE_ZERO</code>. 
+	 * Getter for <code>TEST.T_BOOLEANS.ONE_ZERO</code>.
 	 */
 	public org.jooq.test._.converters.Boolean_10 getOneZero() {
 		return (org.jooq.test._.converters.Boolean_10) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.TRUE_FALSE_LC</code>. 
+	 * Setter for <code>TEST.T_BOOLEANS.TRUE_FALSE_LC</code>.
 	 */
 	public void setTrueFalseLc(org.jooq.test._.converters.Boolean_TF_LC value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.TRUE_FALSE_LC</code>. 
+	 * Getter for <code>TEST.T_BOOLEANS.TRUE_FALSE_LC</code>.
 	 */
 	public org.jooq.test._.converters.Boolean_TF_LC getTrueFalseLc() {
 		return (org.jooq.test._.converters.Boolean_TF_LC) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.TRUE_FALSE_UC</code>. 
+	 * Setter for <code>TEST.T_BOOLEANS.TRUE_FALSE_UC</code>.
 	 */
 	public void setTrueFalseUc(org.jooq.test._.converters.Boolean_TF_UC value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.TRUE_FALSE_UC</code>. 
+	 * Getter for <code>TEST.T_BOOLEANS.TRUE_FALSE_UC</code>.
 	 */
 	public org.jooq.test._.converters.Boolean_TF_UC getTrueFalseUc() {
 		return (org.jooq.test._.converters.Boolean_TF_UC) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.YES_NO_LC</code>. 
+	 * Setter for <code>TEST.T_BOOLEANS.YES_NO_LC</code>.
 	 */
 	public void setYesNoLc(org.jooq.test._.converters.Boolean_YES_NO_LC value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.YES_NO_LC</code>. 
+	 * Getter for <code>TEST.T_BOOLEANS.YES_NO_LC</code>.
 	 */
 	public org.jooq.test._.converters.Boolean_YES_NO_LC getYesNoLc() {
 		return (org.jooq.test._.converters.Boolean_YES_NO_LC) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.YES_NO_UC</code>. 
+	 * Setter for <code>TEST.T_BOOLEANS.YES_NO_UC</code>.
 	 */
 	public void setYesNoUc(org.jooq.test._.converters.Boolean_YES_NO_UC value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.YES_NO_UC</code>. 
+	 * Getter for <code>TEST.T_BOOLEANS.YES_NO_UC</code>.
 	 */
 	public org.jooq.test._.converters.Boolean_YES_NO_UC getYesNoUc() {
 		return (org.jooq.test._.converters.Boolean_YES_NO_UC) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.Y_N_LC</code>. 
+	 * Setter for <code>TEST.T_BOOLEANS.Y_N_LC</code>.
 	 */
 	public void setYNLc(org.jooq.test._.converters.Boolean_YN_LC value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.Y_N_LC</code>. 
+	 * Getter for <code>TEST.T_BOOLEANS.Y_N_LC</code>.
 	 */
 	public org.jooq.test._.converters.Boolean_YN_LC getYNLc() {
 		return (org.jooq.test._.converters.Boolean_YN_LC) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.Y_N_UC</code>. 
+	 * Setter for <code>TEST.T_BOOLEANS.Y_N_UC</code>.
 	 */
 	public void setYNUc(org.jooq.test._.converters.Boolean_YN_UC value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.Y_N_UC</code>. 
+	 * Getter for <code>TEST.T_BOOLEANS.Y_N_UC</code>.
 	 */
 	public org.jooq.test._.converters.Boolean_YN_UC getYNUc() {
 		return (org.jooq.test._.converters.Boolean_YN_UC) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.VC_BOOLEAN</code>. 
+	 * Setter for <code>TEST.T_BOOLEANS.VC_BOOLEAN</code>.
 	 */
 	public void setVcBoolean(java.lang.Boolean value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.VC_BOOLEAN</code>. 
+	 * Getter for <code>TEST.T_BOOLEANS.VC_BOOLEAN</code>.
 	 */
 	public java.lang.Boolean getVcBoolean() {
 		return (java.lang.Boolean) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.C_BOOLEAN</code>. 
+	 * Setter for <code>TEST.T_BOOLEANS.C_BOOLEAN</code>.
 	 */
 	public void setCBoolean(java.lang.Boolean value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.C_BOOLEAN</code>. 
+	 * Getter for <code>TEST.T_BOOLEANS.C_BOOLEAN</code>.
 	 */
 	public java.lang.Boolean getCBoolean() {
 		return (java.lang.Boolean) getValue(9);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.N_BOOLEAN</code>. 
+	 * Setter for <code>TEST.T_BOOLEANS.N_BOOLEAN</code>.
 	 */
 	public void setNBoolean(java.lang.Boolean value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.N_BOOLEAN</code>. 
+	 * Getter for <code>TEST.T_BOOLEANS.N_BOOLEAN</code>.
 	 */
 	public java.lang.Boolean getNBoolean() {
 		return (java.lang.Boolean) getValue(10);

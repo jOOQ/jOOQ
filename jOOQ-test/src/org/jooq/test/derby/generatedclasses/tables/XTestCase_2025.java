@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_2025Record> {
 
-	private static final long serialVersionUID = 761877433;
+	private static final long serialVersionUID = -1836235391;
 
 	/**
 	 * The singleton instance of <code>TEST.X_TEST_CASE_2025</code>
@@ -25,20 +25,28 @@ public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.derby.
 	}
 
 	/**
-	 * The column <code>TEST.X_TEST_CASE_2025.REF_ID</code>. 
+	 * The column <code>TEST.X_TEST_CASE_2025.REF_ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_2025Record, java.lang.Integer> REF_ID = createField("REF_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_2025);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_2025Record, java.lang.Integer> REF_ID = createField("REF_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_2025, "");
 
 	/**
-	 * The column <code>TEST.X_TEST_CASE_2025.REF_NAME</code>. 
+	 * The column <code>TEST.X_TEST_CASE_2025.REF_NAME</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_2025Record, java.lang.String> REF_NAME = createField("REF_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), X_TEST_CASE_2025);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_2025Record, java.lang.String> REF_NAME = createField("REF_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), X_TEST_CASE_2025, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private XTestCase_2025() {
-		super("X_TEST_CASE_2025", org.jooq.test.derby.generatedclasses.Test.TEST);
+		this("X_TEST_CASE_2025", null);
+	}
+
+	private XTestCase_2025(java.lang.String alias, org.jooq.Table<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_2025Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private XTestCase_2025(java.lang.String alias, org.jooq.Table<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_2025Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.derby.generatedclasses.Test.TEST, aliased, parameters, "");
 	}
 
 	/**

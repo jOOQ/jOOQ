@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -1226066957;
+	private static final long serialVersionUID = 1576445321;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOK_STORE</code>
@@ -25,15 +25,23 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.derby.gene
 	}
 
 	/**
-	 * The column <code>TEST.T_BOOK_STORE.NAME</code>. 
+	 * The column <code>TEST.T_BOOK_STORE.NAME</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), T_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), T_BOOK_STORE, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TBookStore() {
-		super("T_BOOK_STORE", org.jooq.test.derby.generatedclasses.Test.TEST);
+		this("T_BOOK_STORE", null);
+	}
+
+	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.derby.generatedclasses.tables.records.TBookStoreRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.derby.generatedclasses.tables.records.TBookStoreRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.derby.generatedclasses.Test.TEST, aliased, parameters, "");
 	}
 
 	/**

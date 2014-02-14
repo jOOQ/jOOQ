@@ -9,45 +9,45 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 546048949;
+	private static final long serialVersionUID = 2015118589;
 
 	/**
-	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
+	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>.
 	 */
 	public void setBookStoreName(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
+	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>.
 	 */
 	public java.lang.String getBookStoreName() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
+	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>.
 	 */
 	public void setBookId(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
+	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>.
 	 */
 	public java.lang.Integer getBookId() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>. 
+	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>.
 	 */
 	public void setStock(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>. 
+	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>.
 	 */
 	public java.lang.Integer getStock() {
 		return (java.lang.Integer) getValue(2);

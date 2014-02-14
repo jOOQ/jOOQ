@@ -44,6 +44,7 @@ import static org.jooq.ExecuteType.READ;
 import static org.jooq.ExecuteType.WRITE;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.LOAD;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.REFRESH;
+import static org.jooq.impl.Utils.attachRecords;
 
 import org.jooq.Configuration;
 import org.jooq.ExecuteType;
@@ -136,6 +137,11 @@ class RecordDelegate<R extends Record> {
                             listener.exception(ctx);
                 }
             }
+        }
+
+        // [#1684] Do not attach configuration if settings say no
+        if (attachRecords(configuration)) {
+            record.attach(configuration);
         }
 
         if (listeners != null) {

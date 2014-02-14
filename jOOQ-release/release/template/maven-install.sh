@@ -1,5 +1,5 @@
 #!/bin/sh
-VERSION=3.3.0-SNAPSHOT
+VERSION=3.3.0
 
 mvn install:install-file -Dfile=pom/jooq-parent/pom.xml             -DgroupId=org.jooq -DartifactId=jooq-parent        -Dversion=$VERSION -Dpackaging=pom
 mvn install:install-file -Dfile=lib/jooq-$VERSION.jar               -DgroupId=org.jooq -DartifactId=jooq               -Dversion=$VERSION -Dpackaging=jar

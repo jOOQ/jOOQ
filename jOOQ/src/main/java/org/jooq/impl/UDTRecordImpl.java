@@ -148,11 +148,16 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
         result.append(create().render(getUDT()));
         result.append("(");
 
-        for (Object o : intoArray()) {
-            result.append(separator);
-            result.append(o);
+        Object[] array = intoArray();
 
-            separator = ", ";
+        // [#3046] array can be null if custom RecordMapperProviders (illegally) return null
+        if (array != null) {
+            for (Object o : array) {
+                result.append(separator);
+                result.append(o);
+
+                separator = ", ";
+            }
         }
 
         result.append(")");

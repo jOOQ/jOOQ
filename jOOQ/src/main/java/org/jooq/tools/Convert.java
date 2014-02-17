@@ -61,11 +61,13 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
+import org.jooq.ArrayRecord;
 import org.jooq.Converter;
 import org.jooq.EnumType;
 import org.jooq.Field;
@@ -750,6 +752,38 @@ public final class Convert {
                     Record record = (Record) from;
                     return record.into(toClass);
                 }
+
+                /* [pro] */
+                // [#3060] Oracle VARRAY / TABLE types should be convertible into arrays and Collections
+                else if (ArrayRecord.class.isAssignableFrom(fromClass)) {
+                    ArrayRecord<?> record = (ArrayRecord<?>) from;
+
+                    if (Collection.class.isAssignableFrom(toClass)) {
+                        try {
+                            Collection<Object> c;
+
+                            if (!toClass.isInterface()) {
+                                c = (Collection<Object>) toClass.newInstance();
+                            }
+                            else if (Set.class.isAssignableFrom(toClass)) {
+                                c = new LinkedHashSet<Object>();
+                            }
+                            else {
+                                c = new ArrayList<Object>();
+                            }
+
+                            c.addAll(record.getList());
+                            return (U) c;
+                        }
+                        catch (Exception e) {
+                            throw new DataTypeException("Cannot convert from " + fromClass + " to " + toClass, e);
+                        }
+                    }
+                    else {
+                        return (U) convertArray(record.get(), toClass);
+                    }
+                }
+                /* [/pro] */
 
                 // TODO [#2520] When RecordUnmappers are supported, they should also be considered here
             }

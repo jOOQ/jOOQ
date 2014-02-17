@@ -1439,21 +1439,41 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals("An entity holding authors of books", T_AUTHOR.getComment());
     }
 
-    static class Street {
+    static class Street1 {
         public String street;
         public String no;
+        public Integer[] floors;
     }
 
-    static class Address {
-        public Street street;
+    static class Address1 {
+        public Street1 street;
         public String city;
         public String country;
     }
 
-    static class Author {
+    static class Author1 {
         public String firstName;
         public String lastName;
-        public Address address;
+        public Address1 address;
+    }
+
+
+    static class Street2 {
+        public String street;
+        public String no;
+        public List<Integer> floors;
+    }
+
+    static class Address2 {
+        public Street2 street;
+        public String city;
+        public String country;
+    }
+
+    static class Author2 {
+        public String firstName;
+        public String lastName;
+        public Address2 address;
     }
 
     @Test
@@ -1463,13 +1483,25 @@ public class OracleTest extends jOOQAbstractTest<
             .where(T_AUTHOR.ID.eq(1))
             .fetchOne();
 
-        Author author = record.into(Author.class);
-        assertEquals("George", author.firstName);
-        assertEquals("Orwell", author.lastName);
-        assertEquals("Hampstead", author.address.city);
-        assertEquals("England", author.address.country);
-        assertEquals("Parliament Hill", author.address.street.street);
-        assertEquals("77", author.address.street.no);
+        Author1 author1 = record.into(Author1.class);
+        assertEquals("George", author1.firstName);
+        assertEquals("Orwell", author1.lastName);
+        assertEquals("Hampstead", author1.address.city);
+        assertEquals("England", author1.address.country);
+        assertEquals("Parliament Hill", author1.address.street.street);
+        assertEquals(asList(1, 2, 3), asList(author1.address.street.floors));
+        assertEquals("77", author1.address.street.no);
+
+        Author2 author2 = record.into(Author2.class);
+        assertEquals("George", author2.firstName);
+        assertEquals("Orwell", author2.lastName);
+        assertEquals("Hampstead", author2.address.city);
+        assertEquals("England", author2.address.country);
+        assertEquals("Parliament Hill", author2.address.street.street);
+        assertEquals(asList(1, 2, 3), author2.address.street.floors);
+        assertEquals("77", author2.address.street.no);
+
+
     }
 
     @Test
@@ -1501,7 +1533,7 @@ public class OracleTest extends jOOQAbstractTest<
             .where(T_AUTHOR.ID.eq(1))
             .fetchOne();
 
-        Author author = record.into(Author.class);
+        Author1 author = record.into(Author1.class);
         assertEquals("George", author.firstName);
         assertEquals("Orwell", author.lastName);
         assertEquals("Hampstead", author.address.city);

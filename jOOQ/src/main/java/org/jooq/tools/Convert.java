@@ -61,11 +61,13 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
+// ...
 import org.jooq.Converter;
 import org.jooq.EnumType;
 import org.jooq.Field;
@@ -750,6 +752,38 @@ public final class Convert {
                     Record record = (Record) from;
                     return record.into(toClass);
                 }
+
+                /* [pro] xx
+                xx xxxxxxx xxxxxx xxxxxx x xxxxx xxxxx xxxxxx xx xxxxxxxxxxx xxxx xxxxxx xxx xxxxxxxxxxx
+                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                    xxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxx xxxxx
+
+                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                        xxx x
+                            xxxxxxxxxxxxxxxxxx xx
+
+                            xx xxxxxxxxxxxxxxxxxxxxxxxx x
+                                x x xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx
+                            x
+                            xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                                x x xxx xxxxxxxxxxxxxxxxxxxxxxxx
+                            x
+                            xxxx x
+                                x x xxx xxxxxxxxxxxxxxxxxxxx
+                            x
+
+                            xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxx xxx xx
+                        x
+                        xxxxx xxxxxxxxxx xx x
+                            xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxx x x xxxxxxxxx x x xx x x xxxxxxxx xxx
+                        x
+                    x
+                    xxxx x
+                        xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx
+                    x
+                x
+                xx [/pro] */
 
                 // TODO [#2520] When RecordUnmappers are supported, they should also be considered here
             }

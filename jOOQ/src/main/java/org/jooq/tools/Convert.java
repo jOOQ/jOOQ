@@ -758,6 +758,8 @@ public final class Convert {
                 else if (ArrayRecord.class.isAssignableFrom(fromClass)) {
                     ArrayRecord<?> record = (ArrayRecord<?>) from;
 
+                    // [#3062] TODO: Make collection conversion more versatile and reusable,
+                    // also for other types than Oracle VARRAY / TABLE types
                     if (Collection.class.isAssignableFrom(toClass)) {
                         try {
                             Collection<Object> c;

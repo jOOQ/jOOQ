@@ -249,6 +249,9 @@ public class JDBCUtils {
                 blob.free();
             }
             catch (Exception ignore) {}
+
+            // [#3069] The free() method was added only in JDBC 4.0 / Java 1.6
+            catch (AbstractMethodError ignore) {}
         }
     }
 
@@ -264,6 +267,9 @@ public class JDBCUtils {
                 clob.free();
             }
             catch (Exception ignore) {}
+
+            // [#3069] The free() method was added only in JDBC 4.0 / Java 1.6
+            catch (AbstractMethodError ignore) {}
         }
     }
 

@@ -10,6 +10,18 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.4.0-SNAPSHOT - February 18, 2014
+================================================================================
+
+This is a snapshot preview version of jOOQ 3.4.0. Please do not use this version
+in production.
+
+Bug fixes
+---------
+#3055 - Add missing MariaDB and MS Access support to the manual
+#3057 - Wrong paths in maven-install.sh and maven-install.bat
+#3060 - Conversion fails for Oracle VARRAY / TABLE types, nested in UDTs
+
 Version 3.3.0 - February 14, 2014
 ================================================================================
 

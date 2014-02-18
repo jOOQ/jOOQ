@@ -48,6 +48,7 @@ import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.Utils.consumeExceptions;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -297,7 +298,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             listener.bindEnd(ctx);
 
             listener.executeStart(ctx);
-            ctx.statement().execute();
+            execute0(ctx);
             listener.executeEnd(ctx);
 
             fetchOutParameters(ctx);
@@ -310,6 +311,18 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         }
         finally {
             Utils.safeClose(listener, ctx);
+        }
+    }
+
+    private final void execute0(ExecuteContext ctx) throws SQLException {
+        try {
+            ctx.statement().execute();
+        }
+
+        // [#3011] [#3054] Consume additional exceptions if there are any
+        catch (SQLException e) {
+            consumeExceptions(ctx.configuration(), ctx.statement(), e);
+            throw e;
         }
     }
 

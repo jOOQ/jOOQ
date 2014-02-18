@@ -68,6 +68,7 @@ import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLInput;
@@ -1952,6 +1953,29 @@ final class Utils {
     // ------------------------------------------------------------------------
     // XXX: JDBC helper methods
     // ------------------------------------------------------------------------
+
+    /**
+     * [#3011] [#3054] Consume additional exceptions if there are any and append
+     * them to the <code>previous</code> exception's
+     * {@link SQLException#getNextException()} list.
+     */
+    static final void consumeExceptions(Configuration configuration, PreparedStatement stmt, SQLException previous) {
+        /* [pro] xx
+        xx xx xxxx xxxx xxxxx xxx xxxx xxxxxxxx xxxx xxxx xxx xxxxxx
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxx xxxxxxxxxx
+                xxxxxxxxxxxx xxx xxxx
+                    xxx x
+                        xx xxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxx xx xxx
+                            xxxxx xxxxxxxxxxxx
+                    x
+                    xxxxx xxxxxxxxxxxxx xx x
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxx x xx
+                    x
+        x
+        xx [/pro] */
+    }
 
     @SuppressWarnings("unchecked")
     static final <T> T getFromSQLInput(Configuration configuration, SQLInput stream, Field<T> field) throws SQLException {

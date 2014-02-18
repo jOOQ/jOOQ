@@ -82,6 +82,11 @@ public class Tables {
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.TDates T_DATES = org.jooq.test.sqlserver.generatedclasses.tables.TDates.T_DATES;
 
 	/**
+	 * The table dbo.t_error_on_update
+	 */
+	public static final org.jooq.test.sqlserver.generatedclasses.tables.TErrorOnUpdate T_ERROR_ON_UPDATE = org.jooq.test.sqlserver.generatedclasses.tables.TErrorOnUpdate.T_ERROR_ON_UPDATE;
+
+	/**
 	 * The table dbo.t_exotic_types
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes T_EXOTIC_TYPES = org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;

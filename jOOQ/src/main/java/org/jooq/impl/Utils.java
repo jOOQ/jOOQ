@@ -68,6 +68,7 @@ import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLInput;
@@ -1952,6 +1953,29 @@ final class Utils {
     // ------------------------------------------------------------------------
     // XXX: JDBC helper methods
     // ------------------------------------------------------------------------
+
+    /**
+     * [#3011] [#3054] Consume additional exceptions if there are any and append
+     * them to the <code>previous</code> exception's
+     * {@link SQLException#getNextException()} list.
+     */
+    static final void consumeExceptions(Configuration configuration, PreparedStatement stmt, SQLException previous) {
+        /* [pro] */
+        // So far, this issue has been observed only with SQL Server
+        switch (configuration.dialect().family()) {
+            case SQLSERVER:
+                consumeLoop: for (;;)
+                    try {
+                        if (!stmt.getMoreResults() && stmt.getUpdateCount() == -1)
+                            break consumeLoop;
+                    }
+                    catch (SQLException e) {
+                        previous.setNextException(e);
+                        previous = e;
+                    }
+        }
+        /* [/pro] */
+    }
 
     @SuppressWarnings("unchecked")
     static final <T> T getFromSQLInput(Configuration configuration, SQLInput stream, Field<T> field) throws SQLException {

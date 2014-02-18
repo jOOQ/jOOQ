@@ -58,6 +58,7 @@ import static org.jooq.test.sqlserver.generatedclasses.Tables.T_BOOK_STORE;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_DATES;
+import static org.jooq.test.sqlserver.generatedclasses.Tables.T_ERROR_ON_UPDATE;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_IDENTITY_PK;
@@ -70,6 +71,7 @@ import static org.jooq.test.sqlserver.generatedclasses.tables.FTables1.F_TABLES1
 import static org.jooq.test.sqlserver.generatedclasses.tables.FTables4.F_TABLES4;
 import static org.jooq.util.sqlserver.SQLServerDSL.difference;
 import static org.jooq.util.sqlserver.SQLServerDSL.soundex;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
@@ -879,6 +881,53 @@ public class SQLServerTest extends jOOQAbstractTest<
             assertEquals("message 2", cause.getMessage());
             assertEquals(50000, cause.getErrorCode());
         }
+    }
+
+    @Test
+    public void testSQLServerRaiserrorInTrigger() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        assertEquals(1,
+        create().insertInto(T_ERROR_ON_UPDATE, T_ERROR_ON_UPDATE.ID)
+                .values(1)
+                .execute());
+
+        // This update only generates warnings (error level <=  10)
+        assertEquals(1,
+        create().update(T_ERROR_ON_UPDATE)
+                .set(T_ERROR_ON_UPDATE.ID, 2)
+                .where(T_ERROR_ON_UPDATE.ID.eq(1))
+                .execute());
+
+        try {
+            // This update generates SQLExceptions (error level > 10)
+            create().update(T_ERROR_ON_UPDATE)
+                    .set(T_ERROR_ON_UPDATE.ID, 3)
+                    .where(T_ERROR_ON_UPDATE.ID.eq(2))
+                    .execute();
+            fail();
+        }
+        catch (DataAccessException e) {
+            SQLException cause = (SQLException) e.getCause();
+
+            assertEquals("t_error_on_update_trigger 3", cause.getMessage());
+            assertEquals(50000, cause.getErrorCode());
+
+            cause = cause.getNextException();
+            assertEquals("t_error_on_update_trigger 4", cause.getMessage());
+            assertEquals(50000, cause.getErrorCode());
+
+            cause = cause.getNextException();
+            assertEquals("t_error_on_update_trigger 5", cause.getMessage());
+            assertEquals(50000, cause.getErrorCode());
+
+            cause = cause.getNextException();
+            assertNull(cause);
+        }
+        finally {
+            create().fetch(T_ERROR_ON_UPDATE);
+        }
+
     }
 }
 

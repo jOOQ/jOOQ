@@ -49,6 +49,7 @@ DROP TABLE t_unsigned/
 DROP TABLE t_booleans/
 DROP TABLE t_identity/
 DROP TABLE t_identity_pk/
+DROP TABLE t_error_on_update/
 
 DROP TYPE u_date_table/
 DROP TYPE u_number_long_table/
@@ -66,6 +67,30 @@ CREATE TYPE u_string_table      AS TABLE (column_value VARCHAR(20))/
 CREATE TYPE u_number_table      AS TABLE (column_value INTEGER)/
 CREATE TYPE u_number_long_table AS TABLE (column_value BIGINT)/
 CREATE TYPE u_date_table        AS TABLE (column_value DATE)/
+
+CREATE TABLE t_error_on_update (
+  id INTEGER
+)
+/
+
+CREATE TRIGGER t_error_on_update_trigger ON t_error_on_update FOR UPDATE
+AS 
+BEGIN
+    IF (SELECT id FROM INSERTED) = 2
+    BEGIN
+        Raiserror('t_error_on_update_trigger 1',  9, -1)
+        Raiserror('t_error_on_update_trigger 2', 10, -1)
+    END
+    ELSE
+    BEGIN
+        Raiserror('t_error_on_update_trigger 1',  9, -1)
+        Raiserror('t_error_on_update_trigger 2', 10, -1)
+        Raiserror('t_error_on_update_trigger 3', 11, -1)
+        Raiserror('t_error_on_update_trigger 4', 12, -1)
+        Raiserror('t_error_on_update_trigger 5', 13, -1)
+    END
+END
+/
 
 CREATE TABLE t_identity_pk (
   id INTEGER IDENTITY(1,1) NOT NULL,

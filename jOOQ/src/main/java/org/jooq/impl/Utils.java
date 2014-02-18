@@ -2414,7 +2414,7 @@ final class Utils {
                 return blob.getBytes(1, (int) blob.length());
             }
             finally {
-                blob.free();
+                JDBCUtils.safeFree(blob);
             }
         }
         else if (object instanceof Clob) {
@@ -2424,7 +2424,7 @@ final class Utils {
                 return clob.getSubString(1, (int) clob.length());
             }
             finally {
-                clob.free();
+                JDBCUtils.safeFree(clob);
             }
         }
 

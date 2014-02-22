@@ -251,9 +251,9 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         try {
             listener.executeStart(ctx);
 
-            // JTDS doesn't seem to implement PreparedStatement.execute()
-            // correctly, at least not for sp_help
             /* [pro] xx
+            xx xxxx xxxxxxx xxxx xx xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xx xxxxxxxxxx xx xxxxx xxx xxx xxxxxxx
             xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxx x
                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             x

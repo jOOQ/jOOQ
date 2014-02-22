@@ -1351,25 +1351,32 @@ public class JavaGenerator extends AbstractGenerator {
         String pType = getStrategy().getFullJavaClassName(table, Mode.POJO);
 
         UniqueKeyDefinition key = table.getPrimaryKey();
-        ColumnDefinition keyColumn = null;
-
-        if (key != null) {
-            List<ColumnDefinition> columns = key.getKeyColumns();
-
-            if (columns.size() == 1) {
-                keyColumn = columns.get(0);
-                tType = getJavaType(keyColumn.getType());
-            }
-        }
-
-        // [#2573] Skip DAOs for tables that don't have 1-column-PKs (for now)
-        if (keyColumn == null) {
+        if (key == null) {
             log.info("Skipping DAO generation", getStrategy().getFileName(table, Mode.DAO));
             return;
         }
-        else {
-            log.info("Generating DAO", getStrategy().getFileName(table, Mode.DAO));
+
+        List<ColumnDefinition> keyColumns = key.getKeyColumns();
+
+        if (keyColumns.size() == 1) {
+            tType = getJavaType(keyColumns.get(0).getType());
         }
+        else if (keyColumns.size() <= Constants.MAX_ROW_DEGREE) {
+            String generics = "";
+            String separator = "";
+
+            for (ColumnDefinition column : keyColumns) {
+                generics += separator + getJavaType(column.getType());
+                separator = ", ";
+            }
+
+            tType = Record.class.getName() + keyColumns.size() + "<" + generics + ">";
+        }
+        else {
+            tType = Record.class.getName();
+        }
+
+        log.info("Generating DAO", getStrategy().getFileName(table, Mode.DAO));
 
         JavaWriter out = new JavaWriter(getStrategy().getFile(table, Mode.DAO));
         printPackage(out, table, Mode.DAO);
@@ -1395,7 +1402,24 @@ public class JavaGenerator extends AbstractGenerator {
         // -------------------------------
         out.tab(1).overrideInherit();
         out.tab(1).println("protected %s getId(%s object) {", tType, pType);
-        out.tab(2).println("return object.%s();", getStrategy().getJavaGetterName(keyColumn, Mode.POJO));
+
+        if (keyColumns.size() == 1) {
+            out.tab(2).println("return object.%s();", getStrategy().getJavaGetterName(keyColumns.get(0), Mode.POJO));
+        }
+
+        // [#2574] This should be replaced by a call to a method on the target table's Key type
+        else {
+            String params = "";
+            String separator = "";
+
+            for (ColumnDefinition column : keyColumns) {
+                params += separator + "object." + getStrategy().getJavaGetterName(column, Mode.POJO) + "()";
+                separator = ", ";
+            }
+
+            out.tab(2).println("return compositeKeyRecord(%s);", params);
+        }
+
         out.tab(1).println("}");
 
         for (ColumnDefinition column : table.getColumns()) {

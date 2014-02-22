@@ -52,9 +52,11 @@ import org.jooq.exception.DataAccessException;
  * common actions on POJOs
  *
  * @author Lukas Eder
- * @param <R> The generic record type
- * @param <P> The generic POJO type
- * @param <T> The generic primary key type
+ * @param <R> The generic record type.
+ * @param <P> The generic POJO type.
+ * @param <T> The generic primary key type. This is a regular
+ *            <code>&lt;T></code> type for single-column keys, or a
+ *            {@link Record} subtype for composite keys.
  */
 public interface DAO<R extends TableRecord<R>, P, T> {
 

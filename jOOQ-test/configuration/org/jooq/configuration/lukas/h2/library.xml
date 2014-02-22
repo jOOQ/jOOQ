@@ -129,6 +129,7 @@
       <generatedAnnotation>false</generatedAnnotation>
       <interfaces>true</interfaces>
       <jpaAnnotations>false</jpaAnnotations>
+      <fluentSetters>true</fluentSetters>
     </generate>
     <target>
       <packageName>

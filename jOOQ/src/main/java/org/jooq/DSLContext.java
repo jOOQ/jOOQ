@@ -4673,6 +4673,18 @@ public interface DSLContext {
     // -------------------------------------------------------------------------
 
     /**
+     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
+     *
+     * @see DSLContext#alterSequence(Sequence)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Transition(
+        name = "ALTER SEQUENCE",
+        args = "Sequence"
+    )
+    <T extends Number> AlterSequenceRestartStep<T> alterSequence(Sequence<T> sequence);
+
+    /**
      * Create a new DSL truncate statement.
      * <p>
      * Example:

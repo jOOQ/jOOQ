@@ -753,6 +753,37 @@ public enum Clause {
     TRUNCATE_TRUNCATE,
 
     // -------------------------------------------------------------------------
+    // Clauses that are used in an ALTER statement
+    // -------------------------------------------------------------------------
+
+    /**
+     * A complete <code>ALTER SEQUENCE</code> statement.
+     */
+    ALTER_SEQUENCE,
+
+    /**
+     * A <code>SEQUENCE</code> clause within an {@link #ALTER_SEQUENCE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>ALTER SEQUENCE</code> keywords</li>
+     * <li>the sequence that is being altered</li>
+     * </ul>
+     */
+    ALTER_SEQUENCE_SEQUENCE,
+
+    /**
+     * A <code>RESTART</code> clause within an {@link #ALTER_SEQUENCE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>RESTART</code> keyword</li>
+     * <li>the <code>WITH</code> keyword and the new sequence value, if applicable.</li>
+     * </ul>
+     */
+    ALTER_SEQUENCE_RESTART,
+
+    // -------------------------------------------------------------------------
     // Other clauses
     // -------------------------------------------------------------------------
 

@@ -379,6 +379,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         public void exception(ExecuteContext ctx) {
             events.add("exception");
         }
+
+        @Override
+        public void warning(ExecuteContext ctx) {
+            events.add("warning");
+        }
     }
 
     @Test
@@ -1348,6 +1353,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         static int countFetchEnd;
         static int countEnd;
         static int countException;
+        static int countWarning;
 
         static void reset() {
             for (java.lang.reflect.Field f : FetchLazyListener.class.getDeclaredFields()) {
@@ -1438,6 +1444,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         @Override
         public void exception(ExecuteContext ctx) {
             countException++;
+        }
+
+        @Override
+        public void warning(ExecuteContext ctx) {
+            countWarning++;
         }
 
         @Override

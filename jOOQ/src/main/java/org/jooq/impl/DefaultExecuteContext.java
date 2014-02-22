@@ -47,6 +47,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLOutput;
+import java.sql.SQLWarning;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -94,8 +95,9 @@ class DefaultExecuteContext implements ExecuteContext {
     private transient Record                     record;
     private transient Result<?>                  result;
     private transient int                        rows  = -1;
-    private transient SQLException               sqlException;
     private transient RuntimeException           exception;
+    private transient SQLException               sqlException;
+    private transient SQLWarning                 sqlWarning;
 
     // ------------------------------------------------------------------------
     // XXX: Static utility methods for handling blob / clob lifecycle
@@ -494,4 +496,15 @@ class DefaultExecuteContext implements ExecuteContext {
         this.sqlException = e;
         exception(Utils.translate(sql(), e));
     }
+
+    @Override
+    public final SQLWarning sqlWarning() {
+        return sqlWarning;
+    }
+
+    @Override
+    public final void sqlWarning(SQLWarning e) {
+        this.sqlWarning = e;
+    }
+
 }

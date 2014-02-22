@@ -50,6 +50,7 @@ import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.Utils.DATA_COUNT_BIND_VALUES;
 import static org.jooq.impl.Utils.DATA_FORCE_STATIC_STATEMENT;
 import static org.jooq.impl.Utils.consumeExceptions;
+import static org.jooq.impl.Utils.consumeWarnings;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -372,10 +373,10 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
      */
     protected int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         int result = 0;
-        listener.executeStart(ctx);
         PreparedStatement stmt = ctx.statement();
 
         try {
+            listener.executeStart(ctx);
 
             // [#1829] Statement.execute() is preferred over Statement.executeUpdate(), as
             // we might be executing plain SQL and returning results.
@@ -383,6 +384,9 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                 result = stmt.getUpdateCount();
                 ctx.rows(result);
             }
+
+            listener.executeEnd(ctx);
+            return result;
         }
 
         // [#3011] [#3054] Consume additional exceptions if there are any
@@ -391,8 +395,9 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             throw e;
         }
 
-        listener.executeEnd(ctx);
-        return result;
+        finally {
+            consumeWarnings(ctx, listener);
+        }
     }
 
     /**

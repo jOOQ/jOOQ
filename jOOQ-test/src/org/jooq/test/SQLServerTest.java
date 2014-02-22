@@ -78,11 +78,13 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.SQLWarning;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
+import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
@@ -94,6 +96,7 @@ import org.jooq.UDTRecord;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -863,7 +866,6 @@ public class SQLServerTest extends jOOQAbstractTest<
         catch (DataAccessException e) {
             SQLException cause = (SQLException) e.getCause();
             assertEquals("message", cause.getMessage());
-            assertEquals(50000, cause.getErrorCode());
         }
 
         try {
@@ -874,12 +876,7 @@ public class SQLServerTest extends jOOQAbstractTest<
             SQLException cause = (SQLException) e.getCause();
 
             assertEquals("message 1", cause.getMessage());
-            assertEquals(50000, cause.getErrorCode());
-
-            cause = cause.getNextException();
-
-            assertEquals("message 2", cause.getMessage());
-            assertEquals(50000, cause.getErrorCode());
+            assertEquals("message 2", cause.getNextException().getMessage());
         }
     }
 
@@ -893,41 +890,64 @@ public class SQLServerTest extends jOOQAbstractTest<
                 .execute());
 
         // This update only generates warnings (error level <=  10)
+        ExceptionListener l1 = new ExceptionListener();
         assertEquals(1,
-        create().update(T_ERROR_ON_UPDATE)
-                .set(T_ERROR_ON_UPDATE.ID, 2)
-                .where(T_ERROR_ON_UPDATE.ID.eq(1))
-                .execute());
+        create(l1).update(T_ERROR_ON_UPDATE)
+                  .set(T_ERROR_ON_UPDATE.ID, 2)
+                  .where(T_ERROR_ON_UPDATE.ID.eq(1))
+                  .execute());
 
+        assertNull(l1.exception);
+        assertEquals("t_error_on_update_trigger 1", l1.warning.getMessage());
+        assertEquals("t_error_on_update_trigger 2", l1.warning.getNextException().getMessage());
+
+        ExceptionListener l2 = new ExceptionListener();
         try {
             // This update generates SQLExceptions (error level > 10)
-            create().update(T_ERROR_ON_UPDATE)
-                    .set(T_ERROR_ON_UPDATE.ID, 3)
-                    .where(T_ERROR_ON_UPDATE.ID.eq(2))
-                    .execute();
+            create(l2).update(T_ERROR_ON_UPDATE)
+                      .set(T_ERROR_ON_UPDATE.ID, 3)
+                      .where(T_ERROR_ON_UPDATE.ID.eq(2))
+                      .execute();
             fail();
         }
         catch (DataAccessException e) {
             SQLException cause = (SQLException) e.getCause();
 
             assertEquals("t_error_on_update_trigger 3", cause.getMessage());
-            assertEquals(50000, cause.getErrorCode());
+            assertEquals("t_error_on_update_trigger 4", cause.getNextException().getMessage());
+            assertEquals("t_error_on_update_trigger 5", cause.getNextException().getNextException().getMessage());
+            assertNull(cause.getNextException().getNextException().getNextException());
 
-            cause = cause.getNextException();
-            assertEquals("t_error_on_update_trigger 4", cause.getMessage());
-            assertEquals(50000, cause.getErrorCode());
-
-            cause = cause.getNextException();
-            assertEquals("t_error_on_update_trigger 5", cause.getMessage());
-            assertEquals(50000, cause.getErrorCode());
-
-            cause = cause.getNextException();
-            assertNull(cause);
+            assertEquals("t_error_on_update_trigger 1", l2.warning.getMessage());
+            assertEquals("t_error_on_update_trigger 2", l2.warning.getNextException().getMessage());
+            assertEquals("t_error_on_update_trigger 3", l2.exception.getMessage());
+            assertEquals("t_error_on_update_trigger 4", l2.exception.getNextException().getMessage());
+            assertEquals("t_error_on_update_trigger 5", l2.exception.getNextException().getNextException().getMessage());
         }
         finally {
             create().fetch(T_ERROR_ON_UPDATE);
         }
+    }
 
+    static class ExceptionListener extends DefaultExecuteListener {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = -8750749773616243579L;
+
+        SQLException exception;
+        SQLWarning warning;
+
+        @Override
+        public void exception(ExecuteContext ctx) {
+            exception = ctx.sqlException();
+        }
+
+        @Override
+        public void warning(ExecuteContext ctx) {
+            warning = ctx.sqlWarning();
+        }
     }
 }
 

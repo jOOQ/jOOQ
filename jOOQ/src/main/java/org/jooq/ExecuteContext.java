@@ -44,6 +44,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLWarning;
 import java.util.Map;
 
 import org.jooq.conf.Settings;
@@ -331,4 +332,14 @@ public interface ExecuteContext {
      * instead. This may have no effect, if called at the wrong moment.
      */
     void sqlException(SQLException e);
+
+    /**
+     * The {@link SQLWarning} that was emitted by the database.
+     */
+    SQLWarning sqlWarning();
+
+    /**
+     * Override the {@link SQLWarning} being emitted.
+     */
+    void sqlWarning(SQLWarning e);
 }

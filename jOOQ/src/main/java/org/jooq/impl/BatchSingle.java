@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
+import static org.jooq.impl.Utils.consumeWarnings;
 import static org.jooq.impl.Utils.visitAll;
 
 import java.sql.Connection;
@@ -150,15 +151,20 @@ class BatchSingle implements BatchBindStep {
                 ctx.statement().addBatch();
             }
 
-            listener.executeStart(ctx);
-            int[] result = ctx.statement().executeBatch();
+            try {
+                listener.executeStart(ctx);
+                int[] result = ctx.statement().executeBatch();
 
-            int[] batchRows = ctx.batchRows();
-            for (int i = 0; i < batchRows.length && i < result.length; i++)
-                batchRows[i] = result[i];
+                int[] batchRows = ctx.batchRows();
+                for (int i = 0; i < batchRows.length && i < result.length; i++)
+                    batchRows[i] = result[i];
 
-            listener.executeEnd(ctx);
-            return result;
+                listener.executeEnd(ctx);
+                return result;
+            }
+            finally {
+                consumeWarnings(ctx, listener);
+            }
         }
         catch (SQLException e) {
             ctx.sqlException(e);

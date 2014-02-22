@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = 1352457896;
+	private static final long serialVersionUID = -683728224;
 
 	private java.lang.Integer id;
 	private java.lang.String  firstName;
@@ -44,8 +44,9 @@ public class TAuthor implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setId(java.lang.Integer id) {
+	public TAuthor setId(java.lang.Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	@Override
@@ -54,8 +55,9 @@ public class TAuthor implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setFirstName(java.lang.String firstName) {
+	public TAuthor setFirstName(java.lang.String firstName) {
 		this.firstName = firstName;
+		return this;
 	}
 
 	@Override
@@ -64,8 +66,9 @@ public class TAuthor implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setLastName(java.lang.String lastName) {
+	public TAuthor setLastName(java.lang.String lastName) {
 		this.lastName = lastName;
+		return this;
 	}
 
 	@Override
@@ -74,8 +77,9 @@ public class TAuthor implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setDateOfBirth(java.sql.Date dateOfBirth) {
+	public TAuthor setDateOfBirth(java.sql.Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+		return this;
 	}
 
 	@Override
@@ -84,8 +88,9 @@ public class TAuthor implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setYearOfBirth(java.lang.Integer yearOfBirth) {
+	public TAuthor setYearOfBirth(java.lang.Integer yearOfBirth) {
 		this.yearOfBirth = yearOfBirth;
+		return this;
 	}
 
 	@Override
@@ -94,8 +99,9 @@ public class TAuthor implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setAddress(java.lang.String address) {
+	public TAuthor setAddress(java.lang.String address) {
 		this.address = address;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

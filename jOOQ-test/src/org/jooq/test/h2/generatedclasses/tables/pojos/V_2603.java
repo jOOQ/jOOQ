@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class V_2603 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IV_2603 {
 
-	private static final long serialVersionUID = 2038072288;
+	private static final long serialVersionUID = -411791640;
 
 	private java.lang.Integer col1;
 	private java.lang.Integer col4;
@@ -30,8 +30,9 @@ public class V_2603 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	}
 
 	@Override
-	public void setCol1(java.lang.Integer col1) {
+	public V_2603 setCol1(java.lang.Integer col1) {
 		this.col1 = col1;
+		return this;
 	}
 
 	@Override
@@ -40,8 +41,9 @@ public class V_2603 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	}
 
 	@Override
-	public void setCol4(java.lang.Integer col4) {
+	public V_2603 setCol4(java.lang.Integer col4) {
 		this.col4 = col4;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

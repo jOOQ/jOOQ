@@ -12,7 +12,7 @@ public interface IÄä extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.Ää.Öö</code>.
 	 */
-	public void setÖö(java.lang.Integer value);
+	public IÄä setÖö(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.Ää.Öö</code>.

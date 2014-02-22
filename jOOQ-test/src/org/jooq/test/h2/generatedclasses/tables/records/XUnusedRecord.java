@@ -9,14 +9,15 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record16<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.math.BigDecimal>, org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = 972040882;
+	private static final long serialVersionUID = 773912714;
 
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.ID</code>.
 	 */
 	@Override
-	public void setId(java.lang.Integer value) {
+	public XUnusedRecord setId(java.lang.Integer value) {
 		setValue(0, value);
+		return this;
 	}
 
 	/**
@@ -31,8 +32,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.X_UNUSED.NAME</code>.
 	 */
 	@Override
-	public void setName(java.lang.String value) {
+	public XUnusedRecord setName(java.lang.String value) {
 		setValue(1, value);
+		return this;
 	}
 
 	/**
@@ -47,8 +49,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.X_UNUSED.BIG_INTEGER</code>.
 	 */
 	@Override
-	public void setBigInteger(java.math.BigInteger value) {
+	public XUnusedRecord setBigInteger(java.math.BigInteger value) {
 		setValue(2, value);
+		return this;
 	}
 
 	/**
@@ -63,8 +66,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.X_UNUSED.ID_REF</code>.
 	 */
 	@Override
-	public void setIdRef(java.lang.Integer value) {
+	public XUnusedRecord setIdRef(java.lang.Integer value) {
 		setValue(3, value);
+		return this;
 	}
 
 	/**
@@ -79,8 +83,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.X_UNUSED.NAME_REF</code>.
 	 */
 	@Override
-	public void setNameRef(java.lang.String value) {
+	public XUnusedRecord setNameRef(java.lang.String value) {
 		setValue(4, value);
+		return this;
 	}
 
 	/**
@@ -95,8 +100,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.X_UNUSED.CLASS</code>.
 	 */
 	@Override
-	public void setClass_(java.lang.Integer value) {
+	public XUnusedRecord setClass_(java.lang.Integer value) {
 		setValue(5, value);
+		return this;
 	}
 
 	/**
@@ -111,8 +117,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.X_UNUSED.FIELDS</code>.
 	 */
 	@Override
-	public void setFields(java.lang.Integer value) {
+	public XUnusedRecord setFields(java.lang.Integer value) {
 		setValue(6, value);
+		return this;
 	}
 
 	/**
@@ -127,8 +134,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.X_UNUSED.TABLE</code>.
 	 */
 	@Override
-	public void setTable_(java.lang.Integer value) {
+	public XUnusedRecord setTable_(java.lang.Integer value) {
 		setValue(7, value);
+		return this;
 	}
 
 	/**
@@ -143,8 +151,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.X_UNUSED.CONFIGURATION</code>.
 	 */
 	@Override
-	public void setConfiguration(java.lang.Integer value) {
+	public XUnusedRecord setConfiguration(java.lang.Integer value) {
 		setValue(8, value);
+		return this;
 	}
 
 	/**
@@ -159,8 +168,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.X_UNUSED.U_D_T</code>.
 	 */
 	@Override
-	public void setUDT(java.lang.Integer value) {
+	public XUnusedRecord setUDT(java.lang.Integer value) {
 		setValue(9, value);
+		return this;
 	}
 
 	/**
@@ -175,8 +185,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.X_UNUSED.META_DATA</code>.
 	 */
 	@Override
-	public void setMetaData(java.lang.Integer value) {
+	public XUnusedRecord setMetaData(java.lang.Integer value) {
 		setValue(10, value);
+		return this;
 	}
 
 	/**
@@ -191,8 +202,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.X_UNUSED.VALUES</code>.
 	 */
 	@Override
-	public void setValues_(java.lang.Integer value) {
+	public XUnusedRecord setValues_(java.lang.Integer value) {
 		setValue(11, value);
+		return this;
 	}
 
 	/**
@@ -207,8 +219,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.X_UNUSED.TYPE0</code>.
 	 */
 	@Override
-	public void setType0(java.lang.Integer value) {
+	public XUnusedRecord setType0(java.lang.Integer value) {
 		setValue(12, value);
+		return this;
 	}
 
 	/**
@@ -223,8 +236,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.X_UNUSED.PRIMARY_KEY</code>.
 	 */
 	@Override
-	public void setPrimaryKey_(java.lang.Integer value) {
+	public XUnusedRecord setPrimaryKey_(java.lang.Integer value) {
 		setValue(13, value);
+		return this;
 	}
 
 	/**
@@ -239,8 +253,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.X_UNUSED.PRIMARYKEY</code>.
 	 */
 	@Override
-	public void setPrimarykey(java.lang.Integer value) {
+	public XUnusedRecord setPrimarykey(java.lang.Integer value) {
 		setValue(14, value);
+		return this;
 	}
 
 	/**
@@ -255,8 +270,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.X_UNUSED.FIELD 737</code>.
 	 */
 	@Override
-	public void setField_737(java.math.BigDecimal value) {
+	public XUnusedRecord setField_737(java.math.BigDecimal value) {
 		setValue(15, value);
+		return this;
 	}
 
 	/**

@@ -12,7 +12,7 @@ public interface IT_2698 extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_2698.ID</code>.
 	 */
-	public void setId(java.lang.Integer value);
+	public IT_2698 setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_2698.ID</code>.
@@ -22,7 +22,7 @@ public interface IT_2698 extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_2698.XX</code>.
 	 */
-	public void setXx(java.lang.Integer value);
+	public IT_2698 setXx(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_2698.XX</code>.

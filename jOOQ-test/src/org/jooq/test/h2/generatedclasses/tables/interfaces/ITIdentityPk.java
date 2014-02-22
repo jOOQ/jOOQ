@@ -12,7 +12,7 @@ public interface ITIdentityPk extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_IDENTITY_PK.ID</code>.
 	 */
-	public void setId(java.lang.Integer value);
+	public ITIdentityPk setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_IDENTITY_PK.ID</code>.
@@ -22,7 +22,7 @@ public interface ITIdentityPk extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_IDENTITY_PK.VAL</code>.
 	 */
-	public void setVal(java.lang.Integer value);
+	public ITIdentityPk setVal(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_IDENTITY_PK.VAL</code>.

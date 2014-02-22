@@ -9,14 +9,15 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.IVLibrary {
 
-	private static final long serialVersionUID = 1288523023;
+	private static final long serialVersionUID = -984555153;
 
 	/**
 	 * Setter for <code>PUBLIC.V_LIBRARY.AUTHOR</code>.
 	 */
 	@Override
-	public void setAuthor(java.lang.String value) {
+	public VLibraryRecord setAuthor(java.lang.String value) {
 		setValue(0, value);
+		return this;
 	}
 
 	/**
@@ -31,8 +32,9 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * Setter for <code>PUBLIC.V_LIBRARY.TITLE</code>.
 	 */
 	@Override
-	public void setTitle(java.lang.String value) {
+	public VLibraryRecord setTitle(java.lang.String value) {
 		setValue(1, value);
+		return this;
 	}
 
 	/**

@@ -12,7 +12,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.ID</code>.
 	 */
-	public void setId(java.lang.Integer value);
+	public IXUnused setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.ID</code>.
@@ -22,7 +22,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.NAME</code>.
 	 */
-	public void setName(java.lang.String value);
+	public IXUnused setName(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.NAME</code>.
@@ -32,7 +32,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.BIG_INTEGER</code>.
 	 */
-	public void setBigInteger(java.math.BigInteger value);
+	public IXUnused setBigInteger(java.math.BigInteger value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.BIG_INTEGER</code>.
@@ -42,7 +42,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.ID_REF</code>.
 	 */
-	public void setIdRef(java.lang.Integer value);
+	public IXUnused setIdRef(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.ID_REF</code>.
@@ -52,7 +52,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.NAME_REF</code>.
 	 */
-	public void setNameRef(java.lang.String value);
+	public IXUnused setNameRef(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.NAME_REF</code>.
@@ -62,7 +62,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.CLASS</code>.
 	 */
-	public void setClass_(java.lang.Integer value);
+	public IXUnused setClass_(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.CLASS</code>.
@@ -72,7 +72,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.FIELDS</code>.
 	 */
-	public void setFields(java.lang.Integer value);
+	public IXUnused setFields(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.FIELDS</code>.
@@ -82,7 +82,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.TABLE</code>.
 	 */
-	public void setTable_(java.lang.Integer value);
+	public IXUnused setTable_(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.TABLE</code>.
@@ -92,7 +92,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.CONFIGURATION</code>.
 	 */
-	public void setConfiguration(java.lang.Integer value);
+	public IXUnused setConfiguration(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.CONFIGURATION</code>.
@@ -102,7 +102,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.U_D_T</code>.
 	 */
-	public void setUDT(java.lang.Integer value);
+	public IXUnused setUDT(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.U_D_T</code>.
@@ -112,7 +112,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.META_DATA</code>.
 	 */
-	public void setMetaData(java.lang.Integer value);
+	public IXUnused setMetaData(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.META_DATA</code>.
@@ -122,7 +122,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.VALUES</code>.
 	 */
-	public void setValues_(java.lang.Integer value);
+	public IXUnused setValues_(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.VALUES</code>.
@@ -132,7 +132,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.TYPE0</code>.
 	 */
-	public void setType0(java.lang.Integer value);
+	public IXUnused setType0(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.TYPE0</code>.
@@ -142,7 +142,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.PRIMARY_KEY</code>.
 	 */
-	public void setPrimaryKey_(java.lang.Integer value);
+	public IXUnused setPrimaryKey_(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.PRIMARY_KEY</code>.
@@ -152,7 +152,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.PRIMARYKEY</code>.
 	 */
-	public void setPrimarykey(java.lang.Integer value);
+	public IXUnused setPrimarykey(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.PRIMARYKEY</code>.
@@ -162,7 +162,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.FIELD 737</code>.
 	 */
-	public void setField_737(java.math.BigDecimal value);
+	public IXUnused setField_737(java.math.BigDecimal value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.FIELD 737</code>.

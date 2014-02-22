@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_71 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_71 {
 
-	private static final long serialVersionUID = -1936068774;
+	private static final long serialVersionUID = -1843560564;
 
 	private java.lang.Integer id;
 	private java.lang.Short   testCase_64_69Id;
@@ -30,8 +30,9 @@ public class XTestCase_71 implements org.jooq.test.h2.generatedclasses.tables.in
 	}
 
 	@Override
-	public void setId(java.lang.Integer id) {
+	public XTestCase_71 setId(java.lang.Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	@Override
@@ -40,8 +41,9 @@ public class XTestCase_71 implements org.jooq.test.h2.generatedclasses.tables.in
 	}
 
 	@Override
-	public void setTestCase_64_69Id(java.lang.Short testCase_64_69Id) {
+	public XTestCase_71 setTestCase_64_69Id(java.lang.Short testCase_64_69Id) {
 		this.testCase_64_69Id = testCase_64_69Id;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

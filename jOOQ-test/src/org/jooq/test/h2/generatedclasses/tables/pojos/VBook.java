@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook implements org.jooq.test.h2.generatedclasses.tables.interfaces.IVBook {
 
-	private static final long serialVersionUID = -1047536297;
+	private static final long serialVersionUID = -1039071113;
 
 	private java.lang.Integer  id;
 	private java.lang.Integer  authorId;
@@ -57,8 +57,9 @@ public class VBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setId(java.lang.Integer id) {
+	public VBook setId(java.lang.Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	@Override
@@ -67,8 +68,9 @@ public class VBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setAuthorId(java.lang.Integer authorId) {
+	public VBook setAuthorId(java.lang.Integer authorId) {
 		this.authorId = authorId;
+		return this;
 	}
 
 	@Override
@@ -77,8 +79,9 @@ public class VBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setCoAuthorId(java.lang.Integer coAuthorId) {
+	public VBook setCoAuthorId(java.lang.Integer coAuthorId) {
 		this.coAuthorId = coAuthorId;
+		return this;
 	}
 
 	@Override
@@ -87,8 +90,9 @@ public class VBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setDetailsId(java.lang.Integer detailsId) {
+	public VBook setDetailsId(java.lang.Integer detailsId) {
 		this.detailsId = detailsId;
+		return this;
 	}
 
 	@Override
@@ -97,8 +101,9 @@ public class VBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setTitle(java.lang.String title) {
+	public VBook setTitle(java.lang.String title) {
 		this.title = title;
+		return this;
 	}
 
 	@Override
@@ -107,8 +112,9 @@ public class VBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setPublishedIn(java.lang.Integer publishedIn) {
+	public VBook setPublishedIn(java.lang.Integer publishedIn) {
 		this.publishedIn = publishedIn;
+		return this;
 	}
 
 	@Override
@@ -117,8 +123,9 @@ public class VBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setLanguageId(java.lang.Integer languageId) {
+	public VBook setLanguageId(java.lang.Integer languageId) {
 		this.languageId = languageId;
+		return this;
 	}
 
 	@Override
@@ -127,8 +134,9 @@ public class VBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setContentText(java.lang.String contentText) {
+	public VBook setContentText(java.lang.String contentText) {
 		this.contentText = contentText;
+		return this;
 	}
 
 	@Override
@@ -137,8 +145,9 @@ public class VBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setContentPdf(byte[] contentPdf) {
+	public VBook setContentPdf(byte[] contentPdf) {
 		this.contentPdf = contentPdf;
+		return this;
 	}
 
 	@Override
@@ -147,8 +156,9 @@ public class VBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setRecVersion(java.lang.Integer recVersion) {
+	public VBook setRecVersion(java.lang.Integer recVersion) {
 		this.recVersion = recVersion;
+		return this;
 	}
 
 	@Override
@@ -157,8 +167,9 @@ public class VBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setRecTimestamp(java.sql.Timestamp recTimestamp) {
+	public VBook setRecTimestamp(java.sql.Timestamp recTimestamp) {
 		this.recTimestamp = recTimestamp;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

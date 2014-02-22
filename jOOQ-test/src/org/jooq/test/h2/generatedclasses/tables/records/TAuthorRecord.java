@@ -11,14 +11,15 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = 777698354;
+	private static final long serialVersionUID = -245216268;
 
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.ID</code>. The author ID
 	 */
 	@Override
-	public void setId(java.lang.Integer value) {
+	public TAuthorRecord setId(java.lang.Integer value) {
 		setValue(0, value);
+		return this;
 	}
 
 	/**
@@ -33,8 +34,9 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>. The author's first name
 	 */
 	@Override
-	public void setFirstName(java.lang.String value) {
+	public TAuthorRecord setFirstName(java.lang.String value) {
 		setValue(1, value);
+		return this;
 	}
 
 	/**
@@ -49,8 +51,9 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.T_AUTHOR.LAST_NAME</code>. The author's last name
 	 */
 	@Override
-	public void setLastName(java.lang.String value) {
+	public TAuthorRecord setLastName(java.lang.String value) {
 		setValue(2, value);
+		return this;
 	}
 
 	/**
@@ -65,8 +68,9 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
 	@Override
-	public void setDateOfBirth(java.sql.Date value) {
+	public TAuthorRecord setDateOfBirth(java.sql.Date value) {
 		setValue(3, value);
+		return this;
 	}
 
 	/**
@@ -81,8 +85,9 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
 	@Override
-	public void setYearOfBirth(java.lang.Integer value) {
+	public TAuthorRecord setYearOfBirth(java.lang.Integer value) {
 		setValue(4, value);
+		return this;
 	}
 
 	/**
@@ -97,8 +102,9 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.T_AUTHOR.ADDRESS</code>. The author's address
 	 */
 	@Override
-	public void setAddress(java.lang.String value) {
+	public TAuthorRecord setAddress(java.lang.String value) {
 		setValue(5, value);
+		return this;
 	}
 
 	/**

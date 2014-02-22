@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_725LobTest {
 
-	private static final long serialVersionUID = 1494387930;
+	private static final long serialVersionUID = 2053181974;
 
 	private java.lang.Integer id;
 	private byte[]            lob;
@@ -30,8 +30,9 @@ public class T_725LobTest implements org.jooq.test.h2.generatedclasses.tables.in
 	}
 
 	@Override
-	public void setId(java.lang.Integer id) {
+	public T_725LobTest setId(java.lang.Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	@Override
@@ -40,8 +41,9 @@ public class T_725LobTest implements org.jooq.test.h2.generatedclasses.tables.in
 	}
 
 	@Override
-	public void setLob(byte[] lob) {
+	public T_725LobTest setLob(byte[] lob) {
 		this.lob = lob;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

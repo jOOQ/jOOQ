@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class F1256 extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = -1681231703;
+	private static final long serialVersionUID = 150746512;
 
 	/**
 	 * The parameter <code>PUBLIC.F1256.RETURN_VALUE</code>.
@@ -41,7 +41,8 @@ public class F1256 extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 	/**
 	 * Set the <code>P1</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
-	public void setP1(org.jooq.Field<java.lang.String> field) {
+	public F1256 setP1(org.jooq.Field<java.lang.String> field) {
 		setField(P1, field);
+		return this;
 	}
 }

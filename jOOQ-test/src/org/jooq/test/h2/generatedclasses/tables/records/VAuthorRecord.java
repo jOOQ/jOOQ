@@ -9,14 +9,15 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor {
 
-	private static final long serialVersionUID = -2108693833;
+	private static final long serialVersionUID = 1018764485;
 
 	/**
 	 * Setter for <code>PUBLIC.V_AUTHOR.ID</code>.
 	 */
 	@Override
-	public void setId(java.lang.Integer value) {
+	public VAuthorRecord setId(java.lang.Integer value) {
 		setValue(0, value);
+		return this;
 	}
 
 	/**
@@ -31,8 +32,9 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 * Setter for <code>PUBLIC.V_AUTHOR.FIRST_NAME</code>.
 	 */
 	@Override
-	public void setFirstName(java.lang.String value) {
+	public VAuthorRecord setFirstName(java.lang.String value) {
 		setValue(1, value);
+		return this;
 	}
 
 	/**
@@ -47,8 +49,9 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 * Setter for <code>PUBLIC.V_AUTHOR.LAST_NAME</code>.
 	 */
 	@Override
-	public void setLastName(java.lang.String value) {
+	public VAuthorRecord setLastName(java.lang.String value) {
 		setValue(2, value);
+		return this;
 	}
 
 	/**
@@ -63,8 +66,9 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 * Setter for <code>PUBLIC.V_AUTHOR.DATE_OF_BIRTH</code>.
 	 */
 	@Override
-	public void setDateOfBirth(java.sql.Date value) {
+	public VAuthorRecord setDateOfBirth(java.sql.Date value) {
 		setValue(3, value);
+		return this;
 	}
 
 	/**
@@ -79,8 +83,9 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 * Setter for <code>PUBLIC.V_AUTHOR.YEAR_OF_BIRTH</code>.
 	 */
 	@Override
-	public void setYearOfBirth(java.lang.Integer value) {
+	public VAuthorRecord setYearOfBirth(java.lang.Integer value) {
 		setValue(4, value);
+		return this;
 	}
 
 	/**
@@ -95,8 +100,9 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 * Setter for <code>PUBLIC.V_AUTHOR.ADDRESS</code>.
 	 */
 	@Override
-	public void setAddress(java.lang.String value) {
+	public VAuthorRecord setAddress(java.lang.String value) {
 		setValue(5, value);
+		return this;
 	}
 
 	/**

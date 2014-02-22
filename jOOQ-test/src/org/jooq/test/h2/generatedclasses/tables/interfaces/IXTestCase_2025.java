@@ -12,7 +12,7 @@ public interface IXTestCase_2025 extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_TEST_CASE_2025.REF_ID</code>.
 	 */
-	public void setRefId(java.lang.Integer value);
+	public IXTestCase_2025 setRefId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_TEST_CASE_2025.REF_ID</code>.
@@ -22,7 +22,7 @@ public interface IXTestCase_2025 extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_TEST_CASE_2025.REF_NAME</code>.
 	 */
-	public void setRefName(java.lang.String value);
+	public IXTestCase_2025 setRefName(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_TEST_CASE_2025.REF_NAME</code>.

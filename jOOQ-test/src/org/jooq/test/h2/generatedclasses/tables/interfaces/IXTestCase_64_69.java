@@ -12,7 +12,7 @@ public interface IXTestCase_64_69 extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_TEST_CASE_64_69.ID</code>.
 	 */
-	public void setId(java.lang.Integer value);
+	public IXTestCase_64_69 setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_TEST_CASE_64_69.ID</code>.
@@ -22,7 +22,7 @@ public interface IXTestCase_64_69 extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_TEST_CASE_64_69.UNUSED_ID</code>.
 	 */
-	public void setUnusedId(java.lang.Integer value);
+	public IXTestCase_64_69 setUnusedId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_TEST_CASE_64_69.UNUSED_ID</code>.

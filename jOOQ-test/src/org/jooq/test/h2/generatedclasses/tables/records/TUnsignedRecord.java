@@ -9,14 +9,15 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TUnsignedRecord> implements org.jooq.Record4<org.jooq.types.UByte, org.jooq.types.UShort, org.jooq.types.UInteger, org.jooq.types.ULong>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITUnsigned {
 
-	private static final long serialVersionUID = -897271570;
+	private static final long serialVersionUID = 1430434390;
 
 	/**
 	 * Setter for <code>PUBLIC.T_UNSIGNED.U_BYTE</code>.
 	 */
 	@Override
-	public void setUByte(org.jooq.types.UByte value) {
+	public TUnsignedRecord setUByte(org.jooq.types.UByte value) {
 		setValue(0, value);
+		return this;
 	}
 
 	/**
@@ -31,8 +32,9 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 * Setter for <code>PUBLIC.T_UNSIGNED.U_SHORT</code>.
 	 */
 	@Override
-	public void setUShort(org.jooq.types.UShort value) {
+	public TUnsignedRecord setUShort(org.jooq.types.UShort value) {
 		setValue(1, value);
+		return this;
 	}
 
 	/**
@@ -47,8 +49,9 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 * Setter for <code>PUBLIC.T_UNSIGNED.U_INT</code>.
 	 */
 	@Override
-	public void setUInt(org.jooq.types.UInteger value) {
+	public TUnsignedRecord setUInt(org.jooq.types.UInteger value) {
 		setValue(2, value);
+		return this;
 	}
 
 	/**
@@ -63,8 +66,9 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 * Setter for <code>PUBLIC.T_UNSIGNED.U_LONG</code>.
 	 */
 	@Override
-	public void setULong(org.jooq.types.ULong value) {
+	public TUnsignedRecord setULong(org.jooq.types.ULong value) {
 		setValue(3, value);
+		return this;
 	}
 
 	/**

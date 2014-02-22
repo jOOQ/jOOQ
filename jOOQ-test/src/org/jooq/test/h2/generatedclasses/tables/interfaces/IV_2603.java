@@ -12,7 +12,7 @@ public interface IV_2603 extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_2603.COL1</code>.
 	 */
-	public void setCol1(java.lang.Integer value);
+	public IV_2603 setCol1(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_2603.COL1</code>.
@@ -22,7 +22,7 @@ public interface IV_2603 extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_2603.COL4</code>.
 	 */
-	public void setCol4(java.lang.Integer value);
+	public IV_2603 setCol4(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_2603.COL4</code>.

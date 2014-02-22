@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = -1369816662;
+	private static final long serialVersionUID = -1422871514;
 
 	private java.lang.Integer    id;
 	private java.lang.String     name;
@@ -72,8 +72,9 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setId(java.lang.Integer id) {
+	public XUnused setId(java.lang.Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	@Override
@@ -82,8 +83,9 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setName(java.lang.String name) {
+	public XUnused setName(java.lang.String name) {
 		this.name = name;
+		return this;
 	}
 
 	@Override
@@ -92,8 +94,9 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setBigInteger(java.math.BigInteger bigInteger) {
+	public XUnused setBigInteger(java.math.BigInteger bigInteger) {
 		this.bigInteger = bigInteger;
+		return this;
 	}
 
 	@Override
@@ -102,8 +105,9 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setIdRef(java.lang.Integer idRef) {
+	public XUnused setIdRef(java.lang.Integer idRef) {
 		this.idRef = idRef;
+		return this;
 	}
 
 	@Override
@@ -112,8 +116,9 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setNameRef(java.lang.String nameRef) {
+	public XUnused setNameRef(java.lang.String nameRef) {
 		this.nameRef = nameRef;
+		return this;
 	}
 
 	@Override
@@ -122,8 +127,9 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setClass_(java.lang.Integer class_) {
+	public XUnused setClass_(java.lang.Integer class_) {
 		this.class_ = class_;
+		return this;
 	}
 
 	@Override
@@ -132,8 +138,9 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setFields(java.lang.Integer fields) {
+	public XUnused setFields(java.lang.Integer fields) {
 		this.fields = fields;
+		return this;
 	}
 
 	@Override
@@ -142,8 +149,9 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setTable_(java.lang.Integer table) {
+	public XUnused setTable_(java.lang.Integer table) {
 		this.table = table;
+		return this;
 	}
 
 	@Override
@@ -152,8 +160,9 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setConfiguration(java.lang.Integer configuration) {
+	public XUnused setConfiguration(java.lang.Integer configuration) {
 		this.configuration = configuration;
+		return this;
 	}
 
 	@Override
@@ -162,8 +171,9 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setUDT(java.lang.Integer uDT) {
+	public XUnused setUDT(java.lang.Integer uDT) {
 		this.uDT = uDT;
+		return this;
 	}
 
 	@Override
@@ -172,8 +182,9 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setMetaData(java.lang.Integer metaData) {
+	public XUnused setMetaData(java.lang.Integer metaData) {
 		this.metaData = metaData;
+		return this;
 	}
 
 	@Override
@@ -182,8 +193,9 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setValues_(java.lang.Integer values) {
+	public XUnused setValues_(java.lang.Integer values) {
 		this.values = values;
+		return this;
 	}
 
 	@Override
@@ -192,8 +204,9 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setType0(java.lang.Integer type0) {
+	public XUnused setType0(java.lang.Integer type0) {
 		this.type0 = type0;
+		return this;
 	}
 
 	@Override
@@ -202,8 +215,9 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setPrimaryKey_(java.lang.Integer primaryKey) {
+	public XUnused setPrimaryKey_(java.lang.Integer primaryKey) {
 		this.primaryKey = primaryKey;
+		return this;
 	}
 
 	@Override
@@ -212,8 +226,9 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setPrimarykey(java.lang.Integer primarykey) {
+	public XUnused setPrimarykey(java.lang.Integer primarykey) {
 		this.primarykey = primarykey;
+		return this;
 	}
 
 	@Override
@@ -222,8 +237,9 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setField_737(java.math.BigDecimal field_737) {
+	public XUnused setField_737(java.math.BigDecimal field_737) {
 		this.field_737 = field_737;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

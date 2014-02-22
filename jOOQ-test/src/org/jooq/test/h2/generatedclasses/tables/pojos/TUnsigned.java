@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsigned implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITUnsigned {
 
-	private static final long serialVersionUID = -1816743250;
+	private static final long serialVersionUID = 715634730;
 
 	private org.jooq.types.UByte    uByte;
 	private org.jooq.types.UShort   uShort;
@@ -36,8 +36,9 @@ public class TUnsigned implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setUByte(org.jooq.types.UByte uByte) {
+	public TUnsigned setUByte(org.jooq.types.UByte uByte) {
 		this.uByte = uByte;
+		return this;
 	}
 
 	@Override
@@ -46,8 +47,9 @@ public class TUnsigned implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setUShort(org.jooq.types.UShort uShort) {
+	public TUnsigned setUShort(org.jooq.types.UShort uShort) {
 		this.uShort = uShort;
+		return this;
 	}
 
 	@Override
@@ -56,8 +58,9 @@ public class TUnsigned implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setUInt(org.jooq.types.UInteger uInt) {
+	public TUnsigned setUInt(org.jooq.types.UInteger uInt) {
 		this.uInt = uInt;
+		return this;
 	}
 
 	@Override
@@ -66,8 +69,9 @@ public class TUnsigned implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setULong(org.jooq.types.ULong uLong) {
+	public TUnsigned setULong(org.jooq.types.ULong uLong) {
 		this.uLong = uLong;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

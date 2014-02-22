@@ -14,7 +14,7 @@ public interface ITBookToBookStore extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
-	public void setBookStoreName(java.lang.String value);
+	public ITBookToBookStore setBookStoreName(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
@@ -24,7 +24,7 @@ public interface ITBookToBookStore extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
 	 */
-	public void setBookId(java.lang.Integer value);
+	public ITBookToBookStore setBookId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
@@ -34,7 +34,7 @@ public interface ITBookToBookStore extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
 	 */
-	public void setStock(java.lang.Integer value);
+	public ITBookToBookStore setStock(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock

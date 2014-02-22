@@ -9,14 +9,15 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ÄäRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.ÄäRecord> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.IÄä {
 
-	private static final long serialVersionUID = -1095078893;
+	private static final long serialVersionUID = 1479640677;
 
 	/**
 	 * Setter for <code>PUBLIC.Ää.Öö</code>.
 	 */
 	@Override
-	public void setÖö(java.lang.Integer value) {
+	public ÄäRecord setÖö(java.lang.Integer value) {
 		setValue(0, value);
+		return this;
 	}
 
 	/**

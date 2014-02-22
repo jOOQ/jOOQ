@@ -12,7 +12,7 @@ public interface ITTriggers extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>.
 	 */
-	public void setIdGenerated(java.lang.Integer value);
+	public ITTriggers setIdGenerated(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>.
@@ -22,7 +22,7 @@ public interface ITTriggers extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_TRIGGERS.ID</code>.
 	 */
-	public void setId(java.lang.Integer value);
+	public ITTriggers setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_TRIGGERS.ID</code>.
@@ -32,7 +32,7 @@ public interface ITTriggers extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_TRIGGERS.COUNTER</code>.
 	 */
-	public void setCounter(java.lang.Integer value);
+	public ITTriggers setCounter(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_TRIGGERS.COUNTER</code>.

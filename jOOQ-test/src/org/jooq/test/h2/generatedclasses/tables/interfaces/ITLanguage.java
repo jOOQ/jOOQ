@@ -14,7 +14,7 @@ public interface ITLanguage extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_LANGUAGE.CD</code>. The language ISO code
 	 */
-	public void setCd(java.lang.String value);
+	public ITLanguage setCd(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_LANGUAGE.CD</code>. The language ISO code
@@ -24,7 +24,7 @@ public interface ITLanguage extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
-	public void setDescription(java.lang.String value);
+	public ITLanguage setDescription(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION</code>. The language description
@@ -34,7 +34,7 @@ public interface ITLanguage extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
-	public void setDescriptionEnglish(java.lang.String value);
+	public ITLanguage setDescriptionEnglish(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
@@ -44,7 +44,7 @@ public interface ITLanguage extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_LANGUAGE.ID</code>. The language ID
 	 */
-	public void setId(java.lang.Integer value);
+	public ITLanguage setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_LANGUAGE.ID</code>. The language ID

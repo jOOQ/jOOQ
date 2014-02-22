@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FArrays1 extends org.jooq.impl.AbstractRoutine<java.lang.Object[]> {
 
-	private static final long serialVersionUID = -285497898;
+	private static final long serialVersionUID = 265456976;
 
 	/**
 	 * The parameter <code>PUBLIC.F_ARRAYS1.RETURN_VALUE</code>.
@@ -41,7 +41,8 @@ public class FArrays1 extends org.jooq.impl.AbstractRoutine<java.lang.Object[]> 
 	/**
 	 * Set the <code>P1</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
-	public void setP1(org.jooq.Field<java.lang.Object[]> field) {
+	public FArrays1 setP1(org.jooq.Field<java.lang.Object[]> field) {
 		setField(P1, field);
+		return this;
 	}
 }

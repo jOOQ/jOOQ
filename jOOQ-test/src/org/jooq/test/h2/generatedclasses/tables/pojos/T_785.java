@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_785 {
 
-	private static final long serialVersionUID = -2117334101;
+	private static final long serialVersionUID = -1805521315;
 
 	private java.lang.Integer id;
 	private java.lang.String  name;
@@ -33,8 +33,9 @@ public class T_785 implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setId(java.lang.Integer id) {
+	public T_785 setId(java.lang.Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	@Override
@@ -43,8 +44,9 @@ public class T_785 implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setName(java.lang.String name) {
+	public T_785 setName(java.lang.String name) {
 		this.name = name;
+		return this;
 	}
 
 	@Override
@@ -53,8 +55,9 @@ public class T_785 implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setValue(java.lang.String value) {
+	public T_785 setValue(java.lang.String value) {
 		this.value = value;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

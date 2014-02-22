@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 824964619;
+	private static final long serialVersionUID = 1980284789;
 
 	/**
 	 * The parameter <code>PUBLIC.F_NUMBER.RETURN_VALUE</code>.
@@ -41,7 +41,8 @@ public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	/**
 	 * Set the <code>P1</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
-	public void setP1(org.jooq.Field<java.lang.Integer> field) {
+	public FNumber setP1(org.jooq.Field<java.lang.Integer> field) {
 		setField(P1, field);
+		return this;
 	}
 }

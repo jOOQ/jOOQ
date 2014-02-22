@@ -12,7 +12,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.ID</code>.
 	 */
-	public void setId(java.lang.Integer value);
+	public IT_639NumbersTable setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.ID</code>.
@@ -22,7 +22,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE</code>.
 	 */
-	public void setByte(java.lang.Byte value);
+	public IT_639NumbersTable setByte(java.lang.Byte value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE</code>.
@@ -32,7 +32,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT</code>.
 	 */
-	public void setShort(java.lang.Short value);
+	public IT_639NumbersTable setShort(java.lang.Short value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT</code>.
@@ -42,7 +42,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER</code>.
 	 */
-	public void setInteger(java.lang.Integer value);
+	public IT_639NumbersTable setInteger(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER</code>.
@@ -52,7 +52,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.LONG</code>.
 	 */
-	public void setLong(java.lang.Long value);
+	public IT_639NumbersTable setLong(java.lang.Long value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.LONG</code>.
@@ -62,7 +62,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>.
 	 */
-	public void setByteDecimal(java.lang.Byte value);
+	public IT_639NumbersTable setByteDecimal(java.lang.Byte value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>.
@@ -72,7 +72,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>.
 	 */
-	public void setShortDecimal(java.lang.Short value);
+	public IT_639NumbersTable setShortDecimal(java.lang.Short value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>.
@@ -82,7 +82,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>.
 	 */
-	public void setIntegerDecimal(java.lang.Integer value);
+	public IT_639NumbersTable setIntegerDecimal(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>.
@@ -92,7 +92,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>.
 	 */
-	public void setLongDecimal(java.lang.Long value);
+	public IT_639NumbersTable setLongDecimal(java.lang.Long value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>.
@@ -102,7 +102,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_INTEGER</code>.
 	 */
-	public void setBigInteger(java.math.BigInteger value);
+	public IT_639NumbersTable setBigInteger(java.math.BigInteger value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_INTEGER</code>.
@@ -112,7 +112,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>.
 	 */
-	public void setBigDecimal(java.math.BigDecimal value);
+	public IT_639NumbersTable setBigDecimal(java.math.BigDecimal value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>.
@@ -122,7 +122,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.FLOAT</code>.
 	 */
-	public void setFloat(java.lang.Float value);
+	public IT_639NumbersTable setFloat(java.lang.Float value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.FLOAT</code>.
@@ -132,7 +132,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.DOUBLE</code>.
 	 */
-	public void setDouble(java.lang.Double value);
+	public IT_639NumbersTable setDouble(java.lang.Double value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.DOUBLE</code>.

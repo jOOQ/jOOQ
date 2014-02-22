@@ -12,7 +12,7 @@ public interface ITExoticTypes extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_EXOTIC_TYPES.ID</code>.
 	 */
-	public void setId(java.lang.Integer value);
+	public ITExoticTypes setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_EXOTIC_TYPES.ID</code>.
@@ -22,7 +22,7 @@ public interface ITExoticTypes extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_EXOTIC_TYPES.UU</code>.
 	 */
-	public void setUu(java.util.UUID value);
+	public ITExoticTypes setUu(java.util.UUID value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_EXOTIC_TYPES.UU</code>.

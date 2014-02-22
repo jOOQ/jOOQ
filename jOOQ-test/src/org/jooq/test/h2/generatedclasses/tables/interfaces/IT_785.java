@@ -12,7 +12,7 @@ public interface IT_785 extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_785.ID</code>.
 	 */
-	public void setId(java.lang.Integer value);
+	public IT_785 setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_785.ID</code>.
@@ -22,7 +22,7 @@ public interface IT_785 extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_785.NAME</code>.
 	 */
-	public void setName(java.lang.String value);
+	public IT_785 setName(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_785.NAME</code>.
@@ -32,7 +32,7 @@ public interface IT_785 extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_785.VALUE</code>.
 	 */
-	public void setValue(java.lang.String value);
+	public IT_785 setValue(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_785.VALUE</code>.

@@ -12,7 +12,7 @@ public interface ITUnsigned extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_UNSIGNED.U_BYTE</code>.
 	 */
-	public void setUByte(org.jooq.types.UByte value);
+	public ITUnsigned setUByte(org.jooq.types.UByte value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_UNSIGNED.U_BYTE</code>.
@@ -22,7 +22,7 @@ public interface ITUnsigned extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_UNSIGNED.U_SHORT</code>.
 	 */
-	public void setUShort(org.jooq.types.UShort value);
+	public ITUnsigned setUShort(org.jooq.types.UShort value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_UNSIGNED.U_SHORT</code>.
@@ -32,7 +32,7 @@ public interface ITUnsigned extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_UNSIGNED.U_INT</code>.
 	 */
-	public void setUInt(org.jooq.types.UInteger value);
+	public ITUnsigned setUInt(org.jooq.types.UInteger value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_UNSIGNED.U_INT</code>.
@@ -42,7 +42,7 @@ public interface ITUnsigned extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_UNSIGNED.U_LONG</code>.
 	 */
-	public void setULong(org.jooq.types.ULong value);
+	public ITUnsigned setULong(org.jooq.types.ULong value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_UNSIGNED.U_LONG</code>.

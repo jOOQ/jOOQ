@@ -12,7 +12,7 @@ public interface IVLibrary extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_LIBRARY.AUTHOR</code>.
 	 */
-	public void setAuthor(java.lang.String value);
+	public IVLibrary setAuthor(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_LIBRARY.AUTHOR</code>.
@@ -22,7 +22,7 @@ public interface IVLibrary extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_LIBRARY.TITLE</code>.
 	 */
-	public void setTitle(java.lang.String value);
+	public IVLibrary setTitle(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_LIBRARY.TITLE</code>.

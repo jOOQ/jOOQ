@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITExoticTypes {
 
-	private static final long serialVersionUID = 1475127168;
+	private static final long serialVersionUID = 851615592;
 
 	private java.lang.Integer id;
 	private java.util.UUID    uu;
@@ -30,8 +30,9 @@ public class TExoticTypes implements org.jooq.test.h2.generatedclasses.tables.in
 	}
 
 	@Override
-	public void setId(java.lang.Integer id) {
+	public TExoticTypes setId(java.lang.Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	@Override
@@ -40,8 +41,9 @@ public class TExoticTypes implements org.jooq.test.h2.generatedclasses.tables.in
 	}
 
 	@Override
-	public void setUu(java.util.UUID uu) {
+	public TExoticTypes setUu(java.util.UUID uu) {
 		this.uu = uu;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

@@ -9,14 +9,15 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_2025Record> implements org.jooq.Record2<java.lang.Integer, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_2025 {
 
-	private static final long serialVersionUID = 1498127373;
+	private static final long serialVersionUID = 1547798333;
 
 	/**
 	 * Setter for <code>PUBLIC.X_TEST_CASE_2025.REF_ID</code>.
 	 */
 	@Override
-	public void setRefId(java.lang.Integer value) {
+	public XTestCase_2025Record setRefId(java.lang.Integer value) {
 		setValue(0, value);
+		return this;
 	}
 
 	/**
@@ -31,8 +32,9 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	 * Setter for <code>PUBLIC.X_TEST_CASE_2025.REF_NAME</code>.
 	 */
 	@Override
-	public void setRefName(java.lang.String value) {
+	public XTestCase_2025Record setRefName(java.lang.String value) {
 		setValue(1, value);
+		return this;
 	}
 
 	/**

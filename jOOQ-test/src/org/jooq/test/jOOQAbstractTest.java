@@ -117,6 +117,7 @@ import org.jooq.test._.testcases.BatchTests;
 import org.jooq.test._.testcases.BenchmarkTests;
 import org.jooq.test._.testcases.CRUDTests;
 import org.jooq.test._.testcases.CsvLoaderTests;
+import org.jooq.test._.testcases.DDLTests;
 import org.jooq.test._.testcases.DaoTests;
 import org.jooq.test._.testcases.DataTypeTests;
 import org.jooq.test._.testcases.EnumTests;
@@ -1118,6 +1119,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testInsertUpdateGetSQLAndGetBindValues() throws Exception {
         new RenderAndBindTests(this).testInsertUpdateGetSQLAndGetBindValues();
+    }
+
+    @Test
+    public void testAlterSequence() throws Exception {
+        new DDLTests(this).testAlterSequence();
     }
 
     @Test

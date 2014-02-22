@@ -69,6 +69,7 @@ import java.util.Map;
 import javax.annotation.Generated;
 import javax.sql.DataSource;
 
+import org.jooq.AlterSequenceRestartStep;
 import org.jooq.Attachable;
 import org.jooq.Batch;
 import org.jooq.BatchBindStep;
@@ -1482,6 +1483,11 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
+
+    @Override
+    public <T extends Number> AlterSequenceRestartStep<T> alterSequence(Sequence<T> sequence) {
+        return new AlterSequenceImpl<T>(configuration, sequence);
+    }
 
     @Override
     public <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table) {

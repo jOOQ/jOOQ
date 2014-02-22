@@ -77,6 +77,7 @@ import javax.annotation.Generated;
 import javax.sql.DataSource;
 
 import org.jooq.AggregateFunction;
+import org.jooq.AlterSequenceRestartStep;
 import org.jooq.ArrayRecord;
 import org.jooq.Case;
 import org.jooq.Condition;
@@ -199,6 +200,7 @@ import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
+import org.jooq.Sequence;
 import org.jooq.SortField;
 import org.jooq.Support;
 import org.jooq.Table;
@@ -4281,6 +4283,20 @@ public class DSL {
     // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
+
+    /**
+     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
+     *
+     * @see DSLContext#alterSequence(Sequence)
+     */
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
+    @Transition(
+        name = "ALTER SEQUENCE",
+        args = "Sequence"
+    )
+    public static <T extends Number> AlterSequenceRestartStep<T> alterSequence(Sequence<T> sequence) {
+        return using(new DefaultConfiguration()).alterSequence(sequence);
+    }
 
     /**
      * Create a new DSL truncate statement.

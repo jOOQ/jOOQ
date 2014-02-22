@@ -12,7 +12,7 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.ID</code>.
 	 */
-	public void setId(java.lang.Integer value);
+	public IVBook setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_BOOK.ID</code>.
@@ -22,7 +22,7 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.AUTHOR_ID</code>.
 	 */
-	public void setAuthorId(java.lang.Integer value);
+	public IVBook setAuthorId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_BOOK.AUTHOR_ID</code>.
@@ -32,7 +32,7 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.CO_AUTHOR_ID</code>.
 	 */
-	public void setCoAuthorId(java.lang.Integer value);
+	public IVBook setCoAuthorId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_BOOK.CO_AUTHOR_ID</code>.
@@ -42,7 +42,7 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.DETAILS_ID</code>.
 	 */
-	public void setDetailsId(java.lang.Integer value);
+	public IVBook setDetailsId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_BOOK.DETAILS_ID</code>.
@@ -52,7 +52,7 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.TITLE</code>.
 	 */
-	public void setTitle(java.lang.String value);
+	public IVBook setTitle(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_BOOK.TITLE</code>.
@@ -62,7 +62,7 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.PUBLISHED_IN</code>.
 	 */
-	public void setPublishedIn(java.lang.Integer value);
+	public IVBook setPublishedIn(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_BOOK.PUBLISHED_IN</code>.
@@ -72,7 +72,7 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.LANGUAGE_ID</code>.
 	 */
-	public void setLanguageId(java.lang.Integer value);
+	public IVBook setLanguageId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_BOOK.LANGUAGE_ID</code>.
@@ -82,7 +82,7 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.CONTENT_TEXT</code>.
 	 */
-	public void setContentText(java.lang.String value);
+	public IVBook setContentText(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_BOOK.CONTENT_TEXT</code>.
@@ -92,7 +92,7 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.CONTENT_PDF</code>.
 	 */
-	public void setContentPdf(byte[] value);
+	public IVBook setContentPdf(byte[] value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_BOOK.CONTENT_PDF</code>.
@@ -102,7 +102,7 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.REC_VERSION</code>.
 	 */
-	public void setRecVersion(java.lang.Integer value);
+	public IVBook setRecVersion(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_BOOK.REC_VERSION</code>.
@@ -112,7 +112,7 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.REC_TIMESTAMP</code>.
 	 */
-	public void setRecTimestamp(java.sql.Timestamp value);
+	public IVBook setRecTimestamp(java.sql.Timestamp value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_BOOK.REC_TIMESTAMP</code>.

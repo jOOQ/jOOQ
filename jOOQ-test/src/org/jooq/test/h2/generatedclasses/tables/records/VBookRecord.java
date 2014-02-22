@@ -9,14 +9,15 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer, java.sql.Timestamp>, org.jooq.test.h2.generatedclasses.tables.interfaces.IVBook {
 
-	private static final long serialVersionUID = 326262064;
+	private static final long serialVersionUID = -1676587641;
 
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.ID</code>.
 	 */
 	@Override
-	public void setId(java.lang.Integer value) {
+	public VBookRecord setId(java.lang.Integer value) {
 		setValue(0, value);
+		return this;
 	}
 
 	/**
@@ -31,8 +32,9 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 * Setter for <code>PUBLIC.V_BOOK.AUTHOR_ID</code>.
 	 */
 	@Override
-	public void setAuthorId(java.lang.Integer value) {
+	public VBookRecord setAuthorId(java.lang.Integer value) {
 		setValue(1, value);
+		return this;
 	}
 
 	/**
@@ -47,8 +49,9 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 * Setter for <code>PUBLIC.V_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	@Override
-	public void setCoAuthorId(java.lang.Integer value) {
+	public VBookRecord setCoAuthorId(java.lang.Integer value) {
 		setValue(2, value);
+		return this;
 	}
 
 	/**
@@ -63,8 +66,9 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 * Setter for <code>PUBLIC.V_BOOK.DETAILS_ID</code>.
 	 */
 	@Override
-	public void setDetailsId(java.lang.Integer value) {
+	public VBookRecord setDetailsId(java.lang.Integer value) {
 		setValue(3, value);
+		return this;
 	}
 
 	/**
@@ -79,8 +83,9 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 * Setter for <code>PUBLIC.V_BOOK.TITLE</code>.
 	 */
 	@Override
-	public void setTitle(java.lang.String value) {
+	public VBookRecord setTitle(java.lang.String value) {
 		setValue(4, value);
+		return this;
 	}
 
 	/**
@@ -95,8 +100,9 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 * Setter for <code>PUBLIC.V_BOOK.PUBLISHED_IN</code>.
 	 */
 	@Override
-	public void setPublishedIn(java.lang.Integer value) {
+	public VBookRecord setPublishedIn(java.lang.Integer value) {
 		setValue(5, value);
+		return this;
 	}
 
 	/**
@@ -111,8 +117,9 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 * Setter for <code>PUBLIC.V_BOOK.LANGUAGE_ID</code>.
 	 */
 	@Override
-	public void setLanguageId(java.lang.Integer value) {
+	public VBookRecord setLanguageId(java.lang.Integer value) {
 		setValue(6, value);
+		return this;
 	}
 
 	/**
@@ -127,8 +134,9 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 * Setter for <code>PUBLIC.V_BOOK.CONTENT_TEXT</code>.
 	 */
 	@Override
-	public void setContentText(java.lang.String value) {
+	public VBookRecord setContentText(java.lang.String value) {
 		setValue(7, value);
+		return this;
 	}
 
 	/**
@@ -143,8 +151,9 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 * Setter for <code>PUBLIC.V_BOOK.CONTENT_PDF</code>.
 	 */
 	@Override
-	public void setContentPdf(byte[] value) {
+	public VBookRecord setContentPdf(byte[] value) {
 		setValue(8, value);
+		return this;
 	}
 
 	/**
@@ -159,8 +168,9 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 * Setter for <code>PUBLIC.V_BOOK.REC_VERSION</code>.
 	 */
 	@Override
-	public void setRecVersion(java.lang.Integer value) {
+	public VBookRecord setRecVersion(java.lang.Integer value) {
 		setValue(9, value);
+		return this;
 	}
 
 	/**
@@ -175,8 +185,9 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 * Setter for <code>PUBLIC.V_BOOK.REC_TIMESTAMP</code>.
 	 */
 	@Override
-	public void setRecTimestamp(java.sql.Timestamp value) {
+	public VBookRecord setRecTimestamp(java.sql.Timestamp value) {
 		setValue(10, value);
+		return this;
 	}
 
 	/**

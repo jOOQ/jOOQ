@@ -12,7 +12,7 @@ public interface IT_2718 extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_2718.EXCLUDE_ME</code>.
 	 */
-	public void setExcludeMe(java.lang.Integer value);
+	public IT_2718 setExcludeMe(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_2718.EXCLUDE_ME</code>.
@@ -22,7 +22,7 @@ public interface IT_2718 extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_2718.XX</code>.
 	 */
-	public void setXx(java.lang.Integer value);
+	public IT_2718 setXx(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_2718.XX</code>.

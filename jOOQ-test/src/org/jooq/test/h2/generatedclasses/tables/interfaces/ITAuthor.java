@@ -14,7 +14,7 @@ public interface ITAuthor extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.ID</code>. The author ID
 	 */
-	public void setId(java.lang.Integer value);
+	public ITAuthor setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_AUTHOR.ID</code>. The author ID
@@ -24,7 +24,7 @@ public interface ITAuthor extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>. The author's first name
 	 */
-	public void setFirstName(java.lang.String value);
+	public ITAuthor setFirstName(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>. The author's first name
@@ -34,7 +34,7 @@ public interface ITAuthor extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.LAST_NAME</code>. The author's last name
 	 */
-	public void setLastName(java.lang.String value);
+	public ITAuthor setLastName(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_AUTHOR.LAST_NAME</code>. The author's last name
@@ -44,7 +44,7 @@ public interface ITAuthor extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
-	public void setDateOfBirth(java.sql.Date value);
+	public ITAuthor setDateOfBirth(java.sql.Date value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>. The author's date of birth
@@ -54,7 +54,7 @@ public interface ITAuthor extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
-	public void setYearOfBirth(java.lang.Integer value);
+	public ITAuthor setYearOfBirth(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>. The author's year of birth
@@ -64,7 +64,7 @@ public interface ITAuthor extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.ADDRESS</code>. The author's address
 	 */
-	public void setAddress(java.lang.String value);
+	public ITAuthor setAddress(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_AUTHOR.ADDRESS</code>. The author's address

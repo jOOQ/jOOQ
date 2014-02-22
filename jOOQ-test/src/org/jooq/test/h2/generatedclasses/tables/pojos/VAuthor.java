@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthor implements org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor {
 
-	private static final long serialVersionUID = -181840512;
+	private static final long serialVersionUID = -319921540;
 
 	private java.lang.Integer id;
 	private java.lang.String  firstName;
@@ -42,8 +42,9 @@ public class VAuthor implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setId(java.lang.Integer id) {
+	public VAuthor setId(java.lang.Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	@Override
@@ -52,8 +53,9 @@ public class VAuthor implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setFirstName(java.lang.String firstName) {
+	public VAuthor setFirstName(java.lang.String firstName) {
 		this.firstName = firstName;
+		return this;
 	}
 
 	@Override
@@ -62,8 +64,9 @@ public class VAuthor implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setLastName(java.lang.String lastName) {
+	public VAuthor setLastName(java.lang.String lastName) {
 		this.lastName = lastName;
+		return this;
 	}
 
 	@Override
@@ -72,8 +75,9 @@ public class VAuthor implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setDateOfBirth(java.sql.Date dateOfBirth) {
+	public VAuthor setDateOfBirth(java.sql.Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+		return this;
 	}
 
 	@Override
@@ -82,8 +86,9 @@ public class VAuthor implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setYearOfBirth(java.lang.Integer yearOfBirth) {
+	public VAuthor setYearOfBirth(java.lang.Integer yearOfBirth) {
 		this.yearOfBirth = yearOfBirth;
+		return this;
 	}
 
 	@Override
@@ -92,8 +97,9 @@ public class VAuthor implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public void setAddress(java.lang.String address) {
+	public VAuthor setAddress(java.lang.String address) {
 		this.address = address;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

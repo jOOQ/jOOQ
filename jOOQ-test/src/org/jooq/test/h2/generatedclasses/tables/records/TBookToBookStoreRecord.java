@@ -11,14 +11,15 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = 1319747073;
+	private static final long serialVersionUID = -1585401563;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
 	@Override
-	public void setBookStoreName(java.lang.String value) {
+	public TBookToBookStoreRecord setBookStoreName(java.lang.String value) {
 		setValue(0, value);
+		return this;
 	}
 
 	/**
@@ -33,8 +34,9 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
 	 */
 	@Override
-	public void setBookId(java.lang.Integer value) {
+	public TBookToBookStoreRecord setBookId(java.lang.Integer value) {
 		setValue(1, value);
+		return this;
 	}
 
 	/**
@@ -49,8 +51,9 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
 	 */
 	@Override
-	public void setStock(java.lang.Integer value) {
+	public TBookToBookStoreRecord setStock(java.lang.Integer value) {
 		setValue(2, value);
+		return this;
 	}
 
 	/**

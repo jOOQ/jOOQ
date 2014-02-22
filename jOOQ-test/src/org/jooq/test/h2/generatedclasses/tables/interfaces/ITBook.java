@@ -14,7 +14,7 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.ID</code>. The book ID
 	 */
-	public void setId(java.lang.Integer value);
+	public ITBook setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.ID</code>. The book ID
@@ -24,7 +24,7 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
-	public void setAuthorId(java.lang.Integer value);
+	public ITBook setAuthorId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.AUTHOR_ID</code>. The author ID in entity 'author'
@@ -34,7 +34,7 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>.
 	 */
-	public void setCoAuthorId(java.lang.Integer value);
+	public ITBook setCoAuthorId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>.
@@ -44,7 +44,7 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.DETAILS_ID</code>.
 	 */
-	public void setDetailsId(java.lang.Integer value);
+	public ITBook setDetailsId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.DETAILS_ID</code>.
@@ -54,7 +54,7 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.TITLE</code>. The book's title
 	 */
-	public void setTitle(java.lang.String value);
+	public ITBook setTitle(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.TITLE</code>. The book's title
@@ -64,7 +64,7 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>. The year the book was published in
 	 */
-	public void setPublishedIn(java.lang.Integer value);
+	public ITBook setPublishedIn(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>. The year the book was published in
@@ -74,7 +74,7 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>. The language of the book
 	 */
-	public void setLanguageId(java.lang.Integer value);
+	public ITBook setLanguageId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>. The language of the book
@@ -84,7 +84,7 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
 	 */
-	public void setContentText(java.lang.String value);
+	public ITBook setContentText(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
@@ -94,7 +94,7 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.CONTENT_PDF</code>. Some binary content of the book
 	 */
-	public void setContentPdf(byte[] value);
+	public ITBook setContentPdf(byte[] value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.CONTENT_PDF</code>. Some binary content of the book
@@ -104,7 +104,7 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.REC_VERSION</code>.
 	 */
-	public void setRecVersion(java.lang.Integer value);
+	public ITBook setRecVersion(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.REC_VERSION</code>.
@@ -114,7 +114,7 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>.
 	 */
-	public void setRecTimestamp(java.sql.Timestamp value);
+	public ITBook setRecTimestamp(java.sql.Timestamp value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>.

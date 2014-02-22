@@ -14,7 +14,7 @@ public interface ITBookStore extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_STORE.NAME</code>. The books store name
 	 */
-	public void setName(java.lang.String value);
+	public ITBookStore setName(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK_STORE.NAME</code>. The books store name

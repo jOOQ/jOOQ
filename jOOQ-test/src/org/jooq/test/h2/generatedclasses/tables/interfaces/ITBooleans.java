@@ -12,7 +12,7 @@ public interface ITBooleans extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.ID</code>.
 	 */
-	public void setId(java.lang.Integer value);
+	public ITBooleans setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOLEANS.ID</code>.
@@ -22,7 +22,7 @@ public interface ITBooleans extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.ONE_ZERO</code>.
 	 */
-	public void setOneZero(org.jooq.test._.converters.Boolean_10 value);
+	public ITBooleans setOneZero(org.jooq.test._.converters.Boolean_10 value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOLEANS.ONE_ZERO</code>.
@@ -32,7 +32,7 @@ public interface ITBooleans extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.TRUE_FALSE_LC</code>.
 	 */
-	public void setTrueFalseLc(org.jooq.test._.converters.Boolean_TF_LC value);
+	public ITBooleans setTrueFalseLc(org.jooq.test._.converters.Boolean_TF_LC value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOLEANS.TRUE_FALSE_LC</code>.
@@ -42,7 +42,7 @@ public interface ITBooleans extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.TRUE_FALSE_UC</code>.
 	 */
-	public void setTrueFalseUc(org.jooq.test._.converters.Boolean_TF_UC value);
+	public ITBooleans setTrueFalseUc(org.jooq.test._.converters.Boolean_TF_UC value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOLEANS.TRUE_FALSE_UC</code>.
@@ -52,7 +52,7 @@ public interface ITBooleans extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.YES_NO_LC</code>.
 	 */
-	public void setYesNoLc(org.jooq.test._.converters.Boolean_YES_NO_LC value);
+	public ITBooleans setYesNoLc(org.jooq.test._.converters.Boolean_YES_NO_LC value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOLEANS.YES_NO_LC</code>.
@@ -62,7 +62,7 @@ public interface ITBooleans extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.YES_NO_UC</code>.
 	 */
-	public void setYesNoUc(org.jooq.test._.converters.Boolean_YES_NO_UC value);
+	public ITBooleans setYesNoUc(org.jooq.test._.converters.Boolean_YES_NO_UC value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOLEANS.YES_NO_UC</code>.
@@ -72,7 +72,7 @@ public interface ITBooleans extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.Y_N_LC</code>.
 	 */
-	public void setYNLc(org.jooq.test._.converters.Boolean_YN_LC value);
+	public ITBooleans setYNLc(org.jooq.test._.converters.Boolean_YN_LC value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOLEANS.Y_N_LC</code>.
@@ -82,7 +82,7 @@ public interface ITBooleans extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.Y_N_UC</code>.
 	 */
-	public void setYNUc(org.jooq.test._.converters.Boolean_YN_UC value);
+	public ITBooleans setYNUc(org.jooq.test._.converters.Boolean_YN_UC value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOLEANS.Y_N_UC</code>.
@@ -92,7 +92,7 @@ public interface ITBooleans extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.VC_BOOLEAN</code>.
 	 */
-	public void setVcBoolean(java.lang.Boolean value);
+	public ITBooleans setVcBoolean(java.lang.Boolean value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOLEANS.VC_BOOLEAN</code>.
@@ -102,7 +102,7 @@ public interface ITBooleans extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.C_BOOLEAN</code>.
 	 */
-	public void setCBoolean(java.lang.Boolean value);
+	public ITBooleans setCBoolean(java.lang.Boolean value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOLEANS.C_BOOLEAN</code>.
@@ -112,7 +112,7 @@ public interface ITBooleans extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.N_BOOLEAN</code>.
 	 */
-	public void setNBoolean(java.lang.Boolean value);
+	public ITBooleans setNBoolean(java.lang.Boolean value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOLEANS.N_BOOLEAN</code>.

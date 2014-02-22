@@ -12,7 +12,7 @@ public interface IT_2327UkOnly extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_2327_UK_ONLY.ID</code>.
 	 */
-	public void setId(java.lang.Integer value);
+	public IT_2327UkOnly setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_2327_UK_ONLY.ID</code>.

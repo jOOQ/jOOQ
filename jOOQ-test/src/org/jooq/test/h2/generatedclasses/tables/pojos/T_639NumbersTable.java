@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable {
 
-	private static final long serialVersionUID = -207065391;
+	private static final long serialVersionUID = -247772819;
 
 	private java.lang.Integer    id;
 	private java.lang.Byte       byte_;
@@ -63,8 +63,9 @@ public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tabl
 	}
 
 	@Override
-	public void setId(java.lang.Integer id) {
+	public T_639NumbersTable setId(java.lang.Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	@Override
@@ -73,8 +74,9 @@ public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tabl
 	}
 
 	@Override
-	public void setByte(java.lang.Byte byte_) {
+	public T_639NumbersTable setByte(java.lang.Byte byte_) {
 		this.byte_ = byte_;
+		return this;
 	}
 
 	@Override
@@ -83,8 +85,9 @@ public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tabl
 	}
 
 	@Override
-	public void setShort(java.lang.Short short_) {
+	public T_639NumbersTable setShort(java.lang.Short short_) {
 		this.short_ = short_;
+		return this;
 	}
 
 	@Override
@@ -93,8 +96,9 @@ public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tabl
 	}
 
 	@Override
-	public void setInteger(java.lang.Integer integer) {
+	public T_639NumbersTable setInteger(java.lang.Integer integer) {
 		this.integer = integer;
+		return this;
 	}
 
 	@Override
@@ -103,8 +107,9 @@ public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tabl
 	}
 
 	@Override
-	public void setLong(java.lang.Long long_) {
+	public T_639NumbersTable setLong(java.lang.Long long_) {
 		this.long_ = long_;
+		return this;
 	}
 
 	@Override
@@ -113,8 +118,9 @@ public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tabl
 	}
 
 	@Override
-	public void setByteDecimal(java.lang.Byte byteDecimal) {
+	public T_639NumbersTable setByteDecimal(java.lang.Byte byteDecimal) {
 		this.byteDecimal = byteDecimal;
+		return this;
 	}
 
 	@Override
@@ -123,8 +129,9 @@ public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tabl
 	}
 
 	@Override
-	public void setShortDecimal(java.lang.Short shortDecimal) {
+	public T_639NumbersTable setShortDecimal(java.lang.Short shortDecimal) {
 		this.shortDecimal = shortDecimal;
+		return this;
 	}
 
 	@Override
@@ -133,8 +140,9 @@ public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tabl
 	}
 
 	@Override
-	public void setIntegerDecimal(java.lang.Integer integerDecimal) {
+	public T_639NumbersTable setIntegerDecimal(java.lang.Integer integerDecimal) {
 		this.integerDecimal = integerDecimal;
+		return this;
 	}
 
 	@Override
@@ -143,8 +151,9 @@ public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tabl
 	}
 
 	@Override
-	public void setLongDecimal(java.lang.Long longDecimal) {
+	public T_639NumbersTable setLongDecimal(java.lang.Long longDecimal) {
 		this.longDecimal = longDecimal;
+		return this;
 	}
 
 	@Override
@@ -153,8 +162,9 @@ public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tabl
 	}
 
 	@Override
-	public void setBigInteger(java.math.BigInteger bigInteger) {
+	public T_639NumbersTable setBigInteger(java.math.BigInteger bigInteger) {
 		this.bigInteger = bigInteger;
+		return this;
 	}
 
 	@Override
@@ -163,8 +173,9 @@ public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tabl
 	}
 
 	@Override
-	public void setBigDecimal(java.math.BigDecimal bigDecimal) {
+	public T_639NumbersTable setBigDecimal(java.math.BigDecimal bigDecimal) {
 		this.bigDecimal = bigDecimal;
+		return this;
 	}
 
 	@Override
@@ -173,8 +184,9 @@ public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tabl
 	}
 
 	@Override
-	public void setFloat(java.lang.Float float_) {
+	public T_639NumbersTable setFloat(java.lang.Float float_) {
 		this.float_ = float_;
+		return this;
 	}
 
 	@Override
@@ -183,8 +195,9 @@ public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tabl
 	}
 
 	@Override
-	public void setDouble(java.lang.Double double_) {
+	public T_639NumbersTable setDouble(java.lang.Double double_) {
 		this.double_ = double_;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

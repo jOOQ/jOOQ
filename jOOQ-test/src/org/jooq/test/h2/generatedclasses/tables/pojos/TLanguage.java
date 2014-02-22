@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITLanguage {
 
-	private static final long serialVersionUID = -213354821;
+	private static final long serialVersionUID = -2143015187;
 
 	private java.lang.String  cd;
 	private java.lang.String  description;
@@ -38,8 +38,9 @@ public class TLanguage implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setCd(java.lang.String cd) {
+	public TLanguage setCd(java.lang.String cd) {
 		this.cd = cd;
+		return this;
 	}
 
 	@Override
@@ -48,8 +49,9 @@ public class TLanguage implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setDescription(java.lang.String description) {
+	public TLanguage setDescription(java.lang.String description) {
 		this.description = description;
+		return this;
 	}
 
 	@Override
@@ -58,8 +60,9 @@ public class TLanguage implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setDescriptionEnglish(java.lang.String descriptionEnglish) {
+	public TLanguage setDescriptionEnglish(java.lang.String descriptionEnglish) {
 		this.descriptionEnglish = descriptionEnglish;
+		return this;
 	}
 
 	@Override
@@ -68,8 +71,9 @@ public class TLanguage implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setId(java.lang.Integer id) {
+	public TLanguage setId(java.lang.Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

@@ -12,7 +12,7 @@ public interface ITIdentity extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_IDENTITY.ID</code>.
 	 */
-	public void setId(java.lang.Integer value);
+	public ITIdentity setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_IDENTITY.ID</code>.
@@ -22,7 +22,7 @@ public interface ITIdentity extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_IDENTITY.VAL</code>.
 	 */
-	public void setVal(java.lang.Integer value);
+	public ITIdentity setVal(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_IDENTITY.VAL</code>.

@@ -12,7 +12,7 @@ public interface ITDates extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_DATES.ID</code>.
 	 */
-	public void setId(java.lang.Integer value);
+	public ITDates setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_DATES.ID</code>.
@@ -22,7 +22,7 @@ public interface ITDates extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_DATES.D</code>.
 	 */
-	public void setD(java.sql.Date value);
+	public ITDates setD(java.sql.Date value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_DATES.D</code>.
@@ -32,7 +32,7 @@ public interface ITDates extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_DATES.T</code>.
 	 */
-	public void setT(java.sql.Time value);
+	public ITDates setT(java.sql.Time value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_DATES.T</code>.
@@ -42,7 +42,7 @@ public interface ITDates extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_DATES.TS</code>.
 	 */
-	public void setTs(java.sql.Timestamp value);
+	public ITDates setTs(java.sql.Timestamp value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_DATES.TS</code>.
@@ -52,7 +52,7 @@ public interface ITDates extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_DATES.D_INT</code>.
 	 */
-	public void setDInt(java.lang.Integer value);
+	public ITDates setDInt(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_DATES.D_INT</code>.
@@ -62,7 +62,7 @@ public interface ITDates extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_DATES.TS_BIGINT</code>.
 	 */
-	public void setTsBigint(java.lang.Long value);
+	public ITDates setTsBigint(java.lang.Long value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_DATES.TS_BIGINT</code>.

@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = 140557622;
+	private static final long serialVersionUID = 1712806940;
 
 	private java.lang.Integer  id;
 	private java.lang.Integer  authorId;
@@ -59,8 +59,9 @@ public class TBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setId(java.lang.Integer id) {
+	public TBook setId(java.lang.Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	@Override
@@ -69,8 +70,9 @@ public class TBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setAuthorId(java.lang.Integer authorId) {
+	public TBook setAuthorId(java.lang.Integer authorId) {
 		this.authorId = authorId;
+		return this;
 	}
 
 	@Override
@@ -79,8 +81,9 @@ public class TBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setCoAuthorId(java.lang.Integer coAuthorId) {
+	public TBook setCoAuthorId(java.lang.Integer coAuthorId) {
 		this.coAuthorId = coAuthorId;
+		return this;
 	}
 
 	@Override
@@ -89,8 +92,9 @@ public class TBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setDetailsId(java.lang.Integer detailsId) {
+	public TBook setDetailsId(java.lang.Integer detailsId) {
 		this.detailsId = detailsId;
+		return this;
 	}
 
 	@Override
@@ -99,8 +103,9 @@ public class TBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setTitle(java.lang.String title) {
+	public TBook setTitle(java.lang.String title) {
 		this.title = title;
+		return this;
 	}
 
 	@Override
@@ -109,8 +114,9 @@ public class TBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setPublishedIn(java.lang.Integer publishedIn) {
+	public TBook setPublishedIn(java.lang.Integer publishedIn) {
 		this.publishedIn = publishedIn;
+		return this;
 	}
 
 	@Override
@@ -119,8 +125,9 @@ public class TBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setLanguageId(java.lang.Integer languageId) {
+	public TBook setLanguageId(java.lang.Integer languageId) {
 		this.languageId = languageId;
+		return this;
 	}
 
 	@Override
@@ -129,8 +136,9 @@ public class TBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setContentText(java.lang.String contentText) {
+	public TBook setContentText(java.lang.String contentText) {
 		this.contentText = contentText;
+		return this;
 	}
 
 	@Override
@@ -139,8 +147,9 @@ public class TBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setContentPdf(byte[] contentPdf) {
+	public TBook setContentPdf(byte[] contentPdf) {
 		this.contentPdf = contentPdf;
+		return this;
 	}
 
 	@Override
@@ -149,8 +158,9 @@ public class TBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setRecVersion(java.lang.Integer recVersion) {
+	public TBook setRecVersion(java.lang.Integer recVersion) {
 		this.recVersion = recVersion;
+		return this;
 	}
 
 	@Override
@@ -159,8 +169,9 @@ public class TBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public void setRecTimestamp(java.sql.Timestamp recTimestamp) {
+	public TBook setRecTimestamp(java.sql.Timestamp recTimestamp) {
 		this.recTimestamp = recTimestamp;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

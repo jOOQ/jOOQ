@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans {
 
-	private static final long serialVersionUID = 701338261;
+	private static final long serialVersionUID = 706903349;
 
 	private java.lang.Integer                            id;
 	private org.jooq.test._.converters.Boolean_10        oneZero;
@@ -57,8 +57,9 @@ public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setId(java.lang.Integer id) {
+	public TBooleans setId(java.lang.Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	@Override
@@ -67,8 +68,9 @@ public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setOneZero(org.jooq.test._.converters.Boolean_10 oneZero) {
+	public TBooleans setOneZero(org.jooq.test._.converters.Boolean_10 oneZero) {
 		this.oneZero = oneZero;
+		return this;
 	}
 
 	@Override
@@ -77,8 +79,9 @@ public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setTrueFalseLc(org.jooq.test._.converters.Boolean_TF_LC trueFalseLc) {
+	public TBooleans setTrueFalseLc(org.jooq.test._.converters.Boolean_TF_LC trueFalseLc) {
 		this.trueFalseLc = trueFalseLc;
+		return this;
 	}
 
 	@Override
@@ -87,8 +90,9 @@ public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setTrueFalseUc(org.jooq.test._.converters.Boolean_TF_UC trueFalseUc) {
+	public TBooleans setTrueFalseUc(org.jooq.test._.converters.Boolean_TF_UC trueFalseUc) {
 		this.trueFalseUc = trueFalseUc;
+		return this;
 	}
 
 	@Override
@@ -97,8 +101,9 @@ public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setYesNoLc(org.jooq.test._.converters.Boolean_YES_NO_LC yesNoLc) {
+	public TBooleans setYesNoLc(org.jooq.test._.converters.Boolean_YES_NO_LC yesNoLc) {
 		this.yesNoLc = yesNoLc;
+		return this;
 	}
 
 	@Override
@@ -107,8 +112,9 @@ public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setYesNoUc(org.jooq.test._.converters.Boolean_YES_NO_UC yesNoUc) {
+	public TBooleans setYesNoUc(org.jooq.test._.converters.Boolean_YES_NO_UC yesNoUc) {
 		this.yesNoUc = yesNoUc;
+		return this;
 	}
 
 	@Override
@@ -117,8 +123,9 @@ public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setYNLc(org.jooq.test._.converters.Boolean_YN_LC yNLc) {
+	public TBooleans setYNLc(org.jooq.test._.converters.Boolean_YN_LC yNLc) {
 		this.yNLc = yNLc;
+		return this;
 	}
 
 	@Override
@@ -127,8 +134,9 @@ public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setYNUc(org.jooq.test._.converters.Boolean_YN_UC yNUc) {
+	public TBooleans setYNUc(org.jooq.test._.converters.Boolean_YN_UC yNUc) {
 		this.yNUc = yNUc;
+		return this;
 	}
 
 	@Override
@@ -137,8 +145,9 @@ public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setVcBoolean(java.lang.Boolean vcBoolean) {
+	public TBooleans setVcBoolean(java.lang.Boolean vcBoolean) {
 		this.vcBoolean = vcBoolean;
+		return this;
 	}
 
 	@Override
@@ -147,8 +156,9 @@ public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setCBoolean(java.lang.Boolean cBoolean) {
+	public TBooleans setCBoolean(java.lang.Boolean cBoolean) {
 		this.cBoolean = cBoolean;
+		return this;
 	}
 
 	@Override
@@ -157,8 +167,9 @@ public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setNBoolean(java.lang.Boolean nBoolean) {
+	public TBooleans setNBoolean(java.lang.Boolean nBoolean) {
 		this.nBoolean = nBoolean;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

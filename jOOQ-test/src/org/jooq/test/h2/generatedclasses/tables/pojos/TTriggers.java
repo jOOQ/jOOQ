@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITTriggers {
 
-	private static final long serialVersionUID = -29994369;
+	private static final long serialVersionUID = 2109438175;
 
 	private java.lang.Integer idGenerated;
 	private java.lang.Integer id;
@@ -33,8 +33,9 @@ public class TTriggers implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setIdGenerated(java.lang.Integer idGenerated) {
+	public TTriggers setIdGenerated(java.lang.Integer idGenerated) {
 		this.idGenerated = idGenerated;
+		return this;
 	}
 
 	@Override
@@ -43,8 +44,9 @@ public class TTriggers implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setId(java.lang.Integer id) {
+	public TTriggers setId(java.lang.Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	@Override
@@ -53,8 +55,9 @@ public class TTriggers implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public void setCounter(java.lang.Integer counter) {
+	public TTriggers setCounter(java.lang.Integer counter) {
 		this.counter = counter;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

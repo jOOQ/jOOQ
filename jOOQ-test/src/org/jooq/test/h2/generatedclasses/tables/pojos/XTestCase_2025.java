@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_2025 {
 
-	private static final long serialVersionUID = -624903058;
+	private static final long serialVersionUID = 251852374;
 
 	private java.lang.Integer refId;
 	private java.lang.String  refName;
@@ -30,8 +30,9 @@ public class XTestCase_2025 implements org.jooq.test.h2.generatedclasses.tables.
 	}
 
 	@Override
-	public void setRefId(java.lang.Integer refId) {
+	public XTestCase_2025 setRefId(java.lang.Integer refId) {
 		this.refId = refId;
+		return this;
 	}
 
 	@Override
@@ -40,8 +41,9 @@ public class XTestCase_2025 implements org.jooq.test.h2.generatedclasses.tables.
 	}
 
 	@Override
-	public void setRefName(java.lang.String refName) {
+	public XTestCase_2025 setRefName(java.lang.String refName) {
 		this.refName = refName;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

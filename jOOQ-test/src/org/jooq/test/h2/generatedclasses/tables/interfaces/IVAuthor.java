@@ -12,7 +12,7 @@ public interface IVAuthor extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_AUTHOR.ID</code>.
 	 */
-	public void setId(java.lang.Integer value);
+	public IVAuthor setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_AUTHOR.ID</code>.
@@ -22,7 +22,7 @@ public interface IVAuthor extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_AUTHOR.FIRST_NAME</code>.
 	 */
-	public void setFirstName(java.lang.String value);
+	public IVAuthor setFirstName(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_AUTHOR.FIRST_NAME</code>.
@@ -32,7 +32,7 @@ public interface IVAuthor extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_AUTHOR.LAST_NAME</code>.
 	 */
-	public void setLastName(java.lang.String value);
+	public IVAuthor setLastName(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_AUTHOR.LAST_NAME</code>.
@@ -42,7 +42,7 @@ public interface IVAuthor extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_AUTHOR.DATE_OF_BIRTH</code>.
 	 */
-	public void setDateOfBirth(java.sql.Date value);
+	public IVAuthor setDateOfBirth(java.sql.Date value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_AUTHOR.DATE_OF_BIRTH</code>.
@@ -52,7 +52,7 @@ public interface IVAuthor extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_AUTHOR.YEAR_OF_BIRTH</code>.
 	 */
-	public void setYearOfBirth(java.lang.Integer value);
+	public IVAuthor setYearOfBirth(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_AUTHOR.YEAR_OF_BIRTH</code>.
@@ -62,7 +62,7 @@ public interface IVAuthor extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.V_AUTHOR.ADDRESS</code>.
 	 */
-	public void setAddress(java.lang.String value);
+	public IVAuthor setAddress(java.lang.String value);
 
 	/**
 	 * Getter for <code>PUBLIC.V_AUTHOR.ADDRESS</code>.

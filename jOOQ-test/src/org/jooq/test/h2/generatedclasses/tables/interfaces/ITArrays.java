@@ -12,7 +12,7 @@ public interface ITArrays extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_ARRAYS.ID</code>.
 	 */
-	public void setId(java.lang.Integer value);
+	public ITArrays setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_ARRAYS.ID</code>.
@@ -22,7 +22,7 @@ public interface ITArrays extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>.
 	 */
-	public void setStringArray(java.lang.Object[] value);
+	public ITArrays setStringArray(java.lang.Object[] value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>.
@@ -32,7 +32,7 @@ public interface ITArrays extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>.
 	 */
-	public void setNumberArray(java.lang.Object[] value);
+	public ITArrays setNumberArray(java.lang.Object[] value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>.
@@ -42,7 +42,7 @@ public interface ITArrays extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>.
 	 */
-	public void setDateArray(java.lang.Object[] value);
+	public ITArrays setDateArray(java.lang.Object[] value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>.

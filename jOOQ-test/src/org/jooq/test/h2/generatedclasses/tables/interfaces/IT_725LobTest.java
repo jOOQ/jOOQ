@@ -12,7 +12,7 @@ public interface IT_725LobTest extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_725_LOB_TEST.ID</code>.
 	 */
-	public void setId(java.lang.Integer value);
+	public IT_725LobTest setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_725_LOB_TEST.ID</code>.
@@ -22,7 +22,7 @@ public interface IT_725LobTest extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_725_LOB_TEST.LOB</code>.
 	 */
-	public void setLob(byte[] value);
+	public IT_725LobTest setLob(byte[] value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_725_LOB_TEST.LOB</code>.

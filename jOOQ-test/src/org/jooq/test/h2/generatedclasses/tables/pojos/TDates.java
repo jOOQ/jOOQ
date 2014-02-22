@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITDates {
 
-	private static final long serialVersionUID = 2009912682;
+	private static final long serialVersionUID = 2126005928;
 
 	private java.lang.Integer  id;
 	private java.sql.Date      d;
@@ -42,8 +42,9 @@ public class TDates implements org.jooq.test.h2.generatedclasses.tables.interfac
 	}
 
 	@Override
-	public void setId(java.lang.Integer id) {
+	public TDates setId(java.lang.Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	@Override
@@ -52,8 +53,9 @@ public class TDates implements org.jooq.test.h2.generatedclasses.tables.interfac
 	}
 
 	@Override
-	public void setD(java.sql.Date d) {
+	public TDates setD(java.sql.Date d) {
 		this.d = d;
+		return this;
 	}
 
 	@Override
@@ -62,8 +64,9 @@ public class TDates implements org.jooq.test.h2.generatedclasses.tables.interfac
 	}
 
 	@Override
-	public void setT(java.sql.Time t) {
+	public TDates setT(java.sql.Time t) {
 		this.t = t;
+		return this;
 	}
 
 	@Override
@@ -72,8 +75,9 @@ public class TDates implements org.jooq.test.h2.generatedclasses.tables.interfac
 	}
 
 	@Override
-	public void setTs(java.sql.Timestamp ts) {
+	public TDates setTs(java.sql.Timestamp ts) {
 		this.ts = ts;
+		return this;
 	}
 
 	@Override
@@ -82,8 +86,9 @@ public class TDates implements org.jooq.test.h2.generatedclasses.tables.interfac
 	}
 
 	@Override
-	public void setDInt(java.lang.Integer dInt) {
+	public TDates setDInt(java.lang.Integer dInt) {
 		this.dInt = dInt;
+		return this;
 	}
 
 	@Override
@@ -92,8 +97,9 @@ public class TDates implements org.jooq.test.h2.generatedclasses.tables.interfac
 	}
 
 	@Override
-	public void setTsBigint(java.lang.Long tsBigint) {
+	public TDates setTsBigint(java.lang.Long tsBigint) {
 		this.tsBigint = tsBigint;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

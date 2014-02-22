@@ -12,7 +12,7 @@ public interface IT_877 extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_877.ID</code>.
 	 */
-	public void setId(java.lang.Integer value);
+	public IT_877 setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_877.ID</code>.

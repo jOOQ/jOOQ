@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Ää implements org.jooq.test.h2.generatedclasses.tables.interfaces.IÄä {
 
-	private static final long serialVersionUID = -1884452033;
+	private static final long serialVersionUID = -943816812;
 
 	private java.lang.Integer öö;
 
@@ -27,8 +27,9 @@ public class Ää implements org.jooq.test.h2.generatedclasses.tables.interfaces
 	}
 
 	@Override
-	public void setÖö(java.lang.Integer öö) {
+	public Ää setÖö(java.lang.Integer öö) {
 		this.öö = öö;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

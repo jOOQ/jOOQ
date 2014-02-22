@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -430078706;
+	private static final long serialVersionUID = 2141668710;
 
 	/**
 	 * The parameter <code>PUBLIC.F317.RETURN_VALUE</code>.
@@ -59,8 +59,9 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	/**
 	 * Set the <code>P1</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
-	public void setP1(org.jooq.Field<java.lang.Integer> field) {
+	public F317 setP1(org.jooq.Field<java.lang.Integer> field) {
 		setField(P1, field);
+		return this;
 	}
 
 	/**
@@ -73,8 +74,9 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	/**
 	 * Set the <code>P2</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
-	public void setP2(org.jooq.Field<java.lang.Integer> field) {
+	public F317 setP2(org.jooq.Field<java.lang.Integer> field) {
 		setField(P2, field);
+		return this;
 	}
 
 	/**
@@ -87,8 +89,9 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	/**
 	 * Set the <code>P3</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
-	public void setP3(org.jooq.Field<java.lang.Integer> field) {
+	public F317 setP3(org.jooq.Field<java.lang.Integer> field) {
 		setField(P3, field);
+		return this;
 	}
 
 	/**
@@ -101,7 +104,8 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	/**
 	 * Set the <code>P4</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
-	public void setP4(org.jooq.Field<java.lang.Integer> field) {
+	public F317 setP4(org.jooq.Field<java.lang.Integer> field) {
 		setField(P4, field);
+		return this;
 	}
 }

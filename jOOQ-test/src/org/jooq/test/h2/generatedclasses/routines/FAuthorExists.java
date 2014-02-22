@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -906161713;
+	private static final long serialVersionUID = 392477023;
 
 	/**
 	 * The parameter <code>PUBLIC.F_AUTHOR_EXISTS.RETURN_VALUE</code>.
@@ -41,7 +41,8 @@ public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integ
 	/**
 	 * Set the <code>P2</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
-	public void setP2(org.jooq.Field<java.lang.String> field) {
+	public FAuthorExists setP2(org.jooq.Field<java.lang.String> field) {
 		setField(P2, field);
+		return this;
 	}
 }

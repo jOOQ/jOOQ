@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore {
 
-	private static final long serialVersionUID = 44421910;
+	private static final long serialVersionUID = 1165685793;
 
 	private java.lang.String name;
 
@@ -29,8 +29,9 @@ public class TBookStore implements org.jooq.test.h2.generatedclasses.tables.inte
 	}
 
 	@Override
-	public void setName(java.lang.String name) {
+	public TBookStore setName(java.lang.String name) {
 		this.name = name;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2327UkOnly implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2327UkOnly {
 
-	private static final long serialVersionUID = 490345161;
+	private static final long serialVersionUID = 47382589;
 
 	private java.lang.Integer id;
 
@@ -27,8 +27,9 @@ public class T_2327UkOnly implements org.jooq.test.h2.generatedclasses.tables.in
 	}
 
 	@Override
-	public void setId(java.lang.Integer id) {
+	public T_2327UkOnly setId(java.lang.Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

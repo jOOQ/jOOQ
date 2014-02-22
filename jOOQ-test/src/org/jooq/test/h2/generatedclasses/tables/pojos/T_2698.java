@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2698 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2698 {
 
-	private static final long serialVersionUID = 991133572;
+	private static final long serialVersionUID = 305743184;
 
 	private java.lang.Integer id;
 	private java.lang.Integer xx;
@@ -30,8 +30,9 @@ public class T_2698 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	}
 
 	@Override
-	public void setId(java.lang.Integer id) {
+	public T_2698 setId(java.lang.Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	@Override
@@ -40,8 +41,9 @@ public class T_2698 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	}
 
 	@Override
-	public void setXx(java.lang.Integer xx) {
+	public T_2698 setXx(java.lang.Integer xx) {
 		this.xx = xx;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

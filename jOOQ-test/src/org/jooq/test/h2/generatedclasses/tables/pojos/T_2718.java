@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2718 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2718 {
 
-	private static final long serialVersionUID = 293455144;
+	private static final long serialVersionUID = -319635166;
 
 	private java.lang.Integer excludeMe;
 	private java.lang.Integer xx;
@@ -30,8 +30,9 @@ public class T_2718 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	}
 
 	@Override
-	public void setExcludeMe(java.lang.Integer excludeMe) {
+	public T_2718 setExcludeMe(java.lang.Integer excludeMe) {
 		this.excludeMe = excludeMe;
+		return this;
 	}
 
 	@Override
@@ -40,8 +41,9 @@ public class T_2718 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	}
 
 	@Override
-	public void setXx(java.lang.Integer xx) {
+	public T_2718 setXx(java.lang.Integer xx) {
 		this.xx = xx;
+		return this;
 	}
 
 	// -------------------------------------------------------------------------

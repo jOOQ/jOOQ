@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.using;
 
 import java.util.ArrayList;
@@ -52,8 +53,10 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DAO;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 
@@ -185,7 +188,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
     @Override
     public final void deleteById(Collection<T> ids) {
-        Field<?> pk = pk();
+        Field<?>[] pk = pk();
 
         if (pk != null) {
             using(configuration).delete(table).where(equal(pk, ids)).execute();
@@ -199,7 +202,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
     @Override
     public final boolean existsById(T id) {
-        Field<?> pk = pk();
+        Field<?>[] pk = pk();
 
         if (pk != null) {
             return using(configuration)
@@ -231,7 +234,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
     @Override
     public final P findById(T id) {
-        Field<?> pk = pk();
+        Field<?>[] pk = pk();
         R record = null;
 
         if (pk != null) {
@@ -279,45 +282,71 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
     protected abstract T getId(P object);
 
+    @SuppressWarnings("unchecked")
+    protected final T compositeKeyRecord(Object... values) {
+        UniqueKey<R> key = table.getPrimaryKey();
+        if (key == null)
+            return null;
+
+        TableField<R, Object>[] fields = (TableField<R, Object>[]) key.getFieldsArray();
+        Record result = DSL.using(configuration)
+                           .newRecord(fields);
+
+        for (int i = 0; i < values.length; i++) {
+            result.setValue(fields[i], fields[i].getDataType().convert(values[i]));
+        }
+
+        return (T) result;
+    }
+
     // ------------------------------------------------------------------------
     // XXX: Private utility methods
     // ------------------------------------------------------------------------
 
-    private final <U> Condition equal(Field<U> pk, T id) {
-        return pk.equal(pk.getDataType().convert(id));
-    }
-
-    private final <U> Condition equal(Field<U> pk, Collection<T> ids) {
-        if (ids.size() == 1) {
-            return equal(pk, ids.iterator().next());
+    @SuppressWarnings("unchecked")
+    private final Condition equal(Field<?>[] pk, T id) {
+        if (pk.length == 1) {
+            return ((Field<Object>) pk[0]).equal(pk[0].getDataType().convert(id));
         }
+
+        // [#2573] Composite key T types are of type Record[N]
         else {
-            return pk.in(pk.getDataType().convert(ids));
+            return row(pk).equal((Record) id);
         }
     }
 
-    private final Field<?> pk() {
-        UniqueKey<?> key = table.getPrimaryKey();
-
-        if (key != null) {
-            if (key.getFields().size() == 1) {
-                return key.getFields().get(0);
+    @SuppressWarnings("unchecked")
+    private final Condition equal(Field<?>[] pk, Collection<T> ids) {
+        if (pk.length == 1) {
+            if (ids.size() == 1) {
+                return equal(pk, ids.iterator().next());
+            }
+            else {
+                return ((Field<Object>) pk[0]).in(pk[0].getDataType().convert(ids));
             }
         }
 
-        return null;
+        // [#2573] Composite key T types are of type Record[N]
+        else {
+            return row(pk).in(ids.toArray(new Record[ids.size()]));
+        }
+    }
+
+    private final Field<?>[] pk() {
+        UniqueKey<?> key = table.getPrimaryKey();
+        return key == null ? null : key.getFieldsArray();
     }
 
     private final List<R> records(Collection<P> objects, boolean forUpdate) {
         List<R> result = new ArrayList<R>();
-        Field<?> pk = pk();
+        Field<?>[] pk = pk();
 
         for (P object : objects) {
             R record = using(configuration).newRecord(table, object);
 
-            if (forUpdate && pk != null) {
-                ((AbstractRecord) record).getValue0(pk).setChanged(false);
-            }
+            if (forUpdate && pk != null)
+                for (Field<?> field : pk)
+                    ((AbstractRecord) record).getValue0(field).setChanged(false);
 
             result.add(record);
         }

@@ -63,6 +63,7 @@ import static org.jooq.test.h2.generatedclasses.tables.TAuthor.FIRST_NAME;
 import static org.jooq.test.h2.generatedclasses.tables.TAuthor.LAST_NAME;
 import static org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -78,6 +79,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
+import org.jooq.Record2;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
@@ -113,7 +115,9 @@ import org.jooq.test.h2.generatedclasses.tables.T_785;
 import org.jooq.test.h2.generatedclasses.tables.VLibrary;
 import org.jooq.test.h2.generatedclasses.tables.daos.TAuthorDao;
 import org.jooq.test.h2.generatedclasses.tables.daos.T_2698Dao;
+import org.jooq.test.h2.generatedclasses.tables.daos.XUnusedDao;
 import org.jooq.test.h2.generatedclasses.tables.pojos.T_2698;
+import org.jooq.test.h2.generatedclasses.tables.pojos.XUnused;
 import org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TBookRecord;
@@ -942,5 +946,41 @@ public class H2Test extends jOOQAbstractTest<
         assertEquals(1, list.size());
         assertEquals(1, (int) list.get(0).getId());
         assertEquals(-1, (int) list.get(0).getXx());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testH2DaoWithCompositeKey() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        Record2<Integer, String> key1 = create().newRecord(
+            org.jooq.test.h2.generatedclasses.tables.XUnused.ID,
+            org.jooq.test.h2.generatedclasses.tables.XUnused.NAME);
+
+        Record2<Integer, String> key2 = create().newRecord(
+            org.jooq.test.h2.generatedclasses.tables.XUnused.ID,
+            org.jooq.test.h2.generatedclasses.tables.XUnused.NAME);
+        key2.setValue(org.jooq.test.h2.generatedclasses.tables.XUnused.ID, 1);
+        key2.setValue(org.jooq.test.h2.generatedclasses.tables.XUnused.NAME, "name");
+
+        XUnusedDao dao = new XUnusedDao(create().configuration());
+        dao.insert(new XUnused().setId(1).setName("name").setFields(1));
+        assertNull(dao.findById(key1));
+
+        XUnused pojo = dao.findById(key2);
+        assertEquals(1, (int) pojo.getId());
+        assertEquals("name", pojo.getName());
+        assertEquals(1, (int) pojo.getFields());
+
+        pojo.setFields(2);
+        dao.update(pojo);
+
+        pojo = dao.findById(key2);
+        assertEquals(1, (int) pojo.getId());
+        assertEquals("name", pojo.getName());
+        assertEquals(2, (int) pojo.getFields());
+
+        dao.deleteById(key2);
+        assertNull(dao.findById(key2));
     }
 }

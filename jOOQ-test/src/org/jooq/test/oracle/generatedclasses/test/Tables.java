@@ -67,6 +67,11 @@ public class Tables {
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TLanguage T_LANGUAGE = org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE;
 
 	/**
+	 * The table TEST.T_TEMP
+	 */
+	public static final org.jooq.test.oracle.generatedclasses.test.tables.TTemp T_TEMP = org.jooq.test.oracle.generatedclasses.test.tables.TTemp.T_TEMP;
+
+	/**
 	 * The table TEST.T_TRIGGERS
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TTriggers T_TRIGGERS = org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS;

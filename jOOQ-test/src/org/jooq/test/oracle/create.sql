@@ -46,6 +46,7 @@ DROP TABLE t_785/
 DROP TABLE "T_2845_CASE_sensitivity"/
 DROP TABLE t_unsigned/
 DROP TABLE t_booleans/
+DROP TABLE t_temp/
 
 DROP TABLE multi_schema_unused.x_unused/
 
@@ -356,6 +357,13 @@ CREATE TABLE t_dates (
   i_d interval day to second,
 
   CONSTRAINT pk_t_dates PRIMARY KEY (id)
+)
+/
+
+CREATE GLOBAL TEMPORARY TABLE t_temp (
+  id number(7),
+
+  CONSTRAINT pk_t_temp PRIMARY KEY (id)
 )
 /
 

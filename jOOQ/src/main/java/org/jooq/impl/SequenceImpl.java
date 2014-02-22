@@ -40,6 +40,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.SEQUENCE;
+import static org.jooq.Clause.SEQUENCE_REFERENCE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
@@ -70,11 +72,12 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 6224349401603636427L;
+    private static final long     serialVersionUID = 6224349401603636427L;
+    private static final Clause[] CLAUSES          = { SEQUENCE, SEQUENCE_REFERENCE };
 
-    final String              name;
-    final Schema              schema;
-    final DataType<T>         type;
+    final String                  name;
+    final Schema                  schema;
+    final DataType<T>             type;
 
     public SequenceImpl(String name, Schema schema, DataType<T> type) {
         this.name = name;
@@ -226,7 +229,7 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return null;
+        return CLAUSES;
     }
 
     // ------------------------------------------------------------------------

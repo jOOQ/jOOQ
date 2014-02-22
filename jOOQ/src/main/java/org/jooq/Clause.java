@@ -63,6 +63,13 @@ public enum Clause {
     SCHEMA_REFERENCE,
 
     // -------------------------------------------------------------------------
+    // Clauses used in a any type of statement to model sequence references
+    // -------------------------------------------------------------------------
+
+    SEQUENCE,
+    SEQUENCE_REFERENCE,
+
+    // -------------------------------------------------------------------------
     // Clauses used in a any type of statement to model table references
     // -------------------------------------------------------------------------
 

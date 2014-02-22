@@ -191,7 +191,7 @@ class Functions {
         <tr>
         <td class="description">Function description</td>
         «FOR d : families»
-        <td class="«d.nameLC»">«d.name»</td>
+        <td class="«d.nameLC»">«d.name()»</td>
         «ENDFOR»
         </tr>
         '''
@@ -203,7 +203,7 @@ class Functions {
         <tr>
         <td class="description">«description»</td>
         «FOR d : families»
-        <td class="«d.name»">«IF families(support.value).contains(d)»<code><pre>«DSL::using(d, new Settings()
+        <td class="«d.name()»">«IF families(support.value).contains(d)»<code><pre>«DSL::using(d, new Settings()
                     .withRenderSchema(false)
                     .withRenderNameStyle(RenderNameStyle.AS_IS)
                     .withStatementType(StatementType.STATIC_STATEMENT)

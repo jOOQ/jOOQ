@@ -45,6 +45,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLWarning;
 import java.util.EventListener;
 
 import org.jooq.conf.Settings;
@@ -616,6 +617,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * </li>
      * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
      * is about to be fetched.</li>
+     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database or <code>null</code> if no warning was emitted.</li>
      * </ul>
      * <p>
      * Overridable attributes in <code>ExecuteContext</code>:
@@ -670,6 +673,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * is about to be fetched.</li>
      * <li> {@link ExecuteContext#result()}: The set of records that are about to
      * be fetched.</li>
+     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database or <code>null</code> if no warning was emitted.</li>
      * </ul>
      * <p>
      * Note that this method is not called when executing queries that do not
@@ -713,6 +718,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * is about to be fetched.</li>
      * <li> {@link ExecuteContext#record()}: The <code>Record</code> that is
      * about to be fetched.</li>
+     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database or <code>null</code> if no warning was emitted.</li>
      * </ul>
      * <p>
      * Note that this method is not called when executing queries that do not
@@ -755,6 +762,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * is about to be fetched.</li>
      * <li> {@link ExecuteContext#record()}: The last <code>Record</code> that
      * was fetched.</li>
+     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database or <code>null</code> if no warning was emitted.</li>
      * </ul>
      * <p>
      * Note that this method is not called when executing queries that do not
@@ -799,6 +808,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * was fetched.</li>
      * <li> {@link ExecuteContext#result()}: The set of records that were
      * fetched.</li>
+     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database or <code>null</code> if no warning was emitted.</li>
      * </ul>
      * <p>
      * Note that this method is not called when executing queries that do not
@@ -846,6 +857,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * was fetched.</li>
      * <li> {@link ExecuteContext#result()}: The last set of records that were
      * fetched.</li>
+     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database or <code>null</code> if no warning was emitted.</li>
      * </ul>
      * <p>
      * In case of multiple <code>ResultSets</code> with
@@ -897,6 +910,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * was fetched or null if no records were fetched.</li>
      * <li> {@link ExecuteContext#result()}: The last set of records that were
      * fetched or null if no records were fetched.</li>
+     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database or <code>null</code> if no warning was emitted.</li>
      * </ul>
      */
     void end(ExecuteContext ctx);
@@ -949,4 +964,57 @@ public interface ExecuteListener extends EventListener, Serializable {
      * </ul>
      */
     void exception(ExecuteContext ctx);
+
+    /**
+     * Called in the event of a warning at any moment of the execution
+     * lifecycle.
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * jOOQ query is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * that is about to be executed, or <code>null</code> if the
+     * <code>SQL</code> statement is unknown..</li>
+     * <li> {@link ExecuteContext#statement()}: The
+     * <code>PreparedStatement</code> that is about to be executed, or
+     * <code>null</code> if no statement is known to jOOQ. This can be any of
+     * the following: <br/>
+     * <br/>
+     * <ul>
+     * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
+     * a jOOQ <code>Query</code> is being executed as
+     * {@link StatementType#PREPARED_STATEMENT}</li>
+     * <li>A <code>java.sql.Statement</code> from your JDBC driver wrapped in a
+     * <code>java.sql.PreparedStatement</code> when your jOOQ <code>Query</code>
+     * is being executed as {@link StatementType#STATIC_STATEMENT}</li>
+     * <li>A <code>java.sql.CallableStatement</code> when you are executing a
+     * jOOQ <code>Routine</code></li>
+     * </ul>
+     * Note that the <code>Statement</code> may be closed!</li>
+     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * was fetched or <code>null</code>, if no result set was fetched. Note that
+     * the <code>ResultSet</code> may already be closed!</li>
+     * <li> {@link ExecuteContext#rows()}: The number of affected rows if
+     * applicable.</li>
+     * <li> {@link ExecuteContext#record()}: The last <code>Record</code> that
+     * was fetched or null if no records were fetched.</li>
+     * <li> {@link ExecuteContext#result()}: The last set of records that were
+     * fetched or null if no records were fetched.</li>
+     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database</li>
+     * <li> {@link ExecuteContext#exception()}: The {@link RuntimeException} that
+     * is about to be thrown or <code>null</code>, if no exception is being
+     * thrown.</li>
+     * <li> {@link ExecuteContext#sqlException()}: The {@link SQLException} that
+     * was thrown by the database or <code>null</code>, if no exception is being
+     * thrown.</li>
+     * </ul>
+     */
+    void warning(ExecuteContext ctx);
 }

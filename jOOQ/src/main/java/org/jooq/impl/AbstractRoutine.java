@@ -49,6 +49,7 @@ import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Utils.consumeExceptions;
+import static org.jooq.impl.Utils.consumeWarnings;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -297,9 +298,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             registerOutParameters(configuration, (CallableStatement) ctx.statement());
             listener.bindEnd(ctx);
 
-            listener.executeStart(ctx);
-            execute0(ctx);
-            listener.executeEnd(ctx);
+            execute0(ctx, listener);
 
             fetchOutParameters(ctx);
             return 0;
@@ -314,15 +313,21 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         }
     }
 
-    private final void execute0(ExecuteContext ctx) throws SQLException {
+    private final void execute0(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         try {
+            listener.executeStart(ctx);
             ctx.statement().execute();
+            listener.executeEnd(ctx);
         }
 
         // [#3011] [#3054] Consume additional exceptions if there are any
         catch (SQLException e) {
             consumeExceptions(ctx.configuration(), ctx.statement(), e);
             throw e;
+        }
+        
+        finally {
+            consumeWarnings(ctx, listener);
         }
     }
 

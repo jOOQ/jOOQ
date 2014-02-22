@@ -232,4 +232,11 @@ class ExecuteListeners implements ExecuteListener {
             listener.exception(ctx);
         }
     }
+
+    @Override
+    public final void warning(ExecuteContext ctx) {
+        for (ExecuteListener listener : listeners) {
+            listener.warning(ctx);
+        }
+    }
 }

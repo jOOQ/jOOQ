@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static org.jooq.conf.RenderNameStyle.LOWER;
 import static org.jooq.conf.RenderNameStyle.UPPER;
+import static org.jooq.impl.Utils.consumeWarnings;
 import static org.jooq.impl.Utils.fieldArray;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
@@ -295,10 +296,15 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
 
                 // SQLite can select _rowid_ after the insert
                 case SQLITE: {
-                    listener.executeStart(ctx);
-                    result = ctx.statement().executeUpdate();
-                    ctx.rows(result);
-                    listener.executeEnd(ctx);
+                    try {
+                        listener.executeStart(ctx);
+                        result = ctx.statement().executeUpdate();
+                        ctx.rows(result);
+                        listener.executeEnd(ctx);
+                    }
+                    finally {
+                        consumeWarnings(ctx, listener);
+                    }
 
                     DSLContext create = DSL.using(ctx.configuration());
                     returned =
@@ -321,10 +327,15 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 xx [/pro] */
 
                 case CUBRID: {
-                    listener.executeStart(ctx);
-                    result = ctx.statement().executeUpdate();
-                    ctx.rows(result);
-                    listener.executeEnd(ctx);
+                    try {
+                        listener.executeStart(ctx);
+                        result = ctx.statement().executeUpdate();
+                        ctx.rows(result);
+                        listener.executeEnd(ctx);
+                    }
+                    finally {
+                        consumeWarnings(ctx, listener);
+                    }
 
                     selectReturning(ctx.configuration(), create(ctx.configuration()).lastID());
                     return result;
@@ -342,10 +353,15 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 case H2:
                 case MARIADB:
                 case MYSQL: {
-                    listener.executeStart(ctx);
-                    result = ctx.statement().executeUpdate();
-                    ctx.rows(result);
-                    listener.executeEnd(ctx);
+                    try {
+                        listener.executeStart(ctx);
+                        result = ctx.statement().executeUpdate();
+                        ctx.rows(result);
+                        listener.executeEnd(ctx);
+                    }
+                    finally {
+                        consumeWarnings(ctx, listener);
+                    }
 
                     rs = ctx.statement().getGeneratedKeys();
 
@@ -378,9 +394,14 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 // in the Postgres JDBC driver
                 case FIREBIRD:
                 case POSTGRES: {
-                    listener.executeStart(ctx);
-                    rs = ctx.statement().executeQuery();
-                    listener.executeEnd(ctx);
+                    try {
+                        listener.executeStart(ctx);
+                        rs = ctx.statement().executeQuery();
+                        listener.executeEnd(ctx);
+                    }
+                    finally {
+                        consumeWarnings(ctx, listener);
+                    }
 
                     break;
                 }
@@ -391,10 +412,15 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 xx [/pro] */
                 case HSQLDB:
                 default: {
-                    listener.executeStart(ctx);
-                    result = ctx.statement().executeUpdate();
-                    ctx.rows(result);
-                    listener.executeEnd(ctx);
+                    try {
+                        listener.executeStart(ctx);
+                        result = ctx.statement().executeUpdate();
+                        ctx.rows(result);
+                        listener.executeEnd(ctx);
+                    }
+                    finally {
+                        consumeWarnings(ctx, listener);
+                    }
 
                     rs = ctx.statement().getGeneratedKeys();
                     break;

@@ -142,4 +142,9 @@ public class StopWatchListener implements ExecuteListener {
     public void exception(ExecuteContext ctx) {
         watch.splitDebug("Exception");
     }
+
+    @Override
+    public void warning(ExecuteContext ctx) {
+        watch.splitDebug("Warning");
+    }
 }

@@ -48,6 +48,7 @@ import static java.util.concurrent.Executors.newSingleThreadExecutor;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.impl.Utils.DATA_LOCK_ROWS_FOR_UPDATE;
+import static org.jooq.impl.Utils.consumeWarnings;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -247,22 +248,27 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     protected final int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
-        listener.executeStart(ctx);
+        try {
+            listener.executeStart(ctx);
 
-        // JTDS doesn't seem to implement PreparedStatement.execute()
-        // correctly, at least not for sp_help
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
+            // JTDS doesn't seem to implement PreparedStatement.execute()
+            // correctly, at least not for sp_help
+            /* [pro] xx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            x
 
-        xx xxxxxxx xxxxx xxxxxxxxxxxxxx xx xxxxx xx xxxxxx xxxxxxx xxxx xxx
-        xx xxx xxxxxx x xxxxxxxxxx xxxx xxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
-        xxxx xx [/pro] */if (ctx.statement().execute()) {
-            ctx.resultSet(ctx.statement().getResultSet());
+            xx xxxxxxx xxxxx xxxxxxxxxxxxxx xx xxxxx xx xxxxxx xxxxxxx xxxx xxx
+            xx xxx xxxxxx x xxxxxxxxxx xxxx xxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+            xxxx xx [/pro] */if (ctx.statement().execute()) {
+                ctx.resultSet(ctx.statement().getResultSet());
+            }
+
+            listener.executeEnd(ctx);
         }
-
-        listener.executeEnd(ctx);
+        finally {
+            consumeWarnings(ctx, listener);
+        }
 
         // Fetch a single result set
         if (!many) {

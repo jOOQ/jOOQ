@@ -73,6 +73,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
+import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -1975,6 +1976,16 @@ final class Utils {
                     x
         x
         xx [/pro] */
+    }
+
+    /**
+     * [#3076] Consume warnings from a {@link Statement} and notify listeners.
+     */
+    static final void consumeWarnings(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
+        ctx.sqlWarning(ctx.statement().getWarnings());
+
+        if (ctx.sqlWarning() != null)
+            listener.warning(ctx);
     }
 
     @SuppressWarnings("unchecked")

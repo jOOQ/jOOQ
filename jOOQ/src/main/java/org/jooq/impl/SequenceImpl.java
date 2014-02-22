@@ -46,7 +46,10 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
 
+import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -62,7 +65,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
  *
  * @author Lukas Eder
  */
-public class SequenceImpl<T extends Number> implements Sequence<T> {
+public class SequenceImpl<T extends Number> extends AbstractQueryPart implements Sequence<T> {
 
     /**
      * Generated UID
@@ -197,16 +200,33 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
 
         private final String getQualifiedName(Configuration configuration) {
             RenderContext local = create(configuration).renderContext();
-            Schema mappedSchema = Utils.getMappedSchema(configuration, schema);
-
-            if (mappedSchema != null && configuration.dialect() != CUBRID) {
-                local.visit(mappedSchema);
-                local.sql(".");
-            }
-
-            local.literal(name);
+            SequenceImpl.this.toSQL(local);
             return local.render();
         }
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final void toSQL(RenderContext ctx) {
+        Schema mappedSchema = Utils.getMappedSchema(ctx.configuration(), schema);
+
+        if (mappedSchema != null && ctx.configuration().dialect() != CUBRID) {
+            ctx.visit(mappedSchema);
+            ctx.sql(".");
+        }
+
+        ctx.literal(name);
+    }
+
+    @Override
+    public final void bind(BindContext ctx) {}
+
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
     }
 
     // ------------------------------------------------------------------------

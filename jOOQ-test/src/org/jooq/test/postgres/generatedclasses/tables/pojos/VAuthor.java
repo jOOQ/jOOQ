@@ -9,22 +9,22 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthor implements org.jooq.test.postgres.generatedclasses.tables.interfaces.IVAuthor {
 
-	private static final long serialVersionUID = -1592051893;
+	private static final long serialVersionUID = 1036404497;
 
-	private final java.lang.Integer                                                      id;
-	private final java.lang.String                                                       firstName;
-	private final java.lang.String                                                       lastName;
-	private final java.sql.Date                                                          dateOfBirth;
-	private final java.lang.Integer                                                      yearOfBirth;
-	private final org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord address;
+	private final java.lang.Integer                                              id;
+	private final java.lang.String                                               firstName;
+	private final java.lang.String                                               lastName;
+	private final java.sql.Date                                                  dateOfBirth;
+	private final java.lang.Integer                                              yearOfBirth;
+	private final org.jooq.test.postgres.generatedclasses.udt.pojos.UAddressType address;
 
 	public VAuthor(
-		java.lang.Integer                                                      id,
-		java.lang.String                                                       firstName,
-		java.lang.String                                                       lastName,
-		java.sql.Date                                                          dateOfBirth,
-		java.lang.Integer                                                      yearOfBirth,
-		org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord address
+		java.lang.Integer                                              id,
+		java.lang.String                                               firstName,
+		java.lang.String                                               lastName,
+		java.sql.Date                                                  dateOfBirth,
+		java.lang.Integer                                              yearOfBirth,
+		org.jooq.test.postgres.generatedclasses.udt.pojos.UAddressType address
 	) {
 		this.id = id;
 		this.firstName = firstName;
@@ -60,7 +60,7 @@ public class VAuthor implements org.jooq.test.postgres.generatedclasses.tables.i
 	}
 
 	@Override
-	public org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord getAddress() {
+	public org.jooq.test.postgres.generatedclasses.udt.pojos.UAddressType getAddress() {
 		return this.address;
 	}
 }

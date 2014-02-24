@@ -37,5 +37,5 @@ public interface ITAuthor extends java.io.Serializable {
 	/**
 	 * Getter for <code>public.t_author.address</code>.
 	 */
-	public org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord getAddress();
+	public org.jooq.test.postgres.generatedclasses.udt.interfaces.IUAddressType getAddress();
 }

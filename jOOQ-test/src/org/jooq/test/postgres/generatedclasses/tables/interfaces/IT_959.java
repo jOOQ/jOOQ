@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 public interface IT_959 extends java.io.Serializable {
 
 	/**
-	 * Getter for <code>public.t_959.java_keywords</code>. 
+	 * Getter for <code>public.t_959.java_keywords</code>.
 	 */
 	public org.jooq.test.postgres.generatedclasses.enums.U_959 getJavaKeywords();
 }

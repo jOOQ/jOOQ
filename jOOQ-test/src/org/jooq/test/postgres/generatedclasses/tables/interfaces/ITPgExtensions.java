@@ -10,27 +10,27 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 public interface ITPgExtensions extends java.io.Serializable {
 
 	/**
-	 * Getter for <code>public.t_pg_extensions.id</code>. 
+	 * Getter for <code>public.t_pg_extensions.id</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Getter for <code>public.t_pg_extensions.pg_interval</code>. 
+	 * Getter for <code>public.t_pg_extensions.pg_interval</code>.
 	 */
 	public java.lang.Object getPgInterval();
 
 	/**
-	 * Getter for <code>public.t_pg_extensions.pg_box</code>. 
+	 * Getter for <code>public.t_pg_extensions.pg_box</code>.
 	 */
 	public java.lang.Object getPgBox();
 
 	/**
-	 * Getter for <code>public.t_pg_extensions.pg_hstore</code>. 
+	 * Getter for <code>public.t_pg_extensions.pg_hstore</code>.
 	 */
 	public java.lang.Object getPgHstore();
 
 	/**
-	 * Getter for <code>public.t_pg_extensions.pg_geometry</code>. 
+	 * Getter for <code>public.t_pg_extensions.pg_geometry</code>.
 	 */
 	public java.lang.Object getPgGeometry();
 }

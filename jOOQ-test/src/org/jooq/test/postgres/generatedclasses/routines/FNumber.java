@@ -9,15 +9,15 @@ package org.jooq.test.postgres.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1444860718;
+	private static final long serialVersionUID = 1697681826;
 
 	/**
-	 * The parameter <code>public.f_number.RETURN_VALUE</code>. 
+	 * The parameter <code>public.f_number.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>public.f_number.n</code>. 
+	 * The parameter <code>public.f_number.n</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> N = createParameter("n", org.jooq.impl.SQLDataType.INTEGER);
 

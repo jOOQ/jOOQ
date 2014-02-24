@@ -10,12 +10,12 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 public interface ITIdentity extends java.io.Serializable {
 
 	/**
-	 * Getter for <code>public.t_identity.id</code>. 
+	 * Getter for <code>public.t_identity.id</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Getter for <code>public.t_identity.val</code>. 
+	 * Getter for <code>public.t_identity.val</code>.
 	 */
 	public java.lang.Integer getVal();
 }

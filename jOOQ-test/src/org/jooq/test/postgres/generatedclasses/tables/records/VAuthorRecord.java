@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord>, org.jooq.test.postgres.generatedclasses.tables.interfaces.IVAuthor {
 
-	private static final long serialVersionUID = -1585074422;
+	private static final long serialVersionUID = -110544000;
 
 	/**
-	 * Setter for <code>public.v_author.id</code>. 
+	 * Setter for <code>public.v_author.id</code>.
 	 */
 	public VAuthorRecord setId(java.lang.Integer value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	}
 
 	/**
-	 * Getter for <code>public.v_author.id</code>. 
+	 * Getter for <code>public.v_author.id</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	}
 
 	/**
-	 * Setter for <code>public.v_author.first_name</code>. 
+	 * Setter for <code>public.v_author.first_name</code>.
 	 */
 	public VAuthorRecord setFirstName(java.lang.String value) {
 		setValue(1, value);
@@ -36,7 +36,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	}
 
 	/**
-	 * Getter for <code>public.v_author.first_name</code>. 
+	 * Getter for <code>public.v_author.first_name</code>.
 	 */
 	@Override
 	public java.lang.String getFirstName() {
@@ -44,7 +44,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	}
 
 	/**
-	 * Setter for <code>public.v_author.last_name</code>. 
+	 * Setter for <code>public.v_author.last_name</code>.
 	 */
 	public VAuthorRecord setLastName(java.lang.String value) {
 		setValue(2, value);
@@ -52,7 +52,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	}
 
 	/**
-	 * Getter for <code>public.v_author.last_name</code>. 
+	 * Getter for <code>public.v_author.last_name</code>.
 	 */
 	@Override
 	public java.lang.String getLastName() {
@@ -60,7 +60,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	}
 
 	/**
-	 * Setter for <code>public.v_author.date_of_birth</code>. 
+	 * Setter for <code>public.v_author.date_of_birth</code>.
 	 */
 	public VAuthorRecord setDateOfBirth(java.sql.Date value) {
 		setValue(3, value);
@@ -68,7 +68,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	}
 
 	/**
-	 * Getter for <code>public.v_author.date_of_birth</code>. 
+	 * Getter for <code>public.v_author.date_of_birth</code>.
 	 */
 	@Override
 	public java.sql.Date getDateOfBirth() {
@@ -76,7 +76,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	}
 
 	/**
-	 * Setter for <code>public.v_author.year_of_birth</code>. 
+	 * Setter for <code>public.v_author.year_of_birth</code>.
 	 */
 	public VAuthorRecord setYearOfBirth(java.lang.Integer value) {
 		setValue(4, value);
@@ -84,7 +84,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	}
 
 	/**
-	 * Getter for <code>public.v_author.year_of_birth</code>. 
+	 * Getter for <code>public.v_author.year_of_birth</code>.
 	 */
 	@Override
 	public java.lang.Integer getYearOfBirth() {
@@ -92,7 +92,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	}
 
 	/**
-	 * Setter for <code>public.v_author.address</code>. 
+	 * Setter for <code>public.v_author.address</code>.
 	 */
 	public VAuthorRecord setAddress(org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord value) {
 		setValue(5, value);
@@ -100,7 +100,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	}
 
 	/**
-	 * Getter for <code>public.v_author.address</code>. 
+	 * Getter for <code>public.v_author.address</code>.
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord getAddress() {

@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 public interface IT_986_1 extends java.io.Serializable {
 
 	/**
-	 * Getter for <code>public.t_986_1.ref</code>. 
+	 * Getter for <code>public.t_986_1.ref</code>.
 	 */
 	public java.lang.Integer getRef();
 }

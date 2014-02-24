@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord> implements org.jooq.Record11<java.lang.Integer, org.jooq.test._.converters.Boolean_10, org.jooq.test._.converters.Boolean_TF_LC, org.jooq.test._.converters.Boolean_TF_UC, org.jooq.test._.converters.Boolean_YES_NO_LC, org.jooq.test._.converters.Boolean_YES_NO_UC, org.jooq.test._.converters.Boolean_YN_LC, org.jooq.test._.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBooleans {
 
-	private static final long serialVersionUID = 1559650344;
+	private static final long serialVersionUID = -477400874;
 
 	/**
-	 * Setter for <code>public.t_booleans.id</code>. 
+	 * Setter for <code>public.t_booleans.id</code>.
 	 */
 	public TBooleansRecord setId(java.lang.Integer value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>public.t_booleans.id</code>. 
+	 * Getter for <code>public.t_booleans.id</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>public.t_booleans.one_zero</code>. 
+	 * Setter for <code>public.t_booleans.one_zero</code>.
 	 */
 	public TBooleansRecord setOneZero(org.jooq.test._.converters.Boolean_10 value) {
 		setValue(1, value);
@@ -36,7 +36,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>public.t_booleans.one_zero</code>. 
+	 * Getter for <code>public.t_booleans.one_zero</code>.
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_10 getOneZero() {
@@ -44,7 +44,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>public.t_booleans.true_false_lc</code>. 
+	 * Setter for <code>public.t_booleans.true_false_lc</code>.
 	 */
 	public TBooleansRecord setTrueFalseLc(org.jooq.test._.converters.Boolean_TF_LC value) {
 		setValue(2, value);
@@ -52,7 +52,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>public.t_booleans.true_false_lc</code>. 
+	 * Getter for <code>public.t_booleans.true_false_lc</code>.
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_TF_LC getTrueFalseLc() {
@@ -60,7 +60,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>public.t_booleans.true_false_uc</code>. 
+	 * Setter for <code>public.t_booleans.true_false_uc</code>.
 	 */
 	public TBooleansRecord setTrueFalseUc(org.jooq.test._.converters.Boolean_TF_UC value) {
 		setValue(3, value);
@@ -68,7 +68,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>public.t_booleans.true_false_uc</code>. 
+	 * Getter for <code>public.t_booleans.true_false_uc</code>.
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_TF_UC getTrueFalseUc() {
@@ -76,7 +76,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>public.t_booleans.yes_no_lc</code>. 
+	 * Setter for <code>public.t_booleans.yes_no_lc</code>.
 	 */
 	public TBooleansRecord setYesNoLc(org.jooq.test._.converters.Boolean_YES_NO_LC value) {
 		setValue(4, value);
@@ -84,7 +84,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>public.t_booleans.yes_no_lc</code>. 
+	 * Getter for <code>public.t_booleans.yes_no_lc</code>.
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_YES_NO_LC getYesNoLc() {
@@ -92,7 +92,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>public.t_booleans.yes_no_uc</code>. 
+	 * Setter for <code>public.t_booleans.yes_no_uc</code>.
 	 */
 	public TBooleansRecord setYesNoUc(org.jooq.test._.converters.Boolean_YES_NO_UC value) {
 		setValue(5, value);
@@ -100,7 +100,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>public.t_booleans.yes_no_uc</code>. 
+	 * Getter for <code>public.t_booleans.yes_no_uc</code>.
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_YES_NO_UC getYesNoUc() {
@@ -108,7 +108,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>public.t_booleans.y_n_lc</code>. 
+	 * Setter for <code>public.t_booleans.y_n_lc</code>.
 	 */
 	public TBooleansRecord setYNLc(org.jooq.test._.converters.Boolean_YN_LC value) {
 		setValue(6, value);
@@ -116,7 +116,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>public.t_booleans.y_n_lc</code>. 
+	 * Getter for <code>public.t_booleans.y_n_lc</code>.
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_YN_LC getYNLc() {
@@ -124,7 +124,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>public.t_booleans.y_n_uc</code>. 
+	 * Setter for <code>public.t_booleans.y_n_uc</code>.
 	 */
 	public TBooleansRecord setYNUc(org.jooq.test._.converters.Boolean_YN_UC value) {
 		setValue(7, value);
@@ -132,7 +132,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>public.t_booleans.y_n_uc</code>. 
+	 * Getter for <code>public.t_booleans.y_n_uc</code>.
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_YN_UC getYNUc() {
@@ -140,7 +140,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>public.t_booleans.vc_boolean</code>. 
+	 * Setter for <code>public.t_booleans.vc_boolean</code>.
 	 */
 	public TBooleansRecord setVcBoolean(java.lang.Boolean value) {
 		setValue(8, value);
@@ -148,7 +148,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>public.t_booleans.vc_boolean</code>. 
+	 * Getter for <code>public.t_booleans.vc_boolean</code>.
 	 */
 	@Override
 	public java.lang.Boolean getVcBoolean() {
@@ -156,7 +156,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>public.t_booleans.c_boolean</code>. 
+	 * Setter for <code>public.t_booleans.c_boolean</code>.
 	 */
 	public TBooleansRecord setCBoolean(java.lang.Boolean value) {
 		setValue(9, value);
@@ -164,7 +164,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>public.t_booleans.c_boolean</code>. 
+	 * Getter for <code>public.t_booleans.c_boolean</code>.
 	 */
 	@Override
 	public java.lang.Boolean getCBoolean() {
@@ -172,7 +172,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>public.t_booleans.n_boolean</code>. 
+	 * Setter for <code>public.t_booleans.n_boolean</code>.
 	 */
 	public TBooleansRecord setNBoolean(java.lang.Boolean value) {
 		setValue(10, value);
@@ -180,7 +180,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>public.t_booleans.n_boolean</code>. 
+	 * Getter for <code>public.t_booleans.n_boolean</code>.
 	 */
 	@Override
 	public java.lang.Boolean getNBoolean() {

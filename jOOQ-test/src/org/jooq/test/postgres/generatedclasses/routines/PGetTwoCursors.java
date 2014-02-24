@@ -9,15 +9,15 @@ package org.jooq.test.postgres.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PGetTwoCursors extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -889181296;
+	private static final long serialVersionUID = -94822722;
 
 	/**
-	 * The parameter <code>public.p_get_two_cursors.books</code>. 
+	 * The parameter <code>public.p_get_two_cursors.books</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> BOOKS = createParameter("books", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * The parameter <code>public.p_get_two_cursors.authors</code>. 
+	 * The parameter <code>public.p_get_two_cursors.authors</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> AUTHORS = createParameter("authors", org.jooq.impl.SQLDataType.RESULT);
 

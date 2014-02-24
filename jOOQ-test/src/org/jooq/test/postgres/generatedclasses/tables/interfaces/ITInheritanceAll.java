@@ -10,22 +10,22 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 public interface ITInheritanceAll extends java.io.Serializable {
 
 	/**
-	 * Getter for <code>public.t_inheritance_all.text_1</code>. 
+	 * Getter for <code>public.t_inheritance_all.text_1</code>.
 	 */
 	public java.lang.String getText_1();
 
 	/**
-	 * Getter for <code>public.t_inheritance_all.text_1_1</code>. 
+	 * Getter for <code>public.t_inheritance_all.text_1_1</code>.
 	 */
 	public java.lang.String getText_1_1();
 
 	/**
-	 * Getter for <code>public.t_inheritance_all.text_1_2</code>. 
+	 * Getter for <code>public.t_inheritance_all.text_1_2</code>.
 	 */
 	public java.lang.String getText_1_2();
 
 	/**
-	 * Getter for <code>public.t_inheritance_all.text_1_all</code>. 
+	 * Getter for <code>public.t_inheritance_all.text_1_all</code>.
 	 */
 	public java.lang.String getText_1All();
 }

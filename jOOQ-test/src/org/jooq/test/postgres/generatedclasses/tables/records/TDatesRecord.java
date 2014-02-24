@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record6<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITDates {
 
-	private static final long serialVersionUID = -1218304111;
+	private static final long serialVersionUID = -382619911;
 
 	/**
-	 * Setter for <code>public.t_dates.id</code>. 
+	 * Setter for <code>public.t_dates.id</code>.
 	 */
 	public TDatesRecord setId(java.lang.Integer value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>public.t_dates.id</code>. 
+	 * Getter for <code>public.t_dates.id</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>public.t_dates.d</code>. 
+	 * Setter for <code>public.t_dates.d</code>.
 	 */
 	public TDatesRecord setD(java.sql.Date value) {
 		setValue(1, value);
@@ -36,7 +36,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>public.t_dates.d</code>. 
+	 * Getter for <code>public.t_dates.d</code>.
 	 */
 	@Override
 	public java.sql.Date getD() {
@@ -44,7 +44,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>public.t_dates.t</code>. 
+	 * Setter for <code>public.t_dates.t</code>.
 	 */
 	public TDatesRecord setT(java.sql.Time value) {
 		setValue(2, value);
@@ -52,7 +52,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>public.t_dates.t</code>. 
+	 * Getter for <code>public.t_dates.t</code>.
 	 */
 	@Override
 	public java.sql.Time getT() {
@@ -60,7 +60,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>public.t_dates.ts</code>. 
+	 * Setter for <code>public.t_dates.ts</code>.
 	 */
 	public TDatesRecord setTs(java.sql.Timestamp value) {
 		setValue(3, value);
@@ -68,7 +68,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>public.t_dates.ts</code>. 
+	 * Getter for <code>public.t_dates.ts</code>.
 	 */
 	@Override
 	public java.sql.Timestamp getTs() {
@@ -76,7 +76,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>public.t_dates.d_int</code>. 
+	 * Setter for <code>public.t_dates.d_int</code>.
 	 */
 	public TDatesRecord setDInt(java.lang.Integer value) {
 		setValue(4, value);
@@ -84,7 +84,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>public.t_dates.d_int</code>. 
+	 * Getter for <code>public.t_dates.d_int</code>.
 	 */
 	@Override
 	public java.lang.Integer getDInt() {
@@ -92,7 +92,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>public.t_dates.ts_bigint</code>. 
+	 * Setter for <code>public.t_dates.ts_bigint</code>.
 	 */
 	public TDatesRecord setTsBigint(java.lang.Long value) {
 		setValue(5, value);
@@ -100,7 +100,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>public.t_dates.ts_bigint</code>. 
+	 * Getter for <code>public.t_dates.ts_bigint</code>.
 	 */
 	@Override
 	public java.lang.Long getTsBigint() {

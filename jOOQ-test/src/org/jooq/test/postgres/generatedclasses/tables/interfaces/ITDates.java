@@ -10,32 +10,32 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 public interface ITDates extends java.io.Serializable {
 
 	/**
-	 * Getter for <code>public.t_dates.id</code>. 
+	 * Getter for <code>public.t_dates.id</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Getter for <code>public.t_dates.d</code>. 
+	 * Getter for <code>public.t_dates.d</code>.
 	 */
 	public java.sql.Date getD();
 
 	/**
-	 * Getter for <code>public.t_dates.t</code>. 
+	 * Getter for <code>public.t_dates.t</code>.
 	 */
 	public java.sql.Time getT();
 
 	/**
-	 * Getter for <code>public.t_dates.ts</code>. 
+	 * Getter for <code>public.t_dates.ts</code>.
 	 */
 	public java.sql.Timestamp getTs();
 
 	/**
-	 * Getter for <code>public.t_dates.d_int</code>. 
+	 * Getter for <code>public.t_dates.d_int</code>.
 	 */
 	public java.lang.Integer getDInt();
 
 	/**
-	 * Getter for <code>public.t_dates.ts_bigint</code>. 
+	 * Getter for <code>public.t_dates.ts_bigint</code>.
 	 */
 	public java.lang.Long getTsBigint();
 }

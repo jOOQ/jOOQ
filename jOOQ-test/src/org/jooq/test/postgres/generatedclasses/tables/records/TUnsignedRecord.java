@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TUnsignedRecord> implements org.jooq.Record4<org.jooq.types.UByte, org.jooq.types.UShort, org.jooq.types.UInteger, org.jooq.types.ULong>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITUnsigned {
 
-	private static final long serialVersionUID = 2146298184;
+	private static final long serialVersionUID = 1193191596;
 
 	/**
-	 * Setter for <code>public.t_unsigned.u_byte</code>. 
+	 * Setter for <code>public.t_unsigned.u_byte</code>.
 	 */
 	public TUnsignedRecord setUByte(org.jooq.types.UByte value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Getter for <code>public.t_unsigned.u_byte</code>. 
+	 * Getter for <code>public.t_unsigned.u_byte</code>.
 	 */
 	@Override
 	public org.jooq.types.UByte getUByte() {
@@ -28,7 +28,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Setter for <code>public.t_unsigned.u_short</code>. 
+	 * Setter for <code>public.t_unsigned.u_short</code>.
 	 */
 	public TUnsignedRecord setUShort(org.jooq.types.UShort value) {
 		setValue(1, value);
@@ -36,7 +36,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Getter for <code>public.t_unsigned.u_short</code>. 
+	 * Getter for <code>public.t_unsigned.u_short</code>.
 	 */
 	@Override
 	public org.jooq.types.UShort getUShort() {
@@ -44,7 +44,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Setter for <code>public.t_unsigned.u_int</code>. 
+	 * Setter for <code>public.t_unsigned.u_int</code>.
 	 */
 	public TUnsignedRecord setUInt(org.jooq.types.UInteger value) {
 		setValue(2, value);
@@ -52,7 +52,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Getter for <code>public.t_unsigned.u_int</code>. 
+	 * Getter for <code>public.t_unsigned.u_int</code>.
 	 */
 	@Override
 	public org.jooq.types.UInteger getUInt() {
@@ -60,7 +60,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Setter for <code>public.t_unsigned.u_long</code>. 
+	 * Setter for <code>public.t_unsigned.u_long</code>.
 	 */
 	public TUnsignedRecord setULong(org.jooq.types.ULong value) {
 		setValue(3, value);
@@ -68,7 +68,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Getter for <code>public.t_unsigned.u_long</code>. 
+	 * Getter for <code>public.t_unsigned.u_long</code>.
 	 */
 	@Override
 	public org.jooq.types.ULong getULong() {

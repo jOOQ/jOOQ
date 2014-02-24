@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -2114003407;
+	private static final long serialVersionUID = 483056212;
 
 	/**
 	 * The singleton instance of <code>public.v_library</code>
@@ -25,31 +25,35 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gen
 	}
 
 	/**
-	 * The column <code>public.v_library.author</code>. 
+	 * The column <code>public.v_library.author</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("author", org.jooq.impl.SQLDataType.CLOB.defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("author", org.jooq.impl.SQLDataType.CLOB.defaulted(true), this, "");
 
 	/**
-	 * The column <code>public.v_library.title</code>. 
+	 * The column <code>public.v_library.title</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400).defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400).defaulted(true), this, "");
 
 	/**
 	 * Create a <code>public.v_library</code> table reference
 	 */
 	public VLibrary() {
-		super("v_library", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
+		this("v_library", null);
 	}
 
 	/**
 	 * Create an aliased <code>public.v_library</code> table reference
 	 */
 	public VLibrary(java.lang.String alias) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.VLibrary.V_LIBRARY);
+		this(alias, org.jooq.test.postgres.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 
 	private VLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord> aliased) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+		this(alias, aliased, null);
+	}
+
+	private VLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**

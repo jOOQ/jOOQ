@@ -10,17 +10,17 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 public interface ITTriggers extends java.io.Serializable {
 
 	/**
-	 * Getter for <code>public.t_triggers.id_generated</code>. 
+	 * Getter for <code>public.t_triggers.id_generated</code>.
 	 */
 	public java.lang.Integer getIdGenerated();
 
 	/**
-	 * Getter for <code>public.t_triggers.id</code>. 
+	 * Getter for <code>public.t_triggers.id</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Getter for <code>public.t_triggers.counter</code>. 
+	 * Getter for <code>public.t_triggers.counter</code>.
 	 */
 	public java.lang.Integer getCounter();
 }

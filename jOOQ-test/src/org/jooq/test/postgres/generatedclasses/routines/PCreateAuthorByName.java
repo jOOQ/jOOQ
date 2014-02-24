@@ -9,15 +9,15 @@ package org.jooq.test.postgres.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 2088383233;
+	private static final long serialVersionUID = -1960994017;
 
 	/**
-	 * The parameter <code>public.p_create_author_by_name.first_name</code>. 
+	 * The parameter <code>public.p_create_author_by_name.first_name</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FIRST_NAME = createParameter("first_name", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The parameter <code>public.p_create_author_by_name.last_name</code>. 
+	 * The parameter <code>public.p_create_author_by_name.last_name</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> LAST_NAME = createParameter("last_name", org.jooq.impl.SQLDataType.VARCHAR);
 

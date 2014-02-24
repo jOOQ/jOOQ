@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String>, org.jooq.test.postgres.generatedclasses.tables.interfaces.IXTestCase_85 {
 
-	private static final long serialVersionUID = -1924309610;
+	private static final long serialVersionUID = 1280924906;
 
 	/**
-	 * Setter for <code>public.x_test_case_85.id</code>. 
+	 * Setter for <code>public.x_test_case_85.id</code>.
 	 */
 	public XTestCase_85Record setId(java.lang.Integer value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Getter for <code>public.x_test_case_85.id</code>. 
+	 * Getter for <code>public.x_test_case_85.id</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Setter for <code>public.x_test_case_85.x_unused_id</code>. 
+	 * Setter for <code>public.x_test_case_85.x_unused_id</code>.
 	 */
 	public XTestCase_85Record setXUnusedId(java.lang.Integer value) {
 		setValue(1, value);
@@ -36,7 +36,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Getter for <code>public.x_test_case_85.x_unused_id</code>. 
+	 * Getter for <code>public.x_test_case_85.x_unused_id</code>.
 	 */
 	@Override
 	public java.lang.Integer getXUnusedId() {
@@ -44,7 +44,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Setter for <code>public.x_test_case_85.x_unused_name</code>. 
+	 * Setter for <code>public.x_test_case_85.x_unused_name</code>.
 	 */
 	public XTestCase_85Record setXUnusedName(java.lang.String value) {
 		setValue(2, value);
@@ -52,7 +52,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Getter for <code>public.x_test_case_85.x_unused_name</code>. 
+	 * Getter for <code>public.x_test_case_85.x_unused_name</code>.
 	 */
 	@Override
 	public java.lang.String getXUnusedName() {

@@ -10,22 +10,22 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 public interface ITUnsigned extends java.io.Serializable {
 
 	/**
-	 * Getter for <code>public.t_unsigned.u_byte</code>. 
+	 * Getter for <code>public.t_unsigned.u_byte</code>.
 	 */
 	public org.jooq.types.UByte getUByte();
 
 	/**
-	 * Getter for <code>public.t_unsigned.u_short</code>. 
+	 * Getter for <code>public.t_unsigned.u_short</code>.
 	 */
 	public org.jooq.types.UShort getUShort();
 
 	/**
-	 * Getter for <code>public.t_unsigned.u_int</code>. 
+	 * Getter for <code>public.t_unsigned.u_int</code>.
 	 */
 	public org.jooq.types.UInteger getUInt();
 
 	/**
-	 * Getter for <code>public.t_unsigned.u_long</code>. 
+	 * Getter for <code>public.t_unsigned.u_long</code>.
 	 */
 	public org.jooq.types.ULong getULong();
 }

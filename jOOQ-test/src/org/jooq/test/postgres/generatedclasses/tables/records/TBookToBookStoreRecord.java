@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = -1594191124;
+	private static final long serialVersionUID = -2046659538;
 
 	/**
-	 * Setter for <code>public.t_book_to_book_store.book_store_name</code>. 
+	 * Setter for <code>public.t_book_to_book_store.book_store_name</code>.
 	 */
 	public TBookToBookStoreRecord setBookStoreName(java.lang.String value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Getter for <code>public.t_book_to_book_store.book_store_name</code>. 
+	 * Getter for <code>public.t_book_to_book_store.book_store_name</code>.
 	 */
 	@Override
 	public java.lang.String getBookStoreName() {
@@ -28,7 +28,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Setter for <code>public.t_book_to_book_store.book_id</code>. 
+	 * Setter for <code>public.t_book_to_book_store.book_id</code>.
 	 */
 	public TBookToBookStoreRecord setBookId(java.lang.Integer value) {
 		setValue(1, value);
@@ -36,7 +36,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Getter for <code>public.t_book_to_book_store.book_id</code>. 
+	 * Getter for <code>public.t_book_to_book_store.book_id</code>.
 	 */
 	@Override
 	public java.lang.Integer getBookId() {
@@ -44,7 +44,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Setter for <code>public.t_book_to_book_store.stock</code>. 
+	 * Setter for <code>public.t_book_to_book_store.stock</code>.
 	 */
 	public TBookToBookStoreRecord setStock(java.lang.Integer value) {
 		setValue(2, value);
@@ -52,7 +52,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Getter for <code>public.t_book_to_book_store.stock</code>. 
+	 * Getter for <code>public.t_book_to_book_store.stock</code>.
 	 */
 	@Override
 	public java.lang.Integer getStock() {

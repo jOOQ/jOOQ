@@ -10,52 +10,52 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 public interface IVBook extends java.io.Serializable {
 
 	/**
-	 * Getter for <code>public.v_book.id</code>. 
+	 * Getter for <code>public.v_book.id</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Getter for <code>public.v_book.author_id</code>. 
+	 * Getter for <code>public.v_book.author_id</code>.
 	 */
 	public java.lang.Integer getAuthorId();
 
 	/**
-	 * Getter for <code>public.v_book.co_author_id</code>. 
+	 * Getter for <code>public.v_book.co_author_id</code>.
 	 */
 	public java.lang.Integer getCoAuthorId();
 
 	/**
-	 * Getter for <code>public.v_book.details_id</code>. 
+	 * Getter for <code>public.v_book.details_id</code>.
 	 */
 	public java.lang.Integer getDetailsId();
 
 	/**
-	 * Getter for <code>public.v_book.title</code>. 
+	 * Getter for <code>public.v_book.title</code>.
 	 */
 	public java.lang.String getTitle();
 
 	/**
-	 * Getter for <code>public.v_book.published_in</code>. 
+	 * Getter for <code>public.v_book.published_in</code>.
 	 */
 	public java.lang.Integer getPublishedIn();
 
 	/**
-	 * Getter for <code>public.v_book.language_id</code>. 
+	 * Getter for <code>public.v_book.language_id</code>.
 	 */
 	public java.lang.Integer getLanguageId();
 
 	/**
-	 * Getter for <code>public.v_book.content_text</code>. 
+	 * Getter for <code>public.v_book.content_text</code>.
 	 */
 	public java.lang.String getContentText();
 
 	/**
-	 * Getter for <code>public.v_book.content_pdf</code>. 
+	 * Getter for <code>public.v_book.content_pdf</code>.
 	 */
 	public byte[] getContentPdf();
 
 	/**
-	 * Getter for <code>public.v_book.status</code>. 
+	 * Getter for <code>public.v_book.status</code>.
 	 */
 	public org.jooq.test.postgres.generatedclasses.enums.UBookStatus getStatus();
 }

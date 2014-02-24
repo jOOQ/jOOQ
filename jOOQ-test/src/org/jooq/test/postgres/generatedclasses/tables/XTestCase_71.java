@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 1259658451;
+	private static final long serialVersionUID = -1311121478;
 
 	/**
 	 * The singleton instance of <code>public.x_test_case_71</code>
@@ -25,31 +25,35 @@ public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.postgres
 	}
 
 	/**
-	 * The column <code>public.x_test_case_71.id</code>. 
+	 * The column <code>public.x_test_case_71.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>public.x_test_case_71.test_case_64_69_id</code>. 
+	 * The column <code>public.x_test_case_71.test_case_64_69_id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record, java.lang.Short> TEST_CASE_64_69_ID = createField("test_case_64_69_id", org.jooq.impl.SQLDataType.SMALLINT.defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record, java.lang.Short> TEST_CASE_64_69_ID = createField("test_case_64_69_id", org.jooq.impl.SQLDataType.SMALLINT.defaulted(true), this, "");
 
 	/**
 	 * Create a <code>public.x_test_case_71</code> table reference
 	 */
 	public XTestCase_71() {
-		super("x_test_case_71", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
+		this("x_test_case_71", null);
 	}
 
 	/**
 	 * Create an aliased <code>public.x_test_case_71</code> table reference
 	 */
 	public XTestCase_71(java.lang.String alias) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71);
+		this(alias, org.jooq.test.postgres.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71);
 	}
 
 	private XTestCase_71(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record> aliased) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+		this(alias, aliased, null);
+	}
+
+	private XTestCase_71(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**

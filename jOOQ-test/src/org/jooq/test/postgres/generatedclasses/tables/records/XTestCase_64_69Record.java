@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.postgres.generatedclasses.tables.interfaces.IXTestCase_64_69 {
 
-	private static final long serialVersionUID = 1795518390;
+	private static final long serialVersionUID = 1968847014;
 
 	/**
-	 * Setter for <code>public.x_test_case_64_69.id</code>. 
+	 * Setter for <code>public.x_test_case_64_69.id</code>.
 	 */
 	public XTestCase_64_69Record setId(java.lang.Integer value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * Getter for <code>public.x_test_case_64_69.id</code>. 
+	 * Getter for <code>public.x_test_case_64_69.id</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * Setter for <code>public.x_test_case_64_69.unused_id</code>. 
+	 * Setter for <code>public.x_test_case_64_69.unused_id</code>.
 	 */
 	public XTestCase_64_69Record setUnusedId(java.lang.Integer value) {
 		setValue(1, value);
@@ -36,7 +36,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * Getter for <code>public.x_test_case_64_69.unused_id</code>. 
+	 * Getter for <code>public.x_test_case_64_69.unused_id</code>.
 	 */
 	@Override
 	public java.lang.Integer getUnusedId() {

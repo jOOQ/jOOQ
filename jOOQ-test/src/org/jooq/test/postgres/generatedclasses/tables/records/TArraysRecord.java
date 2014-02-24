@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> implements org.jooq.Record7<java.lang.Integer, java.lang.String[], java.lang.Integer[], java.sql.Date[], org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord[], org.jooq.test.postgres.generatedclasses.enums.UCountry[], java.lang.Integer[]>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITArrays {
 
-	private static final long serialVersionUID = 1165121123;
+	private static final long serialVersionUID = -1944049509;
 
 	/**
-	 * Setter for <code>public.t_arrays.id</code>. 
+	 * Setter for <code>public.t_arrays.id</code>.
 	 */
 	public TArraysRecord setId(java.lang.Integer value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Getter for <code>public.t_arrays.id</code>. 
+	 * Getter for <code>public.t_arrays.id</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Setter for <code>public.t_arrays.string_array</code>. 
+	 * Setter for <code>public.t_arrays.string_array</code>.
 	 */
 	public TArraysRecord setStringArray(java.lang.String[] value) {
 		setValue(1, value);
@@ -36,7 +36,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Getter for <code>public.t_arrays.string_array</code>. 
+	 * Getter for <code>public.t_arrays.string_array</code>.
 	 */
 	@Override
 	public java.lang.String[] getStringArray() {
@@ -44,7 +44,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Setter for <code>public.t_arrays.number_array</code>. 
+	 * Setter for <code>public.t_arrays.number_array</code>.
 	 */
 	public TArraysRecord setNumberArray(java.lang.Integer[] value) {
 		setValue(2, value);
@@ -52,7 +52,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Getter for <code>public.t_arrays.number_array</code>. 
+	 * Getter for <code>public.t_arrays.number_array</code>.
 	 */
 	@Override
 	public java.lang.Integer[] getNumberArray() {
@@ -60,7 +60,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Setter for <code>public.t_arrays.date_array</code>. 
+	 * Setter for <code>public.t_arrays.date_array</code>.
 	 */
 	public TArraysRecord setDateArray(java.sql.Date[] value) {
 		setValue(3, value);
@@ -68,7 +68,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Getter for <code>public.t_arrays.date_array</code>. 
+	 * Getter for <code>public.t_arrays.date_array</code>.
 	 */
 	@Override
 	public java.sql.Date[] getDateArray() {
@@ -76,7 +76,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Setter for <code>public.t_arrays.udt_array</code>. 
+	 * Setter for <code>public.t_arrays.udt_array</code>.
 	 */
 	public TArraysRecord setUdtArray(org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord[] value) {
 		setValue(4, value);
@@ -84,7 +84,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Getter for <code>public.t_arrays.udt_array</code>. 
+	 * Getter for <code>public.t_arrays.udt_array</code>.
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord[] getUdtArray() {
@@ -92,7 +92,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Setter for <code>public.t_arrays.enum_array</code>. 
+	 * Setter for <code>public.t_arrays.enum_array</code>.
 	 */
 	public TArraysRecord setEnumArray(org.jooq.test.postgres.generatedclasses.enums.UCountry[] value) {
 		setValue(5, value);
@@ -100,7 +100,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Getter for <code>public.t_arrays.enum_array</code>. 
+	 * Getter for <code>public.t_arrays.enum_array</code>.
 	 */
 	@Override
 	public org.jooq.test.postgres.generatedclasses.enums.UCountry[] getEnumArray() {
@@ -108,7 +108,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Setter for <code>public.t_arrays.array_array</code>. 
+	 * Setter for <code>public.t_arrays.array_array</code>.
 	 */
 	public TArraysRecord setArrayArray(java.lang.Integer[] value) {
 		setValue(6, value);
@@ -116,7 +116,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Getter for <code>public.t_arrays.array_array</code>. 
+	 * Getter for <code>public.t_arrays.array_array</code>.
 	 */
 	@Override
 	public java.lang.Integer[] getArrayArray() {

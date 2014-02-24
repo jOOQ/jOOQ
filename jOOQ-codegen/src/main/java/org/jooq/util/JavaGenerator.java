@@ -267,6 +267,10 @@ public class JavaGenerator extends AbstractGenerator {
             generateUDTRecords(schema);
         }
 
+        if (generateInterfaces() && database.getUDTs(schema).size() > 0) {
+            generateUDTInterfaces(schema);
+        }
+
         if (database.getUDTs(schema).size() > 0) {
             generateUDTRoutines(schema);
         }
@@ -575,7 +579,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
             printColumnJPAAnnotation(out, column);
-            printColumnValidationAnnotation(out, column);
+            printValidationAnnotation(out, column);
             out.tab(1).overrideIf(generateInterfaces());
             out.tab(1).println("public %s %s() {", type, getter);
             out.tab(2).println("return (%s) getValue(%s);", type, i);
@@ -727,33 +731,39 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateInterfaces(SchemaDefinition schema) {
-        log.info("Generating interfaces");
+        log.info("Generating table interfaces");
 
         for (TableDefinition table : database.getTables(schema)) {
             try {
                 generateInterface(table);
             } catch (Exception e) {
-                log.error("Error while generating table record " + table, e);
+                log.error("Error while generating table interface " + table, e);
             }
         }
 
-        watch.splitInfo("Table records generated");
+        watch.splitInfo("Table interfaces generated");
     }
 
     protected void generateInterface(TableDefinition table) {
-        log.info("Generating interface", getStrategy().getFileName(table, Mode.INTERFACE));
+        generateInterface((Definition) table);
+    }
 
-        final String className = getStrategy().getJavaClassName(table, Mode.INTERFACE);
-        final List<String> interfaces = getStrategy().getJavaClassImplements(table, Mode.INTERFACE);
+    private void generateInterface(Definition tableOrUDT) {
+        log.info("Generating interface", getStrategy().getFileName(tableOrUDT, Mode.INTERFACE));
 
-        JavaWriter out = new JavaWriter(getStrategy().getFile(table, Mode.INTERFACE));
-        printPackage(out, table, Mode.INTERFACE);
-        printClassJavadoc(out, table);
-        printTableJPAAnnotation(out, table);
+        final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.INTERFACE);
+        final List<String> interfaces = getStrategy().getJavaClassImplements(tableOrUDT, Mode.INTERFACE);
+
+        JavaWriter out = new JavaWriter(getStrategy().getFile(tableOrUDT, Mode.INTERFACE));
+        printPackage(out, tableOrUDT, Mode.INTERFACE);
+        printClassJavadoc(out, tableOrUDT);
+
+        if (tableOrUDT instanceof TableDefinition)
+            printTableJPAAnnotation(out, (TableDefinition) tableOrUDT);
 
         out.println("public interface %s [[before=extends ][%s]] {", className, interfaces);
 
-        for (ColumnDefinition column : table.getColumns()) {
+        for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
             final String comment = StringUtils.defaultString(column.getComment());
             final String setterReturnType = fluentSetters() ? className : "void";
             final String setter = getStrategy().getJavaSetterName(column, Mode.DEFAULT);
@@ -767,14 +777,17 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
-            printColumnJPAAnnotation(out, column);
-            printColumnValidationAnnotation(out, column);
+
+            if (column instanceof ColumnDefinition)
+                printColumnJPAAnnotation(out, (ColumnDefinition) column);
+
+            printValidationAnnotation(out, column);
             out.tab(1).println("public %s %s();", type, getter);
         }
 
         if (!generateImmutablePojos()) {
-            String local = getStrategy().getJavaClassName(table, Mode.INTERFACE);
-            String qualified = getStrategy().getFullJavaClassName(table, Mode.INTERFACE);
+            String local = getStrategy().getJavaClassName(tableOrUDT, Mode.INTERFACE);
+            String qualified = getStrategy().getFullJavaClassName(tableOrUDT, Mode.INTERFACE);
 
             out.tab(1).header("FROM and INTO");
 
@@ -785,7 +798,14 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("public <E extends %s> E into(E into);", qualified);
         }
 
-        generateInterfaceClassFooter(table, out);
+
+        if (tableOrUDT instanceof TableDefinition) {
+            generateInterfaceClassFooter((TableDefinition) tableOrUDT, out);
+        }
+        else {
+            generateUDTInterfaceClassFooter((UDTDefinition) tableOrUDT, out);
+        }
+
         out.println("}");
         out.close();
     }
@@ -919,6 +939,28 @@ public class JavaGenerator extends AbstractGenerator {
      */
     protected void generateUDTPojoClassFooter(UDTDefinition udt, JavaWriter out) {}
 
+    protected void generateUDTInterfaces(SchemaDefinition schema) {
+        log.info("Generating UDT interfaces");
+
+        for (UDTDefinition udt : database.getUDTs(schema)) {
+            try {
+                generateInterface(udt);
+            } catch (Exception e) {
+                log.error("Error while generating UDT interface " + udt, e);
+            }
+        }
+
+        watch.splitInfo("UDT interfaces generated");
+    }
+
+    /**
+     * Subclasses may override this method to provide UDT interface class footer code.
+     *
+     * @param udt The UDT
+     * @param out The writer
+     */
+    protected void generateUDTInterfaceClassFooter(UDTDefinition udt, JavaWriter out) {}
+
     /**
      * Generating UDT record classes
      */
@@ -941,12 +983,16 @@ public class JavaGenerator extends AbstractGenerator {
 
         final String className = getStrategy().getJavaClassName(udt, Mode.RECORD);
         final String recordType = getStrategy().getFullJavaClassName(udt, Mode.RECORD);
-        final List<String> interfaces = getStrategy().getJavaClassImplements(udt, Mode.RECORD);
+        final List<String> interfaces = new ArrayList<String>(getStrategy().getJavaClassImplements(udt, Mode.RECORD));
         final String udtId = getStrategy().getFullJavaIdentifier(udt);
 
         JavaWriter out = new JavaWriter(getStrategy().getFile(udt, Mode.RECORD));
         printPackage(out, udt, Mode.RECORD);
         printClassJavadoc(out, udt);
+
+        if (generateInterfaces()) {
+            interfaces.add(getStrategy().getFullJavaClassName(udt, Mode.INTERFACE));
+        }
 
         out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, UDTRecordImpl.class, recordType, interfaces);
         out.printSerial();
@@ -2137,6 +2183,10 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
+    /**
+     * @deprecated - This method is no longer used by the generator.
+     */
+    @Deprecated
     protected void printColumnValidationAnnotation(JavaWriter out, ColumnDefinition column) {
         printValidationAnnotation(out, column);
     }

@@ -28,8 +28,8 @@ Version 3.3.0 - February 14, 2014
 Finally, a new awesome jOOQ release is ready for you to download! The most
 important feature first:
 
-  The SEEK method
-  ---------------
+The SEEK method
+---------------
   
 We've been blogging about keyset paging before:
 
@@ -40,8 +40,8 @@ Every SQL developer should have this tool in their toolchain. And now, with
 jOOQ 3.3, we natively support a synthetic SQL clause for you to express keyset
 paging very easily. jOOQ is the only database software out there to do so!
 
-  Gudu Software's SQL 2 jOOQ Parser
-  ---------------------------------
+Gudu Software's SQL 2 jOOQ Parser
+---------------------------------
   
 We're very happy to announce our collaboration with Gudu Software Ltd who have
 implemented a very powerful SQL parser and transformer for enterprise databases.
@@ -67,8 +67,8 @@ on the commercial gsp.jar parser, whose trial licensing terms can be seen here:
 
 - https://github.com/sqlparser/sql2jooq/blob/master/sql2jooq/LICENSE-GSQLPARSER.txt
 
-  Great new SQL Feature Support
-  -----------------------------
+Great new SQL Feature Support
+-----------------------------
   
 We've been looking around for SQL standard and vendor-specific features, such as
 the WINDOW clause (standard!), CROSS APPLY, OUTER APPLY, LATERAL join, DEFAULTs
@@ -82,8 +82,8 @@ for more details:
 - http://blog.jooq.org/2014/01/08/lesser-known-sql-features-default-values/
 - http://blog.jooq.org/2014/02/06/youre-very-likely-to-have-gotten-sql-date-time-arithmetic-wrong/
 
-  Formal Spring integration support
-  ---------------------------------
+Formal Spring integration support
+---------------------------------
   
 Spring is one of the most popular frameworks to handle transactions, and it does
 so very well. With the help of our community, we've established new standards and

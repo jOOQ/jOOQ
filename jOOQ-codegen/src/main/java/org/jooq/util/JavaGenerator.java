@@ -259,6 +259,10 @@ public class JavaGenerator extends AbstractGenerator {
             generateUDTs(schema);
         }
 
+        if (generatePojos() && database.getUDTs(schema).size() > 0) {
+            generateUDTPojos(schema);
+        }
+
         if (database.getUDTs(schema).size() > 0) {
             generateUDTRecords(schema);
         }
@@ -499,7 +503,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateRecords(SchemaDefinition schema) {
-        log.info("Generating records");
+        log.info("Generating table records");
 
         for (TableDefinition table : database.getTables(schema)) {
             try {
@@ -513,7 +517,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateRecord(TableDefinition table) {
-        log.info("Generating record", getStrategy().getFileName(table, Mode.RECORD));
+        log.info("Generating table record", getStrategy().getFileName(table, Mode.RECORD));
 
         final UniqueKeyDefinition key = table.getPrimaryKey();
         final String className = getStrategy().getJavaClassName(table, Mode.RECORD);
@@ -891,6 +895,29 @@ public class JavaGenerator extends AbstractGenerator {
      * @param out The writer
      */
     protected void generateUDTClassFooter(UDTDefinition udt, JavaWriter out) {}
+
+    protected void generateUDTPojos(SchemaDefinition schema) {
+        log.info("Generating UDT POJOs");
+
+        for (UDTDefinition udt : database.getUDTs(schema)) {
+            try {
+                generatePojo(udt);
+            }
+            catch (Exception e) {
+                log.error("Error while generating UDT POJO " + udt, e);
+            }
+        }
+
+        watch.splitInfo("UDT POJOs generated");
+    }
+
+    /**
+     * Subclasses may override this method to provide UDT POJO class footer code.
+     *
+     * @param udt The UDT
+     * @param out The writer
+     */
+    protected void generateUDTPojoClassFooter(UDTDefinition udt, JavaWriter out) {}
 
     /**
      * Generating UDT record classes
@@ -1479,21 +1506,28 @@ public class JavaGenerator extends AbstractGenerator {
 
         watch.splitInfo("Table POJOs generated");
     }
-    protected void generatePojo(TableDefinition table) {
-        log.info("Generating table POJO", getStrategy().getFileName(table, Mode.POJO));
 
-        final String className = getStrategy().getJavaClassName(table, Mode.POJO);
-        final String superName = getStrategy().getJavaClassExtends(table, Mode.POJO);
-        final List<String> interfaces = getStrategy().getJavaClassImplements(table, Mode.POJO);
+    protected void generatePojo(TableDefinition table) {
+        generatePojo((Definition) table);
+    }
+
+    private void generatePojo(Definition tableOrUDT) {
+        log.info("Generating POJO", getStrategy().getFileName(tableOrUDT, Mode.POJO));
+
+        final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.POJO);
+        final String superName = getStrategy().getJavaClassExtends(tableOrUDT, Mode.POJO);
+        final List<String> interfaces = getStrategy().getJavaClassImplements(tableOrUDT, Mode.POJO);
 
         if (generateInterfaces()) {
-            interfaces.add(getStrategy().getFullJavaClassName(table, Mode.INTERFACE));
+            interfaces.add(getStrategy().getFullJavaClassName(tableOrUDT, Mode.INTERFACE));
         }
 
-        JavaWriter out = new JavaWriter(getStrategy().getFile(table, Mode.POJO));
-        printPackage(out, table, Mode.POJO);
-        printClassJavadoc(out, table);
-        printTableJPAAnnotation(out, table);
+        JavaWriter out = new JavaWriter(getStrategy().getFile(tableOrUDT, Mode.POJO));
+        printPackage(out, tableOrUDT, Mode.POJO);
+        printClassJavadoc(out, tableOrUDT);
+
+        if (tableOrUDT instanceof TableDefinition)
+            printTableJPAAnnotation(out, (TableDefinition) tableOrUDT);
 
         out.println("public class %s[[before= extends ][%s]][[before= implements ][%s]] {", className, list(superName), interfaces);
         out.printSerial();
@@ -1501,11 +1535,11 @@ public class JavaGenerator extends AbstractGenerator {
         out.println();
 
         int maxLength = 0;
-        for (ColumnDefinition column : table.getColumns()) {
+        for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
             maxLength = Math.max(maxLength, getJavaType(column.getType()).length());
         }
 
-        for (ColumnDefinition column : table.getColumns()) {
+        for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
             out.tab(1).println("private %s%s %s;",
                 generateImmutablePojos() ? "final " : "",
                 StringUtils.rightPad(getJavaType(column.getType()), maxLength),
@@ -1523,31 +1557,36 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         // Multi-constructor
-        out.println();
-        out.tab(1).print("public %s(", className);
 
-        String separator1 = "";
-        for (ColumnDefinition column : table.getColumns()) {
-            out.println(separator1);
+        // [#3010] Invalid UDTs may have no attributes. Avoid generating this constructor
+        // in that case
+        if (getTypedElements(tableOrUDT).size() > 0) {
+            out.println();
+            out.tab(1).print("public %s(", className);
 
-            out.tab(2).print("%s %s",
-                StringUtils.rightPad(getJavaType(column.getType()), maxLength),
-                getStrategy().getJavaMemberName(column, Mode.POJO));
-            separator1 = ",";
+            String separator1 = "";
+            for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
+                out.println(separator1);
+
+                out.tab(2).print("%s %s",
+                    StringUtils.rightPad(getJavaType(column.getType()), maxLength),
+                    getStrategy().getJavaMemberName(column, Mode.POJO));
+                separator1 = ",";
+            }
+
+            out.println();
+            out.tab(1).println(") {");
+
+            for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
+                final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+
+                out.tab(2).println("this.%s = %s;", columnMember, columnMember);
+            }
+
+            out.tab(1).println("}");
         }
 
-        out.println();
-        out.tab(1).println(") {");
-
-        for (ColumnDefinition column : table.getColumns()) {
-            final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
-
-            out.tab(2).println("this.%s = %s;", columnMember, columnMember);
-        }
-
-        out.tab(1).println("}");
-
-        for (ColumnDefinition column : table.getColumns()) {
+        for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
             final String columnType = getJavaType(column.getType());
             final String columnSetterReturnType = fluentSetters() ? className : "void";
             final String columnSetter = getStrategy().getJavaSetterName(column, Mode.POJO);
@@ -1556,8 +1595,11 @@ public class JavaGenerator extends AbstractGenerator {
 
             // Getter
             out.println();
-            printColumnJPAAnnotation(out, column);
-            printColumnValidationAnnotation(out, column);
+
+            if (column instanceof ColumnDefinition)
+                printColumnJPAAnnotation(out, (ColumnDefinition) column);
+
+            printValidationAnnotation(out, column);
             out.tab(1).overrideIf(generateInterfaces());
             out.tab(1).println("public %s %s() {", columnType, columnGetter);
             out.tab(2).println("return this.%s;", columnMember);
@@ -1576,12 +1618,33 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (generateInterfaces() && !generateImmutablePojos()) {
-            printFromAndInto(out, table);
+            printFromAndInto(out, tableOrUDT);
         }
 
-        generatePojoClassFooter(table, out);
+        if (tableOrUDT instanceof TableDefinition) {
+            generatePojoClassFooter((TableDefinition) tableOrUDT, out);
+        }
+        else {
+            generateUDTPojoClassFooter((UDTDefinition) tableOrUDT, out);
+        }
+
         out.println("}");
         out.close();
+    }
+
+    private List<? extends TypedElementDefinition<? extends Definition>> getTypedElements(Definition definition) {
+        if (definition instanceof TableDefinition) {
+            return ((TableDefinition) definition).getColumns();
+        }
+        else if (definition instanceof UDTDefinition) {
+            return ((UDTDefinition) definition).getAttributes();
+        }
+        else if (definition instanceof RoutineDefinition) {
+            return ((RoutineDefinition) definition).getAllParameters();
+        }
+        else {
+            throw new IllegalArgumentException("Unsupported type : " + definition);
+        }
     }
 
     /**
@@ -1922,13 +1985,17 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateSchemaClassFooter(SchemaDefinition schema, JavaWriter out) {}
 
     protected void printFromAndInto(JavaWriter out, TableDefinition table) {
-        String qualified = getStrategy().getFullJavaClassName(table, Mode.INTERFACE);
+        printFromAndInto(out, (Definition) table);
+    }
+
+    private void printFromAndInto(JavaWriter out, Definition tableOrUDT) {
+        String qualified = getStrategy().getFullJavaClassName(tableOrUDT, Mode.INTERFACE);
 
         out.tab(1).header("FROM and INTO");
         out.tab(1).overrideInherit();
         out.tab(1).println("public void from(%s from) {", qualified);
 
-        for (ColumnDefinition column : table.getColumns()) {
+        for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
             String setter = getStrategy().getJavaSetterName(column, Mode.INTERFACE);
             String getter = getStrategy().getJavaGetterName(column, Mode.INTERFACE);
 
@@ -2071,6 +2138,10 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void printColumnValidationAnnotation(JavaWriter out, ColumnDefinition column) {
+        printValidationAnnotation(out, column);
+    }
+
+    private void printValidationAnnotation(JavaWriter out, TypedElementDefinition<?> column) {
         if (generateValidationAnnotations()) {
             DataTypeDefinition type = column.getType();
 

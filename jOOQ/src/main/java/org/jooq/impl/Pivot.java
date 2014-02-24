@@ -58,7 +58,6 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Select;
-import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
@@ -297,7 +296,6 @@ implements
         }
 
         @Override
-        @Support
         public final Table<Record> as(String as, String... fieldAliases) {
             return new TableAlias<Record>(this, as, fieldAliases);
         }

@@ -85,7 +85,6 @@ class Values<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    @Support
     public final Table<R> as(String alias) {
         return new TableAlias<R>(this, alias, true);
     }

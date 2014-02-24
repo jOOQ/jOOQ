@@ -1500,8 +1500,22 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals("Parliament Hill", author2.address.street.street);
         assertEquals(asList(1, 2, 3), author2.address.street.floors);
         assertEquals("77", author2.address.street.no);
+    }
 
+    @Test
+    public void testOracleUDTRecordMappingWithGeneratedUDTs() throws Exception {
+        org.jooq.test.oracle.generatedclasses.test.tables.pojos.TAuthor author =
+        create().selectFrom(T_AUTHOR)
+                .where(T_AUTHOR.ID.eq(1))
+                .fetchOneInto(org.jooq.test.oracle.generatedclasses.test.tables.pojos.TAuthor.class);
 
+        assertEquals("George", author.getFirstName());
+        assertEquals("Orwell", author.getLastName());
+        assertEquals("Hampstead", author.getAddress().getCity());
+        assertEquals("England", author.getAddress().getCountry());
+        assertEquals("Parliament Hill", author.getAddress().getStreet().getStreet());
+        assertEquals(asList(1, 2, 3), asList(author.getAddress().getStreet().getFloors().get()));
+        assertEquals("77", author.getAddress().getStreet().getNo());
     }
 
     @Test

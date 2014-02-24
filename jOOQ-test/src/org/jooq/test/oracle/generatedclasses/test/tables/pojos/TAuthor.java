@@ -13,24 +13,24 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_AUTHOR", schema = "TEST")
 public class TAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = -2029771170;
+	private static final long serialVersionUID = 1871317334;
 
-	private java.lang.Integer                                                         id;
-	private java.lang.String                                                          firstName;
-	private java.lang.String                                                          lastName;
-	private java.sql.Date                                                             dateOfBirth;
-	private java.lang.Integer                                                         yearOfBirth;
-	private org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord address;
+	private java.lang.Integer                                                 id;
+	private java.lang.String                                                  firstName;
+	private java.lang.String                                                  lastName;
+	private java.sql.Date                                                     dateOfBirth;
+	private java.lang.Integer                                                 yearOfBirth;
+	private org.jooq.test.oracle.generatedclasses.test.udt.pojos.UAddressType address;
 
 	public TAuthor() {}
 
 	public TAuthor(
-		java.lang.Integer                                                         id,
-		java.lang.String                                                          firstName,
-		java.lang.String                                                          lastName,
-		java.sql.Date                                                             dateOfBirth,
-		java.lang.Integer                                                         yearOfBirth,
-		org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord address
+		java.lang.Integer                                                 id,
+		java.lang.String                                                  firstName,
+		java.lang.String                                                  lastName,
+		java.sql.Date                                                     dateOfBirth,
+		java.lang.Integer                                                 yearOfBirth,
+		org.jooq.test.oracle.generatedclasses.test.udt.pojos.UAddressType address
 	) {
 		this.id = id;
 		this.firstName = firstName;
@@ -91,11 +91,11 @@ public class TAuthor implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "ADDRESS", length = 1)
-	public org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord getAddress() {
+	public org.jooq.test.oracle.generatedclasses.test.udt.pojos.UAddressType getAddress() {
 		return this.address;
 	}
 
-	public void setAddress(org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord address) {
+	public void setAddress(org.jooq.test.oracle.generatedclasses.test.udt.pojos.UAddressType address) {
 		this.address = address;
 	}
 }

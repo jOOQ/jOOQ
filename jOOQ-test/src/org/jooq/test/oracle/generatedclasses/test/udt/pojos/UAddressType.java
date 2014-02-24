@@ -9,28 +9,28 @@ package org.jooq.test.oracle.generatedclasses.test.udt.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAddressType implements java.io.Serializable {
 
-	private static final long serialVersionUID = -2084387429;
+	private static final long serialVersionUID = 306521243;
 
-	private org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord street;
-	private java.lang.String                                                         zip;
-	private java.lang.String                                                         city;
-	private java.lang.String                                                         country;
-	private java.sql.Date                                                            since;
-	private java.lang.Integer                                                        code;
-	private byte[]                                                                   f_1323;
-	private java.lang.String                                                         f_1326;
+	private org.jooq.test.oracle.generatedclasses.test.udt.pojos.UStreetType street;
+	private java.lang.String                                                 zip;
+	private java.lang.String                                                 city;
+	private java.lang.String                                                 country;
+	private java.sql.Date                                                    since;
+	private java.lang.Integer                                                code;
+	private byte[]                                                           f_1323;
+	private java.lang.String                                                 f_1326;
 
 	public UAddressType() {}
 
 	public UAddressType(
-		org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord street,
-		java.lang.String                                                         zip,
-		java.lang.String                                                         city,
-		java.lang.String                                                         country,
-		java.sql.Date                                                            since,
-		java.lang.Integer                                                        code,
-		byte[]                                                                   f_1323,
-		java.lang.String                                                         f_1326
+		org.jooq.test.oracle.generatedclasses.test.udt.pojos.UStreetType street,
+		java.lang.String                                                 zip,
+		java.lang.String                                                 city,
+		java.lang.String                                                 country,
+		java.sql.Date                                                    since,
+		java.lang.Integer                                                code,
+		byte[]                                                           f_1323,
+		java.lang.String                                                 f_1326
 	) {
 		this.street = street;
 		this.zip = zip;
@@ -42,11 +42,11 @@ public class UAddressType implements java.io.Serializable {
 		this.f_1326 = f_1326;
 	}
 
-	public org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord getStreet() {
+	public org.jooq.test.oracle.generatedclasses.test.udt.pojos.UStreetType getStreet() {
 		return this.street;
 	}
 
-	public void setStreet(org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord street) {
+	public void setStreet(org.jooq.test.oracle.generatedclasses.test.udt.pojos.UStreetType street) {
 		this.street = street;
 	}
 

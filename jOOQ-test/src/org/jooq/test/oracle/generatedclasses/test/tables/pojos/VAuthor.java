@@ -11,24 +11,24 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "V_AUTHOR", schema = "TEST")
 public class VAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1557217072;
+	private static final long serialVersionUID = -82072496;
 
-	private java.lang.Integer                                                         id;
-	private java.lang.String                                                          firstName;
-	private java.lang.String                                                          lastName;
-	private java.sql.Date                                                             dateOfBirth;
-	private java.lang.Integer                                                         yearOfBirth;
-	private org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord address;
+	private java.lang.Integer                                                 id;
+	private java.lang.String                                                  firstName;
+	private java.lang.String                                                  lastName;
+	private java.sql.Date                                                     dateOfBirth;
+	private java.lang.Integer                                                 yearOfBirth;
+	private org.jooq.test.oracle.generatedclasses.test.udt.pojos.UAddressType address;
 
 	public VAuthor() {}
 
 	public VAuthor(
-		java.lang.Integer                                                         id,
-		java.lang.String                                                          firstName,
-		java.lang.String                                                          lastName,
-		java.sql.Date                                                             dateOfBirth,
-		java.lang.Integer                                                         yearOfBirth,
-		org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord address
+		java.lang.Integer                                                 id,
+		java.lang.String                                                  firstName,
+		java.lang.String                                                  lastName,
+		java.sql.Date                                                     dateOfBirth,
+		java.lang.Integer                                                 yearOfBirth,
+		org.jooq.test.oracle.generatedclasses.test.udt.pojos.UAddressType address
 	) {
 		this.id = id;
 		this.firstName = firstName;
@@ -88,11 +88,11 @@ public class VAuthor implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "ADDRESS", length = 40)
-	public org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord getAddress() {
+	public org.jooq.test.oracle.generatedclasses.test.udt.pojos.UAddressType getAddress() {
 		return this.address;
 	}
 
-	public void setAddress(org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord address) {
+	public void setAddress(org.jooq.test.oracle.generatedclasses.test.udt.pojos.UAddressType address) {
 		this.address = address;
 	}
 }

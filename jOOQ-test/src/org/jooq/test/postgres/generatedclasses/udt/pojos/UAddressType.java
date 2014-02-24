@@ -9,24 +9,24 @@ package org.jooq.test.postgres.generatedclasses.udt.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAddressType implements org.jooq.test.postgres.generatedclasses.udt.interfaces.IUAddressType {
 
-	private static final long serialVersionUID = 494346919;
+	private static final long serialVersionUID = 1062009819;
 
-	private final org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord street;
-	private final java.lang.String                                                      zip;
-	private final java.lang.String                                                      city;
-	private final org.jooq.test.postgres.generatedclasses.enums.UCountry                country;
-	private final java.sql.Date                                                         since;
-	private final java.lang.Integer                                                     code;
-	private final byte[]                                                                f_1323;
+	private final org.jooq.test.postgres.generatedclasses.udt.pojos.UStreetType street;
+	private final java.lang.String                                              zip;
+	private final java.lang.String                                              city;
+	private final org.jooq.test.postgres.generatedclasses.enums.UCountry        country;
+	private final java.sql.Date                                                 since;
+	private final java.lang.Integer                                             code;
+	private final byte[]                                                        f_1323;
 
 	public UAddressType(
-		org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord street,
-		java.lang.String                                                      zip,
-		java.lang.String                                                      city,
-		org.jooq.test.postgres.generatedclasses.enums.UCountry                country,
-		java.sql.Date                                                         since,
-		java.lang.Integer                                                     code,
-		byte[]                                                                f_1323
+		org.jooq.test.postgres.generatedclasses.udt.pojos.UStreetType street,
+		java.lang.String                                              zip,
+		java.lang.String                                              city,
+		org.jooq.test.postgres.generatedclasses.enums.UCountry        country,
+		java.sql.Date                                                 since,
+		java.lang.Integer                                             code,
+		byte[]                                                        f_1323
 	) {
 		this.street = street;
 		this.zip = zip;
@@ -38,7 +38,7 @@ public class UAddressType implements org.jooq.test.postgres.generatedclasses.udt
 	}
 
 	@Override
-	public org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord getStreet() {
+	public org.jooq.test.postgres.generatedclasses.udt.pojos.UStreetType getStreet() {
 		return this.street;
 	}
 

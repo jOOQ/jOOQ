@@ -12,7 +12,7 @@ public interface IUAddressType extends java.io.Serializable {
 	/**
 	 * Getter for <code>public.u_address_type.street</code>.
 	 */
-	public org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord getStreet();
+	public org.jooq.test.postgres.generatedclasses.udt.interfaces.IUStreetType getStreet();
 
 	/**
 	 * Getter for <code>public.u_address_type.zip</code>.

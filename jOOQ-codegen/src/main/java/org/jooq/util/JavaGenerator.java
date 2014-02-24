@@ -768,7 +768,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String setterReturnType = fluentSetters() ? className : "void";
             final String setter = getStrategy().getJavaSetterName(column, Mode.DEFAULT);
             final String getter = getStrategy().getJavaGetterName(column, Mode.DEFAULT);
-            final String type = getJavaType((column).getType());
+            final String type = getJavaType((column).getType(), Mode.INTERFACE);
             final String name = column.getQualifiedOutputName();
 
             if (!generateImmutablePojos()) {
@@ -1582,13 +1582,13 @@ public class JavaGenerator extends AbstractGenerator {
 
         int maxLength = 0;
         for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
-            maxLength = Math.max(maxLength, getJavaType(column.getType()).length());
+            maxLength = Math.max(maxLength, getJavaType(column.getType(), Mode.POJO).length());
         }
 
         for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
             out.tab(1).println("private %s%s %s;",
                 generateImmutablePojos() ? "final " : "",
-                StringUtils.rightPad(getJavaType(column.getType()), maxLength),
+                StringUtils.rightPad(getJavaType(column.getType(), Mode.POJO), maxLength),
                 getStrategy().getJavaMemberName(column, Mode.POJO));
         }
 
@@ -1615,7 +1615,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println(separator1);
 
                 out.tab(2).print("%s %s",
-                    StringUtils.rightPad(getJavaType(column.getType()), maxLength),
+                    StringUtils.rightPad(getJavaType(column.getType(), Mode.POJO), maxLength),
                     getStrategy().getJavaMemberName(column, Mode.POJO));
                 separator1 = ",";
             }
@@ -1633,7 +1633,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
-            final String columnType = getJavaType(column.getType());
+            final String columnType = getJavaType(column.getType(), Mode.POJO);
             final String columnSetterReturnType = fluentSetters() ? className : "void";
             final String columnSetter = getStrategy().getJavaSetterName(column, Mode.POJO);
             final String columnGetter = getStrategy().getJavaGetterName(column, Mode.POJO);
@@ -2738,6 +2738,10 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected String getJavaType(DataTypeDefinition type) {
+        return getJavaType(type, Mode.RECORD);
+    }
+
+    protected String getJavaType(DataTypeDefinition type, Mode udtMode) {
         return getType(
             type.getDatabase(),
             type.getSchema(),
@@ -2745,10 +2749,15 @@ public class JavaGenerator extends AbstractGenerator {
             type.getPrecision(),
             type.getScale(),
             type.getUserType(),
-            Object.class.getName());
+            Object.class.getName(),
+            udtMode);
     }
 
     protected String getType(Database db, SchemaDefinition schema, String t, int p, int s, String u, String defaultType) {
+        return getType(db, schema, t, p, s, u, defaultType, Mode.RECORD);
+    }
+
+    protected String getType(Database db, SchemaDefinition schema, String t, int p, int s, String u, String defaultType, Mode udtMode) {
         String type = defaultType;
 
         // Array types
@@ -2769,7 +2778,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         // Check for UDTs
         else if (db.getUDT(schema, u) != null) {
-            type = getStrategy().getFullJavaClassName(db.getUDT(schema, u), Mode.RECORD);
+            type = getStrategy().getFullJavaClassName(db.getUDT(schema, u), udtMode);
         }
 
         // Check for custom types

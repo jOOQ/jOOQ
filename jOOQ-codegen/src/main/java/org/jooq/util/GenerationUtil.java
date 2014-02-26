@@ -178,19 +178,29 @@ class GenerationUtil {
             return "_";
         }
 
+        boolean uppercaseNext = false;
         for (int i = 0; i < literal.length(); i++) {
             char c = literal.charAt(i);
 
             if (!Character.isJavaIdentifierPart(c)) {
-                sb.append(escape(c));
+                if ('.' != c)
+                    sb.append(escape(c));
             }
             else if (i == 0 && !Character.isJavaIdentifierStart(literal.charAt(0))) {
                 sb.append("_");
                 sb.append(c);
             }
             else {
-                sb.append(c);
+                if (uppercaseNext)
+                    sb.append(Character.toUpperCase(c));
+                else
+                    sb.append(c);
             }
+
+            if ('.' == c)
+                uppercaseNext = true;
+            else
+                uppercaseNext = false;
         }
 
         return sb.toString();
@@ -205,7 +215,7 @@ class GenerationUtil {
     }
 
     private static String escape(char c) {
-        if (c == ' ' || c == '-')
+        if (c == ' ' || c == '-' || c == '.')
             return "_";
         else
             return "_" + Integer.toHexString(c);

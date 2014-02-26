@@ -98,6 +98,8 @@ Features and improvements
 #531  - Add support for the WINDOW clause
 #845  - Add support for the T-SQL and Oracle 12c CROSS APPLY clause
 #846  - Add support for the T-SQL and Oracle 12c OUTER APPLY clause
+#1018 - Add support for PostgreSQL and SQL Server non-standard UPDATE .. FROM
+        clause
 #1070 - Add support for SQL Server table-valued functions
 #1506 - Allow for inserting empty records through INSERT INTO .. DEFAULT VALUES
 #2093 - Add comment functionality from DISQUS to website

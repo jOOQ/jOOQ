@@ -50,6 +50,8 @@ DROP TABLE t_booleans/
 DROP TABLE t_identity/
 DROP TABLE t_identity_pk/
 DROP TABLE t_error_on_update/
+DROP TABLE t_3084/
+DROP TABLE t_3084_a/
 
 DROP TYPE u_date_table/
 DROP TYPE u_number_long_table/
@@ -189,6 +191,21 @@ CREATE TABLE t_785 (
   VALUE varchar(50)
 )
 /
+
+CREATE TABLE t_3084 (
+  ID int
+)
+/
+
+CREATE TABLE t_3084_a (
+  ID int,
+  
+  CONSTRAINT uk_t_3084_a UNIQUE (ID)
+)
+/
+
+CREATE UNIQUE INDEX uk_t_3084 ON t_3084 (ID)/
+CREATE UNIQUE INDEX uk_t_3084_a2 ON t_3084_a (ID)/
 
 CREATE TABLE t_author (
   ID int NOT NULL,

@@ -41,6 +41,7 @@
 
 package org.jooq.util.sqlserver;
 
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.util.sqlserver.information_schema.Tables.CHECK_CONSTRAINTS;
@@ -117,11 +118,11 @@ public class SQLServerDatabase extends AbstractDatabase {
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : fetchKeys("PRIMARY KEY")) {
-            SchemaDefinition schema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
-            String key = record.getValue(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
-            String tableName = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
-            String columnName = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
+        for (Record4<String, String, String, String> record : fetchKeys(1)) {
+            SchemaDefinition schema = getSchema(record.value1());
+            String key = record.value2();
+            String tableName = record.value3();
+            String columnName = record.value4();
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null) {
@@ -132,11 +133,11 @@ public class SQLServerDatabase extends AbstractDatabase {
 
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : fetchKeys("UNIQUE")) {
-            SchemaDefinition schema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
-            String key = record.getValue(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
-            String tableName = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
-            String columnName = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
+        for (Record4<String, String, String, String> record : fetchKeys(0)) {
+            SchemaDefinition schema = getSchema(record.value1());
+            String key = record.value2();
+            String tableName = record.value3();
+            String columnName = record.value4();
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null) {
@@ -145,24 +146,37 @@ public class SQLServerDatabase extends AbstractDatabase {
         }
     }
 
-    private Result<Record4<String, String, String, String>> fetchKeys(String constraintType) {
+    private Result<Record4<String, String, String, String>> fetchKeys(int isPrimaryKey) {
+    	// [#3084] Cannot use the INFORMATION_SCHEMA here, as UNIQUE INDEXES
+    	// are not considered constraints by SQL Server, and there is no view to deliver
+    	// indexes in the INFORMATION_SCHEMA.
         return create()
             .select(
-                KEY_COLUMN_USAGE.TABLE_SCHEMA,
-                KEY_COLUMN_USAGE.CONSTRAINT_NAME,
-                KEY_COLUMN_USAGE.TABLE_NAME,
-                KEY_COLUMN_USAGE.COLUMN_NAME)
-            .from(TABLE_CONSTRAINTS)
-            .join(KEY_COLUMN_USAGE)
-            .on(TABLE_CONSTRAINTS.TABLE_SCHEMA.equal(KEY_COLUMN_USAGE.TABLE_SCHEMA))
-            .and(TABLE_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
-            .where(TABLE_CONSTRAINTS.CONSTRAINT_TYPE.equal(constraintType))
-            .and(TABLE_CONSTRAINTS.TABLE_SCHEMA.in(getInputSchemata()))
+                field("s.name", String.class),
+                field("i.name", String.class),
+                field("t.name", String.class),
+                field("c.name", String.class)
+            )
+            .from("sys.indexes i")
+            .join("sys.index_columns ic")
+                .on("i.object_id = ic.object_id")
+                .and("i.index_id = ic.index_id")
+            .join("sys.columns c")
+                .on("ic.object_id = c.object_id")
+                .and("ic.column_id = c.column_id")
+            .join("sys.tables t")
+                .on("i.object_id = t.object_id")
+            .join("sys.schemas s")
+                .on("t.schema_id = s.schema_id")
+            .where("i.is_primary_key = ?", isPrimaryKey)
+                .and("i.is_unique = 1")
+                .and(field("s.name", String.class).in(getInputSchemata()))
             .orderBy(
-                KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
-                KEY_COLUMN_USAGE.TABLE_NAME.asc(),
-                KEY_COLUMN_USAGE.CONSTRAINT_NAME.asc(),
-                KEY_COLUMN_USAGE.ORDINAL_POSITION.asc())
+                field("s.name"),
+                field("t.name"),
+                field("i.name"),
+                field("ic.key_ordinal")
+            )
             .fetch();
     }
 

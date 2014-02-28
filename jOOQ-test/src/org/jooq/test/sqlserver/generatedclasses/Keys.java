@@ -24,6 +24,9 @@ public class Keys {
 	// UNIQUE and PRIMARY KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3084Record> UK_T_3084 = UniqueKeys0.UK_T_3084;
+	public static final org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3084ARecord> UK_T_3084_A = UniqueKeys0.UK_T_3084_A;
+	public static final org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3084ARecord> UK_T_3084_A2 = UniqueKeys0.UK_T_3084_A2;
 	public static final org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = UniqueKeys0.PK_T_639_NUMBERS_TABLE;
 	public static final org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST = UniqueKeys0.PK_T_725_LOB_TEST;
 	public static final org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord> PK_T_AUTHOR = UniqueKeys0.PK_T_AUTHOR;
@@ -71,6 +74,9 @@ public class Keys {
 	}
 
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
+		public static final org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3084Record> UK_T_3084 = createUniqueKey(org.jooq.test.sqlserver.generatedclasses.tables.T_3084.T_3084, org.jooq.test.sqlserver.generatedclasses.tables.T_3084.T_3084.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3084ARecord> UK_T_3084_A = createUniqueKey(org.jooq.test.sqlserver.generatedclasses.tables.T_3084A.T_3084_A, org.jooq.test.sqlserver.generatedclasses.tables.T_3084A.T_3084_A.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3084ARecord> UK_T_3084_A2 = createUniqueKey(org.jooq.test.sqlserver.generatedclasses.tables.T_3084A.T_3084_A, org.jooq.test.sqlserver.generatedclasses.tables.T_3084A.T_3084_A.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = createUniqueKey(org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST = createUniqueKey(org.jooq.test.sqlserver.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.sqlserver.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord> PK_T_AUTHOR = createUniqueKey(org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR, org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR.ID);

@@ -49,6 +49,7 @@ import static org.jooq.impl.DSL.val;
 import static org.jooq.test.sqlserver.generatedclasses.Routines.fTables1;
 import static org.jooq.test.sqlserver.generatedclasses.Routines.fTables4;
 import static org.jooq.test.sqlserver.generatedclasses.Routines.fTables5;
+import static org.jooq.test.sqlserver.generatedclasses.Tables.T_3090_B;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_725_LOB_TEST;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_785;
@@ -122,6 +123,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityPkRecord
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TUnsignedRecord;
+import org.jooq.test.sqlserver.generatedclasses.tables.records.T_3090BRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record;
@@ -948,6 +950,39 @@ public class SQLServerTest extends jOOQAbstractTest<
         public void warning(ExecuteContext ctx) {
             warning = ctx.sqlWarning();
         }
+    }
+
+    @Test
+    public void testSQLServerStoreNullableUniqueKey() {
+        T_3090BRecord record = create().newRecord(T_3090_B);
+        record.setId1(1);
+        record.setId2(null);
+        assertEquals(1, record.insert());
+        assertNull(record.getData());
+
+        // REFRESH()
+        record.setData(2);
+        record.refresh();
+        assertEquals(1, (int) record.getId1());
+        assertNull(record.getId2());
+        assertNull(record.getData());
+
+        record.setData(2);
+        record.refresh(T_3090_B.DATA);
+        assertEquals(1, (int) record.getId1());
+        assertNull(record.getId2());
+        assertNull(record.getData());
+
+        // UPDATE()
+        record.setData(2);
+        assertEquals(1, record.update());
+        assertEquals(1, (int) record.getId1());
+        assertNull(record.getId2());
+        assertEquals(2, (int) record.getData());
+
+        // DELETE()
+        assertEquals(1, record.delete());
+        assertNull(create().fetchOne(T_3090_B));
     }
 }
 

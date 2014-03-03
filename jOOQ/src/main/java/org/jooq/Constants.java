@@ -69,6 +69,26 @@ public final class Constants {
     public static final String FULL_VERSION   = "3.4.0";
 
     /**
+     * The current jooq-runtime XSD file name.
+     */
+    public static final String XSD_RUNTIME    = "jooq-runtime-3.3.0.xsd";
+
+    /**
+     * The current jooq-runtime XML namespace
+     */
+    public static final String NS_RUNTIME     = "http://www.jooq.org/xsd/jooq-runtime-3.3.0.xsd";
+
+    /**
+     * The current jooq-codegen XSD file name.
+     */
+    public static final String XSD_CODEGEN    = "jooq-codegen-3.4.0.xsd";
+
+    /**
+     * The current jooq-codegen XML namespace.
+     */
+    public static final String NS_CODEGEN     = "http://www.jooq.org/xsd/jooq-codegen-3.4.0.xsd";
+
+    /**
      * The maximum degree of {@link Row} and {@link Record} subtypes
      */
     public static final int    MAX_ROW_DEGREE = 22;

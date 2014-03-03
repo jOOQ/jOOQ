@@ -62,6 +62,7 @@ import javax.xml.bind.ValidationEvent;
 import javax.xml.bind.ValidationEventHandler;
 import javax.xml.validation.SchemaFactory;
 
+import org.jooq.Constants;
 import org.jooq.SQLDialect;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -466,21 +467,20 @@ public class GenerationTool {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         copyLarge(in, out);
         String xml = out.toString();
-        String xsd = "/xsd/jooq-codegen-3.3.0.xsd";
 
         // TODO [#1201] Add better error handling here
         xml = xml.replaceAll(
             "<(\\w+:)?configuration xmlns(:\\w+)?=\"http://www.jooq.org/xsd/jooq-codegen-\\d+\\.\\d+\\.\\d+.xsd\">",
-            "<$1configuration xmlns$2=\"http://www.jooq.org" + xsd + "\">");
+            "<$1configuration xmlns$2=\"" + Constants.NS_CODEGEN + "\">");
 
         xml = xml.replace(
             "<configuration>",
-            "<configuration xmlns=\"http://www.jooq.org" + xsd + "\">");
+            "<configuration xmlns=\"" + Constants.NS_CODEGEN + "\">");
 
         try {
             SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             javax.xml.validation.Schema schema = sf.newSchema(
-                GenerationTool.class.getResource(xsd)
+                GenerationTool.class.getResource("/xsd/" + Constants.XSD_CODEGEN)
             );
 
             JAXBContext ctx = JAXBContext.newInstance(Configuration.class);

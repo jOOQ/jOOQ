@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3084 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3084Record> {
 
-	private static final long serialVersionUID = -703911318;
+	private static final long serialVersionUID = 1007734009;
 
 	/**
 	 * The singleton instance of <code>dbo.t_3084</code>
@@ -49,6 +49,14 @@ public class T_3084 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gene
 
 	private T_3084(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3084Record> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3084Record> getPrimaryKey() {
+		return org.jooq.test.sqlserver.generatedclasses.Keys.UK_T_3084;
 	}
 
 	/**

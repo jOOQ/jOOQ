@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3090B extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3090BRecord> {
 
-	private static final long serialVersionUID = -154259102;
+	private static final long serialVersionUID = -1220658833;
 
 	/**
 	 * The singleton instance of <code>dbo.t_3090_b</code>
@@ -35,6 +35,11 @@ public class T_3090B extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gen
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3090BRecord, java.lang.Integer> ID2 = createField("id2", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
+	 * The column <code>dbo.t_3090_b.data</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3090BRecord, java.lang.Integer> DATA = createField("data", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+	/**
 	 * Create a <code>dbo.t_3090_b</code> table reference
 	 */
 	public T_3090B() {
@@ -54,6 +59,14 @@ public class T_3090B extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gen
 
 	private T_3090B(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3090BRecord> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3090BRecord> getPrimaryKey() {
+		return org.jooq.test.sqlserver.generatedclasses.Keys.UK_T_3090_B;
 	}
 
 	/**

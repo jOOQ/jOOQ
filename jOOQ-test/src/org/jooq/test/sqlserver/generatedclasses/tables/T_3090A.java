@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3090A extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3090ARecord> {
 
-	private static final long serialVersionUID = 693547811;
+	private static final long serialVersionUID = -1457760719;
 
 	/**
 	 * The singleton instance of <code>dbo.t_3090_a</code>
@@ -33,6 +33,11 @@ public class T_3090A extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gen
 	 * The column <code>dbo.t_3090_a.id2</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3090ARecord, java.lang.Integer> ID2 = createField("id2", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+	/**
+	 * The column <code>dbo.t_3090_a.data</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3090ARecord, java.lang.Integer> DATA = createField("data", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>dbo.t_3090_a</code> table reference
@@ -60,8 +65,16 @@ public class T_3090A extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gen
 	 * {@inheritDoc}
 	 */
 	@Override
+	public org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3090ARecord> getPrimaryKey() {
+		return org.jooq.test.sqlserver.generatedclasses.Keys.UK_T_3090_A;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3090ARecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3090ARecord>>asList(org.jooq.test.sqlserver.generatedclasses.Keys.PK_T_3090_A);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3090ARecord>>asList(org.jooq.test.sqlserver.generatedclasses.Keys.UK_T_3090_A);
 	}
 
 	/**

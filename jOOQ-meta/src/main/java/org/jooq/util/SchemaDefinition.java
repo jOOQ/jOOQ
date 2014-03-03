@@ -57,6 +57,10 @@ public class SchemaDefinition extends AbstractDefinition {
 		super(database, null, name, comment);
 	}
 
+	public final List<TableDefinition> getTables() {
+	    return getDatabase().getTables(this);
+	}
+
 	@SuppressWarnings("deprecation")
     @Override
     public final String getOutputName() {

@@ -55,12 +55,6 @@ public class DefaultColumnDefinition
     private final int                  position;
     private final boolean              isIdentity;
 
-    private boolean                    primaryKeyLoaded;
-    private UniqueKeyDefinition        primaryKey;
-    private List<UniqueKeyDefinition>  uniqueKeys;
-    private boolean                    foreignKeyLoaded;
-    private List<ForeignKeyDefinition> foreignKey;
-
     public DefaultColumnDefinition(TableDefinition table, String name, int position, DataTypeDefinition type,
         boolean isIdentity, String comment) {
 
@@ -77,31 +71,17 @@ public class DefaultColumnDefinition
 
     @Override
     public final UniqueKeyDefinition getPrimaryKey() {
-        if (!primaryKeyLoaded) {
-            primaryKeyLoaded = true;
-            primaryKey = getDatabase().getRelations().getPrimaryKey(this);
-        }
-
-        return primaryKey;
+        return getDatabase().getRelations().getPrimaryKey(this);
     }
 
     @Override
     public List<UniqueKeyDefinition> getUniqueKeys() {
-        if (uniqueKeys == null) {
-            uniqueKeys = getDatabase().getRelations().getUniqueKeys(this);
-        }
-
-        return uniqueKeys;
+        return getDatabase().getRelations().getUniqueKeys(this);
     }
 
     @Override
     public final List<ForeignKeyDefinition> getForeignKeys() {
-        if (!foreignKeyLoaded) {
-            foreignKeyLoaded = true;
-            foreignKey = getDatabase().getRelations().getForeignKeys(this);
-        }
-
-        return foreignKey;
+        return getDatabase().getRelations().getForeignKeys(this);
     }
 
     @Override

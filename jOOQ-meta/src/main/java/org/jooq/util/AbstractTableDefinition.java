@@ -60,14 +60,7 @@ public abstract class AbstractTableDefinition
 extends AbstractElementContainerDefinition<ColumnDefinition>
 implements TableDefinition {
 
-    private List<UniqueKeyDefinition>       uniqueKeys;
-    private List<ForeignKeyDefinition>      foreignKeys;
-    private List<CheckConstraintDefinition> checkConstraints;
     private List<ParameterDefinition>       parameters;
-    private boolean                         primaryKeyLoaded;
-    private UniqueKeyDefinition             primaryKey;
-    private boolean                         identityLoaded;
-    private IdentityDefinition              identity;
     private TableDefinition                 parentTable;
     private List<TableDefinition>           childTables;
 
@@ -80,15 +73,12 @@ implements TableDefinition {
 
     @Override
     public final UniqueKeyDefinition getPrimaryKey() {
-        if (!primaryKeyLoaded) {
-            primaryKeyLoaded = true;
+        UniqueKeyDefinition primaryKey = null;
 
-            // Try finding a primary key first
-            for (ColumnDefinition column : getColumns()) {
-                if (column.getPrimaryKey() != null) {
-                    primaryKey = column.getPrimaryKey();
-                    return primaryKey;
-                }
+        for (ColumnDefinition column : getColumns()) {
+            if (column.getPrimaryKey() != null) {
+                primaryKey = column.getPrimaryKey();
+                return primaryKey;
             }
         }
 
@@ -97,41 +87,27 @@ implements TableDefinition {
 
     @Override
     public final List<UniqueKeyDefinition> getUniqueKeys() {
-        if (uniqueKeys == null) {
-            uniqueKeys = getDatabase().getRelations().getUniqueKeys(this);
-        }
-
-        return uniqueKeys;
+        return getDatabase().getRelations().getUniqueKeys(this);
     }
 
     @Override
     public final List<ForeignKeyDefinition> getForeignKeys() {
-        if (foreignKeys == null) {
-            foreignKeys = getDatabase().getRelations().getForeignKeys(this);
-        }
-
-        return foreignKeys;
+        return getDatabase().getRelations().getForeignKeys(this);
     }
 
     @Override
     public final List<CheckConstraintDefinition> getCheckConstraints() {
-        if (checkConstraints == null) {
-            checkConstraints = getDatabase().getRelations().getCheckConstraints(this);
-        }
-
-        return checkConstraints;
+        return getDatabase().getRelations().getCheckConstraints(this);
     }
 
     @Override
     public final IdentityDefinition getIdentity() {
-        if (!identityLoaded) {
-            identityLoaded = true;
+        IdentityDefinition identity = null;
 
-            for (ColumnDefinition column : getColumns()) {
-                if (column.isIdentity()) {
-                    identity = new DefaultIdentityDefinition(column);
-                    break;
-                }
+        for (ColumnDefinition column : getColumns()) {
+            if (column.isIdentity()) {
+                identity = new DefaultIdentityDefinition(column);
+                break;
             }
         }
 

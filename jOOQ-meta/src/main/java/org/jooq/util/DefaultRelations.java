@@ -208,6 +208,24 @@ public class DefaultRelations implements Relations {
         return new ArrayList<UniqueKeyDefinition>(result);
     }
 
+
+
+    @Override
+    public List<UniqueKeyDefinition> getUniqueKeys(SchemaDefinition schema) {
+        Set<UniqueKeyDefinition> result = new LinkedHashSet<UniqueKeyDefinition>();
+
+        for (TableDefinition table : schema.getDatabase().getTables(schema)) {
+            result.addAll(getUniqueKeys(table));
+        }
+
+        return new ArrayList<UniqueKeyDefinition>(result);
+    }
+
+    @Override
+    public List<UniqueKeyDefinition> getUniqueKeys() {
+        return new ArrayList<UniqueKeyDefinition>(uniqueKeys.values());
+    }
+
     @Override
 	public List<ForeignKeyDefinition> getForeignKeys(ColumnDefinition column) {
         if (foreignKeysByColumn == null) {

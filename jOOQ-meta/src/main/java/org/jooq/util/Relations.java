@@ -70,6 +70,18 @@ public interface Relations {
     List<UniqueKeyDefinition> getUniqueKeys(TableDefinition table);
 
     /**
+     * Get a list of all referenced keys (primary or unique) for a given schema.
+     * Returns an empty list if the given schema has no primary or unique keys.
+     */
+    List<UniqueKeyDefinition> getUniqueKeys(SchemaDefinition schema);
+
+    /**
+     * Get a list of all referenced keys (primary or unique). Returns an empty
+     * list if there are no primary or unique keys.
+     */
+    List<UniqueKeyDefinition> getUniqueKeys();
+
+    /**
      * Get a list of foreign keys for a given table, that the column
      * participates in. Returns an empty list if the given column is not part of
      * any foreign key.

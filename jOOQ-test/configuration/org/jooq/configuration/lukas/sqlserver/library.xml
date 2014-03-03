@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jooq:configuration xmlns:jooq="http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd">
+<jooq:configuration xmlns:jooq="http://www.jooq.org/xsd/jooq-codegen-3.4.0.xsd">
     <jooq:jdbc>
         <jooq:driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jooq:driver>
         <jooq:url>jdbc:sqlserver://localhost:1433;databaseName=test;integratedSecurity=true</jooq:url>
@@ -14,6 +14,7 @@
             <jooq:name>org.jooq.util.sqlserver.SQLServerDatabase</jooq:name>
             <jooq:includes>t_.*|x_.*|v_.*|p_.*|f_.*|(f|p)[0-9]+|s_.*</jooq:includes>
             <jooq:excludes>t_book_details</jooq:excludes>
+            <jooq:overridePrimaryKeys>(?i:.*([pu]k_t_3084|[pu]k_t_3090]).*)</jooq:overridePrimaryKeys>
             <jooq:dateAsTimestamp>false</jooq:dateAsTimestamp>
             <jooq:customTypes>
                 <jooq:customType>

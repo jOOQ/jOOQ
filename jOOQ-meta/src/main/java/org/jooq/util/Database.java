@@ -260,6 +260,18 @@ public interface Database {
     String[] getRecordTimestampFields();
 
     /**
+     * Unique keys matching these regular expressions will be considered as
+     * primary keys in generated code.
+     */
+    void setOverridePrimaryKeys(String[] primaryKeys);
+
+    /**
+     * Unique keys matching these regular expressions will be considered as
+     * primary keys in generated code.
+     */
+    String[] getOverridePrimaryKeys();
+
+    /**
      * Database objects matching any of these field names will be generated as
      * custom types.
      */

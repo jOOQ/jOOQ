@@ -42,10 +42,12 @@ package org.jooq.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.jooq.tools.JooqLogger;
@@ -96,6 +98,31 @@ public class DefaultRelations implements Relations {
 
         UniqueKeyDefinition key = getUniqueKey(keyName, column, false);
         key.getKeyColumns().add(column);
+    }
+
+    public void overridePrimaryKey(UniqueKeyDefinition key) {
+        UniqueKeyDefinition old = null;
+
+        // Remove the existing key from the column -> key mapping
+        primaryKeysByColumn = null;
+
+        // Remove the existing key from the key mapping
+        Iterator<Entry<Key, UniqueKeyDefinition>> it = primaryKeys.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<Key, UniqueKeyDefinition> entry = it.next();
+
+            if (entry.getValue().getTable().equals(key.getTable())) {
+                old = entry.getValue();
+                it.remove();
+                break;
+            }
+        }
+
+        // Add the new primary key
+        primaryKeys.put(key(key.getTable(), key.getName()), key);
+        log.info("Overriding primary key", "Table : " + key.getTable() +
+                 ", previous key : " + ((old == null) ? "none" : old.getName()) +
+                 ", new key : " + key.getName());
     }
 
     private UniqueKeyDefinition getUniqueKey(String keyName, ColumnDefinition column, boolean isPK) {
@@ -207,8 +234,6 @@ public class DefaultRelations implements Relations {
 
         return new ArrayList<UniqueKeyDefinition>(result);
     }
-
-
 
     @Override
     public List<UniqueKeyDefinition> getUniqueKeys(SchemaDefinition schema) {

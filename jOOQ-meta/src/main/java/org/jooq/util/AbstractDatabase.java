@@ -90,6 +90,7 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          includeExcludeColumns;
     private String[]                                                         recordVersionFields;
     private String[]                                                         recordTimestampFields;
+    private String[]                                                         overridePrimaryKeys;
     private boolean                                                          supportsUnsignedTypes;
     private boolean                                                          dateAsTimestamp;
     private List<Schema>                                                     configuredSchemata;
@@ -325,6 +326,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public String[] getRecordTimestampFields() {
         return recordTimestampFields;
+    }
+
+    @Override
+    public void setOverridePrimaryKeys(String[] overridePrimaryKeys) {
+        this.overridePrimaryKeys = overridePrimaryKeys;
+    }
+
+    @Override
+    public String[] getOverridePrimaryKeys() {
+        return overridePrimaryKeys;
     }
 
     @Override
@@ -785,22 +796,26 @@ public abstract class AbstractDatabase implements Database {
         List<T> result = new ArrayList<T>();
 
         definitionsLoop: for (T definition : definitions) {
-            for (String exclude : excludes) {
-                if (exclude != null &&
-                        (definition.getName().matches(exclude.trim()) ||
-                         definition.getQualifiedName().matches(exclude.trim()))) {
+            if (excludes != null) {
+                for (String exclude : excludes) {
+                    if (exclude != null &&
+                            (definition.getName().matches(exclude.trim()) ||
+                             definition.getQualifiedName().matches(exclude.trim()))) {
 
-                    continue definitionsLoop;
+                        continue definitionsLoop;
+                    }
                 }
             }
 
-            for (String include : includes) {
-                if (include != null &&
-                        (definition.getName().matches(include.trim()) ||
-                         definition.getQualifiedName().matches(include.trim()))) {
+            if (includes != null) {
+                for (String include : includes) {
+                    if (include != null &&
+                            (definition.getName().matches(include.trim()) ||
+                             definition.getQualifiedName().matches(include.trim()))) {
 
-                    result.add(definition);
-                    continue definitionsLoop;
+                        result.add(definition);
+                        continue definitionsLoop;
+                    }
                 }
             }
         }
@@ -842,6 +857,13 @@ public abstract class AbstractDatabase implements Database {
             log.error("Error while fetching check constraints", e);
         }
 
+        try {
+            overridePrimaryKeys(result);
+        }
+        catch (Exception e) {
+            log.error("Error while overriding primary keys", e);
+        }
+
         return result;
     }
 
@@ -860,6 +882,17 @@ public abstract class AbstractDatabase implements Database {
 
     static final String fetchedSize(List<?> fetched, List<?> included) {
         return fetched.size() + " (" + included.size() + " included, " + (fetched.size() - included.size()) + " excluded)";
+    }
+
+    private final void overridePrimaryKeys(DefaultRelations r) {
+        List<UniqueKeyDefinition> allKeys = r.getUniqueKeys();
+        List<UniqueKeyDefinition> filteredKeys = filterExcludeInclude(allKeys, null, overridePrimaryKeys);
+
+        log.info("Overriding primary keys", fetchedSize(allKeys, filteredKeys));
+
+        for (UniqueKeyDefinition key : filteredKeys) {
+            r.overridePrimaryKey(key);
+        }
     }
 
     /**

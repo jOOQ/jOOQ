@@ -290,6 +290,7 @@ public class GenerationTool {
             database.setIncludeExcludeColumns(TRUE.equals(d.isIncludeExcludeColumns()));
             database.setRecordVersionFields(new String[] { defaultString(d.getRecordVersionFields()) });
             database.setRecordTimestampFields(new String[] { defaultString(d.getRecordTimestampFields()) });
+            database.setOverridePrimaryKeys(new String[] { defaultString(d.getOverridePrimaryKeys()) });
             database.setConfiguredCustomTypes(d.getCustomTypes());
             database.setConfiguredEnumTypes(d.getEnumTypes());
             database.setConfiguredForcedTypes(d.getForcedTypes());

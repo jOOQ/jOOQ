@@ -1312,6 +1312,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testInPredicateWithPlainSQL() throws Exception {
+        new PredicateTests(this).testInPredicateWithPlainSQL();
+    }
+
+    @Test
     public void testBetweenConditions() throws Exception {
         new PredicateTests(this).testBetweenConditions();
     }

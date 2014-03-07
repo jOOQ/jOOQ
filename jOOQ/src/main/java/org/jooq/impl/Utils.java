@@ -68,6 +68,7 @@ import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLInput;
@@ -1748,10 +1749,15 @@ final class Utils {
                         // Annotated getter with matching setter
                         else if (method.getParameterTypes().length == 0) {
                             String m = method.getName();
+                            String suffix = m.startsWith("get")
+                                          ? m.substring(3)
+                                          : m.startsWith("is")
+                                          ? m.substring(2)
+                                          : null;
 
-                            if (m.startsWith("get") || m.startsWith("is")) {
+                            if (suffix != null) {
                                 try {
-                                    Method setter = type.getMethod("set" + m.substring(3), method.getReturnType());
+                                    Method setter = type.getMethod("set" + suffix, method.getReturnType());
 
                                     // Setter annotation is more relevant
                                     if (setter.getAnnotation(Column.class) == null) {
@@ -1952,6 +1958,29 @@ final class Utils {
     // ------------------------------------------------------------------------
     // XXX: JDBC helper methods
     // ------------------------------------------------------------------------
+
+    /**
+     * [#3011] [#3054] Consume additional exceptions if there are any and append
+     * them to the <code>previous</code> exception's
+     * {@link SQLException#getNextException()} list.
+     */
+    static final void consumeExceptions(Configuration configuration, PreparedStatement stmt, SQLException previous) {
+        /* [pro] xx
+        xx xx xxxx xxxx xxxxx xxx xxxx xxxxxxxx xxxx xxxx xxx xxxxxx
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxx xxxxxxxxxx
+                xxxxxxxxxxxx xxx xxxx
+                    xxx x
+                        xx xxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxx xx xxx
+                            xxxxx xxxxxxxxxxxx
+                    x
+                    xxxxx xxxxxxxxxxxxx xx x
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxx x xx
+                    x
+        x
+        xx [/pro] */
+    }
 
     @SuppressWarnings("unchecked")
     static final <T> T getFromSQLInput(Configuration configuration, SQLInput stream, Field<T> field) throws SQLException {
@@ -2390,7 +2419,7 @@ final class Utils {
                 return blob.getBytes(1, (int) blob.length());
             }
             finally {
-                blob.free();
+                JDBCUtils.safeFree(blob);
             }
         }
         else if (object instanceof Clob) {
@@ -2400,7 +2429,7 @@ final class Utils {
                 return clob.getSubString(1, (int) clob.length());
             }
             finally {
-                clob.free();
+                JDBCUtils.safeFree(clob);
             }
         }
 

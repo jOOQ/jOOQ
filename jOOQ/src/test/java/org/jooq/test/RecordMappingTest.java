@@ -38,63 +38,69 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq;
+
+package org.jooq.test;
+
+import static junit.framework.Assert.assertTrue;
+import static org.jooq.impl.DSL.field;
+
+import javax.persistence.Column;
+
+import org.jooq.Field;
+import org.jooq.Record1;
+
+import org.junit.Test;
+
 
 /**
- * Some publicly available constants used in jOOQ
+ * A test suite for jOOQ functionality related to records
  *
  * @author Lukas Eder
  */
-public final class Constants {
+public class RecordMappingTest extends AbstractTest {
 
-    /**
-     * The latest jOOQ minor version.
-     */
-    public static final String MINOR_VERSION  = "3.3";
+    @Test
+    public void testIntoBooleans() throws Exception {
+        Field<Boolean> field = field("B", Boolean.class);
+        Record1<Boolean> record = create.newRecord(field);
+        record.setValue(field, true);
 
-    /**
-     * The latest jOOQ version.
-     * <p>
-     * This is the same as {@link #MINOR_VERSION}, but it may include patch
-     * version suffixes.
-     */
-    public static final String VERSION        = "3.3.1";
+        // [#3101] Make sure this works for both "get" and "is" annotated getters
+        BooleansWithAnnotations pojo = record.into(BooleansWithAnnotations.class);
+        assertTrue(pojo.oneZero);
+        assertTrue(pojo.oneZero1);
+        assertTrue(pojo.oneZero2);
+    }
 
-    /**
-     * The latest jOOQ full version.
-     * <p>
-     * This is the same as {@link #VERSION}, but it may include release
-     * candidate and other suffixes.
-     */
-    public static final String FULL_VERSION   = "3.3.1";
+    public static class BooleansWithAnnotations {
 
-    /**
-     * The current jooq-runtime XSD file name.
-     */
-    public static final String XSD_RUNTIME    = "jooq-runtime-3.3.0.xsd";
+        @Column(name = "B")
+        public boolean oneZero;
 
-    /**
-     * The current jooq-runtime XML namespace
-     */
-    public static final String NS_RUNTIME     = "http://www.jooq.org/xsd/jooq-runtime-3.3.0.xsd";
+        public boolean oneZero1;
+        public boolean oneZero2;
 
-    /**
-     * The current jooq-codegen XSD file name.
-     */
-    public static final String XSD_CODEGEN    = "jooq-codegen-3.3.0.xsd";
+        public void setOneZero1(boolean oneZero1) {
+            this.oneZero1 = oneZero1;
+        }
 
-    /**
-     * The current jooq-codegen XML namespace.
-     */
-    public static final String NS_CODEGEN     = "http://www.jooq.org/xsd/jooq-codegen-3.3.0.xsd";
+        @Column(name = "B")
+        public boolean getOneZero1() {
+            return oneZero1;
+        }
 
-    /**
-     * The maximum degree of {@link Row} and {@link Record} subtypes
-     */
-    public static final int    MAX_ROW_DEGREE = 22;
+        public void setOneZero2(boolean oneZero2) {
+            this.oneZero2 = oneZero2;
+        }
 
-    /**
-     * No further instances
-     */
-    private Constants() {}
+        @Column(name = "B")
+        public boolean isOneZero2() {
+            return oneZero2;
+        }
+
+        @Override
+        public String toString() {
+            return "Boolean [oneZero=" + oneZero + ", oneZero1=" + oneZero1 + ", oneZero2=" + oneZero2 + "]";
+        }
+    }
 }

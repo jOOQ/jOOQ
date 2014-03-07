@@ -521,6 +521,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testInPredicateWithPlainSQL() throws Exception {
+
+        // [#3086] This issue cannot seem to be reproduced again...?
+        Result<Record1<Integer>> result =
+        create().select(TBook_ID())
+                .from(TBook())
+                .where(field(TBook_ID().getName()).in(1, 2))
+                .or(field(TBook_TITLE().getName()).in(null, null))
+                .orderBy(TBook_ID())
+                .fetch();
+
+        assertEquals(2, result.size());
+        assertEquals(asList(1, 2), result.getValues(TBook_ID()));
+    }
+
+    @Test
     public void testConditionsAsFields() throws Exception {
         Record record = create().select(field(one().eq(zero())), field(one().eq(1))).fetchOne();
 

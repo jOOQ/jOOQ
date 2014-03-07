@@ -40,15 +40,25 @@
  */
 package org.jooq.tools;
 
-import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.val;
+import static org.jooq.tools.StringUtils.abbreviate;
 
+import java.util.Arrays;
 import java.util.logging.Level;
 
+import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.ExecuteType;
+import org.jooq.Param;
+import org.jooq.QueryPart;
+import org.jooq.VisitContext;
+import org.jooq.VisitListener;
+import org.jooq.VisitListenerProvider;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
+import org.jooq.impl.DefaultVisitListener;
+import org.jooq.impl.DefaultVisitListenerProvider;
 
 /**
  * A default {@link ExecuteListener} that just logs events to java.util.logging,
@@ -68,8 +78,14 @@ public class LoggerListener extends DefaultExecuteListener {
     @Override
     public void renderEnd(ExecuteContext ctx) {
         if (log.isDebugEnabled()) {
-            String[] batchSQL = ctx.batchSQL();
+            Configuration configuration = ctx.configuration();
 
+            // [#2939] Prevent excessive logging of bind variables only in DEBUG mode, not in TRACE mode.
+            if (!log.isTraceEnabled()) {
+                configuration = abbreviateBindVariables(configuration);
+            }
+
+            String[] batchSQL = ctx.batchSQL();
             if (ctx.query() != null) {
 
                 // Actual SQL passed to JDBC
@@ -77,7 +93,7 @@ public class LoggerListener extends DefaultExecuteListener {
 
                 // [#1278] DEBUG log also SQL with inlined bind values, if
                 // that is not the same as the actual SQL passed to JDBC
-                String inlined = ctx.query().getSQL(INLINED);
+                String inlined = DSL.using(configuration).renderInlined(ctx.query());
                 if (!ctx.sql().equals(inlined)) {
                     log.debug("-> with bind values", inlined);
                 }
@@ -87,7 +103,7 @@ public class LoggerListener extends DefaultExecuteListener {
             else if (ctx.routine() != null) {
                 log.debug("Calling routine", ctx.sql());
 
-                String inlined = DSL.using(ctx.configuration())
+                String inlined = DSL.using(configuration)
                                     .renderInlined(ctx.routine());
 
                 if (!ctx.sql().equals(inlined)) {
@@ -147,6 +163,55 @@ public class LoggerListener extends DefaultExecuteListener {
             }
 
             comment = "";
+        }
+    }
+
+    private static final int maxLength = 2000;
+
+    /**
+     * Add a {@link VisitListener} that transforms all bind variables by abbreviating them.
+     */
+    private final Configuration abbreviateBindVariables(Configuration configuration) {
+        VisitListenerProvider[] oldProviders = configuration.visitListenerProviders();
+        VisitListenerProvider[] newProviders = new VisitListenerProvider[oldProviders.length + 1];
+        System.arraycopy(oldProviders, 0, newProviders, 0, oldProviders.length);
+        newProviders[newProviders.length - 1] = new DefaultVisitListenerProvider(new BindValueAbbreviator());
+
+        return configuration.derive(newProviders);
+    }
+
+    private static class BindValueAbbreviator extends DefaultVisitListener {
+
+        private boolean anyAbbreviations = false;
+
+        @Override
+        public void visitStart(VisitContext context) {
+            if (context.renderContext() != null) {
+                QueryPart part = context.queryPart();
+
+                if (part instanceof Param<?>) {
+                    Param<?> param = (Param<?>) part;
+                    Object value = param.getValue();
+
+                    if (value instanceof String && ((String) value).length() > maxLength) {
+                        anyAbbreviations = true;
+                        context.queryPart(val(abbreviate((String) value, maxLength)));
+                    }
+                    else if (value instanceof byte[] && ((byte[]) value).length > maxLength) {
+                        anyAbbreviations = true;
+                        context.queryPart(val(Arrays.copyOf((byte[]) value, maxLength)));
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void visitEnd(VisitContext context) {
+            if (anyAbbreviations) {
+                if (context.queryParts().length == 1) {
+                    context.renderContext().sql(" -- Bind values may have been abbreviated for DEBUG logging. Use TRACE logging for very large bind variables.");
+                }
+            }
         }
     }
 }

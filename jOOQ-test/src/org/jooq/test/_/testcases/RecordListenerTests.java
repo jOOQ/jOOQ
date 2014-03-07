@@ -42,6 +42,7 @@ package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -54,6 +55,7 @@ import org.jooq.Record6;
 import org.jooq.RecordContext;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultRecordListener;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -167,6 +169,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         listener2.events.clear();
         assertEquals(1, book2.delete());
         assertEquals(asList("deleteStart", "deleteEnd"), listener2.events);
+    }
+
+    @Test
+    public void testRecordListenerWithException() throws Exception {
+        jOOQAbstractTest.reset = false;
+        WriteListener listener1 = new WriteListener();
+
+        B book = create(listener1).fetchOne(TBook(), TBook_ID().eq(1));
+
+        try {
+            book.changed(true);
+            book.insert();
+            fail();
+        }
+        catch (DataAccessException expected) {}
+
+        assertEquals(asList("insertStart", "insertEnd"), listener1.events);
     }
 
     @Test

@@ -1544,6 +1544,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRecordListenerWithException() throws Exception {
+        new RecordListenerTests(this).testRecordListenerWithException();
+    }
+
+    @Test
     public void testRecordListenerBatchStore() throws Exception {
         new RecordListenerTests(this).testRecordListenerBatchStore();
     }
@@ -1766,11 +1771,6 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testStoreWithOptimisticLock() throws Exception {
         new CRUDTests(this).testStoreWithOptimisticLock();
-    }
-
-    @Test
-    public void testStoreVsExecuteInsert() throws Exception {
-        new CRUDTests(this).testStoreVsExecuteInsert();
     }
 
     @Test

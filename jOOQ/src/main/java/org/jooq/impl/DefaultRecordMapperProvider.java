@@ -40,6 +40,8 @@
  */
 package org.jooq.impl;
 
+import java.io.Serializable;
+
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
@@ -51,7 +53,12 @@ import org.jooq.RecordType;
  *
  * @author Lukas Eder
  */
-public class DefaultRecordMapperProvider implements RecordMapperProvider {
+public class DefaultRecordMapperProvider implements RecordMapperProvider, Serializable {
+
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = 3938817662684933973L;
 
     @Override
     public final <R extends Record, E> RecordMapper<R, E> provide(RecordType<R> rowType, Class<? extends E> type) {

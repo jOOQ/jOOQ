@@ -45,6 +45,7 @@ import static org.jooq.util.h2.information_schema.tables.Columns.COLUMNS;
 import static org.jooq.util.h2.information_schema.tables.Constraints.CONSTRAINTS;
 import static org.jooq.util.h2.information_schema.tables.CrossReferences.CROSS_REFERENCES;
 import static org.jooq.util.h2.information_schema.tables.FunctionAliases.FUNCTION_ALIASES;
+import static org.jooq.util.h2.information_schema.tables.Indexes.INDEXES;
 import static org.jooq.util.h2.information_schema.tables.Schemata.SCHEMATA;
 import static org.jooq.util.h2.information_schema.tables.Sequences.SEQUENCES;
 import static org.jooq.util.h2.information_schema.tables.Tables.TABLES;
@@ -78,6 +79,7 @@ import org.jooq.util.h2.information_schema.tables.Columns;
 import org.jooq.util.h2.information_schema.tables.Constraints;
 import org.jooq.util.h2.information_schema.tables.CrossReferences;
 import org.jooq.util.h2.information_schema.tables.FunctionAliases;
+import org.jooq.util.h2.information_schema.tables.Indexes;
 import org.jooq.util.h2.information_schema.tables.Schemata;
 import org.jooq.util.h2.information_schema.tables.Sequences;
 import org.jooq.util.h2.information_schema.tables.Tables;
@@ -100,16 +102,12 @@ public class H2Database extends AbstractDatabase {
         for (Record record : fetchKeys("PRIMARY KEY")) {
             SchemaDefinition schema = getSchema(record.getValue(Constraints.TABLE_SCHEMA));
             String tableName = record.getValue(Constraints.TABLE_NAME);
-            String columnList = record.getValue(Constraints.COLUMN_LIST);
             String primaryKey = record.getValue(Constraints.CONSTRAINT_NAME);
+            String columnName = record.getValue(Indexes.COLUMN_NAME);
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null) {
-                String[] columnNames = columnList.split("[,]+");
-
-                for (String columnName : columnNames) {
-                    relations.addPrimaryKey(primaryKey, table.getColumn(columnName));
-                }
+                relations.addPrimaryKey(primaryKey, table.getColumn(columnName));
             }
         }
     }
@@ -119,16 +117,12 @@ public class H2Database extends AbstractDatabase {
         for (Record record : fetchKeys("UNIQUE")) {
             SchemaDefinition schema = getSchema(record.getValue(Constraints.TABLE_SCHEMA));
             String tableName = record.getValue(Constraints.TABLE_NAME);
-            String columnList = record.getValue(Constraints.COLUMN_LIST);
             String primaryKey = record.getValue(Constraints.CONSTRAINT_NAME);
+            String columnName = record.getValue(Indexes.COLUMN_NAME);
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null) {
-                String[] columnNames = columnList.split("[,]+");
-
-                for (String columnName : columnNames) {
-                    relations.addUniqueKey(primaryKey, table.getColumn(columnName));
-                }
+                relations.addUniqueKey(primaryKey, table.getColumn(columnName));
             }
         }
     }
@@ -137,15 +131,19 @@ public class H2Database extends AbstractDatabase {
         return create().select(
                     Constraints.TABLE_SCHEMA,
                     Constraints.TABLE_NAME,
-                    Constraints.COLUMN_LIST,
-                    Constraints.CONSTRAINT_NAME)
+                    Constraints.CONSTRAINT_NAME,
+                    Indexes.COLUMN_NAME)
                 .from(CONSTRAINTS)
+                .join(INDEXES)
+                .on(Constraints.TABLE_SCHEMA.eq(Indexes.TABLE_SCHEMA))
+                .and(Constraints.TABLE_NAME.eq(Indexes.TABLE_NAME))
+                .and(Constraints.UNIQUE_INDEX_NAME.eq(Indexes.INDEX_NAME))
                 .where(Constraints.TABLE_SCHEMA.in(getInputSchemata()))
                 .and(Constraints.CONSTRAINT_TYPE.equal(constraintType))
                 .orderBy(
                     Constraints.TABLE_SCHEMA,
                     Constraints.CONSTRAINT_NAME,
-                    Constraints.COLUMN_LIST)
+                    Indexes.ORDINAL_POSITION)
                 .fetch();
     }
 

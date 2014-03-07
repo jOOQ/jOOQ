@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2013, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * This work is dual-licensed
@@ -38,53 +38,69 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
+
 package org.jooq.test;
 
-import static org.jooq.impl.DSL.val;
+import static junit.framework.Assert.assertTrue;
+import static org.jooq.impl.DSL.field;
 
-import org.jooq.BindContext;
-import org.jooq.QueryPart;
-import org.jooq.RenderContext;
-import org.jooq.impl.CustomQueryPart;
-import org.jooq.impl.DSL;
+import javax.persistence.Column;
 
-import org.jmock.Expectations;
+import org.jooq.Field;
+import org.jooq.Record1;
+
 import org.junit.Test;
 
+
 /**
- * Test cases for custom {@link QueryPart}s.
+ * A test suite for jOOQ functionality related to records
  *
  * @author Lukas Eder
  */
-public class CustomQueryPartTest extends AbstractTest {
+public class RecordMappingTest extends AbstractTest {
 
-    @SuppressWarnings("serial")
     @Test
-    public void testCustomQueryPart() throws Exception {
-        QueryPart p = new CustomQueryPart() {
+    public void testIntoBooleans() throws Exception {
+        Field<Boolean> field = field("B", Boolean.class);
+        Record1<Boolean> record = create.newRecord(field);
+        record.setValue(field, true);
 
-            @Override
-            public void toSQL(RenderContext ctx) {
-                ctx.visit(val("abc"));
-            }
+        // [#3101] Make sure this works for both "get" and "is" annotated getters
+        BooleansWithAnnotations pojo = record.into(BooleansWithAnnotations.class);
+        assertTrue(pojo.oneZero);
+        assertTrue(pojo.oneZero1);
+        assertTrue(pojo.oneZero2);
+    }
 
-            @Override
-            public void bind(BindContext ctx) {
-                ctx.visit(val("abc"));
-            }
-        };
+    public static class BooleansWithAnnotations {
 
-        assertEquals("(x = ?)", r_ref().render(DSL.condition("x = {0}", p)));
-        assertEquals("(x = :1)", r_refP().render(DSL.condition("x = {0}", p)));
-        assertEquals("(x = 'abc')", r_refI().render(DSL.condition("x = {0}", p)));
+        @Column(name = "B")
+        public boolean oneZero;
 
-        context.checking(new Expectations() {{
-            oneOf(statement).setString(1, "abc");
-        }});
+        public boolean oneZero1;
+        public boolean oneZero2;
 
-        int i = b_ref().visit(DSL.condition("x = {0}", p)).peekIndex();
-        assertEquals(2, i);
+        public void setOneZero1(boolean oneZero1) {
+            this.oneZero1 = oneZero1;
+        }
 
-        context.assertIsSatisfied();
+        @Column(name = "B")
+        public boolean getOneZero1() {
+            return oneZero1;
+        }
+
+        public void setOneZero2(boolean oneZero2) {
+            this.oneZero2 = oneZero2;
+        }
+
+        @Column(name = "B")
+        public boolean isOneZero2() {
+            return oneZero2;
+        }
+
+        @Override
+        public String toString() {
+            return "Boolean [oneZero=" + oneZero + ", oneZero1=" + oneZero1 + ", oneZero2=" + oneZero2 + "]";
+        }
     }
 }

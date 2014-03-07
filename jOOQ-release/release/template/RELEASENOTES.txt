@@ -10,6 +10,39 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.2.4 - March 7, 2014
+================================================================================
+
+This is a patch release with some useful fixes for the 3.3 branch
+
+Features and improvements
+-------------------------
+#3096 - Add Constants.XSD_RUNTIME, NS_RUNTIME, XSD_CODEGEN, NS_CODEGEN
+
+Bug fixes
+---------
+#2939 - Excessive logging by jOOQ's default logger in DEBUG level, when logging
+        LOB content 
+#3011 - Routines do not propagate errors raised from T-SQL procedures due to
+        JDBC API misuse
+#3013 - The Configuration's RecordMapperProvider is not used when mapping
+        UDTRecords
+#3019 - Bad SQL rendered from HSQLDBDatabase when loading check constraints
+#3024 - DefaultRecordMapper does not map nested UDTs onto nested POJOs
+#3027 - Missing whitespace / newline on emulated multi-value INSERT
+#3036 - RecordListeners don't receive "end" events when exceptions occur
+#3039 - Cannot bind NULL with JDBC Types.BOOLEAN in DB 
+#3042 - Work around flaws in H2's INFORMATION_SCHEMA.CONSTRAINTS.COLUMN_LIST
+#3046 - UDTRecordImpl.toString() may throw NullPointerException, if custom
+        RecordMapperProvider maps Record to null
+#3048 - Nested UDTs are no longer attached when fetched from queries (as opposed
+        to procedures)
+#3050 - DefaultRecordMapperProvider should implement Serializable
+#3060 - Conversion fails for Oracle VARRAY / TABLE types, nested in UDTs
+#3069 - jOOQ calls Clob.free(), which is available only in JDBC 4.0 / Java 1.6
+#3084 - SQL Server unique indexes are not loaded by jOOQ-meta
+#3101 - MutablePOJOMapper doesn't work with annotated boolean getters
+
 Version 3.2.3 - January 29, 2013
 ================================================================================
 

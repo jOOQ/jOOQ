@@ -50,7 +50,6 @@ import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
-import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
 import static org.jooq.tools.reflect.Reflect.accessible;
 import static org.jooq.tools.reflect.Reflect.on;
@@ -64,6 +63,7 @@ import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLInput;
@@ -325,11 +325,6 @@ final class Utils {
 
                 // [#919] Allow for accessing non-public constructors
                 record = Reflect.accessible(type.getDeclaredConstructor()).newInstance();
-            }
-
-            // [#1684] TODO: Do not attach configuration if settings say no
-            if (attachRecords(configuration)) {
-                record.attach(configuration);
             }
 
             return new RecordDelegate<R>(configuration, record);
@@ -1505,17 +1500,23 @@ final class Utils {
                 else if (method.getParameterTypes().length == 0) {
                     String m = method.getName();
 
-                    if (m.startsWith("get") || m.startsWith("is")) {
-                        try {
-                            Method setter = type.getMethod("set" + m.substring(3), method.getReturnType());
+                    String suffix = m.startsWith("get")
+                        ? m.substring(3)
+                        : m.startsWith("is")
+                        ? m.substring(2)
+                        : null;
 
-                            // Setter annotation is more relevant
-                            if (setter.getAnnotation(Column.class) == null) {
-                                result.add(accessible(setter));
-                            }
-                        }
-                        catch (NoSuchMethodException ignore) {}
-                    }
+                      if (suffix != null) {
+                          try {
+                              Method setter = type.getMethod("set" + suffix, method.getReturnType());
+
+                              // Setter annotation is more relevant
+                              if (setter.getAnnotation(Column.class) == null) {
+                                  result.add(accessible(setter));
+                              }
+                          }
+                          catch (NoSuchMethodException ignore) {}
+                      }
                 }
             }
         }
@@ -1686,6 +1687,29 @@ final class Utils {
     // XXX: JDBC helper methods
     // ------------------------------------------------------------------------
 
+    /**
+     * [#3011] [#3054] Consume additional exceptions if there are any and append
+     * them to the <code>previous</code> exception's
+     * {@link SQLException#getNextException()} list.
+     */
+    static final void consumeExceptions(Configuration configuration, PreparedStatement stmt, SQLException previous) {
+        /* [pro] xx
+        xx xx xxxx xxxx xxxxx xxx xxxx xxxxxxxx xxxx xxxx xxx xxxxxx
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxx xxxxxxxxxx
+                xxxxxxxxxxxx xxx xxxx
+                    xxx x
+                        xx xxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxx xx xxx
+                            xxxxx xxxxxxxxxxxx
+                    x
+                    xxxxx xxxxxxxxxxxxx xx x
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxx x xx
+                    x
+        x
+        xx [/pro] */
+    }
+
     @SuppressWarnings("unchecked")
     static final <T> T getFromSQLInput(Configuration configuration, SQLInput stream, Field<T> field) throws SQLException {
         Class<T> type = field.getType();
@@ -1717,7 +1741,7 @@ final class Utils {
                     return (T) (blob == null ? null : blob.getBytes(1, (int) blob.length()));
                 }
                 finally {
-                    safeFree(blob);
+                    JDBCUtils.safeFree(blob);
                 }
             }
             else {
@@ -2127,7 +2151,7 @@ final class Utils {
                 return blob.getBytes(1, (int) blob.length());
             }
             finally {
-                blob.free();
+                JDBCUtils.safeFree(blob);
             }
         }
         else if (object instanceof Clob) {
@@ -2137,7 +2161,7 @@ final class Utils {
                 return clob.getSubString(1, (int) clob.length());
             }
             finally {
-                clob.free();
+                JDBCUtils.safeFree(clob);
             }
         }
 

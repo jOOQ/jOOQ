@@ -1758,10 +1758,15 @@ final class Utils {
                         // Annotated getter with matching setter
                         else if (method.getParameterTypes().length == 0) {
                             String m = method.getName();
+                            String suffix = m.startsWith("get")
+                                          ? m.substring(3)
+                                          : m.startsWith("is")
+                                          ? m.substring(2)
+                                          : null;
 
-                            if (m.startsWith("get") || m.startsWith("is")) {
+                            if (suffix != null) {
                                 try {
-                                    Method setter = type.getMethod("set" + m.substring(3), method.getReturnType());
+                                    Method setter = type.getMethod("set" + suffix, method.getReturnType());
 
                                     // Setter annotation is more relevant
                                     if (setter.getAnnotation(Column.class) == null) {

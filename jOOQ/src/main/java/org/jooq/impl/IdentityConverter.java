@@ -38,66 +38,47 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq;
+package org.jooq.impl;
 
-/* [pro] xx
+import org.jooq.Converter;
 
-xxxxxx xxxxxxxxxxxxxxx
-xxxxxx xxxxxxxxxxxxxxxxxxxxxx
-xxxxxx xxxxxxxxxxxxxxx
+/**
+ * @author Lukas Eder
+ */
+class IdentityConverter<T> implements Converter<T, T> {
 
-xxx
- x x xxxxxxxx xxxx xxxxxxxxxxxx xx xxxxxxxxxxxx xxxxx xxx xxxxxxxx xxxxxxxxxxxx
- x xxxxxxxxx xxxx xxxxxxxxxxx xxxxxxx
- x
- x xxxxxx xxx xxx xxxxx xxxxxxx xxxx
- x xxxxxxx xxxxx xxxx
- xx
-xxxxxx xxxxxxxxx xxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxx xxxxxxxxxxx x
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = -1721687282753727624L;
+    private final Class<T>    type;
 
-    xxx
-     x xxx xxx xxxxxxxxx xxxxxx
-     xx
-    xxx xxxxxx
+    IdentityConverter(Class<T> type) {
+        this.type = type;
+    }
 
-    xxx
-     x xxx xxx xxxxxxxxx xxxxx xx x xxxxxx xxxxxx
-     xx
-    xxxxxxx xxxxxxxxxx
+    @Override
+    public final T from(T t) {
+        return t;
+    }
 
-    xxx
-     x xxx xxx xxxxxxxxx xxxxxx
-     xx
-    xxxx xxxxxxxxx xxxxxx xxxxxx xxxxxxxxxxxxx
+    @Override
+    public final T to(T t) {
+        return t;
+    }
 
-    xxx
-     x xxx xxx xxxxxxxxx xxxxxx
-     xx
-    xxxx xxxxxxxx xxxxxxx
+    @Override
+    public final Class<T> fromType() {
+        return type;
+    }
 
-    xxx
-     x xxx xxx xxxxxxxxx xxxxx xx x xxxxxx xxxxxx
-     xx
-    xxxx xxxxxxxxxxxxxx xxxxxxx xx xxxxxx
+    @Override
+    public final Class<T> toType() {
+        return type;
+    }
 
-    xxx
-     x xxx xxx xxxx xx xxx xxxxxxxxx xxxxxx
-     xx
-    xxx xxxxxxx
-
-    xxx
-     x xxx xxx xxxx xx xxx xxxxx xxxxx
-     xx
-    xxxxxx xxxxxxxxxx
-
-    xxx
-     x xxx xxx xxxx xxxx xx xxx xxxxxxx xxxx xxxxx
-     xx
-    xxxxxxxxxxx xxxxxxxxxxxxxx
-
-    xxx
-     x xxx xxx xxxx xxxx xx xxx xxxxxx
-     xx
-    xxxxxxxxxxx xxxxxxxxxxxxxxx
-x
-xx [/pro] */
+    @Override
+    public String toString() {
+        return "IdentityConverter [" + type.getName() + "]";
+    }
+}

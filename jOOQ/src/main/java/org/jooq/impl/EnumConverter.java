@@ -126,4 +126,9 @@ public class EnumConverter<T, U extends Enum<U>> implements Converter<T, U> {
          */
         STRING
     }
+
+    @Override
+    public String toString() {
+        return "EnumConverter [ from : " + fromType.getName() + ", to : " + toType.getName() + " ]";
+    }
 }

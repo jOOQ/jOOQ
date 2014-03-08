@@ -47,6 +47,7 @@ import java.util.Map;
 
 import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
@@ -90,7 +91,7 @@ class ParamCollector extends AbstractBindContext {
     }
 
     @Override
-    protected final BindContext bindValue0(Object value, Class<?> type) throws SQLException {
+    protected final BindContext bindValue0(Object value, Field<?> field) throws SQLException {
         throw new UnsupportedOperationException();
     }
 }

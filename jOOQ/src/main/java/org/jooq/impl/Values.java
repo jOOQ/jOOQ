@@ -48,7 +48,6 @@ import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Row;
 import org.jooq.Select;
-import org.jooq.Support;
 import org.jooq.Table;
 
 /**

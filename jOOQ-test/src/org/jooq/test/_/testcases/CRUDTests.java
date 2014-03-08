@@ -51,6 +51,7 @@ import static junit.framework.Assert.fail;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.table;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -65,6 +66,7 @@ import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
+import org.jooq.SQLDialect;
 import org.jooq.StoreQuery;
 import org.jooq.Table;
 import org.jooq.TableField;

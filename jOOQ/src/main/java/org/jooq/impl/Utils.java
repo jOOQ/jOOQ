@@ -2255,14 +2255,8 @@ final class Utils {
     static final <T, U> U getFromResultSet(ExecuteContext ctx, Field<U> field, int index) throws SQLException {
 
         @SuppressWarnings("unchecked")
-        Converter<T, U> converter = (Converter<T, U>) DataTypes.converter(field.getType());
-
-        if (converter != null) {
-            return converter.from(getFromResultSet(ctx, converter.fromType(), index));
-        }
-        else {
-            return getFromResultSet(ctx, field.getType(), index);
-        }
+        Converter<T, U> converter = (Converter<T, U>) field.getConverter();
+        return converter.from(getFromResultSet(ctx, converter.fromType(), index));
     }
 
     @SuppressWarnings("unchecked")

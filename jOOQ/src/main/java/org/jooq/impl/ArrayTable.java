@@ -93,7 +93,7 @@ class ArrayTable extends AbstractTable<Record> {
         /* [pro] */
         // [#1110] Keep track of element type information of Oracle VARRAY / TABLE types
         else if (array instanceof ArrayConstant) {
-            arrayType = array.getDataType().getType();
+            arrayType = ((ArrayConstant<?>) array).getBaseType().getType();
         }
 
         // [#1111] Keep track of element type information of Oracle

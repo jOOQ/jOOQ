@@ -102,7 +102,9 @@ public interface BindContext extends Context<BindContext> {
      *
      * @throws DataAccessException If something went wrong while binding a
      *             variable
+     * @deprecated - 3.4.0 - [#3114] - Use {@link #bindValue(Object, Field)} instead
      */
+    @Deprecated
     BindContext bindValue(Object value, Class<?> type) throws DataAccessException;
 
     /**
@@ -110,6 +112,18 @@ public interface BindContext extends Context<BindContext> {
      *
      * @throws DataAccessException If something went wrong while binding a
      *             variable
+     * @deprecated - 3.4.0 - [#3114] - Use {@link #bindValue(Object, Field)} instead
      */
+    @Deprecated
     BindContext bindValues(Object... values) throws DataAccessException;
+
+    /**
+     * Bind a value using a specific type. This will also increment the internal
+     * counter.
+     *
+     * @throws DataAccessException If something went wrong while binding a
+     *             variable
+     */
+    BindContext bindValue(Object value, Field<?> field) throws DataAccessException;
+
 }

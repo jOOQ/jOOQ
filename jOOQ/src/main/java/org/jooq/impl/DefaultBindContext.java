@@ -72,6 +72,7 @@ import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.EnumType;
+import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -106,15 +107,13 @@ class DefaultBindContext extends AbstractBindContext {
 
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    protected final BindContext bindValue0(Object value, Class<?> type) throws SQLException {
+    protected final BindContext bindValue0(Object value, Field<?> field) throws SQLException {
         SQLDialect dialect = configuration.dialect();
 
-        // [#650] Check first, if we have a converter for the supplied type
-        Converter<?, ?> converter = DataTypes.converter(type);
-        if (converter != null) {
-            value = ((Converter) converter).to(value);
-            type = converter.fromType();
-        }
+        // [#650] [#3108] Use the Field's Converter before actually binding any value
+        Converter<?, ?> converter = field.getConverter();
+        Class<?> type = converter.fromType();
+        value = ((Converter) converter).to(value);
 
         if (log.isTraceEnabled()) {
             if (value != null && value.getClass().isArray() && value.getClass() != byte[].class) {

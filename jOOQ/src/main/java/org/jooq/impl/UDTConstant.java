@@ -162,7 +162,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             // Oracle supports java.sql.SQLData, hence the record can be bound
             // to the CallableStatement directly
             case ORACLE:
-                context.bindValues(value);
+                context.bindValue(value, this);
                 break;
 
             // Is the DB2 case correct? Should it be inlined like the Postgres case?

@@ -2297,6 +2297,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public <R extends TableRecord<R>> void testCustomEnumsWithInline() throws Exception {
+        new EnumTests(this).testCustomEnumsWithInline();
+    }
+
+    @Test
     public void testSerialisation() throws Exception {
         new GeneralTests(this).testSerialisation();
     }

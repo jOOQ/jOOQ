@@ -49,6 +49,7 @@ import static org.junit.Assert.assertTrue;
 import java.sql.Date;
 import java.util.List;
 
+import org.jooq.DSLContext;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -58,6 +59,8 @@ import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.conf.Settings;
+import org.jooq.conf.StatementType;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.test._.converters.Boolean_10;
@@ -128,6 +131,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public <R extends TableRecord<R>> void testCustomEnums() throws Exception {
+        testCustomEnums0(create());
+    }
+
+    @Test
+    public <R extends TableRecord<R>> void testCustomEnumsWithInline() throws Exception {
+        testCustomEnums0(create(new Settings().withStatementType(StatementType.STATIC_STATEMENT)));
+    }
+
+    private <R extends TableRecord<R>> void testCustomEnums0(DSLContext create) throws Exception {
         jOOQAbstractTest.reset = false;
 
         // This does not yet work correctly for Sybase ASE, Postgres
@@ -141,7 +153,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Insertion
         // --------------------------------------------------------------------
         assertEquals(1,
-        create().insertInto(TBooleans())
+        create  .insertInto(TBooleans())
                 .set(TBooleans_ID(), 1)
                 .set(TBooleans_BOOLEAN_10(), Boolean_10.ZERO)
                 .set(TBooleans_Boolean_TF_LC(), Boolean_TF_LC.FALSE)
@@ -156,7 +168,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .execute());
 
         assertEquals(1,
-        create().insertInto(TBooleans())
+        create  .insertInto(TBooleans())
                 .set(TBooleans_ID(), 2)
                 .set(TBooleans_BOOLEAN_10(), Boolean_10.ONE)
                 .set(TBooleans_Boolean_TF_LC(), Boolean_TF_LC.TRUE)
@@ -171,7 +183,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .execute());
 
         assertEquals(1,
-        create().insertInto(TBooleans())
+        create  .insertInto(TBooleans())
                 .set(TBooleans_ID(), 3)
                 .set(TBooleans_BOOLEAN_10(), (Boolean_10) null)
                 .set(TBooleans_Boolean_TF_LC(), (Boolean_TF_LC) null)
@@ -188,7 +200,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Selection
         // --------------------------------------------------------------------
         Result<?> result =
-        create().selectFrom(TBooleans())
+        create  .selectFrom(TBooleans())
                 .where(TBooleans_ID().in(1, 2, 3))
                 .and(TBooleans_BOOLEAN_10().in(Boolean_10.ONE, Boolean_10.ZERO)
                     .or(TBooleans_BOOLEAN_10().isNull()))
@@ -258,7 +270,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
         else {
             List<Object> b =
-            create().selectFrom(TBooleans())
+            create  .selectFrom(TBooleans())
                     .orderBy(TBooleans_ID().asc())
                     .fetchInto(TBooleansPojo());
 

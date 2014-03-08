@@ -87,6 +87,7 @@ import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
@@ -114,17 +115,25 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     private final String          name;
     private final String          comment;
     private final DataType<T>     dataType;
+    private final Converter<?, T> converter;
 
     AbstractField(String name, DataType<T> type) {
-        this(name, type, null);
+        this(name, type, null, null);
     }
 
-    AbstractField(String name, DataType<T> type, String comment) {
+    @SuppressWarnings("unchecked")
+    AbstractField(String name, DataType<T> type, String comment, Converter<?, T> converter) {
         super();
 
         this.name = name;
         this.comment = defaultString(comment);
         this.dataType = type;
+        this.converter =
+              converter != null
+            ? converter
+            : type instanceof ConvertedDataType
+            ? ((ConvertedDataType<?, T>) type).converter()
+            : new IdentityConverter<T>(type.getType());
     }
 
     // ------------------------------------------------------------------------
@@ -159,6 +168,11 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Override
     public final String getComment() {
         return comment;
+    }
+
+    @Override
+    public final Converter<?, T> getConverter() {
+        return converter;
     }
 
     @Override

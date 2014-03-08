@@ -62,6 +62,7 @@ import java.util.List;
 
 import org.jooq.Clause;
 import org.jooq.Context;
+import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.DivideByOnStep;
 import org.jooq.Field;
@@ -325,7 +326,23 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      * @param type The data type of the field
      */
     protected static final <R extends Record, T> TableField<R, T> createField(String name, DataType<T> type, Table<R> table, String comment) {
-        final TableFieldImpl<R, T> tableField = new TableFieldImpl<R, T>(name, type, table, comment);
+        return createField(name, type, table, comment, null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    @SuppressWarnings("unchecked")
+    protected static final <R extends Record, T, U> TableField<R, U> createField(String name, DataType<T> type, Table<R> table, String comment, Converter<T, U> converter) {
+        final DataType<U> actualType = converter == null
+            ? (DataType<U>) type
+            : type.asConvertedDataType(converter);
+
+        final TableFieldImpl<R, U> tableField = new TableFieldImpl<R, U>(name, actualType, table, comment, converter);
 
         // [#1199] The public API of Table returns immutable field lists
         if (table instanceof TableImpl) {

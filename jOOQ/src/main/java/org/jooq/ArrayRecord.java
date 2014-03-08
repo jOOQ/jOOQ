@@ -56,43 +56,48 @@ import java.util.List;
 public interface ArrayRecord<E> extends Attachable, Iterable<E> {
 
     /**
-     * Get the contained array
+     * Get the contained array.
      */
     E[] get();
 
     /**
-     * Get the contained array as a {@link List}
+     * Get the contained array as a {@link List}.
      */
     List<E> getList();
 
     /**
-     * Set the contained array
+     * Set the contained array.
      */
     void set(Array array) throws SQLException;
 
     /**
-     * Set the contained array
+     * Set the contained array.
      */
     void set(E... array);
 
     /**
-     * Set the contained array as a {@link List}
+     * Set the contained array as a {@link List}.
      */
     void setList(List<? extends E> list);
 
     /**
-     * Get the size of the contained array
+     * Get the size of the contained array.
      */
     int size();
 
     /**
-     * Get the name of the array type
+     * Get the name of the array type.
      */
     String getName();
 
     /**
-     * Get the data type of the array type
+     * Get the data type of the array's base type.
      */
     DataType<E> getDataType();
+
+    /**
+     * Get the data type of the array.
+     */
+    DataType<?> getArrayType();
 }
 /* [/pro] */

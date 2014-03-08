@@ -72,7 +72,8 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
     private static final long serialVersionUID = -908937248705184108L;
 
     private final Schema      schema;
-    private final DataType<T> type;
+    private final DataType<T> baseType;
+    private final DataType<?> type;
     private final String      name;
     private T[]               array;
 
@@ -85,10 +86,10 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
 
         this.schema = schema;
         this.name = name;
-        this.type = type;
+        this.baseType = type;
 
         // Array data type initialisation
-        type.asArrayDataType(getClass());
+        this.type = type.asArrayDataType(getClass());
     }
 
     /**
@@ -106,7 +107,7 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
     final List<Attachable> getAttachables() {
         List<Attachable> result = new ArrayList<Attachable>();
 
-        if (Attachable.class.isAssignableFrom(type.getType())) {
+        if (Attachable.class.isAssignableFrom(baseType.getType())) {
             for (T element : get()) {
                 result.add((Attachable) element);
             }
@@ -128,7 +129,7 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
     @Override
     public final T[] get() {
         if (array == null) {
-            return (T[]) Array.newInstance(type.getType(), 0);
+            return (T[]) Array.newInstance(baseType.getType(), 0);
         }
         else {
             return array;
@@ -162,7 +163,7 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
             // [#884] TODO: This name is used in inlined SQL. It should be
             // correctly escaped and schema mapped!
             o = array.getArray(DataTypes.udtRecords());
-            this.array = Convert.convert(o, type.getArrayType());
+            this.array = Convert.convert(o, baseType.getArrayType());
         }
     }
 
@@ -173,7 +174,7 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
             array = null;
         }
         else {
-            array = list.toArray((T[]) Array.newInstance(type.getType(), 0));
+            array = list.toArray((T[]) Array.newInstance(baseType.getType(), 0));
         }
     }
 
@@ -198,6 +199,11 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
 
     @Override
     public final DataType<T> getDataType() {
+        return baseType;
+    }
+
+    @Override
+    public final DataType<?> getArrayType() {
         return type;
     }
 

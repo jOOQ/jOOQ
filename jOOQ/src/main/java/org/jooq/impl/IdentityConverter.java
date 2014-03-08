@@ -40,61 +40,45 @@
  */
 package org.jooq.impl;
 
-/* [pro] */
-
-import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.impl.DSL.val;
-
-import org.jooq.ArrayRecord;
-import org.jooq.BindContext;
-import org.jooq.DataType;
-import org.jooq.RenderContext;
+import org.jooq.Converter;
 
 /**
  * @author Lukas Eder
  */
-class ArrayConstant<R extends ArrayRecord<?>> extends AbstractParam<R> {
+class IdentityConverter<T> implements Converter<T, T> {
 
-    private static final long serialVersionUID = -8538560256712388066L;
-    private final R           array;
-    private final DataType<?> baseType;
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = -1721687282753727624L;
+    private final Class<T>    type;
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    ArrayConstant(R array) {
-        super(array, (DataType) array.getArrayType());
-
-        this.array = array;
-        this.baseType = array.getDataType();
-    }
-
-    final DataType<?> getBaseType() {
-        return baseType;
+    IdentityConverter(Class<T> type) {
+        this.type = type;
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        if (context.paramType() == INLINED) {
-            context.sql(array.getName());
-            context.sql("(");
-
-            String separator = "";
-            for (Object object : array.get()) {
-                context.sql(separator);
-                context.visit(val(object));
-
-                separator = ", ";
-            }
-
-            context.sql(")");
-        }
-        else {
-            context.sql("?");
-        }
+    public final T from(T t) {
+        return t;
     }
 
     @Override
-    public final void bind(BindContext context) {
-        context.bindValue(array, this);
+    public final T to(T t) {
+        return t;
+    }
+
+    @Override
+    public final Class<T> fromType() {
+        return type;
+    }
+
+    @Override
+    public final Class<T> toType() {
+        return type;
+    }
+
+    @Override
+    public String toString() {
+        return "IdentityConverter [" + type.getName() + "]";
     }
 }
-/* [/pro] */

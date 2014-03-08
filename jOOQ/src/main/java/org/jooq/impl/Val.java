@@ -108,7 +108,7 @@ class Val<T> extends AbstractParam<T> {
         // Casting can be enforced or prevented
         switch (context.castMode()) {
             case NEVER:
-                toSQL(context, value, getType());
+                toSQL(context, value, getConverter());
                 return;
 
             case ALWAYS:
@@ -127,7 +127,7 @@ class Val<T> extends AbstractParam<T> {
                     toSQLCast(context);
                 }
                 else {
-                    toSQL(context, value, getType());
+                    toSQL(context, value, getConverter());
                 }
 
                 return;
@@ -140,7 +140,7 @@ class Val<T> extends AbstractParam<T> {
 
         // Most RDBMS can infer types for bind values
         else {
-            toSQL(context, value, getType());
+            toSQL(context, value, getConverter());
         }
     }
 
@@ -245,7 +245,7 @@ class Val<T> extends AbstractParam<T> {
         // [#1125] Also with temporal data types, casting is needed some times
         // [#1130] TODO type can be null for ARRAY types, etc.
         else if (family == POSTGRES && (type == null || !type.isTemporal())) {
-            toSQL(context, value, getType());
+            toSQL(context, value, getConverter());
         }
 
         // [#1727] VARCHAR types should be cast to their actual lengths in some
@@ -291,7 +291,7 @@ class Val<T> extends AbstractParam<T> {
 
     private final void toSQLCast(RenderContext context, DataType<?> type, int length, int precision, int scale) {
         context.keyword("cast").sql("(");
-        toSQL(context, value, getType());
+        toSQL(context, value, getConverter());
         context.sql(" ").keyword("as").sql(" ")
                .sql(type.length(length).precision(precision, scale).getCastTypeName(context.configuration()))
                .sql(")");
@@ -320,28 +320,13 @@ class Val<T> extends AbstractParam<T> {
     /**
      * Inlining abstraction
      */
-    private final void toSQL(RenderContext context, Object val) {
-        if (val == null) {
-            toSQL(context, val, Object.class);
-        }
-        else {
-            toSQL(context, val, val.getClass());
-        }
-    }
-
-    /**
-     * Inlining abstraction
-     */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private final void toSQL(RenderContext context, Object val, Class<?> type) {
+    private final void toSQL(RenderContext context, Object val, Converter<?, T> converter) {
         SQLDialect family = context.configuration().dialect().family();
 
-        // [#650] Check first, if we have a converter for the supplied type
-        Converter<?, ?> converter = DataTypes.converter(type);
-        if (converter != null) {
-            val = ((Converter) converter).to(val);
-            type = converter.fromType();
-        }
+        // [#650] [#3108] Check first, if we have a converter for the supplied type
+        Class<?> type = converter.fromType();
+        val = ((Converter) converter).to(val);
 
         if (isInline(context)) {
             // [#2223] Some type-casts in this section may seem unnecessary, e.g.
@@ -511,7 +496,7 @@ class Val<T> extends AbstractParam<T> {
 
                     for (Object o : ((Object[]) val)) {
                         context.sql(separator);
-                        toSQL(context, o, type.getComponentType());
+                        toSQL(context, o, new IdentityConverter(type.getComponentType()));
                         separator = ", ";
                     }
 
@@ -525,7 +510,7 @@ class Val<T> extends AbstractParam<T> {
 
                     for (Object o : ((Object[]) val)) {
                         context.sql(separator);
-                        toSQL(context, o, type.getComponentType());
+                        toSQL(context, o, new IdentityConverter(type.getComponentType()));
                         separator = ", ";
                     }
 
@@ -538,7 +523,14 @@ class Val<T> extends AbstractParam<T> {
             }
             /* [/pro] */
             else if (EnumType.class.isAssignableFrom(type)) {
-                toSQL(context, ((EnumType) val).getLiteral());
+                String literal = ((EnumType) val).getLiteral();
+
+                if (literal == null) {
+                    toSQL(context, val, new IdentityConverter(String.class));
+                }
+                else {
+                    toSQL(context, val, new IdentityConverter(String.class));
+                }
             }
             else if (UDTRecord.class.isAssignableFrom(type)) {
                 context.sql("[UDT]");
@@ -609,7 +601,7 @@ class Val<T> extends AbstractParam<T> {
 
         // [#1302] Bind value only if it was not explicitly forced to be inlined
         if (!isInline()) {
-            context.bindValue(value, getType());
+            context.bindValue(value, this);
         }
     }
 

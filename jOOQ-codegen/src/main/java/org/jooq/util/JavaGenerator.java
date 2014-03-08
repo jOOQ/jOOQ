@@ -94,6 +94,7 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
 import org.jooq.util.GeneratorStrategy.Mode;
+import org.jooq.util.jaxb.CustomType;
 import org.jooq.util.postgres.PostgresDatabase;
 
 
@@ -1748,13 +1749,23 @@ public class JavaGenerator extends AbstractGenerator {
             final String columnId = getStrategy().getJavaIdentifier(column);
             final String columnName = column.getName();
             final String columnComment = StringUtils.defaultString(column.getComment());
+            final CustomType columnCustomType = database.getConfiguredCustomType(column.getType().getUserType());
 
             String isStatic = generateInstanceFields() ? "" : "static ";
             String tableRef = generateInstanceFields() ? "this" : getStrategy().getJavaIdentifier(table);
 
             out.tab(1).javadoc("The column <code>%s</code>.%s", column.getQualifiedOutputName(), defaultIfBlank(" " + columnComment, ""));
-            out.tab(1).println("public %sfinal %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\");",
-                isStatic, TableField.class, recordType, columnType, columnId, columnName, columnTypeRef, tableRef, escapeString(columnComment));
+
+            if (columnCustomType != null) {
+                String converter = columnCustomType.getConverter();
+
+                out.tab(1).println("public %sfinal %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\", new %s());",
+                    isStatic, TableField.class, recordType, columnType, columnId, columnName, columnTypeRef, tableRef, escapeString(columnComment), converter);
+            }
+            else {
+                out.tab(1).println("public %sfinal %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\");",
+                    isStatic, TableField.class, recordType, columnType, columnId, columnName, columnTypeRef, tableRef, escapeString(columnComment));
+            }
         }
 
         // [#1255] With instance fields, the table constructor may
@@ -2883,12 +2894,6 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (dataType.defaulted()) {
                     sb.append(".defaulted(true)");
-                }
-
-                if (db.getConfiguredCustomType(u) != null) {
-                    sb.append(".asConvertedDataType(new ");
-                    sb.append(db.getConfiguredCustomType(u).getConverter());
-                    sb.append("())");
                 }
             }
 

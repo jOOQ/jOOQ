@@ -861,7 +861,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(4, (int) r1.getValue(T639_ID()));
         assertEquals(4, (int) r1.original(T639_ID()));
         assertFalse(r1.changed(T639_ID()));
-        assertEquals(asList(3, 4), create.select(T639_ID()).from(T639()).fetch(T639_ID()));
+        assertEquals(asList(3, 4), create.select(T639_ID()).from(T639()).orderBy(T639_ID()).fetch(T639_ID()));
 
         // Copy is not affected
         T639 r2 = r1.copy();

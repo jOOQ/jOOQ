@@ -60,7 +60,7 @@ import org.junit.Test;
  *
  * @author Lukas Eder
  */
-public class ConvertTest extends AbstractTest {
+public class ConvertAllTest extends AbstractTest {
 
     @Test
     public void testToObject() {

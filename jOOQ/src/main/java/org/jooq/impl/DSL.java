@@ -11047,7 +11047,7 @@ public class DSL {
     }
 
     /**
-     * The <code>rank_over() over ([analytic clause])</code> function.
+     * The <code>rank() over ([analytic clause])</code> function.
      * <p>
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
@@ -11059,6 +11059,20 @@ public class DSL {
     public static WindowOverStep<Integer> rank() {
         return new Function<Integer>("rank", SQLDataType.INTEGER);
     }
+
+    /* [pro] */
+    /**
+     * The <code>rank(expr) within group (order by [order clause])</code>
+     * ordered aggregate function.
+     */
+    @Support({ ORACLE })
+    @Transition(
+        name = "RANK"
+    )
+    public static OrderedAggregateFunction<Integer> rank(Field<?>... fields) {
+        return new Function<Integer>("rank", SQLDataType.INTEGER, fields);
+    }
+    /* [/pro] */
 
     /**
      * The <code>dense_rank() over ([analytic clause])</code> function.
@@ -11074,6 +11088,20 @@ public class DSL {
         return new Function<Integer>("dense_rank", SQLDataType.INTEGER);
     }
 
+    /* [pro] */
+    /**
+     * The <code>dense_rank(expr) within group (order by [order clause])</code>
+     * ordered aggregate function.
+     */
+    @Support({ ORACLE })
+    @Transition(
+        name = "RANK"
+    )
+    public static OrderedAggregateFunction<Integer> denseRank(Field<?>... fields) {
+        return new Function<Integer>("dense_rank", SQLDataType.INTEGER, fields);
+    }
+    /* [/pro] */
+
     /**
      * The <code>precent_rank() over ([analytic clause])</code> function.
      * <p>
@@ -11088,6 +11116,20 @@ public class DSL {
         return new Function<BigDecimal>("percent_rank", SQLDataType.NUMERIC);
     }
 
+    /* [pro] */
+    /**
+     * The <code>percent_rank(expr) within group (order by [order clause])</code>
+     * ordered aggregate function.
+     */
+    @Support({ ORACLE })
+    @Transition(
+        name = "RANK"
+    )
+    public static OrderedAggregateFunction<Integer> percentRank(Field<?>... fields) {
+        return new Function<Integer>("percent_rank", SQLDataType.INTEGER, fields);
+    }
+    /* [/pro] */
+
     /**
      * The <code>cume_dist() over ([analytic clause])</code> function.
      * <p>
@@ -11101,6 +11143,20 @@ public class DSL {
     public static WindowOverStep<BigDecimal> cumeDist() {
         return new Function<BigDecimal>("cume_dist", SQLDataType.NUMERIC);
     }
+
+    /* [pro] */
+    /**
+     * The <code>cume_dist(expr) within group (order by [order clause])</code>
+     * ordered aggregate function.
+     */
+    @Support({ ORACLE })
+    @Transition(
+        name = "CUME_DIST"
+    )
+    public static OrderedAggregateFunction<BigDecimal> cumeDist(Field<?>... fields) {
+        return new Function<BigDecimal>("cume_dist", SQLDataType.NUMERIC, fields);
+    }
+    /* [/pro] */
 
     /**
      * The <code>ntile([number]) over ([analytic clause])</code> function.

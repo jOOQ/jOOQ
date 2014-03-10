@@ -48,8 +48,12 @@ import static java.util.Collections.emptyList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;
+import static org.jooq.impl.DSL.cumeDist;
 import static org.jooq.impl.DSL.currentUser;
+import static org.jooq.impl.DSL.denseRank;
 import static org.jooq.impl.DSL.max;
+import static org.jooq.impl.DSL.percentRank;
+import static org.jooq.impl.DSL.rank;
 import static org.jooq.impl.DSL.sum;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
@@ -120,6 +124,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Record;
 import org.jooq.Record2;
 import org.jooq.Record3;
+import org.jooq.Record8;
 import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
 import org.jooq.RecordType;
@@ -1384,6 +1389,37 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals(1, result1.size());
         assertEquals("O Alquimista", result1.getValue(0, TBook_TITLE()));
         assertEquals(1, result1.getValue(0, score(2)).compareTo(BigDecimal.ZERO));
+    }
+
+    @Test
+    public void testOracleOrderedAggregateFunctions() throws Exception {
+        Record8<BigDecimal, BigDecimal, Integer, Integer, Integer, Integer, Integer, Integer> result =
+        create().select(
+                    cumeDist(val(1)).withinGroupOrderBy(T_BOOK.ID.desc()),
+                    cumeDist(val(1), val(1)).withinGroupOrderBy(T_BOOK.ID.desc(), T_BOOK.AUTHOR_ID.desc()),
+
+                    rank(val(1)).withinGroupOrderBy(T_BOOK.ID.asc()),
+                    rank(val(1), val(1)).withinGroupOrderBy(T_BOOK.ID.asc(), T_BOOK.AUTHOR_ID.desc()),
+
+                    denseRank(val(1)).withinGroupOrderBy(T_BOOK.ID.asc()),
+                    denseRank(val(1), val(1)).withinGroupOrderBy(T_BOOK.ID.asc(), T_BOOK.AUTHOR_ID.desc()),
+
+                    percentRank(val(1)).withinGroupOrderBy(T_BOOK.ID.asc()),
+                    percentRank(val(1), val(1)).withinGroupOrderBy(T_BOOK.ID.asc(), T_BOOK.AUTHOR_ID.desc()))
+                .from(T_BOOK)
+                .fetchOne();
+
+        assertEquals(BigDecimal.ONE, result.value1());
+        assertEquals(BigDecimal.ONE, result.value2());
+
+        assertEquals(1, (int) result.value3());
+        assertEquals(1, (int) result.value4());
+
+        assertEquals(1, (int) result.value5());
+        assertEquals(1, (int) result.value6());
+
+        assertEquals(1, (int) result.value7());
+        assertEquals(1, (int) result.value8());
     }
 
     @Test

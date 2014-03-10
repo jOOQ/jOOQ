@@ -11047,7 +11047,7 @@ public class DSL {
     }
 
     /**
-     * The <code>rank_over() over ([analytic clause])</code> function.
+     * The <code>rank() over ([analytic clause])</code> function.
      * <p>
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
@@ -11059,6 +11059,20 @@ public class DSL {
     public static WindowOverStep<Integer> rank() {
         return new Function<Integer>("rank", SQLDataType.INTEGER);
     }
+
+    /* [pro] xx
+    xxx
+     x xxx xxxxxxxxxxxxxxxx xxxxxx xxxxx xxxxxx xx xxxxxx xxxxxxxxxxxxxxx
+     x xxxxxxx xxxxxxxxx xxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxx
+    x
+    xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxx
+    x
+    xx [/pro] */
 
     /**
      * The <code>dense_rank() over ([analytic clause])</code> function.
@@ -11074,6 +11088,20 @@ public class DSL {
         return new Function<Integer>("dense_rank", SQLDataType.INTEGER);
     }
 
+    /* [pro] xx
+    xxx
+     x xxx xxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxx xxxxxx xx xxxxxx xxxxxxxxxxxxxxx
+     x xxxxxxx xxxxxxxxx xxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxx
+    x
+    xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxx
+    x
+    xx [/pro] */
+
     /**
      * The <code>precent_rank() over ([analytic clause])</code> function.
      * <p>
@@ -11088,6 +11116,20 @@ public class DSL {
         return new Function<BigDecimal>("percent_rank", SQLDataType.NUMERIC);
     }
 
+    /* [pro] xx
+    xxx
+     x xxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxx xxxxxx xx xxxxxx xxxxxxxxxxxxxxx
+     x xxxxxxx xxxxxxxxx xxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxx
+    x
+    xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxx
+    x
+    xx [/pro] */
+
     /**
      * The <code>cume_dist() over ([analytic clause])</code> function.
      * <p>
@@ -11101,6 +11143,20 @@ public class DSL {
     public static WindowOverStep<BigDecimal> cumeDist() {
         return new Function<BigDecimal>("cume_dist", SQLDataType.NUMERIC);
     }
+
+    /* [pro] xx
+    xxx
+     x xxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxx xxxxxx xx xxxxxx xxxxxxxxxxxxxxx
+     x xxxxxxx xxxxxxxxx xxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxx xx
+    xxxxxxxxxxxx
+        xxxx x xxxxxxxxxxx
+    x
+    xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxx
+    x
+    xx [/pro] */
 
     /**
      * The <code>ntile([number]) over ([analytic clause])</code> function.

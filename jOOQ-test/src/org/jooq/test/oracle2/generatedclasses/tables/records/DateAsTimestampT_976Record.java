@@ -9,59 +9,59 @@ package org.jooq.test.oracle2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DateAsTimestampT_976Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> implements org.jooq.Record4<java.lang.Integer, java.sql.Timestamp, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord> {
 
-	private static final long serialVersionUID = 138332214;
+	private static final long serialVersionUID = -1457391738;
 
 	/**
-	 * Setter for <code>TEST.T_976.ID</code>. 
+	 * Setter for <code>TEST.T_976.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_976.ID</code>. 
+	 * Getter for <code>TEST.T_976.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_976.D</code>. 
+	 * Setter for <code>TEST.T_976.D</code>.
 	 */
 	public void setD(java.sql.Timestamp value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_976.D</code>. 
+	 * Getter for <code>TEST.T_976.D</code>.
 	 */
 	public java.sql.Timestamp getD() {
 		return (java.sql.Timestamp) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_976.T</code>. 
+	 * Setter for <code>TEST.T_976.T</code>.
 	 */
 	public void setT(org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_976.T</code>. 
+	 * Getter for <code>TEST.T_976.T</code>.
 	 */
 	public org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord getT() {
 		return (org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_976.O</code>. 
+	 * Setter for <code>TEST.T_976.O</code>.
 	 */
 	public void setO(org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_976.O</code>. 
+	 * Getter for <code>TEST.T_976.O</code>.
 	 */
 	public org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord getO() {
 		return (org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord) getValue(3);

@@ -9,115 +9,115 @@ package org.jooq.test.oracle2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DateAsTimestampTDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord> implements org.jooq.Record8<java.lang.Integer, java.util.GregorianCalendar, java.util.GregorianCalendar, java.util.GregorianCalendar, java.lang.Integer, java.lang.Long, org.jooq.types.YearToMonth, org.jooq.types.DayToSecond> {
 
-	private static final long serialVersionUID = -691084435;
+	private static final long serialVersionUID = -1361903949;
 
 	/**
-	 * Setter for <code>TEST.T_DATES.ID</code>. 
+	 * Setter for <code>TEST.T_DATES.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.ID</code>. 
+	 * Getter for <code>TEST.T_DATES.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.D</code>. 
+	 * Setter for <code>TEST.T_DATES.D</code>.
 	 */
 	public void setD(java.util.GregorianCalendar value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.D</code>. 
+	 * Getter for <code>TEST.T_DATES.D</code>.
 	 */
 	public java.util.GregorianCalendar getD() {
 		return (java.util.GregorianCalendar) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.T</code>. 
+	 * Setter for <code>TEST.T_DATES.T</code>.
 	 */
 	public void setT(java.util.GregorianCalendar value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.T</code>. 
+	 * Getter for <code>TEST.T_DATES.T</code>.
 	 */
 	public java.util.GregorianCalendar getT() {
 		return (java.util.GregorianCalendar) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.TS</code>. 
+	 * Setter for <code>TEST.T_DATES.TS</code>.
 	 */
 	public void setTs(java.util.GregorianCalendar value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.TS</code>. 
+	 * Getter for <code>TEST.T_DATES.TS</code>.
 	 */
 	public java.util.GregorianCalendar getTs() {
 		return (java.util.GregorianCalendar) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.D_INT</code>. 
+	 * Setter for <code>TEST.T_DATES.D_INT</code>.
 	 */
 	public void setDInt(java.lang.Integer value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.D_INT</code>. 
+	 * Getter for <code>TEST.T_DATES.D_INT</code>.
 	 */
 	public java.lang.Integer getDInt() {
 		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.TS_BIGINT</code>. 
+	 * Setter for <code>TEST.T_DATES.TS_BIGINT</code>.
 	 */
 	public void setTsBigint(java.lang.Long value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.TS_BIGINT</code>. 
+	 * Getter for <code>TEST.T_DATES.TS_BIGINT</code>.
 	 */
 	public java.lang.Long getTsBigint() {
 		return (java.lang.Long) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.I_Y</code>. 
+	 * Setter for <code>TEST.T_DATES.I_Y</code>.
 	 */
 	public void setIY(org.jooq.types.YearToMonth value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.I_Y</code>. 
+	 * Getter for <code>TEST.T_DATES.I_Y</code>.
 	 */
 	public org.jooq.types.YearToMonth getIY() {
 		return (org.jooq.types.YearToMonth) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.I_D</code>. 
+	 * Setter for <code>TEST.T_DATES.I_D</code>.
 	 */
 	public void setID(org.jooq.types.DayToSecond value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.I_D</code>. 
+	 * Getter for <code>TEST.T_DATES.I_D</code>.
 	 */
 	public org.jooq.types.DayToSecond getID() {
 		return (org.jooq.types.DayToSecond) getValue(7);

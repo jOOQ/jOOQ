@@ -9,7 +9,7 @@ package org.jooq.test.oracle2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DateAsTimestampT_976 extends org.jooq.impl.TableImpl<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> {
 
-	private static final long serialVersionUID = -874020871;
+	private static final long serialVersionUID = -771143482;
 
 	/**
 	 * The singleton instance of <code>TEST.T_976</code>
@@ -25,37 +25,45 @@ public class DateAsTimestampT_976 extends org.jooq.impl.TableImpl<org.jooq.test.
 	}
 
 	/**
-	 * The column <code>TEST.T_976.ID</code>. 
+	 * The column <code>TEST.T_976.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record, java.lang.Integer> DATE_AS_TIMESTAMP_ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record, java.lang.Integer> DATE_AS_TIMESTAMP_ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.T_976.D</code>. 
+	 * The column <code>TEST.T_976.D</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record, java.sql.Timestamp> DATE_AS_TIMESTAMP_D = createField("D", org.jooq.impl.SQLDataType.TIMESTAMP, this);
+	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record, java.sql.Timestamp> DATE_AS_TIMESTAMP_D = createField("D", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
-	 * The column <code>TEST.T_976.T</code>. 
+	 * The column <code>TEST.T_976.T</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord> DATE_AS_TIMESTAMP_T = createField("T", org.jooq.impl.SQLDataType.TIMESTAMP.asArrayDataType(org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord.class), this);
+	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord> DATE_AS_TIMESTAMP_T = createField("T", org.jooq.impl.SQLDataType.TIMESTAMP.asArrayDataType(org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord.class), this, "");
 
 	/**
-	 * The column <code>TEST.T_976.O</code>. 
+	 * The column <code>TEST.T_976.O</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord> DATE_AS_TIMESTAMP_O = createField("O", org.jooq.test.oracle2.generatedclasses.udt.DateAsTimestampT_976ObjectType.DATE_AS_TIMESTAMP_T_976_OBJECT_TYPE.getDataType(), this);
+	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord> DATE_AS_TIMESTAMP_O = createField("O", org.jooq.test.oracle2.generatedclasses.udt.DateAsTimestampT_976ObjectType.DATE_AS_TIMESTAMP_T_976_OBJECT_TYPE.getDataType(), this, "");
 
 	/**
 	 * Create a <code>TEST.T_976</code> table reference
 	 */
 	public DateAsTimestampT_976() {
-		super("T_976", org.jooq.test.oracle2.generatedclasses.DateAsTimestampTest.DATE_AS_TIMESTAMP_TEST);
+		this("T_976", null);
 	}
 
 	/**
 	 * Create an aliased <code>TEST.T_976</code> table reference
 	 */
 	public DateAsTimestampT_976(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle2.generatedclasses.DateAsTimestampTest.DATE_AS_TIMESTAMP_TEST, org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976);
+		this(alias, org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976);
+	}
+
+	private DateAsTimestampT_976(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private DateAsTimestampT_976(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.oracle2.generatedclasses.DateAsTimestampTest.DATE_AS_TIMESTAMP_TEST, aliased, parameters, "");
 	}
 
 	/**
@@ -79,6 +87,13 @@ public class DateAsTimestampT_976 extends org.jooq.impl.TableImpl<org.jooq.test.
 	 */
 	@Override
 	public org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976 as(java.lang.String alias) {
-		return new org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976(alias);
+		return new org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976 rename(java.lang.String name) {
+		return new org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976(name, null);
 	}
 }

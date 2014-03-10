@@ -9,18 +9,18 @@ package org.jooq.test.oracle2.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DateAsTimestampT_976ObjectTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord> {
 
-	private static final long serialVersionUID = -1231870041;
+	private static final long serialVersionUID = 1430188449;
 
 
 	/**
-	 * Setter for <code>TEST.T_976_OBJECT_TYPE.D</code>. 
+	 * Setter for <code>TEST.T_976_OBJECT_TYPE.D</code>.
 	 */
 	public void setD(java.sql.Timestamp value) {
 		setValue(org.jooq.test.oracle2.generatedclasses.udt.DateAsTimestampT_976ObjectType.DATE_AS_TIMESTAMP_D, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_976_OBJECT_TYPE.D</code>. 
+	 * Getter for <code>TEST.T_976_OBJECT_TYPE.D</code>.
 	 */
 	public java.sql.Timestamp getD() {
 		return getValue(org.jooq.test.oracle2.generatedclasses.udt.DateAsTimestampT_976ObjectType.DATE_AS_TIMESTAMP_D);

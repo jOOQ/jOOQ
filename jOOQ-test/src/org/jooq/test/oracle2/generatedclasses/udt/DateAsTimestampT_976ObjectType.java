@@ -9,7 +9,7 @@ package org.jooq.test.oracle2.generatedclasses.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DateAsTimestampT_976ObjectType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord> {
 
-	private static final long serialVersionUID = -1351783730;
+	private static final long serialVersionUID = 1540395154;
 
 	/**
 	 * The singleton instance of <code>TEST.T_976_OBJECT_TYPE</code>
@@ -25,7 +25,7 @@ public class DateAsTimestampT_976ObjectType extends org.jooq.impl.UDTImpl<org.jo
 	}
 
 	/**
-	 * The attribute <code>TEST.T_976_OBJECT_TYPE.D</code>. 
+	 * The attribute <code>TEST.T_976_OBJECT_TYPE.D</code>.
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord, java.sql.Timestamp> DATE_AS_TIMESTAMP_D = createField("D", org.jooq.impl.SQLDataType.TIMESTAMP, DATE_AS_TIMESTAMP_T_976_OBJECT_TYPE);
 

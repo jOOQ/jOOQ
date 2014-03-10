@@ -51,28 +51,34 @@ import java.sql.DriverManager
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import java.util.ArrayList
+import org.jooq.scala.test.pojo.BookCaseWithConstructorProperties
+import org.jooq.scala.test.pojo.BookCase
 
 @RunWith(classOf[JUnitRunner])
 class MapperTest extends FunSuite {
 
-  test("RecordMapper") {
+  def dsl() = {
     val c = DriverManager.getConnection("jdbc:h2:~/test", "sa", "");
     val f = DSL.using(c, SQLDialect.H2);
 
+    f;
+  }
+
+  test("RecordMapper") {
     val r =
-    f.select(
-      field("A", classOf[java.lang.Integer]),
-      field("B", classOf[java.lang.Integer])
-     )
-     .from(
-        values(
-          row(1, 2),
-          row(1, 3),
-          row(2, 3)
-        )
-        as("T", "A", "B")
-      )
-     .fetch();
+    dsl().select(
+            field("A", classOf[java.lang.Integer]),
+            field("B", classOf[java.lang.Integer])
+         )
+         .from(
+            values(
+              row(1, 2),
+              row(1, 3),
+              row(2, 3)
+            )
+            as("T", "A", "B")
+          )
+         .fetch();
 
     val mapped1 = r.map((x1 : java.lang.Integer, x2 : java.lang.Integer) => (x1 + ", " + x2))
     val mapped2 = r.map((x : (java.lang.Integer, java.lang.Integer)) => (x._1 + ", " + x._2))
@@ -84,4 +90,29 @@ class MapperTest extends FunSuite {
     assert(mapped1 == mapped2, "Tuple vs ArgumentList")
   }
 
+  test("MapCaseClass") {
+    val books1 =
+    dsl().select(T_BOOK.ID, T_BOOK.AUTHOR_ID, T_BOOK.TITLE)
+         .from(T_BOOK)
+         .orderBy(T_BOOK.ID asc)
+         .fetchInto(classOf[BookCase])
+
+    assert(4 == books1.size());
+    assert(BookCase(1, 1, "1984")         == books1.get(0));
+    assert(BookCase(2, 1, "Animal Farm")  == books1.get(1));
+    assert(BookCase(3, 2, "O Alquimista") == books1.get(2));
+    assert(BookCase(4, 2, "Brida")        == books1.get(3));
+
+    val books2 =
+    dsl().select()
+         .from(T_BOOK)
+         .orderBy(T_BOOK.ID asc)
+         .fetchInto(classOf[BookCaseWithConstructorProperties])
+
+    assert(4 == books2.size());
+    assert(BookCaseWithConstructorProperties(1, 1, "1984")         == books2.get(0));
+    assert(BookCaseWithConstructorProperties(2, 1, "Animal Farm")  == books2.get(1));
+    assert(BookCaseWithConstructorProperties(3, 2, "O Alquimista") == books2.get(2));
+    assert(BookCaseWithConstructorProperties(4, 2, "Brida")        == books2.get(3));
+  }
 }

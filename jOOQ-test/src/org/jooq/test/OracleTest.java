@@ -1692,30 +1692,29 @@ public class OracleTest extends jOOQAbstractTest<
 
 
         {
-            UNumberTableRecord numbers = new UNumberTableRecord(3, 4);
-            UNested_1Record u1 = new UNested_1Record();
-            UNested_2Record u2 = new UNested_2Record(u1, u1);
-            UNested_3Record u3 = new UNested_3Record();
-            u1.setId(2);
-            u1.setNested(numbers);
-            u3.setId(1);
-            u3.setNested(u2);
+            UNested_3Record u3 = new UNested_3Record(1, 
+                new UNested_2Record(
+                    new UNested_1Record(2, new UNumberTableRecord(3, 4)), 
+                    new UNested_1Record(2, new UNumberTableRecord(3, 4))
+                )
+            );
+            
             PNested result = Routines.pNested(configuration, u3, u3);
             assertNotNull(result);
             assertEquals(u3, result.getP3());
             assertEquals(1, (int) result.getP3().getId());
             assertEquals(2, result.getP3().getNested().size());
-            assertEquals(u1, result.getP3().getNested().get()[0]);
+            assertEquals(new UNested_1Record(2, new UNumberTableRecord(3, 4)), result.getP3().getNested().get()[0]);
             assertEquals(2, (int) result.getP3().getNested().get()[0].getId());
             assertEquals(asList(3, 4), result.getP3().getNested().get()[0].getNested().getList());
-            assertEquals(u1, result.getP3().getNested().get()[1]);
+            assertEquals(new UNested_1Record(2, new UNumberTableRecord(3, 4)), result.getP3().getNested().get()[1]);
             assertEquals(u3, result.getP4());
             assertEquals(1, (int) result.getP4().getId());
             assertEquals(2, result.getP4().getNested().size());
-            assertEquals(u1, result.getP4().getNested().get()[0]);
+            assertEquals(new UNested_1Record(2, new UNumberTableRecord(3, 4)), result.getP4().getNested().get()[0]);
             assertEquals(2, (int) result.getP4().getNested().get()[0].getId());
             assertEquals(asList(3, 4), result.getP4().getNested().get()[0].getNested().getList());
-            assertEquals(u1, result.getP4().getNested().get()[1]);
+            assertEquals(new UNested_1Record(2, new UNumberTableRecord(3, 4)), result.getP4().getNested().get()[1]);
         }
     }
 }

@@ -521,47 +521,57 @@ public class JavaGenerator extends AbstractGenerator {
         watch.splitInfo("Table records generated");
     }
 
+
     protected void generateRecord(TableDefinition table) {
-        log.info("Generating table record", getStrategy().getFileName(table, Mode.RECORD));
+        generateRecord((Definition) table);
+    }
 
-        final UniqueKeyDefinition key = table.getPrimaryKey();
-        final String className = getStrategy().getJavaClassName(table, Mode.RECORD);
-        final String tableIdentifier = getStrategy().getFullJavaIdentifier(table);
-        final String recordType = getStrategy().getFullJavaClassName(table, Mode.RECORD);
-        final List<String> interfaces = getStrategy().getJavaClassImplements(table, Mode.RECORD);
+    private void generateRecord(Definition tableOrUdt) {
+        log.info("Generating record", getStrategy().getFileName(tableOrUdt, Mode.RECORD));
 
-        JavaWriter out = new JavaWriter(getStrategy().getFile(table, Mode.RECORD));
-        printPackage(out, table, Mode.RECORD);
-        printClassJavadoc(out, table);
-        printTableJPAAnnotation(out, table);
+        final UniqueKeyDefinition key = (tableOrUdt instanceof TableDefinition)
+            ? ((TableDefinition) tableOrUdt).getPrimaryKey()
+            : null;
+        final String className = getStrategy().getJavaClassName(tableOrUdt, Mode.RECORD);
+        final String tableIdentifier = getStrategy().getFullJavaIdentifier(tableOrUdt);
+        final String recordType = getStrategy().getFullJavaClassName(tableOrUdt, Mode.RECORD);
+        final List<String> interfaces = getStrategy().getJavaClassImplements(tableOrUdt, Mode.RECORD);
+        final List<? extends TypedElementDefinition<?>> columns = getTypedElements(tableOrUdt);
+
+        JavaWriter out = new JavaWriter(getStrategy().getFile(tableOrUdt, Mode.RECORD));
+        printPackage(out, tableOrUdt, Mode.RECORD);
+        printClassJavadoc(out, tableOrUdt);
+        if (tableOrUdt instanceof TableDefinition)
+            printTableJPAAnnotation(out, (TableDefinition) tableOrUdt);
 
         Class<?> baseClass;
-
-        if (generateRelations() && key != null) {
+        if (tableOrUdt instanceof UDTDefinition)
+            baseClass = UDTRecordImpl.class;
+        else if (generateRelations() && key != null)
             baseClass = UpdatableRecordImpl.class;
-        } else {
+        else
             baseClass = TableRecordImpl.class;
-        }
 
-        int degree = table.getColumns().size();
+        int degree = columns.size();
         String rowType = null;
         String rowTypeRecord = null;
 
-        if (degree <= Constants.MAX_ROW_DEGREE) {
-            rowType = getRowType(table.getColumns());
+        // [#3130] Invalid UDTs may have a degree of 0
+        if (degree > 0 && degree <= Constants.MAX_ROW_DEGREE) {
+            rowType = getRowType(columns);
             rowTypeRecord = Record.class.getName() + degree + "<" + rowType + ">";
             interfaces.add(rowTypeRecord);
         }
 
         if (generateInterfaces()) {
-            interfaces.add(getStrategy().getFullJavaClassName(table, Mode.INTERFACE));
+            interfaces.add(getStrategy().getFullJavaClassName(tableOrUdt, Mode.INTERFACE));
         }
 
         out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, baseClass, recordType, interfaces);
         out.printSerial();
 
         for (int i = 0; i < degree; i++) {
-            ColumnDefinition column = table.getColumn(i);
+            TypedElementDefinition<?> column = columns.get(i);
 
             final String comment = StringUtils.defaultString(column.getComment());
             final String setterReturnType = fluentSetters() ? className : "void";
@@ -579,7 +589,8 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("}");
 
             out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
-            printColumnJPAAnnotation(out, column);
+            if (tableOrUdt instanceof TableDefinition)
+                printColumnJPAAnnotation(out, (ColumnDefinition) column);
             printValidationAnnotation(out, column);
             out.tab(1).overrideIf(generateInterfaces());
             out.tab(1).println("public %s %s() {", type, getter);
@@ -601,7 +612,36 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        if (degree <= Constants.MAX_ROW_DEGREE) {
+        if (tableOrUdt instanceof UDTDefinition) {
+
+            // [#799] Oracle UDT's can have member procedures
+            for (RoutineDefinition routine : ((UDTDefinition) tableOrUdt).getRoutines()) {
+
+                // Instance methods ship with a SELF parameter at the first position
+                // [#1584] Static methods don't have that
+                boolean instance = routine.getInParameters().size() > 0
+                                && routine.getInParameters().get(0).getInputName().toUpperCase().equals("SELF");
+
+                try {
+                    if (!routine.isSQLUsable()) {
+                        // Instance execute() convenience method
+                        printConvenienceMethodProcedure(out, routine, instance);
+                    }
+                    else {
+                        // Instance execute() convenience method
+                        if (!routine.isAggregate()) {
+                            printConvenienceMethodFunction(out, routine, instance);
+                        }
+                    }
+
+                } catch (Exception e) {
+                    log.error("Error while generating routine " + routine, e);
+                }
+            }
+        }
+
+        // [#3130] Invalid UDTs may have a degree of 0
+        if (degree > 0 && degree <= Constants.MAX_ROW_DEGREE) {
             out.tab(1).header("Record%s type implementation", degree);
 
             // fieldsRow()
@@ -618,7 +658,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             // field[N]()
             for (int i = 1; i <= degree; i++) {
-                ColumnDefinition column = table.getColumn(i - 1);
+                TypedElementDefinition<?> column = columns.get(i - 1);
 
                 final String colType = getJavaType(column.getType());
                 final String colIdentifier = getStrategy().getFullJavaIdentifier(column);
@@ -631,7 +671,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             // value[N]()
             for (int i = 1; i <= degree; i++) {
-                ColumnDefinition column = table.getColumn(i - 1);
+                TypedElementDefinition<?> column = columns.get(i - 1);
 
                 final String colType = getJavaType(column.getType());
                 final String colGetter = getStrategy().getJavaGetterName(column, Mode.RECORD);
@@ -644,7 +684,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             // value[N](T[N])
             for (int i = 1; i <= degree; i++) {
-                ColumnDefinition column = table.getColumn(i - 1);
+                TypedElementDefinition<?> column = columns.get(i - 1);
 
                 final String colType = getJavaType(column.getType());
                 final String colSetter = getStrategy().getJavaSetterName(column, Mode.RECORD);
@@ -658,7 +698,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             List<String> arguments = new ArrayList<String>();
             for (int i = 1; i <= degree; i++) {
-                ColumnDefinition column = table.getColumn(i - 1);
+                TypedElementDefinition<?> column = columns.get(i - 1);
 
                 final String colType = getJavaType(column.getType());
 
@@ -672,7 +712,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (generateInterfaces() && !generateImmutablePojos()) {
-            printFromAndInto(out, table);
+            printFromAndInto(out, tableOrUdt);
         }
 
         out.tab(1).header("Constructors");
@@ -681,30 +721,37 @@ public class JavaGenerator extends AbstractGenerator {
         out.tab(2).println("super(%s);", tableIdentifier);
         out.tab(1).println("}");
 
-        List<String> arguments = new ArrayList<String>();
-        for (int i = 0; i < degree; i++) {
-            final ColumnDefinition column = table.getColumn(i);
-            final String columnMember = getStrategy().getJavaMemberName(column, Mode.DEFAULT);
-            final String type = getJavaType(column.getType());
+        // [#3130] Invalid UDTs may have a degree of 0
+        if (degree > 0) {
+            List<String> arguments = new ArrayList<String>();
+            for (int i = 0; i < degree; i++) {
+                final TypedElementDefinition<?> column = columns.get(i);
+                final String columnMember = getStrategy().getJavaMemberName(column, Mode.DEFAULT);
+                final String type = getJavaType(column.getType());
 
-            arguments.add(type + " " + columnMember);
+                arguments.add(type + " " + columnMember);
+            }
+
+            out.tab(1).javadoc("Create a detached, initialised %s", className);
+            out.tab(1).println("public %s([[%s]]) {", className, arguments);
+            out.tab(2).println("super(%s);", tableIdentifier);
+            out.println();
+
+            for (int i = 0; i < degree; i++) {
+                final TypedElementDefinition<?> column = columns.get(i);
+                final String columnMember = getStrategy().getJavaMemberName(column, Mode.DEFAULT);
+
+                out.tab(2).println("setValue(%s, %s);", i, columnMember);
+            }
+
+            out.tab(1).println("}");
         }
 
-        out.tab(1).javadoc("Create a detached, initialised %s", className);
-        out.tab(1).println("public %s([[%s]]) {", className, arguments);
-        out.tab(2).println("super(%s);", tableIdentifier);
-        out.println();
+        if (tableOrUdt instanceof TableDefinition)
+            generateRecordClassFooter((TableDefinition) tableOrUdt, out);
+        else
+            generateUDTRecordClassFooter((UDTDefinition) tableOrUdt, out);
 
-        for (int i = 0; i < degree; i++) {
-            final ColumnDefinition column = table.getColumn(i);
-            final String columnMember = getStrategy().getJavaMemberName(column, Mode.DEFAULT);
-
-            out.tab(2).println("setValue(%s, %s);", i, columnMember);
-        }
-
-        out.tab(1).println("}");
-
-        generateRecordClassFooter(table, out);
         out.println("}");
         out.close();
     }
@@ -717,11 +764,11 @@ public class JavaGenerator extends AbstractGenerator {
      */
     protected void generateRecordClassFooter(TableDefinition table, JavaWriter out) {}
 
-    private final String getRowType(Collection<? extends ColumnDefinition> columns) {
+    private final String getRowType(Collection<? extends TypedElementDefinition<?>> columns) {
         StringBuilder result = new StringBuilder();
         String separator = "";
 
-        for (ColumnDefinition column : columns) {
+        for (TypedElementDefinition<?> column : columns) {
             result.append(separator);
             result.append(getJavaType(column.getType()));
 
@@ -980,80 +1027,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateUDTRecord(UDTDefinition udt) {
-        log.info("Generating UDT record", getStrategy().getFileName(udt, Mode.RECORD));
-
-        final String className = getStrategy().getJavaClassName(udt, Mode.RECORD);
-        final String recordType = getStrategy().getFullJavaClassName(udt, Mode.RECORD);
-        final List<String> interfaces = new ArrayList<String>(getStrategy().getJavaClassImplements(udt, Mode.RECORD));
-        final String udtId = getStrategy().getFullJavaIdentifier(udt);
-
-        JavaWriter out = new JavaWriter(getStrategy().getFile(udt, Mode.RECORD));
-        printPackage(out, udt, Mode.RECORD);
-        printClassJavadoc(out, udt);
-
-        if (generateInterfaces()) {
-            interfaces.add(getStrategy().getFullJavaClassName(udt, Mode.INTERFACE));
-        }
-
-        out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, UDTRecordImpl.class, recordType, interfaces);
-        out.printSerial();
-        out.println();
-
-        for (AttributeDefinition attribute : udt.getAttributes()) {
-            final String comment = StringUtils.defaultString(attribute.getComment());
-            final String setterReturnType = fluentSetters() ? className : "void";
-            final String setter = getStrategy().getJavaSetterName(attribute, Mode.DEFAULT);
-            final String getter = getStrategy().getJavaGetterName(attribute, Mode.DEFAULT);
-            final String type = getJavaType((attribute).getType());
-            final String id = getStrategy().getFullJavaIdentifier(attribute);
-            final String name = attribute.getQualifiedOutputName();
-
-            out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
-            out.tab(1).println("public %s %s(%s value) {", setterReturnType, setter, type);
-            out.tab(2).println("setValue(%s, value);", id);
-            if (fluentSetters())
-                out.tab(2).println("return this;");
-            out.tab(1).println("}");
-
-            out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
-            out.tab(1).println("public %s %s() {", type, getter);
-            out.tab(2).println("return getValue(%s);", id);
-            out.tab(1).println("}");
-        }
-
-        // [#799] Oracle UDT's can have member procedures
-        for (RoutineDefinition routine : udt.getRoutines()) {
-
-            // Instance methods ship with a SELF parameter at the first position
-            // [#1584] Static methods don't have that
-            boolean instance = routine.getInParameters().size() > 0
-                            && routine.getInParameters().get(0).getInputName().toUpperCase().equals("SELF");
-
-            try {
-                if (!routine.isSQLUsable()) {
-                    // Instance execute() convenience method
-                    printConvenienceMethodProcedure(out, routine, instance);
-                }
-                else {
-                    // Instance execute() convenience method
-                    if (!routine.isAggregate()) {
-                        printConvenienceMethodFunction(out, routine, instance);
-                    }
-                }
-
-            } catch (Exception e) {
-                log.error("Error while generating routine " + routine, e);
-            }
-        }
-
-        out.tab(1).javadoc("Create a new <code>%s</code> record", udt.getQualifiedOutputName());
-        out.tab(1).println("public %s() {", className);
-        out.tab(2).println("super(%s);", udtId);
-        out.tab(1).println("}");
-
-        generateUDTRecordClassFooter(udt, out);
-        out.println("}");
-        out.close();
+        generateRecord(udt);
     }
 
     /**

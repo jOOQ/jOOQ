@@ -1144,21 +1144,31 @@ public class JavaGenerator extends AbstractGenerator {
         xxxxxxxxxxxxxxxxxxx xxxxx xx xxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxx xxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxx
         xxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxxxxxxxxxxxxxxxxxxx x xxx xxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxx xxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxx
+        xx xxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxx x xxxxxxx x xxx xxx xxxxxx xxxxxx xxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxx xxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxx
+
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxx x xxxxxxx x xxx xxx xxxxxx xxxxxx xxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxx xxxxx xxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxx
+
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxx x xxxxxxx x xxx xxx xxxxxx xxxxxx xxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxx xxxx xxxxxxx xxx xxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxx
+        x
 
         xxxxxxxxxxxxxxxxxxxxxxxxxx x xxx xxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxx xxxxx xxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxx
-
-        xxxxxxxxxxxxxxxxxxxxxxxxxx x xxx xxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxx xxxx xxxxxxx xxx xxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxx xxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxx
         xxxxxxxxxxxxxxxxxxxxxxxx
 
         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx

@@ -1418,8 +1418,8 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals(1, (int) result.value5());
         assertEquals(1, (int) result.value6());
 
-        assertEquals(1, (int) result.value7());
-        assertEquals(1, (int) result.value8());
+        assertEquals(0, (int) result.value7());
+        assertEquals(0, (int) result.value8());
     }
 
     @Test

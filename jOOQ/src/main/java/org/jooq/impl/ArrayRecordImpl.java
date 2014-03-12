@@ -79,10 +79,21 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
 
     /**
      * Create an empty array record
+     *
+     * @deprecated - 3.4.0 - [#3126] - Use the
+     */
+    @SuppressWarnings("unused")
+    @Deprecated
+    protected ArrayRecordImpl(Schema schema, String name, DataType<T> type, Configuration configuration) {
+        this(schema, name, type);
+    }
+
+    /**
+     * Create an empty array record
      */
     @SuppressWarnings("unchecked")
-    protected ArrayRecordImpl(Schema schema, String name, DataType<T> type, Configuration configuration) {
-        super(configuration);
+    protected ArrayRecordImpl(Schema schema, String name, DataType<T> type) {
+        super(null);
 
         this.schema = schema;
         this.name = name;
@@ -90,13 +101,6 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
 
         // Array data type initialisation
         this.type = type.asArrayDataType(getClass());
-    }
-
-    /**
-     * Create an empty array record
-     */
-    protected ArrayRecordImpl(Schema schema, String name, DataType<T> type) {
-        this(schema, name, type, null);
     }
 
     // -------------------------------------------------------------------------

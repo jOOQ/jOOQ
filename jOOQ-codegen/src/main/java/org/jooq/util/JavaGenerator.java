@@ -1144,21 +1144,31 @@ public class JavaGenerator extends AbstractGenerator {
         out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, ArrayRecordImpl.class, elementType, interfaces);
         out.printSerial();
 
-        out.tab(1).javadoc("Create a new <code>%s</code> record", array.getQualifiedOutputName());
-        out.tab(1).println("public %s(%s configuration) {", className, Configuration.class);
-        out.tab(2).println("super(%s, \"%s\", %s, configuration);", schemaId, arrayName, elementTypeRef);
-        out.tab(1).println("}");
+        if (generateDeprecated()) {
+            out.tab(1).javadoc("@deprecated - 3.4.0 - [#3126] - Use the {@link #%s()} constructor instead", className);
+            out.tab(1).println("@java.lang.Deprecated");
+            out.tab(1).println("public %s(%s configuration) {", className, Configuration.class);
+            out.tab(2).println("super(%s, \"%s\", %s, configuration);", schemaId, arrayName, elementTypeRef);
+            out.tab(1).println("}");
+
+            out.tab(1).javadoc("@deprecated - 3.4.0 - [#3126] - Use the {@link #%s()} constructor instead", className);
+            out.tab(1).println("@java.lang.Deprecated");
+            out.tab(1).println("public %s(%s configuration, %s... array) {", className, Configuration.class, elementType);
+            out.tab(2).println("this(configuration);");
+            out.tab(2).println("set(array);");
+            out.tab(1).println("}");
+
+            out.tab(1).javadoc("@deprecated - 3.4.0 - [#3126] - Use the {@link #%s()} constructor instead", className);
+            out.tab(1).println("@java.lang.Deprecated");
+            out.tab(1).println("public %s(%s configuration, %s<? extends %s> list) {", className, Configuration.class, List.class, elementType);
+            out.tab(2).println("this(configuration);");
+            out.tab(2).println("setList(list);");
+            out.tab(1).println("}");
+        }
 
         out.tab(1).javadoc("Create a new <code>%s</code> record", array.getQualifiedOutputName());
-        out.tab(1).println("public %s(%s configuration, %s... array) {", className, Configuration.class, elementType);
-        out.tab(2).println("this(configuration);");
-        out.tab(2).println("set(array);");
-        out.tab(1).println("}");
-
-        out.tab(1).javadoc("Create a new <code>%s</code> record", array.getQualifiedOutputName());
-        out.tab(1).println("public %s(%s configuration, %s<? extends %s> list) {", className, Configuration.class, List.class, elementType);
-        out.tab(2).println("this(configuration);");
-        out.tab(2).println("setList(list);");
+        out.tab(1).println("public %s() {", className);
+        out.tab(2).println("super(%s, \"%s\", %s);", schemaId, arrayName, elementTypeRef);
         out.tab(1).println("}");
 
         generateArrayClassFooter(array, out);

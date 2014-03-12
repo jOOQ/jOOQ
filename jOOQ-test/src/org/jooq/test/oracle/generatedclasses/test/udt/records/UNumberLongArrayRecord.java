@@ -9,28 +9,38 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UNumberLongArrayRecord extends org.jooq.impl.ArrayRecordImpl<java.lang.Long> {
 
-	private static final long serialVersionUID = 787750062;
+	private static final long serialVersionUID = 852600456;
 
 	/**
-	 * Create a new <code>TEST.U_NUMBER_LONG_ARRAY</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UNumberLongArrayRecord()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public UNumberLongArrayRecord(org.jooq.Configuration configuration) {
 		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_NUMBER_LONG_ARRAY", org.jooq.impl.SQLDataType.BIGINT, configuration);
 	}
 
 	/**
-	 * Create a new <code>TEST.U_NUMBER_LONG_ARRAY</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UNumberLongArrayRecord()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public UNumberLongArrayRecord(org.jooq.Configuration configuration, java.lang.Long... array) {
 		this(configuration);
 		set(array);
 	}
 
 	/**
-	 * Create a new <code>TEST.U_NUMBER_LONG_ARRAY</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UNumberLongArrayRecord()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public UNumberLongArrayRecord(org.jooq.Configuration configuration, java.util.List<? extends java.lang.Long> list) {
 		this(configuration);
 		setList(list);
+	}
+
+	/**
+	 * Create a new <code>TEST.U_NUMBER_LONG_ARRAY</code> record
+	 */
+	public UNumberLongArrayRecord() {
+		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_NUMBER_LONG_ARRAY", org.jooq.impl.SQLDataType.BIGINT);
 	}
 }

@@ -9,28 +9,38 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UStringArrayRecord extends org.jooq.impl.ArrayRecordImpl<java.lang.String> {
 
-	private static final long serialVersionUID = 1252480250;
+	private static final long serialVersionUID = 926113428;
 
 	/**
-	 * Create a new <code>TEST.U_STRING_ARRAY</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UStringArrayRecord()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public UStringArrayRecord(org.jooq.Configuration configuration) {
 		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_STRING_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.length(20), configuration);
 	}
 
 	/**
-	 * Create a new <code>TEST.U_STRING_ARRAY</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UStringArrayRecord()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public UStringArrayRecord(org.jooq.Configuration configuration, java.lang.String... array) {
 		this(configuration);
 		set(array);
 	}
 
 	/**
-	 * Create a new <code>TEST.U_STRING_ARRAY</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UStringArrayRecord()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public UStringArrayRecord(org.jooq.Configuration configuration, java.util.List<? extends java.lang.String> list) {
 		this(configuration);
 		setList(list);
+	}
+
+	/**
+	 * Create a new <code>TEST.U_STRING_ARRAY</code> record
+	 */
+	public UStringArrayRecord() {
+		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_STRING_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.length(20));
 	}
 }

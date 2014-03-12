@@ -9,28 +9,38 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAddressTableRecord extends org.jooq.impl.ArrayRecordImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = -1248869463;
+	private static final long serialVersionUID = -133797284;
 
 	/**
-	 * Create a new <code>TEST.U_ADDRESS_TABLE</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UAddressTableRecord()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public UAddressTableRecord(org.jooq.Configuration configuration) {
 		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_ADDRESS_TABLE", org.jooq.test.oracle.generatedclasses.test.udt.UAddressType.U_ADDRESS_TYPE.getDataType(), configuration);
 	}
 
 	/**
-	 * Create a new <code>TEST.U_ADDRESS_TABLE</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UAddressTableRecord()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public UAddressTableRecord(org.jooq.Configuration configuration, org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord... array) {
 		this(configuration);
 		set(array);
 	}
 
 	/**
-	 * Create a new <code>TEST.U_ADDRESS_TABLE</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UAddressTableRecord()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public UAddressTableRecord(org.jooq.Configuration configuration, java.util.List<? extends org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> list) {
 		this(configuration);
 		setList(list);
+	}
+
+	/**
+	 * Create a new <code>TEST.U_ADDRESS_TABLE</code> record
+	 */
+	public UAddressTableRecord() {
+		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_ADDRESS_TABLE", org.jooq.test.oracle.generatedclasses.test.udt.UAddressType.U_ADDRESS_TYPE.getDataType());
 	}
 }

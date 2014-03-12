@@ -1640,10 +1640,9 @@ public class OracleTest extends jOOQAbstractTest<
 
 
         {
-            UNested_3Record u3 = new UNested_3Record();
-            UNested_2Record u2 = new UNested_2Record();
             UNested_1Record u1 = new UNested_1Record();
-            u2.set(u1, u1);
+            UNested_2Record u2 = new UNested_2Record(u1, u1);
+            UNested_3Record u3 = new UNested_3Record();
             u3.setId(1);
             u3.setNested(u2);
             PNested result = Routines.pNested(configuration, u3, u3);
@@ -1666,12 +1665,11 @@ public class OracleTest extends jOOQAbstractTest<
 
 
         {
-            UNested_3Record u3 = new UNested_3Record();
-            UNested_2Record u2 = new UNested_2Record();
             UNested_1Record u1 = new UNested_1Record();
+            UNested_2Record u2 = new UNested_2Record(u1, u1);
+            UNested_3Record u3 = new UNested_3Record();
             u1.setId(2);
             u1.setNested(new UNumberTableRecord());
-            u2.set(u1, u1);
             u3.setId(1);
             u3.setNested(u2);
             PNested result = Routines.pNested(configuration, u3, u3);
@@ -1694,14 +1692,12 @@ public class OracleTest extends jOOQAbstractTest<
 
 
         {
-            UNested_3Record u3 = new UNested_3Record();
-            UNested_2Record u2 = new UNested_2Record();
+            UNumberTableRecord numbers = new UNumberTableRecord(3, 4);
             UNested_1Record u1 = new UNested_1Record();
-            UNumberTableRecord numbers = new UNumberTableRecord();
-            numbers.set(3, 4);
+            UNested_2Record u2 = new UNested_2Record(u1, u1);
+            UNested_3Record u3 = new UNested_3Record();
             u1.setId(2);
             u1.setNested(numbers);
-            u2.set(u1, u1);
             u3.setId(1);
             u3.setNested(u2);
             PNested result = Routines.pNested(configuration, u3, u3);

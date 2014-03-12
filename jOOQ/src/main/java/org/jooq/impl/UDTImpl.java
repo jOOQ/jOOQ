@@ -135,7 +135,14 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.literal(getName());
+        Schema mappedSchema = Utils.getMappedSchema(context.configuration(), getSchema());
+
+        if (mappedSchema != null) {
+            context.visit(mappedSchema);
+            context.sql(".");
+        }
+
+        context.visit(DSL.name(getName()));
     }
 
     @Override

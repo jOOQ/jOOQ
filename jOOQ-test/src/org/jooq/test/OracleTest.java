@@ -100,6 +100,7 @@ import static org.jooq.util.oracle.OracleDSL.versionsOperation;
 import static org.jooq.util.oracle.OracleDSL.versionsStartscn;
 import static org.jooq.util.oracle.OracleDSL.versionsStarttime;
 import static org.jooq.util.oracle.OracleDSL.versionsXid;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
@@ -116,6 +117,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
+import org.jooq.Configuration;
 import org.jooq.DAO;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -149,6 +151,7 @@ import org.jooq.test.oracle.generatedclasses.test.Keys;
 import org.jooq.test.oracle.generatedclasses.test.Routines;
 import org.jooq.test.oracle.generatedclasses.test.Sequences;
 import org.jooq.test.oracle.generatedclasses.test.packages.Library;
+import org.jooq.test.oracle.generatedclasses.test.routines.PNested;
 import org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord;
@@ -181,6 +184,9 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTableRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UInvalidTableRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UInvalidTypeRecord;
+import org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_1Record;
+import org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_2Record;
+import org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_3Record;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord;
@@ -1592,6 +1598,129 @@ public class OracleTest extends jOOQAbstractTest<
         // The UStreetType type should have been encountered more than once (logger.format, map, etc.)
         assertTrue(i.intValue() > 0);
         assertNull(author.address.street);
+    }
+
+    @Test
+    public void testNestedTypes() throws Exception {
+        Configuration configuration = create().configuration();
+
+        {
+            PNested result = Routines.pNested(configuration, null, null);
+            assertNotNull(result);
+            assertNull(result.getP3());
+            assertNull(result.getP4());
+        }
+
+        {
+            UNested_3Record u3 = new UNested_3Record();
+            PNested result = Routines.pNested(configuration, u3, u3);
+            assertNotNull(result);
+            assertEquals(u3, result.getP3());
+            assertNull(result.getP3().getId());
+            assertNull(result.getP3().getNested());
+            assertEquals(u3, result.getP4());
+            assertNull(result.getP4().getId());
+            assertNull(result.getP4().getNested());
+        }
+
+
+        {
+            UNested_3Record u3 = new UNested_3Record();
+            u3.setId(1);
+            u3.setNested(new UNested_2Record(configuration));
+            PNested result = Routines.pNested(configuration, u3, u3);
+            assertNotNull(result);
+            assertEquals(u3, result.getP3());
+            assertEquals(1, (int) result.getP3().getId());
+            assertEquals(0, result.getP3().getNested().size());
+            assertEquals(u3, result.getP4());
+            assertEquals(1, (int) result.getP4().getId());
+            assertEquals(0, result.getP4().getNested().size());
+        }
+
+
+        {
+            UNested_3Record u3 = new UNested_3Record();
+            UNested_2Record u2 = new UNested_2Record(configuration);
+            UNested_1Record u1 = new UNested_1Record();
+            u2.set(u1, u1);
+            u3.setId(1);
+            u3.setNested(u2);
+            PNested result = Routines.pNested(configuration, u3, u3);
+            assertNotNull(result);
+            assertEquals(u3, result.getP3());
+            assertEquals(1, (int) result.getP3().getId());
+            assertEquals(2, result.getP3().getNested().size());
+            assertEquals(u1, result.getP3().getNested().get()[0]);
+            assertNull(result.getP3().getNested().get()[0].getId());
+            assertNull(result.getP3().getNested().get()[0].getNested());
+            assertEquals(u1, result.getP3().getNested().get()[1]);
+            assertEquals(u3, result.getP4());
+            assertEquals(1, (int) result.getP4().getId());
+            assertEquals(2, result.getP4().getNested().size());
+            assertEquals(u1, result.getP4().getNested().get()[0]);
+            assertNull(result.getP4().getNested().get()[0].getId());
+            assertNull(result.getP4().getNested().get()[0].getNested());
+            assertEquals(u1, result.getP4().getNested().get()[1]);
+        }
+
+
+        {
+            UNested_3Record u3 = new UNested_3Record();
+            UNested_2Record u2 = new UNested_2Record(configuration);
+            UNested_1Record u1 = new UNested_1Record();
+            u1.setId(2);
+            u1.setNested(new UNumberTableRecord(configuration));
+            u2.set(u1, u1);
+            u3.setId(1);
+            u3.setNested(u2);
+            PNested result = Routines.pNested(configuration, u3, u3);
+            assertNotNull(result);
+            assertEquals(u3, result.getP3());
+            assertEquals(1, (int) result.getP3().getId());
+            assertEquals(2, result.getP3().getNested().size());
+            assertEquals(u1, result.getP3().getNested().get()[0]);
+            assertEquals(2, (int) result.getP3().getNested().get()[0].getId());
+            assertEquals(0, result.getP3().getNested().get()[0].getNested().size());
+            assertEquals(u1, result.getP3().getNested().get()[1]);
+            assertEquals(u3, result.getP4());
+            assertEquals(1, (int) result.getP4().getId());
+            assertEquals(2, result.getP4().getNested().size());
+            assertEquals(u1, result.getP4().getNested().get()[0]);
+            assertEquals(2, (int) result.getP4().getNested().get()[0].getId());
+            assertEquals(0, result.getP4().getNested().get()[0].getNested().size());
+            assertEquals(u1, result.getP4().getNested().get()[1]);
+        }
+
+
+        {
+            UNested_3Record u3 = new UNested_3Record();
+            UNested_2Record u2 = new UNested_2Record(configuration);
+            UNested_1Record u1 = new UNested_1Record();
+            UNumberTableRecord numbers = new UNumberTableRecord(configuration);
+            numbers.set(3, 4);
+            u1.setId(2);
+            u1.setNested(numbers);
+            u2.set(u1, u1);
+            u3.setId(1);
+            u3.setNested(u2);
+            PNested result = Routines.pNested(configuration, u3, u3);
+            assertNotNull(result);
+            assertEquals(u3, result.getP3());
+            assertEquals(1, (int) result.getP3().getId());
+            assertEquals(2, result.getP3().getNested().size());
+            assertEquals(u1, result.getP3().getNested().get()[0]);
+            assertEquals(2, (int) result.getP3().getNested().get()[0].getId());
+            assertEquals(asList(3, 4), result.getP3().getNested().get()[0].getNested().getList());
+            assertEquals(u1, result.getP3().getNested().get()[1]);
+            assertEquals(u3, result.getP4());
+            assertEquals(1, (int) result.getP4().getId());
+            assertEquals(2, result.getP4().getNested().size());
+            assertEquals(u1, result.getP4().getNested().get()[0]);
+            assertEquals(2, (int) result.getP4().getNested().get()[0].getId());
+            assertEquals(asList(3, 4), result.getP4().getNested().get()[0].getNested().getList());
+            assertEquals(u1, result.getP4().getNested().get()[1]);
+        }
     }
 }
 

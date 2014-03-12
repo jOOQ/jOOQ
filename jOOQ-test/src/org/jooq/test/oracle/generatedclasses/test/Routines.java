@@ -700,6 +700,18 @@ public class Routines {
 	}
 
 	/**
+	 * Call <code>TEST.P_NESTED</code>
+	 */
+	public static org.jooq.test.oracle.generatedclasses.test.routines.PNested pNested(org.jooq.Configuration configuration, org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_3Record p1, org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_3Record p2) {
+		org.jooq.test.oracle.generatedclasses.test.routines.PNested p = new org.jooq.test.oracle.generatedclasses.test.routines.PNested();
+		p.setP1(p1);
+		p.setP2(p2);
+
+		p.execute(configuration);
+		return p;
+	}
+
+	/**
 	 * Call <code>TEST.P_TABLES1</code>
 	 */
 	public static org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord pTables1(org.jooq.Configuration configuration, org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord inTable) {

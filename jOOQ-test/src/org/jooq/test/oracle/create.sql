@@ -50,6 +50,7 @@ DROP TABLE t_temp/
 
 DROP TABLE multi_schema_unused.x_unused/
 
+DROP PROCEDURE p_nested/
 DROP PROCEDURE p_arrays1/
 DROP PROCEDURE p_arrays2/
 DROP PROCEDURE p_arrays3/
@@ -94,6 +95,9 @@ DROP FUNCTION f691cursor_out/
 DROP FUNCTION f691cursor_in/
 DROP PACKAGE library/
 
+DROP TYPE u_nested_3/
+DROP TYPE u_nested_2/
+DROP TYPE u_nested_1/
 DROP TYPE u_address_table/
 DROP TYPE u_address_type/
 DROP TYPE u_street_type/
@@ -316,6 +320,28 @@ CREATE TYPE u_string_table AS TABLE OF VARCHAR2(20)/
 CREATE TYPE u_number_table AS TABLE OF NUMBER(7)/
 CREATE TYPE u_number_long_table AS TABLE OF NUMBER(11)/
 CREATE TYPE u_date_table AS TABLE OF DATE/
+
+CREATE TYPE u_nested_1 AS OBJECT (
+  ID NUMBER(7),
+  NESTED u_number_table
+)/
+
+CREATE TYPE u_nested_2 AS TABLE OF u_nested_1/
+CREATE TYPE u_nested_3 AS OBJECT (
+  ID NUMBER(7),
+  NESTED u_nested_2
+)/
+
+CREATE OR REPLACE PROCEDURE p_nested (
+  p1 IN u_nested_3,
+  p2 IN u_nested_3,
+  p3 OUT u_nested_3,
+  p4 OUT u_nested_3
+) IS
+BEGIN
+  p3 := p1;
+  p4 := p2;
+END;/
 
 CREATE TYPE u_street_type AS OBJECT (
   street VARCHAR2(100),

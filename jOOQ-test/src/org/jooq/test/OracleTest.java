@@ -1601,7 +1601,7 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Test
-    public void testNestedTypes() throws Exception {
+    public void testOracleNestedTypes() throws Exception {
         Configuration configuration = create().configuration();
 
         {

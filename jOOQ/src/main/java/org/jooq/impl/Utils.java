@@ -2456,10 +2456,25 @@ final class Utils {
         }
         else {
             // TODO: [#523] Use array record meta data instead
-            ArrayRecord<?> record = Utils.newArrayRecord(type, configuration);
-            record.set(array);
-            return record;
+            return set(Utils.newArrayRecord(type, configuration), array);
         }
+    }
+
+    static final <T> ArrayRecord<T> set(ArrayRecord<T> target, Array source) throws SQLException {
+        if (source == null) {
+            target.set((T[]) null);
+        }
+        else {
+            Object o;
+
+            // [#1179 #1376 #1377] This is needed to load TABLE OF OBJECT
+            // [#884] TODO: This name is used in inlined SQL. It should be
+            // correctly escaped and schema mapped!
+            o = source.getArray(DataTypes.udtRecords());
+            target.set(Convert.convert(o, target.getDataType().getArrayType()));
+        }
+
+        return target;
     }
 
     /* [/pro] */

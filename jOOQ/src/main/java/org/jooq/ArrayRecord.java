@@ -67,7 +67,10 @@ public interface ArrayRecord<E> extends Attachable, Iterable<E> {
 
     /**
      * Set the contained array.
+     *
+     * @deprecated - 3.4.0 - [#3127] - Do not use this method any more.
      */
+    @Deprecated
     void set(Array array) throws SQLException;
 
     /**

@@ -55,7 +55,6 @@ import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Schema;
-import org.jooq.tools.Convert;
 
 /**
  * A common base class for Oracle ARRAY types
@@ -156,19 +155,9 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
     }
 
     @Override
+    @Deprecated
     public final void set(java.sql.Array array) throws SQLException {
-        if (array == null) {
-            this.array = null;
-        }
-        else {
-            Object o;
-
-            // [#1179 #1376 #1377] This is needed to load TABLE OF OBJECT
-            // [#884] TODO: This name is used in inlined SQL. It should be
-            // correctly escaped and schema mapped!
-            o = array.getArray(DataTypes.udtRecords());
-            this.array = Convert.convert(o, baseType.getArrayType());
-        }
+        Utils.set(this, array);
     }
 
     @SuppressWarnings("unchecked")

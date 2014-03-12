@@ -93,7 +93,14 @@ class MapperTest extends FunSuite {
   test("MapCaseClass") {
     val books1 =
     dsl().select(T_BOOK.ID, T_BOOK.AUTHOR_ID, T_BOOK.TITLE)
-         .from(T_BOOK)
+         .from(
+            values(
+              row(1, 1, "1984"),
+              row(2, 1, "Animal Farm"),
+              row(3, 2, "O Alquimista"),
+              row(4, 2, "Brida")
+            )
+            as("T_BOOK", "ID", "AUTHOR_ID", "TITLE"))
          .orderBy(T_BOOK.ID asc)
          .fetchInto(classOf[BookCase])
 
@@ -105,7 +112,14 @@ class MapperTest extends FunSuite {
 
     val books2 =
     dsl().select()
-         .from(T_BOOK)
+         .from(
+            values(
+              row(1, 1, "1984"),
+              row(2, 1, "Animal Farm"),
+              row(3, 2, "O Alquimista"),
+              row(4, 2, "Brida")
+            )
+            as("T_BOOK", "ID", "AUTHOR_ID", "TITLE"))
          .orderBy(T_BOOK.ID asc)
          .fetchInto(classOf[BookCaseWithConstructorProperties])
 

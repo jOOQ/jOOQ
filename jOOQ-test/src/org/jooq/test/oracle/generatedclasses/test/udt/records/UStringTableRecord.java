@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UStringTableRecord extends org.jooq.impl.ArrayRecordImpl<java.lang.String> {
 
-	private static final long serialVersionUID = 1332821629;
+	private static final long serialVersionUID = -59680647;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UStringTableRecord()} constructor instead
@@ -42,5 +42,21 @@ public class UStringTableRecord extends org.jooq.impl.ArrayRecordImpl<java.lang.
 	 */
 	public UStringTableRecord() {
 		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_STRING_TABLE", org.jooq.impl.SQLDataType.VARCHAR.length(20));
+	}
+
+	/**
+	 * Create a new <code>TEST.U_STRING_TABLE</code> record
+	 */
+	public UStringTableRecord(java.lang.String... array) {
+		this();
+		set(array);
+	}
+
+	/**
+	 * Create a new <code>TEST.U_STRING_TABLE</code> record
+	 */
+	public UStringTableRecord(java.util.Collection<? extends java.lang.String> collection) {
+		this();
+		set(collection);
 	}
 }

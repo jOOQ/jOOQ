@@ -46,6 +46,7 @@ import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -162,13 +163,19 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
 
     @SuppressWarnings("unchecked")
     @Override
-    public final void setList(List<? extends T> list) {
-        if (list == null) {
+    public final void set(Collection<? extends T> collection) {
+        if (collection == null) {
             array = null;
         }
         else {
-            array = list.toArray((T[]) Array.newInstance(baseType.getType(), 0));
+            array = collection.toArray((T[]) Array.newInstance(baseType.getType(), 0));
         }
+    }
+
+    @Override
+    @Deprecated
+    public final void setList(List<? extends T> list) {
+        set(list);
     }
 
     @Override

@@ -799,7 +799,7 @@ public class OracleTest extends jOOQAbstractTest<
             return Routines.fGetOneCursor((UNumberArrayRecord) null);
         }
         else {
-            return Routines.fGetOneCursor(new UNumberArrayRecord(create().configuration(), array));
+            return Routines.fGetOneCursor(new UNumberArrayRecord(array));
         }
     }
 
@@ -925,91 +925,91 @@ public class OracleTest extends jOOQAbstractTest<
 
         // Unnesting arrays
         assertEquals(emptyList(),
-            create().select().from(table(new UNumberArrayRecord(create().configuration(), (Integer[]) null))).fetch(0));
+            create().select().from(table(new UNumberArrayRecord((Integer[]) null))).fetch(0));
         assertEquals(emptyList(),
-            create().select().from(table(new UNumberArrayRecord(create().configuration()))).fetch(0));
+            create().select().from(table(new UNumberArrayRecord())).fetch(0));
         assertEquals(asList(1),
-            create().select().from(table(new UNumberArrayRecord(create().configuration(), 1))).fetch(0));
+            create().select().from(table(new UNumberArrayRecord(1))).fetch(0));
         assertEquals(asList(1, 2),
-            create().select().from(table(new UNumberArrayRecord(create().configuration(), 1, 2))).fetch(0));
+            create().select().from(table(new UNumberArrayRecord(1, 2))).fetch(0));
 
         // Unnesting tables
         assertEquals(emptyList(),
-            create().select().from(table(new UNumberTableRecord(create().configuration(), (Integer[]) null))).fetch(0));
+            create().select().from(table(new UNumberTableRecord((Integer[]) null))).fetch(0));
         assertEquals(emptyList(),
-            create().select().from(table(new UNumberTableRecord(create().configuration()))).fetch(0));
+            create().select().from(table(new UNumberTableRecord())).fetch(0));
         assertEquals(asList(1),
-            create().select().from(table(new UNumberTableRecord(create().configuration(), 1))).fetch(0));
+            create().select().from(table(new UNumberTableRecord(1))).fetch(0));
         assertEquals(asList(1, 2),
-            create().select().from(table(new UNumberTableRecord(create().configuration(), 1, 2))).fetch(0));
+            create().select().from(table(new UNumberTableRecord(1, 2))).fetch(0));
 
         // Unnesting arrays from functions
         assertEquals(emptyList(),
             create().select().from(table(fArrays1((UNumberArrayRecord) null))).fetch(0));
         assertEquals(emptyList(),
-            create().select().from(table(fArrays1(new UNumberArrayRecord(create().configuration(), (Integer[]) null)))).fetch(0));
+            create().select().from(table(fArrays1(new UNumberArrayRecord((Integer[]) null)))).fetch(0));
         assertEquals(emptyList(),
-            create().select().from(table(fArrays1(new UNumberArrayRecord(create().configuration())))).fetch(0));
+            create().select().from(table(fArrays1(new UNumberArrayRecord()))).fetch(0));
         assertEquals(asList(1),
-            create().select().from(table(fArrays1(fArrays1(new UNumberArrayRecord(create().configuration(), 1))))).fetch(0));
+            create().select().from(table(fArrays1(fArrays1(new UNumberArrayRecord(1))))).fetch(0));
         assertEquals(asList(1, 2),
-            create().select().from(table(fArrays1(fArrays1(new UNumberArrayRecord(create().configuration(), 1, 2))))).fetch(0));
+            create().select().from(table(fArrays1(fArrays1(new UNumberArrayRecord(1, 2))))).fetch(0));
 
         // Unnesting tables from functions
         assertEquals(emptyList(),
             create().select().from(table(fTables1((UNumberTableRecord) null))).fetch(0));
         assertEquals(emptyList(),
-            create().select().from(table(fTables1(new UNumberTableRecord(create().configuration(), (Integer[]) null)))).fetch(0));
+            create().select().from(table(fTables1(new UNumberTableRecord((Integer[]) null)))).fetch(0));
         assertEquals(emptyList(),
-            create().select().from(table(fTables1(new UNumberTableRecord(create().configuration())))).fetch(0));
+            create().select().from(table(fTables1(new UNumberTableRecord()))).fetch(0));
         assertEquals(asList(1),
-            create().select().from(table(fTables1(fTables1(new UNumberTableRecord(create().configuration(), 1))))).fetch(0));
+            create().select().from(table(fTables1(fTables1(new UNumberTableRecord(1))))).fetch(0));
         assertEquals(asList(1, 2),
-            create().select().from(table(fTables1(fTables1(new UNumberTableRecord(create().configuration(), 1, 2))))).fetch(0));
+            create().select().from(table(fTables1(fTables1(new UNumberTableRecord(1, 2))))).fetch(0));
 
         // Retrieving arrays from functions
         assertNull(fArrays1(create().configuration(), null));
         assertEquals(emptyList(),
-            fArrays1(create().configuration(), new UNumberArrayRecord(create().configuration(), (Integer[]) null)).getList());
+            fArrays1(create().configuration(), new UNumberArrayRecord((Integer[]) null)).getList());
         assertEquals(emptyList(),
-            fArrays1(create().configuration(), new UNumberArrayRecord(create().configuration())).getList());
+            fArrays1(create().configuration(), new UNumberArrayRecord()).getList());
         assertEquals(asList(1),
-            fArrays1(create().configuration(), fArrays1(create().configuration(), new UNumberArrayRecord(create().configuration(), 1))).getList());
+            fArrays1(create().configuration(), fArrays1(create().configuration(), new UNumberArrayRecord(1))).getList());
         assertEquals(asList(1, 2),
-            fArrays1(create().configuration(), fArrays1(create().configuration(), new UNumberArrayRecord(create().configuration(), 1, 2))).getList());
+            fArrays1(create().configuration(), fArrays1(create().configuration(), new UNumberArrayRecord(1, 2))).getList());
 
         // Retrieving tables from functions
         assertNull(fTables1(create().configuration(), null));
         assertEquals(emptyList(),
-            fTables1(create().configuration(), new UNumberTableRecord(create().configuration(), (Integer[]) null)).getList());
+            fTables1(create().configuration(), new UNumberTableRecord((Integer[]) null)).getList());
         assertEquals(emptyList(),
-            fTables1(create().configuration(), new UNumberTableRecord(create().configuration())).getList());
+            fTables1(create().configuration(), new UNumberTableRecord()).getList());
         assertEquals(asList(1),
-            fTables1(create().configuration(), fTables1(create().configuration(), new UNumberTableRecord(create().configuration(), 1))).getList());
+            fTables1(create().configuration(), fTables1(create().configuration(), new UNumberTableRecord(1))).getList());
         assertEquals(asList(1, 2),
-            fTables1(create().configuration(), fTables1(create().configuration(), new UNumberTableRecord(create().configuration(), 1, 2))).getList());
+            fTables1(create().configuration(), fTables1(create().configuration(), new UNumberTableRecord(1, 2))).getList());
 
         // Retrieving arrays from procedures
         assertNull(pArrays1(create().configuration(), null));
         assertEquals(emptyList(),
-            pArrays1(create().configuration(), new UNumberArrayRecord(create().configuration(), (Integer[]) null)).getList());
+            pArrays1(create().configuration(), new UNumberArrayRecord((Integer[]) null)).getList());
         assertEquals(emptyList(),
-            pArrays1(create().configuration(), new UNumberArrayRecord(create().configuration())).getList());
+            pArrays1(create().configuration(), new UNumberArrayRecord()).getList());
         assertEquals(asList(1),
-            pArrays1(create().configuration(), pArrays1(create().configuration(), new UNumberArrayRecord(create().configuration(), 1))).getList());
+            pArrays1(create().configuration(), pArrays1(create().configuration(), new UNumberArrayRecord(1))).getList());
         assertEquals(asList(1, 2),
-            pArrays1(create().configuration(), pArrays1(create().configuration(), new UNumberArrayRecord(create().configuration(), 1, 2))).getList());
+            pArrays1(create().configuration(), pArrays1(create().configuration(), new UNumberArrayRecord(1, 2))).getList());
 
         // Retrieving tables from procedures
         assertNull(pTables1(create().configuration(), null));
         assertEquals(emptyList(),
-            pTables1(create().configuration(), new UNumberTableRecord(create().configuration(), (Integer[]) null)).getList());
+            pTables1(create().configuration(), new UNumberTableRecord((Integer[]) null)).getList());
         assertEquals(emptyList(),
-            pTables1(create().configuration(), new UNumberTableRecord(create().configuration())).getList());
+            pTables1(create().configuration(), new UNumberTableRecord()).getList());
         assertEquals(asList(1),
-            pTables1(create().configuration(), pTables1(create().configuration(), new UNumberTableRecord(create().configuration(), 1))).getList());
+            pTables1(create().configuration(), pTables1(create().configuration(), new UNumberTableRecord(1))).getList());
         assertEquals(asList(1, 2),
-            pTables1(create().configuration(), pTables1(create().configuration(), new UNumberTableRecord(create().configuration(), 1, 2))).getList());
+            pTables1(create().configuration(), pTables1(create().configuration(), new UNumberTableRecord(1, 2))).getList());
 
         // THEN, check unnesting of VARRAY/TABLE of OBJECT
         // -----------------------------------------------
@@ -1024,85 +1024,85 @@ public class OracleTest extends jOOQAbstractTest<
 
         // Unnesting arrays
         assertEquals(emptyList(),
-            create().select().from(table(new UBookArrayRecord(create().configuration(), (UBookTypeRecord[]) null))).fetch(0));
+            create().select().from(table(new UBookArrayRecord((UBookTypeRecord[]) null))).fetch(0));
         assertEquals(emptyList(),
-            create().select().from(table(new UBookArrayRecord(create().configuration()))).fetch(0));
+            create().select().from(table(new UBookArrayRecord())).fetch(0));
         assertEquals(asList(1),
-            create().select().from(table(new UBookArrayRecord(create().configuration(), r1))).fetch(0));
+            create().select().from(table(new UBookArrayRecord(r1))).fetch(0));
         assertEquals(BOOK_TITLES.subList(0, 1),
-            create().select().from(table(new UBookArrayRecord(create().configuration(), r1))).fetch(1));
+            create().select().from(table(new UBookArrayRecord(r1))).fetch(1));
         assertEquals(asList(1, 2),
-            create().select().from(table(new UBookArrayRecord(create().configuration(), r1, r2))).fetch(0));
+            create().select().from(table(new UBookArrayRecord(r1, r2))).fetch(0));
         assertEquals(BOOK_TITLES.subList(0, 2),
-            create().select().from(table(new UBookArrayRecord(create().configuration(), r1, r2))).fetch(1));
+            create().select().from(table(new UBookArrayRecord(r1, r2))).fetch(1));
 
         // Unnesting tables
         assertEquals(emptyList(),
-            create().select().from(table(new UBookTableRecord(create().configuration(), (UBookTypeRecord[]) null))).fetch(0));
+            create().select().from(table(new UBookTableRecord((UBookTypeRecord[]) null))).fetch(0));
         assertEquals(emptyList(),
-            create().select().from(table(new UBookTableRecord(create().configuration()))).fetch(0));
+            create().select().from(table(new UBookTableRecord())).fetch(0));
         assertEquals(asList(1),
-            create().select().from(table(new UBookTableRecord(create().configuration(), r1))).fetch(0));
+            create().select().from(table(new UBookTableRecord(r1))).fetch(0));
         assertEquals(BOOK_TITLES.subList(0, 1),
-            create().select().from(table(new UBookTableRecord(create().configuration(), r1))).fetch(1));
+            create().select().from(table(new UBookTableRecord(r1))).fetch(1));
         assertEquals(asList(1, 2),
-            create().select().from(table(new UBookTableRecord(create().configuration(), r1, r2))).fetch(0));
+            create().select().from(table(new UBookTableRecord(r1, r2))).fetch(0));
         assertEquals(BOOK_TITLES.subList(0, 2),
-            create().select().from(table(new UBookTableRecord(create().configuration(), r1, r2))).fetch(1));
+            create().select().from(table(new UBookTableRecord(r1, r2))).fetch(1));
 
         // Unnesting arrays from functions
         assertEquals(emptyList(),
             create().select().from(table(fArrays4((UBookArrayRecord) null))).fetch(0));
         assertEquals(emptyList(),
-            create().select().from(table(fArrays4(new UBookArrayRecord(create().configuration(), (UBookTypeRecord[]) null)))).fetch(0));
+            create().select().from(table(fArrays4(new UBookArrayRecord((UBookTypeRecord[]) null)))).fetch(0));
         assertEquals(emptyList(),
-            create().select().from(table(fArrays4(new UBookArrayRecord(create().configuration())))).fetch(0));
+            create().select().from(table(fArrays4(new UBookArrayRecord()))).fetch(0));
         assertEquals(asList(1),
-            create().select().from(table(fArrays4(new UBookArrayRecord(create().configuration(), r1)))).fetch(0));
+            create().select().from(table(fArrays4(new UBookArrayRecord(r1)))).fetch(0));
         assertEquals(BOOK_TITLES.subList(0, 1),
-            create().select().from(table(fArrays4(new UBookArrayRecord(create().configuration(), r1)))).fetch(1));
+            create().select().from(table(fArrays4(new UBookArrayRecord(r1)))).fetch(1));
         assertEquals(asList(1, 2),
-            create().select().from(table(fArrays4(fArrays4(new UBookArrayRecord(create().configuration(), r1, r2))))).fetch(0));
+            create().select().from(table(fArrays4(fArrays4(new UBookArrayRecord(r1, r2))))).fetch(0));
         assertEquals(BOOK_TITLES.subList(0, 2),
-            create().select().from(table(fArrays4(fArrays4(new UBookArrayRecord(create().configuration(), r1, r2))))).fetch(1));
+            create().select().from(table(fArrays4(fArrays4(new UBookArrayRecord(r1, r2))))).fetch(1));
 
         // Unnesting tables from functions
         assertEquals(emptyList(),
             create().select().from(table(fTables4((UBookTableRecord) null))).fetch(0));
         assertEquals(emptyList(),
-            create().select().from(table(fTables4(new UBookTableRecord(create().configuration(), (UBookTypeRecord[]) null)))).fetch(0));
+            create().select().from(table(fTables4(new UBookTableRecord((UBookTypeRecord[]) null)))).fetch(0));
         assertEquals(emptyList(),
-            create().select().from(table(fTables4(new UBookTableRecord(create().configuration())))).fetch(0));
+            create().select().from(table(fTables4(new UBookTableRecord()))).fetch(0));
         assertEquals(asList(1),
-            create().select().from(table(fTables4(new UBookTableRecord(create().configuration(), r1)))).fetch(0));
+            create().select().from(table(fTables4(new UBookTableRecord(r1)))).fetch(0));
         assertEquals(BOOK_TITLES.subList(0, 1),
-            create().select().from(table(fTables4(new UBookTableRecord(create().configuration(), r1)))).fetch(1));
+            create().select().from(table(fTables4(new UBookTableRecord(r1)))).fetch(1));
         assertEquals(asList(1, 2),
-            create().select().from(table(fTables4(fTables4(new UBookTableRecord(create().configuration(), r1, r2))))).fetch(0));
+            create().select().from(table(fTables4(fTables4(new UBookTableRecord(r1, r2))))).fetch(0));
         assertEquals(BOOK_TITLES.subList(0, 2),
-            create().select().from(table(fTables4(fTables4(new UBookTableRecord(create().configuration(), r1, r2))))).fetch(1));
+            create().select().from(table(fTables4(fTables4(new UBookTableRecord(r1, r2))))).fetch(1));
 
         // Retrieving arrays from functions
         assertNull(fArrays4(create().configuration(), null));
         assertEquals(emptyList(),
-            fArrays4(create().configuration(), new UBookArrayRecord(create().configuration(), (UBookTypeRecord[]) null)).getList());
+            fArrays4(create().configuration(), new UBookArrayRecord((UBookTypeRecord[]) null)).getList());
         assertEquals(emptyList(),
-            fArrays4(create().configuration(), new UBookArrayRecord(create().configuration())).getList());
+            fArrays4(create().configuration(), new UBookArrayRecord()).getList());
         assertEquals(asList(r1),
-            fArrays4(create().configuration(), fArrays4(create().configuration(), new UBookArrayRecord(create().configuration(), r1))).getList());
+            fArrays4(create().configuration(), fArrays4(create().configuration(), new UBookArrayRecord(r1))).getList());
         assertEquals(asList(r1, r2),
-            fArrays4(create().configuration(), fArrays4(create().configuration(), new UBookArrayRecord(create().configuration(), r1, r2))).getList());
+            fArrays4(create().configuration(), fArrays4(create().configuration(), new UBookArrayRecord(r1, r2))).getList());
 
         // Retrieving tables from functions
         assertNull(fTables4(create().configuration(), null));
         assertEquals(emptyList(),
-            fTables4(create().configuration(), new UBookTableRecord(create().configuration(), (UBookTypeRecord[]) null)).getList());
+            fTables4(create().configuration(), new UBookTableRecord((UBookTypeRecord[]) null)).getList());
         assertEquals(emptyList(),
-            fTables4(create().configuration(), new UBookTableRecord(create().configuration())).getList());
+            fTables4(create().configuration(), new UBookTableRecord()).getList());
         assertEquals(asList(r1),
-            fTables4(create().configuration(), fTables4(create().configuration(), new UBookTableRecord(create().configuration(), r1))).getList());
+            fTables4(create().configuration(), fTables4(create().configuration(), new UBookTableRecord(r1))).getList());
         assertEquals(asList(r1, r2),
-            fTables4(create().configuration(), fTables4(create().configuration(), new UBookTableRecord(create().configuration(), r1, r2))).getList());
+            fTables4(create().configuration(), fTables4(create().configuration(), new UBookTableRecord(r1, r2))).getList());
 
 
     }
@@ -1627,7 +1627,7 @@ public class OracleTest extends jOOQAbstractTest<
         {
             UNested_3Record u3 = new UNested_3Record();
             u3.setId(1);
-            u3.setNested(new UNested_2Record(configuration));
+            u3.setNested(new UNested_2Record());
             PNested result = Routines.pNested(configuration, u3, u3);
             assertNotNull(result);
             assertEquals(u3, result.getP3());
@@ -1641,7 +1641,7 @@ public class OracleTest extends jOOQAbstractTest<
 
         {
             UNested_3Record u3 = new UNested_3Record();
-            UNested_2Record u2 = new UNested_2Record(configuration);
+            UNested_2Record u2 = new UNested_2Record();
             UNested_1Record u1 = new UNested_1Record();
             u2.set(u1, u1);
             u3.setId(1);
@@ -1667,10 +1667,10 @@ public class OracleTest extends jOOQAbstractTest<
 
         {
             UNested_3Record u3 = new UNested_3Record();
-            UNested_2Record u2 = new UNested_2Record(configuration);
+            UNested_2Record u2 = new UNested_2Record();
             UNested_1Record u1 = new UNested_1Record();
             u1.setId(2);
-            u1.setNested(new UNumberTableRecord(configuration));
+            u1.setNested(new UNumberTableRecord());
             u2.set(u1, u1);
             u3.setId(1);
             u3.setNested(u2);
@@ -1695,9 +1695,9 @@ public class OracleTest extends jOOQAbstractTest<
 
         {
             UNested_3Record u3 = new UNested_3Record();
-            UNested_2Record u2 = new UNested_2Record(configuration);
+            UNested_2Record u2 = new UNested_2Record();
             UNested_1Record u1 = new UNested_1Record();
-            UNumberTableRecord numbers = new UNumberTableRecord(configuration);
+            UNumberTableRecord numbers = new UNumberTableRecord();
             numbers.set(3, 4);
             u1.setId(2);
             u1.setNested(numbers);

@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UNumberArrayRecord extends org.jooq.impl.ArrayRecordImpl<java.lang.Integer> {
 
-	private static final long serialVersionUID = 265816207;
+	private static final long serialVersionUID = -408380669;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UNumberArrayRecord()} constructor instead
@@ -42,5 +42,21 @@ public class UNumberArrayRecord extends org.jooq.impl.ArrayRecordImpl<java.lang.
 	 */
 	public UNumberArrayRecord() {
 		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_NUMBER_ARRAY", org.jooq.impl.SQLDataType.INTEGER);
+	}
+
+	/**
+	 * Create a new <code>TEST.U_NUMBER_ARRAY</code> record
+	 */
+	public UNumberArrayRecord(java.lang.Integer... array) {
+		this();
+		set(array);
+	}
+
+	/**
+	 * Create a new <code>TEST.U_NUMBER_ARRAY</code> record
+	 */
+	public UNumberArrayRecord(java.util.Collection<? extends java.lang.Integer> collection) {
+		this();
+		set(collection);
 	}
 }

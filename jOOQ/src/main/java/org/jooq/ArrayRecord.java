@@ -44,6 +44,7 @@ package org.jooq;
 
 import java.sql.Array;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -81,6 +82,14 @@ public interface ArrayRecord<E> extends Attachable, Iterable<E> {
     /**
      * Set the contained array as a {@link List}.
      */
+    void set(Collection<? extends E> list);
+
+    /**
+     * Set the contained array as a {@link List}.
+     *
+     * @deprecated - 3.4.0 - [#3128] Use {@link #set(Collection)} instead.
+     */
+    @Deprecated
     void setList(List<? extends E> list);
 
     /**

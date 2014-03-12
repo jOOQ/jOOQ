@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UNested_2Record extends org.jooq.impl.ArrayRecordImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_1Record> {
 
-	private static final long serialVersionUID = -594321212;
+	private static final long serialVersionUID = -317672700;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UNested_2Record()} constructor instead
@@ -42,5 +42,21 @@ public class UNested_2Record extends org.jooq.impl.ArrayRecordImpl<org.jooq.test
 	 */
 	public UNested_2Record() {
 		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_NESTED_2", org.jooq.test.oracle.generatedclasses.test.udt.UNested_1.U_NESTED_1.getDataType());
+	}
+
+	/**
+	 * Create a new <code>TEST.U_NESTED_2</code> record
+	 */
+	public UNested_2Record(org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_1Record... array) {
+		this();
+		set(array);
+	}
+
+	/**
+	 * Create a new <code>TEST.U_NESTED_2</code> record
+	 */
+	public UNested_2Record(java.util.Collection<? extends org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_1Record> collection) {
+		this();
+		set(collection);
 	}
 }

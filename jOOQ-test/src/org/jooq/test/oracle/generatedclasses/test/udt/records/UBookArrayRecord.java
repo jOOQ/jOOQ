@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UBookArrayRecord extends org.jooq.impl.ArrayRecordImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord> {
 
-	private static final long serialVersionUID = 1673676339;
+	private static final long serialVersionUID = 711682805;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UBookArrayRecord()} constructor instead
@@ -42,5 +42,21 @@ public class UBookArrayRecord extends org.jooq.impl.ArrayRecordImpl<org.jooq.tes
 	 */
 	public UBookArrayRecord() {
 		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_BOOK_ARRAY", org.jooq.test.oracle.generatedclasses.test.udt.UBookType.U_BOOK_TYPE.getDataType());
+	}
+
+	/**
+	 * Create a new <code>TEST.U_BOOK_ARRAY</code> record
+	 */
+	public UBookArrayRecord(org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord... array) {
+		this();
+		set(array);
+	}
+
+	/**
+	 * Create a new <code>TEST.U_BOOK_ARRAY</code> record
+	 */
+	public UBookArrayRecord(java.util.Collection<? extends org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord> collection) {
+		this();
+		set(collection);
 	}
 }

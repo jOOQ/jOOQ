@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UNumberLongTableRecord extends org.jooq.impl.ArrayRecordImpl<java.lang.Long> {
 
-	private static final long serialVersionUID = -1491946137;
+	private static final long serialVersionUID = 2091353173;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UNumberLongTableRecord()} constructor instead
@@ -42,5 +42,21 @@ public class UNumberLongTableRecord extends org.jooq.impl.ArrayRecordImpl<java.l
 	 */
 	public UNumberLongTableRecord() {
 		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_NUMBER_LONG_TABLE", org.jooq.impl.SQLDataType.BIGINT);
+	}
+
+	/**
+	 * Create a new <code>TEST.U_NUMBER_LONG_TABLE</code> record
+	 */
+	public UNumberLongTableRecord(java.lang.Long... array) {
+		this();
+		set(array);
+	}
+
+	/**
+	 * Create a new <code>TEST.U_NUMBER_LONG_TABLE</code> record
+	 */
+	public UNumberLongTableRecord(java.util.Collection<? extends java.lang.Long> collection) {
+		this();
+		set(collection);
 	}
 }

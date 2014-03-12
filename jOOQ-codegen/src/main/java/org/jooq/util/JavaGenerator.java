@@ -1171,6 +1171,18 @@ public class JavaGenerator extends AbstractGenerator {
         out.tab(2).println("super(%s, \"%s\", %s);", schemaId, arrayName, elementTypeRef);
         out.tab(1).println("}");
 
+        out.tab(1).javadoc("Create a new <code>%s</code> record", array.getQualifiedOutputName());
+        out.tab(1).println("public %s(%s... array) {", className, elementType);
+        out.tab(2).println("this();");
+        out.tab(2).println("set(array);");
+        out.tab(1).println("}");
+
+        out.tab(1).javadoc("Create a new <code>%s</code> record", array.getQualifiedOutputName());
+        out.tab(1).println("public %s(%s<? extends %s> collection) {", className, Collection.class, elementType);
+        out.tab(2).println("this();");
+        out.tab(2).println("set(collection);");
+        out.tab(1).println("}");
+
         generateArrayClassFooter(array, out);
         out.println("}");
         out.close();

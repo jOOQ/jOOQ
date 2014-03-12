@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UDateArrayRecord extends org.jooq.impl.ArrayRecordImpl<java.sql.Date> {
 
-	private static final long serialVersionUID = -1718989370;
+	private static final long serialVersionUID = 1994277164;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UDateArrayRecord()} constructor instead
@@ -42,5 +42,21 @@ public class UDateArrayRecord extends org.jooq.impl.ArrayRecordImpl<java.sql.Dat
 	 */
 	public UDateArrayRecord() {
 		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_DATE_ARRAY", org.jooq.impl.SQLDataType.DATE);
+	}
+
+	/**
+	 * Create a new <code>TEST.U_DATE_ARRAY</code> record
+	 */
+	public UDateArrayRecord(java.sql.Date... array) {
+		this();
+		set(array);
+	}
+
+	/**
+	 * Create a new <code>TEST.U_DATE_ARRAY</code> record
+	 */
+	public UDateArrayRecord(java.util.Collection<? extends java.sql.Date> collection) {
+		this();
+		set(collection);
 	}
 }

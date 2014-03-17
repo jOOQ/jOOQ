@@ -223,6 +223,10 @@ public interface DSLContext {
      * <p>
      * The returned <code>List</code> is immutable. To modify bind values, use
      * {@link #extractParams(QueryPart)} instead.
+     * <p>
+     * Unlike {@link #extractParams(QueryPart)}, which returns also inlined
+     * parameters, this returns only actual bind values that will render an
+     * actual bind value as a question mark <code>"?"</code>
      */
     List<Object> extractBindValues(QueryPart part);
 

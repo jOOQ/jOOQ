@@ -176,6 +176,10 @@ public interface Query extends QueryPart, Attachable {
      * Retrieve the bind values that will be bound by this Query. This
      * <code>List</code> cannot be modified. To modify bind values, use
      * {@link #getParams()} instead.
+     * <p>
+     * Unlike {@link #getParams()}, which returns also inlined parameters, this
+     * returns only actual bind values that will render an actual bind value as
+     * a question mark <code>"?"</code>
      *
      * @see DSLContext#extractBindValues(QueryPart)
      */

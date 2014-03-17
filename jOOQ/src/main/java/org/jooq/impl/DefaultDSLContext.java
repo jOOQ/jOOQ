@@ -309,7 +309,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     public List<Object> extractBindValues(QueryPart part) {
         List<Object> result = new ArrayList<Object>();
 
-        for (Param<?> param : extractParams(part).values()) {
+        for (Param<?> param : extractParams0(part, false).values()) {
             result.add(param.getValue());
         }
 
@@ -318,7 +318,11 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public Map<String, Param<?>> extractParams(QueryPart part) {
-        ParamCollector collector = new ParamCollector(configuration);
+        return extractParams0(part, true);
+    }
+
+    final Map<String, Param<?>> extractParams0(QueryPart part, boolean includeInlinedParams) {
+        ParamCollector collector = new ParamCollector(configuration, includeInlinedParams);
         collector.visit(part);
         return Collections.unmodifiableMap(collector.result);
     }

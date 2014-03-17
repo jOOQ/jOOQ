@@ -38,67 +38,44 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.impl;
+package org.jooq.test;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import static java.util.Arrays.asList;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.val;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import org.jooq.BindContext;
-import org.jooq.Configuration;
-import org.jooq.Field;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jooq.Param;
-import org.jooq.QueryPart;
-import org.jooq.QueryPartInternal;
-import org.jooq.tools.StringUtils;
+import org.jooq.Query;
+
+import org.junit.Test;
 
 /**
- * A stub {@link BindContext} that acts as a collector of {@link Param}
- * {@link QueryPart}'s
- *
  * @author Lukas Eder
  */
-class ParamCollector extends AbstractBindContext {
+public class ParamTest extends AbstractTest {
 
-    final Map<String, Param<?>> result = new LinkedHashMap<String, Param<?>>();
-    private final boolean       includeInlinedParams;
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testData() {
+        Query query = create.select(val(1), inline(2)).where(val(3).ne(inline(4)));
+        List<Param<?>> values = new ArrayList<Param<?>>(query.getParams().values());
 
-    ParamCollector(Configuration configuration, boolean includeInlinedParams) {
-        super(configuration);
+        assertEquals(asList(val(1), inline(2), val(3), inline(4)), values);
+        assertEquals(1, values.get(0).getValue());
+        assertEquals(2, values.get(1).getValue());
+        assertEquals(3, values.get(2).getValue());
+        assertEquals(4, values.get(3).getValue());
 
-        this.includeInlinedParams = includeInlinedParams;
-    }
+        assertFalse(values.get(0).isInline());
+        assertTrue(values.get(1).isInline());
+        assertFalse(values.get(2).isInline());
+        assertTrue(values.get(3).isInline());
 
-    @Override
-    public final PreparedStatement statement() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected final void bindInternal(QueryPartInternal internal) {
-        if (internal instanceof Param) {
-            Param<?> param = (Param<?>) internal;
-
-            // [#3131] Inlined parameters should not be returned in some contexts
-            if (includeInlinedParams || !param.isInline()) {
-                String i = String.valueOf(nextIndex());
-
-                if (StringUtils.isBlank(param.getParamName())) {
-                    result.put(i, param);
-                }
-                else {
-                    result.put(param.getParamName(), param);
-                }
-            }
-        }
-        else {
-            super.bindInternal(internal);
-        }
-    }
-
-    @Override
-    protected final BindContext bindValue0(Object value, Field<?> field) throws SQLException {
-        throw new UnsupportedOperationException();
+        assertEquals(asList(1, 3), query.getBindValues());
     }
 }

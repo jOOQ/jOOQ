@@ -41,12 +41,6 @@
 package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.ORACLE;
@@ -57,6 +51,12 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.tools.reflect.Reflect.on;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -75,8 +75,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
-
-import junit.framework.Assert;
 
 import org.jooq.AttachableInternal;
 import org.jooq.Cursor;
@@ -124,6 +122,7 @@ import org.jooq.test._.StaticWithAnnotations;
 import org.jooq.test._.StaticWithoutAnnotations;
 import org.jooq.tools.jdbc.JDBCUtils;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class FetchTests<
@@ -1992,8 +1991,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals((byte) 4, rs.getByte(1));
         assertEquals((short) 4, rs.getShort(1));
         assertEquals(4L, rs.getLong(1));
-        assertEquals(4.0f, rs.getFloat(1));
-        assertEquals(4.0, rs.getDouble(1));
+        assertEquals(4.0f, rs.getFloat(1), 0.0f);
+        assertEquals(4.0, rs.getDouble(1), 0.0);
         assertEquals(new BigDecimal("4"), rs.getBigDecimal(1));
 
         assertEquals(0, rs.getInt(3));
@@ -2031,8 +2030,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals((byte) 1, rs.getByte(1));
         assertEquals((short) 1, rs.getShort(1));
         assertEquals(1L, rs.getLong(1));
-        assertEquals(1.0f, rs.getFloat(1));
-        assertEquals(1.0, rs.getDouble(1));
+        assertEquals(1.0f, rs.getFloat(1), 0.0f);
+        assertEquals(1.0, rs.getDouble(1), 0.0);
         assertEquals(BigDecimal.ONE, rs.getBigDecimal(1));
 
         assertEquals(0, rs.getInt(3));

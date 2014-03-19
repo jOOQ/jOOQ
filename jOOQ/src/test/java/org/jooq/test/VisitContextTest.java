@@ -41,7 +41,7 @@
 package org.jooq.test;
 
 import static java.util.Arrays.asList;
-import static junit.framework.Assert.fail;
+import static org.junit.Assert.fail;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_AND;
 import static org.jooq.Clause.CONDITION_BETWEEN;

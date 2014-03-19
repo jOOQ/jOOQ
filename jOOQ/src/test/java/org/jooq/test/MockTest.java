@@ -41,8 +41,8 @@
 package org.jooq.test;
 
 import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.fail;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.test.data.Table1.FIELD_ID1;
 import static org.jooq.test.data.Table1.FIELD_NAME1;

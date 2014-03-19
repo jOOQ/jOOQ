@@ -51,7 +51,7 @@ import java.sql.PreparedStatement;
 import java.sql.Time;
 import java.sql.Timestamp;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.jooq.BindContext;
 import org.jooq.Constants;

@@ -41,7 +41,6 @@
 package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertEquals;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.impl.DSL.currentDate;
 import static org.jooq.impl.DSL.inline;
@@ -52,6 +51,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.zero;
+import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
 

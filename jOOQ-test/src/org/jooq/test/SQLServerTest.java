@@ -44,7 +44,6 @@ package org.jooq.test;
 /* [pro] */
 
 import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertEquals;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.test.sqlserver.generatedclasses.Routines.fTables1;
 import static org.jooq.test.sqlserver.generatedclasses.Routines.fTables4;
@@ -72,6 +71,7 @@ import static org.jooq.test.sqlserver.generatedclasses.tables.FTables1.F_TABLES1
 import static org.jooq.test.sqlserver.generatedclasses.tables.FTables4.F_TABLES4;
 import static org.jooq.util.sqlserver.SQLServerDSL.difference;
 import static org.jooq.util.sqlserver.SQLServerDSL.soundex;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 

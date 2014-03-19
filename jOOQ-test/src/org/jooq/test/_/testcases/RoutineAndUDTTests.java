@@ -41,15 +41,15 @@
 package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.tools.reflect.Reflect.on;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
 import java.util.Arrays;
@@ -504,12 +504,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // First record: null
             // -----------------------------------------------------------------
-            assertEquals(null, arrays.getValue(0, TArrays_STRING()));
-            assertEquals(null, arrays.getValue(0, TArrays_NUMBER()));
-            assertEquals(null, arrays.getValue(0, TArrays_DATE()));
+            assertNull(arrays.getValue(0, TArrays_STRING()));
+            assertNull(arrays.getValue(0, TArrays_NUMBER()));
+            assertNull(arrays.getValue(0, TArrays_DATE()));
 
             if (TArrays_UDT() != null) {
-                assertEquals(null, arrays.getValue(0, TArrays_UDT()));
+                assertNull(arrays.getValue(0, TArrays_UDT()));
             }
 
 

@@ -41,8 +41,6 @@
 package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.select;
@@ -50,6 +48,8 @@ import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.selectZero;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.val;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
 import java.util.Vector;
@@ -129,7 +129,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertTrue(asList(result.get(0).fields()).contains(f3));
 
         assertEquals(Integer.valueOf(1), result.get(0).getValue(f1));
-        assertEquals(2d, result.get(0).getValue(f2));
+        assertEquals(2d, result.get(0).getValue(f2), 0.0);
         assertEquals("test", result.get(0).getValue(f3));
     }
 

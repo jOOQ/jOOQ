@@ -41,7 +41,7 @@
 
 package org.jooq.test;
 
-import static junit.framework.Assert.fail;
+import static org.junit.Assert.fail;
 
 import org.jooq.test.data.Table1;
 import org.jooq.test.data.Table1Record;

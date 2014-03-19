@@ -45,9 +45,6 @@ package org.jooq.test;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNull;
 import static org.jooq.impl.DSL.cumeDist;
 import static org.jooq.impl.DSL.currentUser;
 import static org.jooq.impl.DSL.denseRank;
@@ -100,7 +97,10 @@ import static org.jooq.util.oracle.OracleDSL.versionsOperation;
 import static org.jooq.util.oracle.OracleDSL.versionsStartscn;
 import static org.jooq.util.oracle.OracleDSL.versionsStarttime;
 import static org.jooq.util.oracle.OracleDSL.versionsXid;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;

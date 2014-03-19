@@ -42,8 +42,6 @@ package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.nCopies;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
@@ -100,6 +98,8 @@ import static org.jooq.impl.DSL.sumDistinct;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.varPop;
 import static org.jooq.impl.DSL.varSamp;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -258,14 +258,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(2, (int) result1.get(0).value2());
         assertEquals(2, (int) result1.get(0).value3());
         assertEquals(1, (int) result1.get(0).value4());
-        assertEquals(3d, result1.get(0).getValue(4, Double.class));
+        assertEquals(3d, result1.get(0).getValue(4, Double.class), 0.0);
         assertEquals(1, (int) result1.get(0).value7());
         assertEquals(2, (int) result1.get(0).value8());
 
         assertEquals(2, (int) result1.get(1).value2());
         assertEquals(2, (int) result1.get(1).value3());
         assertEquals(1, (int) result1.get(1).value4());
-        assertEquals(7d, result1.get(1).getValue(4, Double.class));
+        assertEquals(7d, result1.get(1).getValue(4, Double.class), 0.0);
         assertEquals(3, (int) result1.get(1).value7());
         assertEquals(4, (int) result1.get(1).value8());
 
@@ -316,17 +316,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .orderBy(TBook_AUTHOR_ID())
                     .fetch();
 
-                assertEquals(0.5, result2.get(0).getValue(1, Double.class));
-                assertEquals(0.25, result2.get(0).getValue(3, Double.class));
-                assertEquals(0.5, result2.get(1).getValue(1, Double.class));
-                assertEquals(0.25, result2.get(1).getValue(3, Double.class));
+                assertEquals(0.5, result2.get(0).getValue(1, Double.class), 0.0);
+                assertEquals(0.25, result2.get(0).getValue(3, Double.class), 0.0);
+                assertEquals(0.5, result2.get(1).getValue(1, Double.class), 0.0);
+                assertEquals(0.25, result2.get(1).getValue(3, Double.class), 0.0);
 
                 // DB2 only knows STDDEV_POP / VAR_POP
                 if (true/* [pro] */ && dialect() != SQLDialect.DB2/* [/pro] */) {
                     assertEquals("0.707", result2.get(0).getValue(2, String.class).substring(0, 5));
-                    assertEquals(0.5, result2.get(0).getValue(4, Double.class));
+                    assertEquals(0.5, result2.get(0).getValue(4, Double.class), 0.0);
                     assertEquals("0.707", result2.get(1).getValue(2, String.class).substring(0, 5));
-                    assertEquals(0.5, result2.get(1).getValue(4, Double.class));
+                    assertEquals(0.5, result2.get(1).getValue(4, Double.class), 0.0);
                 }
             }
         }
@@ -728,18 +728,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Overall STDDEV_POP(), STDDEV_SAMP(), VAR_POP(), VAR_SAMP()
         assertEquals("1.118", result.get(0).getValue(1, String.class).substring(0, 5));
-        assertEquals(1.25, result.get(0).getValue(3, Double.class));
+        assertEquals(1.25, result.get(0).getValue(3, Double.class), 0.0);
 
         // Partitioned STDDEV_POP(), STDDEV_SAMP(), VAR_POP(), VAR_SAMP()
-        assertEquals(0.5, result.get(0).getValue(5, Double.class));
-        assertEquals(0.25, result.get(0).getValue(7, Double.class));
+        assertEquals(0.5, result.get(0).getValue(5, Double.class), 0.0);
+        assertEquals(0.25, result.get(0).getValue(7, Double.class), 0.0);
 
         // DB2 only knows STDDEV_POP / VAR_POP
         if (true/* [pro] */ && dialect() != SQLDialect.DB2/* [/pro] */) {
             assertEquals("1.290", result.get(0).getValue(2, String.class).substring(0, 5));
             assertEquals("1.666", result.get(0).getValue(4, String.class).substring(0, 5));
             assertEquals("0.707", result.get(0).getValue(6, String.class).substring(0, 5));
-            assertEquals(0.5, result.get(0).getValue(8, Double.class));
+            assertEquals(0.5, result.get(0).getValue(8, Double.class), 0.0);
         }
 
         // NTILE()

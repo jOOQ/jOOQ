@@ -40,8 +40,8 @@
  */
 package org.jooq.test._.testcases;
 
-import static junit.framework.Assert.assertEquals;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
 

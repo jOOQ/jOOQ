@@ -40,10 +40,10 @@
  */
 package org.jooq.test._.testcases;
 
-import static junit.framework.Assert.assertEquals;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.values;
+import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
 

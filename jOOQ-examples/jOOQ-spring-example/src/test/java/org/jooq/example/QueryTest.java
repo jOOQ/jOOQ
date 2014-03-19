@@ -41,12 +41,12 @@
 package org.jooq.example;
 
 import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertEquals;
 import static org.jooq.example.db.h2.Tables.AUTHOR;
 import static org.jooq.example.db.h2.Tables.BOOK;
 import static org.jooq.example.db.h2.Tables.BOOK_STORE;
 import static org.jooq.example.db.h2.Tables.BOOK_TO_BOOK_STORE;
 import static org.jooq.impl.DSL.countDistinct;
+import static org.junit.Assert.assertEquals;
 
 import org.jooq.DSLContext;
 import org.jooq.Record3;

@@ -41,10 +41,6 @@
 package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
@@ -73,6 +69,10 @@ import static org.jooq.types.Unsigned.ubyte;
 import static org.jooq.types.Unsigned.uint;
 import static org.jooq.types.Unsigned.ulong;
 import static org.jooq.types.Unsigned.ushort;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -776,10 +776,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, ULong.class));
         assertEquals(
             1.0f,
-            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, Float.class));
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, Float.class), 0.0f);
         assertEquals(
             1.0,
-            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, Double.class));
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, Double.class), 0.0);
         assertEquals(
             new BigInteger("1"),
             create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, BigInteger.class));
@@ -814,10 +814,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), ULong.class));
         assertEquals(
             1.0f,
-            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), Float.class));
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), Float.class), 0.0f);
         assertEquals(
             1.0,
-            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), Double.class));
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), Double.class), 0.0);
         assertEquals(
             new BigInteger("1"),
             create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), BigInteger.class));
@@ -1322,8 +1322,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         if (T639_BIG_INTEGER() != null) assertEquals(new BigInteger("1234567890"), record.getValue(T639_BIG_INTEGER()));
         if (T639_BYTE() != null) assertEquals(9, (byte) record.getValue(T639_BYTE()));
-        if (T639_DOUBLE() != null) assertEquals(10.125, (double) record.getValue(T639_DOUBLE()));
-        if (T639_FLOAT() != null) assertEquals(11.375f, (float) record.getValue(T639_FLOAT()));
+        if (T639_DOUBLE() != null) assertEquals(10.125, record.getValue(T639_DOUBLE()), 0.0);
+        if (T639_FLOAT() != null) assertEquals(11.375f, record.getValue(T639_FLOAT()), 0.0f);
 
         // Various BigDecimal tests
         // ------------------------

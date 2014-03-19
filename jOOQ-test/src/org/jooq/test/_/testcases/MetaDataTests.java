@@ -45,6 +45,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.H2;
@@ -111,7 +112,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#3133] Check if DEFAULT information is correctly generated
         assertFalse(TBook_ID().getDataType().defaulted());
-        assertTrue(TBook_LANGUAGE_ID().getDataType().defaulted());
+
+        if (!asList().contains(dialect().family())) {
+            assertTrue(TBook_LANGUAGE_ID().getDataType().defaulted());
+        }
     }
 
     @Test

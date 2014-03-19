@@ -12,12 +12,12 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface ITBook extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>T_BOOK.ID</code>. 
+	 * Setter for <code>T_BOOK.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_BOOK.ID</code>. 
+	 * Getter for <code>T_BOOK.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
@@ -25,46 +25,46 @@ public interface ITBook extends java.io.Serializable {
 	public java.lang.Integer getId();
 
 	/**
-	 * Setter for <code>T_BOOK.AUTHOR_ID</code>. 
+	 * Setter for <code>T_BOOK.AUTHOR_ID</code>.
 	 */
 	public void setAuthorId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_BOOK.AUTHOR_ID</code>. 
+	 * Getter for <code>T_BOOK.AUTHOR_ID</code>.
 	 */
 	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, length = 4)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getAuthorId();
 
 	/**
-	 * Setter for <code>T_BOOK.CO_AUTHOR_ID</code>. 
+	 * Setter for <code>T_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	public void setCoAuthorId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_BOOK.CO_AUTHOR_ID</code>. 
+	 * Getter for <code>T_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	@javax.persistence.Column(name = "CO_AUTHOR_ID", length = 4)
 	public java.lang.Integer getCoAuthorId();
 
 	/**
-	 * Setter for <code>T_BOOK.DETAILS_ID</code>. 
+	 * Setter for <code>T_BOOK.DETAILS_ID</code>.
 	 */
 	public void setDetailsId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_BOOK.DETAILS_ID</code>. 
+	 * Getter for <code>T_BOOK.DETAILS_ID</code>.
 	 */
 	@javax.persistence.Column(name = "DETAILS_ID", length = 4)
 	public java.lang.Integer getDetailsId();
 
 	/**
-	 * Setter for <code>T_BOOK.TITLE</code>. 
+	 * Setter for <code>T_BOOK.TITLE</code>.
 	 */
 	public void setTitle(java.lang.String value);
 
 	/**
-	 * Getter for <code>T_BOOK.TITLE</code>. 
+	 * Getter for <code>T_BOOK.TITLE</code>.
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
 	@javax.validation.constraints.NotNull
@@ -72,59 +72,59 @@ public interface ITBook extends java.io.Serializable {
 	public java.lang.String getTitle();
 
 	/**
-	 * Setter for <code>T_BOOK.PUBLISHED_IN</code>. 
+	 * Setter for <code>T_BOOK.PUBLISHED_IN</code>.
 	 */
 	public void setPublishedIn(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_BOOK.PUBLISHED_IN</code>. 
+	 * Getter for <code>T_BOOK.PUBLISHED_IN</code>.
 	 */
 	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false, length = 4)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getPublishedIn();
 
 	/**
-	 * Setter for <code>T_BOOK.LANGUAGE_ID</code>. 
+	 * Setter for <code>T_BOOK.LANGUAGE_ID</code>.
 	 */
 	public void setLanguageId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_BOOK.LANGUAGE_ID</code>. 
+	 * Getter for <code>T_BOOK.LANGUAGE_ID</code>.
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, length = 4)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getLanguageId();
 
 	/**
-	 * Setter for <code>T_BOOK.CONTENT_TEXT</code>. 
+	 * Setter for <code>T_BOOK.CONTENT_TEXT</code>.
 	 */
 	public void setContentText(java.lang.String value);
 
 	/**
-	 * Getter for <code>T_BOOK.CONTENT_TEXT</code>. 
+	 * Getter for <code>T_BOOK.CONTENT_TEXT</code>.
 	 */
 	@javax.persistence.Column(name = "CONTENT_TEXT", length = 8)
 	@javax.validation.constraints.Size(max = 8)
 	public java.lang.String getContentText();
 
 	/**
-	 * Setter for <code>T_BOOK.CONTENT_PDF</code>. 
+	 * Setter for <code>T_BOOK.CONTENT_PDF</code>.
 	 */
 	public void setContentPdf(byte[] value);
 
 	/**
-	 * Getter for <code>T_BOOK.CONTENT_PDF</code>. 
+	 * Getter for <code>T_BOOK.CONTENT_PDF</code>.
 	 */
 	@javax.persistence.Column(name = "CONTENT_PDF", length = 8)
 	public byte[] getContentPdf();
 
 	/**
-	 * Setter for <code>T_BOOK.REC_VERSION</code>. 
+	 * Setter for <code>T_BOOK.REC_VERSION</code>.
 	 */
 	public void setRecVersion(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_BOOK.REC_VERSION</code>. 
+	 * Getter for <code>T_BOOK.REC_VERSION</code>.
 	 */
 	@javax.persistence.Column(name = "REC_VERSION", length = 4)
 	public java.lang.Integer getRecVersion();

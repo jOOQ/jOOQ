@@ -12,12 +12,12 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface IT_725LobTest extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>T_725_LOB_TEST.ID</code>. 
+	 * Setter for <code>T_725_LOB_TEST.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_725_LOB_TEST.ID</code>. 
+	 * Getter for <code>T_725_LOB_TEST.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
@@ -25,12 +25,12 @@ public interface IT_725LobTest extends java.io.Serializable {
 	public java.lang.Integer getId();
 
 	/**
-	 * Setter for <code>T_725_LOB_TEST.LOB</code>. 
+	 * Setter for <code>T_725_LOB_TEST.LOB</code>.
 	 */
 	public void setLob(byte[] value);
 
 	/**
-	 * Getter for <code>T_725_LOB_TEST.LOB</code>. 
+	 * Getter for <code>T_725_LOB_TEST.LOB</code>.
 	 */
 	@javax.persistence.Column(name = "LOB", length = 8)
 	public byte[] getLob();

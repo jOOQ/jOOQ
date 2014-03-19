@@ -12,12 +12,12 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface ITDates extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>T_DATES.ID</code>. 
+	 * Setter for <code>T_DATES.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_DATES.ID</code>. 
+	 * Getter for <code>T_DATES.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
@@ -25,56 +25,56 @@ public interface ITDates extends java.io.Serializable {
 	public java.lang.Integer getId();
 
 	/**
-	 * Setter for <code>T_DATES.D</code>. 
+	 * Setter for <code>T_DATES.D</code>.
 	 */
 	public void setD(java.sql.Date value);
 
 	/**
-	 * Getter for <code>T_DATES.D</code>. 
+	 * Getter for <code>T_DATES.D</code>.
 	 */
 	@javax.persistence.Column(name = "D", length = 4)
 	public java.sql.Date getD();
 
 	/**
-	 * Setter for <code>T_DATES.T</code>. 
+	 * Setter for <code>T_DATES.T</code>.
 	 */
 	public void setT(java.sql.Time value);
 
 	/**
-	 * Getter for <code>T_DATES.T</code>. 
+	 * Getter for <code>T_DATES.T</code>.
 	 */
 	@javax.persistence.Column(name = "T", length = 4)
 	public java.sql.Time getT();
 
 	/**
-	 * Setter for <code>T_DATES.TS</code>. 
+	 * Setter for <code>T_DATES.TS</code>.
 	 */
 	public void setTs(java.sql.Timestamp value);
 
 	/**
-	 * Getter for <code>T_DATES.TS</code>. 
+	 * Getter for <code>T_DATES.TS</code>.
 	 */
 	@javax.persistence.Column(name = "TS", length = 8)
 	public java.sql.Timestamp getTs();
 
 	/**
-	 * Setter for <code>T_DATES.D_INT</code>. 
+	 * Setter for <code>T_DATES.D_INT</code>.
 	 */
 	public void setDInt(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_DATES.D_INT</code>. 
+	 * Getter for <code>T_DATES.D_INT</code>.
 	 */
 	@javax.persistence.Column(name = "D_INT", length = 4)
 	public java.lang.Integer getDInt();
 
 	/**
-	 * Setter for <code>T_DATES.TS_BIGINT</code>. 
+	 * Setter for <code>T_DATES.TS_BIGINT</code>.
 	 */
 	public void setTsBigint(java.lang.Long value);
 
 	/**
-	 * Getter for <code>T_DATES.TS_BIGINT</code>. 
+	 * Getter for <code>T_DATES.TS_BIGINT</code>.
 	 */
 	@javax.persistence.Column(name = "TS_BIGINT", length = 8)
 	public java.lang.Long getTsBigint();

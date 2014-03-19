@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = -158679876;
+	private static final long serialVersionUID = 1816111008;
 
 	/**
 	 * The singleton instance of <code>t_785</code>
@@ -25,24 +25,32 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generate
 	}
 
 	/**
-	 * The column <code>t_785.id</code>. 
+	 * The column <code>t_785.id</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_785);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_785, "");
 
 	/**
-	 * The column <code>t_785.name</code>. 
+	 * The column <code>t_785.name</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_785);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_785, "");
 
 	/**
-	 * The column <code>t_785.value</code>. 
+	 * The column <code>t_785.value</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("value", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_785);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("value", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_785, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private T_785() {
-		super("t_785", org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("t_785", null);
+	}
+
+	private T_785(java.lang.String alias, org.jooq.Table<org.jooq.test.cubrid.generatedclasses.tables.records.T_785Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_785(java.lang.String alias, org.jooq.Table<org.jooq.test.cubrid.generatedclasses.tables.records.T_785Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 }

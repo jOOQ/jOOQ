@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 38193833;
+	private static final long serialVersionUID = 826733474;
 
 	/**
 	 * The singleton instance of <code>t_booleans</code>
@@ -25,65 +25,73 @@ public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.gene
 	}
 
 	/**
-	 * The column <code>t_booleans.id</code>. 
+	 * The column <code>t_booleans.id</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOLEANS, "");
 
 	/**
-	 * The column <code>t_booleans.one_zero</code>. 
+	 * The column <code>t_booleans.one_zero</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_10> ONE_ZERO = createField("one_zero", org.jooq.impl.SQLDataType.INTEGER.asConvertedDataType(new org.jooq.test._.converters.Boolean_10_Converter()), T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_10> ONE_ZERO = createField("one_zero", org.jooq.impl.SQLDataType.INTEGER, T_BOOLEANS, "", new org.jooq.test._.converters.Boolean_10_Converter());
 
 	/**
-	 * The column <code>t_booleans.true_false_lc</code>. 
+	 * The column <code>t_booleans.true_false_lc</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_TF_LC> TRUE_FALSE_LC = createField("true_false_lc", org.jooq.impl.SQLDataType.VARCHAR.length(5).asConvertedDataType(new org.jooq.test._.converters.Boolean_TF_LC_Converter()), T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_TF_LC> TRUE_FALSE_LC = createField("true_false_lc", org.jooq.impl.SQLDataType.VARCHAR.length(5), T_BOOLEANS, "", new org.jooq.test._.converters.Boolean_TF_LC_Converter());
 
 	/**
-	 * The column <code>t_booleans.true_false_uc</code>. 
+	 * The column <code>t_booleans.true_false_uc</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_TF_UC> TRUE_FALSE_UC = createField("true_false_uc", org.jooq.impl.SQLDataType.VARCHAR.length(5).asConvertedDataType(new org.jooq.test._.converters.Boolean_TF_UC_Converter()), T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_TF_UC> TRUE_FALSE_UC = createField("true_false_uc", org.jooq.impl.SQLDataType.VARCHAR.length(5), T_BOOLEANS, "", new org.jooq.test._.converters.Boolean_TF_UC_Converter());
 
 	/**
-	 * The column <code>t_booleans.yes_no_lc</code>. 
+	 * The column <code>t_booleans.yes_no_lc</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YES_NO_LC> YES_NO_LC = createField("yes_no_lc", org.jooq.impl.SQLDataType.VARCHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_YES_NO_LC_Converter()), T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YES_NO_LC> YES_NO_LC = createField("yes_no_lc", org.jooq.impl.SQLDataType.VARCHAR, T_BOOLEANS, "", new org.jooq.test._.converters.Boolean_YES_NO_LC_Converter());
 
 	/**
-	 * The column <code>t_booleans.yes_no_uc</code>. 
+	 * The column <code>t_booleans.yes_no_uc</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YES_NO_UC> YES_NO_UC = createField("yes_no_uc", org.jooq.impl.SQLDataType.VARCHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_YES_NO_UC_Converter()), T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YES_NO_UC> YES_NO_UC = createField("yes_no_uc", org.jooq.impl.SQLDataType.VARCHAR, T_BOOLEANS, "", new org.jooq.test._.converters.Boolean_YES_NO_UC_Converter());
 
 	/**
-	 * The column <code>t_booleans.y_n_lc</code>. 
+	 * The column <code>t_booleans.y_n_lc</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YN_LC> Y_N_LC = createField("y_n_lc", org.jooq.impl.SQLDataType.CHAR.length(1).asConvertedDataType(new org.jooq.test._.converters.Boolean_YN_LC_Converter()), T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YN_LC> Y_N_LC = createField("y_n_lc", org.jooq.impl.SQLDataType.CHAR.length(1), T_BOOLEANS, "", new org.jooq.test._.converters.Boolean_YN_LC_Converter());
 
 	/**
-	 * The column <code>t_booleans.y_n_uc</code>. 
+	 * The column <code>t_booleans.y_n_uc</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YN_UC> Y_N_UC = createField("y_n_uc", org.jooq.impl.SQLDataType.CHAR.length(1).asConvertedDataType(new org.jooq.test._.converters.Boolean_YN_UC_Converter()), T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YN_UC> Y_N_UC = createField("y_n_uc", org.jooq.impl.SQLDataType.CHAR.length(1), T_BOOLEANS, "", new org.jooq.test._.converters.Boolean_YN_UC_Converter());
 
 	/**
-	 * The column <code>t_booleans.vc_boolean</code>. 
+	 * The column <code>t_booleans.vc_boolean</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, java.lang.Boolean> VC_BOOLEAN = createField("vc_boolean", org.jooq.impl.SQLDataType.BOOLEAN, T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, java.lang.Boolean> VC_BOOLEAN = createField("vc_boolean", org.jooq.impl.SQLDataType.BOOLEAN, T_BOOLEANS, "");
 
 	/**
-	 * The column <code>t_booleans.c_boolean</code>. 
+	 * The column <code>t_booleans.c_boolean</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, java.lang.Boolean> C_BOOLEAN = createField("c_boolean", org.jooq.impl.SQLDataType.BOOLEAN, T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, java.lang.Boolean> C_BOOLEAN = createField("c_boolean", org.jooq.impl.SQLDataType.BOOLEAN, T_BOOLEANS, "");
 
 	/**
-	 * The column <code>t_booleans.n_boolean</code>. 
+	 * The column <code>t_booleans.n_boolean</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, java.lang.Boolean> N_BOOLEAN = createField("n_boolean", org.jooq.impl.SQLDataType.BOOLEAN, T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, java.lang.Boolean> N_BOOLEAN = createField("n_boolean", org.jooq.impl.SQLDataType.BOOLEAN, T_BOOLEANS, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TBooleans() {
-		super("t_booleans", org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("t_booleans", null);
+	}
+
+	private TBooleans(java.lang.String alias, org.jooq.Table<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TBooleans(java.lang.String alias, org.jooq.Table<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

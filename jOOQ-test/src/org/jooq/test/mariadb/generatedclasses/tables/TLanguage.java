@@ -11,7 +11,7 @@ package org.jooq.test.mariadb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.mariadb.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -428042969;
+	private static final long serialVersionUID = -1319979114;
 
 	/**
 	 * The singleton instance of <code>test.t_language</code>
@@ -29,28 +29,36 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.mariadb.gen
 	/**
 	 * The column <code>test.t_language.CD</code>. The language ISO code
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2).nullable(false), T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2).nullable(false), T_LANGUAGE, "The language ISO code");
 
 	/**
 	 * The column <code>test.t_language.DESCRIPTION</code>. The language description
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE, "The language description");
 
 	/**
-	 * The column <code>test.t_language.description_english</code>. 
+	 * The column <code>test.t_language.description_english</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("description_english", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("description_english", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE, "");
 
 	/**
 	 * The column <code>test.t_language.ID</code>. The language ID
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_LANGUAGE, "The language ID");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TLanguage() {
-		super("t_language", org.jooq.test.mariadb.generatedclasses.Test.TEST);
+		this("t_language", null);
+	}
+
+	private TLanguage(java.lang.String alias, org.jooq.Table<org.jooq.test.mariadb.generatedclasses.tables.records.TLanguageRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TLanguage(java.lang.String alias, org.jooq.Table<org.jooq.test.mariadb.generatedclasses.tables.records.TLanguageRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.mariadb.generatedclasses.Test.TEST, aliased, parameters, "An entity holding language master data");
 	}
 
 	/**

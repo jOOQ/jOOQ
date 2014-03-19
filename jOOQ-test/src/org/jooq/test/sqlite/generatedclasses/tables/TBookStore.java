@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -1716643208;
+	private static final long serialVersionUID = -727006810;
 
 	/**
 	 * The singleton instance of <code>t_book_store</code>
@@ -25,15 +25,23 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.gen
 	}
 
 	/**
-	 * The column <code>t_book_store.name</code>. 
+	 * The column <code>t_book_store.name</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), T_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), T_BOOK_STORE, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TBookStore() {
-		super("t_book_store", org.jooq.test.sqlite.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("t_book_store", null);
+	}
+
+	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sqlite.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

@@ -9,7 +9,7 @@ package org.jooq.test.mariadb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.mariadb.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -1779087135;
+	private static final long serialVersionUID = -1371243383;
 
 	/**
 	 * The singleton instance of <code>test.t_triggers</code>
@@ -25,25 +25,33 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.mariadb.gen
 	}
 
 	/**
-	 * The column <code>test.t_triggers.id_generated</code>. 
+	 * The column <code>test.t_triggers.id_generated</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("id_generated", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_TRIGGERS);
+	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("id_generated", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_TRIGGERS, "");
 
 	/**
-	 * The column <code>test.t_triggers.id</code>. 
+	 * The column <code>test.t_triggers.id</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
+	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS, "");
 
 	/**
-	 * The column <code>test.t_triggers.counter</code>. 
+	 * The column <code>test.t_triggers.counter</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("counter", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
+	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("counter", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TTriggers() {
-		super("t_triggers", org.jooq.test.mariadb.generatedclasses.Test.TEST);
+		this("t_triggers", null);
+	}
+
+	private TTriggers(java.lang.String alias, org.jooq.Table<org.jooq.test.mariadb.generatedclasses.tables.records.TTriggersRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TTriggers(java.lang.String alias, org.jooq.Table<org.jooq.test.mariadb.generatedclasses.tables.records.TTriggersRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.mariadb.generatedclasses.Test.TEST, aliased, parameters, "");
 	}
 
 	/**

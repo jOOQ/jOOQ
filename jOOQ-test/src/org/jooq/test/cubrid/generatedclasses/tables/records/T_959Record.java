@@ -9,31 +9,31 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_959Record> implements org.jooq.Record2<org.jooq.test.cubrid.generatedclasses.enums.T_959JavaKeywords, org.jooq.test.cubrid.generatedclasses.enums.T_959SpecialCharacters> {
 
-	private static final long serialVersionUID = -1081094669;
+	private static final long serialVersionUID = -1162952497;
 
 	/**
-	 * Setter for <code>t_959.java_keywords</code>. 
+	 * Setter for <code>t_959.java_keywords</code>.
 	 */
 	public void setJavaKeywords(org.jooq.test.cubrid.generatedclasses.enums.T_959JavaKeywords value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>t_959.java_keywords</code>. 
+	 * Getter for <code>t_959.java_keywords</code>.
 	 */
 	public org.jooq.test.cubrid.generatedclasses.enums.T_959JavaKeywords getJavaKeywords() {
 		return (org.jooq.test.cubrid.generatedclasses.enums.T_959JavaKeywords) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>t_959.special_characters</code>. 
+	 * Setter for <code>t_959.special_characters</code>.
 	 */
 	public void setSpecialCharacters(org.jooq.test.cubrid.generatedclasses.enums.T_959SpecialCharacters value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>t_959.special_characters</code>. 
+	 * Getter for <code>t_959.special_characters</code>.
 	 */
 	public org.jooq.test.cubrid.generatedclasses.enums.T_959SpecialCharacters getSpecialCharacters() {
 		return (org.jooq.test.cubrid.generatedclasses.enums.T_959SpecialCharacters) getValue(1);

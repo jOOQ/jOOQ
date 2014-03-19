@@ -12,24 +12,24 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface IXTestCase_2025 extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>X_TEST_CASE_2025.REF_ID</code>. 
+	 * Setter for <code>X_TEST_CASE_2025.REF_ID</code>.
 	 */
 	public void setRefId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>X_TEST_CASE_2025.REF_ID</code>. 
+	 * Getter for <code>X_TEST_CASE_2025.REF_ID</code>.
 	 */
 	@javax.persistence.Column(name = "REF_ID", nullable = false, length = 4)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getRefId();
 
 	/**
-	 * Setter for <code>X_TEST_CASE_2025.REF_NAME</code>. 
+	 * Setter for <code>X_TEST_CASE_2025.REF_NAME</code>.
 	 */
 	public void setRefName(java.lang.String value);
 
 	/**
-	 * Getter for <code>X_TEST_CASE_2025.REF_NAME</code>. 
+	 * Getter for <code>X_TEST_CASE_2025.REF_NAME</code>.
 	 */
 	@javax.persistence.Column(name = "REF_NAME", nullable = false, length = 10)
 	@javax.validation.constraints.NotNull

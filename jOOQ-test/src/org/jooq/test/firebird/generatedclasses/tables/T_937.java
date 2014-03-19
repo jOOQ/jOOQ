@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_937 extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_937Record> {
 
-	private static final long serialVersionUID = 1313421171;
+	private static final long serialVersionUID = -1112059527;
 
 	/**
 	 * The singleton instance of <code>T_937</code>
@@ -25,22 +25,30 @@ public class T_937 extends org.jooq.impl.TableImpl<org.jooq.test.firebird.genera
 	}
 
 	/**
-	 * The column <code>T_937.T_937</code>. 
+	 * The column <code>T_937.T_937</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_937Record, java.lang.Integer> T_937_ = createField("T_937", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_937Record, java.lang.Integer> T_937_ = createField("T_937", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>T_937</code> table reference
 	 */
 	public T_937() {
-		super("T_937", org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("T_937", null);
 	}
 
 	/**
 	 * Create an aliased <code>T_937</code> table reference
 	 */
 	public T_937(java.lang.String alias) {
-		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.firebird.generatedclasses.tables.T_937.T_937);
+		this(alias, org.jooq.test.firebird.generatedclasses.tables.T_937.T_937);
+	}
+
+	private T_937(java.lang.String alias, org.jooq.Table<org.jooq.test.firebird.generatedclasses.tables.records.T_937Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_937(java.lang.String alias, org.jooq.Table<org.jooq.test.firebird.generatedclasses.tables.records.T_937Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**
@@ -64,6 +72,13 @@ public class T_937 extends org.jooq.impl.TableImpl<org.jooq.test.firebird.genera
 	 */
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.T_937 as(java.lang.String alias) {
-		return new org.jooq.test.firebird.generatedclasses.tables.T_937(alias);
+		return new org.jooq.test.firebird.generatedclasses.tables.T_937(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.firebird.generatedclasses.tables.T_937 rename(java.lang.String name) {
+		return new org.jooq.test.firebird.generatedclasses.tables.T_937(name, null);
 	}
 }

@@ -11,10 +11,10 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_2025")
 public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_2025Record> implements org.jooq.Record2<java.lang.Integer, java.lang.String>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IXTestCase_2025 {
 
-	private static final long serialVersionUID = 529120295;
+	private static final long serialVersionUID = 387455247;
 
 	/**
-	 * Setter for <code>X_TEST_CASE_2025.REF_ID</code>. 
+	 * Setter for <code>X_TEST_CASE_2025.REF_ID</code>.
 	 */
 	@Override
 	public void setRefId(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	}
 
 	/**
-	 * Getter for <code>X_TEST_CASE_2025.REF_ID</code>. 
+	 * Getter for <code>X_TEST_CASE_2025.REF_ID</code>.
 	 */
 	@javax.persistence.Column(name = "REF_ID", nullable = false, length = 4)
 	@javax.validation.constraints.NotNull
@@ -32,7 +32,7 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	}
 
 	/**
-	 * Setter for <code>X_TEST_CASE_2025.REF_NAME</code>. 
+	 * Setter for <code>X_TEST_CASE_2025.REF_NAME</code>.
 	 */
 	@Override
 	public void setRefName(java.lang.String value) {
@@ -40,7 +40,7 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	}
 
 	/**
-	 * Getter for <code>X_TEST_CASE_2025.REF_NAME</code>. 
+	 * Getter for <code>X_TEST_CASE_2025.REF_NAME</code>.
 	 */
 	@javax.persistence.Column(name = "REF_NAME", nullable = false, length = 10)
 	@javax.validation.constraints.NotNull

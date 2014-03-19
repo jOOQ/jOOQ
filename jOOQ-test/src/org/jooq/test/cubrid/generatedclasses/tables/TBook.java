@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -903699803;
+	private static final long serialVersionUID = 1020223062;
 
 	/**
 	 * The singleton instance of <code>t_book</code>
@@ -25,60 +25,68 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generate
 	}
 
 	/**
-	 * The column <code>t_book.id</code>. 
+	 * The column <code>t_book.id</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK, "");
 
 	/**
-	 * The column <code>t_book.author_id</code>. 
+	 * The column <code>t_book.author_id</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("author_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("author_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK, "");
 
 	/**
-	 * The column <code>t_book.co_author_id</code>. 
+	 * The column <code>t_book.co_author_id</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK, "");
 
 	/**
-	 * The column <code>t_book.details_id</code>. 
+	 * The column <code>t_book.details_id</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.Integer> DETAILS_ID = createField("details_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.Integer> DETAILS_ID = createField("details_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK, "");
 
 	/**
-	 * The column <code>t_book.title</code>. 
+	 * The column <code>t_book.title</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), T_BOOK, "");
 
 	/**
-	 * The column <code>t_book.published_in</code>. 
+	 * The column <code>t_book.published_in</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.Integer> PUBLISHED_IN = createField("published_in", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.Integer> PUBLISHED_IN = createField("published_in", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK, "");
 
 	/**
-	 * The column <code>t_book.language_id</code>. 
+	 * The column <code>t_book.language_id</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), T_BOOK, "");
 
 	/**
-	 * The column <code>t_book.content_text</code>. 
+	 * The column <code>t_book.content_text</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("content_text", org.jooq.impl.SQLDataType.CLOB, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("content_text", org.jooq.impl.SQLDataType.CLOB, T_BOOK, "");
 
 	/**
-	 * The column <code>t_book.content_pdf</code>. 
+	 * The column <code>t_book.content_pdf</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("content_pdf", org.jooq.impl.SQLDataType.BLOB, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("content_pdf", org.jooq.impl.SQLDataType.BLOB, T_BOOK, "");
 
 	/**
-	 * The column <code>t_book.status</code>. 
+	 * The column <code>t_book.status</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, org.jooq.test.cubrid.generatedclasses.enums.TBookStatus> STATUS = createField("status", org.jooq.util.cubrid.CUBRIDDataType.VARCHAR.asEnumDataType(org.jooq.test.cubrid.generatedclasses.enums.TBookStatus.class), T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, org.jooq.test.cubrid.generatedclasses.enums.TBookStatus> STATUS = createField("status", org.jooq.util.cubrid.CUBRIDDataType.VARCHAR.asEnumDataType(org.jooq.test.cubrid.generatedclasses.enums.TBookStatus.class), T_BOOK, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TBook() {
-		super("t_book", org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("t_book", null);
+	}
+
+	private TBook(java.lang.String alias, org.jooq.Table<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TBook(java.lang.String alias, org.jooq.Table<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

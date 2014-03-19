@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -920662196;
+	private static final long serialVersionUID = -9756646;
 
 	/**
 	 * The singleton instance of <code>t_exotic_types</code>
@@ -25,20 +25,28 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.g
 	}
 
 	/**
-	 * The column <code>t_exotic_types.id</code>. 
+	 * The column <code>t_exotic_types.id</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TExoticTypesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_EXOTIC_TYPES);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TExoticTypesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_EXOTIC_TYPES, "");
 
 	/**
-	 * The column <code>t_exotic_types.uu</code>. 
+	 * The column <code>t_exotic_types.uu</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("uu", org.jooq.impl.SQLDataType.UUID, T_EXOTIC_TYPES);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("uu", org.jooq.impl.SQLDataType.UUID, T_EXOTIC_TYPES, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TExoticTypes() {
-		super("t_exotic_types", org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("t_exotic_types", null);
+	}
+
+	private TExoticTypes(java.lang.String alias, org.jooq.Table<org.jooq.test.cubrid.generatedclasses.tables.records.TExoticTypesRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TExoticTypes(java.lang.String alias, org.jooq.Table<org.jooq.test.cubrid.generatedclasses.tables.records.TExoticTypesRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

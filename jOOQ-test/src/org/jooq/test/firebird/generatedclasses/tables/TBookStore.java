@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 478301204;
+	private static final long serialVersionUID = 1774314074;
 
 	/**
 	 * The singleton instance of <code>T_BOOK_STORE</code>
@@ -25,22 +25,30 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.firebird.g
 	}
 
 	/**
-	 * The column <code>T_BOOK_STORE.NAME</code>. 
+	 * The column <code>T_BOOK_STORE.NAME</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
 	 * Create a <code>T_BOOK_STORE</code> table reference
 	 */
 	public TBookStore() {
-		super("T_BOOK_STORE", org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("T_BOOK_STORE", null);
 	}
 
 	/**
 	 * Create an aliased <code>T_BOOK_STORE</code> table reference
 	 */
 	public TBookStore(java.lang.String alias) {
-		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.firebird.generatedclasses.tables.TBookStore.T_BOOK_STORE);
+		this(alias, org.jooq.test.firebird.generatedclasses.tables.TBookStore.T_BOOK_STORE);
+	}
+
+	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.firebird.generatedclasses.tables.records.TBookStoreRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.firebird.generatedclasses.tables.records.TBookStoreRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**
@@ -64,6 +72,13 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.firebird.g
 	 */
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.TBookStore as(java.lang.String alias) {
-		return new org.jooq.test.firebird.generatedclasses.tables.TBookStore(alias);
+		return new org.jooq.test.firebird.generatedclasses.tables.TBookStore(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.firebird.generatedclasses.tables.TBookStore rename(java.lang.String name) {
+		return new org.jooq.test.firebird.generatedclasses.tables.TBookStore(name, null);
 	}
 }

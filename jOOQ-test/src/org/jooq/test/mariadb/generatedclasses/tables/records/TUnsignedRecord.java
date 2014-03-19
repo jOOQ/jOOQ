@@ -9,59 +9,59 @@ package org.jooq.test.mariadb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mariadb.generatedclasses.tables.records.TUnsignedRecord> implements org.jooq.Record4<org.jooq.types.UByte, org.jooq.types.UShort, org.jooq.types.UInteger, org.jooq.types.ULong> {
 
-	private static final long serialVersionUID = -1973388732;
+	private static final long serialVersionUID = 195379380;
 
 	/**
-	 * Setter for <code>test.t_unsigned.u_byte</code>. 
+	 * Setter for <code>test.t_unsigned.u_byte</code>.
 	 */
 	public void setUByte(org.jooq.types.UByte value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_unsigned.u_byte</code>. 
+	 * Getter for <code>test.t_unsigned.u_byte</code>.
 	 */
 	public org.jooq.types.UByte getUByte() {
 		return (org.jooq.types.UByte) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>test.t_unsigned.u_short</code>. 
+	 * Setter for <code>test.t_unsigned.u_short</code>.
 	 */
 	public void setUShort(org.jooq.types.UShort value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_unsigned.u_short</code>. 
+	 * Getter for <code>test.t_unsigned.u_short</code>.
 	 */
 	public org.jooq.types.UShort getUShort() {
 		return (org.jooq.types.UShort) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>test.t_unsigned.u_int</code>. 
+	 * Setter for <code>test.t_unsigned.u_int</code>.
 	 */
 	public void setUInt(org.jooq.types.UInteger value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_unsigned.u_int</code>. 
+	 * Getter for <code>test.t_unsigned.u_int</code>.
 	 */
 	public org.jooq.types.UInteger getUInt() {
 		return (org.jooq.types.UInteger) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>test.t_unsigned.u_long</code>. 
+	 * Setter for <code>test.t_unsigned.u_long</code>.
 	 */
 	public void setULong(org.jooq.types.ULong value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_unsigned.u_long</code>. 
+	 * Getter for <code>test.t_unsigned.u_long</code>.
 	 */
 	public org.jooq.types.ULong getULong() {
 		return (org.jooq.types.ULong) getValue(3);

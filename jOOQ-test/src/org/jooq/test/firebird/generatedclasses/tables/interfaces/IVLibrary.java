@@ -12,24 +12,24 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface IVLibrary extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>V_LIBRARY.AUTHOR</code>. 
+	 * Setter for <code>V_LIBRARY.AUTHOR</code>.
 	 */
 	public void setAuthor(java.lang.String value);
 
 	/**
-	 * Getter for <code>V_LIBRARY.AUTHOR</code>. 
+	 * Getter for <code>V_LIBRARY.AUTHOR</code>.
 	 */
 	@javax.persistence.Column(name = "AUTHOR", length = 101)
 	@javax.validation.constraints.Size(max = 101)
 	public java.lang.String getAuthor();
 
 	/**
-	 * Setter for <code>V_LIBRARY.TITLE</code>. 
+	 * Setter for <code>V_LIBRARY.TITLE</code>.
 	 */
 	public void setTitle(java.lang.String value);
 
 	/**
-	 * Getter for <code>V_LIBRARY.TITLE</code>. 
+	 * Getter for <code>V_LIBRARY.TITLE</code>.
 	 */
 	@javax.persistence.Column(name = "TITLE", length = 400)
 	@javax.validation.constraints.Size(max = 400)

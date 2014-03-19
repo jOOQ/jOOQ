@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_986_2 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_986_2Record> {
 
-	private static final long serialVersionUID = -1721010416;
+	private static final long serialVersionUID = -1373930174;
 
 	/**
 	 * The singleton instance of <code>t_986_2</code>
@@ -25,15 +25,23 @@ public class T_986_2 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.genera
 	}
 
 	/**
-	 * The column <code>t_986_2.ref</code>. 
+	 * The column <code>t_986_2.ref</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_986_2Record, java.lang.Integer> REF = createField("ref", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_986_2);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_986_2Record, java.lang.Integer> REF = createField("ref", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_986_2, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private T_986_2() {
-		super("t_986_2", org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("t_986_2", null);
+	}
+
+	private T_986_2(java.lang.String alias, org.jooq.Table<org.jooq.test.cubrid.generatedclasses.tables.records.T_986_2Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_986_2(java.lang.String alias, org.jooq.Table<org.jooq.test.cubrid.generatedclasses.tables.records.T_986_2Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

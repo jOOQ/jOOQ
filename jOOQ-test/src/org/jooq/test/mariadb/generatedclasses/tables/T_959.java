@@ -9,7 +9,7 @@ package org.jooq.test.mariadb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.mariadb.generatedclasses.tables.records.T_959Record> {
 
-	private static final long serialVersionUID = -568075958;
+	private static final long serialVersionUID = -1003970278;
 
 	/**
 	 * The singleton instance of <code>test.t_959</code>
@@ -25,19 +25,27 @@ public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.mariadb.generat
 	}
 
 	/**
-	 * The column <code>test.t_959.java_keywords</code>. 
+	 * The column <code>test.t_959.java_keywords</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.T_959Record, org.jooq.test.mariadb.generatedclasses.enums.T_959JavaKeywords> JAVA_KEYWORDS = createField("java_keywords", org.jooq.util.mariadb.MariaDBDataType.VARCHAR.asEnumDataType(org.jooq.test.mariadb.generatedclasses.enums.T_959JavaKeywords.class), T_959);
+	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.T_959Record, org.jooq.test.mariadb.generatedclasses.enums.T_959JavaKeywords> JAVA_KEYWORDS = createField("java_keywords", org.jooq.util.mariadb.MariaDBDataType.VARCHAR.asEnumDataType(org.jooq.test.mariadb.generatedclasses.enums.T_959JavaKeywords.class), T_959, "");
 
 	/**
-	 * The column <code>test.t_959.special_characters</code>. 
+	 * The column <code>test.t_959.special_characters</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.T_959Record, org.jooq.test.mariadb.generatedclasses.enums.T_959SpecialCharacters> SPECIAL_CHARACTERS = createField("special_characters", org.jooq.util.mariadb.MariaDBDataType.VARCHAR.asEnumDataType(org.jooq.test.mariadb.generatedclasses.enums.T_959SpecialCharacters.class), T_959);
+	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.T_959Record, org.jooq.test.mariadb.generatedclasses.enums.T_959SpecialCharacters> SPECIAL_CHARACTERS = createField("special_characters", org.jooq.util.mariadb.MariaDBDataType.VARCHAR.asEnumDataType(org.jooq.test.mariadb.generatedclasses.enums.T_959SpecialCharacters.class), T_959, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private T_959() {
-		super("t_959", org.jooq.test.mariadb.generatedclasses.Test.TEST);
+		this("t_959", null);
+	}
+
+	private T_959(java.lang.String alias, org.jooq.Table<org.jooq.test.mariadb.generatedclasses.tables.records.T_959Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_959(java.lang.String alias, org.jooq.Table<org.jooq.test.mariadb.generatedclasses.tables.records.T_959Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.mariadb.generatedclasses.Test.TEST, aliased, parameters, "");
 	}
 }

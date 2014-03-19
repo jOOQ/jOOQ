@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 1924932386;
+	private static final long serialVersionUID = -1402051228;
 
 	/**
 	 * The singleton instance of <code>x_test_case_71</code>
@@ -25,20 +25,28 @@ public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.g
 	}
 
 	/**
-	 * The column <code>x_test_case_71.ID</code>. 
+	 * The column <code>x_test_case_71.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_71);
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_71, "");
 
 	/**
-	 * The column <code>x_test_case_71.TEST_CASE_64_69_ID</code>. 
+	 * The column <code>x_test_case_71.TEST_CASE_64_69_ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_71Record, java.lang.Short> TEST_CASE_64_69_ID = createField("TEST_CASE_64_69_ID", org.jooq.impl.SQLDataType.SMALLINT, X_TEST_CASE_71);
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_71Record, java.lang.Short> TEST_CASE_64_69_ID = createField("TEST_CASE_64_69_ID", org.jooq.impl.SQLDataType.SMALLINT, X_TEST_CASE_71, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private XTestCase_71() {
-		super("x_test_case_71", org.jooq.test.sqlite.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("x_test_case_71", null);
+	}
+
+	private XTestCase_71(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_71Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private XTestCase_71(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_71Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sqlite.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

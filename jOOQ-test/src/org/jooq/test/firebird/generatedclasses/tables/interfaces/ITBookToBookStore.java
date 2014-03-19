@@ -14,12 +14,12 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface ITBookToBookStore extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
+	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>.
 	 */
 	public void setBookStoreName(java.lang.String value);
 
 	/**
-	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
+	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>.
 	 */
 	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
 	@javax.validation.constraints.NotNull
@@ -27,24 +27,24 @@ public interface ITBookToBookStore extends java.io.Serializable {
 	public java.lang.String getBookStoreName();
 
 	/**
-	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
+	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>.
 	 */
 	public void setBookId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
+	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>.
 	 */
 	@javax.persistence.Column(name = "BOOK_ID", nullable = false, length = 4)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getBookId();
 
 	/**
-	 * Setter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>. 
+	 * Setter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>.
 	 */
 	public void setStock(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>. 
+	 * Getter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>.
 	 */
 	@javax.persistence.Column(name = "STOCK", length = 4)
 	public java.lang.Integer getStock();

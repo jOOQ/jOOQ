@@ -11,10 +11,10 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_725_LOB_TEST")
 public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_725LobTestRecord> implements org.jooq.Record2<java.lang.Integer, byte[]>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_725LobTest {
 
-	private static final long serialVersionUID = 1867845788;
+	private static final long serialVersionUID = -1999653050;
 
 	/**
-	 * Setter for <code>T_725_LOB_TEST.ID</code>. 
+	 * Setter for <code>T_725_LOB_TEST.ID</code>.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Getter for <code>T_725_LOB_TEST.ID</code>. 
+	 * Getter for <code>T_725_LOB_TEST.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
@@ -33,7 +33,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Setter for <code>T_725_LOB_TEST.LOB</code>. 
+	 * Setter for <code>T_725_LOB_TEST.LOB</code>.
 	 */
 	@Override
 	public void setLob(byte[] value) {
@@ -41,7 +41,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Getter for <code>T_725_LOB_TEST.LOB</code>. 
+	 * Getter for <code>T_725_LOB_TEST.LOB</code>.
 	 */
 	@javax.persistence.Column(name = "LOB", length = 8)
 	@Override

@@ -11,10 +11,10 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_BOOK")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IVBook {
 
-	private static final long serialVersionUID = -1300373523;
+	private static final long serialVersionUID = 1510572261;
 
 	/**
-	 * Setter for <code>V_BOOK.ID</code>. 
+	 * Setter for <code>V_BOOK.ID</code>.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Getter for <code>V_BOOK.ID</code>. 
+	 * Getter for <code>V_BOOK.ID</code>.
 	 */
 	@javax.persistence.Column(name = "ID", length = 4)
 	@Override
@@ -31,7 +31,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Setter for <code>V_BOOK.AUTHOR_ID</code>. 
+	 * Setter for <code>V_BOOK.AUTHOR_ID</code>.
 	 */
 	@Override
 	public void setAuthorId(java.lang.Integer value) {
@@ -39,7 +39,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Getter for <code>V_BOOK.AUTHOR_ID</code>. 
+	 * Getter for <code>V_BOOK.AUTHOR_ID</code>.
 	 */
 	@javax.persistence.Column(name = "AUTHOR_ID", length = 4)
 	@Override
@@ -48,7 +48,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Setter for <code>V_BOOK.CO_AUTHOR_ID</code>. 
+	 * Setter for <code>V_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	@Override
 	public void setCoAuthorId(java.lang.Integer value) {
@@ -56,7 +56,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Getter for <code>V_BOOK.CO_AUTHOR_ID</code>. 
+	 * Getter for <code>V_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	@javax.persistence.Column(name = "CO_AUTHOR_ID", length = 4)
 	@Override
@@ -65,7 +65,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Setter for <code>V_BOOK.DETAILS_ID</code>. 
+	 * Setter for <code>V_BOOK.DETAILS_ID</code>.
 	 */
 	@Override
 	public void setDetailsId(java.lang.Integer value) {
@@ -73,7 +73,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Getter for <code>V_BOOK.DETAILS_ID</code>. 
+	 * Getter for <code>V_BOOK.DETAILS_ID</code>.
 	 */
 	@javax.persistence.Column(name = "DETAILS_ID", length = 4)
 	@Override
@@ -82,7 +82,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Setter for <code>V_BOOK.TITLE</code>. 
+	 * Setter for <code>V_BOOK.TITLE</code>.
 	 */
 	@Override
 	public void setTitle(java.lang.String value) {
@@ -90,7 +90,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Getter for <code>V_BOOK.TITLE</code>. 
+	 * Getter for <code>V_BOOK.TITLE</code>.
 	 */
 	@javax.persistence.Column(name = "TITLE", length = 400)
 	@javax.validation.constraints.Size(max = 400)
@@ -100,7 +100,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Setter for <code>V_BOOK.PUBLISHED_IN</code>. 
+	 * Setter for <code>V_BOOK.PUBLISHED_IN</code>.
 	 */
 	@Override
 	public void setPublishedIn(java.lang.Integer value) {
@@ -108,7 +108,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Getter for <code>V_BOOK.PUBLISHED_IN</code>. 
+	 * Getter for <code>V_BOOK.PUBLISHED_IN</code>.
 	 */
 	@javax.persistence.Column(name = "PUBLISHED_IN", length = 4)
 	@Override
@@ -117,7 +117,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Setter for <code>V_BOOK.LANGUAGE_ID</code>. 
+	 * Setter for <code>V_BOOK.LANGUAGE_ID</code>.
 	 */
 	@Override
 	public void setLanguageId(java.lang.Integer value) {
@@ -125,7 +125,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Getter for <code>V_BOOK.LANGUAGE_ID</code>. 
+	 * Getter for <code>V_BOOK.LANGUAGE_ID</code>.
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID", length = 4)
 	@Override
@@ -134,7 +134,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Setter for <code>V_BOOK.CONTENT_TEXT</code>. 
+	 * Setter for <code>V_BOOK.CONTENT_TEXT</code>.
 	 */
 	@Override
 	public void setContentText(java.lang.String value) {
@@ -142,7 +142,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Getter for <code>V_BOOK.CONTENT_TEXT</code>. 
+	 * Getter for <code>V_BOOK.CONTENT_TEXT</code>.
 	 */
 	@javax.persistence.Column(name = "CONTENT_TEXT", length = 8)
 	@javax.validation.constraints.Size(max = 8)
@@ -152,7 +152,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Setter for <code>V_BOOK.CONTENT_PDF</code>. 
+	 * Setter for <code>V_BOOK.CONTENT_PDF</code>.
 	 */
 	@Override
 	public void setContentPdf(byte[] value) {
@@ -160,7 +160,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Getter for <code>V_BOOK.CONTENT_PDF</code>. 
+	 * Getter for <code>V_BOOK.CONTENT_PDF</code>.
 	 */
 	@javax.persistence.Column(name = "CONTENT_PDF", length = 8)
 	@Override
@@ -169,7 +169,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Setter for <code>V_BOOK.REC_VERSION</code>. 
+	 * Setter for <code>V_BOOK.REC_VERSION</code>.
 	 */
 	@Override
 	public void setRecVersion(java.lang.Integer value) {
@@ -177,7 +177,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Getter for <code>V_BOOK.REC_VERSION</code>. 
+	 * Getter for <code>V_BOOK.REC_VERSION</code>.
 	 */
 	@javax.persistence.Column(name = "REC_VERSION", length = 4)
 	@Override

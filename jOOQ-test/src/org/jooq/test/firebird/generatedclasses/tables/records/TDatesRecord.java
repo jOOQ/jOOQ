@@ -11,10 +11,10 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_DATES")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record6<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITDates {
 
-	private static final long serialVersionUID = -589471639;
+	private static final long serialVersionUID = 646981641;
 
 	/**
-	 * Setter for <code>T_DATES.ID</code>. 
+	 * Setter for <code>T_DATES.ID</code>.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>T_DATES.ID</code>. 
+	 * Getter for <code>T_DATES.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
@@ -33,7 +33,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>T_DATES.D</code>. 
+	 * Setter for <code>T_DATES.D</code>.
 	 */
 	@Override
 	public void setD(java.sql.Date value) {
@@ -41,7 +41,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>T_DATES.D</code>. 
+	 * Getter for <code>T_DATES.D</code>.
 	 */
 	@javax.persistence.Column(name = "D", length = 4)
 	@Override
@@ -50,7 +50,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>T_DATES.T</code>. 
+	 * Setter for <code>T_DATES.T</code>.
 	 */
 	@Override
 	public void setT(java.sql.Time value) {
@@ -58,7 +58,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>T_DATES.T</code>. 
+	 * Getter for <code>T_DATES.T</code>.
 	 */
 	@javax.persistence.Column(name = "T", length = 4)
 	@Override
@@ -67,7 +67,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>T_DATES.TS</code>. 
+	 * Setter for <code>T_DATES.TS</code>.
 	 */
 	@Override
 	public void setTs(java.sql.Timestamp value) {
@@ -75,7 +75,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>T_DATES.TS</code>. 
+	 * Getter for <code>T_DATES.TS</code>.
 	 */
 	@javax.persistence.Column(name = "TS", length = 8)
 	@Override
@@ -84,7 +84,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>T_DATES.D_INT</code>. 
+	 * Setter for <code>T_DATES.D_INT</code>.
 	 */
 	@Override
 	public void setDInt(java.lang.Integer value) {
@@ -92,7 +92,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>T_DATES.D_INT</code>. 
+	 * Getter for <code>T_DATES.D_INT</code>.
 	 */
 	@javax.persistence.Column(name = "D_INT", length = 4)
 	@Override
@@ -101,7 +101,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>T_DATES.TS_BIGINT</code>. 
+	 * Setter for <code>T_DATES.TS_BIGINT</code>.
 	 */
 	@Override
 	public void setTsBigint(java.lang.Long value) {
@@ -109,7 +109,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Getter for <code>T_DATES.TS_BIGINT</code>. 
+	 * Getter for <code>T_DATES.TS_BIGINT</code>.
 	 */
 	@javax.persistence.Column(name = "TS_BIGINT", length = 8)
 	@Override

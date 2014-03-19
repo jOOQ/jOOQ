@@ -11,10 +11,10 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_BOOLEANS")
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBooleansRecord> implements org.jooq.Record11<java.lang.Integer, org.jooq.test._.converters.Boolean_10, org.jooq.test._.converters.Boolean_TF_LC, org.jooq.test._.converters.Boolean_TF_UC, org.jooq.test._.converters.Boolean_YES_NO_LC, org.jooq.test._.converters.Boolean_YES_NO_UC, org.jooq.test._.converters.Boolean_YN_LC, org.jooq.test._.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITBooleans {
 
-	private static final long serialVersionUID = 586695062;
+	private static final long serialVersionUID = 255965974;
 
 	/**
-	 * Setter for <code>T_BOOLEANS.ID</code>. 
+	 * Setter for <code>T_BOOLEANS.ID</code>.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>T_BOOLEANS.ID</code>. 
+	 * Getter for <code>T_BOOLEANS.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
@@ -33,7 +33,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>T_BOOLEANS.ONE_ZERO</code>. 
+	 * Setter for <code>T_BOOLEANS.ONE_ZERO</code>.
 	 */
 	@Override
 	public void setOneZero(org.jooq.test._.converters.Boolean_10 value) {
@@ -41,7 +41,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>T_BOOLEANS.ONE_ZERO</code>. 
+	 * Getter for <code>T_BOOLEANS.ONE_ZERO</code>.
 	 */
 	@javax.persistence.Column(name = "ONE_ZERO", length = 4)
 	@Override
@@ -50,7 +50,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>T_BOOLEANS.TRUE_FALSE_LC</code>. 
+	 * Setter for <code>T_BOOLEANS.TRUE_FALSE_LC</code>.
 	 */
 	@Override
 	public void setTrueFalseLc(org.jooq.test._.converters.Boolean_TF_LC value) {
@@ -58,7 +58,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>T_BOOLEANS.TRUE_FALSE_LC</code>. 
+	 * Getter for <code>T_BOOLEANS.TRUE_FALSE_LC</code>.
 	 */
 	@javax.persistence.Column(name = "TRUE_FALSE_LC", length = 5)
 	@Override
@@ -67,7 +67,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>T_BOOLEANS.TRUE_FALSE_UC</code>. 
+	 * Setter for <code>T_BOOLEANS.TRUE_FALSE_UC</code>.
 	 */
 	@Override
 	public void setTrueFalseUc(org.jooq.test._.converters.Boolean_TF_UC value) {
@@ -75,7 +75,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>T_BOOLEANS.TRUE_FALSE_UC</code>. 
+	 * Getter for <code>T_BOOLEANS.TRUE_FALSE_UC</code>.
 	 */
 	@javax.persistence.Column(name = "TRUE_FALSE_UC", length = 5)
 	@Override
@@ -84,7 +84,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>T_BOOLEANS.YES_NO_LC</code>. 
+	 * Setter for <code>T_BOOLEANS.YES_NO_LC</code>.
 	 */
 	@Override
 	public void setYesNoLc(org.jooq.test._.converters.Boolean_YES_NO_LC value) {
@@ -92,7 +92,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>T_BOOLEANS.YES_NO_LC</code>. 
+	 * Getter for <code>T_BOOLEANS.YES_NO_LC</code>.
 	 */
 	@javax.persistence.Column(name = "YES_NO_LC", length = 3)
 	@Override
@@ -101,7 +101,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>T_BOOLEANS.YES_NO_UC</code>. 
+	 * Setter for <code>T_BOOLEANS.YES_NO_UC</code>.
 	 */
 	@Override
 	public void setYesNoUc(org.jooq.test._.converters.Boolean_YES_NO_UC value) {
@@ -109,7 +109,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>T_BOOLEANS.YES_NO_UC</code>. 
+	 * Getter for <code>T_BOOLEANS.YES_NO_UC</code>.
 	 */
 	@javax.persistence.Column(name = "YES_NO_UC", length = 3)
 	@Override
@@ -118,7 +118,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>T_BOOLEANS.Y_N_LC</code>. 
+	 * Setter for <code>T_BOOLEANS.Y_N_LC</code>.
 	 */
 	@Override
 	public void setYNLc(org.jooq.test._.converters.Boolean_YN_LC value) {
@@ -126,7 +126,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>T_BOOLEANS.Y_N_LC</code>. 
+	 * Getter for <code>T_BOOLEANS.Y_N_LC</code>.
 	 */
 	@javax.persistence.Column(name = "Y_N_LC", length = 1)
 	@Override
@@ -135,7 +135,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>T_BOOLEANS.Y_N_UC</code>. 
+	 * Setter for <code>T_BOOLEANS.Y_N_UC</code>.
 	 */
 	@Override
 	public void setYNUc(org.jooq.test._.converters.Boolean_YN_UC value) {
@@ -143,7 +143,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>T_BOOLEANS.Y_N_UC</code>. 
+	 * Getter for <code>T_BOOLEANS.Y_N_UC</code>.
 	 */
 	@javax.persistence.Column(name = "Y_N_UC", length = 1)
 	@Override
@@ -152,7 +152,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>T_BOOLEANS.VC_BOOLEAN</code>. 
+	 * Setter for <code>T_BOOLEANS.VC_BOOLEAN</code>.
 	 */
 	@Override
 	public void setVcBoolean(java.lang.Boolean value) {
@@ -160,7 +160,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>T_BOOLEANS.VC_BOOLEAN</code>. 
+	 * Getter for <code>T_BOOLEANS.VC_BOOLEAN</code>.
 	 */
 	@javax.persistence.Column(name = "VC_BOOLEAN", length = 1)
 	@Override
@@ -169,7 +169,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>T_BOOLEANS.C_BOOLEAN</code>. 
+	 * Setter for <code>T_BOOLEANS.C_BOOLEAN</code>.
 	 */
 	@Override
 	public void setCBoolean(java.lang.Boolean value) {
@@ -177,7 +177,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>T_BOOLEANS.C_BOOLEAN</code>. 
+	 * Getter for <code>T_BOOLEANS.C_BOOLEAN</code>.
 	 */
 	@javax.persistence.Column(name = "C_BOOLEAN", length = 1)
 	@Override
@@ -186,7 +186,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>T_BOOLEANS.N_BOOLEAN</code>. 
+	 * Setter for <code>T_BOOLEANS.N_BOOLEAN</code>.
 	 */
 	@Override
 	public void setNBoolean(java.lang.Boolean value) {
@@ -194,7 +194,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>T_BOOLEANS.N_BOOLEAN</code>. 
+	 * Getter for <code>T_BOOLEANS.N_BOOLEAN</code>.
 	 */
 	@javax.persistence.Column(name = "N_BOOLEAN", length = 4)
 	@Override

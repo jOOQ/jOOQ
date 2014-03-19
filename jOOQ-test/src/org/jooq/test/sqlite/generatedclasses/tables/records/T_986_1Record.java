@@ -9,17 +9,17 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_1Record> implements org.jooq.Record1<java.lang.Integer> {
 
-	private static final long serialVersionUID = -700695495;
+	private static final long serialVersionUID = -625650905;
 
 	/**
-	 * Setter for <code>t_986_1.REF</code>. 
+	 * Setter for <code>t_986_1.REF</code>.
 	 */
 	public void setRef(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>t_986_1.REF</code>. 
+	 * Getter for <code>t_986_1.REF</code>.
 	 */
 	public java.lang.Integer getRef() {
 		return (java.lang.Integer) getValue(0);

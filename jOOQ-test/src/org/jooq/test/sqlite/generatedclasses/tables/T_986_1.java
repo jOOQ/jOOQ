@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_986_1 extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = -791403461;
+	private static final long serialVersionUID = 1579411015;
 
 	/**
 	 * The singleton instance of <code>t_986_1</code>
@@ -25,15 +25,23 @@ public class T_986_1 extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.genera
 	}
 
 	/**
-	 * The column <code>t_986_1.REF</code>. 
+	 * The column <code>t_986_1.REF</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_1Record, java.lang.Integer> REF = createField("REF", org.jooq.impl.SQLDataType.INTEGER, T_986_1);
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_1Record, java.lang.Integer> REF = createField("REF", org.jooq.impl.SQLDataType.INTEGER, T_986_1, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private T_986_1() {
-		super("t_986_1", org.jooq.test.sqlite.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("t_986_1", null);
+	}
+
+	private T_986_1(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_1Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_986_1(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_1Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sqlite.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

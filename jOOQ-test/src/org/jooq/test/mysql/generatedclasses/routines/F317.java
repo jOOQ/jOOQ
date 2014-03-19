@@ -11,30 +11,30 @@ package org.jooq.test.mysql.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -474724700;
+	private static final long serialVersionUID = 935399916;
 
 	/**
-	 * The parameter <code>test.f317.RETURN_VALUE</code>. 
+	 * The parameter <code>test.f317.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>test.f317.p1</code>. 
+	 * The parameter <code>test.f317.p1</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P1 = createParameter("p1", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>test.f317.p2</code>. 
+	 * The parameter <code>test.f317.p2</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P2 = createParameter("p2", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>test.f317.p3</code>. 
+	 * The parameter <code>test.f317.p3</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P3 = createParameter("p3", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>test.f317.p4</code>. 
+	 * The parameter <code>test.f317.p4</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P4 = createParameter("p4", org.jooq.impl.SQLDataType.INTEGER);
 

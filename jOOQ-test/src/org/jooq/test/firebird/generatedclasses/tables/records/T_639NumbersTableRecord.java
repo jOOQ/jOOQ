@@ -11,10 +11,10 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_639_NUMBERS_TABLE")
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigDecimal, java.lang.Float, java.lang.Double>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_639NumbersTable {
 
-	private static final long serialVersionUID = -1114471923;
+	private static final long serialVersionUID = -659833679;
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.ID</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.ID</code>.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.ID</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
@@ -33,7 +33,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.SHORT</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.SHORT</code>.
 	 */
 	@Override
 	public void setShort(java.lang.Short value) {
@@ -41,7 +41,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.SHORT</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.SHORT</code>.
 	 */
 	@javax.persistence.Column(name = "SHORT", length = 2)
 	@Override
@@ -50,7 +50,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.INTEGER</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.INTEGER</code>.
 	 */
 	@Override
 	public void setInteger(java.lang.Integer value) {
@@ -58,7 +58,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.INTEGER</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.INTEGER</code>.
 	 */
 	@javax.persistence.Column(name = "INTEGER", length = 4)
 	@Override
@@ -67,7 +67,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.LONG</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.LONG</code>.
 	 */
 	@Override
 	public void setLong(java.lang.Long value) {
@@ -75,7 +75,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.LONG</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.LONG</code>.
 	 */
 	@javax.persistence.Column(name = "LONG", length = 8)
 	@Override
@@ -84,7 +84,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>.
 	 */
 	@Override
 	public void setByteDecimal(java.lang.Byte value) {
@@ -92,7 +92,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>.
 	 */
 	@javax.persistence.Column(name = "BYTE_DECIMAL", precision = 2)
 	@Override
@@ -101,7 +101,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>.
 	 */
 	@Override
 	public void setShortDecimal(java.lang.Short value) {
@@ -109,7 +109,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>.
 	 */
 	@javax.persistence.Column(name = "SHORT_DECIMAL", precision = 4)
 	@Override
@@ -118,7 +118,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>.
 	 */
 	@Override
 	public void setIntegerDecimal(java.lang.Integer value) {
@@ -126,7 +126,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>.
 	 */
 	@javax.persistence.Column(name = "INTEGER_DECIMAL", precision = 9)
 	@Override
@@ -135,7 +135,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>.
 	 */
 	@Override
 	public void setLongDecimal(java.lang.Long value) {
@@ -143,7 +143,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>.
 	 */
 	@javax.persistence.Column(name = "LONG_DECIMAL", precision = 18)
 	@Override
@@ -152,7 +152,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>.
 	 */
 	@Override
 	public void setBigDecimal(java.math.BigDecimal value) {
@@ -160,7 +160,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>.
 	 */
 	@javax.persistence.Column(name = "BIG_DECIMAL", precision = 18, scale = 5)
 	@Override
@@ -169,7 +169,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.FLOAT</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.FLOAT</code>.
 	 */
 	@Override
 	public void setFloat(java.lang.Float value) {
@@ -177,7 +177,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.FLOAT</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.FLOAT</code>.
 	 */
 	@javax.persistence.Column(name = "FLOAT", length = 4)
 	@Override
@@ -186,7 +186,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.DOUBLE</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.DOUBLE</code>.
 	 */
 	@Override
 	public void setDouble(java.lang.Double value) {
@@ -194,7 +194,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.DOUBLE</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.DOUBLE</code>.
 	 */
 	@javax.persistence.Column(name = "DOUBLE", length = 8)
 	@Override

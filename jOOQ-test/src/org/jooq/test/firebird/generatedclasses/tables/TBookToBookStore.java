@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -117709716;
+	private static final long serialVersionUID = -1011697540;
 
 	/**
 	 * The singleton instance of <code>T_BOOK_TO_BOOK_STORE</code>
@@ -25,32 +25,40 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.fire
 	}
 
 	/**
-	 * The column <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
+	 * The column <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
-	 * The column <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
+	 * The column <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>T_BOOK_TO_BOOK_STORE.STOCK</code>. 
+	 * The column <code>T_BOOK_TO_BOOK_STORE.STOCK</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("STOCK", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("STOCK", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>T_BOOK_TO_BOOK_STORE</code> table reference
 	 */
 	public TBookToBookStore() {
-		super("T_BOOK_TO_BOOK_STORE", org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("T_BOOK_TO_BOOK_STORE", null);
 	}
 
 	/**
 	 * Create an aliased <code>T_BOOK_TO_BOOK_STORE</code> table reference
 	 */
 	public TBookToBookStore(java.lang.String alias) {
-		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+		this(alias, org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+	}
+
+	private TBookToBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TBookToBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**
@@ -82,6 +90,13 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.fire
 	 */
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore as(java.lang.String alias) {
-		return new org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore(alias);
+		return new org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore rename(java.lang.String name) {
+		return new org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore(name, null);
 	}
 }

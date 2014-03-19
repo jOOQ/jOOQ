@@ -11,15 +11,15 @@ package org.jooq.test.mysql.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 324931002;
+	private static final long serialVersionUID = -1000668768;
 
 	/**
-	 * The parameter <code>test.f_number.RETURN_VALUE</code>. 
+	 * The parameter <code>test.f_number.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>test.f_number.n</code>. 
+	 * The parameter <code>test.f_number.n</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> N = createParameter("n", org.jooq.impl.SQLDataType.INTEGER);
 

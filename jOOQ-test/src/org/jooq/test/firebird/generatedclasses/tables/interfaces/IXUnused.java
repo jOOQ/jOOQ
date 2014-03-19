@@ -14,24 +14,24 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface IXUnused extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>X_UNUSED.ID</code>. 
+	 * Setter for <code>X_UNUSED.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>X_UNUSED.ID</code>. 
+	 * Getter for <code>X_UNUSED.ID</code>.
 	 */
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId();
 
 	/**
-	 * Setter for <code>X_UNUSED.NAME</code>. 
+	 * Setter for <code>X_UNUSED.NAME</code>.
 	 */
 	public void setName(java.lang.String value);
 
 	/**
-	 * Getter for <code>X_UNUSED.NAME</code>. 
+	 * Getter for <code>X_UNUSED.NAME</code>.
 	 */
 	@javax.persistence.Column(name = "NAME", nullable = false, length = 10)
 	@javax.validation.constraints.NotNull
@@ -39,156 +39,156 @@ public interface IXUnused extends java.io.Serializable {
 	public java.lang.String getName();
 
 	/**
-	 * Setter for <code>X_UNUSED.BIG_INTEGER</code>. 
+	 * Setter for <code>X_UNUSED.BIG_INTEGER</code>.
 	 */
 	public void setBigInteger(java.lang.Long value);
 
 	/**
-	 * Getter for <code>X_UNUSED.BIG_INTEGER</code>. 
+	 * Getter for <code>X_UNUSED.BIG_INTEGER</code>.
 	 */
 	@javax.persistence.Column(name = "BIG_INTEGER", precision = 18)
 	public java.lang.Long getBigInteger();
 
 	/**
-	 * Setter for <code>X_UNUSED.ID_REF</code>. 
+	 * Setter for <code>X_UNUSED.ID_REF</code>.
 	 */
 	public void setIdRef(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>X_UNUSED.ID_REF</code>. 
+	 * Getter for <code>X_UNUSED.ID_REF</code>.
 	 */
 	@javax.persistence.Column(name = "ID_REF", length = 4)
 	public java.lang.Integer getIdRef();
 
 	/**
-	 * Setter for <code>X_UNUSED.CLASS</code>. 
+	 * Setter for <code>X_UNUSED.CLASS</code>.
 	 */
 	public void setClass_(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>X_UNUSED.CLASS</code>. 
+	 * Getter for <code>X_UNUSED.CLASS</code>.
 	 */
 	@javax.persistence.Column(name = "CLASS", length = 4)
 	public java.lang.Integer getClass_();
 
 	/**
-	 * Setter for <code>X_UNUSED.FIELDS</code>. 
+	 * Setter for <code>X_UNUSED.FIELDS</code>.
 	 */
 	public void setFields(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>X_UNUSED.FIELDS</code>. 
+	 * Getter for <code>X_UNUSED.FIELDS</code>.
 	 */
 	@javax.persistence.Column(name = "FIELDS", length = 4)
 	public java.lang.Integer getFields();
 
 	/**
-	 * Setter for <code>X_UNUSED.CONFIGURATION</code>. 
+	 * Setter for <code>X_UNUSED.CONFIGURATION</code>.
 	 */
 	public void setConfiguration(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>X_UNUSED.CONFIGURATION</code>. 
+	 * Getter for <code>X_UNUSED.CONFIGURATION</code>.
 	 */
 	@javax.persistence.Column(name = "CONFIGURATION", length = 4)
 	public java.lang.Integer getConfiguration();
 
 	/**
-	 * Setter for <code>X_UNUSED.U_D_T</code>. 
+	 * Setter for <code>X_UNUSED.U_D_T</code>.
 	 */
 	public void setUDT(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>X_UNUSED.U_D_T</code>. 
+	 * Getter for <code>X_UNUSED.U_D_T</code>.
 	 */
 	@javax.persistence.Column(name = "U_D_T", length = 4)
 	public java.lang.Integer getUDT();
 
 	/**
-	 * Setter for <code>X_UNUSED.META_DATA</code>. 
+	 * Setter for <code>X_UNUSED.META_DATA</code>.
 	 */
 	public void setMetaData(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>X_UNUSED.META_DATA</code>. 
+	 * Getter for <code>X_UNUSED.META_DATA</code>.
 	 */
 	@javax.persistence.Column(name = "META_DATA", length = 4)
 	public java.lang.Integer getMetaData();
 
 	/**
-	 * Setter for <code>X_UNUSED.TYPE0</code>. 
+	 * Setter for <code>X_UNUSED.TYPE0</code>.
 	 */
 	public void setType0(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>X_UNUSED.TYPE0</code>. 
+	 * Getter for <code>X_UNUSED.TYPE0</code>.
 	 */
 	@javax.persistence.Column(name = "TYPE0", length = 4)
 	public java.lang.Integer getType0();
 
 	/**
-	 * Setter for <code>X_UNUSED.PRIMARY_KEY</code>. 
+	 * Setter for <code>X_UNUSED.PRIMARY_KEY</code>.
 	 */
 	public void setPrimaryKey_(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>X_UNUSED.PRIMARY_KEY</code>. 
+	 * Getter for <code>X_UNUSED.PRIMARY_KEY</code>.
 	 */
 	@javax.persistence.Column(name = "PRIMARY_KEY", length = 4)
 	public java.lang.Integer getPrimaryKey_();
 
 	/**
-	 * Setter for <code>X_UNUSED.PRIMARYKEY</code>. 
+	 * Setter for <code>X_UNUSED.PRIMARYKEY</code>.
 	 */
 	public void setPrimarykey(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>X_UNUSED.PRIMARYKEY</code>. 
+	 * Getter for <code>X_UNUSED.PRIMARYKEY</code>.
 	 */
 	@javax.persistence.Column(name = "PRIMARYKEY", length = 4)
 	public java.lang.Integer getPrimarykey();
 
 	/**
-	 * Setter for <code>X_UNUSED.NAME_REF</code>. 
+	 * Setter for <code>X_UNUSED.NAME_REF</code>.
 	 */
 	public void setNameRef(java.lang.String value);
 
 	/**
-	 * Getter for <code>X_UNUSED.NAME_REF</code>. 
+	 * Getter for <code>X_UNUSED.NAME_REF</code>.
 	 */
 	@javax.persistence.Column(name = "NAME_REF", length = 10)
 	@javax.validation.constraints.Size(max = 10)
 	public java.lang.String getNameRef();
 
 	/**
-	 * Setter for <code>X_UNUSED.FIELD 737</code>. 
+	 * Setter for <code>X_UNUSED.FIELD 737</code>.
 	 */
 	public void setField_737(java.math.BigDecimal value);
 
 	/**
-	 * Getter for <code>X_UNUSED.FIELD 737</code>. 
+	 * Getter for <code>X_UNUSED.FIELD 737</code>.
 	 */
 	@javax.persistence.Column(name = "FIELD 737", precision = 18, scale = 2)
 	public java.math.BigDecimal getField_737();
 
 	/**
-	 * Setter for <code>X_UNUSED.CONNECTION</code>. 
+	 * Setter for <code>X_UNUSED.CONNECTION</code>.
 	 */
 	public void setConnection(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>X_UNUSED.CONNECTION</code>. 
+	 * Getter for <code>X_UNUSED.CONNECTION</code>.
 	 */
 	@javax.persistence.Column(name = "CONNECTION", length = 4)
 	public java.lang.Integer getConnection();
 
 	/**
-	 * Setter for <code>X_UNUSED.PREPARED_STATEMENT</code>. 
+	 * Setter for <code>X_UNUSED.PREPARED_STATEMENT</code>.
 	 */
 	public void setPreparedStatement(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>X_UNUSED.PREPARED_STATEMENT</code>. 
+	 * Getter for <code>X_UNUSED.PREPARED_STATEMENT</code>.
 	 */
 	@javax.persistence.Column(name = "PREPARED_STATEMENT", length = 4)
 	public java.lang.Integer getPreparedStatement();

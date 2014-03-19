@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = -2111163989;
+	private static final long serialVersionUID = 650993791;
 
 	/**
 	 * The singleton instance of <code>V_AUTHOR</code>
@@ -25,47 +25,55 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.firebird.gene
 	}
 
 	/**
-	 * The column <code>V_AUTHOR.ID</code>. 
+	 * The column <code>V_AUTHOR.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>V_AUTHOR.FIRST_NAME</code>. 
+	 * The column <code>V_AUTHOR.FIRST_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.VAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.VAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
-	 * The column <code>V_AUTHOR.LAST_NAME</code>. 
+	 * The column <code>V_AUTHOR.LAST_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.VAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.VAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
-	 * The column <code>V_AUTHOR.DATE_OF_BIRTH</code>. 
+	 * The column <code>V_AUTHOR.DATE_OF_BIRTH</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.VAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.VAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, this, "");
 
 	/**
-	 * The column <code>V_AUTHOR.YEAR_OF_BIRTH</code>. 
+	 * The column <code>V_AUTHOR.YEAR_OF_BIRTH</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>V_AUTHOR.ADDRESS</code>. 
+	 * The column <code>V_AUTHOR.ADDRESS</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.VAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.VAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
 	 * Create a <code>V_AUTHOR</code> table reference
 	 */
 	public VAuthor() {
-		super("V_AUTHOR", org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("V_AUTHOR", null);
 	}
 
 	/**
 	 * Create an aliased <code>V_AUTHOR</code> table reference
 	 */
 	public VAuthor(java.lang.String alias) {
-		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.firebird.generatedclasses.tables.VAuthor.V_AUTHOR);
+		this(alias, org.jooq.test.firebird.generatedclasses.tables.VAuthor.V_AUTHOR);
+	}
+
+	private VAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.firebird.generatedclasses.tables.records.VAuthorRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private VAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.firebird.generatedclasses.tables.records.VAuthorRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**
@@ -73,6 +81,13 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.firebird.gene
 	 */
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.VAuthor as(java.lang.String alias) {
-		return new org.jooq.test.firebird.generatedclasses.tables.VAuthor(alias);
+		return new org.jooq.test.firebird.generatedclasses.tables.VAuthor(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.firebird.generatedclasses.tables.VAuthor rename(java.lang.String name) {
+		return new org.jooq.test.firebird.generatedclasses.tables.VAuthor(name, null);
 	}
 }

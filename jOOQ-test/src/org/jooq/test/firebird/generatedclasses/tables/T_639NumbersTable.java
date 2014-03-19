@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -1490821104;
+	private static final long serialVersionUID = 451278914;
 
 	/**
 	 * The singleton instance of <code>T_639_NUMBERS_TABLE</code>
@@ -25,72 +25,80 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * The column <code>T_639_NUMBERS_TABLE.ID</code>. 
+	 * The column <code>T_639_NUMBERS_TABLE.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>T_639_NUMBERS_TABLE.SHORT</code>. 
+	 * The column <code>T_639_NUMBERS_TABLE.SHORT</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Short> SHORT = createField("SHORT", org.jooq.impl.SQLDataType.SMALLINT, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Short> SHORT = createField("SHORT", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
-	 * The column <code>T_639_NUMBERS_TABLE.INTEGER</code>. 
+	 * The column <code>T_639_NUMBERS_TABLE.INTEGER</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> INTEGER = createField("INTEGER", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> INTEGER = createField("INTEGER", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>T_639_NUMBERS_TABLE.LONG</code>. 
+	 * The column <code>T_639_NUMBERS_TABLE.LONG</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> LONG = createField("LONG", org.jooq.impl.SQLDataType.BIGINT, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> LONG = createField("LONG", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
 	/**
-	 * The column <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
+	 * The column <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Byte> BYTE_DECIMAL = createField("BYTE_DECIMAL", org.jooq.impl.SQLDataType.TINYINT, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Byte> BYTE_DECIMAL = createField("BYTE_DECIMAL", org.jooq.impl.SQLDataType.TINYINT, this, "");
 
 	/**
-	 * The column <code>T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
+	 * The column <code>T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Short> SHORT_DECIMAL = createField("SHORT_DECIMAL", org.jooq.impl.SQLDataType.SMALLINT, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Short> SHORT_DECIMAL = createField("SHORT_DECIMAL", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
-	 * The column <code>T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
+	 * The column <code>T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> INTEGER_DECIMAL = createField("INTEGER_DECIMAL", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> INTEGER_DECIMAL = createField("INTEGER_DECIMAL", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
+	 * The column <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> LONG_DECIMAL = createField("LONG_DECIMAL", org.jooq.impl.SQLDataType.BIGINT, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> LONG_DECIMAL = createField("LONG_DECIMAL", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
 	/**
-	 * The column <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 
+	 * The column <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigDecimal> BIG_DECIMAL = createField("BIG_DECIMAL", org.jooq.impl.SQLDataType.DECIMAL.precision(18, 5), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigDecimal> BIG_DECIMAL = createField("BIG_DECIMAL", org.jooq.impl.SQLDataType.DECIMAL.precision(18, 5), this, "");
 
 	/**
-	 * The column <code>T_639_NUMBERS_TABLE.FLOAT</code>. 
+	 * The column <code>T_639_NUMBERS_TABLE.FLOAT</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Float> FLOAT = createField("FLOAT", org.jooq.impl.SQLDataType.REAL, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Float> FLOAT = createField("FLOAT", org.jooq.impl.SQLDataType.REAL, this, "");
 
 	/**
-	 * The column <code>T_639_NUMBERS_TABLE.DOUBLE</code>. 
+	 * The column <code>T_639_NUMBERS_TABLE.DOUBLE</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Double> DOUBLE = createField("DOUBLE", org.jooq.impl.SQLDataType.DOUBLE, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Double> DOUBLE = createField("DOUBLE", org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
 	/**
 	 * Create a <code>T_639_NUMBERS_TABLE</code> table reference
 	 */
 	public T_639NumbersTable() {
-		super("T_639_NUMBERS_TABLE", org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("T_639_NUMBERS_TABLE", null);
 	}
 
 	/**
 	 * Create an aliased <code>T_639_NUMBERS_TABLE</code> table reference
 	 */
 	public T_639NumbersTable(java.lang.String alias) {
-		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE);
+		this(alias, org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE);
+	}
+
+	private T_639NumbersTable(java.lang.String alias, org.jooq.Table<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_639NumbersTable(java.lang.String alias, org.jooq.Table<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**
@@ -114,6 +122,13 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.fir
 	 */
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable as(java.lang.String alias) {
-		return new org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable(alias);
+		return new org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable rename(java.lang.String name) {
+		return new org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable(name, null);
 	}
 }

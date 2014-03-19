@@ -9,115 +9,115 @@ package org.jooq.test.mariadb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mariadb.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record8<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long, java.sql.Date, java.sql.Date> {
 
-	private static final long serialVersionUID = 1600572588;
+	private static final long serialVersionUID = 34728166;
 
 	/**
-	 * Setter for <code>test.t_dates.id</code>. 
+	 * Setter for <code>test.t_dates.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_dates.id</code>. 
+	 * Getter for <code>test.t_dates.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>test.t_dates.d</code>. 
+	 * Setter for <code>test.t_dates.d</code>.
 	 */
 	public void setD(java.sql.Date value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_dates.d</code>. 
+	 * Getter for <code>test.t_dates.d</code>.
 	 */
 	public java.sql.Date getD() {
 		return (java.sql.Date) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>test.t_dates.t</code>. 
+	 * Setter for <code>test.t_dates.t</code>.
 	 */
 	public void setT(java.sql.Time value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_dates.t</code>. 
+	 * Getter for <code>test.t_dates.t</code>.
 	 */
 	public java.sql.Time getT() {
 		return (java.sql.Time) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>test.t_dates.ts</code>. 
+	 * Setter for <code>test.t_dates.ts</code>.
 	 */
 	public void setTs(java.sql.Timestamp value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_dates.ts</code>. 
+	 * Getter for <code>test.t_dates.ts</code>.
 	 */
 	public java.sql.Timestamp getTs() {
 		return (java.sql.Timestamp) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>test.t_dates.d_int</code>. 
+	 * Setter for <code>test.t_dates.d_int</code>.
 	 */
 	public void setDInt(java.lang.Integer value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_dates.d_int</code>. 
+	 * Getter for <code>test.t_dates.d_int</code>.
 	 */
 	public java.lang.Integer getDInt() {
 		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>test.t_dates.ts_bigint</code>. 
+	 * Setter for <code>test.t_dates.ts_bigint</code>.
 	 */
 	public void setTsBigint(java.lang.Long value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_dates.ts_bigint</code>. 
+	 * Getter for <code>test.t_dates.ts_bigint</code>.
 	 */
 	public java.lang.Long getTsBigint() {
 		return (java.lang.Long) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>test.t_dates.y2</code>. 
+	 * Setter for <code>test.t_dates.y2</code>.
 	 */
 	public void setY2(java.sql.Date value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_dates.y2</code>. 
+	 * Getter for <code>test.t_dates.y2</code>.
 	 */
 	public java.sql.Date getY2() {
 		return (java.sql.Date) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>test.t_dates.y4</code>. 
+	 * Setter for <code>test.t_dates.y4</code>.
 	 */
 	public void setY4(java.sql.Date value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_dates.y4</code>. 
+	 * Getter for <code>test.t_dates.y4</code>.
 	 */
 	public java.sql.Date getY4() {
 		return (java.sql.Date) getValue(7);

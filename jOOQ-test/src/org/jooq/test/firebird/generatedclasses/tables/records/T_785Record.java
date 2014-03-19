@@ -11,10 +11,10 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_785")
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_785 {
 
-	private static final long serialVersionUID = 1094436054;
+	private static final long serialVersionUID = 811582938;
 
 	/**
-	 * Setter for <code>T_785.ID</code>. 
+	 * Setter for <code>T_785.ID</code>.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Getter for <code>T_785.ID</code>. 
+	 * Getter for <code>T_785.ID</code>.
 	 */
 	@javax.persistence.Column(name = "ID", length = 4)
 	@Override
@@ -31,7 +31,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Setter for <code>T_785.NAME</code>. 
+	 * Setter for <code>T_785.NAME</code>.
 	 */
 	@Override
 	public void setName(java.lang.String value) {
@@ -39,7 +39,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Getter for <code>T_785.NAME</code>. 
+	 * Getter for <code>T_785.NAME</code>.
 	 */
 	@javax.persistence.Column(name = "NAME", length = 50)
 	@javax.validation.constraints.Size(max = 50)
@@ -49,7 +49,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Setter for <code>T_785.VALUE</code>. 
+	 * Setter for <code>T_785.VALUE</code>.
 	 */
 	@Override
 	public void setValue(java.lang.String value) {
@@ -57,7 +57,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * Getter for <code>T_785.VALUE</code>. 
+	 * Getter for <code>T_785.VALUE</code>.
 	 */
 	@javax.persistence.Column(name = "VALUE", length = 50)
 	@javax.validation.constraints.Size(max = 50)

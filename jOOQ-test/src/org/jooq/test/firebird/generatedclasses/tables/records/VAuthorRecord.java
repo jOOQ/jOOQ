@@ -11,10 +11,10 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_AUTHOR")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IVAuthor {
 
-	private static final long serialVersionUID = 1019076067;
+	private static final long serialVersionUID = -646188325;
 
 	/**
-	 * Setter for <code>V_AUTHOR.ID</code>. 
+	 * Setter for <code>V_AUTHOR.ID</code>.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.f
 	}
 
 	/**
-	 * Getter for <code>V_AUTHOR.ID</code>. 
+	 * Getter for <code>V_AUTHOR.ID</code>.
 	 */
 	@javax.persistence.Column(name = "ID", length = 4)
 	@Override
@@ -31,7 +31,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.f
 	}
 
 	/**
-	 * Setter for <code>V_AUTHOR.FIRST_NAME</code>. 
+	 * Setter for <code>V_AUTHOR.FIRST_NAME</code>.
 	 */
 	@Override
 	public void setFirstName(java.lang.String value) {
@@ -39,7 +39,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.f
 	}
 
 	/**
-	 * Getter for <code>V_AUTHOR.FIRST_NAME</code>. 
+	 * Getter for <code>V_AUTHOR.FIRST_NAME</code>.
 	 */
 	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
 	@javax.validation.constraints.Size(max = 50)
@@ -49,7 +49,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.f
 	}
 
 	/**
-	 * Setter for <code>V_AUTHOR.LAST_NAME</code>. 
+	 * Setter for <code>V_AUTHOR.LAST_NAME</code>.
 	 */
 	@Override
 	public void setLastName(java.lang.String value) {
@@ -57,7 +57,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.f
 	}
 
 	/**
-	 * Getter for <code>V_AUTHOR.LAST_NAME</code>. 
+	 * Getter for <code>V_AUTHOR.LAST_NAME</code>.
 	 */
 	@javax.persistence.Column(name = "LAST_NAME", length = 50)
 	@javax.validation.constraints.Size(max = 50)
@@ -67,7 +67,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.f
 	}
 
 	/**
-	 * Setter for <code>V_AUTHOR.DATE_OF_BIRTH</code>. 
+	 * Setter for <code>V_AUTHOR.DATE_OF_BIRTH</code>.
 	 */
 	@Override
 	public void setDateOfBirth(java.sql.Date value) {
@@ -75,7 +75,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.f
 	}
 
 	/**
-	 * Getter for <code>V_AUTHOR.DATE_OF_BIRTH</code>. 
+	 * Getter for <code>V_AUTHOR.DATE_OF_BIRTH</code>.
 	 */
 	@javax.persistence.Column(name = "DATE_OF_BIRTH", length = 4)
 	@Override
@@ -84,7 +84,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.f
 	}
 
 	/**
-	 * Setter for <code>V_AUTHOR.YEAR_OF_BIRTH</code>. 
+	 * Setter for <code>V_AUTHOR.YEAR_OF_BIRTH</code>.
 	 */
 	@Override
 	public void setYearOfBirth(java.lang.Integer value) {
@@ -92,7 +92,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.f
 	}
 
 	/**
-	 * Getter for <code>V_AUTHOR.YEAR_OF_BIRTH</code>. 
+	 * Getter for <code>V_AUTHOR.YEAR_OF_BIRTH</code>.
 	 */
 	@javax.persistence.Column(name = "YEAR_OF_BIRTH", length = 4)
 	@Override
@@ -101,7 +101,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.f
 	}
 
 	/**
-	 * Setter for <code>V_AUTHOR.ADDRESS</code>. 
+	 * Setter for <code>V_AUTHOR.ADDRESS</code>.
 	 */
 	@Override
 	public void setAddress(java.lang.String value) {
@@ -109,7 +109,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.f
 	}
 
 	/**
-	 * Getter for <code>V_AUTHOR.ADDRESS</code>. 
+	 * Getter for <code>V_AUTHOR.ADDRESS</code>.
 	 */
 	@javax.persistence.Column(name = "ADDRESS", length = 50)
 	@javax.validation.constraints.Size(max = 50)

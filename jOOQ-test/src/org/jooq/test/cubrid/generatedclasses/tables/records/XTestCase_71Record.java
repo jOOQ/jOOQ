@@ -9,31 +9,31 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_71Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1222587640;
+	private static final long serialVersionUID = 341935150;
 
 	/**
-	 * Setter for <code>x_test_case_71.id</code>. 
+	 * Setter for <code>x_test_case_71.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>x_test_case_71.id</code>. 
+	 * Getter for <code>x_test_case_71.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>x_test_case_71.test_case_64_69_id</code>. 
+	 * Setter for <code>x_test_case_71.test_case_64_69_id</code>.
 	 */
 	public void setTestCase_64_69Id(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>x_test_case_71.test_case_64_69_id</code>. 
+	 * Getter for <code>x_test_case_71.test_case_64_69_id</code>.
 	 */
 	public java.lang.Integer getTestCase_64_69Id() {
 		return (java.lang.Integer) getValue(1);

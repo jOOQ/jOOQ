@@ -11,7 +11,7 @@ package org.jooq.test.mariadb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.mariadb.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -1675374086;
+	private static final long serialVersionUID = -1816941545;
 
 	/**
 	 * The singleton instance of <code>test.t_book_to_book_store</code>
@@ -29,23 +29,31 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.mari
 	/**
 	 * The column <code>test.t_book_to_book_store.book_store_name</code>. The book store name
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), T_BOOK_TO_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), T_BOOK_TO_BOOK_STORE, "The book store name");
 
 	/**
 	 * The column <code>test.t_book_to_book_store.book_id</code>. The book ID
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("book_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK_TO_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("book_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK_TO_BOOK_STORE, "The book ID");
 
 	/**
 	 * The column <code>test.t_book_to_book_store.stock</code>. The number of books on stock
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("stock", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.mariadb.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("stock", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE, "The number of books on stock");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TBookToBookStore() {
-		super("t_book_to_book_store", org.jooq.test.mariadb.generatedclasses.Test.TEST);
+		this("t_book_to_book_store", null);
+	}
+
+	private TBookToBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.mariadb.generatedclasses.tables.records.TBookToBookStoreRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TBookToBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.mariadb.generatedclasses.tables.records.TBookToBookStoreRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.mariadb.generatedclasses.Test.TEST, aliased, parameters, "An m:n relation between books and book stores");
 	}
 
 	/**

@@ -9,143 +9,143 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.cubrid.generatedclasses.enums.TBookStatus> {
 
-	private static final long serialVersionUID = -960139638;
+	private static final long serialVersionUID = 1933960484;
 
 	/**
-	 * Setter for <code>t_book.id</code>. 
+	 * Setter for <code>t_book.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>t_book.id</code>. 
+	 * Getter for <code>t_book.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>t_book.author_id</code>. 
+	 * Setter for <code>t_book.author_id</code>.
 	 */
 	public void setAuthorId(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>t_book.author_id</code>. 
+	 * Getter for <code>t_book.author_id</code>.
 	 */
 	public java.lang.Integer getAuthorId() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>t_book.co_author_id</code>. 
+	 * Setter for <code>t_book.co_author_id</code>.
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>t_book.co_author_id</code>. 
+	 * Getter for <code>t_book.co_author_id</code>.
 	 */
 	public java.lang.Integer getCoAuthorId() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>t_book.details_id</code>. 
+	 * Setter for <code>t_book.details_id</code>.
 	 */
 	public void setDetailsId(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>t_book.details_id</code>. 
+	 * Getter for <code>t_book.details_id</code>.
 	 */
 	public java.lang.Integer getDetailsId() {
 		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>t_book.title</code>. 
+	 * Setter for <code>t_book.title</code>.
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>t_book.title</code>. 
+	 * Getter for <code>t_book.title</code>.
 	 */
 	public java.lang.String getTitle() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>t_book.published_in</code>. 
+	 * Setter for <code>t_book.published_in</code>.
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>t_book.published_in</code>. 
+	 * Getter for <code>t_book.published_in</code>.
 	 */
 	public java.lang.Integer getPublishedIn() {
 		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>t_book.language_id</code>. 
+	 * Setter for <code>t_book.language_id</code>.
 	 */
 	public void setLanguageId(java.lang.Integer value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>t_book.language_id</code>. 
+	 * Getter for <code>t_book.language_id</code>.
 	 */
 	public java.lang.Integer getLanguageId() {
 		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>t_book.content_text</code>. 
+	 * Setter for <code>t_book.content_text</code>.
 	 */
 	public void setContentText(java.lang.String value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>t_book.content_text</code>. 
+	 * Getter for <code>t_book.content_text</code>.
 	 */
 	public java.lang.String getContentText() {
 		return (java.lang.String) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>t_book.content_pdf</code>. 
+	 * Setter for <code>t_book.content_pdf</code>.
 	 */
 	public void setContentPdf(byte[] value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>t_book.content_pdf</code>. 
+	 * Getter for <code>t_book.content_pdf</code>.
 	 */
 	public byte[] getContentPdf() {
 		return (byte[]) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>t_book.status</code>. 
+	 * Setter for <code>t_book.status</code>.
 	 */
 	public void setStatus(org.jooq.test.cubrid.generatedclasses.enums.TBookStatus value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>t_book.status</code>. 
+	 * Getter for <code>t_book.status</code>.
 	 */
 	public org.jooq.test.cubrid.generatedclasses.enums.TBookStatus getStatus() {
 		return (org.jooq.test.cubrid.generatedclasses.enums.TBookStatus) getValue(9);

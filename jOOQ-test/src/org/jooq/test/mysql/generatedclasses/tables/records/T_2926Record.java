@@ -9,59 +9,59 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2926Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.T_2926Record> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -1719487136;
+	private static final long serialVersionUID = -59538140;
 
 	/**
-	 * Setter for <code>test.t_2926.t1</code>. 
+	 * Setter for <code>test.t_2926.t1</code>.
 	 */
 	public void setT1(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_2926.t1</code>. 
+	 * Getter for <code>test.t_2926.t1</code>.
 	 */
 	public java.lang.String getT1() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>test.t_2926.t2</code>. 
+	 * Setter for <code>test.t_2926.t2</code>.
 	 */
 	public void setT2(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_2926.t2</code>. 
+	 * Getter for <code>test.t_2926.t2</code>.
 	 */
 	public java.lang.String getT2() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>test.t_2926.t3</code>. 
+	 * Setter for <code>test.t_2926.t3</code>.
 	 */
 	public void setT3(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_2926.t3</code>. 
+	 * Getter for <code>test.t_2926.t3</code>.
 	 */
 	public java.lang.String getT3() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>test.t_2926.t4</code>. 
+	 * Setter for <code>test.t_2926.t4</code>.
 	 */
 	public void setT4(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_2926.t4</code>. 
+	 * Getter for <code>test.t_2926.t4</code>.
 	 */
 	public java.lang.String getT4() {
 		return (java.lang.String) getValue(3);

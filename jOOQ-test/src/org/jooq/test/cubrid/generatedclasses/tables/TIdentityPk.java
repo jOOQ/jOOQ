@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = 1381450925;
+	private static final long serialVersionUID = 1773082335;
 
 	/**
 	 * The singleton instance of <code>t_identity_pk</code>
@@ -25,20 +25,28 @@ public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.ge
 	}
 
 	/**
-	 * The column <code>t_identity_pk.id</code>. 
+	 * The column <code>t_identity_pk.id</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_IDENTITY_PK);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_IDENTITY_PK, "");
 
 	/**
-	 * The column <code>t_identity_pk.val</code>. 
+	 * The column <code>t_identity_pk.val</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY_PK);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY_PK, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TIdentityPk() {
-		super("t_identity_pk", org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("t_identity_pk", null);
+	}
+
+	private TIdentityPk(java.lang.String alias, org.jooq.Table<org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityPkRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TIdentityPk(java.lang.String alias, org.jooq.Table<org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityPkRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

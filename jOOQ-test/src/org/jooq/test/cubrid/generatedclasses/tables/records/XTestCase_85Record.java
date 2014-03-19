@@ -9,45 +9,45 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -933208850;
+	private static final long serialVersionUID = 294671396;
 
 	/**
-	 * Setter for <code>x_test_case_85.id</code>. 
+	 * Setter for <code>x_test_case_85.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>x_test_case_85.id</code>. 
+	 * Getter for <code>x_test_case_85.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>x_test_case_85.x_unused_id</code>. 
+	 * Setter for <code>x_test_case_85.x_unused_id</code>.
 	 */
 	public void setXUnusedId(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>x_test_case_85.x_unused_id</code>. 
+	 * Getter for <code>x_test_case_85.x_unused_id</code>.
 	 */
 	public java.lang.Integer getXUnusedId() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>x_test_case_85.x_unused_name</code>. 
+	 * Setter for <code>x_test_case_85.x_unused_name</code>.
 	 */
 	public void setXUnusedName(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>x_test_case_85.x_unused_name</code>. 
+	 * Getter for <code>x_test_case_85.x_unused_name</code>.
 	 */
 	public java.lang.String getXUnusedName() {
 		return (java.lang.String) getValue(2);

@@ -9,129 +9,129 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]> {
 
-	private static final long serialVersionUID = -729685797;
+	private static final long serialVersionUID = 793135057;
 
 	/**
-	 * Setter for <code>v_book.ID</code>. 
+	 * Setter for <code>v_book.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>v_book.ID</code>. 
+	 * Getter for <code>v_book.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>v_book.AUTHOR_ID</code>. 
+	 * Setter for <code>v_book.AUTHOR_ID</code>.
 	 */
 	public void setAuthorId(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>v_book.AUTHOR_ID</code>. 
+	 * Getter for <code>v_book.AUTHOR_ID</code>.
 	 */
 	public java.lang.Integer getAuthorId() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>v_book.co_author_id</code>. 
+	 * Setter for <code>v_book.co_author_id</code>.
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>v_book.co_author_id</code>. 
+	 * Getter for <code>v_book.co_author_id</code>.
 	 */
 	public java.lang.Integer getCoAuthorId() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>v_book.DETAILS_ID</code>. 
+	 * Setter for <code>v_book.DETAILS_ID</code>.
 	 */
 	public void setDetailsId(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>v_book.DETAILS_ID</code>. 
+	 * Getter for <code>v_book.DETAILS_ID</code>.
 	 */
 	public java.lang.Integer getDetailsId() {
 		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>v_book.TITLE</code>. 
+	 * Setter for <code>v_book.TITLE</code>.
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>v_book.TITLE</code>. 
+	 * Getter for <code>v_book.TITLE</code>.
 	 */
 	public java.lang.String getTitle() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>v_book.PUBLISHED_IN</code>. 
+	 * Setter for <code>v_book.PUBLISHED_IN</code>.
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>v_book.PUBLISHED_IN</code>. 
+	 * Getter for <code>v_book.PUBLISHED_IN</code>.
 	 */
 	public java.lang.Integer getPublishedIn() {
 		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>v_book.LANGUAGE_ID</code>. 
+	 * Setter for <code>v_book.LANGUAGE_ID</code>.
 	 */
 	public void setLanguageId(java.lang.Integer value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>v_book.LANGUAGE_ID</code>. 
+	 * Getter for <code>v_book.LANGUAGE_ID</code>.
 	 */
 	public java.lang.Integer getLanguageId() {
 		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>v_book.CONTENT_TEXT</code>. 
+	 * Setter for <code>v_book.CONTENT_TEXT</code>.
 	 */
 	public void setContentText(java.lang.String value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>v_book.CONTENT_TEXT</code>. 
+	 * Getter for <code>v_book.CONTENT_TEXT</code>.
 	 */
 	public java.lang.String getContentText() {
 		return (java.lang.String) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>v_book.CONTENT_PDF</code>. 
+	 * Setter for <code>v_book.CONTENT_PDF</code>.
 	 */
 	public void setContentPdf(byte[] value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>v_book.CONTENT_PDF</code>. 
+	 * Getter for <code>v_book.CONTENT_PDF</code>.
 	 */
 	public byte[] getContentPdf() {
 		return (byte[]) getValue(8);

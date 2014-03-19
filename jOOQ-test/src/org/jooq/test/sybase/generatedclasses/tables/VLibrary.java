@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 1216960786;
+	private static final long serialVersionUID = 1045990597;
 
 	/**
 	 * The singleton instance of <code>DBA.V_LIBRARY</code>
@@ -25,27 +25,35 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.sybase.gener
 	}
 
 	/**
-	 * The column <code>DBA.V_LIBRARY.AUTHOR</code>. 
+	 * The column <code>DBA.V_LIBRARY.AUTHOR</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR.length(101), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR.length(101), this, "");
 
 	/**
-	 * The column <code>DBA.V_LIBRARY.TITLE</code>. 
+	 * The column <code>DBA.V_LIBRARY.TITLE</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
 	 * Create a <code>DBA.V_LIBRARY</code> table reference
 	 */
 	public VLibrary() {
-		super("V_LIBRARY", org.jooq.test.sybase.generatedclasses.Dba.DBA);
+		this("V_LIBRARY", null);
 	}
 
 	/**
 	 * Create an aliased <code>DBA.V_LIBRARY</code> table reference
 	 */
 	public VLibrary(java.lang.String alias) {
-		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.VLibrary.V_LIBRARY);
+		this(alias, org.jooq.test.sybase.generatedclasses.tables.VLibrary.V_LIBRARY);
+	}
+
+	private VLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.VLibraryRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private VLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.VLibraryRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, aliased, parameters, "");
 	}
 
 	/**
@@ -53,6 +61,13 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.sybase.gener
 	 */
 	@Override
 	public org.jooq.test.sybase.generatedclasses.tables.VLibrary as(java.lang.String alias) {
-		return new org.jooq.test.sybase.generatedclasses.tables.VLibrary(alias);
+		return new org.jooq.test.sybase.generatedclasses.tables.VLibrary(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.sybase.generatedclasses.tables.VLibrary rename(java.lang.String name) {
+		return new org.jooq.test.sybase.generatedclasses.tables.VLibrary(name, null);
 	}
 }

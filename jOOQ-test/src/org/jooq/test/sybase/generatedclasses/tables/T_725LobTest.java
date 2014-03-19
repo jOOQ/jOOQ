@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = 783848344;
+	private static final long serialVersionUID = 748615385;
 
 	/**
 	 * The singleton instance of <code>DBA.t_725_lob_test</code>
@@ -25,27 +25,35 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.sybase.g
 	}
 
 	/**
-	 * The column <code>DBA.t_725_lob_test.ID</code>. 
+	 * The column <code>DBA.t_725_lob_test.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>DBA.t_725_lob_test.LOB</code>. 
+	 * The column <code>DBA.t_725_lob_test.LOB</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.LONGVARBINARY, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.LONGVARBINARY, this, "");
 
 	/**
 	 * Create a <code>DBA.t_725_lob_test</code> table reference
 	 */
 	public T_725LobTest() {
-		super("t_725_lob_test", org.jooq.test.sybase.generatedclasses.Dba.DBA);
+		this("t_725_lob_test", null);
 	}
 
 	/**
 	 * Create an aliased <code>DBA.t_725_lob_test</code> table reference
 	 */
 	public T_725LobTest(java.lang.String alias) {
-		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST);
+		this(alias, org.jooq.test.sybase.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST);
+	}
+
+	private T_725LobTest(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.T_725LobTestRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_725LobTest(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.T_725LobTestRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, aliased, parameters, "");
 	}
 
 	/**
@@ -69,6 +77,13 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.sybase.g
 	 */
 	@Override
 	public org.jooq.test.sybase.generatedclasses.tables.T_725LobTest as(java.lang.String alias) {
-		return new org.jooq.test.sybase.generatedclasses.tables.T_725LobTest(alias);
+		return new org.jooq.test.sybase.generatedclasses.tables.T_725LobTest(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.sybase.generatedclasses.tables.T_725LobTest rename(java.lang.String name) {
+		return new org.jooq.test.sybase.generatedclasses.tables.T_725LobTest(name, null);
 	}
 }

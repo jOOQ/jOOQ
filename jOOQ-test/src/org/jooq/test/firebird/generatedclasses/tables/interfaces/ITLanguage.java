@@ -12,12 +12,12 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface ITLanguage extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>T_LANGUAGE.CD</code>. 
+	 * Setter for <code>T_LANGUAGE.CD</code>.
 	 */
 	public void setCd(java.lang.String value);
 
 	/**
-	 * Getter for <code>T_LANGUAGE.CD</code>. 
+	 * Getter for <code>T_LANGUAGE.CD</code>.
 	 */
 	@javax.persistence.Column(name = "CD", nullable = false, length = 2)
 	@javax.validation.constraints.NotNull
@@ -25,36 +25,36 @@ public interface ITLanguage extends java.io.Serializable {
 	public java.lang.String getCd();
 
 	/**
-	 * Setter for <code>T_LANGUAGE.DESCRIPTION</code>. 
+	 * Setter for <code>T_LANGUAGE.DESCRIPTION</code>.
 	 */
 	public void setDescription(java.lang.String value);
 
 	/**
-	 * Getter for <code>T_LANGUAGE.DESCRIPTION</code>. 
+	 * Getter for <code>T_LANGUAGE.DESCRIPTION</code>.
 	 */
 	@javax.persistence.Column(name = "DESCRIPTION", length = 50)
 	@javax.validation.constraints.Size(max = 50)
 	public java.lang.String getDescription();
 
 	/**
-	 * Setter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * Setter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
 	public void setDescriptionEnglish(java.lang.String value);
 
 	/**
-	 * Getter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * Getter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
 	@javax.persistence.Column(name = "DESCRIPTION_ENGLISH", length = 50)
 	@javax.validation.constraints.Size(max = 50)
 	public java.lang.String getDescriptionEnglish();
 
 	/**
-	 * Setter for <code>T_LANGUAGE.ID</code>. 
+	 * Setter for <code>T_LANGUAGE.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_LANGUAGE.ID</code>. 
+	 * Getter for <code>T_LANGUAGE.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)

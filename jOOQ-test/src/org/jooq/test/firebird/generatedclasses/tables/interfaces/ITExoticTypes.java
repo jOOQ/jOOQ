@@ -12,12 +12,12 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface ITExoticTypes extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>T_EXOTIC_TYPES.ID</code>. 
+	 * Setter for <code>T_EXOTIC_TYPES.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_EXOTIC_TYPES.ID</code>. 
+	 * Getter for <code>T_EXOTIC_TYPES.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
@@ -25,12 +25,12 @@ public interface ITExoticTypes extends java.io.Serializable {
 	public java.lang.Integer getId();
 
 	/**
-	 * Setter for <code>T_EXOTIC_TYPES.UU</code>. 
+	 * Setter for <code>T_EXOTIC_TYPES.UU</code>.
 	 */
 	public void setUu(java.util.UUID value);
 
 	/**
-	 * Getter for <code>T_EXOTIC_TYPES.UU</code>. 
+	 * Getter for <code>T_EXOTIC_TYPES.UU</code>.
 	 */
 	@javax.persistence.Column(name = "UU", length = 36)
 	public java.util.UUID getUu();

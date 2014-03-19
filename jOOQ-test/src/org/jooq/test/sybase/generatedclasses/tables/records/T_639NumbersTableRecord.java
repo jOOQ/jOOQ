@@ -9,185 +9,185 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_639NumbersTableRecord> implements org.jooq.Record13<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal, java.lang.Double, java.lang.Double> {
 
-	private static final long serialVersionUID = -1439455802;
+	private static final long serialVersionUID = -64440212;
 
 	/**
-	 * Setter for <code>DBA.t_639_numbers_table.ID</code>. 
+	 * Setter for <code>DBA.t_639_numbers_table.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_639_numbers_table.ID</code>. 
+	 * Getter for <code>DBA.t_639_numbers_table.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_639_numbers_table.BYTE</code>. 
+	 * Setter for <code>DBA.t_639_numbers_table.BYTE</code>.
 	 */
 	public void setByte(java.lang.Byte value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_639_numbers_table.BYTE</code>. 
+	 * Getter for <code>DBA.t_639_numbers_table.BYTE</code>.
 	 */
 	public java.lang.Byte getByte() {
 		return (java.lang.Byte) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_639_numbers_table.SHORT</code>. 
+	 * Setter for <code>DBA.t_639_numbers_table.SHORT</code>.
 	 */
 	public void setShort(java.lang.Short value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_639_numbers_table.SHORT</code>. 
+	 * Getter for <code>DBA.t_639_numbers_table.SHORT</code>.
 	 */
 	public java.lang.Short getShort() {
 		return (java.lang.Short) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_639_numbers_table.INTEGER</code>. 
+	 * Setter for <code>DBA.t_639_numbers_table.INTEGER</code>.
 	 */
 	public void setInteger(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_639_numbers_table.INTEGER</code>. 
+	 * Getter for <code>DBA.t_639_numbers_table.INTEGER</code>.
 	 */
 	public java.lang.Integer getInteger() {
 		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_639_numbers_table.LONG</code>. 
+	 * Setter for <code>DBA.t_639_numbers_table.LONG</code>.
 	 */
 	public void setLong(java.lang.Long value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_639_numbers_table.LONG</code>. 
+	 * Getter for <code>DBA.t_639_numbers_table.LONG</code>.
 	 */
 	public java.lang.Long getLong() {
 		return (java.lang.Long) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_639_numbers_table.BYTE_DECIMAL</code>. 
+	 * Setter for <code>DBA.t_639_numbers_table.BYTE_DECIMAL</code>.
 	 */
 	public void setByteDecimal(java.lang.Byte value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_639_numbers_table.BYTE_DECIMAL</code>. 
+	 * Getter for <code>DBA.t_639_numbers_table.BYTE_DECIMAL</code>.
 	 */
 	public java.lang.Byte getByteDecimal() {
 		return (java.lang.Byte) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_639_numbers_table.SHORT_DECIMAL</code>. 
+	 * Setter for <code>DBA.t_639_numbers_table.SHORT_DECIMAL</code>.
 	 */
 	public void setShortDecimal(java.lang.Short value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_639_numbers_table.SHORT_DECIMAL</code>. 
+	 * Getter for <code>DBA.t_639_numbers_table.SHORT_DECIMAL</code>.
 	 */
 	public java.lang.Short getShortDecimal() {
 		return (java.lang.Short) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_639_numbers_table.INTEGER_DECIMAL</code>. 
+	 * Setter for <code>DBA.t_639_numbers_table.INTEGER_DECIMAL</code>.
 	 */
 	public void setIntegerDecimal(java.lang.Integer value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_639_numbers_table.INTEGER_DECIMAL</code>. 
+	 * Getter for <code>DBA.t_639_numbers_table.INTEGER_DECIMAL</code>.
 	 */
 	public java.lang.Integer getIntegerDecimal() {
 		return (java.lang.Integer) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_639_numbers_table.LONG_DECIMAL</code>. 
+	 * Setter for <code>DBA.t_639_numbers_table.LONG_DECIMAL</code>.
 	 */
 	public void setLongDecimal(java.lang.Long value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_639_numbers_table.LONG_DECIMAL</code>. 
+	 * Getter for <code>DBA.t_639_numbers_table.LONG_DECIMAL</code>.
 	 */
 	public java.lang.Long getLongDecimal() {
 		return (java.lang.Long) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_639_numbers_table.BIG_INTEGER</code>. 
+	 * Setter for <code>DBA.t_639_numbers_table.BIG_INTEGER</code>.
 	 */
 	public void setBigInteger(java.math.BigInteger value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_639_numbers_table.BIG_INTEGER</code>. 
+	 * Getter for <code>DBA.t_639_numbers_table.BIG_INTEGER</code>.
 	 */
 	public java.math.BigInteger getBigInteger() {
 		return (java.math.BigInteger) getValue(9);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_639_numbers_table.BIG_DECIMAL</code>. 
+	 * Setter for <code>DBA.t_639_numbers_table.BIG_DECIMAL</code>.
 	 */
 	public void setBigDecimal(java.math.BigDecimal value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_639_numbers_table.BIG_DECIMAL</code>. 
+	 * Getter for <code>DBA.t_639_numbers_table.BIG_DECIMAL</code>.
 	 */
 	public java.math.BigDecimal getBigDecimal() {
 		return (java.math.BigDecimal) getValue(10);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_639_numbers_table.FLOAT</code>. 
+	 * Setter for <code>DBA.t_639_numbers_table.FLOAT</code>.
 	 */
 	public void setFloat(java.lang.Double value) {
 		setValue(11, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_639_numbers_table.FLOAT</code>. 
+	 * Getter for <code>DBA.t_639_numbers_table.FLOAT</code>.
 	 */
 	public java.lang.Double getFloat() {
 		return (java.lang.Double) getValue(11);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_639_numbers_table.DOUBLE</code>. 
+	 * Setter for <code>DBA.t_639_numbers_table.DOUBLE</code>.
 	 */
 	public void setDouble(java.lang.Double value) {
 		setValue(12, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_639_numbers_table.DOUBLE</code>. 
+	 * Getter for <code>DBA.t_639_numbers_table.DOUBLE</code>.
 	 */
 	public java.lang.Double getDouble() {
 		return (java.lang.Double) getValue(12);

@@ -9,17 +9,17 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = 1954837545;
+	private static final long serialVersionUID = -474257321;
 
 	/**
-	 * Setter for <code>LIBRARY.T_BOOK_STORE.NAME</code>. 
+	 * Setter for <code>LIBRARY.T_BOOK_STORE.NAME</code>.
 	 */
 	public void setName(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>LIBRARY.T_BOOK_STORE.NAME</code>. 
+	 * Getter for <code>LIBRARY.T_BOOK_STORE.NAME</code>.
 	 */
 	public java.lang.String getName() {
 		return (java.lang.String) getValue(0);

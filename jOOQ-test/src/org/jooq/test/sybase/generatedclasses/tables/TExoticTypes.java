@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = 1133555140;
+	private static final long serialVersionUID = -343627003;
 
 	/**
 	 * The singleton instance of <code>DBA.t_exotic_types</code>
@@ -25,27 +25,35 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.sybase.g
 	}
 
 	/**
-	 * The column <code>DBA.t_exotic_types.ID</code>. 
+	 * The column <code>DBA.t_exotic_types.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TExoticTypesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TExoticTypesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>DBA.t_exotic_types.UU</code>. 
+	 * The column <code>DBA.t_exotic_types.UU</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("UU", org.jooq.impl.SQLDataType.UUID.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("UU", org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
 
 	/**
 	 * Create a <code>DBA.t_exotic_types</code> table reference
 	 */
 	public TExoticTypes() {
-		super("t_exotic_types", org.jooq.test.sybase.generatedclasses.Dba.DBA);
+		this("t_exotic_types", null);
 	}
 
 	/**
 	 * Create an aliased <code>DBA.t_exotic_types</code> table reference
 	 */
 	public TExoticTypes(java.lang.String alias) {
-		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES);
+		this(alias, org.jooq.test.sybase.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES);
+	}
+
+	private TExoticTypes(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.TExoticTypesRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TExoticTypes(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.TExoticTypesRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, aliased, parameters, "");
 	}
 
 	/**
@@ -69,6 +77,13 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.sybase.g
 	 */
 	@Override
 	public org.jooq.test.sybase.generatedclasses.tables.TExoticTypes as(java.lang.String alias) {
-		return new org.jooq.test.sybase.generatedclasses.tables.TExoticTypes(alias);
+		return new org.jooq.test.sybase.generatedclasses.tables.TExoticTypes(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.sybase.generatedclasses.tables.TExoticTypes rename(java.lang.String name) {
+		return new org.jooq.test.sybase.generatedclasses.tables.TExoticTypes(name, null);
 	}
 }

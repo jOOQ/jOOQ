@@ -11,10 +11,10 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_LANGUAGE")
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITLanguage {
 
-	private static final long serialVersionUID = 1200502719;
+	private static final long serialVersionUID = -1129206221;
 
 	/**
-	 * Setter for <code>T_LANGUAGE.CD</code>. 
+	 * Setter for <code>T_LANGUAGE.CD</code>.
 	 */
 	@Override
 	public void setCd(java.lang.String value) {
@@ -22,7 +22,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>T_LANGUAGE.CD</code>. 
+	 * Getter for <code>T_LANGUAGE.CD</code>.
 	 */
 	@javax.persistence.Column(name = "CD", nullable = false, length = 2)
 	@javax.validation.constraints.NotNull
@@ -33,7 +33,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>T_LANGUAGE.DESCRIPTION</code>. 
+	 * Setter for <code>T_LANGUAGE.DESCRIPTION</code>.
 	 */
 	@Override
 	public void setDescription(java.lang.String value) {
@@ -41,7 +41,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>T_LANGUAGE.DESCRIPTION</code>. 
+	 * Getter for <code>T_LANGUAGE.DESCRIPTION</code>.
 	 */
 	@javax.persistence.Column(name = "DESCRIPTION", length = 50)
 	@javax.validation.constraints.Size(max = 50)
@@ -51,7 +51,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * Setter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
 	@Override
 	public void setDescriptionEnglish(java.lang.String value) {
@@ -59,7 +59,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * Getter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
 	@javax.persistence.Column(name = "DESCRIPTION_ENGLISH", length = 50)
 	@javax.validation.constraints.Size(max = 50)
@@ -69,7 +69,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>T_LANGUAGE.ID</code>. 
+	 * Setter for <code>T_LANGUAGE.ID</code>.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -77,7 +77,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Getter for <code>T_LANGUAGE.ID</code>. 
+	 * Getter for <code>T_LANGUAGE.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)

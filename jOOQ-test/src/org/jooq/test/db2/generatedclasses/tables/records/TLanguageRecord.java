@@ -9,59 +9,59 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = 965655961;
+	private static final long serialVersionUID = 1745950029;
 
 	/**
-	 * Setter for <code>LIBRARY.T_LANGUAGE.CD</code>. 
+	 * Setter for <code>LIBRARY.T_LANGUAGE.CD</code>.
 	 */
 	public void setCd(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>LIBRARY.T_LANGUAGE.CD</code>. 
+	 * Getter for <code>LIBRARY.T_LANGUAGE.CD</code>.
 	 */
 	public java.lang.String getCd() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>LIBRARY.T_LANGUAGE.DESCRIPTION</code>. 
+	 * Setter for <code>LIBRARY.T_LANGUAGE.DESCRIPTION</code>.
 	 */
 	public void setDescription(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>LIBRARY.T_LANGUAGE.DESCRIPTION</code>. 
+	 * Getter for <code>LIBRARY.T_LANGUAGE.DESCRIPTION</code>.
 	 */
 	public java.lang.String getDescription() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>LIBRARY.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * Setter for <code>LIBRARY.T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
 	public void setDescriptionEnglish(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>LIBRARY.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * Getter for <code>LIBRARY.T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
 	public java.lang.String getDescriptionEnglish() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>LIBRARY.T_LANGUAGE.ID</code>. 
+	 * Setter for <code>LIBRARY.T_LANGUAGE.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>LIBRARY.T_LANGUAGE.ID</code>. 
+	 * Getter for <code>LIBRARY.T_LANGUAGE.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(3);

@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = 866447847;
+	private static final long serialVersionUID = -969649845;
 
 	/**
 	 * The singleton instance of <code>t_725_lob_test</code>
@@ -25,20 +25,28 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.g
 	}
 
 	/**
-	 * The column <code>t_725_lob_test.id</code>. 
+	 * The column <code>t_725_lob_test.id</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_725_LOB_TEST);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_725_LOB_TEST, "");
 
 	/**
-	 * The column <code>t_725_lob_test.lob</code>. 
+	 * The column <code>t_725_lob_test.lob</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("lob", org.jooq.impl.SQLDataType.BLOB, T_725_LOB_TEST);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("lob", org.jooq.impl.SQLDataType.BLOB, T_725_LOB_TEST, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private T_725LobTest() {
-		super("t_725_lob_test", org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("t_725_lob_test", null);
+	}
+
+	private T_725LobTest(java.lang.String alias, org.jooq.Table<org.jooq.test.cubrid.generatedclasses.tables.records.T_725LobTestRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_725LobTest(java.lang.String alias, org.jooq.Table<org.jooq.test.cubrid.generatedclasses.tables.records.T_725LobTestRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

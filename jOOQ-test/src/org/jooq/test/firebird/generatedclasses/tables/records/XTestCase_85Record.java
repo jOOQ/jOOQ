@@ -11,10 +11,10 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_85")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IXTestCase_85 {
 
-	private static final long serialVersionUID = -1601240647;
+	private static final long serialVersionUID = 957756169;
 
 	/**
-	 * Setter for <code>X_TEST_CASE_85.ID</code>. 
+	 * Setter for <code>X_TEST_CASE_85.ID</code>.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Getter for <code>X_TEST_CASE_85.ID</code>. 
+	 * Getter for <code>X_TEST_CASE_85.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
@@ -33,7 +33,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Setter for <code>X_TEST_CASE_85.X_UNUSED_ID</code>. 
+	 * Setter for <code>X_TEST_CASE_85.X_UNUSED_ID</code>.
 	 */
 	@Override
 	public void setXUnusedId(java.lang.Integer value) {
@@ -41,7 +41,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Getter for <code>X_TEST_CASE_85.X_UNUSED_ID</code>. 
+	 * Getter for <code>X_TEST_CASE_85.X_UNUSED_ID</code>.
 	 */
 	@javax.persistence.Column(name = "X_UNUSED_ID", length = 4)
 	@Override
@@ -50,7 +50,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Setter for <code>X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 * Setter for <code>X_TEST_CASE_85.X_UNUSED_NAME</code>.
 	 */
 	@Override
 	public void setXUnusedName(java.lang.String value) {
@@ -58,7 +58,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Getter for <code>X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 * Getter for <code>X_TEST_CASE_85.X_UNUSED_NAME</code>.
 	 */
 	@javax.persistence.Column(name = "X_UNUSED_NAME", length = 10)
 	@javax.validation.constraints.Size(max = 10)

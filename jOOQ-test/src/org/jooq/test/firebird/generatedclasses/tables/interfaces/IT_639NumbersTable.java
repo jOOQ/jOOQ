@@ -12,12 +12,12 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface IT_639NumbersTable extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.ID</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.ID</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
@@ -25,111 +25,111 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	public java.lang.Integer getId();
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.SHORT</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.SHORT</code>.
 	 */
 	public void setShort(java.lang.Short value);
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.SHORT</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.SHORT</code>.
 	 */
 	@javax.persistence.Column(name = "SHORT", length = 2)
 	public java.lang.Short getShort();
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.INTEGER</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.INTEGER</code>.
 	 */
 	public void setInteger(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.INTEGER</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.INTEGER</code>.
 	 */
 	@javax.persistence.Column(name = "INTEGER", length = 4)
 	public java.lang.Integer getInteger();
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.LONG</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.LONG</code>.
 	 */
 	public void setLong(java.lang.Long value);
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.LONG</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.LONG</code>.
 	 */
 	@javax.persistence.Column(name = "LONG", length = 8)
 	public java.lang.Long getLong();
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>.
 	 */
 	public void setByteDecimal(java.lang.Byte value);
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>.
 	 */
 	@javax.persistence.Column(name = "BYTE_DECIMAL", precision = 2)
 	public java.lang.Byte getByteDecimal();
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>.
 	 */
 	public void setShortDecimal(java.lang.Short value);
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>.
 	 */
 	@javax.persistence.Column(name = "SHORT_DECIMAL", precision = 4)
 	public java.lang.Short getShortDecimal();
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>.
 	 */
 	public void setIntegerDecimal(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>.
 	 */
 	@javax.persistence.Column(name = "INTEGER_DECIMAL", precision = 9)
 	public java.lang.Integer getIntegerDecimal();
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>.
 	 */
 	public void setLongDecimal(java.lang.Long value);
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>.
 	 */
 	@javax.persistence.Column(name = "LONG_DECIMAL", precision = 18)
 	public java.lang.Long getLongDecimal();
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>.
 	 */
 	public void setBigDecimal(java.math.BigDecimal value);
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>.
 	 */
 	@javax.persistence.Column(name = "BIG_DECIMAL", precision = 18, scale = 5)
 	public java.math.BigDecimal getBigDecimal();
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.FLOAT</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.FLOAT</code>.
 	 */
 	public void setFloat(java.lang.Float value);
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.FLOAT</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.FLOAT</code>.
 	 */
 	@javax.persistence.Column(name = "FLOAT", length = 4)
 	public java.lang.Float getFloat();
 
 	/**
-	 * Setter for <code>T_639_NUMBERS_TABLE.DOUBLE</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.DOUBLE</code>.
 	 */
 	public void setDouble(java.lang.Double value);
 
 	/**
-	 * Getter for <code>T_639_NUMBERS_TABLE.DOUBLE</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.DOUBLE</code>.
 	 */
 	@javax.persistence.Column(name = "DOUBLE", length = 8)
 	public java.lang.Double getDouble();

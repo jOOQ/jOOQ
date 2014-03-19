@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 519622628;
+	private static final long serialVersionUID = -347652019;
 
 	/**
 	 * The singleton instance of <code>DBA.x_test_case_64_69</code>
@@ -25,27 +25,35 @@ public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.sybas
 	}
 
 	/**
-	 * The column <code>DBA.x_test_case_64_69.ID</code>. 
+	 * The column <code>DBA.x_test_case_64_69.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>DBA.x_test_case_64_69.UNUSED_ID</code>. 
+	 * The column <code>DBA.x_test_case_64_69.UNUSED_ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> UNUSED_ID = createField("UNUSED_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> UNUSED_ID = createField("UNUSED_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>DBA.x_test_case_64_69</code> table reference
 	 */
 	public XTestCase_64_69() {
-		super("x_test_case_64_69", org.jooq.test.sybase.generatedclasses.Dba.DBA);
+		this("x_test_case_64_69", null);
 	}
 
 	/**
 	 * Create an aliased <code>DBA.x_test_case_64_69</code> table reference
 	 */
 	public XTestCase_64_69(java.lang.String alias) {
-		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69);
+		this(alias, org.jooq.test.sybase.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69);
+	}
+
+	private XTestCase_64_69(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private XTestCase_64_69(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, aliased, parameters, "");
 	}
 
 	/**
@@ -77,6 +85,13 @@ public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.sybas
 	 */
 	@Override
 	public org.jooq.test.sybase.generatedclasses.tables.XTestCase_64_69 as(java.lang.String alias) {
-		return new org.jooq.test.sybase.generatedclasses.tables.XTestCase_64_69(alias);
+		return new org.jooq.test.sybase.generatedclasses.tables.XTestCase_64_69(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.sybase.generatedclasses.tables.XTestCase_64_69 rename(java.lang.String name) {
+		return new org.jooq.test.sybase.generatedclasses.tables.XTestCase_64_69(name, null);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TUnsignedRecord> {
 
-	private static final long serialVersionUID = -300420803;
+	private static final long serialVersionUID = -1813612715;
 
 	/**
 	 * The singleton instance of <code>t_unsigned</code>
@@ -25,29 +25,37 @@ public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.gene
 	}
 
 	/**
-	 * The column <code>t_unsigned.u_byte</code>. 
+	 * The column <code>t_unsigned.u_byte</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.UByte> U_BYTE = createField("u_byte", org.jooq.impl.SQLDataType.TINYINTUNSIGNED, T_UNSIGNED);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.UByte> U_BYTE = createField("u_byte", org.jooq.impl.SQLDataType.TINYINTUNSIGNED, T_UNSIGNED, "");
 
 	/**
-	 * The column <code>t_unsigned.u_short</code>. 
+	 * The column <code>t_unsigned.u_short</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.UShort> U_SHORT = createField("u_short", org.jooq.impl.SQLDataType.SMALLINTUNSIGNED, T_UNSIGNED);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.UShort> U_SHORT = createField("u_short", org.jooq.impl.SQLDataType.SMALLINTUNSIGNED, T_UNSIGNED, "");
 
 	/**
-	 * The column <code>t_unsigned.u_int</code>. 
+	 * The column <code>t_unsigned.u_int</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.UInteger> U_INT = createField("u_int", org.jooq.impl.SQLDataType.INTEGERUNSIGNED, T_UNSIGNED);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.UInteger> U_INT = createField("u_int", org.jooq.impl.SQLDataType.INTEGERUNSIGNED, T_UNSIGNED, "");
 
 	/**
-	 * The column <code>t_unsigned.u_long</code>. 
+	 * The column <code>t_unsigned.u_long</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.ULong> U_LONG = createField("u_long", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, T_UNSIGNED);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.ULong> U_LONG = createField("u_long", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, T_UNSIGNED, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TUnsigned() {
-		super("t_unsigned", org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("t_unsigned", null);
+	}
+
+	private TUnsigned(java.lang.String alias, org.jooq.Table<org.jooq.test.cubrid.generatedclasses.tables.records.TUnsignedRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TUnsigned(java.lang.String alias, org.jooq.Table<org.jooq.test.cubrid.generatedclasses.tables.records.TUnsignedRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 }

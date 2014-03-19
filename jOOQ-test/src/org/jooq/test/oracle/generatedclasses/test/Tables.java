@@ -17,6 +17,11 @@ public class Tables {
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.MLibrary M_LIBRARY = org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY;
 
 	/**
+	 * The table TEST.T_ACCOUNTS
+	 */
+	public static final org.jooq.test.oracle.generatedclasses.test.tables.TAccounts T_ACCOUNTS = org.jooq.test.oracle.generatedclasses.test.tables.TAccounts.T_ACCOUNTS;
+
+	/**
 	 * The table TEST.T_ARRAYS
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TArrays T_ARRAYS = org.jooq.test.oracle.generatedclasses.test.tables.TArrays.T_ARRAYS;
@@ -67,9 +72,19 @@ public class Tables {
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TLanguage T_LANGUAGE = org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE;
 
 	/**
+	 * The table TEST.TRANSACTIONS_WITH_CREDIT_DEBIT
+	 */
+	public static final org.jooq.test.oracle.generatedclasses.test.tables.TransactionsWithCreditDebit TRANSACTIONS_WITH_CREDIT_DEBIT = org.jooq.test.oracle.generatedclasses.test.tables.TransactionsWithCreditDebit.TRANSACTIONS_WITH_CREDIT_DEBIT;
+
+	/**
 	 * The table TEST.T_TEMP
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TTemp T_TEMP = org.jooq.test.oracle.generatedclasses.test.tables.TTemp.T_TEMP;
+
+	/**
+	 * The table TEST.T_TRANSACTIONS
+	 */
+	public static final org.jooq.test.oracle.generatedclasses.test.tables.TTransactions T_TRANSACTIONS = org.jooq.test.oracle.generatedclasses.test.tables.TTransactions.T_TRANSACTIONS;
 
 	/**
 	 * The table TEST.T_TRIGGERS
@@ -120,6 +135,21 @@ public class Tables {
 	 * The table TEST.V_LIBRARY
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.VLibrary V_LIBRARY = org.jooq.test.oracle.generatedclasses.test.tables.VLibrary.V_LIBRARY;
+
+	/**
+	 * The table TEST.V_TRANSACTIONS
+	 */
+	public static final org.jooq.test.oracle.generatedclasses.test.tables.VTransactions V_TRANSACTIONS = org.jooq.test.oracle.generatedclasses.test.tables.VTransactions.V_TRANSACTIONS;
+
+	/**
+	 * The table TEST.V_TRANSACTIONS_BY_TIME
+	 */
+	public static final org.jooq.test.oracle.generatedclasses.test.tables.VTransactionsByTime V_TRANSACTIONS_BY_TIME = org.jooq.test.oracle.generatedclasses.test.tables.VTransactionsByTime.V_TRANSACTIONS_BY_TIME;
+
+	/**
+	 * The table TEST.V_TRANSACTIONS_CREDIT_FIRST
+	 */
+	public static final org.jooq.test.oracle.generatedclasses.test.tables.VTransactionsCreditFirst V_TRANSACTIONS_CREDIT_FIRST = org.jooq.test.oracle.generatedclasses.test.tables.VTransactionsCreditFirst.V_TRANSACTIONS_CREDIT_FIRST;
 
 	/**
 	 * The table TEST.X_TEST_CASE_2025

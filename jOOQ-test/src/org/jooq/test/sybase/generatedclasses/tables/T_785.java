@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = 1991715949;
+	private static final long serialVersionUID = 497084786;
 
 	/**
 	 * The singleton instance of <code>DBA.t_785</code>
@@ -25,32 +25,40 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generate
 	}
 
 	/**
-	 * The column <code>DBA.t_785.ID</code>. 
+	 * The column <code>DBA.t_785.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>DBA.t_785.NAME</code>. 
+	 * The column <code>DBA.t_785.NAME</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
-	 * The column <code>DBA.t_785.VALUE</code>. 
+	 * The column <code>DBA.t_785.VALUE</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
 	 * Create a <code>DBA.t_785</code> table reference
 	 */
 	public T_785() {
-		super("t_785", org.jooq.test.sybase.generatedclasses.Dba.DBA);
+		this("t_785", null);
 	}
 
 	/**
 	 * Create an aliased <code>DBA.t_785</code> table reference
 	 */
 	public T_785(java.lang.String alias) {
-		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.T_785.T_785);
+		this(alias, org.jooq.test.sybase.generatedclasses.tables.T_785.T_785);
+	}
+
+	private T_785(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.T_785Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_785(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.T_785Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, aliased, parameters, "");
 	}
 
 	/**
@@ -58,6 +66,13 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generate
 	 */
 	@Override
 	public org.jooq.test.sybase.generatedclasses.tables.T_785 as(java.lang.String alias) {
-		return new org.jooq.test.sybase.generatedclasses.tables.T_785(alias);
+		return new org.jooq.test.sybase.generatedclasses.tables.T_785(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.sybase.generatedclasses.tables.T_785 rename(java.lang.String name) {
+		return new org.jooq.test.sybase.generatedclasses.tables.T_785(name, null);
 	}
 }

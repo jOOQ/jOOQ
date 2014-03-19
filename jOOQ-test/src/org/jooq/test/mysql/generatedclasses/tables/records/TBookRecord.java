@@ -11,7 +11,7 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.mysql.generatedclasses.enums.TBookStatus> {
 
-	private static final long serialVersionUID = -1127858454;
+	private static final long serialVersionUID = 2024076256;
 
 	/**
 	 * Setter for <code>test.t_book.ID</code>. The book ID
@@ -42,14 +42,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Setter for <code>test.t_book.co_author_id</code>. 
+	 * Setter for <code>test.t_book.co_author_id</code>.
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>test.t_book.co_author_id</code>. 
+	 * Getter for <code>test.t_book.co_author_id</code>.
 	 */
 	public java.lang.Integer getCoAuthorId() {
 		return (java.lang.Integer) getValue(2);

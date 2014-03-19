@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -1553520956;
+	private static final long serialVersionUID = -2127127425;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOK</code>
@@ -59,7 +59,7 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generate
 	/**
 	 * The column <code>TEST.T_BOOK.LANGUAGE_ID</code>. The language of the book
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The language of the book");
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "The language of the book");
 
 	/**
 	 * The column <code>TEST.T_BOOK.CONTENT_TEXT</code>. Some textual content of the book

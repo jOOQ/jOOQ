@@ -12,12 +12,12 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface IT_937 extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>T_937.T_937</code>. 
+	 * Setter for <code>T_937.T_937</code>.
 	 */
 	public void setT_937(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_937.T_937</code>. 
+	 * Getter for <code>T_937.T_937</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "T_937", unique = true, nullable = false, length = 4)

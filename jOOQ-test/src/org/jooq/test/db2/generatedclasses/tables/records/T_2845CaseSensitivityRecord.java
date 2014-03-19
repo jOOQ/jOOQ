@@ -9,73 +9,73 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.T_2845CaseSensitivityRecord> implements org.jooq.Record5<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1267918881;
+	private static final long serialVersionUID = 270117423;
 
 	/**
-	 * Setter for <code>LIBRARY.T_2845_CASE_sensitivity.ID</code>. 
+	 * Setter for <code>LIBRARY.T_2845_CASE_sensitivity.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>LIBRARY.T_2845_CASE_sensitivity.ID</code>. 
+	 * Getter for <code>LIBRARY.T_2845_CASE_sensitivity.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>LIBRARY.T_2845_CASE_sensitivity.INSENSITIVE</code>. 
+	 * Setter for <code>LIBRARY.T_2845_CASE_sensitivity.INSENSITIVE</code>.
 	 */
 	public void setInsensitive(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>LIBRARY.T_2845_CASE_sensitivity.INSENSITIVE</code>. 
+	 * Getter for <code>LIBRARY.T_2845_CASE_sensitivity.INSENSITIVE</code>.
 	 */
 	public java.lang.Integer getInsensitive() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>LIBRARY.T_2845_CASE_sensitivity.UPPER</code>. 
+	 * Setter for <code>LIBRARY.T_2845_CASE_sensitivity.UPPER</code>.
 	 */
 	public void setUpper(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>LIBRARY.T_2845_CASE_sensitivity.UPPER</code>. 
+	 * Getter for <code>LIBRARY.T_2845_CASE_sensitivity.UPPER</code>.
 	 */
 	public java.lang.Integer getUpper() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>LIBRARY.T_2845_CASE_sensitivity.lower</code>. 
+	 * Setter for <code>LIBRARY.T_2845_CASE_sensitivity.lower</code>.
 	 */
 	public void setLower(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>LIBRARY.T_2845_CASE_sensitivity.lower</code>. 
+	 * Getter for <code>LIBRARY.T_2845_CASE_sensitivity.lower</code>.
 	 */
 	public java.lang.Integer getLower() {
 		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>LIBRARY.T_2845_CASE_sensitivity.Mixed</code>. 
+	 * Setter for <code>LIBRARY.T_2845_CASE_sensitivity.Mixed</code>.
 	 */
 	public void setMixed(java.lang.Integer value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>LIBRARY.T_2845_CASE_sensitivity.Mixed</code>. 
+	 * Getter for <code>LIBRARY.T_2845_CASE_sensitivity.Mixed</code>.
 	 */
 	public java.lang.Integer getMixed() {
 		return (java.lang.Integer) getValue(4);

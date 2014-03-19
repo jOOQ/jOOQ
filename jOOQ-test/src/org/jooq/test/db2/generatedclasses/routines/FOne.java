@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FOne extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -1134084610;
+	private static final long serialVersionUID = 280789588;
 
 	/**
-	 * The parameter <code>LIBRARY.F_ONE.RETURN_VALUE</code>. 
+	 * The parameter <code>LIBRARY.F_ONE.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 

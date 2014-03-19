@@ -11,10 +11,10 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_LIBRARY")
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IVLibrary {
 
-	private static final long serialVersionUID = 2115122333;
+	private static final long serialVersionUID = -239099017;
 
 	/**
-	 * Setter for <code>V_LIBRARY.AUTHOR</code>. 
+	 * Setter for <code>V_LIBRARY.AUTHOR</code>.
 	 */
 	@Override
 	public void setAuthor(java.lang.String value) {
@@ -22,7 +22,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Getter for <code>V_LIBRARY.AUTHOR</code>. 
+	 * Getter for <code>V_LIBRARY.AUTHOR</code>.
 	 */
 	@javax.persistence.Column(name = "AUTHOR", length = 101)
 	@javax.validation.constraints.Size(max = 101)
@@ -32,7 +32,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Setter for <code>V_LIBRARY.TITLE</code>. 
+	 * Setter for <code>V_LIBRARY.TITLE</code>.
 	 */
 	@Override
 	public void setTitle(java.lang.String value) {
@@ -40,7 +40,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Getter for <code>V_LIBRARY.TITLE</code>. 
+	 * Getter for <code>V_LIBRARY.TITLE</code>.
 	 */
 	@javax.persistence.Column(name = "TITLE", length = 400)
 	@javax.validation.constraints.Size(max = 400)

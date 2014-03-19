@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 1967347488;
+	private static final long serialVersionUID = 1549732379;
 
 	/**
 	 * The singleton instance of <code>DBA.t_dates</code>
@@ -25,47 +25,55 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generat
 	}
 
 	/**
-	 * The column <code>DBA.t_dates.id</code>. 
+	 * The column <code>DBA.t_dates.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>DBA.t_dates.d</code>. 
+	 * The column <code>DBA.t_dates.d</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord, java.sql.Date> D = createField("d", org.jooq.impl.SQLDataType.DATE, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord, java.sql.Date> D = createField("d", org.jooq.impl.SQLDataType.DATE, this, "");
 
 	/**
-	 * The column <code>DBA.t_dates.t</code>. 
+	 * The column <code>DBA.t_dates.t</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord, java.sql.Time> T = createField("t", org.jooq.impl.SQLDataType.TIME, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord, java.sql.Time> T = createField("t", org.jooq.impl.SQLDataType.TIME, this, "");
 
 	/**
-	 * The column <code>DBA.t_dates.ts</code>. 
+	 * The column <code>DBA.t_dates.ts</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("ts", org.jooq.impl.SQLDataType.TIMESTAMP, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("ts", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
-	 * The column <code>DBA.t_dates.d_int</code>. 
+	 * The column <code>DBA.t_dates.d_int</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> D_INT = createField("d_int", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> D_INT = createField("d_int", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>DBA.t_dates.ts_bigint</code>. 
+	 * The column <code>DBA.t_dates.ts_bigint</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.BIGINT, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
 	/**
 	 * Create a <code>DBA.t_dates</code> table reference
 	 */
 	public TDates() {
-		super("t_dates", org.jooq.test.sybase.generatedclasses.Dba.DBA);
+		this("t_dates", null);
 	}
 
 	/**
 	 * Create an aliased <code>DBA.t_dates</code> table reference
 	 */
 	public TDates(java.lang.String alias) {
-		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.TDates.T_DATES);
+		this(alias, org.jooq.test.sybase.generatedclasses.tables.TDates.T_DATES);
+	}
+
+	private TDates(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TDates(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, aliased, parameters, "");
 	}
 
 	/**
@@ -89,6 +97,13 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generat
 	 */
 	@Override
 	public org.jooq.test.sybase.generatedclasses.tables.TDates as(java.lang.String alias) {
-		return new org.jooq.test.sybase.generatedclasses.tables.TDates(alias);
+		return new org.jooq.test.sybase.generatedclasses.tables.TDates(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.sybase.generatedclasses.tables.TDates rename(java.lang.String name) {
+		return new org.jooq.test.sybase.generatedclasses.tables.TDates(name, null);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_986_1 extends org.jooq.impl.TableImpl<org.jooq.test.db2.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = 120549318;
+	private static final long serialVersionUID = 1822444602;
 
 	/**
 	 * The singleton instance of <code>LIBRARY.T_986_1</code>
@@ -25,15 +25,23 @@ public class T_986_1 extends org.jooq.impl.TableImpl<org.jooq.test.db2.generated
 	}
 
 	/**
-	 * The column <code>LIBRARY.T_986_1.REF</code>. 
+	 * The column <code>LIBRARY.T_986_1.REF</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_986_1Record, java.lang.Integer> REF = createField("REF", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_986_1);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_986_1Record, java.lang.Integer> REF = createField("REF", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_986_1, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private T_986_1() {
-		super("T_986_1", org.jooq.test.db2.generatedclasses.Library.LIBRARY);
+		this("T_986_1", null);
+	}
+
+	private T_986_1(java.lang.String alias, org.jooq.Table<org.jooq.test.db2.generatedclasses.tables.records.T_986_1Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_986_1(java.lang.String alias, org.jooq.Table<org.jooq.test.db2.generatedclasses.tables.records.T_986_1Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.db2.generatedclasses.Library.LIBRARY, aliased, parameters, "");
 	}
 
 	/**

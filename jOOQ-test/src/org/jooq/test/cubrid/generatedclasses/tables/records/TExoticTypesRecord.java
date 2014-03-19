@@ -9,31 +9,31 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TExoticTypesRecord> implements org.jooq.Record2<java.lang.Integer, java.util.UUID> {
 
-	private static final long serialVersionUID = -453068989;
+	private static final long serialVersionUID = -2056428769;
 
 	/**
-	 * Setter for <code>t_exotic_types.id</code>. 
+	 * Setter for <code>t_exotic_types.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>t_exotic_types.id</code>. 
+	 * Getter for <code>t_exotic_types.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>t_exotic_types.uu</code>. 
+	 * Setter for <code>t_exotic_types.uu</code>.
 	 */
 	public void setUu(java.util.UUID value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>t_exotic_types.uu</code>. 
+	 * Getter for <code>t_exotic_types.uu</code>.
 	 */
 	public java.util.UUID getUu() {
 		return (java.util.UUID) getValue(1);

@@ -9,7 +9,7 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 2062790932;
+	private static final long serialVersionUID = -1580835444;
 
 	/**
 	 * The singleton instance of <code>LIBRARY.V_BOOK</code>
@@ -25,54 +25,62 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.db2.generatedcl
 	}
 
 	/**
-	 * The column <code>LIBRARY.V_BOOK.ID</code>. 
+	 * The column <code>LIBRARY.V_BOOK.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), V_BOOK, "");
 
 	/**
-	 * The column <code>LIBRARY.V_BOOK.AUTHOR_ID</code>. 
+	 * The column <code>LIBRARY.V_BOOK.AUTHOR_ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), V_BOOK, "");
 
 	/**
-	 * The column <code>LIBRARY.V_BOOK.CO_AUTHOR_ID</code>. 
+	 * The column <code>LIBRARY.V_BOOK.CO_AUTHOR_ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK, "");
 
 	/**
-	 * The column <code>LIBRARY.V_BOOK.DETAILS_ID</code>. 
+	 * The column <code>LIBRARY.V_BOOK.DETAILS_ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK, "");
 
 	/**
-	 * The column <code>LIBRARY.V_BOOK.TITLE</code>. 
+	 * The column <code>LIBRARY.V_BOOK.TITLE</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), V_BOOK, "");
 
 	/**
-	 * The column <code>LIBRARY.V_BOOK.PUBLISHED_IN</code>. 
+	 * The column <code>LIBRARY.V_BOOK.PUBLISHED_IN</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER.nullable(false), V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER.nullable(false), V_BOOK, "");
 
 	/**
-	 * The column <code>LIBRARY.V_BOOK.LANGUAGE_ID</code>. 
+	 * The column <code>LIBRARY.V_BOOK.LANGUAGE_ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), V_BOOK, "");
 
 	/**
-	 * The column <code>LIBRARY.V_BOOK.CONTENT_TEXT</code>. 
+	 * The column <code>LIBRARY.V_BOOK.CONTENT_TEXT</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB.length(1048576), V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB.length(1048576), V_BOOK, "");
 
 	/**
-	 * The column <code>LIBRARY.V_BOOK.CONTENT_PDF</code>. 
+	 * The column <code>LIBRARY.V_BOOK.CONTENT_PDF</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB.length(1048576), V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB.length(1048576), V_BOOK, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private VBook() {
-		super("V_BOOK", org.jooq.test.db2.generatedclasses.Library.LIBRARY);
+		this("V_BOOK", null);
+	}
+
+	private VBook(java.lang.String alias, org.jooq.Table<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private VBook(java.lang.String alias, org.jooq.Table<org.jooq.test.db2.generatedclasses.tables.records.VBookRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.db2.generatedclasses.Library.LIBRARY, aliased, parameters, "");
 	}
 }

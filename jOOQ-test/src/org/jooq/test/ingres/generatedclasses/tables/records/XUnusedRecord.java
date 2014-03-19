@@ -9,199 +9,199 @@ package org.jooq.test.ingres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ingres.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record14<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 421306320;
+	private static final long serialVersionUID = 1492424816;
 
 	/**
-	 * Setter for <code>test.x_unused.id</code>. 
+	 * Setter for <code>test.x_unused.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>test.x_unused.id</code>. 
+	 * Getter for <code>test.x_unused.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>test.x_unused.name</code>. 
+	 * Setter for <code>test.x_unused.name</code>.
 	 */
 	public void setName(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>test.x_unused.name</code>. 
+	 * Getter for <code>test.x_unused.name</code>.
 	 */
 	public java.lang.String getName() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>test.x_unused.big_integer</code>. 
+	 * Setter for <code>test.x_unused.big_integer</code>.
 	 */
 	public void setBigInteger(java.math.BigInteger value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>test.x_unused.big_integer</code>. 
+	 * Getter for <code>test.x_unused.big_integer</code>.
 	 */
 	public java.math.BigInteger getBigInteger() {
 		return (java.math.BigInteger) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>test.x_unused.id_ref</code>. 
+	 * Setter for <code>test.x_unused.id_ref</code>.
 	 */
 	public void setIdRef(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>test.x_unused.id_ref</code>. 
+	 * Getter for <code>test.x_unused.id_ref</code>.
 	 */
 	public java.lang.Integer getIdRef() {
 		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>test.x_unused.class</code>. 
+	 * Setter for <code>test.x_unused.class</code>.
 	 */
 	public void setClass_(java.lang.Integer value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>test.x_unused.class</code>. 
+	 * Getter for <code>test.x_unused.class</code>.
 	 */
 	public java.lang.Integer getClass_() {
 		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>test.x_unused.fields</code>. 
+	 * Setter for <code>test.x_unused.fields</code>.
 	 */
 	public void setFields(java.lang.Integer value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>test.x_unused.fields</code>. 
+	 * Getter for <code>test.x_unused.fields</code>.
 	 */
 	public java.lang.Integer getFields() {
 		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>test.x_unused.configuration</code>. 
+	 * Setter for <code>test.x_unused.configuration</code>.
 	 */
 	public void setConfiguration(java.lang.Integer value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>test.x_unused.configuration</code>. 
+	 * Getter for <code>test.x_unused.configuration</code>.
 	 */
 	public java.lang.Integer getConfiguration() {
 		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>test.x_unused.u_d_t</code>. 
+	 * Setter for <code>test.x_unused.u_d_t</code>.
 	 */
 	public void setUDT(java.lang.Integer value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>test.x_unused.u_d_t</code>. 
+	 * Getter for <code>test.x_unused.u_d_t</code>.
 	 */
 	public java.lang.Integer getUDT() {
 		return (java.lang.Integer) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>test.x_unused.meta_data</code>. 
+	 * Setter for <code>test.x_unused.meta_data</code>.
 	 */
 	public void setMetaData(java.lang.Integer value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>test.x_unused.meta_data</code>. 
+	 * Getter for <code>test.x_unused.meta_data</code>.
 	 */
 	public java.lang.Integer getMetaData() {
 		return (java.lang.Integer) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>test.x_unused.type0</code>. 
+	 * Setter for <code>test.x_unused.type0</code>.
 	 */
 	public void setType0(java.lang.Integer value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>test.x_unused.type0</code>. 
+	 * Getter for <code>test.x_unused.type0</code>.
 	 */
 	public java.lang.Integer getType0() {
 		return (java.lang.Integer) getValue(9);
 	}
 
 	/**
-	 * Setter for <code>test.x_unused.primary_key</code>. 
+	 * Setter for <code>test.x_unused.primary_key</code>.
 	 */
 	public void setPrimaryKey_(java.lang.Integer value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>test.x_unused.primary_key</code>. 
+	 * Getter for <code>test.x_unused.primary_key</code>.
 	 */
 	public java.lang.Integer getPrimaryKey_() {
 		return (java.lang.Integer) getValue(10);
 	}
 
 	/**
-	 * Setter for <code>test.x_unused.primarykey</code>. 
+	 * Setter for <code>test.x_unused.primarykey</code>.
 	 */
 	public void setPrimarykey(java.lang.Integer value) {
 		setValue(11, value);
 	}
 
 	/**
-	 * Getter for <code>test.x_unused.primarykey</code>. 
+	 * Getter for <code>test.x_unused.primarykey</code>.
 	 */
 	public java.lang.Integer getPrimarykey() {
 		return (java.lang.Integer) getValue(11);
 	}
 
 	/**
-	 * Setter for <code>test.x_unused.name_ref</code>. 
+	 * Setter for <code>test.x_unused.name_ref</code>.
 	 */
 	public void setNameRef(java.lang.String value) {
 		setValue(12, value);
 	}
 
 	/**
-	 * Getter for <code>test.x_unused.name_ref</code>. 
+	 * Getter for <code>test.x_unused.name_ref</code>.
 	 */
 	public java.lang.String getNameRef() {
 		return (java.lang.String) getValue(12);
 	}
 
 	/**
-	 * Setter for <code>test.x_unused.field 737</code>. 
+	 * Setter for <code>test.x_unused.field 737</code>.
 	 */
 	public void setField_737(java.math.BigDecimal value) {
 		setValue(13, value);
 	}
 
 	/**
-	 * Getter for <code>test.x_unused.field 737</code>. 
+	 * Getter for <code>test.x_unused.field 737</code>.
 	 */
 	public java.math.BigDecimal getField_737() {
 		return (java.math.BigDecimal) getValue(13);

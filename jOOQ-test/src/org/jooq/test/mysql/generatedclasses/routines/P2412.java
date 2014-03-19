@@ -9,30 +9,30 @@ package org.jooq.test.mysql.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class P2412 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1853634390;
+	private static final long serialVersionUID = 1271751276;
 
 	/**
-	 * The parameter <code>test.p2412.p_in_1</code>. 
+	 * The parameter <code>test.p2412.p_in_1</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P_IN_1 = createParameter("p_in_1", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>test.p2412.p_in_2</code>. 
+	 * The parameter <code>test.p2412.p_in_2</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P_IN_2 = createParameter("p_in_2", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>test.p2412.p_out_1</code>. 
+	 * The parameter <code>test.p2412.p_out_1</code>.
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> P_OUT_1 = createParameter("p_out_1", org.jooq.impl.SQLDataType.DECIMAL.precision(12, 2));
 
 	/**
-	 * The parameter <code>test.p2412.p_out_2</code>. 
+	 * The parameter <code>test.p2412.p_out_2</code>.
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> P_OUT_2 = createParameter("p_out_2", org.jooq.impl.SQLDataType.DECIMAL.precision(12, 2));
 
 	/**
-	 * The parameter <code>test.p2412.p_in_out</code>. 
+	 * The parameter <code>test.p2412.p_in_out</code>.
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> P_IN_OUT = createParameter("p_in_out", org.jooq.impl.SQLDataType.DECIMAL.precision(12, 2));
 

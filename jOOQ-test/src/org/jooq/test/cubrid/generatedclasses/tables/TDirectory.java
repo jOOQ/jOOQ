@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDirectory extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord> {
 
-	private static final long serialVersionUID = 1188061463;
+	private static final long serialVersionUID = -644214361;
 
 	/**
 	 * The singleton instance of <code>t_directory</code>
@@ -25,30 +25,38 @@ public class TDirectory extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.gen
 	}
 
 	/**
-	 * The column <code>t_directory.id</code>. 
+	 * The column <code>t_directory.id</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_DIRECTORY);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_DIRECTORY, "");
 
 	/**
-	 * The column <code>t_directory.parent_id</code>. 
+	 * The column <code>t_directory.parent_id</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, java.lang.Integer> PARENT_ID = createField("parent_id", org.jooq.impl.SQLDataType.INTEGER, T_DIRECTORY);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, java.lang.Integer> PARENT_ID = createField("parent_id", org.jooq.impl.SQLDataType.INTEGER, T_DIRECTORY, "");
 
 	/**
-	 * The column <code>t_directory.is_directory</code>. 
+	 * The column <code>t_directory.is_directory</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, java.lang.Integer> IS_DIRECTORY = createField("is_directory", org.jooq.impl.SQLDataType.INTEGER, T_DIRECTORY);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, java.lang.Integer> IS_DIRECTORY = createField("is_directory", org.jooq.impl.SQLDataType.INTEGER, T_DIRECTORY, "");
 
 	/**
-	 * The column <code>t_directory.name</code>. 
+	 * The column <code>t_directory.name</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_DIRECTORY);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_DIRECTORY, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TDirectory() {
-		super("t_directory", org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("t_directory", null);
+	}
+
+	private TDirectory(java.lang.String alias, org.jooq.Table<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TDirectory(java.lang.String alias, org.jooq.Table<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

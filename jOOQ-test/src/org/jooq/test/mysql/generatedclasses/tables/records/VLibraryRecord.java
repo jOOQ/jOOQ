@@ -11,17 +11,17 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -35477460;
+	private static final long serialVersionUID = -1494136764;
 
 	/**
-	 * Setter for <code>test.v_library.AUTHOR</code>. 
+	 * Setter for <code>test.v_library.AUTHOR</code>.
 	 */
 	public void setAuthor(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>test.v_library.AUTHOR</code>. 
+	 * Getter for <code>test.v_library.AUTHOR</code>.
 	 */
 	public java.lang.String getAuthor() {
 		return (java.lang.String) getValue(0);

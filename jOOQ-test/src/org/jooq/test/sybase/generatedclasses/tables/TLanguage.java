@@ -11,7 +11,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 1774063137;
+	private static final long serialVersionUID = 972536321;
 
 	/**
 	 * The singleton instance of <code>DBA.t_language</code>
@@ -27,37 +27,45 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.sybase.gene
 	}
 
 	/**
-	 * The column <code>DBA.t_language.cd</code>. 
+	 * The column <code>DBA.t_language.cd</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("cd", org.jooq.impl.SQLDataType.CHAR.length(2).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("cd", org.jooq.impl.SQLDataType.CHAR.length(2).nullable(false), this, "");
 
 	/**
-	 * The column <code>DBA.t_language.description</code>. 
+	 * The column <code>DBA.t_language.description</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
-	 * The column <code>DBA.t_language.description_english</code>. 
+	 * The column <code>DBA.t_language.description_english</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("description_english", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("description_english", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
-	 * The column <code>DBA.t_language.id</code>. 
+	 * The column <code>DBA.t_language.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>DBA.t_language</code> table reference
 	 */
 	public TLanguage() {
-		super("t_language", org.jooq.test.sybase.generatedclasses.Dba.DBA);
+		this("t_language", null);
 	}
 
 	/**
 	 * Create an aliased <code>DBA.t_language</code> table reference
 	 */
 	public TLanguage(java.lang.String alias) {
-		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.TLanguage.T_LANGUAGE);
+		this(alias, org.jooq.test.sybase.generatedclasses.tables.TLanguage.T_LANGUAGE);
+	}
+
+	private TLanguage(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TLanguage(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, aliased, parameters, "An entity holding language master data");
 	}
 
 	/**
@@ -81,6 +89,13 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.sybase.gene
 	 */
 	@Override
 	public org.jooq.test.sybase.generatedclasses.tables.TLanguage as(java.lang.String alias) {
-		return new org.jooq.test.sybase.generatedclasses.tables.TLanguage(alias);
+		return new org.jooq.test.sybase.generatedclasses.tables.TLanguage(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.sybase.generatedclasses.tables.TLanguage rename(java.lang.String name) {
+		return new org.jooq.test.sybase.generatedclasses.tables.TLanguage(name, null);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -10048587;
+	private static final long serialVersionUID = 264800197;
 
 	/**
 	 * The singleton instance of <code>TEST</code>
@@ -50,6 +50,7 @@ public class Test extends org.jooq.impl.SchemaImpl {
 	private final java.util.List<org.jooq.Table<?>> getTables0() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
 			org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY,
+			org.jooq.test.oracle.generatedclasses.test.tables.TAccounts.T_ACCOUNTS,
 			org.jooq.test.oracle.generatedclasses.test.tables.TArrays.T_ARRAYS,
 			org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR,
 			org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK,
@@ -60,7 +61,9 @@ public class Test extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY,
 			org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes.T_EXOTIC_TYPES,
 			org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE,
+			org.jooq.test.oracle.generatedclasses.test.tables.TransactionsWithCreditDebit.TRANSACTIONS_WITH_CREDIT_DEBIT,
 			org.jooq.test.oracle.generatedclasses.test.tables.TTemp.T_TEMP,
+			org.jooq.test.oracle.generatedclasses.test.tables.TTransactions.T_TRANSACTIONS,
 			org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS,
 			org.jooq.test.oracle.generatedclasses.test.tables.TUnsigned.T_UNSIGNED,
 			org.jooq.test.oracle.generatedclasses.test.tables.T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY,
@@ -71,6 +74,9 @@ public class Test extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK,
 			org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE,
 			org.jooq.test.oracle.generatedclasses.test.tables.VLibrary.V_LIBRARY,
+			org.jooq.test.oracle.generatedclasses.test.tables.VTransactions.V_TRANSACTIONS,
+			org.jooq.test.oracle.generatedclasses.test.tables.VTransactionsByTime.V_TRANSACTIONS_BY_TIME,
+			org.jooq.test.oracle.generatedclasses.test.tables.VTransactionsCreditFirst.V_TRANSACTIONS_CREDIT_FIRST,
 			org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025,
 			org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_64_69.X_TEST_CASE_64_69,
 			org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_71.X_TEST_CASE_71,

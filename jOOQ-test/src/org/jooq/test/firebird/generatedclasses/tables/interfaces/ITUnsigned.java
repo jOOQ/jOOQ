@@ -12,45 +12,45 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface ITUnsigned extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>T_UNSIGNED.U_BYTE</code>. 
+	 * Setter for <code>T_UNSIGNED.U_BYTE</code>.
 	 */
 	public void setUByte(org.jooq.types.UByte value);
 
 	/**
-	 * Getter for <code>T_UNSIGNED.U_BYTE</code>. 
+	 * Getter for <code>T_UNSIGNED.U_BYTE</code>.
 	 */
 	@javax.persistence.Column(name = "U_BYTE", length = 2)
 	public org.jooq.types.UByte getUByte();
 
 	/**
-	 * Setter for <code>T_UNSIGNED.U_SHORT</code>. 
+	 * Setter for <code>T_UNSIGNED.U_SHORT</code>.
 	 */
 	public void setUShort(org.jooq.types.UShort value);
 
 	/**
-	 * Getter for <code>T_UNSIGNED.U_SHORT</code>. 
+	 * Getter for <code>T_UNSIGNED.U_SHORT</code>.
 	 */
 	@javax.persistence.Column(name = "U_SHORT", length = 4)
 	public org.jooq.types.UShort getUShort();
 
 	/**
-	 * Setter for <code>T_UNSIGNED.U_INT</code>. 
+	 * Setter for <code>T_UNSIGNED.U_INT</code>.
 	 */
 	public void setUInt(org.jooq.types.UInteger value);
 
 	/**
-	 * Getter for <code>T_UNSIGNED.U_INT</code>. 
+	 * Getter for <code>T_UNSIGNED.U_INT</code>.
 	 */
 	@javax.persistence.Column(name = "U_INT", length = 8)
 	public org.jooq.types.UInteger getUInt();
 
 	/**
-	 * Setter for <code>T_UNSIGNED.U_LONG</code>. 
+	 * Setter for <code>T_UNSIGNED.U_LONG</code>.
 	 */
 	public void setULong(org.jooq.types.ULong value);
 
 	/**
-	 * Getter for <code>T_UNSIGNED.U_LONG</code>. 
+	 * Getter for <code>T_UNSIGNED.U_LONG</code>.
 	 */
 	@javax.persistence.Column(name = "U_LONG", length = 20)
 	public org.jooq.types.ULong getULong();

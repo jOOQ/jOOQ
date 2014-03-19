@@ -9,7 +9,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -1580791940;
+	private static final long serialVersionUID = 1728183268;
 
 	/**
 	 * The singleton instance of <code>test.t_725_lob_test</code>
@@ -25,20 +25,28 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.mysql.ge
 	}
 
 	/**
-	 * The column <code>test.t_725_lob_test.ID</code>. 
+	 * The column <code>test.t_725_lob_test.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_725_LOB_TEST);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_725_LOB_TEST, "");
 
 	/**
-	 * The column <code>test.t_725_lob_test.LOB</code>. 
+	 * The column <code>test.t_725_lob_test.LOB</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB, T_725_LOB_TEST);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB, T_725_LOB_TEST, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private T_725LobTest() {
-		super("t_725_lob_test", org.jooq.test.mysql.generatedclasses.Test.TEST);
+		this("t_725_lob_test", null);
+	}
+
+	private T_725LobTest(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql.generatedclasses.tables.records.T_725LobTestRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_725LobTest(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql.generatedclasses.tables.records.T_725LobTestRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.mysql.generatedclasses.Test.TEST, aliased, parameters, "");
 	}
 
 	/**

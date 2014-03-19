@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_2025Record> {
 
-	private static final long serialVersionUID = 342546644;
+	private static final long serialVersionUID = -1162703335;
 
 	/**
 	 * The singleton instance of <code>DBA.x_test_case_2025</code>
@@ -25,27 +25,35 @@ public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.sybase
 	}
 
 	/**
-	 * The column <code>DBA.x_test_case_2025.ref_id</code>. 
+	 * The column <code>DBA.x_test_case_2025.ref_id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_2025Record, java.lang.Integer> REF_ID = createField("ref_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_2025Record, java.lang.Integer> REF_ID = createField("ref_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>DBA.x_test_case_2025.ref_name</code>. 
+	 * The column <code>DBA.x_test_case_2025.ref_name</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_2025Record, java.lang.String> REF_NAME = createField("ref_name", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_2025Record, java.lang.String> REF_NAME = createField("ref_name", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), this, "");
 
 	/**
 	 * Create a <code>DBA.x_test_case_2025</code> table reference
 	 */
 	public XTestCase_2025() {
-		super("x_test_case_2025", org.jooq.test.sybase.generatedclasses.Dba.DBA);
+		this("x_test_case_2025", null);
 	}
 
 	/**
 	 * Create an aliased <code>DBA.x_test_case_2025</code> table reference
 	 */
 	public XTestCase_2025(java.lang.String alias) {
-		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025);
+		this(alias, org.jooq.test.sybase.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025);
+	}
+
+	private XTestCase_2025(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_2025Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private XTestCase_2025(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_2025Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, aliased, parameters, "");
 	}
 
 	/**
@@ -61,6 +69,13 @@ public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.sybase
 	 */
 	@Override
 	public org.jooq.test.sybase.generatedclasses.tables.XTestCase_2025 as(java.lang.String alias) {
-		return new org.jooq.test.sybase.generatedclasses.tables.XTestCase_2025(alias);
+		return new org.jooq.test.sybase.generatedclasses.tables.XTestCase_2025(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.sybase.generatedclasses.tables.XTestCase_2025 rename(java.lang.String name) {
+		return new org.jooq.test.sybase.generatedclasses.tables.XTestCase_2025(name, null);
 	}
 }

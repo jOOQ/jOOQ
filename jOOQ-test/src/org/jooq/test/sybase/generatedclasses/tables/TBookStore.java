@@ -11,7 +11,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -919202873;
+	private static final long serialVersionUID = 1057247441;
 
 	/**
 	 * The singleton instance of <code>DBA.t_book_store</code>
@@ -27,22 +27,30 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.sybase.gen
 	}
 
 	/**
-	 * The column <code>DBA.t_book_store.name</code>. 
+	 * The column <code>DBA.t_book_store.name</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
 	 * Create a <code>DBA.t_book_store</code> table reference
 	 */
 	public TBookStore() {
-		super("t_book_store", org.jooq.test.sybase.generatedclasses.Dba.DBA);
+		this("t_book_store", null);
 	}
 
 	/**
 	 * Create an aliased <code>DBA.t_book_store</code> table reference
 	 */
 	public TBookStore(java.lang.String alias) {
-		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.TBookStore.T_BOOK_STORE);
+		this(alias, org.jooq.test.sybase.generatedclasses.tables.TBookStore.T_BOOK_STORE);
+	}
+
+	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, aliased, parameters, "A book store");
 	}
 
 	/**
@@ -66,6 +74,13 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.sybase.gen
 	 */
 	@Override
 	public org.jooq.test.sybase.generatedclasses.tables.TBookStore as(java.lang.String alias) {
-		return new org.jooq.test.sybase.generatedclasses.tables.TBookStore(alias);
+		return new org.jooq.test.sybase.generatedclasses.tables.TBookStore(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.sybase.generatedclasses.tables.TBookStore rename(java.lang.String name) {
+		return new org.jooq.test.sybase.generatedclasses.tables.TBookStore(name, null);
 	}
 }

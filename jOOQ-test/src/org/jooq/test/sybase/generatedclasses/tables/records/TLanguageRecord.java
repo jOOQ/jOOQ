@@ -11,59 +11,59 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = 483686244;
+	private static final long serialVersionUID = 1414711640;
 
 	/**
-	 * Setter for <code>DBA.t_language.cd</code>. 
+	 * Setter for <code>DBA.t_language.cd</code>.
 	 */
 	public void setCd(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_language.cd</code>. 
+	 * Getter for <code>DBA.t_language.cd</code>.
 	 */
 	public java.lang.String getCd() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_language.description</code>. 
+	 * Setter for <code>DBA.t_language.description</code>.
 	 */
 	public void setDescription(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_language.description</code>. 
+	 * Getter for <code>DBA.t_language.description</code>.
 	 */
 	public java.lang.String getDescription() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_language.description_english</code>. 
+	 * Setter for <code>DBA.t_language.description_english</code>.
 	 */
 	public void setDescriptionEnglish(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_language.description_english</code>. 
+	 * Getter for <code>DBA.t_language.description_english</code>.
 	 */
 	public java.lang.String getDescriptionEnglish() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_language.id</code>. 
+	 * Setter for <code>DBA.t_language.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_language.id</code>. 
+	 * Getter for <code>DBA.t_language.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(3);

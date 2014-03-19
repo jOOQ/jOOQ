@@ -11,7 +11,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 463577058;
+	private static final long serialVersionUID = -1682154905;
 
 	/**
 	 * The singleton instance of <code>DBA.t_book</code>
@@ -27,62 +27,70 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generate
 	}
 
 	/**
-	 * The column <code>DBA.t_book.ID</code>. 
+	 * The column <code>DBA.t_book.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>DBA.t_book.AUTHOR_ID</code>. 
+	 * The column <code>DBA.t_book.AUTHOR_ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>DBA.t_book.CO_AUTHOR_ID</code>. 
+	 * The column <code>DBA.t_book.CO_AUTHOR_ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>DBA.t_book.DETAILS_ID</code>. 
+	 * The column <code>DBA.t_book.DETAILS_ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>DBA.t_book.TITLE</code>. 
+	 * The column <code>DBA.t_book.TITLE</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
-	 * The column <code>DBA.t_book.PUBLISHED_IN</code>. 
+	 * The column <code>DBA.t_book.PUBLISHED_IN</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>DBA.t_book.LANGUAGE_ID</code>. 
+	 * The column <code>DBA.t_book.LANGUAGE_ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>DBA.t_book.CONTENT_TEXT</code>. 
+	 * The column <code>DBA.t_book.CONTENT_TEXT</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.LONGVARCHAR.length(32767), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.LONGVARCHAR.length(32767), this, "");
 
 	/**
-	 * The column <code>DBA.t_book.CONTENT_PDF</code>. 
+	 * The column <code>DBA.t_book.CONTENT_PDF</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.LONGVARBINARY, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.LONGVARBINARY, this, "");
 
 	/**
 	 * Create a <code>DBA.t_book</code> table reference
 	 */
 	public TBook() {
-		super("t_book", org.jooq.test.sybase.generatedclasses.Dba.DBA);
+		this("t_book", null);
 	}
 
 	/**
 	 * Create an aliased <code>DBA.t_book</code> table reference
 	 */
 	public TBook(java.lang.String alias) {
-		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK);
+		this(alias, org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK);
+	}
+
+	private TBook(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TBook(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, aliased, parameters, "An entity holding books");
 	}
 
 	/**
@@ -114,6 +122,13 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generate
 	 */
 	@Override
 	public org.jooq.test.sybase.generatedclasses.tables.TBook as(java.lang.String alias) {
-		return new org.jooq.test.sybase.generatedclasses.tables.TBook(alias);
+		return new org.jooq.test.sybase.generatedclasses.tables.TBook(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.sybase.generatedclasses.tables.TBook rename(java.lang.String name) {
+		return new org.jooq.test.sybase.generatedclasses.tables.TBook(name, null);
 	}
 }

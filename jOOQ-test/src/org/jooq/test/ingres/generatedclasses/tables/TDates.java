@@ -9,7 +9,7 @@ package org.jooq.test.ingres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 713709083;
+	private static final long serialVersionUID = -521399467;
 
 	/**
 	 * The singleton instance of <code>test.t_dates</code>
@@ -25,40 +25,48 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generat
 	}
 
 	/**
-	 * The column <code>test.t_dates.id</code>. 
+	 * The column <code>test.t_dates.id</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_DATES, "");
 
 	/**
-	 * The column <code>test.t_dates.d</code>. 
+	 * The column <code>test.t_dates.d</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord, java.sql.Date> D = createField("d", org.jooq.impl.SQLDataType.DATE, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord, java.sql.Date> D = createField("d", org.jooq.impl.SQLDataType.DATE, T_DATES, "");
 
 	/**
-	 * The column <code>test.t_dates.t</code>. 
+	 * The column <code>test.t_dates.t</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord, java.sql.Time> T = createField("t", org.jooq.impl.SQLDataType.TIME, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord, java.sql.Time> T = createField("t", org.jooq.impl.SQLDataType.TIME, T_DATES, "");
 
 	/**
-	 * The column <code>test.t_dates.ts</code>. 
+	 * The column <code>test.t_dates.ts</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("ts", org.jooq.impl.SQLDataType.TIMESTAMP, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("ts", org.jooq.impl.SQLDataType.TIMESTAMP, T_DATES, "");
 
 	/**
-	 * The column <code>test.t_dates.d_int</code>. 
+	 * The column <code>test.t_dates.d_int</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> D_INT = createField("d_int", org.jooq.impl.SQLDataType.INTEGER, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> D_INT = createField("d_int", org.jooq.impl.SQLDataType.INTEGER, T_DATES, "");
 
 	/**
-	 * The column <code>test.t_dates.ts_bigint</code>. 
+	 * The column <code>test.t_dates.ts_bigint</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.BIGINT, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.BIGINT, T_DATES, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TDates() {
-		super("t_dates", org.jooq.test.ingres.generatedclasses.Test.TEST);
+		this("t_dates", null);
+	}
+
+	private TDates(java.lang.String alias, org.jooq.Table<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TDates(java.lang.String alias, org.jooq.Table<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.ingres.generatedclasses.Test.TEST, aliased, parameters, "");
 	}
 
 	/**

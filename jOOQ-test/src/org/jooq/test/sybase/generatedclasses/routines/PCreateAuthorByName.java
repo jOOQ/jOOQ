@@ -9,15 +9,15 @@ package org.jooq.test.sybase.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1889896325;
+	private static final long serialVersionUID = -2129525737;
 
 	/**
-	 * The parameter <code>DBA.p_create_author_by_name.p_first_name</code>. 
+	 * The parameter <code>DBA.p_create_author_by_name.p_first_name</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> P_FIRST_NAME = createParameter("p_first_name", org.jooq.impl.SQLDataType.VARCHAR.length(50));
 
 	/**
-	 * The parameter <code>DBA.p_create_author_by_name.p_last_name</code>. 
+	 * The parameter <code>DBA.p_create_author_by_name.p_last_name</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> P_LAST_NAME = createParameter("p_last_name", org.jooq.impl.SQLDataType.VARCHAR.length(50));
 

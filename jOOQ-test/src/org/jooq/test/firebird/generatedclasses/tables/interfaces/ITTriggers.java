@@ -12,12 +12,12 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface ITTriggers extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>T_TRIGGERS.ID_GENERATED</code>. 
+	 * Setter for <code>T_TRIGGERS.ID_GENERATED</code>.
 	 */
 	public void setIdGenerated(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_TRIGGERS.ID_GENERATED</code>. 
+	 * Getter for <code>T_TRIGGERS.ID_GENERATED</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID_GENERATED", unique = true, nullable = false, length = 4)
@@ -25,23 +25,23 @@ public interface ITTriggers extends java.io.Serializable {
 	public java.lang.Integer getIdGenerated();
 
 	/**
-	 * Setter for <code>T_TRIGGERS.ID</code>. 
+	 * Setter for <code>T_TRIGGERS.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_TRIGGERS.ID</code>. 
+	 * Getter for <code>T_TRIGGERS.ID</code>.
 	 */
 	@javax.persistence.Column(name = "ID", length = 4)
 	public java.lang.Integer getId();
 
 	/**
-	 * Setter for <code>T_TRIGGERS.COUNTER</code>. 
+	 * Setter for <code>T_TRIGGERS.COUNTER</code>.
 	 */
 	public void setCounter(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_TRIGGERS.COUNTER</code>. 
+	 * Getter for <code>T_TRIGGERS.COUNTER</code>.
 	 */
 	@javax.persistence.Column(name = "COUNTER", length = 4)
 	public java.lang.Integer getCounter();

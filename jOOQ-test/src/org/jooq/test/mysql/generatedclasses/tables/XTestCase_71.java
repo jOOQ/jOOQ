@@ -11,7 +11,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -1841341379;
+	private static final long serialVersionUID = -1968118013;
 
 	/**
 	 * The singleton instance of <code>test.x_test_case_71</code>
@@ -27,20 +27,28 @@ public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.mysql.ge
 	}
 
 	/**
-	 * The column <code>test.x_test_case_71.ID</code>. 
+	 * The column <code>test.x_test_case_71.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_71);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_71, "");
 
 	/**
-	 * The column <code>test.x_test_case_71.TEST_CASE_64_69_ID</code>. 
+	 * The column <code>test.x_test_case_71.TEST_CASE_64_69_ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> TEST_CASE_64_69_ID = createField("TEST_CASE_64_69_ID", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_71);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> TEST_CASE_64_69_ID = createField("TEST_CASE_64_69_ID", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_71, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private XTestCase_71() {
-		super("x_test_case_71", org.jooq.test.mysql.generatedclasses.Test.TEST);
+		this("x_test_case_71", null);
+	}
+
+	private XTestCase_71(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private XTestCase_71(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.mysql.generatedclasses.Test.TEST, aliased, parameters, "An unused table in the same schema.");
 	}
 
 	/**

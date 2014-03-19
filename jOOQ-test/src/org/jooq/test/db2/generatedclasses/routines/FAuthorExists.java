@@ -9,15 +9,15 @@ package org.jooq.test.db2.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1910151586;
+	private static final long serialVersionUID = 1358659658;
 
 	/**
-	 * The parameter <code>LIBRARY.F_AUTHOR_EXISTS.RETURN_VALUE</code>. 
+	 * The parameter <code>LIBRARY.F_AUTHOR_EXISTS.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>LIBRARY.F_AUTHOR_EXISTS.AUTHOR_NAME</code>. 
+	 * The parameter <code>LIBRARY.F_AUTHOR_EXISTS.AUTHOR_NAME</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("AUTHOR_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50));
 

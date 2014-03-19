@@ -12,12 +12,12 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface ITBookStore extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>T_BOOK_STORE.NAME</code>. 
+	 * Setter for <code>T_BOOK_STORE.NAME</code>.
 	 */
 	public void setName(java.lang.String value);
 
 	/**
-	 * Getter for <code>T_BOOK_STORE.NAME</code>. 
+	 * Getter for <code>T_BOOK_STORE.NAME</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "NAME", unique = true, nullable = false, length = 400)

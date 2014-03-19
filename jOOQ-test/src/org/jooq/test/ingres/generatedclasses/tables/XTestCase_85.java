@@ -9,7 +9,7 @@ package org.jooq.test.ingres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = -122166597;
+	private static final long serialVersionUID = -224913545;
 
 	/**
 	 * The singleton instance of <code>test.x_test_case_85</code>
@@ -25,25 +25,33 @@ public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.ingres.g
 	}
 
 	/**
-	 * The column <code>test.x_test_case_85.id</code>. 
+	 * The column <code>test.x_test_case_85.id</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_85);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_85, "");
 
 	/**
-	 * The column <code>test.x_test_case_85.x_unused_id</code>. 
+	 * The column <code>test.x_test_case_85.x_unused_id</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> X_UNUSED_ID = createField("x_unused_id", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_85);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> X_UNUSED_ID = createField("x_unused_id", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_85, "");
 
 	/**
-	 * The column <code>test.x_test_case_85.x_unused_name</code>. 
+	 * The column <code>test.x_test_case_85.x_unused_name</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_85Record, java.lang.String> X_UNUSED_NAME = createField("x_unused_name", org.jooq.impl.SQLDataType.VARCHAR.length(10), X_TEST_CASE_85);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_85Record, java.lang.String> X_UNUSED_NAME = createField("x_unused_name", org.jooq.impl.SQLDataType.VARCHAR.length(10), X_TEST_CASE_85, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private XTestCase_85() {
-		super("x_test_case_85", org.jooq.test.ingres.generatedclasses.Test.TEST);
+		this("x_test_case_85", null);
+	}
+
+	private XTestCase_85(java.lang.String alias, org.jooq.Table<org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_85Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private XTestCase_85(java.lang.String alias, org.jooq.Table<org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_85Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.ingres.generatedclasses.Test.TEST, aliased, parameters, "");
 	}
 
 	/**

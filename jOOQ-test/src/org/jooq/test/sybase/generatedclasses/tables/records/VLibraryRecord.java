@@ -9,31 +9,31 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 763143963;
+	private static final long serialVersionUID = -988109063;
 
 	/**
-	 * Setter for <code>DBA.V_LIBRARY.AUTHOR</code>. 
+	 * Setter for <code>DBA.V_LIBRARY.AUTHOR</code>.
 	 */
 	public void setAuthor(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.V_LIBRARY.AUTHOR</code>. 
+	 * Getter for <code>DBA.V_LIBRARY.AUTHOR</code>.
 	 */
 	public java.lang.String getAuthor() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>DBA.V_LIBRARY.TITLE</code>. 
+	 * Setter for <code>DBA.V_LIBRARY.TITLE</code>.
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.V_LIBRARY.TITLE</code>. 
+	 * Getter for <code>DBA.V_LIBRARY.TITLE</code>.
 	 */
 	public java.lang.String getTitle() {
 		return (java.lang.String) getValue(1);

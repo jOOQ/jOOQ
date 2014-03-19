@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 941549658;
+	private static final long serialVersionUID = 1678804159;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOK</code>
@@ -57,7 +57,7 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generate
 	/**
 	 * The column <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>.

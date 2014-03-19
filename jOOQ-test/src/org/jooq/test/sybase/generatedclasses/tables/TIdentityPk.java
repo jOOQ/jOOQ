@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = -1165580182;
+	private static final long serialVersionUID = -832303981;
 
 	/**
 	 * The singleton instance of <code>DBA.t_identity_pk</code>
@@ -25,27 +25,35 @@ public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.sybase.ge
 	}
 
 	/**
-	 * The column <code>DBA.t_identity_pk.id</code>. 
+	 * The column <code>DBA.t_identity_pk.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>DBA.t_identity_pk.val</code>. 
+	 * The column <code>DBA.t_identity_pk.val</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>DBA.t_identity_pk</code> table reference
 	 */
 	public TIdentityPk() {
-		super("t_identity_pk", org.jooq.test.sybase.generatedclasses.Dba.DBA);
+		this("t_identity_pk", null);
 	}
 
 	/**
 	 * Create an aliased <code>DBA.t_identity_pk</code> table reference
 	 */
 	public TIdentityPk(java.lang.String alias) {
-		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
+		this(alias, org.jooq.test.sybase.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
+	}
+
+	private TIdentityPk(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TIdentityPk(java.lang.String alias, org.jooq.Table<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, aliased, parameters, "");
 	}
 
 	/**
@@ -77,6 +85,13 @@ public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.sybase.ge
 	 */
 	@Override
 	public org.jooq.test.sybase.generatedclasses.tables.TIdentityPk as(java.lang.String alias) {
-		return new org.jooq.test.sybase.generatedclasses.tables.TIdentityPk(alias);
+		return new org.jooq.test.sybase.generatedclasses.tables.TIdentityPk(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.sybase.generatedclasses.tables.TIdentityPk rename(java.lang.String name) {
+		return new org.jooq.test.sybase.generatedclasses.tables.TIdentityPk(name, null);
 	}
 }

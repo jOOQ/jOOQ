@@ -13,10 +13,10 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = -1679733554;
+	private static final long serialVersionUID = 601666080;
 
 	/**
-	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
+	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>.
 	 */
 	@Override
 	public void setBookStoreName(java.lang.String value) {
@@ -24,7 +24,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
+	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>.
 	 */
 	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
 	@javax.validation.constraints.NotNull
@@ -35,7 +35,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
+	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>.
 	 */
 	@Override
 	public void setBookId(java.lang.Integer value) {
@@ -43,7 +43,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
+	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>.
 	 */
 	@javax.persistence.Column(name = "BOOK_ID", nullable = false, length = 4)
 	@javax.validation.constraints.NotNull
@@ -53,7 +53,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Setter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>. 
+	 * Setter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>.
 	 */
 	@Override
 	public void setStock(java.lang.Integer value) {
@@ -61,7 +61,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Getter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>. 
+	 * Getter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>.
 	 */
 	@javax.persistence.Column(name = "STOCK", length = 4)
 	@Override

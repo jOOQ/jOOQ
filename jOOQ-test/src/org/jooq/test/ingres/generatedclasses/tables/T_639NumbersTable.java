@@ -9,7 +9,7 @@ package org.jooq.test.ingres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -1924035897;
+	private static final long serialVersionUID = -1183200125;
 
 	/**
 	 * The singleton instance of <code>test.t_639_numbers_table</code>
@@ -25,75 +25,83 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.ing
 	}
 
 	/**
-	 * The column <code>test.t_639_numbers_table.id</code>. 
+	 * The column <code>test.t_639_numbers_table.id</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_639_NUMBERS_TABLE);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_639_NUMBERS_TABLE, "");
 
 	/**
-	 * The column <code>test.t_639_numbers_table.byte</code>. 
+	 * The column <code>test.t_639_numbers_table.byte</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Byte> BYTE = createField("byte", org.jooq.impl.SQLDataType.TINYINT, T_639_NUMBERS_TABLE);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Byte> BYTE = createField("byte", org.jooq.impl.SQLDataType.TINYINT, T_639_NUMBERS_TABLE, "");
 
 	/**
-	 * The column <code>test.t_639_numbers_table.short</code>. 
+	 * The column <code>test.t_639_numbers_table.short</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Short> SHORT = createField("short", org.jooq.impl.SQLDataType.SMALLINT, T_639_NUMBERS_TABLE);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Short> SHORT = createField("short", org.jooq.impl.SQLDataType.SMALLINT, T_639_NUMBERS_TABLE, "");
 
 	/**
-	 * The column <code>test.t_639_numbers_table.integer</code>. 
+	 * The column <code>test.t_639_numbers_table.integer</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> INTEGER = createField("integer", org.jooq.impl.SQLDataType.INTEGER, T_639_NUMBERS_TABLE);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> INTEGER = createField("integer", org.jooq.impl.SQLDataType.INTEGER, T_639_NUMBERS_TABLE, "");
 
 	/**
-	 * The column <code>test.t_639_numbers_table.long</code>. 
+	 * The column <code>test.t_639_numbers_table.long</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> LONG = createField("long", org.jooq.impl.SQLDataType.BIGINT, T_639_NUMBERS_TABLE);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> LONG = createField("long", org.jooq.impl.SQLDataType.BIGINT, T_639_NUMBERS_TABLE, "");
 
 	/**
-	 * The column <code>test.t_639_numbers_table.byte_decimal</code>. 
+	 * The column <code>test.t_639_numbers_table.byte_decimal</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Byte> BYTE_DECIMAL = createField("byte_decimal", org.jooq.impl.SQLDataType.TINYINT, T_639_NUMBERS_TABLE);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Byte> BYTE_DECIMAL = createField("byte_decimal", org.jooq.impl.SQLDataType.TINYINT, T_639_NUMBERS_TABLE, "");
 
 	/**
-	 * The column <code>test.t_639_numbers_table.short_decimal</code>. 
+	 * The column <code>test.t_639_numbers_table.short_decimal</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Short> SHORT_DECIMAL = createField("short_decimal", org.jooq.impl.SQLDataType.SMALLINT, T_639_NUMBERS_TABLE);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Short> SHORT_DECIMAL = createField("short_decimal", org.jooq.impl.SQLDataType.SMALLINT, T_639_NUMBERS_TABLE, "");
 
 	/**
-	 * The column <code>test.t_639_numbers_table.integer_decimal</code>. 
+	 * The column <code>test.t_639_numbers_table.integer_decimal</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> INTEGER_DECIMAL = createField("integer_decimal", org.jooq.impl.SQLDataType.INTEGER, T_639_NUMBERS_TABLE);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> INTEGER_DECIMAL = createField("integer_decimal", org.jooq.impl.SQLDataType.INTEGER, T_639_NUMBERS_TABLE, "");
 
 	/**
-	 * The column <code>test.t_639_numbers_table.long_decimal</code>. 
+	 * The column <code>test.t_639_numbers_table.long_decimal</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> LONG_DECIMAL = createField("long_decimal", org.jooq.impl.SQLDataType.BIGINT, T_639_NUMBERS_TABLE);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> LONG_DECIMAL = createField("long_decimal", org.jooq.impl.SQLDataType.BIGINT, T_639_NUMBERS_TABLE, "");
 
 	/**
-	 * The column <code>test.t_639_numbers_table.big_integer</code>. 
+	 * The column <code>test.t_639_numbers_table.big_integer</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigInteger> BIG_INTEGER = createField("big_integer", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(22), T_639_NUMBERS_TABLE);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigInteger> BIG_INTEGER = createField("big_integer", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(22), T_639_NUMBERS_TABLE, "");
 
 	/**
-	 * The column <code>test.t_639_numbers_table.big_decimal</code>. 
+	 * The column <code>test.t_639_numbers_table.big_decimal</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigDecimal> BIG_DECIMAL = createField("big_decimal", org.jooq.impl.SQLDataType.DECIMAL.precision(22, 5), T_639_NUMBERS_TABLE);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigDecimal> BIG_DECIMAL = createField("big_decimal", org.jooq.impl.SQLDataType.DECIMAL.precision(22, 5), T_639_NUMBERS_TABLE, "");
 
 	/**
-	 * The column <code>test.t_639_numbers_table.float</code>. 
+	 * The column <code>test.t_639_numbers_table.float</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Float> FLOAT = createField("float", org.jooq.impl.SQLDataType.REAL, T_639_NUMBERS_TABLE);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Float> FLOAT = createField("float", org.jooq.impl.SQLDataType.REAL, T_639_NUMBERS_TABLE, "");
 
 	/**
-	 * The column <code>test.t_639_numbers_table.double</code>. 
+	 * The column <code>test.t_639_numbers_table.double</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Double> DOUBLE = createField("double", org.jooq.impl.SQLDataType.DOUBLE, T_639_NUMBERS_TABLE);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Double> DOUBLE = createField("double", org.jooq.impl.SQLDataType.DOUBLE, T_639_NUMBERS_TABLE, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private T_639NumbersTable() {
-		super("t_639_numbers_table", org.jooq.test.ingres.generatedclasses.Test.TEST);
+		this("t_639_numbers_table", null);
+	}
+
+	private T_639NumbersTable(java.lang.String alias, org.jooq.Table<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_639NumbersTable(java.lang.String alias, org.jooq.Table<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.ingres.generatedclasses.Test.TEST, aliased, parameters, "");
 	}
 
 	/**

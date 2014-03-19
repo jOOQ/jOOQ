@@ -9,31 +9,31 @@ package org.jooq.test.ingres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -415665986;
+	private static final long serialVersionUID = -422453038;
 
 	/**
-	 * Setter for <code>test.x_test_case_64_69.id</code>. 
+	 * Setter for <code>test.x_test_case_64_69.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>test.x_test_case_64_69.id</code>. 
+	 * Getter for <code>test.x_test_case_64_69.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>test.x_test_case_64_69.unused_id</code>. 
+	 * Setter for <code>test.x_test_case_64_69.unused_id</code>.
 	 */
 	public void setUnusedId(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>test.x_test_case_64_69.unused_id</code>. 
+	 * Getter for <code>test.x_test_case_64_69.unused_id</code>.
 	 */
 	public java.lang.Integer getUnusedId() {
 		return (java.lang.Integer) getValue(1);

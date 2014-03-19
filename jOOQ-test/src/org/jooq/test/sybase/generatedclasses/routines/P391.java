@@ -9,35 +9,35 @@ package org.jooq.test.sybase.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class P391 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -511861337;
+	private static final long serialVersionUID = 306534819;
 
 	/**
-	 * The parameter <code>DBA.p391.i1</code>. 
+	 * The parameter <code>DBA.p391.i1</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> I1 = createParameter("i1", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>DBA.p391.io1</code>. 
+	 * The parameter <code>DBA.p391.io1</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> IO1 = createParameter("io1", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>DBA.p391.o1</code>. 
+	 * The parameter <code>DBA.p391.o1</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> O1 = createParameter("o1", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>DBA.p391.o2</code>. 
+	 * The parameter <code>DBA.p391.o2</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> O2 = createParameter("o2", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>DBA.p391.io2</code>. 
+	 * The parameter <code>DBA.p391.io2</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> IO2 = createParameter("io2", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>DBA.p391.i2</code>. 
+	 * The parameter <code>DBA.p391.i2</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> I2 = createParameter("i2", org.jooq.impl.SQLDataType.INTEGER);
 

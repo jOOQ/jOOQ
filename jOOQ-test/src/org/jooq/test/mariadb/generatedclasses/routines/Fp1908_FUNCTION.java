@@ -9,15 +9,15 @@ package org.jooq.test.mariadb.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Fp1908_FUNCTION extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -1086205852;
+	private static final long serialVersionUID = -1328098256;
 
 	/**
-	 * The parameter <code>test.fp1908.RETURN_VALUE</code>. 
+	 * The parameter <code>test.fp1908.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>test.fp1908.p1</code>. 
+	 * The parameter <code>test.fp1908.p1</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> P1 = createParameter("p1", org.jooq.impl.SQLDataType.INTEGER);
 

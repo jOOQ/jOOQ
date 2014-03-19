@@ -9,45 +9,45 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -191045670;
+	private static final long serialVersionUID = 403838338;
 
 	/**
-	 * Setter for <code>t_book_to_book_store.book_store_name</code>. 
+	 * Setter for <code>t_book_to_book_store.book_store_name</code>.
 	 */
 	public void setBookStoreName(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>t_book_to_book_store.book_store_name</code>. 
+	 * Getter for <code>t_book_to_book_store.book_store_name</code>.
 	 */
 	public java.lang.String getBookStoreName() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>t_book_to_book_store.book_id</code>. 
+	 * Setter for <code>t_book_to_book_store.book_id</code>.
 	 */
 	public void setBookId(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>t_book_to_book_store.book_id</code>. 
+	 * Getter for <code>t_book_to_book_store.book_id</code>.
 	 */
 	public java.lang.Integer getBookId() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>t_book_to_book_store.stock</code>. 
+	 * Setter for <code>t_book_to_book_store.stock</code>.
 	 */
 	public void setStock(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>t_book_to_book_store.stock</code>. 
+	 * Getter for <code>t_book_to_book_store.stock</code>.
 	 */
 	public java.lang.Integer getStock() {
 		return (java.lang.Integer) getValue(2);

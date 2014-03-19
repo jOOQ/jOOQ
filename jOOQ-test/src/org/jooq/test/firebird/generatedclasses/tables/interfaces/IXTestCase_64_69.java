@@ -12,12 +12,12 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface IXTestCase_64_69 extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>X_TEST_CASE_64_69.ID</code>. 
+	 * Setter for <code>X_TEST_CASE_64_69.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>X_TEST_CASE_64_69.ID</code>. 
+	 * Getter for <code>X_TEST_CASE_64_69.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
@@ -25,12 +25,12 @@ public interface IXTestCase_64_69 extends java.io.Serializable {
 	public java.lang.Integer getId();
 
 	/**
-	 * Setter for <code>X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 * Setter for <code>X_TEST_CASE_64_69.UNUSED_ID</code>.
 	 */
 	public void setUnusedId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 * Getter for <code>X_TEST_CASE_64_69.UNUSED_ID</code>.
 	 */
 	@javax.persistence.Column(name = "UNUSED_ID", length = 4)
 	public java.lang.Integer getUnusedId();

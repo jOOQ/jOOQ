@@ -1147,6 +1147,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testMetaFieldTypes() throws Exception {
+        new MetaDataTests(this).testMetaFieldTypes();
+    }
+
+    @Test
     public void testMetaData() throws Exception {
         new MetaDataTests(this).testMetaData();
     }

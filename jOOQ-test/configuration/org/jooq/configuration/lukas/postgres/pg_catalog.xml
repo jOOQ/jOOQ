@@ -2,7 +2,7 @@
 <configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-3.0.0.xsd">
     <jdbc>
         <driver>org.postgresql.Driver</driver>
-        <url>jdbc:postgresql:postgres</url>
+        <url>jdbc:postgresql://localhost:5434/postgres</url>
         <schema>pg_catalog</schema>
         <user>postgres</user>
         <password>test</password>

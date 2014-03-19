@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -1311121478;
+	private static final long serialVersionUID = -397694822;
 
 	/**
 	 * The singleton instance of <code>public.x_test_case_71</code>
@@ -27,12 +27,12 @@ public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.postgres
 	/**
 	 * The column <code>public.x_test_case_71.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>public.x_test_case_71.test_case_64_69_id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record, java.lang.Short> TEST_CASE_64_69_ID = createField("test_case_64_69_id", org.jooq.impl.SQLDataType.SMALLINT.defaulted(true), this, "");
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record, java.lang.Short> TEST_CASE_64_69_ID = createField("test_case_64_69_id", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * Create a <code>public.x_test_case_71</code> table reference

@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TUnsignedRecord> {
 
-	private static final long serialVersionUID = -1334121026;
+	private static final long serialVersionUID = -612500482;
 
 	/**
 	 * The singleton instance of <code>public.t_unsigned</code>
@@ -27,22 +27,22 @@ public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.postgres.ge
 	/**
 	 * The column <code>public.t_unsigned.u_byte</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.UByte> U_BYTE = createField("u_byte", org.jooq.impl.SQLDataType.TINYINTUNSIGNED.defaulted(true), this, "");
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.UByte> U_BYTE = createField("u_byte", org.jooq.impl.SQLDataType.TINYINTUNSIGNED, this, "");
 
 	/**
 	 * The column <code>public.t_unsigned.u_short</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.UShort> U_SHORT = createField("u_short", org.jooq.impl.SQLDataType.SMALLINTUNSIGNED.defaulted(true), this, "");
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.UShort> U_SHORT = createField("u_short", org.jooq.impl.SQLDataType.SMALLINTUNSIGNED, this, "");
 
 	/**
 	 * The column <code>public.t_unsigned.u_int</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.UInteger> U_INT = createField("u_int", org.jooq.impl.SQLDataType.INTEGERUNSIGNED.defaulted(true), this, "");
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.UInteger> U_INT = createField("u_int", org.jooq.impl.SQLDataType.INTEGERUNSIGNED, this, "");
 
 	/**
 	 * The column <code>public.t_unsigned.u_long</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.ULong> U_LONG = createField("u_long", org.jooq.impl.SQLDataType.BIGINTUNSIGNED.defaulted(true), this, "");
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TUnsignedRecord, org.jooq.types.ULong> U_LONG = createField("u_long", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, this, "");
 
 	/**
 	 * Create a <code>public.t_unsigned</code> table reference

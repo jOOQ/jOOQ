@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 483056212;
+	private static final long serialVersionUID = 1175419316;
 
 	/**
 	 * The singleton instance of <code>public.v_library</code>
@@ -27,12 +27,12 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gen
 	/**
 	 * The column <code>public.v_library.author</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("author", org.jooq.impl.SQLDataType.CLOB.defaulted(true), this, "");
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("author", org.jooq.impl.SQLDataType.CLOB, this, "");
 
 	/**
 	 * The column <code>public.v_library.title</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400).defaulted(true), this, "");
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400), this, "");
 
 	/**
 	 * Create a <code>public.v_library</code> table reference

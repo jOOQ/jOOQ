@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = 530816150;
+	private static final long serialVersionUID = -791223882;
 
 	/**
 	 * The singleton instance of <code>public.t_725_lob_test</code>
@@ -27,12 +27,12 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.postgres
 	/**
 	 * The column <code>public.t_725_lob_test.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>public.t_725_lob_test.lob</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("lob", org.jooq.impl.SQLDataType.BLOB.defaulted(true), this, "");
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("lob", org.jooq.impl.SQLDataType.BLOB, this, "");
 
 	/**
 	 * Create a <code>public.t_725_lob_test</code> table reference

@@ -41,7 +41,7 @@
 
 package org.jooq.util.postgres;
 
-import static org.jooq.tools.StringUtils.isBlank;
+import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.util.postgres.information_schema.Tables.COLUMNS;
 
 import java.sql.SQLException;
@@ -77,7 +77,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 COLUMNS.NUMERIC_PRECISION,
                 COLUMNS.NUMERIC_SCALE,
                 COLUMNS.IS_NULLABLE,
-                COLUMNS.COLUMN_DEFAULT.nvl(""),
+                COLUMNS.COLUMN_DEFAULT,
                 COLUMNS.UDT_NAME)
             .from(COLUMNS)
             .where(COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()))
@@ -93,7 +93,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 record.getValue(COLUMNS.NUMERIC_PRECISION),
                 record.getValue(COLUMNS.NUMERIC_SCALE),
                 record.getValue(COLUMNS.IS_NULLABLE, boolean.class),
-                !isBlank(record.getValue(COLUMNS.COLUMN_DEFAULT.nvl(""))),
+                record.getValue(COLUMNS.COLUMN_DEFAULT) != null,
                 record.getValue(COLUMNS.UDT_NAME)
             );
 
@@ -102,7 +102,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 			    record.getValue(COLUMNS.COLUMN_NAME),
 			    record.getValue(COLUMNS.ORDINAL_POSITION, int.class),
 			    type,
-			    record.getValue(COLUMNS.COLUMN_DEFAULT.nvl("")).startsWith("nextval"),
+			    defaultString(record.getValue(COLUMNS.COLUMN_DEFAULT)).startsWith("nextval"),
 			    null
 		    );
 

@@ -41,7 +41,6 @@
 
 package org.jooq.test;
 
-import static junit.framework.Assert.assertNull;
 import static org.jooq.impl.DSL.md5;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.test.mariadb.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
@@ -65,6 +64,7 @@ import static org.jooq.util.mariadb.MariaDBDSL.uncompress;
 import static org.jooq.util.mariadb.MariaDBDSL.uncompressedLength;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

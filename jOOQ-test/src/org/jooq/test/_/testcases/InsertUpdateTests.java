@@ -41,9 +41,6 @@
 package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -74,6 +71,9 @@ import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.val;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

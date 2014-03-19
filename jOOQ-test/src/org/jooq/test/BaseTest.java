@@ -40,7 +40,7 @@
  */
 package org.jooq.test;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -56,8 +56,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
-
-import junit.framework.Assert;
 
 import org.jooq.AggregateFunction;
 // ...
@@ -100,6 +98,8 @@ import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
+
+import org.junit.Assert;
 
 public abstract class BaseTest<
 

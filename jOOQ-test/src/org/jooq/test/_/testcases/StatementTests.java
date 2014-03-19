@@ -40,13 +40,13 @@
  */
 package org.jooq.test._.testcases;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.val;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

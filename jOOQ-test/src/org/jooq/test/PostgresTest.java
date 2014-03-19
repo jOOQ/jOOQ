@@ -42,7 +42,6 @@
 package org.jooq.test;
 
 import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertEquals;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
@@ -76,6 +75,7 @@ import static org.jooq.util.postgres.PostgresDSL.arrayPrepend;
 import static org.jooq.util.postgres.PostgresDSL.arrayToString;
 import static org.jooq.util.postgres.PostgresDSL.only;
 import static org.jooq.util.postgres.PostgresDSL.stringToArray;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import java.math.BigDecimal;

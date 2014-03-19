@@ -41,7 +41,7 @@
 
 package org.jooq.test;
 
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 import static org.jooq.impl.DSL.field;
 
 import javax.persistence.Column;

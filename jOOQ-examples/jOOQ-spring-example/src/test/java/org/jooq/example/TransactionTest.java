@@ -43,12 +43,12 @@ package org.jooq.example;
 import static org.jooq.example.db.h2.Tables.BOOK;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import junit.framework.Assert;
 
 import org.jooq.DSLContext;
 import org.jooq.example.spring.BookService;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

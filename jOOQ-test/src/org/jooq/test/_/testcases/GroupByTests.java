@@ -41,7 +41,6 @@
 package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertEquals;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -54,6 +53,7 @@ import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.rollup;
 import static org.jooq.impl.DSL.selectOne;
+import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
 import java.util.Arrays;

@@ -41,12 +41,12 @@
 package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
 import static org.jooq.impl.DSL.delete;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.tools.reflect.Reflect.on;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.sql.Connection;
 import java.sql.Date;

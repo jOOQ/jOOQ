@@ -41,6 +41,7 @@
 
 package org.jooq.util.postgres;
 
+import static org.jooq.tools.StringUtils.isBlank;
 import static org.jooq.util.postgres.information_schema.Tables.COLUMNS;
 
 import java.sql.SQLException;
@@ -92,7 +93,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 record.getValue(COLUMNS.NUMERIC_PRECISION),
                 record.getValue(COLUMNS.NUMERIC_SCALE),
                 record.getValue(COLUMNS.IS_NULLABLE, boolean.class),
-                record.getValue(COLUMNS.COLUMN_DEFAULT.nvl("")) != null,
+                !isBlank(record.getValue(COLUMNS.COLUMN_DEFAULT.nvl(""))),
                 record.getValue(COLUMNS.UDT_NAME)
             );
 

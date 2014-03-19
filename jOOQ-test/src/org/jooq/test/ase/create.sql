@@ -162,7 +162,7 @@ CREATE TABLE t_book (
   details_id INT NULL,
   title VARCHAR(400) NOT NULL,
   published_in INT NOT NULL,
-  language_id INT NOT NULL,
+  language_id INT NOT NULL DEFAULT 1,
   content_text text NULL,
   content_pdf BINARY(400) NULL,
 

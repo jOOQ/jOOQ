@@ -530,7 +530,7 @@ CREATE TABLE t_book (
   details_id NUMBER(7),
   title VARCHAR2(400) NOT NULL,
   published_in NUMBER(7) NOT NULL,
-  language_id NUMBER(7) NOT NULL,
+  language_id NUMBER(7) DEFAULT 1 NOT NULL,
   content_text CLOB,
   content_pdf BLOB,
 
@@ -620,7 +620,7 @@ CREATE TABLE MULTI_SCHEMA.t_book (
   details_id NUMBER(7),
   title VARCHAR2(400) NOT NULL,
   published_in NUMBER(7) NOT NULL,
-  language_id NUMBER(7) NOT NULL,
+  language_id NUMBER(7) DEFAULT 1 NOT NULL,
   content_text CLOB,
   content_pdf BLOB,
 

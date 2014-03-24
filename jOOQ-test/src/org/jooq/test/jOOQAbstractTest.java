@@ -1757,6 +1757,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testInsertReturningWithSetClause() throws Exception {
+        new InsertUpdateTests(this).testInsertReturningWithSetClause();
+    }
+
+    @Test
     public void testInsertReturningWithCaseSensitiveColumns() throws Exception {
         new InsertUpdateTests(this).testInsertReturningWithCaseSensitiveColumns();
     }

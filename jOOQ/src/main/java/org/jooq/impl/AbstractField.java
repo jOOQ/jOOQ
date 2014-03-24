@@ -312,10 +312,10 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
         for (Entry<T, Z> entry : sortMap.entrySet()) {
             if (result == null) {
-                result = decode.when(entry.getKey(), entry.getValue());
+                result = decode.when(entry.getKey(), inline(entry.getValue()));
             }
             else {
-                result.when(entry.getKey(), entry.getValue());
+                result.when(entry.getKey(), inline(entry.getValue()));
             }
         }
 
@@ -600,7 +600,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         return compare(IS_NOT_DISTINCT_FROM, field);
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Condition isTrue() {
         Class<?> type = getType();
@@ -619,7 +619,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         }
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Condition isFalse() {
         Class<?> type = getType();

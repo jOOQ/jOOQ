@@ -756,6 +756,45 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testInsertReturningWithSetClause() throws Exception {
+        if (TTriggers() == null) {
+            log.info("SKIPPING", "INSERT RETURNING tests");
+            return;
+        }
+
+        jOOQAbstractTest.reset = false;
+
+        {
+            T result =
+            create().insertInto(TTriggers())
+                    .set(TTriggers_ID(), 1)
+                    .set(TTriggers_COUNTER(), 1)
+                    .returning()
+                    .fetchOne();
+
+            assertEquals(1, (int) result.getValue(TTriggers_ID()));
+            assertEquals(1, (int) result.getValue(TTriggers_ID_GENERATED()));
+            assertEquals(2, (int) result.getValue(TTriggers_COUNTER()));
+        }
+
+        {
+            T record = create().newRecord(TTriggers());
+            record.setValue(TTriggers_ID(), 2);
+            record.setValue(TTriggers_COUNTER(), 2);
+
+            T result =
+            create().insertInto(TTriggers())
+                    .set(record)
+                    .returning()
+                    .fetchOne();
+
+            assertEquals(2, (int) result.getValue(TTriggers_ID()));
+            assertEquals(2, (int) result.getValue(TTriggers_ID_GENERATED()));
+            assertEquals(4, (int) result.getValue(TTriggers_COUNTER()));
+        }
+    }
+
+    @Test
     public void testInsertReturningWithCaseSensitiveColumns() throws Exception {
         if (CASE() == null) {
             log.info("SKIPPING", "INSERT RETURNING tests with case sensitive columns");

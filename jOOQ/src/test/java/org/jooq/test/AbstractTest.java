@@ -45,17 +45,18 @@ import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.test.data.Table1.FIELD_ID1;
 import static org.jooq.test.data.Table1.FIELD_NAME1;
 import static org.jooq.test.data.Table1.TABLE1;
+import static org.jooq.test.data.Table2.FIELD_NAME2;
+import static org.jooq.test.data.Table3.FIELD_NAME3;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Time;
 import java.sql.Timestamp;
 
-import org.junit.Assert;
-
 import org.jooq.BindContext;
 import org.jooq.Constants;
 import org.jooq.DSLContext;
+import org.jooq.Record3;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -65,6 +66,7 @@ import org.jooq.util.mysql.MySQLDataType;
 
 import org.jmock.Mockery;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
@@ -75,12 +77,13 @@ import org.junit.BeforeClass;
  */
 public abstract class AbstractTest {
 
-    protected Mockery              context;
-    protected PreparedStatement    statement;
-    protected DSLContext           create;
-    protected Result<Table1Record> resultEmpty;
-    protected Result<Table1Record> resultOne;
-    protected Result<Table1Record> resultTwo;
+    protected Mockery                                 context;
+    protected PreparedStatement                       statement;
+    protected DSLContext                              create;
+    protected Result<Table1Record>                    resultEmpty;
+    protected Result<Table1Record>                    resultOne;
+    protected Result<Table1Record>                    resultTwo;
+    protected Result<Record3<String, String, String>> resultStrings;
 
     @BeforeClass
     public static void init() throws Exception {
@@ -113,6 +116,16 @@ public abstract class AbstractTest {
         resultTwo.get(1).setValue(FIELD_ID1, 3);
         resultTwo.get(1).setValue(FIELD_NAME1, "3");
         resultTwo.get(1).changed(false);
+
+        resultStrings = create.newResult(FIELD_NAME1, FIELD_NAME2, FIELD_NAME3);
+        resultStrings.add(create.newRecord(FIELD_NAME1, FIELD_NAME2, FIELD_NAME3));
+        resultStrings.add(create.newRecord(FIELD_NAME1, FIELD_NAME2, FIELD_NAME3));
+        resultStrings.get(0).setValue(FIELD_NAME1, "A1");
+        resultStrings.get(0).setValue(FIELD_NAME2, "B1");
+        resultStrings.get(0).setValue(FIELD_NAME3, "C1");
+        resultStrings.get(1).setValue(FIELD_NAME1, "A2");
+        resultStrings.get(1).setValue(FIELD_NAME2, "B2");
+        resultStrings.get(1).setValue(FIELD_NAME3, "C2");
     }
 
     @After

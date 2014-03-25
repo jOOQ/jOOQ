@@ -51,6 +51,7 @@ class DSLContext extends Generators {
     def static void main(String[] args) {
         val ctx = new DSLContext();
         ctx.generateNewRecord();
+        ctx.generateNewResult();
         ctx.generateSelect();
         ctx.generateSelectDistinct();
         ctx.generateInsert();
@@ -95,6 +96,46 @@ class DSLContext extends Generators {
 
         insert("org.jooq.DSLContext", outAPI, "newRecord");
         insert("org.jooq.impl.DefaultDSLContext", outImpl, "newRecord");
+    }
+    
+    def generateNewResult() {
+        val outImpl = new StringBuilder();
+        val outAPI = new StringBuilder();
+        
+        for (degree : (1..Constants::MAX_ROW_DEGREE)) {
+            var fieldOrRow = "Row" + degree;
+            
+            if (degree == 1) {
+                fieldOrRow = "Field";
+            }
+            
+            outAPI.append('''
+            
+                /**
+                 * Create a new empty {@link Result}.
+                 * <p>
+                 * The resulting result is attached to this {@link Configuration} by
+                 * default. Use {@link Settings#isAttachRecords()} to override this
+                 * behaviour.
+                 *
+                 * @return The new result
+                 */
+                «generatedMethod»
+                <«TN(degree)»> Result<Record«recTypeSuffix(degree)»> newResult(«Field_TN_fieldn(degree)»);
+            ''');
+            
+            outImpl.append('''
+            
+                «generatedMethod»
+                @Override
+                public <«TN(degree)»> Result<Record«recTypeSuffix(degree)»> newResult(«Field_TN_fieldn(degree)») {
+                    return (Result) newResult(new Field[] { «fieldn(degree)» });
+                }
+            ''');
+        }
+
+        insert("org.jooq.DSLContext", outAPI, "newResult");
+        insert("org.jooq.impl.DefaultDSLContext", outImpl, "newResult");
     }
     
     def generateSelect() {

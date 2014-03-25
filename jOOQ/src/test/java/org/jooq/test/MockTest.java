@@ -41,8 +41,6 @@
 package org.jooq.test;
 
 import static java.util.Arrays.asList;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.test.data.Table1.FIELD_ID1;
 import static org.jooq.test.data.Table1.FIELD_NAME1;
@@ -50,6 +48,9 @@ import static org.jooq.test.data.Table1.TABLE1;
 import static org.jooq.test.data.Table2.FIELD_ID2;
 import static org.jooq.test.data.Table2.FIELD_NAME2;
 import static org.jooq.test.data.Table2.TABLE2;
+import static org.jooq.test.data.Table3.FIELD_NAME3;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.RandomAccessFile;
@@ -152,16 +153,17 @@ public class MockTest extends AbstractTest {
     }
 
     @Test
-    public void testDoubleResult() {
-        DSLContext e = DSL.using(new MockConnection(new DoubleResult()), SQLDialect.H2);
+    public void testTripleResult() {
+        DSLContext e = DSL.using(new MockConnection(new TripleResult()), SQLDialect.H2);
         List<Result<Record>> result = e.fetchMany("select ?, ? from dual", 1, 2);
 
-        assertEquals(2, result.size());
+        assertEquals(3, result.size());
         assertEquals(1, result.get(0).size());
         assertEquals(2, result.get(1).size());
         assertEquals(3, result.get(0).fields().length);
         assertEquals(3, result.get(1).fields().length);
 
+        // Metadata
         for (int j = 0; j < 2; j++) {
             for (int i = 0; i < 3; i++) {
                 assertEquals(TABLE1.field(i).getName(), result.get(j).field(i).getName());
@@ -169,6 +171,14 @@ public class MockTest extends AbstractTest {
             }
         }
 
+        assertEquals(FIELD_NAME1.getName(), result.get(2).field(0).getName());
+        assertEquals(FIELD_NAME2.getName(), result.get(2).field(1).getName());
+        assertEquals(FIELD_NAME3.getName(), result.get(2).field(2).getName());
+        assertEquals(FIELD_NAME1.getType(), result.get(2).field(0).getType());
+        assertEquals(FIELD_NAME2.getType(), result.get(2).field(1).getType());
+        assertEquals(FIELD_NAME3.getType(), result.get(2).field(2).getType());
+
+        // Data
         assertEquals(1, (int) result.get(0).getValue(0, FIELD_ID1));
         assertEquals(2, (int) result.get(1).getValue(0, FIELD_ID1));
         assertEquals(3, (int) result.get(1).getValue(1, FIELD_ID1));
@@ -178,9 +188,16 @@ public class MockTest extends AbstractTest {
         assertNull(result.get(0).getValue(0, Table1.FIELD_DATE1));
         assertNull(result.get(1).getValue(0, Table1.FIELD_DATE1));
         assertNull(result.get(1).getValue(1, Table1.FIELD_DATE1));
+
+        assertEquals("A1", result.get(2).getValue(0, FIELD_NAME1));
+        assertEquals("B1", result.get(2).getValue(0, FIELD_NAME2));
+        assertEquals("C1", result.get(2).getValue(0, FIELD_NAME3));
+        assertEquals("A2", result.get(2).getValue(1, FIELD_NAME1));
+        assertEquals("B2", result.get(2).getValue(1, FIELD_NAME2));
+        assertEquals("C2", result.get(2).getValue(1, FIELD_NAME3));
     }
 
-    class DoubleResult extends AbstractResult {
+    class TripleResult extends AbstractResult {
         @Override
         public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
             execute0(ctx);
@@ -188,6 +205,7 @@ public class MockTest extends AbstractTest {
             return new MockResult[] {
                 new MockResult(0, resultOne),
                 new MockResult(0, resultTwo),
+                new MockResult(0, resultStrings)
             };
         }
     }

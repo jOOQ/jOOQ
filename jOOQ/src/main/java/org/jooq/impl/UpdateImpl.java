@@ -165,6 +165,7 @@ final class UpdateImpl<R extends Record>
     }
 
 // [jooq-tools] START [set]
+
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final <T1> UpdateFromStep<R> set(Row1<T1> row, Row1<T1> value) {

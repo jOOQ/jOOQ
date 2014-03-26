@@ -2087,6 +2087,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testDerivedColumnListsWithAmbiguousColumnNames() throws Exception {
+        new AliasTests(this).testDerivedColumnListsWithAmbiguousColumnNames();
+    }
+
+    @Test
     public void testAliasingTablesAndFields() throws Exception {
         new AliasTests(this).testAliasingTablesAndFields();
     }

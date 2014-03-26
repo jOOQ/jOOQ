@@ -450,6 +450,46 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testLimitWithAmbiguousColumnNames() throws Exception {
+        // [#2335] In those databases that do not support LIMIT .. OFFSET, emulations
+        // using ROW_NUMBER() or ROWNUM may cause additional issues
+
+        Result<Record2<Integer, Integer>> result1 =
+        create().select(TAuthor_ID(), TBook_ID())
+                .from(TAuthor())
+                .join(TBook()).on(TAuthor_ID().eq(TBook_AUTHOR_ID()))
+                .orderBy(TBook_ID())
+                .limit(2)
+                .fetch();
+
+        assertEquals(2, result1.size());
+        assertEquals(asList(1, 1), result1.getValues(TAuthor_ID()));
+        assertEquals(asList(1, 2), result1.getValues(TBook_ID()));
+
+        /* [pro] xx
+        xx xxxxxxx xxxxx xxxxxxxxx xxxx xxxx xxx xx xxxxxx xxx xxxxxx xxx
+        xx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxx xxxxxx xx xxxxxx xxxxxxxx
+            xxxxxxx
+        x
+
+        xx [/pro] */
+
+        Result<Record2<Integer, Integer>> result2 =
+        create().select(TAuthor_ID(), TBook_ID())
+                .from(TAuthor())
+                .join(TBook()).on(TAuthor_ID().eq(TBook_AUTHOR_ID()))
+                .orderBy(TBook_ID())
+                .limit(2)
+                .offset(2)
+                .fetch();
+
+        assertEquals(2, result2.size());
+        assertEquals(asList(2, 2), result2.getValues(TAuthor_ID()));
+        assertEquals(asList(3, 4), result2.getValues(TBook_ID()));
+    }
+
+    @Test
     public void testLimitDistinct() throws Exception {
 
         /* [pro] xx

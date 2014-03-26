@@ -1992,6 +1992,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testLimitWithAmbiguousColumnNames() throws Exception {
+        new OrderByTests(this).testLimitWithAmbiguousColumnNames();
+    }
+
+    @Test
     public void testLimitDistinct() throws Exception {
         new OrderByTests(this).testLimitDistinct();
     }

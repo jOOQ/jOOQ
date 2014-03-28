@@ -10,7 +10,7 @@
     <!-- This is needed if you want to use the @Transactional annotation -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close" >
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" >
        <property name="url" value="${db.url}" />
        <property name="driverClassName" value="${db.driver}" />
        <property name="username" value="${db.username}" />

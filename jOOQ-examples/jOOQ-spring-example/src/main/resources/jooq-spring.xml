@@ -10,12 +10,11 @@
     <!-- This is needed if you want to use the @Transactional annotation -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
-        <!-- These properties are replaced by Maven "resources" -->
-        <property name="driverClass" value="${db.driver}"/>
-        <property name="jdbcUrl" value="${db.url}"/>
-        <property name="username" value="${db.username}"/>
-        <property name="password" value="${db.password}"/>
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close" >
+       <property name="url" value="${db.url}" />
+       <property name="driverClassName" value="${db.driver}" />
+       <property name="username" value="${db.username}" />
+       <property name="password" value="${db.password}" />
     </bean>
 
     <!-- Configure Spring's transaction manager to use a DataSource -->

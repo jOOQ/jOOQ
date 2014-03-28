@@ -31,9 +31,9 @@
             <version>${org.jooq.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.jolbox</groupId>
-            <artifactId>bonecp</artifactId>
-            <version>0.8.0.RELEASE</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>2.0</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>

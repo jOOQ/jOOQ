@@ -47,6 +47,11 @@ public class Tables {
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_3084A T_3084_A = org.jooq.test.sqlserver.generatedclasses.tables.T_3084A.T_3084_A;
 
 	/**
+	 * The table dbo.t_3085
+	 */
+	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_3085 T_3085 = org.jooq.test.sqlserver.generatedclasses.tables.T_3085.T_3085;
+
+	/**
 	 * The table dbo.t_3090_a
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_3090A T_3090_A = org.jooq.test.sqlserver.generatedclasses.tables.T_3090A.T_3090_A;

@@ -54,6 +54,7 @@ DROP TABLE t_3084/
 DROP TABLE t_3084_a/
 DROP TABLE t_3090_a/
 DROP TABLE t_3090_b/
+DROP TABLE t_3085/
 
 DROP TYPE u_date_table/
 DROP TYPE u_number_long_table/
@@ -226,6 +227,12 @@ CREATE TABLE t_3090_b (
 /
 
 CREATE UNIQUE INDEX uk_t_3090_b ON t_3090_b (id1, id2)/
+
+CREATE TABLE t_3085 (
+  c1 INT,
+  c2 DATETIME2
+)
+/
 
 CREATE TABLE t_author (
   ID int NOT NULL,

@@ -48,6 +48,7 @@ import static org.jooq.impl.DSL.val;
 import static org.jooq.test.sqlserver.generatedclasses.Routines.fTables1;
 import static org.jooq.test.sqlserver.generatedclasses.Routines.fTables4;
 import static org.jooq.test.sqlserver.generatedclasses.Routines.fTables5;
+import static org.jooq.test.sqlserver.generatedclasses.Tables.T_3085;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_3090_B;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_725_LOB_TEST;
@@ -123,6 +124,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityPkRecord
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TUnsignedRecord;
+import org.jooq.test.sqlserver.generatedclasses.tables.records.T_3085Record;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.T_3090BRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.T_725LobTestRecord;
@@ -983,6 +985,13 @@ public class SQLServerTest extends jOOQAbstractTest<
         // DELETE()
         assertEquals(1, record.delete());
         assertNull(create().fetchOne(T_3090_B));
+    }
+
+    @Test
+    public void testSQLServerPlainSQLWithSpecialTypes() {
+        create().execute("insert into t_3085 values (null, null)");
+        T_3085Record record = create().resultQuery("select * from t_3085").fetchAnyInto(T_3085);
+        assertEquals(asList(null, null), asList(record.intoArray()));
     }
 }
 

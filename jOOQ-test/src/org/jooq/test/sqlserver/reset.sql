@@ -11,6 +11,7 @@ DELETE FROM t_identity/
 DELETE FROM t_identity_pk/
 DELETE FROM t_triggers/
 DELETE FROM t_error_on_update/
+DELETE FROM t_3085/
 
 DROP SEQUENCE s_author_id;/
 CREATE SEQUENCE s_author_id START WITH 1;/

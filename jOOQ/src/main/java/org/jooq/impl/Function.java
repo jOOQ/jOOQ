@@ -367,10 +367,18 @@ class Function<T> extends AbstractField<T> implements
             Map<Object, Object> map = (Map<Object, Object>) ctx.data(DATA_LOCALLY_SCOPED_DATA_MAP);
             QueryPartList<WindowDefinition> windows = (QueryPartList<WindowDefinition>) map.get(DATA_WINDOW_DEFINITIONS);
 
-            for (WindowDefinition window : windows) {
-                if (((WindowDefinitionImpl) window).getName().equals(windowName)) {
-                    return window;
+            if (windows != null) {
+                for (WindowDefinition window : windows) {
+                    if (((WindowDefinitionImpl) window).getName().equals(windowName)) {
+                        return window;
+                    }
                 }
+            }
+
+            // [#3162] If a window specification is missing from the query's WINDOW clause,
+            // jOOQ should just render the window name regardless of the SQL dialect
+            else {
+                return windowName;
             }
         }
 

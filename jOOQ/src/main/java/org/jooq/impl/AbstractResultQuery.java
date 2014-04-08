@@ -477,6 +477,78 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    public final Map<String, Object> fetchOneMap() {
+        R record = fetchOne();
+        return record == null ? null : record.intoMap();
+    }
+
+    @Override
+    public final Object[] fetchOneArray() {
+        R record = fetchOne();
+        return record == null ? null : record.intoArray();
+    }
+
+    @Override
+    public final <E> E fetchOneInto(Class<? extends E> type) {
+        R record = fetchOne();
+        return record == null ? null : record.into(type);
+    }
+
+    @Override
+    public final <Z extends Record> Z fetchOneInto(Table<Z> table) {
+        R record = fetchOne();
+        return record == null ? null : record.into(table);
+    }
+
+    @Override
+    public final <T> T fetchAny(Field<T> field) {
+        R record = fetchAny();
+        return record == null ? null : record.getValue(field);
+    }
+
+    @Override
+    public final <T> T fetchAny(Field<?> field, Class<? extends T> type) {
+        return Convert.convert(fetchAny(field), type);
+    }
+
+    @Override
+    public final <T, U> U fetchAny(Field<T> field, Converter<? super T, U> converter) {
+        return Convert.convert(fetchAny(field), converter);
+    }
+
+    @Override
+    public final Object fetchAny(int fieldIndex) {
+        R record = fetchAny();
+        return record == null ? null : record.getValue(fieldIndex);
+    }
+
+    @Override
+    public final <T> T fetchAny(int fieldIndex, Class<? extends T> type) {
+        return Convert.convert(fetchAny(fieldIndex), type);
+    }
+
+    @Override
+    public final <U> U fetchAny(int fieldIndex, Converter<?, U> converter) {
+        return Convert.convert(fetchAny(fieldIndex), converter);
+    }
+
+    @Override
+    public final Object fetchAny(String fieldName) {
+        R record = fetchAny();
+        return record == null ? null : record.getValue(fieldName);
+    }
+
+    @Override
+    public final <T> T fetchAny(String fieldName, Class<? extends T> type) {
+        return Convert.convert(fetchAny(fieldName), type);
+    }
+
+    @Override
+    public final <U> U fetchAny(String fieldName, Converter<?, U> converter) {
+        return Convert.convert(fetchAny(fieldName), converter);
+    }
+
+    @Override
     public final R fetchAny() {
         Cursor<R> c = fetchLazy();
 
@@ -486,6 +558,30 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         finally {
             c.close();
         }
+    }
+
+    @Override
+    public final Map<String, Object> fetchAnyMap() {
+        R record = fetchAny();
+        return record == null ? null : record.intoMap();
+    }
+
+    @Override
+    public final Object[] fetchAnyArray() {
+        R record = fetchAny();
+        return record == null ? null : record.intoArray();
+    }
+
+    @Override
+    public final <E> E fetchAnyInto(Class<? extends E> type) {
+        R record = fetchAny();
+        return record == null ? null : record.into(type);
+    }
+
+    @Override
+    public final <Z extends Record> Z fetchAnyInto(Table<Z> table) {
+        R record = fetchAny();
+        return record == null ? null : record.into(table);
     }
 
     @Override
@@ -526,12 +622,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final List<Map<String, Object>> fetchMaps() {
         return fetch().intoMaps();
-    }
-
-    @Override
-    public final Map<String, Object> fetchOneMap() {
-        R record = fetchOne();
-        return record == null ? null : record.intoMap();
     }
 
     @Override
@@ -630,31 +720,13 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final Object[] fetchOneArray() {
-        R record = fetchOne();
-        return record == null ? null : record.intoArray();
-    }
-
-    @Override
     public final <T> List<T> fetchInto(Class<? extends T> type) {
         return fetch().into(type);
     }
 
     @Override
-    public final <E> E fetchOneInto(Class<? extends E> type) {
-        R record = fetchOne();
-        return record == null ? null : record.into(type);
-    }
-
-    @Override
     public final <Z extends Record> Result<Z> fetchInto(Table<Z> table) {
         return fetch().into(table);
-    }
-
-    @Override
-    public final <Z extends Record> Z fetchOneInto(Table<Z> table) {
-        R record = fetchOne();
-        return record == null ? null : record.into(table);
     }
 
     @Override

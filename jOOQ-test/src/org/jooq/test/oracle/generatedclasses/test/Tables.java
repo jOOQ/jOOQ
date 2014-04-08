@@ -17,11 +17,6 @@ public class Tables {
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.MLibrary M_LIBRARY = org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY;
 
 	/**
-	 * The table TEST.T_ACCOUNTS
-	 */
-	public static final org.jooq.test.oracle.generatedclasses.test.tables.TAccounts T_ACCOUNTS = org.jooq.test.oracle.generatedclasses.test.tables.TAccounts.T_ACCOUNTS;
-
-	/**
 	 * The table TEST.T_ARRAYS
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TArrays T_ARRAYS = org.jooq.test.oracle.generatedclasses.test.tables.TArrays.T_ARRAYS;
@@ -80,11 +75,6 @@ public class Tables {
 	 * The table TEST.T_TEMP
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TTemp T_TEMP = org.jooq.test.oracle.generatedclasses.test.tables.TTemp.T_TEMP;
-
-	/**
-	 * The table TEST.T_TRANSACTIONS
-	 */
-	public static final org.jooq.test.oracle.generatedclasses.test.tables.TTransactions T_TRANSACTIONS = org.jooq.test.oracle.generatedclasses.test.tables.TTransactions.T_TRANSACTIONS;
 
 	/**
 	 * The table TEST.T_TRIGGERS

@@ -1692,13 +1692,13 @@ public class OracleTest extends jOOQAbstractTest<
 
 
         {
-            UNested_3Record u3 = new UNested_3Record(1, 
+            UNested_3Record u3 = new UNested_3Record(1,
                 new UNested_2Record(
-                    new UNested_1Record(2, new UNumberTableRecord(3, 4)), 
+                    new UNested_1Record(2, new UNumberTableRecord(3, 4)),
                     new UNested_1Record(2, new UNumberTableRecord(3, 4))
                 )
             );
-            
+
             PNested result = Routines.pNested(configuration, u3, u3);
             assertNotNull(result);
             assertEquals(u3, result.getP3());
@@ -1716,6 +1716,11 @@ public class OracleTest extends jOOQAbstractTest<
             assertEquals(asList(3, 4), result.getP4().getNested().get()[0].getNested().getList());
             assertEquals(new UNested_1Record(2, new UNumberTableRecord(3, 4)), result.getP4().getNested().get()[1]);
         }
+    }
+
+    @Test
+    public void testOracleProceduresReturningNULLObjectTypes() {
+        assertNull(Routines.p3005(create().configuration()));
     }
 }
 

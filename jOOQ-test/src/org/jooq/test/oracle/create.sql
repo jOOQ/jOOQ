@@ -76,6 +76,7 @@ DROP FUNCTION f_pipelined_table4/
 DROP PROCEDURE p_enhance_address1/
 DROP PROCEDURE p_enhance_address2/
 DROP PROCEDURE p_enhance_address3/
+DROP PROCEDURE p3005/
 DROP PROCEDURE p_unused/
 DROP PROCEDURE p_create_author/
 DROP PROCEDURE p_create_author_by_name/
@@ -118,6 +119,12 @@ DROP TYPE u_book_table/
 DROP TYPE u_book_array/
 DROP TYPE u_book_type/
 DROP TYPE u_second_max/
+DROP TYPE u_3005/
+
+CREATE TYPE u_3005 AS OBJECT (
+  ID NUMBER(7)
+)
+/
 
 CREATE TYPE U_SECOND_MAX AS OBJECT
 (
@@ -807,6 +814,13 @@ BEGIN
 	address.street.no := '17';
 	address.street.floors := u_number_array(2);
 END p_enhance_address3;
+/
+
+CREATE OR REPLACE PROCEDURE p3005 (p1 OUT u_3005)
+IS
+BEGIN
+  p1 := NULL;
+END p3005;
 /
 
 CREATE OR REPLACE PROCEDURE p_create_author_by_name (first_name VARCHAR2, last_name VARCHAR2)

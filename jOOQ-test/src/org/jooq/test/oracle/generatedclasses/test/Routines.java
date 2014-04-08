@@ -778,6 +778,16 @@ public class Routines {
 	}
 
 	/**
+	 * Call <code>TEST.P3005</code>
+	 */
+	public static org.jooq.test.oracle.generatedclasses.test.udt.records.U_3005Record p3005(org.jooq.Configuration configuration) {
+		org.jooq.test.oracle.generatedclasses.test.routines.P3005 p = new org.jooq.test.oracle.generatedclasses.test.routines.P3005();
+
+		p.execute(configuration);
+		return p.getP1();
+	}
+
+	/**
 	 * Call <code>TEST.P377</code>
 	 */
 	public static void p377(org.jooq.Configuration configuration) {

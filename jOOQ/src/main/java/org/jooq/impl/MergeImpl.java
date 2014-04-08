@@ -1163,7 +1163,7 @@ implements
         // [#999] WHEN MATCHED clause is optional
         if (matchedUpdate != null) {
             context.formatSeparator()
-                   .keyword("when matched then update set").sql(" ")
+                   .keyword("when matched then update set")
                    .formatIndentStart()
                    .formatSeparator()
                    .visit(matchedUpdate)

@@ -41,6 +41,7 @@
 package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.nCopies;
 import static org.jooq.impl.DSL.delete;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.selectOne;
@@ -150,6 +151,27 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         int[] result3 = batch3.execute();
         assertEquals(3, result3.length);
         testBatchAuthors("Gamma", "Helm", "Johnson");
+    }
+
+    @Test
+    public void testBatchSingleWithNulls() throws Exception {
+        Batch batch = create().batch(insertInto(TDates(), TDates_ID(), TDates_D(), TDates_T(), TDates_TS())
+                                     .values(1, null, null, null))
+                              .bind(1, null, null, null)
+                              .bind(2, null, null, null)
+                              .bind(3, null, null, null);
+
+        assertEquals(3, batch.size());
+        int[] result = batch.execute();
+        assertEquals(3, result.length);
+
+        Result<DATE> dates = create().fetch(TDates());
+        assertEquals(3, dates.size());
+        assertEquals(asList(1, 2, 3), dates.getValues(TDates_ID()));
+        assertEquals(nCopies(3, null), dates.getValues(TDates_D()));
+        assertEquals(nCopies(3, null), dates.getValues(TDates_T()));
+        assertEquals(nCopies(3, null), dates.getValues(TDates_TS()));
+
     }
 
     @Test

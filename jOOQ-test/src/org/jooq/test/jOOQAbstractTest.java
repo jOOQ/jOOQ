@@ -2432,6 +2432,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testBatchSingleWithNulls() throws Exception {
+        new BatchTests(this).testBatchSingleWithNulls();
+    }
+
+    @Test
     public void testBatchMultiple() throws Exception {
         new BatchTests(this).testBatchMultiple();
     }

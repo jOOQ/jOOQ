@@ -445,6 +445,204 @@ public interface ResultQuery<R extends Record> extends Query {
     R fetchOne() throws DataAccessException, InvalidResultException;
 
     /**
+     * Execute the query and return at most one resulting record as a name/value
+     * map.
+     *
+     * @return The resulting record or <code>null</code> if the query returns no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     * @see Result#intoMaps()
+     * @see Record#intoMap()
+     */
+    Map<String, Object> fetchOneMap() throws DataAccessException, InvalidResultException;
+
+    /**
+     * Execute the query and return at most one resulting record as an array
+     * <p>
+     * You can access data like this
+     * <code><pre>query.fetchOneArray()[fieldIndex]</pre></code>
+     *
+     * @return The resulting record or <code>null</code> if the query returns no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     */
+    Object[] fetchOneArray() throws DataAccessException, InvalidResultException;
+
+    /**
+     * Map resulting records onto a custom type.
+     * <p>
+     * This is the same as calling <code><pre>
+     * E result = null;
+     * Record r = q.fetchOne();
+     *
+     * if (r != null)
+     *     result = r.into(type);
+     * </pre></code>. See {@link Record#into(Class)} for more details
+     *
+     * @param <E> The generic entity type.
+     * @param type The entity type.
+     * @return The resulting record or <code>null</code> if the query returns no
+     *         records.
+     * @see Record#into(Class)
+     * @see Result#into(Class)
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @throws InvalidResultException if the query returned more than one record
+     * @see DefaultRecordMapper
+     */
+    <E> E fetchOneInto(Class<? extends E> type) throws DataAccessException, MappingException, InvalidResultException;
+
+    /**
+     * Map resulting records onto a custom record.
+     * <p>
+     * This is the same as calling <code><pre>
+     * Z result = null;
+     * Record r = q.fetchOne();
+     *
+     * if (r != null)
+     *     result = r.into(table);
+     * </pre></code>. See {@link Record#into(Table)} for more details
+     * <p>
+     * The resulting record is attached to the original {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     *
+     * @param <Z> The generic table record type.
+     * @param table The table type.
+     * @return The resulting record or <code>null</code> if the query returns no
+     *         records.
+     * @see Record#into(Table)
+     * @see Result#into(Table)
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     */
+    <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, InvalidResultException;
+
+    /**
+     * Execute the query and return return at most one resulting value for a
+     * field from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(Field)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     */
+    <T> T fetchAny(Field<T> field) throws DataAccessException;
+
+    /**
+     * Execute the query and return return at most one resulting value for a
+     * field from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(Field, Class)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     */
+    <T> T fetchAny(Field<?> field, Class<? extends T> type) throws DataAccessException;
+
+    /**
+     * Execute the query and return return at most one resulting value for a
+     * field from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(Field, Converter)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     */
+    <T, U> U fetchAny(Field<T> field, Converter<? super T, U> converter) throws DataAccessException;
+
+    /**
+     * Execute the query and return return at most one resulting value for a
+     * field index from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(int)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    Object fetchAny(int fieldIndex) throws DataAccessException;
+
+    /**
+     * Execute the query and return return at most one resulting value for a
+     * field index from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(int, Class)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <T> T fetchAny(int fieldIndex, Class<? extends T> type) throws DataAccessException;
+
+    /**
+     * Execute the query and return return at most one resulting value for a
+     * field index from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(int, Converter)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     */
+    <U> U fetchAny(int fieldIndex, Converter<?, U> converter) throws DataAccessException;
+
+    /**
+     * Execute the query and return return at most one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(int)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    Object fetchAny(String fieldName) throws DataAccessException;
+
+    /**
+     * Execute the query and return return at most one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(String, Class)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <T> T fetchAny(String fieldName, Class<? extends T> type) throws DataAccessException;
+
+    /**
+     * Execute the query and return return at most one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(String, Converter)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <U> U fetchAny(String fieldName, Converter<?, U> converter) throws DataAccessException;
+
+    /**
      * Execute the query and return at most one resulting record.
      * <p>
      * The resulting record is attached to the original {@link Configuration} by
@@ -458,6 +656,80 @@ public interface ResultQuery<R extends Record> extends Query {
     R fetchAny() throws DataAccessException;
 
     /**
+     * Execute the query and return at most one resulting record as a name/value
+     * map.
+     *
+     * @return The resulting record or <code>null</code> if the query returns no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoMaps()
+     * @see Record#intoMap()
+     */
+    Map<String, Object> fetchAnyMap() throws DataAccessException;
+
+    /**
+     * Execute the query and return at most one resulting record as an array
+     * <p>
+     * You can access data like this
+     * <code><pre>query.fetchAnyArray()[fieldIndex]</pre></code>
+     *
+     * @return The resulting record or <code>null</code> if the query returns no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    Object[] fetchAnyArray() throws DataAccessException;
+
+    /**
+     * Map resulting records onto a custom type.
+     * <p>
+     * This is the same as calling <code><pre>
+     * E result = null;
+     * Record r = q.fetchAny();
+     *
+     * if (r != null)
+     *     result = r.into(type);
+     * </pre></code>. See {@link Record#into(Class)} for more details
+     *
+     * @param <E> The generic entity type.
+     * @param type The entity type.
+     * @return The resulting record or <code>null</code> if the query returns no
+     *         records.
+     * @see Record#into(Class)
+     * @see Result#into(Class)
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <E> E fetchAnyInto(Class<? extends E> type) throws DataAccessException, MappingException;
+
+    /**
+     * Map resulting records onto a custom record.
+     * <p>
+     * This is the same as calling <code><pre>
+     * Z result = null;
+     * Record r = q.fetchOne();
+     *
+     * if (r != null)
+     *     result = r.into(table);
+     * </pre></code>. See {@link Record#into(Table)} for more details
+     * <p>
+     * The resulting record is attached to the original {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     *
+     * @param <Z> The generic table record type.
+     * @param table The table type.
+     * @return The resulting record or <code>null</code> if the query returns no
+     *         records.
+     * @see Record#into(Table)
+     * @see Result#into(Table)
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     */
+    <Z extends Record> Z fetchAnyInto(Table<Z> table) throws DataAccessException, InvalidResultException;
+
+    /**
      * Execute the query and return the generated result as a list of name/value
      * maps.
      *
@@ -469,19 +741,6 @@ public interface ResultQuery<R extends Record> extends Query {
      * @see Record#intoMap()
      */
     List<Map<String, Object>> fetchMaps() throws DataAccessException;
-
-    /**
-     * Execute the query and return at most one resulting record as a name/value
-     * map.
-     *
-     * @return The resulting record or <code>null</code> if the query returns no
-     *         records.
-     * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
-     * @see Result#intoMaps()
-     * @see Record#intoMap()
-     */
-    Map<String, Object> fetchOneMap() throws DataAccessException, InvalidResultException;
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
@@ -885,19 +1144,6 @@ public interface ResultQuery<R extends Record> extends Query {
     <T, U> U[] fetchArray(Field<T> field, Converter<? super T, U> converter) throws DataAccessException;
 
     /**
-     * Execute the query and return at most one resulting record as an array
-     * <p>
-     * You can access data like this
-     * <code><pre>query.fetchOneArray()[fieldIndex]</pre></code>
-     *
-     * @return The resulting record or <code>null</code> if the query returns no
-     *         records.
-     * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
-     */
-    Object[] fetchOneArray() throws DataAccessException, InvalidResultException;
-
-    /**
      * Map resulting records onto a custom type.
      * <p>
      * This is the same as calling <code>fetch().into(type)</code>. See
@@ -913,31 +1159,6 @@ public interface ResultQuery<R extends Record> extends Query {
      * @see DefaultRecordMapper
      */
     <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException, MappingException;
-
-    /**
-     * Map resulting records onto a custom type.
-     * <p>
-     * This is the same as calling <code><pre>
-     * E result = null;
-     * Record r = q.fetchOne();
-     *
-     * if (r != null)
-     *     result = r.into(type);
-     * </pre></code>. See {@link Record#into(Class)} for more details
-     *
-     * @param <E> The generic entity type.
-     * @param type The entity type.
-     * @return The resulting record or <code>null</code> if the query returns no
-     *         records.
-     * @see Record#into(Class)
-     * @see Result#into(Class)
-     * @throws DataAccessException if something went wrong executing the query
-     * @throws MappingException wrapping any reflection or data type conversion
-     *             exception that might have occurred while mapping records
-     * @throws InvalidResultException if the query returned more than one record
-     * @see DefaultRecordMapper
-     */
-    <E> E fetchOneInto(Class<? extends E> type) throws DataAccessException, MappingException, InvalidResultException;
 
     /**
      * Map resulting records onto a custom record.
@@ -956,32 +1177,6 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      */
     <Z extends Record> Result<Z> fetchInto(Table<Z> table) throws DataAccessException;
-
-    /**
-     * Map resulting records onto a custom record.
-     * <p>
-     * This is the same as calling <code><pre>
-     * Z result = null;
-     * Record r = q.fetchOne();
-     *
-     * if (r != null)
-     *     result = r.into(table);
-     * </pre></code>. See {@link Record#into(Table)} for more details
-     * <p>
-     * The resulting record is attached to the original {@link Configuration} by
-     * default. Use {@link Settings#isAttachRecords()} to override this
-     * behaviour.
-     *
-     * @param <Z> The generic table record type.
-     * @param table The table type.
-     * @return The resulting record or <code>null</code> if the query returns no
-     *         records.
-     * @see Record#into(Table)
-     * @see Result#into(Table)
-     * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
-     */
-    <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, InvalidResultException;
 
     /**
      * Fetch results into a custom handler callback.

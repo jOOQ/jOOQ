@@ -2373,8 +2373,93 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public final Map<String, Object> fetchOneMap() {
+        return getDelegate().fetchOneMap();
+    }
+
+    @Override
+    public final Object[] fetchOneArray() {
+        return getDelegate().fetchOneArray();
+    }
+
+    @Override
+    public final <E> E fetchOneInto(Class<? extends E> type) {
+        return getDelegate().fetchOneInto(type);
+    }
+
+    @Override
+    public final <Z extends Record> Z fetchOneInto(Table<Z> table) {
+        return getDelegate().fetchOneInto(table);
+    }
+
+    @Override
+    public final <T> T fetchAny(Field<T> field) {
+        return getDelegate().fetchAny(field);
+    }
+
+    @Override
+    public final <T> T fetchAny(Field<?> field, Class<? extends T> type) {
+        return getDelegate().fetchAny(field, type);
+    }
+
+    @Override
+    public final <T, U> U fetchAny(Field<T> field, Converter<? super T, U> converter) {
+        return getDelegate().fetchAny(field, converter);
+    }
+
+    @Override
+    public final Object fetchAny(int fieldIndex) {
+        return getDelegate().fetchAny(fieldIndex);
+    }
+
+    @Override
+    public final <T> T fetchAny(int fieldIndex, Class<? extends T> type) {
+        return getDelegate().fetchAny(fieldIndex, type);
+    }
+
+    @Override
+    public final <U> U fetchAny(int fieldIndex, Converter<?, U> converter) {
+        return getDelegate().fetchAny(fieldIndex, converter);
+    }
+
+    @Override
+    public final Object fetchAny(String fieldName) {
+        return getDelegate().fetchAny(fieldName);
+    }
+
+    @Override
+    public final <T> T fetchAny(String fieldName, Class<? extends T> type) {
+        return getDelegate().fetchAny(fieldName, type);
+    }
+
+    @Override
+    public final <U> U fetchAny(String fieldName, Converter<?, U> converter) {
+        return getDelegate().fetchAny(fieldName, converter);
+    }
+
+    @Override
     public final R fetchAny() {
         return getDelegate().fetchAny();
+    }
+
+    @Override
+    public final Map<String, Object> fetchAnyMap() {
+        return getDelegate().fetchAnyMap();
+    }
+
+    @Override
+    public final Object[] fetchAnyArray() {
+        return getDelegate().fetchAnyArray();
+    }
+
+    @Override
+    public final <E> E fetchAnyInto(Class<? extends E> type) {
+        return getDelegate().fetchAnyInto(type);
+    }
+
+    @Override
+    public final <Z extends Record> Z fetchAnyInto(Table<Z> table) {
+        return getDelegate().fetchAnyInto(table);
     }
 
     @Override
@@ -2415,11 +2500,6 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final List<Map<String, Object>> fetchMaps() {
         return getDelegate().fetchMaps();
-    }
-
-    @Override
-    public final Map<String, Object> fetchOneMap() {
-        return getDelegate().fetchOneMap();
     }
 
     @Override
@@ -2508,23 +2588,8 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
-    public final Object[] fetchOneArray() {
-        return getDelegate().fetchOneArray();
-    }
-
-    @Override
     public final <T> List<T> fetchInto(Class<? extends T> type) {
         return getDelegate().fetchInto(type);
-    }
-
-    @Override
-    public final <E> E fetchOneInto(Class<? extends E> type) {
-        return getDelegate().fetchOneInto(type);
-    }
-
-    @Override
-    public final <Z extends Record> Z fetchOneInto(Table<Z> table) {
-        return getDelegate().fetchOneInto(table);
     }
 
     @Override

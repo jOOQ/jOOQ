@@ -1164,7 +1164,10 @@ implements
         if (matchedUpdate != null) {
             context.formatSeparator()
                    .keyword("when matched then update set").sql(" ")
-                   .visit(matchedUpdate);
+                   .formatIndentStart()
+                   .formatSeparator()
+                   .visit(matchedUpdate)
+                   .formatIndentEnd();
         }
 
         context.end(MERGE_SET)

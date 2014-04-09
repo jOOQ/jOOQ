@@ -38,46 +38,23 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.test._.testcases;
-
-import java.sql.Date;
-
-import org.jooq.Record1;
-import org.jooq.Record2;
-import org.jooq.Record3;
-import org.jooq.Record6;
-import org.jooq.TableRecord;
-import org.jooq.UpdatableRecord;
-import org.jooq.test.BaseTest;
-import org.jooq.test.jOOQAbstractTest;
+package org.jooq;
 
 /**
+ * A <code>CorrelationName</code> is a name of a table expression with optional
+ * derived column list.
+ * <p>
+ * An example of a correlation name with derived column list is:
+ * <code>table(column1, column2)</code>
+ *
  * @author Lukas Eder
  */
-public class Template<
-    A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
-    AP,
-    B    extends UpdatableRecord<B>,
-    S    extends UpdatableRecord<S> & Record1<String>,
-    B2S  extends UpdatableRecord<B2S> & Record3<String, Integer, Integer>,
-    BS   extends UpdatableRecord<BS>,
-    L    extends TableRecord<L> & Record2<String, String>,
-    X    extends TableRecord<X>,
-    DATE extends UpdatableRecord<DATE>,
-    BOOL extends UpdatableRecord<BOOL>,
-    D    extends UpdatableRecord<D>,
-    T    extends UpdatableRecord<T>,
-    U    extends TableRecord<U>,
-    UU   extends UpdatableRecord<UU>,
-    I    extends TableRecord<I>,
-    IPK  extends UpdatableRecord<IPK>,
-    T725 extends UpdatableRecord<T725>,
-    T639 extends UpdatableRecord<T639>,
-    T785 extends TableRecord<T785>,
-    CASE extends UpdatableRecord<CASE>>
-extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> {
+public interface CorrelationName extends QueryPart {
 
-    public Template(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
-        super(delegate);
-    }
+    /**
+     * Specify a subselect to refer to by the <code>CorrelationName</code> to
+     * form a common table expression.
+     */
+    <R extends Record> CommonTableExpression<R> as(Select<R> select);
+
 }

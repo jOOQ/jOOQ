@@ -1508,6 +1508,18 @@ public interface DSLContext {
     // XXX Global Query factory
     // -------------------------------------------------------------------------
 
+    WithAsStep with(String alias);
+
+    WithAsStep with(String alias, String... fieldAliases);
+
+    WithStep with(CommonTableExpression<?>... tables);
+
+    WithAsStep withRecursive(String alias);
+
+    WithAsStep withRecursive(String alias, String... fieldAliases);
+
+    WithStep withRecursive(CommonTableExpression<?>... tables);
+
     /**
      * Create a new DSL select statement.
      * <p>

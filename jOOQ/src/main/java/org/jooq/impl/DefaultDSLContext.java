@@ -74,6 +74,7 @@ import org.jooq.Attachable;
 import org.jooq.Batch;
 import org.jooq.BatchBindStep;
 import org.jooq.BindContext;
+import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
@@ -181,6 +182,8 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetFirstStep;
+import org.jooq.WithAsStep;
+import org.jooq.WithStep;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
@@ -735,6 +738,36 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
 
     @Override
+    public WithAsStep with(String alias) {
+        return new WithImpl(configuration, false).with(alias);
+    }
+
+    @Override
+    public WithAsStep with(String alias, String... fieldAliases) {
+        return new WithImpl(configuration, false).with(alias, fieldAliases);
+    }
+
+    @Override
+    public WithStep with(CommonTableExpression<?>... tables) {
+        return new WithImpl(configuration, false).with(tables);
+    }
+
+    @Override
+    public WithAsStep withRecursive(String alias) {
+        return new WithImpl(configuration, true).with(alias);
+    }
+
+    @Override
+    public WithAsStep withRecursive(String alias, String... fieldAliases) {
+        return new WithImpl(configuration, true).with(alias, fieldAliases);
+    }
+
+    @Override
+    public WithStep withRecursive(CommonTableExpression<?>... tables) {
+        return new WithImpl(configuration, true).with(tables);
+    }
+
+    @Override
     public <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
         SelectWhereStep<R> result = DSL.selectFrom(table);
         result.attach(configuration);
@@ -1064,12 +1097,12 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public SelectQuery<Record> selectQuery() {
-        return new SelectQueryImpl(configuration);
+        return new SelectQueryImpl(null, configuration);
     }
 
     @Override
     public <R extends Record> SelectQuery<R> selectQuery(TableLike<R> table) {
-        return new SelectQueryImpl<R>(configuration, table);
+        return new SelectQueryImpl<R>(null, configuration, table);
     }
 
     @Override

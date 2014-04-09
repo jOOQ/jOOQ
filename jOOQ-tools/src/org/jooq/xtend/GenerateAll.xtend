@@ -56,5 +56,6 @@ class GenerateAll {
     	Rows::main(args);
     	SelectSeekStep::main(args);
     	UpdateDSL::main(args);
+    	With::main(args);
     }
 }

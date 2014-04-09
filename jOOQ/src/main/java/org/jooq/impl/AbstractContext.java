@@ -71,6 +71,7 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     boolean                           declareFields;
     boolean                           declareTables;
     boolean                           declareWindows;
+    boolean                           declareCTE;
     boolean                           subquery;
     int                               index;
 
@@ -335,6 +336,13 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
                 declareWindows(true);
             }
 
+            // We're declaring cte, but "part" does not declare cte
+            else if (declareCTE() && !internal.declaresCTE()) {
+                declareCTE(false);
+                visit0(internal);
+                declareCTE(true);
+            }
+
             // We're not declaring, or "part" can declare
             else {
                 visit0(internal);
@@ -376,6 +384,17 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     @Override
     public final C declareWindows(boolean d) {
         this.declareWindows = d;
+        return (C) this;
+    }
+
+    @Override
+    public final boolean declareCTE() {
+        return declareCTE;
+    }
+
+    @Override
+    public final C declareCTE(boolean d) {
+        this.declareCTE = d;
         return (C) this;
     }
 

@@ -116,6 +116,7 @@ import org.jooq.test._.testcases.AliasTests;
 import org.jooq.test._.testcases.BatchTests;
 import org.jooq.test._.testcases.BenchmarkTests;
 import org.jooq.test._.testcases.CRUDTests;
+import org.jooq.test._.testcases.CTETests;
 import org.jooq.test._.testcases.CsvLoaderTests;
 import org.jooq.test._.testcases.DDLTests;
 import org.jooq.test._.testcases.DaoTests;
@@ -2019,6 +2020,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testLimitNamedParams() throws Exception {
         new OrderByTests(this).testLimitNamedParams();
+    }
+
+    @Test
+    public void testCTE() throws Exception {
+        new CTETests(this).testCTE();
     }
 
     @Test

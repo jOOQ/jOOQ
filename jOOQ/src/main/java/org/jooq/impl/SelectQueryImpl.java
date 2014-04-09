@@ -133,6 +133,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     private static final long               serialVersionUID = 1646393178384872967L;
     private static final Clause[]           CLAUSES          = { SELECT };
 
+    private final WithImpl                  with;
     private final SelectFieldList           select;
     private String                          hint;
     private String                          option;
@@ -158,21 +159,22 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     private boolean                         seekBefore;
     private final Limit                     limit;
 
-    SelectQueryImpl(Configuration configuration) {
-        this(configuration, null);
+    SelectQueryImpl(WithImpl with, Configuration configuration) {
+        this(with, configuration, null);
     }
 
-    SelectQueryImpl(Configuration configuration, boolean distinct) {
-        this(configuration, null, distinct);
+    SelectQueryImpl(WithImpl with, Configuration configuration, boolean distinct) {
+        this(with, configuration, null, distinct);
     }
 
-    SelectQueryImpl(Configuration configuration, TableLike<? extends R> from) {
-        this(configuration, from, false);
+    SelectQueryImpl(WithImpl with, Configuration configuration, TableLike<? extends R> from) {
+        this(with, configuration, from, false);
     }
 
-    SelectQueryImpl(Configuration configuration, TableLike<? extends R> from, boolean distinct) {
+    SelectQueryImpl(WithImpl with, Configuration configuration, TableLike<? extends R> from, boolean distinct) {
         super(configuration);
 
+        this.with = with;
         this.distinct = distinct;
         this.select = new SelectFieldList();
         this.from = new TableList();
@@ -201,6 +203,9 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
     @Override
     public final void bind(BindContext context) {
+        if (with != null)
+            context.visit(with);
+
         pushWindow(context);
 
         context.declareFields(true)
@@ -235,6 +240,9 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
     @Override
     public final void toSQL(RenderContext context) {
+        if (with != null)
+            context.visit(with).formatSeparator();
+
         pushWindow(context);
 
         Boolean wrapDerivedTables = (Boolean) context.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);

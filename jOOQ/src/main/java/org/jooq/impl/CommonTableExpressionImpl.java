@@ -40,95 +40,101 @@
  */
 package org.jooq.impl;
 
-import java.util.Arrays;
+import static org.jooq.impl.DSL.fieldByName;
+
+import java.util.List;
 
 import org.jooq.BindContext;
-import org.jooq.Clause;
-import org.jooq.Context;
-import org.jooq.CorrelationName;
-import org.jooq.Name;
+import org.jooq.CommonTableExpression;
+import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.RenderContext;
-import org.jooq.WindowDefinition;
-import org.jooq.WindowSpecification;
-import org.jooq.tools.StringUtils;
+import org.jooq.Select;
+import org.jooq.Table;
 
 /**
- * The default implementation for a SQL identifier
- *
  * @author Lukas Eder
  */
-class NameImpl extends AbstractQueryPart implements Name {
+class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R> implements CommonTableExpression<R> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 8562325639223483938L;
+    private static final long         serialVersionUID = 2520235151216758958L;
 
-    private String[]          qualifiedName;
+    private final CorrelationNameImpl name;
+    private final Select<R>           select;
+    private final Fields<R>           fields;
 
-    NameImpl(String[] qualifiedName) {
-        this.qualifiedName = qualifiedName;
+    CommonTableExpressionImpl(CorrelationNameImpl name, Select<R> select) {
+        super(name.name);
+
+        this.name = name;
+        this.select = select;
+        this.fields = fields1();
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        String separator = "";
+    public final Class<? extends R> getRecordType() {
+        return select.getRecordType();
+    }
 
-        for (String name : qualifiedName) {
-            if (!StringUtils.isEmpty(name)) {
-                context.sql(separator).literal(name);
-                separator = ".";
-            }
+    @Override
+    public final Table<R> as(String alias) {
+        return new TableAlias<R>(this, alias);
+    }
+
+    @Override
+    public final Table<R> as(String alias, String... fieldAliases) {
+        return new TableAlias<R>(this, alias, fieldAliases);
+    }
+
+    @Override
+    public final boolean declaresCTE() {
+        return true;
+    }
+
+    @Override
+    public final void toSQL(RenderContext ctx) {
+        if (ctx.declareCTE()) {
+            ctx.visit(name)
+               .sql(" ")
+               .keyword("as")
+               .sql(" (")
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(select)
+               .formatIndentEnd()
+               .formatNewLine()
+               .sql(")");
+        }
+        else {
+            ctx.visit(DSL.name(name.name));
         }
     }
 
     @Override
-    public final void bind(BindContext context) {}
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
-
-    @Override
-    public final String[] getName() {
-        return qualifiedName;
-    }
-
-    @Override
-    public final WindowDefinition as(WindowSpecification window) {
-        return new WindowDefinitionImpl(this, window);
-    }
-
-    @Override
-    public final CorrelationName fields(String... fieldNames) {
-        if (qualifiedName.length != 1)
-            throw new IllegalStateException("Cannot create a CorrelationName from a qualified name : " + Arrays.asList(qualifiedName));
-
-        return new CorrelationNameImpl(qualifiedName[0], fieldNames);
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: Object API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public int hashCode() {
-        return Arrays.hashCode(getName());
-    }
-
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
+    public final void bind(BindContext ctx) {
+        if (ctx.declareCTE()) {
+            ctx.visit(name).visit(select);
         }
-
-        // [#1626] NameImpl equality can be decided without executing the
-        // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof NameImpl) {
-            return Arrays.equals(getName(), (((NameImpl) that).getName()));
+        else {
         }
+    }
 
-        return super.equals(that);
+    @Override
+    final Fields<R> fields0() {
+        return fields;
+    }
+
+    final Fields<R> fields1() {
+        List<Field<?>> s = select.getSelect();
+        Field<?>[] f = new Field[s.size()];
+
+        for (int i = 0; i < f.length; i++)
+            f[i] = fieldByName(s.get(i).getDataType(), name.name, name.fieldNames[i]);
+
+        Fields<R> result = new Fields<R>(f);
+        return result;
     }
 }

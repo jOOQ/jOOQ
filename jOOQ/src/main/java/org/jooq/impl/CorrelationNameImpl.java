@@ -40,95 +40,64 @@
  */
 package org.jooq.impl;
 
-import java.util.Arrays;
+import static org.jooq.impl.DSL.name;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.CommonTableExpression;
 import org.jooq.Context;
 import org.jooq.CorrelationName;
-import org.jooq.Name;
+import org.jooq.Record;
 import org.jooq.RenderContext;
-import org.jooq.WindowDefinition;
-import org.jooq.WindowSpecification;
-import org.jooq.tools.StringUtils;
+import org.jooq.Select;
 
 /**
- * The default implementation for a SQL identifier
- *
  * @author Lukas Eder
  */
-class NameImpl extends AbstractQueryPart implements Name {
+class CorrelationNameImpl extends AbstractQueryPart implements CorrelationName {
 
     /**
-     * Generated UID
+     * Gemerated UID
      */
-    private static final long serialVersionUID = 8562325639223483938L;
+    private static final long serialVersionUID = -369633206858851863L;
 
-    private String[]          qualifiedName;
+    final String              name;
+    final String[]            fieldNames;
 
-    NameImpl(String[] qualifiedName) {
-        this.qualifiedName = qualifiedName;
+    CorrelationNameImpl(String name, String[] fieldNames) {
+        this.name = name;
+        this.fieldNames = fieldNames;
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        String separator = "";
+    public final <R extends Record> CommonTableExpression<R> as(Select<R> select) {
+        return new CommonTableExpressionImpl<R>(this, select);
+    }
 
-        for (String name : qualifiedName) {
-            if (!StringUtils.isEmpty(name)) {
-                context.sql(separator).literal(name);
-                separator = ".";
+    @Override
+    public final void toSQL(RenderContext ctx) {
+        ctx.visit(name(name));
+
+        if (fieldNames != null && fieldNames.length > 0) {
+            ctx.sql("(");
+
+            for (int i = 0; i < fieldNames.length; i++) {
+                if (i > 0)
+                    ctx.sql(", ");
+
+                ctx.visit(name(fieldNames[i]));
             }
+
+            ctx.sql(")");
         }
     }
 
     @Override
-    public final void bind(BindContext context) {}
+    public final void bind(BindContext ctx) {
+    }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return null;
-    }
-
-    @Override
-    public final String[] getName() {
-        return qualifiedName;
-    }
-
-    @Override
-    public final WindowDefinition as(WindowSpecification window) {
-        return new WindowDefinitionImpl(this, window);
-    }
-
-    @Override
-    public final CorrelationName fields(String... fieldNames) {
-        if (qualifiedName.length != 1)
-            throw new IllegalStateException("Cannot create a CorrelationName from a qualified name : " + Arrays.asList(qualifiedName));
-
-        return new CorrelationNameImpl(qualifiedName[0], fieldNames);
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: Object API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public int hashCode() {
-        return Arrays.hashCode(getName());
-    }
-
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-
-        // [#1626] NameImpl equality can be decided without executing the
-        // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof NameImpl) {
-            return Arrays.equals(getName(), (((NameImpl) that).getName()));
-        }
-
-        return super.equals(that);
     }
 }

@@ -95,6 +95,14 @@ abstract class AbstractQueryPart implements QueryPartInternal {
         return false;
     }
 
+    /**
+     * Subclasses may override this
+     */
+    @Override
+    public boolean declaresCTE() {
+        return false;
+    }
+
     // -------------------------------------------------------------------------
     // The Object API
     // -------------------------------------------------------------------------

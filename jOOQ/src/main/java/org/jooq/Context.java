@@ -168,6 +168,18 @@ public interface Context<C extends Context<C>> {
     C declareWindows(boolean declareWindows);
 
     /**
+     * Whether the current context is rendering a common table expression (e.g.
+     * a {@link CommonTableExpression} in the <code>WITH</code> clause of the
+     * query).
+     */
+    boolean declareCTE();
+
+    /**
+     * Set the new context value for {@link #declareCTE()}
+     */
+    C declareCTE(boolean declareCTE);
+
+    /**
      * Whether the current context is rendering a sub-query (nested query)
      */
     boolean subquery();

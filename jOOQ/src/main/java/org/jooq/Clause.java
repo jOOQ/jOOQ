@@ -282,6 +282,15 @@ public enum Clause {
     CONDITION_NOT_EXISTS,
 
     // -------------------------------------------------------------------------
+    // The WITH clause that is used in all sorts of statements
+    // -------------------------------------------------------------------------
+
+    /**
+     * A <code>WITH</code> clause preceding all sorts of DML statements.
+     */
+    WITH,
+
+    // -------------------------------------------------------------------------
     // Clauses that are used in a SELECT statement
     // -------------------------------------------------------------------------
 

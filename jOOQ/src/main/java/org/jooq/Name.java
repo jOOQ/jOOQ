@@ -69,4 +69,15 @@ public interface Name extends QueryPart {
      * </ul>
      */
     WindowDefinition as(WindowSpecification window);
+
+    /**
+     * Add a list of fields to this name to make this name a
+     * {@link CorrelationName}.
+     * <p>
+     * The <code>CorrelationName</code> can then be used along with a subselect
+     * to form a {@link CommonTableExpression} to be used with <code>WITH</code>
+     * clauses.
+     */
+    CorrelationName fields(String... fieldNames);
+
 }

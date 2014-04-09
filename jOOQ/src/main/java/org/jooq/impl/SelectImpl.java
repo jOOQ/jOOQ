@@ -196,12 +196,12 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     private transient Integer               limit;
     private transient Param<Integer>        limitParam;
 
-    SelectImpl(Configuration configuration) {
-        this(configuration, false);
+    SelectImpl(WithImpl with, Configuration configuration) {
+        this(with, configuration, false);
     }
 
-    SelectImpl(Configuration configuration, boolean distinct) {
-        this(new SelectQueryImpl<R>(configuration, distinct));
+    SelectImpl(WithImpl with, Configuration configuration, boolean distinct) {
+        this(new SelectQueryImpl<R>(with, configuration, distinct));
     }
 
     SelectImpl(Select<R> query) {

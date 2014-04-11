@@ -606,7 +606,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         Class<?> type = getType();
 
         if (type == String.class) {
-            return ((Field<String>) this).in((Collection) Utils.inline(TRUE_VALUES.toArray(new String[TRUE_VALUES.size()])));
+            return ((Field<String>) this).in(Utils.inline(TRUE_VALUES.toArray(new String[TRUE_VALUES.size()])));
         }
         else if (Number.class.isAssignableFrom(type)) {
             return ((Field<Number>) this).equal(inline((Number) getDataType().convert(1)));
@@ -625,7 +625,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         Class<?> type = getType();
 
         if (type == String.class) {
-            return ((Field<String>) this).in((Collection) Utils.inline(FALSE_VALUES.toArray(new String[FALSE_VALUES.size()])));
+            return ((Field<String>) this).in(Utils.inline(FALSE_VALUES.toArray(new String[FALSE_VALUES.size()])));
         }
         else if (Number.class.isAssignableFrom(type)) {
             return ((Field<Number>) this).equal(inline((Number) getDataType().convert(0)));
@@ -634,7 +634,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
             return ((Field<Boolean>) this).equal(inline(false));
         }
         else {
-            return cast(String.class).in((Collection) Utils.inline(FALSE_VALUES.toArray(new String[FALSE_VALUES.size()])));
+            return cast(String.class).in(Utils.inline(FALSE_VALUES.toArray(new String[FALSE_VALUES.size()])));
         }
     }
 
@@ -788,10 +788,10 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition in(Collection<T> values) {
+    public final Condition in(Collection<?> values) {
         List<Field<?>> fields = new ArrayList<Field<?>>();
 
-        for (T value : values) {
+        for (Object value : values) {
             fields.add(Utils.field(value, this));
         }
 
@@ -819,10 +819,10 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition notIn(Collection<T> values) {
+    public final Condition notIn(Collection<?> values) {
         List<Field<?>> fields = new ArrayList<Field<?>>();
 
-        for (T value : values) {
+        for (Object value : values) {
             fields.add(Utils.field(value, this));
         }
 

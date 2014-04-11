@@ -1746,7 +1746,7 @@ public interface Field<T> extends GroupField {
         args = "Field+",
         to = "InPredicate"
     )
-    Condition in(Collection<T> values);
+    Condition in(Collection<?> values);
 
     /**
      * Create a condition to check this field against several values.
@@ -1806,7 +1806,7 @@ public interface Field<T> extends GroupField {
         args = "Field+",
         to = "InPredicate"
     )
-    Condition notIn(Collection<T> values);
+    Condition notIn(Collection<?> values);
 
     /**
      * Create a condition to check this field against several values.

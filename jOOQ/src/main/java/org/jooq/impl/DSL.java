@@ -89,6 +89,7 @@ import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Delete;
 import org.jooq.DeleteWhereStep;
+import org.jooq.DerivedColumnList;
 import org.jooq.Field;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupField;
@@ -543,26 +544,78 @@ public class DSL {
     // XXX Static subselect factory methods
     // -------------------------------------------------------------------------
 
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     */
     public static WithAsStep with(String alias) {
         return new WithImpl(null, false).with(alias);
     }
 
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     */
     public static WithAsStep with(String alias, String... fieldAliases) {
         return new WithImpl(null, false).with(alias, fieldAliases);
     }
 
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * Reusable {@link CommonTableExpression} types can be constructed through
+     * <ul>
+     * <li>{@link #name(String...)}</li>
+     * <li>{@link Name#fields(String...)}</li>
+     * <li>
+     * {@link DerivedColumnList#as(Select)}</li>
+     * </ul>
+     */
     public static WithStep with(CommonTableExpression<?>... tables) {
         return new WithImpl(null, false).with(tables);
     }
 
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     */
     public static WithAsStep withRecursive(String alias) {
         return new WithImpl(null, true).with(alias);
     }
 
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     */
     public static WithAsStep withRecursive(String alias, String... fieldAliases) {
         return new WithImpl(null, true).with(alias, fieldAliases);
     }
 
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * Reusable {@link CommonTableExpression} types can be constructed through
+     * <ul>
+     * <li>{@link #name(String...)}</li>
+     * <li>{@link Name#fields(String...)}</li>
+     * <li>
+     * {@link DerivedColumnList#as(Select)}</li>
+     * </ul>
+     */
     public static WithStep withRecursive(CommonTableExpression<?>... tables) {
         return new WithImpl(null, true).with(tables);
     }

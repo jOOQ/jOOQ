@@ -57,6 +57,19 @@ import org.jooq.impl.DSL;
 
 
 /**
+ * This type is part of the jOOQ DSL to create {@link Select}, {@link Insert},
+ * {@link Update}, {@link Delete}, {@link Merge} statements prefixed with a
+ * <code>WITH</code> clause and with {@link CommonTableExpression}s.
+ * <p>
+ * Example:
+ * <code><pre>
+ * DSL.with("table", "col1", "col2")
+ *    .as(
+ *        select(one(), two())
+ *    )
+ *    .select()
+ *    .from("table")
+ * </pre></code>
  *
  * @author Lukas Eder
  */
@@ -66,10 +79,27 @@ public interface WithStep extends QueryPart {
     // XXX Add additional common table expressions
     // -------------------------------------------------------------------------
 
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
     WithAsStep with(String alias);
 
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
     WithAsStep with(String alias, String... fieldAliases);
 
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     * <p>
+     * Reusable {@link CommonTableExpression} types can be constructed through
+     * <ul>
+     * <li>{@link DSL#name(String...)}</li>
+     * <li>{@link Name#fields(String...)}</li>
+     * <li>
+     * {@link DerivedColumnList#as(Select)}</li>
+     * </ul>
+     */
     WithStep with(CommonTableExpression<?>... tables);
 
     // -------------------------------------------------------------------------

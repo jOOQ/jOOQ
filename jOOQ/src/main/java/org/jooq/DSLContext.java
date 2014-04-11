@@ -1508,16 +1508,68 @@ public interface DSLContext {
     // XXX Global Query factory
     // -------------------------------------------------------------------------
 
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     */
     WithAsStep with(String alias);
 
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     */
     WithAsStep with(String alias, String... fieldAliases);
 
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * Reusable {@link CommonTableExpression} types can be constructed through
+     * <ul>
+     * <li>{@link DSL#name(String...)}</li>
+     * <li>{@link Name#fields(String...)}</li>
+     * <li>
+     * {@link DerivedColumnList#as(Select)}</li>
+     * </ul>
+     */
     WithStep with(CommonTableExpression<?>... tables);
 
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     */
     WithAsStep withRecursive(String alias);
 
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     */
     WithAsStep withRecursive(String alias, String... fieldAliases);
 
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * Reusable {@link CommonTableExpression} types can be constructed through
+     * <ul>
+     * <li>{@link DSL#name(String...)}</li>
+     * <li>{@link Name#fields(String...)}</li>
+     * <li>
+     * {@link DerivedColumnList#as(Select)}</li>
+     * </ul>
+     */
     WithStep withRecursive(CommonTableExpression<?>... tables);
 
     /**

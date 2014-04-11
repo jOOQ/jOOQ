@@ -1601,9 +1601,10 @@ public class JavaGenerator extends AbstractGenerator {
 
         // Multi-constructor
 
-        // [#3010] Invalid UDTs may have no attributes. Avoid generating this constructor
-        // in that case
-        if (getTypedElements(tableOrUDT).size() > 0) {
+        // [#3010] Invalid UDTs may have no attributes. Avoid generating this constructor in that case
+        // [#3176] Avoid generating constructors for tables with more than 255 columns (Java's method argument limit)
+        if (getTypedElements(tableOrUDT).size() > 0 &&
+            getTypedElements(tableOrUDT).size() < 256) {
             out.println();
             out.tab(1).print("public %s(", className);
 

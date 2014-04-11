@@ -41,10 +41,26 @@
 package org.jooq;
 
 /**
+ * This type is part of the jOOQ DSL to create {@link Select}, {@link Insert},
+ * {@link Update}, {@link Delete}, {@link Merge} statements prefixed with a
+ * <code>WITH</code> clause and with {@link CommonTableExpression}s.
+ * <p>
+ * Example:
+ * <code><pre>
+ * DSL.with("table", "col1", "col2")
+ *    .as(
+ *        select(one(), two())
+ *    )
+ *    .select()
+ *    .from("table")
+ * </pre></code>
  *
  * @author Lukas Eder
  */
 public interface WithAsStep {
 
+    /**
+     * Associate a subselect with a common table expression's table and column names.
+     */
     WithStep as(Select<?> select);
 }

@@ -122,10 +122,12 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             SQLDialect dialect = context.configuration().dialect();
             boolean simulateDerivedColumnList = false;
 
-            // [#1801] Some databases don't allow "derived column names" in
-            // "simple class specifications". Hence, wrap the table reference in
-            // a subselect
-            if (fieldAliases != null && asList(CUBRID, FIREBIRD).contains(dialect.family()) && wrapped instanceof TableImpl) {
+            // [#454] [#1801] Some databases don't allow "derived column names" in
+            // "simple class specifications", or "common table expression references".
+            // Hence, wrap the table reference in a subselect
+            if (fieldAliases != null
+                    && asList(CUBRID, FIREBIRD).contains(dialect.family())
+                    && (wrapped instanceof TableImpl || wrapped instanceof CommonTableExpressionImpl)) {
 
                 @SuppressWarnings("unchecked")
                 Select<Record> select =

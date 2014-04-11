@@ -94,7 +94,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
-    public void testCTE() throws Exception {
+    public void testCTESimple() throws Exception {
         switch (dialect().family()) {
             case MARIADB:
             case MYSQL:
@@ -116,9 +116,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(String.class, result1.field(1).getType());
         assertEquals(1, result1.getValue(0, 0));
         assertEquals("a", result1.getValue(0, 1));
+    }
 
 
-
+    @Test
+    public void testCTEMultiple() throws Exception {
         CommonTableExpression<Record2<Integer, String>> t1 = name("t1").fields("f1", "f2").as(select(val(1), val("a")));
         CommonTableExpression<Record2<Integer, String>> t2 = name("t2").fields("f3", "f4").as(select(val(2), val("b")));
 
@@ -150,7 +152,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .from(t1, t2)
                     .fetch()
         );
+    }
 
+
+    @Test
+    public void testCTEAliasing() throws Exception {
+        CommonTableExpression<Record2<Integer, String>> t1 = name("t1").fields("f1", "f2").as(select(val(1), val("a")));
+        CommonTableExpression<Record2<Integer, String>> t2 = name("t2").fields("f3", "f4").as(select(val(2), val("b")));
 
         // Try renaming the CTEs when referencing them
         Table<Record2<Integer, String>> a1 = t1.as("a1");
@@ -174,9 +182,28 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(3, result3.getValue(0, 0));
         assertEquals("ab", result3.getValue(0, 1));
 
+        // Try renaming the CTEs and their columns when referencing them
+        Table<Record2<Integer, String>> b1 = t1.as("a1", "i1", "s1");
+        Table<Record2<Integer, String>> b2 = t2.as("a2", "i2", "s2");
 
+        Result<?> result4 =
+        create().with(t1)
+                .with(t2)
+                .select(
+                    b1.field("i1").add(b2.field("i2")).as("add"),
+                    b1.field("s1").concat(b2.field("s2")).as("concat"))
+                .from(b1, b2)
+                .fetch();
 
-        // TODO: Test aliasing CTE with derived column lists : a1(x1, x2)
+        assertEquals(1, result4.size());
+        assertEquals(2, result4.fields().length);
+        assertEquals("add", result4.field(0).getName());
+        assertEquals("concat", result4.field(1).getName());
+        assertEquals(Integer.class, result4.field(0).getType());
+        assertEquals(String.class, result4.field(1).getType());
+        assertEquals(3, result4.getValue(0, 0));
+        assertEquals("ab", result4.getValue(0, 1));
+
         // TODO: Test CTE with no explicit column lists
         // TODO: Test recursive CTE
         // TODO: Test CTE with UNIONs (may not work due to #1658)

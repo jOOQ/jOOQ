@@ -2023,8 +2023,18 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testCTE() throws Exception {
-        new CTETests(this).testCTE();
+    public void testCTESimple() throws Exception {
+        new CTETests(this).testCTESimple();
+    }
+
+    @Test
+    public void testCTEMultiple() throws Exception {
+        new CTETests(this).testCTEMultiple();
+    }
+
+    @Test
+    public void testCTEAliasing() throws Exception {
+        new CTETests(this).testCTEAliasing();
     }
 
     @Test

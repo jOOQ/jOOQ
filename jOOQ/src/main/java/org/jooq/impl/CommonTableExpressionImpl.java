@@ -62,11 +62,11 @@ class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R> imple
      */
     private static final long         serialVersionUID = 2520235151216758958L;
 
-    private final CorrelationNameImpl name;
+    private final DerivedColumnListImpl name;
     private final Select<R>           select;
     private final Fields<R>           fields;
 
-    CommonTableExpressionImpl(CorrelationNameImpl name, Select<R> select) {
+    CommonTableExpressionImpl(DerivedColumnListImpl name, Select<R> select) {
         super(name.name);
 
         this.name = name;

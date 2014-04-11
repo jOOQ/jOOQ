@@ -72,12 +72,12 @@ public interface Name extends QueryPart {
 
     /**
      * Add a list of fields to this name to make this name a
-     * {@link CorrelationName}.
+     * {@link DerivedColumnList}.
      * <p>
-     * The <code>CorrelationName</code> can then be used along with a subselect
-     * to form a {@link CommonTableExpression} to be used with <code>WITH</code>
-     * clauses.
+     * The <code>DerivedColumnList</code> can then be used along with a
+     * subselect to form a {@link CommonTableExpression} to be used with
+     * <code>WITH</code> clauses.
      */
-    CorrelationName fields(String... fieldNames);
+    DerivedColumnList fields(String... fieldNames);
 
 }

@@ -45,7 +45,7 @@ import java.util.Arrays;
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
-import org.jooq.CorrelationName;
+import org.jooq.DerivedColumnList;
 import org.jooq.Name;
 import org.jooq.RenderContext;
 import org.jooq.WindowDefinition;
@@ -101,11 +101,11 @@ class NameImpl extends AbstractQueryPart implements Name {
     }
 
     @Override
-    public final CorrelationName fields(String... fieldNames) {
+    public final DerivedColumnList fields(String... fieldNames) {
         if (qualifiedName.length != 1)
-            throw new IllegalStateException("Cannot create a CorrelationName from a qualified name : " + Arrays.asList(qualifiedName));
+            throw new IllegalStateException("Cannot create a DerivedColumnList from a qualified name : " + Arrays.asList(qualifiedName));
 
-        return new CorrelationNameImpl(qualifiedName[0], fieldNames);
+        return new DerivedColumnListImpl(qualifiedName[0], fieldNames);
     }
 
     // ------------------------------------------------------------------------

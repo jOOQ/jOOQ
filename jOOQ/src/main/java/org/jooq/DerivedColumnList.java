@@ -38,66 +38,23 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.impl;
-
-import static org.jooq.impl.DSL.name;
-
-import org.jooq.BindContext;
-import org.jooq.Clause;
-import org.jooq.CommonTableExpression;
-import org.jooq.Context;
-import org.jooq.CorrelationName;
-import org.jooq.Record;
-import org.jooq.RenderContext;
-import org.jooq.Select;
+package org.jooq;
 
 /**
+ * A <code>DerivedColumnList</code> is a name of a table expression with
+ * optional derived column list.
+ * <p>
+ * An example of a correlation name with derived column list is:
+ * <code>table(column1, column2)</code>
+ *
  * @author Lukas Eder
  */
-class CorrelationNameImpl extends AbstractQueryPart implements CorrelationName {
+public interface DerivedColumnList extends QueryPart {
 
     /**
-     * Gemerated UID
+     * Specify a subselect to refer to by the <code>DerivedColumnList</code> to
+     * form a common table expression.
      */
-    private static final long serialVersionUID = -369633206858851863L;
+    <R extends Record> CommonTableExpression<R> as(Select<R> select);
 
-    final String              name;
-    final String[]            fieldNames;
-
-    CorrelationNameImpl(String name, String[] fieldNames) {
-        this.name = name;
-        this.fieldNames = fieldNames;
-    }
-
-    @Override
-    public final <R extends Record> CommonTableExpression<R> as(Select<R> select) {
-        return new CommonTableExpressionImpl<R>(this, select);
-    }
-
-    @Override
-    public final void toSQL(RenderContext ctx) {
-        ctx.visit(name(name));
-
-        if (fieldNames != null && fieldNames.length > 0) {
-            ctx.sql("(");
-
-            for (int i = 0; i < fieldNames.length; i++) {
-                if (i > 0)
-                    ctx.sql(", ");
-
-                ctx.visit(name(fieldNames[i]));
-            }
-
-            ctx.sql(")");
-        }
-    }
-
-    @Override
-    public final void bind(BindContext ctx) {
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
 }

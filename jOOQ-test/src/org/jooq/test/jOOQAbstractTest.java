@@ -2038,6 +2038,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testCTEWithNoExplicitColumnLists() throws Exception {
+        new CTETests(this).testCTEWithNoExplicitColumnLists();
+    }
+
+    @Test
     public void testJoinDuplicateFieldNames() throws Exception {
         new JoinTests(this).testJoinDuplicateFieldNames();
     }

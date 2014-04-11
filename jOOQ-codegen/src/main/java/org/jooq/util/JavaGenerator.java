@@ -722,8 +722,10 @@ public class JavaGenerator extends AbstractGenerator {
         out.tab(1).println("}");
 
         // [#3130] Invalid UDTs may have a degree of 0
-        if (degree > 0) {
+        // [#3176] Avoid generating constructors for tables with more than 255 columns (Java's method argument limit)
+        if (degree > 0 && degree < 256) {
             List<String> arguments = new ArrayList<String>();
+
             for (int i = 0; i < degree; i++) {
                 final TypedElementDefinition<?> column = columns.get(i);
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.DEFAULT);

@@ -131,8 +131,16 @@ class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R> imple
         List<Field<?>> s = select.getSelect();
         Field<?>[] f = new Field[s.size()];
 
-        for (int i = 0; i < f.length; i++)
-            f[i] = fieldByName(s.get(i).getDataType(), name.name, name.fieldNames[i]);
+        for (int i = 0; i < f.length; i++) {
+            f[i] = fieldByName(
+                s.get(i).getDataType(),
+                name.name,
+
+                // If the CTE has no explicit column names, inherit those of the subquery
+                name.fieldNames.length > 0
+                    ? name.fieldNames[i]
+                    : s.get(i).getName());
+        }
 
         Fields<R> result = new Fields<R>(f);
         return result;

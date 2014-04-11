@@ -204,6 +204,28 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(3, result4.getValue(0, 0));
         assertEquals("ab", result4.getValue(0, 1));
 
+    }
+
+    @Test
+    public void testCTEWithNoExplicitColumnLists() throws Exception {
+        Result<Record> result1 =
+        create().with("a").as(select(
+                                val(1).as("x"),
+                                val("a").as("y")
+                             ))
+                .select()
+                .from("a")
+                .fetch();
+
+        assertEquals(1, result1.size());
+        assertEquals(2, result1.fields().length);
+        assertEquals("x", result1.field(0).getName());
+        assertEquals("y", result1.field(1).getName());
+        assertEquals(Integer.class, result1.field(0).getType());
+        assertEquals(String.class, result1.field(1).getType());
+        assertEquals(1, result1.getValue(0, 0));
+        assertEquals("a", result1.getValue(0, 1));
+
         // TODO: Test CTE with no explicit column lists
         // TODO: Test recursive CTE
         // TODO: Test CTE with UNIONs (may not work due to #1658)

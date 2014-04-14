@@ -45,16 +45,13 @@ import static org.jooq.Clause.INSERT_INSERT_INTO;
 import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE;
 import static org.jooq.Clause.INSERT_RETURNING;
 import static org.jooq.Clause.INSERT_SELECT;
-import static org.jooq.impl.Utils.visitAll;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Insert;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 
@@ -82,43 +79,36 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.start(INSERT_INSERT_INTO)
-               .keyword("insert into")
-               .sql(" ")
-               .visit(into)
-               .sql(" (");
+    public final void accept(Context<?> ctx) {
+        ctx.start(INSERT_INSERT_INTO)
+           .keyword("insert into")
+           .sql(" ")
+           .visit(into)
+           .sql(" (");
 
         // [#989] Avoid qualifying fields in INSERT field declaration
-        boolean qualify = context.qualify();
-        context.qualify(false);
+        boolean qualify = ctx.qualify();
+        ctx.qualify(false);
 
         String separator = "";
         for (Field<?> field : fields) {
-            context.sql(separator)
-                   .visit(field);
+            ctx.sql(separator)
+               .visit(field);
 
             separator = ", ";
         }
 
-        context.qualify(qualify);
-        context.sql(")")
-               .end(INSERT_INSERT_INTO)
-               .formatSeparator()
-               .start(INSERT_SELECT)
-               .visit(select)
-               .end(INSERT_SELECT)
-               .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
-               .end(INSERT_ON_DUPLICATE_KEY_UPDATE)
-               .start(INSERT_RETURNING)
-               .end(INSERT_RETURNING);
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.visit(into);
-        visitAll(context, fields);
-        context.visit(select);
+        ctx.qualify(qualify);
+        ctx.sql(")")
+           .end(INSERT_INSERT_INTO)
+           .formatSeparator()
+           .start(INSERT_SELECT)
+           .visit(select)
+           .end(INSERT_SELECT)
+           .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
+           .end(INSERT_ON_DUPLICATE_KEY_UPDATE)
+           .start(INSERT_RETURNING)
+           .end(INSERT_RETURNING);
     }
 
     @Override

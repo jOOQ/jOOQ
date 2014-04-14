@@ -43,7 +43,6 @@ package org.jooq.impl;
 import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_REFERENCE;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Record;
@@ -77,18 +76,15 @@ class QualifiedTable extends AbstractTable<Record> {
     // ------------------------------------------------------------------------
 
     @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> ctx) {
         String separator = "";
         for (String string : sql) {
-            context.sql(separator);
-            context.literal(string);
+            ctx.sql(separator);
+            ctx.literal(string);
 
             separator = ".";
         }
     }
-
-    @Override
-    public final void bind(BindContext context) {}
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {

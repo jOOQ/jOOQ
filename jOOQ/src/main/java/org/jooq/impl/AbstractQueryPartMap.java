@@ -45,9 +45,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.QueryPart;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -72,10 +71,7 @@ implements Map<K, V> {
     // -------------------------------------------------------------------------
 
     @Override
-    public abstract void toSQL(RenderContext context);
-
-    @Override
-    public abstract void bind(BindContext context);
+    public abstract void accept(Context<?> context);
 
     // -------------------------------------------------------------------------
     // The Map API

@@ -40,10 +40,9 @@
  */
 package org.jooq.impl;
 
-import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Table;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
@@ -82,27 +81,15 @@ class FunctionTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        switch (context.configuration().dialect()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.configuration().dialect()) {
             case HSQLDB: {
-                context.keyword("table(").visit(function).sql(")");
+                ctx.keyword("table(").visit(function).sql(")");
                 break;
             }
 
             default:
-                throw new SQLDialectNotSupportedException("FUNCTION TABLE is not supported for " + context.configuration().dialect());
-        }
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        switch (context.configuration().dialect()) {
-            case HSQLDB:
-                context.visit(function);
-                break;
-
-            default:
-                throw new SQLDialectNotSupportedException("FUNCTION TABLE is not supported for " + context.configuration().dialect());
+                throw new SQLDialectNotSupportedException("FUNCTION TABLE is not supported for " + ctx.configuration().dialect());
         }
     }
 

@@ -58,14 +58,12 @@ import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPartInternal;
-import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 
 /**
@@ -94,13 +92,8 @@ class IsDistinctFrom<T> extends AbstractCondition {
     }
 
     @Override
-    public final void toSQL(RenderContext ctx) {
-        delegate(ctx.configuration()).toSQL(ctx);
-    }
-
-    @Override
-    public final void bind(BindContext ctx) {
-        delegate(ctx.configuration()).bind(ctx);
+    public final void accept(Context<?> ctx) {
+        delegate(ctx.configuration()).accept(ctx);
     }
 
     @Override

@@ -46,18 +46,15 @@ import static org.jooq.Clause.CONDITION_AND;
 import static org.jooq.Clause.CONDITION_OR;
 import static org.jooq.Operator.AND;
 import static org.jooq.impl.DSL.trueCondition;
-import static org.jooq.impl.Utils.visitAll;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Operator;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -113,39 +110,34 @@ class CombinedCondition extends AbstractCondition {
     }
 
     @Override
-    public final void bind(BindContext context) {
-        visitAll(context, conditions);
-    }
-
-    @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> ctx) {
         if (conditions.isEmpty()) {
-            context.visit(trueCondition());
+            ctx.visit(trueCondition());
         }
         else if (conditions.size() == 1) {
-            context.visit(conditions.get(0));
+            ctx.visit(conditions.get(0));
         }
         else {
-            context.sql("(")
-                   .formatIndentStart()
-                   .formatNewLine();
+            ctx.sql("(")
+               .formatIndentStart()
+               .formatNewLine();
 
             String operatorName = operator.name().toLowerCase() + " ";
             String separator = "";
 
             for (int i = 0; i < conditions.size(); i++) {
                 if (i > 0) {
-                    context.formatSeparator();
+                    ctx.formatSeparator();
                 }
 
-                context.keyword(separator);
-                context.visit(conditions.get(i));
+                ctx.keyword(separator);
+                ctx.visit(conditions.get(i));
                 separator = operatorName;
             }
 
-            context.formatIndentEnd()
-                   .formatNewLine()
-                   .sql(")");
+            ctx.formatIndentEnd()
+               .formatNewLine()
+               .sql(")");
         }
     }
 }

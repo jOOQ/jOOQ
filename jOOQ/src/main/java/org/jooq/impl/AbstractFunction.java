@@ -40,12 +40,11 @@
  */
 package org.jooq.impl;
 
-import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.QueryPart;
-import org.jooq.RenderContext;
 
 /**
  * A base class for all built-in functions that have vendor-specific behaviour
@@ -68,12 +67,7 @@ abstract class AbstractFunction<T> extends AbstractField<T> {
     }
 
     @Override
-    public final void toSQL(RenderContext ctx) {
-        ctx.visit(getFunction0(ctx.configuration()));
-    }
-
-    @Override
-    public final void bind(BindContext ctx) {
+    public final void accept(Context<?> ctx) {
         ctx.visit(getFunction0(ctx.configuration()));
     }
 

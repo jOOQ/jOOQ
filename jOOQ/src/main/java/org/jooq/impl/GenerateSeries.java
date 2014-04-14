@@ -45,12 +45,11 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.table;
 
-import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.Record1;
-import org.jooq.RenderContext;
 import org.jooq.Table;
 
 /**
@@ -74,12 +73,7 @@ class GenerateSeries extends AbstractTable<Record1<Integer>> {
     }
 
     @Override
-    public final void toSQL(RenderContext ctx) {
-        ctx.visit(delegate(ctx.configuration()));
-    }
-
-    @Override
-    public final void bind(BindContext ctx) {
+    public final void accept(Context<?> ctx) {
         ctx.visit(delegate(ctx.configuration()));
     }
 

@@ -40,7 +40,7 @@
  */
 package org.jooq.impl;
 
-import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -71,16 +71,13 @@ class QualifiedField<T> extends AbstractField<T> {
     // ------------------------------------------------------------------------
 
     @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> ctx) {
         String separator = "";
         for (String string : sql) {
-            context.sql(separator);
-            context.literal(string);
+            ctx.sql(separator);
+            ctx.literal(string);
 
             separator = ".";
         }
     }
-
-    @Override
-    public final void bind(BindContext context) {}
 }

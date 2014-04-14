@@ -41,11 +41,9 @@
 
 package org.jooq.impl;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 
@@ -89,38 +87,24 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final void bind(BindContext context) {
+    public final void accept(Context<?> ctx) {
 
         // If this is already a subquery, proceed
-        if (context.subquery()) {
-            context.visit(query);
+        if (ctx.subquery()) {
+            ctx.formatIndentStart()
+               .formatNewLine()
+               .visit(query)
+               .formatIndentEnd()
+               .formatNewLine();
         }
         else {
-            context.subquery(true)
-                   .visit(query)
-                   .subquery(false);
-        }
-    }
-
-    @Override
-    public final void toSQL(RenderContext context) {
-
-        // If this is already a subquery, proceed
-        if (context.subquery()) {
-            context.formatIndentStart()
-                   .formatNewLine()
-                   .visit(query)
-                   .formatIndentEnd()
-                   .formatNewLine();
-        }
-        else {
-            context.subquery(true)
-                   .formatIndentStart()
-                   .formatNewLine()
-                   .visit(query)
-                   .formatIndentEnd()
-                   .formatNewLine()
-                   .subquery(false);
+            ctx.subquery(true)
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(query)
+               .formatIndentEnd()
+               .formatNewLine()
+               .subquery(false);
         }
     }
 

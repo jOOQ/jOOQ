@@ -41,14 +41,12 @@ import static org.jooq.impl.DSL.select;
 import java.sql.ResultSetMetaData;
 import java.util.List;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.Record1;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 
 /**
@@ -71,12 +69,7 @@ class FetchCount extends AbstractResultQuery<Record1<Integer>> {
     }
 
     @Override
-    public final void toSQL(RenderContext ctx) {
-        ctx.visit(delegate(ctx.configuration()));
-    }
-
-    @Override
-    public final void bind(BindContext ctx) {
+    public final void accept(Context<?> ctx) {
         ctx.visit(delegate(ctx.configuration()));
     }
 

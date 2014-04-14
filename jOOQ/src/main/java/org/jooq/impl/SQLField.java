@@ -40,10 +40,9 @@
  */
 package org.jooq.impl;
 
-import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.QueryPart;
-import org.jooq.RenderContext;
 
 class SQLField<T> extends AbstractField<T> {
 
@@ -65,12 +64,7 @@ class SQLField<T> extends AbstractField<T> {
     // ------------------------------------------------------------------------
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.visit(delegate);
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.visit(delegate);
+    public final void accept(Context<?> ctx) {
+        ctx.visit(delegate);
     }
 }

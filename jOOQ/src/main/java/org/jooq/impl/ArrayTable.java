@@ -46,15 +46,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.ArrayRecord;
-import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Table;
 import org.jooq.UDTRecord;
-import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.util.h2.H2DataType;
@@ -171,12 +169,7 @@ class ArrayTable extends AbstractTable<Record> {
     }
 
     @Override
-    public final void toSQL(RenderContext ctx) {
-        ctx.visit(table(ctx.configuration()));
-    }
-
-    @Override
-    public final void bind(BindContext ctx) {
+    public final void accept(Context<?> ctx) {
         ctx.visit(table(ctx.configuration()));
     }
 
@@ -225,11 +218,11 @@ class ArrayTable extends AbstractTable<Record> {
         private static final long serialVersionUID = 6989279597964488457L;
 
         @Override
-        public void toSQL(RenderContext context) {
-            context.sql("(").keyword("select").sql(" * ")
-                   .keyword("from").sql(" ").keyword("unnest").sql("(").visit(array).sql(") ")
-                   .keyword("as").sql(" ").literal(alias)
-                   .sql("(").literal("COLUMN_VALUE").sql("))");
+        public final void accept(Context<?> ctx) {
+            ctx.sql("(").keyword("select").sql(" * ")
+               .keyword("from").sql(" ").keyword("unnest").sql("(").visit(array).sql(") ")
+               .keyword("as").sql(" ").literal(alias)
+               .sql("(").literal("COLUMN_VALUE").sql("))");
         }
     }
 
@@ -241,20 +234,20 @@ class ArrayTable extends AbstractTable<Record> {
         private static final long serialVersionUID = 8679404596822098711L;
 
         @Override
-        public void toSQL(RenderContext context) {
-            context.keyword("table(").sql("COLUMN_VALUE ");
+        public final void accept(Context<?> ctx) {
+            ctx.keyword("table(").sql("COLUMN_VALUE ");
 
             // If the array type is unknown (e.g. because it's returned from
             // a stored function
             // Then the best choice for arbitrary types is varchar
             if (array.getDataType().getType() == Object[].class) {
-                context.keyword(H2DataType.VARCHAR.getTypeName());
+                ctx.keyword(H2DataType.VARCHAR.getTypeName());
             }
             else {
-                context.keyword(array.getDataType().getTypeName());
+                ctx.keyword(array.getDataType().getTypeName());
             }
 
-            context.sql(" = ").visit(array).sql(")");
+            ctx.sql(" = ").visit(array).sql(")");
         }
     }
 
@@ -267,8 +260,8 @@ class ArrayTable extends AbstractTable<Record> {
         private static final long serialVersionUID = 1716687061980551706L;
 
         @Override
-        public void toSQL(RenderContext context) {
-            context.keyword("table (").visit(array).sql(")");
+        public final void accept(Context<?> ctx) {
+            ctx.keyword("table (").visit(array).sql(")");
         }
     }
 
@@ -297,11 +290,6 @@ class ArrayTable extends AbstractTable<Record> {
         @Override
         public final Table<Record> as(String as, String... fieldAliases) {
             return new TableAlias<Record>(this, as, fieldAliases);
-        }
-
-        @Override
-        public final void bind(BindContext context) throws DataAccessException {
-            context.visit(array);
         }
 
         @Override

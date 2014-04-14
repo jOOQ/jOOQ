@@ -48,7 +48,6 @@ import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -213,7 +212,7 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final void toSQL(RenderContext ctx) {
+    public final void accept(Context<?> ctx) {
         Schema mappedSchema = Utils.getMappedSchema(ctx.configuration(), schema);
 
         if (mappedSchema != null && ctx.configuration().dialect() != CUBRID) {
@@ -223,9 +222,6 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
 
         ctx.literal(name);
     }
-
-    @Override
-    public final void bind(BindContext ctx) {}
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {

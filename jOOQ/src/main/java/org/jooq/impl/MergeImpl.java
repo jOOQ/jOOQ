@@ -130,7 +130,6 @@ import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
-import org.jooq.RenderContext;
 import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -1054,78 +1053,78 @@ implements
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> ctx) {
         if (h2Style) {
-            if (context.configuration().dialect() == H2) {
-                toSQLH2(context);
+            if (ctx.configuration().dialect() == H2) {
+                toSQLH2(ctx);
             }
             else {
-                context.visit(getStandardMerge(context.configuration()));
+                ctx.visit(getStandardMerge(ctx.configuration()));
             }
         }
         else {
-            toSQLStandard(context);
+            toSQLStandard(ctx);
         }
     }
 
-    private final void toSQLH2(RenderContext context) {
-        context.keyword("merge into")
-               .sql(" ")
-               .declareTables(true)
-               .visit(table)
-               .formatSeparator();
+    private final void toSQLH2(Context<?> ctx) {
+        ctx.keyword("merge into")
+           .sql(" ")
+           .declareTables(true)
+           .visit(table)
+           .formatSeparator();
 
-        context.sql("(");
-        Utils.fieldNames(context, getH2Fields());
-        context.sql(")");
+        ctx.sql("(");
+        Utils.fieldNames(ctx, getH2Fields());
+        ctx.sql(")");
 
         if (!getH2Keys().isEmpty()) {
-            context.sql(" ").keyword("key").sql(" (");
-            Utils.fieldNames(context, getH2Keys());
-            context.sql(")");
+            ctx.sql(" ").keyword("key").sql(" (");
+            Utils.fieldNames(ctx, getH2Keys());
+            ctx.sql(")");
         }
 
         if (h2Select != null) {
-            context.sql(" ")
-                   .visit(h2Select);
+            ctx.sql(" ")
+               .visit(h2Select);
         }
         else {
-            context.sql(" ").keyword("values").sql(" (")
-                   .visit(getH2Values())
-                   .sql(")");
+            ctx.sql(" ").keyword("values").sql(" (")
+               .visit(getH2Values())
+               .sql(")");
         }
     }
 
-    private final void toSQLStandard(RenderContext context) {
-        context.start(MERGE_MERGE_INTO)
-               .keyword("merge into").sql(" ")
-               .declareTables(true)
-               .visit(table)
-               .declareTables(false)
-               .end(MERGE_MERGE_INTO)
-               .formatSeparator()
-               .start(MERGE_USING)
-               .declareTables(true)
-               .keyword("using").sql(" ")
-               .formatIndentStart()
-               .formatNewLine();
-        context.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
-        context.visit(using);
-        context.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, null);
-        context.formatIndentEnd()
-               .declareTables(false);
+    private final void toSQLStandard(Context<?> ctx) {
+        ctx.start(MERGE_MERGE_INTO)
+           .keyword("merge into").sql(" ")
+           .declareTables(true)
+           .visit(table)
+           .declareTables(false)
+           .end(MERGE_MERGE_INTO)
+           .formatSeparator()
+           .start(MERGE_USING)
+           .declareTables(true)
+           .keyword("using").sql(" ")
+           .formatIndentStart()
+           .formatNewLine();
+        ctx.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
+        ctx.visit(using);
+        ctx.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, null);
+        ctx.formatIndentEnd()
+           .declareTables(false);
 
         /* [pro] */
-        switch (context.configuration().dialect().family()) {
+        switch (ctx.configuration().dialect().family()) {
             case SQLSERVER:
             case SYBASE: {
                 if (using instanceof Select) {
                     int hash = Utils.hash(using);
 
-                    context.sql(" ").keyword("as").sql(" ")
-                           .sql("dummy_")
-                           .sql(hash)
-                           .sql("(");
+                    ctx.sql(" ").keyword("as").sql(" ")
+                       .sql("dummy_")
+                       .sql(hash)
+                       .sql("(");
 
                     String separator = "";
                     for (Field<?> field : ((Select<?>) using).fields()) {
@@ -1136,11 +1135,11 @@ implements
                             ? "dummy_" + hash + "_" + Utils.hash(field)
                             : field.getName();
 
-                        context.sql(separator).literal(name);
+                        ctx.sql(separator).literal(name);
                         separator = ", ";
                     }
 
-                    context.sql(")");
+                    ctx.sql(")");
                 }
 
                 break;
@@ -1148,121 +1147,83 @@ implements
         }
 
         /* [/pro] */
-        boolean onParentheses = false/* [pro] */ || context.configuration().dialect().family() == ORACLE/* [/pro] */;
-        context.end(MERGE_USING)
-               .formatSeparator()
-               .start(MERGE_ON)
-               // Oracle ON ( ... ) parentheses are a mandatory syntax element
-               .keyword("on").sql(onParentheses ? " (" : " ")
-               .visit(on)
-               .sql(onParentheses ? ")" : "")
-               .end(MERGE_ON)
-               .start(MERGE_WHEN_MATCHED_THEN_UPDATE)
-               .start(MERGE_SET);
+        boolean onParentheses = false/* [pro] */ || ctx.configuration().dialect().family() == ORACLE/* [/pro] */;
+        ctx.end(MERGE_USING)
+           .formatSeparator()
+           .start(MERGE_ON)
+           // Oracle ON ( ... ) parentheses are a mandatory syntax element
+           .keyword("on").sql(onParentheses ? " (" : " ")
+           .visit(on)
+           .sql(onParentheses ? ")" : "")
+           .end(MERGE_ON)
+           .start(MERGE_WHEN_MATCHED_THEN_UPDATE)
+           .start(MERGE_SET);
 
         // [#999] WHEN MATCHED clause is optional
         if (matchedUpdate != null) {
-            context.formatSeparator()
-                   .keyword("when matched then update set")
-                   .formatIndentStart()
-                   .formatSeparator()
-                   .visit(matchedUpdate)
-                   .formatIndentEnd();
+            ctx.formatSeparator()
+               .keyword("when matched then update set")
+               .formatIndentStart()
+               .formatSeparator()
+               .visit(matchedUpdate)
+               .formatIndentEnd();
         }
 
-        context.end(MERGE_SET)
-               .start(MERGE_WHERE);
+        ctx.end(MERGE_SET)
+           .start(MERGE_WHERE);
 
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. WHERE
         if (matchedWhere != null) {
-            context.formatSeparator()
-                   .keyword("where").sql(" ")
-                   .visit(matchedWhere);
+            ctx.formatSeparator()
+               .keyword("where").sql(" ")
+               .visit(matchedWhere);
         }
 
-        context.end(MERGE_WHERE)
-               .start(MERGE_DELETE_WHERE);
+        ctx.end(MERGE_WHERE)
+           .start(MERGE_DELETE_WHERE);
 
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. DELETE WHERE
         if (matchedDeleteWhere != null) {
-            context.formatSeparator()
-                   .keyword("delete where").sql(" ")
-                   .visit(matchedDeleteWhere);
+            ctx.formatSeparator()
+               .keyword("delete where").sql(" ")
+               .visit(matchedDeleteWhere);
         }
 
-        context.end(MERGE_DELETE_WHERE)
-               .end(MERGE_WHEN_MATCHED_THEN_UPDATE)
-               .start(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
+        ctx.end(MERGE_DELETE_WHERE)
+           .end(MERGE_WHEN_MATCHED_THEN_UPDATE)
+           .start(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
 
         // [#999] WHEN NOT MATCHED clause is optional
         if (notMatchedInsert != null) {
-            context.formatSeparator()
-                   .keyword("when not matched then insert").sql(" ");
-            notMatchedInsert.toSQLReferenceKeys(context);
-            context.formatSeparator()
-                   .start(MERGE_VALUES)
-                   .keyword("values").sql(" ")
-                   .visit(notMatchedInsert)
-                   .end(MERGE_VALUES);
+            ctx.formatSeparator()
+               .keyword("when not matched then insert").sql(" ");
+            notMatchedInsert.toSQLReferenceKeys(ctx);
+            ctx.formatSeparator()
+               .start(MERGE_VALUES)
+               .keyword("values").sql(" ")
+               .visit(notMatchedInsert)
+               .end(MERGE_VALUES);
         }
 
-        context.start(MERGE_WHERE);
+        ctx.start(MERGE_WHERE);
 
         // [#998] Oracle MERGE extension: WHEN NOT MATCHED THEN INSERT .. WHERE
         if (notMatchedWhere != null) {
-            context.formatSeparator()
-                   .keyword("where").sql(" ")
-                   .visit(notMatchedWhere);
+            ctx.formatSeparator()
+               .keyword("where").sql(" ")
+               .visit(notMatchedWhere);
         }
 
-        context.end(MERGE_WHERE)
-               .end(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
+        ctx.end(MERGE_WHERE)
+           .end(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
         /* [pro] */
 
-        switch (context.configuration().dialect().family()) {
+        switch (ctx.configuration().dialect().family()) {
             case SQLSERVER:
-                context.sql(";");
+                ctx.sql(";");
                 break;
         }
         /* [/pro] */
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        if (h2Style) {
-            if (context.configuration().dialect() == H2) {
-                bindH2(context);
-            }
-            else {
-                context.visit(getStandardMerge(context.configuration()));
-            }
-        }
-        else {
-            bindStandard(context);
-        }
-    }
-
-    private final void bindH2(BindContext context) {
-        context.declareTables(true)
-               .visit(table)
-               .declareTables(false)
-               .visit(getH2Fields())
-               .visit(getH2Keys())
-               .visit(h2Select)
-               .visit(getH2Values());
-    }
-
-    private final void bindStandard(BindContext context) {
-        context.declareTables(true)
-               .visit(table)
-               .visit(using)
-               .declareTables(false)
-               .visit(on)
-               .visit(matchedUpdate)
-               .visit(matchedWhere)
-               .visit(matchedDeleteWhere)
-               .visit(notMatchedInsert)
-               .visit(notMatchedWhere);
     }
 
     @Override

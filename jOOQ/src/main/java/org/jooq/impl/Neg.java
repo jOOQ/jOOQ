@@ -49,9 +49,8 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.impl.ExpressionOperator.BIT_NOT;
 
-import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 
 /**
@@ -75,36 +74,31 @@ class Neg<T> extends AbstractField<T> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        SQLDialect family = context.configuration().dialect().family();
+    public final void accept(Context<?> ctx) {
+        SQLDialect family = ctx.configuration().dialect().family();
 
         if (operator == BIT_NOT && asList(H2, HSQLDB, INGRES, ORACLE).contains(family)) {
-            context.sql("(0 -")
-                   .visit(field)
-                   .sql(" - 1)");
+            ctx.sql("(0 -")
+               .visit(field)
+               .sql(" - 1)");
         }
         /* [pro] */
         else if (operator == BIT_NOT && family == DB2) {
-            context.keyword("bitnot(")
-                   .visit(field)
-                   .sql(")");
+            ctx.keyword("bitnot(")
+               .visit(field)
+               .sql(")");
         }
         /* [/pro] */
         else if (operator == BIT_NOT && family == FIREBIRD) {
-            context.keyword("bin_not(")
-                   .visit(field)
-                   .sql(")");
+            ctx.keyword("bin_not(")
+               .visit(field)
+               .sql(")");
         }
         else {
-            context.sql(operator.toSQL())
-                   .sql("(")
-                   .visit(field)
-                   .sql(")");
+            ctx.sql(operator.toSQL())
+               .sql("(")
+               .visit(field)
+               .sql(")");
         }
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.visit(field);
     }
 }

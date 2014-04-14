@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Utils.visitAll;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
 
@@ -59,8 +60,8 @@ import org.jooq.exception.DataAccessException;
  */
 abstract class AbstractBindContext extends AbstractContext<BindContext> implements BindContext {
 
-    AbstractBindContext(Configuration configuration) {
-        super(configuration);
+    AbstractBindContext(Configuration configuration, PreparedStatement stmt) {
+        super(configuration, stmt);
     }
 
     // ------------------------------------------------------------------------
@@ -131,6 +132,120 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
     }
 
     // ------------------------------------------------------------------------
+    // RenderContext API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final String peekAlias() {
+        return null;
+    }
+
+    @Override
+    public final String nextAlias() {
+        return null;
+    }
+
+    @Override
+    public final String render() {
+        return null;
+    }
+
+    @Override
+    public final String render(QueryPart part) {
+        return null;
+    }
+
+    @Override
+    public final BindContext keyword(String keyword) {
+        return this;
+    }
+
+    @Override
+    public final BindContext sql(String sql) {
+        return this;
+    }
+
+    @Override
+    public final BindContext sql(String sql, boolean literal) {
+        return this;
+    }
+
+    @Override
+    public final BindContext sql(char sql) {
+        return this;
+    }
+
+    @Override
+    public final BindContext sql(int sql) {
+        return this;
+    }
+
+    @Override
+    public final BindContext format(boolean format) {
+        return this;
+    }
+
+    @Override
+    public final boolean format() {
+        return false;
+    }
+
+    @Override
+    public final BindContext formatNewLine() {
+        return this;
+    }
+
+    @Override
+    public final BindContext formatNewLineAfterPrintMargin() {
+        return this;
+    }
+
+    @Override
+    public final BindContext formatSeparator() {
+        return this;
+    }
+
+    @Override
+    public final BindContext formatIndentStart() {
+        return this;
+    }
+
+    @Override
+    public final BindContext formatIndentStart(int indent) {
+        return this;
+    }
+
+    @Override
+    public final BindContext formatIndentLockStart() {
+        return this;
+    }
+
+    @Override
+    public final BindContext formatIndentEnd() {
+        return this;
+    }
+
+    @Override
+    public final BindContext formatIndentEnd(int indent) {
+        return this;
+    }
+
+    @Override
+    public final BindContext formatIndentLockEnd() {
+        return this;
+    }
+
+    @Override
+    public final BindContext formatPrintMargin(int margin) {
+        return this;
+    }
+
+    @Override
+    public final BindContext literal(String literal) {
+        return this;
+    }
+
+    // ------------------------------------------------------------------------
     // AbstractBindContext template methods
     // ------------------------------------------------------------------------
 
@@ -138,7 +253,7 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
      * Subclasses may override this method to achieve different behaviour
      */
     protected void bindInternal(QueryPartInternal internal) {
-        internal.bind(this);
+        internal.accept(this);
     }
 
     /**

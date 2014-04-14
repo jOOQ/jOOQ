@@ -47,10 +47,8 @@ import static org.jooq.Clause.SCHEMA_REFERENCE;
 import java.util.Collections;
 import java.util.List;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
-import org.jooq.RenderContext;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -83,12 +81,9 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.literal(getName());
+    public final void accept(Context<?> ctx) {
+        ctx.literal(getName());
     }
-
-    @Override
-    public final void bind(BindContext context) {}
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {

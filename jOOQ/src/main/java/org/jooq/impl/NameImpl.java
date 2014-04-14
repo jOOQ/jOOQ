@@ -42,12 +42,10 @@ package org.jooq.impl;
 
 import java.util.Arrays;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DerivedColumnList;
 import org.jooq.Name;
-import org.jooq.RenderContext;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
 import org.jooq.tools.StringUtils;
@@ -71,19 +69,16 @@ class NameImpl extends AbstractQueryPart implements Name {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> ctx) {
         String separator = "";
 
         for (String name : qualifiedName) {
             if (!StringUtils.isEmpty(name)) {
-                context.sql(separator).literal(name);
+                ctx.sql(separator).literal(name);
                 separator = ".";
             }
         }
     }
-
-    @Override
-    public final void bind(BindContext context) {}
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {

@@ -40,9 +40,8 @@
  */
 package org.jooq.impl;
 
-import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Table;
 
 /**
@@ -83,15 +82,10 @@ class Lateral<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final void toSQL(RenderContext ctx) {
+    public final void accept(Context<?> ctx) {
         ctx.keyword("lateral")
            .sql(" ")
            .visit(table);
-    }
-
-    @Override
-    public final void bind(BindContext ctx) {
-        ctx.visit(table);
     }
 
     @Override

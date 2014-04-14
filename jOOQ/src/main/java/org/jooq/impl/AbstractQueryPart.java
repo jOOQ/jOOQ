@@ -45,6 +45,7 @@ import java.sql.SQLException;
 
 import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.DSLContext;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
@@ -70,6 +71,26 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     // -------------------------------------------------------------------------
     // The QueryPart and QueryPart internal API
     // -------------------------------------------------------------------------
+
+    @Override
+    @Deprecated
+    public void toSQL(RenderContext ctx) {
+        accept(ctx);
+    }
+
+    @Override
+    public void accept(Context<?> ctx) {
+        if (ctx instanceof RenderContext)
+            toSQL((RenderContext) ctx);
+        else
+            bind((BindContext) ctx);
+    }
+
+    @Override
+    @Deprecated
+    public void bind(BindContext ctx) throws DataAccessException {
+        accept(ctx);
+    }
 
     /**
      * Subclasses may override this
@@ -164,14 +185,7 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     /**
      * Internal convenience method
      */
-    protected final DSLContext create(RenderContext ctx) {
-        return DSL.using(ctx.configuration());
-    }
-
-    /**
-     * Internal convenience method
-     */
-    protected final DSLContext create(BindContext ctx) {
+    protected final DSLContext create(Context<?> ctx) {
         return DSL.using(ctx.configuration());
     }
 

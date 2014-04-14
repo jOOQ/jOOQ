@@ -44,12 +44,10 @@ package org.jooq.impl;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 
 /**
@@ -71,49 +69,34 @@ class SelectQueryAsSubQueryCondition extends AbstractCondition {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> ctx) {
 
         // If this is already a subquery, proceed
-        if (context.subquery()) {
-            context.visit(field)
-                   .sql(" ")
-                   .keyword(comparator.toSQL())
-                   .sql(" (")
-                   .formatIndentStart()
-                   .formatNewLine()
-                   .visit(query)
-                   .formatIndentEnd()
-                   .formatNewLine()
-                   .sql(")");
+        if (ctx.subquery()) {
+            ctx.visit(field)
+               .sql(" ")
+               .keyword(comparator.toSQL())
+               .sql(" (")
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(query)
+               .formatIndentEnd()
+               .formatNewLine()
+               .sql(")");
         }
         else {
-            context.visit(field)
-                   .sql(" ")
-                   .keyword(comparator.toSQL())
-                   .sql(" (")
-                   .subquery(true)
-                   .formatIndentStart()
-                   .formatNewLine()
-                   .visit(query)
-                   .formatIndentEnd()
-                   .formatNewLine()
-                   .subquery(false)
-                   .sql(")");
-        }
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-
-        // If this is already a subquery, proceed
-        if (context.subquery()) {
-            context.visit(field).visit(query);
-        }
-        else {
-            context.visit(field)
-                   .subquery(true)
-                   .visit(query)
-                   .subquery(false);
+            ctx.visit(field)
+               .sql(" ")
+               .keyword(comparator.toSQL())
+               .sql(" (")
+               .subquery(true)
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(query)
+               .formatIndentEnd()
+               .formatNewLine()
+               .subquery(false)
+               .sql(")");
         }
     }
 

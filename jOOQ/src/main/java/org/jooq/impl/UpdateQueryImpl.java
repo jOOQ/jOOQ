@@ -59,7 +59,6 @@ import java.util.Map;
 
 import javax.annotation.Generated;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -89,7 +88,6 @@ import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Record8;
 import org.jooq.Record9;
-import org.jooq.RenderContext;
 import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.Row10;
@@ -466,49 +464,49 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.start(UPDATE_UPDATE)
-               .keyword("update")
-               .sql(" ")
-               .declareTables(true)
-               .visit(getInto())
-               .declareTables(false)
-               .end(UPDATE_UPDATE);
+    public final void accept(Context<?> ctx) {
+        ctx.start(UPDATE_UPDATE)
+           .keyword("update")
+           .sql(" ")
+           .declareTables(true)
+           .visit(getInto())
+           .declareTables(false)
+           .end(UPDATE_UPDATE);
 
         /* [pro] */
         // [#1018] Ingres has a special understanding of the UPDATE .. FROM clause
-        if (context.configuration().dialect().family() == INGRES) {
-            context.start(UPDATE_FROM);
+        if (ctx.configuration().dialect().family() == INGRES) {
+            ctx.start(UPDATE_FROM);
 
             if (!from.isEmpty()) {
-                context.formatSeparator()
-                       .keyword("from").sql(" ")
-                       .visit(from);
+                ctx.formatSeparator()
+                   .keyword("from").sql(" ")
+                   .visit(from);
             }
 
-            context.end(UPDATE_FROM);
+            ctx.end(UPDATE_FROM);
         }
         /* [/pro] */
 
-        context.formatSeparator()
-               .start(UPDATE_SET)
-               .keyword("set")
-               .sql(" ");
+        ctx.formatSeparator()
+           .start(UPDATE_SET)
+           .keyword("set")
+           .sql(" ");
 
         // A multi-row update was specified
         if (multiRow != null) {
-            boolean qualify = context.qualify();
+            boolean qualify = ctx.qualify();
 
-            context.start(UPDATE_SET_ASSIGNMENT)
-                   .qualify(false)
-                   .visit(multiRow)
-                   .qualify(qualify)
-                   .sql(" = ");
+            ctx.start(UPDATE_SET_ASSIGNMENT)
+               .qualify(false)
+               .visit(multiRow)
+               .qualify(qualify)
+               .sql(" = ");
 
             // Some dialects don't really support row value expressions on the
             // right hand side of a SET clause
-            if (multiValue != null && !asList(INGRES, ORACLE).contains(context.configuration().dialect().family())) {
-                context.visit(multiValue);
+            if (multiValue != null && !asList(INGRES, ORACLE).contains(ctx.configuration().dialect().family())) {
+                ctx.visit(multiValue);
             }
 
             // Subselects or subselect simulations of row value expressions
@@ -519,30 +517,30 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     select = select(multiValue.fields());
                 }
 
-                context.sql("(")
-                       .formatIndentStart()
-                       .formatNewLine()
-                       .subquery(true)
-                       .visit(select)
-                       .subquery(false)
-                       .formatIndentEnd()
-                       .formatNewLine()
-                       .sql(")");
+                ctx.sql("(")
+                   .formatIndentStart()
+                   .formatNewLine()
+                   .subquery(true)
+                   .visit(select)
+                   .subquery(false)
+                   .formatIndentEnd()
+                   .formatNewLine()
+                   .sql(")");
             }
 
-            context.end(UPDATE_SET_ASSIGNMENT);
+            ctx.end(UPDATE_SET_ASSIGNMENT);
         }
 
         // A regular (non-multi-row) update was specified
         else {
-            context.formatIndentLockStart()
-                   .visit(updateMap)
-                   .formatIndentLockEnd();
+            ctx.formatIndentLockStart()
+               .visit(updateMap)
+               .formatIndentLockEnd();
         }
 
-        context.end(UPDATE_SET);
+        ctx.end(UPDATE_SET);
 
-        switch (context.configuration().dialect().family()) {
+        switch (ctx.configuration().dialect().family()) {
 
             /* [pro] */
             // [#1018] Ingres has a special understanding of the UPDATE .. FROM clause
@@ -551,84 +549,32 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
             /* [/pro] */
 
             default:
-                context.start(UPDATE_FROM);
+                ctx.start(UPDATE_FROM);
 
                 if (!from.isEmpty()) {
-                    context.formatSeparator()
-                           .keyword("from").sql(" ")
-                           .visit(from);
+                    ctx.formatSeparator()
+                       .keyword("from").sql(" ")
+                       .visit(from);
                 }
 
-                context.end(UPDATE_FROM);
+                ctx.end(UPDATE_FROM);
                 break;
         }
 
-        context.start(UPDATE_WHERE);
+        ctx.start(UPDATE_WHERE);
 
         if (!(getWhere() instanceof TrueCondition)) {
-            context.formatSeparator()
-                   .keyword("where").sql(" ")
-                   .visit(getWhere());
+            ctx.formatSeparator()
+               .keyword("where").sql(" ")
+               .visit(getWhere());
         }
 
-        context.end(UPDATE_WHERE)
-               .start(UPDATE_RETURNING);
+        ctx.end(UPDATE_WHERE)
+           .start(UPDATE_RETURNING);
 
-        toSQLReturning(context);
+        toSQLReturning(ctx);
 
-        context.end(UPDATE_RETURNING);
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        boolean declareTables = context.declareTables();
-
-        context.declareTables(true)
-               .visit(getInto())
-               .declareTables(declareTables);
-
-
-        /* [pro] */
-        // [#1018] Ingres has a special understanding of the UPDATE .. FROM clause
-        if (context.configuration().dialect().family() == INGRES) {
-            context.visit(from);
-        }
-        /* [/pro] */
-
-        // A multi-row update was specified
-        if (multiRow != null) {
-            context.visit(multiRow);
-
-            if (multiValue != null) {
-                context.visit(multiValue);
-            }
-            else {
-                context.subquery(true)
-                       .visit(multiSelect)
-                       .subquery(false);
-            }
-        }
-
-        // A regular (non-multi-row) update was specified
-        else {
-            context.visit(updateMap);
-        }
-
-        switch (context.configuration().dialect().family()) {
-
-            /* [pro] */
-            // [#1018] Ingres has a special understanding of the UPDATE .. FROM clause
-            case INGRES:
-                break;
-            /* [/pro] */
-
-            default:
-                context.visit(from);
-                break;
-        }
-
-        context.visit(condition);
-        bindReturning(context);
+        ctx.end(UPDATE_RETURNING);
     }
 
     @Override

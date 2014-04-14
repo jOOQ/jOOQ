@@ -45,11 +45,10 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.val;
 
-import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Table;
 import org.jooq.VersionsBetweenAndStep;
 
@@ -113,40 +112,28 @@ implements VersionsBetweenAndStep<R, T> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.visit(table);
+    public final void accept(Context<?> ctx) {
+        ctx.visit(table);
 
         if (asOf != null) {
-            context.sql(" ")
-                   .keyword("as of")
-                   .sql(" ")
-                   .visit(type)
-                   .sql(" ")
-                   .visit(asOf);
+            ctx.sql(" ")
+               .keyword("as of")
+               .sql(" ")
+               .visit(type)
+               .sql(" ")
+               .visit(asOf);
         }
         else {
-            context.sql(" ")
-                   .keyword("versions between")
-                   .sql(" ")
-                   .visit(type)
-                   .sql(" ")
-                   .visit(minvalue)
-                   .sql(" ")
-                   .keyword("and")
-                   .sql(" ")
-                   .visit(maxvalue);
-        }
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.visit(table);
-
-        if (asOf != null) {
-            context.visit(asOf);
-        }
-        else {
-            context.visit(minvalue).visit(maxvalue);
+            ctx.sql(" ")
+               .keyword("versions between")
+               .sql(" ")
+               .visit(type)
+               .sql(" ")
+               .visit(minvalue)
+               .sql(" ")
+               .keyword("and")
+               .sql(" ")
+               .visit(maxvalue);
         }
     }
 

@@ -44,11 +44,10 @@ import static org.jooq.impl.DSL.fieldByName;
 
 import java.util.List;
 
-import org.jooq.BindContext;
 import org.jooq.CommonTableExpression;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 
@@ -95,7 +94,7 @@ class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R> imple
     }
 
     @Override
-    public final void toSQL(RenderContext ctx) {
+    public final void accept(Context<?> ctx) {
         if (ctx.declareCTE()) {
             ctx.visit(name)
                .sql(" ")
@@ -110,15 +109,6 @@ class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R> imple
         }
         else {
             ctx.visit(DSL.name(name.name));
-        }
-    }
-
-    @Override
-    public final void bind(BindContext ctx) {
-        if (ctx.declareCTE()) {
-            ctx.visit(name).visit(select);
-        }
-        else {
         }
     }
 

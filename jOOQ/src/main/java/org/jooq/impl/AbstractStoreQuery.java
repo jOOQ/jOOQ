@@ -56,15 +56,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Identity;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.StoreQuery;
@@ -166,15 +165,15 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         return returned;
     }
 
-    final void toSQLReturning(RenderContext context) {
+    final void toSQLReturning(Context<?> ctx) {
         if (!returning.isEmpty()) {
-            switch (context.configuration().dialect()) {
+            switch (ctx.configuration().dialect()) {
                 case FIREBIRD:
                 case POSTGRES:
-                    context.formatSeparator()
-                           .keyword("returning")
-                           .sql(" ")
-                           .visit(returning);
+                    ctx.formatSeparator()
+                       .keyword("returning")
+                       .sql(" ")
+                       .visit(returning);
                     break;
 
                 default:
@@ -182,19 +181,6 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                     // use JDBC's Statement.RETURN_GENERATED_KEYS mode instead
                     break;
             }
-        }
-    }
-
-    final void bindReturning(BindContext context) {
-        switch (context.configuration().dialect()) {
-            case FIREBIRD:
-            case POSTGRES:
-                context.visit(returning);
-                break;
-
-            default:
-                // Other dialects don't bind a RETURNING clause, but
-                // use JDBC's Statement.RETURN_GENERATED_KEYS mode instead
         }
     }
 

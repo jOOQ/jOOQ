@@ -44,10 +44,9 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.select;
 
-import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Schema;
 import org.jooq.Table;
 
@@ -103,12 +102,12 @@ class Dual extends AbstractTable<Record> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> ctx) {
         if (force) {
-            context.visit(FORCED_DUAL);
+            ctx.visit(FORCED_DUAL);
         }
         else {
-            switch (context.configuration().dialect().family()) {
+            switch (ctx.configuration().dialect().family()) {
                 /* [pro] */
                 case ASE:
                 case SQLSERVER:
@@ -118,58 +117,55 @@ class Dual extends AbstractTable<Record> {
                     break;
 
                 case FIREBIRD:
-                    context.literal("RDB$DATABASE");
+                    ctx.literal("RDB$DATABASE");
                     break;
 
                 case HSQLDB:
-                    context.literal("INFORMATION_SCHEMA")
-                           .sql(".")
-                           .literal("SYSTEM_USERS");
+                    ctx.literal("INFORMATION_SCHEMA")
+                       .sql(".")
+                       .literal("SYSTEM_USERS");
                     break;
 
                 case CUBRID:
-                    context.literal("db_root");
+                    ctx.literal("db_root");
                     break;
 
                 // These dialects don't have a DUAL table. But simulation is needed
                 // for queries like SELECT 1 WHERE 1 = 1
                 /* [pro] */
                 case ACCESS:
-                    context.sql("(").sql(DUAL_ACCESS).sql(") as dual");
+                    ctx.sql("(").sql(DUAL_ACCESS).sql(") as dual");
                     break;
 
                 case DB2:
-                    context.literal("SYSIBM")
-                           .sql(".")
-                           .literal("DUAL");
+                    ctx.literal("SYSIBM")
+                       .sql(".")
+                       .literal("DUAL");
                     break;
 
                 case INGRES:
-                    context.keyword("(select 1 as dual) as dual");
+                    ctx.keyword("(select 1 as dual) as dual");
                     break;
 
                 case SYBASE:
-                    context.literal("SYS")
-                           .sql(".")
-                           .literal("DUMMY");
+                    ctx.literal("SYS")
+                       .sql(".")
+                       .literal("DUMMY");
                     break;
 
                 /* [/pro] */
                 case DERBY:
-                    context.literal("SYSIBM")
-                           .sql(".")
-                           .literal("SYSDUMMY1");
+                    ctx.literal("SYSIBM")
+                       .sql(".")
+                       .literal("SYSDUMMY1");
                     break;
 
                 default:
-                    context.keyword("dual");
+                    ctx.keyword("dual");
                     break;
             }
         }
     }
-
-    @Override
-    public final void bind(BindContext context) {}
 
     @Override
     final Fields<Record> fields0() {

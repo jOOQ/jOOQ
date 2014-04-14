@@ -58,14 +58,12 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.QueryPartInternal;
-import org.jooq.RenderContext;
 import org.jooq.Row2;
 
 /**
@@ -88,13 +86,8 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        delegate(context.configuration()).toSQL(context);
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        delegate(context.configuration()).bind(context);
+    public final void accept(Context<?> ctx) {
+        delegate(ctx.configuration()).accept(ctx);
     }
 
     @Override
@@ -156,16 +149,11 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         private static final long serialVersionUID = -1552476981094856727L;
 
         @Override
-        public final void toSQL(RenderContext context) {
-            context.sql("(").visit(left)
-                   .sql(" ").keyword("overlaps")
-                   .sql(" ").visit(right)
-                   .sql(")");
-        }
-
-        @Override
-        public final void bind(BindContext context) {
-            context.visit(left).visit(right);
+        public final void accept(Context<?> ctx) {
+            ctx.sql("(").visit(left)
+               .sql(" ").keyword("overlaps")
+               .sql(" ").visit(right)
+               .sql(")");
         }
 
         @Override

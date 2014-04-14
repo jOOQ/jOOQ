@@ -44,13 +44,11 @@ package org.jooq.impl;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.val;
 
-import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 import org.jooq.Schema;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
-import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
  * @author Lukas Eder
@@ -64,17 +62,17 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        switch (context.configuration().dialect().family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.configuration().dialect().family()) {
 
             /* [pro] */
             // Oracle supports java.sql.SQLData, hence the record can be bound
             // to the CallableStatement directly
             case ORACLE: {
-                if (context.paramType() == INLINED) {
-                    toSQLInline(context);
+                if (ctx.paramType() == INLINED) {
+                    toSQLInline(ctx);
                 } else {
-                    context.sql("?");
+                    ctx.sql("?");
                 }
 
                 return;
@@ -84,16 +82,16 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             case DB2: {
 
                 // The subsequent DB2 logic should be refactored into toSQLInline()
-                context.sql(getInlineConstructor(context));
-                context.sql("()");
+                ctx.sql(getInlineConstructor(ctx));
+                ctx.sql("()");
 
                 String separator = "..";
                 for (Field<?> field : value.fields()) {
-                    context.sql(separator);
-                    context.sql(field.getName());
-                    context.sql("(");
-                    context.visit(val(value.getValue(field)));
-                    context.sql(")");
+                    ctx.sql(separator);
+                    ctx.sql(field.getName());
+                    ctx.sql("(");
+                    ctx.visit(val(value.getValue(field)));
+                    ctx.sql(")");
                 }
 
                 return;
@@ -103,34 +101,34 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             // Due to lack of UDT support in the Postgres JDBC drivers, all UDT's
             // have to be inlined
             case POSTGRES: {
-                toSQLInline(context);
+                toSQLInline(ctx);
                 return;
             }
 
             // Assume default behaviour if dialect is not available
             default:
-                toSQLInline(context);
+                toSQLInline(ctx);
                 return;
         }
     }
 
-    private void toSQLInline(RenderContext context) {
-        context.sql(getInlineConstructor(context));
-        context.sql("(");
+    private void toSQLInline(Context<?> ctx) {
+        ctx.sql(getInlineConstructor(ctx));
+        ctx.sql("(");
 
         String separator = "";
         for (Field<?> field : value.fields()) {
-            context.sql(separator);
-            context.visit(val(value.getValue(field), field));
+            ctx.sql(separator);
+            ctx.visit(val(value.getValue(field), field));
             separator = ", ";
         }
 
-        context.sql(")");
+        ctx.sql(")");
     }
 
-    private String getInlineConstructor(RenderContext context) {
+    private String getInlineConstructor(Context<?> ctx) {
         // TODO [#884] Fix this with a local render context (using ctx.literal)
-        switch (context.configuration().dialect().family()) {
+        switch (ctx.configuration().dialect().family()) {
             case POSTGRES:
                 return "ROW";
 
@@ -142,7 +140,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             // Assume default behaviour if dialect is not available
             default: {
                 UDT<?> udt = value.getUDT();
-                Schema mappedSchema = Utils.getMappedSchema(context.configuration(), udt.getSchema());
+                Schema mappedSchema = Utils.getMappedSchema(ctx.configuration(), udt.getSchema());
 
                 if (mappedSchema != null) {
                     return mappedSchema + "." + udt.getName();
@@ -151,36 +149,6 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
                     return udt.getName();
                 }
             }
-        }
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        switch (context.configuration().dialect().family()) {
-
-            /* [pro] */
-            // Oracle supports java.sql.SQLData, hence the record can be bound
-            // to the CallableStatement directly
-            case ORACLE:
-                context.bindValue(value, this);
-                break;
-
-            // Is the DB2 case correct? Should it be inlined like the Postgres case?
-            case DB2:
-
-            /* [/pro] */
-            // Postgres cannot bind a complete structured type. The type is
-            // inlined instead: ROW(.., .., ..)
-            case POSTGRES: {
-                for (Field<?> field : value.fields()) {
-                    context.visit(val(value.getValue(field)));
-                }
-
-                break;
-            }
-
-            default:
-                throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + context.configuration().dialect());
         }
     }
 }

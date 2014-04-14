@@ -51,7 +51,6 @@ import java.util.Collection;
 
 import javax.annotation.Generated;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.CommonTableExpression;
 import org.jooq.Configuration;
@@ -129,7 +128,6 @@ import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Record8;
 import org.jooq.Record9;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
@@ -173,7 +171,7 @@ class WithImpl extends AbstractQueryPart implements WithStep, WithAsStep {
     // -------------------------------------------------------------------------
 
     @Override
-    public final void toSQL(RenderContext ctx) {
+    public final void accept(Context<?> ctx) {
         ctx.keyword("with")
            .sql(" ");
 
@@ -181,13 +179,6 @@ class WithImpl extends AbstractQueryPart implements WithStep, WithAsStep {
             ctx.keyword("recursive")
                .sql(" ");
 
-        ctx.declareCTE(true)
-           .visit(cte)
-           .declareCTE(false);
-    }
-
-    @Override
-    public final void bind(BindContext ctx) {
         ctx.declareCTE(true)
            .visit(cte)
            .declareCTE(false);

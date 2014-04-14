@@ -46,9 +46,8 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.val;
 
 import org.jooq.ArrayRecord;
-import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.DataType;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -72,29 +71,24 @@ class ArrayConstant<R extends ArrayRecord<?>> extends AbstractParam<R> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        if (context.paramType() == INLINED) {
-            context.sql(array.getName());
-            context.sql("(");
+    public final void accept(Context<?> ctx) {
+        if (ctx.paramType() == INLINED) {
+            ctx.sql(array.getName());
+            ctx.sql("(");
 
             String separator = "";
             for (Object object : array.get()) {
-                context.sql(separator);
-                context.visit(val(object));
+                ctx.sql(separator);
+                ctx.visit(val(object));
 
                 separator = ", ";
             }
 
-            context.sql(")");
+            ctx.sql(")");
         }
         else {
-            context.sql("?");
+            ctx.sql("?");
         }
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.bindValue(array, this);
     }
 }
 /* [/pro] */

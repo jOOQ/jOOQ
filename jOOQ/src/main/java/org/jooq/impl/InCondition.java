@@ -45,17 +45,14 @@ import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_IN;
 import static org.jooq.Clause.CONDITION_NOT_IN;
 import static org.jooq.Comparator.IN;
-import static org.jooq.impl.Utils.visitAll;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -83,28 +80,22 @@ class InCondition<T> extends AbstractCondition {
     }
 
     @Override
-    public final void bind(BindContext context) {
-        context.visit(field);
-        visitAll(context, values);
-    }
-
-    @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> ctx) {
         List<Field<?>> list = Arrays.asList(values);
 
         if (list.size() > IN_LIMIT) {
             // [#798] Oracle and some other dialects can only hold 1000 values
             // in an IN (...) clause
-            switch (context.configuration().dialect().family()) {
+            switch (ctx.configuration().dialect().family()) {
                 /* [pro] */
                 case INGRES:
                 case ORACLE:
                 case SQLSERVER:
                 /* [/pro] */
                 case FIREBIRD: {
-                    context.sql("(")
-                           .formatIndentStart()
-                           .formatNewLine();
+                    ctx.sql("(")
+                       .formatIndentStart()
+                       .formatNewLine();
 
                     for (int i = 0; i < list.size(); i += IN_LIMIT) {
                         if (i > 0) {
@@ -112,66 +103,66 @@ class InCondition<T> extends AbstractCondition {
                             // [#1515] The connector depends on the IN / NOT IN
                             // operator
                             if (comparator == Comparator.IN) {
-                                context.formatSeparator()
-                                       .keyword("or")
-                                       .sql(" ");
+                                ctx.formatSeparator()
+                                   .keyword("or")
+                                   .sql(" ");
                             }
                             else {
-                                context.formatSeparator()
-                                       .keyword("and")
-                                       .sql(" ");
+                                ctx.formatSeparator()
+                                   .keyword("and")
+                                   .sql(" ");
                             }
                         }
 
-                        toSQLSubValues(context, list.subList(i, Math.min(i + IN_LIMIT, list.size())));
+                        toSQLSubValues(ctx, list.subList(i, Math.min(i + IN_LIMIT, list.size())));
                     }
 
-                    context.formatIndentEnd()
-                           .formatNewLine()
-                           .sql(")");
+                    ctx.formatIndentEnd()
+                       .formatNewLine()
+                       .sql(")");
                     break;
                 }
 
                 // Most dialects can handle larger lists
                 default: {
-                    toSQLSubValues(context, list);
+                    toSQLSubValues(ctx, list);
                     break;
                 }
             }
         }
         else {
-            toSQLSubValues(context, list);
+            toSQLSubValues(ctx, list);
         }
     }
 
     /**
      * Render the SQL for a sub-set of the <code>IN</code> clause's values
      */
-    private void toSQLSubValues(RenderContext context, List<Field<?>> subValues) {
-        context.visit(field)
-               .sql(" ")
-               .keyword(comparator.toSQL())
-               .sql(" (");
+    private void toSQLSubValues(Context<?> ctx, List<Field<?>> subValues) {
+        ctx.visit(field)
+           .sql(" ")
+           .keyword(comparator.toSQL())
+           .sql(" (");
 
         if (subValues.size() > 1) {
-            context.formatIndentStart()
-                   .formatNewLine();
+            ctx.formatIndentStart()
+               .formatNewLine();
         }
 
         String separator = "";
         for (Field<?> value : subValues) {
-            context.sql(separator)
-                   .formatNewLineAfterPrintMargin()
-                   .visit(value);
+            ctx.sql(separator)
+               .formatNewLineAfterPrintMargin()
+               .visit(value);
 
             separator = ", ";
         }
 
         if (subValues.size() > 1) {
-            context.formatIndentEnd()
-                   .formatNewLine();
+            ctx.formatIndentEnd()
+               .formatNewLine();
         }
 
-        context.sql(")");
+        ctx.sql(")");
     }
 }

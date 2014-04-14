@@ -53,12 +53,10 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.POSTGRES;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 
 /**
@@ -86,13 +84,8 @@ class CompareCondition extends AbstractCondition {
     }
 
     @Override
-    public final void bind(BindContext context) {
-        context.visit(field1).visit(field2);
-    }
-
-    @Override
-    public final void toSQL(RenderContext context) {
-        SQLDialect family = context.configuration().dialect().family();
+    public final void accept(Context<?> ctx) {
+        SQLDialect family = ctx.configuration().dialect().family();
         Field<?> lhs = field1;
         Field<?> rhs = field2;
         Comparator op = comparator;
@@ -117,8 +110,8 @@ class CompareCondition extends AbstractCondition {
             op = (op == LIKE_IGNORE_CASE ? LIKE : NOT_LIKE);
         }
 
-        context.visit(lhs)
-               .sql(" ");
+        ctx.visit(lhs)
+           .sql(" ");
 
         boolean castRhs = false;
 
@@ -130,15 +123,15 @@ class CompareCondition extends AbstractCondition {
             castRhs = true;
         /* [/pro] */
 
-                     context.keyword(op.toSQL()).sql(" ");
-        if (castRhs) context.keyword("cast").sql("(");
-                     context.visit(rhs);
-        if (castRhs) context.sql(" ").keyword("as").sql(" ").keyword("varchar").sql("(4000))");
+                     ctx.keyword(op.toSQL()).sql(" ");
+        if (castRhs) ctx.keyword("cast").sql("(");
+                     ctx.visit(rhs);
+        if (castRhs) ctx.sql(" ").keyword("as").sql(" ").keyword("varchar").sql("(4000))");
 
         if (escape != null) {
-            context.sql(" ").keyword("escape").sql(" '")
-                   .sql(escape)
-                   .sql("'");
+            ctx.sql(" ").keyword("escape").sql(" '")
+               .sql(escape)
+               .sql("'");
         }
     }
 

@@ -64,7 +64,6 @@ import static org.jooq.SQLDialect.SYBASE;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -73,7 +72,6 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.QueryPartInternal;
-import org.jooq.RenderContext;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 
@@ -100,13 +98,8 @@ class RowCondition extends AbstractCondition {
     }
 
     @Override
-    public final void toSQL(RenderContext ctx) {
-        delegate(ctx.configuration()).toSQL(ctx);
-    }
-
-    @Override
-    public final void bind(BindContext ctx) {
-        delegate(ctx.configuration()).bind(ctx);
+    public final void accept(Context<?> ctx) {
+        delegate(ctx.configuration()).accept(ctx);
     }
 
     @Override
@@ -213,31 +206,26 @@ class RowCondition extends AbstractCondition {
         private static final long serialVersionUID = -2977241780111574353L;
 
         @Override
-        public final void toSQL(RenderContext context) {
+        public final void accept(Context<?> ctx) {
 
             // Some dialects do not support != comparison with rows
-            if (comparator == NOT_EQUALS && asList(DB2).contains(context.configuration().dialect().family())) {
-                context.keyword("not").sql("(")
-                       .visit(left).sql(" = ").visit(right)
-                       .sql(")");
+            if (comparator == NOT_EQUALS && asList(DB2).contains(ctx.configuration().dialect().family())) {
+                ctx.keyword("not").sql("(")
+                   .visit(left).sql(" = ").visit(right)
+                   .sql(")");
             }
             else {
                 // Some databases need extra parentheses around the RHS
-                boolean extraParentheses = asList(ORACLE).contains(context.configuration().dialect().family());
+                boolean extraParentheses = asList(ORACLE).contains(ctx.configuration().dialect().family());
 
-                context.visit(left)
-                       .sql(" ")
-                       .sql(comparator.toSQL())
-                       .sql(" ")
-                       .sql(extraParentheses ? "(" : "")
-                       .visit(right)
-                       .sql(extraParentheses ? ")" : "");
+                ctx.visit(left)
+                   .sql(" ")
+                   .sql(comparator.toSQL())
+                   .sql(" ")
+                   .sql(extraParentheses ? "(" : "")
+                   .visit(right)
+                   .sql(extraParentheses ? ")" : "");
             }
-        }
-
-        @Override
-        public final void bind(BindContext context) {
-            context.visit(left).visit(right);
         }
 
         @Override

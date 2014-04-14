@@ -40,10 +40,8 @@
  */
 package org.jooq.impl;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -62,16 +60,11 @@ class WrappedList extends AbstractQueryPart {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.sql("(")
-               .visit(wrapped)
-               .sql(")");
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.visit(wrapped);
-    }
+    public final void accept(Context<?> ctx) {
+        ctx.sql("(")
+           .visit(wrapped)
+           .sql(")");
+}
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {

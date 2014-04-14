@@ -43,12 +43,10 @@ package org.jooq.impl;
 import static org.jooq.Clause.TRUNCATE;
 import static org.jooq.Clause.TRUNCATE_TRUNCATE;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TruncateCascadeStep;
@@ -104,8 +102,8 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        switch (context.configuration().dialect().family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.configuration().dialect().family()) {
 
             // These dialects don't implement the TRUNCATE statement
             /* [pro] */
@@ -114,41 +112,36 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
             /* [/pro] */
             case FIREBIRD:
             case SQLITE: {
-                context.visit(create(context).delete(table));
+                ctx.visit(create(ctx).delete(table));
                 break;
             }
 
             // All other dialects do
             default: {
-                context.start(TRUNCATE_TRUNCATE)
-                       .keyword("truncate table").sql(" ")
-                       .visit(table);
+                ctx.start(TRUNCATE_TRUNCATE)
+                   .keyword("truncate table").sql(" ")
+                   .visit(table);
 
                 /* [pro] */
-                if (context.configuration().dialect().family() == SQLDialect.DB2) {
-                    context.sql(" ").keyword("immediate");
+                if (ctx.configuration().dialect().family() == SQLDialect.DB2) {
+                    ctx.sql(" ").keyword("immediate");
                 }
 
                 /* [/pro] */
                 if (restartIdentity != null) {
-                    context.formatSeparator()
-                           .keyword(restartIdentity ? "restart identity" : "continue identity");
+                    ctx.formatSeparator()
+                       .keyword(restartIdentity ? "restart identity" : "continue identity");
                 }
 
                 if (cascade != null) {
-                    context.formatSeparator()
-                           .keyword(cascade ? "cascade" : "restrict");
+                    ctx.formatSeparator()
+                       .keyword(cascade ? "cascade" : "restrict");
                 }
 
-                context.end(TRUNCATE_TRUNCATE);
+                ctx.end(TRUNCATE_TRUNCATE);
                 break;
             }
         }
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.visit(table);
     }
 
     @Override

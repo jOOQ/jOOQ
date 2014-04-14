@@ -62,7 +62,6 @@ import static org.jooq.SQLDialect.SYBASE;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -70,7 +69,6 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.QueryPartInternal;
-import org.jooq.RenderContext;
 import org.jooq.Row;
 
 /**
@@ -94,13 +92,8 @@ class RowIsNull extends AbstractCondition {
     }
 
     @Override
-    public final void toSQL(RenderContext ctx) {
-        delegate(ctx.configuration()).toSQL(ctx);
-    }
-
-    @Override
-    public final void bind(BindContext ctx) {
-        delegate(ctx.configuration()).bind(ctx);
+    public final void accept(Context<?> ctx) {
+        delegate(ctx.configuration()).accept(ctx);
     }
 
     @Override
@@ -135,15 +128,10 @@ class RowIsNull extends AbstractCondition {
         private static final long serialVersionUID = -2977241780111574353L;
 
         @Override
-        public final void toSQL(RenderContext context) {
-            context.visit(row)
-                   .sql(" ")
-                   .keyword(isNull ? "is null" : "is not null");
-        }
-
-        @Override
-        public final void bind(BindContext context) {
-            context.visit(row);
+        public final void accept(Context<?> ctx) {
+            ctx.visit(row)
+               .sql(" ")
+               .keyword(isNull ? "is null" : "is not null");
         }
 
         @Override

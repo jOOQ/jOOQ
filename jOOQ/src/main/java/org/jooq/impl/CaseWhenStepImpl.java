@@ -43,14 +43,12 @@ package org.jooq.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.BindContext;
 import org.jooq.CaseWhenStep;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPart;
-import org.jooq.RenderContext;
 
 class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep<V, T> {
 
@@ -130,43 +128,6 @@ class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep
         private static final long serialVersionUID = 6146002888421945901L;
 
         @Override
-        public final void bind(BindContext ctx) {
-            switch (ctx.configuration().dialect()) {
-
-                /* [pro] */
-                // The ACCESS dialect only knows the Switch function
-                case ACCESS:
-                /* [/pro] */
-
-                // The DERBY dialect doesn't support the simple CASE clause
-                case DERBY: {
-                    for (int i = 0; i < compareValues.size(); i++) {
-                        ctx.visit(value);
-                        ctx.visit(compareValues.get(i));
-                        ctx.visit(results.get(i));
-                    }
-
-                    break;
-                }
-
-                default: {
-                    ctx.visit(value);
-
-                    for (int i = 0; i < compareValues.size(); i++) {
-                        ctx.visit(compareValues.get(i));
-                        ctx.visit(results.get(i));
-                    }
-
-                    break;
-                }
-            }
-
-            if (otherwise != null) {
-                ctx.visit(otherwise);
-            }
-        }
-
-        @Override
         public final Clause[] clauses(Context<?> ctx) {
             return null;
         }
@@ -181,7 +142,7 @@ class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep
         private static final long serialVersionUID = -2421654117534179787L;
 
         @Override
-        public final void toSQL(RenderContext ctx) {
+        public final void accept(Context<?> ctx) {
             ctx.keyword("switch")
                .sql("(");
 
@@ -218,7 +179,7 @@ class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep
         private static final long serialVersionUID = 7564667836130498156L;
 
         @Override
-        public final void toSQL(RenderContext ctx) {
+        public final void accept(Context<?> ctx) {
             ctx.formatIndentLockStart()
                .keyword("case");
 

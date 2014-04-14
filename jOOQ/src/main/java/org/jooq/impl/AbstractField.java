@@ -79,7 +79,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.jooq.BetweenAndStep;
-import org.jooq.BindContext;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
 import org.jooq.Clause;
@@ -93,7 +92,6 @@ import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Record1;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
@@ -141,10 +139,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     // ------------------------------------------------------------------------
 
     @Override
-    public abstract void toSQL(RenderContext context);
-
-    @Override
-    public abstract void bind(BindContext context);
+    public abstract void accept(Context<?> ctx);
 
     @Override
     public Clause[] clauses(Context<?> ctx) {
@@ -600,7 +595,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         return compare(IS_NOT_DISTINCT_FROM, field);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked" })
     @Override
     public final Condition isTrue() {
         Class<?> type = getType();
@@ -619,7 +614,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         }
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked" })
     @Override
     public final Condition isFalse() {
         Class<?> type = getType();

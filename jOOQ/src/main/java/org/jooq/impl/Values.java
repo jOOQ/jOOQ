@@ -41,11 +41,9 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.TABLE_VALUES;
-import static org.jooq.impl.Utils.visitAll;
 
-import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -94,8 +92,8 @@ class Values<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        switch (context.configuration().dialect().family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.configuration().dialect().family()) {
 
             // [#915] Simulate VALUES(..) with SELECT .. UNION ALL SELECT ..
             // for those dialects that do not support a VALUES() constructor
@@ -114,7 +112,7 @@ class Values<R extends Record> extends AbstractTable<R> {
             // have any means to rename it using derived column lists
             case H2: {
                 Select<Record> selects = null;
-                boolean subquery = context.subquery();
+                boolean subquery = ctx.subquery();
 
                 for (Row row : rows) {
                     Select<Record> select = create().select(row.fields());
@@ -127,13 +125,13 @@ class Values<R extends Record> extends AbstractTable<R> {
                     }
                 }
 
-                context.formatIndentStart()
-                       .formatNewLine()
-                       .subquery(true)
-                       .visit(selects)
-                       .subquery(subquery)
-                       .formatIndentEnd()
-                       .formatNewLine();
+                ctx.formatIndentStart()
+                   .formatNewLine()
+                   .subquery(true)
+                   .visit(selects)
+                   .subquery(subquery)
+                   .formatIndentEnd()
+                   .formatNewLine();
                 break;
             }
 
@@ -149,30 +147,25 @@ class Values<R extends Record> extends AbstractTable<R> {
 
             /* [/pro] */
             default: {
-                context.start(TABLE_VALUES)
-                       .keyword("values")
-                       .formatIndentLockStart();
+                ctx.start(TABLE_VALUES)
+                   .keyword("values")
+                   .formatIndentLockStart();
 
                 boolean firstRow = true;
                 for (Row row : rows) {
                     if (!firstRow) {
-                        context.sql(",").formatSeparator();
+                        ctx.sql(",").formatSeparator();
                     }
 
-                    context.visit(row);
+                    ctx.visit(row);
                     firstRow = false;
                 }
 
-                context.formatIndentLockEnd()
-                       .end(TABLE_VALUES);
+                ctx.formatIndentLockEnd()
+                   .end(TABLE_VALUES);
                 break;
             }
         }
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        visitAll(context, rows);
     }
 
     @Override

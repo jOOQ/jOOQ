@@ -92,17 +92,8 @@ class DefaultBindContext extends AbstractBindContext {
 
     private static final JooqLogger log              = JooqLogger.getLogger(DefaultBindContext.class);
 
-    private final PreparedStatement stmt;
-
     DefaultBindContext(Configuration configuration, PreparedStatement stmt) {
-        super(configuration);
-
-        this.stmt = stmt;
-    }
-
-    @Override
-    public final PreparedStatement statement() {
-        return stmt;
+        super(configuration, stmt);
     }
 
     @Override

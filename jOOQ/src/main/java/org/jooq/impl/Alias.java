@@ -67,12 +67,10 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Utils.list;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -117,7 +115,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> context) {
         if (context.declareFields() || context.declareTables()) {
             SQLDialect dialect = context.configuration().dialect();
             boolean simulateDerivedColumnList = false;
@@ -231,19 +229,19 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
         }
     }
 
-    static void toSQLAs(RenderContext context) {
+    static void toSQLAs(Context<?> context) {
         if (asList(ACCESS, DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES).contains(context.configuration().dialect())) {
             context.sql(" ").keyword("as");
         }
     }
 
-    private void toSQLWrapped(RenderContext context) {
+    private void toSQLWrapped(Context<?> context) {
         context.sql(wrapInParentheses ? "(" : "")
                .visit(wrapped)
                .sql(wrapInParentheses ? ")" : "");
     }
 
-    private void toSQLDerivedColumnList(RenderContext context) {
+    private void toSQLDerivedColumnList(Context<?> context) {
         String separator = "";
 
         context.sql("(");
@@ -256,16 +254,6 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
         }
 
         context.sql(")");
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        if (context.declareFields() || context.declareTables()) {
-            context.visit(wrapped);
-        }
-        else {
-            // Don't bind any values
-        }
     }
 
     @Override

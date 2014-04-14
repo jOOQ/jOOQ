@@ -40,9 +40,8 @@
  */
 package org.jooq.impl;
 
-import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.QueryPart;
-import org.jooq.RenderContext;
 
 class SQLCondition extends AbstractCondition {
 
@@ -62,17 +61,12 @@ class SQLCondition extends AbstractCondition {
     // ------------------------------------------------------------------------
 
     @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> ctx) {
         // We have no control over the plain SQL content, hence we MUST put it
         // in parentheses to ensure correct semantics
 
-        context.sql("(");
-        context.visit(delegate);
-        context.sql(")");
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.visit(delegate);
+        ctx.sql("(");
+        ctx.visit(delegate);
+        ctx.sql(")");
     }
 }

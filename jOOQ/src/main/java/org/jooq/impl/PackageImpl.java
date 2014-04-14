@@ -40,11 +40,9 @@
  */
 package org.jooq.impl;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Package;
-import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.tools.StringUtils;
@@ -85,12 +83,9 @@ public class PackageImpl extends AbstractQueryPart implements Package {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.literal(getName());
+    public final void accept(Context<?> ctx) {
+        ctx.literal(getName());
     }
-
-    @Override
-    public final void bind(BindContext context) {}
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {

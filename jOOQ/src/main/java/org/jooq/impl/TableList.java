@@ -43,8 +43,8 @@ package org.jooq.impl;
 
 import java.util.List;
 
+import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 import org.jooq.Table;
 
 /**
@@ -63,8 +63,8 @@ class TableList extends QueryPartList<Table<?>> {
     }
 
     @Override
-    protected void toSQLEmptyList(RenderContext context) {
-        context.visit(new Dual());
+    protected void toSQLEmptyList(Context<?> ctx) {
+        ctx.visit(new Dual());
     }
 
     @Override
@@ -76,13 +76,13 @@ class TableList extends QueryPartList<Table<?>> {
      * Get a list of names of the <code>NamedQueryParts</code> contained in this
      * list.
      */
-    final void toSQLFieldNames(RenderContext context) {
+    final void toSQLFieldNames(Context<?> ctx) {
         String separator = "";
 
         for (Table<?> table : this) {
             for (Field<?> field : table.fieldsRow().fields()) {
-                context.sql(separator);
-                context.literal(field.getName());
+                ctx.sql(separator);
+                ctx.literal(field.getName());
 
                 separator = ", ";
             }

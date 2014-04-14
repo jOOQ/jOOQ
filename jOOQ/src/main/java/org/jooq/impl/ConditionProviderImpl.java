@@ -46,7 +46,6 @@ import static org.jooq.impl.DSL.trueCondition;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.ConditionProvider;
@@ -54,7 +53,6 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 
 /**
@@ -119,13 +117,8 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
     }
 
     @Override
-    public final void bind(BindContext context) {
-        context.visit(getWhere());
-    }
-
-    @Override
-    public final void toSQL(RenderContext context) {
-        context.visit(getWhere());
+    public final void accept(Context<?> ctx) {
+        ctx.visit(getWhere());
     }
 
     @Override

@@ -48,19 +48,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.PivotForStep;
 import org.jooq.PivotInStep;
 import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.conf.ParamType;
-import org.jooq.exception.DataAccessException;
 
 /**
  * A pivot table implementation
@@ -103,8 +101,8 @@ implements
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.visit(pivot(context.configuration()));
+    public final void accept(Context<?> ctx) {
+        ctx.visit(pivot(ctx.configuration()));
     }
 
     private Table<?> pivot(Configuration configuration) {
@@ -138,14 +136,7 @@ implements
         private static final long serialVersionUID = -5930286639571867314L;
 
         @Override
-        public void toSQL(RenderContext ctx) {
-            ctx.declareTables(true)
-               .visit(select(ctx.configuration()))
-               .declareTables(false);
-        }
-
-        @Override
-        public void bind(BindContext ctx) throws DataAccessException {
+        public final void accept(Context<?> ctx) {
             ctx.declareTables(true)
                .visit(select(ctx.configuration()))
                .declareTables(false);
@@ -230,43 +221,34 @@ implements
         private static final long serialVersionUID = -3451610306872726958L;
 
         @Override
-        public void toSQL(RenderContext context) {
+        public final void accept(Context<?> ctx) {
 
             // Bind variables are not allowed inside of PIVOT clause
-            ParamType paramType = context.paramType();
-            boolean declareFields = context.declareFields();
-            boolean declareTables = context.declareTables();
+            ParamType paramType = ctx.paramType();
+            boolean declareFields = ctx.declareFields();
+            boolean declareTables = ctx.declareTables();
 
-            context.declareTables(true)
-                   .visit(table)
-                   .declareTables(declareTables)
-                   .formatSeparator()
-                   .keyword("pivot").sql(" (")
-                   .paramType(INLINED)
-                   .declareFields(true)
-                   .formatIndentStart()
-                   .visit(aggregateFunctions)
-                   .formatSeparator()
-                   .keyword("for").sql(" ")
-                   .literal(on.getName())
-                   .formatSeparator()
-                   .keyword("in").sql(" (")
-                   .visit(in)
-                   .declareFields(declareFields)
-                   .paramType(paramType)
-                   .sql(")")
-                   .formatIndentEnd()
-                   .formatNewLine()
-                   .sql(")");
-        }
-
-        @Override
-        public void bind(BindContext context) throws DataAccessException {
-            boolean declareTables = context.declareFields();
-
-            context.declareTables(true)
-                   .visit(table)
-                   .declareTables(declareTables);
+            ctx.declareTables(true)
+               .visit(table)
+               .declareTables(declareTables)
+               .formatSeparator()
+               .keyword("pivot").sql(" (")
+               .paramType(INLINED)
+               .declareFields(true)
+               .formatIndentStart()
+               .visit(aggregateFunctions)
+               .formatSeparator()
+               .keyword("for").sql(" ")
+               .literal(on.getName())
+               .formatSeparator()
+               .keyword("in").sql(" (")
+               .visit(in)
+               .declareFields(declareFields)
+               .paramType(paramType)
+               .sql(")")
+               .formatIndentEnd()
+               .formatNewLine()
+               .sql(")");
         }
     }
     /* [/pro] */
@@ -317,11 +299,6 @@ implements
     @Override
     public final boolean declaresTables() {
         return true;
-    }
-
-    @Override
-    public final void bind(BindContext context) throws DataAccessException {
-        context.visit(pivot(context.configuration()));
     }
 
     @Override

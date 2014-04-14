@@ -40,8 +40,10 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.impl.Utils.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
@@ -54,10 +56,13 @@ import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
+import org.jooq.RenderContext.CastMode;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.VisitContext;
 import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
+import org.jooq.conf.ParamType;
 
 /**
  * @author Lukas Eder
@@ -66,6 +71,7 @@ import org.jooq.VisitListenerProvider;
 abstract class AbstractContext<C extends Context<C>> implements Context<C> {
 
     final Configuration               configuration;
+    final PreparedStatement           stmt;
     final Map<Object, Object>         data;
 
     boolean                           declareFields;
@@ -81,8 +87,15 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     private final DefaultVisitContext visitContext;
     private final Deque<QueryPart>    visitParts;
 
-    AbstractContext(Configuration configuration) {
+    // [#2694] Unified RenderContext and BindContext traversal
+    ParamType                         paramType;
+    boolean                           qualify  = true;
+    CastMode                          castMode = CastMode.DEFAULT;
+    SQLDialect[]                      castDialects;
+
+    AbstractContext(Configuration configuration, PreparedStatement stmt) {
         this.configuration = configuration;
+        this.stmt = stmt;
         this.data = new HashMap<Object, Object>();
         this.visitClauses = new ArrayDeque<Clause>();
 
@@ -417,6 +430,74 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     @Override
     public final int peekIndex() {
         return index + 1;
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX RenderContext API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final ParamType paramType() {
+        return paramType;
+    }
+
+    @Override
+    public final C paramType(ParamType p) {
+        paramType = p;
+        return (C) this;
+    }
+
+    @Override
+    public final boolean qualify() {
+        return qualify;
+    }
+
+    @Override
+    public final C qualify(boolean q) {
+        this.qualify = q;
+        return (C) this;
+    }
+
+    @Override
+    public final CastMode castMode() {
+        return castMode;
+    }
+
+    @Override
+    public final C castMode(CastMode mode) {
+        this.castMode = mode;
+        this.castDialects = null;
+        return (C) this;
+    }
+
+    @Override
+    public final Boolean cast() {
+        switch (castMode) {
+            case ALWAYS:
+                return true;
+            case NEVER:
+                return false;
+            case SOME:
+                return asList(castDialects).contains(configuration.dialect());
+        }
+
+        return null;
+    }
+
+    @Override
+    public final C castModeSome(SQLDialect... dialects) {
+        this.castMode = CastMode.SOME;
+        this.castDialects = dialects;
+        return (C) this;
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX BindContext API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final PreparedStatement statement() {
+        return stmt;
     }
 
     // ------------------------------------------------------------------------

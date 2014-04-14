@@ -43,11 +43,9 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.POSTGRES;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Name;
-import org.jooq.RenderContext;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
 
@@ -74,7 +72,7 @@ class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefinition
     }
 
     @Override
-    public final void toSQL(RenderContext ctx) {
+    public final void accept(Context<?> ctx) {
 
         // In the WINDOW clause, always declare window definitions
         if (ctx.declareWindows()) {
@@ -93,19 +91,6 @@ class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefinition
         }
 
         // When emulating, just repeat the window specification
-        else {
-            ctx.visit(window);
-        }
-    }
-
-    @Override
-    public final void bind(BindContext ctx) {
-        if (ctx.declareWindows()) {
-            ctx.visit(name).visit(window);
-        }
-        else if (asList(ctx.configuration().dialect()).contains(POSTGRES)) {
-            ctx.visit(name);
-        }
         else {
             ctx.visit(window);
         }

@@ -44,11 +44,9 @@ import static org.jooq.Clause.TEMPLATE;
 
 import java.util.List;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.QueryPart;
-import org.jooq.RenderContext;
 import org.jooq.Template;
 
 @SuppressWarnings("deprecation")
@@ -81,13 +79,8 @@ class SQLTemplate implements Template {
         }
 
         @Override
-        public final void toSQL(RenderContext context) {
-            Utils.renderAndBind(context, null, sql, substitutes);
-        }
-
-        @Override
-        public final void bind(BindContext context) {
-            Utils.renderAndBind(null, context, sql, substitutes);
+        public final void accept(Context<?> ctx) {
+            Utils.renderAndBind(ctx, sql, substitutes);
         }
 
         @Override

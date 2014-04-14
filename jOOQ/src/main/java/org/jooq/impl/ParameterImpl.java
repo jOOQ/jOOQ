@@ -41,13 +41,11 @@
 
 package org.jooq.impl;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Parameter;
-import org.jooq.RenderContext;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -90,12 +88,9 @@ class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.literal(getName());
+    public final void accept(Context<?> ctx) {
+        ctx.literal(getName());
     }
-
-    @Override
-    public final void bind(BindContext context) {}
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {

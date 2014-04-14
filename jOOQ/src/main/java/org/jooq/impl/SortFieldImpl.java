@@ -44,11 +44,9 @@ import static org.jooq.impl.DSL.nvl2;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
 
@@ -106,9 +104,9 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> ctx) {
         if (nullsFirst || nullsLast) {
-            switch (context.configuration().dialect().family()) {
+            switch (ctx.configuration().dialect().family()) {
 
                 /* [pro] xx
                 xx xxx xxxxxxxx xxxxx xxxxxxxxxx xxxx xx xxxx xxxxxxxx xxxxxxxxx
@@ -130,26 +128,26 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                     Field<Integer> ifNull = nullsFirst ? zero() : one();
                     Field<Integer> ifNotNull = nullsFirst ? one() : zero();
 
-                    context.visit(nvl2(field, ifNotNull, ifNull))
-                           .sql(", ")
-                           .visit(field)
-                           .sql(" ")
-                           .keyword(order.toSQL());
+                    ctx.visit(nvl2(field, ifNotNull, ifNull))
+                       .sql(", ")
+                       .visit(field)
+                       .sql(" ")
+                       .keyword(order.toSQL());
 
                     break;
                 }
 
                 // DERBY, H2, HSQLDB, ORACLE, POSTGRES
                 default: {
-                    context.visit(field)
-                           .sql(" ")
-                           .keyword(order.toSQL());
+                    ctx.visit(field)
+                       .sql(" ")
+                       .keyword(order.toSQL());
 
                     if (nullsFirst) {
-                        context.sql(" ").keyword("nulls first");
+                        ctx.sql(" ").keyword("nulls first");
                     }
                     else {
-                        context.sql(" ").keyword("nulls last");
+                        ctx.sql(" ").keyword("nulls last");
                     }
 
                     break;
@@ -157,37 +155,10 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
             }
         }
         else {
-            context.visit(field)
-                   .sql(" ")
-                   .keyword(order.toSQL());
+            ctx.visit(field)
+               .sql(" ")
+               .keyword(order.toSQL());
         }
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-
-        // [#1667] Some dialects simulate NULLS { FIRST | LAST } clauses. They
-        // will need to bind the sort field twice
-        if (nullsFirst || nullsLast) {
-            switch (context.configuration().dialect().family()) {
-                /* [pro] xx
-                xxxx xxxxxxx
-                xxxx xxxx
-                xxxx xxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxx
-                xx [/pro] */
-                case CUBRID:
-                case MARIADB:
-                case MYSQL:
-                case SQLITE: {
-                    context.visit(field);
-                }
-            }
-        }
-
-        context.visit(field);
     }
 
     @Override

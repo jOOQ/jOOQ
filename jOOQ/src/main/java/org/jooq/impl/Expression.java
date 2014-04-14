@@ -73,13 +73,12 @@ import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 
 import java.sql.Timestamp;
 
-import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.Param;
-import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -573,29 +572,24 @@ class Expression<T> extends AbstractFunction<T> {
         }
 
         @Override
-        public final void toSQL(RenderContext context) {
+        public final void accept(Context<?> ctx) {
             String op = operator.toSQL();
 
-            if (operator == BIT_XOR && context.configuration().dialect() == POSTGRES) {
+            if (operator == BIT_XOR && ctx.configuration().dialect() == POSTGRES) {
                 op = "#";
             }
 
-            context.sql("(");
-            context.visit(lhs);
+            ctx.sql("(");
+            ctx.visit(lhs);
 
             for (Field<?> field : rhs) {
-                context.sql(" ")
-                       .sql(op)
-                       .sql(" ")
-                       .visit(field);
+                ctx.sql(" ")
+                   .sql(op)
+                   .sql(" ")
+                   .visit(field);
             }
 
-            context.sql(")");
-        }
-
-        @Override
-        public final void bind(BindContext context) {
-            context.visit(lhs).visit(rhs);
+            ctx.sql(")");
         }
     }
 }

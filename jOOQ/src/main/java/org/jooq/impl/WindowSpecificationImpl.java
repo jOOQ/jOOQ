@@ -48,11 +48,9 @@ import static org.jooq.impl.DSL.one;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 import org.jooq.SortField;
 import org.jooq.WindowSpecificationFinalStep;
 import org.jooq.WindowSpecificationOrderByStep;
@@ -86,7 +84,7 @@ class WindowSpecificationImpl extends AbstractQueryPart implements
     }
 
     @Override
-    public final void toSQL(RenderContext ctx) {
+    public final void accept(Context<?> ctx) {
         String glue = "";
 
         if (!partitionBy.isEmpty()) {
@@ -131,30 +129,24 @@ class WindowSpecificationImpl extends AbstractQueryPart implements
         }
     }
 
-    private final void toSQLRows(RenderContext context, Integer rows) {
+    private final void toSQLRows(Context<?> ctx, Integer rows) {
         if (rows == Integer.MIN_VALUE) {
-            context.keyword("unbounded preceding");
+            ctx.keyword("unbounded preceding");
         }
         else if (rows == Integer.MAX_VALUE) {
-            context.keyword("unbounded following");
+            ctx.keyword("unbounded following");
         }
         else if (rows < 0) {
-            context.sql(-rows);
-            context.sql(" ").keyword("preceding");
+            ctx.sql(-rows);
+            ctx.sql(" ").keyword("preceding");
         }
         else if (rows > 0) {
-            context.sql(rows);
-            context.sql(" ").keyword("following");
+            ctx.sql(rows);
+            ctx.sql(" ").keyword("following");
         }
         else {
-            context.keyword("current row");
+            ctx.keyword("current row");
         }
-    }
-
-    @Override
-    public final void bind(BindContext ctx) {
-        ctx.visit(partitionBy)
-           .visit(orderBy);
     }
 
     @Override

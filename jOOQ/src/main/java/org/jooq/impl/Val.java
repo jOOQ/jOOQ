@@ -72,6 +72,7 @@ import java.text.SimpleDateFormat;
 
 // ...
 import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.EnumType;
@@ -101,6 +102,14 @@ class Val<T> extends AbstractParam<T> {
     // ------------------------------------------------------------------------
     // XXX: Field API
     // ------------------------------------------------------------------------
+
+    @Override
+    public void accept(Context<?> ctx) {
+        if (ctx instanceof RenderContext)
+            toSQL((RenderContext) ctx);
+        else
+            bind((BindContext) ctx);
+    }
 
     @Override
     public final void toSQL(RenderContext context) {

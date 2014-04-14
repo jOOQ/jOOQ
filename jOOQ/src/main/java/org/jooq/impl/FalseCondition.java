@@ -44,10 +44,8 @@ package org.jooq.impl;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -58,11 +56,8 @@ class FalseCondition extends AbstractCondition {
     private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
 
     @Override
-    public void bind(BindContext context) {}
-
-    @Override
-    public final void toSQL(RenderContext context) {
-        context.sql("1 = 0");
+    public final void accept(Context<?> ctx) {
+        ctx.sql("1 = 0");
     }
 
     @Override

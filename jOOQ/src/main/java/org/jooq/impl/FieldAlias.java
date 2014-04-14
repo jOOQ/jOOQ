@@ -41,11 +41,9 @@
 
 package org.jooq.impl;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -62,13 +60,8 @@ class FieldAlias<T> extends AbstractField<T> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.visit(alias);
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.visit(alias);
+    public final void accept(Context<?> ctx) {
+        ctx.visit(alias);
     }
 
     @Override

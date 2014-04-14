@@ -43,11 +43,10 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.inline;
 
-import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPartInternal;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -65,13 +64,8 @@ class FieldCondition extends AbstractCondition {
     }
 
     @Override
-    public void toSQL(RenderContext ctx) {
-        delegate(ctx.configuration()).toSQL(ctx);
-    }
-
-    @Override
-    public void bind(BindContext ctx) {
-        delegate(ctx.configuration()).bind(ctx);
+    public void accept(Context<?> ctx) {
+        delegate(ctx.configuration()).accept(ctx);
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {

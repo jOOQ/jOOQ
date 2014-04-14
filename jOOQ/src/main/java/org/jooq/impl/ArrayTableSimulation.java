@@ -45,14 +45,12 @@ import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.using;
 
-import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.exception.DataAccessException;
 
 /**
  * Essentially, this is the same as <code>ArrayTable</code>, except that it simulates
@@ -122,12 +120,7 @@ class ArrayTableSimulation extends AbstractTable<Record> {
     }
 
     @Override
-    public final void toSQL(RenderContext ctx) {
-        ctx.visit(table(ctx.configuration()));
-    }
-
-    @Override
-    public final void bind(BindContext ctx) throws DataAccessException {
+    public final void accept(Context<?> ctx) {
         ctx.visit(table(ctx.configuration()));
     }
 

@@ -50,7 +50,6 @@ import static org.jooq.SQLDialect.MYSQL;
 
 import java.util.Collection;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -58,7 +57,6 @@ import org.jooq.Context;
 import org.jooq.DeleteQuery;
 import org.jooq.Operator;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Table;
 
 /**
@@ -108,44 +106,39 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        boolean declare = context.declareTables();
+    public final void accept(Context<?> ctx) {
+        boolean declare = ctx.declareTables();
 
-        context.start(DELETE_DELETE)
-               .keyword("delete").sql(" ");
+        ctx.start(DELETE_DELETE)
+           .keyword("delete").sql(" ");
 
         // [#2464] MySQL supports a peculiar multi-table DELETE syntax for aliased tables:
         // DELETE t1 FROM my_table AS t1
-        if (asList(MARIADB, MYSQL).contains(context.configuration().dialect())) {
+        if (asList(MARIADB, MYSQL).contains(ctx.configuration().dialect())) {
 
             // [#2579] TODO: Improve Table API to discover aliased tables more
             // reliably instead of resorting to instanceof:
             if (getFrom() instanceof TableAlias ||
                (getFrom() instanceof TableImpl && ((TableImpl<R>)getFrom()).getAliasedTable() != null)) {
-                context.visit(getFrom())
-                       .sql(" ");
+                ctx.visit(getFrom())
+                   .sql(" ");
             }
         }
 
-        context.keyword("from").sql(" ")
-               .declareTables(true)
-               .visit(getFrom())
-               .declareTables(declare)
-               .end(DELETE_DELETE)
-               .start(DELETE_WHERE);
+        ctx.keyword("from").sql(" ")
+           .declareTables(true)
+           .visit(getFrom())
+           .declareTables(declare)
+           .end(DELETE_DELETE)
+           .start(DELETE_WHERE);
 
         if (!(getWhere() instanceof TrueCondition)) {
-            context.formatSeparator()
-                   .keyword("where").sql(" ")
-                   .visit(getWhere());
+            ctx.formatSeparator()
+               .keyword("where").sql(" ")
+               .visit(getWhere());
         }
 
-        context.end(DELETE_WHERE);
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.visit(getFrom()).visit(getWhere());
+        ctx.end(DELETE_WHERE);
     }
 
     @Override

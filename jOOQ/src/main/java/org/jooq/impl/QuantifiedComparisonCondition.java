@@ -45,13 +45,11 @@ package org.jooq.impl;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_BETWEEN;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QuantifiedSelect;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -72,17 +70,12 @@ class QuantifiedComparisonCondition extends AbstractCondition {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.visit(field)
-               .sql(" ")
-               .keyword(comparator.toSQL())
-               .sql(" ")
-               .visit(query);
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.visit(field).visit(query);
+    public final void accept(Context<?> ctx) {
+        ctx.visit(field)
+           .sql(" ")
+           .keyword(comparator.toSQL())
+           .sql(" ")
+           .visit(query);
     }
 
     @Override

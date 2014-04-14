@@ -52,14 +52,12 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.QueryPart;
-import org.jooq.RenderContext;
 import org.jooq.RenderContext.CastMode;
 
 /**
@@ -109,7 +107,7 @@ class Cast<T> extends AbstractFunction<T> {
         xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
 
         xxxxxxxxx
-        xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxx xxxx x
+        xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxx xxxx x
 
             xx xx xxxxxx xxxx xxx xxxx xxxx xxxxxx xxx xxxx xxxxxx xxxxxx xxxx xx x xxxxxxxxx xxxxxxx xxxxxxxx
             xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
@@ -141,11 +139,6 @@ class Cast<T> extends AbstractFunction<T> {
                 x
 
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
-
-        xxxxxxxxx
-        xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx xxxx x
-            xxxxxxxxxxxxxxxxx
         x
 
         xxxxxxxxx
@@ -186,26 +179,26 @@ class Cast<T> extends AbstractFunction<T> {
 
         @SuppressWarnings("unchecked")
         @Override
-        public void toSQL(RenderContext context) {
+        public final void accept(Context<?> ctx) {
 
             // Avoid casting bind values inside an explicit cast...
-            CastMode castMode = context.castMode();
+            CastMode castMode = ctx.castMode();
 
             // [#857] Interestingly, Derby does not allow for casting numeric
             // types directly to VARCHAR. An intermediary cast to CHAR is needed
             if (field.getDataType().isNumeric() &&
                 VARCHAR.equals(getSQLDataType())) {
 
-                context.keyword("trim").sql("(")
+                ctx.keyword("trim").sql("(")
+                       .keyword("cast").sql("(")
                            .keyword("cast").sql("(")
-                               .keyword("cast").sql("(")
-                                   .castMode(CastMode.NEVER)
-                                   .visit(field)
-                                   .castMode(castMode)
-                                   .sql(" ").keyword("as").sql(" char(38))")
-                               .sql(" ").keyword("as").sql(" ")
-                               .keyword(getDataType(context.configuration()).getCastTypeName(context.configuration()))
-                           .sql("))");
+                               .castMode(CastMode.NEVER)
+                               .visit(field)
+                               .castMode(castMode)
+                               .sql(" ").keyword("as").sql(" char(38))")
+                           .sql(" ").keyword("as").sql(" ")
+                           .keyword(getDataType(ctx.configuration()).getCastTypeName(ctx.configuration()))
+                       .sql("))");
 
                 return;
             }
@@ -214,17 +207,17 @@ class Cast<T> extends AbstractFunction<T> {
             else if (field.getDataType().isString() &&
                      asList(FLOAT, DOUBLE, REAL).contains(getSQLDataType())) {
 
-                context.keyword("cast").sql("(")
-                           .keyword("cast").sql("(")
-                               .castMode(CastMode.NEVER)
-                               .visit(field)
-                               .castMode(castMode)
-                               .sql(" ").keyword("as").sql(" ").keyword("decimal")
-                           .sql(") ")
-                           .keyword("as")
-                           .sql(" ")
-                           .keyword(getDataType(context.configuration()).getCastTypeName(context.configuration()))
-                       .sql(")");
+                ctx.keyword("cast").sql("(")
+                       .keyword("cast").sql("(")
+                           .castMode(CastMode.NEVER)
+                           .visit(field)
+                           .castMode(castMode)
+                           .sql(" ").keyword("as").sql(" ").keyword("decimal")
+                       .sql(") ")
+                       .keyword("as")
+                       .sql(" ")
+                       .keyword(getDataType(ctx.configuration()).getCastTypeName(ctx.configuration()))
+                   .sql(")");
 
                 return;
             }
@@ -233,7 +226,7 @@ class Cast<T> extends AbstractFunction<T> {
             else if (field.getDataType().isNumeric() &&
                      BOOLEAN.equals(getSQLDataType())) {
 
-                context.visit(asDecodeNumberToBoolean());
+                ctx.visit(asDecodeNumberToBoolean());
                 return;
             }
 
@@ -241,33 +234,11 @@ class Cast<T> extends AbstractFunction<T> {
             else if (field.getDataType().isString() &&
                      BOOLEAN.equals(getSQLDataType())) {
 
-                context.visit(asDecodeVarcharToBoolean());
+                ctx.visit(asDecodeVarcharToBoolean());
                 return;
             }
 
-            super.toSQL(context);
-        }
-
-        @Override
-        public void bind(BindContext context) {
-
-            // [#859] casting numeric types to BOOLEAN
-            if (field.getDataType().isNumeric() &&
-                BOOLEAN.equals(getSQLDataType())) {
-
-                context.visit(asDecodeNumberToBoolean());
-                return;
-            }
-
-            // [#859] casting character types to BOOLEAN
-            else if (field.getDataType().isString() &&
-                     BOOLEAN.equals(getSQLDataType())) {
-
-                context.visit(asDecodeVarcharToBoolean());
-                return;
-            }
-
-            super.bind(context);
+            super.accept(ctx);
         }
     }
 
@@ -279,24 +250,19 @@ class Cast<T> extends AbstractFunction<T> {
         private static final long serialVersionUID = -8497561014419483312L;
 
         @Override
-        public void toSQL(RenderContext context) {
+        public void accept(Context<?> ctx) {
 
             // Avoid casting bind values inside an explicit cast...
-            CastMode castMode = context.castMode();
+            CastMode castMode = ctx.castMode();
 
             // Default rendering, if no special case has applied yet
-            context.keyword("cast").sql("(")
-                       .castMode(CastMode.NEVER)
-                       .visit(field)
-                       .castMode(castMode)
-                       .sql(" ").keyword("as").sql(" ")
-                       .keyword(getDataType(context.configuration()).getCastTypeName(context.configuration()))
-                   .sql(")");
-        }
-
-        @Override
-        public void bind(BindContext context) {
-            context.visit(field);
+            ctx.keyword("cast").sql("(")
+               .castMode(CastMode.NEVER)
+               .visit(field)
+               .castMode(castMode)
+               .sql(" ").keyword("as").sql(" ")
+               .keyword(getDataType(ctx.configuration()).getCastTypeName(ctx.configuration()))
+               .sql(")");
         }
 
         @Override

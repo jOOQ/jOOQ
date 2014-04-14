@@ -44,13 +44,11 @@ package org.jooq.impl;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.val;
 
-import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 import org.jooq.Schema;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
-import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
  * @author Lukas Eder
@@ -64,17 +62,17 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        switch (context.configuration().dialect().family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.configuration().dialect().family()) {
 
             /* [pro] xx
             xx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxx xxxxx xxx xxxxxx xxx xx xxxxx
             xx xx xxx xxxxxxxxxxxxxxxxx xxxxxxxx
             xxxx xxxxxxx x
-                xx xxxxxxxxxxxxxxxxxxxx xx xxxxxxxx x
-                    xxxxxxxxxxxxxxxxxxxxx
-                x xxxx x
+                xx xxxxxxxxxxxxxxxx xx xxxxxxxx x
                     xxxxxxxxxxxxxxxxx
+                x xxxx x
+                    xxxxxxxxxxxxx
                 x
 
                 xxxxxxx
@@ -84,16 +82,16 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             xxxx xxxx x
 
                 xx xxx xxxxxxxxxx xxx xxxxx xxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxx
 
                 xxxxxx xxxxxxxxx x xxxxx
                 xxx xxxxxxxxx xxxxx x xxxxxxxxxxxxxxx x
-                    xxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxx
                 x
 
                 xxxxxxx
@@ -103,34 +101,34 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             // Due to lack of UDT support in the Postgres JDBC drivers, all UDT's
             // have to be inlined
             case POSTGRES: {
-                toSQLInline(context);
+                toSQLInline(ctx);
                 return;
             }
 
             // Assume default behaviour if dialect is not available
             default:
-                toSQLInline(context);
+                toSQLInline(ctx);
                 return;
         }
     }
 
-    private void toSQLInline(RenderContext context) {
-        context.sql(getInlineConstructor(context));
-        context.sql("(");
+    private void toSQLInline(Context<?> ctx) {
+        ctx.sql(getInlineConstructor(ctx));
+        ctx.sql("(");
 
         String separator = "";
         for (Field<?> field : value.fields()) {
-            context.sql(separator);
-            context.visit(val(value.getValue(field), field));
+            ctx.sql(separator);
+            ctx.visit(val(value.getValue(field), field));
             separator = ", ";
         }
 
-        context.sql(")");
+        ctx.sql(")");
     }
 
-    private String getInlineConstructor(RenderContext context) {
+    private String getInlineConstructor(Context<?> ctx) {
         // TODO [#884] Fix this with a local render context (using ctx.literal)
-        switch (context.configuration().dialect().family()) {
+        switch (ctx.configuration().dialect().family()) {
             case POSTGRES:
                 return "ROW";
 
@@ -142,7 +140,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             // Assume default behaviour if dialect is not available
             default: {
                 UDT<?> udt = value.getUDT();
-                Schema mappedSchema = Utils.getMappedSchema(context.configuration(), udt.getSchema());
+                Schema mappedSchema = Utils.getMappedSchema(ctx.configuration(), udt.getSchema());
 
                 if (mappedSchema != null) {
                     return mappedSchema + "." + udt.getName();
@@ -151,36 +149,6 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
                     return udt.getName();
                 }
             }
-        }
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        switch (context.configuration().dialect().family()) {
-
-            /* [pro] xx
-            xx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxx xxxxx xxx xxxxxx xxx xx xxxxx
-            xx xx xxx xxxxxxxxxxxxxxxxx xxxxxxxx
-            xxxx xxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
-                xxxxxx
-
-            xx xx xxx xxx xxxx xxxxxxxx xxxxxx xx xx xxxxxxx xxxx xxx xxxxxxxx xxxxx
-            xxxx xxxx
-
-            xx [/pro] */
-            // Postgres cannot bind a complete structured type. The type is
-            // inlined instead: ROW(.., .., ..)
-            case POSTGRES: {
-                for (Field<?> field : value.fields()) {
-                    context.visit(val(value.getValue(field)));
-                }
-
-                break;
-            }
-
-            default:
-                throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + context.configuration().dialect());
         }
     }
 }

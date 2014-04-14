@@ -43,11 +43,9 @@ package org.jooq.impl;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_NOT;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
-import org.jooq.RenderContext;
 
 class NotCondition extends AbstractCondition {
 
@@ -61,13 +59,8 @@ class NotCondition extends AbstractCondition {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.keyword("not(").visit(condition).sql(")");
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.visit(condition);
+    public final void accept(Context<?> ctx) {
+        ctx.keyword("not(").visit(condition).sql(")");
     }
 
     @Override

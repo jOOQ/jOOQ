@@ -44,13 +44,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.AttachableInternal;
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Param;
 import org.jooq.Query;
-import org.jooq.RenderContext;
 import org.jooq.conf.ParamType;
 
 /**
@@ -93,12 +91,7 @@ abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPar
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.visit(delegate);
-    }
-
-    @Override
-    public final void bind(BindContext context) {
+    public final void accept(Context<?> context) {
         context.visit(delegate);
     }
 

@@ -48,19 +48,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.PivotForStep;
 import org.jooq.PivotInStep;
 import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.conf.ParamType;
-import org.jooq.exception.DataAccessException;
 
 /**
  * A pivot table implementation
@@ -103,8 +101,8 @@ implements
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.visit(pivot(context.configuration()));
+    public final void accept(Context<?> ctx) {
+        ctx.visit(pivot(ctx.configuration()));
     }
 
     private Table<?> pivot(Configuration configuration) {
@@ -138,14 +136,7 @@ implements
         private static final long serialVersionUID = -5930286639571867314L;
 
         @Override
-        public void toSQL(RenderContext ctx) {
-            ctx.declareTables(true)
-               .visit(select(ctx.configuration()))
-               .declareTables(false);
-        }
-
-        @Override
-        public void bind(BindContext ctx) throws DataAccessException {
+        public final void accept(Context<?> ctx) {
             ctx.declareTables(true)
                .visit(select(ctx.configuration()))
                .declareTables(false);
@@ -230,43 +221,34 @@ implements
         xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxx
 
         xxxxxxxxx
-        xxxxxx xxxx xxxxxxxxxxxxxxxxxxx xxxxxxxx x
+        xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxx xxxx x
 
             xx xxxx xxxxxxxxx xxx xxx xxxxxxx xxxxxx xx xxxxx xxxxxx
-            xxxxxxxxx xxxxxxxxx x xxxxxxxxxxxxxxxxxxxx
-            xxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxx xxxxxxxxx x xxxxxxxxxxxxxxxx
+            xxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxx
+            xxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxx
 
-            xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxxx xxx
-                   xxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxx xx
-                   xxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxx xxx
-                   xxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxx
-                   xxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxx
-                   xxxxxxxxxx
-        x
-
-        xxxxxxxxx
-        xxxxxx xxxx xxxxxxxxxxxxxxxx xxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxx x
-            xxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxx
-
-            xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxxxxxxx xxx
+               xxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxxxxx xx
+               xxxxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxxxx xxx
+               xxxxxxxxxx
+               xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxx
+               xxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxx
+               xxxxxxxxxx
         x
     x
     xx [/pro] */
@@ -317,11 +299,6 @@ implements
     @Override
     public final boolean declaresTables() {
         return true;
-    }
-
-    @Override
-    public final void bind(BindContext context) throws DataAccessException {
-        context.visit(pivot(context.configuration()));
     }
 
     @Override

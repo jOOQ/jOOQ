@@ -44,18 +44,15 @@ import static org.jooq.Clause.SELECT_EXCEPT;
 import static org.jooq.Clause.SELECT_INTERSECT;
 import static org.jooq.Clause.SELECT_UNION;
 import static org.jooq.Clause.SELECT_UNION_ALL;
-import static org.jooq.impl.Utils.visitAll;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 
 /**
@@ -100,22 +97,22 @@ class Union<R extends Record> extends AbstractSelect<R> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> ctx) {
         for (int i = 0; i < queries.size(); i++) {
             if (i != 0) {
-                context.formatSeparator()
-                       .keyword(operator.toSQL(context.configuration().dialect()))
+                ctx.formatSeparator()
+                       .keyword(operator.toSQL(ctx.configuration().dialect()))
                        .formatSeparator();
             }
 
-            wrappingParenthesis(context, "(");
-            context.visit(queries.get(i));
-            wrappingParenthesis(context, ")");
+            wrappingParenthesis(ctx, "(");
+            ctx.visit(queries.get(i));
+            wrappingParenthesis(ctx, ")");
         }
     }
 
-    private final void wrappingParenthesis(RenderContext context, String parenthesis) {
-        switch (context.configuration().dialect()) {
+    private final void wrappingParenthesis(Context<?> ctx, String parenthesis) {
+        switch (ctx.configuration().dialect()) {
             // Sybase ASE, Derby, Firebird and SQLite have some syntax issues with unions.
             // Check out https://issues.apache.org/jira/browse/DERBY-2374
             /* [pro] xx
@@ -134,21 +131,16 @@ class Union<R extends Record> extends AbstractSelect<R> {
         }
 
         if (")".equals(parenthesis)) {
-            context.formatIndentEnd()
-                   .formatNewLine();
+            ctx.formatIndentEnd()
+               .formatNewLine();
         }
 
-        context.sql(parenthesis);
+        ctx.sql(parenthesis);
 
         if ("(".equals(parenthesis)) {
-            context.formatIndentStart()
-                   .formatNewLine();
+            ctx.formatIndentStart()
+               .formatNewLine();
         }
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        visitAll(context, queries);
     }
 
     @Override

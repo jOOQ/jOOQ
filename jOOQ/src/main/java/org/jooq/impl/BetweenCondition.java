@@ -63,14 +63,12 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.val;
 
 import org.jooq.BetweenAndStep;
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPartInternal;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -114,13 +112,8 @@ class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>
     }
 
     @Override
-    public final void bind(BindContext ctx) {
-        delegate(ctx.configuration()).bind(ctx);
-    }
-
-    @Override
-    public final void toSQL(RenderContext ctx) {
-        delegate(ctx.configuration()).toSQL(ctx);
+    public final void accept(Context<?> ctx) {
+        delegate(ctx.configuration()).accept(ctx);
     }
 
     @Override
@@ -150,19 +143,14 @@ class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>
         private static final long serialVersionUID = 2915703568738921575L;
 
         @Override
-        public final void toSQL(RenderContext context) {
-                           context.visit(field);
-            if (not)       context.sql(" ").keyword("not");
-                           context.sql(" ").keyword("between");
-            if (symmetric) context.sql(" ").keyword("symmetric");
-                           context.sql(" ").visit(minValue);
-                           context.sql(" ").keyword("and");
-                           context.sql(" ").visit(maxValue);
-        }
-
-        @Override
-        public final void bind(BindContext context) {
-            context.visit(field).visit(minValue).visit(maxValue);
+        public final void accept(Context<?> ctx) {
+                           ctx.visit(field);
+            if (not)       ctx.sql(" ").keyword("not");
+                           ctx.sql(" ").keyword("between");
+            if (symmetric) ctx.sql(" ").keyword("symmetric");
+                           ctx.sql(" ").visit(minValue);
+                           ctx.sql(" ").keyword("and");
+                           ctx.sql(" ").visit(maxValue);
         }
 
         @Override

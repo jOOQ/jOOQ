@@ -60,7 +60,6 @@ import static org.jooq.SQLDialect.SQLITE;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -68,7 +67,6 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Operator;
 import org.jooq.QueryPartInternal;
-import org.jooq.RenderContext;
 import org.jooq.Row;
 
 /**
@@ -94,13 +92,8 @@ class RowInCondition extends AbstractCondition {
     }
 
     @Override
-    public final void toSQL(RenderContext ctx) {
-        delegate(ctx.configuration()).toSQL(ctx);
-    }
-
-    @Override
-    public final void bind(BindContext ctx) {
-        delegate(ctx.configuration()).bind(ctx);
+    public final void accept(Context<?> ctx) {
+        delegate(ctx.configuration()).accept(ctx);
     }
 
     @Override
@@ -137,18 +130,13 @@ class RowInCondition extends AbstractCondition {
         private static final long serialVersionUID = -7019193803316281371L;
 
         @Override
-        public final void toSQL(RenderContext context) {
-            context.visit(left)
-                   .sql(" ")
-                   .keyword(comparator.toSQL())
-                   .sql(" (")
-                   .visit(right)
-                   .sql(")");
-        }
-
-        @Override
-        public final void bind(BindContext context) {
-            context.visit(left).visit(right);
+        public final void accept(Context<?> ctx) {
+            ctx.visit(left)
+               .sql(" ")
+               .keyword(comparator.toSQL())
+               .sql(" (")
+               .visit(right)
+               .sql(")");
         }
 
         @Override

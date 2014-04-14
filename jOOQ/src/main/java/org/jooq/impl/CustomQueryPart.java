@@ -104,6 +104,19 @@ public abstract class CustomQueryPart extends AbstractQueryPart {
     // -------------------------------------------------------------------------
 
     /**
+     * Subclasses may implement this method.
+     * <hr/>
+     * {@inheritDoc}
+     */
+    @Override
+    public void accept(Context<?> ctx) {
+        if (ctx instanceof RenderContext)
+            toSQL((RenderContext) ctx);
+        else
+            bind((BindContext) ctx);
+    }
+
+    /**
      * Subclasses may implement this method
      * <hr/>
      * {@inheritDoc}

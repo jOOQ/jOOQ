@@ -61,6 +61,7 @@ public interface BindContext extends Context<BindContext> {
     /**
      * Retrieve the context's underlying {@link PreparedStatement}
      */
+    @Override
     PreparedStatement statement();
 
     /**
@@ -124,6 +125,7 @@ public interface BindContext extends Context<BindContext> {
      * @throws DataAccessException If something went wrong while binding a
      *             variable
      */
+    @Override
     BindContext bindValue(Object value, Field<?> field) throws DataAccessException;
 
 }

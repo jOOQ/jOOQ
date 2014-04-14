@@ -48,7 +48,6 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Param;
-import org.jooq.RenderContext;
 
 /**
  * A base implementation for {@link Param}
@@ -133,7 +132,7 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
         return inline;
     }
 
-    final boolean isInline(RenderContext context) {
+    final boolean isInline(Context<?> context) {
         return isInline() || context.paramType() == INLINED;
     }
 }

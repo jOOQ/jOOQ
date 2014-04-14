@@ -42,13 +42,11 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.name;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.CommonTableExpression;
 import org.jooq.Context;
 import org.jooq.DerivedColumnList;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 
 /**
@@ -75,7 +73,7 @@ class DerivedColumnListImpl extends AbstractQueryPart implements DerivedColumnLi
     }
 
     @Override
-    public final void toSQL(RenderContext ctx) {
+    public final void accept(Context<?> ctx) {
         ctx.visit(name(name));
 
         if (fieldNames != null && fieldNames.length > 0) {
@@ -90,10 +88,6 @@ class DerivedColumnListImpl extends AbstractQueryPart implements DerivedColumnLi
 
             ctx.sql(")");
         }
-    }
-
-    @Override
-    public final void bind(BindContext ctx) {
     }
 
     @Override

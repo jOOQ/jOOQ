@@ -42,16 +42,13 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.Clause.INSERT_VALUES;
-import static org.jooq.impl.Utils.visitAll;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 
 /**
@@ -76,39 +73,39 @@ class FieldMapsForInsert extends AbstractQueryPart {
     // -------------------------------------------------------------------------
 
     @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> ctx) {
         if (!isExecutable()) {
-            context.sql("[ no fields are inserted ]");
+            ctx.sql("[ no fields are inserted ]");
         }
 
         // Single record inserts can use the standard syntax in any dialect
         else if (insertMaps.size() == 1 || insertMaps.get(1) == null) {
-            context.formatSeparator()
-                   .start(INSERT_VALUES)
-                   .keyword("values")
-                   .sql(" ")
-                   .visit(insertMaps.get(0))
-                   .end(INSERT_VALUES);
+            ctx.formatSeparator()
+               .start(INSERT_VALUES)
+               .keyword("values")
+               .sql(" ")
+               .visit(insertMaps.get(0))
+               .end(INSERT_VALUES);
         }
 
         // True SQL92 multi-record inserts aren't always supported
         else {
-            switch (context.configuration().dialect().family()) {
+            switch (ctx.configuration().dialect().family()) {
 
                 // Some dialects don't support multi-record inserts
                 /* [pro] xx
                 xxxx xxxxxxx x
-                    xxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxx
 
                     xx xx xxxxxx xxxx xxx xxxxxxx xxxxxx xx xxxxxx xxx xx xxxxx xxxxxx xxx xx xxxxxxxxxxx xxxx
                     xx xxx xx xxxxxxxx xxxxx xxxxxx xx xxxxxx xx x xxxx xxxxxxx xxx xx xxxxx xxxxxx xxx xxx xxxx xx
                     xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                     xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxx
                            xxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxx
 
                     xxxxxx
                 x
@@ -119,21 +116,21 @@ class FieldMapsForInsert extends AbstractQueryPart {
                 xx [/pro] */
                 case FIREBIRD:
                 case SQLITE: {
-                    context.formatSeparator()
+                    ctx.formatSeparator()
                            .start(INSERT_SELECT);
-                    context.visit(insertSelect(context));
-                    context.end(INSERT_SELECT);
+                    ctx.visit(insertSelect(ctx));
+                    ctx.end(INSERT_SELECT);
 
                     break;
                 }
 
                 default: {
-                    context.formatSeparator()
+                    ctx.formatSeparator()
                            .start(INSERT_VALUES)
                            .keyword("values")
                            .sql(" ");
-                    toSQL92Values(context);
-                    context.end(INSERT_VALUES);
+                    toSQL92Values(ctx);
+                    ctx.end(INSERT_VALUES);
 
                     break;
                 }
@@ -141,7 +138,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
         }
     }
 
-    private final Select<Record> insertSelect(RenderContext context) {
+    private final Select<Record> insertSelect(Context<?> context) {
         Select<Record> select = null;
 
         for (FieldMapForInsert map : insertMaps) {
@@ -160,7 +157,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
         return select;
     }
 
-    private final void toSQL92Values(RenderContext context) {
+    private final void toSQL92Values(Context<?> context) {
         context.visit(insertMaps.get(0));
 
         int i = 0;
@@ -172,11 +169,6 @@ class FieldMapsForInsert extends AbstractQueryPart {
 
             i++;
         }
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        visitAll(context, insertMaps);
     }
 
     @Override

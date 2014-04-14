@@ -82,7 +82,7 @@ public abstract class CustomField<T> extends AbstractField<T> {
     // -------------------------------------------------------------------------
 
     /**
-     * Subclasses must implement this method
+     * Subclasses must implement this method.
      * <hr/>
      * {@inheritDoc}
      */
@@ -94,7 +94,20 @@ public abstract class CustomField<T> extends AbstractField<T> {
     // -------------------------------------------------------------------------
 
     /**
-     * Subclasses may implement this method
+     * Subclasses may implement this method.
+     * <hr/>
+     * {@inheritDoc}
+     */
+    @Override
+    public void accept(Context<?> ctx) {
+        if (ctx instanceof RenderContext)
+            toSQL((RenderContext) ctx);
+        else
+            bind((BindContext) ctx);
+    }
+
+    /**
+     * Subclasses may implement this method.
      * <hr/>
      * {@inheritDoc}
      */

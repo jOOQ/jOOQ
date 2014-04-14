@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -65,14 +64,9 @@ class ParamCollector extends AbstractBindContext {
     private final boolean       includeInlinedParams;
 
     ParamCollector(Configuration configuration, boolean includeInlinedParams) {
-        super(configuration);
+        super(configuration, null);
 
         this.includeInlinedParams = includeInlinedParams;
-    }
-
-    @Override
-    public final PreparedStatement statement() {
-        throw new UnsupportedOperationException();
     }
 
     @Override

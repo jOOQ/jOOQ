@@ -45,14 +45,11 @@ import static org.jooq.Clause.CONDITION_COMPARISON;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.val;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.RenderContext;
-import org.jooq.exception.DataAccessException;
 
 /**
  * Abstraction for various "contains" operations
@@ -84,13 +81,8 @@ class Contains<T> extends AbstractCondition {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.visit(condition(context.configuration()));
-    }
-
-    @Override
-    public final void bind(BindContext context) throws DataAccessException {
-        context.visit(condition(context.configuration()));
+    public final void accept(Context<?> ctx) {
+        ctx.visit(condition(ctx.configuration()));
     }
 
     @Override
@@ -131,13 +123,8 @@ class Contains<T> extends AbstractCondition {
         private static final long serialVersionUID = 8083622843635168388L;
 
         @Override
-        public final void toSQL(RenderContext context) {
-            context.visit(lhs).sql(" @> ").visit(rhs());
-        }
-
-        @Override
-        public final void bind(BindContext context) throws DataAccessException {
-            context.visit(lhs).visit(rhs());
+        public final void accept(Context<?> ctx) {
+            ctx.visit(lhs).sql(" @> ").visit(rhs());
         }
 
         @Override

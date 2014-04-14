@@ -54,19 +54,21 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.regex.Pattern;
 
+import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Constants;
+import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
-import org.jooq.conf.ParamType;
 import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
 import org.jooq.exception.ControlFlowSignal;
+import org.jooq.exception.DataAccessException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -82,12 +84,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private static final Set<String>  SQLITE_KEYWORDS;
 
     private final StringBuilder       sql;
-    private ParamType                 paramType;
     private int                       params;
-    private boolean                   qualify            = true;
     private int                       alias;
-    private CastMode                  castMode           = CastMode.DEFAULT;
-    private SQLDialect[]              castDialects;
     private int                       indent;
     private Stack<Integer>            indentLock         = new Stack<Integer>();
     private int                       printMargin        = 80;
@@ -98,7 +96,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private boolean                   cachedRenderFormatted;
 
     DefaultRenderContext(Configuration configuration) {
-        super(configuration);
+        super(configuration, null);
 
         Settings settings = configuration.settings();
 
@@ -117,6 +115,15 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         declareFields(context.declareFields());
         declareTables(context.declareTables());
         data().putAll(context.data());
+    }
+
+    // ------------------------------------------------------------------------
+    // BindContext API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final BindContext bindValue(Object value, Field<?> field) throws DataAccessException {
+        throw new UnsupportedOperationException();
     }
 
     // ------------------------------------------------------------------------
@@ -400,7 +407,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @Override
     protected final void visit0(QueryPartInternal internal) {
         checkForceInline(internal);
-        internal.toSQL(this);
+        internal.accept(this);
     }
 
     private final void checkForceInline(QueryPart part) throws ForceInlineSignal {
@@ -450,8 +457,15 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     @Override
+    @Deprecated
     public final boolean inline() {
         return paramType == INLINED;
+    }
+
+    @Override
+    @Deprecated
+    public final boolean namedParams() {
+        return paramType == NAMED;
     }
 
     @Override
@@ -462,69 +476,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     @Override
-    public final ParamType paramType() {
-        return paramType;
-    }
-
-    @Override
-    public final RenderContext paramType(ParamType p) {
-        paramType = p;
-        return this;
-    }
-
-    @Override
-    public final boolean qualify() {
-        return qualify;
-    }
-
-    @Override
-    public final RenderContext qualify(boolean q) {
-        this.qualify = q;
-        return this;
-    }
-
-    @Override
-    public final boolean namedParams() {
-        return paramType == NAMED;
-    }
-
-    @Override
     @Deprecated
     public final RenderContext namedParams(boolean r) {
         this.paramType = r ? NAMED : INDEXED;
-        return this;
-    }
-
-    @Override
-    public final CastMode castMode() {
-        return castMode;
-    }
-
-    @Override
-    public final RenderContext castMode(CastMode mode) {
-        this.castMode = mode;
-        this.castDialects = null;
-        return this;
-    }
-
-    @Override
-    public final Boolean cast() {
-        switch (castMode) {
-            case ALWAYS:
-                return true;
-            case NEVER:
-                return false;
-            case SOME:
-                return asList(castDialects).contains(configuration.dialect());
-        }
-
-        return null;
-    }
-
-    @Override
-    public final RenderContext castModeSome(SQLDialect... dialects) {
-        this.castMode = CastMode.SOME;
-        this.castDialects = dialects;
         return this;
     }
 

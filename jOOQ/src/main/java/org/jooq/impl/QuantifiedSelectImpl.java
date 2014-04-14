@@ -42,7 +42,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.table;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -50,7 +49,6 @@ import org.jooq.Field;
 import org.jooq.QuantifiedSelect;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 
 /**
@@ -80,7 +78,7 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
     }
 
     @Override
-    public final void toSQL(RenderContext ctx) {
+    public final void accept(Context<?> ctx) {
 
         // If this is already a subquery, proceed
         if (ctx.subquery()) {
@@ -104,20 +102,6 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
                .formatNewLine()
                .subquery(false)
                .sql(")");
-        }
-    }
-
-    @Override
-    public final void bind(BindContext ctx) {
-
-        // If this is already a subquery, proceed
-        if (ctx.subquery()) {
-            ctx.visit(delegate(ctx.configuration()));
-        }
-        else {
-            ctx.subquery(true)
-               .visit(delegate(ctx.configuration()))
-               .subquery(false);
         }
     }
 

@@ -40,13 +40,11 @@
  */
 package org.jooq.impl;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Row;
 import org.jooq.Schema;
 import org.jooq.UDT;
@@ -134,20 +132,15 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        Schema mappedSchema = Utils.getMappedSchema(context.configuration(), getSchema());
+    public final void accept(Context<?> ctx) {
+        Schema mappedSchema = Utils.getMappedSchema(ctx.configuration(), getSchema());
 
         if (mappedSchema != null) {
-            context.visit(mappedSchema);
-            context.sql(".");
+            ctx.visit(mappedSchema);
+            ctx.sql(".");
         }
 
-        context.visit(DSL.name(getName()));
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.visit(fields);
+        ctx.visit(DSL.name(getName()));
     }
 
     @Override

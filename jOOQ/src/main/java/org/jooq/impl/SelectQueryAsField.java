@@ -41,10 +41,9 @@
 
 package org.jooq.impl;
 
-import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 
 /**
@@ -68,42 +67,28 @@ class SelectQueryAsField<T> extends AbstractField<T> {
     }
 
     @Override
-    public final void bind(BindContext context) {
+    public final void accept(Context<?> ctx) {
 
         // If this is already a subquery, proceed
-        if (context.subquery()) {
-            context.visit(query);
+        if (ctx.subquery()) {
+            ctx.sql("(")
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(query)
+               .formatIndentEnd()
+               .formatNewLine()
+               .sql(")");
         }
         else {
-            context.subquery(true)
-                   .visit(query)
-                   .subquery(false);
-        }
-    }
-
-    @Override
-    public final void toSQL(RenderContext context) {
-
-        // If this is already a subquery, proceed
-        if (context.subquery()) {
-            context.sql("(")
-                   .formatIndentStart()
-                   .formatNewLine()
-                   .visit(query)
-                   .formatIndentEnd()
-                   .formatNewLine()
-                   .sql(")");
-        }
-        else {
-            context.sql("(")
-                   .subquery(true)
-                   .formatIndentStart()
-                   .formatNewLine()
-                   .visit(query)
-                   .formatIndentEnd()
-                   .formatNewLine()
-                   .subquery(false)
-                   .sql(")");
+            ctx.sql("(")
+               .subquery(true)
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(query)
+               .formatIndentEnd()
+               .formatNewLine()
+               .subquery(false)
+               .sql(")");
         }
     }
 }

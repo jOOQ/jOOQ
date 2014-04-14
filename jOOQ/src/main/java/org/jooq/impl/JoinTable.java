@@ -81,7 +81,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
@@ -91,7 +90,6 @@ import org.jooq.JoinType;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -150,33 +148,33 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        JoinType translatedType = translateType(context);
+    public final void accept(Context<?> ctx) {
+        JoinType translatedType = translateType(ctx);
         Clause translatedClause = translateClause(translatedType);
 
         String keyword = translatedType.toSQL();
 
         /* [pro] xx
         xx xx xx xxxxxxx xxx xxxxx xxxxxxx xx xxx xxxxxxxx
-        xx xxxxxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+        xx xxxxxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
             xxxxxxx x xxxxxx xxxxxx
         x
         xx [/pro] */
 
-        toSQLTable(context, lhs);
+        toSQLTable(ctx, lhs);
 
-        context.formatIndentStart()
+        ctx.formatIndentStart()
                .formatSeparator()
                .start(translatedClause)
                .keyword(keyword)
                .sql(" ");
 
-        toSQLTable(context, rhs);
+        toSQLTable(ctx, rhs);
 
         // [#1645] The Oracle PARTITION BY clause can be put to the right of an
         // OUTER JOINed table
         if (!rhsPartitionBy.isEmpty()) {
-            context.formatSeparator()
+            ctx.formatSeparator()
                    .start(TABLE_JOIN_PARTITION_BY)
                    .keyword("partition by")
                    .sql(" (")
@@ -192,33 +190,33 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
                     NATURAL_RIGHT_OUTER_JOIN,
                     CROSS_APPLY,
                     OUTER_APPLY).contains(translatedType)) {
-            toSQLJoinCondition(context);
+            toSQLJoinCondition(ctx);
         }
 
-        context.end(translatedClause)
+        ctx.end(translatedClause)
                .formatIndentEnd();
     }
 
-    private void toSQLTable(RenderContext context, Table<?> table) {
+    private void toSQLTable(Context<?> ctx, Table<?> table) {
 
         // [#671] Some databases formally require nested JOINS on the right hand
         // side of the join expression to be wrapped in parentheses (e.g. MySQL).
         // In other databases, it's a good idea to wrap them all
         boolean wrap = table instanceof JoinTable &&
-            (table == rhs || asList().contains(context.configuration().dialect().family()));
+            (table == rhs || asList().contains(ctx.configuration().dialect().family()));
 
         if (wrap) {
-            context.sql("(")
-                   .formatIndentStart()
-                   .formatNewLine();
+            ctx.sql("(")
+               .formatIndentStart()
+               .formatNewLine();
         }
 
-        context.visit(table);
+        ctx.visit(table);
 
         if (wrap) {
-            context.formatIndentEnd()
-                   .formatNewLine()
-                   .sql(")");
+            ctx.formatIndentEnd()
+               .formatNewLine()
+               .sql(")");
         }
     }
 
@@ -244,17 +242,17 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     /**
      * Translate the join type for SQL rendering
      */
-    final JoinType translateType(RenderContext context) {
-        if (simulateCrossJoin(context)) {
+    final JoinType translateType(Context<?> context) {
+        if (emulateCrossJoin(context)) {
             return JOIN;
         }
-        else if (simulateNaturalJoin(context)) {
+        else if (emulateNaturalJoin(context)) {
             return JOIN;
         }
-        else if (simulateNaturalLeftOuterJoin(context)) {
+        else if (emulateNaturalLeftOuterJoin(context)) {
             return LEFT_OUTER_JOIN;
         }
-        else if (simulateNaturalRightOuterJoin(context)) {
+        else if (emulateNaturalRightOuterJoin(context)) {
             return RIGHT_OUTER_JOIN;
         }
         else {
@@ -262,23 +260,23 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         }
     }
 
-    private final boolean simulateCrossJoin(RenderContext context) {
+    private final boolean emulateCrossJoin(Context<?> context) {
         return type == CROSS_JOIN && asList().contains(context.configuration().dialect().family());
     }
 
-    private final boolean simulateNaturalJoin(RenderContext context) {
+    private final boolean emulateNaturalJoin(Context<?> context) {
         return type == NATURAL_JOIN && asList(CUBRID).contains(context.configuration().dialect().family());
     }
 
-    private final boolean simulateNaturalLeftOuterJoin(RenderContext context) {
+    private final boolean emulateNaturalLeftOuterJoin(Context<?> context) {
         return type == NATURAL_LEFT_OUTER_JOIN && asList(CUBRID, H2).contains(context.configuration().dialect().family());
     }
 
-    private final boolean simulateNaturalRightOuterJoin(RenderContext context) {
+    private final boolean emulateNaturalRightOuterJoin(Context<?> context) {
         return type == NATURAL_RIGHT_OUTER_JOIN && asList(CUBRID, H2).contains(context.configuration().dialect().family());
     }
 
-    private final void toSQLJoinCondition(RenderContext context) {
+    private final void toSQLJoinCondition(Context<?> context) {
         if (!using.isEmpty()) {
 
             // [#582] Some dialects don't explicitly support a JOIN .. USING
@@ -321,9 +319,9 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
 
         // [#577] If any NATURAL JOIN syntax needs to be simulated, find out
         // common fields in lhs and rhs of the JOIN clause
-        else if (simulateNaturalJoin(context) ||
-                 simulateNaturalLeftOuterJoin(context) ||
-                 simulateNaturalRightOuterJoin(context)) {
+        else if (emulateNaturalJoin(context) ||
+                 emulateNaturalLeftOuterJoin(context) ||
+                 emulateNaturalRightOuterJoin(context)) {
 
             boolean first = true;
             for (Field<?> field : lhs.fields()) {
@@ -360,18 +358,6 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
                    .sql(" ")
                    .visit(condition)
                    .end(TABLE_JOIN_ON);
-        }
-    }
-
-    @Override
-    public final void bind(BindContext context) throws DataAccessException {
-        context.visit(lhs).visit(rhs).visit(rhsPartitionBy);
-
-        if (!using.isEmpty()) {
-            context.visit(using);
-        }
-        else {
-            context.visit(condition);
         }
     }
 

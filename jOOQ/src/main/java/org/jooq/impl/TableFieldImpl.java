@@ -45,13 +45,11 @@ import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_REFERENCE;
 import static org.jooq.impl.Utils.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.tools.StringUtils;
@@ -89,20 +87,17 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true);
+    public final void accept(Context<?> ctx) {
+        ctx.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true);
 
-        if (context.qualify()) {
-            context.visit(table);
-            context.sql(".");
+        if (ctx.qualify()) {
+            ctx.visit(table);
+            ctx.sql(".");
         }
 
-        context.literal(getName());
-        context.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, null);
+        ctx.literal(getName());
+        ctx.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, null);
     }
-
-    @Override
-    public final void bind(BindContext context) {}
 
     // ------------------------------------------------------------------------
     // XXX: Object API

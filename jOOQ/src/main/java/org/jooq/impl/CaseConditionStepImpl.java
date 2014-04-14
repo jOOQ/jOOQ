@@ -43,7 +43,6 @@ package org.jooq.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.BindContext;
 import org.jooq.CaseConditionStep;
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -51,7 +50,6 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPart;
-import org.jooq.RenderContext;
 
 class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseConditionStep<T> {
 
@@ -119,18 +117,6 @@ class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseCondit
         private static final long serialVersionUID = 6146002888421945901L;
 
         @Override
-        public final void bind(BindContext context) {
-            for (int i = 0; i < conditions.size(); i++) {
-                context.visit(conditions.get(i));
-                context.visit(results.get(i));
-            }
-
-            if (otherwise != null) {
-                context.visit(otherwise);
-            }
-        }
-
-        @Override
         public final Clause[] clauses(Context<?> ctx) {
             return null;
         }
@@ -145,7 +131,7 @@ class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseCondit
         xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
 
         xxxxxxxxx
-        xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxx xxxx x
+        xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxx xxxx x
             xxxxxxxxxxxxxxxxxxxxx
                xxxxxxxxxx
 
@@ -181,37 +167,37 @@ class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseCondit
         private static final long serialVersionUID = 7850713333675233736L;
 
         @Override
-        public final void toSQL(RenderContext context) {
-            context.formatIndentLockStart()
-                   .keyword("case")
-                   .formatIndentLockStart();
+        public final void accept(Context<?> ctx) {
+            ctx.formatIndentLockStart()
+               .keyword("case")
+               .formatIndentLockStart();
 
             int size = conditions.size();
             for (int i = 0; i < size; i++) {
                 if (i > 0) {
-                    context.formatNewLine();
+                    ctx.formatNewLine();
                 }
 
-                context.sql(" ").keyword("when").sql(" ").visit(conditions.get(i))
-                       .sql(" ").keyword("then").sql(" ").visit(results.get(i));
+                ctx.sql(" ").keyword("when").sql(" ").visit(conditions.get(i))
+                   .sql(" ").keyword("then").sql(" ").visit(results.get(i));
             }
 
             if (otherwise != null) {
-                context.formatNewLine()
-                       .sql(" ").keyword("else").sql(" ").visit(otherwise);
+                ctx.formatNewLine()
+                   .sql(" ").keyword("else").sql(" ").visit(otherwise);
             }
 
-            context.formatIndentLockEnd();
+            ctx.formatIndentLockEnd();
 
             if (size > 1 || otherwise != null) {
-                context.formatSeparator();
+                ctx.formatSeparator();
             }
             else {
-                context.sql(" ");
+                ctx.sql(" ");
             }
 
-            context.keyword("end")
-                   .formatIndentLockEnd();
+            ctx.keyword("end")
+               .formatIndentLockEnd();
         }
     }
 }

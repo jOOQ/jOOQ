@@ -42,7 +42,6 @@ package org.jooq.impl;
 
 import java.sql.ResultSetMetaData;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -50,7 +49,6 @@ import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 
 /**
  * A plain SQL query that returns results
@@ -77,13 +75,8 @@ class SQLResultQuery extends AbstractResultQuery<Record> {
     // ------------------------------------------------------------------------
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.visit(delegate);
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.visit(delegate);
+    public final void accept(Context<?> ctx) {
+        ctx.visit(delegate);
     }
 
     @Override

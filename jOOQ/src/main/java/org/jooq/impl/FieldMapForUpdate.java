@@ -46,11 +46,9 @@ import static org.jooq.SQLDialect.SQLITE;
 
 import java.util.Map;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -69,7 +67,7 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> ctx) {
         if (size() > 0) {
             String separator = "";
 
@@ -79,37 +77,29 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
             // [#2055] Other dialects require qualified column references to
             // disambiguated columns in queries like
             // UPDATE t1 JOIN t2 .. SET t1.val = ..., t2.val = ...
-            boolean restoreQualify = context.qualify();
-            boolean supportsQualify = asList(POSTGRES, SQLITE).contains(context.configuration().dialect()) ? false : restoreQualify;
+            boolean restoreQualify = ctx.qualify();
+            boolean supportsQualify = asList(POSTGRES, SQLITE).contains(ctx.configuration().dialect()) ? false : restoreQualify;
 
             for (Entry<Field<?>, Field<?>> entry : entrySet()) {
-                context.sql(separator);
+                ctx.sql(separator);
 
                 if (!"".equals(separator)) {
-                    context.formatNewLine();
+                    ctx.formatNewLine();
                 }
 
-                context.start(assignmentClause)
-                       .qualify(supportsQualify)
-                       .visit(entry.getKey())
-                       .qualify(restoreQualify)
-                       .sql(" = ")
-                       .visit(entry.getValue())
-                       .end(assignmentClause);
+                ctx.start(assignmentClause)
+                   .qualify(supportsQualify)
+                   .visit(entry.getKey())
+                   .qualify(restoreQualify)
+                   .sql(" = ")
+                   .visit(entry.getValue())
+                   .end(assignmentClause);
 
                 separator = ", ";
             }
         }
         else {
-            context.sql("[ no fields are updated ]");
-        }
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        for (Entry<Field<?>, Field<?>> entry : entrySet()) {
-            context.visit(entry.getKey());
-            context.visit(entry.getValue());
+            ctx.sql("[ no fields are updated ]");
         }
     }
 

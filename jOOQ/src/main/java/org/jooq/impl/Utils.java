@@ -999,7 +999,11 @@ final class Utils {
      * values in the sql string</li>
      * </ul>
      */
-    static final void renderAndBind(RenderContext render, BindContext bind, String sql, List<QueryPart> substitutes) {
+    @SuppressWarnings("null")
+    static final void renderAndBind(Context<?> ctx, String sql, List<QueryPart> substitutes) {
+        RenderContext render = (RenderContext) ((ctx instanceof RenderContext) ? ctx : null);
+        BindContext   bind   = (BindContext)   ((ctx instanceof BindContext)   ? ctx : null);
+
         int substituteIndex = 0;
         char[] sqlChars = sql.toCharArray();
 
@@ -1174,7 +1178,7 @@ final class Utils {
      * Render a list of names of the <code>NamedQueryParts</code> contained in
      * this list.
      */
-    static final void fieldNames(RenderContext context, Fields<?> fields) {
+    static final void fieldNames(Context<?> context, Fields<?> fields) {
         fieldNames(context, list(fields.fields));
     }
 
@@ -1182,7 +1186,7 @@ final class Utils {
      * Render a list of names of the <code>NamedQueryParts</code> contained in
      * this list.
      */
-    static final void fieldNames(RenderContext context, Field<?>... fields) {
+    static final void fieldNames(Context<?> context, Field<?>... fields) {
         fieldNames(context, list(fields));
     }
 
@@ -1190,7 +1194,7 @@ final class Utils {
      * Render a list of names of the <code>NamedQueryParts</code> contained in
      * this list.
      */
-    static final void fieldNames(RenderContext context, Collection<? extends Field<?>> list) {
+    static final void fieldNames(Context<?> context, Collection<? extends Field<?>> list) {
         String separator = "";
 
         for (Field<?> field : list) {
@@ -1204,7 +1208,7 @@ final class Utils {
      * Render a list of names of the <code>NamedQueryParts</code> contained in
      * this list.
      */
-    static final void tableNames(RenderContext context, Table<?>... list) {
+    static final void tableNames(Context<?> context, Table<?>... list) {
         tableNames(context, list(list));
     }
 
@@ -1212,7 +1216,7 @@ final class Utils {
      * Render a list of names of the <code>NamedQueryParts</code> contained in
      * this list.
      */
-    static final void tableNames(RenderContext context, Collection<? extends Table<?>> list) {
+    static final void tableNames(Context<?> context, Collection<? extends Table<?>> list) {
         String separator = "";
 
         for (Table<?> table : list) {

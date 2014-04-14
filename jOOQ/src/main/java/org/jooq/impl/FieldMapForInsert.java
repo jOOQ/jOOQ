@@ -41,17 +41,14 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.FIELD_ROW;
-import static org.jooq.impl.Utils.visitAll;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -68,74 +65,68 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> ctx) {
         boolean indent = (size() > 1);
 
-        context.sql("(");
+        ctx.sql("(");
 
         if (indent) {
-            context.formatIndentStart();
+            ctx.formatIndentStart();
         }
 
         String separator = "";
         for (Field<?> field : values()) {
-            context.sql(separator);
+            ctx.sql(separator);
 
             if (indent) {
-                context.formatNewLine();
+                ctx.formatNewLine();
             }
 
-            context.visit(field);
+            ctx.visit(field);
             separator = ", ";
         }
 
         if (indent) {
-            context.formatIndentEnd()
-                   .formatNewLine();
+            ctx.formatIndentEnd()
+               .formatNewLine();
         }
 
-        context.sql(")");
+        ctx.sql(")");
     }
 
-    final void toSQLReferenceKeys(RenderContext context) {
+    final void toSQLReferenceKeys(Context<?> ctx) {
         boolean indent = (size() > 1);
 
-        context.sql("(");
+        ctx.sql("(");
 
         if (indent) {
-            context.formatIndentStart();
+            ctx.formatIndentStart();
         }
 
         // [#989] Avoid qualifying fields in INSERT field declaration
-        boolean qualify = context.qualify();
-        context.qualify(false);
+        boolean qualify = ctx.qualify();
+        ctx.qualify(false);
 
         String separator = "";
         for (Field<?> field : keySet()) {
-            context.sql(separator);
+            ctx.sql(separator);
 
             if (indent) {
-                context.formatNewLine();
+                ctx.formatNewLine();
             }
 
-            context.visit(field);
+            ctx.visit(field);
             separator = ", ";
         }
 
-        context.qualify(qualify);
+        ctx.qualify(qualify);
 
         if (indent) {
-            context.formatIndentEnd()
-                   .formatNewLine();
+            ctx.formatIndentEnd()
+               .formatNewLine();
         }
 
-        context.sql(")");
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        visitAll(context, keySet());
-        visitAll(context, values());
+        ctx.sql(")");
     }
 
     @Override

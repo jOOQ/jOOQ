@@ -47,12 +47,10 @@ import static org.jooq.Clause.TABLE_REFERENCE;
 
 import java.util.Arrays;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.tools.StringUtils;
@@ -127,38 +125,26 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final void bind(BindContext context) {
+    public final void accept(Context<?> ctx) {
         if (alias != null) {
-            alias.bind(context);
-        }
-        else if (parameters != null && context.declareTables()) {
-            for (Field<?> parameter : parameters) {
-                context.visit(parameter);
-            }
-        }
-    }
-
-    @Override
-    public final void toSQL(RenderContext context) {
-        if (alias != null) {
-            alias.toSQL(context);
+            alias.accept(ctx);
         }
         else {
-            if (context.qualify()) {
-                Schema mappedSchema = Utils.getMappedSchema(context.configuration(), getSchema());
+            if (ctx.qualify()) {
+                Schema mappedSchema = Utils.getMappedSchema(ctx.configuration(), getSchema());
 
                 if (mappedSchema != null) {
-                    context.visit(mappedSchema);
-                    context.sql(".");
+                    ctx.visit(mappedSchema);
+                    ctx.sql(".");
                 }
             }
 
-            context.literal(Utils.getMappedTable(context.configuration(), this).getName());
+            ctx.literal(Utils.getMappedTable(ctx.configuration(), this).getName());
 
-            if (parameters != null && context.declareTables()) {
-                context.sql("(")
-                       .visit(new QueryPartList<Field<?>>(parameters))
-                       .sql(")");
+            if (parameters != null && ctx.declareTables()) {
+                ctx.sql("(")
+                   .visit(new QueryPartList<Field<?>>(parameters))
+                   .sql(")");
             }
         }
     }

@@ -40,9 +40,8 @@
  */
 package org.jooq.impl;
 
-import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Table;
 
 /**
@@ -71,16 +70,11 @@ class WithTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.visit(delegate)
-               .sql(" ").keyword("with")
-               .sql(" (").sql(hint)
-               .sql(")");
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.visit(delegate);
+    public final void accept(Context<?> ctx) {
+        ctx.visit(delegate)
+           .sql(" ").keyword("with")
+           .sql(" (").sql(hint)
+           .sql(")");
     }
 
     @Override

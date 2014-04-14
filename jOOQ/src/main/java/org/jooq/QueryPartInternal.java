@@ -53,13 +53,22 @@ import org.jooq.exception.DataAccessException;
 public interface QueryPartInternal extends QueryPart {
 
     /**
+     * This {@link QueryPart} can <code>accept</code> a {@link Context} object
+     * in order to render a SQL string or to bind its variables.
+     */
+    void accept(Context<?> ctx);
+
+    /**
      * Render this {@link QueryPart} to a SQL string contained in
      * <code>context.sql()</code>. The <code>context</code> will contain
      * additional information about how to render this <code>QueryPart</code>,
      * e.g. whether this <code>QueryPart</code> should be rendered as a
      * declaration or reference, whether this <code>QueryPart</code>'s contained
      * bind variables should be inlined or replaced by <code>'?'</code>, etc.
+     *
+     * @deprecated - 3.4.0 - [#2694] - Use {@link #accept(Context)} instead.
      */
+    @Deprecated
     void toSQL(RenderContext ctx);
 
     /**
@@ -71,7 +80,9 @@ public interface QueryPartInternal extends QueryPart {
      *            for variable binding
      * @throws DataAccessException If something went wrong while binding a
      *             variable
+     * @deprecated - 3.4.0 - [#2694] - Use {@link #accept(Context)} instead.
      */
+    @Deprecated
     void bind(BindContext ctx) throws DataAccessException;
 
     /**

@@ -42,7 +42,6 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
-import static org.jooq.impl.Utils.visitAll;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -50,11 +49,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.QueryPart;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -83,17 +80,11 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> ctx) {
 
         // Some lists render different SQL when empty
         if (isEmpty()) {
-//            if (clause != null && clause != DUMMY)
-//                context.start(clause);
-
-            toSQLEmptyList(context);
-
-//            if (clause != null && clause != DUMMY)
-//                context.end(clause);
+            toSQLEmptyList(ctx);
         }
 
         else {
@@ -101,33 +92,21 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
             boolean indent = (size() > 1);
 
             if (indent)
-                context.formatIndentStart();
+                ctx.formatIndentStart();
 
             for (T queryPart : this) {
-                context.sql(separator);
+                ctx.sql(separator);
 
                 if (indent)
-                    context.formatNewLine();
+                    ctx.formatNewLine();
 
-//                if (clause != null && clause != DUMMY)
-//                    context.start(clause);
-
-                context.visit(queryPart);
-
-//                if (clause != null && clause != DUMMY)
-//                    context.end(clause);
-
+                ctx.visit(queryPart);
                 separator = ", ";
             }
 
             if (indent)
-                context.formatIndentEnd();
+                ctx.formatIndentEnd();
         }
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        visitAll(context, wrappedList);
     }
 
     @Override
@@ -139,7 +118,7 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
      * Subclasses may override this method
      */
     @SuppressWarnings("unused")
-    protected void toSQLEmptyList(RenderContext context) {
+    protected void toSQLEmptyList(Context<?> context) {
     }
 
 

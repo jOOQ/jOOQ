@@ -64,7 +64,6 @@ import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -101,21 +100,19 @@ class RowSubqueryCondition extends AbstractCondition {
     }
 
     @Override
-    public final void toSQL(RenderContext ctx) {
-        delegate(ctx.configuration(), ctx).toSQL(ctx);
-    }
-
-    @Override
-    public final void bind(BindContext ctx) {
-        delegate(ctx.configuration(), null).bind(ctx);
+    public final void accept(Context<?> ctx) {
+        delegate(ctx).accept(ctx);
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return delegate(ctx.configuration(), null).clauses(ctx);
+        return delegate(ctx).clauses(ctx);
     }
 
-    private final QueryPartInternal delegate(Configuration configuration, RenderContext ctx) {
+    private final QueryPartInternal delegate(Context<?> ctx) {
+        final Configuration configuration = ctx.configuration();
+        final RenderContext render = ctx instanceof RenderContext ? (RenderContext) ctx : null;
+
         SQLDialect family = configuration.dialect().family();
 
         // [#2395] These dialects have full native support for comparison
@@ -142,7 +139,7 @@ class RowSubqueryCondition extends AbstractCondition {
 
         // [#2395] All other configurations have to be simulated
         else {
-            String table = ctx == null ? "t" : ctx.nextAlias();
+            String table = render == null ? "t" : render.nextAlias();
 
             List<String> names = new ArrayList<String>();
             for (int i = 0; i < left.size(); i++) {
@@ -205,29 +202,24 @@ class RowSubqueryCondition extends AbstractCondition {
         private static final long serialVersionUID = -1552476981094856727L;
 
         @Override
-        public final void toSQL(RenderContext context) {
+        public final void accept(Context<?> ctx) {
 
             // Some databases need extra parentheses around the RHS
-            boolean extraParentheses = asList().contains(context.configuration().dialect().family());
-            boolean subquery = context.subquery();
+            boolean extraParentheses = asList().contains(ctx.configuration().dialect().family());
+            boolean subquery = ctx.subquery();
 
-            context.visit(left)
-                   .sql(" ")
-                   .keyword(comparator.toSQL())
-                   .sql(" (")
-                   .sql(extraParentheses ? "(" : "");
-            context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true);
-            context.subquery(true)
-                   .visit(right)
-                   .subquery(subquery);
-            context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
-            context.sql(extraParentheses ? ")" : "")
-                   .sql(")");
-        }
-
-        @Override
-        public final void bind(BindContext context) {
-            context.visit(left).visit(right);
+            ctx.visit(left)
+               .sql(" ")
+               .keyword(comparator.toSQL())
+               .sql(" (")
+               .sql(extraParentheses ? "(" : "");
+            ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true);
+            ctx.subquery(true)
+               .visit(right)
+               .subquery(subquery);
+            ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
+            ctx.sql(extraParentheses ? ")" : "")
+               .sql(")");
         }
 
         @Override

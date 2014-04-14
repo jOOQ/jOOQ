@@ -44,13 +44,11 @@ package org.jooq.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Row;
 import org.jooq.Table;
 
@@ -123,13 +121,8 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.visit(alias);
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.visit(alias);
+    public final void accept(Context<?> ctx) {
+        ctx.visit(alias);
     }
 
     @Override

@@ -58,7 +58,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -70,7 +69,6 @@ import org.jooq.MergeNotMatchedStep;
 import org.jooq.MergeOnConditionStep;
 import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Table;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
@@ -149,15 +147,15 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> ctx) {
 
         /* [pro] xx
         xx xxxxxxxxxxxxxxxxxxxxx
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxx
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxx
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
         x
         xxxx
         xx [/pro] */
@@ -165,19 +163,19 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         // ON DUPLICATE KEY UPDATE clause
         // ------------------------------
         if (onDuplicateKeyUpdate) {
-            switch (context.configuration().dialect().family()) {
+            switch (ctx.configuration().dialect().family()) {
 
                 // MySQL has a nice syntax for this
                 case CUBRID:
                 case MARIADB:
                 case MYSQL: {
-                    toSQLInsert(context);
-                    context.formatSeparator()
-                           .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
-                           .keyword("on duplicate key update")
-                           .sql(" ")
-                           .visit(updateMap)
-                           .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
+                    toSQLInsert(ctx);
+                    ctx.formatSeparator()
+                       .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
+                       .keyword("on duplicate key update")
+                       .sql(" ")
+                       .visit(updateMap)
+                       .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
 
                     break;
                 }
@@ -185,7 +183,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // Some dialects can't really handle this clause. Simulation
                 // should be done in two steps
                 case H2: {
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.configuration().dialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + ctx.configuration().dialect());
                 }
 
                 // Some databases allow for simulating this clause using a
@@ -197,26 +195,26 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 xxxx xxxxxxx
                 xx [/pro] */
                 case HSQLDB: {
-                    context.visit(toMerge(context.configuration()));
+                    ctx.visit(toMerge(ctx.configuration()));
                     break;
                 }
 
                 default:
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.configuration().dialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + ctx.configuration().dialect());
             }
         }
 
         // ON DUPLICATE KEY IGNORE clause
         // ------------------------------
         else if (onDuplicateKeyIgnore) {
-            switch (context.configuration().dialect().family()) {
+            switch (ctx.configuration().dialect().family()) {
 
                 // MySQL has a nice, native syntax for this
                 case MARIADB:
                 case MYSQL: {
-                    toSQLInsert(context);
-                    context.start(INSERT_ON_DUPLICATE_KEY_UPDATE)
-                           .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
+                    toSQLInsert(ctx);
+                    ctx.start(INSERT_ON_DUPLICATE_KEY_UPDATE)
+                       .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
                     break;
                 }
 
@@ -226,13 +224,13 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     Field<?> field = getInto().field(0);
                     update.put(field, field);
 
-                    toSQLInsert(context);
-                    context.formatSeparator()
-                           .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
-                           .keyword("on duplicate key update")
-                           .sql(" ")
-                           .visit(update)
-                           .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
+                    toSQLInsert(ctx);
+                    ctx.formatSeparator()
+                       .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
+                       .keyword("on duplicate key update")
+                       .sql(" ")
+                       .visit(update)
+                       .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
 
                     break;
                 }
@@ -240,7 +238,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // Some dialects can't really handle this clause. Simulation
                 // should be done in two steps
                 case H2: {
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + context.configuration().dialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + ctx.configuration().dialect());
                 }
 
                 // Some databases allow for simulating this clause using a
@@ -252,26 +250,26 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 xxxx xxxxxxx
                 xx [/pro] */
                 case HSQLDB: {
-                    context.visit(toMerge(context.configuration()));
+                    ctx.visit(toMerge(ctx.configuration()));
                     break;
                 }
 
                 default:
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + context.configuration().dialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + ctx.configuration().dialect());
             }
         }
 
         // Default mode
         // ------------
         else {
-            toSQLInsert(context);
-            context.start(INSERT_ON_DUPLICATE_KEY_UPDATE)
-                   .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
+            toSQLInsert(ctx);
+            ctx.start(INSERT_ON_DUPLICATE_KEY_UPDATE)
+               .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
         }
 
-        context.start(INSERT_RETURNING);
-        toSQLReturning(context);
-        context.end(INSERT_RETURNING);
+        ctx.start(INSERT_RETURNING);
+        toSQLReturning(ctx);
+        ctx.end(INSERT_RETURNING);
     }
 
     /* [pro] xx
@@ -281,130 +279,30 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     xx [/pro] */
 
     @Override
-    public final void bind(BindContext context) {
-
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxx
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxx
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
-        x
-        xxxx
-        xx [/pro] */
-
-        // ON DUPLICATE KEY UPDATE clause
-        // ------------------------------
-        if (onDuplicateKeyUpdate) {
-            switch (context.configuration().dialect().family()) {
-
-                // MySQL has a nice syntax for this
-                case CUBRID:
-                case MARIADB:
-                case MYSQL: {
-                    bindInsert(context);
-                    break;
-                }
-
-                // Some dialects can't really handle this clause. Simulation
-                // is done in two steps
-                case H2: {
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.configuration().dialect());
-                }
-
-                // Some databases allow for simulating this clause using a
-                // MERGE statement
-                /* [pro] xx
-                xxxx xxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxx
-                xx [/pro] */
-                case HSQLDB: {
-                    context.visit(toMerge(context.configuration()));
-                    break;
-                }
-
-                default:
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.configuration().dialect());
-            }
-        }
-
-        // ON DUPLICATE KEY IGNORE clause
-        // ------------------------------
-        else if (onDuplicateKeyIgnore) {
-            switch (context.configuration().dialect().family()) {
-
-                // MySQL has a nice, native syntax for this
-                case MARIADB:
-                case MYSQL: {
-                    bindInsert(context);
-                    break;
-                }
-
-                // CUBRID can simulate this using ON DUPLICATE KEY UPDATE
-                case CUBRID: {
-                    bindInsert(context);
-                    break;
-                }
-
-                // Some dialects can't really handle this clause. Simulation
-                // is done in two steps
-                case H2: {
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + context.configuration().dialect());
-                }
-
-                // Some databases allow for simulating this clause using a
-                // MERGE statement
-                /* [pro] xx
-                xxxx xxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxx
-                xx [/pro] */
-                case HSQLDB: {
-                    context.visit(toMerge(context.configuration()));
-                    break;
-                }
-
-                default:
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + context.configuration().dialect());
-            }
-        }
-
-        // Default mode
-        // ------------
-        else {
-            bindInsert(context);
-        }
-    }
-
-    @Override
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 
-    private final void toSQLInsert(RenderContext context) {
-        context.start(INSERT_INSERT_INTO)
-               .keyword("insert")
-               .sql(" ")
-               // [#1295] MySQL natively supports the IGNORE keyword
-               .keyword((onDuplicateKeyIgnore && asList(MARIADB, MYSQL).contains(context.configuration().dialect())) ? "ignore " : "")
-               .keyword("into")
-               .sql(" ")
-               .visit(getInto());
+    private final void toSQLInsert(Context<?> ctx) {
+        ctx.start(INSERT_INSERT_INTO)
+           .keyword("insert")
+           .sql(" ")
+           // [#1295] MySQL natively supports the IGNORE keyword
+           .keyword((onDuplicateKeyIgnore && asList(MARIADB, MYSQL).contains(ctx.configuration().dialect())) ? "ignore " : "")
+           .keyword("into")
+           .sql(" ")
+           .visit(getInto());
 
         // [#1506] with DEFAULT VALUES, we might not have any columns to render
         if (insertMaps.isExecutable()) {
-            context.sql(" ");
-            insertMaps.insertMaps.get(0).toSQLReferenceKeys(context);
+            ctx.sql(" ");
+            insertMaps.insertMaps.get(0).toSQLReferenceKeys(ctx);
         }
 
-        context.end(INSERT_INSERT_INTO);
+        ctx.end(INSERT_INSERT_INTO);
 
         if (defaultValues) {
-            switch (context.configuration().dialect().family()) {
+            switch (ctx.configuration().dialect().family()) {
                 /* [pro] xx
                 xxxx xxxxxxx
                 xxxx xxxx
@@ -414,36 +312,28 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case DERBY:
                 case MARIADB:
                 case MYSQL:
-                    context.sql(" ").keyword("values").sql("(");
+                    ctx.sql(" ").keyword("values").sql("(");
 
                     int count = getInto().fields().length;
                     String separator = "";
 
                     for (int i = 0; i < count; i++) {
-                        context.sql(separator);
-                        context.keyword("default");
+                        ctx.sql(separator);
+                        ctx.keyword("default");
                         separator = ", ";
                     }
 
-                    context.sql(")");
+                    ctx.sql(")");
                     break;
 
                 default:
-                    context.sql(" ").keyword("default values");
+                    ctx.sql(" ").keyword("default values");
                     break;
             }
         }
         else {
-            context.visit(insertMaps);
+            ctx.visit(insertMaps);
         }
-    }
-
-    private final void bindInsert(BindContext context) {
-        context.visit(getInto())
-               .visit(insertMaps)
-               .visit(updateMap);
-
-        bindReturning(context);
     }
 
     @SuppressWarnings("unchecked")

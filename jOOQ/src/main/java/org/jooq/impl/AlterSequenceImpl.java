@@ -46,11 +46,9 @@ import static org.jooq.Clause.ALTER_SEQUENCE_SEQUENCE;
 
 import org.jooq.AlterSequenceFinalStep;
 import org.jooq.AlterSequenceRestartStep;
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
-import org.jooq.RenderContext;
 import org.jooq.Sequence;
 
 /**
@@ -97,7 +95,7 @@ class AlterSequenceImpl<T extends Number> extends AbstractQuery  implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final void toSQL(RenderContext ctx) {
+    public final void accept(Context<?> ctx) {
         ctx.start(ALTER_SEQUENCE)
            .keyword("alter sequence")
            .start(ALTER_SEQUENCE_SEQUENCE)
@@ -116,11 +114,6 @@ class AlterSequenceImpl<T extends Number> extends AbstractQuery  implements
 
         ctx.end(ALTER_SEQUENCE_RESTART)
            .end(ALTER_SEQUENCE);
-    }
-
-    @Override
-    public final void bind(BindContext ctx) {
-        ctx.visit(sequence);
     }
 
     @Override

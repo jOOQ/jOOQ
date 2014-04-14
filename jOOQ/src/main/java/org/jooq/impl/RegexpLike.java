@@ -43,11 +43,9 @@ package org.jooq.impl;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -69,8 +67,8 @@ class RegexpLike extends AbstractCondition {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        switch (context.configuration().dialect().family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.configuration().dialect().family()) {
 
             // [#620] These databases are compatible with the MySQL syntax
             /* [pro] xx
@@ -81,11 +79,11 @@ class RegexpLike extends AbstractCondition {
             case MARIADB:
             case MYSQL:
             case SQLITE: {
-                context.visit(search)
-                       .sql(" ")
-                       .keyword("regexp")
-                       .sql(" ")
-                       .visit(pattern);
+                ctx.visit(search)
+                   .sql(" ")
+                   .keyword("regexp")
+                   .sql(" ")
+                   .visit(pattern);
 
                 break;
             }
@@ -94,7 +92,7 @@ class RegexpLike extends AbstractCondition {
             case HSQLDB: {
 
                 // [#1570] TODO: Replace this by SQL.condition(String, QueryPart...)
-                context.visit(DSL.condition("{regexp_matches}({0}, {1})", search, pattern));
+                ctx.visit(DSL.condition("{regexp_matches}({0}, {1})", search, pattern));
                 break;
             }
 
@@ -102,7 +100,7 @@ class RegexpLike extends AbstractCondition {
             case POSTGRES: {
 
                 // [#1570] TODO: Replace this by SQL.condition(String, QueryPart...)
-                context.visit(DSL.condition("{0} ~ {1}", search, pattern));
+                ctx.visit(DSL.condition("{0} ~ {1}", search, pattern));
                 break;
             }
 
@@ -111,7 +109,7 @@ class RegexpLike extends AbstractCondition {
             xxxx xxxxxxx x
 
                 xx xxxxxxx xxxxx xxxxxxx xxxx xx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxx xxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxx xxxxxxxxxx
                 xxxxxx
             x
 
@@ -127,20 +125,15 @@ class RegexpLike extends AbstractCondition {
             case DERBY:
             case FIREBIRD:
             default: {
-                context.visit(search)
-                       .sql(" ")
-                       .keyword("like_regex")
-                       .sql(" ")
-                       .visit(pattern);
+                ctx.visit(search)
+                   .sql(" ")
+                   .keyword("like_regex")
+                   .sql(" ")
+                   .visit(pattern);
 
                 break;
             }
         }
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.visit(search).visit(pattern);
     }
 
     @Override

@@ -40,10 +40,9 @@
  */
 package org.jooq.impl;
 
-import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -64,12 +63,7 @@ class Coerce<T> extends AbstractField<T> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.visit(field);
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.visit(field);
+    public final void accept(Context<?> ctx) {
+        ctx.visit(field);
     }
 }

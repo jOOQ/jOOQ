@@ -43,8 +43,8 @@ package org.jooq.impl;
 
 import java.util.Collection;
 
+import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -66,8 +66,8 @@ class SelectFieldList extends QueryPartList<Field<?>> {
     }
 
     @Override
-    protected void toSQLEmptyList(RenderContext context) {
-        context.sql("*");
+    protected void toSQLEmptyList(Context<?> ctx) {
+        ctx.sql("*");
     }
 
     @Override

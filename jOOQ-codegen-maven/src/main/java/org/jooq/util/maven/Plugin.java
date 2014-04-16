@@ -57,13 +57,14 @@ import org.apache.maven.project.MavenProject;
  * @phase generate-sources
  * @version $Id$
  * @author Sander Plas
+ * @author Lukas Eder
  */
 public class Plugin extends AbstractMojo {
 
     /**
      * The Maven project.
      *
-     * @parameter expression="${project}"
+     * @parameter property="project"
      * @required
      * @readonly
      */

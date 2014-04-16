@@ -2668,6 +2668,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testKeepStatementWithConnectionPool() throws Exception {
+        new StatementTests(this).testKeepStatementWithConnectionPool();
+    }
+
+    @Test
     public void testCancelStatement() throws Exception {
         new StatementTests(this).testCancelStatement();
     }

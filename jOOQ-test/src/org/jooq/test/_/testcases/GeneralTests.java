@@ -83,6 +83,7 @@ import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DetachedException;
+import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConnectionProvider;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.test.BaseTest;
@@ -131,6 +132,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testSequences() throws Exception {
+        testSequences0(SAuthorID());
+    }
+
+    @Test
+    public void testSequenceByName() throws Exception {
+        Sequence<? extends Number> sequence = SAuthorID();
+
+        if (sequence != null) {
+            testSequences0(DSL.sequenceByName(sequence.getSchema().getName(), sequence.getName()));
+        }
+    }
+
+    private void testSequences0(Sequence<? extends Number> sequence) {
         if (cSequences() == null) {
             log.info("SKIPPING", "sequences test");
             return;
@@ -138,7 +152,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         jOOQAbstractTest.reset = false;
 
-        Sequence<? extends Number> sequence = SAuthorID();
         Field<? extends Number> nextval = sequence.nextval();
         Field<? extends Number> currval = null;
 

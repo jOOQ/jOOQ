@@ -63,6 +63,7 @@ import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Utils.combine;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSetMetaData;
@@ -4990,6 +4991,95 @@ public class DSL {
     @Support
     public static Schema schemaByName(String name) {
         return new SchemaImpl(name);
+    }
+
+    /**
+     * Create a qualified sequence, given its sequence name.
+     * <p>
+     * This constructs a sequence reference given the sequence's qualified name.
+     * jOOQ will render the sequence name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This sequence...
+     * sequenceByName("MY_SCHEMA", "MY_SEQUENCE");
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_SEQUENCE]
+     * </pre></code>
+     *
+     * @param qualifiedName The various parts making up your sequence's
+     *            reference name.
+     * @return A sequence referenced by <code>sequenceName</code>
+     */
+    @Support
+    public static Sequence<BigInteger> sequenceByName(String... qualifiedName) {
+        return sequenceByName(BigInteger.class, qualifiedName);
+    }
+
+    /**
+     * Create a qualified sequence, given its sequence name.
+     * <p>
+     * This constructs a sequence reference given the sequence's qualified name.
+     * jOOQ will render the sequence name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This sequence...
+     * sequenceByName("MY_SCHEMA", "MY_SEQUENCE");
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_SEQUENCE]
+     * </pre></code>
+     *
+     * @param qualifiedName The various parts making up your sequence's
+     *            reference name.
+     * @param type The type of the returned field
+     * @return A sequence referenced by <code>sequenceName</code>
+     */
+    @Support
+    public static <T extends Number> Sequence<T> sequenceByName(Class<T> type, String... qualifiedName) {
+        return sequenceByName(getDataType(type), qualifiedName);
+    }
+
+    /**
+     * Create a qualified sequence, given its sequence name.
+     * <p>
+     * This constructs a sequence reference given the sequence's qualified name.
+     * jOOQ will render the sequence name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This sequence...
+     * sequenceByName("MY_SCHEMA", "MY_SEQUENCE");
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_SEQUENCE]
+     * </pre></code>
+     *
+     * @param qualifiedName The various parts making up your sequence's
+     *            reference name.
+     * @param type The type of the returned field
+     * @return A sequence referenced by <code>sequenceName</code>
+     */
+    @Support
+    public static <T extends Number> Sequence<T> sequenceByName(DataType<T> type, String... qualifiedName) {
+        if (qualifiedName == null)
+            throw new NullPointerException();
+
+        if (qualifiedName.length < 1 || qualifiedName.length > 2)
+            throw new IllegalArgumentException("Must provide a qualified name of length 1 or 2 : " + name(qualifiedName));
+
+        String name = qualifiedName[qualifiedName.length - 1];
+        Schema schema = qualifiedName.length == 2 ? schemaByName(qualifiedName[0]) : null;
+
+        return new SequenceImpl<T>(name, schema, type);
     }
 
     /**

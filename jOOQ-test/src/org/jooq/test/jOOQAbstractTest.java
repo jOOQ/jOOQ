@@ -1283,6 +1283,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testSequenceByName() throws Exception {
+        new GeneralTests(this).testSequenceByName();
+    }
+
+    @Test
     public void testSelectSimpleQuery() throws Exception {
         new SelectTests(this).testSelectSimpleQuery();
     }

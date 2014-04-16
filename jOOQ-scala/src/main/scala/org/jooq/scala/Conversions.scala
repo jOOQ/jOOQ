@@ -210,7 +210,7 @@ object Conversions {
     // QueryPart API
     // -------------
 
-             def toSQL(context : RenderContext) = underlying.asInstanceOf[QueryPartInternal].toSQL(context)
+    override def toSQL(context : RenderContext) = underlying.asInstanceOf[QueryPartInternal].toSQL(context)
     override def bind (context : BindContext)   = underlying.asInstanceOf[QueryPartInternal].bind(context)
 
     // String operations

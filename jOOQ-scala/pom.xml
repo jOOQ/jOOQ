@@ -15,7 +15,7 @@
     <name>jOOQ Scala</name>
 
     <properties>
-        <scala.version>2.9.1</scala.version>
+        <scala.version>2.10.4</scala.version>
     </properties>
 
     <build>
@@ -209,8 +209,8 @@
         </dependency>
         <dependency>
             <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.9.1</artifactId>
-            <version>1.8</version>
+            <artifactId>scalatest_2.10</artifactId>
+            <version>2.1.3</version>
             <type>jar</type>
             <scope>test</scope>
         </dependency>

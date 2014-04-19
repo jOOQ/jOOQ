@@ -1328,6 +1328,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testInPredicateWithSubselectAndLimitOffset() throws Exception {
+        new PredicateTests(this).testInPredicateWithSubselectAndLimitOffset();
+    }
+
+    @Test
     public void testBetweenConditions() throws Exception {
         new PredicateTests(this).testBetweenConditions();
     }

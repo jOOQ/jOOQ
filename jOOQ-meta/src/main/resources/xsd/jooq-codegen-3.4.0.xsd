@@ -335,9 +335,12 @@
         All elements that are generated from your schema (A Java regular expression. 
         Use the pipe to separate several expressions) Watch out for
         case-sensitivity. Depending on your database, this might be
-        important! You can create case-insensitive regular expressions
-        using this syntax: (?i:expr)A comma-separated list of regular
-        expressions
+        important! 
+        
+        You can create case-insensitive regular expressions
+        using this syntax: (?i:expr)
+        
+        Whitespace is ignored and comments are possible.
         -->
       <element name="includes" type="string" default=".*" minOccurs="0" maxOccurs="1" />
 

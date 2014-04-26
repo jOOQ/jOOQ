@@ -53,6 +53,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.jooq.AggregateFunction;
 import org.jooq.Configuration;
@@ -1856,9 +1857,11 @@ public class JavaGenerator extends AbstractGenerator {
         // if properly configured
         if (updatable) {
             patternLoop: for (String pattern : database.getRecordVersionFields()) {
+                Pattern p = Pattern.compile(pattern, Pattern.COMMENTS);
+
                 for (ColumnDefinition column : table.getColumns()) {
-                    if ((column.getName().matches(pattern.trim()) ||
-                         column.getQualifiedName().matches(pattern.trim()))) {
+                    if ((p.matcher(column.getName()).matches() ||
+                         p.matcher(column.getQualifiedName()).matches())) {
 
                         final String columnType = getJavaType(column.getType());
                         final String columnId = getStrategy().getFullJavaIdentifier(column);
@@ -1875,9 +1878,11 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             timestampLoop: for (String pattern : database.getRecordTimestampFields()) {
+                Pattern p = Pattern.compile(pattern, Pattern.COMMENTS);
+
                 for (ColumnDefinition column : table.getColumns()) {
-                    if ((column.getName().matches(pattern.trim()) ||
-                         column.getQualifiedName().matches(pattern.trim()))) {
+                    if ((p.matcher(column.getName()).matches() ||
+                         p.matcher(column.getQualifiedName()).matches())) {
 
                         final String columnType = getJavaType(column.getType());
                         final String columnId = getStrategy().getFullJavaIdentifier(column);

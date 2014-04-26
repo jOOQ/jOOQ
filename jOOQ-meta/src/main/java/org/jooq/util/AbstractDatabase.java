@@ -54,6 +54,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
@@ -798,9 +799,11 @@ public abstract class AbstractDatabase implements Database {
         definitionsLoop: for (T definition : definitions) {
             if (excludes != null) {
                 for (String exclude : excludes) {
+                    Pattern p = Pattern.compile(exclude, Pattern.COMMENTS);
+
                     if (exclude != null &&
-                            (definition.getName().matches(exclude.trim()) ||
-                             definition.getQualifiedName().matches(exclude.trim()))) {
+                            (p.matcher(definition.getName()).matches() ||
+                             p.matcher(definition.getQualifiedName()).matches())) {
 
                         continue definitionsLoop;
                     }
@@ -809,9 +812,11 @@ public abstract class AbstractDatabase implements Database {
 
             if (includes != null) {
                 for (String include : includes) {
+                    Pattern p = Pattern.compile(include, Pattern.COMMENTS);
+
                     if (include != null &&
-                            (definition.getName().matches(include.trim()) ||
-                             definition.getQualifiedName().matches(include.trim()))) {
+                            (p.matcher(definition.getName()).matches() ||
+                             p.matcher(definition.getQualifiedName()).matches())) {
 
                         result.add(definition);
                         continue definitionsLoop;

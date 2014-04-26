@@ -10,10 +10,22 @@
     <name>org.jooq.util.DefaultGenerator</name>
     <database>
       <includes>.*</includes>
-      <excludes>T_BOOK_DETAILS|SYSTEM_SEQUENCE.*|.*\.COL2|COL3</excludes>
+      <excludes>
+             T_BOOK_DETAILS    # Check if dependent objects (e.g. foreign keys) are not generated
+           | SYSTEM_SEQUENCE.* # who knows where this came from (sample comment)
+           | .*\.COL2          # v_2603 contains some columns that we don't want to generate
+           | COL3              # v_2603 contains some columns that we don't want to generate
+      </excludes>
       <includeExcludeColumns>true</includeExcludeColumns>
-      <recordVersionFields>REC_VERSION</recordVersionFields>
-      <recordTimestampFields>REC_TIMESTAMP</recordTimestampFields>
+      <recordVersionFields>
+             REC_VERSION
+           | ASDF_ASDF_ASDF    # This should not have any effect
+      </recordVersionFields>
+      <recordTimestampFields>
+             REC_TIMESTAMP
+           | ASDF_ASDF_ASDF    # This should not have any effect
+           | ASDF_ASDF_ASDF    # This should not have any effect
+      </recordTimestampFields>
       <dateAsTimestamp>false</dateAsTimestamp>
       <unsignedTypes>true</unsignedTypes>
       <inputSchema>PUBLIC</inputSchema>

@@ -1348,6 +1348,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testNotField() throws Exception {
+        new PredicateTests(this).testNotField();
+    }
+
+    @Test
     public void testQuantifiedPredicates() throws Exception {
         new PredicateTests(this).testQuantifiedPredicates();
     }

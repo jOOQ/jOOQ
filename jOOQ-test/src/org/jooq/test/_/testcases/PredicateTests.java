@@ -56,6 +56,7 @@ import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.escape;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.lower;
+import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
@@ -574,6 +575,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(create().selectOne().where(f).fetchOne());
         assertEquals(1, create().selectOne().where(trueCondition().andNot(f)).fetchOne(0));
         assertNull(create().selectOne().where(trueCondition().andNot(t)).fetchOne());
+    }
+
+    @Test
+    public void testNotField() throws Exception {
+        Record record = create().select(
+            not(true),
+            not(false),
+            not((Boolean) null),
+            field(not(condition(val(true)))),
+            field(not(condition(val(false)))),
+            field(not(condition(val(null, Boolean.class))))
+        )
+        .fetchOne();
+
+        assertEquals(false, record.getValue(0));
+        assertEquals(true, record.getValue(1));
+        assertEquals(null, record.getValue(2));
+        assertEquals(false, record.getValue(3));
+        assertEquals(true, record.getValue(4));
+        assertEquals(null, record.getValue(5));
     }
 
     @Test

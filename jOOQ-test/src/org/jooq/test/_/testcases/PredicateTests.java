@@ -583,6 +583,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             not(true),
             not(false),
             not((Boolean) null),
+            field(not(condition(true))),
+            field(not(condition(false))),
+            field(not(condition((Boolean) null))),
             field(not(condition(val(true)))),
             field(not(condition(val(false)))),
             field(not(condition(val(null, Boolean.class))))
@@ -595,6 +598,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(false, record.getValue(3));
         assertEquals(true, record.getValue(4));
         assertEquals(null, record.getValue(5));
+        assertEquals(false, record.getValue(6));
+        assertEquals(true, record.getValue(7));
+        assertEquals(null, record.getValue(8));
     }
 
     @Test

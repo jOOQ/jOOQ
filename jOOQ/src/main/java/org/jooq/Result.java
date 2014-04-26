@@ -1188,4 +1188,29 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @see String#intern()
      */
     Result<R> intern(String... fieldNames);
+
+    // ------------------------------------------------------------------------
+    // Specialisations of Attachable methods
+    // ------------------------------------------------------------------------
+
+    /**
+     * Attach this result and all of its contained records to a new
+     * {@link Configuration}.
+     *
+     * @param configuration A configuration or <code>null</code>, if you wish to
+     *            detach this <code>Attachable</code> from its previous
+     *            configuration.
+     */
+    @Override
+    void attach(Configuration configuration);
+
+    /**
+     * Detach this result and all of its contained records from their current
+     * {@link Configuration}.
+     * <p>
+     * This is the same as calling <code>attach(null)</code>.
+     */
+    @Override
+    void detach();
+
 }

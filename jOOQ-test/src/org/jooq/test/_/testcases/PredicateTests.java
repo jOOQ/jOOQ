@@ -538,6 +538,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testInPredicateWithSubselectAndLimitOffset() throws Exception {
+        Result<Record1<Integer>> result =
+        create().select(TBook_ID())
+                .from(TBook())
+                .where(TBook_AUTHOR_ID().in(
+                    select(TAuthor_ID())
+                    .from(TAuthor())
+                    .orderBy(TAuthor_ID())
+                    .limit(1)
+                ))
+                .orderBy(TBook_ID())
+                .limit(1)
+                .fetch();
+
+        assertEquals(1, result.size());
+        assertEquals(1, (int) result.get(0).value1());
+    }
+
+    @Test
     public void testConditionsAsFields() throws Exception {
         Record record = create().select(field(one().eq(zero())), field(one().eq(1))).fetchOne();
 

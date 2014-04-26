@@ -5903,6 +5903,25 @@ public class DSL {
      * select 1 where texteq('a', 'a');
      * </pre></code>
      *
+     * @param value The boolean expression.
+     * @return A condition wrapping the boolean expression
+     */
+    @Support
+    public static Condition condition(Boolean value) {
+        return condition(Utils.field(value, Boolean.class));
+    }
+
+    /**
+     * Create a condition from a boolean field.
+     * <p>
+     * Databases that support boolean data types can use boolean expressions
+     * as predicates or as columns interchangeably. This extends to any type
+     * of field, including functions. A Postgres example:
+     * <p>
+     * <code><pre>
+     * select 1 where texteq('a', 'a');
+     * </pre></code>
+     *
      * @param field The boolean expression.
      * @return A condition wrapping the boolean expression
      */

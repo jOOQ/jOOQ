@@ -5983,6 +5983,42 @@ public class DSL {
     }
 
     /**
+     * Invert a boolean value.
+     * <p>
+     * This is convenience for calling {@link #field(Condition)},
+     * {@link #not(Condition)}, {@link #condition(Field)}, i.e. <code><pre>
+     * field(not(condition(field)));
+     * </pre></code>
+     */
+    @Support
+    @Transition(
+        name = "NOT",
+        args = "Field",
+        to = "Field"
+    )
+    public static Field<Boolean> not(Boolean value) {
+        return not(Utils.field(value, Boolean.class));
+    }
+
+    /**
+     * Invert a boolean value.
+     * <p>
+     * This is convenience for calling {@link #field(Condition)},
+     * {@link #not(Condition)}, {@link #condition(Field)}, i.e. <code><pre>
+     * field(not(condition(field)));
+     * </pre></code>
+     */
+    @Support
+    @Transition(
+        name = "NOT",
+        args = "Field",
+        to = "Field"
+    )
+    public static Field<Boolean> not(Field<Boolean> field) {
+        return new NotField(field);
+    }
+
+    /**
      * Transform a condition into a boolean field.
      */
     @Support

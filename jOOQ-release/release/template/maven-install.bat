@@ -1,5 +1,5 @@
 @echo off
-set VERSION=3.2.4
+set VERSION=3.2.5
 
 call mvn install:install-file -Dfile=pom\jooq-parent\pom.xml              -DgroupId=org.jooq -DartifactId=jooq-parent        -Dversion=%VERSION% -Dpackaging=pom
 call mvn install:install-file -Dfile=lib\jooq-%VERSION%.jar               -DgroupId=org.jooq -DartifactId=jooq               -Dversion=%VERSION% -Dpackaging=jar

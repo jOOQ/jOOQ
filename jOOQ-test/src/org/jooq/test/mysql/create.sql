@@ -195,7 +195,7 @@ CREATE TABLE t_book (
   DETAILS_ID INT COMMENT 'Some more details about the book',
   TITLE TEXT NOT NULL COMMENT 'The book''s title',
   PUBLISHED_IN INT NOT NULL COMMENT 'The year the book was published in',
-  LANGUAGE_ID INT NOT NULL COMMENT 'The language of the book',
+  LANGUAGE_ID INT NOT NULL COMMENT 'The language of the book' DEFAULT 1,
   CONTENT_TEXT LONGTEXT COMMENT 'Some textual content of the book',
   CONTENT_PDF LONGBLOB COMMENT 'Some binary content of the book',
   STATUS enum('SOLD OUT','ORDERED','ON STOCK') COMMENT 'The book''s stock status',

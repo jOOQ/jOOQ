@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 1736485388;
+	private static final long serialVersionUID = 131755822;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.X_TEST_CASE_64_69</code>
@@ -25,12 +25,12 @@ public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.h2.ge
 	}
 
 	/**
-	 * The column <code>PUBLIC.X_TEST_CASE_64_69.ID</code>. 
+	 * The column <code>PUBLIC.X_TEST_CASE_64_69.ID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_64_69);
 
 	/**
-	 * The column <code>PUBLIC.X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 * The column <code>PUBLIC.X_TEST_CASE_64_69.UNUSED_ID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> UNUSED_ID = createField("UNUSED_ID", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_64_69);
 

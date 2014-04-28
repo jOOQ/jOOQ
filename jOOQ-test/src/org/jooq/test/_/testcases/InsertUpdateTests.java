@@ -986,6 +986,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .on(TAuthor_LAST_NAME().equal(l))
                 .whenMatchedThenUpdate()
                 .set(TAuthor_FIRST_NAME(), "James")
+                .set(TAuthor_LAST_NAME(), "Dean")
                 .whenNotMatchedThenInsert()
                 .set(TAuthor_ID(), 3)
                 .set(TAuthor_FIRST_NAME(), f)

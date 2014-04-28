@@ -240,6 +240,9 @@ CREATE TABLE t_book (
 );
 /
 
+ALTER TABLE t_book ALTER COLUMN language_id SET DEFAULT 1;
+/
+
 CREATE TABLE t_book_store (
   name VARCHAR(400) NOT NULL,
 

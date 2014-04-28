@@ -41,6 +41,7 @@
 
 package org.jooq.util.postgres;
 
+import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.util.postgres.information_schema.Tables.COLUMNS;
 
 import java.sql.SQLException;
@@ -101,7 +102,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 			    record.getValue(COLUMNS.COLUMN_NAME),
 			    record.getValue(COLUMNS.ORDINAL_POSITION, int.class),
 			    type,
-			    record.getValue(COLUMNS.COLUMN_DEFAULT, "").startsWith("nextval"),
+                defaultString(record.getValue(COLUMNS.COLUMN_DEFAULT)).startsWith("nextval"),
 			    null
 		    );
 

@@ -10,12 +10,12 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
 public interface IÄä extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.Ää.Öö</code>. 
+	 * Setter for <code>PUBLIC.Ää.Öö</code>.
 	 */
 	public void setÖö(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.Ää.Öö</code>. 
+	 * Getter for <code>PUBLIC.Ää.Öö</code>.
 	 */
 	public java.lang.Integer getÖö();
 

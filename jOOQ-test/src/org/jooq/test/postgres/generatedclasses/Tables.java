@@ -97,6 +97,31 @@ public class Tables {
 	public static final org.jooq.test.postgres.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
 
 	/**
+	 * The table public.t_inheritance_1
+	 */
+	public static final org.jooq.test.postgres.generatedclasses.tables.TInheritance_1 T_INHERITANCE_1 = org.jooq.test.postgres.generatedclasses.tables.TInheritance_1.T_INHERITANCE_1;
+
+	/**
+	 * The table public.t_inheritance_1_1
+	 */
+	public static final org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_1 T_INHERITANCE_1_1 = org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_1.T_INHERITANCE_1_1;
+
+	/**
+	 * The table public.t_inheritance_1_2
+	 */
+	public static final org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2 T_INHERITANCE_1_2 = org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2.T_INHERITANCE_1_2;
+
+	/**
+	 * The table public.t_inheritance_1_2_1
+	 */
+	public static final org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2_1 T_INHERITANCE_1_2_1 = org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2_1.T_INHERITANCE_1_2_1;
+
+	/**
+	 * The table public.t_inheritance_all
+	 */
+	public static final org.jooq.test.postgres.generatedclasses.tables.TInheritanceAll T_INHERITANCE_ALL = org.jooq.test.postgres.generatedclasses.tables.TInheritanceAll.T_INHERITANCE_ALL;
+
+	/**
 	 * The table public.t_language
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE;

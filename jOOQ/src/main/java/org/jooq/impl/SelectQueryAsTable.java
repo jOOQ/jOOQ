@@ -64,6 +64,10 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
         this.query = query;
     }
 
+    final Select<R> query() {
+        return query;
+    }
+
     @Override
     public final Table<R> as(String alias) {
         return new TableAlias<R>(this, alias, true);

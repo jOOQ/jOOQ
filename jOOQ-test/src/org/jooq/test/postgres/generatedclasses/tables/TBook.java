@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -958275241;
+	private static final long serialVersionUID = 466614994;
 
 	/**
 	 * The singleton instance of <code>public.t_book</code>
@@ -57,7 +57,7 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.postgres.genera
 	/**
 	 * The column <code>public.t_book.language_id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this);
 
 	/**
 	 * The column <code>public.t_book.content_text</code>.

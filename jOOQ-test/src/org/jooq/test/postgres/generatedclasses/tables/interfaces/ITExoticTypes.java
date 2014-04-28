@@ -18,4 +18,9 @@ public interface ITExoticTypes extends java.io.Serializable {
 	 * Getter for <code>public.t_exotic_types.uu</code>.
 	 */
 	public java.util.UUID getUu();
+
+	/**
+	 * Getter for <code>public.t_exotic_types.js</code>.
+	 */
+	public java.lang.Object getJs();
 }

@@ -292,7 +292,7 @@ CREATE TABLE t_book (
   details_id INT,
   title VARCHAR(400) NOT NULL,
   published_in INTEGER NOT NULL,
-  language_id INTEGER NOT NULL,
+  language_id INTEGER NOT NULL DEFAULT 1,
   content_text TEXT,
   content_pdf BYTEA,
   status u_book_status,

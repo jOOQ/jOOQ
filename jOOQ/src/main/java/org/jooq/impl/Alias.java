@@ -146,9 +146,18 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
                     fields.add(field("null").as(fieldAlias));
                 }
 
-                Select<Record> select =
-                    select(fields).where(falseCondition()).unionAll(
-                    select(field("*")).from(((Table<?>) wrapped).as(alias)));
+                Select<Record> select = select(fields).where(falseCondition())
+                .unionAll(
+
+                    // [#3156] Do not SELECT * from derived tables to prevent ambiguously defined columns
+                    // in those derived tables
+                      wrapped instanceof Select
+                    ? (Select<?>) wrapped
+                    : wrapped instanceof SelectQueryAsTable
+                    ? ((SelectQueryAsTable<?>) wrapped).query()
+                    : select(field("*")).from(((Table<?>) wrapped).as(alias))
+
+                );
 
                 context.sql("(").formatIndentStart().formatNewLine()
                        .visit(select).formatIndentEnd().formatNewLine()

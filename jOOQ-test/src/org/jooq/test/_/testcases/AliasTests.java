@@ -42,6 +42,7 @@ package org.jooq.test._.testcases;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
+import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
@@ -107,6 +108,27 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Result<Record> books = create().select().from(b).orderBy(b_ID).fetch();
         assertEquals(4, books.size());
         assertEquals(BOOK_IDS, books.getValues(b_ID));
+    }
+
+    @Test
+    public void testDerivedColumnListsWithAmbiguousColumnNames() throws Exception {
+
+        // [#3156] If derived column lists are emulated on derived tables that contain
+        // ambiguous column names, jOOQ must make sure that this ambiguity doesn't cause any issues
+        Result<Record> result =
+        create().select()
+                .from(
+                    table(
+                        select(TBook_ID(), TAuthor_ID())
+                        .from(TBook())
+                        .join(TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+                    ).as("t", "a", "b"))
+                .orderBy(fieldByName("a"))
+                .fetch();
+
+        assertEquals(4, result.size());
+        assertEquals(BOOK_IDS, result.getValues("a"));
+        assertEquals(BOOK_AUTHOR_IDS, result.getValues("b"));
     }
 
     @SuppressWarnings("unchecked")

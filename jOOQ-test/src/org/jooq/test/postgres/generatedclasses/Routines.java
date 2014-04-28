@@ -296,8 +296,8 @@ public class Routines {
 	/**
 	 * Call <code>public.p_arrays</code>
 	 */
-	public static java.lang.Long[] pArrays2(org.jooq.Configuration configuration, java.lang.Long[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.PArrays2 p = new org.jooq.test.postgres.generatedclasses.routines.PArrays2();
+	public static java.lang.String[] pArrays3(org.jooq.Configuration configuration, java.lang.String[] inArray) {
+		org.jooq.test.postgres.generatedclasses.routines.PArrays3 p = new org.jooq.test.postgres.generatedclasses.routines.PArrays3();
 		p.setInArray(inArray);
 
 		p.execute(configuration);
@@ -318,8 +318,8 @@ public class Routines {
 	/**
 	 * Call <code>public.p_arrays</code>
 	 */
-	public static java.lang.String[] pArrays3(org.jooq.Configuration configuration, java.lang.String[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.PArrays3 p = new org.jooq.test.postgres.generatedclasses.routines.PArrays3();
+	public static java.lang.Long[] pArrays2(org.jooq.Configuration configuration, java.lang.Long[] inArray) {
+		org.jooq.test.postgres.generatedclasses.routines.PArrays2 p = new org.jooq.test.postgres.generatedclasses.routines.PArrays2();
 		p.setInArray(inArray);
 
 		p.execute(configuration);

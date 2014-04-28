@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 2084241955;
+	private static final long serialVersionUID = -1350927812;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOK</code>
@@ -37,12 +37,12 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedcla
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK);
 
 	/**
-	 * The column <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>. 
+	 * The column <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The column <code>PUBLIC.T_BOOK.DETAILS_ID</code>. 
+	 * The column <code>PUBLIC.T_BOOK.DETAILS_ID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
@@ -59,7 +59,7 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedcla
 	/**
 	 * The column <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>. The language of the book
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), T_BOOK);
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
@@ -72,12 +72,12 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedcla
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB.length(2147483647), T_BOOK);
 
 	/**
-	 * The column <code>PUBLIC.T_BOOK.REC_VERSION</code>. 
+	 * The column <code>PUBLIC.T_BOOK.REC_VERSION</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> REC_VERSION = createField("REC_VERSION", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The column <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>. 
+	 * The column <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.sql.Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP, T_BOOK);
 

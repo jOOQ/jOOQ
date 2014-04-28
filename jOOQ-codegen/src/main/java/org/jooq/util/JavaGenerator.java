@@ -613,28 +613,33 @@ public class JavaGenerator extends AbstractGenerator {
         out.tab(2).println("super(%s);", tableIdentifier);
         out.tab(1).println("}");
 
-        List<String> arguments = new ArrayList<String>();
-        for (int i = 0; i < degree; i++) {
-            final ColumnDefinition column = table.getColumn(i);
-            final String columnMember = getStrategy().getJavaMemberName(column, Mode.DEFAULT);
-            final String type = getJavaType(column.getType());
+        // [#3176] Avoid generating constructors for tables with more than 255 columns (Java's method argument limit)
+        if (table.getColumns().size() > 0 &&
+            table.getColumns().size() < 256) {
 
-            arguments.add(type + " " + columnMember);
+            List<String> arguments = new ArrayList<String>();
+            for (int i = 0; i < degree; i++) {
+                final ColumnDefinition column = table.getColumn(i);
+                final String columnMember = getStrategy().getJavaMemberName(column, Mode.DEFAULT);
+                final String type = getJavaType(column.getType());
+
+                arguments.add(type + " " + columnMember);
+            }
+
+            out.tab(1).javadoc("Create a detached, initialised %s", className);
+            out.tab(1).println("public %s([[%s]]) {", className, arguments);
+            out.tab(2).println("super(%s);", tableIdentifier);
+            out.println();
+
+            for (int i = 0; i < degree; i++) {
+                final ColumnDefinition column = table.getColumn(i);
+                final String columnMember = getStrategy().getJavaMemberName(column, Mode.DEFAULT);
+
+                out.tab(2).println("setValue(%s, %s);", i, columnMember);
+            }
+
+            out.tab(1).println("}");
         }
-
-        out.tab(1).javadoc("Create a detached, initialised %s", className);
-        out.tab(1).println("public %s([[%s]]) {", className, arguments);
-        out.tab(2).println("super(%s);", tableIdentifier);
-        out.println();
-
-        for (int i = 0; i < degree; i++) {
-            final ColumnDefinition column = table.getColumn(i);
-            final String columnMember = getStrategy().getJavaMemberName(column, Mode.DEFAULT);
-
-            out.tab(2).println("setValue(%s, %s);", i, columnMember);
-        }
-
-        out.tab(1).println("}");
 
         generateRecordClassFooter(table, out);
         out.println("}");
@@ -1427,29 +1432,34 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         // Multi-constructor
-        out.println();
-        out.tab(1).print("public %s(", className);
 
-        String separator1 = "";
-        for (ColumnDefinition column : table.getColumns()) {
-            out.println(separator1);
+        // [#3176] Avoid generating constructors for tables with more than 255 columns (Java's method argument limit)
+        if (table.getColumns().size() > 0 &&
+            table.getColumns().size() < 256) {
+            out.println();
+            out.tab(1).print("public %s(", className);
 
-            out.tab(2).print("%s %s",
-                StringUtils.rightPad(getJavaType(column.getType()), maxLength),
-                getStrategy().getJavaMemberName(column, Mode.POJO));
-            separator1 = ",";
+            String separator1 = "";
+            for (ColumnDefinition column : table.getColumns()) {
+                out.println(separator1);
+
+                out.tab(2).print("%s %s",
+                    StringUtils.rightPad(getJavaType(column.getType()), maxLength),
+                    getStrategy().getJavaMemberName(column, Mode.POJO));
+                separator1 = ",";
+            }
+
+            out.println();
+            out.tab(1).println(") {");
+
+            for (ColumnDefinition column : table.getColumns()) {
+                final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+
+                out.tab(2).println("this.%s = %s;", columnMember, columnMember);
+            }
+
+            out.tab(1).println("}");
         }
-
-        out.println();
-        out.tab(1).println(") {");
-
-        for (ColumnDefinition column : table.getColumns()) {
-            final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
-
-            out.tab(2).println("this.%s = %s;", columnMember, columnMember);
-        }
-
-        out.tab(1).println("}");
 
         for (ColumnDefinition column : table.getColumns()) {
             final String columnType = getJavaType(column.getType());

@@ -524,6 +524,12 @@ class Val<T> extends AbstractParam<T> {
                     }
 
                     context.sql("]");
+
+                    // [#3214] Some PostgreSQL array type literals need explicit casting
+                    if (family == POSTGRES && EnumType.class.isAssignableFrom(type.getComponentType())) {
+                        context.sql("::")
+                               .keyword(DefaultDataType.getDataType(family, type).getCastTypeName(context.configuration()));
+                    }
                 }
             }
             /* [pro] */
@@ -557,7 +563,6 @@ class Val<T> extends AbstractParam<T> {
         }
 
         // In Postgres, some additional casting must be done in some cases...
-        // TODO: Improve this implementation with [#215] (cast support)
         else if (family == SQLDialect.POSTGRES) {
 
             // Postgres needs explicit casting for array types

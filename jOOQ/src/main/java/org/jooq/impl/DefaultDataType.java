@@ -40,6 +40,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.Collections.unmodifiableCollection;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.NCLOB;
@@ -848,5 +849,13 @@ public class DefaultDataType<T> implements DataType<T> {
         else {
             return BigDecimal.class;
         }
+    }
+
+    static Collection<Class<?>> types() {
+        return unmodifiableCollection(SQL_DATATYPES_BY_TYPE.keySet());
+    }
+
+    static Collection<DataType<?>> dataTypes() {
+        return unmodifiableCollection(SQL_DATATYPES_BY_TYPE.values());
     }
 }

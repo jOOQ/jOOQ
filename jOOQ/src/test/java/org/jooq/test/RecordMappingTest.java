@@ -41,13 +41,16 @@
 
 package org.jooq.test;
 
-import static org.junit.Assert.assertTrue;
 import static org.jooq.impl.DSL.field;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
 
 import javax.persistence.Column;
 
 import org.jooq.Field;
 import org.jooq.Record1;
+import org.jooq.Result;
 
 import org.junit.Test;
 
@@ -103,4 +106,23 @@ public class RecordMappingTest extends AbstractTest {
             return "Boolean [oneZero=" + oneZero + ", oneZero1=" + oneZero1 + ", oneZero2=" + oneZero2 + "]";
         }
     }
+
+    @Test
+    public void testIntoValueTypes() throws Exception {
+        Field<Boolean> field = field("B", Boolean.class);
+        Result<Record1<Boolean>> result = create.newResult(field);
+        result.add(create.newRecord(field));
+        result.add(create.newRecord(field));
+        result.add(create.newRecord(field));
+        result.get(0).setValue(field, true);
+        result.get(1).setValue(field, false);
+        result.get(2).setValue(field, null);
+
+        assertEquals(Arrays.asList(true, false, false), result.into(boolean.class));
+        assertEquals(Arrays.asList(true, false, null), result.into(Boolean.class));
+        assertEquals(Arrays.asList(1, 0, 0), result.into(int.class));
+        assertEquals(Arrays.asList(1, 0, null), result.into(Integer.class));
+        assertEquals(Arrays.asList("true", "false", null), result.into(String.class));
+    }
+
 }

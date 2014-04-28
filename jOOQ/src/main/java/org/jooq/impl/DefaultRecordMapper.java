@@ -56,6 +56,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -67,6 +68,7 @@ import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
 import org.jooq.RecordType;
@@ -87,6 +89,24 @@ import org.jooq.tools.reflect.Reflect;
  * specific arrays fails, a {@link MappingException} is thrown, wrapping
  * conversion exceptions.
  * <p>
+ * <h5>If <code>&lt;E></code> is a field "value type" and <code>&lt;R></code>
+ * has exactly one column:</h5>
+ * <p>
+ * Any Java type available from {@link SQLDataType} qualifies as a well-known
+ * "value type" that can be converted from a single-field {@link Record1}. The
+ * following rules apply:
+ * <p>
+ * <ul>
+ * <li>If <code>&lt;E></code> is a reference type like {@link String},
+ * {@link Integer}, {@link Long}, {@link Timestamp}, etc., then converting from
+ * <code>&lt;R></code> to <code>&lt;E></code> is mere convenience for calling
+ * {@link Record#getValue(int, Class)} with <code>fieldIndex = 0</code></li>
+ * <li>If <code>&lt;E></code> is a primitive type, the mapping result will be
+ * the corresponding wrapper type. <code>null</code> will map to the primitive
+ * type's initialisation value, e.g. <code>0</code> for <code>int</code>,
+ * <code>0.0</code> for <code>double</code>, <code>false</code> for
+ * <code>boolean</code>.</li>
+ * </ul>
  * <h5>If a default constructor is available and any JPA {@link Column}
  * annotations are found on the provided <code>&lt;E></code>, only those are
  * used:</h5>
@@ -245,6 +265,12 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             return;
         }
 
+        // [#3212] "Value types" can be mapped from single-field Record1 types for convenience
+        if (type.isPrimitive() || DefaultDataType.types().contains(type)) {
+            delegate = new ValueTypeMapper();
+            return;
+        }
+
         // [#1470] Return a proxy if the supplied type is an interface
         if (Modifier.isAbstract(type.getModifiers())) {
             delegate = new ProxyMapper();
@@ -344,6 +370,18 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
 
             return (E) result;
+        }
+    }
+
+    private class ValueTypeMapper implements RecordMapper<R, E> {
+
+        @Override
+        public final E map(R record) {
+            int size = record.size();
+            if (size != 1)
+                throw new MappingException("Cannot map multi-column record of degree " + size + " to value type " + type);
+
+            return record.getValue(0, type);
         }
     }
 

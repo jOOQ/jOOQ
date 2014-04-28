@@ -1835,6 +1835,28 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testFetchIntoValueType() throws Exception {
+        Result<Record1<Integer>> result =
+        create().select(TBook_ID())
+                .from(TBook())
+                .orderBy(TBook_ID())
+                .fetch();
+
+        assertEquals(BOOK_IDS, result.into(int.class));
+        assertEquals(BOOK_IDS, result.into(Integer.class));
+        assertEquals(BOOK_IDS_SHORT, result.into(short.class));
+        assertEquals(BOOK_IDS_SHORT, result.into(Short.class));
+        assertEquals(BOOK_IDS_STRING, result.into(String.class));
+
+        try {
+            create().selectFrom(TBook())
+                    .fetchInto(int.class);
+            fail();
+        }
+        catch (MappingException expected) {}
+    }
+
+    @Test
     public void testFetchIntoResultSet() throws Exception {
         Result<B> result = create().selectFrom(TBook()).orderBy(TBook_ID()).fetch();
 

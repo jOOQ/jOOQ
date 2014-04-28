@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TInheritanceAllRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TInheritanceAllRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.String>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITInheritanceAll {
 
-	private static final long serialVersionUID = 1714652496;
+	private static final long serialVersionUID = -790084562;
 
 	/**
-	 * Setter for <code>public.t_inheritance_all.text_1</code>. 
+	 * Setter for <code>public.t_inheritance_all.text_1</code>.
 	 */
 	public TInheritanceAllRecord setText_1(java.lang.String value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class TInheritanceAllRecord extends org.jooq.impl.TableRecordImpl<org.joo
 	}
 
 	/**
-	 * Getter for <code>public.t_inheritance_all.text_1</code>. 
+	 * Getter for <code>public.t_inheritance_all.text_1</code>.
 	 */
 	@Override
 	public java.lang.String getText_1() {
@@ -28,7 +28,7 @@ public class TInheritanceAllRecord extends org.jooq.impl.TableRecordImpl<org.joo
 	}
 
 	/**
-	 * Setter for <code>public.t_inheritance_all.text_1_1</code>. 
+	 * Setter for <code>public.t_inheritance_all.text_1_1</code>.
 	 */
 	public TInheritanceAllRecord setText_1_1(java.lang.String value) {
 		setValue(1, value);
@@ -36,7 +36,7 @@ public class TInheritanceAllRecord extends org.jooq.impl.TableRecordImpl<org.joo
 	}
 
 	/**
-	 * Getter for <code>public.t_inheritance_all.text_1_1</code>. 
+	 * Getter for <code>public.t_inheritance_all.text_1_1</code>.
 	 */
 	@Override
 	public java.lang.String getText_1_1() {
@@ -44,7 +44,7 @@ public class TInheritanceAllRecord extends org.jooq.impl.TableRecordImpl<org.joo
 	}
 
 	/**
-	 * Setter for <code>public.t_inheritance_all.text_1_2</code>. 
+	 * Setter for <code>public.t_inheritance_all.text_1_2</code>.
 	 */
 	public TInheritanceAllRecord setText_1_2(java.lang.String value) {
 		setValue(2, value);
@@ -52,7 +52,7 @@ public class TInheritanceAllRecord extends org.jooq.impl.TableRecordImpl<org.joo
 	}
 
 	/**
-	 * Getter for <code>public.t_inheritance_all.text_1_2</code>. 
+	 * Getter for <code>public.t_inheritance_all.text_1_2</code>.
 	 */
 	@Override
 	public java.lang.String getText_1_2() {
@@ -60,7 +60,7 @@ public class TInheritanceAllRecord extends org.jooq.impl.TableRecordImpl<org.joo
 	}
 
 	/**
-	 * Setter for <code>public.t_inheritance_all.text_1_all</code>. 
+	 * Setter for <code>public.t_inheritance_all.text_1_all</code>.
 	 */
 	public TInheritanceAllRecord setText_1All(java.lang.String value) {
 		setValue(3, value);
@@ -68,7 +68,7 @@ public class TInheritanceAllRecord extends org.jooq.impl.TableRecordImpl<org.joo
 	}
 
 	/**
-	 * Getter for <code>public.t_inheritance_all.text_1_all</code>. 
+	 * Getter for <code>public.t_inheritance_all.text_1_all</code>.
 	 */
 	@Override
 	public java.lang.String getText_1All() {

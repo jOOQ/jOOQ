@@ -64,8 +64,6 @@ class ConvertedDataType<T, U> extends DefaultDataType<U> {
 
         this.delegate = delegate;
         this.converter = converter;
-
-        DataTypes.registerConverter(converter.toType(), converter);
     }
 
     @Override
@@ -87,5 +85,9 @@ class ConvertedDataType<T, U> extends DefaultDataType<U> {
     @Override
     public U convert(Object object) {
         return converter.from(delegate.convert(converter.to((U) object)));
+    }
+
+    Converter<? super T, U> converter() {
+        return converter;
     }
 }

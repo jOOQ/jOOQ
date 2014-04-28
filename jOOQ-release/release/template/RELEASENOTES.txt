@@ -10,6 +10,36 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.3.2 - April 28, 2014
+================================================================================
+
+This is a patch release with some useful fixes for the 3.3 branch
+
+Features and improvements
+-------------------------
+#3199 - Add some Javadoc to Result.attach() and Result.detach() to explain the
+        semantics
+
+Bug fixes
+---------
+#3090 - Bad predicates generated from nullable keys on refresh(), update(), 
+        delete()
+#3108 - Local Fields' Converters should be preferred over globally registered
+        Converters
+#3122 - Runtime Schema mapping doesn't work for UDT
+#3133 - Code generation marks all PostgreSQL Fields as having a default value
+#3143 - Bad Javadoc in the org.jooq.tools.json package: JSON tools are not
+        "JSONAware"
+#3147 - Field.sortAsc() and sortDesc() should generate inlined values for sort
+        indirection 
+#3156 - "Column ambiguously defined" when emulating derived column lists with
+        duplicate column names
+#3162 - NullPointerException when referencing window name that was not declared
+#3164 - Missing formatting when rendering formatted MERGE statement's SET clause
+#3176 - Don't generate "assignment-constructors" for POJOs and Records with more
+        than 255 columns
+#3214 - Error when inserting PostgreSQL enum array
+
 Version 3.3.1 - March 7, 2014
 ================================================================================
 

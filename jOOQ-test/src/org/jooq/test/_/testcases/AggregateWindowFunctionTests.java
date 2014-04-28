@@ -205,21 +205,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 xxxxxx
             x
         x
-        xx xxxxx xx
-    x
+        xx [/pro] */
+    }
 
-    xxxxx
-    xxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxx x
+    @Test
+    public void testAggregateFunctions() throws Exception {
 
-        xx xxxxxxxx xxxxxxxxx xxxxxxxxxx xxxxxxxxx xx xxx xxxxxxxxx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxx
+        // Standard aggregate functions, available in all dialects:
+        // --------------------------------------------------------
+        Field<BigDecimal> median = median(TBook_ID());
 
-        xx xxxx xxxxxxxx xxxxx xxxxxxx x xxxxxx xxxxxxxx xx x xxxxxxxxxx xxxxxxx
-        xx xxx xxx xxxxxxxx xx xx xxxx xxxxxxx xxx xxxxxx xx xxxxxx xxx xxx
-        xx xxx xxx xxxx
-        xxxxxx xxxxxxxxxxxxxxxxxxxx x
-            xx xxxxx xx
+        // Some dialects don't support a median function or a simulation thereof
+        // Use AVG instead, as in this example the values of MEDIAN and AVG
+        // are the same
+        switch (dialect().family()) {
+            /* [pro] xx
             xxxx xxxx
             xxxx xxxxxxx
             xxxx xxxx

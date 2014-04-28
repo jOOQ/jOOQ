@@ -9,25 +9,25 @@ package org.jooq.test.postgres.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FSearchBook extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = -251159613;
+	private static final long serialVersionUID = -176305171;
 
 	/**
-	 * The parameter <code>public.f_search_book.RETURN_VALUE</code>. 
+	 * The parameter <code>public.f_search_book.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.DefaultDataType.getDefaultDataType("USER-DEFINED"));
 
 	/**
-	 * The parameter <code>public.f_search_book.p_title</code>. 
+	 * The parameter <code>public.f_search_book.p_title</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> P_TITLE = createParameter("p_title", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The parameter <code>public.f_search_book.p_limit</code>. 
+	 * The parameter <code>public.f_search_book.p_limit</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Long> P_LIMIT = createParameter("p_limit", org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The parameter <code>public.f_search_book.p_offset</code>. 
+	 * The parameter <code>public.f_search_book.p_offset</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.Long> P_OFFSET = createParameter("p_offset", org.jooq.impl.SQLDataType.BIGINT);
 

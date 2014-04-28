@@ -10,12 +10,12 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 public interface IVLibrary extends java.io.Serializable {
 
 	/**
-	 * Getter for <code>public.v_library.author</code>. 
+	 * Getter for <code>public.v_library.author</code>.
 	 */
 	public java.lang.String getAuthor();
 
 	/**
-	 * Getter for <code>public.v_library.title</code>. 
+	 * Getter for <code>public.v_library.title</code>.
 	 */
 	public java.lang.String getTitle();
 }

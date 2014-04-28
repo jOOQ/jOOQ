@@ -99,6 +99,7 @@ import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Converter;
@@ -1483,11 +1484,18 @@ final class Utils {
 
         // [#2764] If primary keys are allowed to be changed, the
         if (updatablePrimaryKeys(settings(record))) {
-            provider.addConditions(field.equal(record.original(field)));
+            provider.addConditions(condition(field, record.original(field)));
         }
         else {
-            provider.addConditions(field.equal(record.getValue(field)));
+            provider.addConditions(condition(field, record.getValue(field)));
         }
+    }
+
+    /**
+     * Create a <code>null</code>-safe condition.
+     */
+    static final <T> Condition condition(Field<T> field, T value) {
+        return (value == null) ? field.isNull() : field.eq(value);
     }
 
     // ------------------------------------------------------------------------
@@ -2236,14 +2244,8 @@ final class Utils {
     static final <T, U> U getFromResultSet(ExecuteContext ctx, Field<U> field, int index) throws SQLException {
 
         @SuppressWarnings("unchecked")
-        Converter<T, U> converter = (Converter<T, U>) DataTypes.converter(field.getType());
-
-        if (converter != null) {
-            return converter.from(getFromResultSet(ctx, converter.fromType(), index));
-        }
-        else {
-            return getFromResultSet(ctx, field.getType(), index);
-        }
+        Converter<T, U> converter = (Converter<T, U>) field.getConverter();
+        return converter.from(getFromResultSet(ctx, converter.fromType(), index));
     }
 
     @SuppressWarnings("unchecked")

@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_2025Record> implements org.jooq.Record2<java.lang.Integer, java.lang.String>, org.jooq.test.postgres.generatedclasses.tables.interfaces.IXTestCase_2025 {
 
-	private static final long serialVersionUID = 342287991;
+	private static final long serialVersionUID = -598809661;
 
 	/**
-	 * Setter for <code>public.x_test_case_2025.ref_id</code>. 
+	 * Setter for <code>public.x_test_case_2025.ref_id</code>.
 	 */
 	public XTestCase_2025Record setRefId(java.lang.Integer value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	}
 
 	/**
-	 * Getter for <code>public.x_test_case_2025.ref_id</code>. 
+	 * Getter for <code>public.x_test_case_2025.ref_id</code>.
 	 */
 	@Override
 	public java.lang.Integer getRefId() {
@@ -28,7 +28,7 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	}
 
 	/**
-	 * Setter for <code>public.x_test_case_2025.ref_name</code>. 
+	 * Setter for <code>public.x_test_case_2025.ref_name</code>.
 	 */
 	public XTestCase_2025Record setRefName(java.lang.String value) {
 		setValue(1, value);
@@ -36,7 +36,7 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	}
 
 	/**
-	 * Getter for <code>public.x_test_case_2025.ref_name</code>. 
+	 * Getter for <code>public.x_test_case_2025.ref_name</code>.
 	 */
 	@Override
 	public java.lang.String getRefName() {

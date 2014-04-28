@@ -87,6 +87,7 @@ import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
@@ -114,17 +115,25 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     private final String          name;
     private final String          comment;
     private final DataType<T>     dataType;
+    private final Converter<?, T> converter;
 
     AbstractField(String name, DataType<T> type) {
-        this(name, type, null);
+        this(name, type, null, null);
     }
 
-    AbstractField(String name, DataType<T> type, String comment) {
+    @SuppressWarnings("unchecked")
+    AbstractField(String name, DataType<T> type, String comment, Converter<?, T> converter) {
         super();
 
         this.name = name;
         this.comment = defaultString(comment);
         this.dataType = type;
+        this.converter =
+              converter != null
+            ? converter
+            : type instanceof ConvertedDataType
+            ? ((ConvertedDataType<?, T>) type).converter()
+            : new IdentityConverter<T>(type.getType());
     }
 
     // ------------------------------------------------------------------------
@@ -159,6 +168,11 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Override
     public final String getComment() {
         return comment;
+    }
+
+    @Override
+    public final Converter<?, T> getConverter() {
+        return converter;
     }
 
     @Override
@@ -298,10 +312,10 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
         for (Entry<T, Z> entry : sortMap.entrySet()) {
             if (result == null) {
-                result = decode.when(entry.getKey(), entry.getValue());
+                result = decode.when(entry.getKey(), inline(entry.getValue()));
             }
             else {
-                result.when(entry.getKey(), entry.getValue());
+                result.when(entry.getKey(), inline(entry.getValue()));
             }
         }
 
@@ -586,7 +600,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         return compare(IS_NOT_DISTINCT_FROM, field);
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Condition isTrue() {
         Class<?> type = getType();
@@ -605,7 +619,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         }
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Condition isFalse() {
         Class<?> type = getType();

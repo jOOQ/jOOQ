@@ -45,10 +45,12 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.H2;
 // ...
+import static org.junit.Assert.assertFalse;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -103,6 +105,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public MetaDataTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
         super(delegate);
+    }
+
+    @Test
+    public void testMetaFieldTypes() throws Exception {
+
+        // [#3133] Check if DEFAULT information is correctly generated
+        assertFalse(TBook_ID().getDataType().defaulted());
+
+        if (!asList().contains(dialect().family())) {
+            assertTrue(TBook_LANGUAGE_ID().getDataType().defaulted());
+        }
     }
 
     @Test

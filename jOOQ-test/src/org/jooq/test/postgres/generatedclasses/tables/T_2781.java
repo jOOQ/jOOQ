@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2781 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record> {
 
-	private static final long serialVersionUID = -503271217;
+	private static final long serialVersionUID = -56691512;
 
 	/**
 	 * The singleton instance of <code>public.t_2781</code>
@@ -25,31 +25,35 @@ public class T_2781 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gener
 	}
 
 	/**
-	 * The column <code>public.t_2781.org</code>. 
+	 * The column <code>public.t_2781.org</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record, java.lang.String> ORG = createField("org", org.jooq.impl.SQLDataType.CLOB.defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record, java.lang.String> ORG = createField("org", org.jooq.impl.SQLDataType.CLOB, this, "");
 
 	/**
-	 * The column <code>public.t_2781.jooq</code>. 
+	 * The column <code>public.t_2781.jooq</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record, java.lang.String> JOOQ = createField("jooq", org.jooq.impl.SQLDataType.CLOB.defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record, java.lang.String> JOOQ = createField("jooq", org.jooq.impl.SQLDataType.CLOB, this, "");
 
 	/**
 	 * Create a <code>public.t_2781</code> table reference
 	 */
 	public T_2781() {
-		super("t_2781", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
+		this("t_2781", null);
 	}
 
 	/**
 	 * Create an aliased <code>public.t_2781</code> table reference
 	 */
 	public T_2781(java.lang.String alias) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.T_2781.T_2781);
+		this(alias, org.jooq.test.postgres.generatedclasses.tables.T_2781.T_2781);
 	}
 
 	private T_2781(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record> aliased) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+		this(alias, aliased, null);
+	}
+
+	private T_2781(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.T_2781Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**

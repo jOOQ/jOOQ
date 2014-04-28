@@ -33,14 +33,6 @@ public class JSONValue {
 
     /**
      * Encode an object into JSON text and write it to out.
-     * <p>
-     * If this object is a Map or a List, and it's also a JSONStreamAware or a
-     * JSONAware, JSONStreamAware or JSONAware will be considered firstly.
-     * <p>
-     * DO NOT call this method from writeJSONString(Writer) of a class that
-     * implements both JSONStreamAware and (Map or List) with "this" as the
-     * first parameter, use JSONObject.writeJSONString(Map, Writer) or
-     * JSONArray.writeJSONString(List, Writer) instead.
      *
      * @see JSONObject#writeJSONString(Map, Writer)
      * @see JSONArray#writeJSONString(List, Writer)
@@ -99,13 +91,6 @@ public class JSONValue {
 
     /**
      * Convert an object to JSON text.
-     * <p>
-     * If this object is a Map or a List, and it's also a JSONAware, JSONAware
-     * will be considered firstly.
-     * <p>
-     * DO NOT call this method from toJSONString() of a class that implements
-     * both JSONAware and Map or List with "this" as the parameter, use
-     * JSONObject.toJSONString(Map) or JSONArray.toJSONString(List) instead.
      *
      * @see JSONObject#toJSONString(Map)
      * @see JSONArray#toJSONString(List)

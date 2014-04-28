@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String>, org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_785 {
 
-	private static final long serialVersionUID = 1111535350;
+	private static final long serialVersionUID = -1605857700;
 
 	/**
-	 * Setter for <code>public.t_785.id</code>. 
+	 * Setter for <code>public.t_785.id</code>.
 	 */
 	public T_785Record setId(java.lang.Integer value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	}
 
 	/**
-	 * Getter for <code>public.t_785.id</code>. 
+	 * Getter for <code>public.t_785.id</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	}
 
 	/**
-	 * Setter for <code>public.t_785.name</code>. 
+	 * Setter for <code>public.t_785.name</code>.
 	 */
 	public T_785Record setName(java.lang.String value) {
 		setValue(1, value);
@@ -36,7 +36,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	}
 
 	/**
-	 * Getter for <code>public.t_785.name</code>. 
+	 * Getter for <code>public.t_785.name</code>.
 	 */
 	@Override
 	public java.lang.String getName() {
@@ -44,7 +44,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	}
 
 	/**
-	 * Setter for <code>public.t_785.value</code>. 
+	 * Setter for <code>public.t_785.value</code>.
 	 */
 	public T_785Record setValue(java.lang.String value) {
 		setValue(2, value);
@@ -52,7 +52,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	}
 
 	/**
-	 * Getter for <code>public.t_785.value</code>. 
+	 * Getter for <code>public.t_785.value</code>.
 	 */
 	@Override
 	public java.lang.String getValue() {

@@ -43,6 +43,7 @@ package org.jooq.test;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
+import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
@@ -116,6 +117,7 @@ import org.jooq.test.postgres.generatedclasses.Routines;
 import org.jooq.test.postgres.generatedclasses.Sequences;
 import org.jooq.test.postgres.generatedclasses.enums.UCountry;
 import org.jooq.test.postgres.generatedclasses.enums.U_959;
+import org.jooq.test.postgres.generatedclasses.tables.TArrays;
 import org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord;
@@ -1182,5 +1184,44 @@ public class PostgresTest extends jOOQAbstractTest<
         assertEquals("Parliament Hill", author.address.street.street);
         assertEquals("77", author.address.street.no);
         System.out.println(author);
+    }
+
+    @Test
+    public void testPostgresEnumArrayCRUD() throws Exception {
+        testPostgresEnumArrayCRUD0(create());
+    }
+
+
+    @Test
+    public void testPostgresEnumArrayCRUDWithInline() throws Exception {
+        testPostgresEnumArrayCRUD0(create(new Settings().withStatementType(STATIC_STATEMENT)));
+    }
+
+    private void testPostgresEnumArrayCRUD0(DSLContext create) throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        TArrays a = T_ARRAYS;
+
+        assertEquals(4,
+        create.insertInto(a, a.ID, a.ENUM_ARRAY)
+              .values(11, null)
+              .values(12, new UCountry[0])
+              .values(13, new UCountry[] { null })
+              .values(14, new UCountry[] { UCountry.Brazil })
+              .execute());
+
+        List<UCountry[]> countries =
+        create.select(a.ENUM_ARRAY)
+              .from(a)
+              .where(a.ID.gt(10))
+              .orderBy(a.ID)
+              .fetch(a.ENUM_ARRAY);
+
+        assertNull(countries.get(0));
+        assertEquals(0, countries.get(1).length);
+        assertEquals(1, countries.get(2).length);
+        assertNull(countries.get(2)[0]);
+        assertEquals(1, countries.get(3).length);
+        assertEquals(UCountry.Brazil, countries.get(3)[0]);
     }
 }

@@ -93,7 +93,7 @@ class ArrayTable extends AbstractTable<Record> {
         /* [pro] xx
         xx xxxxxxx xxxx xxxxx xx xxxxxxx xxxx xxxxxxxxxxx xx xxxxxx xxxxxx x xxxxx xxxxx
         xxxx xx xxxxxx xxxxxxxxxx xxxxxxxxxxxxxx x
-            xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxx x xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         x
 
         xx xxxxxxx xxxx xxxxx xx xxxxxxx xxxx xxxxxxxxxxx xx xxxxxx

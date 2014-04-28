@@ -10,22 +10,22 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 public interface ITLanguage extends java.io.Serializable {
 
 	/**
-	 * Getter for <code>public.t_language.cd</code>. 
+	 * Getter for <code>public.t_language.cd</code>.
 	 */
 	public java.lang.String getCd();
 
 	/**
-	 * Getter for <code>public.t_language.description</code>. 
+	 * Getter for <code>public.t_language.description</code>.
 	 */
 	public java.lang.String getDescription();
 
 	/**
-	 * Getter for <code>public.t_language.description_english</code>. 
+	 * Getter for <code>public.t_language.description_english</code>.
 	 */
 	public java.lang.String getDescriptionEnglish();
 
 	/**
-	 * Getter for <code>public.t_language.id</code>. 
+	 * Getter for <code>public.t_language.id</code>.
 	 */
 	public java.lang.Integer getId();
 }

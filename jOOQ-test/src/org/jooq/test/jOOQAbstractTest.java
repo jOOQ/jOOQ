@@ -1141,6 +1141,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testMetaFieldTypes() throws Exception {
+        new MetaDataTests(this).testMetaFieldTypes();
+    }
+
+    @Test
     public void testMetaData() throws Exception {
         new MetaDataTests(this).testMetaData();
     }
@@ -2061,6 +2066,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testDerivedColumnListsWithAmbiguousColumnNames() throws Exception {
+        new AliasTests(this).testDerivedColumnListsWithAmbiguousColumnNames();
+    }
+
+    @Test
     public void testAliasingTablesAndFields() throws Exception {
         new AliasTests(this).testAliasingTablesAndFields();
     }
@@ -2283,6 +2293,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public <R extends TableRecord<R>> void testCustomEnums() throws Exception {
         new EnumTests(this).testCustomEnums();
+    }
+
+    @Test
+    public <R extends TableRecord<R>> void testCustomEnumsWithInline() throws Exception {
+        new EnumTests(this).testCustomEnumsWithInline();
     }
 
     @Test

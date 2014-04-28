@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TInheritance_1 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TInheritance_1Record> {
 
-	private static final long serialVersionUID = 407693019;
+	private static final long serialVersionUID = -1741663071;
 
 	/**
 	 * The singleton instance of <code>public.t_inheritance_1</code>
@@ -25,26 +25,30 @@ public class TInheritance_1 extends org.jooq.impl.TableImpl<org.jooq.test.postgr
 	}
 
 	/**
-	 * The column <code>public.t_inheritance_1.text_1</code>. 
+	 * The column <code>public.t_inheritance_1.text_1</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TInheritance_1Record, java.lang.String> TEXT_1 = createField("text_1", org.jooq.impl.SQLDataType.CLOB.defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TInheritance_1Record, java.lang.String> TEXT_1 = createField("text_1", org.jooq.impl.SQLDataType.CLOB, this, "");
 
 	/**
 	 * Create a <code>public.t_inheritance_1</code> table reference
 	 */
 	public TInheritance_1() {
-		super("t_inheritance_1", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
+		this("t_inheritance_1", null);
 	}
 
 	/**
 	 * Create an aliased <code>public.t_inheritance_1</code> table reference
 	 */
 	public TInheritance_1(java.lang.String alias) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TInheritance_1.T_INHERITANCE_1);
+		this(alias, org.jooq.test.postgres.generatedclasses.tables.TInheritance_1.T_INHERITANCE_1);
 	}
 
 	private TInheritance_1(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TInheritance_1Record> aliased) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+		this(alias, aliased, null);
+	}
+
+	private TInheritance_1(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TInheritance_1Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**

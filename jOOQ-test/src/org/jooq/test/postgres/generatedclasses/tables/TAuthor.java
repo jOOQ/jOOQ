@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 161284948;
+	private static final long serialVersionUID = 364488020;
 
 	/**
 	 * The singleton instance of <code>public.t_author</code>
@@ -25,51 +25,55 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gene
 	}
 
 	/**
-	 * The column <code>public.t_author.id</code>. 
+	 * The column <code>public.t_author.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>public.t_author.first_name</code>. 
+	 * The column <code>public.t_author.first_name</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(50).defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
-	 * The column <code>public.t_author.last_name</code>. 
+	 * The column <code>public.t_author.last_name</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false).defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this, "");
 
 	/**
-	 * The column <code>public.t_author.date_of_birth</code>. 
+	 * The column <code>public.t_author.date_of_birth</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("date_of_birth", org.jooq.impl.SQLDataType.DATE.defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("date_of_birth", org.jooq.impl.SQLDataType.DATE, this, "");
 
 	/**
-	 * The column <code>public.t_author.year_of_birth</code>. 
+	 * The column <code>public.t_author.year_of_birth</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("year_of_birth", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("year_of_birth", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>public.t_author.address</code>. 
+	 * The column <code>public.t_author.address</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> ADDRESS = createField("address", org.jooq.test.postgres.generatedclasses.udt.UAddressType.U_ADDRESS_TYPE.getDataType(), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> ADDRESS = createField("address", org.jooq.test.postgres.generatedclasses.udt.UAddressType.U_ADDRESS_TYPE.getDataType(), this, "");
 
 	/**
 	 * Create a <code>public.t_author</code> table reference
 	 */
 	public TAuthor() {
-		super("t_author", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
+		this("t_author", null);
 	}
 
 	/**
 	 * Create an aliased <code>public.t_author</code> table reference
 	 */
 	public TAuthor(java.lang.String alias) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR);
+		this(alias, org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR);
 	}
 
 	private TAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord> aliased) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+		this(alias, aliased, null);
+	}
+
+	private TAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**

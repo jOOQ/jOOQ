@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UUuids extends org.jooq.impl.UDTImpl<org.jooq.test.postgres.generatedclasses.udt.records.UUuidsRecord> {
 
-	private static final long serialVersionUID = -1890792487;
+	private static final long serialVersionUID = -1499239053;
 
 	/**
 	 * The singleton instance of <code>public.u_uuids</code>
@@ -25,12 +25,12 @@ public class UUuids extends org.jooq.impl.UDTImpl<org.jooq.test.postgres.generat
 	}
 
 	/**
-	 * The attribute <code>public.u_uuids.u1</code>. 
+	 * The attribute <code>public.u_uuids.u1</code>.
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.postgres.generatedclasses.udt.records.UUuidsRecord, java.util.UUID> U1 = createField("u1", org.jooq.impl.SQLDataType.UUID, U_UUIDS);
 
 	/**
-	 * The attribute <code>public.u_uuids.u2</code>. 
+	 * The attribute <code>public.u_uuids.u2</code>.
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.postgres.generatedclasses.udt.records.UUuidsRecord, java.util.UUID[]> U2 = createField("u2", org.jooq.impl.SQLDataType.UUID.getArrayDataType(), U_UUIDS);
 

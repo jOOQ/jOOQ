@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = 1280696648;
+	private static final long serialVersionUID = 1399637894;
 
 	/**
 	 * The singleton instance of <code>public.t_arrays</code>
@@ -25,56 +25,60 @@ public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gene
 	}
 
 	/**
-	 * The column <code>public.t_arrays.id</code>. 
+	 * The column <code>public.t_arrays.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>public.t_arrays.string_array</code>. 
+	 * The column <code>public.t_arrays.string_array</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.lang.String[]> STRING_ARRAY = createField("string_array", org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType(), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.lang.String[]> STRING_ARRAY = createField("string_array", org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType(), this, "");
 
 	/**
-	 * The column <code>public.t_arrays.number_array</code>. 
+	 * The column <code>public.t_arrays.number_array</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.lang.Integer[]> NUMBER_ARRAY = createField("number_array", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType(), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.lang.Integer[]> NUMBER_ARRAY = createField("number_array", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType(), this, "");
 
 	/**
-	 * The column <code>public.t_arrays.date_array</code>. 
+	 * The column <code>public.t_arrays.date_array</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.sql.Date[]> DATE_ARRAY = createField("date_array", org.jooq.impl.SQLDataType.DATE.getArrayDataType(), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.sql.Date[]> DATE_ARRAY = createField("date_array", org.jooq.impl.SQLDataType.DATE.getArrayDataType(), this, "");
 
 	/**
-	 * The column <code>public.t_arrays.udt_array</code>. 
+	 * The column <code>public.t_arrays.udt_array</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord[]> UDT_ARRAY = createField("udt_array", org.jooq.test.postgres.generatedclasses.udt.UStreetType.U_STREET_TYPE.getDataType().getArrayDataType(), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord[]> UDT_ARRAY = createField("udt_array", org.jooq.test.postgres.generatedclasses.udt.UStreetType.U_STREET_TYPE.getDataType().getArrayDataType(), this, "");
 
 	/**
-	 * The column <code>public.t_arrays.enum_array</code>. 
+	 * The column <code>public.t_arrays.enum_array</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, org.jooq.test.postgres.generatedclasses.enums.UCountry[]> ENUM_ARRAY = createField("enum_array", org.jooq.util.postgres.PostgresDataType.VARCHAR.asEnumDataType(org.jooq.test.postgres.generatedclasses.enums.UCountry.class).getArrayDataType(), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, org.jooq.test.postgres.generatedclasses.enums.UCountry[]> ENUM_ARRAY = createField("enum_array", org.jooq.util.postgres.PostgresDataType.VARCHAR.asEnumDataType(org.jooq.test.postgres.generatedclasses.enums.UCountry.class).getArrayDataType(), this, "");
 
 	/**
-	 * The column <code>public.t_arrays.array_array</code>. 
+	 * The column <code>public.t_arrays.array_array</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.lang.Integer[]> ARRAY_ARRAY = createField("array_array", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType(), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.lang.Integer[]> ARRAY_ARRAY = createField("array_array", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType(), this, "");
 
 	/**
 	 * Create a <code>public.t_arrays</code> table reference
 	 */
 	public TArrays() {
-		super("t_arrays", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
+		this("t_arrays", null);
 	}
 
 	/**
 	 * Create an aliased <code>public.t_arrays</code> table reference
 	 */
 	public TArrays(java.lang.String alias) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS);
+		this(alias, org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS);
 	}
 
 	private TArrays(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> aliased) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+		this(alias, aliased, null);
+	}
+
+	private TArrays(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**

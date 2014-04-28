@@ -973,7 +973,7 @@ public class BasicTest extends AbstractTest {
             public void bind(BindContext ctx) {
                 try {
                     ctx.statement().setInt(ctx.nextIndex(), 1);
-                    ctx.bindValues(1);
+                    ctx.bindValue(1, DSL.val(1));
                 }
                 catch (SQLException ignore) {}
             }
@@ -1064,7 +1064,7 @@ public class BasicTest extends AbstractTest {
 
             @Override
             public void bind(BindContext ctx) {
-                ctx.bindValues(1);
+                ctx.bindValue(1, DSL.val(1));
             }
         };
 

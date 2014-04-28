@@ -162,7 +162,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             xx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxx xxxxx xxx xxxxxx xxx xx xxxxx
             xx xx xxx xxxxxxxxxxxxxxxxx xxxxxxxx
             xxxx xxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
                 xxxxxx
 
             xx xx xxx xxx xxxx xxxxxxxx xxxxxx xx xx xxxxxxx xxxx xxx xxxxxxxx xxxxx

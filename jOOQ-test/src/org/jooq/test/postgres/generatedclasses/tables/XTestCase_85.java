@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = 2023739352;
+	private static final long serialVersionUID = -555647442;
 
 	/**
 	 * The singleton instance of <code>public.x_test_case_85</code>
@@ -25,36 +25,40 @@ public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.postgres
 	}
 
 	/**
-	 * The column <code>public.x_test_case_85.id</code>. 
+	 * The column <code>public.x_test_case_85.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>public.x_test_case_85.x_unused_id</code>. 
+	 * The column <code>public.x_test_case_85.x_unused_id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> X_UNUSED_ID = createField("x_unused_id", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> X_UNUSED_ID = createField("x_unused_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>public.x_test_case_85.x_unused_name</code>. 
+	 * The column <code>public.x_test_case_85.x_unused_name</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_85Record, java.lang.String> X_UNUSED_NAME = createField("x_unused_name", org.jooq.impl.SQLDataType.VARCHAR.length(10).defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_85Record, java.lang.String> X_UNUSED_NAME = createField("x_unused_name", org.jooq.impl.SQLDataType.VARCHAR.length(10), this, "");
 
 	/**
 	 * Create a <code>public.x_test_case_85</code> table reference
 	 */
 	public XTestCase_85() {
-		super("x_test_case_85", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
+		this("x_test_case_85", null);
 	}
 
 	/**
 	 * Create an aliased <code>public.x_test_case_85</code> table reference
 	 */
 	public XTestCase_85(java.lang.String alias) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
+		this(alias, org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
 	}
 
 	private XTestCase_85(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_85Record> aliased) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+		this(alias, aliased, null);
+	}
+
+	private XTestCase_85(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_85Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**

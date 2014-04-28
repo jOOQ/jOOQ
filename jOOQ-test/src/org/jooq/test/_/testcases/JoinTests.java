@@ -240,10 +240,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testCrossJoin() throws Exception {
-        if (dialect().family() == ACCESS) {
-            log.info("SKIPPING", "CROSS JOIN tests");
-            return;
-        }
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+            xxxxxxxxxxxxxxxxxxxx xxxxxx xxxx xxxxxxxx
+            xxxxxxx
+        x
+        xx [/pro] */
 
         Result<Record> result;
 

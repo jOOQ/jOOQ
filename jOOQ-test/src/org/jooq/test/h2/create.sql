@@ -1,3 +1,4 @@
+DROP VIEW IF EXISTS v_3176/
 DROP VIEW IF EXISTS v_2603/
 DROP VIEW IF EXISTS "Ää"/
 DROP VIEW IF EXISTS v_author/
@@ -215,7 +216,7 @@ CREATE TABLE t_book (
   DETAILS_ID INT,
   TITLE VARCHAR(400) NOT NULL,
   PUBLISHED_IN INT NOT NULL,
-  LANGUAGE_ID INT NOT NULL,
+  LANGUAGE_ID INT NOT NULL DEFAULT 1,
   CONTENT_TEXT CLOB,
   CONTENT_PDF BLOB,
 
@@ -386,7 +387,40 @@ SELECT 1 AS "Öö"
 /
 
 CREATE VIEW v_2603 AS
-SELECT 1 AS col1, 2 AS col2, 3 AS col3, 4 as col4
+SELECT 1 AS col1, 2 AS col2, 3 AS col3, 4 AS col4
+/
+
+CREATE VIEW v_3176 AS
+SELECT 1 AS col001, 1 AS col002, 1 AS col003, 1 AS col004, 1 AS col005, 1 AS col006, 1 AS col007, 1 AS col008, 1 AS col009, 1 AS col010,
+       1 AS col011, 1 AS col012, 1 AS col013, 1 AS col014, 1 AS col015, 1 AS col016, 1 AS col017, 1 AS col018, 1 AS col019, 1 AS col020,
+       1 AS col021, 1 AS col022, 1 AS col023, 1 AS col024, 1 AS col025, 1 AS col026, 1 AS col027, 1 AS col028, 1 AS col029, 1 AS col030,
+       1 AS col031, 1 AS col032, 1 AS col033, 1 AS col034, 1 AS col035, 1 AS col036, 1 AS col037, 1 AS col038, 1 AS col039, 1 AS col040,
+       1 AS col041, 1 AS col042, 1 AS col043, 1 AS col044, 1 AS col045, 1 AS col046, 1 AS col047, 1 AS col048, 1 AS col049, 1 AS col050,
+       1 AS col051, 1 AS col052, 1 AS col053, 1 AS col054, 1 AS col055, 1 AS col056, 1 AS col057, 1 AS col058, 1 AS col059, 1 AS col060,
+       1 AS col061, 1 AS col062, 1 AS col063, 1 AS col064, 1 AS col065, 1 AS col066, 1 AS col067, 1 AS col068, 1 AS col069, 1 AS col070,
+       1 AS col071, 1 AS col072, 1 AS col073, 1 AS col074, 1 AS col075, 1 AS col076, 1 AS col077, 1 AS col078, 1 AS col079, 1 AS col080,
+       1 AS col081, 1 AS col082, 1 AS col083, 1 AS col084, 1 AS col085, 1 AS col086, 1 AS col087, 1 AS col088, 1 AS col089, 1 AS col090,
+       1 AS col091, 1 AS col092, 1 AS col093, 1 AS col094, 1 AS col095, 1 AS col096, 1 AS col097, 1 AS col098, 1 AS col099, 1 AS col100,
+       1 AS col101, 1 AS col102, 1 AS col103, 1 AS col104, 1 AS col105, 1 AS col106, 1 AS col107, 1 AS col108, 1 AS col109, 1 AS col110,
+       1 AS col111, 1 AS col112, 1 AS col113, 1 AS col114, 1 AS col115, 1 AS col116, 1 AS col117, 1 AS col118, 1 AS col119, 1 AS col120,
+       1 AS col121, 1 AS col122, 1 AS col123, 1 AS col124, 1 AS col125, 1 AS col126, 1 AS col127, 1 AS col128, 1 AS col129, 1 AS col130,
+       1 AS col131, 1 AS col132, 1 AS col133, 1 AS col134, 1 AS col135, 1 AS col136, 1 AS col137, 1 AS col138, 1 AS col139, 1 AS col140,
+       1 AS col141, 1 AS col142, 1 AS col143, 1 AS col144, 1 AS col145, 1 AS col146, 1 AS col147, 1 AS col148, 1 AS col149, 1 AS col150,
+       1 AS col151, 1 AS col152, 1 AS col153, 1 AS col154, 1 AS col155, 1 AS col156, 1 AS col157, 1 AS col158, 1 AS col159, 1 AS col160,
+       1 AS col161, 1 AS col162, 1 AS col163, 1 AS col164, 1 AS col165, 1 AS col166, 1 AS col167, 1 AS col168, 1 AS col169, 1 AS col170,
+       1 AS col171, 1 AS col172, 1 AS col173, 1 AS col174, 1 AS col175, 1 AS col176, 1 AS col177, 1 AS col178, 1 AS col179, 1 AS col180,
+       1 AS col181, 1 AS col182, 1 AS col183, 1 AS col184, 1 AS col185, 1 AS col186, 1 AS col187, 1 AS col188, 1 AS col189, 1 AS col190,
+       1 AS col191, 1 AS col192, 1 AS col193, 1 AS col194, 1 AS col195, 1 AS col196, 1 AS col197, 1 AS col198, 1 AS col199, 1 AS col200,
+       1 AS col201, 1 AS col202, 1 AS col203, 1 AS col204, 1 AS col205, 1 AS col206, 1 AS col207, 1 AS col208, 1 AS col209, 1 AS col210,
+       1 AS col211, 1 AS col212, 1 AS col213, 1 AS col214, 1 AS col215, 1 AS col216, 1 AS col217, 1 AS col218, 1 AS col219, 1 AS col220,
+       1 AS col221, 1 AS col222, 1 AS col223, 1 AS col224, 1 AS col225, 1 AS col226, 1 AS col227, 1 AS col228, 1 AS col229, 1 AS col230,
+       1 AS col231, 1 AS col232, 1 AS col233, 1 AS col234, 1 AS col235, 1 AS col236, 1 AS col237, 1 AS col238, 1 AS col239, 1 AS col240,
+       1 AS col241, 1 AS col242, 1 AS col243, 1 AS col244, 1 AS col245, 1 AS col246, 1 AS col247, 1 AS col248, 1 AS col249, 1 AS col250,
+       1 AS col251, 1 AS col252, 1 AS col253, 1 AS col254, 1 AS col255, 1 AS col256, 1 AS col257, 1 AS col258, 1 AS col259, 1 AS col260,
+       1 AS col261, 1 AS col262, 1 AS col263, 1 AS col264, 1 AS col265, 1 AS col266, 1 AS col267, 1 AS col268, 1 AS col269, 1 AS col270,
+       1 AS col271, 1 AS col272, 1 AS col273, 1 AS col274, 1 AS col275, 1 AS col276, 1 AS col277, 1 AS col278, 1 AS col279, 1 AS col280,
+       1 AS col281, 1 AS col282, 1 AS col283, 1 AS col284, 1 AS col285, 1 AS col286, 1 AS col287, 1 AS col288, 1 AS col289, 1 AS col290,
+       1 AS col291, 1 AS col292, 1 AS col293, 1 AS col294, 1 AS col295, 1 AS col296, 1 AS col297, 1 AS col298, 1 AS col299, 1 AS col300
 /
 
 CREATE ALIAS f_one FOR "org.jooq.test.h2.F.fOne";/

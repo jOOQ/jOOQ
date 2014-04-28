@@ -9,11 +9,11 @@ package org.jooq.test.postgres.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UUuidsRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.postgres.generatedclasses.udt.records.UUuidsRecord> {
 
-	private static final long serialVersionUID = -62787964;
+	private static final long serialVersionUID = 1818667242;
 
 
 	/**
-	 * Setter for <code>public.u_uuids.u1</code>. 
+	 * Setter for <code>public.u_uuids.u1</code>.
 	 */
 	public UUuidsRecord setU1(java.util.UUID value) {
 		setValue(org.jooq.test.postgres.generatedclasses.udt.UUuids.U1, value);
@@ -21,14 +21,14 @@ public class UUuidsRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.post
 	}
 
 	/**
-	 * Getter for <code>public.u_uuids.u1</code>. 
+	 * Getter for <code>public.u_uuids.u1</code>.
 	 */
 	public java.util.UUID getU1() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UUuids.U1);
 	}
 
 	/**
-	 * Setter for <code>public.u_uuids.u2</code>. 
+	 * Setter for <code>public.u_uuids.u2</code>.
 	 */
 	public UUuidsRecord setU2(java.util.UUID[] value) {
 		setValue(org.jooq.test.postgres.generatedclasses.udt.UUuids.U2, value);
@@ -36,7 +36,7 @@ public class UUuidsRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.post
 	}
 
 	/**
-	 * Getter for <code>public.u_uuids.u2</code>. 
+	 * Getter for <code>public.u_uuids.u2</code>.
 	 */
 	public java.util.UUID[] getU2() {
 		return getValue(org.jooq.test.postgres.generatedclasses.udt.UUuids.U2);

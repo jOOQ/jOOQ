@@ -48,9 +48,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jooq.Converter;
 import org.jooq.DataType;
-import org.jooq.exception.DataTypeException;
 
 /**
  * A central {@link DataType} registry
@@ -59,59 +57,12 @@ import org.jooq.exception.DataTypeException;
  */
 final class DataTypes {
 
-    private static final Map<Class<?>, Converter<?, ?>> CONVERTERS  = new HashMap<Class<?>, Converter<?, ?>>();
     private static final Map<String, Class<?>>          UDT_RECORDS = new HashMap<String, Class<?>>();
 
     // ------------------------------------------------------------------------
     // XXX: Public API used for initialisation from generated artefacts
     // (this may be rendered public in the future)
     // ------------------------------------------------------------------------
-
-    /**
-     * Register a <code>Converter</code> for a custom type
-     * <p>
-     * This registers a {@link Converter} for a custom type. This converter will
-     * be used by jOOQ to recognise custom types and to transform them back to
-     * well-known database types (as defined in {@link Converter#fromType()}) in
-     * rendering and binding steps
-     * <p>
-     * A custom type can be registered only once. Duplicate registrations will
-     * be ignored
-     * <p>
-     * The converter class must provide a default constructor.
-     *
-     * @see #registerConverter(Class, Converter)
-     */
-    static final synchronized <U> void registerConverter(Class<U> customType,
-        Class<? extends Converter<?, U>> converter) {
-
-        try {
-            converter.getConstructor().setAccessible(true);
-            registerConverter(customType, converter.newInstance());
-        }
-        catch (Exception e) {
-            throw new DataTypeException("Cannot register converter", e);
-        }
-    }
-
-    /**
-     * Register a <code>Converter</code> for a custom type
-     * <p>
-     * This registers a {@link Converter} for a custom type. This converter will
-     * be used by jOOQ to recognise custom types and to transform them back to
-     * well-known database types (as defined in {@link Converter#fromType()}) in
-     * rendering and binding steps
-     * <p>
-     * A custom type can be registered only once. Duplicate registrations will
-     * be ignored
-     */
-    static final synchronized <U> void registerConverter(Class<U> customType, Converter<?, U> converter) {
-
-        // A converter can be registered only once
-        if (!CONVERTERS.containsKey(customType)) {
-            CONVERTERS.put(customType, converter);
-        }
-    }
 
     /**
      * Register a type mapping for a UDT
@@ -133,13 +84,6 @@ final class DataTypes {
     // ------------------------------------------------------------------------
     // XXX: Internal API
     // ------------------------------------------------------------------------
-
-    @SuppressWarnings("unchecked")
-    static final <U> Converter<?, U> converter(Class<U> customType) {
-
-        // TODO: Is synchronisation needed? How to implement it most efficiently?
-        return (Converter<?, U>) CONVERTERS.get(customType);
-    }
 
     static final Map<String, Class<?>> udtRecords() {
         return Collections.unmodifiableMap(UDT_RECORDS);

@@ -10,12 +10,12 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 public interface IXTestCase_64_69 extends java.io.Serializable {
 
 	/**
-	 * Getter for <code>public.x_test_case_64_69.id</code>. 
+	 * Getter for <code>public.x_test_case_64_69.id</code>.
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * Getter for <code>public.x_test_case_64_69.unused_id</code>. 
+	 * Getter for <code>public.x_test_case_64_69.unused_id</code>.
 	 */
 	public java.lang.Integer getUnusedId();
 }

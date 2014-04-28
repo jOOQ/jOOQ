@@ -10,12 +10,12 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 public interface IT_2781 extends java.io.Serializable {
 
 	/**
-	 * Getter for <code>public.t_2781.org</code>. 
+	 * Getter for <code>public.t_2781.org</code>.
 	 */
 	public java.lang.String getOrg();
 
 	/**
-	 * Getter for <code>public.t_2781.jooq</code>. 
+	 * Getter for <code>public.t_2781.jooq</code>.
 	 */
 	public java.lang.String getJooq();
 }

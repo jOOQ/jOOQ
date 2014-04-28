@@ -47,8 +47,10 @@ import java.util.Collection;
 
 import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
+import org.jooq.exception.DataAccessException;
 
 /**
  * A base class for {@link BindContext} implementations
@@ -89,6 +91,7 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
     }
 
     @Override
+    @Deprecated
     public final BindContext bindValues(Object... values) {
 
         // [#724] When values is null, this is probably due to API-misuse
@@ -99,7 +102,7 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
         else {
             for (Object value : values) {
                 Class<?> type = (value == null) ? Object.class : value.getClass();
-                bindValue(value, type);
+                bindValue(value, DSL.val(value, type));
             }
         }
 
@@ -107,9 +110,20 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
     }
 
     @Override
+    @Deprecated
     public final BindContext bindValue(Object value, Class<?> type) {
         try {
-            return bindValue0(value, type);
+            return bindValue0(value, DSL.val(value, type));
+        }
+        catch (SQLException e) {
+            throw Utils.translate(null, e);
+        }
+    }
+
+    @Override
+    public final BindContext bindValue(Object value, Field<?> field) throws DataAccessException {
+        try {
+            return bindValue0(value, field);
         }
         catch (SQLException e) {
             throw Utils.translate(null, e);
@@ -131,7 +145,7 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
      * Subclasses may override this method to achieve different behaviour
      */
     @SuppressWarnings("unused")
-    protected BindContext bindValue0(Object value, Class<?> type) throws SQLException {
+    protected BindContext bindValue0(Object value, Field<?> field) throws SQLException {
         return this;
     }
 

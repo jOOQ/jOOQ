@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_986_2 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record> {
 
-	private static final long serialVersionUID = -1006284626;
+	private static final long serialVersionUID = 1768751594;
 
 	/**
 	 * The singleton instance of <code>public.t_986_2</code>
@@ -25,26 +25,30 @@ public class T_986_2 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gene
 	}
 
 	/**
-	 * The column <code>public.t_986_2.ref</code>. 
+	 * The column <code>public.t_986_2.ref</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record, java.lang.Integer> REF = createField("ref", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record, java.lang.Integer> REF = createField("ref", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>public.t_986_2</code> table reference
 	 */
 	public T_986_2() {
-		super("t_986_2", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
+		this("t_986_2", null);
 	}
 
 	/**
 	 * Create an aliased <code>public.t_986_2</code> table reference
 	 */
 	public T_986_2(java.lang.String alias) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.T_986_2.T_986_2);
+		this(alias, org.jooq.test.postgres.generatedclasses.tables.T_986_2.T_986_2);
 	}
 
 	private T_986_2(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record> aliased) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+		this(alias, aliased, null);
+	}
+
+	private T_986_2(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**

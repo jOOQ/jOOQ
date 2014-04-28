@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+
 /**
  * A JSON object. Key value pairs are unordered. JSONObject supports
  * java.util.Map interface.
@@ -46,9 +47,7 @@ public class JSONObject extends HashMap{
     }
 
     /**
-     * Encode a map into JSON text and write it to out. If this map is also a
-     * JSONAware or JSONStreamAware, JSONAware or JSONStreamAware specific
-     * behaviours will be ignored at this top level.
+     * Encode a map into JSON text and write it to out.
      *
      * @see JSONValue#writeJSONString(Object, Writer)
      */
@@ -78,9 +77,7 @@ public class JSONObject extends HashMap{
     }
 
     /**
-     * Convert a map to JSON text. The result is a JSON object. If this map is
-     * also a JSONAware, JSONAware specific behaviours will be omitted at this
-     * top level.
+     * Convert a map to JSON text. The result is a JSON object.
      *
      * @see JSONValue#toJSONString(Object)
      * @return JSON text, or "null" if map is null.

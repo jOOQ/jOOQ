@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 1577230919;
+	private static final long serialVersionUID = 78051787;
 
 	/**
 	 * The singleton instance of <code>public.t_book_store</code>
@@ -25,26 +25,30 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.postgres.g
 	}
 
 	/**
-	 * The column <code>public.t_book_store.name</code>. 
+	 * The column <code>public.t_book_store.name</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false).defaulted(true), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
 	 * Create a <code>public.t_book_store</code> table reference
 	 */
 	public TBookStore() {
-		super("t_book_store", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
+		this("t_book_store", null);
 	}
 
 	/**
 	 * Create an aliased <code>public.t_book_store</code> table reference
 	 */
 	public TBookStore(java.lang.String alias) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TBookStore.T_BOOK_STORE);
+		this(alias, org.jooq.test.postgres.generatedclasses.tables.TBookStore.T_BOOK_STORE);
 	}
 
 	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord> aliased) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased);
+		this(alias, aliased, null);
+	}
+
+	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**

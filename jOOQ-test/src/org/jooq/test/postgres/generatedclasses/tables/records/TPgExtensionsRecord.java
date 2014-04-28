@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TPgExtensionsRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord> implements org.jooq.Record5<java.lang.Integer, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITPgExtensions {
 
-	private static final long serialVersionUID = 499339171;
+	private static final long serialVersionUID = 310117023;
 
 	/**
-	 * Setter for <code>public.t_pg_extensions.id</code>. 
+	 * Setter for <code>public.t_pg_extensions.id</code>.
 	 */
 	public TPgExtensionsRecord setId(java.lang.Integer value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class TPgExtensionsRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * Getter for <code>public.t_pg_extensions.id</code>. 
+	 * Getter for <code>public.t_pg_extensions.id</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class TPgExtensionsRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * Setter for <code>public.t_pg_extensions.pg_interval</code>. 
+	 * Setter for <code>public.t_pg_extensions.pg_interval</code>.
 	 */
 	public TPgExtensionsRecord setPgInterval(java.lang.Object value) {
 		setValue(1, value);
@@ -36,7 +36,7 @@ public class TPgExtensionsRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * Getter for <code>public.t_pg_extensions.pg_interval</code>. 
+	 * Getter for <code>public.t_pg_extensions.pg_interval</code>.
 	 */
 	@Override
 	public java.lang.Object getPgInterval() {
@@ -44,7 +44,7 @@ public class TPgExtensionsRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * Setter for <code>public.t_pg_extensions.pg_box</code>. 
+	 * Setter for <code>public.t_pg_extensions.pg_box</code>.
 	 */
 	public TPgExtensionsRecord setPgBox(java.lang.Object value) {
 		setValue(2, value);
@@ -52,7 +52,7 @@ public class TPgExtensionsRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * Getter for <code>public.t_pg_extensions.pg_box</code>. 
+	 * Getter for <code>public.t_pg_extensions.pg_box</code>.
 	 */
 	@Override
 	public java.lang.Object getPgBox() {
@@ -60,7 +60,7 @@ public class TPgExtensionsRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * Setter for <code>public.t_pg_extensions.pg_hstore</code>. 
+	 * Setter for <code>public.t_pg_extensions.pg_hstore</code>.
 	 */
 	public TPgExtensionsRecord setPgHstore(java.lang.Object value) {
 		setValue(3, value);
@@ -68,7 +68,7 @@ public class TPgExtensionsRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * Getter for <code>public.t_pg_extensions.pg_hstore</code>. 
+	 * Getter for <code>public.t_pg_extensions.pg_hstore</code>.
 	 */
 	@Override
 	public java.lang.Object getPgHstore() {
@@ -76,7 +76,7 @@ public class TPgExtensionsRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * Setter for <code>public.t_pg_extensions.pg_geometry</code>. 
+	 * Setter for <code>public.t_pg_extensions.pg_geometry</code>.
 	 */
 	public TPgExtensionsRecord setPgGeometry(java.lang.Object value) {
 		setValue(4, value);
@@ -84,7 +84,7 @@ public class TPgExtensionsRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	}
 
 	/**
-	 * Getter for <code>public.t_pg_extensions.pg_geometry</code>. 
+	 * Getter for <code>public.t_pg_extensions.pg_geometry</code>.
 	 */
 	@Override
 	public java.lang.Object getPgGeometry() {

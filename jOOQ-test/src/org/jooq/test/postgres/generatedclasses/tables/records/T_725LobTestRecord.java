@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord> implements org.jooq.Record2<java.lang.Integer, byte[]>, org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_725LobTest {
 
-	private static final long serialVersionUID = 1604441011;
+	private static final long serialVersionUID = 1699341809;
 
 	/**
-	 * Setter for <code>public.t_725_lob_test.id</code>. 
+	 * Setter for <code>public.t_725_lob_test.id</code>.
 	 */
 	public T_725LobTestRecord setId(java.lang.Integer value) {
 		setValue(0, value);
@@ -20,7 +20,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Getter for <code>public.t_725_lob_test.id</code>. 
+	 * Getter for <code>public.t_725_lob_test.id</code>.
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Setter for <code>public.t_725_lob_test.lob</code>. 
+	 * Setter for <code>public.t_725_lob_test.lob</code>.
 	 */
 	public T_725LobTestRecord setLob(byte[] value) {
 		setValue(1, value);
@@ -36,7 +36,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Getter for <code>public.t_725_lob_test.lob</code>. 
+	 * Getter for <code>public.t_725_lob_test.lob</code>.
 	 */
 	@Override
 	public byte[] getLob() {

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd">
+    <jdbc>
+        <driver>oracle.jdbc.OracleDriver</driver>
+        <url>jdbc:oracle:thin:@localhost:1521:xe</url>
+        <schema>TEST</schema>
+        <user>TEST</user>
+        <password>TEST</password>
+    </jdbc>
+    <generator>
+        <name>org.jooq.util.DefaultGenerator</name>
+        <strategy>
+            <name>org.jooq.configuration.lukas.oracle.Oracle2Strategy</name>
+        </strategy>
+        <database>
+            <name>org.jooq.util.oracle.OracleDatabase</name>
+            <includes>.*976.*|T_DATES</includes>
+            <excludes></excludes>
+            <schemata>
+                <schema>
+                    <inputSchema>TEST</inputSchema>
+                </schema>
+            </schemata>
+            <dateAsTimestamp>true</dateAsTimestamp>
+            <unsignedTypes>true</unsignedTypes>
+
+            <!-- [#2404] Try combining forced types with dateAsTimestamp -->
+            <customTypes>
+                <customType>
+                    <name>java.util.GregorianCalendar</name>
+                    <converter>org.jooq.test._.converters.CalendarConverter</converter>
+                </customType>
+            </customTypes>
+
+            <!-- [#2404] Then, associate custom types with database columns -->
+            <forcedTypes>
+                <forcedType>
+                    <name>java.util.GregorianCalendar</name>
+                    <expressions>.*T_DATES\.(T|D|TS)</expressions>
+                </forcedType>
+            </forcedTypes>
+        </database>
+        <generate>
+            <relations>true</relations>
+            <deprecated>true</deprecated>
+            <instanceFields>true</instanceFields>
+            <generatedAnnotation>false</generatedAnnotation>
+            <pojos>false</pojos>
+            <jpaAnnotations>false</jpaAnnotations>
+        </generate>
+        <target>
+            <packageName>org.jooq.test.oracle2.generatedclasses</packageName>
+            <directory>./src/test/java</directory>
+        </target>
+    </generator>
+</configuration>

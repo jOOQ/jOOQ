@@ -46,6 +46,9 @@ import static java.util.Arrays.asList;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
+import static org.jooq.conf.RenderNameStyle.LOWER;
+import static org.jooq.conf.RenderNameStyle.QUOTED;
+import static org.jooq.conf.RenderNameStyle.UPPER;
 import static org.jooq.impl.Utils.DATA_COUNT_BIND_VALUES;
 
 import java.util.Arrays;
@@ -77,23 +80,22 @@ import org.jooq.tools.StringUtils;
  */
 class DefaultRenderContext extends AbstractContext<RenderContext> implements RenderContext {
 
-    private static final JooqLogger   log                = JooqLogger.getLogger(DefaultRenderContext.class);
+    private static final JooqLogger  log         = JooqLogger.getLogger(DefaultRenderContext.class);
 
-    private static final Pattern      IDENTIFIER_PATTERN = Pattern.compile("[A-Za-z][A-Za-z0-9_]*");
-    private static final Pattern      NEWLINE            = Pattern.compile("[\\n\\r]");
-    private static final Set<String>  SQLITE_KEYWORDS;
+    private static final Pattern     NEWLINE     = Pattern.compile("[\\n\\r]");
+    private static final Set<String> SQLITE_KEYWORDS;
 
-    private final StringBuilder       sql;
-    private int                       params;
-    private int                       alias;
-    private int                       indent;
-    private Stack<Integer>            indentLock         = new Stack<Integer>();
-    private int                       printMargin        = 80;
+    private final StringBuilder      sql;
+    private int                      params;
+    private int                      alias;
+    private int                      indent;
+    private Stack<Integer>           indentLock  = new Stack<Integer>();
+    private int                      printMargin = 80;
 
     // [#1632] Cached values from Settings
-    private RenderKeywordStyle        cachedRenderKeywordStyle;
-    private RenderNameStyle           cachedRenderNameStyle;
-    private boolean                   cachedRenderFormatted;
+    private RenderKeywordStyle       cachedRenderKeywordStyle;
+    private RenderNameStyle          cachedRenderNameStyle;
+    private boolean                  cachedRenderFormatted;
 
     DefaultRenderContext(Configuration configuration) {
         super(configuration, null);
@@ -327,38 +329,35 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             return this;
         }
 
+        SQLDialect family = configuration.dialect().family();
+
         // Quoting is needed when explicitly requested...
         boolean needsQuote =
-            (RenderNameStyle.QUOTED == cachedRenderNameStyle
+            (QUOTED == cachedRenderNameStyle
 
         // [#2367] ... but in SQLite, quoting "normal" literals is generally
         // asking for trouble, as SQLite bends the rules here, see
         // http://www.sqlite.org/lang_keywords.html for details ...
-            && configuration.dialect() != SQLDialect.SQLITE)
+            && family != SQLDialect.SQLITE)
 
         ||
 
         // [#2367] ... yet, do quote when an identifier is a SQLite keyword
-            (configuration.dialect() == SQLDialect.SQLITE
-            && SQLITE_KEYWORDS.contains(literal.toUpperCase()))
-
-        ||
-
-        // [#1982] ... yet, do quote when an identifier contains special characters
-            (!IDENTIFIER_PATTERN.matcher(literal).matches());
-
-        if (RenderNameStyle.LOWER == cachedRenderNameStyle) {
-            literal = literal.toLowerCase();
-        }
-        else if (RenderNameStyle.UPPER == cachedRenderNameStyle) {
-            literal = literal.toUpperCase();
-        }
+            (family == SQLDialect.SQLITE
+            && SQLITE_KEYWORDS.contains(literal.toUpperCase()));
 
         if (!needsQuote) {
+            if (LOWER == cachedRenderNameStyle) {
+                literal = literal.toLowerCase();
+            }
+            else if (UPPER == cachedRenderNameStyle) {
+                literal = literal.toUpperCase();
+            }
+
             sql(literal);
         }
         else {
-            switch (configuration.dialect().family()) {
+            switch (family) {
 
                 // MySQL supports backticks and double quotes
                 case MARIADB:

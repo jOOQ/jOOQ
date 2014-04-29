@@ -367,6 +367,12 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                 }
             }
 
+            // [#3186] Firebird's FOR UPDATE clause has a different semantics. To achieve "regular"
+            // FOR UPDATE semantics, we should use FOR UPDATE WITH LOCK
+            if (context.configuration().dialect().family() == FIREBIRD) {
+                context.sql(" ").keyword("with lock");
+            }
+
             if (forUpdateMode != null) {
                 context.sql(" ");
                 context.keyword(forUpdateMode.toSQL());

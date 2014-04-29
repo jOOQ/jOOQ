@@ -2528,13 +2528,13 @@ public class BasicTest extends AbstractTest {
         RenderContext r_refI = r_refI();
 
         r_refI.configuration().settings().setRenderNameStyle(RenderNameStyle.AS_IS);
-        assertEquals("select 1 as `Aa ``Bb`` Cc` from TABLE1 as `Xx ''Yy''\\ Zz`", r_refI.render(q));
+        assertEquals("select 1 as Aa `Bb` Cc from TABLE1 as Xx ''Yy''\\ Zz", r_refI.render(q));
 
         r_refI.configuration().settings().setRenderNameStyle(RenderNameStyle.LOWER);
-        assertEquals("select 1 as `aa ``bb`` cc` from table1 as `xx ''yy''\\ zz`", r_refI.render(q));
+        assertEquals("select 1 as aa `bb` cc from table1 as xx ''yy''\\ zz", r_refI.render(q));
 
         r_refI.configuration().settings().setRenderNameStyle(RenderNameStyle.UPPER);
-        assertEquals("select 1 as `AA ``BB`` CC` from TABLE1 as `XX ''YY''\\ ZZ`", r_refI.render(q));
+        assertEquals("select 1 as AA `BB` CC from TABLE1 as XX ''YY''\\ ZZ", r_refI.render(q));
 
         r_refI.configuration().settings().setRenderNameStyle(RenderNameStyle.QUOTED);
         assertEquals("select 1 as `Aa ``Bb`` Cc` from `TABLE1` as `Xx ''Yy''\\ Zz`", r_refI.render(q));

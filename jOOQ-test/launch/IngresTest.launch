@@ -25,7 +25,9 @@
 <listEntry value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;runtimeClasspathEntry path=&quot;3&quot; projectName=&quot;jOOQ-codegen&quot; type=&quot;1&quot;/&gt;&#13;&#10;"/>
 <listEntry value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;runtimeClasspathEntry path=&quot;3&quot; projectName=&quot;jOOQ-console&quot; type=&quot;1&quot;/&gt;&#13;&#10;"/>
 </listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.jooq.test.IngresTest"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="jOOQ-test"/>
+<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.jooq.configuration=/org/jooq/configuration/${env_var:USERNAME}/ingres/library.xml -XX:+UnlockCommercialFeatures -XX:+FlightRecorder"/>
 </launchConfiguration>

@@ -89,7 +89,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testTruncate() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -109,7 +108,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(0, create().fetch(TDates()).size());
     }
 
-    @Test
     public void testTruncateCascade() throws Exception {
         switch (dialect().family()) {
             /* [pro] */
@@ -151,7 +149,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(0, create().fetch(TBook()).size());
     }
 
-    @Test
     public void testTruncateRestartIdentity() throws Exception {
         switch (dialect().family()) {
             /* [pro] */

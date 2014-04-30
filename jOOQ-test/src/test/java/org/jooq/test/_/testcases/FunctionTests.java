@@ -186,7 +186,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testFunctionPosition() throws Exception {
         // SQLite does not have anything like the position function
         if (dialect() == SQLDialect.SQLITE) {
@@ -216,7 +215,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertTrue(library != null);
     }
 
-    @Test
     public void testFunctionsLikeDecode() throws Exception {
         Field<String> sNull = castNull(String.class);
         Field<Integer> iNull = castNull(Integer.class);
@@ -348,7 +346,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("DE", result.getValue(3, 3));
     }
 
-    @Test
     public void testCaseStatement() throws Exception {
         Field<String> case1 = decode()
             .value(TBook_PUBLISHED_IN())
@@ -424,7 +421,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("don't know", result.getValue(3, case4).trim());
     }
 
-    @Test
     public void testFunctionsOnStrings_TRIM() throws Exception {
 
         // Trimming
@@ -436,7 +432,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("abc  ", create().select(ltrim("  abc  ")).fetchOne(0));
     }
 
-    @Test
     public void testFunctionsOnStrings_UPPER_LOWER() throws Exception {
 
         // Lower / Upper
@@ -444,7 +439,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("ABC", create().select(upper("abc")).fetchOne(0));
     }
 
-    @Test
     public void testFunctionsOnStrings_CONCAT() throws Exception {
 
         // String concatenation
@@ -457,7 +451,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("1ab45", create().select(concat(val(1), val("ab"), val(45))).fetchOne(0));
     }
 
-    @Test
     public void testFunctionsOnStrings_REPLACE() throws Exception {
 
         // Standard String functions
@@ -511,7 +504,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFunctionsOnStrings_RPAD_LPAD() throws Exception {
 
         // RPAD, LPAD
@@ -537,7 +529,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFunctionsOnStrings_SUBSTRING() throws Exception {
 
         // SUBSTRING
@@ -564,7 +555,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("eo", result.getValue(substring(TAuthor_FIRST_NAME(), 2, 2)));
     }
 
-    @Test
     public void testFunctionsOnStrings_LEFT_RIGHT() throws Exception {
 
         // LEFT and RIGHT
@@ -587,7 +577,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("rge", result.value2());
     }
 
-    @Test
     public void testFunctionsOnStrings_REPEAT() throws Exception {
 
         // REPEAT
@@ -612,7 +601,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFunctionsOnStrings_SPACE() throws Exception {
 
         switch (dialect()) {
@@ -638,7 +626,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFunctionsOnStrings_REVERSE() throws Exception {
 
         // REVERSE
@@ -669,7 +656,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFunctionsOnStrings_ASCII() throws Exception {
 
         // ASCII
@@ -698,7 +684,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFunctionsOnStrings_HashFunctions() throws Exception {
 
         // MD5
@@ -732,7 +717,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFunctionsOnNumbers_RAND() throws Exception {
 
         // The random function
@@ -740,7 +724,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNotNull(rand);
     }
 
-    @Test
     public void testFunctionsOnNumbers_ROUND_FLOOR_CEIL_TRUNC() throws Exception {
 
         // Some databases are limited or buggy
@@ -842,7 +825,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("0.0", record.getValue(f4f, String.class));
     }
 
-    @Test
     public void testFunctionsOnNumbers_GREATEST_LEAST() throws Exception {
 
         // Greatest and least
@@ -878,7 +860,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList(1, 1, 2, 2), result.getValues(2));
     }
 
-    @Test
     public void testFunctionsOnNumbers_TRIGONOMETRY() throws Exception {
 
         // Mathematical functions
@@ -953,7 +934,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFunctionsOnNumbers_SIGN() throws Exception {
 
         // The sign function
@@ -972,7 +952,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(-1), record.getValue(4));
     }
 
-    @Test
     public void testFunctionsOnNumbers_ABS() throws Exception {
 
         // The abs function
@@ -991,7 +970,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(2), record.getValue(4));
     }
 
-    @Test
     public void testDateOrTimeFunction() throws Exception {
 
         // [#3041] TODO
@@ -1014,7 +992,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("02:00:00", record.getValue(t).toString());
     }
 
-    @Test
     public void testFunctionsOnDates() throws Exception {
 
         // Some checks on current_timestamp functions
@@ -1093,7 +1070,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             (record.getValue(tomorrow).getTime() / 1000 - record.getValue(ts).getTime() / 1000));
     }
 
-    @Test
     public void testExtractInSubselect() throws Exception {
         Field<Timestamp> now = currentTimestamp();
 
@@ -1126,7 +1102,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(reference, result);
     }
 
-    @Test
     public void testSystemFunctions() throws Exception {
         if (dialect() == SQLDialect.SQLITE) {
             log.info("SKIPPING", "System functions test");
@@ -1137,7 +1112,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create().select(user).fetchOne();
     }
 
-    @Test
     public void testArithmeticOperations() throws Exception {
         Field<Integer> f1 = val(1).add(2).add(3).div(2);
         Field<Integer> f2 = val(10).div(5).add(val(3).sub(2));
@@ -1168,7 +1142,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf((1948 - 4) * -8), result.getValue(0, f5));
     }
 
-    @Test
     public void testBitwiseOperations() throws Exception {
         switch (dialect().family()) {
             /* [pro] */

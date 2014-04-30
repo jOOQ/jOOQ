@@ -109,7 +109,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testInsertUpdateDelete() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -187,7 +186,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         q.addValue(field, address);
     }
 
-    @Test
     public void testManager() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -237,7 +235,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(null, create().fetchOne(TAuthor(), TAuthor_FIRST_NAME().equal("Erich")));
     }
 
-    @Test
     public void testUpdatablesCopy() throws Exception {
         if (TTriggers() == null) {
             log.info("SKIPPING", "UpdatableRecord.copy() tests");
@@ -264,7 +261,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings("unchecked")
-    @Test
+
     public void testUpdatablesKeysMethod() throws Exception {
         B b = create().selectFrom(TBook())
                       .where(TBook_ID().eq(1))
@@ -296,7 +293,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(6, (int) bKey.value1());
     }
 
-    @Test
     public void testUpdatablesInsertUpdate() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -350,7 +346,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("YY", test.getValue(TAuthor_LAST_NAME()));
     }
 
-    @Test
     public void testUpdatablesPK() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -515,7 +510,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .fetchOne(0));
     }
 
-    @Test
     public void testUpdatablesPKChangePK() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -547,7 +541,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("new title", book3.getValue(TBook_TITLE()));
     }
 
-    @Test
     public void testUpdatablesUK() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -597,7 +590,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Rösslitor", store.getValue(TBookStore_NAME()));
     }
 
-    @Test
     public void testUpdatablesVersionAndTimestamp() throws Exception {
         if (TBook_REC_TIMESTAMP() == null && TBook_REC_VERSION() == null) {
             log.info("SKIPPING", "Record version and timestamp tests");
@@ -688,7 +680,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         if (v) assertEquals(v4a, book4.getValue(TBook_REC_VERSION()));
     }
 
-    @Test
     public void testStoreWithOptimisticLock() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -792,7 +783,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         catch (DataChangedException expected) {}
     }
 
-    @Test
     public void testStoreVsExecuteInsert() throws Exception {
         if (TIdentityPK() == null) {
             log.info("SKIPPING", "store() vs. executeInsert() tests");
@@ -812,7 +802,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(1, i2.store());
     }
 
-    @Test
     public void testUpdatablesWithUpdatablePK() throws Exception {
         DSLContext create = create();
         create.configuration().settings().setUpdatablePrimaryKeys(true);

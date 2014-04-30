@@ -108,7 +108,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings("unchecked")
-    @Test
+
     public void testRowValueExpressionConditions() throws Exception {
 
         // Simple equality tests
@@ -162,7 +162,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetch(TBook_ID()));
     }
 
-    @Test
     public void testRowValueExpressionBetweenConditions() throws Exception {
         assertEquals(1, (int)
         create().selectOne()
@@ -217,7 +216,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .fetchOne(0, Integer.class));
     }
 
-    @Test
     public void testRowValueExpressionOrderingConditions() throws Exception {
         assertEquals(1, (int)
         create().selectOne()
@@ -310,7 +308,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetchOne(0, Integer.class));
     }
 
-    @Test
     public void testRowValueExpressionOrderingSubselects() throws Exception {
         assertEquals(1, (int)
         create().selectOne()
@@ -340,7 +337,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetchOne(0, Integer.class));
     }
 
-    @Test
     public void testRowValueExpressionInConditions() throws Exception {
         assertEquals(1, (int)
         create().selectOne()
@@ -375,7 +371,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetch(0, Integer.class));
     }
 
-    @Test
     public void testRowValueExpressionNULLPredicate() throws Exception {
         assertEquals(3, (int)
         create().selectCount()
@@ -386,7 +381,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     }
 
-    @Test
     public void testRowValueExpressionOverlapsCondition() throws Exception {
         // 1903-06-25
         // 1947-08-24
@@ -437,7 +431,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetchOne(0, Integer.class));
     }
 
-    @Test
     public void testRowValueExpressionRecords() {
 
         // All record types should be assignment-compatible to the general-purpose
@@ -613,7 +606,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testRowValueExpressionTableRecords() throws Exception {
 
         // [#1918] Generated records now also implement Record[N] interfaces
@@ -664,7 +656,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         ));
     }
 
-    @Test
     public void testRowValueExpressionValuesConstructor() throws Exception {
         // [#915] TODO: How to properly alias things in order to be able to select them?
 

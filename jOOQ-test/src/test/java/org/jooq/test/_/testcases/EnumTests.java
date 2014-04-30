@@ -101,7 +101,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Test
+
     public void testEnums() throws Exception {
         if (TBook_STATUS() == null) {
             log.info("SKIPPING", "enums test");
@@ -129,12 +129,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("ON STOCK", ((EnumType) value).getLiteral());
     }
 
-    @Test
     public <R extends TableRecord<R>> void testCustomEnums() throws Exception {
         testCustomEnums0(create());
     }
 
-    @Test
     public <R extends TableRecord<R>> void testCustomEnumsWithInline() throws Exception {
         testCustomEnums0(create(new Settings().withStatementType(StatementType.STATIC_STATEMENT)));
     }

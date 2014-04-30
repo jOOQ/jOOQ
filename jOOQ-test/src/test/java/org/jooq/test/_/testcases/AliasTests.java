@@ -98,7 +98,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testAliasingSimple() throws Exception {
         Table<B> b = TBook().as("b");
         Field<Integer> b_ID = b.field(TBook_ID());
@@ -112,7 +111,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(BOOK_IDS, books.getValues(b_ID));
     }
 
-    @Test
     public void testDerivedColumnListsWithAmbiguousColumnNames() throws Exception {
 
         // [#3156] If derived column lists are emulated on derived tables that contain
@@ -134,7 +132,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings("unchecked")
-    @Test
+
     public void testAliasingTablesAndFields() throws Exception {
         Table<B2S> b2s = TBookToBookStore().as("b2s", "b2s_1", "b2s_2", "b2s_3");
         Field<String> b2s1 = (Field<String>) b2s.field(0);
@@ -167,7 +165,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(2, (int) record1.getValue(b2s3));
     }
 
-    @Test
     public void testAliasingSelectAndFields() throws Exception {
         Record r1 = create().select().from(table(selectOne()).as("t", "v")).fetchOne();
         assertEquals("v", r1.field(0).getName());
@@ -224,7 +221,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(r2.getValue("v3"));
     }
 
-    @Test
     public void testAliasingJoins() throws Exception {
         Record r1 = create()
             .select()
@@ -243,7 +239,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     }
 
-    @Test
     public void testAliasingDelete() throws Exception {
         switch (dialect().family()) {
             /* [pro] */

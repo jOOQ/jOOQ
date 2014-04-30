@@ -90,7 +90,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings("unchecked")
-    @Test
+
     public void testValuesConstructor() throws Exception {
         Result<Record2<Integer, String>> r21 = create().selectFrom(values(row(1, "a"))).fetch();
 
@@ -120,7 +120,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(r1, r2);
     }
 
-    @Test
     public void testResultConstructor() throws Exception {
         Result<Record2<Integer, String>> booksResult =
         create().select(TBook_ID(), TBook_TITLE())

@@ -83,7 +83,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testConcurrentExecution() throws Exception {
         if (dialect() == FIREBIRD) {
             log.info("SKIPPING", "Thread-safety tests. This can crash Firebird");

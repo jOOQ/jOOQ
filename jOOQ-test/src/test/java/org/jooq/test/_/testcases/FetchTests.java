@@ -152,7 +152,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testFetchMap() throws Exception {
         try {
             create().selectFrom(TBook()).orderBy(TBook_ID()).fetchMap(TBook_AUTHOR_ID());
@@ -240,7 +239,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         catch (InvalidResultException expected) {}
     }
 
-    @Test
     public void testFetchGroups() throws Exception {
         // Key -> Record Map
         // -----------------
@@ -342,7 +340,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFetchArray() throws Exception {
 
         // fetchOne
@@ -394,7 +391,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertTrue(array3 instanceof Integer[]);
     }
 
-    @Test
     public void testFetch() throws Exception {
         SelectQuery<?> q = create().selectQuery();
         q.addFrom(TAuthor());
@@ -417,12 +413,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Coelho", record.getValue(TAuthor_LAST_NAME()));
     }
 
-    @Test
     public void testFetchValue() throws Exception {
         assertEquals(1, (int) create().fetchValue(selectOne()));
     }
 
-    @Test
     public void testFetchAny() throws Exception {
         A a1 = create().fetchAny(TAuthor());
         assertTrue(asList(1, 2).contains(a1.getValue(TAuthor_ID())));
@@ -434,7 +428,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(a3);
     }
 
-    @Test
     public void testFetchMany() throws Exception {
         switch (dialect().family()) {
             /* [pro] */
@@ -456,7 +449,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(BOOK_TITLES, results.get(0).getValues(TBook_TITLE()));
     }
 
-    @Test
     public void testFetchWithoutResults() throws Exception {
         /* [pro] */
         switch (dialect()) {
@@ -488,7 +480,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     }
 
-    @Test
     public void testFetchIntoWithAnnotations() throws Exception {
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
@@ -669,7 +660,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(1L, dates2.primitiveLong3);
     }
 
-    @Test
     public void testFetchIntoWithoutAnnotations() throws Exception {
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (dialect()) {
@@ -757,7 +747,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Coelho", result2.get(3).getLAST_NAME());
     }
 
-    @Test
     public void testRecordFromWithAnnotations() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
@@ -802,7 +791,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(book.getValue(TBook_PUBLISHED_IN()));
     }
 
-    @Test
     public void testRecordFromWithoutAnnotations() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
@@ -849,7 +837,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(book.getValue(TBook_PUBLISHED_IN()));
     }
 
-    @Test
     public void testRecordFromWithIdentity() throws Exception {
         if (TIdentityPK() == null) {
             log.info("SKIPPING", "Reflection with IDENTITY tests");
@@ -870,7 +857,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         public int val = 11;
     }
 
-    @Test
     public void testRecordFromUpdatePK() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
@@ -916,7 +902,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(author3, author4);
     }
 
-    @Test
     public void testRecordFrom() throws Exception {
         A author;
 
@@ -969,7 +954,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(object.lastName, author.getValue(TAuthor_LAST_NAME()));
     }
 
-    @Test
     public void testReflectionWithAnnotations() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
@@ -1035,7 +1019,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(f.ID, new FinalWithAnnotations().ID);
     }
 
-    @Test
     public void testReflectionWithoutAnnotations() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
@@ -1070,7 +1053,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(f.ID, new FinalWithoutAnnotations().ID);
     }
 
-    @Test
     public void testReflectionWithImmutables() throws Exception {
 
         // [#1336] Try instanciating "immutable" POJOs
@@ -1138,7 +1120,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         catch (MappingException expected) {}
     }
 
-    @Test
     public void testReflectionWithImmutablesAndConstructorProperties() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
@@ -1193,8 +1174,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(AUTHOR_LAST_NAMES.get(0), into4.f2);
     }
 
-
-    @Test
     public void testFetchIntoTableRecords() throws Exception {
 
         // [#1819] Check if only applicable setters are used
@@ -1221,7 +1200,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFetchIntoTableRecordsWithColumnAmbiguities() throws Exception {
 
         // [#2836] When fetching into TableRecord types, the "expected" behaviour would
@@ -1238,7 +1216,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(4, (int) book.getValue(TBook_ID()));
     }
 
-    @Test
     public void testFetchAttachables() throws Exception {
         // [#2869] DefaultRecordMapper should recognise Attachable types and attach them
         // according to the Settings.
@@ -1257,7 +1234,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(((AttachableInternal) b4).configuration());
     }
 
-    @Test
     public void testFetchIntoTableRecordsWithUDTs() throws Exception {
         if (cUAddressType() == null) {
             log.info("SKIPPING", "Skipping batch store with UDT tests");
@@ -1279,7 +1255,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Rio de Janeiro", on(authors.get(1).getValue(TAuthor_ADDRESS())).call("getCity").get());
     }
 
-    @Test
     public void testFetchIntoRecordClass() throws Exception {
         B b1 = create().selectFrom(TBook()).where(TBook_ID().eq(1)).fetchOne();
         B b2 = b1.into(TBook().getRecordType());
@@ -1307,7 +1282,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("1984", b2.original(TBook_TITLE()));
     }
 
-    @Test
     public void testFetchIntoTable() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -1371,7 +1345,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Animal Farm", books2.getValue(4, TBook_TITLE()));
     }
 
-    @Test
     public void testFetchIntoTables() throws Exception {
         Result<Record> result =
         create().select()
@@ -1396,7 +1369,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertTrue(TBook().getRecordType().isAssignableFrom(b.get(0).getClass()));
     }
 
-    @Test
     public void testFetchIntoCustomTable() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
@@ -1450,7 +1422,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Collections.nCopies(4, null), result.getValues(BookTable.UNMATCHED));
     }
 
-    @Test
     public void testFetchIntoRecordHandler() throws Exception {
 
         // Test a simple query with typed records
@@ -1514,7 +1485,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 });
     }
 
-    @Test
     public void testFetchIntoRecordMapper() throws Exception {
         assertEquals(BOOK_IDS,
         create().selectFrom(TBook())
@@ -1540,7 +1510,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @SuppressWarnings("serial")
     static class NoRecordMapperAvailableException extends RuntimeException {}
 
-    @Test
     @SuppressWarnings("unchecked")
     public void testFetchIntoWithRecordMapperProvider() throws Exception {
         DSLContext create = create(create().configuration().derive(
@@ -1596,7 +1565,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         catch (NoRecordMapperAvailableException expected) {}
     }
 
-    @Test
     public void testFetchResultSet() throws Exception {
         for (int i = 0; i < 2; i++) {
             // Fetching ResultSets into Results
@@ -1659,7 +1627,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFetchResultSetValue() throws Exception {
         assertEquals("1", "" + create().fetchValue(
             create().fetchLazy("select 1 from " + TBook().getName() + " where " + TBook_ID().getName() + " = 1").resultSet()));
@@ -1674,7 +1641,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             TBook_TITLE()));
     }
 
-    @Test
     public void testFetchResultSetWithCoercedTypes() throws Exception {
         ResultSet rs1 = null;
         ResultSet rs2 = null;
@@ -1725,7 +1691,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFetchLazy() throws Exception {
         for (int fetchSize : Arrays.asList(0, 1)) {
 
@@ -1814,7 +1779,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFetchIntoGeneratedPojos() throws Exception {
         if (TAuthorPojo() == null) {
             log.info("SKIPPING", "Generated POJO tests");
@@ -1834,7 +1798,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFetchIntoValueType() throws Exception {
         Result<Record1<Integer>> result =
         create().select(TBook_ID())
@@ -1856,7 +1819,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         catch (MappingException expected) {}
     }
 
-    @Test
     public void testFetchIntoResultSet() throws Exception {
         Result<B> result = create().selectFrom(TBook()).orderBy(TBook_ID()).fetch();
 
@@ -2089,7 +2051,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         catch (SQLException expected) {}
     }
 
-    @Test
     public void testFetchMapPOJO() throws Exception {
         if (TBookPojo() == null) {
             log.info("SKIPPING", "Generated POJO tests");
@@ -2151,7 +2112,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFetchGroupsPOJO() throws Exception {
         if (TBookPojo() == null) {
             log.info("SKIPPING", "Generated POJO tests");
@@ -2249,7 +2209,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFetchGroupsMapper() throws Exception {
         RecordMapper<Record, String> bookIdMapper = new RecordMapper<Record, String>() {
             @Override
@@ -2335,7 +2294,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("4", new ArrayList<String>(maps2.values()).get(3));
     }
 
-    @Test
     public void testFetchWithMaxRows() throws Exception {
         Result<B> books =
         create().selectFrom(TBook())
@@ -2347,7 +2305,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Arrays.asList(1, 2), books.getValues(TBook_ID()));
     }
 
-    @Test
     public void testFetchWithTimeout() throws Exception {
 
         // Some dialects do not really implement the timeout well. In those
@@ -2376,7 +2333,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         catch (DataAccessException expected) {}
     }
 
-    @Test
     public void testInterning() throws Exception {
         jOOQAbstractTest.reset = false;
 

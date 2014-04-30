@@ -97,7 +97,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testTableMapping() throws Exception {
         Settings settings = new Settings()
             .withRenderMapping(new RenderMapping()
@@ -128,7 +127,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Brida", result.getValue(3, TBook_TITLE()));
     }
 
-    @Test
     public void testSchemaMapping() throws Exception {
         switch (dialect()) {
             case FIREBIRD:
@@ -277,7 +275,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Brida", result3.getValue(3, TBook_TITLE()));
     }
 
-    @Test
     public void testMultiSchemaQueries() {
         if (TBookSale() == null) {
             log.info("SKIPPING", "Multi-schema query tests");

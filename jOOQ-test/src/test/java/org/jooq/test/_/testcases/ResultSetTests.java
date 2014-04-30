@@ -90,7 +90,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testResultSetType() throws Exception {
         if (asList(SQLITE).contains(dialect())) {
             log.info("SKIPPING", "ResultSet type tests");
@@ -118,7 +117,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings("serial")
-    @Test
+
     public void testResultSetTypeWithListener() throws Exception {
         if (asList(SQLITE).contains(dialect())) {
             log.info("SKIPPING", "ResultSet type tests");
@@ -152,7 +151,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings("serial")
-    @Test
+
     public void testResultSetConcurrency() throws Exception {
         switch (dialect()) {
             /* [pro] */

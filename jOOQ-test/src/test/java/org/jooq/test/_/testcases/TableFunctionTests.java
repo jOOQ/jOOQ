@@ -92,13 +92,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testDualImplicit() throws Exception {
         assertEquals(1, (int) create().selectOne().fetchOne(0, Integer.class));
         assertEquals(1, (int) create().selectOne().where(one().equal(1)).fetchOne(0, Integer.class));
     }
 
-    @Test
     public void testDualExplicit() throws Exception {
         assertEquals("X", create().selectFrom(dual()).fetchOne(0, String.class));
         assertEquals(
@@ -111,7 +109,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                            .fetchOne().intoArray()));
     }
 
-    @Test
     public void testGenerateSeries() throws Exception {
         if (!asList(CUBRID, POSTGRES, ORACLE).contains(dialect().family()))
             return;

@@ -89,7 +89,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testRecordListenerLoad() throws Exception {
 
         // Check if lifecycle is handled correctly when initialising new records.
@@ -140,7 +139,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testRecordListenerStore() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -171,7 +169,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList("deleteStart", "deleteEnd"), listener2.events);
     }
 
-    @Test
     public void testRecordListenerWithException() throws Exception {
         jOOQAbstractTest.reset = false;
         WriteListener listener1 = new WriteListener();
@@ -189,7 +186,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(1, listener1.exceptions.size());
     }
 
-    @Test
     public void testRecordListenerBatchStore() throws Exception {
         jOOQAbstractTest.reset = false;
         WriteListener listener1 = new WriteListener();
@@ -210,7 +206,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         listener1.events);
     }
 
-    @Test
     public void testRecordListenerRefresh() throws Exception {
         B book =
         create()

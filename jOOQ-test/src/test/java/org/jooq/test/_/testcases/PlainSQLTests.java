@@ -119,7 +119,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testQualifiedSQL() throws Exception {
         Result<Record2<Integer, String>> result =
         create().select(
@@ -134,7 +133,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(BOOK_TITLES, result.getValues(1));
     }
 
-    @Test
     public void testPlainSQLExecuteWithResults() throws Exception {
         // [#1829] The Factory.execute() method must be able to handle queries
         // that return results
@@ -143,7 +141,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(0, create().query(create().render(create().selectOne())).execute());
     }
 
-    @Test
     public void testPlainSQL() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -274,7 +271,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(1), books.getValue(1, TBook_AUTHOR_ID()));
     }
 
-    @Test
     public void testPlainSQLWithSelfJoins()  throws Exception {
 
         // [#1860] In case of ambiguous field names in plain SQL, access by
@@ -292,7 +288,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList(null, null), result2.getValues(1, Integer.class));
     }
 
-    @Test
     public void testPlainSQLAndComments() throws Exception {
 
         // Skip comments test for most dialects, as the behaviour w.r.t. comments
@@ -342,7 +337,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("/* no comment */", record4.getValue(1));
     }
 
-    @Test
     public void testPlainSQLCRUD() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -407,7 +401,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetchOne(0));
     }
 
-    @Test
     public void testPlainSQLWithQueryParts() throws Exception {
         // Mix {keywords} with {numbered placeholders}
         String sql = "{select} {0}, a.{1} {from} {2} a {where} {3} = {4}";
@@ -432,14 +425,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         cursor.close();
     }
 
-    @Test
     public void testPlainSQLFetchValue() throws Exception {
         assertEquals("1", "" + create().fetchValue("select 1 from " + TBook().getName() + " where " + TBook_ID().getName() + " = 1"));
         assertEquals("1", "" + create().fetchValue("select 1 from " + TBook().getName() + " where " + TBook_ID().getName() + " = ?", 1));
         assertEquals("1", "" + create().fetchValue("select {0} from {1} where {2} = {3}", inline(1), TBook(), TBook_ID(), val(1)));
     }
 
-    @Test
     public void testPlainSQLResultQuery() throws Exception {
         // [#1749] TODO Firebird renders CAST(? as VARCHAR(...)) bind values with sizes
         // pre-calculated. Hence the param needs to have some min length...
@@ -519,7 +510,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         public int p;
     }
 
-    @Test
     public void testCustomSQL() throws Exception {
         final Field<Integer> IDx2 = new CustomField<Integer>(TBook_ID().getName(), TBook_ID().getDataType()) {
             private static final long serialVersionUID = 1L;
@@ -610,7 +600,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Baz", create.configuration().data("Foo-Condition"));
     }
 
-    @Test
     public void testPlainSQLBlobAndClob() throws Exception {
         jOOQAbstractTest.reset = false;
 

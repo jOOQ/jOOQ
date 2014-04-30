@@ -130,7 +130,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testInsertIdentity() throws Exception {
 
         // Oracle and SQLite don't support identity columns
@@ -229,7 +228,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testInsertDefaultValues() throws Exception {
         /* [pro] */
         if (dialect().family() == ACCESS) {
@@ -249,7 +247,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(1, create().delete(TTriggers()).execute());
     }
 
-    @Test
     public void testInsertImplicit() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -271,7 +268,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Kästner", author.getValue(TAuthor_LAST_NAME()));
     }
 
-    @Test
     public void testInsertMultiple() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -329,7 +325,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Test
+
     public void testInsertConvert() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -395,7 +391,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .execute());
     }
 
-    @Test
     public void testInsertSelect() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -444,7 +439,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(null, author2.getValue(TAuthor_YEAR_OF_BIRTH()));
     }
 
-    @Test
     public void testInsertWithSelectAsField() throws Exception {
 
         Field<Integer> ID3;
@@ -514,7 +508,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Hesse", author.getValue(TAuthor_LAST_NAME()));
     }
 
-    @Test
     public void testUpdateWithRowValueExpression() throws Exception {
         if (asList(ASE, CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL, SQLSERVER, SQLITE, SYBASE).contains(dialect().family())) {
             log.info("SKIPPING", "UPDATE with row value expression tests");
@@ -604,7 +597,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testInsertReturning() throws Exception {
         if (TTriggers() == null) {
             log.info("SKIPPING", "INSERT RETURNING tests");
@@ -755,7 +747,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         return create().selectFrom(TTriggers()).fetchOne(TTriggers_ID_GENERATED());
     }
 
-    @Test
     public void testInsertReturningWithSetClause() throws Exception {
         if (TTriggers() == null) {
             log.info("SKIPPING", "INSERT RETURNING tests");
@@ -794,7 +785,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testInsertReturningWithCaseSensitiveColumns() throws Exception {
         if (CASE() == null) {
             log.info("SKIPPING", "INSERT RETURNING tests with case sensitive columns");
@@ -816,7 +806,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(5, (int) c.getValue(CASE_UPPER()));
     }
 
-    @Test
     public void testInsertReturningWithRenderNameStyleAS_IS() throws Exception {
         // [#3035] TODO: Re-enable this test
         switch (dialect().family()) {
@@ -841,7 +830,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("XMF", author.getValue(TAuthor_LAST_NAME()));
     }
 
-    @Test
     public void testInsertReturningWithPlainSQL() throws Exception {
         if (TTriggers() == null) {
             log.info("SKIPPING", "INSERT RETURNING tests");
@@ -863,7 +851,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(++ID, (int) returned.getValue(0, int.class));
     }
 
-    @Test
     public void testUpdateReturning() throws Exception {
         switch (dialect().family()) {
             /* [pro] */
@@ -921,7 +908,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testInsertOnDuplicateKeyUpdate() throws Exception {
         switch (dialect()) {
             /* [pro] */
@@ -962,7 +948,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(3), create().select(count()).from(TAuthor()).fetchOne(0));
     }
 
-    @Test
     public void testInsertOnDuplicateKeyIgnore() throws Exception {
         switch (dialect()) {
             /* [pro] */
@@ -1001,7 +986,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     }
 
-    @Test
     public void testMerge() throws Exception {
         switch (dialect().family()) {
             /* [pro] */
@@ -1126,7 +1110,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Especially for SQL Server and Sybase, some bugs could be expected
     }
 
-    @Test
     public void testMergeWithOracleSyntaxExtension() throws Exception {
         switch (dialect().family()) {
             /* [pro] */
@@ -1224,7 +1207,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // No tests on results
     }
 
-    @Test
     public void testMergeWithH2SyntaxExtension() throws Exception {
         switch (dialect()) {
             /* [pro] */
@@ -1329,7 +1311,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("John", authors5.get(3).getValue(TAuthor_FIRST_NAME()));
     }
 
-    @Test
     public void testUpdateSelect() throws Exception {
         switch (dialect()) {
             /* [pro] */
@@ -1362,7 +1343,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .fetchOne(c));
     }
 
-    @Test
     public void testUpdateJoin() throws Exception {
         switch (dialect().family()) {
             /* [pro] */
@@ -1412,7 +1392,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("ABC", b22.getValue(TBook_TITLE()));
     }
 
-    @Test
     public void testUpdateFrom() throws Exception {
         switch (dialect().family()) {
             /* [pro] */

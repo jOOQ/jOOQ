@@ -156,13 +156,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testSelectCountQuery() throws Exception {
         assertEquals(4, create().selectCount().from(TBook()).fetchOne(0));
         assertEquals(2, create().selectCount().from(TAuthor()).fetchOne(0));
     }
 
-    @Test
     public void testUserDefinedAggregateFunctions() throws Exception {
         if (secondMax(null) == null) {
             log.info("SKIPPING", "User-defined aggregate function tests");
@@ -208,7 +206,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         /* [pro] */
     }
 
-    @Test
     public void testAggregateFunctions() throws Exception {
 
         // Standard aggregate functions, available in all dialects:
@@ -349,7 +346,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(4, (int) result3.get(1).getValue(2, Integer.class));
     }
 
-    @Test
     public void testFetchCount() throws Exception {
         assertEquals(1, create().fetchCount(select(one().as("x"))));
         assertEquals(1, create().select(one().as("x")).fetchCount());
@@ -369,7 +365,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             select(inline("abc")))));
     }
 
-    @Test
     public void testFetchCountWithLimitOffset() throws Exception {
 
         /* [pro] */
@@ -389,7 +384,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testCountDistinct() throws Exception {
 
         /* [pro] */
@@ -417,7 +411,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testLinearRegressionFunctions() throws Exception {
         switch (dialect().family()) {
             /* [pro] */
@@ -485,7 +478,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(values, Arrays.asList(roundStrings(1, result.get(3).into(String[].class))));
     }
 
-    @Test
     public void testWindowFunctions() throws Exception {
         switch (dialect()) {
             /* [pro] */
@@ -1007,7 +999,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testListAgg() throws Exception {
         switch (dialect().family()) {
             /* [pro] */
@@ -1114,7 +1105,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("O AlquimistaBrida", result3.getValue(3, 2));
     }
 
-    @Test
     public void testWindowClause() throws Exception {
         switch (dialect()) {
             /* [pro] */

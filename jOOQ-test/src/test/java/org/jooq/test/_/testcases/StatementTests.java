@@ -115,7 +115,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testKeepStatement() throws Exception {
         DSLContext create = create(new KeepStatementListener());
 
@@ -178,7 +177,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         query.close();
     }
 
-    @Test
     public void testKeepStatementWithConnectionPool() throws Exception {
 
         // "Normal" DataSource behaviour, without keeping an open statement
@@ -344,7 +342,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testCancelStatement() throws Exception {
 
         // Some dialects do not really implement the cancelation well. In those

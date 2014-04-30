@@ -100,7 +100,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testBenchmarkNewRecord() throws Exception {
         DSLContext create = create();
 
@@ -109,7 +108,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testBenchmarkRecordIntoWithoutAnnotations() throws Exception {
         Result<B> books = create().fetch(TBook());
 
@@ -118,7 +116,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testBenchmarkRecordIntoWithAnnotations() throws Exception {
 //        System.out.print("X:");
 //        System.out.println(System.in.read());
@@ -139,7 +136,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 //        System.out.println(System.in.read());
     }
 
-    @Test
     public void testBenchmarkRecordIntoTableRecord() throws Exception {
 
         // This benchmark should heavily outperform the preceding one due to the optimisations done in [#2989]
@@ -150,7 +146,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testBenchmarkFieldAccess() throws Exception {
         // This benchmark is inspired by a private contribution by Roberto Giacco
 
@@ -165,7 +160,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testBenchmarkSelect() throws Exception {
         // This benchmark is contributed by "jjYBdx4IL" on GitHub:
         // https://github.com/jOOQ/jOOQ/issues/1625

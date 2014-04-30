@@ -101,7 +101,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testEmptyGrouping() throws Exception {
 
         // [#1665] Test the empty GROUP BY clause
@@ -118,7 +117,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .fetchOne(0, Integer.class));
     }
 
-    @Test
     public void testGrouping() throws Exception {
 
         // Test a simple group by query
@@ -183,7 +181,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Paulo", result4.getValue(0, VLibrary_AUTHOR()).substring(0, 5));
     }
 
-    @Test
     public void testGroupByCubeRollup() throws Exception {
         switch (dialect()) {
             /* [pro] */
@@ -308,7 +305,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         /* [/pro] */
     }
 
-    @Test
     public void testHavingWithoutGrouping() throws Exception {
         try {
             assertEquals(Integer.valueOf(1), create()

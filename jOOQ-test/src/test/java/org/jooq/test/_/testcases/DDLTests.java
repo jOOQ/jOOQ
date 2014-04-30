@@ -88,7 +88,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings("unchecked")
-    @Test
+
     public void testAlterSequence() throws Exception {
         if (cSequences() == null || asList(DERBY, ORACLE).contains(dialect().family())) {
             log.info("SKIPPING", "Skipping ALTER SEQUENCE test");

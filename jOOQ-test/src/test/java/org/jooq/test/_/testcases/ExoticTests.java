@@ -112,7 +112,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testTableWithHint() throws Exception {
         /* [pro] */
         switch (dialect().family()) {
@@ -150,7 +149,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         /* [/pro] */
     }
 
-    @Test
     public void testPivotClause() throws Exception {
         /* [pro] */
         switch (dialect().family()) {
@@ -285,7 +283,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         /* [/pro] */
     }
 
-    @Test
     public void testAliasingPivot() throws Exception {
         /* [pro] */
         switch (dialect().family()) {
@@ -352,7 +349,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         /* [/pro] */
     }
 
-    @Test
     public void testRelationalDivision() throws Exception {
 
         // Books and bookstores. There's only one book that is contained in
@@ -388,7 +384,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList((Object) 3, "abc"), asList(result.get(1).intoArray()));
     }
 
-    @Test
     public void testAliasingRelationalDivision() throws Exception {
 
         // Books and bookstores. There's only one book that is contained in
@@ -406,7 +401,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(3, record.getValue("x"));
     }
 
-    @Test
     public void testConnectBySimple() throws Exception {
         switch (dialect().family()) {
             /* [pro] */
@@ -469,7 +463,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Boolean.FALSE, result.getValue(2, connectByIsCycle()));
     }
 
-    @Test
     public void testConnectByDirectory() throws Exception {
         switch (dialect().family()) {
             /* [pro] */

@@ -102,7 +102,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testSelectSimpleQuery() throws Exception {
         SelectQuery<?> q = create().selectQuery();
         Field<Integer> f1 = val(1).as("f1");
@@ -133,7 +132,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("test", result.get(0).getValue(f3));
     }
 
-    @Test
     public void testSelectQuery() throws Exception {
         SelectQuery<?> q = create().selectQuery();
         q.addFrom(TAuthor());
@@ -149,7 +147,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Orwell", result.get(1).getValue(TAuthor_LAST_NAME()));
     }
 
-    @Test
     public void testDistinctQuery() throws Exception {
         Result<Record1<Integer>> result = create()
             .selectDistinct(TBook_AUTHOR_ID())
@@ -168,7 +165,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .size());
     }
 
-    @Test
     public void testSubSelect() throws Exception {
 
         // ---------------------------------------------------------------------
@@ -197,7 +193,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetchOne(TAuthor_LAST_NAME()));
     }
 
-    @Test
     public void testSelectWithINPredicate() throws Exception {
         assertEquals(3,
             create().selectFrom(TBook())
@@ -208,7 +203,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .execute());
     }
 
-    @Test
     public void testSelectWithExistsPredicate() throws Exception {
         assertEquals(3,
             create()
@@ -223,7 +217,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .andExists(select()).execute());
     }
 
-    @Test
     public void testSelectFromSelect() throws Exception {
         Table<Record2<Integer, Integer>> nested = create().select(TBook_AUTHOR_ID(), count().as("books"))
             .from(TBook())
@@ -240,7 +233,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(2), records.getValue(1, nested.field("books")));
     }
 
-    @Test
     public void testSelectWithSubselectProjection() throws Exception {
         Field<Object> books = create().select(count())
                 .from(TBook())
@@ -257,7 +249,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(2), records.getValue(1, books));
     }
 
-    @Test
     public void testUnaliasedSubqueryProjections() throws Exception {
         // TODO [#579] re-enable this test when fixing this bug
 
@@ -309,7 +300,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("test", result2.getValue(0, 7));
     }
 
-    @Test
     public void testCombinedSelectQuery() throws Exception {
         SelectQuery<B> q1 = create().selectQuery(TBook());
         SelectQuery<B> q2 = create().selectQuery(TBook());
@@ -333,7 +323,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(2, rows);
     }
 
-    @Test
     public void testComplexUnions() throws Exception {
         Select<Record1<String>> s1 = create().select(TBook_TITLE()).from(TBook()).where(TBook_ID().equal(1));
         Select<Record1<String>> s2 = create().select(TBook_TITLE()).from(TBook()).where(TBook_ID().equal(2));
@@ -362,7 +351,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(4, q.execute());
     }
 
-    @Test
     public void testForUpdateClauses() throws Exception {
         switch (dialect().family()) {
             /* [pro] */

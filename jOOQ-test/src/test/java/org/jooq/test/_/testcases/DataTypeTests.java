@@ -147,7 +147,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testCharCasts() throws Exception {
         if (asList(ACCESS).contains(dialect().family())) {
             log.info("SKIPPING", "Char cast tests");
@@ -162,7 +161,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetchOne(0, String.class));
     }
 
-    @Test
     public void testBlobAndClob() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -286,7 +284,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("abc", new String((byte[]) result.getValue(3, T725_LOB().getName())));
     }
 
-    @Test
     public void testTypeConversions() throws Exception {
         Record record = create().fetchOne(TAuthor(), TAuthor_LAST_NAME().equal("Orwell"));
 
@@ -323,7 +320,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings("serial")
-    @Test
+
     public void testCustomConversion() {
         Converter<String, StringBuilder> converter = new Converter<String, StringBuilder>() {
             @Override
@@ -415,7 +412,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         return result;
     }
 
-    @Test
     public void testCastingToDialectDataType() throws Exception {
         for (DataType<?> type : getCastableDataTypes()) {
             /* [pro] */
@@ -433,7 +429,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testCastingToSQLDataType() throws Exception {
         for (DataType<?> type : Arrays.<DataType<?>> asList(
             SQLDataType.BIGINT,
@@ -494,7 +489,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testCastingToJavaClass() throws Exception {
         if (dialect() != SQLDialect.HSQLDB) {
             assertEquals(true, create().select(cast(1, Boolean.class)).fetchOne(0));
@@ -577,7 +571,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .fetch().getValue(0, 0));
     }
 
-    @Test
     public void testNestedCasting() throws Exception {
         // TODO: These tests fail on some dialects. Investigate in some post-2.2.0 release
         if (true) return;
@@ -590,7 +583,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().select(val(1).add(val("2")).cast(String.class)).fetchOne(0));
     }
 
-    @Test
     public void testConversionResult() throws Exception {
         // .fetch(..., Class)
         // ------------------
@@ -837,7 +829,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(expected, Arrays.asList(select.fetch().intoArray(TAuthor_ID().getName(), type)));
     }
 
-    @Test
     public void testConversion() throws Exception {
 
         // Converting NULL
@@ -1203,7 +1194,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(record.getValue(1, Boolean_YES_NO_LC.class));
     }
 
-    @Test
     public void testUnsignedDataTypes() throws Exception {
         if (TUnsigned() == null) {
             log.info("SKIPPING", "Unsigned tests");
@@ -1283,7 +1273,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(-1L, u.getValue(TUnsigned_U_LONG()).longValue());
     }
 
-    @Test
     public void testNumbers() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -1355,7 +1344,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testDateTime() throws Exception {
         Record record =
         create().select(
@@ -1437,7 +1425,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testDateTimeArithmetic() throws Exception {
 
         /* [pro] */
@@ -1579,7 +1566,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(new DayToSecond(1, 6), record.getValue("ts2"));
     }
 
-    @Test
     public void testFunctionsOnDates_DATE_ADD() throws Exception {
         Calendar cal;
 
@@ -1632,7 +1618,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         return cal;
     }
 
-    @Test
     public void testFunctionsOnDates_TRUNC() throws Exception {
         switch (dialect().family()) {
             /* [pro] */
@@ -1706,7 +1691,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(new Timestamp(cal.getTimeInMillis()), r1.value6());
     }
 
-    @Test
     public void testCurrentDate() throws Exception {
 
         // Skip this test for Derby
@@ -1727,7 +1711,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(record.value1().getTime(), record.value2().getTime());
     }
 
-    @Test
     public void testUUIDDataType() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -1753,7 +1736,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(uuid2, uu2.getValue(TExoticTypes_UU()));
     }
 
-    @Test
     public void testUUIDArrayDataType() throws Exception {
         if (TArrays_STRING() == null) {
             log.info("SKIPPING", "Skipping UUID ARRAY data type tests");
@@ -1783,7 +1765,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testCoercion() throws Exception {
         Field<Long> id1 = TBook_ID().coerce(Long.class);
         Field<String> id2 = TBook_ID().coerce(String.class);

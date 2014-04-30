@@ -114,7 +114,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testBatchSingle() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -153,7 +152,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         testBatchAuthors("Gamma", "Helm", "Johnson");
     }
 
-    @Test
     public void testBatchSingleWithNulls() throws Exception {
         Batch batch = create().batch(insertInto(TDates(), TDates_ID(), TDates_D(), TDates_T(), TDates_TS())
                                      .values(1, null, null, null))
@@ -174,7 +172,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     }
 
-    @Test
     public void testBatchMultiple() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -208,7 +205,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         testBatchAuthors("Gamma", "Helm", "Johnson");
     }
 
-    @Test
     public void testBatchStore() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -259,7 +255,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .fetchOne(0));
     }
 
-    @Test
     public void testBatchInsertUpdate() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -316,7 +311,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings("unchecked")
-    @Test
+
     public void testBatchStoreWithUDTs() throws Exception {
         if (cUAddressType() == null) {
             log.info("SKIPPING", "Skipping batch store with UDT tests");
@@ -364,7 +359,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("City Y", on(authors.get(1).getValue(TAuthor_ADDRESS())).call("getCity").get());
     }
 
-    @Test
     public void testBatchDelete() throws Exception {
         jOOQAbstractTest.reset = false;
 

@@ -112,7 +112,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testJoinDuplicateFieldNames() throws Exception {
 
         // [#783] Result holds wrong data when tables in a cartesian self
@@ -135,7 +134,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(BOOK_IDS, result.getValues(TBook_ID()));
     }
 
-    @Test
     public void testJoinQuery() throws Exception {
         SelectQuery<L> q1 = create().selectQuery(VLibrary());
 
@@ -238,7 +236,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testCrossJoin() throws Exception {
         if (dialect().family() == ACCESS) {
             log.info("SKIPPING", "CROSS JOIN tests");
@@ -314,7 +311,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetchOne(0, int.class));
     }
 
-    @Test
     public void testCrossApply() throws Exception {
         switch (dialect()) {
             /* [pro] */
@@ -407,7 +403,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         /* [/pro] */
     }
 
-    @Test
     public void testLateralJoin() throws Exception {
         switch (dialect()) {
             /* [pro] */
@@ -468,7 +463,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         );
     }
 
-    @Test
     public void testNaturalJoin() throws Exception {
         boolean unqualified = false;
         if (asList(HSQLDB, ORACLE).contains(dialect().family()))
@@ -513,7 +507,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(result.getValue(3, TAuthor_LAST_NAME()));
     }
 
-    @Test
     public void testJoinUsing() throws Exception {
         boolean unqualified = false;
         if (asList(HSQLDB, ORACLE).contains(dialect().family()))
@@ -560,7 +553,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(result.getValue(3, TAuthor_LAST_NAME()));
     }
 
-    @Test
     public void testJoinOnKey() throws Exception {
         if (!supportsReferences()) {
             log.info("SKIPPING", "JOIN ON KEY tests");
@@ -656,7 +648,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(result4, result5);
     }
 
-    @Test
     public void testJoinOnKeyWithAlias() throws Exception {
 
         // Test using unambiguous keys
@@ -678,7 +669,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             "Buchhandlung im Volkshaus", "Ex Libris", "Orell Füssli"), result4.getValues(1));
     }
 
-    @Test
     public void testInverseAndNestedJoin() throws Exception {
 
         // [#1086] TODO: Fix this for SQLite
@@ -738,7 +728,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(result1, result2);
     }
 
-    @Test
     public void testOuterJoin() throws Exception {
         // Test LEFT OUTER JOIN
         // --------------------
@@ -805,7 +794,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFullOuterJoin() throws Exception {
 
         // Test FULL OUTER JOIN

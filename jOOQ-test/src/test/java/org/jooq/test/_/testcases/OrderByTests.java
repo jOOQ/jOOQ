@@ -105,7 +105,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testOrderByInSubquery() throws Exception {
         /* [pro] */
         // TODO: [#780] Fix this for Ingres and Sybase ASE
@@ -135,7 +134,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Arrays.asList(4, 3, 2, 1), result);
     }
 
-    @Test
     public void testOrderByNulls() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -176,12 +174,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(authors3.getValue(2, TAuthor_FIRST_NAME()));
     }
 
-    @Test
     public void testOrderByWithDual() throws Exception {
         assertEquals(1, (int) create().selectOne().orderBy(1).fetchOne(0, int.class));
     }
 
-    @Test
     public void testOrderByIndexes() throws Exception {
         assertEquals(Arrays.asList(1, 2, 3, 4),
             create().selectFrom(TBook())
@@ -207,7 +203,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .fetch(TBook_AUTHOR_ID()));
     }
 
-    @Test
     public void testOrderByIndirection() throws Exception {
         assertEquals(BOOK_IDS,
             create().selectFrom(TBook())
@@ -245,7 +240,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .fetch(TBook_ID()));
     }
 
-    @Test
     public void testOrderByAndLimit() throws Exception {
 
         // [#1954] The combination of ORDER BY and LIMIT clauses has some
@@ -292,7 +286,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList(4, 3), result2);
     }
 
-    @Test
     public void testOrderByAndSeek() throws Exception {
 
         // Single ORDER BY column, no LIMIT
@@ -409,7 +402,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // -------------------------------------------------------
     }
 
-    @Test
     public void testLimit() throws Exception {
 
         // Some dialects don't support LIMIT 0 / TOP 0
@@ -449,7 +441,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(3), result.getValue(1, TBook_ID()));
     }
 
-    @Test
     public void testLimitWithAmbiguousColumnNames() throws Exception {
         // [#2335] In those databases that do not support LIMIT .. OFFSET, emulations
         // using ROW_NUMBER() or ROWNUM may cause additional issues
@@ -489,7 +480,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList(3, 4), result2.getValues(TBook_ID()));
     }
 
-    @Test
     public void testLimitDistinct() throws Exception {
 
         /* [pro] */
@@ -525,7 +515,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetch(TBook_AUTHOR_ID()));
     }
 
-    @Test
     public void testLimitAliased() throws Exception {
         /* [pro] */
         if (asList(ACCESS, ASE, SQLSERVER).contains(dialect().family())) {
@@ -586,14 +575,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings("unchecked")
-    @Test
+
     public void testLimitBindValues() throws Exception {
         Select<?> s2 = DSL.select().limit(1).offset(2);
         assertSame(asList(1, 2), s2.getBindValues());
         assertSame(asList(val(1), val(2)), s2.getParams().values());
     }
 
-    @Test
     public void testLimitNamedParams() throws Exception {
         /* [pro] */
         if (asList(ASE, INGRES).contains(dialect())) {
@@ -663,7 +651,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(3), result.getValue(1, TBook_ID()));
     }
 
-    @Test
     public void testLimitNested() throws Exception {
         /* [pro] */
         // TODO [#780] This is not supported in Ingres

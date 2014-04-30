@@ -86,7 +86,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testDialectGuessing() throws Exception {
         if (dialect() == MARIADB) {
             log.info("SKIPPING", "Skipping dialect guessing test");

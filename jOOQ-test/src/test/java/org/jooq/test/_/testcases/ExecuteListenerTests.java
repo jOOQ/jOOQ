@@ -107,7 +107,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testExecuteListenerRows() throws Exception {
         RowsListener listener1 = new RowsListener();
         DSLContext create1 = create(listener1);
@@ -141,7 +140,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testExecuteListenerWithData() throws Exception {
         DSLContext create = create(new DataListener());
         create.selectOne().fetch();
@@ -254,7 +252,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testExecuteListenerException() throws Exception {
         ExecuteListenerEvents events = new ExecuteListenerEvents();
         DSLContext create = create(events);
@@ -386,7 +383,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testExecuteListenerCustomException() throws Exception {
         DSLContext create = create(new CustomExceptionListener());
 
@@ -412,7 +408,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testExecuteListenerOnResultQuery() throws Exception {
         DSLContext create = create(new ResultQueryListener());
 
@@ -765,7 +760,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testExecuteListenerOnBatchSingle() {
         if (!executePreparedStatements(create().configuration().settings())) {
             log.info("SKIPPINT", "Single batch tests with statement type = STATEMENT");
@@ -991,7 +985,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testExecuteListenerOnBatchMultiple() {
         jOOQAbstractTest.reset = false;
 
@@ -1226,7 +1219,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testExecuteListenerFetchLazyTest() throws Exception {
         DSLContext create = create(new FetchLazyListener());
         FetchLazyListener.reset();
@@ -1457,7 +1449,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testExecuteListenerDELETEorUPDATEwithoutWHERE() throws Exception {
         try {
             create(new DELETEorUPDATEwithoutWHERElistener())

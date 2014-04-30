@@ -109,14 +109,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testFetchFromTXT() throws Exception {
         Result<L> result = create().fetch(VLibrary());
 
         assertEquals(result, create().fetchFromTXT(result.format()));
     }
 
-    @Test
     public void testFormat() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -178,7 +176,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(1, rhs.size());
     }
 
-    @Test
     public void testFormatHTML() throws Exception {
         Row row = TBook().fieldsRow();
         Result<B> books = create().selectFrom(TBook()).fetch();
@@ -217,7 +214,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFetchFromCSV() throws Exception {
         Result<Record> result1 = create().fetchFromCSV(
             "A,B,\"C\",\"\"\"D\"\n" +
@@ -274,7 +270,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(BOOK_TITLES, result2.getValues(TBook_TITLE()));
     }
 
-    @Test
     public void testFormatCSV() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -343,7 +338,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testFormatJSON() throws Exception {
         Row row = TBook().fieldsRow();
         Result<B> books = create().selectFrom(TBook()).fetch();
@@ -404,7 +398,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("]}", json);
     }
 
-    @Test
     public void testFetchFromJSON() {
 
         // Factory.fetchFromJSON() should be the inverse of Result.formatJSON()
@@ -418,7 +411,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(BOOK_TITLES, result2.getValues(TBook_TITLE()));
     }
 
-    @Test
     public void testFormatXML() throws Exception {
         Result<B> books = create().selectFrom(TBook()).fetch();
         String xml = books.formatXML();
@@ -431,13 +423,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         testXML(doc, books);
     }
 
-    @Test
     public void testIntoXML() throws Exception {
         Result<B> books = create().selectFrom(TBook()).fetch();
         testXML(books.intoXML(), books);
     }
 
-    @Test
     public void testIntoXMLContentHandler() throws Exception {
         Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
         Result<B> books = create().selectFrom(TBook()).fetch();

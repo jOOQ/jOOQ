@@ -105,7 +105,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public RoutineAndUDTTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
         super(delegate);
     }
-    @Test
+
     public void testPackage() throws Exception {
         if (cLibrary() == null) {
             log.info("SKIPPING", "packages test");
@@ -120,7 +120,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("0", "" + invoke(cLibrary(), "pkgFAuthorExists1", create().configuration(), "Shakespeare"));
     }
 
-    @Test
     public void testStoredProcedure() throws Exception {
         if (cRoutines() == null) {
             log.info("SKIPPING", "procedure test");
@@ -238,7 +237,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         /* [/pro] */
     }
 
-    @Test
     public void testStoredProcedureWithDefaultParameters() {
         if (cRoutines() == null) {
             log.info("SKIPPING", "procedure tests with default parameters");
@@ -275,7 +273,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Date.valueOf("2012-01-01"), executedWithoutDefault.call("getPOutDate").get());
     }
 
-    @Test
     public void testStoredFunctions() throws Exception {
         if (cRoutines() == null) {
             log.info("SKIPPING", "functions test");
@@ -386,7 +383,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(2), result2.getValue(1, 2));
     }
 
-    @Test
     public void testStoredFunctionsWithNoSchema() throws Exception {
         if (cRoutines() == null) {
             log.info("SKIPPING", "functions test with no schema");
@@ -407,7 +403,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    @Test
+
     public void testARRAYType() throws Exception {
         if (TArrays() == null) {
             log.info("SKIPPING", "ARRAY type test");
@@ -672,7 +668,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testARRAYProcedure() throws Exception {
         if (cRoutines() == null) {
             log.info("SKIPPING", "ARRAY procedure test (no procedure support)");
@@ -874,7 +869,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     /* [/pro] */
-    @Test
+
     public void testUDTs() throws Exception {
         if (TAuthor_ADDRESS() == null) {
             log.info("SKIPPING", "UDT test");
@@ -926,7 +921,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testUDTProcedure() throws Exception {
         if (cUAddressType() == null) {
             log.info("SKIPPING", "UDT procedure test (no UDT support)");
@@ -976,7 +970,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("17", invoke(street, "getNo"));
     }
 
-    @Test
     public void testArrayTables() throws Exception {
         /* [pro] */
         if (TArrays_NUMBER_R() != null) {
@@ -1163,7 +1156,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testArrayTableSimulation() throws Exception {
         Result<?> result;
 
@@ -1237,7 +1229,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("O Alquimista", result.getValue(1, TBook_TITLE()));
     }
 
-    @Test
     public void testStoredProceduresWithCursorParameters() throws Exception {
         switch (dialect().family()) {
             /* [pro] */

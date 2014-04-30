@@ -107,7 +107,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testMetaFieldTypes() throws Exception {
 
         // [#3133] Check if DEFAULT information is correctly generated
@@ -118,7 +117,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testMetaModel() throws Exception {
 
         // Test correct source code generation for the meta model
@@ -427,7 +425,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testMetaData() throws Exception {
         Meta meta = create().meta();
 

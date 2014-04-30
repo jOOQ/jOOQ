@@ -86,7 +86,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings("unchecked")
-    @Test
+
     public void testFetchParentAndChildren() throws Exception {
         if (!supportsReferences()) {
             log.info("SKIPPING", "Fetch parent and children tests");

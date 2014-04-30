@@ -86,7 +86,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testRecordOriginals() throws Exception {
         B book = create().selectFrom(TBook()).where(TBook_ID().eq(1)).fetchOne();
         B orig = book.original();
@@ -119,7 +118,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testRecordChanged() throws Exception {
         B book = create().selectFrom(TBook()).where(TBook_ID().eq(1)).fetchOne();
 
@@ -154,7 +152,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("abc", book.original(TBook_TITLE()));
     }
 
-    @Test
     public void testRecordChangedOnGeneratedMethods() throws Exception {
 
         // [#2798] Generated methods might show a different behaviour with respect to changed flags,
@@ -181,7 +178,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertTrue(b2.changed(TBook_ID()));
     }
 
-    @Test
     public void testRecordReset() throws Exception {
         B book = create().selectFrom(TBook()).where(TBook_ID().eq(1)).fetchOne();
 

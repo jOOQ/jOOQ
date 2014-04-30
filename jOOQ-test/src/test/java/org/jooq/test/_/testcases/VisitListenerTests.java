@@ -123,7 +123,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testVisitListenerOnSELECT() throws Exception {
 
         // No join with author table
@@ -219,7 +218,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         );
     }
 
-    @Test
     public void testVisitListenerOnDML() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -300,7 +298,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         /* [/pro] */
     }
 
-    @Test
     public void testVisitListenerFailOnMissingWhere() {
         jOOQAbstractTest.reset = false;
 

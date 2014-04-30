@@ -111,7 +111,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testSelectGetSQLAndGetBindValues() throws Exception {
         Select<?> select =
         create().select(TBook_ID(), TBook_ID().mul(6).div(2).div(3))
@@ -146,7 +145,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         stmt.close();
     }
 
-    @Test
     public void testInsertUpdateGetSQLAndGetBindValues() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -176,7 +174,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             insert2.getBindValues());
     }
 
-    @Test
     public void testNamedParams() throws Exception {
         Select<?> select =
         create().select(
@@ -210,7 +207,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("asdf", result2.getValue(1, 1));
     }
 
-    @Test
     public void testUnknownBindTypes() throws Exception {
 
         // [#1028] [#1029] Named params without any associated type information
@@ -227,7 +223,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(null, result3.getValue(0, 1));
     }
 
-    @Test
     public void testManyVarcharBindValues() throws Exception {
         /* [pro] */
         // [#2492] MS Access's upper limit is 255 columns!
@@ -246,7 +241,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .fetchOne(0));
     }
 
-    @Test
     public void testSelectBindValues() throws Exception {
         Select<?> select =
         create().select(
@@ -282,7 +276,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("asdf", result2.getValue(1, 1));
     }
 
-    @Test
     public void testSelectBindValuesWithPlainSQL() throws Exception {
         Select<?> select =
         create().select(TAuthor_ID())
@@ -315,7 +308,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(2, result2.getValue(1, 0));
     }
 
-    @Test
     public void testInlinedBindValues() throws Exception {
 
         // [#1158] TODO get this working for derby as well
@@ -431,7 +423,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Test
+
     public void testInlinedBindValuesForNumberTypes() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -460,7 +452,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testInlinedBindValuesForDatetime() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -493,7 +484,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList((Object) 2, d1, t1, ts1), asList(dates.get(1).intoArray()));
     }
 
-    @Test
     public void testRenderNameStyle() throws Exception {
         Select<?> s =
         create(new Settings().withRenderNameStyle(RenderNameStyle.AS_IS))
@@ -520,7 +510,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertTrue(s.getSQL().toUpperCase().contains("T_AUTHOR.LAST_NAME"));
     }
 
-    @Test
     public void testRenderKeywordStyle() throws Exception {
         Select<?> s =
         create(new Settings().withRenderKeywordStyle(RenderKeywordStyle.UPPER))
@@ -543,7 +532,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertTrue(s.getSQL().contains("ORDER BY"));
     }
 
-    @Test
     public void testRenderFormattedAndInlinedWithNewlines() throws Exception {
         jOOQAbstractTest.reset = false;
 

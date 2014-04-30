@@ -118,7 +118,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testLiterals() throws Exception {
         Record record = create().select(zero(), one(), two(), pi(), e(), rad(deg(pi()))).fetchOne();
 
@@ -130,12 +129,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("3.141", record.getValue(5, String.class).substring(0, 5));
     }
 
-    @Test
     public void testSequences() throws Exception {
         testSequences0(SAuthorID());
     }
 
-    @Test
     public void testSequenceByName() throws Exception {
         Sequence<? extends Number> sequence = SAuthorID();
 
@@ -188,7 +185,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(8, create().nextval(sequence).intValue());
     }
 
-    @Test
     public void testAccessInternalRepresentation() throws Exception {
         SelectQuery<Record1<Integer>> query =
         create().select(TBook_ID())
@@ -207,7 +203,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Arrays.asList(1, 2, 3), result.getValues(TBook_ID()));
     }
 
-    @Test
     public void testSerialisation() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -312,7 +307,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         return (Z) i.readObject();
     }
 
-    @Test
     public void testAttachable() throws Exception {
         jOOQAbstractTest.reset = false;
         DSLContext create = create();
@@ -376,7 +370,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings("unchecked")
-    @Test
+
     public void testNULL() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -403,7 +397,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(null, records.getValue(0, TAuthor_YEAR_OF_BIRTH()));
     }
 
-    @Test
     public void testEquals() throws Exception {
 
         // Record.equals()

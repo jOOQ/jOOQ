@@ -121,7 +121,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testIsTrue() throws Exception {
         assertEquals(0, create().select().where(val(null).isTrue()).fetch().size());
         assertEquals(0, create().select().where(val("asdf").isTrue()).fetch().size());
@@ -172,7 +171,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testIsDistinctFrom() throws Exception {
         assertEquals(0, create().select().where(val(null, Integer.class).isDistinctFrom((Integer) null)).fetch().size());
         assertEquals(1, create().select().where(val(1).isDistinctFrom((Integer) null)).fetch().size());
@@ -185,7 +183,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(1, create().select().where(val(1).isNotDistinctFrom(1)).fetch().size());
     }
 
-    @Test
     public void testLike() throws Exception {
         jOOQAbstractTest.reset = false;
 
@@ -334,7 +331,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList(2), books.getValues(TBook_ID()));
     }
 
-    @Test
     public void testLikeRegex() throws Exception {
         switch (dialect().family()) {
             /* [pro] */
@@ -363,7 +359,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(4, (int) result.get(1).getValue(TBook_ID()));
     }
 
-    @Test
     public void testLargeINCondition() throws Exception {
         Field<Integer> count = count();
         assertEquals(1, (int) create().select(count)
@@ -414,7 +409,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .fetchOne(count));
     }
 
-    @Test
     public void testConditionalSelect() throws Exception {
         Condition c = trueCondition();
 
@@ -431,7 +425,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(3, create().selectFrom(TBook()).where(c).execute());
     }
 
-    @Test
     public void testBetweenConditions() throws Exception {
 
         // The BETWEEN clause
@@ -461,7 +454,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .orderBy(TBook_ID()).fetch(TBook_ID()));
     }
 
-    @Test
     public void testConditions() throws Exception {
 
         // The IN clause
@@ -521,7 +513,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .orderBy(TBook_ID()).fetch(TBook_ID()));
     }
 
-    @Test
     public void testInPredicateWithPlainSQL() throws Exception {
 
         // [#3086] This issue cannot seem to be reproduced again...?
@@ -537,7 +528,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList(1, 2), result.getValues(TBook_ID()));
     }
 
-    @Test
     public void testInPredicateWithSubselectAndLimitOffset() throws Exception {
         Result<Record1<Integer>> result =
         create().select(TBook_ID())
@@ -556,7 +546,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(1, (int) result.get(0).value1());
     }
 
-    @Test
     public void testConditionsAsFields() throws Exception {
         Record record = create().select(field(one().eq(zero())), field(one().eq(1))).fetchOne();
 
@@ -564,7 +553,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(true, record.getValue(1));
     }
 
-    @Test
     public void testFieldsAsConditions() throws Exception {
         Param<Boolean> t = val(true);
         Param<Boolean> f = val(false);
@@ -577,7 +565,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(create().selectOne().where(trueCondition().andNot(t)).fetchOne());
     }
 
-    @Test
     public void testNotField() throws Exception {
         Record record = create().select(
             not(true),
@@ -603,7 +590,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(null, record.getValue(8));
     }
 
-    @Test
     public void testQuantifiedPredicates() throws Exception {
 
         // = { ALL | ANY | SOME }
@@ -699,7 +685,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    @Test
     public void testIgnoreCase() {
         A author =
         create().selectFrom(TAuthor())
@@ -714,7 +699,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("George", author.getValue(TAuthor_FIRST_NAME()));
     }
 
-    @Test
     public void testIgnoreCaseForLongStrings() {
         jOOQAbstractTest.reset = false;
 
@@ -732,7 +716,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetchOne(TAuthor_ID()));
     }
 
-    @Test
     public void testBigDecimalPredicates() {
 
         // [#2902] The Xerial (SQLite) driver binds BigDecimal values as String, internally

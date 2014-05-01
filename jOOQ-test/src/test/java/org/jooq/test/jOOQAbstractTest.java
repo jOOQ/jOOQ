@@ -2683,6 +2683,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testBenchmarkPlainSQL() throws Exception {
+        new BenchmarkTests(this).testBenchmarkPlainSQL();
+    }
+
+    @Test
     public void testKeepStatement() throws Exception {
         new StatementTests(this).testKeepStatement();
     }

@@ -55,6 +55,7 @@ import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.Result;
+import org.jooq.ResultQuery;
 import org.jooq.Select;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
@@ -63,8 +64,6 @@ import org.jooq.test.jOOQAbstractTest;
 import org.jooq.test._.BookWithAnnotations;
 import org.jooq.test._.BookWithoutAnnotations;
 import org.jooq.tools.StopWatch;
-
-import org.junit.Test;
 
 public class BenchmarkTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
@@ -94,6 +93,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     private static final int    REPETITIONS_RECORD_INTO_TABLE_RECORD = 20000;
     private static final int    REPETITIONS_FIELD_ACCESS             = 1000000;
     private static final int    REPETITIONS_SELECT                   = 100;
+    private static final int    REPETITIONS_PLAIN_SQL                = 30000;
     private static final String RANDOM                               = "" + new Random().nextLong();
 
     public BenchmarkTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
@@ -185,6 +185,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         testBenchmarkReuseSQLString(create, REPETITIONS_SELECT);
         watch.splitInfo("Reuse SQL String");
+    }
+
+    public void testBenchmarkPlainSQL() throws Exception {
+        Configuration configuration = create().configuration().derive(new ExecuteListenerProvider[0]);
+        configuration.settings().setExecuteLogging(false);
+        DSLContext create = create(configuration);
+
+        ResultQuery<?> q = create
+            .select()
+            .from("t_book")
+            .where("id = ?", -1);
+
+        for (int i = 0; i < REPETITIONS_PLAIN_SQL; i++) {
+            q.bind(1, i % 4 + 1).fetchOne();
+        }
     }
 
     private void testBenchmarkReuseSQLString(DSLContext create, int repetitions) throws Exception {

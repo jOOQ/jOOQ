@@ -87,5 +87,10 @@ class SQLTemplate implements Template {
         public final Clause[] clauses(Context<?> ctx) {
             return CLAUSES;
         }
+
+        @Override
+        public String toString() {
+            return sql;
+        }
     }
 }

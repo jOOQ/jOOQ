@@ -89,7 +89,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private int                      params;
     private int                      alias;
     private int                      indent;
-    private Stack<Integer>           indentLock  = new Stack<Integer>();
+    private Stack<Integer>           indentLock;
     private int                      printMargin = 80;
 
     // [#1632] Cached values from Settings
@@ -295,10 +295,18 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
+    private Stack<Integer> indentLock() {
+        if (indentLock == null) {
+            indentLock = new Stack<Integer>();
+        }
+
+        return indentLock;
+    }
+
     @Override
     public final RenderContext formatIndentLockStart() {
         if (cachedRenderFormatted) {
-            indentLock.push(indent);
+            indentLock().push(indent);
             String[] lines = sql.toString().split("[\\n\\r]");
             indent = lines[lines.length - 1].length();
         }
@@ -309,7 +317,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @Override
     public final RenderContext formatIndentLockEnd() {
         if (cachedRenderFormatted) {
-            indent = indentLock.pop();
+            indent = indentLock().pop();
         }
 
         return this;

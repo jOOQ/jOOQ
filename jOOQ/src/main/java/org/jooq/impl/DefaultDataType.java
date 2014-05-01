@@ -278,10 +278,14 @@ public class DefaultDataType<T> implements DataType<T> {
 
         // Dialect-specific data types
         int ordinal = dialect == null ? SQLDialect.SQL99.ordinal() : dialect.ordinal();
-        String normalised = DefaultDataType.normalise(typeName);
 
-        if (TYPES_BY_NAME[ordinal].get(normalised) == null) {
-            TYPES_BY_NAME[ordinal].put(normalised, this);
+        // [#3225] Avoid normalisation if not necessary
+        if (!TYPES_BY_NAME[ordinal].containsKey(typeName.toUpperCase())) {
+            String normalised = DefaultDataType.normalise(typeName);
+
+            if (TYPES_BY_NAME[ordinal].get(normalised) == null) {
+                TYPES_BY_NAME[ordinal].put(normalised, this);
+            }
         }
 
         if (TYPES_BY_TYPE[ordinal].get(type) == null) {
@@ -620,7 +624,7 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     public static DataType<?> getDataType(SQLDialect dialect, String typeName) {
-        DataType<?> result = TYPES_BY_NAME[dialect.ordinal()].get(typeName);
+        DataType<?> result = TYPES_BY_NAME[dialect.ordinal()].get(typeName.toUpperCase());
 
         // [#3225] Normalise only if necessary
         if (result == null) {

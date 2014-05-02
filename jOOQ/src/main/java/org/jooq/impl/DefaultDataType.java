@@ -278,10 +278,14 @@ public class DefaultDataType<T> implements DataType<T> {
 
         // Dialect-specific data types
         int ordinal = dialect == null ? SQLDialect.SQL99.ordinal() : dialect.ordinal();
-        String normalised = DefaultDataType.normalise(typeName);
 
-        if (TYPES_BY_NAME[ordinal].get(normalised) == null) {
-            TYPES_BY_NAME[ordinal].put(normalised, this);
+        // [#3225] Avoid normalisation if not necessary
+        if (!TYPES_BY_NAME[ordinal].containsKey(typeName.toUpperCase())) {
+            String normalised = DefaultDataType.normalise(typeName);
+
+            if (TYPES_BY_NAME[ordinal].get(normalised) == null) {
+                TYPES_BY_NAME[ordinal].put(normalised, this);
+            }
         }
 
         if (TYPES_BY_TYPE[ordinal].get(type) == null) {
@@ -620,12 +624,17 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     public static DataType<?> getDataType(SQLDialect dialect, String typeName) {
-        String normalised = DefaultDataType.normalise(typeName);
-        DataType<?> result = TYPES_BY_NAME[dialect.ordinal()].get(normalised);
+        DataType<?> result = TYPES_BY_NAME[dialect.ordinal()].get(typeName.toUpperCase());
+
+        // [#3225] Normalise only if necessary
+        if (result == null) {
+            typeName = DefaultDataType.normalise(typeName);
+            result = TYPES_BY_NAME[dialect.ordinal()].get(typeName);
+        }
 
         // UDT data types and others are registered using SQL99
         if (result == null) {
-            result = TYPES_BY_NAME[SQLDialect.SQL99.ordinal()].get(normalised);
+            result = TYPES_BY_NAME[SQLDialect.SQL99.ordinal()].get(typeName);
         }
 
         if (result == null) {
@@ -806,7 +815,7 @@ public class DefaultDataType<T> implements DataType<T> {
      * Convert a type name (using precision and scale) into a Java class
      */
     public static DataType<?> getDataType(SQLDialect dialect, String t, int p, int s) throws SQLDialectNotSupportedException {
-        DataType<?> result = DefaultDataType.getDataType(dialect, DefaultDataType.normalise(t));
+        DataType<?> result = DefaultDataType.getDataType(dialect, t);
 
         if (result.getType() == BigDecimal.class) {
             result = DefaultDataType.getDataType(dialect, getNumericClass(p, s));

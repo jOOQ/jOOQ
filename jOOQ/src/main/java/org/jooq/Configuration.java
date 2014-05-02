@@ -44,6 +44,8 @@ import java.io.Serializable;
 import java.util.Map;
 
 import org.jooq.conf.Settings;
+import org.jooq.impl.DefaultConnectionProvider;
+import org.jooq.impl.DefaultTransactionProvider;
 
 /**
  * A <code>Configuration</code> configures a {@link DSLContext}, providing it
@@ -138,6 +140,15 @@ public interface Configuration extends Serializable {
      * Get this configuration's underlying connection provider.
      */
     ConnectionProvider connectionProvider();
+
+    /**
+     * Get this configuration's underlying transaction provider.
+     * <p>
+     * If no explicit transaction provider was specified, and if
+     * {@link #connectionProvider()} is a {@link DefaultConnectionProvider},
+     * then this will return a {@link DefaultTransactionProvider}.
+     */
+    TransactionProvider transactionProvider();
 
     /**
      * Get this configuration's underlying record mapper provider.
@@ -238,6 +249,18 @@ public interface Configuration extends Serializable {
     Configuration set(ConnectionProvider newConnectionProvider);
 
     /**
+     * Change this configuration to hold a new transaction provider.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newTransactionProvider The new transaction provider to be
+     *            contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(TransactionProvider newTransactionProvider);
+
+    /**
      * Change this configuration to hold a new record mapper provider.
      * <p>
      * This method is not thread-safe and should not be used in globally
@@ -330,6 +353,16 @@ public interface Configuration extends Serializable {
      * @return The derived configuration.
      */
     Configuration derive(ConnectionProvider newConnectionProvider);
+
+    /**
+     * Create a derived configuration from this one, with a new transaction
+     * provider.
+     *
+     * @param newTransactionProvider The new transaction provider to be
+     *            contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(TransactionProvider newTransactionProvider);
 
     /**
      * Create a derived configuration from this one, with a new record mapper

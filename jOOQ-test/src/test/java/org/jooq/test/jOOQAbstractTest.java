@@ -150,6 +150,7 @@ import org.jooq.test._.testcases.SelectTests;
 import org.jooq.test._.testcases.StatementTests;
 import org.jooq.test._.testcases.TableFunctionTests;
 import org.jooq.test._.testcases.ThreadSafetyTests;
+import org.jooq.test._.testcases.TransactionTests;
 import org.jooq.test._.testcases.TruncateTests;
 import org.jooq.test._.testcases.ValuesConstructorTests;
 import org.jooq.test._.testcases.VisitListenerTests;
@@ -2700,5 +2701,25 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testDialectGuessing() throws Exception {
         new JDBCTests(this).testDialectGuessing();
+    }
+
+    @Test
+    public void testTransactionsWithJDBCSimple() throws Exception {
+        new TransactionTests(this).testTransactionsWithJDBCSimple();
+    }
+
+    @Test
+    public void testTransactionsWithJDBCCheckedException() throws Exception {
+        new TransactionTests(this).testTransactionsWithJDBCCheckedException();
+    }
+
+    @Test
+    public void testTransactionsWithJDBCNestedWithSavepoints() throws Exception {
+        new TransactionTests(this).testTransactionsWithJDBCNestedWithSavepoints();
+    }
+
+    @Test
+    public void testTransactionsWithJDBCNestedWithoutSavepoints() throws Exception {
+        new TransactionTests(this).testTransactionsWithJDBCNestedWithoutSavepoints();
     }
 }

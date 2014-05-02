@@ -160,6 +160,39 @@ public class DefaultConfiguration implements Configuration {
     }
 
     /**
+     * This constructor is maintained for backwards-compatibility reasons.
+     * Spring users tend to construct this <code>DefaultConfiguration</code>
+     * through reflection.
+     *
+     * @deprecated Use
+     *             {@link #DefaultConfiguration(ConnectionProvider, TransactionProvider, RecordMapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], SQLDialect, Settings, Map)}
+     *             instead
+     */
+    @Deprecated
+    DefaultConfiguration(
+            ConnectionProvider connectionProvider,
+            RecordMapperProvider recordMapperProvider,
+            RecordListenerProvider[] recordListenerProviders,
+            ExecuteListenerProvider[] executeListenerProviders,
+            VisitListenerProvider[] visitListenerProviders,
+            SQLDialect dialect,
+            Settings settings,
+            Map<Object, Object> data)
+    {
+        this(
+            connectionProvider,
+            null,
+            recordMapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            visitListenerProviders,
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    /**
      * Create the actual configuration object.
      * <p>
      * This constructor has been made package-private to allow for adding new

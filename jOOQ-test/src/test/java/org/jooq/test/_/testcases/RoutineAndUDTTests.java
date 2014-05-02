@@ -77,8 +77,6 @@ import org.jooq.test.jOOQAbstractTest;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
 
-import org.junit.Test;
-
 public class RoutineAndUDTTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,

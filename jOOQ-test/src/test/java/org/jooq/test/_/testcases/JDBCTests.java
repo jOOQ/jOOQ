@@ -57,8 +57,6 @@ import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.tools.jdbc.JDBCUtils;
 
-import org.junit.Test;
-
 public class JDBCTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,

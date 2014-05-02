@@ -123,7 +123,6 @@ import org.jooq.test._.StaticWithoutAnnotations;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 import org.junit.Assert;
-import org.junit.Test;
 
 public class FetchTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,

@@ -93,8 +93,6 @@ import org.jooq.impl.DefaultVisitListener;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
-import org.junit.Test;
-
 @SuppressWarnings("serial")
 public class VisitListenerTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,

@@ -61,8 +61,6 @@ import org.jooq.UpdatableRecord;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
-import org.junit.Test;
-
 /**
  * @author Lukas Eder
  */

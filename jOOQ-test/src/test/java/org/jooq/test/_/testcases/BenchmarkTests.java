@@ -64,8 +64,6 @@ import org.jooq.test._.BookWithAnnotations;
 import org.jooq.test._.BookWithoutAnnotations;
 import org.jooq.tools.StopWatch;
 
-import org.junit.Test;
-
 public class BenchmarkTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,

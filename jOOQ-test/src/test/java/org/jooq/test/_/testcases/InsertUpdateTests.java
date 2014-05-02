@@ -101,8 +101,6 @@ import org.jooq.conf.Settings;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
-import org.junit.Test;
-
 public class InsertUpdateTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,

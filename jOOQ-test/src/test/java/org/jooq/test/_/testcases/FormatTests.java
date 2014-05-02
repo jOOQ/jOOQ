@@ -74,7 +74,6 @@ import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.test._.tools.DOMBuilder;
 
-import org.junit.Test;
 import org.w3c.dom.Document;
 
 /**

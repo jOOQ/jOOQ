@@ -118,8 +118,6 @@ import org.jooq.types.UShort;
 import org.jooq.types.Unsigned;
 import org.jooq.types.YearToMonth;
 
-import org.junit.Test;
-
 public class DataTypeTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,

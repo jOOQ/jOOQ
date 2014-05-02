@@ -72,8 +72,6 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
-import org.junit.Test;
-
 public class GroupByTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,

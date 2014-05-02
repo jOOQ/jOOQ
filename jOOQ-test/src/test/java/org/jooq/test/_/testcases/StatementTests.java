@@ -86,8 +86,6 @@ import org.jooq.test.jOOQAbstractTest;
 import org.jooq.tools.jdbc.DefaultConnection;
 import org.jooq.tools.reflect.Reflect;
 
-import org.junit.Test;
-
 public class StatementTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,

@@ -70,8 +70,6 @@ import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
-import org.junit.Test;
-
 public class BatchTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,

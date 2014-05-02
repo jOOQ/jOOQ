@@ -62,6 +62,7 @@ import org.jooq.RecordListenerProvider;
 import org.jooq.RecordMapperProvider;
 import org.jooq.SQLDialect;
 import org.jooq.SchemaMapping;
+import org.jooq.TransactionProvider;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
@@ -89,6 +90,7 @@ public class DefaultConfiguration implements Configuration {
 
     // Non-serializable Configuration objects
     private transient ConnectionProvider        connectionProvider;
+    private transient TransactionProvider       transactionProvider;
     private transient RecordMapperProvider      recordMapperProvider;
     private transient RecordListenerProvider[]  recordListenerProviders;
     private transient ExecuteListenerProvider[] executeListenerProviders;
@@ -128,6 +130,7 @@ public class DefaultConfiguration implements Configuration {
             null,
             null,
             null,
+            null,
             dialect,
             SettingsTools.defaultSettings(),
             null
@@ -145,6 +148,7 @@ public class DefaultConfiguration implements Configuration {
     DefaultConfiguration(Configuration configuration) {
         this(
             configuration.connectionProvider(),
+            configuration.transactionProvider(),
             configuration.recordMapperProvider(),
             configuration.recordListenerProviders(),
             configuration.executeListenerProviders(),
@@ -165,6 +169,7 @@ public class DefaultConfiguration implements Configuration {
      */
     DefaultConfiguration(
             ConnectionProvider connectionProvider,
+            TransactionProvider transactionProvider,
             RecordMapperProvider recordMapperProvider,
             RecordListenerProvider[] recordListenerProviders,
             ExecuteListenerProvider[] executeListenerProviders,
@@ -174,6 +179,7 @@ public class DefaultConfiguration implements Configuration {
             Map<Object, Object> data)
     {
         set(connectionProvider);
+        set(transactionProvider);
         set(recordMapperProvider);
         set(recordListenerProviders);
         set(executeListenerProviders);
@@ -221,6 +227,25 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(ConnectionProvider newConnectionProvider) {
         return new DefaultConfiguration(
             newConnectionProvider,
+            transactionProvider,
+            recordMapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            visitListenerProviders,
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Configuration derive(TransactionProvider newTransactionProvider) {
+        return new DefaultConfiguration(
+            connectionProvider,
+            newTransactionProvider,
             recordMapperProvider,
             recordListenerProviders,
             executeListenerProviders,
@@ -238,6 +263,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(RecordMapperProvider newRecordMapperProvider) {
         return new DefaultConfiguration(
             connectionProvider,
+            transactionProvider,
             newRecordMapperProvider,
             recordListenerProviders,
             executeListenerProviders,
@@ -255,6 +281,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(RecordListenerProvider... newRecordListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
+            transactionProvider,
             recordMapperProvider,
             newRecordListenerProviders,
             executeListenerProviders,
@@ -272,6 +299,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
+            transactionProvider,
             recordMapperProvider,
             recordListenerProviders,
             newExecuteListenerProviders,
@@ -289,6 +317,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(VisitListenerProvider... newVisitListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
+            transactionProvider,
             recordMapperProvider,
             recordListenerProviders,
             executeListenerProviders,
@@ -306,6 +335,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(SQLDialect newDialect) {
         return new DefaultConfiguration(
             connectionProvider,
+            transactionProvider,
             recordMapperProvider,
             recordListenerProviders,
             executeListenerProviders,
@@ -323,6 +353,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(Settings newSettings) {
         return new DefaultConfiguration(
             connectionProvider,
+            transactionProvider,
             recordMapperProvider,
             recordListenerProviders,
             executeListenerProviders,
@@ -361,6 +392,18 @@ public class DefaultConfiguration implements Configuration {
         this.connectionProvider = newConnectionProvider != null
             ? newConnectionProvider
             : new NoConnectionProvider();
+
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Configuration set(TransactionProvider newTransactionProvider) {
+        this.transactionProvider = newTransactionProvider != null
+            ? newTransactionProvider
+            : new NoTransactionProvider();
 
         return this;
     }
@@ -451,6 +494,20 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
+    public final TransactionProvider transactionProvider() {
+        if (transactionProvider instanceof NoTransactionProvider &&
+            connectionProvider  instanceof DefaultConnectionProvider) {
+
+            return new DefaultTransactionProvider((DefaultConnectionProvider) connectionProvider);
+        }
+
+        return transactionProvider;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public final RecordMapperProvider recordMapperProvider() {
         return recordMapperProvider;
     }
@@ -533,7 +590,9 @@ public class DefaultConfiguration implements Configuration {
         StringWriter writer = new StringWriter();
         JAXB.marshal(settings, writer);
 
-        return "DefaultConfiguration [\n\tconnected=" + (connectionProvider != null && !(connectionProvider instanceof NoConnectionProvider)) +
+        return "DefaultConfiguration " +
+            "[\n\tconnected=" + (connectionProvider != null && !(connectionProvider instanceof NoConnectionProvider)) +
+            ",\n\ttransactional=" + (transactionProvider != null && !(transactionProvider instanceof NoTransactionProvider)) +
             ",\n\tdialect=" + dialect +
             ",\n\tdata=" + data +
             ",\n\tsettings=\n\t\t" + writer.toString().trim().replace("\n", "\n\t\t") +
@@ -550,6 +609,9 @@ public class DefaultConfiguration implements Configuration {
         // Allow these objects to be non-serializable
         oos.writeObject(connectionProvider instanceof Serializable
             ? connectionProvider
+            : null);
+        oos.writeObject(transactionProvider instanceof Serializable
+            ? transactionProvider
             : null);
         oos.writeObject(recordMapperProvider instanceof Serializable
             ? recordMapperProvider
@@ -576,6 +638,7 @@ public class DefaultConfiguration implements Configuration {
         ois.defaultReadObject();
 
         connectionProvider = (ConnectionProvider) ois.readObject();
+        transactionProvider = (TransactionProvider) ois.readObject();
         recordMapperProvider = (RecordMapperProvider) ois.readObject();
         executeListenerProviders = (ExecuteListenerProvider[]) ois.readObject();
         recordListenerProviders = (RecordListenerProvider[]) ois.readObject();

@@ -67,6 +67,7 @@ import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Clob;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -247,6 +248,18 @@ final class Utils {
      * corresponds to the PostgreSQL <code>INSERT .. RETURNING</code> clause.
      */
     static final String          DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE        = "org.jooq.configuration.rendering-db2-final-table-clause";
+
+    /**
+     * [#1629] The {@link Connection#getAutoCommit()} flag value before starting
+     * a new transaction.
+     */
+    static final String          DATA_DEFAULT_TRANSACTION_PROVIDER_AUTOCOMMIT = "org.jooq.configuration.default-transaction-provider-autocommit";
+
+    /**
+     * [#1629] The {@link Connection#getAutoCommit()} flag value before starting
+     * a new transaction.
+     */
+    static final String          DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS = "org.jooq.configuration.default-transaction-provider-savepoints";
 
     /**
      * [#2965] These are {@link ConcurrentHashMap}s containing caches for

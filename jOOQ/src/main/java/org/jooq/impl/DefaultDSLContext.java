@@ -176,6 +176,9 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.TableRecord;
+import org.jooq.Transaction;
+import org.jooq.TransactionProvider;
+import org.jooq.Transactional;
 import org.jooq.TruncateIdentityStep;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
@@ -218,7 +221,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     public DefaultDSLContext(SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(new NoConnectionProvider(), null, null, null, null, dialect, settings, null));
+        this(new DefaultConfiguration(new NoConnectionProvider(), null, null, null, null, null, dialect, settings, null));
     }
 
     public DefaultDSLContext(Connection connection, SQLDialect dialect) {
@@ -226,7 +229,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     public DefaultDSLContext(Connection connection, SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(new DefaultConnectionProvider(connection), null, null, null, null, dialect, settings, null));
+        this(new DefaultConfiguration(new DefaultConnectionProvider(connection), null, null, null, null, null, dialect, settings, null));
     }
 
     public DefaultDSLContext(DataSource datasource, SQLDialect dialect) {
@@ -234,7 +237,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     public DefaultDSLContext(DataSource datasource, SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(new DataSourceConnectionProvider(datasource), null, null, null, null, dialect, settings, null));
+        this(new DefaultConfiguration(new DataSourceConnectionProvider(datasource), null, null, null, null, null, dialect, settings, null));
     }
 
     public DefaultDSLContext(ConnectionProvider connectionProvider, SQLDialect dialect) {
@@ -242,7 +245,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     public DefaultDSLContext(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(connectionProvider, null, null, null, null, dialect, settings, null));
+        this(new DefaultConfiguration(connectionProvider, null, null, null, null, null, dialect, settings, null));
     }
 
     public DefaultDSLContext(Configuration configuration) {
@@ -282,6 +285,37 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     @Override
     public Meta meta() {
         return new MetaImpl(configuration);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX Transaction API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public <T> T transaction(Transactional<T> transactional) {
+        Configuration local = configuration.derive();
+        TransactionProvider provider = local.transactionProvider();
+
+        Transaction transaction = null;
+        T result = null;
+
+        try {
+            transaction = provider.begin(local);
+            result = transactional.run(local);
+            provider.commit(local, transaction);
+        }
+        catch (Exception cause) {
+            provider.rollback(local, transaction, cause);
+
+            if (cause instanceof RuntimeException) {
+                throw (RuntimeException) cause;
+            }
+            else {
+                throw new DataAccessException("Rollback caused", cause);
+            }
+        }
+
+        return result;
     }
 
     // -------------------------------------------------------------------------

@@ -162,6 +162,21 @@ public interface DSLContext {
     Meta meta();
 
     // -------------------------------------------------------------------------
+    // XXX Transaction API
+    // -------------------------------------------------------------------------
+
+    /**
+     * Run a {@link Transactional} in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link Configuration#transactionProvider()}, and return the
+     * <code>transactional</code>'s outcome.
+     *
+     * @param transactional The transactional code
+     * @return The transactional outcome
+     */
+    <T> T transaction(Transactional<T> transactional);
+
+    // -------------------------------------------------------------------------
     // XXX RenderContext and BindContext accessors
     // -------------------------------------------------------------------------
 

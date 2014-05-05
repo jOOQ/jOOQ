@@ -130,9 +130,20 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
         // [#677] Forced types for matching regular expressions
         ForcedType forcedType = db.getConfiguredForcedType(child, definedType);
         if (forcedType != null) {
-            String type = getCustomType(db, forcedType.getName());
+            String type = forcedType.getName();
+            String converter = null;
 
-            log.info("Forcing type", child + " into " + type);
+            CustomType customType = customType(db, forcedType.getName());
+            if (customType != null) {
+                type = (!StringUtils.isBlank(customType.getType()))
+                    ? customType.getType()
+                    : customType.getName();
+
+                converter = customType.getConverter();
+            }
+
+
+            log.info("Forcing type", child + " into " + type + (converter != null ? " using converter " + converter : ""));
             DataType<?> forcedDataType = null;
 
             String t = result.getType();
@@ -148,30 +159,25 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
 
             // [#677] SQLDataType matches are actual type-rewrites
             if (forcedDataType != null) {
-                result = new DefaultDataTypeDefinition(db, child.getSchema(), type, l, p, s, n, d);
+                result = new DefaultDataTypeDefinition(db, child.getSchema(), type, l, p, s, n, d, null, converter);
             }
 
             // Other forced types are UDT's, enums, etc.
             else {
-                result = new DefaultDataTypeDefinition(db, child.getSchema(), t, l, p, s, n, d, type);
+                result = new DefaultDataTypeDefinition(db, child.getSchema(), t, l, p, s, n, d, type, converter);
             }
         }
 
         return result;
     }
 
-    private static String getCustomType(Database db, String name) {
+    static CustomType customType(Database db, String name) {
         for (CustomType type : db.getConfiguredCustomTypes()) {
             if (name.equals(type.getName())) {
-                if (!StringUtils.isBlank(type.getType())) {
-                    return type.getType();
-                }
-                else {
-                    return type.getName();
-                }
+                return type;
             }
         }
 
-        return name;
+        return null;
     }
 }

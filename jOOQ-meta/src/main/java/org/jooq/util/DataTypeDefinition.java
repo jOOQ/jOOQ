@@ -54,6 +54,12 @@ public interface DataTypeDefinition {
     String getType();
 
     /**
+     * The converter type that is applied to this data type, or
+     * <code>null</code>, if no such converter type is configured.
+     */
+    String getConverter();
+
+    /**
      * The type's length.
      */
     int getLength();

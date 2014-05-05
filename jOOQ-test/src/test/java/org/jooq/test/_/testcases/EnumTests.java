@@ -40,6 +40,7 @@
  */
 package org.jooq.test._.testcases;
 
+import static java.util.Arrays.asList;
 import static org.jooq.tools.reflect.Reflect.on;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -70,6 +71,8 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
+
+import org.junit.Test;
 
 public class EnumTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
@@ -127,6 +130,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("ON STOCK", ((EnumType) value).getLiteral());
     }
 
+    @Test
+    public void testFetchIntoConvertedType() throws Exception {
+        try {
+            insertBooleans(create());
+
+            assertEquals(
+                asList(Boolean_10.ZERO, Boolean_10.ONE, null),
+                create().select(TBooleans_BOOLEAN_10())
+                        .from(TBooleans())
+                        .orderBy(TBooleans_ID())
+                        .fetchInto(Boolean_10.class)
+            );
+        }
+        finally {
+            create().delete(TBooleans()).execute();
+        }
+    }
+
     public <R extends TableRecord<R>> void testCustomEnums() throws Exception {
         testCustomEnums0(create());
     }
@@ -148,50 +169,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Insertion
         // --------------------------------------------------------------------
-        assertEquals(1,
-        create  .insertInto(TBooleans())
-                .set(TBooleans_ID(), 1)
-                .set(TBooleans_BOOLEAN_10(), Boolean_10.ZERO)
-                .set(TBooleans_Boolean_TF_LC(), Boolean_TF_LC.FALSE)
-                .set(TBooleans_Boolean_TF_UC(), Boolean_TF_UC.FALSE)
-                .set(TBooleans_Boolean_YES_NO_LC(), Boolean_YES_NO_LC.no)
-                .set(TBooleans_Boolean_YES_NO_UC(), Boolean_YES_NO_UC.NO)
-                .set(TBooleans_Boolean_YN_LC(), Boolean_YN_LC.n)
-                .set(TBooleans_Boolean_YN_UC(), Boolean_YN_UC.N)
-                .set(TBooleans_C(), false)
-                .set(TBooleans_VC(), false)
-                .set(TBooleans_N(), false)
-                .execute());
-
-        assertEquals(1,
-        create  .insertInto(TBooleans())
-                .set(TBooleans_ID(), 2)
-                .set(TBooleans_BOOLEAN_10(), Boolean_10.ONE)
-                .set(TBooleans_Boolean_TF_LC(), Boolean_TF_LC.TRUE)
-                .set(TBooleans_Boolean_TF_UC(), Boolean_TF_UC.TRUE)
-                .set(TBooleans_Boolean_YES_NO_LC(), Boolean_YES_NO_LC.yes)
-                .set(TBooleans_Boolean_YES_NO_UC(), Boolean_YES_NO_UC.YES)
-                .set(TBooleans_Boolean_YN_LC(), Boolean_YN_LC.y)
-                .set(TBooleans_Boolean_YN_UC(), Boolean_YN_UC.Y)
-                .set(TBooleans_C(), true)
-                .set(TBooleans_VC(), true)
-                .set(TBooleans_N(), true)
-                .execute());
-
-        assertEquals(1,
-        create  .insertInto(TBooleans())
-                .set(TBooleans_ID(), 3)
-                .set(TBooleans_BOOLEAN_10(), (Boolean_10) null)
-                .set(TBooleans_Boolean_TF_LC(), (Boolean_TF_LC) null)
-                .set(TBooleans_Boolean_TF_UC(), (Boolean_TF_UC) null)
-                .set(TBooleans_Boolean_YES_NO_LC(), (Boolean_YES_NO_LC) null)
-                .set(TBooleans_Boolean_YES_NO_UC(), (Boolean_YES_NO_UC) null)
-                .set(TBooleans_Boolean_YN_LC(), (Boolean_YN_LC) null)
-                .set(TBooleans_Boolean_YN_UC(), (Boolean_YN_UC) null)
-                .set(TBooleans_C(), (Boolean) null)
-                .set(TBooleans_VC(), (Boolean) null)
-                .set(TBooleans_N(), (Boolean) null)
-                .execute());
+        insertBooleans(create);
 
         // Selection
         // --------------------------------------------------------------------
@@ -303,5 +281,52 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(Boolean_YN_UC.Y, on(b.get(1)).call("getYNUc").get());
             assertNull(on(b.get(2)).call("getYNUc").get());
         }
+    }
+
+    private void insertBooleans(DSLContext create) {
+        assertEquals(1,
+        create  .insertInto(TBooleans())
+                .set(TBooleans_ID(), 1)
+                .set(TBooleans_BOOLEAN_10(), Boolean_10.ZERO)
+                .set(TBooleans_Boolean_TF_LC(), Boolean_TF_LC.FALSE)
+                .set(TBooleans_Boolean_TF_UC(), Boolean_TF_UC.FALSE)
+                .set(TBooleans_Boolean_YES_NO_LC(), Boolean_YES_NO_LC.no)
+                .set(TBooleans_Boolean_YES_NO_UC(), Boolean_YES_NO_UC.NO)
+                .set(TBooleans_Boolean_YN_LC(), Boolean_YN_LC.n)
+                .set(TBooleans_Boolean_YN_UC(), Boolean_YN_UC.N)
+                .set(TBooleans_C(), false)
+                .set(TBooleans_VC(), false)
+                .set(TBooleans_N(), false)
+                .execute());
+
+        assertEquals(1,
+        create  .insertInto(TBooleans())
+                .set(TBooleans_ID(), 2)
+                .set(TBooleans_BOOLEAN_10(), Boolean_10.ONE)
+                .set(TBooleans_Boolean_TF_LC(), Boolean_TF_LC.TRUE)
+                .set(TBooleans_Boolean_TF_UC(), Boolean_TF_UC.TRUE)
+                .set(TBooleans_Boolean_YES_NO_LC(), Boolean_YES_NO_LC.yes)
+                .set(TBooleans_Boolean_YES_NO_UC(), Boolean_YES_NO_UC.YES)
+                .set(TBooleans_Boolean_YN_LC(), Boolean_YN_LC.y)
+                .set(TBooleans_Boolean_YN_UC(), Boolean_YN_UC.Y)
+                .set(TBooleans_C(), true)
+                .set(TBooleans_VC(), true)
+                .set(TBooleans_N(), true)
+                .execute());
+
+        assertEquals(1,
+        create  .insertInto(TBooleans())
+                .set(TBooleans_ID(), 3)
+                .set(TBooleans_BOOLEAN_10(), (Boolean_10) null)
+                .set(TBooleans_Boolean_TF_LC(), (Boolean_TF_LC) null)
+                .set(TBooleans_Boolean_TF_UC(), (Boolean_TF_UC) null)
+                .set(TBooleans_Boolean_YES_NO_LC(), (Boolean_YES_NO_LC) null)
+                .set(TBooleans_Boolean_YES_NO_UC(), (Boolean_YES_NO_UC) null)
+                .set(TBooleans_Boolean_YN_LC(), (Boolean_YN_LC) null)
+                .set(TBooleans_Boolean_YN_UC(), (Boolean_YN_UC) null)
+                .set(TBooleans_C(), (Boolean) null)
+                .set(TBooleans_VC(), (Boolean) null)
+                .set(TBooleans_N(), (Boolean) null)
+                .execute());
     }
 }

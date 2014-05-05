@@ -485,6 +485,11 @@
     <all>
       <!-- The name of the custom type -->
       <element name="name" type="string" minOccurs="1" maxOccurs="1" />
+      
+      <!-- The type of the custom type - e.g. java.time.LocalDateTime.
+           For backwards-compatibility reasons, this information is optional. If left undefined,
+           the "type" value will default to the "name" value. -->
+      <element name="type" type="string" minOccurs="0" maxOccurs="1" />
 
       <!-- A converter implementation for the custom type -->
       <element name="converter" type="string" minOccurs="1" maxOccurs="1" />

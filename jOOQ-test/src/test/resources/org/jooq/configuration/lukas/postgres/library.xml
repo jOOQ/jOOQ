@@ -29,7 +29,8 @@
             <unsignedTypes>true</unsignedTypes>
             <customTypes>
                 <customType>
-            		<name>org.jooq.test._.converters.Boolean_10</name>
+            		<name>B10</name>
+                    <type>org.jooq.test._.converters.Boolean_10</type>
             		<converter>org.jooq.test._.converters.Boolean_10_Converter</converter>
             	</customType>
             	<customType>
@@ -107,7 +108,7 @@
                     <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_UC)</expression>
                 </forcedType>
                 <forcedType>
-                    <name>org.jooq.test._.converters.Boolean_10</name>
+                    <name>B10</name>
                     <expression>(?i:(.*?.)?T_BOOLEANS.ONE_ZERO)</expression>
                 </forcedType>
             </forcedTypes>

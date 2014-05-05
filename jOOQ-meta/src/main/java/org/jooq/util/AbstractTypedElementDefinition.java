@@ -50,6 +50,8 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
+import org.jooq.util.jaxb.CustomType;
 import org.jooq.util.jaxb.ForcedType;
 
 abstract class AbstractTypedElementDefinition<T extends Definition>
@@ -128,7 +130,9 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
         // [#677] Forced types for matching regular expressions
         ForcedType forcedType = db.getConfiguredForcedType(child, definedType);
         if (forcedType != null) {
-            log.debug("Forcing type", child + " into " + forcedType.getName());
+            String type = getCustomType(db, forcedType.getName());
+
+            log.info("Forcing type", child + " into " + type);
             DataType<?> forcedDataType = null;
 
             String t = result.getType();
@@ -139,20 +143,35 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
             boolean d = result.isDefaulted();
 
             try {
-                forcedDataType = DefaultDataType.getDataType(db.getDialect(), forcedType.getName(), p, s);
+                forcedDataType = DefaultDataType.getDataType(db.getDialect(), type, p, s);
             } catch (SQLDialectNotSupportedException ignore) {}
 
             // [#677] SQLDataType matches are actual type-rewrites
             if (forcedDataType != null) {
-                result = new DefaultDataTypeDefinition(db, child.getSchema(), forcedType.getName(), l, p, s, n, d);
+                result = new DefaultDataTypeDefinition(db, child.getSchema(), type, l, p, s, n, d);
             }
 
             // Other forced types are UDT's, enums, etc.
             else {
-                result = new DefaultDataTypeDefinition(db, child.getSchema(), t, l, p, s, n, d, forcedType.getName());
+                result = new DefaultDataTypeDefinition(db, child.getSchema(), t, l, p, s, n, d, type);
             }
         }
 
         return result;
+    }
+
+    private static String getCustomType(Database db, String name) {
+        for (CustomType type : db.getConfiguredCustomTypes()) {
+            if (name.equals(type.getName())) {
+                if (!StringUtils.isBlank(type.getType())) {
+                    return type.getType();
+                }
+                else {
+                    return type.getName();
+                }
+            }
+        }
+
+        return name;
     }
 }

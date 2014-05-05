@@ -360,9 +360,14 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final CustomType getConfiguredCustomType(String name) {
+    public final CustomType getConfiguredCustomType(String typeName) {
         for (CustomType type : configuredCustomTypes) {
-            if (type.getName().equals(name)) {
+            if (type == null || (type.getName() == null && type.getType() == null)) {
+                log.warn("Invalid custom type encountered: " + type);
+                continue;
+            }
+
+            if (StringUtils.equals(type.getType() != null ? type.getType() : type.getName(), typeName)) {
                 return type;
             }
         }

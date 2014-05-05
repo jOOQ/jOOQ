@@ -70,6 +70,7 @@ DROP TABLE IF EXISTS t_inheritance_1_2/
 DROP TABLE IF EXISTS t_inheritance_1_1/
 DROP TABLE IF EXISTS t_inheritance_1/
 DROP TABLE IF EXISTS t_2781/
+DROP TABLE IF EXISTS t_3111/
 
 DROP TYPE IF EXISTS u_address_type/
 DROP TYPE IF EXISTS u_street_type/
@@ -113,6 +114,16 @@ CREATE TYPE u_address_type AS (
   since DATE,
   code INTEGER,
   f_1323 bytea
+)
+/
+
+CREATE TABLE t_3111 (
+  id int,
+  inverse int,
+  bool1 boolean,
+  bool2 boolean,
+  
+  CONSTRAINT pk_t_3111 PRIMARY KEY (id)
 )
 /
 

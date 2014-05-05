@@ -12,7 +12,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-parent</artifactId>
-    <version>3.4.0-SNAPSHOT</version>
+    <version>${jooq.version}</version>
     <packaging>pom</packaging>
 
     <name>jOOQ Parent</name>
@@ -38,6 +38,10 @@
         xxxxxxxxxx
         xxxx [/pro] -->
     </licenses>
+
+    <properties>
+        <jooq.version>3.4.0-SNAPSHOT</jooq.version>
+    </properties>
 
     <scm>
         <developerConnection>https://github.com/jOOQ/jOOQ.git</developerConnection>

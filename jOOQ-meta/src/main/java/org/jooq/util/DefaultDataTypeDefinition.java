@@ -56,6 +56,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     private final SchemaDefinition schema;
     private final String           typeName;
     private final String           udtName;
+    private final String           converter;
     private final boolean          nullable;
     private final boolean          defaulted;
     private final int              length;
@@ -63,18 +64,23 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     private final int              scale;
 
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName) {
-        this(database, schema, typeName, null, null, null, null, null);
+        this(database, schema, typeName, null, null, null, null, null, null);
     }
 
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable) {
-        this(database, schema, typeName, length, precision, scale, nullable, defaultable, typeName);
+        this(database, schema, typeName, length, precision, scale, nullable, defaultable, typeName, null);
     }
 
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String udtName) {
+        this(database, schema, typeName, length, precision, scale, nullable, defaultable, udtName, null);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String udtName, String converter) {
         this.database = database;
         this.schema = schema;
         this.typeName = typeName;
         this.udtName = udtName;
+        this.converter = converter;
 
         // Some dialects do not distinguish between length and precision...
         if (length != null && precision != null && length.intValue() != 0 && precision.intValue() != 0) {
@@ -129,6 +135,11 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     @Override
     public final String getType() {
         return typeName;
+    }
+
+    @Override
+    public final String getConverter() {
+        return converter;
     }
 
     @Override

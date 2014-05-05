@@ -25,6 +25,7 @@ public class Keys {
 	// UNIQUE and PRIMARY KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.T_3111Record> PK_T_3111 = UniqueKeys0.PK_T_3111;
 	public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = UniqueKeys0.PK_T_639_NUMBERS_TABLE;
 	public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST = UniqueKeys0.PK_T_725_LOB_TEST;
 	public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> PK_T_ARRAYS = UniqueKeys0.PK_T_ARRAYS;
@@ -77,6 +78,7 @@ public class Keys {
 	}
 
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
+		public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.T_3111Record> PK_T_3111 = createUniqueKey(org.jooq.test.postgres.generatedclasses.tables.T_3111.T_3111, org.jooq.test.postgres.generatedclasses.tables.T_3111.T_3111.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = createUniqueKey(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST = createUniqueKey(org.jooq.test.postgres.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.postgres.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> PK_T_ARRAYS = createUniqueKey(org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS, org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS.ID);

@@ -43,12 +43,14 @@ package org.jooq.test;
 
 import static java.util.Arrays.asList;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.test.postgres.generatedclasses.Routines.fSearchBook;
+import static org.jooq.test.postgres.generatedclasses.Tables.T_3111;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_725_LOB_TEST;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_785;
@@ -94,6 +96,7 @@ import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.Record1;
+import org.jooq.Record3;
 import org.jooq.Record5;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -131,6 +134,7 @@ import org.jooq.test.postgres.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TUnsignedRecord;
+import org.jooq.test.postgres.generatedclasses.tables.records.T_3111Record;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_785Record;
@@ -1223,5 +1227,56 @@ public class PostgresTest extends jOOQAbstractTest<
         assertNull(countries.get(2)[0]);
         assertEquals(1, countries.get(3).length);
         assertEquals(UCountry.Brazil, countries.get(3)[0]);
+    }
+
+    @Test
+    public void testPostgresMultipleConvertersForJavaLangInteger() {
+        try {
+            T_3111Record record;
+
+            record = create().newRecord(T_3111);
+            record.setId(1);
+            assertEquals(1, record.store());
+
+            record = create().newRecord(T_3111);
+            record.setId(2);
+            record.setInverse(0);
+            record.setBool1(0);
+            record.setBool2(0);
+            assertEquals(1, record.store());
+
+            record = create().newRecord(T_3111);
+            record.setId(3);
+            record.setInverse(1);
+            record.setBool1(1);
+            record.setBool2(-1);
+            assertEquals(1, record.store());
+
+            Result<Record3<Integer, Integer, Integer>> r1 =
+            create().select(T_3111.INVERSE, T_3111.BOOL1, T_3111.BOOL2)
+                    .from(T_3111)
+                    .orderBy(T_3111.ID)
+                    .fetch();
+
+            assertEquals(3, r1.size());
+            assertEquals(asList(null, 0, 1), r1.getValues(T_3111.INVERSE));
+            assertEquals(asList(null, 0, 1), r1.getValues(T_3111.BOOL1));
+            assertEquals(asList(null, 0, -1), r1.getValues(T_3111.BOOL2));
+
+            // Check if actual data in database are the correct boolean values:
+            Result<?> r2 =
+            create().select(field("inverse"), field("bool1"), field("bool2"))
+                    .from("t_3111")
+                    .orderBy(field("id"))
+                    .fetch();
+
+            assertEquals(3, r2.size());
+            assertEquals(asList(null, 0, -1), r2.getValues(0));
+            assertEquals(asList(null, false, true), r2.getValues(1));
+            assertEquals(asList(null, false, true), r2.getValues(2));
+        }
+        finally {
+            create().delete(T_3111).execute();
+        }
     }
 }

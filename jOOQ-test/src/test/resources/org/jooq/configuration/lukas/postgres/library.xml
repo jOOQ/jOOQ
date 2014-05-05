@@ -28,6 +28,23 @@
             <dateAsTimestamp>false</dateAsTimestamp>
             <unsignedTypes>true</unsignedTypes>
             <customTypes>
+            
+                <customType>
+                    <name>3111_INVERSE</name>
+                    <type>java.lang.Integer</type>
+                    <converter>org.jooq.test._.converters.T_3111_InverseConverter</converter>
+                </customType>
+                <customType>
+                    <name>3111_BOOL1</name>
+                    <type>java.lang.Integer</type>
+                    <converter>org.jooq.test._.converters.T_3111_Bool1Converter</converter>
+                </customType>
+                <customType>
+                    <name>3111_BOOL2</name>
+                    <type>java.lang.Integer</type>
+                    <converter>org.jooq.test._.converters.T_3111_Bool2Converter</converter>
+                </customType>
+                
                 <customType>
             		<name>B10</name>
                     <type>org.jooq.test._.converters.Boolean_10</type>
@@ -60,6 +77,21 @@
             </customTypes>
 
             <forcedTypes>
+                                            
+                <!-- [#3111] Several forced types should be able to map to the same U type -->
+                <forcedType>
+                    <name>3111_INVERSE</name>
+                    <expression>(?i:(.*?\.)?T_3111\.INVERSE)</expression>
+                </forcedType>
+                <forcedType>
+                    <name>3111_BOOL1</name>
+                    <expression>(?i:(.*?\.)?T_3111\.BOOL1)</expression>
+                </forcedType>
+                <forcedType>
+                    <name>3111_BOOL2</name>
+                    <expression>(?i:(.*?\.)?T_3111\.BOOL2)</expression>
+                </forcedType>
+                
                 <forcedType>
                     <name>BOOLEAN</name>
                     <expression>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expression>

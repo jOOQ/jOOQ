@@ -271,11 +271,17 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             //         This may be used to provide jOOQ with a JDBC connection,
             //         in case this Query / Configuration was previously
             //         deserialised
-            ExecuteContext ctx = new DefaultExecuteContext(c, this);
+            DefaultExecuteContext ctx = new DefaultExecuteContext(c, this);
             ExecuteListener listener = new ExecuteListeners(ctx);
 
             int result = 0;
             try {
+
+                // [#3191] Pre-initialise the ExecuteContext with a previous connection, if available.
+                if (statement != null) {
+                    ctx.connection(c.connectionProvider(), statement.getConnection());
+                }
+
                 if (ctx.connection() == null) {
                     throw new DetachedException("Cannot execute query. No Connection configured");
                 }

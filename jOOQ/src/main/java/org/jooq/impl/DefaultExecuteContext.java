@@ -423,17 +423,25 @@ class DefaultExecuteContext implements ExecuteContext {
         // Settings.getStatementType() correctly.
 
         ConnectionProvider provider = connectionProvider != null ? connectionProvider : configuration.connectionProvider();
-
         if (connection == null && provider != null) {
-            Connection c = provider.acquire();
-
-            if (c != null) {
-                LOCAL_CONNECTION.set(c);
-                connection = new SettingsEnabledConnection(new ProviderEnabledConnection(provider, c), configuration.settings());
-            }
+            connection(provider, provider.acquire());
         }
 
         return connection;
+    }
+
+    /**
+     * Initialise this {@link DefaultExecuteContext} with a pre-existing
+     * {@link Connection}.
+     * <p>
+     * [#3191] This is needed, e.g. when using
+     * {@link Query#keepStatement(boolean)}.
+     */
+    final void connection(ConnectionProvider provider, Connection c) {
+        if (c != null) {
+            LOCAL_CONNECTION.set(c);
+            connection = new SettingsEnabledConnection(new ProviderEnabledConnection(provider, c), configuration.settings());
+        }
     }
 
     @Override

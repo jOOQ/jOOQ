@@ -68,7 +68,19 @@ class DefaultTransactionContext implements TransactionContext {
     }
 
     @Override
+    public final TransactionContext transaction(Transaction t) {
+        transaction = t;
+        return this;
+    }
+
+    @Override
     public final Exception cause() {
         return cause;
+    }
+
+    @Override
+    public final TransactionContext cause(Exception c) {
+        cause = c;
+        return this;
     }
 }

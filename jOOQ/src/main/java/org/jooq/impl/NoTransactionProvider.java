@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Transaction;
 import org.jooq.TransactionContext;
 import org.jooq.TransactionProvider;
 
@@ -52,7 +51,7 @@ import org.jooq.TransactionProvider;
 public class NoTransactionProvider implements TransactionProvider {
 
     @Override
-    public final Transaction begin(TransactionContext ctx) {
+    public final void begin(TransactionContext ctx) {
         throw new UnsupportedOperationException("No transaction provider configured");
     }
 

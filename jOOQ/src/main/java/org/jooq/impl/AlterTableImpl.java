@@ -65,7 +65,7 @@ import org.jooq.Table;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 class AlterTableImpl extends AbstractQuery implements
 
-    // Cascading interface implementations for AlterSequence behaviour
+    // Cascading interface implementations for ALTER TABLE behaviour
     AlterTableStep,
     AlterTableDropStep,
     AlterTableAlterStep {

@@ -166,8 +166,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().alterTable("t").add("h", SQLDataType.INTEGER.nullable(false)).execute();
         }
         finally {
-            // TODO: Re-use jOOQ API for this
-            create().execute("drop table t");
+            create().dropTable("t").execute();
         }
     }
 
@@ -187,8 +186,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             catch (DataAccessException expected) {}
         }
         finally {
-            // TODO: Re-use jOOQ API for this
-            create().execute("drop table t");
+            create().dropTable("t").execute();
         }
     }
 
@@ -202,8 +200,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals("empty", create().fetchOne("select b from t").getValue(0));
         }
         finally {
-            // TODO: Re-use jOOQ API for this
-            create().execute("drop table t");
+            create().dropTable("t").execute();
         }
     }
 
@@ -221,8 +218,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(asList(1), asList(create().fetchOne(table("t")).intoArray()));
         }
         finally {
-            // TODO: Re-use jOOQ API for this
-            create().execute("drop table t");
+            create().dropTable("t").execute();
         }
+    }
+
+    public void testDropTable() throws Exception {
+
+        // TODO: Re-use jOOQ API for this
+        create().execute("create table t (a int, b int, c int)");
+        create().execute("insert into t values (1, 2, 3)");
+        assertEquals(asList(1, 2, 3), asList(create().fetchOne(table("t")).intoArray()));
+
+        create().dropTable("t").execute();
+        try {
+            create().fetch(table("t"));
+            fail();
+        }
+        catch (DataAccessException expected) {}
     }
 }

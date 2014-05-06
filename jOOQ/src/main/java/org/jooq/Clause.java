@@ -800,7 +800,7 @@ public enum Clause {
     ALTER_SEQUENCE_RESTART,
 
     /**
-     * A complete <code>ALTER ALTER_TABLE</code> statement.
+     * A complete <code>ALTER TABLE</code> statement.
      */
     ALTER_TABLE,
 
@@ -847,6 +847,22 @@ public enum Clause {
      * </ul>
      */
     ALTER_TABLE_DROP,
+
+    /**
+     * A complete <code>DROP TABLE</code> statement.
+     */
+    DROP_TABLE,
+
+    /**
+     * A <code>TABLE</code> clause within an {@link #DROP_TABLE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>DROP TABLE</code> keywords</li>
+     * <li>the table that is being dropped</li>
+     * </ul>
+     */
+    DROP_TABLE_TABLE,
 
     // -------------------------------------------------------------------------
     // Other clauses

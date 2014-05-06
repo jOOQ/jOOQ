@@ -92,6 +92,7 @@ import org.jooq.DatePart;
 import org.jooq.Delete;
 import org.jooq.DeleteWhereStep;
 import org.jooq.DerivedColumnList;
+import org.jooq.DropTableStep;
 import org.jooq.Field;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupField;
@@ -4383,7 +4384,7 @@ public class DSL {
     /**
      * Create a new DSL <code>ALTER SEQUENCE</code> statement.
      *
-     * @see DSLContext#alterSequence(Sequence)
+     * @see DSLContext#alterSequence(String)
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     @Transition(
@@ -4397,7 +4398,7 @@ public class DSL {
     /**
      * Create a new DSL <code>ALTER TABLE</code> statement.
      *
-     * @see DSL#alterTable(Table)
+     * @see DSLContext#alterTable(Table)
      */
     @Support
     @Transition(
@@ -4411,7 +4412,7 @@ public class DSL {
     /**
      * Create a new DSL <code>ALTER TABLE</code> statement.
      *
-     * @see DSL#alterTable(Table)
+     * @see DSLContext#alterTable(String)
      */
     @Support
     @Transition(
@@ -4420,6 +4421,34 @@ public class DSL {
     )
     public static AlterTableStep alterTable(String table) {
         return using(new DefaultConfiguration()).alterTable(table);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TABLE</code> statement.
+     *
+     * @see DSLContext#dropTable(Table)
+     */
+    @Support
+    @Transition(
+        name = "ALTER TABLE",
+        args = "Table"
+    )
+    public static DropTableStep dropTable(Table<?> table) {
+        return using(new DefaultConfiguration()).dropTable(table);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TABLE</code> statement.
+     *
+     * @see DSLContext#dropTable(String)
+     */
+    @Support
+    @Transition(
+        name = "ALTER TABLE",
+        args = "Table"
+    )
+    public static DropTableStep dropTable(String table) {
+        return using(new DefaultConfiguration()).dropTable(table);
     }
 
     /**

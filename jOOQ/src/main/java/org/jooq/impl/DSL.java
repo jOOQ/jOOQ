@@ -5425,6 +5425,56 @@ public class DSL {
     }
 
     /**
+     * Create a "plain SQL" sequence.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return A field wrapping the plain SQL
+     */
+    @Support
+    public static Sequence<BigInteger> sequence(String sql) {
+        return sequence(sql, BigInteger.class);
+    }
+
+    /**
+     * Create a "plain SQL" sequence.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @param type The field type
+     * @return A field wrapping the plain SQL
+     */
+    @Support
+    public static <T extends Number> Sequence<T> sequence(String sql, Class<T> type) {
+        return sequence(sql, getDataType(type));
+    }
+
+    /**
+     * Create a "plain SQL" sequence.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @param type The field type
+     * @return A field wrapping the plain SQL
+     */
+    @Support
+    public static <T extends Number> Sequence<T> sequence(String sql, DataType<T> type) {
+        return new SequenceImpl<T>(sql, null, type);
+    }
+
+    /**
      * Create a "plain SQL" field.
      * <p>
      * A PlainSQLField is a field that can contain user-defined plain SQL,

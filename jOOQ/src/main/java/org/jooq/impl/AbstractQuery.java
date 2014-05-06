@@ -277,19 +277,13 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             int result = 0;
             try {
 
-                // [#3191] Pre-initialise the ExecuteContext with a previous connection, if available.
-                if (statement != null) {
-                    ctx.connection(c.connectionProvider(), statement.getConnection());
-                }
-
-                if (ctx.connection() == null) {
-                    throw new DetachedException("Cannot execute query. No Connection configured");
-                }
-
                 // [#385] If a statement was previously kept open
                 if (keepStatement() && statement != null) {
                     ctx.sql(sql);
                     ctx.statement(statement);
+
+                    // [#3191] Pre-initialise the ExecuteContext with a previous connection, if available.
+                    ctx.connection(c.connectionProvider(), statement.getConnection());
                 }
 
                 // [#385] First time statement preparing
@@ -299,6 +293,13 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                     listener.renderEnd(ctx);
 
                     sql = ctx.sql();
+
+                    // [#3234] Defer initialising of a connection until the prepare step
+                    // This optimises unnecessary ConnectionProvider.acquire() calls when
+                    // ControlFlowSignals are thrown
+                    if (ctx.connection() == null) {
+                        throw new DetachedException("Cannot execute query. No Connection configured");
+                    }
 
                     listener.prepareStart(ctx);
                     prepare(ctx);

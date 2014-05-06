@@ -47,6 +47,7 @@ import static org.jooq.Clause.ALTER_SEQUENCE_SEQUENCE;
 import static org.jooq.Clause.ALTER_TABLE;
 import static org.jooq.Clause.ALTER_TABLE_ADD;
 import static org.jooq.Clause.ALTER_TABLE_ALTER;
+import static org.jooq.Clause.ALTER_TABLE_ALTER_DEFAULT;
 import static org.jooq.Clause.ALTER_TABLE_DROP;
 import static org.jooq.Clause.ALTER_TABLE_TABLE;
 import static org.jooq.Clause.CONDITION;
@@ -788,7 +789,10 @@ public class VisitContextTest extends AbstractTest {
             asList(ALTER_TABLE, ALTER_TABLE_TABLE, TABLE, TABLE_REFERENCE),
             asList(ALTER_TABLE, ALTER_TABLE_ALTER),
             asList(ALTER_TABLE, ALTER_TABLE_ALTER, FIELD),
-            asList(ALTER_TABLE, ALTER_TABLE_ALTER, FIELD, FIELD_REFERENCE)
+            asList(ALTER_TABLE, ALTER_TABLE_ALTER, FIELD, FIELD_REFERENCE),
+            asList(ALTER_TABLE, ALTER_TABLE_ALTER, ALTER_TABLE_ALTER_DEFAULT),
+            asList(ALTER_TABLE, ALTER_TABLE_ALTER, ALTER_TABLE_ALTER_DEFAULT, FIELD),
+            asList(ALTER_TABLE, ALTER_TABLE_ALTER, ALTER_TABLE_ALTER_DEFAULT, FIELD, FIELD_VALUE)
         ),
         ctx.alterTable(TABLE1).alter(FIELD_NAME1).defaultValue("no name"));
     }

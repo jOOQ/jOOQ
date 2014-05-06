@@ -2632,8 +2632,13 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testExecuteListenerCustomException() throws Exception {
-        new ExecuteListenerTests(this).testExecuteListenerCustomException();
+    public void testExecuteListenerCustomExceptionOnSyntaxError() throws Exception {
+        new ExecuteListenerTests(this).testExecuteListenerCustomExceptionOnSyntaxError();
+    }
+
+    @Test
+    public void testExecuteListenerCustomExceptionOnConstraintViolation() throws Exception {
+        new ExecuteListenerTests(this).testExecuteListenerCustomExceptionOnConstraintViolation();
     }
 
     @Test

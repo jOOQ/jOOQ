@@ -40,29 +40,35 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Configuration;
 import org.jooq.Transaction;
 import org.jooq.TransactionContext;
-import org.jooq.TransactionProvider;
 
 /**
- * An "empty" implementation that is never transactional.
- *
  * @author Lukas Eder
  */
-public class NoTransactionProvider implements TransactionProvider {
+class DefaultTransactionContext implements TransactionContext {
 
-    @Override
-    public final Transaction begin(TransactionContext ctx) {
-        throw new UnsupportedOperationException("No transaction provider configured");
+    private final Configuration configuration;
+    Transaction                 transaction;
+    Exception                   cause;
+
+    DefaultTransactionContext(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     @Override
-    public final void commit(TransactionContext ctx) {
-        throw new UnsupportedOperationException("No transaction provider configured");
+    public final Configuration configuration() {
+        return configuration;
     }
 
     @Override
-    public final void rollback(TransactionContext ctx) {
-        throw new UnsupportedOperationException("No transaction provider configured");
+    public final Transaction transaction() {
+        return transaction;
+    }
+
+    @Override
+    public final Exception cause() {
+        return cause;
     }
 }

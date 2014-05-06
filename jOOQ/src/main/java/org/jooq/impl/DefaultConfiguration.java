@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.SQL99;
+import static org.jooq.impl.Utils.DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -520,7 +521,11 @@ public class DefaultConfiguration implements Configuration {
      */
     @Override
     public final ConnectionProvider connectionProvider() {
-        return connectionProvider;
+
+        // [#3229] If we're currently in a transaction, return that transaction's
+        // local DefaultConnectionProvider, not the one from this configuration
+        ConnectionProvider transactional = (ConnectionProvider) data(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION);
+        return transactional == null ? connectionProvider : transactional;
     }
 
     /**
@@ -528,10 +533,11 @@ public class DefaultConfiguration implements Configuration {
      */
     @Override
     public final TransactionProvider transactionProvider() {
-        if (transactionProvider instanceof NoTransactionProvider &&
-            connectionProvider  instanceof DefaultConnectionProvider) {
 
-            return new DefaultTransactionProvider((DefaultConnectionProvider) connectionProvider);
+        // [#3229] If transactions are used in client code, the default behaviour
+        // is assumed automatically, for convenience.
+        if (transactionProvider instanceof NoTransactionProvider) {
+            return new DefaultTransactionProvider(connectionProvider);
         }
 
         return transactionProvider;

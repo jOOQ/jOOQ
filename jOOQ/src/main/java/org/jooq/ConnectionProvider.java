@@ -52,6 +52,12 @@ import org.jooq.exception.DataAccessException;
  * behaviour into jOOQ's internals. jOOQ will try to acquire a new JDBC
  * {@link Connection} from the connection provider as early as needed, and will
  * release it as early as possible.
+ * <p>
+ * {@link TransactionProvider} implementations may choose to influence
+ * {@link ConnectionProvider} behaviour, e.g. by acquiring connections upon
+ * {@link TransactionProvider#begin(TransactionContext)} and by releasing
+ * connections only upon {@link TransactionProvider#commit(TransactionContext)},
+ * or {@link TransactionProvider#rollback(TransactionContext)}.
  *
  * @author Aaron Digulla
  * @author Lukas Eder

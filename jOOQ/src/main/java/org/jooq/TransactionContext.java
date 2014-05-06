@@ -38,31 +38,33 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.impl;
-
-import org.jooq.Transaction;
-import org.jooq.TransactionContext;
-import org.jooq.TransactionProvider;
+package org.jooq;
 
 /**
- * An "empty" implementation that is never transactional.
+ * A context object that is used to pass arguments to the various methods of
+ * {@link TransactionProvider}.
  *
  * @author Lukas Eder
  */
-public class NoTransactionProvider implements TransactionProvider {
+public interface TransactionContext {
 
-    @Override
-    public final Transaction begin(TransactionContext ctx) {
-        throw new UnsupportedOperationException("No transaction provider configured");
-    }
+    /**
+     * The configuration scoped to this transaction and its nested transactions.
+     */
+    Configuration configuration();
 
-    @Override
-    public final void commit(TransactionContext ctx) {
-        throw new UnsupportedOperationException("No transaction provider configured");
-    }
+    /**
+     * A user-defined transaction object, obtained from
+     * {@link TransactionProvider#begin(TransactionContext)}.
+     *
+     * @return The transaction object. May be <code>null</code>.
+     */
+    Transaction transaction();
 
-    @Override
-    public final void rollback(TransactionContext ctx) {
-        throw new UnsupportedOperationException("No transaction provider configured");
-    }
+    /**
+     * The exception that has caused the rollback.
+     *
+     * @return The exception. May be <code>null</code>.
+     */
+    Exception cause();
 }

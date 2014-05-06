@@ -41,14 +41,15 @@
 package org.jooq.test._.testcases;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLException;
 
 import org.jooq.Configuration;
+import org.jooq.ConnectionProvider;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
@@ -58,7 +59,6 @@ import org.jooq.Transactional;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
-import org.jooq.impl.DefaultConnectionProvider;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -110,7 +110,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().transaction(new Transactional<Integer>() {
                 @Override
                 public Integer run(Configuration configuration) {
-                    assertFalse(((DefaultConnectionProvider) configuration.connectionProvider()).getAutoCommit());
+                    assertAutoCommit(configuration.connectionProvider(), false);
 
                     assertEquals(1,
                     DSL.using(configuration)
@@ -127,7 +127,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         catch (MyRuntimeException expected) {
             assertEquals("No", expected.getMessage());
             assertEquals(2, create().fetchCount(TAuthor()));
-            assertTrue(create().configuration().connectionProvider().acquire().getAutoCommit());
+            assertAutoCommit(create().configuration().connectionProvider(), true);
         }
 
         assertEquals(2, create().fetchCount(TAuthor()));
@@ -138,7 +138,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().transaction(new Transactional<Integer>() {
                 @Override
                 public Integer run(Configuration configuration) throws MyCheckedException {
-                    assertFalse(((DefaultConnectionProvider) configuration.connectionProvider()).getAutoCommit());
+                    assertAutoCommit(configuration.connectionProvider(), false);
 
                     assertEquals(1,
                     DSL.using(configuration)
@@ -156,7 +156,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(MyCheckedException.class, expected.getCause().getClass());
             assertEquals("No", expected.getCause().getMessage());
             assertEquals(2, create().fetchCount(TAuthor()));
-            assertTrue(create().configuration().connectionProvider().acquire().getAutoCommit());
+            assertAutoCommit(create().configuration().connectionProvider(), true);
         }
 
         assertEquals(2, create().fetchCount(TAuthor()));
@@ -172,7 +172,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create().transaction(new Transactional<Integer>() {
             @Override
             public Integer run(Configuration c1) throws MyCheckedException {
-                assertFalse(((DefaultConnectionProvider) c1.connectionProvider()).getAutoCommit());
+                assertAutoCommit(c1.connectionProvider(), false);
 
                 inserted[0] =
                 DSL.using(c1)
@@ -188,7 +188,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
                         @Override
                         public Integer run(Configuration c2) throws Exception {
-                            assertFalse(((DefaultConnectionProvider) c2.connectionProvider()).getAutoCommit());
+                            assertAutoCommit(c2.connectionProvider(), false);
 
                             updated[0] =
                             DSL.using(c2)
@@ -228,7 +228,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().transaction(new Transactional<Integer>() {
                 @Override
                 public Integer run(Configuration c1) throws MyCheckedException {
-                    assertFalse(((DefaultConnectionProvider) c1.connectionProvider()).getAutoCommit());
+                    assertAutoCommit(c1.connectionProvider(), false);
 
                     inserted[0] =
                     DSL.using(c1)
@@ -243,7 +243,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
                         @Override
                         public Integer run(Configuration c2) throws Exception {
-                            assertFalse(((DefaultConnectionProvider) c2.connectionProvider()).getAutoCommit());
+                            assertAutoCommit(c2.connectionProvider(), false);
 
                             updated[0] =
                             DSL.using(c2)
@@ -269,6 +269,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(2, create().fetchCount(TAuthor()));
             assertEquals(MyRuntimeException.class, expected.getClass());
             assertEquals("No", expected.getMessage());
+        }
+    }
+
+    private void assertAutoCommit(ConnectionProvider provider, boolean autoCommit) {
+        Connection c = null;
+
+        try {
+            c = provider.acquire();
+            assertEquals(autoCommit, c.getAutoCommit());
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            if (c != null)
+                provider.release(c);
         }
     }
 }

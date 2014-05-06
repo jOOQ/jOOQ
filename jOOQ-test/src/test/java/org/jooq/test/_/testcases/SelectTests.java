@@ -51,6 +51,7 @@ import static org.jooq.impl.DSL.val;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.util.Vector;
 
@@ -72,6 +73,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultConnectionProvider;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
+import org.jooq.tools.jdbc.JDBCUtils;
 
 public class SelectTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
@@ -361,15 +363,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Checking for syntax correctness and locking behaviour
         // -----------------------------------------------------
-        final DSLContext create1 = create();
-        final DSLContext create2 = create();
-
-        ((DefaultConnectionProvider) create2.configuration().connectionProvider()).setConnection(getNewConnection());
-        create2.configuration().connectionProvider().acquire().setAutoCommit(false);
-
-        final Vector<String> execOrder = new Vector<String>();
+        Connection connection2 = null;
 
         try {
+            connection2 = getNewConnection();
+            connection2.setAutoCommit(false);
+
+            final DSLContext create1 = create();
+            final DSLContext create2 = create(create().configuration().derive(new DefaultConnectionProvider(connection2)));
+
+            final Vector<String> execOrder = new Vector<String>();
             final Thread t1 = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -431,10 +434,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(asList("t2-exec", "t2-signal", "t1-block", "t1-fail-or-t2-commit", "t1-fail-or-t2-commit"), execOrder);
         }
         finally {
-            try {
-                create2.configuration().connectionProvider().acquire().close();
-            }
-            catch (Exception e) {}
+            JDBCUtils.safeClose(connection2);
         }
 
         // Check again with limit / offset clauses

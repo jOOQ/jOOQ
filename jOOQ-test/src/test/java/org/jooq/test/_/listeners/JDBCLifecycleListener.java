@@ -40,6 +40,9 @@
  */
 package org.jooq.test._.listeners;
 
+import static org.jooq.test._.listeners.Lifecycle.METHOD_COMPARATOR;
+import static org.jooq.test._.listeners.Lifecycle.increment;
+
 import java.lang.reflect.Method;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
@@ -47,6 +50,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.jooq.ExecuteContext;
+import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.tools.jdbc.DefaultCallableStatement;
 import org.jooq.tools.jdbc.DefaultPreparedStatement;
 import org.jooq.tools.jdbc.DefaultResultSet;
@@ -57,7 +61,7 @@ import org.jooq.tools.jdbc.DefaultResultSet;
  *
  * @author Lukas Eder
  */
-public class JDBCLifecycleListener extends AbstractLifecycleListener {
+public class JDBCLifecycleListener extends DefaultExecuteListener {
 
     /**
      * Generated UID

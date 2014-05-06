@@ -40,66 +40,41 @@
  */
 package org.jooq.test._.listeners;
 
+import static org.jooq.test._.listeners.Lifecycle.METHOD_COMPARATOR;
+import static org.jooq.test._.listeners.Lifecycle.increment;
+
 import java.lang.reflect.Method;
-import java.util.Comparator;
+import java.sql.Connection;
 import java.util.Map;
+import java.util.TreeMap;
 
-import org.jooq.impl.DefaultExecuteListener;
-
-import org.junit.Test;
+import org.jooq.ConnectionProvider;
 
 /**
- * An <code>ExecuteListener</code> that collects data about the lifecycle of
- * execute listeners in all integration tests.
+ * A lifecycle listener to check {@link ConnectionProvider} lifecycles in integration tests
  *
  * @author Lukas Eder
  */
-public abstract class AbstractLifecycleListener extends DefaultExecuteListener {
+public class ConnectionProviderLifecycleListener implements ConnectionProvider {
 
-    /**
-     * Generated UID
-     */
-    private static final long           serialVersionUID  = -2283264126211556442L;
+    public static final Map<Method, Integer> ACQUIRE_COUNT = new TreeMap<Method, Integer>(METHOD_COMPARATOR);
+    public static final Map<Method, Integer> RELEASE_COUNT = new TreeMap<Method, Integer>(METHOD_COMPARATOR);
 
-    protected static Comparator<Method> METHOD_COMPARATOR = new Comparator<Method>() {
+    private final ConnectionProvider delegate;
 
-                                                              @Override
-                                                              public int compare(Method o1, Method o2) {
-                                                                  return o1.getName().compareTo(o2.getName());
-                                                              }
-                                                          };
-
-    private static final Object         INCREMENT_MONITOR = new Object();
-
-    protected final void increment(Map<Method, Integer> map) {
-        synchronized (INCREMENT_MONITOR) {
-            Method m = testMethod();
-
-            if (m != null) {
-                Integer count = map.get(m);
-
-                if (count == null) {
-                    count = 0;
-                }
-
-                count = count + 1;
-                map.put(m, count);
-            }
-        }
+    public ConnectionProviderLifecycleListener(ConnectionProvider delegate) {
+        this.delegate = delegate;
     }
 
-    private static Method testMethod() {
-        for (StackTraceElement e : Thread.currentThread().getStackTrace()) {
-            try {
-                for (Method m : Class.forName(e.getClassName()).getMethods()) {
-                    if (m.getName().equals(e.getMethodName()) && m.getAnnotation(Test.class) != null) {
-                        return m;
-                    }
-                }
-            }
-            catch (Exception ignore) {}
-        }
+    @Override
+    public Connection acquire() {
+        increment(ACQUIRE_COUNT);
+        return delegate.acquire();
+    }
 
-        return null;
+    @Override
+    public void release(Connection connection) {
+        increment(RELEASE_COUNT);
+        delegate.release(connection);
     }
 }

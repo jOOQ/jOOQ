@@ -40,15 +40,11 @@
  */
 package org.jooq.test._.listeners;
 
-import static org.jooq.test._.listeners.Lifecycle.METHOD_COMPARATOR;
-import static org.jooq.test._.listeners.Lifecycle.increment;
-
 import java.lang.reflect.Method;
+import java.util.Comparator;
 import java.util.Map;
-import java.util.TreeMap;
 
-import org.jooq.ExecuteContext;
-import org.jooq.impl.DefaultExecuteListener;
+import org.junit.Test;
 
 /**
  * An <code>ExecuteListener</code> that collects data about the lifecycle of
@@ -56,25 +52,47 @@ import org.jooq.impl.DefaultExecuteListener;
  *
  * @author Lukas Eder
  */
-public class LifecycleWatcherListener extends DefaultExecuteListener {
+public class Lifecycle {
 
-    /**
-     * Generated UID
-     */
-    private static final long                serialVersionUID     = -2283264126211556442L;
+    protected static Comparator<Method> METHOD_COMPARATOR = new Comparator<Method>() {
 
-    public static final Map<Method, Integer> LISTENER_START_COUNT = new TreeMap<Method, Integer>(METHOD_COMPARATOR);
-    public static final Map<Method, Integer> LISTENER_END_COUNT   = new TreeMap<Method, Integer>(METHOD_COMPARATOR);
+                                                              @Override
+                                                              public int compare(Method o1, Method o2) {
+                                                                  return o1.getName().compareTo(o2.getName());
+                                                              }
+                                                          };
 
-    @Override
-    public void start(ExecuteContext ctx) {
-        super.start(ctx);
-        increment(LISTENER_START_COUNT);
+    private static final Object         INCREMENT_MONITOR = new Object();
+
+    protected static final void increment(Map<Method, Integer> map) {
+        synchronized (INCREMENT_MONITOR) {
+            Method m = testMethod();
+
+            if (m != null) {
+                Integer count = map.get(m);
+
+                if (count == null) {
+                    count = 0;
+                }
+
+                count = count + 1;
+                map.put(m, count);
+            }
+        }
     }
 
-    @Override
-    public void end(ExecuteContext ctx) {
-        super.end(ctx);
-        increment(LISTENER_END_COUNT);
+    private static Method testMethod() {
+        for (StackTraceElement e : Thread.currentThread().getStackTrace()) {
+            try {
+                for (Method m : Class.forName(e.getClassName()).getMethods()) {
+                    if (m.getName().equals(e.getMethodName()) && m.getAnnotation(Test.class) != null) {
+                        return m;
+                    }
+                }
+            }
+            catch (Exception ignore) {}
+        }
+
+        return null;
     }
 }

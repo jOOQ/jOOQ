@@ -4770,7 +4770,7 @@ public interface DSLContext {
     /**
      * Create a new DSL <code>ALTER SEQUENCE</code> statement.
      *
-     * @see DSL#alterSequence(Sequence)
+     * @see DSL#alterSequence(String)
      */
     @Support({ DB2, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
     @Transition(
@@ -4794,7 +4794,7 @@ public interface DSLContext {
     /**
      * Create a new DSL <code>ALTER TABLE</code> statement.
      *
-     * @see DSL#alterTable(Table)
+     * @see DSL#alterTable(String)
      */
     @Support
     @Transition(
@@ -4802,6 +4802,30 @@ public interface DSLContext {
         args = "Table"
     )
     AlterTableStep alterTable(String table);
+
+    /**
+     * Create a new DSL <code>DROP TABLE</code> statement.
+     *
+     * @see DSL#dropTable(Table)
+     */
+    @Support
+    @Transition(
+        name = "DROP TABLE",
+        args = "Table"
+    )
+    DropTableStep dropTable(Table<?> table);
+
+    /**
+     * Create a new DSL <code>ALTER TABLE</code> statement.
+     *
+     * @see DSL#dropTable(String)
+     */
+    @Support
+    @Transition(
+        name = "DROP TABLE",
+        args = "Table"
+    )
+    DropTableStep dropTable(String table);
 
     /**
      * Create a new DSL truncate statement.

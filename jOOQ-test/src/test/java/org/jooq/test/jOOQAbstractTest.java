@@ -1164,6 +1164,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testDropTable() throws Exception {
+        new DDLTests(this).testDropTable();
+    }
+
+    @Test
     public void testTruncate() throws Exception {
         new TruncateTests(this).testTruncate();
     }

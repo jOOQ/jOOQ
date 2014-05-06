@@ -67,6 +67,8 @@ import static org.jooq.Clause.CONDITION_OR;
 import static org.jooq.Clause.DELETE;
 import static org.jooq.Clause.DELETE_DELETE;
 import static org.jooq.Clause.DELETE_WHERE;
+import static org.jooq.Clause.DROP_TABLE;
+import static org.jooq.Clause.DROP_TABLE_TABLE;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_ALIAS;
 import static org.jooq.Clause.FIELD_REFERENCE;
@@ -803,6 +805,17 @@ public class VisitContextTest extends AbstractTest {
             asList(ALTER_TABLE, ALTER_TABLE_DROP, FIELD, FIELD_REFERENCE)
         ),
         ctx.alterTable(TABLE1).drop(FIELD_NAME1));
+    }
+
+    @Test
+    public void test_DROP_TABLE() {
+        assertEvents(asList(
+            asList(DROP_TABLE),
+            asList(DROP_TABLE, DROP_TABLE_TABLE),
+            asList(DROP_TABLE, DROP_TABLE_TABLE, TABLE),
+            asList(DROP_TABLE, DROP_TABLE_TABLE, TABLE, TABLE_REFERENCE)
+        ),
+        ctx.dropTable(TABLE1));
     }
 
     @Test

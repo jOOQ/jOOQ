@@ -40,42 +40,26 @@
  */
 package org.jooq;
 
-// ...
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-
 import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
 
 /**
- * A {@link Query} that can alter sequences.
+ * The step in the <code>ALTER TABLE</code> DSL used to <code>DROP</code>
+ * columns.
  *
  * @author Lukas Eder
  */
 @State
-public interface AlterSequenceRestartStep<T extends Number> {
+public interface AlterTableDropStep extends AlterTableFinalStep {
 
     /**
-     * Restart the sequence at its initial value.
+     * Add a <code>CASCADE</code> clause to the
+     * <code>ALTER TABLE .. DROP COLUMN</code> statement.
      */
-    @Support({ HSQLDB, POSTGRES })
-    @Transition(
-        name = "RESTART"
-    )
-    AlterSequenceFinalStep restart();
+    AlterTableFinalStep cascade();
 
     /**
-     * Restart the sequence at a given value.
+     * Add a <code>RESTRICT</code> clause to the
+     * <code>ALTER TABLE .. DROP COLUMN</code> statement.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    @Transition(
-        name = "RESTART WITH",
-        args = "Number"
-    )
-    AlterSequenceFinalStep restartWith(T value);
+    AlterTableFinalStep restrict();
 }

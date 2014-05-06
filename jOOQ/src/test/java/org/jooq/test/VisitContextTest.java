@@ -41,7 +41,14 @@
 package org.jooq.test;
 
 import static java.util.Arrays.asList;
-import static org.junit.Assert.fail;
+import static org.jooq.Clause.ALTER_SEQUENCE;
+import static org.jooq.Clause.ALTER_SEQUENCE_RESTART;
+import static org.jooq.Clause.ALTER_SEQUENCE_SEQUENCE;
+import static org.jooq.Clause.ALTER_TABLE;
+import static org.jooq.Clause.ALTER_TABLE_ADD;
+import static org.jooq.Clause.ALTER_TABLE_ALTER;
+import static org.jooq.Clause.ALTER_TABLE_DROP;
+import static org.jooq.Clause.ALTER_TABLE_TABLE;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_AND;
 import static org.jooq.Clause.CONDITION_BETWEEN;
@@ -94,6 +101,8 @@ import static org.jooq.Clause.SELECT_START_WITH;
 import static org.jooq.Clause.SELECT_UNION_ALL;
 import static org.jooq.Clause.SELECT_WHERE;
 import static org.jooq.Clause.SELECT_WINDOW;
+import static org.jooq.Clause.SEQUENCE;
+import static org.jooq.Clause.SEQUENCE_REFERENCE;
 import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_ALIAS;
 import static org.jooq.Clause.TABLE_REFERENCE;
@@ -124,6 +133,7 @@ import static org.jooq.test.data.Table1.FIELD_NAME1;
 import static org.jooq.test.data.Table1.TABLE1;
 import static org.jooq.test.data.Table2.FIELD_ID2;
 import static org.jooq.test.data.Table2.TABLE2;
+import static org.junit.Assert.fail;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -137,6 +147,7 @@ import org.jooq.RenderContext;
 import org.jooq.VisitContext;
 import org.jooq.VisitListener;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.tools.jdbc.MockConnection;
 import org.jooq.tools.jdbc.MockDataProvider;
 import org.jooq.tools.jdbc.MockExecuteContext;
@@ -721,6 +732,77 @@ public class VisitContextTest extends AbstractTest {
         ctx.update(TABLE1)
            .set(FIELD_NAME1, "value")
            .returning(FIELD_ID1, FIELD_NAME1));
+    }
+
+    @Test
+    public void test_ALTER_SEQUENCE() {
+
+        // Postgres supports sequences
+        ctx.configuration().set(POSTGRES);
+        assertEvents(asList(
+            asList(ALTER_SEQUENCE),
+            asList(ALTER_SEQUENCE, ALTER_SEQUENCE_SEQUENCE),
+            asList(ALTER_SEQUENCE, ALTER_SEQUENCE_SEQUENCE, SEQUENCE),
+            asList(ALTER_SEQUENCE, ALTER_SEQUENCE_SEQUENCE, SEQUENCE, SEQUENCE_REFERENCE),
+            asList(ALTER_SEQUENCE, ALTER_SEQUENCE_RESTART)
+        ),
+        ctx.alterSequence("seq").restart());
+    }
+
+    @Test
+    public void test_ALTER_TABLE_ADD() {
+        assertEvents(asList(
+            asList(ALTER_TABLE),
+            asList(ALTER_TABLE, ALTER_TABLE_TABLE),
+            asList(ALTER_TABLE, ALTER_TABLE_TABLE, TABLE),
+            asList(ALTER_TABLE, ALTER_TABLE_TABLE, TABLE, TABLE_REFERENCE),
+            asList(ALTER_TABLE, ALTER_TABLE_ADD),
+            asList(ALTER_TABLE, ALTER_TABLE_ADD, FIELD),
+            asList(ALTER_TABLE, ALTER_TABLE_ADD, FIELD, FIELD_REFERENCE)
+        ),
+        ctx.alterTable(TABLE1).add(FIELD_NAME1, SQLDataType.VARCHAR));
+    }
+
+    @Test
+    public void test_ALTER_TABLE_ALTER_TYPE() {
+        assertEvents(asList(
+            asList(ALTER_TABLE),
+            asList(ALTER_TABLE, ALTER_TABLE_TABLE),
+            asList(ALTER_TABLE, ALTER_TABLE_TABLE, TABLE),
+            asList(ALTER_TABLE, ALTER_TABLE_TABLE, TABLE, TABLE_REFERENCE),
+            asList(ALTER_TABLE, ALTER_TABLE_ALTER),
+            asList(ALTER_TABLE, ALTER_TABLE_ALTER, FIELD),
+            asList(ALTER_TABLE, ALTER_TABLE_ALTER, FIELD, FIELD_REFERENCE)
+        ),
+        ctx.alterTable(TABLE1).alter(FIELD_NAME1).set(SQLDataType.INTEGER));
+    }
+
+    @Test
+    public void test_ALTER_TABLE_ALTER_DEFAULT() {
+        assertEvents(asList(
+            asList(ALTER_TABLE),
+            asList(ALTER_TABLE, ALTER_TABLE_TABLE),
+            asList(ALTER_TABLE, ALTER_TABLE_TABLE, TABLE),
+            asList(ALTER_TABLE, ALTER_TABLE_TABLE, TABLE, TABLE_REFERENCE),
+            asList(ALTER_TABLE, ALTER_TABLE_ALTER),
+            asList(ALTER_TABLE, ALTER_TABLE_ALTER, FIELD),
+            asList(ALTER_TABLE, ALTER_TABLE_ALTER, FIELD, FIELD_REFERENCE)
+        ),
+        ctx.alterTable(TABLE1).alter(FIELD_NAME1).defaultValue("no name"));
+    }
+
+    @Test
+    public void test_ALTER_TABLE_DROP() {
+        assertEvents(asList(
+            asList(ALTER_TABLE),
+            asList(ALTER_TABLE, ALTER_TABLE_TABLE),
+            asList(ALTER_TABLE, ALTER_TABLE_TABLE, TABLE),
+            asList(ALTER_TABLE, ALTER_TABLE_TABLE, TABLE, TABLE_REFERENCE),
+            asList(ALTER_TABLE, ALTER_TABLE_DROP),
+            asList(ALTER_TABLE, ALTER_TABLE_DROP, FIELD),
+            asList(ALTER_TABLE, ALTER_TABLE_DROP, FIELD, FIELD_REFERENCE)
+        ),
+        ctx.alterTable(TABLE1).drop(FIELD_NAME1));
     }
 
     @Test

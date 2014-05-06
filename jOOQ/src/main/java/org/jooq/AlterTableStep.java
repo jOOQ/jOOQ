@@ -40,42 +40,49 @@
  */
 package org.jooq;
 
-// ...
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-
 import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
 
 /**
- * A {@link Query} that can alter sequences.
+ * The step in the <code>ALTER TABLE</code> where the action can be decided.
  *
  * @author Lukas Eder
  */
 @State
-public interface AlterSequenceRestartStep<T extends Number> {
+public interface AlterTableStep {
 
     /**
-     * Restart the sequence at its initial value.
+     * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
      */
-    @Support({ HSQLDB, POSTGRES })
-    @Transition(
-        name = "RESTART"
-    )
-    AlterSequenceFinalStep restart();
+    <T> AlterTableAlterStep<T> alter(Field<T> field);
 
     /**
-     * Restart the sequence at a given value.
+     * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    @Transition(
-        name = "RESTART WITH",
-        args = "Number"
-    )
-    AlterSequenceFinalStep restartWith(T value);
+    AlterTableAlterStep<Object> alter(String field);
+
+    /**
+     * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    <T> AlterTableFinalStep add(Field<T> field, DataType<T> type);
+
+    /**
+     * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    AlterTableFinalStep add(String field, DataType<?> type);
+
+    /**
+     * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    AlterTableDropStep drop(Field<?> field);
+
+    /**
+     * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    AlterTableDropStep drop(String field);
 }

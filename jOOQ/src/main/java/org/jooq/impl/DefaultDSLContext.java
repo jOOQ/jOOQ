@@ -45,6 +45,8 @@ import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.queryPart;
+import static org.jooq.impl.DSL.sequence;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.template;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Utils.list;
@@ -70,6 +72,7 @@ import javax.annotation.Generated;
 import javax.sql.DataSource;
 
 import org.jooq.AlterSequenceRestartStep;
+import org.jooq.AlterTableStep;
 import org.jooq.Attachable;
 import org.jooq.Batch;
 import org.jooq.BatchBindStep;
@@ -1556,6 +1559,21 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     @Override
     public <T extends Number> AlterSequenceRestartStep<T> alterSequence(Sequence<T> sequence) {
         return new AlterSequenceImpl<T>(configuration, sequence);
+    }
+
+    @Override
+    public AlterSequenceRestartStep<BigInteger> alterSequence(String sequence) {
+        return alterSequence(sequence(sequence));
+    }
+
+    @Override
+    public AlterTableStep alterTable(Table<?> table) {
+        return new AlterTableImpl(configuration, table);
+    }
+
+    @Override
+    public AlterTableStep alterTable(String table) {
+        return alterTable(table(table));
     }
 
     @Override

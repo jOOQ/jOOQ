@@ -381,11 +381,27 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    public void testExecuteListenerCustomException() throws Exception {
+    public void testExecuteListenerCustomExceptionOnSyntaxError() throws Exception {
         DSLContext create = create(new CustomExceptionListener());
 
         try {
             create.fetch("invalid sql");
+            fail();
+        }
+        catch (E e) {
+            assertEquals("ERROR", e.getMessage());
+        }
+    }
+
+    public void testExecuteListenerCustomExceptionOnConstraintViolation() throws Exception {
+        DSLContext create = create(new CustomExceptionListener());
+
+        try {
+            A author = create.newRecord(TAuthor());
+            author.setValue(TAuthor_ID(), 1);
+            author.setValue(TAuthor_LAST_NAME(), "XX");
+            author.insert();
+
             fail();
         }
         catch (E e) {

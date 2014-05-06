@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Utils.DATA_DEFAULT_TRANSACTION_PROVIDER_AUTOCOMMIT;
+import static org.jooq.impl.Utils.DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION;
 import static org.jooq.impl.Utils.DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS;
 
 import java.sql.Connection;
@@ -48,7 +49,9 @@ import java.sql.Savepoint;
 import java.util.Stack;
 
 import org.jooq.Configuration;
+import org.jooq.ConnectionProvider;
 import org.jooq.Transaction;
+import org.jooq.TransactionContext;
 import org.jooq.TransactionProvider;
 
 /**
@@ -57,17 +60,18 @@ import org.jooq.TransactionProvider;
  * This implementation is entirely based on JDBC transactions and is intended to
  * work with {@link DefaultConnectionProvider} (which is implicitly created when
  * using {@link DSL#using(Connection)}). It supports nested transactions by
- * modelling them implicitly with JDBC {@link Savepoint}s, if supported by the
+ * modeling them implicitly with JDBC {@link Savepoint}s, if supported by the
  * underlying JDBC driver.
  *
  * @author Lukas Eder
  */
 public class DefaultTransactionProvider implements TransactionProvider {
 
-    private final DefaultConnectionProvider connection;
+    private final ConnectionProvider  provider;
+    private Connection                connection;
 
-    public DefaultTransactionProvider(DefaultConnectionProvider connection) {
-        this.connection = connection;
+    public DefaultTransactionProvider(ConnectionProvider provider) {
+        this.provider = provider;
     }
 
     @SuppressWarnings("unchecked")
@@ -86,35 +90,46 @@ public class DefaultTransactionProvider implements TransactionProvider {
         Boolean autoCommit = (Boolean) configuration.data(DATA_DEFAULT_TRANSACTION_PROVIDER_AUTOCOMMIT);
 
         if (autoCommit == null) {
-            autoCommit = connection.getAutoCommit();
+            autoCommit = connection(configuration).getAutoCommit();
             configuration.data(DATA_DEFAULT_TRANSACTION_PROVIDER_AUTOCOMMIT, autoCommit);
         }
 
         return autoCommit;
     }
 
+    private final DefaultConnectionProvider connection(Configuration configuration) {
+        DefaultConnectionProvider connectionWrapper = (DefaultConnectionProvider) configuration.data(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION);
+
+        if (connectionWrapper == null) {
+            connectionWrapper = new DefaultConnectionProvider(connection);
+            configuration.data(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION, connectionWrapper);
+        }
+
+        return connectionWrapper;
+    }
+
     @Override
-    public final Transaction begin(Configuration configuration) {
-        Stack<Savepoint> savepoints = savepoints(configuration);
+    public final Transaction begin(TransactionContext ctx) {
+        Stack<Savepoint> savepoints = savepoints(ctx.configuration());
 
         // This is the top-level transaction
         if (savepoints.isEmpty()) {
-            autoCommit(configuration, false);
+            brace(ctx.configuration(), true);
         }
 
-        savepoints.push(connection.setSavepoint());
+        savepoints.push(connection(ctx.configuration()).setSavepoint());
         return null;
     }
 
     @Override
-    public final void commit(Configuration configuration, Transaction transaction) {
-        Stack<Savepoint> savepoints = savepoints(configuration);
+    public final void commit(TransactionContext ctx) {
+        Stack<Savepoint> savepoints = savepoints(ctx.configuration());
         savepoints.pop();
 
         // This is the top-level transaction
         if (savepoints.isEmpty()) {
-            connection.commit();
-            autoCommit(configuration, true);
+            connection(ctx.configuration()).commit();
+            brace(ctx.configuration(), false);
         }
 
         // Nested commits have no effect
@@ -123,17 +138,17 @@ public class DefaultTransactionProvider implements TransactionProvider {
     }
 
     @Override
-    public final void rollback(Configuration configuration, Transaction transaction, Exception cause) {
-        Stack<Savepoint> savepoints = savepoints(configuration);
+    public final void rollback(TransactionContext ctx) {
+        Stack<Savepoint> savepoints = savepoints(ctx.configuration());
         Savepoint savepoint = savepoints.pop();
 
         try {
-            connection.rollback(savepoint);
+            connection(ctx.configuration()).rollback(savepoint);
         }
 
         finally {
             if (savepoints.isEmpty())
-                autoCommit(configuration, true);
+                brace(ctx.configuration(), false);
         }
     }
 
@@ -141,13 +156,24 @@ public class DefaultTransactionProvider implements TransactionProvider {
      * Ensure an <code>autoCommit</code> value on the connection, if it was set
      * to <code>true</code>, originally.
      */
-    private void autoCommit(Configuration configuration, boolean newValue) {
-        boolean oldValue = autoCommit(configuration);
+    private void brace(Configuration configuration, boolean start) {
+        if (start) {
+            connection = provider.acquire();
+        }
+
+        boolean autoCommit = autoCommit(configuration);
 
         // Transactions cannot run with autoCommit = true. Change the value for
         // the duration of a transaction
-        if (oldValue == true) {
-            connection.setAutoCommit(newValue);
+        if (autoCommit == true) {
+            connection(configuration).setAutoCommit(!start);
+        }
+
+        if (!start) {
+            provider.release(connection);
+
+            connection = null;
+            configuration.data().remove(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION);
         }
     }
 }

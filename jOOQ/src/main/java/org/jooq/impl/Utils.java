@@ -262,6 +262,12 @@ final class Utils {
     static final String          DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS = "org.jooq.configuration.default-transaction-provider-savepoints";
 
     /**
+     * [#1629] The {@link DefaultConnectionProvider} instance to be used during
+     * the transaction.
+     */
+    static final String          DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION = "org.jooq.configuration.default-transaction-provider-connection-provider";
+
+    /**
      * [#2965] These are {@link ConcurrentHashMap}s containing caches for
      * reflection information.
      * <p>

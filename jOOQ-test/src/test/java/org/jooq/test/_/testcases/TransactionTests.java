@@ -47,9 +47,11 @@ import static org.junit.Assert.fail;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
+import org.jooq.DSLContext;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
@@ -106,8 +108,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testTransactionsWithJDBCSimple() throws Exception {
+        DSLContext create = create();
+        TransactionalConnectionProvider provider = new TransactionalConnectionProvider(create.configuration().connectionProvider());
+        create.configuration().set(provider);
+
         try {
-            create().transaction(new Transactional<Integer>() {
+            create.transaction(new Transactional<Integer>() {
                 @Override
                 public Integer run(Configuration configuration) {
                     assertAutoCommit(configuration.connectionProvider(), false);
@@ -125,17 +131,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             fail();
         }
         catch (MyRuntimeException expected) {
+            assertEquals(1, provider.acquire.get());
+            assertEquals(1, provider.release.get());
+
             assertEquals("No", expected.getMessage());
-            assertEquals(2, create().fetchCount(TAuthor()));
-            assertAutoCommit(create().configuration().connectionProvider(), true);
+            assertEquals(2, create.fetchCount(TAuthor()));
+            assertAutoCommit(create.configuration().connectionProvider(), true);
         }
 
-        assertEquals(2, create().fetchCount(TAuthor()));
+        assertEquals(2, create.fetchCount(TAuthor()));
     }
 
     public void testTransactionsWithJDBCCheckedException() throws Exception {
+        DSLContext create = create();
+        TransactionalConnectionProvider provider = new TransactionalConnectionProvider(create.configuration().connectionProvider());
+        create.configuration().set(provider);
+
         try {
-            create().transaction(new Transactional<Integer>() {
+            create.transaction(new Transactional<Integer>() {
                 @Override
                 public Integer run(Configuration configuration) throws MyCheckedException {
                     assertAutoCommit(configuration.connectionProvider(), false);
@@ -153,13 +166,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             fail();
         }
         catch (DataAccessException expected) {
+            assertEquals(1, provider.acquire.get());
+            assertEquals(1, provider.release.get());
+
             assertEquals(MyCheckedException.class, expected.getCause().getClass());
             assertEquals("No", expected.getCause().getMessage());
-            assertEquals(2, create().fetchCount(TAuthor()));
-            assertAutoCommit(create().configuration().connectionProvider(), true);
+            assertEquals(2, create.fetchCount(TAuthor()));
+            assertAutoCommit(create.configuration().connectionProvider(), true);
         }
 
-        assertEquals(2, create().fetchCount(TAuthor()));
+        assertEquals(2, create.fetchCount(TAuthor()));
     }
 
     public void testTransactionsWithJDBCNestedWithSavepoints() throws Exception {
@@ -168,8 +184,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         final int[] inserted = new int[1];
         final int[] updated = new int[1];
 
+        DSLContext create = create();
+        TransactionalConnectionProvider provider = new TransactionalConnectionProvider(create.configuration().connectionProvider());
+        create.configuration().set(provider);
+
         Integer result =
-        create().transaction(new Transactional<Integer>() {
+        create.transaction(new Transactional<Integer>() {
             @Override
             public Integer run(Configuration c1) throws MyCheckedException {
                 assertAutoCommit(c1.connectionProvider(), false);
@@ -215,7 +235,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             }
         });
 
-        assertEquals(3, create().fetchCount(TAuthor()));
+        assertEquals(1, provider.acquire.get());
+        assertEquals(1, provider.release.get());
+        assertEquals(3, create.fetchCount(TAuthor()));
         assertEquals(42, (int) result);
     }
 
@@ -224,8 +246,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         final int[] inserted = new int[1];
         final int[] updated = new int[1];
 
+        DSLContext create = create();
+        TransactionalConnectionProvider provider = new TransactionalConnectionProvider(create.configuration().connectionProvider());
+        create.configuration().set(provider);
+
         try {
-            create().transaction(new Transactional<Integer>() {
+            create.transaction(new Transactional<Integer>() {
                 @Override
                 public Integer run(Configuration c1) throws MyCheckedException {
                     assertAutoCommit(c1.connectionProvider(), false);
@@ -266,7 +292,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         catch (MyRuntimeException expected) {
-            assertEquals(2, create().fetchCount(TAuthor()));
+            assertEquals(1, provider.acquire.get());
+            assertEquals(1, provider.release.get());
+
+            assertEquals(2, create.fetchCount(TAuthor()));
             assertEquals(MyRuntimeException.class, expected.getClass());
             assertEquals("No", expected.getMessage());
         }
@@ -285,6 +314,31 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         finally {
             if (c != null)
                 provider.release(c);
+        }
+    }
+
+    private static class TransactionalConnectionProvider implements ConnectionProvider {
+
+        private final ConnectionProvider delegate;
+        private final AtomicInteger acquire;
+        private final AtomicInteger release;
+
+        TransactionalConnectionProvider(ConnectionProvider delegate) {
+            this.delegate = delegate;
+            this.acquire = new AtomicInteger();
+            this.release = new AtomicInteger();
+        }
+
+        @Override
+        public Connection acquire() throws DataAccessException {
+            acquire.incrementAndGet();
+            return delegate.acquire();
+        }
+
+        @Override
+        public void release(Connection connection) throws DataAccessException {
+            release.incrementAndGet();
+            delegate.release(connection);
         }
     }
 }

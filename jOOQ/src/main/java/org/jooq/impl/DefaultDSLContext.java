@@ -176,7 +176,6 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.TableRecord;
-import org.jooq.Transaction;
 import org.jooq.TransactionProvider;
 import org.jooq.Transactional;
 import org.jooq.TruncateIdentityStep;
@@ -293,19 +292,19 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public <T> T transaction(Transactional<T> transactional) {
-        Configuration local = configuration.derive();
-        TransactionProvider provider = local.transactionProvider();
-
-        Transaction transaction = null;
         T result = null;
 
+        DefaultTransactionContext ctx = new DefaultTransactionContext(configuration.derive());
+        TransactionProvider provider = configuration.derive().transactionProvider();
+
         try {
-            transaction = provider.begin(local);
-            result = transactional.run(local);
-            provider.commit(local, transaction);
+            ctx.transaction = provider.begin(ctx);
+            result = transactional.run(configuration.derive());
+            provider.commit(ctx);
         }
         catch (Exception cause) {
-            provider.rollback(local, transaction, cause);
+            ctx.cause = cause;
+            provider.rollback(ctx);
 
             if (cause instanceof RuntimeException) {
                 throw (RuntimeException) cause;

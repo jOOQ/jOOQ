@@ -53,10 +53,9 @@ import org.jooq.impl.DefaultTransactionProvider;
  * A new {@link Configuration} copy is created from the calling
  * {@link DSLContext} for the scope of a single transactions. Implementors may
  * freely add custom data to {@link Configuration#data()}, in order to share
- * information between {@link #begin(Configuration)} and
- * {@link #commit(Configuration, Transaction)} or
- * {@link #rollback(Configuration, Transaction, Exception)}, as well as to share
- * information with nested transactions.
+ * information between {@link #begin(TransactionContext)} and
+ * {@link #commit(TransactionContext)} or {@link #rollback(TransactionContext)},
+ * as well as to share information with nested transactions.
  * <p>
  * Implementors may freely choose whether they support nested transactions. An
  * example implementation supporting nested transactions is
@@ -73,8 +72,8 @@ public interface TransactionProvider {
      * This method begins a new transaction with a {@link Configuration} scoped
      * for this transaction. The resulting {@link Transaction} object may be
      * used by implementors to identify the transaction when
-     * {@link #commit(Configuration, Transaction)} or
-     * {@link #rollback(Configuration, Transaction, Exception)} is called.
+     * {@link #commit(TransactionContext)} or
+     * {@link #rollback(TransactionContext)} is called.
      *
      * @param Configuration the configuration scoped to this transaction and its
      *            nested transactions.
@@ -82,27 +81,27 @@ public interface TransactionProvider {
      * @throws DataAccessException Any exception issued by the underlying
      *             database.
      */
-    Transaction begin(Configuration configuration) throws DataAccessException;
+    Transaction begin(TransactionContext ctx) throws DataAccessException;
 
     /**
      * @param Configuration the configuration scoped to this transaction and its
      *            nested transactions.
      * @param transaction The user-defined transaction object returned from
-     *            {@link #begin(Configuration)}. May be <code>null</code>.
+     *            {@link #begin(TransactionContext)}. May be <code>null</code>.
      * @throws DataAccessException Any exception issued by the underlying
      *             database.
      */
-    void commit(Configuration configuration, Transaction transaction) throws DataAccessException;
+    void commit(TransactionContext ctx) throws DataAccessException;
 
     /**
      * @param Configuration the configuration scoped to this transaction and its
      *            nested transactions.
      * @param transaction The user-defined transaction object returned from
-     *            {@link #begin(Configuration)}. May be <code>null</code>.
+     *            {@link #begin(TransactionContext)}. May be <code>null</code>.
      * @param cause The exception that has caused the rollback.
      * @throws DataAccessException Any exception issued by the underlying
      *             database.
      */
-    void rollback(Configuration configuration, Transaction transaction, Exception cause) throws DataAccessException;
+    void rollback(TransactionContext ctx) throws DataAccessException;
 
 }

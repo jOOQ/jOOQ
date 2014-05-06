@@ -838,6 +838,17 @@ public enum Clause {
     ALTER_TABLE_ALTER,
 
     /**
+     * A <code>ALTER DEFAULT</code> clause within an {@link #ALTER_TABLE}
+     * statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the default expression that is being altered</li>
+     * </ul>
+     */
+    ALTER_TABLE_ALTER_DEFAULT,
+
+    /**
      * A <code>DROP</code> clause within an {@link #ALTER_TABLE} statement.
      * <p>
      * This clause surrounds

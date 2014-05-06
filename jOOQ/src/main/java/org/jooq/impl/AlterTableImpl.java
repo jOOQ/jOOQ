@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static org.jooq.Clause.ALTER_TABLE;
 import static org.jooq.Clause.ALTER_TABLE_ADD;
 import static org.jooq.Clause.ALTER_TABLE_ALTER;
+import static org.jooq.Clause.ALTER_TABLE_ALTER_DEFAULT;
 import static org.jooq.Clause.ALTER_TABLE_DROP;
 import static org.jooq.Clause.ALTER_TABLE_TABLE;
 import static org.jooq.impl.DSL.field;
@@ -194,7 +195,9 @@ class AlterTableImpl extends AbstractQuery implements
                    .keyword(alterType.getCastTypeName(ctx.configuration()));
             }
             else if (alterDefault != null) {
-                ctx.sql(" ").keyword("set default").sql(" ").visit(alterDefault);
+                ctx.start(ALTER_TABLE_ALTER_DEFAULT)
+                   .sql(" ").keyword("set default").sql(" ").visit(alterDefault)
+                   .end(ALTER_TABLE_ALTER_DEFAULT);
             }
 
             ctx.end(ALTER_TABLE_ALTER);

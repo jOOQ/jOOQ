@@ -43,6 +43,8 @@ package org.jooq.test;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.test._.listeners.ConnectionProviderLifecycleListener.ACQUIRE_COUNT;
+import static org.jooq.test._.listeners.ConnectionProviderLifecycleListener.RELEASE_COUNT;
 import static org.jooq.test._.listeners.JDBCLifecycleListener.RS_CLOSE_COUNT;
 import static org.jooq.test._.listeners.JDBCLifecycleListener.RS_START_COUNT;
 import static org.jooq.test._.listeners.JDBCLifecycleListener.STMT_CLOSE_COUNT;
@@ -107,7 +109,9 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
+import org.jooq.test._.listeners.ConnectionProviderLifecycleListener;
 import org.jooq.test._.listeners.JDBCLifecycleListener;
+import org.jooq.test._.listeners.Lifecycle;
 import org.jooq.test._.listeners.LifecycleWatcherListener;
 import org.jooq.test._.listeners.PrettyPrinter;
 import org.jooq.test._.listeners.TestStatisticsListener;
@@ -499,7 +503,12 @@ public abstract class jOOQAbstractTest<
         logStat.info("Total", total);
 
         int unbalanced = 0;
-        JooqLogger logLife = JooqLogger.getLogger(LifecycleWatcherListener.class);
+        JooqLogger logLife = JooqLogger.getLogger(Lifecycle.class);
+
+        logLife.info("");
+        logLife.info("CONNECTION PROVIDER LIFECYCLE STATS");
+        logLife.info("-----------------------------------");
+        unbalanced = extracted(logLife, unbalanced, ACQUIRE_COUNT, RELEASE_COUNT);
 
         logLife.info("");
         logLife.info("EXECUTE LISTENER LIFECYCLE STATS");
@@ -961,14 +970,21 @@ public abstract class jOOQAbstractTest<
             .withRenderMapping(new RenderMapping()
                 .withDefaultSchema(defaultSchema));
 
-        return DSL.using(create0(settings).configuration().derive(
-            DefaultExecuteListenerProvider.providers(
-                new JDBCLifecycleListener(),
-                new LifecycleWatcherListener(),
-                new TestStatisticsListener(),
-                new PrettyPrinter()
+        org.jooq.Configuration c = create0(settings).configuration();
+
+        return DSL.using(c
+            .derive(
+                new ConnectionProviderLifecycleListener(c.connectionProvider())
             )
-        ));
+            .derive(
+                DefaultExecuteListenerProvider.providers(
+                    new JDBCLifecycleListener(),
+                    new LifecycleWatcherListener(),
+                    new TestStatisticsListener(),
+                    new PrettyPrinter()
+                )
+            )
+        );
     }
 
     protected final DSLContext create(Settings settings) {

@@ -196,12 +196,14 @@ CREATE TABLE t_785 (
 /
 
 CREATE TABLE t_3084 (
-  ID int
+  ID   INTEGER,
+  data INTEGER
 )
 /
 
 CREATE TABLE t_3084_a (
-  ID int,
+  ID   INTEGER,
+  data INTEGER,
   
   CONSTRAINT uk_t_3084_a UNIQUE (ID)
 )

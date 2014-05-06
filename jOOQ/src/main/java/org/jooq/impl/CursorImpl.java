@@ -1415,6 +1415,11 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                     rows++;
                 }
             }
+            catch (RuntimeException e) {
+                ctx.exception(e);
+                listener.exception(ctx);
+                throw ctx.exception();
+            }
             catch (SQLException e) {
                 ctx.sqlException(e);
                 listener.exception(ctx);

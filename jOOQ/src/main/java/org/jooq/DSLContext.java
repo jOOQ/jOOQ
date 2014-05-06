@@ -4758,7 +4758,7 @@ public interface DSLContext {
     /**
      * Create a new DSL <code>ALTER SEQUENCE</code> statement.
      *
-     * @see DSLContext#alterSequence(Sequence)
+     * @see DSL#alterSequence(Sequence)
      */
     @Support({ DB2, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
     @Transition(
@@ -4766,6 +4766,42 @@ public interface DSLContext {
         args = "Sequence"
     )
     <T extends Number> AlterSequenceRestartStep<T> alterSequence(Sequence<T> sequence);
+
+    /**
+     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
+     *
+     * @see DSL#alterSequence(Sequence)
+     */
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
+    @Transition(
+        name = "ALTER SEQUENCE",
+        args = "Sequence"
+    )
+    AlterSequenceRestartStep<BigInteger> alterSequence(String sequence);
+
+    /**
+     * Create a new DSL <code>ALTER TABLE</code> statement.
+     *
+     * @see DSL#alterTable(Table)
+     */
+    @Support
+    @Transition(
+        name = "ALTER TABLE",
+        args = "Table"
+    )
+    AlterTableStep alterTable(Table<?> table);
+
+    /**
+     * Create a new DSL <code>ALTER TABLE</code> statement.
+     *
+     * @see DSL#alterTable(Table)
+     */
+    @Support
+    @Transition(
+        name = "ALTER TABLE",
+        args = "Table"
+    )
+    AlterTableStep alterTable(String table);
 
     /**
      * Create a new DSL truncate statement.

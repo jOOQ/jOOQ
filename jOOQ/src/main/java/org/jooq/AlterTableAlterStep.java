@@ -40,42 +40,29 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLSERVER2012;
-import static org.jooq.SQLDialect.SYBASE;
-
 import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
 
 /**
- * A {@link Query} that can alter sequences.
+ * The step in the <code>ALTER TABLE</code> DSL used to <code>ALTER</code>
+ * columns.
  *
  * @author Lukas Eder
  */
 @State
-public interface AlterSequenceRestartStep<T extends Number> {
+public interface AlterTableAlterStep<T> {
 
     /**
-     * Restart the sequence at its initial value.
+     * Specify a new column <code>DEFAULT</code>.
      */
-    @Support({ DB2, HSQLDB, POSTGRES, SQLSERVER2012 })
-    @Transition(
-        name = "RESTART"
-    )
-    AlterSequenceFinalStep restart();
+    AlterTableFinalStep defaultValue(T literal);
 
     /**
-     * Restart the sequence at a given value.
+     * Specify a new column <code>DEFAULT</code>.
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
-    @Transition(
-        name = "RESTART WITH",
-        args = "Number"
-    )
-    AlterSequenceFinalStep restartWith(T value);
+    AlterTableFinalStep defaultValue(Field<T> expression);
+
+    /**
+     * Specify a new column data type.
+     */
+    AlterTableFinalStep set(DataType<?> type);
 }

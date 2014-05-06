@@ -44,7 +44,9 @@ import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.impl.DSL.table;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.sql.Date;
 
@@ -55,6 +57,8 @@ import org.jooq.Record6;
 import org.jooq.Sequence;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.exception.DataAccessException;
+import org.jooq.impl.SQLDataType;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -86,7 +90,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings("unchecked")
-
     public void testAlterSequence() throws Exception {
         if (cSequences() == null || asList(DERBY, ORACLE).contains(dialect().family())) {
             log.info("SKIPPING", "Skipping ALTER SEQUENCE test");
@@ -126,5 +129,100 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create().alterSequence(S_AUTHOR_ID).restartWith(5).execute();
         assertEquals(i++, create().nextval(S_AUTHOR_ID).intValue());
         assertEquals(i++, create().nextval(S_AUTHOR_ID).intValue());
+    }
+
+    public void testAlterTableAdd() throws Exception {
+        try {
+            // TODO: Re-use jOOQ API for this
+            create().execute("create table t (a int)");
+            create().execute("insert into t values (1)");
+            assertEquals(asList(1), asList(create().fetchOne(table("t")).intoArray()));
+
+            create().alterTable("t").add("b", SQLDataType.INTEGER).execute();
+            assertEquals(asList(1, null), asList(create().fetchOne(table("t")).intoArray()));
+
+            create().alterTable("t").add("c", SQLDataType.NUMERIC).execute();
+            assertEquals(asList(1, null, null), asList(create().fetchOne(table("t")).intoArray()));
+
+            create().alterTable("t").add("d", SQLDataType.NUMERIC.precision(5)).execute();
+            assertEquals(asList(1, null, null, null), asList(create().fetchOne(table("t")).intoArray()));
+
+            create().alterTable("t").add("e", SQLDataType.NUMERIC.precision(5, 2)).execute();
+            assertEquals(asList(1, null, null, null, null), asList(create().fetchOne(table("t")).intoArray()));
+
+            create().alterTable("t").add("f", SQLDataType.VARCHAR).execute();
+            assertEquals(asList(1, null, null, null, null, null), asList(create().fetchOne(table("t")).intoArray()));
+
+            create().alterTable("t").add("g", SQLDataType.VARCHAR.length(5)).execute();
+            assertEquals(asList(1, null, null, null, null, null, null), asList(create().fetchOne(table("t")).intoArray()));
+
+            try {
+                create().alterTable("t").add("h", SQLDataType.INTEGER.nullable(false)).execute();
+                fail();
+            }
+            catch (DataAccessException expected) {}
+
+            create().execute("delete t");
+            create().alterTable("t").add("h", SQLDataType.INTEGER.nullable(false)).execute();
+        }
+        finally {
+            // TODO: Re-use jOOQ API for this
+            create().execute("drop table t");
+        }
+    }
+
+    public void testAlterTableAlterType() throws Exception {
+        try {
+            // TODO: Re-use jOOQ API for this
+            create().execute("create table t (a int)");
+            create().execute("insert into t values (1)");
+
+            create().alterTable("t").alter("a").set(SQLDataType.VARCHAR).execute();
+            assertEquals("1", create().fetchOne("select * from t").getValue(0));
+
+            create().alterTable("t").alter("a").set(SQLDataType.VARCHAR.nullable(false)).execute();
+            try {
+                create().execute("update t set t = null");
+            }
+            catch (DataAccessException expected) {}
+        }
+        finally {
+            // TODO: Re-use jOOQ API for this
+            create().execute("drop table t");
+        }
+    }
+
+    public void testAlterTableAlterDefault() throws Exception {
+        try {
+            // TODO: Re-use jOOQ API for this
+            create().execute("create table t (a int, b varchar)");
+
+            create().alterTable("t").alter("b").defaultValue("empty").execute();
+            create().execute("insert into t (a) values (1)");
+            assertEquals("empty", create().fetchOne("select b from t").getValue(0));
+        }
+        finally {
+            // TODO: Re-use jOOQ API for this
+            create().execute("drop table t");
+        }
+    }
+
+    public void testAlterTableDrop() throws Exception {
+        try {
+            // TODO: Re-use jOOQ API for this
+            create().execute("create table t (a int, b int, c int)");
+            create().execute("insert into t values (1, 2, 3)");
+            assertEquals(asList(1, 2, 3), asList(create().fetchOne(table("t")).intoArray()));
+
+            create().alterTable("t").drop("c").execute();
+            assertEquals(asList(1, 2), asList(create().fetchOne(table("t")).intoArray()));
+
+            create().alterTable("t").drop("b").execute();
+            assertEquals(asList(1), asList(create().fetchOne(table("t")).intoArray()));
+        }
+        finally {
+            // TODO: Re-use jOOQ API for this
+            create().execute("drop table t");
+        }
     }
 }

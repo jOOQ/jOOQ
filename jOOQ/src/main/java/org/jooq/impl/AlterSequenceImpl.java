@@ -54,7 +54,7 @@ import org.jooq.Sequence;
 /**
  * @author Lukas Eder
  */
-class AlterSequenceImpl<T extends Number> extends AbstractQuery  implements
+class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
 
     // Cascading interface implementations for AlterSequence behaviour
     AlterSequenceRestartStep<T>,
@@ -96,9 +96,8 @@ class AlterSequenceImpl<T extends Number> extends AbstractQuery  implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.start(ALTER_SEQUENCE)
+        ctx.start(ALTER_SEQUENCE_SEQUENCE)
            .keyword("alter sequence")
-           .start(ALTER_SEQUENCE_SEQUENCE)
            .sql(" ").visit(sequence)
            .end(ALTER_SEQUENCE_SEQUENCE)
            .start(ALTER_SEQUENCE_RESTART);
@@ -112,8 +111,7 @@ class AlterSequenceImpl<T extends Number> extends AbstractQuery  implements
                .sql(" ").sql(with.toString());
         }
 
-        ctx.end(ALTER_SEQUENCE_RESTART)
-           .end(ALTER_SEQUENCE);
+        ctx.end(ALTER_SEQUENCE_RESTART);
     }
 
     @Override

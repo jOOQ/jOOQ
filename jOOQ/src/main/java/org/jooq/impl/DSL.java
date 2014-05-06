@@ -79,6 +79,7 @@ import javax.sql.DataSource;
 
 import org.jooq.AggregateFunction;
 import org.jooq.AlterSequenceRestartStep;
+import org.jooq.AlterTableStep;
 import org.jooq.ArrayRecord;
 import org.jooq.Case;
 import org.jooq.CommonTableExpression;
@@ -4377,6 +4378,48 @@ public class DSL {
     )
     public static <T extends Number> AlterSequenceRestartStep<T> alterSequence(Sequence<T> sequence) {
         return using(new DefaultConfiguration()).alterSequence(sequence);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
+     *
+     * @see DSLContext#alterSequence(Sequence)
+     */
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
+    @Transition(
+        name = "ALTER SEQUENCE",
+        args = "Sequence"
+    )
+    public static AlterSequenceRestartStep<BigInteger> alterSequence(String sequence) {
+        return using(new DefaultConfiguration()).alterSequence(sequence);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER TABLE</code> statement.
+     *
+     * @see DSL#alterTable(Table)
+     */
+    @Support
+    @Transition(
+        name = "ALTER TABLE",
+        args = "Table"
+    )
+    public static AlterTableStep alterTable(Table<?> table) {
+        return using(new DefaultConfiguration()).alterTable(table);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER TABLE</code> statement.
+     *
+     * @see DSL#alterTable(Table)
+     */
+    @Support
+    @Transition(
+        name = "ALTER TABLE",
+        args = "Table"
+    )
+    public static AlterTableStep alterTable(String table) {
+        return using(new DefaultConfiguration()).alterTable(table);
     }
 
     /**

@@ -799,6 +799,55 @@ public enum Clause {
      */
     ALTER_SEQUENCE_RESTART,
 
+    /**
+     * A complete <code>ALTER ALTER_TABLE</code> statement.
+     */
+    ALTER_TABLE,
+
+    /**
+     * A <code>TABLE</code> clause within an {@link #ALTER_TABLE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>ALTER TABLE</code> keywords</li>
+     * <li>the table that is being altered</li>
+     * </ul>
+     */
+    ALTER_TABLE_TABLE,
+
+    /**
+     * A <code>ADD</code> clause within an {@link #ALTER_TABLE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>ADD</code> keywords</li>
+     * <li>the column that is being added</li>
+     * </ul>
+     */
+    ALTER_TABLE_ADD,
+
+    /**
+     * A <code>ALTER</code> clause within an {@link #ALTER_TABLE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>ALTER</code> keywords</li>
+     * <li>the column that is being altered</li>
+     * </ul>
+     */
+    ALTER_TABLE_ALTER,
+
+    /**
+     * A <code>DROP</code> clause within an {@link #ALTER_TABLE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>DROP</code> keywords</li>
+     * <li>the column that is being dropped</li>
+     * </ul>
+     */
+    ALTER_TABLE_DROP,
+
     // -------------------------------------------------------------------------
     // Other clauses
     // -------------------------------------------------------------------------

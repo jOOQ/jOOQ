@@ -1144,6 +1144,26 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testAlterTableAdd() throws Exception {
+        new DDLTests(this).testAlterTableAdd();
+    }
+
+    @Test
+    public void testAlterTableAlterType() throws Exception {
+        new DDLTests(this).testAlterTableAlterType();
+    }
+
+    @Test
+    public void testAlterTableAlterDefault() throws Exception {
+        new DDLTests(this).testAlterTableAlterDefault();
+    }
+
+    @Test
+    public void testAlterTableDrop() throws Exception {
+        new DDLTests(this).testAlterTableDrop();
+    }
+
+    @Test
     public void testTruncate() throws Exception {
         new TruncateTests(this).testTruncate();
     }

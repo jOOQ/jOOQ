@@ -1331,8 +1331,22 @@ final class Utils {
 
         // [#385] Close statements only if not requested to keep open
         if (!keepStatement) {
-            JDBCUtils.safeClose(ctx.statement());
-            ctx.statement(null);
+            PreparedStatement statement = ctx.statement();
+
+            if (statement != null) {
+                JDBCUtils.safeClose(statement);
+                ctx.statement(null);
+            }
+
+            // [#3234] We must ensure that any connection we may still have will be released,
+            // in the event of an exception
+            else {
+                Connection connection = localConnection();
+
+                if (connection != null) {
+                    ctx.configuration().connectionProvider().release(connection);
+                }
+            }
         }
 
         // [#1868] [#2373] Terminate ExecuteListener lifecycle, if needed

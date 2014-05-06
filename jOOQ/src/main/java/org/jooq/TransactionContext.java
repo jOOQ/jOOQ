@@ -54,7 +54,7 @@ public interface TransactionContext {
     Configuration configuration();
 
     /**
-     * A user-defined transaction object, obtained from
+     * A user-defined transaction object, possibly obtained from
      * {@link TransactionProvider#begin(TransactionContext)}.
      *
      * @return The transaction object. May be <code>null</code>.
@@ -62,9 +62,21 @@ public interface TransactionContext {
     Transaction transaction();
 
     /**
+     * Set the user-defined transaction object to the current transaction
+     * context.
+     */
+    TransactionContext transaction(Transaction transaction);
+
+    /**
      * The exception that has caused the rollback.
      *
      * @return The exception. May be <code>null</code>.
      */
     Exception cause();
+
+    /**
+     * Set the exception that has caused the rollback to the current transaction
+     * context.
+     */
+    TransactionContext cause(Exception cause);
 }

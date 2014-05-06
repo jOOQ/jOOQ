@@ -77,11 +77,10 @@ public interface TransactionProvider {
      *
      * @param Configuration the configuration scoped to this transaction and its
      *            nested transactions.
-     * @return A user-defined transaction object. May be <code>null</code>.
      * @throws DataAccessException Any exception issued by the underlying
      *             database.
      */
-    Transaction begin(TransactionContext ctx) throws DataAccessException;
+    void begin(TransactionContext ctx) throws DataAccessException;
 
     /**
      * @param Configuration the configuration scoped to this transaction and its

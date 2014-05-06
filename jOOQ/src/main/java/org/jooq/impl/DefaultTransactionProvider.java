@@ -50,7 +50,6 @@ import java.util.Stack;
 
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
-import org.jooq.Transaction;
 import org.jooq.TransactionContext;
 import org.jooq.TransactionProvider;
 
@@ -109,7 +108,7 @@ public class DefaultTransactionProvider implements TransactionProvider {
     }
 
     @Override
-    public final Transaction begin(TransactionContext ctx) {
+    public final void begin(TransactionContext ctx) {
         Stack<Savepoint> savepoints = savepoints(ctx.configuration());
 
         // This is the top-level transaction
@@ -118,7 +117,6 @@ public class DefaultTransactionProvider implements TransactionProvider {
         }
 
         savepoints.push(connection(ctx.configuration()).setSavepoint());
-        return null;
     }
 
     @Override

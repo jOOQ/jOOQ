@@ -298,13 +298,12 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         TransactionProvider provider = configuration.derive().transactionProvider();
 
         try {
-            ctx.transaction = provider.begin(ctx);
+            provider.begin(ctx);
             result = transactional.run(configuration.derive());
             provider.commit(ctx);
         }
         catch (Exception cause) {
-            ctx.cause = cause;
-            provider.rollback(ctx);
+            provider.rollback(ctx.cause(cause));
 
             if (cause instanceof RuntimeException) {
                 throw (RuntimeException) cause;

@@ -192,24 +192,35 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         configuration.settings().setExecuteLogging(false);
         DSLContext create = create(configuration);
 
+        ResultQuery<?> q = null;
+
+        try {
+
 //        System.out.println("Start");
 //        System.in.read();
 //        System.in.read();
-        ResultQuery<?> q = create
-            .select()
-            .from("t_book")
-            .where("id = ?", -1)
-            .keepStatement(true);
 
-        StopWatch watch = new StopWatch();
-        for (int i = 0; i < REPETITIONS_PLAIN_SQL; i++) {
-            q.bind(1, i % 4 + 1).fetchOne();
-        }
+            q = create
+                    .select()
+                    .from("t_book")
+                    .where("id = ?", -1)
+                    .keepStatement(true);
 
-        watch.splitInfo("Done with " + REPETITIONS_PLAIN_SQL + " repetitions");
+            StopWatch watch = new StopWatch();
+            for (int i = 0; i < REPETITIONS_PLAIN_SQL; i++) {
+                q.bind(1, i % 4 + 1).fetchOne();
+            }
+
+            watch.splitInfo("Done with " + REPETITIONS_PLAIN_SQL + " repetitions");
+
 //        System.out.println("Stop");
 //        System.in.read();
 //        System.in.read();
+        }
+        finally {
+            if (q != null)
+                q.close();
+        }
     }
 
     private void testBenchmarkReuseSQLString(DSLContext create, int repetitions) throws Exception {

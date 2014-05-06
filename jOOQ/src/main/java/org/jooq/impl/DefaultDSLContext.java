@@ -299,11 +299,11 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         T result = null;
 
         DefaultTransactionContext ctx = new DefaultTransactionContext(configuration.derive());
-        TransactionProvider provider = configuration.derive().transactionProvider();
+        TransactionProvider provider = ctx.configuration().transactionProvider();
 
         try {
             provider.begin(ctx);
-            result = transactional.run(configuration.derive());
+            result = transactional.run(ctx.configuration());
             provider.commit(ctx);
         }
         catch (Exception cause) {

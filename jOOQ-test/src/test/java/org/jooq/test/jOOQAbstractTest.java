@@ -101,7 +101,9 @@ import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultConnectionProvider;
 import org.jooq.impl.DefaultExecuteListenerProvider;
+import org.jooq.impl.DefaultTransactionProvider;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -971,11 +973,11 @@ public abstract class jOOQAbstractTest<
                 .withDefaultSchema(defaultSchema));
 
         org.jooq.Configuration c = create0(settings).configuration();
+        ConnectionProviderLifecycleListener cp = new ConnectionProviderLifecycleListener(c.connectionProvider());
 
         return DSL.using(c
-            .derive(
-                new ConnectionProviderLifecycleListener(c.connectionProvider())
-            )
+            .derive(cp)
+            .derive(new DefaultTransactionProvider((DefaultConnectionProvider) c.connectionProvider()))
             .derive(
                 DefaultExecuteListenerProvider.providers(
                     new JDBCLifecycleListener(),

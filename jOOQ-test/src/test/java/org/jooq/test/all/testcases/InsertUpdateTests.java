@@ -936,19 +936,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testInsertOnDuplicateKeyUpdate() throws Exception {
-        switch (dialect()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxx
-            xx [/pro] */
-            case DERBY:
-            case H2:
-            case POSTGRES:
-            case SQLITE:
-                log.info("SKIPPING", "ON DUPLICATE KEY UPDATE test");
-                return;
-        }
+        assumeFamilyNotIn(DERBY, FIREBIRD, H2, POSTGRES, SQLITE);
 
         jOOQAbstractTest.reset = false;
 
@@ -976,18 +964,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testInsertOnDuplicateKeyIgnore() throws Exception {
-        switch (dialect()) {
-            /* [pro] xx
-            xxxx xxxx
-            xxxx xxxxxxx
-            xx [/pro] */
-            case DERBY:
-            case H2:
-            case POSTGRES:
-            case SQLITE:
-                log.info("SKIPPING", "ON DUPLICATE KEY IGNORE test");
-                return;
-        }
+        assumeFamilyNotIn(DERBY, FIREBIRD, H2, POSTGRES, SQLITE);
 
         jOOQAbstractTest.reset = false;
 
@@ -1014,21 +991,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testMerge() throws Exception {
-        switch (dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxx
-            xx [/pro] */
-            case DERBY:
-            case H2:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE:
-                log.info("SKIPPING", "Merge tests");
-                return;
-        }
+        assumeFamilyNotIn(DERBY, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE);
 
         jOOQAbstractTest.reset = false;
 
@@ -1235,20 +1198,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testMergeWithH2SyntaxExtension() throws Exception {
-        switch (dialect()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxx
-            xx [/pro] */
-            case DERBY:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE:
-                log.info("SKIPPING", "H2-specific MERGE syntax test");
-                return;
-        }
+        assumeFamilyNotIn(DERBY, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE);
 
         jOOQAbstractTest.reset = false;
 

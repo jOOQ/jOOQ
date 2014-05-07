@@ -260,6 +260,11 @@ For more information, please visit: http://www.jooq.org/licenses''');
                 replaceAll.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?)\b«d.name()»\b,\s*([^\)]*?\)))'''), "$1$2"));
                 replaceAll.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?)\s*\b«d.name()»\b\s*([^\)]*?\)))'''), "$1$2"));
                 
+                // Remove commercial dialects from assume*(...) listings
+                replaceAll.add(new ImmutablePair(compile('''(?:(assume(?:Family|Dialect)NotIn.*\([^\)]*?),\s*\b«d.name()»\b([^\)]*\)))'''), "$1$2"));
+                replaceAll.add(new ImmutablePair(compile('''(?:(assume(?:Family|Dialect)NotIn.*\([^\)]*?)\b«d.name()»\b,\s*([^\)]*\)))'''), "$1$2"));
+                replaceAll.add(new ImmutablePair(compile('''(?:(assume(?:Family|Dialect)NotIn.*\([^\)]*?)\s*\b«d.name()»\b\s*([^\)]*\)))'''), "$1$2"));
+                
                 // Remove commercial dialects from Arrays.asList() expressions
                 replaceAll.add(new ImmutablePair(compile('''(asList\([^\)]*?),\s*\b«d.name()»\b([^\)]*?\))'''), "$1$2"));
                 replaceAll.add(new ImmutablePair(compile('''(asList\([^\)]*?)\b«d.name()»\b,\s*([^\)]*?\))'''), "$1$2"));

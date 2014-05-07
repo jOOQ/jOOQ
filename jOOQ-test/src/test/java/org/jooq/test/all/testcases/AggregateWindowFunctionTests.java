@@ -49,7 +49,10 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -100,6 +103,7 @@ import static org.jooq.impl.DSL.varPop;
 import static org.jooq.impl.DSL.varSamp;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeNotNull;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -160,10 +164,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testUserDefinedAggregateFunctions() throws Exception {
-        if (secondMax(null) == null) {
-            log.info("SKIPPING", "User-defined aggregate function tests");
-            return;
-        }
+        assumeNotNull(secondMax(null));
 
         // Check the correctness of the aggregate function
         List<Integer> result1 =
@@ -366,13 +367,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFetchCountWithLimitOffset() throws Exception {
 
         /* [pro] */
-        switch (dialect().family()) {
-            case ACCESS:
-            case ASE:
-            case INGRES:
-                log.info("SKIPPING", "Nested LIMIT .. OFFSET tests");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, INGRES);
         /* [/pro] */
 
         // Some databases don't allow for LIMIT .. OFFSET in nested selects or derived tables.
@@ -410,23 +405,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testLinearRegressionFunctions() throws Exception {
-        switch (dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            case SQLSERVER:
-            /* [/pro] */
-            case CUBRID:
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case SQLITE:
-                log.info("SKIPPING", "Skipping linear regression function tests");
-                return;
-        }
+        assumeFamilyNotIn(ASE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE, SQLSERVER);
 
         // [#600] As aggregate functions
         Record record =
@@ -477,19 +456,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testWindowFunctions() throws Exception {
-        switch (dialect()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case INGRES:
-            /* [/pro] */
-            case FIREBIRD:
-            case MARIADB:
-            case MYSQL:
-            case SQLITE:
-                log.info("SKIPPING", "Window function tests");
-                return;
-        }
+        assumeDialectNotIn(ACCESS, ASE, INGRES, FIREBIRD, MARIADB, MYSQL, SQLITE);
 
         switch (dialect()) {
             case DERBY:
@@ -998,17 +965,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testListAgg() throws Exception {
-        switch (dialect().family()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case INGRES:
-            case SQLSERVER:
-            /* [/pro] */
-            case DERBY:
-                log.info("SKIPPING", "LISTAGG tests");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, INGRES, SQLSERVER);
 
         // [#3045] Skip this test for the time being
         if (!asList(ORACLE).contains(dialect().family())) {
@@ -1104,23 +1061,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testWindowClause() throws Exception {
-        switch (dialect()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case DERBY:
-            case INGRES:
-            /* [/pro] */
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case SQLITE:
-                log.info("SKIPPING", "Window function tests");
-                return;
-        }
-
+        assumeDialectNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE);
 
         Name a = name("a");
         Name b = name("b");

@@ -41,6 +41,7 @@
 package org.jooq.test.all.testcases;
 
 import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.DSL.name;
@@ -95,7 +96,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCTESimple() throws Exception {
-        assumeFamilyNotIn(CUBRID, MARIADB, MYSQL);
+        assumeFamilyNotIn(CUBRID, H2, MARIADB, MYSQL);
 
         Result<Record> result1 =
         create().with("t", "f1", "f2").as(select(val(1), val("a")))
@@ -114,7 +115,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCTEMultiple() throws Exception {
-        assumeFamilyNotIn(CUBRID, MARIADB, MYSQL);
+        assumeFamilyNotIn(CUBRID, H2, MARIADB, MYSQL);
 
         CommonTableExpression<Record2<Integer, String>> t1 = name("t1").fields("f1", "f2").as(select(val(1), val("a")));
         CommonTableExpression<Record2<Integer, String>> t2 = name("t2").fields("f3", "f4").as(select(val(2), val("b")));
@@ -150,7 +151,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCTEAliasing() throws Exception {
-        assumeFamilyNotIn(CUBRID, MARIADB, MYSQL);
+        assumeFamilyNotIn(CUBRID, H2, MARIADB, MYSQL);
 
         CommonTableExpression<Record2<Integer, String>> t1 = name("t1").fields("f1", "f2").as(select(val(1), val("a")));
         CommonTableExpression<Record2<Integer, String>> t2 = name("t2").fields("f3", "f4").as(select(val(2), val("b")));
@@ -202,7 +203,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCTEWithNoExplicitColumnLists() throws Exception {
-        assumeFamilyNotIn(CUBRID, MARIADB, MYSQL);
+        assumeFamilyNotIn(CUBRID, H2, MARIADB, MYSQL);
 
         Result<Record> result1 =
         create().with("a").as(select(

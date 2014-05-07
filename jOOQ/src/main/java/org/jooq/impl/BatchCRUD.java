@@ -55,6 +55,7 @@ import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.Query;
+import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
@@ -67,14 +68,14 @@ class BatchCRUD implements Batch {
     /**
      * Generated UID
      */
-    private static final long          serialVersionUID = -2935544935267715011L;
+    private static final long      serialVersionUID = -2935544935267715011L;
 
-    private final DSLContext             create;
-    private final Configuration        configuration;
-    private final UpdatableRecord<?>[] records;
-    private final Action               action;
+    private final DSLContext       create;
+    private final Configuration    configuration;
+    private final TableRecord<?>[] records;
+    private final Action           action;
 
-    BatchCRUD(Configuration configuration, Action action, UpdatableRecord<?>[] records) {
+    BatchCRUD(Configuration configuration, Action action, TableRecord<?>[] records) {
         this.create = DSL.using(configuration);
         this.configuration = configuration;
         this.action = action;
@@ -206,16 +207,16 @@ class BatchCRUD implements Batch {
     private void executeAction(int i) {
         switch (action) {
             case STORE:
-                records[i].store();
+                ((UpdatableRecord<?>) records[i]).store();
                 break;
             case INSERT:
                 records[i].insert();
                 break;
             case UPDATE:
-                records[i].update();
+                ((UpdatableRecord<?>) records[i]).update();
                 break;
             case DELETE:
-                records[i].delete();
+                ((UpdatableRecord<?>) records[i]).delete();
                 break;
         }
     }
@@ -224,7 +225,7 @@ class BatchCRUD implements Batch {
         // 1. Deleted records should be marked as changed, such that subsequent
         //    calls to store() will insert them again
         // 2. Stored records should be marked as unchanged
-        for (UpdatableRecord<?> record : records) {
+        for (TableRecord<?> record : records) {
             record.changed(action == Action.DELETE);
         }
     }

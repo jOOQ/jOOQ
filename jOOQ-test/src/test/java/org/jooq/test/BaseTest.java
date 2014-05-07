@@ -897,7 +897,11 @@ public abstract class BaseTest<
 
     @SuppressWarnings("unchecked")
     protected Sequence<? extends Number> SAuthorID() throws IllegalAccessException, NoSuchFieldException {
-        return (Sequence<? extends Number>) cSequences().getField("S_AUTHOR_ID").get(cSequences());
+        Class<?> sequences = cSequences();
+
+        return sequences == null
+            ? null
+            : (Sequence<? extends Number>) sequences.getField("S_AUTHOR_ID").get(sequences);
     }
 
     protected final Schema schema() {

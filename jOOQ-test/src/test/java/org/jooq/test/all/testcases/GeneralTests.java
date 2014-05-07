@@ -57,6 +57,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeNotNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -128,15 +129,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testSequences() throws Exception {
+        assumeNotNull(SAuthorID());
+
         testSequences0(SAuthorID());
     }
 
     public void testSequenceByName() throws Exception {
-        Sequence<? extends Number> sequence = SAuthorID();
+        assumeNotNull(SAuthorID());
 
-        if (sequence != null) {
-            testSequences0(DSL.sequenceByName(sequence.getSchema().getName(), sequence.getName()));
-        }
+        testSequences0(DSL.sequenceByName(SAuthorID().getSchema().getName(), SAuthorID().getName()));
     }
 
     private void testSequences0(Sequence<? extends Number> sequence) {

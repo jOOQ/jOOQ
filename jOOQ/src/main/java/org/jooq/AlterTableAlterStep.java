@@ -40,6 +40,22 @@
  */
 package org.jooq;
 
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+
 import org.jooq.api.annotation.State;
 
 /**
@@ -54,15 +70,18 @@ public interface AlterTableAlterStep<T> {
     /**
      * Specify a new column <code>DEFAULT</code>.
      */
+    @Support
     AlterTableFinalStep defaultValue(T literal);
 
     /**
      * Specify a new column <code>DEFAULT</code>.
      */
+    @Support
     AlterTableFinalStep defaultValue(Field<T> expression);
 
     /**
      * Specify a new column data type.
      */
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AlterTableFinalStep set(DataType<?> type);
 }

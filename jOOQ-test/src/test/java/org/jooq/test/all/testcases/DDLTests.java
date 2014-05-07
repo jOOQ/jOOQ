@@ -135,27 +135,27 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testAlterTableAdd() throws Exception {
         try {
             // TODO: Re-use jOOQ API for this
-            create().execute("create table t (a int)");
+            create().execute("create table t (a " + varchar() + ")");
             create().insertInto(table("t"), field("a")).values(1).execute();
-            assertEquals(asList(1), asList(create().fetchOne(table("t")).intoArray()));
+            assertEquals(asList("1"), asList(create().fetchOne(table("t")).intoArray()));
 
             create().alterTable("t").add("b", SQLDataType.INTEGER).execute();
-            assertEquals(asList(1, null), asList(create().fetchOne(table("t")).intoArray()));
+            assertEquals(asList("1", null), asList(create().fetchOne(table("t")).intoArray()));
 
             create().alterTable("t").add("c", SQLDataType.NUMERIC).execute();
-            assertEquals(asList(1, null, null), asList(create().fetchOne(table("t")).intoArray()));
+            assertEquals(asList("1", null, null), asList(create().fetchOne(table("t")).intoArray()));
 
             create().alterTable("t").add("d", SQLDataType.NUMERIC.precision(5)).execute();
-            assertEquals(asList(1, null, null, null), asList(create().fetchOne(table("t")).intoArray()));
+            assertEquals(asList("1", null, null, null), asList(create().fetchOne(table("t")).intoArray()));
 
             create().alterTable("t").add("e", SQLDataType.NUMERIC.precision(5, 2)).execute();
-            assertEquals(asList(1, null, null, null, null), asList(create().fetchOne(table("t")).intoArray()));
+            assertEquals(asList("1", null, null, null, null), asList(create().fetchOne(table("t")).intoArray()));
 
             create().alterTable("t").add("f", SQLDataType.VARCHAR).execute();
-            assertEquals(asList(1, null, null, null, null, null), asList(create().fetchOne(table("t")).intoArray()));
+            assertEquals(asList("1", null, null, null, null, null), asList(create().fetchOne(table("t")).intoArray()));
 
             create().alterTable("t").add("g", SQLDataType.VARCHAR.length(5)).execute();
-            assertEquals(asList(1, null, null, null, null, null, null), asList(create().fetchOne(table("t")).intoArray()));
+            assertEquals(asList("1", null, null, null, null, null, null), asList(create().fetchOne(table("t")).intoArray()));
         }
         finally {
             create().dropTable("t").execute();
@@ -163,12 +163,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testAlterTableAlterType() throws Exception {
+        assumeFamilyNotIn(FIREBIRD);
+
         try {
             // TODO: Re-use jOOQ API for this
             create().execute("create table t (a int)");
-            create().insertInto(table("t"), field("a")).values(1).execute();
-
             create().alterTable("t").alter("a").set(SQLDataType.VARCHAR).execute();
+            create().insertInto(table("t"), field("a")).values("1").execute();
             assertEquals("1", create().fetchOne("select * from t").getValue(0));
         }
         finally {
@@ -179,7 +180,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testAlterTableAlterDefault() throws Exception {
         try {
             // TODO: Re-use jOOQ API for this
-            create().execute("create table t (a int, b " + SQLDataType.VARCHAR.length(10).getCastTypeName(create().configuration()) + ")");
+            create().execute("create table t (a int, b " + varchar() + ")");
 
             create().alterTable("t").alter("b").defaultValue("empty").execute();
             create().insertInto(table("t"), field("a")).values(1).execute();
@@ -193,15 +194,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testAlterTableDrop() throws Exception {
         try {
             // TODO: Re-use jOOQ API for this
-            create().execute("create table t (a int, b int, c int)");
-            create().insertInto(table("t"), field("a"), field("b"), field("c")).values(1, 2, 3).execute();
-            assertEquals(asList(1, 2, 3), asList(create().fetchOne(table("t")).intoArray()));
+            create().execute("create table t (a " + varchar() + ", b " + varchar() + ", c " + varchar() + ")");
+            create().insertInto(table("t"), field("a"), field("b"), field("c")).values("1", "2", "3").execute();
+            assertEquals(asList("1", "2", "3"), asList(create().fetchOne(table("t")).intoArray()));
 
             create().alterTable("t").drop("c").execute();
-            assertEquals(asList(1, 2), asList(create().fetchOne(table("t")).intoArray()));
+            assertEquals(asList("1", "2"), asList(create().fetchOne(table("t")).intoArray()));
 
             create().alterTable("t").drop("b").execute();
-            assertEquals(asList(1), asList(create().fetchOne(table("t")).intoArray()));
+            assertEquals(asList("1"), asList(create().fetchOne(table("t")).intoArray()));
         }
         finally {
             create().dropTable("t").execute();
@@ -211,9 +212,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testDropTable() throws Exception {
 
         // TODO: Re-use jOOQ API for this
-        create().execute("create table t (a int, b int, c int)");
-        create().insertInto(table("t"), field("a"), field("b"), field("c")).values(1, 2, 3).execute();
-        assertEquals(asList(1, 2, 3), asList(create().fetchOne(table("t")).intoArray()));
+        create().execute("create table t (a " + varchar() + ", b " + varchar() + ", c " + varchar() + ")");
+        create().insertInto(table("t"), field("a"), field("b"), field("c")).values("1", "2", "3").execute();
+        assertEquals(asList("1", "2", "3"), asList(create().fetchOne(table("t")).intoArray()));
 
         create().dropTable("t").execute();
         try {
@@ -221,5 +222,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             fail();
         }
         catch (DataAccessException expected) {}
+    }
+
+    private String varchar() {
+        return SQLDataType.VARCHAR.length(10).getCastTypeName(create().configuration());
     }
 }

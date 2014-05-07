@@ -54,35 +54,41 @@ public interface AlterTableStep {
      * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @Support
     <T> AlterTableAlterStep<T> alter(Field<T> field);
 
     /**
      * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @Support
     AlterTableAlterStep<Object> alter(String field);
 
     /**
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @Support
     <T> AlterTableFinalStep add(Field<T> field, DataType<T> type);
 
     /**
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @Support
     AlterTableFinalStep add(String field, DataType<?> type);
 
     /**
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @Support
     AlterTableDropStep drop(Field<?> field);
 
     /**
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @Support
     AlterTableDropStep drop(String field);
 }

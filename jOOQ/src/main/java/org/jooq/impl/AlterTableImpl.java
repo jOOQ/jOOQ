@@ -40,15 +40,12 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.ALTER_TABLE;
 import static org.jooq.Clause.ALTER_TABLE_ADD;
 import static org.jooq.Clause.ALTER_TABLE_ALTER;
 import static org.jooq.Clause.ALTER_TABLE_ALTER_DEFAULT;
 import static org.jooq.Clause.ALTER_TABLE_DROP;
 import static org.jooq.Clause.ALTER_TABLE_TABLE;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 
@@ -190,21 +187,37 @@ class AlterTableImpl extends AbstractQuery implements
             ctx.end(ALTER_TABLE_ADD);
         }
         else if (alter != null) {
-            ctx.start(ALTER_TABLE_ALTER)
-               .sql(" ").keyword("alter").sql(" ")
+            ctx.start(ALTER_TABLE_ALTER);
+
+            switch (family) {
+                /* [pro] xx
+                xxxx xxxxxxx
+                    xxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
+                    xxxxxx
+                xx [/pro] */
+
+                default:
+                    ctx.sql(" ").keyword("alter");
+                    break;
+            }
+
+            ctx.sql(" ")
                .qualify(false)
                .visit(alter)
                .qualify(true);
 
             if (alterType != null) {
-                if (asList(POSTGRES).contains(family)) {
-                    ctx.sql(" ").keyword("type");
+                switch (family) {
+                    /* [pro] xx
+                    xxxx xxxx
+                        xxxxxxxxx xxxxxxxxxxxxxxx xxxx xxxxxxx
+                        xxxxxx
+                    xx [/pro] */
+
+                    case POSTGRES:
+                        ctx.sql(" ").keyword("type");
+                        break;
                 }
-                /* [pro] xx
-                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                    xxxxxxxxx xxxxxxxxxxxxxxx xxxx xxxxxxx
-                x
-                xx [/pro] */
 
                 ctx.sql(" ").keyword(alterType.getCastTypeName(ctx.configuration()));
 
@@ -213,16 +226,42 @@ class AlterTableImpl extends AbstractQuery implements
                 }
             }
             else if (alterDefault != null) {
-                ctx.start(ALTER_TABLE_ALTER_DEFAULT)
-                   .sql(" ").keyword("set default").sql(" ").visit(alterDefault)
+                ctx.start(ALTER_TABLE_ALTER_DEFAULT);
+
+                switch (family) {
+                    /* [pro] xx
+                    xxxx xxxxxxx
+                        xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxx
+                    xx [/pro] */
+
+                    default:
+                        ctx.sql(" ").keyword("set default");
+                        break;
+                }
+
+                ctx.sql(" ").visit(alterDefault)
                    .end(ALTER_TABLE_ALTER_DEFAULT);
             }
 
             ctx.end(ALTER_TABLE_ALTER);
         }
         else if (drop != null) {
-            ctx.start(ALTER_TABLE_DROP)
-               .sql(" ").keyword("drop").sql(" ")
+            ctx.start(ALTER_TABLE_DROP);
+
+            switch (family) {
+                /* [pro] xx
+                xxxx xxxxxxx
+                    xxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxx
+                    xxxxxx
+                xx [/pro] */
+
+                default:
+                    ctx.sql(" ").keyword("drop");
+                    break;
+            }
+
+            ctx.sql(" ")
                .qualify(false)
                .visit(drop)
                .qualify(true);

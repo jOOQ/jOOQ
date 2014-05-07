@@ -373,48 +373,42 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             final DSLContext create2 = create(create().configuration().derive(new DefaultConnectionProvider(connection2)));
 
             final Vector<String> execOrder = new Vector<String>();
-            final Thread t1 = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    sleep(2000);
-                    execOrder.add("t1-block");
-                    try {
-                        create1
-                            .select(TAuthor_ID())
-                            .from(TAuthor())
-                            .forUpdate()
-                            .fetch();
-                    }
+            final Thread t1 = new Thread(() -> {
+                sleep(2000);
+                execOrder.add("t1-block");
+                try {
+                    create1
+                        .select(TAuthor_ID())
+                        .from(TAuthor())
+                        .forUpdate()
+                        .fetch();
+                }
 
-                    // Some databases fail on locking, others lock for a while
-                    catch (DataAccessException ignore) {
-                    }
-                    finally {
-                        execOrder.add("t1-fail-or-t2-commit");
-                    }
+                // Some databases fail on locking, others lock for a while
+                catch (DataAccessException ignore) {
+                }
+                finally {
+                    execOrder.add("t1-fail-or-t2-commit");
                 }
             });
 
-            final Thread t2 = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    execOrder.add("t2-exec");
-                    Result<A> result2 = create2
-                        .selectFrom(TAuthor())
-                        .forUpdate()
-                        .fetch();
-                    assertEquals(2, result2.size());
+            final Thread t2 = new Thread(() -> {
+                execOrder.add("t2-exec");
+                Result<A> result2 = create2
+                    .selectFrom(TAuthor())
+                    .forUpdate()
+                    .fetch();
+                assertEquals(2, result2.size());
 
-                    execOrder.add("t2-signal");
-                    sleep(4000);
-                    execOrder.add("t1-fail-or-t2-commit");
+                execOrder.add("t2-signal");
+                sleep(4000);
+                execOrder.add("t1-fail-or-t2-commit");
 
-                    try {
-                        create2.configuration().connectionProvider().acquire().commit();
-                        create2.configuration().connectionProvider().acquire().close();
-                    }
-                    catch (Exception e) {}
+                try {
+                    create2.configuration().connectionProvider().acquire().commit();
+                    create2.configuration().connectionProvider().acquire().close();
                 }
+                catch (Exception e) {}
             });
 
             // This is the test case:

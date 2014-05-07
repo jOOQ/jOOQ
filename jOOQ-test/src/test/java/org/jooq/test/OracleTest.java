@@ -1567,18 +1567,15 @@ public class OracleTest extends jOOQAbstractTest<
         ctx.configuration().set(new RecordMapperProvider() {
             @Override
             public <R extends Record, E> RecordMapper<R, E> provide(final RecordType<R> recordType, final Class<? extends E> type) {
-                return new RecordMapper<R, E>() {
-                    @Override
-                    public E map(R record) {
+                return record -> {
 
-                        // Don't map this type for this test
-                        if (record instanceof UStreetTypeRecord) {
-                            i.incrementAndGet();
-                            return null;
-                        }
-
-                        return new DefaultRecordMapper<R, E>(recordType, type).map(record);
+                    // Don't map this type for this test
+                    if (record instanceof UStreetTypeRecord) {
+                        i.incrementAndGet();
+                        return null;
                     }
+
+                    return new DefaultRecordMapper<R, E>(recordType, type).map(record);
                 };
             }
         });

@@ -50,8 +50,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.PrintWriter;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.sql.Connection;
 import java.sql.Date;
@@ -378,16 +376,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             Proxy.newProxyInstance(
                 PreparedStatement.class.getClassLoader(),
                 new Class[] { PreparedStatement.class },
-                new InvocationHandler() {
-
-                    @Override
-                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                        if (method.getName().equals("close")) {
-                            closed++;
-                        }
-
-                        return Reflect.on(delegate).call(method.getName(), args).get();
+                (proxy, method, args) -> {
+                    if (method.getName().equals("close")) {
+                        closed++;
                     }
+
+                    return Reflect.on(delegate).call(method.getName(), args).get();
                 });
 
             if (!delegate.getClass().getName().toLowerCase().contains("proxy")) {
@@ -421,16 +415,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     TBook(), TBook(), TBook(), TBook());
 
         try {
-            new Thread(new Runnable() {
-
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(500);
-                    }
-                    catch (InterruptedException ignore) {}
-                    select.cancel();
+            new Thread(() -> {
+                try {
+                    Thread.sleep(500);
                 }
+                catch (InterruptedException ignore) {}
+                select.cancel();
             }).start();
 
             // The fetch should never terminate, as the above thread should cancel it

@@ -43,10 +43,7 @@ package org.jooq.test;
 
 /* [pro] */
 
-import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
-import org.jooq.conf.Settings;
-import org.jooq.impl.DSL;
 
 
 /**
@@ -55,8 +52,8 @@ import org.jooq.impl.DSL;
 public class OracleTest11g extends OracleTest {
 
     @Override
-    protected DSLContext create0(Settings settings) {
-        return DSL.using(getConnection(), SQLDialect.ORACLE11G, settings);
+    protected SQLDialect dialect() {
+        return SQLDialect.ORACLE11G;
     }
 }
 

@@ -43,10 +43,7 @@ package org.jooq.test;
 
 /* [pro] */
 
-import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
-import org.jooq.conf.Settings;
-import org.jooq.impl.DSL;
 
 /**
  * @author Lukas Eder
@@ -54,8 +51,8 @@ import org.jooq.impl.DSL;
 public class SQLServer2008Test extends SQLServerTest {
 
     @Override
-    protected DSLContext create0(Settings settings) {
-        return DSL.using(getConnection(), SQLDialect.SQLSERVER2008, settings);
+    protected SQLDialect dialect() {
+        return SQLDialect.SQLSERVER2008;
     }
 }
 

@@ -136,7 +136,6 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
-import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultRecordMapper;
 import org.jooq.test._.converters.Boolean_10;
@@ -252,8 +251,8 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected DSLContext create0(Settings settings) {
-        return DSL.using(getConnection(), SQLDialect.ORACLE, settings);
+    protected SQLDialect dialect() {
+        return SQLDialect.ORACLE;
     }
 
     @Override

@@ -44,12 +44,10 @@ package org.jooq.test;
 import java.util.List;
 
 import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
 import org.jooq.conf.MappedSchema;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
-import org.jooq.impl.DSL;
 
 
 /**
@@ -86,6 +84,6 @@ public class MySQLTestSchemaMapping extends MySQLTest {
                 .withOutput(TAuthor().getSchema().getName() + getSchemaSuffix());
         }
 
-        return DSL.using(getConnection(), SQLDialect.MYSQL, settings);
+        return super.create0(settings);
     }
 }

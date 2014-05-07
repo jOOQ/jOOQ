@@ -41,7 +41,6 @@
 
 package org.jooq.test;
 
-import static org.jooq.impl.DSL.using;
 import static org.jooq.test.cubrid.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.cubrid.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.cubrid.generatedclasses.Tables.T_DATES;
@@ -59,7 +58,6 @@ import java.sql.Date;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
-import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -69,7 +67,6 @@ import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
-import org.jooq.conf.Settings;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -146,8 +143,8 @@ public class CUBRIDTest extends jOOQAbstractTest<
         XUnusedRecord> {
 
     @Override
-    protected DSLContext create0(Settings settings) {
-        return using(getConnection(), SQLDialect.CUBRID, settings);
+    protected SQLDialect dialect() {
+        return SQLDialect.CUBRID;
     }
 
     @Override

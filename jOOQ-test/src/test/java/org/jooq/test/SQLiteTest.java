@@ -55,7 +55,6 @@ import java.sql.Date;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
-import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -65,8 +64,6 @@ import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
-import org.jooq.conf.Settings;
-import org.jooq.impl.DSL;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -135,8 +132,8 @@ public class SQLiteTest extends jOOQAbstractTest<
         XUnusedRecord> {
 
     @Override
-    protected DSLContext create0(Settings settings) {
-        return DSL.using(getConnection(), SQLDialect.SQLITE, settings);
+    protected SQLDialect dialect() {
+        return SQLDialect.SQLITE;
     }
 
     @Override

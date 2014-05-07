@@ -107,7 +107,6 @@ import org.jooq.conf.MappedSchema;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
-import org.jooq.impl.DSL;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -182,8 +181,8 @@ public class PostgresTest extends jOOQAbstractTest<
         XUnusedRecord> {
 
     @Override
-    protected DSLContext create0(Settings settings) {
-        return DSL.using(getConnection(), SQLDialect.POSTGRES, settings);
+    protected SQLDialect dialect() {
+        return SQLDialect.POSTGRES;
     }
 
     @Override

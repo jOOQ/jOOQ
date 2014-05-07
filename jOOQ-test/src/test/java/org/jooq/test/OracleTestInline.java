@@ -44,10 +44,8 @@ package org.jooq.test;
 /* [pro] */
 
 import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
-import org.jooq.impl.DSL;
 
 
 /**
@@ -60,7 +58,7 @@ public class OracleTestInline extends OracleTest {
         settings = (settings != null) ? settings : new Settings();
         settings.withStatementType(StatementType.STATIC_STATEMENT);
         settings.withRenderFormatted(true);
-        return DSL.using(getConnection(), SQLDialect.ORACLE, settings);
+        return super.create0(settings);
     }
 }
 

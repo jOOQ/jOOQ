@@ -85,7 +85,6 @@ import java.sql.SQLWarning;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
-import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.ExecuteContext;
 import org.jooq.Field;
@@ -96,9 +95,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
-import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
@@ -167,8 +164,8 @@ public class SQLServerTest extends jOOQAbstractTest<
         XUnusedRecord> {
 
     @Override
-    protected DSLContext create0(Settings settings) {
-        return DSL.using(getConnection(), SQLDialect.SQLSERVER2012, settings);
+    protected SQLDialect dialect() {
+        return SQLDialect.SQLSERVER2012;
     }
 
     @Override
@@ -1006,11 +1003,11 @@ public class SQLServerTest extends jOOQAbstractTest<
         // STORE() means UPDATE, no batch
         r1.setData(11);
         r2.setData(12);
-        
+
         assertEquals(1, r1.store());
         assertEquals(1, r2.store());
         assertEquals(asList(11, 12), create().select(T_3084.DATA).from(T_3084).orderBy(T_3084.ID).fetchInto(int.class));
-        
+
         // STORE() means UPDATE, with batch
         r1.setData(21);
         r2.setData(22);

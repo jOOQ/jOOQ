@@ -955,7 +955,10 @@ public abstract class jOOQAbstractTest<
     protected abstract Class<?> cLibrary();
     protected abstract Class<?> cSequences();
     protected abstract DataType<?>[] getCastableDataTypes();
-    protected abstract DSLContext create0(Settings settings);
+    protected abstract SQLDialect dialect();
+    protected DSLContext create0(Settings settings) {
+        return DSL.using(getConnection(), dialect(), settings);
+    }
 
     protected final Schema schema() {
         return create().map(TAuthor().getSchema());

@@ -41,12 +41,19 @@
 
 package org.jooq;
 
+import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
@@ -178,7 +185,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
     /**
      * Set an empty record with the <code>DEFAULT VALUES</code> clause.
      */
-    @Support
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     void setDefaultValues();
 
     /**

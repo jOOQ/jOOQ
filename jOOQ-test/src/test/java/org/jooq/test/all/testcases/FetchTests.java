@@ -1517,21 +1517,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 @Override
                 public <R extends Record, E> RecordMapper<R, E> provide(RecordType<R> rowType, Class<? extends E> type) {
                     if (type == Integer.class) {
-                        return new RecordMapper<R, E>() {
-                            @Override
-                            public E map(R record) {
-                                return (E) record.getValue(TBook_ID());
-                            }
-                        };
+                        return record -> (E) record.getValue(TBook_ID());
                     }
 
                     if (type == String.class && rowType.field(TBook_TITLE()) != null) {
-                        return new RecordMapper<R, E>() {
-                            @Override
-                            public E map(R record) {
-                                return (E) record.getValue(TBook_TITLE());
-                            }
-                        };
+                        return record -> (E) record.getValue(TBook_TITLE());
                     }
 
                     throw new NoRecordMapperAvailableException();

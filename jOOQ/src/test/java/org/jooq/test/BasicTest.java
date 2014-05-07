@@ -1566,7 +1566,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("insert into `TABLE1` (`ID1`, `NAME1`, `DATE1`) select 1 from dual", r_ref().render(q));
 
         // [#1069] Allow for specifying custom fields
-        q = create.insertInto(TABLE1, FIELD_ID1).select(selectOne());
+        q = create.insertInto(TABLE1, FIELD_ID1).select(select(one()));
 
         assertEquals("insert into `TABLE1` (`ID1`) select 1 from dual", r_refI().render(q));
         assertEquals("insert into `TABLE1` (`ID1`) select 1 from dual", r_ref().render(q));

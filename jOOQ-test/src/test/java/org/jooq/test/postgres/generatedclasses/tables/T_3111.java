@@ -32,17 +32,17 @@ public class T_3111 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gener
 	/**
 	 * The column <code>public.t_3111.inverse</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_3111Record, java.lang.Integer> INVERSE = createField("inverse", org.jooq.impl.SQLDataType.INTEGER, this, "", new org.jooq.test._.converters.T_3111_InverseConverter());
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_3111Record, java.lang.Integer> INVERSE = createField("inverse", org.jooq.impl.SQLDataType.INTEGER, this, "", new org.jooq.test.all.converters.T_3111_InverseConverter());
 
 	/**
 	 * The column <code>public.t_3111.bool1</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_3111Record, java.lang.Integer> BOOL1 = createField("bool1", org.jooq.impl.SQLDataType.BOOLEAN, this, "", new org.jooq.test._.converters.T_3111_Bool1Converter());
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_3111Record, java.lang.Integer> BOOL1 = createField("bool1", org.jooq.impl.SQLDataType.BOOLEAN, this, "", new org.jooq.test.all.converters.T_3111_Bool1Converter());
 
 	/**
 	 * The column <code>public.t_3111.bool2</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_3111Record, java.lang.Integer> BOOL2 = createField("bool2", org.jooq.impl.SQLDataType.BOOLEAN, this, "", new org.jooq.test._.converters.T_3111_Bool2Converter());
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_3111Record, java.lang.Integer> BOOL2 = createField("bool2", org.jooq.impl.SQLDataType.BOOLEAN, this, "", new org.jooq.test.all.converters.T_3111_Bool2Converter());
 
 	/**
 	 * Create a <code>public.t_3111</code> table reference

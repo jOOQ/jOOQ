@@ -22,72 +22,72 @@ public interface ITBooleans extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.ONE_ZERO</code>.
 	 */
-	public ITBooleans setOneZero(org.jooq.test._.converters.Boolean_10 value);
+	public ITBooleans setOneZero(org.jooq.test.all.converters.Boolean_10 value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOLEANS.ONE_ZERO</code>.
 	 */
-	public org.jooq.test._.converters.Boolean_10 getOneZero();
+	public org.jooq.test.all.converters.Boolean_10 getOneZero();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.TRUE_FALSE_LC</code>.
 	 */
-	public ITBooleans setTrueFalseLc(org.jooq.test._.converters.Boolean_TF_LC value);
+	public ITBooleans setTrueFalseLc(org.jooq.test.all.converters.Boolean_TF_LC value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOLEANS.TRUE_FALSE_LC</code>.
 	 */
-	public org.jooq.test._.converters.Boolean_TF_LC getTrueFalseLc();
+	public org.jooq.test.all.converters.Boolean_TF_LC getTrueFalseLc();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.TRUE_FALSE_UC</code>.
 	 */
-	public ITBooleans setTrueFalseUc(org.jooq.test._.converters.Boolean_TF_UC value);
+	public ITBooleans setTrueFalseUc(org.jooq.test.all.converters.Boolean_TF_UC value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOLEANS.TRUE_FALSE_UC</code>.
 	 */
-	public org.jooq.test._.converters.Boolean_TF_UC getTrueFalseUc();
+	public org.jooq.test.all.converters.Boolean_TF_UC getTrueFalseUc();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.YES_NO_LC</code>.
 	 */
-	public ITBooleans setYesNoLc(org.jooq.test._.converters.Boolean_YES_NO_LC value);
+	public ITBooleans setYesNoLc(org.jooq.test.all.converters.Boolean_YES_NO_LC value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOLEANS.YES_NO_LC</code>.
 	 */
-	public org.jooq.test._.converters.Boolean_YES_NO_LC getYesNoLc();
+	public org.jooq.test.all.converters.Boolean_YES_NO_LC getYesNoLc();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.YES_NO_UC</code>.
 	 */
-	public ITBooleans setYesNoUc(org.jooq.test._.converters.Boolean_YES_NO_UC value);
+	public ITBooleans setYesNoUc(org.jooq.test.all.converters.Boolean_YES_NO_UC value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOLEANS.YES_NO_UC</code>.
 	 */
-	public org.jooq.test._.converters.Boolean_YES_NO_UC getYesNoUc();
+	public org.jooq.test.all.converters.Boolean_YES_NO_UC getYesNoUc();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.Y_N_LC</code>.
 	 */
-	public ITBooleans setYNLc(org.jooq.test._.converters.Boolean_YN_LC value);
+	public ITBooleans setYNLc(org.jooq.test.all.converters.Boolean_YN_LC value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOLEANS.Y_N_LC</code>.
 	 */
-	public org.jooq.test._.converters.Boolean_YN_LC getYNLc();
+	public org.jooq.test.all.converters.Boolean_YN_LC getYNLc();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.Y_N_UC</code>.
 	 */
-	public ITBooleans setYNUc(org.jooq.test._.converters.Boolean_YN_UC value);
+	public ITBooleans setYNUc(org.jooq.test.all.converters.Boolean_YN_UC value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOLEANS.Y_N_UC</code>.
 	 */
-	public org.jooq.test._.converters.Boolean_YN_UC getYNUc();
+	public org.jooq.test.all.converters.Boolean_YN_UC getYNUc();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.VC_BOOLEAN</code>.

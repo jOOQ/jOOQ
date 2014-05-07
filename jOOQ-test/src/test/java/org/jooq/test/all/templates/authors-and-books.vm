@@ -1,0 +1,18 @@
+SELECT
+  a.first_name,
+  a.last_name,
+  count(*)
+FROM
+  t_author a
+LEFT OUTER JOIN
+  t_book b ON a.id = b.author_id
+WHERE
+  1 = 0
+#foreach ($param in $p)
+  OR a.id = ?
+#end
+GROUP BY
+  a.first_name,
+  a.last_name
+ORDER BY
+  a.id ASC

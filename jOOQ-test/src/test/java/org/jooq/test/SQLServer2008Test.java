@@ -44,9 +44,6 @@ package org.jooq.test;
 /* [pro] xx
 
 xxxxxx xxxxxxxxxxxxxxxxxxxx
-xxxxxx xxxxxxxxxxxxxxxxxxxx
-xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
-xxxxxx xxxxxxxxxxxxxxxxxx
 
 xxx
  x xxxxxxx xxxxx xxxx
@@ -54,8 +51,8 @@ xxx
 xxxxxx xxxxx xxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx x
 
     xxxxxxxxx
-    xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx
+    xxxxxxxxx xxxxxxxxxx xxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
     x
 x
 

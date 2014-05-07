@@ -75,7 +75,6 @@ import java.util.UUID;
 
 // ...
 import org.jooq.DAO;
-import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -85,15 +84,13 @@ import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
-import org.jooq.conf.Settings;
-import org.jooq.impl.DSL;
-import org.jooq.test._.converters.Boolean_10;
-import org.jooq.test._.converters.Boolean_TF_LC;
-import org.jooq.test._.converters.Boolean_TF_UC;
-import org.jooq.test._.converters.Boolean_YES_NO_LC;
-import org.jooq.test._.converters.Boolean_YES_NO_UC;
-import org.jooq.test._.converters.Boolean_YN_LC;
-import org.jooq.test._.converters.Boolean_YN_UC;
+import org.jooq.test.all.converters.Boolean_10;
+import org.jooq.test.all.converters.Boolean_TF_LC;
+import org.jooq.test.all.converters.Boolean_TF_UC;
+import org.jooq.test.all.converters.Boolean_YES_NO_LC;
+import org.jooq.test.all.converters.Boolean_YES_NO_UC;
+import org.jooq.test.all.converters.Boolean_YN_LC;
+import org.jooq.test.all.converters.Boolean_YN_UC;
 import org.jooq.test.mysql.generatedclasses.Keys;
 import org.jooq.test.mysql.generatedclasses.Routines;
 import org.jooq.test.mysql.generatedclasses.enums.TBookStatus;
@@ -165,8 +162,8 @@ public class MySQLTest extends jOOQAbstractTest<
         XUnusedRecord> {
 
     @Override
-    protected DSLContext create0(Settings settings) {
-        return DSL.using(getConnection(), SQLDialect.MYSQL, settings);
+    protected SQLDialect dialect() {
+        return SQLDialect.MYSQL;
     }
 
     @Override

@@ -27,79 +27,79 @@ public interface ITBooleans extends java.io.Serializable {
 	/**
 	 * Setter for <code>T_BOOLEANS.ONE_ZERO</code>.
 	 */
-	public void setOneZero(org.jooq.test._.converters.Boolean_10 value);
+	public void setOneZero(org.jooq.test.all.converters.Boolean_10 value);
 
 	/**
 	 * Getter for <code>T_BOOLEANS.ONE_ZERO</code>.
 	 */
 	@javax.persistence.Column(name = "ONE_ZERO", length = 4)
-	public org.jooq.test._.converters.Boolean_10 getOneZero();
+	public org.jooq.test.all.converters.Boolean_10 getOneZero();
 
 	/**
 	 * Setter for <code>T_BOOLEANS.TRUE_FALSE_LC</code>.
 	 */
-	public void setTrueFalseLc(org.jooq.test._.converters.Boolean_TF_LC value);
+	public void setTrueFalseLc(org.jooq.test.all.converters.Boolean_TF_LC value);
 
 	/**
 	 * Getter for <code>T_BOOLEANS.TRUE_FALSE_LC</code>.
 	 */
 	@javax.persistence.Column(name = "TRUE_FALSE_LC", length = 5)
-	public org.jooq.test._.converters.Boolean_TF_LC getTrueFalseLc();
+	public org.jooq.test.all.converters.Boolean_TF_LC getTrueFalseLc();
 
 	/**
 	 * Setter for <code>T_BOOLEANS.TRUE_FALSE_UC</code>.
 	 */
-	public void setTrueFalseUc(org.jooq.test._.converters.Boolean_TF_UC value);
+	public void setTrueFalseUc(org.jooq.test.all.converters.Boolean_TF_UC value);
 
 	/**
 	 * Getter for <code>T_BOOLEANS.TRUE_FALSE_UC</code>.
 	 */
 	@javax.persistence.Column(name = "TRUE_FALSE_UC", length = 5)
-	public org.jooq.test._.converters.Boolean_TF_UC getTrueFalseUc();
+	public org.jooq.test.all.converters.Boolean_TF_UC getTrueFalseUc();
 
 	/**
 	 * Setter for <code>T_BOOLEANS.YES_NO_LC</code>.
 	 */
-	public void setYesNoLc(org.jooq.test._.converters.Boolean_YES_NO_LC value);
+	public void setYesNoLc(org.jooq.test.all.converters.Boolean_YES_NO_LC value);
 
 	/**
 	 * Getter for <code>T_BOOLEANS.YES_NO_LC</code>.
 	 */
 	@javax.persistence.Column(name = "YES_NO_LC", length = 3)
-	public org.jooq.test._.converters.Boolean_YES_NO_LC getYesNoLc();
+	public org.jooq.test.all.converters.Boolean_YES_NO_LC getYesNoLc();
 
 	/**
 	 * Setter for <code>T_BOOLEANS.YES_NO_UC</code>.
 	 */
-	public void setYesNoUc(org.jooq.test._.converters.Boolean_YES_NO_UC value);
+	public void setYesNoUc(org.jooq.test.all.converters.Boolean_YES_NO_UC value);
 
 	/**
 	 * Getter for <code>T_BOOLEANS.YES_NO_UC</code>.
 	 */
 	@javax.persistence.Column(name = "YES_NO_UC", length = 3)
-	public org.jooq.test._.converters.Boolean_YES_NO_UC getYesNoUc();
+	public org.jooq.test.all.converters.Boolean_YES_NO_UC getYesNoUc();
 
 	/**
 	 * Setter for <code>T_BOOLEANS.Y_N_LC</code>.
 	 */
-	public void setYNLc(org.jooq.test._.converters.Boolean_YN_LC value);
+	public void setYNLc(org.jooq.test.all.converters.Boolean_YN_LC value);
 
 	/**
 	 * Getter for <code>T_BOOLEANS.Y_N_LC</code>.
 	 */
 	@javax.persistence.Column(name = "Y_N_LC", length = 1)
-	public org.jooq.test._.converters.Boolean_YN_LC getYNLc();
+	public org.jooq.test.all.converters.Boolean_YN_LC getYNLc();
 
 	/**
 	 * Setter for <code>T_BOOLEANS.Y_N_UC</code>.
 	 */
-	public void setYNUc(org.jooq.test._.converters.Boolean_YN_UC value);
+	public void setYNUc(org.jooq.test.all.converters.Boolean_YN_UC value);
 
 	/**
 	 * Getter for <code>T_BOOLEANS.Y_N_UC</code>.
 	 */
 	@javax.persistence.Column(name = "Y_N_UC", length = 1)
-	public org.jooq.test._.converters.Boolean_YN_UC getYNUc();
+	public org.jooq.test.all.converters.Boolean_YN_UC getYNUc();
 
 	/**
 	 * Setter for <code>T_BOOLEANS.VC_BOOLEAN</code>.

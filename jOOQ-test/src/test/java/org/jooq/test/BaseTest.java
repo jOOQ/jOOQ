@@ -40,6 +40,9 @@
  */
 package org.jooq.test;
 
+import static java.util.Arrays.stream;
+import static org.hamcrest.Matchers.isOneOf;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.Method;
@@ -86,13 +89,13 @@ import org.jooq.conf.Settings;
 import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.jooq.impl.DefaultRecordListenerProvider;
 import org.jooq.impl.DefaultVisitListenerProvider;
-import org.jooq.test._.converters.Boolean_10;
-import org.jooq.test._.converters.Boolean_TF_LC;
-import org.jooq.test._.converters.Boolean_TF_UC;
-import org.jooq.test._.converters.Boolean_YES_NO_LC;
-import org.jooq.test._.converters.Boolean_YES_NO_UC;
-import org.jooq.test._.converters.Boolean_YN_LC;
-import org.jooq.test._.converters.Boolean_YN_UC;
+import org.jooq.test.all.converters.Boolean_10;
+import org.jooq.test.all.converters.Boolean_TF_LC;
+import org.jooq.test.all.converters.Boolean_TF_UC;
+import org.jooq.test.all.converters.Boolean_YES_NO_LC;
+import org.jooq.test.all.converters.Boolean_YES_NO_UC;
+import org.jooq.test.all.converters.Boolean_YN_LC;
+import org.jooq.test.all.converters.Boolean_YN_UC;
 import org.jooq.tools.JooqLogger;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -100,6 +103,7 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 
 import org.junit.Assert;
+import org.junit.Assume;
 
 public abstract class BaseTest<
 
@@ -792,7 +796,7 @@ public abstract class BaseTest<
     }
 
     protected final SQLDialect dialect() {
-        return delegate.getDialect();
+        return delegate.dialect();
     }
 
     protected final void sleep(long millis) {
@@ -881,6 +885,14 @@ public abstract class BaseTest<
 
     protected final void assertCountBooks(int count) {
         assertEquals(count, (int) create().selectCount().from(TBook()).fetchOne(0, Integer.class));
+    }
+
+    protected final void assumeFamilyNotIn(SQLDialect... dialects) {
+        Assume.assumeThat(dialect().family(), not(isOneOf(stream(dialects).map(d -> d.family()).toArray(SQLDialect[]::new))));
+    }
+
+    protected final void assumeDialectNotIn(SQLDialect... dialects) {
+        Assume.assumeThat(dialect(), not(isOneOf(dialects)));
     }
 
     @SuppressWarnings("unchecked")

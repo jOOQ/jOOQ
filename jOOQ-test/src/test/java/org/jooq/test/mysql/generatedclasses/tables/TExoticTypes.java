@@ -32,7 +32,7 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.mysql.ge
 	/**
 	 * The column <code>test.t_exotic_types.UU</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("UU", org.jooq.impl.SQLDataType.BINARY.length(16), T_EXOTIC_TYPES, "", new org.jooq.test._.converters.UUIDBinaryConverter());
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("UU", org.jooq.impl.SQLDataType.BINARY.length(16), T_EXOTIC_TYPES, "", new org.jooq.test.all.converters.UUIDBinaryConverter());
 
 	/**
 	 * No further instances allowed

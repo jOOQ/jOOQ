@@ -77,14 +77,13 @@ import org.jooq.conf.MappedSchema;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
-import org.jooq.impl.DSL;
-import org.jooq.test._.converters.Boolean_10;
-import org.jooq.test._.converters.Boolean_TF_LC;
-import org.jooq.test._.converters.Boolean_TF_UC;
-import org.jooq.test._.converters.Boolean_YES_NO_LC;
-import org.jooq.test._.converters.Boolean_YES_NO_UC;
-import org.jooq.test._.converters.Boolean_YN_LC;
-import org.jooq.test._.converters.Boolean_YN_UC;
+import org.jooq.test.all.converters.Boolean_10;
+import org.jooq.test.all.converters.Boolean_TF_LC;
+import org.jooq.test.all.converters.Boolean_TF_UC;
+import org.jooq.test.all.converters.Boolean_YES_NO_LC;
+import org.jooq.test.all.converters.Boolean_YES_NO_UC;
+import org.jooq.test.all.converters.Boolean_YN_LC;
+import org.jooq.test.all.converters.Boolean_YN_UC;
 import org.jooq.test.h2.generatedclasses.Keys;
 import org.jooq.test.h2.generatedclasses.Routines;
 import org.jooq.test.h2.generatedclasses.Sequences;
@@ -134,6 +133,11 @@ public class HSQLDBTest2 extends jOOQAbstractTest<
         T_785Record,
         XUnusedRecord> {
 
+    @Override
+    protected SQLDialect dialect() {
+        return SQLDialect.HSQLDB;
+    }
+
 	@Override
     protected DSLContext create0(Settings settings) {
 	    settings = (settings != null) ? settings : new Settings();
@@ -151,7 +155,7 @@ public class HSQLDBTest2 extends jOOQAbstractTest<
                 .withOutput(Public.PUBLIC.getName());
         }
 
-        return DSL.using(getConnection(), SQLDialect.HSQLDB, settings);
+        return super.create0(settings);
     }
 
 	@Override

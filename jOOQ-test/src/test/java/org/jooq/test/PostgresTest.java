@@ -107,14 +107,13 @@ import org.jooq.conf.MappedSchema;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
-import org.jooq.impl.DSL;
-import org.jooq.test._.converters.Boolean_10;
-import org.jooq.test._.converters.Boolean_TF_LC;
-import org.jooq.test._.converters.Boolean_TF_UC;
-import org.jooq.test._.converters.Boolean_YES_NO_LC;
-import org.jooq.test._.converters.Boolean_YES_NO_UC;
-import org.jooq.test._.converters.Boolean_YN_LC;
-import org.jooq.test._.converters.Boolean_YN_UC;
+import org.jooq.test.all.converters.Boolean_10;
+import org.jooq.test.all.converters.Boolean_TF_LC;
+import org.jooq.test.all.converters.Boolean_TF_UC;
+import org.jooq.test.all.converters.Boolean_YES_NO_LC;
+import org.jooq.test.all.converters.Boolean_YES_NO_UC;
+import org.jooq.test.all.converters.Boolean_YN_LC;
+import org.jooq.test.all.converters.Boolean_YN_UC;
 import org.jooq.test.postgres.generatedclasses.Keys;
 import org.jooq.test.postgres.generatedclasses.Routines;
 import org.jooq.test.postgres.generatedclasses.Sequences;
@@ -182,8 +181,8 @@ public class PostgresTest extends jOOQAbstractTest<
         XUnusedRecord> {
 
     @Override
-    protected DSLContext create0(Settings settings) {
-        return DSL.using(getConnection(), SQLDialect.POSTGRES, settings);
+    protected SQLDialect dialect() {
+        return SQLDialect.POSTGRES;
     }
 
     @Override

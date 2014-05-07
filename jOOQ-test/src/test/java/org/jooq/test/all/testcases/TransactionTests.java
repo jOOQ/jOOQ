@@ -49,7 +49,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.DSLContext;
 import org.jooq.Record1;
@@ -57,7 +56,6 @@ import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.TableRecord;
-import org.jooq.Transactional;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
@@ -113,19 +111,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create.configuration().set(provider);
 
         try {
-            create.transaction(new Transactional<Integer>() {
-                @Override
-                public Integer run(Configuration configuration) {
-                    assertAutoCommit(configuration.connectionProvider(), false);
+            create.transaction(c -> {
+                assertAutoCommit(c.connectionProvider(), false);
 
-                    assertEquals(1,
-                    DSL.using(configuration)
-                       .insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
-                       .values(3, "Koontz")
-                       .execute());
+                assertEquals(1,
+                DSL.using(c)
+                   .insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+                   .values(3, "Koontz")
+                   .execute());
 
-                    throw new MyRuntimeException("No");
-                }
+                throw new MyRuntimeException("No");
             });
 
             fail();
@@ -148,19 +143,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create.configuration().set(provider);
 
         try {
-            create.transaction(new Transactional<Integer>() {
-                @Override
-                public Integer run(Configuration configuration) throws MyCheckedException {
-                    assertAutoCommit(configuration.connectionProvider(), false);
+            create.transaction(c -> {
+                assertAutoCommit(c.connectionProvider(), false);
 
-                    assertEquals(1,
-                    DSL.using(configuration)
-                       .insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
-                       .values(3, "Koontz")
-                       .execute());
+                assertEquals(1,
+                DSL.using(c)
+                   .insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+                   .values(3, "Koontz")
+                   .execute());
 
-                    throw new MyCheckedException("No");
-                }
+                throw new MyCheckedException("No");
             });
 
             fail();
@@ -189,50 +181,43 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create.configuration().set(provider);
 
         Integer result =
-        create.transaction(new Transactional<Integer>() {
-            @Override
-            public Integer run(Configuration c1) throws MyCheckedException {
-                assertAutoCommit(c1.connectionProvider(), false);
+        create.transaction(c1 -> {
+            assertAutoCommit(c1.connectionProvider(), false);
 
-                inserted[0] =
-                DSL.using(c1)
-                   .insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
-                   .values(3, "Koontz")
-                   .execute();
+            inserted[0] =
+            DSL.using(c1)
+               .insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+               .values(3, "Koontz")
+               .execute();
 
-                assertEquals(1, inserted[0]);
+            assertEquals(1, inserted[0]);
 
-                // Implicit savepoint here
-                try {
-                    DSL.using(c1).transaction(new Transactional<Integer>() {
+            // Implicit savepoint here
+            try {
+                DSL.using(c1).transaction(c2 -> {
+                    assertAutoCommit(c2.connectionProvider(), false);
 
-                        @Override
-                        public Integer run(Configuration c2) throws Exception {
-                            assertAutoCommit(c2.connectionProvider(), false);
+                    updated[0] =
+                    DSL.using(c2)
+                       .update(TAuthor())
+                       .set(TAuthor_FIRST_NAME(), "Dean")
+                       .where(TAuthor_ID().eq(3))
+                       .execute();
 
-                            updated[0] =
-                            DSL.using(c2)
-                               .update(TAuthor())
-                               .set(TAuthor_FIRST_NAME(), "Dean")
-                               .where(TAuthor_ID().eq(3))
-                               .execute();
+                    assertEquals(1, updated[0]);
 
-                            assertEquals(1, updated[0]);
-
-                            throw new MyRuntimeException("No");
-                        }
-                    });
-                }
-
-                // Rollback to savepoint must have happened
-                catch (MyRuntimeException expected) {
-                    assertNull(DSL.using(c1).fetchOne(TAuthor(), TAuthor_ID().eq(3)).getValue(TAuthor_FIRST_NAME()));
-                    assertEquals(MyRuntimeException.class, expected.getClass());
-                    assertEquals("No", expected.getMessage());
-                }
-
-                return 42;
+                    throw new MyRuntimeException("No");
+                });
             }
+
+            // Rollback to savepoint must have happened
+            catch (MyRuntimeException expected) {
+                assertNull(DSL.using(c1).fetchOne(TAuthor(), TAuthor_ID().eq(3)).getValue(TAuthor_FIRST_NAME()));
+                assertEquals(MyRuntimeException.class, expected.getClass());
+                assertEquals("No", expected.getMessage());
+            }
+
+            return 42;
         });
 
         assertEquals(1, provider.acquire.get());
@@ -251,43 +236,36 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create.configuration().set(provider);
 
         try {
-            create.transaction(new Transactional<Integer>() {
-                @Override
-                public Integer run(Configuration c1) throws MyCheckedException {
-                    assertAutoCommit(c1.connectionProvider(), false);
+            create.transaction(c1 -> {
+                assertAutoCommit(c1.connectionProvider(), false);
 
-                    inserted[0] =
-                    DSL.using(c1)
-                       .insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
-                       .values(3, "Koontz")
+                inserted[0] =
+                DSL.using(c1)
+                   .insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+                   .values(3, "Koontz")
+                   .execute();
+
+                assertEquals(1, inserted[0]);
+
+                // No savepoint here
+                DSL.using(c1).transaction(c2 -> {
+                    assertAutoCommit(c2.connectionProvider(), false);
+
+                    updated[0] =
+                    DSL.using(c2)
+                       .update(TAuthor())
+                       .set(TAuthor_FIRST_NAME(), "Dean")
+                       .where(TAuthor_ID().eq(3))
                        .execute();
 
-                    assertEquals(1, inserted[0]);
+                    assertEquals(1, updated[0]);
 
-                    // No savepoint here
-                    DSL.using(c1).transaction(new Transactional<Integer>() {
+                    throw new MyRuntimeException("No");
+                });
 
-                        @Override
-                        public Integer run(Configuration c2) throws Exception {
-                            assertAutoCommit(c2.connectionProvider(), false);
-
-                            updated[0] =
-                            DSL.using(c2)
-                               .update(TAuthor())
-                               .set(TAuthor_FIRST_NAME(), "Dean")
-                               .where(TAuthor_ID().eq(3))
-                               .execute();
-
-                            assertEquals(1, updated[0]);
-
-                            throw new MyRuntimeException("No");
-                        }
-                    });
-
-                    // This code should never be reached, as exception should propagate
-                    fail();
-                    return 42;
-                }
+                // This code should never be reached, as exception should propagate
+                fail();
+                return 42;
             });
         }
 

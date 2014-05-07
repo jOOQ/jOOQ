@@ -1529,6 +1529,7 @@ public interface DSLContext {
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
      */
+    @Support({ FIREBIRD, POSTGRES })
     WithAsStep with(String alias);
 
     /**

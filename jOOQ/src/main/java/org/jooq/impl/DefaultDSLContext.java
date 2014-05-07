@@ -1524,13 +1524,13 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
-    public Batch batchInsert(UpdatableRecord<?>... records) {
+    public Batch batchInsert(TableRecord<?>... records) {
         return new BatchCRUD(configuration, Action.INSERT, records);
     }
 
     @Override
-    public Batch batchInsert(Collection<? extends UpdatableRecord<?>> records) {
-        return batchInsert(records.toArray(new UpdatableRecord[records.size()]));
+    public Batch batchInsert(Collection<? extends TableRecord<?>> records) {
+        return batchInsert(records.toArray(new TableRecord[records.size()]));
     }
 
     @Override

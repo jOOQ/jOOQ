@@ -4666,7 +4666,7 @@ public interface DSLContext {
      * @see Statement#executeBatch()
      */
     @Support
-    Batch batchInsert(UpdatableRecord<?>... records);
+    Batch batchInsert(TableRecord<?>... records);
 
     /**
      * Execute a set of <code>INSERT</code> queries in batch mode (with bind
@@ -4676,7 +4676,7 @@ public interface DSLContext {
      * @see Statement#executeBatch()
      */
     @Support
-    Batch batchInsert(Collection<? extends UpdatableRecord<?>> records);
+    Batch batchInsert(Collection<? extends TableRecord<?>> records);
 
     /**
      * Execute a set of <code>UPDATE</code> queries in batch mode (with bind

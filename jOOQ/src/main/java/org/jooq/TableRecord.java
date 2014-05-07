@@ -62,6 +62,21 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
     R original();
 
     /**
+     * Store this record to the database using an <code>INSERT</code>
+     * statement.
+     * <p>
+     * If you want to enforce statement execution, regardless if the values in
+     * this record were changed, you can explicitly set the changed flags for
+     * all values with {@link #changed(boolean)} or for single values with
+     * {@link #changed(Field, boolean)}, prior to insertion.
+     *
+     * @return <code>1</code> if the record was stored to the database. <code>0
+     *         </code> if storing was not necessary.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    int insert() throws DataAccessException;
+
+    /**
      * Fetch a parent record of this record, given a foreign key
      * <p>
      * This returns a parent record referenced by this record through a given

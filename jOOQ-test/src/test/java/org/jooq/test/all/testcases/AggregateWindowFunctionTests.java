@@ -49,7 +49,10 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
 // ...
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
@@ -100,6 +103,7 @@ import static org.jooq.impl.DSL.varPop;
 import static org.jooq.impl.DSL.varSamp;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeNotNull;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -160,10 +164,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testUserDefinedAggregateFunctions() throws Exception {
-        if (secondMax(null) == null) {
-            log.info("SKIPPING", "User-defined aggregate function tests");
-            return;
-        }
+        assumeNotNull(secondMax(null));
 
         // Check the correctness of the aggregate function
         List<Integer> result1 =
@@ -366,13 +367,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFetchCountWithLimitOffset() throws Exception {
 
         /* [pro] xx
-        xxxxxx xxxxxxxxxxxxxxxxxxxx x
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxx
-                xxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxx xx xxxxxx xxxxxxxx
-                xxxxxxx
-        x
+        xxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxx
         xx [/pro] */
 
         // Some databases don't allow for LIMIT .. OFFSET in nested selects or derived tables.
@@ -410,23 +405,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testLinearRegressionFunctions() throws Exception {
-        switch (dialect().family()) {
-            /* [pro] xx
-            xxxx xxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx
-            xx [/pro] */
-            case CUBRID:
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case SQLITE:
-                log.info("SKIPPING", "Skipping linear regression function tests");
-                return;
-        }
+        assumeFamilyNotIn(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
 
         // [#600] As aggregate functions
         Record record =
@@ -477,19 +456,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testWindowFunctions() throws Exception {
-        switch (dialect()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxx
-            xx [/pro] */
-            case FIREBIRD:
-            case MARIADB:
-            case MYSQL:
-            case SQLITE:
-                log.info("SKIPPING", "Window function tests");
-                return;
-        }
+        assumeDialectNotIn(FIREBIRD, MARIADB, MYSQL, SQLITE);
 
         switch (dialect()) {
             case DERBY:
@@ -998,17 +965,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testListAgg() throws Exception {
-        switch (dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx
-            xx [/pro] */
-            case DERBY:
-                log.info("SKIPPING", "LISTAGG tests");
-                return;
-        }
+        assumeFamilyNotIn(DERBY);
 
         // [#3045] Skip this test for the time being
         if (!asList().contains(dialect().family())) {
@@ -1104,23 +1061,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testWindowClause() throws Exception {
-        switch (dialect()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case SQLITE:
-                log.info("SKIPPING", "Window function tests");
-                return;
-        }
-
+        assumeDialectNotIn(DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
 
         Name a = name("a");
         Name b = name("b");

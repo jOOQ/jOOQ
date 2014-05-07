@@ -124,9 +124,9 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.DefaultVisitListenerProvider.providers;
@@ -961,7 +961,7 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_WINDOW),
             asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_ORDER_BY)
         ),
-        exists(selectOne()));
+        exists(select(one())));
     }
 
     @Test
@@ -985,7 +985,7 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_WINDOW),
             asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_ORDER_BY)
         ),
-        notExists(selectOne()));
+        notExists(select(one())));
     }
 
     @Test

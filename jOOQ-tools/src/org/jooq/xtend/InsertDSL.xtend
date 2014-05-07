@@ -144,6 +144,7 @@ class InsertDSL extends Generators {
         import org.jooq.InsertQuery;
         import org.jooq.InsertResultStep;
         import org.jooq.InsertSetMoreStep;
+        import org.jooq.InsertSetStep;
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
         import org.jooq.InsertValuesStep«degree»;
         «ENDFOR»
@@ -168,6 +169,7 @@ class InsertDSL extends Generators {
             InsertValuesStep«degree»<R, «TN(degree)»>,
             «ENDFOR»
             InsertValuesStepN<R>,
+            InsertSetStep<R>,
             InsertSetMoreStep<R>,
             InsertOnDuplicateSetMoreStep<R>,
             InsertResultStep<R> {

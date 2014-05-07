@@ -40,6 +40,8 @@
  */
 package org.jooq;
 
+import java.util.Map;
+
 /**
  * This type is used for the {@link Insert}'s alternative DSL API.
  * <p>
@@ -60,7 +62,46 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface InsertSetMoreStep<R extends Record> extends InsertSetStep<R>, InsertOnDuplicateStep<R> {
+public interface InsertSetMoreStep<R extends Record> extends InsertOnDuplicateStep<R> {
+
+    /**
+     * Set a value for a field in the <code>INSERT</code> statement.
+     */
+    @Support
+    <T> InsertSetMoreStep<R> set(Field<T> field, T value);
+
+    /**
+     * Set a value for a field in the <code>INSERT</code> statement.
+     */
+    @Support
+    <T> InsertSetMoreStep<R> set(Field<T> field, Field<T> value);
+
+    /**
+     * Set a value for a field in the <code>INSERT</code> statement.
+     */
+    @Support
+    <T> InsertSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
+
+    /**
+     * Set values in the <code>INSERT</code> statement.
+     * <p>
+     * Values can either be of type <code>&lt;T&gt;</code> or
+     * <code>Field&lt;T&gt;</code>. jOOQ will attempt to convert values to their
+     * corresponding field's type.
+     */
+    @Support
+    InsertSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
+
+    /**
+     * Set values in the <code>INSERT</code> statement.
+     * <p>
+     * This is the same as calling {@link #set(Map)} with the argument record
+     * treated as a <code>Map<Field<?>, Object></code>.
+     *
+     * @see #set(Map)
+     */
+    @Support
+    InsertSetMoreStep<R> set(Record record);
 
     /**
      * Add an additional record to the <code>INSERT</code> statement

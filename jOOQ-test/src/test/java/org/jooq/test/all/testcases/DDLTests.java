@@ -44,6 +44,7 @@ import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.table;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -135,7 +136,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         try {
             // TODO: Re-use jOOQ API for this
             create().execute("create table t (a int)");
-            create().execute("insert into t values (1)");
+            create().insertInto(table("t"), field("a")).values(1).execute();
             assertEquals(asList(1), asList(create().fetchOne(table("t")).intoArray()));
 
             create().alterTable("t").add("b", SQLDataType.INTEGER).execute();
@@ -155,15 +156,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             create().alterTable("t").add("g", SQLDataType.VARCHAR.length(5)).execute();
             assertEquals(asList(1, null, null, null, null, null, null), asList(create().fetchOne(table("t")).intoArray()));
-
-            try {
-                create().alterTable("t").add("h", SQLDataType.INTEGER.nullable(false)).execute();
-                fail();
-            }
-            catch (DataAccessException expected) {}
-
-            create().execute("delete t");
-            create().alterTable("t").add("h", SQLDataType.INTEGER.nullable(false)).execute();
         }
         finally {
             create().dropTable("t").execute();
@@ -174,16 +166,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         try {
             // TODO: Re-use jOOQ API for this
             create().execute("create table t (a int)");
-            create().execute("insert into t values (1)");
+            create().insertInto(table("t"), field("a")).values(1).execute();
 
             create().alterTable("t").alter("a").set(SQLDataType.VARCHAR).execute();
             assertEquals("1", create().fetchOne("select * from t").getValue(0));
-
-            create().alterTable("t").alter("a").set(SQLDataType.VARCHAR.nullable(false)).execute();
-            try {
-                create().execute("update t set t = null");
-            }
-            catch (DataAccessException expected) {}
         }
         finally {
             create().dropTable("t").execute();
@@ -193,10 +179,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testAlterTableAlterDefault() throws Exception {
         try {
             // TODO: Re-use jOOQ API for this
-            create().execute("create table t (a int, b varchar)");
+            create().execute("create table t (a int, b " + SQLDataType.VARCHAR.length(10).getCastTypeName(create().configuration()) + ")");
 
             create().alterTable("t").alter("b").defaultValue("empty").execute();
-            create().execute("insert into t (a) values (1)");
+            create().insertInto(table("t"), field("a")).values(1).execute();
             assertEquals("empty", create().fetchOne("select b from t").getValue(0));
         }
         finally {
@@ -208,7 +194,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         try {
             // TODO: Re-use jOOQ API for this
             create().execute("create table t (a int, b int, c int)");
-            create().execute("insert into t values (1, 2, 3)");
+            create().insertInto(table("t"), field("a"), field("b"), field("c")).values(1, 2, 3).execute();
             assertEquals(asList(1, 2, 3), asList(create().fetchOne(table("t")).intoArray()));
 
             create().alterTable("t").drop("c").execute();
@@ -226,7 +212,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // TODO: Re-use jOOQ API for this
         create().execute("create table t (a int, b int, c int)");
-        create().execute("insert into t values (1, 2, 3)");
+        create().insertInto(table("t"), field("a"), field("b"), field("c")).values(1, 2, 3).execute();
         assertEquals(asList(1, 2, 3), asList(create().fetchOne(table("t")).intoArray()));
 
         create().dropTable("t").execute();

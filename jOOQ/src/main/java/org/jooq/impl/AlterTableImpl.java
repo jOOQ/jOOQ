@@ -40,12 +40,15 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.ALTER_TABLE;
 import static org.jooq.Clause.ALTER_TABLE_ADD;
 import static org.jooq.Clause.ALTER_TABLE_ALTER;
 import static org.jooq.Clause.ALTER_TABLE_ALTER_DEFAULT;
 import static org.jooq.Clause.ALTER_TABLE_DROP;
 import static org.jooq.Clause.ALTER_TABLE_TABLE;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 
@@ -58,6 +61,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 
 /**
@@ -165,6 +169,8 @@ class AlterTableImpl extends AbstractQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        SQLDialect family = ctx.configuration().dialect().family();
+
         ctx.start(ALTER_TABLE_TABLE)
            .keyword("alter table").sql(" ").visit(table)
            .end(ALTER_TABLE_TABLE);
@@ -191,8 +197,20 @@ class AlterTableImpl extends AbstractQuery implements
                .qualify(true);
 
             if (alterType != null) {
-                ctx.sql(" ")
-                   .keyword(alterType.getCastTypeName(ctx.configuration()));
+                if (asList(POSTGRES).contains(family)) {
+                    ctx.sql(" ").keyword("type");
+                }
+                /* [pro] xx
+                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                    xxxxxxxxx xxxxxxxxxxxxxxx xxxx xxxxxxx
+                x
+                xx [/pro] */
+
+                ctx.sql(" ").keyword(alterType.getCastTypeName(ctx.configuration()));
+
+                if (!alterType.nullable()) {
+                    ctx.sql(" ").keyword("not null");
+                }
             }
             else if (alterDefault != null) {
                 ctx.start(ALTER_TABLE_ALTER_DEFAULT)

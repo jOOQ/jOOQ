@@ -44,6 +44,7 @@ import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.table;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -162,7 +163,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             }
             catch (DataAccessException expected) {}
 
-            create().execute("delete t");
+            assertEquals(1, create().delete(table("t")).execute());
             create().alterTable("t").add("h", SQLDataType.INTEGER.nullable(false)).execute();
         }
         finally {
@@ -181,7 +182,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             create().alterTable("t").alter("a").set(SQLDataType.VARCHAR.nullable(false)).execute();
             try {
-                create().execute("update t set t = null");
+                create().update(table("t")).set(field("a"), (Object) null).execute();
+                fail();
             }
             catch (DataAccessException expected) {}
         }

@@ -211,7 +211,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                                 val("a").as("y")
                              ))
                 .select()
-                .from("a")
+                .from(tableByName("a"))
                 .fetch();
 
         assertEquals(1, result1.size());

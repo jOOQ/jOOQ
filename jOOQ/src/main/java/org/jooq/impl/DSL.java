@@ -2675,7 +2675,7 @@ public class DSL {
         name = "SELECT ZERO"
     )
     public static SelectSelectStep<Record1<Integer>> selectZero() {
-        return new SelectImpl(null, new DefaultConfiguration()).select(zero());
+        return new SelectImpl(null, new DefaultConfiguration()).select(zero().as("zero"));
     }
 
     /**
@@ -2711,7 +2711,7 @@ public class DSL {
         name = "SELECT ONE"
     )
     public static SelectSelectStep<Record1<Integer>> selectOne() {
-        return new SelectImpl(null, new DefaultConfiguration()).select(one());
+        return new SelectImpl(null, new DefaultConfiguration()).select(one().as("one"));
     }
 
     /**

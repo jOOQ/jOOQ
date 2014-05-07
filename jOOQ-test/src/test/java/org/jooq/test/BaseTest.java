@@ -40,6 +40,9 @@
  */
 package org.jooq.test;
 
+import static java.util.Arrays.stream;
+import static org.hamcrest.Matchers.isOneOf;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.Method;
@@ -100,6 +103,7 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 
 import org.junit.Assert;
+import org.junit.Assume;
 
 public abstract class BaseTest<
 
@@ -792,7 +796,7 @@ public abstract class BaseTest<
     }
 
     protected final SQLDialect dialect() {
-        return delegate.getDialect();
+        return delegate.dialect();
     }
 
     protected final void sleep(long millis) {
@@ -881,6 +885,14 @@ public abstract class BaseTest<
 
     protected final void assertCountBooks(int count) {
         assertEquals(count, (int) create().selectCount().from(TBook()).fetchOne(0, Integer.class));
+    }
+
+    protected final void assumeFamilyNotIn(SQLDialect... dialects) {
+        Assume.assumeThat(dialect().family(), not(isOneOf(stream(dialects).map(d -> d.family()).toArray(SQLDialect[]::new))));
+    }
+
+    protected final void assumeDialectNotIn(SQLDialect... dialects) {
+        Assume.assumeThat(dialect(), not(isOneOf(dialects)));
     }
 
     @SuppressWarnings("unchecked")

@@ -111,7 +111,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(TAuthorDao().fetchOne(TAuthor_ID(), 3));
 
         AP id1 = TAuthorDao().findById(1);
-        assertEquals(1, on(id1).get("id"));
+        assertEquals(1, (int) on(id1).get("id"));
         assertEquals("George", on(id1).get("firstName"));
         assertEquals("Orwell", on(id1).get("lastName"));
         assertTrue(TAuthorDao().exists(id1));
@@ -120,7 +120,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         List<AP> authors1 = on(TAuthorDao()).call("fetchByLastName", (Object) new String[] { "Orwell", "George"}).<List<AP>>get();
         assertEquals(1, authors1.size());
-        assertEquals(1, on(authors1.get(0)).get("id"));
+        assertEquals(1, (int) on(authors1.get(0)).get("id"));
         assertEquals("George", on(authors1.get(0)).get("firstName"));
         assertEquals("Orwell", on(authors1.get(0)).get("lastName"));
 
@@ -133,10 +133,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             public int compare(AP o1, AP o2) {
                 return on(o1).<Integer>get("id").compareTo(on(o2).<Integer>get("id"));
             }});
-        assertEquals(1, on(authors2.get(0)).get("id"));
+        assertEquals(1, (int) on(authors2.get(0)).get("id"));
         assertEquals("George", on(authors2.get(0)).get("firstName"));
         assertEquals("Orwell", on(authors2.get(0)).get("lastName"));
-        assertEquals(2, on(authors2.get(1)).get("id"));
+        assertEquals(2, (int) on(authors2.get(1)).get("id"));
         assertEquals("Paulo", on(authors2.get(1)).get("firstName"));
         assertEquals("Coelho", on(authors2.get(1)).get("lastName"));
 
@@ -158,15 +158,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         TAuthorDao().insert(author);
         assertEquals(3, TAuthorDao().count());
         AP id3 = TAuthorDao().findById(3);
-        assertEquals(3, on(id3).get("id"));
-        assertEquals(null, on(id3).get("firstName"));
+        assertEquals(3, (int) on(id3).get("id"));
+        assertEquals(null, (String) on(id3).get("firstName"));
         assertEquals("Hesse", on(id3).get("lastName"));
 
         author = on(author).set("firstName", "Hermann").<AP>get();
         TAuthorDao().update(author);
         id3 = TAuthorDao().findById(3);
         assertEquals(3, TAuthorDao().count());
-        assertEquals(3, on(id3).get("id"));
+        assertEquals(3, (int) on(id3).get("id"));
         assertEquals("Hermann", on(id3).get("firstName"));
         assertEquals("Hesse", on(id3).get("lastName"));
 
@@ -200,11 +200,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         AP id5 = TAuthorDao().findById(5);
 
         assertEquals(4, TAuthorDao().count());
-        assertEquals(4, on(id4).get("id"));
-        assertEquals(null, on(id4).get("firstName"));
+        assertEquals(4, (int) on(id4).get("id"));
+        assertEquals(null, (String) on(id4).get("firstName"));
         assertEquals("Koontz", on(id4).get("lastName"));
-        assertEquals(5, on(id5).get("id"));
-        assertEquals(null, on(id5).get("firstName"));
+        assertEquals(5, (int) on(id5).get("id"));
+        assertEquals(null, (String) on(id5).get("firstName"));
         assertEquals("Hitchcock", on(id5).get("lastName"));
 
         id4 = on(id4).set("firstName", "Dean").<AP>get();
@@ -215,10 +215,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         id5 = TAuthorDao().findById(5);
 
         assertEquals(4, TAuthorDao().count());
-        assertEquals(4, on(id4).get("id"));
+        assertEquals(4, (int) on(id4).get("id"));
         assertEquals("Dean", on(id4).get("firstName"));
         assertEquals("Koontz", on(id4).get("lastName"));
-        assertEquals(5, on(id5).get("id"));
+        assertEquals(5, (int) on(id5).get("id"));
         assertEquals("Alfred", on(id5).get("firstName"));
         assertEquals("Hitchcock", on(id5).get("lastName"));
     }

@@ -249,9 +249,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .fetchInto(TBooleansPojo());
 
             assertEquals(3, b.size());
-            assertEquals(1, on(b.get(0)).call("getId").get());
-            assertEquals(2, on(b.get(1)).call("getId").get());
-            assertEquals(3, on(b.get(2)).call("getId").get());
+            assertEquals(1, (int) on(b.get(0)).call("getId").get());
+            assertEquals(2, (int) on(b.get(1)).call("getId").get());
+            assertEquals(3, (int) on(b.get(2)).call("getId").get());
 
             assertEquals(Boolean_10.ZERO, on(b.get(0)).call("getOneZero").get());
             assertEquals(Boolean_10.ONE, on(b.get(1)).call("getOneZero").get());

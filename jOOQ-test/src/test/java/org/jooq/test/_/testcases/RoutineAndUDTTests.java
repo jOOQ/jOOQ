@@ -906,7 +906,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(null, on(a2).call("getZip").get());
         assertEquals("Rio de Janeiro", on(a2).call("getCity").get());
         assertEquals("Brazil", "" + on(a2).call("getCountry").get());
-        assertEquals(2, on(a2).call("getCode").get());
+        assertEquals(2, (int) on(a2).call("getCode").get());
         assertEquals(null, on(a2).call("getF_1323").<byte[]>get());
 
         /* [pro] */

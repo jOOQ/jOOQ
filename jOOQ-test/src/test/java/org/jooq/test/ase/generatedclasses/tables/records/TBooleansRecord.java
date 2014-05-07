@@ -32,98 +32,98 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * The table column <code>dbo.t_booleans.one_zero</code>
 	 */
-	public void setOneZero(org.jooq.test._.converters.Boolean_10 value) {
+	public void setOneZero(org.jooq.test.all.converters.Boolean_10 value) {
 		setValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.ONE_ZERO, value);
 	}
 
 	/**
 	 * The table column <code>dbo.t_booleans.one_zero</code>
 	 */
-	public org.jooq.test._.converters.Boolean_10 getOneZero() {
+	public org.jooq.test.all.converters.Boolean_10 getOneZero() {
 		return getValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.ONE_ZERO);
 	}
 
 	/**
 	 * The table column <code>dbo.t_booleans.true_false_lc</code>
 	 */
-	public void setTrueFalseLc(org.jooq.test._.converters.Boolean_TF_LC value) {
+	public void setTrueFalseLc(org.jooq.test.all.converters.Boolean_TF_LC value) {
 		setValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.TRUE_FALSE_LC, value);
 	}
 
 	/**
 	 * The table column <code>dbo.t_booleans.true_false_lc</code>
 	 */
-	public org.jooq.test._.converters.Boolean_TF_LC getTrueFalseLc() {
+	public org.jooq.test.all.converters.Boolean_TF_LC getTrueFalseLc() {
 		return getValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.TRUE_FALSE_LC);
 	}
 
 	/**
 	 * The table column <code>dbo.t_booleans.true_false_uc</code>
 	 */
-	public void setTrueFalseUc(org.jooq.test._.converters.Boolean_TF_UC value) {
+	public void setTrueFalseUc(org.jooq.test.all.converters.Boolean_TF_UC value) {
 		setValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.TRUE_FALSE_UC, value);
 	}
 
 	/**
 	 * The table column <code>dbo.t_booleans.true_false_uc</code>
 	 */
-	public org.jooq.test._.converters.Boolean_TF_UC getTrueFalseUc() {
+	public org.jooq.test.all.converters.Boolean_TF_UC getTrueFalseUc() {
 		return getValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.TRUE_FALSE_UC);
 	}
 
 	/**
 	 * The table column <code>dbo.t_booleans.yes_no_lc</code>
 	 */
-	public void setYesNoLc(org.jooq.test._.converters.Boolean_YES_NO_LC value) {
+	public void setYesNoLc(org.jooq.test.all.converters.Boolean_YES_NO_LC value) {
 		setValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.YES_NO_LC, value);
 	}
 
 	/**
 	 * The table column <code>dbo.t_booleans.yes_no_lc</code>
 	 */
-	public org.jooq.test._.converters.Boolean_YES_NO_LC getYesNoLc() {
+	public org.jooq.test.all.converters.Boolean_YES_NO_LC getYesNoLc() {
 		return getValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.YES_NO_LC);
 	}
 
 	/**
 	 * The table column <code>dbo.t_booleans.yes_no_uc</code>
 	 */
-	public void setYesNoUc(org.jooq.test._.converters.Boolean_YES_NO_UC value) {
+	public void setYesNoUc(org.jooq.test.all.converters.Boolean_YES_NO_UC value) {
 		setValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.YES_NO_UC, value);
 	}
 
 	/**
 	 * The table column <code>dbo.t_booleans.yes_no_uc</code>
 	 */
-	public org.jooq.test._.converters.Boolean_YES_NO_UC getYesNoUc() {
+	public org.jooq.test.all.converters.Boolean_YES_NO_UC getYesNoUc() {
 		return getValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.YES_NO_UC);
 	}
 
 	/**
 	 * The table column <code>dbo.t_booleans.y_n_lc</code>
 	 */
-	public void setYNLc(org.jooq.test._.converters.Boolean_YN_LC value) {
+	public void setYNLc(org.jooq.test.all.converters.Boolean_YN_LC value) {
 		setValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.Y_N_LC, value);
 	}
 
 	/**
 	 * The table column <code>dbo.t_booleans.y_n_lc</code>
 	 */
-	public org.jooq.test._.converters.Boolean_YN_LC getYNLc() {
+	public org.jooq.test.all.converters.Boolean_YN_LC getYNLc() {
 		return getValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.Y_N_LC);
 	}
 
 	/**
 	 * The table column <code>dbo.t_booleans.y_n_uc</code>
 	 */
-	public void setYNUc(org.jooq.test._.converters.Boolean_YN_UC value) {
+	public void setYNUc(org.jooq.test.all.converters.Boolean_YN_UC value) {
 		setValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.Y_N_UC, value);
 	}
 
 	/**
 	 * The table column <code>dbo.t_booleans.y_n_uc</code>
 	 */
-	public org.jooq.test._.converters.Boolean_YN_UC getYNUc() {
+	public org.jooq.test.all.converters.Boolean_YN_UC getYNUc() {
 		return getValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.Y_N_UC);
 	}
 

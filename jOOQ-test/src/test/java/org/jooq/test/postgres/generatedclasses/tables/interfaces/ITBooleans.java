@@ -17,37 +17,37 @@ public interface ITBooleans extends java.io.Serializable {
 	/**
 	 * Getter for <code>public.t_booleans.one_zero</code>.
 	 */
-	public org.jooq.test._.converters.Boolean_10 getOneZero();
+	public org.jooq.test.all.converters.Boolean_10 getOneZero();
 
 	/**
 	 * Getter for <code>public.t_booleans.true_false_lc</code>.
 	 */
-	public org.jooq.test._.converters.Boolean_TF_LC getTrueFalseLc();
+	public org.jooq.test.all.converters.Boolean_TF_LC getTrueFalseLc();
 
 	/**
 	 * Getter for <code>public.t_booleans.true_false_uc</code>.
 	 */
-	public org.jooq.test._.converters.Boolean_TF_UC getTrueFalseUc();
+	public org.jooq.test.all.converters.Boolean_TF_UC getTrueFalseUc();
 
 	/**
 	 * Getter for <code>public.t_booleans.yes_no_lc</code>.
 	 */
-	public org.jooq.test._.converters.Boolean_YES_NO_LC getYesNoLc();
+	public org.jooq.test.all.converters.Boolean_YES_NO_LC getYesNoLc();
 
 	/**
 	 * Getter for <code>public.t_booleans.yes_no_uc</code>.
 	 */
-	public org.jooq.test._.converters.Boolean_YES_NO_UC getYesNoUc();
+	public org.jooq.test.all.converters.Boolean_YES_NO_UC getYesNoUc();
 
 	/**
 	 * Getter for <code>public.t_booleans.y_n_lc</code>.
 	 */
-	public org.jooq.test._.converters.Boolean_YN_LC getYNLc();
+	public org.jooq.test.all.converters.Boolean_YN_LC getYNLc();
 
 	/**
 	 * Getter for <code>public.t_booleans.y_n_uc</code>.
 	 */
-	public org.jooq.test._.converters.Boolean_YN_UC getYNUc();
+	public org.jooq.test.all.converters.Boolean_YN_UC getYNUc();
 
 	/**
 	 * Getter for <code>public.t_booleans.vc_boolean</code>.

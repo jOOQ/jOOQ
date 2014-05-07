@@ -32,17 +32,17 @@ public class DateAsTimestampTDates extends org.jooq.impl.TableImpl<org.jooq.test
 	/**
 	 * The column <code>TEST.T_DATES.D</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord, java.util.GregorianCalendar> DATE_AS_TIMESTAMP_D = createField("D", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new org.jooq.test._.converters.CalendarConverter());
+	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord, java.util.GregorianCalendar> DATE_AS_TIMESTAMP_D = createField("D", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new org.jooq.test.all.converters.CalendarConverter());
 
 	/**
 	 * The column <code>TEST.T_DATES.T</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord, java.util.GregorianCalendar> DATE_AS_TIMESTAMP_T = createField("T", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new org.jooq.test._.converters.CalendarConverter());
+	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord, java.util.GregorianCalendar> DATE_AS_TIMESTAMP_T = createField("T", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new org.jooq.test.all.converters.CalendarConverter());
 
 	/**
 	 * The column <code>TEST.T_DATES.TS</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord, java.util.GregorianCalendar> DATE_AS_TIMESTAMP_TS = createField("TS", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new org.jooq.test._.converters.CalendarConverter());
+	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord, java.util.GregorianCalendar> DATE_AS_TIMESTAMP_TS = createField("TS", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new org.jooq.test.all.converters.CalendarConverter());
 
 	/**
 	 * The column <code>TEST.T_DATES.D_INT</code>.

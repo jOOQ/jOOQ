@@ -12,26 +12,26 @@ public class TBooleans implements java.io.Serializable {
 	private static final long serialVersionUID = -930609655;
 
 	private final java.lang.Integer                            id;
-	private final org.jooq.test._.converters.Boolean_10        oneZero;
-	private final org.jooq.test._.converters.Boolean_TF_LC     trueFalseLc;
-	private final org.jooq.test._.converters.Boolean_TF_UC     trueFalseUc;
-	private final org.jooq.test._.converters.Boolean_YES_NO_LC yesNoLc;
-	private final org.jooq.test._.converters.Boolean_YES_NO_UC yesNoUc;
-	private final org.jooq.test._.converters.Boolean_YN_LC     yNLc;
-	private final org.jooq.test._.converters.Boolean_YN_UC     yNUc;
+	private final org.jooq.test.all.converters.Boolean_10        oneZero;
+	private final org.jooq.test.all.converters.Boolean_TF_LC     trueFalseLc;
+	private final org.jooq.test.all.converters.Boolean_TF_UC     trueFalseUc;
+	private final org.jooq.test.all.converters.Boolean_YES_NO_LC yesNoLc;
+	private final org.jooq.test.all.converters.Boolean_YES_NO_UC yesNoUc;
+	private final org.jooq.test.all.converters.Boolean_YN_LC     yNLc;
+	private final org.jooq.test.all.converters.Boolean_YN_UC     yNUc;
 	private final java.lang.Boolean                            vcBoolean;
 	private final java.lang.Boolean                            cBoolean;
 	private final java.lang.Boolean                            nBoolean;
 
 	public TBooleans(
 		java.lang.Integer                            id,
-		org.jooq.test._.converters.Boolean_10        oneZero,
-		org.jooq.test._.converters.Boolean_TF_LC     trueFalseLc,
-		org.jooq.test._.converters.Boolean_TF_UC     trueFalseUc,
-		org.jooq.test._.converters.Boolean_YES_NO_LC yesNoLc,
-		org.jooq.test._.converters.Boolean_YES_NO_UC yesNoUc,
-		org.jooq.test._.converters.Boolean_YN_LC     yNLc,
-		org.jooq.test._.converters.Boolean_YN_UC     yNUc,
+		org.jooq.test.all.converters.Boolean_10        oneZero,
+		org.jooq.test.all.converters.Boolean_TF_LC     trueFalseLc,
+		org.jooq.test.all.converters.Boolean_TF_UC     trueFalseUc,
+		org.jooq.test.all.converters.Boolean_YES_NO_LC yesNoLc,
+		org.jooq.test.all.converters.Boolean_YES_NO_UC yesNoUc,
+		org.jooq.test.all.converters.Boolean_YN_LC     yNLc,
+		org.jooq.test.all.converters.Boolean_YN_UC     yNUc,
 		java.lang.Boolean                            vcBoolean,
 		java.lang.Boolean                            cBoolean,
 		java.lang.Boolean                            nBoolean
@@ -53,31 +53,31 @@ public class TBooleans implements java.io.Serializable {
 		return this.id;
 	}
 
-	public org.jooq.test._.converters.Boolean_10 getOneZero() {
+	public org.jooq.test.all.converters.Boolean_10 getOneZero() {
 		return this.oneZero;
 	}
 
-	public org.jooq.test._.converters.Boolean_TF_LC getTrueFalseLc() {
+	public org.jooq.test.all.converters.Boolean_TF_LC getTrueFalseLc() {
 		return this.trueFalseLc;
 	}
 
-	public org.jooq.test._.converters.Boolean_TF_UC getTrueFalseUc() {
+	public org.jooq.test.all.converters.Boolean_TF_UC getTrueFalseUc() {
 		return this.trueFalseUc;
 	}
 
-	public org.jooq.test._.converters.Boolean_YES_NO_LC getYesNoLc() {
+	public org.jooq.test.all.converters.Boolean_YES_NO_LC getYesNoLc() {
 		return this.yesNoLc;
 	}
 
-	public org.jooq.test._.converters.Boolean_YES_NO_UC getYesNoUc() {
+	public org.jooq.test.all.converters.Boolean_YES_NO_UC getYesNoUc() {
 		return this.yesNoUc;
 	}
 
-	public org.jooq.test._.converters.Boolean_YN_LC getYNLc() {
+	public org.jooq.test.all.converters.Boolean_YN_LC getYNLc() {
 		return this.yNLc;
 	}
 
-	public org.jooq.test._.converters.Boolean_YN_UC getYNUc() {
+	public org.jooq.test.all.converters.Boolean_YN_UC getYNUc() {
 		return this.yNUc;
 	}
 

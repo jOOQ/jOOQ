@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_BOOLEANS", schema = "TEST")
-public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord> implements org.jooq.Record11<java.lang.Integer, org.jooq.test._.converters.Boolean_10, org.jooq.test._.converters.Boolean_TF_LC, org.jooq.test._.converters.Boolean_TF_UC, org.jooq.test._.converters.Boolean_YES_NO_LC, org.jooq.test._.converters.Boolean_YES_NO_UC, org.jooq.test._.converters.Boolean_YN_LC, org.jooq.test._.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean> {
+public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord> implements org.jooq.Record11<java.lang.Integer, org.jooq.test.all.converters.Boolean_10, org.jooq.test.all.converters.Boolean_TF_LC, org.jooq.test.all.converters.Boolean_TF_UC, org.jooq.test.all.converters.Boolean_YES_NO_LC, org.jooq.test.all.converters.Boolean_YES_NO_UC, org.jooq.test.all.converters.Boolean_YN_LC, org.jooq.test.all.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean> {
 
 	private static final long serialVersionUID = 660296172;
 
@@ -33,7 +33,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * Setter for <code>TEST.T_BOOLEANS.ONE_ZERO</code>.
 	 */
-	public void setOneZero(org.jooq.test._.converters.Boolean_10 value) {
+	public void setOneZero(org.jooq.test.all.converters.Boolean_10 value) {
 		setValue(1, value);
 	}
 
@@ -41,14 +41,14 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * Getter for <code>TEST.T_BOOLEANS.ONE_ZERO</code>.
 	 */
 	@javax.persistence.Column(name = "ONE_ZERO", precision = 7)
-	public org.jooq.test._.converters.Boolean_10 getOneZero() {
-		return (org.jooq.test._.converters.Boolean_10) getValue(1);
+	public org.jooq.test.all.converters.Boolean_10 getOneZero() {
+		return (org.jooq.test.all.converters.Boolean_10) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_BOOLEANS.TRUE_FALSE_LC</code>.
 	 */
-	public void setTrueFalseLc(org.jooq.test._.converters.Boolean_TF_LC value) {
+	public void setTrueFalseLc(org.jooq.test.all.converters.Boolean_TF_LC value) {
 		setValue(2, value);
 	}
 
@@ -56,14 +56,14 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * Getter for <code>TEST.T_BOOLEANS.TRUE_FALSE_LC</code>.
 	 */
 	@javax.persistence.Column(name = "TRUE_FALSE_LC", length = 5)
-	public org.jooq.test._.converters.Boolean_TF_LC getTrueFalseLc() {
-		return (org.jooq.test._.converters.Boolean_TF_LC) getValue(2);
+	public org.jooq.test.all.converters.Boolean_TF_LC getTrueFalseLc() {
+		return (org.jooq.test.all.converters.Boolean_TF_LC) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_BOOLEANS.TRUE_FALSE_UC</code>.
 	 */
-	public void setTrueFalseUc(org.jooq.test._.converters.Boolean_TF_UC value) {
+	public void setTrueFalseUc(org.jooq.test.all.converters.Boolean_TF_UC value) {
 		setValue(3, value);
 	}
 
@@ -71,14 +71,14 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * Getter for <code>TEST.T_BOOLEANS.TRUE_FALSE_UC</code>.
 	 */
 	@javax.persistence.Column(name = "TRUE_FALSE_UC", length = 5)
-	public org.jooq.test._.converters.Boolean_TF_UC getTrueFalseUc() {
-		return (org.jooq.test._.converters.Boolean_TF_UC) getValue(3);
+	public org.jooq.test.all.converters.Boolean_TF_UC getTrueFalseUc() {
+		return (org.jooq.test.all.converters.Boolean_TF_UC) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_BOOLEANS.YES_NO_LC</code>.
 	 */
-	public void setYesNoLc(org.jooq.test._.converters.Boolean_YES_NO_LC value) {
+	public void setYesNoLc(org.jooq.test.all.converters.Boolean_YES_NO_LC value) {
 		setValue(4, value);
 	}
 
@@ -86,14 +86,14 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * Getter for <code>TEST.T_BOOLEANS.YES_NO_LC</code>.
 	 */
 	@javax.persistence.Column(name = "YES_NO_LC", length = 3)
-	public org.jooq.test._.converters.Boolean_YES_NO_LC getYesNoLc() {
-		return (org.jooq.test._.converters.Boolean_YES_NO_LC) getValue(4);
+	public org.jooq.test.all.converters.Boolean_YES_NO_LC getYesNoLc() {
+		return (org.jooq.test.all.converters.Boolean_YES_NO_LC) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_BOOLEANS.YES_NO_UC</code>.
 	 */
-	public void setYesNoUc(org.jooq.test._.converters.Boolean_YES_NO_UC value) {
+	public void setYesNoUc(org.jooq.test.all.converters.Boolean_YES_NO_UC value) {
 		setValue(5, value);
 	}
 
@@ -101,14 +101,14 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * Getter for <code>TEST.T_BOOLEANS.YES_NO_UC</code>.
 	 */
 	@javax.persistence.Column(name = "YES_NO_UC", length = 3)
-	public org.jooq.test._.converters.Boolean_YES_NO_UC getYesNoUc() {
-		return (org.jooq.test._.converters.Boolean_YES_NO_UC) getValue(5);
+	public org.jooq.test.all.converters.Boolean_YES_NO_UC getYesNoUc() {
+		return (org.jooq.test.all.converters.Boolean_YES_NO_UC) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_BOOLEANS.Y_N_LC</code>.
 	 */
-	public void setYNLc(org.jooq.test._.converters.Boolean_YN_LC value) {
+	public void setYNLc(org.jooq.test.all.converters.Boolean_YN_LC value) {
 		setValue(6, value);
 	}
 
@@ -116,14 +116,14 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * Getter for <code>TEST.T_BOOLEANS.Y_N_LC</code>.
 	 */
 	@javax.persistence.Column(name = "Y_N_LC", length = 1)
-	public org.jooq.test._.converters.Boolean_YN_LC getYNLc() {
-		return (org.jooq.test._.converters.Boolean_YN_LC) getValue(6);
+	public org.jooq.test.all.converters.Boolean_YN_LC getYNLc() {
+		return (org.jooq.test.all.converters.Boolean_YN_LC) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_BOOLEANS.Y_N_UC</code>.
 	 */
-	public void setYNUc(org.jooq.test._.converters.Boolean_YN_UC value) {
+	public void setYNUc(org.jooq.test.all.converters.Boolean_YN_UC value) {
 		setValue(7, value);
 	}
 
@@ -131,8 +131,8 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * Getter for <code>TEST.T_BOOLEANS.Y_N_UC</code>.
 	 */
 	@javax.persistence.Column(name = "Y_N_UC", length = 1)
-	public org.jooq.test._.converters.Boolean_YN_UC getYNUc() {
-		return (org.jooq.test._.converters.Boolean_YN_UC) getValue(7);
+	public org.jooq.test.all.converters.Boolean_YN_UC getYNUc() {
+		return (org.jooq.test.all.converters.Boolean_YN_UC) getValue(7);
 	}
 
 	/**
@@ -200,7 +200,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row11<java.lang.Integer, org.jooq.test._.converters.Boolean_10, org.jooq.test._.converters.Boolean_TF_LC, org.jooq.test._.converters.Boolean_TF_UC, org.jooq.test._.converters.Boolean_YES_NO_LC, org.jooq.test._.converters.Boolean_YES_NO_UC, org.jooq.test._.converters.Boolean_YN_LC, org.jooq.test._.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean> fieldsRow() {
+	public org.jooq.Row11<java.lang.Integer, org.jooq.test.all.converters.Boolean_10, org.jooq.test.all.converters.Boolean_TF_LC, org.jooq.test.all.converters.Boolean_TF_UC, org.jooq.test.all.converters.Boolean_YES_NO_LC, org.jooq.test.all.converters.Boolean_YES_NO_UC, org.jooq.test.all.converters.Boolean_YN_LC, org.jooq.test.all.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean> fieldsRow() {
 		return (org.jooq.Row11) super.fieldsRow();
 	}
 
@@ -208,7 +208,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row11<java.lang.Integer, org.jooq.test._.converters.Boolean_10, org.jooq.test._.converters.Boolean_TF_LC, org.jooq.test._.converters.Boolean_TF_UC, org.jooq.test._.converters.Boolean_YES_NO_LC, org.jooq.test._.converters.Boolean_YES_NO_UC, org.jooq.test._.converters.Boolean_YN_LC, org.jooq.test._.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean> valuesRow() {
+	public org.jooq.Row11<java.lang.Integer, org.jooq.test.all.converters.Boolean_10, org.jooq.test.all.converters.Boolean_TF_LC, org.jooq.test.all.converters.Boolean_TF_UC, org.jooq.test.all.converters.Boolean_YES_NO_LC, org.jooq.test.all.converters.Boolean_YES_NO_UC, org.jooq.test.all.converters.Boolean_YN_LC, org.jooq.test.all.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean> valuesRow() {
 		return (org.jooq.Row11) super.valuesRow();
 	}
 
@@ -224,7 +224,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<org.jooq.test._.converters.Boolean_10> field2() {
+	public org.jooq.Field<org.jooq.test.all.converters.Boolean_10> field2() {
 		return org.jooq.test.oracle.generatedclasses.test.tables.TBooleans.T_BOOLEANS.ONE_ZERO;
 	}
 
@@ -232,7 +232,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<org.jooq.test._.converters.Boolean_TF_LC> field3() {
+	public org.jooq.Field<org.jooq.test.all.converters.Boolean_TF_LC> field3() {
 		return org.jooq.test.oracle.generatedclasses.test.tables.TBooleans.T_BOOLEANS.TRUE_FALSE_LC;
 	}
 
@@ -240,7 +240,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<org.jooq.test._.converters.Boolean_TF_UC> field4() {
+	public org.jooq.Field<org.jooq.test.all.converters.Boolean_TF_UC> field4() {
 		return org.jooq.test.oracle.generatedclasses.test.tables.TBooleans.T_BOOLEANS.TRUE_FALSE_UC;
 	}
 
@@ -248,7 +248,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<org.jooq.test._.converters.Boolean_YES_NO_LC> field5() {
+	public org.jooq.Field<org.jooq.test.all.converters.Boolean_YES_NO_LC> field5() {
 		return org.jooq.test.oracle.generatedclasses.test.tables.TBooleans.T_BOOLEANS.YES_NO_LC;
 	}
 
@@ -256,7 +256,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<org.jooq.test._.converters.Boolean_YES_NO_UC> field6() {
+	public org.jooq.Field<org.jooq.test.all.converters.Boolean_YES_NO_UC> field6() {
 		return org.jooq.test.oracle.generatedclasses.test.tables.TBooleans.T_BOOLEANS.YES_NO_UC;
 	}
 
@@ -264,7 +264,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<org.jooq.test._.converters.Boolean_YN_LC> field7() {
+	public org.jooq.Field<org.jooq.test.all.converters.Boolean_YN_LC> field7() {
 		return org.jooq.test.oracle.generatedclasses.test.tables.TBooleans.T_BOOLEANS.Y_N_LC;
 	}
 
@@ -272,7 +272,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<org.jooq.test._.converters.Boolean_YN_UC> field8() {
+	public org.jooq.Field<org.jooq.test.all.converters.Boolean_YN_UC> field8() {
 		return org.jooq.test.oracle.generatedclasses.test.tables.TBooleans.T_BOOLEANS.Y_N_UC;
 	}
 
@@ -312,7 +312,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.test._.converters.Boolean_10 value2() {
+	public org.jooq.test.all.converters.Boolean_10 value2() {
 		return getOneZero();
 	}
 
@@ -320,7 +320,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.test._.converters.Boolean_TF_LC value3() {
+	public org.jooq.test.all.converters.Boolean_TF_LC value3() {
 		return getTrueFalseLc();
 	}
 
@@ -328,7 +328,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.test._.converters.Boolean_TF_UC value4() {
+	public org.jooq.test.all.converters.Boolean_TF_UC value4() {
 		return getTrueFalseUc();
 	}
 
@@ -336,7 +336,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.test._.converters.Boolean_YES_NO_LC value5() {
+	public org.jooq.test.all.converters.Boolean_YES_NO_LC value5() {
 		return getYesNoLc();
 	}
 
@@ -344,7 +344,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.test._.converters.Boolean_YES_NO_UC value6() {
+	public org.jooq.test.all.converters.Boolean_YES_NO_UC value6() {
 		return getYesNoUc();
 	}
 
@@ -352,7 +352,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.test._.converters.Boolean_YN_LC value7() {
+	public org.jooq.test.all.converters.Boolean_YN_LC value7() {
 		return getYNLc();
 	}
 
@@ -360,7 +360,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.test._.converters.Boolean_YN_UC value8() {
+	public org.jooq.test.all.converters.Boolean_YN_UC value8() {
 		return getYNUc();
 	}
 
@@ -401,7 +401,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBooleansRecord value2(org.jooq.test._.converters.Boolean_10 value) {
+	public TBooleansRecord value2(org.jooq.test.all.converters.Boolean_10 value) {
 		setOneZero(value);
 		return this;
 	}
@@ -410,7 +410,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBooleansRecord value3(org.jooq.test._.converters.Boolean_TF_LC value) {
+	public TBooleansRecord value3(org.jooq.test.all.converters.Boolean_TF_LC value) {
 		setTrueFalseLc(value);
 		return this;
 	}
@@ -419,7 +419,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBooleansRecord value4(org.jooq.test._.converters.Boolean_TF_UC value) {
+	public TBooleansRecord value4(org.jooq.test.all.converters.Boolean_TF_UC value) {
 		setTrueFalseUc(value);
 		return this;
 	}
@@ -428,7 +428,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBooleansRecord value5(org.jooq.test._.converters.Boolean_YES_NO_LC value) {
+	public TBooleansRecord value5(org.jooq.test.all.converters.Boolean_YES_NO_LC value) {
 		setYesNoLc(value);
 		return this;
 	}
@@ -437,7 +437,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBooleansRecord value6(org.jooq.test._.converters.Boolean_YES_NO_UC value) {
+	public TBooleansRecord value6(org.jooq.test.all.converters.Boolean_YES_NO_UC value) {
 		setYesNoUc(value);
 		return this;
 	}
@@ -446,7 +446,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBooleansRecord value7(org.jooq.test._.converters.Boolean_YN_LC value) {
+	public TBooleansRecord value7(org.jooq.test.all.converters.Boolean_YN_LC value) {
 		setYNLc(value);
 		return this;
 	}
@@ -455,7 +455,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBooleansRecord value8(org.jooq.test._.converters.Boolean_YN_UC value) {
+	public TBooleansRecord value8(org.jooq.test.all.converters.Boolean_YN_UC value) {
 		setYNUc(value);
 		return this;
 	}
@@ -491,7 +491,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBooleansRecord values(java.lang.Integer value1, org.jooq.test._.converters.Boolean_10 value2, org.jooq.test._.converters.Boolean_TF_LC value3, org.jooq.test._.converters.Boolean_TF_UC value4, org.jooq.test._.converters.Boolean_YES_NO_LC value5, org.jooq.test._.converters.Boolean_YES_NO_UC value6, org.jooq.test._.converters.Boolean_YN_LC value7, org.jooq.test._.converters.Boolean_YN_UC value8, java.lang.Boolean value9, java.lang.Boolean value10, java.lang.Boolean value11) {
+	public TBooleansRecord values(java.lang.Integer value1, org.jooq.test.all.converters.Boolean_10 value2, org.jooq.test.all.converters.Boolean_TF_LC value3, org.jooq.test.all.converters.Boolean_TF_UC value4, org.jooq.test.all.converters.Boolean_YES_NO_LC value5, org.jooq.test.all.converters.Boolean_YES_NO_UC value6, org.jooq.test.all.converters.Boolean_YN_LC value7, org.jooq.test.all.converters.Boolean_YN_UC value8, java.lang.Boolean value9, java.lang.Boolean value10, java.lang.Boolean value11) {
 		return this;
 	}
 
@@ -509,7 +509,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * Create a detached, initialised TBooleansRecord
 	 */
-	public TBooleansRecord(java.lang.Integer id, org.jooq.test._.converters.Boolean_10 oneZero, org.jooq.test._.converters.Boolean_TF_LC trueFalseLc, org.jooq.test._.converters.Boolean_TF_UC trueFalseUc, org.jooq.test._.converters.Boolean_YES_NO_LC yesNoLc, org.jooq.test._.converters.Boolean_YES_NO_UC yesNoUc, org.jooq.test._.converters.Boolean_YN_LC yNLc, org.jooq.test._.converters.Boolean_YN_UC yNUc, java.lang.Boolean vcBoolean, java.lang.Boolean cBoolean, java.lang.Boolean nBoolean) {
+	public TBooleansRecord(java.lang.Integer id, org.jooq.test.all.converters.Boolean_10 oneZero, org.jooq.test.all.converters.Boolean_TF_LC trueFalseLc, org.jooq.test.all.converters.Boolean_TF_UC trueFalseUc, org.jooq.test.all.converters.Boolean_YES_NO_LC yesNoLc, org.jooq.test.all.converters.Boolean_YES_NO_UC yesNoUc, org.jooq.test.all.converters.Boolean_YN_LC yNLc, org.jooq.test.all.converters.Boolean_YN_UC yNUc, java.lang.Boolean vcBoolean, java.lang.Boolean cBoolean, java.lang.Boolean nBoolean) {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TBooleans.T_BOOLEANS);
 
 		setValue(0, id);

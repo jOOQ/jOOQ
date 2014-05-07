@@ -140,7 +140,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
 
         Batch batch3 = create().batch(insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
-                                      .values((Integer) null, null))
+                                      .values((Integer) null, "           "))
                                .bind(8, "Gamma")
                                .bind(9, "Helm")
                                .bind(10, "Johnson");

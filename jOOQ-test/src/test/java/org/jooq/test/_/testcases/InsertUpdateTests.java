@@ -41,6 +41,7 @@
 package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.nCopies;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
@@ -60,6 +61,7 @@ import static org.jooq.impl.DSL.castNull;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.decode;
+import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.inline;
@@ -243,6 +245,43 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals(1, (int) create().fetchOne(selectCount().from(TTriggers())).getValue(0, int.class));
         assertEquals(1, create().delete(TTriggers()).execute());
+    }
+
+    public void testInsertDefaultValue() throws Exception {
+        /* [pro] */
+        if (dialect().family() == ACCESS) {
+            log.info("SKIPPING", "Default values test");
+            return;
+        }
+        /* [/pro] */
+
+        jOOQAbstractTest.reset = false;
+
+        assertEquals(1,
+        create().insertInto(TBook())
+                .set(newBook(5))
+                .set(TBook_LANGUAGE_ID(), defaultValue(int.class))
+                .execute());
+
+        assertEquals(1, (int) create().fetchOne(TBook(), TBook_ID().eq(5)).getValue(TBook_LANGUAGE_ID()));
+    }
+
+    public void testUpdateDefaultValue() throws Exception {
+        /* [pro] */
+        if (dialect().family() == ACCESS) {
+            log.info("SKIPPING", "Default values test");
+            return;
+        }
+        /* [/pro] */
+
+        jOOQAbstractTest.reset = false;
+
+        assertEquals(4,
+        create().update(TBook())
+                .set(TBook_LANGUAGE_ID(), defaultValue(int.class))
+                .execute());
+
+        assertEquals(nCopies(4, 1), create().fetch(TBook()).getValues(TBook_LANGUAGE_ID()));
     }
 
     public void testInsertImplicit() throws Exception {

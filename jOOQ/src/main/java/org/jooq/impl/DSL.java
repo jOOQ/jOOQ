@@ -5014,6 +5014,38 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
+     * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
+     * <code>UPDATE</code>, or <code>MERGE</code> statements.
+     * <p>
+     * While the <code>DEFAULT</code> keyword works with all data types, you may
+     * still prefer to associate a {@link Field} type with your
+     * <code>DEFAULT</code> value. In that case, use
+     * {@link #defaultValue(Class)} or {@link #defaultValue(DataType)} instead.
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    public static Field<Object> defaultValue() {
+        return defaultValue(Object.class);
+    }
+
+    /**
+     * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
+     * <code>UPDATE</code>, or <code>MERGE</code> statements.
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    public static <T> Field<T> defaultValue(Class<T> type) {
+        return defaultValue(getDataType(type));
+    }
+
+    /**
+     * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
+     * <code>UPDATE</code>, or <code>MERGE</code> statements.
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    public static <T> Field<T> defaultValue(DataType<T> type) {
+        return new SQLField<T>(type, keyword("default"));
+    }
+
+    /**
      * Create a new SQL identifier using a qualified name.
      * <p>
      * Use this method to construct syntax-safe, SQL-injection-safe SQL

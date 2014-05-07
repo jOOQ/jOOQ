@@ -936,19 +936,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testInsertOnDuplicateKeyUpdate() throws Exception {
-        switch (dialect()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case INGRES:
-            /* [/pro] */
-            case DERBY:
-            case H2:
-            case POSTGRES:
-            case SQLITE:
-                log.info("SKIPPING", "ON DUPLICATE KEY UPDATE test");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, INGRES, POSTGRES, SQLITE);
 
         jOOQAbstractTest.reset = false;
 
@@ -976,18 +964,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testInsertOnDuplicateKeyIgnore() throws Exception {
-        switch (dialect()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            /* [/pro] */
-            case DERBY:
-            case H2:
-            case POSTGRES:
-            case SQLITE:
-                log.info("SKIPPING", "ON DUPLICATE KEY IGNORE test");
-                return;
-        }
+        assumeFamilyNotIn(ASE, DERBY, FIREBIRD, H2, INGRES, POSTGRES, SQLITE);
 
         jOOQAbstractTest.reset = false;
 
@@ -1014,21 +991,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testMerge() throws Exception {
-        switch (dialect().family()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case INGRES:
-            /* [/pro] */
-            case DERBY:
-            case H2:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE:
-                log.info("SKIPPING", "Merge tests");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE);
 
         jOOQAbstractTest.reset = false;
 
@@ -1235,20 +1198,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testMergeWithH2SyntaxExtension() throws Exception {
-        switch (dialect()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case INGRES:
-            /* [/pro] */
-            case DERBY:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE:
-                log.info("SKIPPING", "H2-specific MERGE syntax test");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE);
 
         jOOQAbstractTest.reset = false;
 

@@ -248,12 +248,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testInsertDefaultValue() throws Exception {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxx xxxxxxx
-            xxxxxxx
-        x
-        xx [/pro] */
+        assumeFamilyNotIn(FIREBIRD);
 
         jOOQAbstractTest.reset = false;
 
@@ -267,12 +262,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testUpdateDefaultValue() throws Exception {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxx xxxxxxx
-            xxxxxxx
-        x
-        xx [/pro] */
+        assumeFamilyNotIn(FIREBIRD);
 
         jOOQAbstractTest.reset = false;
 

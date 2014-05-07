@@ -5022,7 +5022,7 @@ public class DSL {
      * <code>DEFAULT</code> value. In that case, use
      * {@link #defaultValue(Class)} or {@link #defaultValue(DataType)} instead.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Object> defaultValue() {
         return defaultValue(Object.class);
     }
@@ -5031,7 +5031,7 @@ public class DSL {
      * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
      * <code>UPDATE</code>, or <code>MERGE</code> statements.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> Field<T> defaultValue(Class<T> type) {
         return defaultValue(getDataType(type));
     }
@@ -5040,7 +5040,7 @@ public class DSL {
      * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
      * <code>UPDATE</code>, or <code>MERGE</code> statements.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> Field<T> defaultValue(DataType<T> type) {
         return new SQLField<T>(type, keyword("default"));
     }

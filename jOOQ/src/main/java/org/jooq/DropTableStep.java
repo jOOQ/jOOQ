@@ -55,11 +55,13 @@ public interface DropTableStep extends DropTableFinalStep {
      * Add a <code>CASCADE</code> clause to the <code>DROP TABLE</code>
      * statement.
      */
+    @Support
     DropTableFinalStep cascade();
 
     /**
      * Add a <code>RESTRICT</code> clause to the <code>DROP TABLE</code>
      * statement.
      */
+    @Support
     DropTableFinalStep restrict();
 }

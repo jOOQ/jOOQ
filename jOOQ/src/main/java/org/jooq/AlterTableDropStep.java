@@ -55,11 +55,13 @@ public interface AlterTableDropStep extends AlterTableFinalStep {
      * Add a <code>CASCADE</code> clause to the
      * <code>ALTER TABLE .. DROP COLUMN</code> statement.
      */
+    @Support
     AlterTableFinalStep cascade();
 
     /**
      * Add a <code>RESTRICT</code> clause to the
      * <code>ALTER TABLE .. DROP COLUMN</code> statement.
      */
+    @Support
     AlterTableFinalStep restrict();
 }

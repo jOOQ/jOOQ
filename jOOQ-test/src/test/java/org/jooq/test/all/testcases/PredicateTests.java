@@ -46,6 +46,8 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 import static org.jooq.impl.DSL.all;
 import static org.jooq.impl.DSL.any;
@@ -527,6 +529,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testInPredicateWithSubselectAndLimitOffset() throws Exception {
+
+        // This query is not yet supported in these databases
+        assumeFamilyNotIn(MARIADB, MYSQL);
+
         Result<Record1<Integer>> result =
         create().select(TBook_ID())
                 .from(TBook())

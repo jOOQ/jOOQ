@@ -241,6 +241,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataAccessException if something went wrong executing the query
      * @see #store()
      */
+    @Override
     int insert() throws DataAccessException;
 
     /**

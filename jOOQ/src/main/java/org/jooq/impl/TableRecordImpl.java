@@ -40,9 +40,25 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
+import static org.jooq.impl.RecordDelegate.delegate;
+import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
+
+import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+
+import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
+import org.jooq.InsertQuery;
+import org.jooq.Record;
 import org.jooq.Row;
+import org.jooq.StoreQuery;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 
@@ -99,5 +115,172 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     @Override
     public final <O extends UpdatableRecord<O>> O fetchParent(ForeignKey<R, O> key) {
         return key.fetchParent((R) this);
+    }
+
+    @Override
+    public final int insert() {
+        return storeInsert();
+    }
+
+    final int storeInsert() {
+        final int[] result = new int[1];
+
+        delegate(configuration(), (Record) this, INSERT)
+        .operate(new RecordOperation<Record, RuntimeException>() {
+
+            @Override
+            public Record operate(Record record) throws RuntimeException {
+                result[0] = storeInsert0();
+                return record;
+            }
+        });
+
+        return result[0];
+    }
+
+    final int storeInsert0() {
+        DSLContext create = create();
+        InsertQuery<R> insert = create.insertQuery(getTable());
+        addChangedValues(insert);
+
+        // Don't store records if no value was set by client code
+        if (!insert.isExecutable()) return 0;
+
+        // [#1596] Set timestamp and/or version columns to appropriate values
+        BigInteger version = addRecordVersion(insert);
+        Timestamp timestamp = addRecordTimestamp(insert);
+
+        // [#814] Refresh identity and/or main unique key values
+        // [#1002] Consider also identity columns of non-updatable records
+        // [#1537] Avoid refreshing identity columns on batch inserts
+        Collection<Field<?>> key = null;
+        if (!TRUE.equals(create.configuration().data(Utils.DATA_OMIT_RETURNING_CLAUSE))) {
+            key = getReturning();
+            insert.setReturning(key);
+        }
+
+        int result = insert.execute();
+
+        if (result > 0) {
+
+            // [#1596] If insert was successful, update timestamp and/or version columns
+            setRecordVersionAndTimestamp(version, timestamp);
+
+            // If an insert was successful try fetching the generated IDENTITY value
+            if (key != null && !key.isEmpty()) {
+                if (insert.getReturnedRecord() != null) {
+                    for (Field<?> field : key) {
+                        setValue(field, new Value<Object>(insert.getReturnedRecord().getValue(field)));
+                    }
+                }
+            }
+
+            changed(false);
+        }
+
+        return result;
+    }
+
+    /**
+     * Set a generated version and timestamp value onto this record after
+     * successfully storing the record.
+     */
+    final void setRecordVersionAndTimestamp(BigInteger version, Timestamp timestamp) {
+        if (version != null) {
+            TableField<R, ?> field = getTable().getRecordVersion();
+            setValue(field, new Value<Object>(field.getDataType().convert(version)));
+        }
+        if (timestamp != null) {
+            TableField<R, ?> field = getTable().getRecordTimestamp();
+            setValue(field, new Value<Object>(field.getDataType().convert(timestamp)));
+        }
+    }
+
+    /**
+     * Set all changed values of this record to a store query
+     */
+    final void addChangedValues(StoreQuery<R> query) {
+        for (Field<?> field : fields.fields.fields) {
+            if (getValue0(field).isChanged()) {
+                addValue(query, field);
+            }
+        }
+    }
+
+    /**
+     * Extracted method to ensure generic type safety.
+     */
+    final <T> void addValue(StoreQuery<?> store, Field<T> field, Object value) {
+        store.addValue(field, Utils.field(value, field));
+    }
+
+    /**
+     * Extracted method to ensure generic type safety.
+     */
+    final <T> void addValue(StoreQuery<?> store, Field<T> field) {
+        addValue(store, field, getValue(field));
+    }
+
+    /**
+     * Set an updated timestamp value to a store query
+     */
+    final Timestamp addRecordTimestamp(StoreQuery<?> store) {
+        Timestamp result = null;
+
+        if (isTimestampOrVersionAvailable()) {
+            TableField<R, ? extends java.util.Date> timestamp = getTable().getRecordTimestamp();
+
+            if (timestamp != null) {
+
+                // Use Timestamp locally, to provide maximum precision
+                result = new Timestamp(System.currentTimeMillis());
+                addValue(store, timestamp, result);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Set an updated version value to a store query
+     */
+    final BigInteger addRecordVersion(StoreQuery<?> store) {
+        BigInteger result = null;
+
+        if (isTimestampOrVersionAvailable()) {
+            TableField<R, ? extends Number> version = getTable().getRecordVersion();
+
+            if (version != null) {
+                Number value = getValue(version);
+
+                // Use BigInteger locally to avoid arithmetic overflows
+                if (value == null) {
+                    result = BigInteger.ONE;
+                }
+                else {
+                    result = new BigInteger(value.toString()).add(BigInteger.ONE);
+                }
+
+                addValue(store, version, result);
+            }
+        }
+
+        return result;
+    }
+
+    final boolean isTimestampOrVersionAvailable() {
+        return getTable().getRecordTimestamp() != null || getTable().getRecordVersion() != null;
+    }
+
+    final Collection<Field<?>> getReturning() {
+        Collection<Field<?>> result = new LinkedHashSet<Field<?>>();
+
+        Identity<R, ?> identity = getTable().getIdentity();
+        if (identity != null) {
+            result.add(identity.getField());
+        }
+
+        result.addAll(getPrimaryKey().getFields());
+        return result;
     }
 }

@@ -84,7 +84,14 @@ class ConvertedDataType<T, U> extends DefaultDataType<U> {
     @SuppressWarnings("unchecked")
     @Override
     public U convert(Object object) {
-        return converter.from(delegate.convert(converter.to((U) object)));
+        if (converter.toType().isInstance(object)) {
+            return (U) object;
+        }
+
+        // [#3200] Try to convert arbitrary objects to T
+        else {
+            return converter.from(delegate.convert(object));
+        }
     }
 
     Converter<? super T, U> converter() {

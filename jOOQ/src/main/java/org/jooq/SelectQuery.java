@@ -72,7 +72,7 @@ import org.jooq.exception.DataAccessException;
 public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvider {
 
     /**
-     * Add a list of select fields
+     * Add a list of select fields.
      *
      * @param fields
      */
@@ -80,7 +80,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addSelect(Field<?>... fields);
 
     /**
-     * Add a list of select fields
+     * Add a list of select fields.
      *
      * @param fields
      */
@@ -88,13 +88,13 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addSelect(Collection<? extends Field<?>> fields);
 
     /**
-     * Add "distinct" keyword to the select clause
+     * Add "distinct" keyword to the select clause.
      */
     @Support
     void setDistinct(boolean distinct);
 
     /**
-     * Add tables to the table product
+     * Add tables to the table product.
      *
      * @param from The added tables
      */
@@ -102,7 +102,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addFrom(TableLike<?>... from);
 
     /**
-     * Add tables to the table product
+     * Add tables to the table product.
      *
      * @param from The added tables
      */
@@ -110,7 +110,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addFrom(Collection<? extends TableLike<?>> from);
 
     /**
-     * Joins the existing table product to a new table using a condition
+     * Joins the existing table product to a new table using a condition.
      *
      * @param table The joined table
      * @param conditions The joining conditions
@@ -119,7 +119,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addJoin(TableLike<?> table, Condition... conditions);
 
     /**
-     * Joins the existing table product to a new table using a condition
+     * Joins the existing table product to a new table using a condition.
      *
      * @param table The joined table
      * @param type The type of join
@@ -130,7 +130,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
 
     /* [pro] xx
     xxx
-     x xxxxx xxx xxxxxxxx xxxxx xxxxxxx xx x xxx xxxxx xxxxx x xxxxxxxxx
+     x xxxxx xxx xxxxxxxx xxxxx xxxxxxx xx x xxx xxxxx xxxxx x xxxxxxxxxx
      x xxx
      x xxxx xxxx x xxxxxxxxxxxxxxx xxxxxxxxx xxxxxx xx xxx xxxxx xxxx xxxx xx x
      x xxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxx
@@ -147,7 +147,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     xx [/pro] */
     /**
      * Joins the existing table product to a new table with a <code>USING</code>
-     * clause
+     * clause.
      * <p>
      * If this is not supported by your RDBMS, then jOOQ will try to simulate
      * this behaviour using the information provided in this query.
@@ -160,7 +160,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
 
     /**
      * Joins the existing table product to a new table with a <code>USING</code>
-     * clause
+     * clause.
      * <p>
      * If this is not supported by your RDBMS, then jOOQ will try to simulate
      * this behaviour using the information provided in this query.
@@ -173,7 +173,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addJoinUsing(TableLike<?> table, JoinType type, Collection<? extends Field<?>> fields);
 
     /**
-     * Joins the existing table product to a new table using a foreign key
+     * Joins the existing table product to a new table using a foreign key.
      *
      * @param table The joined table
      * @param type The type of join
@@ -185,7 +185,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addJoinOnKey(TableLike<?> table, JoinType type) throws DataAccessException;
 
     /**
-     * Joins the existing table product to a new table using a foreign key
+     * Joins the existing table product to a new table using a foreign key.
      *
      * @param table The joined table
      * @param type The type of join
@@ -198,7 +198,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addJoinOnKey(TableLike<?> table, JoinType type, TableField<?, ?>... keyFields) throws DataAccessException;
 
     /**
-     * Joins the existing table product to a new table using a foreign key
+     * Joins the existing table product to a new table using a foreign key.
      *
      * @param table The joined table
      * @param type The type of join
@@ -209,7 +209,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addJoinOnKey(TableLike<?> table, JoinType type, ForeignKey<?, ?> key);
 
     /**
-     * Adds grouping fields
+     * Adds grouping fields.
      * <p>
      * Calling this with an empty argument list will result in an empty
      * <code>GROUP BY ()</code> clause being rendered.
@@ -220,7 +220,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addGroupBy(GroupField... fields);
 
     /**
-     * Adds grouping fields
+     * Adds grouping fields.
      * <p>
      * Calling this with an empty argument list will result in an empty
      * <code>GROUP BY ()</code> clause being rendered.
@@ -250,7 +250,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
 
     /**
      * Adds new conditions to the having clause of query, connecting them to
-     * existing conditions with the provided operator
+     * existing conditions with the provided operator.
      *
      * @param operator The operator to use to add the conditions to the existing
      *            conditions
@@ -261,7 +261,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
 
     /**
      * Adds new conditions to the having clause of query, connecting them to
-     * existing conditions with the provided operator
+     * existing conditions with the provided operator.
      *
      * @param operator The operator to use to add the conditions to the existing
      *            conditions
@@ -350,21 +350,21 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addOption(String option);
 
     /**
-     * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
+     * Add an Oracle-specific <code>CONNECT BY</code> clause to the query.
      */
     @Support({ CUBRID })
     void addConnectBy(Condition condition);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
-     * query
+     * query.
      */
     @Support({ CUBRID })
     void addConnectByNoCycle(Condition condition);
 
     /**
      * Add an Oracle-specific <code>START WITH</code> clause to the query's
-     * <code>CONNECT BY</code> clause
+     * <code>CONNECT BY</code> clause.
      */
     @Support({ CUBRID })
     void setConnectByStartWith(Condition condition);
@@ -402,7 +402,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addConditions(Operator operator, Collection<? extends Condition> conditions);
 
     /**
-     * Adds ordering fields, ordering by the default sort order
+     * Adds ordering fields, ordering by the default sort order.
      *
      * @param fields The ordering fields
      */
@@ -410,7 +410,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addOrderBy(Field<?>... fields);
 
     /**
-     * Adds ordering fields
+     * Adds ordering fields.
      *
      * @param fields The ordering fields
      */
@@ -418,7 +418,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addOrderBy(SortField<?>... fields);
 
     /**
-     * Adds ordering fields
+     * Adds ordering fields.
      *
      * @param fields The ordering fields
      */
@@ -426,7 +426,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addOrderBy(Collection<? extends SortField<?>> fields);
 
     /**
-     * Adds ordering fields
+     * Adds ordering fields.
      * <p>
      * Indexes start at <code>1</code> in SQL!
      * <p>
@@ -486,7 +486,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addSeekBefore(Collection<? extends Field<?>> fields);
 
     /**
-     * Limit the results of this select
+     * Limit the results of this select.
      * <p>
      * This is the same as calling {@link #addLimit(int, int)} with offset = 0
      *
@@ -496,7 +496,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addLimit(int numberOfRows);
 
     /**
-     * Limit the results of this select using named parameters
+     * Limit the results of this select using named parameters.
      * <p>
      * Note that some dialects do not support bind values at all in
      * <code>LIMIT</code> or <code>TOP</code> clauses!
@@ -515,7 +515,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addLimit(Param<Integer> numberOfRows);
 
     /**
-     * Limit the results of this select
+     * Limit the results of this select.
      * <p>
      * Note that some dialects do not support bind values at all in
      * <code>LIMIT</code> or <code>TOP</code> clauses!
@@ -532,7 +532,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addLimit(int offset, int numberOfRows);
 
     /**
-     * Limit the results of this select
+     * Limit the results of this select.
      * <p>
      * Note that some dialects do not support bind values at all in
      * <code>LIMIT</code> or <code>TOP</code> clauses!
@@ -550,7 +550,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addLimit(Param<Integer> offset, int numberOfRows);
 
     /**
-     * Limit the results of this select using named parameters
+     * Limit the results of this select using named parameters.
      * <p>
      * Note that some dialects do not support bind values at all in
      * <code>LIMIT</code> or <code>TOP</code> clauses!
@@ -568,7 +568,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addLimit(int offset, Param<Integer> numberOfRows);
 
     /**
-     * Limit the results of this select using named parameters
+     * Limit the results of this select using named parameters.
      * <p>
      * Note that some dialects do not support bind values at all in
      * <code>LIMIT</code> or <code>TOP</code> clauses!
@@ -586,7 +586,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addLimit(Param<Integer> offset, Param<Integer> numberOfRows);
 
     /**
-     * Sets the "FOR UPDATE" flag onto the query
+     * Sets the "FOR UPDATE" flag onto the query.
      * <p>
      * <h5>Native implementation</h5>
      * <p>
@@ -771,7 +771,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
 
     xx [/pro] */
     /**
-     * Sets the "FOR SHARE" flag onto the query
+     * Sets the "FOR SHARE" flag onto the query.
      * <p>
      * This has been observed to be supported by any of these dialects:
      * <ul>

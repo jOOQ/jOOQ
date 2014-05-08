@@ -28,7 +28,7 @@
             <customTypes>
                 <customType>
                     <name>java.util.GregorianCalendar</name>
-                    <converter>org.jooq.test._.converters.CalendarConverter</converter>
+                    <converter>org.jooq.test.all.converters.CalendarConverter</converter>
                 </customType>
             </customTypes>
 

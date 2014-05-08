@@ -1,3 +1,6 @@
+DROP MATERIALIZED VIEW IF EXISTS m_library/
+DROP MATERIALIZED VIEW IF EXISTS m_arrays/
+DROP MATERIALIZED VIEW IF EXISTS m_639_numbers_table/
 DROP VIEW IF EXISTS v_library/
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
@@ -518,6 +521,18 @@ CREATE TABLE x_test_case_2025 (
 CREATE OR REPLACE VIEW v_library (author, title) AS
 SELECT a.first_name || ' ' || a.last_name, b.title
 FROM t_author a JOIN t_book b ON b.author_id = a.id
+/
+
+CREATE MATERIALIZED VIEW m_library AS
+SELECT * FROM v_library
+/
+
+CREATE MATERIALIZED VIEW m_arrays AS
+SELECT * FROM t_arrays
+/
+
+CREATE MATERIALIZED VIEW m_639_numbers_table AS
+SELECT * FROM t_639_numbers_table
 /
 
 CREATE VIEW v_author AS

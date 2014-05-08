@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord> implements org.jooq.Record11<java.lang.Integer, org.jooq.test.all.converters.Boolean_10, org.jooq.test.all.converters.Boolean_TF_LC, org.jooq.test.all.converters.Boolean_TF_UC, org.jooq.test.all.converters.Boolean_YES_NO_LC, org.jooq.test.all.converters.Boolean_YES_NO_UC, org.jooq.test.all.converters.Boolean_YN_LC, org.jooq.test.all.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBooleans {
 
-	private static final long serialVersionUID = -477400874;
+	private static final long serialVersionUID = -277494940;
 
 	/**
 	 * Setter for <code>public.t_booleans.id</code>.

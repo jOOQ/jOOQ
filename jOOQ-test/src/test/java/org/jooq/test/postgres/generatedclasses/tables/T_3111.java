@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3111 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_3111Record> {
 
-	private static final long serialVersionUID = -768298040;
+	private static final long serialVersionUID = -1478107386;
 
 	/**
 	 * The singleton instance of <code>public.t_3111</code>

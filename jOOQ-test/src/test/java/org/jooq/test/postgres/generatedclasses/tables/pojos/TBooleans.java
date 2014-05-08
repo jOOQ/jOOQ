@@ -9,9 +9,9 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans implements org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBooleans {
 
-	private static final long serialVersionUID = 1977703566;
+	private static final long serialVersionUID = 1331243344;
 
-	private final java.lang.Integer                            id;
+	private final java.lang.Integer                              id;
 	private final org.jooq.test.all.converters.Boolean_10        oneZero;
 	private final org.jooq.test.all.converters.Boolean_TF_LC     trueFalseLc;
 	private final org.jooq.test.all.converters.Boolean_TF_UC     trueFalseUc;
@@ -19,12 +19,12 @@ public class TBooleans implements org.jooq.test.postgres.generatedclasses.tables
 	private final org.jooq.test.all.converters.Boolean_YES_NO_UC yesNoUc;
 	private final org.jooq.test.all.converters.Boolean_YN_LC     yNLc;
 	private final org.jooq.test.all.converters.Boolean_YN_UC     yNUc;
-	private final java.lang.Boolean                            vcBoolean;
-	private final java.lang.Boolean                            cBoolean;
-	private final java.lang.Boolean                            nBoolean;
+	private final java.lang.Boolean                              vcBoolean;
+	private final java.lang.Boolean                              cBoolean;
+	private final java.lang.Boolean                              nBoolean;
 
 	public TBooleans(
-		java.lang.Integer                            id,
+		java.lang.Integer                              id,
 		org.jooq.test.all.converters.Boolean_10        oneZero,
 		org.jooq.test.all.converters.Boolean_TF_LC     trueFalseLc,
 		org.jooq.test.all.converters.Boolean_TF_UC     trueFalseUc,
@@ -32,9 +32,9 @@ public class TBooleans implements org.jooq.test.postgres.generatedclasses.tables
 		org.jooq.test.all.converters.Boolean_YES_NO_UC yesNoUc,
 		org.jooq.test.all.converters.Boolean_YN_LC     yNLc,
 		org.jooq.test.all.converters.Boolean_YN_UC     yNUc,
-		java.lang.Boolean                            vcBoolean,
-		java.lang.Boolean                            cBoolean,
-		java.lang.Boolean                            nBoolean
+		java.lang.Boolean                              vcBoolean,
+		java.lang.Boolean                              cBoolean,
+		java.lang.Boolean                              nBoolean
 	) {
 		this.id = id;
 		this.oneZero = oneZero;

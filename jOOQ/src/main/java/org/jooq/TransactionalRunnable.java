@@ -45,7 +45,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Transactional<T> {
+public interface TransactionalRunnable {
 
     /**
      * Run the transactional code.
@@ -53,15 +53,14 @@ public interface Transactional<T> {
      * If this method completes normally, and this is not a nested transaction,
      * then the transaction will be committed. If this method completes with an
      * exception, then the transaction is rolled back to the beginning of this
-     * <code>Transactional</code>.
+     * <code>TransactionalRunnable</code>.
      *
      * @param configuration The <code>Configuration</code> in whose context the
      *            transaction is run.
-     * @return The outcome of the transaction.
      * @throws Exception Any exception that will cause a rollback of the code
      *             contained in this transaction. If this is a nested
      *             transaction, the rollback may be performed only to the state
-     *             before executing this <code>Transactional</code>.
+     *             before executing this <code>TransactionalRunnable</code>.
      */
-    T run(Configuration configuration) throws Exception;
+    void run(Configuration configuration) throws Exception;
 }

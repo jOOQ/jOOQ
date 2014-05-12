@@ -48,7 +48,8 @@ import org.jooq.impl.DefaultTransactionProvider;
 /**
  * The <code>TransactionProvider</code> SPI can be used to implement custom
  * <code>transaction</code> behaviour that is applied when calling
- * {@link DSLContext#transaction(Transactional)}.
+ * {@link DSLContext#transactionResult(TransactionalCallable)} or
+ * {@link DSLContext#transaction(TransactionalRunnable)}.
  * <p>
  * A new {@link Configuration} copy is created from the calling
  * {@link DSLContext} for the scope of a single transactions. Implementors may

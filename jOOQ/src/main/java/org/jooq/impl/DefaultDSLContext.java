@@ -181,7 +181,8 @@ import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.TableRecord;
 import org.jooq.TransactionProvider;
-import org.jooq.Transactional;
+import org.jooq.TransactionalCallable;
+import org.jooq.TransactionalRunnable;
 import org.jooq.TruncateIdentityStep;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
@@ -295,7 +296,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
 
     @Override
-    public <T> T transaction(Transactional<T> transactional) {
+    public <T> T transactionResult(TransactionalCallable<T> transactional) {
         T result = null;
 
         DefaultTransactionContext ctx = new DefaultTransactionContext(configuration.derive());
@@ -318,6 +319,17 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         }
 
         return result;
+    }
+
+    @Override
+    public void transaction(final TransactionalRunnable transactional) {
+        transactionResult(new TransactionalCallable<Void>() {
+            @Override
+            public Void run(Configuration c) throws Exception {
+                transactional.run(c);
+                return null;
+            }
+        });
     }
 
     // -------------------------------------------------------------------------

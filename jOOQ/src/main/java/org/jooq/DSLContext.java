@@ -166,15 +166,40 @@ public interface DSLContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Run a {@link Transactional} in the context of this
+     * Run a {@link TransactionalCallable} in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link Configuration#transactionProvider()}, and return the
+     * <code>transactional</code>'s outcome.
+     * <p>
+     * Both javac and Eclipse compilers contain bugs when overloading methods
+     * that take both "void-compatible" and "value-compatible" functional
+     * interfaces:
+     * <ul>
+     * <li><a
+     * href="https://bugs.openjdk.java.net/browse/JDK-8029718">JDK-8029718</a></li>
+     * <li><a
+     * href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=434642">Eclipse
+     * 434642</a></li>
+     * </ul>
+     * This is why this method was renamed to <code>transactionResult()</code>.
+     * Future versions of jOOQ may create a better synonym for this, called
+     * <code>transaction()</code>, which doesn't conflict with
+     * {@link #transaction(TransactionalRunnable)}
+     *
+     * @param transactional The transactional code
+     * @return The transactional outcome
+     */
+    <T> T transactionResult(TransactionalCallable<T> transactional);
+
+    /**
+     * Run a {@link TransactionalCallable} in the context of this
      * <code>DSLContext</code>'s underlying {@link #configuration()}'s
      * {@link Configuration#transactionProvider()}, and return the
      * <code>transactional</code>'s outcome.
      *
      * @param transactional The transactional code
-     * @return The transactional outcome
      */
-    <T> T transaction(Transactional<T> transactional);
+    void transaction(TransactionalRunnable transactional);
 
     // -------------------------------------------------------------------------
     // XXX RenderContext and BindContext accessors

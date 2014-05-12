@@ -85,4 +85,15 @@ public class ConverterTest extends AbstractTest {
         assertEquals(Bool.FALSE, result.getValue(1, 0));
         assertEquals(Bool.NULL, result.getValue(2, 0));
     }
+
+    @Test
+    public void testConverterInTableField() {
+        assertEquals(Bool.NULL, BOOL_TABLE.BOOL.getDataType().convert((Boolean) null));
+        assertEquals(Bool.TRUE, BOOL_TABLE.BOOL.getDataType().convert(true));
+        assertEquals(Bool.TRUE, BOOL_TABLE.BOOL.getDataType().convert(1));
+        assertEquals(Bool.TRUE, BOOL_TABLE.BOOL.getDataType().convert("true"));
+        assertEquals(Bool.FALSE, BOOL_TABLE.BOOL.getDataType().convert(false));
+        assertEquals(Bool.FALSE, BOOL_TABLE.BOOL.getDataType().convert(0));
+        assertEquals(Bool.FALSE, BOOL_TABLE.BOOL.getDataType().convert("false"));
+    }
 }

@@ -700,5 +700,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetch();
 
         assertEquals(2, result.size());
+
+        result =
+        create().select(TBook_CONTENT_TEXT())
+                .from(TBook())
+                .limit(2)
+                .offset(1)
+                .fetch();
+
+        assertEquals(2, result.size());
     }
 }

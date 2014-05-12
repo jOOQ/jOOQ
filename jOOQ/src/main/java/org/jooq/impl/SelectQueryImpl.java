@@ -1098,10 +1098,11 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         return seek;
     }
 
+    @Deprecated // Can this be written any better?
     final SortFieldList getNonEmptyOrderBy() {
         if (getOrderBy().isEmpty()) {
             SortFieldList result = new SortFieldList();
-            result.add(getSelect().get(0).asc());
+            result.add(DSL.field("@@version").asc());
             return result;
         }
 

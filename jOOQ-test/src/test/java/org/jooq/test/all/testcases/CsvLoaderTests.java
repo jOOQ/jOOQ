@@ -40,6 +40,9 @@
  */
 package org.jooq.test.all.testcases;
 
+import static java.util.Arrays.asList;
+import static org.junit.Assert.assertEquals;
+
 import java.sql.Date;
 
 import org.jooq.Loader;
@@ -47,9 +50,13 @@ import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
+import org.jooq.Result;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.impl.DSL;
 import org.jooq.test.jOOQAbstractTest;
+import org.jooq.test.all.converters.Boolean_10;
+import org.jooq.test.all.converters.Boolean_TF_LC;
 
 /**
  * @author Johannes Buehler
@@ -80,6 +87,39 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
 
     public CsvLoaderTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
         super(delegate);
+    }
+
+    public void testLoaderConverter() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        create().transaction(c -> {
+            String csv =
+                "1,0,false\n" +
+                "2,1,true";
+
+            Loader<BOOL> loader =
+            DSL.using(c)
+               .loadInto(TBooleans())
+               .loadCSV(csv)
+               .fields(TBooleans_ID(), TBooleans_BOOLEAN_10(), TBooleans_Boolean_TF_LC())
+               .ignoreRows(0)
+               .execute();
+
+            assertEquals(0, loader.errors().size());
+            assertEquals(2, loader.stored());
+
+            Result<Record3<Integer, Boolean_10, Boolean_TF_LC>> result =
+            DSL.using(c)
+               .select(TBooleans_ID(), TBooleans_BOOLEAN_10(), TBooleans_Boolean_TF_LC())
+               .from(TBooleans())
+               .orderBy(TBooleans_ID())
+               .fetch();
+
+            assertEquals(2, result.size());
+            assertEquals(asList(1, 2), result.getValues(TBooleans_ID()));
+            assertEquals(asList(Boolean_10.ZERO, Boolean_10.ONE), result.getValues(TBooleans_BOOLEAN_10()));
+            assertEquals(asList(Boolean_TF_LC.FALSE, Boolean_TF_LC.TRUE), result.getValues(TBooleans_Boolean_TF_LC()));
+        });
     }
 
     @Override

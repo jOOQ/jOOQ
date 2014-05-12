@@ -2070,6 +2070,11 @@ public abstract class jOOQAbstractTest<
         new OrderByTests(this).testLimitDistinct();
     }
 
+    @Test
+    public void testLimitWithLOBs() throws Exception {
+        new OrderByTests(this).testLimitWithLOBs();
+    }
+
     // [#2080] TODO @Test
     public void testLimitAliased() throws Exception {
         new OrderByTests(this).testLimitAliased();

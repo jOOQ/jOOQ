@@ -816,7 +816,8 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         else if (getLimit().isApplicable() && asList(SQLSERVER, SQLSERVER2012).contains(dialect)){
             context.formatSeparator()
                    .keyword("order by")
-                   .sql(" 1");
+                   .sql(" ")
+                   .keyword("@@version");
         }
 
         context.end(SELECT_ORDER_BY);

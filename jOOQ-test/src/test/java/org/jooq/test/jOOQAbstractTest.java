@@ -312,6 +312,9 @@ public abstract class jOOQAbstractTest<
                 }
             }
             catch (Exception e) {
+                if (e.getMessage() == null)
+                    throw e;
+
                 log.debug("Ignoring", e.getMessage().replaceAll("\n", " "));
 
                 // Ignore all errors on DROP statements
@@ -671,6 +674,28 @@ public abstract class jOOQAbstractTest<
 
     final Connection getConnection0(String jdbcUser, String jdbcPassword) {
         try {
+
+            // [#682] We reuse the config.properties that is also used for the Maven pom.xml
+            try (InputStream config = GenerationTool.class.getResourceAsStream("/config.properties")) {
+                if (config != null) {
+                    Properties properties = new Properties();
+                    properties.load(config);
+
+                    String d = dialect().name().toLowerCase();
+                    if (properties.containsKey("db." + d + ".driver")) {
+                        jdbcURL = properties.getProperty("db." + d + ".url") + getSchemaSuffix();
+                        jdbcSchema = properties.getProperty("db." + d + ".schema") + getSchemaSuffix();
+
+                        jdbcUser = properties.getProperty("db." + d + ".username");
+                        jdbcPassword = properties.getProperty("db." + d + ".password");
+
+                        return getConnection1(jdbcUser, jdbcPassword, properties.getProperty("db." + d + ".driver"));
+                    }
+                }
+            }
+
+
+
             String configuration = System.getProperty("org.jooq.configuration");
             if (configuration == null) {
                 log.error("No system property 'org.jooq.configuration' found");
@@ -702,26 +727,30 @@ public abstract class jOOQAbstractTest<
                 jdbc.getPassword() != null ? jdbc.getPassword() :
                 getProperty(jdbc.getProperties(), "password");
 
-            Properties info = new Properties();
-            if (getClass().getSimpleName().toLowerCase().contains("ingres")) {
-                info.setProperty("timezone", "EUROPE-CENTRAL");
-            }
-            Driver d = ((Driver) Class.forName(driver).newInstance());
-            if (!StringUtils.isBlank(jdbcUser)) {
-                info.put("user", jdbcUser);
-                info.put("password", jdbcPassword);
-            }
-            else {
-                return DriverManager.getConnection(getJdbcURL(), jdbcUser, jdbcPassword);
-            }
-
-            return d != null
-                ? d.connect(getJdbcURL(), info)
-                : DriverManager.getConnection(getJdbcURL(), info);
+            return getConnection1(jdbcUser, jdbcPassword, driver);
         }
         catch (Exception e) {
             throw new Error(e);
         }
+    }
+
+    private Connection getConnection1(String jdbcUser, String jdbcPassword, String driver) throws Exception {
+        Properties info = new Properties();
+        if (getClass().getSimpleName().toLowerCase().contains("ingres")) {
+            info.setProperty("timezone", "EUROPE-CENTRAL");
+        }
+        Driver d = ((Driver) Class.forName(driver).newInstance());
+        if (!StringUtils.isBlank(jdbcUser)) {
+            info.put("user", jdbcUser);
+            info.put("password", jdbcPassword);
+        }
+        else {
+            return DriverManager.getConnection(getJdbcURL(), jdbcUser, jdbcPassword);
+        }
+
+        return d != null
+            ? d.connect(getJdbcURL(), info)
+            : DriverManager.getConnection(getJdbcURL(), info);
     }
 
     /**

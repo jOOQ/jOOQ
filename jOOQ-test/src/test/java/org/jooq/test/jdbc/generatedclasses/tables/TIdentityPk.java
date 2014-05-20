@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = 600058304;
+	private static final long serialVersionUID = -1279694350;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_IDENTITY_PK</code>
@@ -25,20 +25,28 @@ public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.gene
 	}
 
 	/**
-	 * The column <code>PUBLIC.T_IDENTITY_PK.ID</code>. 
+	 * The column <code>PUBLIC.T_IDENTITY_PK.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY_PK);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY_PK, "");
 
 	/**
-	 * The column <code>PUBLIC.T_IDENTITY_PK.VAL</code>. 
+	 * The column <code>PUBLIC.T_IDENTITY_PK.VAL</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> VAL = createField("VAL", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY_PK);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> VAL = createField("VAL", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY_PK, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TIdentityPk() {
-		super("T_IDENTITY_PK", org.jooq.test.jdbc.generatedclasses.Public.PUBLIC);
+		this("T_IDENTITY_PK", null);
+	}
+
+	private TIdentityPk(java.lang.String alias, org.jooq.Table<org.jooq.test.jdbc.generatedclasses.tables.records.TIdentityPkRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TIdentityPk(java.lang.String alias, org.jooq.Table<org.jooq.test.jdbc.generatedclasses.tables.records.TIdentityPkRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.jdbc.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**

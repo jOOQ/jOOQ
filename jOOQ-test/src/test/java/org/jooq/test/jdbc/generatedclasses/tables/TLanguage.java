@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -612520653;
+	private static final long serialVersionUID = 1834098985;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_LANGUAGE</code>
@@ -25,30 +25,38 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.genera
 	}
 
 	/**
-	 * The column <code>PUBLIC.T_LANGUAGE.CD</code>. 
+	 * The column <code>PUBLIC.T_LANGUAGE.CD</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2), T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2), T_LANGUAGE, "");
 
 	/**
-	 * The column <code>PUBLIC.T_LANGUAGE.DESCRIPTION</code>. 
+	 * The column <code>PUBLIC.T_LANGUAGE.DESCRIPTION</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE, "");
 
 	/**
-	 * The column <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * The column <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("DESCRIPTION_ENGLISH", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("DESCRIPTION_ENGLISH", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE, "");
 
 	/**
-	 * The column <code>PUBLIC.T_LANGUAGE.ID</code>. 
+	 * The column <code>PUBLIC.T_LANGUAGE.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_LANGUAGE, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TLanguage() {
-		super("T_LANGUAGE", org.jooq.test.jdbc.generatedclasses.Public.PUBLIC);
+		this("T_LANGUAGE", null);
+	}
+
+	private TLanguage(java.lang.String alias, org.jooq.Table<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TLanguage(java.lang.String alias, org.jooq.Table<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.jdbc.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**

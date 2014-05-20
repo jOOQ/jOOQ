@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 338620898;
+	private static final long serialVersionUID = 218833624;
 
 	/**
 	 * The singleton instance of <code>t_639_numbers_table</code>
@@ -52,32 +52,32 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.sql
 	/**
 	 * The column <code>t_639_numbers_table.BYTE_DECIMAL</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Byte> BYTE_DECIMAL = createField("BYTE_DECIMAL", org.jooq.impl.SQLDataType.TINYINT, T_639_NUMBERS_TABLE, "");
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Object> BYTE_DECIMAL = createField("BYTE_DECIMAL", org.jooq.impl.DefaultDataType.getDefaultDataType("DECIMAL(2, 0)"), T_639_NUMBERS_TABLE, "");
 
 	/**
 	 * The column <code>t_639_numbers_table.SHORT_DECIMAL</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Short> SHORT_DECIMAL = createField("SHORT_DECIMAL", org.jooq.impl.SQLDataType.SMALLINT, T_639_NUMBERS_TABLE, "");
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Object> SHORT_DECIMAL = createField("SHORT_DECIMAL", org.jooq.impl.DefaultDataType.getDefaultDataType("DECIMAL(4, 0)"), T_639_NUMBERS_TABLE, "");
 
 	/**
 	 * The column <code>t_639_numbers_table.INTEGER_DECIMAL</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> INTEGER_DECIMAL = createField("INTEGER_DECIMAL", org.jooq.impl.SQLDataType.INTEGER, T_639_NUMBERS_TABLE, "");
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Object> INTEGER_DECIMAL = createField("INTEGER_DECIMAL", org.jooq.impl.DefaultDataType.getDefaultDataType("DECIMAL(9, 0)"), T_639_NUMBERS_TABLE, "");
 
 	/**
 	 * The column <code>t_639_numbers_table.LONG_DECIMAL</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> LONG_DECIMAL = createField("LONG_DECIMAL", org.jooq.impl.SQLDataType.BIGINT, T_639_NUMBERS_TABLE, "");
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Object> LONG_DECIMAL = createField("LONG_DECIMAL", org.jooq.impl.DefaultDataType.getDefaultDataType("DECIMAL(18, 0)"), T_639_NUMBERS_TABLE, "");
 
 	/**
 	 * The column <code>t_639_numbers_table.BIG_INTEGER</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigInteger> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(22), T_639_NUMBERS_TABLE, "");
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Object> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.impl.DefaultDataType.getDefaultDataType("DECIMAL(22, 0)"), T_639_NUMBERS_TABLE, "");
 
 	/**
 	 * The column <code>t_639_numbers_table.BIG_DECIMAL</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigDecimal> BIG_DECIMAL = createField("BIG_DECIMAL", org.jooq.impl.SQLDataType.NUMERIC.precision(22, 5), T_639_NUMBERS_TABLE, "");
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Object> BIG_DECIMAL = createField("BIG_DECIMAL", org.jooq.impl.DefaultDataType.getDefaultDataType("DECIMAL(22, 5)"), T_639_NUMBERS_TABLE, "");
 
 	/**
 	 * The column <code>t_639_numbers_table.FLOAT</code>.

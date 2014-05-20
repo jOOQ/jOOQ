@@ -10,12 +10,12 @@ package org.jooq.test.jdbc.generatedclasses.tables.interfaces;
 public interface IT_2327UkOnly extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.T_2327_UK_ONLY.ID</code>. 
+	 * Setter for <code>PUBLIC.T_2327_UK_ONLY.ID</code>.
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.T_2327_UK_ONLY.ID</code>. 
+	 * Getter for <code>PUBLIC.T_2327_UK_ONLY.ID</code>.
 	 */
 	public java.lang.Integer getId();
 

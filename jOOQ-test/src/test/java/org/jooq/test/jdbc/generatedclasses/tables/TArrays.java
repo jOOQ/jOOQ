@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = -951729578;
+	private static final long serialVersionUID = 1345695006;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_ARRAYS</code>
@@ -25,30 +25,38 @@ public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generate
 	}
 
 	/**
-	 * The column <code>PUBLIC.T_ARRAYS.ID</code>. 
+	 * The column <code>PUBLIC.T_ARRAYS.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TArraysRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_ARRAYS);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TArraysRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_ARRAYS, "");
 
 	/**
-	 * The column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>. 
+	 * The column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TArraysRecord, java.lang.Object> STRING_ARRAY = createField("STRING_ARRAY", org.jooq.impl.SQLDataType.OTHER, T_ARRAYS);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TArraysRecord, java.lang.Object> STRING_ARRAY = createField("STRING_ARRAY", org.jooq.impl.SQLDataType.OTHER, T_ARRAYS, "");
 
 	/**
-	 * The column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>. 
+	 * The column <code>PUBLIC.T_ARRAYS.NUMBER_ARRAY</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TArraysRecord, java.lang.Object> NUMBER_ARRAY = createField("NUMBER_ARRAY", org.jooq.impl.SQLDataType.OTHER, T_ARRAYS);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TArraysRecord, java.lang.Object> NUMBER_ARRAY = createField("NUMBER_ARRAY", org.jooq.impl.SQLDataType.OTHER, T_ARRAYS, "");
 
 	/**
-	 * The column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>. 
+	 * The column <code>PUBLIC.T_ARRAYS.DATE_ARRAY</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TArraysRecord, java.lang.Object> DATE_ARRAY = createField("DATE_ARRAY", org.jooq.impl.SQLDataType.OTHER, T_ARRAYS);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TArraysRecord, java.lang.Object> DATE_ARRAY = createField("DATE_ARRAY", org.jooq.impl.SQLDataType.OTHER, T_ARRAYS, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TArrays() {
-		super("T_ARRAYS", org.jooq.test.jdbc.generatedclasses.Public.PUBLIC);
+		this("T_ARRAYS", null);
+	}
+
+	private TArrays(java.lang.String alias, org.jooq.Table<org.jooq.test.jdbc.generatedclasses.tables.records.TArraysRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TArrays(java.lang.String alias, org.jooq.Table<org.jooq.test.jdbc.generatedclasses.tables.records.TArraysRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.jdbc.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**

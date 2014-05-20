@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -1049230640;
+	private static final long serialVersionUID = -877336589;
 
 	/**
 	 * The singleton instance of <code>t_triggers</code>
@@ -52,6 +52,14 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.gene
 
 	private TTriggers(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, org.jooq.test.sqlite.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Identity<org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> getIdentity() {
+		return org.jooq.test.sqlite.generatedclasses.Keys.IDENTITY_T_TRIGGERS;
 	}
 
 	/**

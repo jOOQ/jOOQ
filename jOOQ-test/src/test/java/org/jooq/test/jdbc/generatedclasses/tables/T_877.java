@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_877 extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedclasses.tables.records.T_877Record> {
 
-	private static final long serialVersionUID = -1047568143;
+	private static final long serialVersionUID = -1279017677;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_877</code>
@@ -25,14 +25,22 @@ public class T_877 extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedc
 	}
 
 	/**
-	 * The column <code>PUBLIC.T_877.ID</code>. 
+	 * The column <code>PUBLIC.T_877.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.T_877Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_877);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.T_877Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_877, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private T_877() {
-		super("T_877", org.jooq.test.jdbc.generatedclasses.Public.PUBLIC);
+		this("T_877", null);
+	}
+
+	private T_877(java.lang.String alias, org.jooq.Table<org.jooq.test.jdbc.generatedclasses.tables.records.T_877Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_877(java.lang.String alias, org.jooq.Table<org.jooq.test.jdbc.generatedclasses.tables.records.T_877Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.jdbc.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 }

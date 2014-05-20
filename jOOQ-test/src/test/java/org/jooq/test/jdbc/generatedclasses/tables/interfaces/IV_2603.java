@@ -10,42 +10,42 @@ package org.jooq.test.jdbc.generatedclasses.tables.interfaces;
 public interface IV_2603 extends java.io.Serializable {
 
 	/**
-	 * Setter for <code>PUBLIC.V_2603.COL1</code>. 
+	 * Setter for <code>PUBLIC.V_2603.COL1</code>.
 	 */
 	public void setCol1(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_2603.COL1</code>. 
+	 * Getter for <code>PUBLIC.V_2603.COL1</code>.
 	 */
 	public java.lang.Integer getCol1();
 
 	/**
-	 * Setter for <code>PUBLIC.V_2603.COL2</code>. 
+	 * Setter for <code>PUBLIC.V_2603.COL2</code>.
 	 */
 	public void setCol2(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_2603.COL2</code>. 
+	 * Getter for <code>PUBLIC.V_2603.COL2</code>.
 	 */
 	public java.lang.Integer getCol2();
 
 	/**
-	 * Setter for <code>PUBLIC.V_2603.COL3</code>. 
+	 * Setter for <code>PUBLIC.V_2603.COL3</code>.
 	 */
 	public void setCol3(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_2603.COL3</code>. 
+	 * Getter for <code>PUBLIC.V_2603.COL3</code>.
 	 */
 	public java.lang.Integer getCol3();
 
 	/**
-	 * Setter for <code>PUBLIC.V_2603.COL4</code>. 
+	 * Setter for <code>PUBLIC.V_2603.COL4</code>.
 	 */
 	public void setCol4(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>PUBLIC.V_2603.COL4</code>. 
+	 * Getter for <code>PUBLIC.V_2603.COL4</code>.
 	 */
 	public java.lang.Integer getCol4();
 

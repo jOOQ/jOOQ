@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -140961755;
+	private static final long serialVersionUID = 586586741;
 
 	/**
 	 * The singleton instance of <code>T_BOOLEANS</code>

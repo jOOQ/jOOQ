@@ -955,11 +955,14 @@ public class SQLServerTest extends jOOQAbstractTest<
 
     @Test
     public void testSQLServerStoreNullableUniqueKey() {
+        clean(T_3090_B);
+
         T_3090BRecord record = create().newRecord(T_3090_B);
         record.setId1(1);
         record.setId2(null);
         assertEquals(1, record.insert());
         assertNull(record.getData());
+        assertEquals(1, create().fetchCount(T_3090_B));
 
         // REFRESH()
         record.setData(2);
@@ -967,12 +970,22 @@ public class SQLServerTest extends jOOQAbstractTest<
         assertEquals(1, (int) record.getId1());
         assertNull(record.getId2());
         assertNull(record.getData());
+        assertEquals(1, create().fetchCount(T_3090_B));
 
         record.setData(2);
         record.refresh(T_3090_B.DATA);
         assertEquals(1, (int) record.getId1());
         assertNull(record.getId2());
         assertNull(record.getData());
+        assertEquals(1, create().fetchCount(T_3090_B));
+
+        // STORE()
+        record.setData(2);
+        assertEquals(1, record.store());
+        assertEquals(1, (int) record.getId1());
+        assertNull(record.getId2());
+        assertEquals(2, (int) record.getData());
+        assertEquals(1, create().fetchCount(T_3090_B));
 
         // UPDATE()
         record.setData(2);
@@ -980,14 +993,18 @@ public class SQLServerTest extends jOOQAbstractTest<
         assertEquals(1, (int) record.getId1());
         assertNull(record.getId2());
         assertEquals(2, (int) record.getData());
+        assertEquals(1, create().fetchCount(T_3090_B));
 
         // DELETE()
         assertEquals(1, record.delete());
         assertNull(create().fetchOne(T_3090_B));
+        assertEquals(0, create().fetchCount(T_3090_B));
     }
 
     @Test
     public void testSQLServerStoreNullableUniqueKeyWithBatchStore() {
+        clean(T_3084);
+
         T_3084Record r1 = create().newRecord(T_3084);
         T_3084Record r2 = create().newRecord(T_3084);
 

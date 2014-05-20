@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -1383173867;
+	private static final long serialVersionUID = -1533937935;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOK_STORE</code>
@@ -25,15 +25,23 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.gener
 	}
 
 	/**
-	 * The column <code>PUBLIC.T_BOOK_STORE.NAME</code>. 
+	 * The column <code>PUBLIC.T_BOOK_STORE.NAME</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400), T_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400), T_BOOK_STORE, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TBookStore() {
-		super("T_BOOK_STORE", org.jooq.test.jdbc.generatedclasses.Public.PUBLIC);
+		this("T_BOOK_STORE", null);
+	}
+
+	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.jdbc.generatedclasses.tables.records.TBookStoreRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.jdbc.generatedclasses.tables.records.TBookStoreRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.jdbc.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**

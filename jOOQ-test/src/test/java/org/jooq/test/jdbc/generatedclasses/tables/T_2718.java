@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2718 extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedclasses.tables.records.T_2718Record> {
 
-	private static final long serialVersionUID = -2082537201;
+	private static final long serialVersionUID = 1707905665;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_2718</code>
@@ -25,20 +25,28 @@ public class T_2718 extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generated
 	}
 
 	/**
-	 * The column <code>PUBLIC.T_2718.EXCLUDE_ME</code>. 
+	 * The column <code>PUBLIC.T_2718.EXCLUDE_ME</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.T_2718Record, java.lang.Integer> EXCLUDE_ME = createField("EXCLUDE_ME", org.jooq.impl.SQLDataType.INTEGER, T_2718);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.T_2718Record, java.lang.Integer> EXCLUDE_ME = createField("EXCLUDE_ME", org.jooq.impl.SQLDataType.INTEGER, T_2718, "");
 
 	/**
-	 * The column <code>PUBLIC.T_2718.XX</code>. 
+	 * The column <code>PUBLIC.T_2718.XX</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.T_2718Record, java.lang.Integer> XX = createField("XX", org.jooq.impl.SQLDataType.INTEGER, T_2718);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.T_2718Record, java.lang.Integer> XX = createField("XX", org.jooq.impl.SQLDataType.INTEGER, T_2718, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private T_2718() {
-		super("T_2718", org.jooq.test.jdbc.generatedclasses.Public.PUBLIC);
+		this("T_2718", null);
+	}
+
+	private T_2718(java.lang.String alias, org.jooq.Table<org.jooq.test.jdbc.generatedclasses.tables.records.T_2718Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_2718(java.lang.String alias, org.jooq.Table<org.jooq.test.jdbc.generatedclasses.tables.records.T_2718Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.jdbc.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**

@@ -142,6 +142,11 @@ public class Tables {
 	public static final org.jooq.test.jdbc.generatedclasses.tables.V_2603 V_2603 = org.jooq.test.jdbc.generatedclasses.tables.V_2603.V_2603;
 
 	/**
+	 * The table PUBLIC.V_3176
+	 */
+	public static final org.jooq.test.jdbc.generatedclasses.tables.V_3176 V_3176 = org.jooq.test.jdbc.generatedclasses.tables.V_3176.V_3176;
+
+	/**
 	 * The table PUBLIC.V_AUTHOR
 	 */
 	public static final org.jooq.test.jdbc.generatedclasses.tables.VAuthor V_AUTHOR = org.jooq.test.jdbc.generatedclasses.tables.VAuthor.V_AUTHOR;

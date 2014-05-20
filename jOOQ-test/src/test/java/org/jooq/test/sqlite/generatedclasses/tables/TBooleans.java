@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -666401042;
+	private static final long serialVersionUID = 107614126;
 
 	/**
 	 * The singleton instance of <code>t_booleans</code>

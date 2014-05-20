@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -1150658559;
+	private static final long serialVersionUID = -853914637;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_EXOTIC_TYPES</code>
@@ -25,20 +25,28 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.gen
 	}
 
 	/**
-	 * The column <code>PUBLIC.T_EXOTIC_TYPES.ID</code>. 
+	 * The column <code>PUBLIC.T_EXOTIC_TYPES.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TExoticTypesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_EXOTIC_TYPES);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TExoticTypesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_EXOTIC_TYPES, "");
 
 	/**
-	 * The column <code>PUBLIC.T_EXOTIC_TYPES.UU</code>. 
+	 * The column <code>PUBLIC.T_EXOTIC_TYPES.UU</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("UU", org.jooq.impl.SQLDataType.UUID, T_EXOTIC_TYPES);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("UU", org.jooq.impl.SQLDataType.UUID, T_EXOTIC_TYPES, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private TExoticTypes() {
-		super("T_EXOTIC_TYPES", org.jooq.test.jdbc.generatedclasses.Public.PUBLIC);
+		this("T_EXOTIC_TYPES", null);
+	}
+
+	private TExoticTypes(java.lang.String alias, org.jooq.Table<org.jooq.test.jdbc.generatedclasses.tables.records.TExoticTypesRecord> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private TExoticTypes(java.lang.String alias, org.jooq.Table<org.jooq.test.jdbc.generatedclasses.tables.records.TExoticTypesRecord> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.jdbc.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 
 	/**

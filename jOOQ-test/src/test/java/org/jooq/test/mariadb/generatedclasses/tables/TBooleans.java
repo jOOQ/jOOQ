@@ -9,7 +9,7 @@ package org.jooq.test.mariadb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.mariadb.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -1486067353;
+	private static final long serialVersionUID = 1558027943;
 
 	/**
 	 * The singleton instance of <code>test.t_booleans</code>

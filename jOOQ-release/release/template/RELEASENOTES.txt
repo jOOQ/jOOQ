@@ -18,8 +18,15 @@ in production.
 
 Features and improvements
 -------------------------
+#1061 - Support "DEFAULT" keyword in INSERT and UPDATE statements
 #2573 - Generate DAOs for tables with composite primary keys
+#2646 - SQL Server error "The text, ntext, and image data types cannot be
+        compared or sorted" when using LIMIT with a SELECT [text, image]
+        statement
+#2675 - Add test to verify if jOOQ correctly binds NULL values with the right
+        JDBC type in batch INSERT operations
 #3010 - Generate POJOs for Oracle and PostgreSQL UDTs
+#3016 - Adapt manual to recommend also other popular connection pools
 #3030 - Add support for ALTER SEQUENCE ... RESTART [ WITH ... ]
 #3075 - Add support for Oracle TEMPORARY tables
 #3076 - Add ExecuteListener.warning(ExecuteContext) to allow for listening to
@@ -33,9 +40,63 @@ Features and improvements
 #3094 - Add Relations.getUniqueKeys(SchemaDefinition), getUniqueKeys()
 #3095 - Add SchemaDefinition.getTables()
 #3096 - Add Constants.XSD_RUNTIME, NS_RUNTIME, XSD_CODEGEN, NS_CODEGEN
+#3111 - Support multiple Converters for the same <U> type in the code generator
+#3115 - Support hypothetical set function syntax (for CUME_DIST, RANK,
+        DENSE_RANK, PERCENT_RANK)
+#3116 - The jOOQ Scala manual examples use T_BOOK instead of BOOK
+#3125 - Generate default ArrayRecord constructors that don't need a
+        Configuration
+#3130 - Generated UDTRecords should be more similar to generated TableRecords
+#3139 - Add <T1, ..., T[N]> Result<Record[N]<T1, ..., T[N]>>
+        DSLContext.newResult(Field<T1>, ..., Field<T[N]>)
+#3153 - Add a paragraph to the manual explaining classpath behaviour of the
+        standalone code generator
+#3169 - Add more ResultQuery.fetchAnyXXX() convenience methods
+#3180 - Add a Java 8 example to the documentation
+#3181 - Update external manual links to point to the JavaSE 8 Javadoc
+#3189 - Add DSL.sequenceByName(String...)
+#3199 - Add some Javadoc to Result.attach() and Result.detach() to explain the
+        semantics
+#3202 - Allow for Pattern.COMMENTS in code generation configuration's regexes
+#3203 - Add DSL.not(Field<Boolean>) as a convenience for DSL.not(Condition)
+        and condition(Field<Boolean>) 
+#3204 - Clarify what "fully qualified" means in the context of <include/> and
+        <exclude/> in the code generator configuration
+#3205 - Add DSL.condition(Boolean) as a convenience for
+        condition(Field<Boolean>)
+#3212 - Add support for value types in DefaultRecordMapper, when mapping 
+        Record1 types
+#3229 - Add DSLContext.transaction() to implement nested transaction semantics
+        through functional interfaces 
+#3230 - Implement TransactionProvider for use with DataSourceConnectionProvider
+#3232 - Add optional <type/> configuration to <customType/> in order to specify
+        different converters for the same Java type
+#3233 - Add DataTypeDefinition.getConverter()
+#3240 - Add DSL.sequence() methods for plain SQL sequence construction
+#3252 - Relax bounds on <R> for DSLContext.batchInsert()
+#3253 - Pull up TableRecord.insert()
+
+API changes (backwards-compatible)
+----------------------------------
+#3126 - Deprecate generated ArrayRecord constructors that take a Configuration
+        argument 
+#3127 - Deprecate ArrayRecord.set(Array)
+#3128 - Change ArrayRecord.setList(List<? extends E>) into
+        ArrayRecord.set(Collection<? extends E>)
+
+API changes (backwards-incompatible)
+------------------------------------
+#3247 - InsertSetMoreStep must not extend InsertSetStep
+
+Behavioural changes (backwards-incompatible)
+--------------------------------------------
+#3131 - Query.getBindValues() should not return inlined bind values
+#3132 - Quoting identifiers that contain "special characters" may lead to
+        unexpected results when using RenderNameStyle.AS_IS
 
 Bug fixes
 ---------
+#2973 - Field.in(Collection) should accept wildcard instead of T
 #3011 - Routines do not propagate errors raised from T-SQL with sqljdbc_4.0
 #3055 - Add missing MariaDB and MS Access support to the manual
 #3057 - Wrong paths in maven-install.sh and maven-install.bat
@@ -46,6 +107,47 @@ Bug fixes
 #3101 - MutablePOJOMapper doesn't work with annotated boolean getters
 #3108 - Local Fields' Converters should be preferred over globally registered
         Converters 
+#3119 - Upgrade to JUnit 4.11 and omit using deprecated junit.framework.Assert
+        in tests
+#3120 - Outdated link to Spring TX in the manual
+#3122 - Runtime Schema mapping doesn't work for UDT
+#3131 - Query.getBindValues() should not return inlined bind values
+#3133 - Code generation marks all PostgreSQL Fields as having a default value
+#3143 - Bad Javadoc in the org.jooq.tools.json package: JSON tools are not
+        "JSONAware" 
+#3147 - Field.sortAsc() and sortDesc() should generate inlined values for sort
+        indirection
+#3156 - "Column ambiguously defined" when emulating derived column lists with
+        duplicate column names 
+#3159 - Replace BoneCP with Apache DBCP in examples and manual
+#3161 - Bad XSD version number referenced from jOOQ 3.3 manual
+#3162 - NullPointerException when referencing window name that was not declared
+#3164 - Missing formatting when rendering formatted MERGE statement's SET clause
+#3168 - Bad download link in documentation 
+#3176 - Don't generate "assignment-constructors" for POJOs and Records with more
+        than 255 columns 
+#3179 - PDF manual's white-on-black code sections are hard to read with Kindle
+#3186 - Bad SQL rendered for FOR UPDATE clause in Firebird
+#3187 - Manual section about Groovy has a couple of Scala references in them
+#3191 - ResultQuery.keepStatement(true) doesn't work correctly with
+        DataSourceConnectionProvider 
+#3194 - Avoid using deprecated Maven mojo descriptor @parameter
+        expression="${property}"
+#3200 - Converter does not work when loading CSV files
+#3211 - Dead codegen example POM link in manual
+#3214 - Error when inserting PostgreSQL enum array
+#3217 - Manual was not updated after fixing #2910
+#3218 - Fix the manual and suggest using DSL.field() instead of
+        DSL.fieldByName()
+#3226 - DefaultConnectionProvider shouldn't use DSL class for DEBUG logging
+#3234 - Connection Leak With BatchCRUD operations
+#3237 - UpdatableRecord.store() executes INSERT instead of UPDATE when nullable
+        primary keys are NULL
+#3241 - Cursor.iterator() does not correctly implement Iterator.next() contract
+        with respect to NoSuchElementException
+#3244 - InsertQuery.setDefaultValues() is not supported by the ACCESS dialect
+#3249 - DSL.selectZero() and DSL.selectOne() should alias column names
+
 
 Version 3.3.0 - February 14, 2014
 ================================================================================

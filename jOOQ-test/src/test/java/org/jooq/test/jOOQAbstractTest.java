@@ -270,6 +270,7 @@ public abstract class jOOQAbstractTest<
     public static String                 jdbcURL;
     public static String                 jdbcSchema;
     public static Map<String, String>    scripts                = new HashMap<String, String>();
+    public static Table<?>[]             clean;
 
     protected void execute(String script) throws Exception {
         Statement stmt = null;
@@ -457,11 +458,26 @@ public abstract class jOOQAbstractTest<
             reset = true;
             execute(getResetScript());
         }
+
+        if (clean != null && clean.length > 0) {
+            for (Table<?> table : clean) {
+                try {
+                    create().delete(table);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     @After
     public void tearDown() throws Exception {
         connection.setAutoCommit(autocommit);
+    }
+
+    public void clean(Table<?>... tables) {
+        this.clean = tables;
     }
 
     @BeforeClass

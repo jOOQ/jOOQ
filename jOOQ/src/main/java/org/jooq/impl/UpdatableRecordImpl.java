@@ -155,8 +155,11 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
             // [#2764] Primary key value changes are interpreted as record copies
             else {
 
-                // If any primary key value is null or changed, execute an insert
-                if (getValue(field) == null || getValue0(field).isChanged()) {
+                // If any primary key value is null or changed
+                if (getValue0(field).isChanged() ||
+
+                // [#3237] or if a NOT NULL primary key value is null, then execute an INSERT
+                   (field.getDataType().nullable() == false && getValue(field) == null)) {
                     executeUpdate = false;
                     break;
                 }

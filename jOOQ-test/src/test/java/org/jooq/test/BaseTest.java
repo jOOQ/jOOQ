@@ -879,6 +879,10 @@ public abstract class BaseTest<
         return new Timestamp(0).toString();
     }
 
+    protected final void clean(Table<?>... tables) {
+        delegate.clean(tables);
+    }
+
     protected final void assertCountAuthors(int count) {
         assertEquals(count, (int) create().selectCount().from(TAuthor()).fetchOne(0, Integer.class));
     }

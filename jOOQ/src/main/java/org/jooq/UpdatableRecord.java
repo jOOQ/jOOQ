@@ -107,8 +107,9 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <ul>
      * <li>If this record was created by client code, an <code>INSERT</code>
      * statement is executed</li>
-     * <li>If this record was loaded by jOOQ, but the primary key value was
-     * changed, an <code>INSERT</code> statement is executed. jOOQ expects that
+     * <li>If this record was loaded by jOOQ and the primary key value was
+     * changed, an <code>INSERT</code> statement is executed (unless
+     * {@link Settings#isUpdatablePrimaryKeys()} is set). jOOQ expects that
      * primary key values will never change due to the principle of
      * normalisation in RDBMS. So if client code changes primary key values,
      * this is interpreted by jOOQ as client code wanting to duplicate this

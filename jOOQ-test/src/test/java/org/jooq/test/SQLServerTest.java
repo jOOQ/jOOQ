@@ -1009,6 +1009,7 @@ public class SQLServerTest extends jOOQAbstractTest<
         T_3084Record r2 = create().newRecord(T_3084);
 
         // STORE() means INSERT, no batch
+        r1.setId(null);
         r1.setData(1);
         r2.setId(2);
         r2.setData(2);

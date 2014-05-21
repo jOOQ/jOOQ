@@ -33,42 +33,46 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.test.h2;
+package org.jooq.test.utils.h2;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-import java.net.URI;
-import java.net.URL;
+import static org.jooq.impl.DSL.using;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import org.jooq.SQLDialect;
+import org.jooq.impl.SQLDataType;
+import org.jooq.impl.SchemaImpl;
+import org.jooq.impl.SequenceImpl;
+
+import org.h2.api.Trigger;
 
 /**
- * A generator for large-schema.sql
+ * A sample trigger for H2
  *
  * @author Lukas Eder
  */
-public class GenerateLargeSchema {
+public class TTriggersTrigger implements Trigger {
 
-    public static void main(String[] args) throws Exception {
-        URL resource = GenerateLargeSchema.class.getResource("/org/jooq/test/h2/large-schema.sql");
-        File file = new File(new URI(resource.toURI().toString().replace("/bin/", "/src/")));
-        PrintWriter w = new PrintWriter(new FileOutputStream(file));
+    @Override
+    public void init(Connection conn, String schemaName, String triggerName, String tableName, boolean before, int type)
+        throws SQLException {}
 
-        try {
-            w.println("DROP SCHEMA IF EXISTS large/");
-            w.println("CREATE SCHEMA large/");
+    @Override
+    public void fire(Connection conn, Object[] oldRow, Object[] newRow) throws SQLException {
+        int maxID = using(conn, SQLDialect.H2).nextval(
+            new SequenceImpl<Integer>("s_triggers_sequence", new SchemaImpl("public"), SQLDataType.INTEGER)
+        ).intValue();
 
-            w.println("CREATE TABLE large.t00000 (id INT,              CONSTRAINT pk_00000 PRIMARY KEY (id))/");
-
-            for (int i = 1; i < 15000; i++) {
-                w.println(String.format(
-                    "CREATE TABLE large.t%1$05d (id INT, prev_id INT, CONSTRAINT pk_%1$05d PRIMARY KEY (id), CONSTRAINT fk_%1$05d FOREIGN KEY (prev_id) REFERENCES t%2$05d(id))/",
-                    i, i - 1
-                ));
-            }
-        }
-        finally {
-            w.flush();
-            w.close();
-        }
+        newRow[0] = maxID;
+        newRow[1] = maxID;
+        newRow[2] = maxID * 2;
     }
+
+    @Override
+    public void close() throws SQLException {}
+
+    @Override
+    public void remove() throws SQLException {}
+
 }

@@ -281,7 +281,7 @@ public abstract class jOOQAbstractTest<
                 log.info("Loading", script);
                 File file = new File(getClass().getResource(script).toURI());
                 allSQL = FileUtils.readFileToString(file);
-                testSQLWatch.splitDebug("Loaded SQL file");
+                testSQLWatch.splitInfo("Loaded SQL file");
             }
             catch (Exception ignore) {
                 allSQL = "";
@@ -308,7 +308,7 @@ public abstract class jOOQAbstractTest<
                     }
 
                     stmt.execute(sql.trim());
-                    testSQLWatch.splitDebug(StringUtils.abbreviate(sql.trim().replaceAll("[\\n\\r]|\\s+", " "), 25));
+                    testSQLWatch.splitInfo(StringUtils.abbreviate(sql.trim().replaceAll("[\\n\\r]|\\s+", " "), 25));
                 }
             }
             catch (Exception e) {

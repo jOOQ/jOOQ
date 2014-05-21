@@ -33,14 +33,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.test.h2;
+package org.jooq.test.utils.h2;
 
 import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.sign;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.SQLDataType.INTEGER;
-import static org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR;
-import static org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -50,9 +50,6 @@ import java.sql.SQLException;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
-import org.jooq.test.h2.generatedclasses.Routines;
-import org.jooq.test.h2.generatedclasses.tables.TAuthor;
-import org.jooq.test.h2.generatedclasses.tables.TBook;
 
 /**
  * Pre-compiled stored functions for H2
@@ -62,16 +59,16 @@ import org.jooq.test.h2.generatedclasses.tables.TBook;
 public class F {
 
     public static void pCreateAuthor(Connection connection) {
-        Routines.pCreateAuthorByName(create(connection).configuration(), "William", "Shakespeare");
+        pCreateAuthorByName(connection, "William", "Shakespeare");
     }
 
     public static void pCreateAuthorByName(Connection connection, String firstName, String lastName) {
         DSLContext create = create(connection);
 
-        create.insertInto(T_AUTHOR)
-              .set(TAuthor.ID, create.select(max(TAuthor.ID).add(1)).from(T_AUTHOR).<Integer>asField())
-              .set(TAuthor.FIRST_NAME, firstName)
-              .set(TAuthor.LAST_NAME, lastName)
+        create.insertInto(table("t_author"))
+              .set(field("id"), create.select(max(field("id")).add(1)).from(table("t_author")).<Integer>asField())
+              .set(field("first_name"), firstName)
+              .set(field("last_name"), lastName)
               .execute();
     }
 
@@ -82,9 +79,9 @@ public class F {
 
         String sql = create(connection)
             .select()
-            .from(T_BOOK)
-            .where(TBook.ID.in(INTEGER.convert(bookIds)))
-            .orderBy(TBook.ID.asc())
+            .from(table("t_book"))
+            .where(field("id", Integer.class).in(INTEGER.convert(bookIds)))
+            .orderBy(field("id").asc())
             .getSQL();
 
         stmt = connection.prepareStatement(sql);
@@ -101,9 +98,9 @@ public class F {
 
         Integer result =
         create.select(sign(count()))
-              .from(T_AUTHOR)
-              .where(TAuthor.FIRST_NAME.equal(authorName))
-              .or(TAuthor.LAST_NAME.equal(authorName))
+              .from(table("t_author"))
+              .where(field("first_name").equal(authorName))
+              .or(field("last_name").equal(authorName))
               .fetchOne(0, Integer.class);
 
         return result;

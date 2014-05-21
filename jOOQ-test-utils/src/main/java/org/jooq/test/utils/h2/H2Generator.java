@@ -33,7 +33,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.test.h2;
+package org.jooq.test.utils.h2;
 
 import org.jooq.util.JavaGenerator;
 import org.jooq.util.JavaWriter;

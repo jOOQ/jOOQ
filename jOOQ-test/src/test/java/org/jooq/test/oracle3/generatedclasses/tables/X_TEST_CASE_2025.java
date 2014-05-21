@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class X_TEST_CASE_2025 extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_2025> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1931144103;
+	private static final long serialVersionUID = -971929892;
 
 	/**
-	 * The singleton instance of <code>X_TEST_CASE_2025</code>
+	 * The singleton instance of <code>TEST.X_TEST_CASE_2025</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_2025 X_TEST_CASE_2025 = new org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_2025();
 
@@ -25,27 +25,35 @@ public class X_TEST_CASE_2025 extends org.jooq.impl.TableImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * The column <code>X_TEST_CASE_2025.REF_ID</code>. 
+	 * The column <code>TEST.X_TEST_CASE_2025.REF_ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_2025, java.lang.Integer> REF_ID = createField("REF_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_2025, java.lang.Integer> REF_ID = createField("REF_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>X_TEST_CASE_2025.REF_NAME</code>. 
+	 * The column <code>TEST.X_TEST_CASE_2025.REF_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_2025, java.lang.String> REF_NAME = createField("REF_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_2025, java.lang.String> REF_NAME = createField("REF_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), this, "");
 
 	/**
-	 * Create a <code>X_TEST_CASE_2025</code> table reference
+	 * Create a <code>TEST.X_TEST_CASE_2025</code> table reference
 	 */
 	public X_TEST_CASE_2025() {
-		super("X_TEST_CASE_2025", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("X_TEST_CASE_2025", null);
 	}
 
 	/**
-	 * Create an aliased <code>X_TEST_CASE_2025</code> table reference
+	 * Create an aliased <code>TEST.X_TEST_CASE_2025</code> table reference
 	 */
 	public X_TEST_CASE_2025(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_2025.X_TEST_CASE_2025);
+		this(alias, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_2025.X_TEST_CASE_2025);
+	}
+
+	private X_TEST_CASE_2025(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_2025> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private X_TEST_CASE_2025(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_2025> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, aliased, parameters, "");
 	}
 
 	/**
@@ -61,6 +69,13 @@ public class X_TEST_CASE_2025 extends org.jooq.impl.TableImpl<org.jooq.test.orac
 	 */
 	@Override
 	public org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_2025 as(java.lang.String alias) {
-		return new org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_2025(alias);
+		return new org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_2025(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_2025 rename(java.lang.String name) {
+		return new org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_2025(name, null);
 	}
 }

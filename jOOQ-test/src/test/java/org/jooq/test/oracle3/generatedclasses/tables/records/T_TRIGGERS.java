@@ -8,13 +8,13 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_TRIGGERS")
+@javax.persistence.Table(name = "T_TRIGGERS", schema = "TEST")
 public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS> implements java.lang.Cloneable, org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TRIGGERS_INTERFACE {
 
-	private static final long serialVersionUID = -663691490;
+	private static final long serialVersionUID = 80724536;
 
 	/**
-	 * Setter for <code>T_TRIGGERS.ID_GENERATED</code>. 
+	 * Setter for <code>TEST.T_TRIGGERS.ID_GENERATED</code>.
 	 */
 	@Override
 	public void setID_GENERATED(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Getter for <code>T_TRIGGERS.ID_GENERATED</code>. 
+	 * Getter for <code>TEST.T_TRIGGERS.ID_GENERATED</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID_GENERATED", unique = true, nullable = false, precision = 7)
@@ -32,7 +32,7 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Setter for <code>T_TRIGGERS.ID</code>. 
+	 * Setter for <code>TEST.T_TRIGGERS.ID</code>.
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
@@ -40,7 +40,7 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Getter for <code>T_TRIGGERS.ID</code>. 
+	 * Getter for <code>TEST.T_TRIGGERS.ID</code>.
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	@Override
@@ -49,7 +49,7 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Setter for <code>T_TRIGGERS.COUNTER</code>. 
+	 * Setter for <code>TEST.T_TRIGGERS.COUNTER</code>.
 	 */
 	@Override
 	public void setCOUNTER(java.lang.Integer value) {
@@ -57,7 +57,7 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Getter for <code>T_TRIGGERS.COUNTER</code>. 
+	 * Getter for <code>TEST.T_TRIGGERS.COUNTER</code>.
 	 */
 	@javax.persistence.Column(name = "COUNTER", nullable = false, precision = 7)
 	@Override

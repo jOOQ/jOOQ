@@ -11,15 +11,15 @@ package org.jooq.test.oracle3.generatedclasses.packages;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LIBRARY_767_PACKAGE_TEST extends org.jooq.impl.PackageImpl implements java.io.Serializable, java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1428800647;
+	private static final long serialVersionUID = 1388773734;
 
 	/**
-	 * The singleton instance of <code>LIBRARY_767_PACKAGE_TEST</code>
+	 * The singleton instance of <code>TEST.LIBRARY_767_PACKAGE_TEST</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.packages.LIBRARY_767_PACKAGE_TEST LIBRARY_767_PACKAGE_TEST = new org.jooq.test.oracle3.generatedclasses.packages.LIBRARY_767_PACKAGE_TEST();
 
 	/**
-	 * Call <code>LIBRARY_767_PACKAGE_TEST.LIBRARY_767_PACKAGE_TEST</code>
+	 * Call <code>TEST.LIBRARY_767_PACKAGE_TEST.LIBRARY_767_PACKAGE_TEST</code>
 	 */
 	public static java.math.BigDecimal call_LIBRARY_767_PACKAGE_TEST(org.jooq.Configuration configuration) {
 		org.jooq.test.oracle3.generatedclasses.packages.library_767_package_test.LIBRARY_767_PACKAGE_TEST f = new org.jooq.test.oracle3.generatedclasses.packages.library_767_package_test.LIBRARY_767_PACKAGE_TEST();
@@ -29,7 +29,7 @@ public class LIBRARY_767_PACKAGE_TEST extends org.jooq.impl.PackageImpl implemen
 	}
 
 	/**
-	 * Get <code>LIBRARY_767_PACKAGE_TEST.LIBRARY_767_PACKAGE_TEST</code> as a field
+	 * Get <code>TEST.LIBRARY_767_PACKAGE_TEST.LIBRARY_767_PACKAGE_TEST</code> as a field
 	 */
 	public static org.jooq.Field<java.math.BigDecimal> call_LIBRARY_767_PACKAGE_TEST() {
 		org.jooq.test.oracle3.generatedclasses.packages.library_767_package_test.LIBRARY_767_PACKAGE_TEST f = new org.jooq.test.oracle3.generatedclasses.packages.library_767_package_test.LIBRARY_767_PACKAGE_TEST();
@@ -41,6 +41,6 @@ public class LIBRARY_767_PACKAGE_TEST extends org.jooq.impl.PackageImpl implemen
 	 * No further instances allowed
 	 */
 	private LIBRARY_767_PACKAGE_TEST() {
-		super("LIBRARY_767_PACKAGE_TEST", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		super("LIBRARY_767_PACKAGE_TEST", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
 	}
 }

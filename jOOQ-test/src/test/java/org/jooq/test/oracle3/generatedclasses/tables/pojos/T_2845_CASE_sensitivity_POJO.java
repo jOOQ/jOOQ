@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_2845_CASE_sensitivity")
+@javax.persistence.Table(name = "T_2845_CASE_sensitivity", schema = "TEST")
 public class T_2845_CASE_sensitivity_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_2845_CASE_sensitivity_INTERFACE {
 
-	private static final long serialVersionUID = 210934842;
+	private static final long serialVersionUID = -997829392;
 
 	private java.math.BigDecimal ID;
 	private java.math.BigDecimal INSENSITIVE;

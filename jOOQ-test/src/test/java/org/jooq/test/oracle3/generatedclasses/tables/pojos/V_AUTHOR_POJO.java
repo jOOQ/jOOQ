@@ -8,27 +8,27 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "V_AUTHOR")
+@javax.persistence.Table(name = "V_AUTHOR", schema = "TEST")
 public class V_AUTHOR_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_AUTHOR_INTERFACE {
 
-	private static final long serialVersionUID = 1588169401;
+	private static final long serialVersionUID = -1511265355;
 
-	private java.lang.Integer                                                 ID;
-	private java.lang.String                                                  FIRST_NAME;
-	private java.lang.String                                                  LAST_NAME;
-	private java.sql.Date                                                     DATE_OF_BIRTH;
-	private java.lang.Integer                                                 YEAR_OF_BIRTH;
-	private org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE ADDRESS;
+	private java.lang.Integer                                                    ID;
+	private java.lang.String                                                     FIRST_NAME;
+	private java.lang.String                                                     LAST_NAME;
+	private java.sql.Date                                                        DATE_OF_BIRTH;
+	private java.lang.Integer                                                    YEAR_OF_BIRTH;
+	private org.jooq.test.oracle3.generatedclasses.udt.pojos.U_ADDRESS_TYPE_POJO ADDRESS;
 
 	public V_AUTHOR_POJO() {}
 
 	public V_AUTHOR_POJO(
-		java.lang.Integer                                                 ID,
-		java.lang.String                                                  FIRST_NAME,
-		java.lang.String                                                  LAST_NAME,
-		java.sql.Date                                                     DATE_OF_BIRTH,
-		java.lang.Integer                                                 YEAR_OF_BIRTH,
-		org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE ADDRESS
+		java.lang.Integer                                                    ID,
+		java.lang.String                                                     FIRST_NAME,
+		java.lang.String                                                     LAST_NAME,
+		java.sql.Date                                                        DATE_OF_BIRTH,
+		java.lang.Integer                                                    YEAR_OF_BIRTH,
+		org.jooq.test.oracle3.generatedclasses.udt.pojos.U_ADDRESS_TYPE_POJO ADDRESS
 	) {
 		this.ID = ID;
 		this.FIRST_NAME = FIRST_NAME;
@@ -95,12 +95,12 @@ public class V_AUTHOR_POJO extends java.lang.ThreadDeath implements java.lang.Cl
 
 	@javax.persistence.Column(name = "ADDRESS", length = 40)
 	@Override
-	public org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE getADDRESS() {
+	public org.jooq.test.oracle3.generatedclasses.udt.pojos.U_ADDRESS_TYPE_POJO getADDRESS() {
 		return this.ADDRESS;
 	}
 
 	@Override
-	public void setADDRESS(org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE ADDRESS) {
+	public void setADDRESS(org.jooq.test.oracle3.generatedclasses.udt.pojos.U_ADDRESS_TYPE_POJO ADDRESS) {
 		this.ADDRESS = ADDRESS;
 	}
 

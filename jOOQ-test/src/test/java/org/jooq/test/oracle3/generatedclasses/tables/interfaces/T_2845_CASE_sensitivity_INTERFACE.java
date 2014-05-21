@@ -8,61 +8,61 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_2845_CASE_sensitivity")
+@javax.persistence.Table(name = "T_2845_CASE_sensitivity", schema = "TEST")
 public interface T_2845_CASE_sensitivity_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * Setter for <code>T_2845_CASE_sensitivity.ID</code>. 
+	 * Setter for <code>TEST.T_2845_CASE_sensitivity.ID</code>.
 	 */
 	public void setID(java.math.BigDecimal value);
 
 	/**
-	 * Getter for <code>T_2845_CASE_sensitivity.ID</code>. 
+	 * Getter for <code>TEST.T_2845_CASE_sensitivity.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 22)
 	public java.math.BigDecimal getID();
 
 	/**
-	 * Setter for <code>T_2845_CASE_sensitivity.INSENSITIVE</code>. 
+	 * Setter for <code>TEST.T_2845_CASE_sensitivity.INSENSITIVE</code>.
 	 */
 	public void setINSENSITIVE(java.math.BigDecimal value);
 
 	/**
-	 * Getter for <code>T_2845_CASE_sensitivity.INSENSITIVE</code>. 
+	 * Getter for <code>TEST.T_2845_CASE_sensitivity.INSENSITIVE</code>.
 	 */
 	@javax.persistence.Column(name = "INSENSITIVE", length = 22)
 	public java.math.BigDecimal getINSENSITIVE();
 
 	/**
-	 * Setter for <code>T_2845_CASE_sensitivity.UPPER</code>. 
+	 * Setter for <code>TEST.T_2845_CASE_sensitivity.UPPER</code>.
 	 */
 	public void setUPPER(java.math.BigDecimal value);
 
 	/**
-	 * Getter for <code>T_2845_CASE_sensitivity.UPPER</code>. 
+	 * Getter for <code>TEST.T_2845_CASE_sensitivity.UPPER</code>.
 	 */
 	@javax.persistence.Column(name = "UPPER", length = 22)
 	public java.math.BigDecimal getUPPER();
 
 	/**
-	 * Setter for <code>T_2845_CASE_sensitivity.lower</code>. 
+	 * Setter for <code>TEST.T_2845_CASE_sensitivity.lower</code>.
 	 */
 	public void setlower(java.math.BigDecimal value);
 
 	/**
-	 * Getter for <code>T_2845_CASE_sensitivity.lower</code>. 
+	 * Getter for <code>TEST.T_2845_CASE_sensitivity.lower</code>.
 	 */
 	@javax.persistence.Column(name = "lower", length = 22)
 	public java.math.BigDecimal getlower();
 
 	/**
-	 * Setter for <code>T_2845_CASE_sensitivity.Mixed</code>. 
+	 * Setter for <code>TEST.T_2845_CASE_sensitivity.Mixed</code>.
 	 */
 	public void setMixed(java.math.BigDecimal value);
 
 	/**
-	 * Getter for <code>T_2845_CASE_sensitivity.Mixed</code>. 
+	 * Getter for <code>TEST.T_2845_CASE_sensitivity.Mixed</code>.
 	 */
 	@javax.persistence.Column(name = "Mixed", length = 22)
 	public java.math.BigDecimal getMixed();

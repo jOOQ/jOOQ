@@ -8,33 +8,37 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "V_BOOK")
+@javax.persistence.Table(name = "V_BOOK", schema = "TEST")
 public class V_BOOK_POJO extends java.lang.Object implements java.io.Serializable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = -2075912844;
+	private static final long serialVersionUID = -290535134;
 
-	private java.lang.Integer ID;
-	private java.lang.Integer AUTHOR_ID;
-	private java.lang.Integer CO_AUTHOR_ID;
-	private java.lang.Integer DETAILS_ID;
-	private java.lang.String  TITLE;
-	private java.lang.Integer PUBLISHED_IN;
-	private java.lang.Integer LANGUAGE_ID;
-	private java.lang.String  CONTENT_TEXT;
-	private byte[]            CONTENT_PDF;
+	private java.lang.Integer    ID;
+	private java.lang.Integer    AUTHOR_ID;
+	private java.lang.Integer    CO_AUTHOR_ID;
+	private java.lang.Integer    DETAILS_ID;
+	private java.lang.String     TITLE;
+	private java.lang.Integer    PUBLISHED_IN;
+	private java.lang.Integer    LANGUAGE_ID;
+	private java.lang.String     CONTENT_TEXT;
+	private byte[]               CONTENT_PDF;
+	private java.math.BigDecimal REC_VERSION;
+	private java.sql.Timestamp   REC_TIMESTAMP;
 
 	public V_BOOK_POJO() {}
 
 	public V_BOOK_POJO(
-		java.lang.Integer ID,
-		java.lang.Integer AUTHOR_ID,
-		java.lang.Integer CO_AUTHOR_ID,
-		java.lang.Integer DETAILS_ID,
-		java.lang.String  TITLE,
-		java.lang.Integer PUBLISHED_IN,
-		java.lang.Integer LANGUAGE_ID,
-		java.lang.String  CONTENT_TEXT,
-		byte[]            CONTENT_PDF
+		java.lang.Integer    ID,
+		java.lang.Integer    AUTHOR_ID,
+		java.lang.Integer    CO_AUTHOR_ID,
+		java.lang.Integer    DETAILS_ID,
+		java.lang.String     TITLE,
+		java.lang.Integer    PUBLISHED_IN,
+		java.lang.Integer    LANGUAGE_ID,
+		java.lang.String     CONTENT_TEXT,
+		byte[]               CONTENT_PDF,
+		java.math.BigDecimal REC_VERSION,
+		java.sql.Timestamp   REC_TIMESTAMP
 	) {
 		this.ID = ID;
 		this.AUTHOR_ID = AUTHOR_ID;
@@ -45,6 +49,8 @@ public class V_BOOK_POJO extends java.lang.Object implements java.io.Serializabl
 		this.LANGUAGE_ID = LANGUAGE_ID;
 		this.CONTENT_TEXT = CONTENT_TEXT;
 		this.CONTENT_PDF = CONTENT_PDF;
+		this.REC_VERSION = REC_VERSION;
+		this.REC_TIMESTAMP = REC_TIMESTAMP;
 	}
 
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
@@ -146,6 +152,28 @@ public class V_BOOK_POJO extends java.lang.Object implements java.io.Serializabl
 		this.CONTENT_PDF = CONTENT_PDF;
 	}
 
+	@javax.persistence.Column(name = "REC_VERSION", length = 22)
+	@Override
+	public java.math.BigDecimal getREC_VERSION() {
+		return this.REC_VERSION;
+	}
+
+	@Override
+	public void setREC_VERSION(java.math.BigDecimal REC_VERSION) {
+		this.REC_VERSION = REC_VERSION;
+	}
+
+	@javax.persistence.Column(name = "REC_TIMESTAMP", length = 11)
+	@Override
+	public java.sql.Timestamp getREC_TIMESTAMP() {
+		return this.REC_TIMESTAMP;
+	}
+
+	@Override
+	public void setREC_TIMESTAMP(java.sql.Timestamp REC_TIMESTAMP) {
+		this.REC_TIMESTAMP = REC_TIMESTAMP;
+	}
+
 	// -------------------------------------------------------------------------
 	// FROM and INTO
 	// -------------------------------------------------------------------------
@@ -164,6 +192,8 @@ public class V_BOOK_POJO extends java.lang.Object implements java.io.Serializabl
 		setLANGUAGE_ID(from.getLANGUAGE_ID());
 		setCONTENT_TEXT(from.getCONTENT_TEXT());
 		setCONTENT_PDF(from.getCONTENT_PDF());
+		setREC_VERSION(from.getREC_VERSION());
+		setREC_TIMESTAMP(from.getREC_TIMESTAMP());
 	}
 
 	/**

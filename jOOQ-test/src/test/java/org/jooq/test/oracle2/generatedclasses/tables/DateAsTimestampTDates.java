@@ -9,7 +9,7 @@ package org.jooq.test.oracle2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DateAsTimestampTDates extends org.jooq.impl.TableImpl<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord> {
 
-	private static final long serialVersionUID = -287286545;
+	private static final long serialVersionUID = -1851448207;
 
 	/**
 	 * The singleton instance of <code>TEST.T_DATES</code>

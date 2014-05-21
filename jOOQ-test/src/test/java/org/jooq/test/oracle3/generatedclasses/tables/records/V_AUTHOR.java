@@ -8,13 +8,13 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "V_AUTHOR")
+@javax.persistence.Table(name = "V_AUTHOR", schema = "TEST")
 public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_AUTHOR> implements java.lang.Cloneable, org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_AUTHOR_INTERFACE {
 
-	private static final long serialVersionUID = 1995638882;
+	private static final long serialVersionUID = -1206373480;
 
 	/**
-	 * Setter for <code>V_AUTHOR.ID</code>. 
+	 * Setter for <code>TEST.V_AUTHOR.ID</code>.
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	}
 
 	/**
-	 * Getter for <code>V_AUTHOR.ID</code>. 
+	 * Getter for <code>TEST.V_AUTHOR.ID</code>.
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	@Override
@@ -31,7 +31,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	}
 
 	/**
-	 * Setter for <code>V_AUTHOR.FIRST_NAME</code>. 
+	 * Setter for <code>TEST.V_AUTHOR.FIRST_NAME</code>.
 	 */
 	@Override
 	public void setFIRST_NAME(java.lang.String value) {
@@ -39,7 +39,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	}
 
 	/**
-	 * Getter for <code>V_AUTHOR.FIRST_NAME</code>. 
+	 * Getter for <code>TEST.V_AUTHOR.FIRST_NAME</code>.
 	 */
 	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
 	@Override
@@ -48,7 +48,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	}
 
 	/**
-	 * Setter for <code>V_AUTHOR.LAST_NAME</code>. 
+	 * Setter for <code>TEST.V_AUTHOR.LAST_NAME</code>.
 	 */
 	@Override
 	public void setLAST_NAME(java.lang.String value) {
@@ -56,7 +56,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	}
 
 	/**
-	 * Getter for <code>V_AUTHOR.LAST_NAME</code>. 
+	 * Getter for <code>TEST.V_AUTHOR.LAST_NAME</code>.
 	 */
 	@javax.persistence.Column(name = "LAST_NAME", nullable = false, length = 50)
 	@Override
@@ -65,7 +65,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	}
 
 	/**
-	 * Setter for <code>V_AUTHOR.DATE_OF_BIRTH</code>. 
+	 * Setter for <code>TEST.V_AUTHOR.DATE_OF_BIRTH</code>.
 	 */
 	@Override
 	public void setDATE_OF_BIRTH(java.sql.Date value) {
@@ -73,7 +73,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	}
 
 	/**
-	 * Getter for <code>V_AUTHOR.DATE_OF_BIRTH</code>. 
+	 * Getter for <code>TEST.V_AUTHOR.DATE_OF_BIRTH</code>.
 	 */
 	@javax.persistence.Column(name = "DATE_OF_BIRTH", length = 7)
 	@Override
@@ -82,7 +82,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	}
 
 	/**
-	 * Setter for <code>V_AUTHOR.YEAR_OF_BIRTH</code>. 
+	 * Setter for <code>TEST.V_AUTHOR.YEAR_OF_BIRTH</code>.
 	 */
 	@Override
 	public void setYEAR_OF_BIRTH(java.lang.Integer value) {
@@ -90,7 +90,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	}
 
 	/**
-	 * Getter for <code>V_AUTHOR.YEAR_OF_BIRTH</code>. 
+	 * Getter for <code>TEST.V_AUTHOR.YEAR_OF_BIRTH</code>.
 	 */
 	@javax.persistence.Column(name = "YEAR_OF_BIRTH", precision = 7)
 	@Override
@@ -99,7 +99,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	}
 
 	/**
-	 * Setter for <code>V_AUTHOR.ADDRESS</code>. 
+	 * Setter for <code>TEST.V_AUTHOR.ADDRESS</code>.
 	 */
 	@Override
 	public void setADDRESS(org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE value) {
@@ -107,7 +107,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	}
 
 	/**
-	 * Getter for <code>V_AUTHOR.ADDRESS</code>. 
+	 * Getter for <code>TEST.V_AUTHOR.ADDRESS</code>.
 	 */
 	@javax.persistence.Column(name = "ADDRESS", length = 40)
 	@Override

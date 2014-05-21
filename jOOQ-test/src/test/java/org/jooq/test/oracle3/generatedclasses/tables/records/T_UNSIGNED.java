@@ -8,13 +8,13 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_UNSIGNED")
+@javax.persistence.Table(name = "T_UNSIGNED", schema = "TEST")
 public class T_UNSIGNED extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_UNSIGNED> implements java.lang.Cloneable, org.jooq.Record4<java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_UNSIGNED_INTERFACE {
 
-	private static final long serialVersionUID = 991139178;
+	private static final long serialVersionUID = -1422679552;
 
 	/**
-	 * Setter for <code>T_UNSIGNED.U_BYTE</code>. 
+	 * Setter for <code>TEST.T_UNSIGNED.U_BYTE</code>.
 	 */
 	@Override
 	public void setU_BYTE(java.lang.Short value) {
@@ -22,7 +22,7 @@ public class T_UNSIGNED extends org.jooq.impl.TableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * Getter for <code>T_UNSIGNED.U_BYTE</code>. 
+	 * Getter for <code>TEST.T_UNSIGNED.U_BYTE</code>.
 	 */
 	@javax.persistence.Column(name = "U_BYTE", precision = 3)
 	@Override
@@ -31,7 +31,7 @@ public class T_UNSIGNED extends org.jooq.impl.TableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * Setter for <code>T_UNSIGNED.U_SHORT</code>. 
+	 * Setter for <code>TEST.T_UNSIGNED.U_SHORT</code>.
 	 */
 	@Override
 	public void setU_SHORT(java.lang.Integer value) {
@@ -39,7 +39,7 @@ public class T_UNSIGNED extends org.jooq.impl.TableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * Getter for <code>T_UNSIGNED.U_SHORT</code>. 
+	 * Getter for <code>TEST.T_UNSIGNED.U_SHORT</code>.
 	 */
 	@javax.persistence.Column(name = "U_SHORT", precision = 5)
 	@Override
@@ -48,7 +48,7 @@ public class T_UNSIGNED extends org.jooq.impl.TableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * Setter for <code>T_UNSIGNED.U_INT</code>. 
+	 * Setter for <code>TEST.T_UNSIGNED.U_INT</code>.
 	 */
 	@Override
 	public void setU_INT(java.lang.Long value) {
@@ -56,7 +56,7 @@ public class T_UNSIGNED extends org.jooq.impl.TableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * Getter for <code>T_UNSIGNED.U_INT</code>. 
+	 * Getter for <code>TEST.T_UNSIGNED.U_INT</code>.
 	 */
 	@javax.persistence.Column(name = "U_INT", precision = 10)
 	@Override
@@ -65,7 +65,7 @@ public class T_UNSIGNED extends org.jooq.impl.TableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * Setter for <code>T_UNSIGNED.U_LONG</code>. 
+	 * Setter for <code>TEST.T_UNSIGNED.U_LONG</code>.
 	 */
 	@Override
 	public void setU_LONG(java.math.BigInteger value) {
@@ -73,7 +73,7 @@ public class T_UNSIGNED extends org.jooq.impl.TableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * Getter for <code>T_UNSIGNED.U_LONG</code>. 
+	 * Getter for <code>TEST.T_UNSIGNED.U_LONG</code>.
 	 */
 	@javax.persistence.Column(name = "U_LONG", precision = 20)
 	@Override

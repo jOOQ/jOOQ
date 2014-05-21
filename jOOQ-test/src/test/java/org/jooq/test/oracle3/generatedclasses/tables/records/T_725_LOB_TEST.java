@@ -8,13 +8,13 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_725_LOB_TEST")
+@javax.persistence.Table(name = "T_725_LOB_TEST", schema = "TEST")
 public class T_725_LOB_TEST extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, byte[]>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_725_LOB_TEST_INTERFACE {
 
-	private static final long serialVersionUID = 932214385;
+	private static final long serialVersionUID = -1998599977;
 
 	/**
-	 * Setter for <code>T_725_LOB_TEST.ID</code>. 
+	 * Setter for <code>TEST.T_725_LOB_TEST.ID</code>.
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class T_725_LOB_TEST extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * Getter for <code>T_725_LOB_TEST.ID</code>. 
+	 * Getter for <code>TEST.T_725_LOB_TEST.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -32,7 +32,7 @@ public class T_725_LOB_TEST extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * Setter for <code>T_725_LOB_TEST.LOB</code>. 
+	 * Setter for <code>TEST.T_725_LOB_TEST.LOB</code>.
 	 */
 	@Override
 	public void setLOB(byte[] value) {
@@ -40,7 +40,7 @@ public class T_725_LOB_TEST extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * Getter for <code>T_725_LOB_TEST.LOB</code>. 
+	 * Getter for <code>TEST.T_725_LOB_TEST.LOB</code>.
 	 */
 	@javax.persistence.Column(name = "LOB")
 	@Override

@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2845_CASE_sensitivity extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_2845_CASE_sensitivity> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -374975696;
+	private static final long serialVersionUID = -536144255;
 
 	/**
-	 * The singleton instance of <code>T_2845_CASE_sensitivity</code>
+	 * The singleton instance of <code>TEST.T_2845_CASE_sensitivity</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_2845_CASE_sensitivity T_2845_CASE_sensitivity = new org.jooq.test.oracle3.generatedclasses.tables.T_2845_CASE_sensitivity();
 
@@ -25,42 +25,50 @@ public class T_2845_CASE_sensitivity extends org.jooq.impl.TableImpl<org.jooq.te
 	}
 
 	/**
-	 * The column <code>T_2845_CASE_sensitivity.ID</code>. 
+	 * The column <code>TEST.T_2845_CASE_sensitivity.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_2845_CASE_sensitivity, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_2845_CASE_sensitivity, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC.nullable(false), this, "");
 
 	/**
-	 * The column <code>T_2845_CASE_sensitivity.INSENSITIVE</code>. 
+	 * The column <code>TEST.T_2845_CASE_sensitivity.INSENSITIVE</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_2845_CASE_sensitivity, java.math.BigDecimal> INSENSITIVE = createField("INSENSITIVE", org.jooq.impl.SQLDataType.NUMERIC, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_2845_CASE_sensitivity, java.math.BigDecimal> INSENSITIVE = createField("INSENSITIVE", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * The column <code>T_2845_CASE_sensitivity.UPPER</code>. 
+	 * The column <code>TEST.T_2845_CASE_sensitivity.UPPER</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_2845_CASE_sensitivity, java.math.BigDecimal> UPPER = createField("UPPER", org.jooq.impl.SQLDataType.NUMERIC, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_2845_CASE_sensitivity, java.math.BigDecimal> UPPER = createField("UPPER", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * The column <code>T_2845_CASE_sensitivity.lower</code>. 
+	 * The column <code>TEST.T_2845_CASE_sensitivity.lower</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_2845_CASE_sensitivity, java.math.BigDecimal> lower = createField("lower", org.jooq.impl.SQLDataType.NUMERIC, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_2845_CASE_sensitivity, java.math.BigDecimal> lower = createField("lower", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * The column <code>T_2845_CASE_sensitivity.Mixed</code>. 
+	 * The column <code>TEST.T_2845_CASE_sensitivity.Mixed</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_2845_CASE_sensitivity, java.math.BigDecimal> Mixed = createField("Mixed", org.jooq.impl.SQLDataType.NUMERIC, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_2845_CASE_sensitivity, java.math.BigDecimal> Mixed = createField("Mixed", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * Create a <code>T_2845_CASE_sensitivity</code> table reference
+	 * Create a <code>TEST.T_2845_CASE_sensitivity</code> table reference
 	 */
 	public T_2845_CASE_sensitivity() {
-		super("T_2845_CASE_sensitivity", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("T_2845_CASE_sensitivity", null);
 	}
 
 	/**
-	 * Create an aliased <code>T_2845_CASE_sensitivity</code> table reference
+	 * Create an aliased <code>TEST.T_2845_CASE_sensitivity</code> table reference
 	 */
 	public T_2845_CASE_sensitivity(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.tables.T_2845_CASE_sensitivity.T_2845_CASE_sensitivity);
+		this(alias, org.jooq.test.oracle3.generatedclasses.tables.T_2845_CASE_sensitivity.T_2845_CASE_sensitivity);
+	}
+
+	private T_2845_CASE_sensitivity(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_2845_CASE_sensitivity> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_2845_CASE_sensitivity(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_2845_CASE_sensitivity> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, aliased, parameters, "");
 	}
 
 	/**
@@ -84,6 +92,13 @@ public class T_2845_CASE_sensitivity extends org.jooq.impl.TableImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.test.oracle3.generatedclasses.tables.T_2845_CASE_sensitivity as(java.lang.String alias) {
-		return new org.jooq.test.oracle3.generatedclasses.tables.T_2845_CASE_sensitivity(alias);
+		return new org.jooq.test.oracle3.generatedclasses.tables.T_2845_CASE_sensitivity(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle3.generatedclasses.tables.T_2845_CASE_sensitivity rename(java.lang.String name) {
+		return new org.jooq.test.oracle3.generatedclasses.tables.T_2845_CASE_sensitivity(name, null);
 	}
 }

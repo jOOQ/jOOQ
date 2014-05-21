@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_DIRECTORY")
+@javax.persistence.Table(name = "T_DIRECTORY", schema = "TEST")
 public class T_DIRECTORY_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DIRECTORY_INTERFACE {
 
-	private static final long serialVersionUID = 1130212526;
+	private static final long serialVersionUID = -1528721074;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer PARENT_ID;

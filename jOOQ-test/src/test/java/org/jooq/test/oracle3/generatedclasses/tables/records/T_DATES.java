@@ -8,13 +8,13 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_DATES")
+@javax.persistence.Table(name = "T_DATES", schema = "TEST")
 public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES> implements java.lang.Cloneable, org.jooq.Record8<java.lang.Integer, java.sql.Date, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Long, org.jooq.types.YearToMonth, org.jooq.types.DayToSecond>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DATES_INTERFACE {
 
-	private static final long serialVersionUID = 1997922254;
+	private static final long serialVersionUID = -1095401336;
 
 	/**
-	 * Setter for <code>T_DATES.ID</code>. 
+	 * Setter for <code>TEST.T_DATES.ID</code>.
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Getter for <code>T_DATES.ID</code>. 
+	 * Getter for <code>TEST.T_DATES.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -32,7 +32,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>T_DATES.D</code>. 
+	 * Setter for <code>TEST.T_DATES.D</code>.
 	 */
 	@Override
 	public void setD(java.sql.Date value) {
@@ -40,7 +40,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Getter for <code>T_DATES.D</code>. 
+	 * Getter for <code>TEST.T_DATES.D</code>.
 	 */
 	@javax.persistence.Column(name = "D", length = 7)
 	@Override
@@ -49,7 +49,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>T_DATES.T</code>. 
+	 * Setter for <code>TEST.T_DATES.T</code>.
 	 */
 	@Override
 	public void setT(java.sql.Timestamp value) {
@@ -57,7 +57,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Getter for <code>T_DATES.T</code>. 
+	 * Getter for <code>TEST.T_DATES.T</code>.
 	 */
 	@javax.persistence.Column(name = "T", length = 11)
 	@Override
@@ -66,7 +66,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>T_DATES.TS</code>. 
+	 * Setter for <code>TEST.T_DATES.TS</code>.
 	 */
 	@Override
 	public void setTS(java.sql.Timestamp value) {
@@ -74,7 +74,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Getter for <code>T_DATES.TS</code>. 
+	 * Getter for <code>TEST.T_DATES.TS</code>.
 	 */
 	@javax.persistence.Column(name = "TS", length = 11)
 	@Override
@@ -83,7 +83,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>T_DATES.D_INT</code>. 
+	 * Setter for <code>TEST.T_DATES.D_INT</code>.
 	 */
 	@Override
 	public void setD_INT(java.lang.Integer value) {
@@ -91,7 +91,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Getter for <code>T_DATES.D_INT</code>. 
+	 * Getter for <code>TEST.T_DATES.D_INT</code>.
 	 */
 	@javax.persistence.Column(name = "D_INT", precision = 7)
 	@Override
@@ -100,7 +100,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>T_DATES.TS_BIGINT</code>. 
+	 * Setter for <code>TEST.T_DATES.TS_BIGINT</code>.
 	 */
 	@Override
 	public void setTS_BIGINT(java.lang.Long value) {
@@ -108,7 +108,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Getter for <code>T_DATES.TS_BIGINT</code>. 
+	 * Getter for <code>TEST.T_DATES.TS_BIGINT</code>.
 	 */
 	@javax.persistence.Column(name = "TS_BIGINT", precision = 18)
 	@Override
@@ -117,7 +117,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>T_DATES.I_Y</code>. 
+	 * Setter for <code>TEST.T_DATES.I_Y</code>.
 	 */
 	@Override
 	public void setI_Y(org.jooq.types.YearToMonth value) {
@@ -125,7 +125,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Getter for <code>T_DATES.I_Y</code>. 
+	 * Getter for <code>TEST.T_DATES.I_Y</code>.
 	 */
 	@javax.persistence.Column(name = "I_Y", precision = 2)
 	@Override
@@ -134,7 +134,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Setter for <code>T_DATES.I_D</code>. 
+	 * Setter for <code>TEST.T_DATES.I_D</code>.
 	 */
 	@Override
 	public void setI_D(org.jooq.types.DayToSecond value) {
@@ -142,7 +142,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Getter for <code>T_DATES.I_D</code>. 
+	 * Getter for <code>TEST.T_DATES.I_D</code>.
 	 */
 	@javax.persistence.Column(name = "I_D", precision = 2, scale = 6)
 	@Override

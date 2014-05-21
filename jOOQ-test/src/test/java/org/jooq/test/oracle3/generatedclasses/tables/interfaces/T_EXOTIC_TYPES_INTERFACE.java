@@ -8,28 +8,28 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_EXOTIC_TYPES")
+@javax.persistence.Table(name = "T_EXOTIC_TYPES", schema = "TEST")
 public interface T_EXOTIC_TYPES_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * Setter for <code>T_EXOTIC_TYPES.ID</code>. 
+	 * Setter for <code>TEST.T_EXOTIC_TYPES.ID</code>.
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>T_EXOTIC_TYPES.ID</code>. 
+	 * Getter for <code>TEST.T_EXOTIC_TYPES.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * Setter for <code>T_EXOTIC_TYPES.UU</code>. 
+	 * Setter for <code>TEST.T_EXOTIC_TYPES.UU</code>.
 	 */
 	public void setUU(java.lang.String value);
 
 	/**
-	 * Getter for <code>T_EXOTIC_TYPES.UU</code>. 
+	 * Getter for <code>TEST.T_EXOTIC_TYPES.UU</code>.
 	 */
 	@javax.persistence.Column(name = "UU", length = 36)
 	public java.lang.String getUU();

@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_TRIGGERS")
+@javax.persistence.Table(name = "T_TRIGGERS", schema = "TEST")
 public class T_TRIGGERS_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TRIGGERS_INTERFACE {
 
-	private static final long serialVersionUID = 1002878348;
+	private static final long serialVersionUID = -1624621588;
 
 	private java.lang.Integer ID_GENERATED;
 	private java.lang.Integer ID;

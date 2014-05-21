@@ -10,15 +10,15 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_BOOK_TO_BOOK_STORE", uniqueConstraints = {
+@javax.persistence.Table(name = "T_BOOK_TO_BOOK_STORE", schema = "TEST", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"BOOK_STORE_NAME", "BOOK_ID"})
 })
 public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_TO_BOOK_STORE> implements java.lang.Cloneable, org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_STORE_INTERFACE {
 
-	private static final long serialVersionUID = -1438396631;
+	private static final long serialVersionUID = -1951917815;
 
 	/**
-	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
+	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
 	@Override
 	public void setBOOK_STORE_NAME(java.lang.String value) {
@@ -26,7 +26,7 @@ public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.
 	}
 
 	/**
-	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
+	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
 	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
 	@Override
@@ -35,7 +35,7 @@ public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.
 	}
 
 	/**
-	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
+	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
 	 */
 	@Override
 	public void setBOOK_ID(java.lang.Integer value) {
@@ -43,7 +43,7 @@ public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.
 	}
 
 	/**
-	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
+	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
 	 */
 	@javax.persistence.Column(name = "BOOK_ID", nullable = false, precision = 7)
 	@Override
@@ -52,7 +52,7 @@ public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.
 	}
 
 	/**
-	 * Setter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
+	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
 	 */
 	@Override
 	public void setSTOCK(java.lang.Integer value) {
@@ -60,7 +60,7 @@ public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.
 	}
 
 	/**
-	 * Getter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
+	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
 	 */
 	@javax.persistence.Column(name = "STOCK", precision = 7)
 	@Override

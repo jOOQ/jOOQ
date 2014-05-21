@@ -9,28 +9,54 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_DATE_ARRAY extends org.jooq.impl.ArrayRecordImpl<java.sql.Date> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1330565277;
+	private static final long serialVersionUID = 1410525408;
 
 	/**
-	 * Create a new <code>U_DATE_ARRAY</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #U_DATE_ARRAY()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public U_DATE_ARRAY(org.jooq.Configuration configuration) {
-		super(org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, "U_DATE_ARRAY", org.jooq.impl.SQLDataType.DATE, configuration);
+		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_DATE_ARRAY", org.jooq.impl.SQLDataType.DATE, configuration);
 	}
 
 	/**
-	 * Create a new <code>U_DATE_ARRAY</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #U_DATE_ARRAY()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public U_DATE_ARRAY(org.jooq.Configuration configuration, java.sql.Date... array) {
 		this(configuration);
 		set(array);
 	}
 
 	/**
-	 * Create a new <code>U_DATE_ARRAY</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #U_DATE_ARRAY()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public U_DATE_ARRAY(org.jooq.Configuration configuration, java.util.List<? extends java.sql.Date> list) {
 		this(configuration);
 		setList(list);
+	}
+
+	/**
+	 * Create a new <code>TEST.U_DATE_ARRAY</code> record
+	 */
+	public U_DATE_ARRAY() {
+		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_DATE_ARRAY", org.jooq.impl.SQLDataType.DATE);
+	}
+
+	/**
+	 * Create a new <code>TEST.U_DATE_ARRAY</code> record
+	 */
+	public U_DATE_ARRAY(java.sql.Date... array) {
+		this();
+		set(array);
+	}
+
+	/**
+	 * Create a new <code>TEST.U_DATE_ARRAY</code> record
+	 */
+	public U_DATE_ARRAY(java.util.Collection<? extends java.sql.Date> collection) {
+		this();
+		set(collection);
 	}
 }

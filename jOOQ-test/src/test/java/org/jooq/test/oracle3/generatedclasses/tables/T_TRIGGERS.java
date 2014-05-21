@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_TRIGGERS extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1226054306;
+	private static final long serialVersionUID = -539147999;
 
 	/**
-	 * The singleton instance of <code>T_TRIGGERS</code>
+	 * The singleton instance of <code>TEST.T_TRIGGERS</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS T_TRIGGERS = new org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS();
 
@@ -25,32 +25,40 @@ public class T_TRIGGERS extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.ge
 	}
 
 	/**
-	 * The column <code>T_TRIGGERS.ID_GENERATED</code>. 
+	 * The column <code>TEST.T_TRIGGERS.ID_GENERATED</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>T_TRIGGERS.ID</code>. 
+	 * The column <code>TEST.T_TRIGGERS.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>T_TRIGGERS.COUNTER</code>. 
+	 * The column <code>TEST.T_TRIGGERS.COUNTER</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS, java.lang.Integer> COUNTER = createField("COUNTER", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS, java.lang.Integer> COUNTER = createField("COUNTER", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * Create a <code>T_TRIGGERS</code> table reference
+	 * Create a <code>TEST.T_TRIGGERS</code> table reference
 	 */
 	public T_TRIGGERS() {
-		super("T_TRIGGERS", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("T_TRIGGERS", null);
 	}
 
 	/**
-	 * Create an aliased <code>T_TRIGGERS</code> table reference
+	 * Create an aliased <code>TEST.T_TRIGGERS</code> table reference
 	 */
 	public T_TRIGGERS(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS);
+		this(alias, org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS);
+	}
+
+	private T_TRIGGERS(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_TRIGGERS(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, aliased, parameters, "");
 	}
 
 	/**
@@ -74,6 +82,13 @@ public class T_TRIGGERS extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.ge
 	 */
 	@Override
 	public org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS as(java.lang.String alias) {
-		return new org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS(alias);
+		return new org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS rename(java.lang.String name) {
+		return new org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS(name, null);
 	}
 }

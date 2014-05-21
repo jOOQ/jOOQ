@@ -9,15 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class F_GET_ONE_CURSOR extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 572993999;
+	private static final long serialVersionUID = -1051376998;
 
 	/**
-	 * The parameter <code>F_GET_ONE_CURSOR.RETURN_VALUE</code>. 
+	 * The parameter <code>TEST.F_GET_ONE_CURSOR.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * The parameter <code>F_GET_ONE_CURSOR.BOOK_IDS</code>. 
+	 * The parameter <code>TEST.F_GET_ONE_CURSOR.BOOK_IDS</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> BOOK_IDS = createParameter("BOOK_IDS", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY.class));
 
@@ -25,7 +25,7 @@ public class F_GET_ONE_CURSOR extends org.jooq.impl.AbstractRoutine<org.jooq.Res
 	 * Create a new routine call instance
 	 */
 	public F_GET_ONE_CURSOR() {
-		super("F_GET_ONE_CURSOR", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.impl.SQLDataType.RESULT);
+		super("F_GET_ONE_CURSOR", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.impl.SQLDataType.RESULT);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(BOOK_IDS);

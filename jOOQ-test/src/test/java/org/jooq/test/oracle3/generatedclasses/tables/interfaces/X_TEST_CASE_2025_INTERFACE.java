@@ -8,27 +8,27 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "X_TEST_CASE_2025")
+@javax.persistence.Table(name = "X_TEST_CASE_2025", schema = "TEST")
 public interface X_TEST_CASE_2025_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * Setter for <code>X_TEST_CASE_2025.REF_ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>.
 	 */
 	public void setREF_ID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>X_TEST_CASE_2025.REF_ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>.
 	 */
 	@javax.persistence.Column(name = "REF_ID", nullable = false, precision = 7)
 	public java.lang.Integer getREF_ID();
 
 	/**
-	 * Setter for <code>X_TEST_CASE_2025.REF_NAME</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_NAME</code>.
 	 */
 	public void setREF_NAME(java.lang.String value);
 
 	/**
-	 * Getter for <code>X_TEST_CASE_2025.REF_NAME</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_2025.REF_NAME</code>.
 	 */
 	@javax.persistence.Column(name = "REF_NAME", nullable = false, length = 10)
 	public java.lang.String getREF_NAME();

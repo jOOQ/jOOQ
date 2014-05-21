@@ -8,13 +8,13 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "X_TEST_CASE_85")
+@javax.persistence.Table(name = "X_TEST_CASE_85", schema = "TEST")
 public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_85> implements java.lang.Cloneable, org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_85_INTERFACE {
 
-	private static final long serialVersionUID = 176709233;
+	private static final long serialVersionUID = 1626847139;
 
 	/**
-	 * Setter for <code>X_TEST_CASE_85.ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_85.ID</code>.
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * Getter for <code>X_TEST_CASE_85.ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_85.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -32,7 +32,7 @@ public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * Setter for <code>X_TEST_CASE_85.X_UNUSED_ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>.
 	 */
 	@Override
 	public void setX_UNUSED_ID(java.lang.Integer value) {
@@ -40,7 +40,7 @@ public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * Getter for <code>X_TEST_CASE_85.X_UNUSED_ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>.
 	 */
 	@javax.persistence.Column(name = "X_UNUSED_ID", precision = 7)
 	@Override
@@ -49,7 +49,7 @@ public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * Setter for <code>X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>.
 	 */
 	@Override
 	public void setX_UNUSED_NAME(java.lang.String value) {
@@ -57,7 +57,7 @@ public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * Getter for <code>X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>.
 	 */
 	@javax.persistence.Column(name = "X_UNUSED_NAME", length = 10)
 	@Override

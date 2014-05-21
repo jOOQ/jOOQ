@@ -8,13 +8,13 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_DIRECTORY")
+@javax.persistence.Table(name = "T_DIRECTORY", schema = "TEST")
 public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY> implements java.lang.Cloneable, org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DIRECTORY_INTERFACE {
 
-	private static final long serialVersionUID = -1178464697;
+	private static final long serialVersionUID = 2081701245;
 
 	/**
-	 * Setter for <code>T_DIRECTORY.ID</code>. 
+	 * Setter for <code>TEST.T_DIRECTORY.ID</code>.
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Getter for <code>T_DIRECTORY.ID</code>. 
+	 * Getter for <code>TEST.T_DIRECTORY.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -32,7 +32,7 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Setter for <code>T_DIRECTORY.PARENT_ID</code>. 
+	 * Setter for <code>TEST.T_DIRECTORY.PARENT_ID</code>.
 	 */
 	@Override
 	public void setPARENT_ID(java.lang.Integer value) {
@@ -40,7 +40,7 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Getter for <code>T_DIRECTORY.PARENT_ID</code>. 
+	 * Getter for <code>TEST.T_DIRECTORY.PARENT_ID</code>.
 	 */
 	@javax.persistence.Column(name = "PARENT_ID", precision = 7)
 	@Override
@@ -49,7 +49,7 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Setter for <code>T_DIRECTORY.IS_DIRECTORY</code>. 
+	 * Setter for <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>.
 	 */
 	@Override
 	public void setIS_DIRECTORY(java.lang.Integer value) {
@@ -57,7 +57,7 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Getter for <code>T_DIRECTORY.IS_DIRECTORY</code>. 
+	 * Getter for <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>.
 	 */
 	@javax.persistence.Column(name = "IS_DIRECTORY", precision = 7)
 	@Override
@@ -66,7 +66,7 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Setter for <code>T_DIRECTORY.name</code>. 
+	 * Setter for <code>TEST.T_DIRECTORY.name</code>.
 	 */
 	@Override
 	public void setname(java.lang.String value) {
@@ -74,7 +74,7 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Getter for <code>T_DIRECTORY.name</code>. 
+	 * Getter for <code>TEST.T_DIRECTORY.name</code>.
 	 */
 	@javax.persistence.Column(name = "name", length = 50)
 	@Override

@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "V_INCOMPLETE")
+@javax.persistence.Table(name = "V_INCOMPLETE", schema = "TEST")
 public class V_INCOMPLETE_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INTERFACE {
 
-	private static final long serialVersionUID = 948534078;
+	private static final long serialVersionUID = -1280720380;
 
 	private java.lang.Object ID;
 	private java.lang.Object AUTHOR_ID;
@@ -22,6 +22,8 @@ public class V_INCOMPLETE_POJO extends java.lang.ThreadDeath implements java.lan
 	private java.lang.Object LANGUAGE_ID;
 	private java.lang.Object CONTENT_TEXT;
 	private java.lang.Object CONTENT_PDF;
+	private java.lang.Object REC_VERSION;
+	private java.lang.Object REC_TIMESTAMP;
 
 	public V_INCOMPLETE_POJO() {}
 
@@ -34,7 +36,9 @@ public class V_INCOMPLETE_POJO extends java.lang.ThreadDeath implements java.lan
 		java.lang.Object PUBLISHED_IN,
 		java.lang.Object LANGUAGE_ID,
 		java.lang.Object CONTENT_TEXT,
-		java.lang.Object CONTENT_PDF
+		java.lang.Object CONTENT_PDF,
+		java.lang.Object REC_VERSION,
+		java.lang.Object REC_TIMESTAMP
 	) {
 		this.ID = ID;
 		this.AUTHOR_ID = AUTHOR_ID;
@@ -45,6 +49,8 @@ public class V_INCOMPLETE_POJO extends java.lang.ThreadDeath implements java.lan
 		this.LANGUAGE_ID = LANGUAGE_ID;
 		this.CONTENT_TEXT = CONTENT_TEXT;
 		this.CONTENT_PDF = CONTENT_PDF;
+		this.REC_VERSION = REC_VERSION;
+		this.REC_TIMESTAMP = REC_TIMESTAMP;
 	}
 
 	@javax.persistence.Column(name = "ID")
@@ -146,6 +152,28 @@ public class V_INCOMPLETE_POJO extends java.lang.ThreadDeath implements java.lan
 		this.CONTENT_PDF = CONTENT_PDF;
 	}
 
+	@javax.persistence.Column(name = "REC_VERSION")
+	@Override
+	public java.lang.Object getREC_VERSION() {
+		return this.REC_VERSION;
+	}
+
+	@Override
+	public void setREC_VERSION(java.lang.Object REC_VERSION) {
+		this.REC_VERSION = REC_VERSION;
+	}
+
+	@javax.persistence.Column(name = "REC_TIMESTAMP")
+	@Override
+	public java.lang.Object getREC_TIMESTAMP() {
+		return this.REC_TIMESTAMP;
+	}
+
+	@Override
+	public void setREC_TIMESTAMP(java.lang.Object REC_TIMESTAMP) {
+		this.REC_TIMESTAMP = REC_TIMESTAMP;
+	}
+
 	// -------------------------------------------------------------------------
 	// FROM and INTO
 	// -------------------------------------------------------------------------
@@ -164,6 +192,8 @@ public class V_INCOMPLETE_POJO extends java.lang.ThreadDeath implements java.lan
 		setLANGUAGE_ID(from.getLANGUAGE_ID());
 		setCONTENT_TEXT(from.getCONTENT_TEXT());
 		setCONTENT_PDF(from.getCONTENT_PDF());
+		setREC_VERSION(from.getREC_VERSION());
+		setREC_TIMESTAMP(from.getREC_TIMESTAMP());
 	}
 
 	/**

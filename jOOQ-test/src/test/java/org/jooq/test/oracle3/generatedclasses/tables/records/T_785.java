@@ -8,13 +8,13 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_785")
+@javax.persistence.Table(name = "T_785", schema = "TEST")
 public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_785> implements java.lang.Cloneable, org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_785_INTERFACE {
 
-	private static final long serialVersionUID = -1804123677;
+	private static final long serialVersionUID = -993952173;
 
 	/**
-	 * Setter for <code>T_785.ID</code>. 
+	 * Setter for <code>TEST.T_785.ID</code>.
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.g
 	}
 
 	/**
-	 * Getter for <code>T_785.ID</code>. 
+	 * Getter for <code>TEST.T_785.ID</code>.
 	 */
 	@javax.persistence.Column(name = "ID", precision = 7)
 	@Override
@@ -31,7 +31,7 @@ public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.g
 	}
 
 	/**
-	 * Setter for <code>T_785.NAME</code>. 
+	 * Setter for <code>TEST.T_785.NAME</code>.
 	 */
 	@Override
 	public void setNAME(java.lang.String value) {
@@ -39,7 +39,7 @@ public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.g
 	}
 
 	/**
-	 * Getter for <code>T_785.NAME</code>. 
+	 * Getter for <code>TEST.T_785.NAME</code>.
 	 */
 	@javax.persistence.Column(name = "NAME", length = 50)
 	@Override
@@ -48,7 +48,7 @@ public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.g
 	}
 
 	/**
-	 * Setter for <code>T_785.VALUE</code>. 
+	 * Setter for <code>TEST.T_785.VALUE</code>.
 	 */
 	@Override
 	public void setVALUE(java.lang.String value) {
@@ -56,7 +56,7 @@ public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.g
 	}
 
 	/**
-	 * Getter for <code>T_785.VALUE</code>. 
+	 * Getter for <code>TEST.T_785.VALUE</code>.
 	 */
 	@javax.persistence.Column(name = "VALUE", length = 50)
 	@Override

@@ -8,13 +8,13 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "X_TEST_CASE_71")
+@javax.persistence.Table(name = "X_TEST_CASE_71", schema = "TEST")
 public class X_TEST_CASE_71 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_71> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, java.lang.Short>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_71_INTERFACE {
 
-	private static final long serialVersionUID = -1116242707;
+	private static final long serialVersionUID = 408143149;
 
 	/**
-	 * Setter for <code>X_TEST_CASE_71.ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_71.ID</code>.
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class X_TEST_CASE_71 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * Getter for <code>X_TEST_CASE_71.ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_71.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -32,7 +32,7 @@ public class X_TEST_CASE_71 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * Setter for <code>X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
+	 * Setter for <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>.
 	 */
 	@Override
 	public void setTEST_CASE_64_69_ID(java.lang.Short value) {
@@ -40,7 +40,7 @@ public class X_TEST_CASE_71 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * Getter for <code>X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
+	 * Getter for <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>.
 	 */
 	@javax.persistence.Column(name = "TEST_CASE_64_69_ID", precision = 4)
 	@Override

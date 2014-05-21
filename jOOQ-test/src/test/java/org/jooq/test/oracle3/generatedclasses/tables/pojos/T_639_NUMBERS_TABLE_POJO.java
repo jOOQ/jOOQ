@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_639_NUMBERS_TABLE")
+@javax.persistence.Table(name = "T_639_NUMBERS_TABLE", schema = "TEST")
 public class T_639_NUMBERS_TABLE_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_639_NUMBERS_TABLE_INTERFACE {
 
-	private static final long serialVersionUID = -1928374391;
+	private static final long serialVersionUID = -365989129;
 
 	private java.lang.Integer    ID;
 	private java.lang.Byte       BYTE;

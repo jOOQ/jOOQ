@@ -9,28 +9,54 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_BOOK_ARRAY extends org.jooq.impl.ArrayRecordImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 52092859;
+	private static final long serialVersionUID = 617476721;
 
 	/**
-	 * Create a new <code>U_BOOK_ARRAY</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #U_BOOK_ARRAY()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public U_BOOK_ARRAY(org.jooq.Configuration configuration) {
-		super(org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, "U_BOOK_ARRAY", org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE.getDataType(), configuration);
+		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_BOOK_ARRAY", org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE.getDataType(), configuration);
 	}
 
 	/**
-	 * Create a new <code>U_BOOK_ARRAY</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #U_BOOK_ARRAY()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public U_BOOK_ARRAY(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE... array) {
 		this(configuration);
 		set(array);
 	}
 
 	/**
-	 * Create a new <code>U_BOOK_ARRAY</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #U_BOOK_ARRAY()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public U_BOOK_ARRAY(org.jooq.Configuration configuration, java.util.List<? extends org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE> list) {
 		this(configuration);
 		setList(list);
+	}
+
+	/**
+	 * Create a new <code>TEST.U_BOOK_ARRAY</code> record
+	 */
+	public U_BOOK_ARRAY() {
+		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_BOOK_ARRAY", org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE.getDataType());
+	}
+
+	/**
+	 * Create a new <code>TEST.U_BOOK_ARRAY</code> record
+	 */
+	public U_BOOK_ARRAY(org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE... array) {
+		this();
+		set(array);
+	}
+
+	/**
+	 * Create a new <code>TEST.U_BOOK_ARRAY</code> record
+	 */
+	public U_BOOK_ARRAY(java.util.Collection<? extends org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE> collection) {
+		this();
+		set(collection);
 	}
 }

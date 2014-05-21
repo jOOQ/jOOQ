@@ -8,13 +8,13 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_EXOTIC_TYPES")
+@javax.persistence.Table(name = "T_EXOTIC_TYPES", schema = "TEST")
 public class T_EXOTIC_TYPES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_EXOTIC_TYPES_INTERFACE {
 
-	private static final long serialVersionUID = 523414673;
+	private static final long serialVersionUID = -1858615331;
 
 	/**
-	 * Setter for <code>T_EXOTIC_TYPES.ID</code>. 
+	 * Setter for <code>TEST.T_EXOTIC_TYPES.ID</code>.
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class T_EXOTIC_TYPES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * Getter for <code>T_EXOTIC_TYPES.ID</code>. 
+	 * Getter for <code>TEST.T_EXOTIC_TYPES.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -32,7 +32,7 @@ public class T_EXOTIC_TYPES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * Setter for <code>T_EXOTIC_TYPES.UU</code>. 
+	 * Setter for <code>TEST.T_EXOTIC_TYPES.UU</code>.
 	 */
 	@Override
 	public void setUU(java.lang.String value) {
@@ -40,7 +40,7 @@ public class T_EXOTIC_TYPES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * Getter for <code>T_EXOTIC_TYPES.UU</code>. 
+	 * Getter for <code>TEST.T_EXOTIC_TYPES.UU</code>.
 	 */
 	@javax.persistence.Column(name = "UU", length = 36)
 	@Override

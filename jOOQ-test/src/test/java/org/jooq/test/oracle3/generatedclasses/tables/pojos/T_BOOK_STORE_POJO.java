@@ -10,10 +10,10 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_BOOK_STORE")
+@javax.persistence.Table(name = "T_BOOK_STORE", schema = "TEST")
 public class T_BOOK_STORE_POJO extends java.lang.Object implements java.io.Serializable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INTERFACE {
 
-	private static final long serialVersionUID = -1739062544;
+	private static final long serialVersionUID = 552166970;
 
 	private java.lang.String NAME;
 

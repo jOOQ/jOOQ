@@ -127,7 +127,7 @@ CREATE TRIGGER t_triggers_trigger
 BEFORE INSERT
 ON t_triggers
 FOR EACH ROW
-CALL "org.jooq.test.h2.TTriggersTrigger"
+CALL "org.jooq.test.utils.h2.TTriggersTrigger"
 /
 
 CREATE TABLE t_language (
@@ -423,14 +423,14 @@ SELECT 1 AS col001, 1 AS col002, 1 AS col003, 1 AS col004, 1 AS col005, 1 AS col
        1 AS col291, 1 AS col292, 1 AS col293, 1 AS col294, 1 AS col295, 1 AS col296, 1 AS col297, 1 AS col298, 1 AS col299, 1 AS col300
 /
 
-CREATE ALIAS f_one FOR "org.jooq.test.h2.F.fOne";/
-CREATE ALIAS f_number FOR "org.jooq.test.h2.F.fNumber";/
-CREATE ALIAS f317 FOR "org.jooq.test.h2.F.f317";/
-CREATE ALIAS f1256 FOR "org.jooq.test.h2.F.f1256";/
-CREATE ALIAS f_arrays1 FOR "org.jooq.test.h2.F.f_arrays1";/
-CREATE ALIAS f_arrays2 FOR "org.jooq.test.h2.F.f_arrays2";/
-CREATE ALIAS f_arrays3 FOR "org.jooq.test.h2.F.f_arrays3";/
-CREATE ALIAS f_author_exists FOR "org.jooq.test.h2.F.fAuthorExists";/
-CREATE ALIAS f_get_one_cursor FOR "org.jooq.test.h2.F.fGetOneCursor";/
-CREATE ALIAS p_create_author_by_name FOR "org.jooq.test.h2.F.pCreateAuthorByName";/
-CREATE ALIAS p_create_author FOR "org.jooq.test.h2.F.pCreateAuthor";/
+CREATE ALIAS f_one FOR "org.jooq.test.utils.h2.F.fOne";/
+CREATE ALIAS f_number FOR "org.jooq.test.utils.h2.F.fNumber";/
+CREATE ALIAS f317 FOR "org.jooq.test.utils.h2.F.f317";/
+CREATE ALIAS f1256 FOR "org.jooq.test.utils.h2.F.f1256";/
+CREATE ALIAS f_arrays1 FOR "org.jooq.test.utils.h2.F.f_arrays1";/
+CREATE ALIAS f_arrays2 FOR "org.jooq.test.utils.h2.F.f_arrays2";/
+CREATE ALIAS f_arrays3 FOR "org.jooq.test.utils.h2.F.f_arrays3";/
+CREATE ALIAS f_author_exists FOR "org.jooq.test.utils.h2.F.fAuthorExists";/
+CREATE ALIAS f_get_one_cursor FOR "org.jooq.test.utils.h2.F.fGetOneCursor";/
+CREATE ALIAS p_create_author_by_name FOR "org.jooq.test.utils.h2.F.pCreateAuthorByName";/
+CREATE ALIAS p_create_author FOR "org.jooq.test.utils.h2.F.pCreateAuthor";/

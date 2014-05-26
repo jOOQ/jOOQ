@@ -37,6 +37,7 @@
         <db.derby.version>10.10.2.0</db.derby.version>
         <db.firebird.version>2.2.5</db.firebird.version>
         <db.h2.version>1.4.177</db.h2.version>
+        <db.hsqldb.version>2.3.2</db.hsqldb.version>
         <db.mariadb.version>1.1.7</db.mariadb.version>
         <db.mysql.version>5.1.30</db.mysql.version>
         <db.postgres.version>9.3-1101-jdbc41</db.postgres.version>
@@ -46,6 +47,7 @@
         <db.db2.version>3.1.57</db.db2.version>
         <db.oracle.version>10.2.0.3.0</db.oracle.version>
         <db.sqlserver.version>3.0</db.sqlserver.version>
+        <db.sybase.version>6.0</db.sybase.version>
         <!-- [/pro] -->
     </properties>
     
@@ -134,6 +136,28 @@
             <version>${db.derby.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbyclient</artifactId>
+            <version>${db.derby.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbytools</artifactId>
+            <version>${db.derby.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbynet</artifactId>
+            <version>${db.derby.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbyrun</artifactId>
+            <version>${db.derby.version}</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/derbyrun.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>org.jooq.cubrid</groupId>
             <artifactId>cubrid-jdbc</artifactId>
             <version>${db.cubrid.version}</version>
@@ -151,9 +175,9 @@
             <version>${db.h2.version}</version>
         </dependency>
         <dependency>
-            <groupId>hsqldb</groupId>
+            <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
-            <version>1.8.0.10</version>
+            <version>${db.hsqldb.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
@@ -204,7 +228,7 @@
         <dependency>
             <groupId>sybase</groupId>
             <artifactId>jconn3</artifactId>
-            <version>6.0</version>
+            <version>${db.sybase.version}</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/jconn3.jar</systemPath>
         </dependency>
@@ -273,7 +297,89 @@
         </plugins>
     </build>
     
+    
+    <!-- Currently, Maven profiles are used instead of a more appropriate mechanism in order to execute only
+         *one* run target. Apparently, it is not possible to call single executions like in ant
+         Suggestions about how to improve this are very welcome! -->
     <profiles>
+        
+        <!-- Start Java databases like HSQLDB or Derby -->
+        <profile>
+            <id>start-hsqldb</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.2.1</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                                
+                        <configuration>
+                            <mainClass>org.hsqldb.server.Server</mainClass>
+                            <arguments>
+                                <argument>--database.0</argument>
+                                <argument>file:${project.build.directory}/databases/hsqld</argument>
+                            </arguments>
+                        </configuration>
+                        
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.hsqldb</groupId>
+                                <artifactId>hsqldb</artifactId>
+                                <version>${db.hsqldb.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        <profile>
+            <id>start-derby</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.2.1</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                                
+                        <configuration>
+                            <mainClass>org.apache.derby.iapi.tools.run</mainClass>
+                            <arguments>
+                                <argument>server</argument>
+                                <argument>start</argument>
+                            </arguments>
+                        </configuration>
+                        
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.apache.derby</groupId>
+                                <artifactId>derbyrun</artifactId>
+                                <version>${db.derby.version}</version>
+                                <scope>system</scope>
+                                <systemPath>${basedir}/lib/derbyrun.jar</systemPath>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        
+        <!-- Code generation profiles -->
         <profile>
             <id>codegen-cubrid</id>
             <build>
@@ -627,6 +733,76 @@
                                         <target>
                                             <packageName>org.jooq.test.derby.generatedclasses</packageName>
                                             <directory>./src/test/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.apache.derby</groupId>
+                                <artifactId>derby</artifactId>
+                                <version>${db.derby.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        
+        <profile>
+            <id>codegen-derby-sys</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${jooq.version}</version>
+        
+                        <executions>
+                            <execution>
+                                <id>generate-derby-sys</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.derby.driver}</driver>
+                                        <url>${db.derby.url}</url>
+                                        <schema>SYS</schema>
+                                        <user>${db.derby.username}</user>
+                                        <password>${db.derby.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <name>org.jooq.util.DefaultGenerator</name>
+                                        <database>
+                                            <name>org.jooq.util.derby.DerbyDatabase</name>
+                                            <includes>SYSSCHEMAS|SYSTABLES|SYSCOLUMNS|SYSCONSTRAINTS|SYSCONGLOMERATES|SYSKEYS|SYSSEQUENCES</includes>
+                                            <excludes></excludes>
+                                            <recordVersionFields></recordVersionFields>
+                                            <recordTimestampFields></recordTimestampFields>
+                                            <dateAsTimestamp>false</dateAsTimestamp>
+                                            <unsignedTypes>true</unsignedTypes>
+                                        </database>
+                                        <generate>
+                                            <relations>false</relations>
+                                            <deprecated>false</deprecated>
+                                            <instanceFields>false</instanceFields>
+                                            <generatedAnnotation>true</generatedAnnotation>
+                                            <records>false</records>
+                                            <pojos>false</pojos>
+                                            <immutablePojos>false</immutablePojos>
+                                            <interfaces>false</interfaces>
+                                            <daos>false</daos>
+                                            <jpaAnnotations>false</jpaAnnotations>
+                                            <validationAnnotations>false</validationAnnotations>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.util.derby.sys</packageName>
+                                            <directory>../jOOQ-meta/src/main/java</directory>
                                         </target>
                                     </generator>
                                 </configuration>
@@ -1640,6 +1816,296 @@
                                 <groupId>org.jooq</groupId>
                                 <artifactId>jooq-test-utils</artifactId>
                                 <version>${project.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        
+        <profile>
+            <id>codegen-hsqldb</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${jooq.version}</version>
+        
+                        <executions>
+                            <execution>
+                                <id>generate-hsqldb</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.hsqldb.driver}</driver>
+                                        <url>${db.hsqldb.url}</url>
+                                        <schema>${db.hsqldb.schema}</schema>
+                                        <properties>
+                                            <property>
+                                                <key>user</key>
+                                                <value>${db.hsqldb.username}</value>
+                                            </property>
+                                            <property>
+                                                <key>password</key>
+                                                <value>${db.hsqldb.password}</value>
+                                            </property>
+                                        </properties>
+                                    </jdbc>
+                                    <generator>
+                                        <name>org.jooq.util.DefaultGenerator</name>
+                                        <database>
+                                            <name>org.jooq.util.hsqldb.HSQLDBDatabase</name>
+                                            <includes>.*</includes>
+                                            <excludes>T_BOOK_DETAILS|S_TRIGGERS_SEQUENCE</excludes>
+                                            <recordVersionFields>REC_VERSION</recordVersionFields>
+                                            <recordTimestampFields>REC_TIMESTAMP</recordTimestampFields>
+                                            <dateAsTimestamp>false</dateAsTimestamp>
+                                            <unsignedTypes>true</unsignedTypes>
+                                            <customTypes>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.StringEnum</name>
+                                                    <converter>org.jooq.test.all.converters.StringEnumConverter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.StringEnum1</name>
+                                                    <converter>org.jooq.test.all.converters.StringEnum1Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.OrdinalEnum</name>
+                                                    <converter>org.jooq.test.all.converters.OrdinalEnumConverter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.OrdinalEnum1</name>
+                                                    <converter>org.jooq.test.all.converters.OrdinalEnum1Converter</converter>
+                                                </customType>
+                                
+                                                <customType>
+                                                    <name>java.util.Date</name>
+                                                    <converter>org.jooq.test.all.converters.DateConverter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>java.util.GregorianCalendar</name>
+                                                    <converter>org.jooq.test.all.converters.CalendarConverter</converter>
+                                                </customType>
+                                
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_10</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_10_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_TF_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_TF_UC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YN_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YN_UC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YES_NO_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YES_NO_UC_Converter</converter>
+                                                </customType>
+                                            </customTypes>
+                                
+                                            <forcedTypes>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.StringEnum</name>
+                                                    <expression>(?i:(.*?\.)?T_MAPPED_TYPES.DEFAULT_ENUM_NAME)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.StringEnum1</name>
+                                                    <expression>(?i:(.*?\.)?T_MAPPED_TYPES.CUSTOM_ENUM_TEXT)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.OrdinalEnum</name>
+                                                    <expression>(?i:(.*?\.)?T_MAPPED_TYPES.DEFAULT_ENUM_ORDINAL)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.OrdinalEnum1</name>
+                                                    <expression>(?i:(.*?\.)?T_MAPPED_TYPES.CUSTOM_ENUM_NUMERIC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>java.util.Date</name>
+                                                    <expression>(?i:(.*?\.)?T_MAPPED_TYPES.JAVA_UTIL_DATE)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>java.util.GregorianCalendar</name>
+                                                    <expression>(?i:(.*?\.)?T_MAPPED_TYPES.JAVA_UTIL_CALENDAR)</expression>
+                                                </forcedType>
+                                
+                                                <forcedType>
+                                                    <name>BOOLEAN</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>UUID</name>
+                                                    <expression>(?i:(.*?.)?T_EXOTIC_TYPES.UU)</expression>
+                                                </forcedType>
+                                                
+                                                <!-- [#2477] Check if unsigned types work correctly -->
+                                                <forcedType>
+                                                    <name>TINYINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_BYTE)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>SMALLINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_SHORT)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>INTEGERUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_INT)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>BIGINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_LONG)</expression>
+                                                </forcedType>
+                                
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_10</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.ONE_ZERO)</expression>
+                                                </forcedType>
+                                            </forcedTypes>
+                                        </database>
+                                        <generate>
+                                            <relations>true</relations>
+                                            <deprecated>true</deprecated>
+                                            <instanceFields>true</instanceFields>
+                                            <generatedAnnotation>false</generatedAnnotation>
+                                            <records>true</records>
+                                            <pojos>false</pojos>
+                                            <interfaces>true</interfaces>
+                                            <jpaAnnotations>false</jpaAnnotations>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.test.hsqldb.generatedclasses</packageName>
+                                            <directory>./src/test/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.hsqldb</groupId>
+                                <artifactId>hsqldb</artifactId>
+                                <version>${db.hsqldb.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        
+        <profile>
+            <id>codegen-hsqldb-information-schema</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${jooq.version}</version>
+        
+                        <executions>
+                            <execution>
+                                <id>generate-hsqldb-information-schema</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.hsqldb.driver}</driver>
+                                        <url>${db.hsqldb.url}</url>
+                                        <schema>INFORMATION_SCHEMA</schema>
+                                        <properties>
+                                            <property>
+                                                <key>user</key>
+                                                <value>${db.hsqldb.username}</value>
+                                            </property>
+                                            <property>
+                                                <key>password</key>
+                                                <value>${db.hsqldb.password}</value>
+                                            </property>
+                                        </properties>
+                                    </jdbc>
+                                    <generator>
+                                        <name>org.jooq.util.DefaultGenerator</name>
+                                        <database>
+                                            <name>org.jooq.util.hsqldb.HSQLDBDatabase</name>
+                                            <includes>CHECK_CONSTRAINTS|COLUMNS|ELEMENT_TYPES|KEY_COLUMN_USAGE|PARAMETERS|REFERENTIAL_CONSTRAINTS|ROUTINES|SCHEMATA|SEQUENCES|TABLE_CONSTRAINTS|TABLES</includes>
+                                            <excludes></excludes>
+                                            <recordVersionFields></recordVersionFields>
+                                            <recordTimestampFields></recordTimestampFields>
+                                            <dateAsTimestamp>false</dateAsTimestamp>
+                                            <unsignedTypes>true</unsignedTypes>
+                                        </database>
+                                        <generate>
+                                            <relations>false</relations>
+                                            <deprecated>false</deprecated>
+                                            <instanceFields>true</instanceFields>
+                                            <generatedAnnotation>true</generatedAnnotation>
+                                            <records>false</records>
+                                            <pojos>false</pojos>
+                                            <immutablePojos>false</immutablePojos>
+                                            <interfaces>false</interfaces>
+                                            <daos>false</daos>
+                                            <jpaAnnotations>false</jpaAnnotations>
+                                            <validationAnnotations>false</validationAnnotations>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.util.hsqldb.information_schema</packageName>
+                                            <directory>../jOOQ-meta/src/main/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.hsqldb</groupId>
+                                <artifactId>hsqldb</artifactId>
+                                <version>${db.hsqldb.version}</version>
                             </dependency>
                         </dependencies>
                     </plugin>
@@ -3847,6 +4313,288 @@
                                 <version>${db.sqlserver.version}</version>
                                 <scope>system</scope>
                                 <systemPath>${basedir}/lib/sqljdbc4.jar</systemPath>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        
+        <!-- The SQL Server INFORMATION_SCHEMA is very similar to that of HSQLDB, which we're using instead. -->
+        <profile>
+            <id>codegen-sqlserver-information-schema</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${jooq.version}</version>
+        
+                        <executions>
+                            <execution>
+                                <id>generate-sqlserver-information-schema</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.hsqldb.driver}</driver>
+                                        <url>${db.hsqldb.url}</url>
+                                        <schema>INFORMATION_SCHEMA</schema>
+                                        <user>${db.hsqldb.username}</user>
+                                        <password>${db.hsqldb.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <name>org.jooq.util.DefaultGenerator</name>
+                                        <database>
+                                            <name>org.jooq.util.hsqldb.HSQLDBDatabase</name>
+                                            <includes>CHECK_CONSTRAINTS|COLUMNS|CONSTRAINT_COLUMN_USAGE|KEY_COLUMN_USAGE|PARAMETERS|REFERENTIAL_CONSTRAINTS|ROUTINES|ROUTINE_COLUMNS|SCHEMATA|SEQUENCES|TABLE_CONSTRAINTS|TABLES</includes>
+                                            <excludes></excludes>
+                                            <recordVersionFields></recordVersionFields>
+                                            <recordTimestampFields></recordTimestampFields>
+                                            <dateAsTimestamp>false</dateAsTimestamp>
+                                            <unsignedTypes>true</unsignedTypes>
+                                        </database>
+                                        <generate>
+                                            <relations>false</relations>
+                                            <deprecated>false</deprecated>
+                                            <instanceFields>true</instanceFields>
+                                            <generatedAnnotation>true</generatedAnnotation>
+                                            <records>false</records>
+                                            <pojos>false</pojos>
+                                            <immutablePojos>false</immutablePojos>
+                                            <interfaces>false</interfaces>
+                                            <daos>false</daos>
+                                            <jpaAnnotations>false</jpaAnnotations>
+                                            <validationAnnotations>false</validationAnnotations>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.util.sqlserver.information_schema</packageName>
+                                            <directory>../jOOQ-meta/src/main/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.hsqldb</groupId>
+                                <artifactId>hsqldb</artifactId>
+                                <version>${db.hsqldb.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        
+        <profile>
+            <id>codegen-sybase</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${jooq.version}</version>
+        
+                        <executions>
+                            <execution>
+                                <id>generate-sybase</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+        
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.sybase.driver}</driver>
+                                        <url>${db.sybase.url}</url>
+                                        <schema>${db.sybase.schema}</schema>
+                                        <user>${db.sybase.username}</user>
+                                        <password>${db.sybase.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <name>org.jooq.util.DefaultGenerator</name>
+                                        <strategy/>
+                                        <database>
+                                            <name>org.jooq.util.sybase.SybaseDatabase</name>
+                                            <includes>t_.*|x_.*|v_.*|V_.*|p_.*|f_.*|(f|p)[0-9]+|s_.*</includes>
+                                            <excludes>t_book_details</excludes>
+                                            <dateAsTimestamp>false</dateAsTimestamp>
+                                            <unsignedTypes>true</unsignedTypes>
+                                
+                                            <customTypes>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_10</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_10_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_TF_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_TF_UC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YN_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YN_UC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YES_NO_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YES_NO_UC_Converter</converter>
+                                                </customType>
+                                            </customTypes>
+                                
+                                            <forcedTypes>
+                                                <forcedType>
+                                                    <name>BIT</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expression>
+                                                </forcedType>
+                                                
+                                                <!-- 
+                                                  [#965] Sybase SQL Anywhere doesn't support what other
+                                                  databases consider a SIGNED TINYINT
+                                                  -->
+                                                <forcedType>
+                                                    <name>SIGNED TINYINT</name>
+                                                    <expression>(?i:(.*?.)?T_639_NUMBERS_TABLE.BYTE)</expression>
+                                                </forcedType>
+                                
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_10</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.ONE_ZERO)</expression>
+                                                </forcedType>
+                                            </forcedTypes>
+                                        </database>
+                                        <generate>
+                                            <relations>true</relations>
+                                            <deprecated>true</deprecated>
+                                            <instanceFields>true</instanceFields>
+                                            <generatedAnnotation>false</generatedAnnotation>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.test.sybase.generatedclasses</packageName>
+                                            <directory>./src/test/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>sybase</groupId>
+                                <artifactId>jconn3</artifactId>
+                                <version>${db.sybase.version}</version>
+                                <scope>system</scope>
+                                <systemPath>${basedir}/lib/jconn3.jar</systemPath>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        
+        <profile>
+            <id>codegen-sybase-sys</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${jooq.version}</version>
+        
+                        <executions>
+                            <execution>
+                                <id>generate-sybase-sys</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+        
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.sybase.driver}</driver>
+                                        <url>${db.sybase.url}</url>
+                                        <schema>SYS</schema>
+                                        <user>${db.sybase.username}</user>
+                                        <password>${db.sybase.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <name>org.jooq.util.DefaultGenerator</name>
+                                        <database>
+                                            <name>org.jooq.util.sybase.SybaseDatabase</name>
+                                            <includes>SYSUSER|SYSTAB|SYSTABLE|SYSTABCOL|SYSDOMAIN|SYSIDX|SYSIDXCOL|SYSPROCEDURE|SYSPROCPARM|SYSVIEW|SYSSEQUENCE|SYSFKEY</includes>
+                                            <excludes></excludes>
+                                            <recordVersionFields></recordVersionFields>
+                                            <recordTimestampFields></recordTimestampFields>
+                                            <dateAsTimestamp>false</dateAsTimestamp>
+                                            <unsignedTypes>true</unsignedTypes>
+                                        </database>
+                                        <generate>
+                                            <relations>false</relations>
+                                            <deprecated>false</deprecated>
+                                            <instanceFields>true</instanceFields>
+                                            <generatedAnnotation>true</generatedAnnotation>
+                                            <records>false</records>
+                                            <pojos>false</pojos>
+                                            <immutablePojos>false</immutablePojos>
+                                            <interfaces>false</interfaces>
+                                            <daos>false</daos>
+                                            <jpaAnnotations>false</jpaAnnotations>
+                                            <validationAnnotations>false</validationAnnotations>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.util.sybase.sys</packageName>
+                                            <directory>../jOOQ-meta/src/main/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>sybase</groupId>
+                                <artifactId>jconn3</artifactId>
+                                <version>${db.sybase.version}</version>
+                                <scope>system</scope>
+                                <systemPath>${basedir}/lib/jconn3.jar</systemPath>
                             </dependency>
                         </dependencies>
                     </plugin>

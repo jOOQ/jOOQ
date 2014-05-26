@@ -4507,7 +4507,8 @@ public interface DSLContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Execute a set of queries in batch mode (without bind values).
+     * Create a batch statement to execute a set of queries in batch mode
+     * (without bind values).
      * <p>
      * This essentially runs the following logic: <code><pre>
      * Statement s = connection.createStatement();
@@ -4525,7 +4526,8 @@ public interface DSLContext {
     Batch batch(Query... queries);
 
     /**
-     * Execute a set of queries in batch mode (without bind values).
+     * Create a batch statement to execute a set of queries in batch mode
+     * (without bind values).
      * <p>
      * This is a convenience method for calling
      * <code><pre>batch(query(queries[0]), query(queries[1]), ...)</pre></code>.
@@ -4538,7 +4540,8 @@ public interface DSLContext {
     Batch batch(String... queries);
 
     /**
-     * Execute a set of queries in batch mode (without bind values).
+     * Create a batch statement to execute a set of queries in batch mode
+     * (without bind values).
      * <p>
      * This essentially runs the following logic: <code><pre>
      * Statement s = connection.createStatement();
@@ -4556,7 +4559,8 @@ public interface DSLContext {
     Batch batch(Collection<? extends Query> queries);
 
     /**
-     * Execute a set of queries in batch mode (with bind values).
+     * Create a batch statement to execute a set of queries in batch mode (with
+     * bind values).
      * <p>
      * When running <code><pre>
      * create.batch(query)
@@ -4589,7 +4593,8 @@ public interface DSLContext {
     BatchBindStep batch(Query query);
 
     /**
-     * Execute a set of queries in batch mode (with bind values).
+     * Create a batch statement to execute a set of queries in batch mode (with
+     * bind values).
      * <p>
      * This is a convenience method for calling
      * <code><pre>batch(query(sql))</pre></code>.
@@ -4602,7 +4607,8 @@ public interface DSLContext {
     BatchBindStep batch(String sql);
 
     /**
-     * Execute a set of queries in batch mode (with bind values).
+     * Create a batch statement to execute a set of queries in batch mode (with
+     * bind values).
      * <p>
      * This is a convenience method for calling {@link #batch(Query)} and then
      * binding values one by one using {@link BatchBindStep#bind(Object...)}
@@ -4618,7 +4624,8 @@ public interface DSLContext {
     Batch batch(Query query, Object[]... bindings);
 
     /**
-     * Execute a set of queries in batch mode (with bind values).
+     * Create a batch statement to execute a set of queries in batch mode (with
+     * bind values).
      * <p>
      * This is a convenience method for calling
      * <code><pre>batch(query(sql), bindings)</pre></code>.
@@ -4631,8 +4638,8 @@ public interface DSLContext {
     Batch batch(String sql, Object[]... bindings);
 
     /**
-     * Execute a set of <code>INSERT</code> and <code>UPDATE</code> queries in
-     * batch mode (with bind values).
+     * Create a batch statement to execute a set of <code>INSERT</code> and
+     * <code>UPDATE</code> queries in batch mode (with bind values).
      * <p>
      * This batch operation can be executed in two modes:
      * <p>
@@ -4675,8 +4682,8 @@ public interface DSLContext {
     Batch batchStore(UpdatableRecord<?>... records);
 
     /**
-     * Execute a set of <code>INSERT</code> and <code>UPDATE</code> queries in
-     * batch mode (with bind values).
+     * Create a batch statement to execute a set of <code>INSERT</code> and
+     * <code>UPDATE</code> queries in batch mode (with bind values).
      *
      * @see #batchStore(UpdatableRecord...)
      * @see Statement#executeBatch()
@@ -4685,8 +4692,8 @@ public interface DSLContext {
     Batch batchStore(Collection<? extends UpdatableRecord<?>> records);
 
     /**
-     * Execute a set of <code>INSERT</code> queries in batch mode (with bind
-     * values).
+     * Create a batch statement to execute a set of <code>INSERT</code> queries
+     * in batch mode (with bind values).
      *
      * @see #batchStore(UpdatableRecord...)
      * @see Statement#executeBatch()
@@ -4695,8 +4702,8 @@ public interface DSLContext {
     Batch batchInsert(TableRecord<?>... records);
 
     /**
-     * Execute a set of <code>INSERT</code> queries in batch mode (with bind
-     * values).
+     * Create a batch statement to execute a set of <code>INSERT</code> queries
+     * in batch mode (with bind values).
      *
      * @see #batchStore(UpdatableRecord...)
      * @see Statement#executeBatch()
@@ -4705,8 +4712,8 @@ public interface DSLContext {
     Batch batchInsert(Collection<? extends TableRecord<?>> records);
 
     /**
-     * Execute a set of <code>UPDATE</code> queries in batch mode (with bind
-     * values).
+     * Create a batch statement to execute a set of <code>UPDATE</code> queries
+     * in batch mode (with bind values).
      *
      * @see #batchStore(UpdatableRecord...)
      * @see Statement#executeBatch()
@@ -4715,8 +4722,8 @@ public interface DSLContext {
     Batch batchUpdate(UpdatableRecord<?>... records);
 
     /**
-     * Execute a set of <code>UPDATE</code> queries in batch mode (with bind
-     * values).
+     * Create a batch statement to execute a set of <code>UPDATE</code> queries
+     * in batch mode (with bind values).
      *
      * @see #batchStore(UpdatableRecord...)
      * @see Statement#executeBatch()
@@ -4725,8 +4732,8 @@ public interface DSLContext {
     Batch batchUpdate(Collection<? extends UpdatableRecord<?>> records);
 
     /**
-     * Execute a set of <code>DELETE</code> queries in batch mode (with bind
-     * values).
+     * Create a batch statement to execute a set of <code>DELETE</code> queries
+     * in batch mode (with bind values).
      * <p>
      * This batch operation can be executed in two modes:
      * <p>
@@ -4769,7 +4776,8 @@ public interface DSLContext {
     Batch batchDelete(UpdatableRecord<?>... records);
 
     /**
-     * Execute a set of <code>DELETE</code> in batch mode (with bind values).
+     * Create a batch statement to execute a set of <code>DELETE</code> in batch
+     * mode (with bind values).
      *
      * @see #batchDelete(UpdatableRecord...)
      * @see Statement#executeBatch()

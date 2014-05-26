@@ -44,7 +44,9 @@
         <db.sqlite.version>3.7.15-M1</db.sqlite.version>
         
         <!-- [pro] -->
+        <db.ase.version>1.3.1</db.ase.version>
         <db.db2.version>3.1.57</db.db2.version>
+        <db.ingres.version>10.0-4.0.6</db.ingres.version>
         <db.oracle.version>10.2.0.3.0</db.oracle.version>
         <db.sqlserver.version>3.0</db.sqlserver.version>
         <db.sybase.version>6.0</db.sybase.version>
@@ -209,12 +211,12 @@
         <dependency>
             <groupId>com.ingres.jdbc</groupId>
             <artifactId>iijdbc</artifactId>
-            <version>10.0-4.0.6</version>
+            <version>${db.ingres.version}</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.jtds</groupId>
             <artifactId>jtds</artifactId>
-            <version>1.3.1</version>
+            <version>${db.ase.version}</version>
         </dependency>
 
         
@@ -3354,7 +3356,225 @@
             </build>
         </profile>
         
+      
+        <profile>
+            <id>codegen-ase</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${jooq.version}</version>
         
+                        <executions>
+                            <execution>
+                                <id>generate-ase</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+        
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.ase.driver}</driver>
+                                        <url>${db.ase.url}</url>
+                                        <schema>${db.ase.schema}</schema>
+                                        <user>${db.ase.username}</user>
+                                        <password>${db.ase.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <name>org.jooq.util.DefaultGenerator</name>
+                                        <database>
+                                            <name>org.jooq.util.ase.ASEDatabase</name>
+                                            <includes>t_.*|x_.*|v_.*|V_.*|p_.*|f_.*|(f|p)[0-9]+|s_.*</includes>
+                                            <excludes>t_book_details</excludes>
+                                            <dateAsTimestamp>false</dateAsTimestamp>
+                                            <unsignedTypes>true</unsignedTypes>
+                                
+                                            <customTypes>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_10</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_10_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_TF_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_TF_UC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YN_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YN_UC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YES_NO_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YES_NO_UC_Converter</converter>
+                                                </customType>
+                                            </customTypes>
+                                
+                                            <forcedTypes>
+                                                <forcedType>
+                                                    <name>BIT</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expression>
+                                                </forcedType>
+                                                
+                                                <!-- [#2477] Check if unsigned types work correctly -->
+                                                <forcedType>
+                                                    <name>TINYINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_BYTE)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>SMALLINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_SHORT)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>INTEGERUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_INT)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>BIGINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_LONG)</expression>
+                                                </forcedType>
+                                
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_10</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.ONE_ZERO)</expression>
+                                                </forcedType>
+                                            </forcedTypes>
+                                        </database>
+                                        <generate>
+                                            <deprecated>true</deprecated>
+                                            <instanceFields>false</instanceFields>
+                                            <generatedAnnotation>false</generatedAnnotation>
+                                            <records>true</records>
+                                            <pojos>false</pojos>
+                                            <jpaAnnotations>false</jpaAnnotations>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.test.ase.generatedclasses</packageName>
+                                            <directory>./src/test/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>net.sourceforge.jtds</groupId>
+                                <artifactId>jtds</artifactId>
+                                <version>${db.ase.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+      
+        <profile>
+            <id>codegen-ase</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${jooq.version}</version>
+        
+                        <executions>
+                            <execution>
+                                <id>generate-ase</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+        
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.ase.driver}</driver>
+                                        <url>${db.ase.url}</url>
+                                        <schema>${db.ase.schema}</schema>
+                                        <user>${db.ase.username}</user>
+                                        <password>${db.ase.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <name>org.jooq.util.DefaultGenerator</name>
+                                        <database>
+                                            <name>org.jooq.util.ase.ASEDatabase</name>
+                                            <includes>sysusers|sysindexes|sysobjects|sysreferences</includes>
+                                            <excludes></excludes>
+                                            <recordVersionFields></recordVersionFields>
+                                            <recordTimestampFields></recordTimestampFields>
+                                            <dateAsTimestamp>false</dateAsTimestamp>
+                                            <unsignedTypes>true</unsignedTypes>
+                                        </database>
+                                        <generate>
+                                            <relations>false</relations>
+                                            <deprecated>false</deprecated>
+                                            <instanceFields>false</instanceFields>
+                                            <generatedAnnotation>true</generatedAnnotation>
+                                            <records>false</records>
+                                            <pojos>false</pojos>
+                                            <immutablePojos>false</immutablePojos>
+                                            <interfaces>false</interfaces>
+                                            <daos>false</daos>
+                                            <jpaAnnotations>false</jpaAnnotations>
+                                            <validationAnnotations>false</validationAnnotations>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.util.ase.sys</packageName>
+                                            <directory>../jOOQ-meta/src/main/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>net.sourceforge.jtds</groupId>
+                                <artifactId>jtds</artifactId>
+                                <version>${db.ase.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+      
         <profile>
             <id>codegen-db2</id>
             <build>
@@ -3573,6 +3793,229 @@
                                 <version>${db.db2.version}</version>
                                 <scope>system</scope>
                                 <systemPath>${basedir}/lib/db2jcc4.jar</systemPath>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        
+        <profile>
+            <id>codegen-ingres</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${jooq.version}</version>
+        
+                        <executions>
+                            <execution>
+                                <id>generate-ingres</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+        
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.ingres.driver}</driver>
+                                        <url>${db.ingres.url}</url>
+                                        <schema>${db.ingres.schema}</schema>
+                                        <user>${db.ingres.username}</user>
+                                        <password>${db.ingres.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <name>org.jooq.util.DefaultGenerator</name>
+                                        <database>
+                                            <name>org.jooq.util.ingres.IngresDatabase</name>
+                                            <includes>t_.*|x_.*|v_.*|p_.*|f_.*|(f|p)[0-9]+|s_.*</includes>
+                                            <excludes>t_book_details</excludes>
+                                            <dateAsTimestamp>false</dateAsTimestamp>
+                                            <unsignedTypes>true</unsignedTypes>
+                                
+                                            <customTypes>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_10</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_10_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_TF_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_TF_UC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YN_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YN_UC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YES_NO_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YES_NO_UC_Converter</converter>
+                                                </customType>
+                                            </customTypes>
+                                
+                                            <forcedTypes>
+                                                <forcedType>
+                                                    <name>BOOLEAN</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>UUID</name>
+                                                    <expression>(?i:(.*?.)?T_EXOTIC_TYPES.UU)</expression>
+                                                </forcedType>
+                                                
+                                                <!-- [#2477] Check if unsigned types work correctly -->
+                                                <forcedType>
+                                                    <name>TINYINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_BYTE)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>SMALLINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_SHORT)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>INTEGERUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_INT)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>BIGINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_LONG)</expression>
+                                                </forcedType>
+                                
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_10</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.ONE_ZERO)</expression>
+                                                </forcedType>
+                                            </forcedTypes>
+                                        </database>
+                                        <generate>
+                                            <relations>true</relations>
+                                            <deprecated>true</deprecated>
+                                            <instanceFields>false</instanceFields>
+                                            <generatedAnnotation>false</generatedAnnotation>
+                                            <records>true</records>
+                                            <pojos>false</pojos>
+                                            <jpaAnnotations>false</jpaAnnotations>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.test.ingres.generatedclasses</packageName>
+                                            <directory>./src/test/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.ingres.jdbc</groupId>
+                                <artifactId>iijdbc</artifactId>
+                                <version>${db.ingres.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        
+        <profile>
+            <id>codegen-ingres-$ingres</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${jooq.version}</version>
+        
+                        <executions>
+                            <execution>
+                                <id>generate-ingres-$ingres</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+        
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.ingres.driver}</driver>
+                                        <url>${db.ingres.url}</url>
+                                        <schema>$ingres</schema>
+                                        <user>${db.ingres.username}</user>
+                                        <password>${db.ingres.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <name>org.jooq.util.DefaultGenerator</name>
+                                        <database>
+                                            <name>org.jooq.util.ingres.IngresDatabase</name>
+                                            <includes>iischema|iitables|iicolumns|iiconstraints|iikeys|iiref_constraints|iisequences|iidb_comments|iidb_subcomments</includes>
+                                            <excludes></excludes>
+                                            <recordVersionFields></recordVersionFields>
+                                            <recordTimestampFields></recordTimestampFields>
+                                            <dateAsTimestamp>false</dateAsTimestamp>
+                                            <unsignedTypes>true</unsignedTypes>
+                                        </database>
+                                        <generate>
+                                            <relations>false</relations>
+                                            <deprecated>false</deprecated>
+                                            <instanceFields>false</instanceFields>
+                                            <generatedAnnotation>true</generatedAnnotation>
+                                            <records>false</records>
+                                            <pojos>false</pojos>
+                                            <immutablePojos>false</immutablePojos>
+                                            <interfaces>false</interfaces>
+                                            <daos>false</daos>
+                                            <jpaAnnotations>false</jpaAnnotations>
+                                            <validationAnnotations>false</validationAnnotations>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.util.ingres.ingres</packageName>
+                                            <directory>../jOOQ-meta/src/main/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.ingres.jdbc</groupId>
+                                <artifactId>iijdbc</artifactId>
+                                <version>${db.ingres.version}</version>
                             </dependency>
                         </dependencies>
                     </plugin>

@@ -9,14 +9,13 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_725_LOB_TEST", schema = "TEST")
-public class T_725_LOB_TEST extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, byte[]>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_725_LOB_TEST_INTERFACE {
+public class T_725_LOB_TEST extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, byte[]> {
 
-	private static final long serialVersionUID = -1998599977;
+	private static final long serialVersionUID = -527699088;
 
 	/**
 	 * Setter for <code>TEST.T_725_LOB_TEST.ID</code>.
 	 */
-	@Override
 	public void setID(java.lang.Integer value) {
 		setValue(0, value);
 	}
@@ -26,7 +25,6 @@ public class T_725_LOB_TEST extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
-	@Override
 	public java.lang.Integer getID() {
 		return (java.lang.Integer) getValue(0);
 	}
@@ -34,7 +32,6 @@ public class T_725_LOB_TEST extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	/**
 	 * Setter for <code>TEST.T_725_LOB_TEST.LOB</code>.
 	 */
-	@Override
 	public void setLOB(byte[] value) {
 		setValue(1, value);
 	}
@@ -43,7 +40,6 @@ public class T_725_LOB_TEST extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	 * Getter for <code>TEST.T_725_LOB_TEST.LOB</code>.
 	 */
 	@javax.persistence.Column(name = "LOB")
-	@Override
 	public byte[] getLOB() {
 		return (byte[]) getValue(1);
 	}
@@ -136,28 +132,6 @@ public class T_725_LOB_TEST extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	@Override
 	public T_725_LOB_TEST values(java.lang.Integer value1, byte[] value2) {
 		return this;
-	}
-
-	// -------------------------------------------------------------------------
-	// FROM and INTO
-	// -------------------------------------------------------------------------
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_725_LOB_TEST_INTERFACE from) {
-		setID(from.getID());
-		setLOB(from.getLOB());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_725_LOB_TEST_INTERFACE> E into(E into) {
-		into.from(this);
-		return into;
 	}
 
 	// -------------------------------------------------------------------------

@@ -9,9 +9,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "X_TEST_CASE_85", schema = "TEST")
-public class X_TEST_CASE_85_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_85_INTERFACE {
+public class X_TEST_CASE_85_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, java.io.Serializable {
 
-	private static final long serialVersionUID = -29961767;
+	private static final long serialVersionUID = 1763445438;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer X_UNUSED_ID;
@@ -31,58 +31,29 @@ public class X_TEST_CASE_85_POJO extends java.lang.ThreadDeath implements java.l
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
-	@Override
 	public java.lang.Integer getID() {
 		return this.ID;
 	}
 
-	@Override
 	public void setID(java.lang.Integer ID) {
 		this.ID = ID;
 	}
 
 	@javax.persistence.Column(name = "X_UNUSED_ID", precision = 7)
-	@Override
 	public java.lang.Integer getX_UNUSED_ID() {
 		return this.X_UNUSED_ID;
 	}
 
-	@Override
 	public void setX_UNUSED_ID(java.lang.Integer X_UNUSED_ID) {
 		this.X_UNUSED_ID = X_UNUSED_ID;
 	}
 
 	@javax.persistence.Column(name = "X_UNUSED_NAME", length = 10)
-	@Override
 	public java.lang.String getX_UNUSED_NAME() {
 		return this.X_UNUSED_NAME;
 	}
 
-	@Override
 	public void setX_UNUSED_NAME(java.lang.String X_UNUSED_NAME) {
 		this.X_UNUSED_NAME = X_UNUSED_NAME;
-	}
-
-	// -------------------------------------------------------------------------
-	// FROM and INTO
-	// -------------------------------------------------------------------------
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_85_INTERFACE from) {
-		setID(from.getID());
-		setX_UNUSED_ID(from.getX_UNUSED_ID());
-		setX_UNUSED_NAME(from.getX_UNUSED_NAME());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_85_INTERFACE> E into(E into) {
-		into.from(this);
-		return into;
 	}
 }

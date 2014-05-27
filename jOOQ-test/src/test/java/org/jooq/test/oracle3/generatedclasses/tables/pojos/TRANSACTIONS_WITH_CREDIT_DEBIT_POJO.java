@@ -9,9 +9,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "TRANSACTIONS_WITH_CREDIT_DEBIT", schema = "TEST")
-public class TRANSACTIONS_WITH_CREDIT_DEBIT_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.TRANSACTIONS_WITH_CREDIT_DEBIT_INTERFACE {
+public class TRANSACTIONS_WITH_CREDIT_DEBIT_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, java.io.Serializable {
 
-	private static final long serialVersionUID = -2132864745;
+	private static final long serialVersionUID = -1682049182;
 
 	private java.lang.Long       ID;
 	private java.lang.Long       ACCOUNT_ID;
@@ -39,94 +39,56 @@ public class TRANSACTIONS_WITH_CREDIT_DEBIT_POJO extends java.lang.ThreadDeath i
 	}
 
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 10)
-	@Override
 	public java.lang.Long getID() {
 		return this.ID;
 	}
 
-	@Override
 	public void setID(java.lang.Long ID) {
 		this.ID = ID;
 	}
 
 	@javax.persistence.Column(name = "ACCOUNT_ID", nullable = false, precision = 10)
-	@Override
 	public java.lang.Long getACCOUNT_ID() {
 		return this.ACCOUNT_ID;
 	}
 
-	@Override
 	public void setACCOUNT_ID(java.lang.Long ACCOUNT_ID) {
 		this.ACCOUNT_ID = ACCOUNT_ID;
 	}
 
 	@javax.persistence.Column(name = "VALUE_DATE", nullable = false, length = 7)
-	@Override
 	public java.sql.Date getVALUE_DATE() {
 		return this.VALUE_DATE;
 	}
 
-	@Override
 	public void setVALUE_DATE(java.sql.Date VALUE_DATE) {
 		this.VALUE_DATE = VALUE_DATE;
 	}
 
 	@javax.persistence.Column(name = "AMOUNT", nullable = false, precision = 10, scale = 2)
-	@Override
 	public java.math.BigDecimal getAMOUNT() {
 		return this.AMOUNT;
 	}
 
-	@Override
 	public void setAMOUNT(java.math.BigDecimal AMOUNT) {
 		this.AMOUNT = AMOUNT;
 	}
 
 	@javax.persistence.Column(name = "CREDIT", length = 22)
-	@Override
 	public java.math.BigDecimal getCREDIT() {
 		return this.CREDIT;
 	}
 
-	@Override
 	public void setCREDIT(java.math.BigDecimal CREDIT) {
 		this.CREDIT = CREDIT;
 	}
 
 	@javax.persistence.Column(name = "DEBIT", length = 22)
-	@Override
 	public java.math.BigDecimal getDEBIT() {
 		return this.DEBIT;
 	}
 
-	@Override
 	public void setDEBIT(java.math.BigDecimal DEBIT) {
 		this.DEBIT = DEBIT;
-	}
-
-	// -------------------------------------------------------------------------
-	// FROM and INTO
-	// -------------------------------------------------------------------------
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.TRANSACTIONS_WITH_CREDIT_DEBIT_INTERFACE from) {
-		setID(from.getID());
-		setACCOUNT_ID(from.getACCOUNT_ID());
-		setVALUE_DATE(from.getVALUE_DATE());
-		setAMOUNT(from.getAMOUNT());
-		setCREDIT(from.getCREDIT());
-		setDEBIT(from.getDEBIT());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.TRANSACTIONS_WITH_CREDIT_DEBIT_INTERFACE> E into(E into) {
-		into.from(this);
-		return into;
 	}
 }

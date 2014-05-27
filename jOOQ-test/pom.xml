@@ -4388,7 +4388,10 @@
                                             <generatedAnnotation>false</generatedAnnotation>
                                             <records>true</records>
                                             <pojos>true</pojos>
+                                            <!-- 
+                                            [#3117] jOOQ illegally generates covariant setters on UDTRecords and UDT Pojos when <pojos/> and <interfaces/> are activated
                                             <interfaces>true</interfaces>
+                                             -->
                                             <jpaAnnotations>true</jpaAnnotations>
                                         </generate>
                                         <target>

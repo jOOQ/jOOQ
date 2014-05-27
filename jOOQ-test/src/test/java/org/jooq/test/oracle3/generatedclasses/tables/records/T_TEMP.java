@@ -9,14 +9,13 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_TEMP", schema = "TEST")
-public class T_TEMP extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_TEMP> implements java.lang.Cloneable, org.jooq.Record1<java.lang.Integer>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TEMP_INTERFACE {
+public class T_TEMP extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_TEMP> implements java.lang.Cloneable, org.jooq.Record1<java.lang.Integer> {
 
-	private static final long serialVersionUID = -1191005711;
+	private static final long serialVersionUID = -1723275428;
 
 	/**
 	 * Setter for <code>TEST.T_TEMP.ID</code>.
 	 */
-	@Override
 	public void setID(java.lang.Integer value) {
 		setValue(0, value);
 	}
@@ -26,7 +25,6 @@ public class T_TEMP extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
-	@Override
 	public java.lang.Integer getID() {
 		return (java.lang.Integer) getValue(0);
 	}
@@ -94,27 +92,6 @@ public class T_TEMP extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	@Override
 	public T_TEMP values(java.lang.Integer value1) {
 		return this;
-	}
-
-	// -------------------------------------------------------------------------
-	// FROM and INTO
-	// -------------------------------------------------------------------------
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TEMP_INTERFACE from) {
-		setID(from.getID());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TEMP_INTERFACE> E into(E into) {
-		into.from(this);
-		return into;
 	}
 
 	// -------------------------------------------------------------------------

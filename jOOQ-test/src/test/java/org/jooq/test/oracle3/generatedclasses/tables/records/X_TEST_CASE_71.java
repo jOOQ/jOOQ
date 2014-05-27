@@ -9,14 +9,13 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "X_TEST_CASE_71", schema = "TEST")
-public class X_TEST_CASE_71 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_71> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, java.lang.Short>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_71_INTERFACE {
+public class X_TEST_CASE_71 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_71> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, java.lang.Short> {
 
-	private static final long serialVersionUID = 408143149;
+	private static final long serialVersionUID = 1329064519;
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_71.ID</code>.
 	 */
-	@Override
 	public void setID(java.lang.Integer value) {
 		setValue(0, value);
 	}
@@ -26,7 +25,6 @@ public class X_TEST_CASE_71 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
-	@Override
 	public java.lang.Integer getID() {
 		return (java.lang.Integer) getValue(0);
 	}
@@ -34,7 +32,6 @@ public class X_TEST_CASE_71 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>.
 	 */
-	@Override
 	public void setTEST_CASE_64_69_ID(java.lang.Short value) {
 		setValue(1, value);
 	}
@@ -43,7 +40,6 @@ public class X_TEST_CASE_71 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	 * Getter for <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>.
 	 */
 	@javax.persistence.Column(name = "TEST_CASE_64_69_ID", precision = 4)
-	@Override
 	public java.lang.Short getTEST_CASE_64_69_ID() {
 		return (java.lang.Short) getValue(1);
 	}
@@ -136,28 +132,6 @@ public class X_TEST_CASE_71 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	@Override
 	public X_TEST_CASE_71 values(java.lang.Integer value1, java.lang.Short value2) {
 		return this;
-	}
-
-	// -------------------------------------------------------------------------
-	// FROM and INTO
-	// -------------------------------------------------------------------------
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_71_INTERFACE from) {
-		setID(from.getID());
-		setTEST_CASE_64_69_ID(from.getTEST_CASE_64_69_ID());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_71_INTERFACE> E into(E into) {
-		into.from(this);
-		return into;
 	}
 
 	// -------------------------------------------------------------------------

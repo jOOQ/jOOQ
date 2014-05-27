@@ -9,9 +9,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "V_INCOMPLETE", schema = "TEST")
-public class V_INCOMPLETE_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INTERFACE {
+public class V_INCOMPLETE_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, java.io.Serializable {
 
-	private static final long serialVersionUID = -1280720380;
+	private static final long serialVersionUID = -533677574;
 
 	private java.lang.Object ID;
 	private java.lang.Object AUTHOR_ID;
@@ -54,154 +54,101 @@ public class V_INCOMPLETE_POJO extends java.lang.ThreadDeath implements java.lan
 	}
 
 	@javax.persistence.Column(name = "ID")
-	@Override
 	public java.lang.Object getID() {
 		return this.ID;
 	}
 
-	@Override
 	public void setID(java.lang.Object ID) {
 		this.ID = ID;
 	}
 
 	@javax.persistence.Column(name = "AUTHOR_ID")
-	@Override
 	public java.lang.Object getAUTHOR_ID() {
 		return this.AUTHOR_ID;
 	}
 
-	@Override
 	public void setAUTHOR_ID(java.lang.Object AUTHOR_ID) {
 		this.AUTHOR_ID = AUTHOR_ID;
 	}
 
 	@javax.persistence.Column(name = "CO_AUTHOR_ID")
-	@Override
 	public java.lang.Object getCO_AUTHOR_ID() {
 		return this.CO_AUTHOR_ID;
 	}
 
-	@Override
 	public void setCO_AUTHOR_ID(java.lang.Object CO_AUTHOR_ID) {
 		this.CO_AUTHOR_ID = CO_AUTHOR_ID;
 	}
 
 	@javax.persistence.Column(name = "DETAILS_ID")
-	@Override
 	public java.lang.Object getDETAILS_ID() {
 		return this.DETAILS_ID;
 	}
 
-	@Override
 	public void setDETAILS_ID(java.lang.Object DETAILS_ID) {
 		this.DETAILS_ID = DETAILS_ID;
 	}
 
 	@javax.persistence.Column(name = "TITLE")
-	@Override
 	public java.lang.Object getTITLE() {
 		return this.TITLE;
 	}
 
-	@Override
 	public void setTITLE(java.lang.Object TITLE) {
 		this.TITLE = TITLE;
 	}
 
 	@javax.persistence.Column(name = "PUBLISHED_IN")
-	@Override
 	public java.lang.Object getPUBLISHED_IN() {
 		return this.PUBLISHED_IN;
 	}
 
-	@Override
 	public void setPUBLISHED_IN(java.lang.Object PUBLISHED_IN) {
 		this.PUBLISHED_IN = PUBLISHED_IN;
 	}
 
 	@javax.persistence.Column(name = "LANGUAGE_ID")
-	@Override
 	public java.lang.Object getLANGUAGE_ID() {
 		return this.LANGUAGE_ID;
 	}
 
-	@Override
 	public void setLANGUAGE_ID(java.lang.Object LANGUAGE_ID) {
 		this.LANGUAGE_ID = LANGUAGE_ID;
 	}
 
 	@javax.persistence.Column(name = "CONTENT_TEXT")
-	@Override
 	public java.lang.Object getCONTENT_TEXT() {
 		return this.CONTENT_TEXT;
 	}
 
-	@Override
 	public void setCONTENT_TEXT(java.lang.Object CONTENT_TEXT) {
 		this.CONTENT_TEXT = CONTENT_TEXT;
 	}
 
 	@javax.persistence.Column(name = "CONTENT_PDF")
-	@Override
 	public java.lang.Object getCONTENT_PDF() {
 		return this.CONTENT_PDF;
 	}
 
-	@Override
 	public void setCONTENT_PDF(java.lang.Object CONTENT_PDF) {
 		this.CONTENT_PDF = CONTENT_PDF;
 	}
 
 	@javax.persistence.Column(name = "REC_VERSION")
-	@Override
 	public java.lang.Object getREC_VERSION() {
 		return this.REC_VERSION;
 	}
 
-	@Override
 	public void setREC_VERSION(java.lang.Object REC_VERSION) {
 		this.REC_VERSION = REC_VERSION;
 	}
 
 	@javax.persistence.Column(name = "REC_TIMESTAMP")
-	@Override
 	public java.lang.Object getREC_TIMESTAMP() {
 		return this.REC_TIMESTAMP;
 	}
 
-	@Override
 	public void setREC_TIMESTAMP(java.lang.Object REC_TIMESTAMP) {
 		this.REC_TIMESTAMP = REC_TIMESTAMP;
-	}
-
-	// -------------------------------------------------------------------------
-	// FROM and INTO
-	// -------------------------------------------------------------------------
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INTERFACE from) {
-		setID(from.getID());
-		setAUTHOR_ID(from.getAUTHOR_ID());
-		setCO_AUTHOR_ID(from.getCO_AUTHOR_ID());
-		setDETAILS_ID(from.getDETAILS_ID());
-		setTITLE(from.getTITLE());
-		setPUBLISHED_IN(from.getPUBLISHED_IN());
-		setLANGUAGE_ID(from.getLANGUAGE_ID());
-		setCONTENT_TEXT(from.getCONTENT_TEXT());
-		setCONTENT_PDF(from.getCONTENT_PDF());
-		setREC_VERSION(from.getREC_VERSION());
-		setREC_TIMESTAMP(from.getREC_TIMESTAMP());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INTERFACE> E into(E into) {
-		into.from(this);
-		return into;
 	}
 }

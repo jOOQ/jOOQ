@@ -9,14 +9,13 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "V_INCOMPLETE", schema = "TEST")
-public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE> implements java.lang.Cloneable, org.jooq.Record11<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INTERFACE {
+public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE> implements java.lang.Cloneable, org.jooq.Record11<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object> {
 
-	private static final long serialVersionUID = 1509355291;
+	private static final long serialVersionUID = -333141894;
 
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.ID</code>.
 	 */
-	@Override
 	public void setID(java.lang.Object value) {
 		setValue(0, value);
 	}
@@ -25,7 +24,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	 * Getter for <code>TEST.V_INCOMPLETE.ID</code>.
 	 */
 	@javax.persistence.Column(name = "ID")
-	@Override
 	public java.lang.Object getID() {
 		return (java.lang.Object) getValue(0);
 	}
@@ -33,7 +31,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>.
 	 */
-	@Override
 	public void setAUTHOR_ID(java.lang.Object value) {
 		setValue(1, value);
 	}
@@ -42,7 +39,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	 * Getter for <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>.
 	 */
 	@javax.persistence.Column(name = "AUTHOR_ID")
-	@Override
 	public java.lang.Object getAUTHOR_ID() {
 		return (java.lang.Object) getValue(1);
 	}
@@ -50,7 +46,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>.
 	 */
-	@Override
 	public void setCO_AUTHOR_ID(java.lang.Object value) {
 		setValue(2, value);
 	}
@@ -59,7 +54,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	 * Getter for <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>.
 	 */
 	@javax.persistence.Column(name = "CO_AUTHOR_ID")
-	@Override
 	public java.lang.Object getCO_AUTHOR_ID() {
 		return (java.lang.Object) getValue(2);
 	}
@@ -67,7 +61,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.DETAILS_ID</code>.
 	 */
-	@Override
 	public void setDETAILS_ID(java.lang.Object value) {
 		setValue(3, value);
 	}
@@ -76,7 +69,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	 * Getter for <code>TEST.V_INCOMPLETE.DETAILS_ID</code>.
 	 */
 	@javax.persistence.Column(name = "DETAILS_ID")
-	@Override
 	public java.lang.Object getDETAILS_ID() {
 		return (java.lang.Object) getValue(3);
 	}
@@ -84,7 +76,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.TITLE</code>.
 	 */
-	@Override
 	public void setTITLE(java.lang.Object value) {
 		setValue(4, value);
 	}
@@ -93,7 +84,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	 * Getter for <code>TEST.V_INCOMPLETE.TITLE</code>.
 	 */
 	@javax.persistence.Column(name = "TITLE")
-	@Override
 	public java.lang.Object getTITLE() {
 		return (java.lang.Object) getValue(4);
 	}
@@ -101,7 +91,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>.
 	 */
-	@Override
 	public void setPUBLISHED_IN(java.lang.Object value) {
 		setValue(5, value);
 	}
@@ -110,7 +99,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	 * Getter for <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>.
 	 */
 	@javax.persistence.Column(name = "PUBLISHED_IN")
-	@Override
 	public java.lang.Object getPUBLISHED_IN() {
 		return (java.lang.Object) getValue(5);
 	}
@@ -118,7 +106,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>.
 	 */
-	@Override
 	public void setLANGUAGE_ID(java.lang.Object value) {
 		setValue(6, value);
 	}
@@ -127,7 +114,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	 * Getter for <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>.
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID")
-	@Override
 	public java.lang.Object getLANGUAGE_ID() {
 		return (java.lang.Object) getValue(6);
 	}
@@ -135,7 +121,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>.
 	 */
-	@Override
 	public void setCONTENT_TEXT(java.lang.Object value) {
 		setValue(7, value);
 	}
@@ -144,7 +129,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	 * Getter for <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>.
 	 */
 	@javax.persistence.Column(name = "CONTENT_TEXT")
-	@Override
 	public java.lang.Object getCONTENT_TEXT() {
 		return (java.lang.Object) getValue(7);
 	}
@@ -152,7 +136,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>.
 	 */
-	@Override
 	public void setCONTENT_PDF(java.lang.Object value) {
 		setValue(8, value);
 	}
@@ -161,7 +144,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	 * Getter for <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>.
 	 */
 	@javax.persistence.Column(name = "CONTENT_PDF")
-	@Override
 	public java.lang.Object getCONTENT_PDF() {
 		return (java.lang.Object) getValue(8);
 	}
@@ -169,7 +151,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.REC_VERSION</code>.
 	 */
-	@Override
 	public void setREC_VERSION(java.lang.Object value) {
 		setValue(9, value);
 	}
@@ -178,7 +159,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	 * Getter for <code>TEST.V_INCOMPLETE.REC_VERSION</code>.
 	 */
 	@javax.persistence.Column(name = "REC_VERSION")
-	@Override
 	public java.lang.Object getREC_VERSION() {
 		return (java.lang.Object) getValue(9);
 	}
@@ -186,7 +166,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.REC_TIMESTAMP</code>.
 	 */
-	@Override
 	public void setREC_TIMESTAMP(java.lang.Object value) {
 		setValue(10, value);
 	}
@@ -195,7 +174,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	 * Getter for <code>TEST.V_INCOMPLETE.REC_TIMESTAMP</code>.
 	 */
 	@javax.persistence.Column(name = "REC_TIMESTAMP")
-	@Override
 	public java.lang.Object getREC_TIMESTAMP() {
 		return (java.lang.Object) getValue(10);
 	}
@@ -501,37 +479,6 @@ public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	@Override
 	public V_INCOMPLETE values(java.lang.Object value1, java.lang.Object value2, java.lang.Object value3, java.lang.Object value4, java.lang.Object value5, java.lang.Object value6, java.lang.Object value7, java.lang.Object value8, java.lang.Object value9, java.lang.Object value10, java.lang.Object value11) {
 		return this;
-	}
-
-	// -------------------------------------------------------------------------
-	// FROM and INTO
-	// -------------------------------------------------------------------------
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INTERFACE from) {
-		setID(from.getID());
-		setAUTHOR_ID(from.getAUTHOR_ID());
-		setCO_AUTHOR_ID(from.getCO_AUTHOR_ID());
-		setDETAILS_ID(from.getDETAILS_ID());
-		setTITLE(from.getTITLE());
-		setPUBLISHED_IN(from.getPUBLISHED_IN());
-		setLANGUAGE_ID(from.getLANGUAGE_ID());
-		setCONTENT_TEXT(from.getCONTENT_TEXT());
-		setCONTENT_PDF(from.getCONTENT_PDF());
-		setREC_VERSION(from.getREC_VERSION());
-		setREC_TIMESTAMP(from.getREC_TIMESTAMP());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INTERFACE> E into(E into) {
-		into.from(this);
-		return into;
 	}
 
 	// -------------------------------------------------------------------------

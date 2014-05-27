@@ -9,14 +9,13 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "V_TRANSACTIONS_CREDIT_FIRST", schema = "TEST")
-public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS_CREDIT_FIRST> implements java.lang.Cloneable, org.jooq.Record8<java.lang.Long, java.lang.Long, java.sql.Date, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_TRANSACTIONS_CREDIT_FIRST_INTERFACE {
+public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS_CREDIT_FIRST> implements java.lang.Cloneable, org.jooq.Record8<java.lang.Long, java.lang.Long, java.sql.Date, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 579422065;
+	private static final long serialVersionUID = 905256393;
 
 	/**
 	 * Setter for <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.ID</code>.
 	 */
-	@Override
 	public void setID(java.lang.Long value) {
 		setValue(0, value);
 	}
@@ -25,7 +24,6 @@ public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableRecordImpl<o
 	 * Getter for <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.ID</code>.
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 10)
-	@Override
 	public java.lang.Long getID() {
 		return (java.lang.Long) getValue(0);
 	}
@@ -33,7 +31,6 @@ public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableRecordImpl<o
 	/**
 	 * Setter for <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.ACCOUNT_ID</code>.
 	 */
-	@Override
 	public void setACCOUNT_ID(java.lang.Long value) {
 		setValue(1, value);
 	}
@@ -42,7 +39,6 @@ public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableRecordImpl<o
 	 * Getter for <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.ACCOUNT_ID</code>.
 	 */
 	@javax.persistence.Column(name = "ACCOUNT_ID", nullable = false, precision = 10)
-	@Override
 	public java.lang.Long getACCOUNT_ID() {
 		return (java.lang.Long) getValue(1);
 	}
@@ -50,7 +46,6 @@ public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableRecordImpl<o
 	/**
 	 * Setter for <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.VALUE_DATE</code>.
 	 */
-	@Override
 	public void setVALUE_DATE(java.sql.Date value) {
 		setValue(2, value);
 	}
@@ -59,7 +54,6 @@ public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableRecordImpl<o
 	 * Getter for <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.VALUE_DATE</code>.
 	 */
 	@javax.persistence.Column(name = "VALUE_DATE", nullable = false, length = 7)
-	@Override
 	public java.sql.Date getVALUE_DATE() {
 		return (java.sql.Date) getValue(2);
 	}
@@ -67,7 +61,6 @@ public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableRecordImpl<o
 	/**
 	 * Setter for <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.AMOUNT</code>.
 	 */
-	@Override
 	public void setAMOUNT(java.math.BigDecimal value) {
 		setValue(3, value);
 	}
@@ -76,7 +69,6 @@ public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableRecordImpl<o
 	 * Getter for <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.AMOUNT</code>.
 	 */
 	@javax.persistence.Column(name = "AMOUNT", nullable = false, precision = 10, scale = 2)
-	@Override
 	public java.math.BigDecimal getAMOUNT() {
 		return (java.math.BigDecimal) getValue(3);
 	}
@@ -84,7 +76,6 @@ public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableRecordImpl<o
 	/**
 	 * Setter for <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.CREDIT</code>.
 	 */
-	@Override
 	public void setCREDIT(java.math.BigDecimal value) {
 		setValue(4, value);
 	}
@@ -93,7 +84,6 @@ public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableRecordImpl<o
 	 * Getter for <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.CREDIT</code>.
 	 */
 	@javax.persistence.Column(name = "CREDIT", length = 22)
-	@Override
 	public java.math.BigDecimal getCREDIT() {
 		return (java.math.BigDecimal) getValue(4);
 	}
@@ -101,7 +91,6 @@ public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableRecordImpl<o
 	/**
 	 * Setter for <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.DEBIT</code>.
 	 */
-	@Override
 	public void setDEBIT(java.math.BigDecimal value) {
 		setValue(5, value);
 	}
@@ -110,7 +99,6 @@ public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableRecordImpl<o
 	 * Getter for <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.DEBIT</code>.
 	 */
 	@javax.persistence.Column(name = "DEBIT", length = 22)
-	@Override
 	public java.math.BigDecimal getDEBIT() {
 		return (java.math.BigDecimal) getValue(5);
 	}
@@ -118,7 +106,6 @@ public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableRecordImpl<o
 	/**
 	 * Setter for <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.CURRENT_BALANCE</code>.
 	 */
-	@Override
 	public void setCURRENT_BALANCE(java.math.BigDecimal value) {
 		setValue(6, value);
 	}
@@ -127,7 +114,6 @@ public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableRecordImpl<o
 	 * Getter for <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.CURRENT_BALANCE</code>.
 	 */
 	@javax.persistence.Column(name = "CURRENT_BALANCE", nullable = false, precision = 10, scale = 2)
-	@Override
 	public java.math.BigDecimal getCURRENT_BALANCE() {
 		return (java.math.BigDecimal) getValue(6);
 	}
@@ -135,7 +121,6 @@ public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableRecordImpl<o
 	/**
 	 * Setter for <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.TRANSACTION_NUMBER</code>.
 	 */
-	@Override
 	public void setTRANSACTION_NUMBER(java.math.BigDecimal value) {
 		setValue(7, value);
 	}
@@ -144,7 +129,6 @@ public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableRecordImpl<o
 	 * Getter for <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.TRANSACTION_NUMBER</code>.
 	 */
 	@javax.persistence.Column(name = "TRANSACTION_NUMBER", length = 22)
-	@Override
 	public java.math.BigDecimal getTRANSACTION_NUMBER() {
 		return (java.math.BigDecimal) getValue(7);
 	}
@@ -375,34 +359,6 @@ public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableRecordImpl<o
 	@Override
 	public V_TRANSACTIONS_CREDIT_FIRST values(java.lang.Long value1, java.lang.Long value2, java.sql.Date value3, java.math.BigDecimal value4, java.math.BigDecimal value5, java.math.BigDecimal value6, java.math.BigDecimal value7, java.math.BigDecimal value8) {
 		return this;
-	}
-
-	// -------------------------------------------------------------------------
-	// FROM and INTO
-	// -------------------------------------------------------------------------
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_TRANSACTIONS_CREDIT_FIRST_INTERFACE from) {
-		setID(from.getID());
-		setACCOUNT_ID(from.getACCOUNT_ID());
-		setVALUE_DATE(from.getVALUE_DATE());
-		setAMOUNT(from.getAMOUNT());
-		setCREDIT(from.getCREDIT());
-		setDEBIT(from.getDEBIT());
-		setCURRENT_BALANCE(from.getCURRENT_BALANCE());
-		setTRANSACTION_NUMBER(from.getTRANSACTION_NUMBER());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_TRANSACTIONS_CREDIT_FIRST_INTERFACE> E into(E into) {
-		into.from(this);
-		return into;
 	}
 
 	// -------------------------------------------------------------------------

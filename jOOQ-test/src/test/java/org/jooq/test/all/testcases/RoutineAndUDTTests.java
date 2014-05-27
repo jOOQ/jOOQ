@@ -440,12 +440,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             InsertQuery<?> insert = create().insertQuery(TArrays());
             insert.addValue(TArrays_ID(), 5);
-            insert.addValue((Field) TArrays_NUMBER_R(),
-                on(TArrays_NUMBER_R().getType()).create(create().configuration(), new Integer[] { 1, 2, 3 }).get());
-            insert.addValue((Field) TArrays_STRING_R(),
-                on(TArrays_STRING_R().getType()).create(create().configuration(), new String[] { "a", "b", "c", "d\"\\d" }).get());
-            insert.addValue((Field) TArrays_DATE_R(),
-                on(TArrays_DATE_R().getType()).create(create().configuration(), new Date[] { new Date(0), new Date(84600 * 1000), new Date(84600 * 2000) }).get());
+            insert.addValue((Field<ArrayRecord<Integer>>) TArrays_NUMBER_R(),
+                on(TArrays_NUMBER_R().getType()).create(create().configuration(), new Integer[] { 1, 2, 3 }).<ArrayRecord<Integer>>get());
+            insert.addValue((Field<ArrayRecord<String>>) TArrays_STRING_R(),
+                on(TArrays_STRING_R().getType()).create(create().configuration(), new String[] { "a", "b", "c", "d\"\\d" }).<ArrayRecord<String>>get());
+            insert.addValue((Field<ArrayRecord<Date>>) TArrays_DATE_R(),
+                on(TArrays_DATE_R().getType()).create(create().configuration(), new Date[] { new Date(0), new Date(84600 * 1000), new Date(84600 * 2000) }).<ArrayRecord<Date>>get());
             insert.execute();
 
             Record array = create().select(
@@ -463,12 +463,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
 
             UpdateQuery<X> update = create().updateQuery(TArrays());
-            update.addValue((Field) TArrays_NUMBER_R(),
-                on(TArrays_NUMBER_R().getType()).create(create().configuration(), new Integer[] { 3, 2, 1 }).get());
-            update.addValue((Field) TArrays_STRING_R(),
-                on(TArrays_STRING_R().getType()).create(create().configuration(), new String[] { "d\"\\d", "c", "b", "a" }).get());
-            update.addValue((Field) TArrays_DATE_R(),
-                on(TArrays_DATE_R().getType()).create(create().configuration(), new Date[] { new Date(84600 * 2000), new Date(84600 * 1000), new Date(0) }).get());
+            update.addValue((Field<ArrayRecord<Integer>>) TArrays_NUMBER_R(),
+                on(TArrays_NUMBER_R().getType()).create(create().configuration(), new Integer[] { 3, 2, 1 }).<ArrayRecord<Integer>>get());
+            update.addValue((Field<ArrayRecord<String>>) TArrays_STRING_R(),
+                on(TArrays_STRING_R().getType()).create(create().configuration(), new String[] { "d\"\\d", "c", "b", "a" }).<ArrayRecord<String>>get());
+            update.addValue((Field<ArrayRecord<Date>>) TArrays_DATE_R(),
+                on(TArrays_DATE_R().getType()).create(create().configuration(), new Date[] { new Date(84600 * 2000), new Date(84600 * 1000), new Date(0) }).<ArrayRecord<Date>>get());
             update.addConditions(TArrays_ID().equal(5));
             update.execute();
 

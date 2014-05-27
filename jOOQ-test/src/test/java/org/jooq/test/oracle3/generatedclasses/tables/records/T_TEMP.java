@@ -8,20 +8,20 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_TEMP", schema = "TEST")
+@javax.persistence.Table(name = "T_TEMP")
 public class T_TEMP extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_TEMP> implements java.lang.Cloneable, org.jooq.Record1<java.lang.Integer> {
 
-	private static final long serialVersionUID = -1723275428;
+	private static final long serialVersionUID = -357484300;
 
 	/**
-	 * Setter for <code>TEST.T_TEMP.ID</code>.
+	 * Setter for <code>T_TEMP.ID</code>.
 	 */
 	public void setID(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_TEMP.ID</code>.
+	 * Getter for <code>T_TEMP.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)

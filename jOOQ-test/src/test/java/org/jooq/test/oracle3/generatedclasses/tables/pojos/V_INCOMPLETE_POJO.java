@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "V_INCOMPLETE", schema = "TEST")
+@javax.persistence.Table(name = "V_INCOMPLETE")
 public class V_INCOMPLETE_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, java.io.Serializable {
 
-	private static final long serialVersionUID = -533677574;
+	private static final long serialVersionUID = -2070740036;
 
 	private java.lang.Object ID;
 	private java.lang.Object AUTHOR_ID;

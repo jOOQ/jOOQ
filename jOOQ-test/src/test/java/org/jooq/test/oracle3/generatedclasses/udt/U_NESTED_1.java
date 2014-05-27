@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_NESTED_1 extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_1> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -207038352;
+	private static final long serialVersionUID = 663979903;
 
 	/**
-	 * The singleton instance of <code>TEST.U_NESTED_1</code>
+	 * The singleton instance of <code>U_NESTED_1</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_1 U_NESTED_1 = new org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_1();
 
@@ -25,12 +25,12 @@ public class U_NESTED_1 extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.gene
 	}
 
 	/**
-	 * The attribute <code>TEST.U_NESTED_1.ID</code>.
+	 * The attribute <code>U_NESTED_1.ID</code>.
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_1, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, U_NESTED_1);
 
 	/**
-	 * The attribute <code>TEST.U_NESTED_1.NESTED</code>.
+	 * The attribute <code>U_NESTED_1.NESTED</code>.
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_1, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE> NESTED = createField("NESTED", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE.class), U_NESTED_1);
 
@@ -38,7 +38,7 @@ public class U_NESTED_1 extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.gene
 	 * No further instances allowed
 	 */
 	private U_NESTED_1() {
-		super("U_NESTED_1", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("U_NESTED_1", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 
 		// Initialise data type
 		getDataType();

@@ -9,31 +9,31 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_NESTED_1 extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_1> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE> {
 
-	private static final long serialVersionUID = -735565649;
+	private static final long serialVersionUID = 949016021;
 
 	/**
-	 * Setter for <code>TEST.U_NESTED_1.ID</code>.
+	 * Setter for <code>U_NESTED_1.ID</code>.
 	 */
 	public void setID(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_NESTED_1.ID</code>.
+	 * Getter for <code>U_NESTED_1.ID</code>.
 	 */
 	public java.lang.Integer getID() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>TEST.U_NESTED_1.NESTED</code>.
+	 * Setter for <code>U_NESTED_1.NESTED</code>.
 	 */
 	public void setNESTED(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_NESTED_1.NESTED</code>.
+	 * Getter for <code>U_NESTED_1.NESTED</code>.
 	 */
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE getNESTED() {
 		return (org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE) getValue(1);

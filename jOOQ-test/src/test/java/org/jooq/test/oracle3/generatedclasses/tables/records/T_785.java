@@ -8,20 +8,20 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_785", schema = "TEST")
+@javax.persistence.Table(name = "T_785")
 public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_785> implements java.lang.Cloneable, org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -1855644504;
+	private static final long serialVersionUID = -850896830;
 
 	/**
-	 * Setter for <code>TEST.T_785.ID</code>.
+	 * Setter for <code>T_785.ID</code>.
 	 */
 	public void setID(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_785.ID</code>.
+	 * Getter for <code>T_785.ID</code>.
 	 */
 	@javax.persistence.Column(name = "ID", precision = 7)
 	public java.lang.Integer getID() {
@@ -29,14 +29,14 @@ public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.g
 	}
 
 	/**
-	 * Setter for <code>TEST.T_785.NAME</code>.
+	 * Setter for <code>T_785.NAME</code>.
 	 */
 	public void setNAME(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_785.NAME</code>.
+	 * Getter for <code>T_785.NAME</code>.
 	 */
 	@javax.persistence.Column(name = "NAME", length = 50)
 	public java.lang.String getNAME() {
@@ -44,14 +44,14 @@ public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.g
 	}
 
 	/**
-	 * Setter for <code>TEST.T_785.VALUE</code>.
+	 * Setter for <code>T_785.VALUE</code>.
 	 */
 	public void setVALUE(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_785.VALUE</code>.
+	 * Getter for <code>T_785.VALUE</code>.
 	 */
 	@javax.persistence.Column(name = "VALUE", length = 50)
 	public java.lang.String getVALUE() {

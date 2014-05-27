@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_ARRAYS extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_ARRAYS> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1869735081;
+	private static final long serialVersionUID = -116952036;
 
 	/**
-	 * The singleton instance of <code>TEST.T_ARRAYS</code>
+	 * The singleton instance of <code>T_ARRAYS</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS T_ARRAYS = new org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS();
 
@@ -25,39 +25,39 @@ public class T_ARRAYS extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.gene
 	}
 
 	/**
-	 * The column <code>TEST.T_ARRAYS.ID</code>.
+	 * The column <code>T_ARRAYS.ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_ARRAYS, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.T_ARRAYS.STRING_ARRAY</code>.
+	 * The column <code>T_ARRAYS.STRING_ARRAY</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_ARRAYS, org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY> STRING_ARRAY = createField("STRING_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.length(20).asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY.class), this, "");
 
 	/**
-	 * The column <code>TEST.T_ARRAYS.NUMBER_ARRAY</code>.
+	 * The column <code>T_ARRAYS.NUMBER_ARRAY</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_ARRAYS, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> NUMBER_ARRAY = createField("NUMBER_ARRAY", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY.class), this, "");
 
 	/**
-	 * The column <code>TEST.T_ARRAYS.NUMBER_LONG_ARRAY</code>.
+	 * The column <code>T_ARRAYS.NUMBER_LONG_ARRAY</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_ARRAYS, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY> NUMBER_LONG_ARRAY = createField("NUMBER_LONG_ARRAY", org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY.class), this, "");
 
 	/**
-	 * The column <code>TEST.T_ARRAYS.DATE_ARRAY</code>.
+	 * The column <code>T_ARRAYS.DATE_ARRAY</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_ARRAYS, org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY> DATE_ARRAY = createField("DATE_ARRAY", org.jooq.impl.SQLDataType.DATE.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY.class), this, "");
 
 	/**
-	 * Create a <code>TEST.T_ARRAYS</code> table reference
+	 * Create a <code>T_ARRAYS</code> table reference
 	 */
 	public T_ARRAYS() {
 		this("T_ARRAYS", null);
 	}
 
 	/**
-	 * Create an aliased <code>TEST.T_ARRAYS</code> table reference
+	 * Create an aliased <code>T_ARRAYS</code> table reference
 	 */
 	public T_ARRAYS(java.lang.String alias) {
 		this(alias, org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS.T_ARRAYS);
@@ -68,7 +68,7 @@ public class T_ARRAYS extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.gene
 	}
 
 	private T_ARRAYS(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_ARRAYS> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, aliased, parameters, "");
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

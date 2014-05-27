@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class V_BOOK extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1828544272;
+	private static final long serialVersionUID = 516490649;
 
 	/**
-	 * The singleton instance of <code>TEST.V_BOOK</code>
+	 * The singleton instance of <code>V_BOOK</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.V_BOOK V_BOOK = new org.jooq.test.oracle3.generatedclasses.tables.V_BOOK();
 
@@ -25,69 +25,69 @@ public class V_BOOK extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.genera
 	}
 
 	/**
-	 * The column <code>TEST.V_BOOK.ID</code>.
+	 * The column <code>V_BOOK.ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.V_BOOK.AUTHOR_ID</code>.
+	 * The column <code>V_BOOK.AUTHOR_ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.V_BOOK.CO_AUTHOR_ID</code>.
+	 * The column <code>V_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>TEST.V_BOOK.DETAILS_ID</code>.
+	 * The column <code>V_BOOK.DETAILS_ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>TEST.V_BOOK.TITLE</code>.
+	 * The column <code>V_BOOK.TITLE</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.V_BOOK.PUBLISHED_IN</code>.
+	 * The column <code>V_BOOK.PUBLISHED_IN</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.V_BOOK.LANGUAGE_ID</code>.
+	 * The column <code>V_BOOK.LANGUAGE_ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.V_BOOK.CONTENT_TEXT</code>.
+	 * The column <code>V_BOOK.CONTENT_TEXT</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB, this, "");
 
 	/**
-	 * The column <code>TEST.V_BOOK.CONTENT_PDF</code>.
+	 * The column <code>V_BOOK.CONTENT_PDF</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, this, "");
 
 	/**
-	 * The column <code>TEST.V_BOOK.REC_VERSION</code>.
+	 * The column <code>V_BOOK.REC_VERSION</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK, java.math.BigDecimal> REC_VERSION = createField("REC_VERSION", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * The column <code>TEST.V_BOOK.REC_TIMESTAMP</code>.
+	 * The column <code>V_BOOK.REC_TIMESTAMP</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK, java.sql.Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
-	 * Create a <code>TEST.V_BOOK</code> table reference
+	 * Create a <code>V_BOOK</code> table reference
 	 */
 	public V_BOOK() {
 		this("V_BOOK", null);
 	}
 
 	/**
-	 * Create an aliased <code>TEST.V_BOOK</code> table reference
+	 * Create an aliased <code>V_BOOK</code> table reference
 	 */
 	public V_BOOK(java.lang.String alias) {
 		this(alias, org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK);
@@ -98,7 +98,7 @@ public class V_BOOK extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.genera
 	}
 
 	private V_BOOK(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, aliased, parameters, "");
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

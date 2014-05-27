@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class V_TRANSACTIONS extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -460083625;
+	private static final long serialVersionUID = -1295830190;
 
 	/**
-	 * The singleton instance of <code>TEST.V_TRANSACTIONS</code>
+	 * The singleton instance of <code>V_TRANSACTIONS</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.V_TRANSACTIONS V_TRANSACTIONS = new org.jooq.test.oracle3.generatedclasses.tables.V_TRANSACTIONS();
 
@@ -25,49 +25,49 @@ public class V_TRANSACTIONS extends org.jooq.impl.TableImpl<org.jooq.test.oracle
 	}
 
 	/**
-	 * The column <code>TEST.V_TRANSACTIONS.ID</code>.
+	 * The column <code>V_TRANSACTIONS.ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS, java.lang.Long> ID = createField("ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.V_TRANSACTIONS.ACCOUNT_ID</code>.
+	 * The column <code>V_TRANSACTIONS.ACCOUNT_ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS, java.lang.Long> ACCOUNT_ID = createField("ACCOUNT_ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.V_TRANSACTIONS.VALUE_DATE</code>.
+	 * The column <code>V_TRANSACTIONS.VALUE_DATE</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS, java.sql.Date> VALUE_DATE = createField("VALUE_DATE", org.jooq.impl.SQLDataType.DATE.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.V_TRANSACTIONS.AMOUNT</code>.
+	 * The column <code>V_TRANSACTIONS.AMOUNT</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS, java.math.BigDecimal> AMOUNT = createField("AMOUNT", org.jooq.impl.SQLDataType.NUMERIC.precision(10, 2).nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.V_TRANSACTIONS.CREDIT</code>.
+	 * The column <code>V_TRANSACTIONS.CREDIT</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS, java.math.BigDecimal> CREDIT = createField("CREDIT", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * The column <code>TEST.V_TRANSACTIONS.DEBIT</code>.
+	 * The column <code>V_TRANSACTIONS.DEBIT</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS, java.math.BigDecimal> DEBIT = createField("DEBIT", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * The column <code>TEST.V_TRANSACTIONS.CURRENT_BALANCE</code>.
+	 * The column <code>V_TRANSACTIONS.CURRENT_BALANCE</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS, java.math.BigDecimal> CURRENT_BALANCE = createField("CURRENT_BALANCE", org.jooq.impl.SQLDataType.NUMERIC.precision(10, 2).nullable(false), this, "");
 
 	/**
-	 * Create a <code>TEST.V_TRANSACTIONS</code> table reference
+	 * Create a <code>V_TRANSACTIONS</code> table reference
 	 */
 	public V_TRANSACTIONS() {
 		this("V_TRANSACTIONS", null);
 	}
 
 	/**
-	 * Create an aliased <code>TEST.V_TRANSACTIONS</code> table reference
+	 * Create an aliased <code>V_TRANSACTIONS</code> table reference
 	 */
 	public V_TRANSACTIONS(java.lang.String alias) {
 		this(alias, org.jooq.test.oracle3.generatedclasses.tables.V_TRANSACTIONS.V_TRANSACTIONS);
@@ -78,7 +78,7 @@ public class V_TRANSACTIONS extends org.jooq.impl.TableImpl<org.jooq.test.oracle
 	}
 
 	private V_TRANSACTIONS(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, aliased, parameters, "");
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

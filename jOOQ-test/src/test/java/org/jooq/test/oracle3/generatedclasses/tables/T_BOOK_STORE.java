@@ -11,10 +11,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_BOOK_STORE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1407683217;
+	private static final long serialVersionUID = 1415932384;
 
 	/**
-	 * The singleton instance of <code>TEST.T_BOOK_STORE</code>
+	 * The singleton instance of <code>T_BOOK_STORE</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE T_BOOK_STORE = new org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE();
 
@@ -27,19 +27,19 @@ public class T_BOOK_STORE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.
 	}
 
 	/**
-	 * The column <code>TEST.T_BOOK_STORE.NAME</code>. The books store name
+	 * The column <code>T_BOOK_STORE.NAME</code>. The books store name
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "The books store name");
 
 	/**
-	 * Create a <code>TEST.T_BOOK_STORE</code> table reference
+	 * Create a <code>T_BOOK_STORE</code> table reference
 	 */
 	public T_BOOK_STORE() {
 		this("T_BOOK_STORE", null);
 	}
 
 	/**
-	 * Create an aliased <code>TEST.T_BOOK_STORE</code> table reference
+	 * Create an aliased <code>T_BOOK_STORE</code> table reference
 	 */
 	public T_BOOK_STORE(java.lang.String alias) {
 		this(alias, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE.T_BOOK_STORE);
@@ -50,7 +50,7 @@ public class T_BOOK_STORE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.
 	}
 
 	private T_BOOK_STORE(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, aliased, parameters, "A book store");
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "A book store");
 	}
 
 	/**

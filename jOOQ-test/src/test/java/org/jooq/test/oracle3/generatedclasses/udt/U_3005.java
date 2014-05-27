@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3005 extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_3005> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1062299030;
+	private static final long serialVersionUID = 626986837;
 
 	/**
-	 * The singleton instance of <code>TEST.U_3005</code>
+	 * The singleton instance of <code>U_3005</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.udt.U_3005 U_3005 = new org.jooq.test.oracle3.generatedclasses.udt.U_3005();
 
@@ -25,7 +25,7 @@ public class U_3005 extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.generate
 	}
 
 	/**
-	 * The attribute <code>TEST.U_3005.ID</code>.
+	 * The attribute <code>U_3005.ID</code>.
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_3005, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, U_3005);
 
@@ -33,7 +33,7 @@ public class U_3005 extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.generate
 	 * No further instances allowed
 	 */
 	private U_3005() {
-		super("U_3005", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("U_3005", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 
 		// Initialise data type
 		getDataType();

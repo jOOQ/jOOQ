@@ -9,17 +9,17 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3005 extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_3005> implements java.lang.Cloneable, org.jooq.Record1<java.lang.Integer> {
 
-	private static final long serialVersionUID = 642590537;
+	private static final long serialVersionUID = 756517999;
 
 	/**
-	 * Setter for <code>TEST.U_3005.ID</code>.
+	 * Setter for <code>U_3005.ID</code>.
 	 */
 	public void setID(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_3005.ID</code>.
+	 * Getter for <code>U_3005.ID</code>.
 	 */
 	public java.lang.Integer getID() {
 		return (java.lang.Integer) getValue(0);

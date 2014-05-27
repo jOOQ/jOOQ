@@ -8,20 +8,20 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "X_TEST_CASE_2025", schema = "TEST")
+@javax.persistence.Table(name = "X_TEST_CASE_2025")
 public class X_TEST_CASE_2025 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_2025> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 909090150;
+	private static final long serialVersionUID = 1495271324;
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>.
+	 * Setter for <code>X_TEST_CASE_2025.REF_ID</code>.
 	 */
 	public void setREF_ID(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>.
+	 * Getter for <code>X_TEST_CASE_2025.REF_ID</code>.
 	 */
 	@javax.persistence.Column(name = "REF_ID", nullable = false, precision = 7)
 	public java.lang.Integer getREF_ID() {
@@ -29,14 +29,14 @@ public class X_TEST_CASE_2025 extends org.jooq.impl.TableRecordImpl<org.jooq.tes
 	}
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_NAME</code>.
+	 * Setter for <code>X_TEST_CASE_2025.REF_NAME</code>.
 	 */
 	public void setREF_NAME(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_2025.REF_NAME</code>.
+	 * Getter for <code>X_TEST_CASE_2025.REF_NAME</code>.
 	 */
 	@javax.persistence.Column(name = "REF_NAME", nullable = false, length = 10)
 	public java.lang.String getREF_NAME() {

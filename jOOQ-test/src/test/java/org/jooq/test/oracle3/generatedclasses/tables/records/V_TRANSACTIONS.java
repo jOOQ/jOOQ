@@ -8,20 +8,20 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "V_TRANSACTIONS", schema = "TEST")
+@javax.persistence.Table(name = "V_TRANSACTIONS")
 public class V_TRANSACTIONS extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS> implements java.lang.Cloneable, org.jooq.Record7<java.lang.Long, java.lang.Long, java.sql.Date, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 1456317438;
+	private static final long serialVersionUID = 1682051888;
 
 	/**
-	 * Setter for <code>TEST.V_TRANSACTIONS.ID</code>.
+	 * Setter for <code>V_TRANSACTIONS.ID</code>.
 	 */
 	public void setID(java.lang.Long value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_TRANSACTIONS.ID</code>.
+	 * Getter for <code>V_TRANSACTIONS.ID</code>.
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 10)
 	public java.lang.Long getID() {
@@ -29,14 +29,14 @@ public class V_TRANSACTIONS extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Setter for <code>TEST.V_TRANSACTIONS.ACCOUNT_ID</code>.
+	 * Setter for <code>V_TRANSACTIONS.ACCOUNT_ID</code>.
 	 */
 	public void setACCOUNT_ID(java.lang.Long value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_TRANSACTIONS.ACCOUNT_ID</code>.
+	 * Getter for <code>V_TRANSACTIONS.ACCOUNT_ID</code>.
 	 */
 	@javax.persistence.Column(name = "ACCOUNT_ID", nullable = false, precision = 10)
 	public java.lang.Long getACCOUNT_ID() {
@@ -44,14 +44,14 @@ public class V_TRANSACTIONS extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Setter for <code>TEST.V_TRANSACTIONS.VALUE_DATE</code>.
+	 * Setter for <code>V_TRANSACTIONS.VALUE_DATE</code>.
 	 */
 	public void setVALUE_DATE(java.sql.Date value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_TRANSACTIONS.VALUE_DATE</code>.
+	 * Getter for <code>V_TRANSACTIONS.VALUE_DATE</code>.
 	 */
 	@javax.persistence.Column(name = "VALUE_DATE", nullable = false, length = 7)
 	public java.sql.Date getVALUE_DATE() {
@@ -59,14 +59,14 @@ public class V_TRANSACTIONS extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Setter for <code>TEST.V_TRANSACTIONS.AMOUNT</code>.
+	 * Setter for <code>V_TRANSACTIONS.AMOUNT</code>.
 	 */
 	public void setAMOUNT(java.math.BigDecimal value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_TRANSACTIONS.AMOUNT</code>.
+	 * Getter for <code>V_TRANSACTIONS.AMOUNT</code>.
 	 */
 	@javax.persistence.Column(name = "AMOUNT", nullable = false, precision = 10, scale = 2)
 	public java.math.BigDecimal getAMOUNT() {
@@ -74,14 +74,14 @@ public class V_TRANSACTIONS extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Setter for <code>TEST.V_TRANSACTIONS.CREDIT</code>.
+	 * Setter for <code>V_TRANSACTIONS.CREDIT</code>.
 	 */
 	public void setCREDIT(java.math.BigDecimal value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_TRANSACTIONS.CREDIT</code>.
+	 * Getter for <code>V_TRANSACTIONS.CREDIT</code>.
 	 */
 	@javax.persistence.Column(name = "CREDIT", length = 22)
 	public java.math.BigDecimal getCREDIT() {
@@ -89,14 +89,14 @@ public class V_TRANSACTIONS extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Setter for <code>TEST.V_TRANSACTIONS.DEBIT</code>.
+	 * Setter for <code>V_TRANSACTIONS.DEBIT</code>.
 	 */
 	public void setDEBIT(java.math.BigDecimal value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_TRANSACTIONS.DEBIT</code>.
+	 * Getter for <code>V_TRANSACTIONS.DEBIT</code>.
 	 */
 	@javax.persistence.Column(name = "DEBIT", length = 22)
 	public java.math.BigDecimal getDEBIT() {
@@ -104,14 +104,14 @@ public class V_TRANSACTIONS extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Setter for <code>TEST.V_TRANSACTIONS.CURRENT_BALANCE</code>.
+	 * Setter for <code>V_TRANSACTIONS.CURRENT_BALANCE</code>.
 	 */
 	public void setCURRENT_BALANCE(java.math.BigDecimal value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_TRANSACTIONS.CURRENT_BALANCE</code>.
+	 * Getter for <code>V_TRANSACTIONS.CURRENT_BALANCE</code>.
 	 */
 	@javax.persistence.Column(name = "CURRENT_BALANCE", nullable = false, precision = 10, scale = 2)
 	public java.math.BigDecimal getCURRENT_BALANCE() {

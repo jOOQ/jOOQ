@@ -9,31 +9,31 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_BOOK_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 136466808;
+	private static final long serialVersionUID = 1779265380;
 
 	/**
-	 * Setter for <code>TEST.U_BOOK_TYPE.ID</code>.
+	 * Setter for <code>U_BOOK_TYPE.ID</code>.
 	 */
 	public void setID(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_BOOK_TYPE.ID</code>.
+	 * Getter for <code>U_BOOK_TYPE.ID</code>.
 	 */
 	public java.lang.Integer getID() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>TEST.U_BOOK_TYPE.TITLE</code>.
+	 * Setter for <code>U_BOOK_TYPE.TITLE</code>.
 	 */
 	public void setTITLE(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_BOOK_TYPE.TITLE</code>.
+	 * Getter for <code>U_BOOK_TYPE.TITLE</code>.
 	 */
 	public java.lang.String getTITLE() {
 		return (java.lang.String) getValue(1);

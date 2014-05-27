@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class X_TEST_CASE_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1493923180;
+	private static final long serialVersionUID = 768038151;
 
 	/**
-	 * The singleton instance of <code>TEST.X_TEST_CASE_64_69</code>
+	 * The singleton instance of <code>X_TEST_CASE_64_69</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69 X_TEST_CASE_64_69 = new org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69();
 
@@ -25,24 +25,24 @@ public class X_TEST_CASE_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * The column <code>TEST.X_TEST_CASE_64_69.ID</code>.
+	 * The column <code>X_TEST_CASE_64_69.ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>.
+	 * The column <code>X_TEST_CASE_64_69.UNUSED_ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69, java.lang.Integer> UNUSED_ID = createField("UNUSED_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * Create a <code>TEST.X_TEST_CASE_64_69</code> table reference
+	 * Create a <code>X_TEST_CASE_64_69</code> table reference
 	 */
 	public X_TEST_CASE_64_69() {
 		this("X_TEST_CASE_64_69", null);
 	}
 
 	/**
-	 * Create an aliased <code>TEST.X_TEST_CASE_64_69</code> table reference
+	 * Create an aliased <code>X_TEST_CASE_64_69</code> table reference
 	 */
 	public X_TEST_CASE_64_69(java.lang.String alias) {
 		this(alias, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69.X_TEST_CASE_64_69);
@@ -53,7 +53,7 @@ public class X_TEST_CASE_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.ora
 	}
 
 	private X_TEST_CASE_64_69(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, aliased, parameters, "");
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

@@ -8,20 +8,20 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "X_TEST_CASE_85", schema = "TEST")
+@javax.persistence.Table(name = "X_TEST_CASE_85")
 public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_85> implements java.lang.Cloneable, org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 191969211;
+	private static final long serialVersionUID = -995543849;
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_85.ID</code>.
+	 * Setter for <code>X_TEST_CASE_85.ID</code>.
 	 */
 	public void setID(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_85.ID</code>.
+	 * Getter for <code>X_TEST_CASE_85.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -30,14 +30,14 @@ public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>.
+	 * Setter for <code>X_TEST_CASE_85.X_UNUSED_ID</code>.
 	 */
 	public void setX_UNUSED_ID(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>.
+	 * Getter for <code>X_TEST_CASE_85.X_UNUSED_ID</code>.
 	 */
 	@javax.persistence.Column(name = "X_UNUSED_ID", precision = 7)
 	public java.lang.Integer getX_UNUSED_ID() {
@@ -45,14 +45,14 @@ public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>.
+	 * Setter for <code>X_TEST_CASE_85.X_UNUSED_NAME</code>.
 	 */
 	public void setX_UNUSED_NAME(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>.
+	 * Getter for <code>X_TEST_CASE_85.X_UNUSED_NAME</code>.
 	 */
 	@javax.persistence.Column(name = "X_UNUSED_NAME", length = 10)
 	public java.lang.String getX_UNUSED_NAME() {

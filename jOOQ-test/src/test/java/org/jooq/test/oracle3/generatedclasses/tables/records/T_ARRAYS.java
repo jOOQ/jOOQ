@@ -8,20 +8,20 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_ARRAYS", schema = "TEST")
+@javax.persistence.Table(name = "T_ARRAYS")
 public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_ARRAYS> implements java.lang.Cloneable, org.jooq.Record5<java.lang.Integer, org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY, org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY> {
 
-	private static final long serialVersionUID = 1987875337;
+	private static final long serialVersionUID = 45967441;
 
 	/**
-	 * Setter for <code>TEST.T_ARRAYS.ID</code>.
+	 * Setter for <code>T_ARRAYS.ID</code>.
 	 */
 	public void setID(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_ARRAYS.ID</code>.
+	 * Getter for <code>T_ARRAYS.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -30,14 +30,14 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * Setter for <code>TEST.T_ARRAYS.STRING_ARRAY</code>.
+	 * Setter for <code>T_ARRAYS.STRING_ARRAY</code>.
 	 */
 	public void setSTRING_ARRAY(org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_ARRAYS.STRING_ARRAY</code>.
+	 * Getter for <code>T_ARRAYS.STRING_ARRAY</code>.
 	 */
 	@javax.persistence.Column(name = "STRING_ARRAY", length = 101)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY getSTRING_ARRAY() {
@@ -45,14 +45,14 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * Setter for <code>TEST.T_ARRAYS.NUMBER_ARRAY</code>.
+	 * Setter for <code>T_ARRAYS.NUMBER_ARRAY</code>.
 	 */
 	public void setNUMBER_ARRAY(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_ARRAYS.NUMBER_ARRAY</code>.
+	 * Getter for <code>T_ARRAYS.NUMBER_ARRAY</code>.
 	 */
 	@javax.persistence.Column(name = "NUMBER_ARRAY", length = 109)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY getNUMBER_ARRAY() {
@@ -60,14 +60,14 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * Setter for <code>TEST.T_ARRAYS.NUMBER_LONG_ARRAY</code>.
+	 * Setter for <code>T_ARRAYS.NUMBER_LONG_ARRAY</code>.
 	 */
 	public void setNUMBER_LONG_ARRAY(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_ARRAYS.NUMBER_LONG_ARRAY</code>.
+	 * Getter for <code>T_ARRAYS.NUMBER_LONG_ARRAY</code>.
 	 */
 	@javax.persistence.Column(name = "NUMBER_LONG_ARRAY", length = 109)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY getNUMBER_LONG_ARRAY() {
@@ -75,14 +75,14 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * Setter for <code>TEST.T_ARRAYS.DATE_ARRAY</code>.
+	 * Setter for <code>T_ARRAYS.DATE_ARRAY</code>.
 	 */
 	public void setDATE_ARRAY(org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_ARRAYS.DATE_ARRAY</code>.
+	 * Getter for <code>T_ARRAYS.DATE_ARRAY</code>.
 	 */
 	@javax.persistence.Column(name = "DATE_ARRAY", length = 49)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY getDATE_ARRAY() {

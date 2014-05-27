@@ -10,20 +10,20 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_BOOK_STORE", schema = "TEST")
+@javax.persistence.Table(name = "T_BOOK_STORE")
 public class T_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE> implements java.lang.Cloneable, org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = -649931587;
+	private static final long serialVersionUID = -551651381;
 
 	/**
-	 * Setter for <code>TEST.T_BOOK_STORE.NAME</code>. The books store name
+	 * Setter for <code>T_BOOK_STORE.NAME</code>. The books store name
 	 */
 	public void setNAME(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOK_STORE.NAME</code>. The books store name
+	 * Getter for <code>T_BOOK_STORE.NAME</code>. The books store name
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "NAME", unique = true, nullable = false, length = 400)

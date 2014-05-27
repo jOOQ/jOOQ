@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class P3005 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1528874560;
+	private static final long serialVersionUID = -2433393;
 
 	/**
-	 * The parameter <code>TEST.P3005.P1</code>.
+	 * The parameter <code>P3005.P1</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_3005> P1 = createParameter("P1", org.jooq.test.oracle3.generatedclasses.udt.U_3005.U_3005.getDataType());
 
@@ -20,7 +20,7 @@ public class P3005 extends org.jooq.impl.AbstractRoutine<java.lang.Void> impleme
 	 * Create a new routine call instance
 	 */
 	public P3005() {
-		super("P3005", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("P3005", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 
 		addOutParameter(P1);
 	}

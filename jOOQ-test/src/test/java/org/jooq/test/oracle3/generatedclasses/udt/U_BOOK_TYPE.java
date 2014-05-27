@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_BOOK_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 459180100;
+	private static final long serialVersionUID = -1175915527;
 
 	/**
-	 * The singleton instance of <code>TEST.U_BOOK_TYPE</code>
+	 * The singleton instance of <code>U_BOOK_TYPE</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE U_BOOK_TYPE = new org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE();
 
@@ -25,12 +25,12 @@ public class U_BOOK_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.gen
 	}
 
 	/**
-	 * The attribute <code>TEST.U_BOOK_TYPE.ID</code>.
+	 * The attribute <code>U_BOOK_TYPE.ID</code>.
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, U_BOOK_TYPE);
 
 	/**
-	 * The attribute <code>TEST.U_BOOK_TYPE.TITLE</code>.
+	 * The attribute <code>U_BOOK_TYPE.TITLE</code>.
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), U_BOOK_TYPE);
 
@@ -38,7 +38,7 @@ public class U_BOOK_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.gen
 	 * No further instances allowed
 	 */
 	private U_BOOK_TYPE() {
-		super("U_BOOK_TYPE", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("U_BOOK_TYPE", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 
 		// Initialise data type
 		getDataType();

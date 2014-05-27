@@ -10,20 +10,20 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "M_LIBRARY", schema = "TEST")
+@javax.persistence.Table(name = "M_LIBRARY")
 public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY> implements java.io.Serializable, java.lang.Cloneable, org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -159797193;
+	private static final long serialVersionUID = 1701475137;
 
 	/**
-	 * Setter for <code>TEST.M_LIBRARY.AUTHOR</code>.
+	 * Setter for <code>M_LIBRARY.AUTHOR</code>.
 	 */
 	public void setAUTHOR(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.M_LIBRARY.AUTHOR</code>.
+	 * Getter for <code>M_LIBRARY.AUTHOR</code>.
 	 */
 	@javax.persistence.Column(name = "AUTHOR", length = 101)
 	public java.lang.String getAUTHOR() {
@@ -31,14 +31,14 @@ public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	}
 
 	/**
-	 * Setter for <code>TEST.M_LIBRARY.TITLE</code>.
+	 * Setter for <code>M_LIBRARY.TITLE</code>.
 	 */
 	public void setTITLE(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.M_LIBRARY.TITLE</code>.
+	 * Getter for <code>M_LIBRARY.TITLE</code>.
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
 	public java.lang.String getTITLE() {

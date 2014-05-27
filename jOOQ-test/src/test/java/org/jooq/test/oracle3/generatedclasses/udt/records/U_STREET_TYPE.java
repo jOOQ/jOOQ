@@ -9,73 +9,73 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_STREET_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE> implements java.lang.Cloneable, org.jooq.Record5<java.lang.String, java.lang.String, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY, byte[], java.lang.String> {
 
-	private static final long serialVersionUID = -991651430;
+	private static final long serialVersionUID = -1829332080;
 
 	/**
-	 * Setter for <code>TEST.U_STREET_TYPE.STREET</code>.
+	 * Setter for <code>U_STREET_TYPE.STREET</code>.
 	 */
 	public void setSTREET(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_STREET_TYPE.STREET</code>.
+	 * Getter for <code>U_STREET_TYPE.STREET</code>.
 	 */
 	public java.lang.String getSTREET() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>TEST.U_STREET_TYPE.NO</code>.
+	 * Setter for <code>U_STREET_TYPE.NO</code>.
 	 */
 	public void setNO(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_STREET_TYPE.NO</code>.
+	 * Getter for <code>U_STREET_TYPE.NO</code>.
 	 */
 	public java.lang.String getNO() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>TEST.U_STREET_TYPE.FLOORS</code>.
+	 * Setter for <code>U_STREET_TYPE.FLOORS</code>.
 	 */
 	public void setFLOORS(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_STREET_TYPE.FLOORS</code>.
+	 * Getter for <code>U_STREET_TYPE.FLOORS</code>.
 	 */
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY getFLOORS() {
 		return (org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>TEST.U_STREET_TYPE.F_1323</code>.
+	 * Setter for <code>U_STREET_TYPE.F_1323</code>.
 	 */
 	public void setF_1323(byte[] value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_STREET_TYPE.F_1323</code>.
+	 * Getter for <code>U_STREET_TYPE.F_1323</code>.
 	 */
 	public byte[] getF_1323() {
 		return (byte[]) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>TEST.U_STREET_TYPE.F_1326</code>.
+	 * Setter for <code>U_STREET_TYPE.F_1326</code>.
 	 */
 	public void setF_1326(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_STREET_TYPE.F_1326</code>.
+	 * Getter for <code>U_STREET_TYPE.F_1326</code>.
 	 */
 	public java.lang.String getF_1326() {
 		return (java.lang.String) getValue(4);

@@ -4376,8 +4376,9 @@
                                             <unsignedTypes>true</unsignedTypes>
                                             <schemata>
                                                 <schema>
+                                                    <!-- [#3282] This is lower-cased to check for Oracle case-insensitivity in schema names -->
                                                     <inputSchema>${db.oracle.schema}</inputSchema>
-                                                    <outputSchema></outputSchema>
+                                                    <outputSchemaToDefault>true</outputSchemaToDefault>
                                                 </schema>
                                             </schemata>
                                         </database>

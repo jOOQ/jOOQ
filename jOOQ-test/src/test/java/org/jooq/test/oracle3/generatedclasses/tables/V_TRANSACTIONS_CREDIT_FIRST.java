@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS_CREDIT_FIRST> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1659270602;
+	private static final long serialVersionUID = 1674503485;
 
 	/**
-	 * The singleton instance of <code>TEST.V_TRANSACTIONS_CREDIT_FIRST</code>
+	 * The singleton instance of <code>V_TRANSACTIONS_CREDIT_FIRST</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.V_TRANSACTIONS_CREDIT_FIRST V_TRANSACTIONS_CREDIT_FIRST = new org.jooq.test.oracle3.generatedclasses.tables.V_TRANSACTIONS_CREDIT_FIRST();
 
@@ -25,54 +25,54 @@ public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableImpl<org.joo
 	}
 
 	/**
-	 * The column <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.ID</code>.
+	 * The column <code>V_TRANSACTIONS_CREDIT_FIRST.ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS_CREDIT_FIRST, java.lang.Long> ID = createField("ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.ACCOUNT_ID</code>.
+	 * The column <code>V_TRANSACTIONS_CREDIT_FIRST.ACCOUNT_ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS_CREDIT_FIRST, java.lang.Long> ACCOUNT_ID = createField("ACCOUNT_ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.VALUE_DATE</code>.
+	 * The column <code>V_TRANSACTIONS_CREDIT_FIRST.VALUE_DATE</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS_CREDIT_FIRST, java.sql.Date> VALUE_DATE = createField("VALUE_DATE", org.jooq.impl.SQLDataType.DATE.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.AMOUNT</code>.
+	 * The column <code>V_TRANSACTIONS_CREDIT_FIRST.AMOUNT</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS_CREDIT_FIRST, java.math.BigDecimal> AMOUNT = createField("AMOUNT", org.jooq.impl.SQLDataType.NUMERIC.precision(10, 2).nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.CREDIT</code>.
+	 * The column <code>V_TRANSACTIONS_CREDIT_FIRST.CREDIT</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS_CREDIT_FIRST, java.math.BigDecimal> CREDIT = createField("CREDIT", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * The column <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.DEBIT</code>.
+	 * The column <code>V_TRANSACTIONS_CREDIT_FIRST.DEBIT</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS_CREDIT_FIRST, java.math.BigDecimal> DEBIT = createField("DEBIT", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * The column <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.CURRENT_BALANCE</code>.
+	 * The column <code>V_TRANSACTIONS_CREDIT_FIRST.CURRENT_BALANCE</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS_CREDIT_FIRST, java.math.BigDecimal> CURRENT_BALANCE = createField("CURRENT_BALANCE", org.jooq.impl.SQLDataType.NUMERIC.precision(10, 2).nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.V_TRANSACTIONS_CREDIT_FIRST.TRANSACTION_NUMBER</code>.
+	 * The column <code>V_TRANSACTIONS_CREDIT_FIRST.TRANSACTION_NUMBER</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS_CREDIT_FIRST, java.math.BigDecimal> TRANSACTION_NUMBER = createField("TRANSACTION_NUMBER", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * Create a <code>TEST.V_TRANSACTIONS_CREDIT_FIRST</code> table reference
+	 * Create a <code>V_TRANSACTIONS_CREDIT_FIRST</code> table reference
 	 */
 	public V_TRANSACTIONS_CREDIT_FIRST() {
 		this("V_TRANSACTIONS_CREDIT_FIRST", null);
 	}
 
 	/**
-	 * Create an aliased <code>TEST.V_TRANSACTIONS_CREDIT_FIRST</code> table reference
+	 * Create an aliased <code>V_TRANSACTIONS_CREDIT_FIRST</code> table reference
 	 */
 	public V_TRANSACTIONS_CREDIT_FIRST(java.lang.String alias) {
 		this(alias, org.jooq.test.oracle3.generatedclasses.tables.V_TRANSACTIONS_CREDIT_FIRST.V_TRANSACTIONS_CREDIT_FIRST);
@@ -83,7 +83,7 @@ public class V_TRANSACTIONS_CREDIT_FIRST extends org.jooq.impl.TableImpl<org.joo
 	}
 
 	private V_TRANSACTIONS_CREDIT_FIRST(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.V_TRANSACTIONS_CREDIT_FIRST> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, aliased, parameters, "");
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

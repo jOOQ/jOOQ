@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_EXOTIC_TYPES", schema = "TEST")
+@javax.persistence.Table(name = "T_EXOTIC_TYPES")
 public class T_EXOTIC_TYPES_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, java.io.Serializable {
 
-	private static final long serialVersionUID = -545384335;
+	private static final long serialVersionUID = 1858318995;
 
 	private java.lang.Integer ID;
 	private java.lang.String  UU;

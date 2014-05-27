@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TRANSACTIONS_WITH_CREDIT_DEBIT extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.TRANSACTIONS_WITH_CREDIT_DEBIT> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -515974655;
+	private static final long serialVersionUID = -1250822556;
 
 	/**
-	 * The singleton instance of <code>TEST.TRANSACTIONS_WITH_CREDIT_DEBIT</code>
+	 * The singleton instance of <code>TRANSACTIONS_WITH_CREDIT_DEBIT</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.TRANSACTIONS_WITH_CREDIT_DEBIT TRANSACTIONS_WITH_CREDIT_DEBIT = new org.jooq.test.oracle3.generatedclasses.tables.TRANSACTIONS_WITH_CREDIT_DEBIT();
 
@@ -25,44 +25,44 @@ public class TRANSACTIONS_WITH_CREDIT_DEBIT extends org.jooq.impl.TableImpl<org.
 	}
 
 	/**
-	 * The column <code>TEST.TRANSACTIONS_WITH_CREDIT_DEBIT.ID</code>.
+	 * The column <code>TRANSACTIONS_WITH_CREDIT_DEBIT.ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.TRANSACTIONS_WITH_CREDIT_DEBIT, java.lang.Long> ID = createField("ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.TRANSACTIONS_WITH_CREDIT_DEBIT.ACCOUNT_ID</code>.
+	 * The column <code>TRANSACTIONS_WITH_CREDIT_DEBIT.ACCOUNT_ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.TRANSACTIONS_WITH_CREDIT_DEBIT, java.lang.Long> ACCOUNT_ID = createField("ACCOUNT_ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.TRANSACTIONS_WITH_CREDIT_DEBIT.VALUE_DATE</code>.
+	 * The column <code>TRANSACTIONS_WITH_CREDIT_DEBIT.VALUE_DATE</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.TRANSACTIONS_WITH_CREDIT_DEBIT, java.sql.Date> VALUE_DATE = createField("VALUE_DATE", org.jooq.impl.SQLDataType.DATE.nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.TRANSACTIONS_WITH_CREDIT_DEBIT.AMOUNT</code>.
+	 * The column <code>TRANSACTIONS_WITH_CREDIT_DEBIT.AMOUNT</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.TRANSACTIONS_WITH_CREDIT_DEBIT, java.math.BigDecimal> AMOUNT = createField("AMOUNT", org.jooq.impl.SQLDataType.NUMERIC.precision(10, 2).nullable(false), this, "");
 
 	/**
-	 * The column <code>TEST.TRANSACTIONS_WITH_CREDIT_DEBIT.CREDIT</code>.
+	 * The column <code>TRANSACTIONS_WITH_CREDIT_DEBIT.CREDIT</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.TRANSACTIONS_WITH_CREDIT_DEBIT, java.math.BigDecimal> CREDIT = createField("CREDIT", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * The column <code>TEST.TRANSACTIONS_WITH_CREDIT_DEBIT.DEBIT</code>.
+	 * The column <code>TRANSACTIONS_WITH_CREDIT_DEBIT.DEBIT</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.TRANSACTIONS_WITH_CREDIT_DEBIT, java.math.BigDecimal> DEBIT = createField("DEBIT", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * Create a <code>TEST.TRANSACTIONS_WITH_CREDIT_DEBIT</code> table reference
+	 * Create a <code>TRANSACTIONS_WITH_CREDIT_DEBIT</code> table reference
 	 */
 	public TRANSACTIONS_WITH_CREDIT_DEBIT() {
 		this("TRANSACTIONS_WITH_CREDIT_DEBIT", null);
 	}
 
 	/**
-	 * Create an aliased <code>TEST.TRANSACTIONS_WITH_CREDIT_DEBIT</code> table reference
+	 * Create an aliased <code>TRANSACTIONS_WITH_CREDIT_DEBIT</code> table reference
 	 */
 	public TRANSACTIONS_WITH_CREDIT_DEBIT(java.lang.String alias) {
 		this(alias, org.jooq.test.oracle3.generatedclasses.tables.TRANSACTIONS_WITH_CREDIT_DEBIT.TRANSACTIONS_WITH_CREDIT_DEBIT);
@@ -73,7 +73,7 @@ public class TRANSACTIONS_WITH_CREDIT_DEBIT extends org.jooq.impl.TableImpl<org.
 	}
 
 	private TRANSACTIONS_WITH_CREDIT_DEBIT(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.TRANSACTIONS_WITH_CREDIT_DEBIT> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, aliased, parameters, "");
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

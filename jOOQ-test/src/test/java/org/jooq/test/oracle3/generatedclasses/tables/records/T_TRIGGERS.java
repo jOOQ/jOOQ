@@ -8,20 +8,20 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_TRIGGERS", schema = "TEST")
+@javax.persistence.Table(name = "T_TRIGGERS")
 public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS> implements java.lang.Cloneable, org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -617655286;
+	private static final long serialVersionUID = -1226186056;
 
 	/**
-	 * Setter for <code>TEST.T_TRIGGERS.ID_GENERATED</code>.
+	 * Setter for <code>T_TRIGGERS.ID_GENERATED</code>.
 	 */
 	public void setID_GENERATED(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_TRIGGERS.ID_GENERATED</code>.
+	 * Getter for <code>T_TRIGGERS.ID_GENERATED</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID_GENERATED", unique = true, nullable = false, precision = 7)
@@ -30,14 +30,14 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Setter for <code>TEST.T_TRIGGERS.ID</code>.
+	 * Setter for <code>T_TRIGGERS.ID</code>.
 	 */
 	public void setID(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_TRIGGERS.ID</code>.
+	 * Getter for <code>T_TRIGGERS.ID</code>.
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	public java.lang.Integer getID() {
@@ -45,14 +45,14 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Setter for <code>TEST.T_TRIGGERS.COUNTER</code>.
+	 * Setter for <code>T_TRIGGERS.COUNTER</code>.
 	 */
 	public void setCOUNTER(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_TRIGGERS.COUNTER</code>.
+	 * Getter for <code>T_TRIGGERS.COUNTER</code>.
 	 */
 	@javax.persistence.Column(name = "COUNTER", nullable = false, precision = 7)
 	public java.lang.Integer getCOUNTER() {

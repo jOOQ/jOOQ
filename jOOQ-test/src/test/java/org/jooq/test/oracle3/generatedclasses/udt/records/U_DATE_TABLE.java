@@ -9,14 +9,14 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_DATE_TABLE extends org.jooq.impl.ArrayRecordImpl<java.sql.Date> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1814574953;
+	private static final long serialVersionUID = -1247440379;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #U_DATE_TABLE()} constructor instead
 	 */
 	@java.lang.Deprecated
 	public U_DATE_TABLE(org.jooq.Configuration configuration) {
-		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_DATE_TABLE", org.jooq.impl.SQLDataType.DATE, configuration);
+		super(org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, "U_DATE_TABLE", org.jooq.impl.SQLDataType.DATE, configuration);
 	}
 
 	/**
@@ -38,14 +38,14 @@ public class U_DATE_TABLE extends org.jooq.impl.ArrayRecordImpl<java.sql.Date> i
 	}
 
 	/**
-	 * Create a new <code>TEST.U_DATE_TABLE</code> record
+	 * Create a new <code>U_DATE_TABLE</code> record
 	 */
 	public U_DATE_TABLE() {
-		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_DATE_TABLE", org.jooq.impl.SQLDataType.DATE);
+		super(org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, "U_DATE_TABLE", org.jooq.impl.SQLDataType.DATE);
 	}
 
 	/**
-	 * Create a new <code>TEST.U_DATE_TABLE</code> record
+	 * Create a new <code>U_DATE_TABLE</code> record
 	 */
 	public U_DATE_TABLE(java.sql.Date... array) {
 		this();
@@ -53,7 +53,7 @@ public class U_DATE_TABLE extends org.jooq.impl.ArrayRecordImpl<java.sql.Date> i
 	}
 
 	/**
-	 * Create a new <code>TEST.U_DATE_TABLE</code> record
+	 * Create a new <code>U_DATE_TABLE</code> record
 	 */
 	public U_DATE_TABLE(java.util.Collection<? extends java.sql.Date> collection) {
 		this();

@@ -9,14 +9,14 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_NUMBER_LONG_ARRAY extends org.jooq.impl.ArrayRecordImpl<java.lang.Long> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 300834072;
+	private static final long serialVersionUID = 2069713154;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #U_NUMBER_LONG_ARRAY()} constructor instead
 	 */
 	@java.lang.Deprecated
 	public U_NUMBER_LONG_ARRAY(org.jooq.Configuration configuration) {
-		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_NUMBER_LONG_ARRAY", org.jooq.impl.SQLDataType.BIGINT, configuration);
+		super(org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, "U_NUMBER_LONG_ARRAY", org.jooq.impl.SQLDataType.BIGINT, configuration);
 	}
 
 	/**
@@ -38,14 +38,14 @@ public class U_NUMBER_LONG_ARRAY extends org.jooq.impl.ArrayRecordImpl<java.lang
 	}
 
 	/**
-	 * Create a new <code>TEST.U_NUMBER_LONG_ARRAY</code> record
+	 * Create a new <code>U_NUMBER_LONG_ARRAY</code> record
 	 */
 	public U_NUMBER_LONG_ARRAY() {
-		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_NUMBER_LONG_ARRAY", org.jooq.impl.SQLDataType.BIGINT);
+		super(org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, "U_NUMBER_LONG_ARRAY", org.jooq.impl.SQLDataType.BIGINT);
 	}
 
 	/**
-	 * Create a new <code>TEST.U_NUMBER_LONG_ARRAY</code> record
+	 * Create a new <code>U_NUMBER_LONG_ARRAY</code> record
 	 */
 	public U_NUMBER_LONG_ARRAY(java.lang.Long... array) {
 		this();
@@ -53,7 +53,7 @@ public class U_NUMBER_LONG_ARRAY extends org.jooq.impl.ArrayRecordImpl<java.lang
 	}
 
 	/**
-	 * Create a new <code>TEST.U_NUMBER_LONG_ARRAY</code> record
+	 * Create a new <code>U_NUMBER_LONG_ARRAY</code> record
 	 */
 	public U_NUMBER_LONG_ARRAY(java.util.Collection<? extends java.lang.Long> collection) {
 		this();

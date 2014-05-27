@@ -9,14 +9,14 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_STRING_ARRAY extends org.jooq.impl.ArrayRecordImpl<java.lang.String> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -334038836;
+	private static final long serialVersionUID = -1793424118;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #U_STRING_ARRAY()} constructor instead
 	 */
 	@java.lang.Deprecated
 	public U_STRING_ARRAY(org.jooq.Configuration configuration) {
-		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_STRING_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.length(20), configuration);
+		super(org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, "U_STRING_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.length(20), configuration);
 	}
 
 	/**
@@ -38,14 +38,14 @@ public class U_STRING_ARRAY extends org.jooq.impl.ArrayRecordImpl<java.lang.Stri
 	}
 
 	/**
-	 * Create a new <code>TEST.U_STRING_ARRAY</code> record
+	 * Create a new <code>U_STRING_ARRAY</code> record
 	 */
 	public U_STRING_ARRAY() {
-		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_STRING_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.length(20));
+		super(org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, "U_STRING_ARRAY", org.jooq.impl.SQLDataType.VARCHAR.length(20));
 	}
 
 	/**
-	 * Create a new <code>TEST.U_STRING_ARRAY</code> record
+	 * Create a new <code>U_STRING_ARRAY</code> record
 	 */
 	public U_STRING_ARRAY(java.lang.String... array) {
 		this();
@@ -53,7 +53,7 @@ public class U_STRING_ARRAY extends org.jooq.impl.ArrayRecordImpl<java.lang.Stri
 	}
 
 	/**
-	 * Create a new <code>TEST.U_STRING_ARRAY</code> record
+	 * Create a new <code>U_STRING_ARRAY</code> record
 	 */
 	public U_STRING_ARRAY(java.util.Collection<? extends java.lang.String> collection) {
 		this();

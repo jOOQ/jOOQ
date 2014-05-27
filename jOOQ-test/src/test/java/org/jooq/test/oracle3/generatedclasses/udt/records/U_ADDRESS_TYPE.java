@@ -9,115 +9,115 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_ADDRESS_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> implements java.lang.Cloneable, org.jooq.Record8<org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE, java.lang.String, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, byte[], java.lang.String> {
 
-	private static final long serialVersionUID = -1849049339;
+	private static final long serialVersionUID = -735346507;
 
 	/**
-	 * Setter for <code>TEST.U_ADDRESS_TYPE.STREET</code>.
+	 * Setter for <code>U_ADDRESS_TYPE.STREET</code>.
 	 */
 	public void setSTREET(org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_ADDRESS_TYPE.STREET</code>.
+	 * Getter for <code>U_ADDRESS_TYPE.STREET</code>.
 	 */
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE getSTREET() {
 		return (org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>TEST.U_ADDRESS_TYPE.ZIP</code>.
+	 * Setter for <code>U_ADDRESS_TYPE.ZIP</code>.
 	 */
 	public void setZIP(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_ADDRESS_TYPE.ZIP</code>.
+	 * Getter for <code>U_ADDRESS_TYPE.ZIP</code>.
 	 */
 	public java.lang.String getZIP() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>TEST.U_ADDRESS_TYPE.CITY</code>.
+	 * Setter for <code>U_ADDRESS_TYPE.CITY</code>.
 	 */
 	public void setCITY(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_ADDRESS_TYPE.CITY</code>.
+	 * Getter for <code>U_ADDRESS_TYPE.CITY</code>.
 	 */
 	public java.lang.String getCITY() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>TEST.U_ADDRESS_TYPE.COUNTRY</code>.
+	 * Setter for <code>U_ADDRESS_TYPE.COUNTRY</code>.
 	 */
 	public void setCOUNTRY(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_ADDRESS_TYPE.COUNTRY</code>.
+	 * Getter for <code>U_ADDRESS_TYPE.COUNTRY</code>.
 	 */
 	public java.lang.String getCOUNTRY() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>TEST.U_ADDRESS_TYPE.SINCE</code>.
+	 * Setter for <code>U_ADDRESS_TYPE.SINCE</code>.
 	 */
 	public void setSINCE(java.sql.Date value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_ADDRESS_TYPE.SINCE</code>.
+	 * Getter for <code>U_ADDRESS_TYPE.SINCE</code>.
 	 */
 	public java.sql.Date getSINCE() {
 		return (java.sql.Date) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>TEST.U_ADDRESS_TYPE.CODE</code>.
+	 * Setter for <code>U_ADDRESS_TYPE.CODE</code>.
 	 */
 	public void setCODE(java.lang.Integer value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_ADDRESS_TYPE.CODE</code>.
+	 * Getter for <code>U_ADDRESS_TYPE.CODE</code>.
 	 */
 	public java.lang.Integer getCODE() {
 		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>TEST.U_ADDRESS_TYPE.F_1323</code>.
+	 * Setter for <code>U_ADDRESS_TYPE.F_1323</code>.
 	 */
 	public void setF_1323(byte[] value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_ADDRESS_TYPE.F_1323</code>.
+	 * Getter for <code>U_ADDRESS_TYPE.F_1323</code>.
 	 */
 	public byte[] getF_1323() {
 		return (byte[]) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>TEST.U_ADDRESS_TYPE.F_1326</code>.
+	 * Setter for <code>U_ADDRESS_TYPE.F_1326</code>.
 	 */
 	public void setF_1326(java.lang.String value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.U_ADDRESS_TYPE.F_1326</code>.
+	 * Getter for <code>U_ADDRESS_TYPE.F_1326</code>.
 	 */
 	public java.lang.String getF_1326() {
 		return (java.lang.String) getValue(7);

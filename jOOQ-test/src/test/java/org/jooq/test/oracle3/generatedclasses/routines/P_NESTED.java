@@ -9,25 +9,25 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class P_NESTED extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1726572213;
+	private static final long serialVersionUID = -947085888;
 
 	/**
-	 * The parameter <code>TEST.P_NESTED.P1</code>.
+	 * The parameter <code>P_NESTED.P1</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_3> P1 = createParameter("P1", org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_3.U_NESTED_3.getDataType());
 
 	/**
-	 * The parameter <code>TEST.P_NESTED.P2</code>.
+	 * The parameter <code>P_NESTED.P2</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_3> P2 = createParameter("P2", org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_3.U_NESTED_3.getDataType());
 
 	/**
-	 * The parameter <code>TEST.P_NESTED.P3</code>.
+	 * The parameter <code>P_NESTED.P3</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_3> P3 = createParameter("P3", org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_3.U_NESTED_3.getDataType());
 
 	/**
-	 * The parameter <code>TEST.P_NESTED.P4</code>.
+	 * The parameter <code>P_NESTED.P4</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_3> P4 = createParameter("P4", org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_3.U_NESTED_3.getDataType());
 
@@ -35,7 +35,7 @@ public class P_NESTED extends org.jooq.impl.AbstractRoutine<java.lang.Void> impl
 	 * Create a new routine call instance
 	 */
 	public P_NESTED() {
-		super("P_NESTED", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("P_NESTED", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 
 		addInParameter(P1);
 		addInParameter(P2);

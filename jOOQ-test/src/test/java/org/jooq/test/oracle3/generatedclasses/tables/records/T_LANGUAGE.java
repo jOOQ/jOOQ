@@ -10,20 +10,20 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_LANGUAGE", schema = "TEST")
+@javax.persistence.Table(name = "T_LANGUAGE")
 public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> implements java.lang.Cloneable, org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = -987312149;
+	private static final long serialVersionUID = 820207359;
 
 	/**
-	 * Setter for <code>TEST.T_LANGUAGE.CD</code>. The language ISO code
+	 * Setter for <code>T_LANGUAGE.CD</code>. The language ISO code
 	 */
 	public void setCD(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_LANGUAGE.CD</code>. The language ISO code
+	 * Getter for <code>T_LANGUAGE.CD</code>. The language ISO code
 	 */
 	@javax.persistence.Column(name = "CD", nullable = false, length = 2)
 	public java.lang.String getCD() {
@@ -31,14 +31,14 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Setter for <code>TEST.T_LANGUAGE.DESCRIPTION</code>. The language description
+	 * Setter for <code>T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
 	public void setDESCRIPTION(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_LANGUAGE.DESCRIPTION</code>. The language description
+	 * Getter for <code>T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
 	@javax.persistence.Column(name = "DESCRIPTION", length = 50)
 	public java.lang.String getDESCRIPTION() {
@@ -46,14 +46,14 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Setter for <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
+	 * Setter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
 	public void setDESCRIPTION_ENGLISH(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
+	 * Getter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
 	@javax.persistence.Column(name = "DESCRIPTION_ENGLISH", length = 50)
 	public java.lang.String getDESCRIPTION_ENGLISH() {
@@ -61,14 +61,14 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * Setter for <code>TEST.T_LANGUAGE.ID</code>. The language ID
+	 * Setter for <code>T_LANGUAGE.ID</code>. The language ID
 	 */
 	public void setID(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_LANGUAGE.ID</code>. The language ID
+	 * Getter for <code>T_LANGUAGE.ID</code>. The language ID
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)

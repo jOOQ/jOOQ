@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_TEMP extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_TEMP> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1815682530;
+	private static final long serialVersionUID = 1981697823;
 
 	/**
-	 * The singleton instance of <code>TEST.T_TEMP</code>
+	 * The singleton instance of <code>T_TEMP</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_TEMP T_TEMP = new org.jooq.test.oracle3.generatedclasses.tables.T_TEMP();
 
@@ -25,19 +25,19 @@ public class T_TEMP extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.genera
 	}
 
 	/**
-	 * The column <code>TEST.T_TEMP.ID</code>.
+	 * The column <code>T_TEMP.ID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_TEMP, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * Create a <code>TEST.T_TEMP</code> table reference
+	 * Create a <code>T_TEMP</code> table reference
 	 */
 	public T_TEMP() {
 		this("T_TEMP", null);
 	}
 
 	/**
-	 * Create an aliased <code>TEST.T_TEMP</code> table reference
+	 * Create an aliased <code>T_TEMP</code> table reference
 	 */
 	public T_TEMP(java.lang.String alias) {
 		this(alias, org.jooq.test.oracle3.generatedclasses.tables.T_TEMP.T_TEMP);
@@ -48,7 +48,7 @@ public class T_TEMP extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.genera
 	}
 
 	private T_TEMP(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_TEMP> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, aliased, parameters, "");
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**

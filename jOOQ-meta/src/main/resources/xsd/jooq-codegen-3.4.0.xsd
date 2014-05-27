@@ -410,8 +410,16 @@
         production schema. Use this to override your local development
         schema name for source code generation. If not specified, this
         will be the same as the input-schema.
+        
+        This will be ignored if outputSchemaToDefault is set to true
         -->
       <element name="outputSchema" type="string" minOccurs="0" maxOccurs="1" />
+
+      <!--
+        A flag to indicate that the outputSchema should be the "default" schema,
+        which generates schema-less, unqualified tables, procedures, etc.
+        -->
+      <element name="outputSchemaToDefault" type="boolean" minOccurs="0" maxOccurs="1" default="false" />
 
       <!--
         A configuration element to configure several input and/or output
@@ -457,6 +465,9 @@
 
       <!-- See also database/outputSchema -->
       <element name="outputSchema" type="string" minOccurs="0" maxOccurs="1" />
+
+      <!-- See also database/outputSchemaDefault -->
+      <element name="outputSchemaToDefault" type="boolean" minOccurs="0" maxOccurs="1" default="false" />
     </all>
   </complexType>
 

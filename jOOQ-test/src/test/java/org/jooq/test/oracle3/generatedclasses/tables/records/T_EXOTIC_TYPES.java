@@ -8,20 +8,20 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_EXOTIC_TYPES", schema = "TEST")
+@javax.persistence.Table(name = "T_EXOTIC_TYPES")
 public class T_EXOTIC_TYPES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -1125139551;
+	private static final long serialVersionUID = -201301103;
 
 	/**
-	 * Setter for <code>TEST.T_EXOTIC_TYPES.ID</code>.
+	 * Setter for <code>T_EXOTIC_TYPES.ID</code>.
 	 */
 	public void setID(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_EXOTIC_TYPES.ID</code>.
+	 * Getter for <code>T_EXOTIC_TYPES.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -30,14 +30,14 @@ public class T_EXOTIC_TYPES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * Setter for <code>TEST.T_EXOTIC_TYPES.UU</code>.
+	 * Setter for <code>T_EXOTIC_TYPES.UU</code>.
 	 */
 	public void setUU(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_EXOTIC_TYPES.UU</code>.
+	 * Getter for <code>T_EXOTIC_TYPES.UU</code>.
 	 */
 	@javax.persistence.Column(name = "UU", length = 36)
 	public java.lang.String getUU() {

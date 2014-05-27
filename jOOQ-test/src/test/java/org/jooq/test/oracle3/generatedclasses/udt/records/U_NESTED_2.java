@@ -9,14 +9,14 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_NESTED_2 extends org.jooq.impl.ArrayRecordImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_1> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1746329679;
+	private static final long serialVersionUID = 1104822175;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #U_NESTED_2()} constructor instead
 	 */
 	@java.lang.Deprecated
 	public U_NESTED_2(org.jooq.Configuration configuration) {
-		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_NESTED_2", org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_1.U_NESTED_1.getDataType(), configuration);
+		super(org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, "U_NESTED_2", org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_1.U_NESTED_1.getDataType(), configuration);
 	}
 
 	/**
@@ -38,14 +38,14 @@ public class U_NESTED_2 extends org.jooq.impl.ArrayRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * Create a new <code>TEST.U_NESTED_2</code> record
+	 * Create a new <code>U_NESTED_2</code> record
 	 */
 	public U_NESTED_2() {
-		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_NESTED_2", org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_1.U_NESTED_1.getDataType());
+		super(org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, "U_NESTED_2", org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_1.U_NESTED_1.getDataType());
 	}
 
 	/**
-	 * Create a new <code>TEST.U_NESTED_2</code> record
+	 * Create a new <code>U_NESTED_2</code> record
 	 */
 	public U_NESTED_2(org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_1... array) {
 		this();
@@ -53,7 +53,7 @@ public class U_NESTED_2 extends org.jooq.impl.ArrayRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * Create a new <code>TEST.U_NESTED_2</code> record
+	 * Create a new <code>U_NESTED_2</code> record
 	 */
 	public U_NESTED_2(java.util.Collection<? extends org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_1> collection) {
 		this();

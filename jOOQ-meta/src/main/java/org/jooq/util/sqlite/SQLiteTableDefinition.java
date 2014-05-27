@@ -77,7 +77,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
 
             String name = record.getValue("name", String.class);
             String dataType = record.getValue("type", String.class)
-                                    .replaceAll("\\(\\d+\\)", "");
+                                    .replaceAll("\\(\\d+(\\s*,\\s*\\d+)?\\)", "");
             Number precision = parsePrecision(record.getValue("type", String.class));
             Number scale = parseScale(record.getValue("type", String.class));
 

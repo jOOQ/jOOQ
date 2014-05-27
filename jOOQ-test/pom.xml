@@ -81,12 +81,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.6.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>integration</artifactId>
-            <version>1.6.1</version>
+            <version>1.7.5</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -3511,7 +3506,7 @@
         
       
         <profile>
-            <id>codegen-ase</id>
+            <id>codegen-ase-sys</id>
             <build>
                 <plugins>
                     <plugin>
@@ -3521,7 +3516,7 @@
         
                         <executions>
                             <execution>
-                                <id>generate-ase</id>
+                                <id>generate-ase-sys</id>
                                 <phase>generate-sources</phase>
                                 <goals>
                                     <goal>generate</goal>
@@ -3531,7 +3526,7 @@
                                     <jdbc>
                                         <driver>${db.ase.driver}</driver>
                                         <url>${db.ase.url}</url>
-                                        <schema>${db.ase.schema}</schema>
+                                        <schema>sys</schema>
                                         <user>${db.ase.username}</user>
                                         <password>${db.ase.password}</password>
                                     </jdbc>

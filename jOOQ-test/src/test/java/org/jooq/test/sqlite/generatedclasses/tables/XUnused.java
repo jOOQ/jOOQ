@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 1966456461;
+	private static final long serialVersionUID = 182021772;
 
 	/**
 	 * The singleton instance of <code>x_unused</code>
@@ -92,7 +92,7 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.genera
 	/**
 	 * The column <code>x_unused.FIELD 737</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord, java.lang.Object> FIELD_737 = createField("FIELD 737", org.jooq.impl.DefaultDataType.getDefaultDataType("DECIMAL(25, 2)"), X_UNUSED, "");
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.NUMERIC.precision(25, 2), X_UNUSED, "");
 
 	/**
 	 * No further instances allowed

@@ -2456,6 +2456,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchCustomTypeIntoPOJO() throws Exception {
+        new EnumTests(this).testFetchCustomTypeIntoPOJO();
+    }
+
+    @Test
     public <R extends TableRecord<R>> void testCustomEnums() throws Exception {
         new EnumTests(this).testCustomEnums();
     }

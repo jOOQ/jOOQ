@@ -72,8 +72,6 @@ import org.jooq.test.all.converters.Boolean_YES_NO_UC;
 import org.jooq.test.all.converters.Boolean_YN_LC;
 import org.jooq.test.all.converters.Boolean_YN_UC;
 
-import org.junit.Test;
-
 public class EnumTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,
@@ -102,7 +100,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-
     public void testEnums() throws Exception {
         if (TBook_STATUS() == null) {
             log.info("SKIPPING", "enums test");
@@ -130,22 +127,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("ON STOCK", ((EnumType) value).getLiteral());
     }
 
-    @Test
     public void testFetchIntoConvertedType() throws Exception {
-        try {
-            insertBooleans(create());
+        clean(TBooleans());
+        insertBooleans(create());
 
-            assertEquals(
-                asList(Boolean_10.ZERO, Boolean_10.ONE, null),
-                create().select(TBooleans_BOOLEAN_10())
-                        .from(TBooleans())
-                        .orderBy(TBooleans_ID())
-                        .fetchInto(Boolean_10.class)
-            );
-        }
-        finally {
-            create().delete(TBooleans()).execute();
-        }
+        assertEquals(
+            asList(Boolean_10.ZERO, Boolean_10.ONE, null),
+            create().select(TBooleans_BOOLEAN_10())
+                    .from(TBooleans())
+                    .orderBy(TBooleans_ID())
+                    .fetchInto(Boolean_10.class)
+        );
     }
 
     public <R extends TableRecord<R>> void testCustomEnums() throws Exception {
@@ -328,5 +320,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .set(TBooleans_VC(), (Boolean) null)
                 .set(TBooleans_N(), (Boolean) null)
                 .execute());
+    }
+
+    public void testFetchCustomTypeIntoPOJO() {
+        clean(TBooleans());
+        insertBooleans(create());
+
+        List<B1> b1 =
+        create().select(TBooleans_BOOLEAN_10())
+                .from(TBooleans())
+                .orderBy(TBooleans_ID())
+                .fetchInto(B1.class);
+
+        assertEquals(3, b1.size());
+        assertEquals("ZERO", b1.get(0).oneZero);
+        assertEquals("ONE", b1.get(1).oneZero);
+        assertNull(b1.get(2).oneZero);
+    }
+
+    private static class B1 {
+        public String oneZero;
     }
 }

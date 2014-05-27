@@ -275,6 +275,14 @@ public class GenerationTool {
                 if (schema.getOutputSchema() == null) {
                     schema.setOutputSchema(trim(schema.getInputSchema()));
                 }
+
+                /* [pro] */
+                // [#3282] Oracle database only knows case-insensitive schema names.
+                if (database instanceof OracleDatabase) {
+                    schema.setInputSchema(schema.getInputSchema().toUpperCase());
+                    schema.setOutputSchema(schema.getOutputSchema().toUpperCase());
+                }
+                /* [/pro] */
             }
 
             if (schemata.size() == 1) {

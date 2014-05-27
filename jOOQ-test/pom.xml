@@ -81,12 +81,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.6.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>integration</artifactId>
-            <version>1.6.1</version>
+            <version>1.7.5</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -3511,7 +3506,7 @@
         
       
         xxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxx
                 xxxxxxxxx
                     xxxxxxxx
@@ -3521,7 +3516,7 @@
         
                         xxxxxxxxxxxx
                             xxxxxxxxxxx
-                                xxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxxxxxxxxxxxxxxxxxx
                                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                                 xxxxxxx
                                     xxxxxxxxxxxxxxxxxxxxx
@@ -3531,7 +3526,7 @@
                                     xxxxxx
                                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                                         xxxxxxxxxxxxxxxxxxxxxxxx
-                                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                        xxxxxxxxxxxxxxxxxxxx
                                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                                     xxxxxxx

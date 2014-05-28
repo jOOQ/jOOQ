@@ -55,6 +55,9 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
+import org.jooq.tools.reflect.Reflect;
+import org.jooq.util.JavaGenerator;
+import org.slf4j.Logger;
 
 /**
  * The jOOQ Codegen Plugin
@@ -93,6 +96,16 @@ public class Plugin extends AbstractMojo {
     @Override
     public void execute() throws MojoExecutionException {
         try {
+
+            // [#3273] Use maven log
+            Logger log = Reflect.on(getLog()).as(Logger.class);
+
+            Reflect.on(GenerationTool.class).field("log")
+                .set("slf4j", log)
+                .set("supportsInfo", true);
+            Reflect.on(JavaGenerator.class).field("log")
+                .set("slf4j", log)
+                .set("supportsInfo", true);
 
             // [#2887] Patch relative paths to take plugin execution basedir into accountcd joo
             String dir = generator.getTarget().getDirectory();

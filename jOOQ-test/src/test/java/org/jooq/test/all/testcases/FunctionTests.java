@@ -977,17 +977,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 return;
         }
 
-        Field<Date> d = date(inline(Timestamp.valueOf("1970-01-01 02:00:00.0")));
-        Field<Time> t = time(inline(Timestamp.valueOf("1970-01-01 02:00:00.0")));
-        Field<Timestamp> ts = timestamp(inline(Date.valueOf("1970-01-01")));
+        Field<Date> d1 = date(inline(Timestamp.valueOf("1970-01-01 02:00:00.0")));
+        Field<Time> t1 = time(inline(Timestamp.valueOf("1970-01-01 02:00:00.0")));
+        Field<Timestamp> ts1 = timestamp(inline(Date.valueOf("1970-01-01")));
 
-        Record3<Date, Time, Timestamp> record =
-        create().select(d, t, ts)
+        Field<Date> d2 = date("1970-01-01");
+        Field<Time> t2 = time("02:00:00");
+        Field<Timestamp> ts2 = timestamp("1970-01-01 02:00:00.0");
+
+        Record record =
+        create().select(d1, t1, ts1)
+                .select(d2, t2, ts2)
                 .fetchOne();
 
-        assertEquals("1970-01-01 00:00:00.0", record.getValue(ts).toString());
-        assertEquals("1970-01-01", record.getValue(d).toString());
-        assertEquals("02:00:00", record.getValue(t).toString());
+        assertEquals("1970-01-01 00:00:00.0", record.getValue(ts1).toString());
+        assertEquals("1970-01-01", record.getValue(d1).toString());
+        assertEquals("02:00:00", record.getValue(t1).toString());
+
+        assertEquals("1970-01-01 02:00:00.0", record.getValue(ts2).toString());
+        assertEquals("1970-01-01", record.getValue(d2).toString());
+        assertEquals("02:00:00", record.getValue(t2).toString());
     }
 
     public void testFunctionsOnDates() throws Exception {

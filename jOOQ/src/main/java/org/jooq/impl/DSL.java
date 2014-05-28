@@ -8483,6 +8483,14 @@ public class DSL {
     }
 
     /**
+     * Convert a string value to a <code>DATE</code>.
+     */
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    public static Field<Date> date(String value) {
+        return date(Date.valueOf(value));
+    }
+
+    /**
      * Convert a temporal value to a <code>DATE</code>.
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
@@ -8499,6 +8507,14 @@ public class DSL {
     }
 
     /**
+     * Convert a string value to a <code>TIME</code>.
+     */
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    public static Field<Time> time(String value) {
+        return time(Time.valueOf(value));
+    }
+
+    /**
      * Convert a temporal value to a <code>TIME</code>.
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
@@ -8512,6 +8528,14 @@ public class DSL {
     @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<Time> time(Field<? extends java.util.Date> field) {
         return new DateOrTime<Time>(field, SQLDataType.TIME);
+    }
+
+    /**
+     * Convert a string value to a <code>TIMESTAMP</code>.
+     */
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    public static Field<Timestamp> timestamp(String value) {
+        return timestamp(Timestamp.valueOf(value));
     }
 
     /**

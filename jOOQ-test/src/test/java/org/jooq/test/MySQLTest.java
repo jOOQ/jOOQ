@@ -822,7 +822,7 @@ public class MySQLTest extends jOOQAbstractTest<
     }
 
     @Test
-    public void testMySQLEncryptionFunctions() throws Exception {
+    public void testMySQLStringEncryptionFunctions() throws Exception {
         assertNotNull(create().select(password("abc")).fetchOne(0));
         assertNotNull(create().select(md5("abc")).fetchOne(0));
         assertNotNull(create().select(sha1("abc")).fetchOne(0));
@@ -833,6 +833,22 @@ public class MySQLTest extends jOOQAbstractTest<
         assertEquals("abc", create().select(desDecrypt(desEncrypt("abc"))).fetchOne(0));
         assertEquals("abc", create().select(uncompress(compress("abc"))).fetchOne(0));
         assertEquals(3, create().select(uncompressedLength(compress("abc"))).fetchOne(0));
+    }
+
+    @Test
+    public void testMySQLByteArrayEncryptionFunctions() throws Exception {
+        final byte[] MESSAGE = new byte[] {-74, 71, -79, -124, -58};
+        final byte[] SECRET = new byte[] {-122, -123, 4, -12, -37};
+
+        assertNotNull(create().select(password(MESSAGE)).fetchOne(0));
+        assertNotNull(create().select(sha1(MESSAGE)).fetchOne(0));
+        assertNotNull(create().select(sha2(MESSAGE, 256)).fetchOne(0));
+        assertEquals(MESSAGE, create().select(decode(encode(MESSAGE, SECRET), val(SECRET))).fetchOne(0));
+        assertEquals(MESSAGE, create().select(aesDecrypt(aesEncrypt(MESSAGE, SECRET), val(SECRET))).fetchOne(0));
+        assertEquals(MESSAGE, create().select(desDecrypt(desEncrypt(MESSAGE, SECRET), val(SECRET))).fetchOne(0));
+        assertEquals(MESSAGE, create().select(desDecrypt(desEncrypt(MESSAGE))).fetchOne(0));
+        assertEquals(MESSAGE, create().select(uncompress(compress(MESSAGE))).fetchOne(0));
+        assertEquals(3, create().select(uncompressedLength(compress(MESSAGE))).fetchOne(0));
     }
 
     @Test

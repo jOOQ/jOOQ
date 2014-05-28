@@ -76,8 +76,17 @@ public class MySQLDSL extends DSL {
      * <p>
      * Don't mix this up with the various {@link DSL#decode()} methods!
      */
-    public static Field<String> decode(Field<String> cryptString, Field<String> keyString) {
-        return function("decode", String.class, cryptString, keyString);
+    public static Field<byte[]> decode(byte[] cryptString, byte[] keyString) {
+        return decode(val(cryptString), val(keyString));
+    }
+
+    /**
+     * Get the MySQL-specific <code>DECODE()</code> function
+     * <p>
+     * Don't mix this up with the various {@link DSL#decode()} methods!
+     */
+    public static <T> Field<T> decode(Field<T> cryptString, Field<T> keyString) {
+        return function("decode", cryptString.getType(), cryptString, keyString);
     }
 
     /**
@@ -90,8 +99,15 @@ public class MySQLDSL extends DSL {
     /**
      * Get the MySQL-specific <code>ENCODE()</code> function
      */
-    public static Field<String> encode(Field<String> string, Field<String> keyString) {
-        return function("encode", String.class, string, keyString);
+    public static Field<byte[]> encode(byte[] string, byte[] keyString) {
+        return encode(val(string), val(keyString));
+    }
+
+    /**
+     * Get the MySQL-specific <code>ENCODE()</code> function
+     */
+    public static <T> Field<T> encode(Field<T> string, Field<T> keyString) {
+        return function("encode", string.getType(), string, keyString);
     }
 
     /**
@@ -104,8 +120,15 @@ public class MySQLDSL extends DSL {
     /**
      * Get the MySQL-specific <code>AES_DECRYPT()</code> function
      */
-    public static Field<String> aesDecrypt(Field<String> cryptString, Field<String> keyString) {
-        return function("aes_decrypt", String.class, cryptString, keyString);
+    public static Field<byte[]> aesDecrypt(byte[] cryptString, byte[] keyString) {
+        return aesDecrypt(val(cryptString), val(keyString));
+    }
+
+    /**
+     * Get the MySQL-specific <code>AES_DECRYPT()</code> function
+     */
+    public static <T> Field<T> aesDecrypt(Field<T> cryptString, Field<T> keyString) {
+        return function("aes_decrypt", cryptString.getType(), cryptString, keyString);
     }
 
     /**
@@ -118,8 +141,15 @@ public class MySQLDSL extends DSL {
     /**
      * Get the MySQL-specific <code>AES_ENCRYPT()</code> function
      */
-    public static Field<String> aesEncrypt(Field<String> string, Field<String> keyString) {
-        return function("aes_encrypt", String.class, string, keyString);
+    public static Field<byte[]> aesEncrypt(byte[] string, byte[] keyString) {
+        return aesEncrypt(val(string), val(keyString));
+    }
+
+    /**
+     * Get the MySQL-specific <code>AES_ENCRYPT()</code> function
+     */
+    public static <T> Field<T> aesEncrypt(Field<T> string, Field<T> keyString) {
+        return function("aes_encrypt", string.getType(), string, keyString);
     }
 
     /**
@@ -132,8 +162,15 @@ public class MySQLDSL extends DSL {
     /**
      * Get the MySQL-specific <code>DES_DECRYPT()</code> function
      */
-    public static Field<String> desDecrypt(Field<String> cryptString) {
-        return function("des_decrypt", String.class, cryptString);
+    public static Field<byte[]> desDecrypt(byte[] cryptString) {
+        return desDecrypt(val(cryptString));
+    }
+
+    /**
+     * Get the MySQL-specific <code>DES_DECRYPT()</code> function
+     */
+    public static <T> Field<T> desDecrypt(Field<T> cryptString) {
+        return function("des_decrypt", cryptString.getType(), cryptString);
     }
 
     /**
@@ -146,8 +183,15 @@ public class MySQLDSL extends DSL {
     /**
      * Get the MySQL-specific <code>DES_DECRYPT()</code> function
      */
-    public static Field<String> desDecrypt(Field<String> cryptString, Field<String> keyString) {
-        return function("des_decrypt", String.class, cryptString, keyString);
+    public static Field<byte[]> desDecrypt(byte[] cryptString, byte[] keyString) {
+        return desDecrypt(val(cryptString), val(keyString));
+    }
+
+    /**
+     * Get the MySQL-specific <code>DES_DECRYPT()</code> function
+     */
+    public static <T> Field<T> desDecrypt(Field<T> cryptString, Field<T> keyString) {
+        return function("des_decrypt", cryptString.getType(), cryptString, keyString);
     }
 
     /**
@@ -160,8 +204,15 @@ public class MySQLDSL extends DSL {
     /**
      * Get the MySQL-specific <code>DES_ENCRYPT()</code> function
      */
-    public static Field<String> desEncrypt(Field<String> string) {
-        return function("des_encrypt", String.class, string);
+    public static Field<byte[]> desEncrypt(byte[] string) {
+        return desEncrypt(val(string));
+    }
+
+    /**
+     * Get the MySQL-specific <code>DES_ENCRYPT()</code> function
+     */
+    public static <T> Field<T> desEncrypt(Field<T> string) {
+        return function("des_encrypt", string.getType(), string);
     }
 
     /**
@@ -174,8 +225,15 @@ public class MySQLDSL extends DSL {
     /**
      * Get the MySQL-specific <code>DES_ENCRYPT()</code> function
      */
-    public static Field<String> desEncrypt(Field<String> string, Field<String> keyString) {
-        return function("des_encrypt", String.class, string, keyString);
+    public static Field<byte[]> desEncrypt(byte[] string, byte[] keyString) {
+        return desEncrypt(val(string), val(keyString));
+    }
+
+    /**
+     * Get the MySQL-specific <code>DES_ENCRYPT()</code> function
+     */
+    public static <T> Field<T> desEncrypt(Field<T> string, Field<T> keyString) {
+        return function("des_encrypt", string.getType(), string, keyString);
     }
 
     /**
@@ -188,8 +246,15 @@ public class MySQLDSL extends DSL {
     /**
      * Get the MySQL-specific <code>COMPRESS()</code> function
      */
-    public static Field<String> compress(Field<String> string) {
-        return function("compress", String.class, string);
+    public static Field<byte[]> compress(byte[] string) {
+        return compress(val(string));
+    }
+
+    /**
+     * Get the MySQL-specific <code>COMPRESS()</code> function
+     */
+    public static <T> Field<T> compress(Field<T> string) {
+        return function("compress", string.getType(), string);
     }
 
     /**
@@ -202,8 +267,15 @@ public class MySQLDSL extends DSL {
     /**
      * Get the MySQL-specific <code>UNCOMPRESS()</code> function
      */
-    public static Field<String> uncompress(Field<String> string) {
-        return function("uncompress", String.class, string);
+    public static Field<byte[]> uncompress(byte[] string) {
+        return uncompress(val(string));
+    }
+
+    /**
+     * Get the MySQL-specific <code>UNCOMPRESS()</code> function
+     */
+    public static <T> Field<T> uncompress(Field<T> string) {
+        return function("uncompress", string.getType(), string);
     }
 
     /**
@@ -216,7 +288,14 @@ public class MySQLDSL extends DSL {
     /**
      * Get the MySQL-specific <code>UNCOMPRESSED_LENGTH()</code> function
      */
-    public static Field<Integer> uncompressedLength(Field<String> string) {
+    public static Field<Integer> uncompressedLength(byte[] string) {
+        return uncompressedLength(val(string));
+    }
+
+    /**
+     * Get the MySQL-specific <code>UNCOMPRESSED_LENGTH()</code> function
+     */
+    public static <T> Field<Integer> uncompressedLength(Field<T> string) {
         return function("uncompressed_length", Integer.class, string);
     }
 
@@ -230,8 +309,15 @@ public class MySQLDSL extends DSL {
     /**
      * Get the MySQL-specific <code>SHA1()</code> function
      */
-    public static Field<String> sha1(Field<String> string) {
-        return function("sha1", String.class, string);
+    public static Field<byte[]> sha1(byte[] string) {
+        return sha1(val(string));
+    }
+
+    /**
+     * Get the MySQL-specific <code>SHA1()</code> function
+     */
+    public static <T> Field<T> sha1(Field<T> string) {
+        return function("sha1", string.getType(), string);
     }
 
     /**
@@ -244,8 +330,15 @@ public class MySQLDSL extends DSL {
     /**
      * Get the MySQL-specific <code>SHA2()</code> function
      */
-    public static Field<String> sha2(Field<String> string, Field<Integer> hashLength) {
-        return function("sha2", String.class, string, hashLength);
+    public static Field<byte[]> sha2(byte[] string, int hashLength) {
+        return sha2(val(string), val(hashLength));
+    }
+
+    /**
+     * Get the MySQL-specific <code>SHA2()</code> function
+     */
+    public static <T> Field<T> sha2(Field<T> string, Field<Integer> hashLength) {
+        return function("sha2", string.getType(), string, hashLength);
     }
 
     /**
@@ -258,8 +351,15 @@ public class MySQLDSL extends DSL {
     /**
      * Get the MySQL-specific <code>PASSWORD()</code> function
      */
-    public static Field<String> password(Field<String> string) {
-        return function("password", String.class, string);
+    public static Field<byte[]> password(byte[] string) {
+        return password(val(string));
+    }
+
+    /**
+     * Get the MySQL-specific <code>PASSWORD()</code> function
+     */
+    public static <T> Field<T> password(Field<T> string) {
+        return function("password", string.getType(), string);
     }
 
     // -------------------------------------------------------------------------

@@ -7,6 +7,7 @@ install:
   - sh -c 'mvn install -DskipTests=true'
   - sh -c 'cd jOOQ-examples/jOOQ-spring-example && mvn install -DskipTests=true'
   - sh -c 'cd jOOQ-examples/jOOQ-spring-guice-example && mvn install -DskipTests=true'
+  - sh -c 'cd jOOQ-test-utils && mvn install -DskipTest=true'
   - sh -c 'cd jOOQ-test && mvn install -DskipTests=true'
 script: 
   - sh -c 'mvn test'

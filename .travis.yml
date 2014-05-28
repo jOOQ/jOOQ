@@ -7,10 +7,10 @@ install:
   - sh -c 'mvn install -DskipTests=true'
   - sh -c 'cd jOOQ-examples/jOOQ-spring-example && mvn install -DskipTests=true'
   - sh -c 'cd jOOQ-examples/jOOQ-spring-guice-example && mvn install -DskipTests=true'
-  - bash -c 'grep -q 8 <<<$JAVA_HOME && cd jOOQ-test-utils && mvn install -DskipTest=true'
-  - bash -c 'grep -q 8 <<<$JAVA_HOME && cd jOOQ-test && mvn install -DskipTests=true'
+  - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-test-utils && mvn install -DskipTest=true'
+  - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-test && mvn install -DskipTests=true'
 script: 
   - sh -c 'mvn test'
   - sh -c 'cd jOOQ-examples/jOOQ-spring-example && mvn test'
   - sh -c 'cd jOOQ-examples/jOOQ-spring-guice-example && mvn test'
-  - bash -c 'grep -q 8 <<<$JAVA_HOME && cd jOOQ-test && mvn test -Dorg.jooq.test-dialects=h2'
+  - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-test && mvn test -Dorg.jooq.test-dialects=h2'

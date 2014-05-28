@@ -235,10 +235,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCrossJoin() throws Exception {
+        /* [pro] */
         if (dialect().family() == ACCESS) {
             log.info("SKIPPING", "CROSS JOIN tests");
             return;
         }
+        /* [/pro] */
 
         Result<Record> result;
 

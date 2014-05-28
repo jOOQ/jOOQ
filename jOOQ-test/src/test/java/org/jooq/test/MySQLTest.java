@@ -63,6 +63,7 @@ import static org.jooq.util.mysql.MySQLDSL.sha1;
 import static org.jooq.util.mysql.MySQLDSL.sha2;
 import static org.jooq.util.mysql.MySQLDSL.uncompress;
 import static org.jooq.util.mysql.MySQLDSL.uncompressedLength;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -843,12 +844,12 @@ public class MySQLTest extends jOOQAbstractTest<
         assertNotNull(create().select(password(MESSAGE)).fetchOne(0));
         assertNotNull(create().select(sha1(MESSAGE)).fetchOne(0));
         assertNotNull(create().select(sha2(MESSAGE, 256)).fetchOne(0));
-        assertEquals(MESSAGE, create().select(decode(encode(MESSAGE, SECRET), val(SECRET))).fetchOne(0));
-        assertEquals(MESSAGE, create().select(aesDecrypt(aesEncrypt(MESSAGE, SECRET), val(SECRET))).fetchOne(0));
-        assertEquals(MESSAGE, create().select(desDecrypt(desEncrypt(MESSAGE, SECRET), val(SECRET))).fetchOne(0));
-        assertEquals(MESSAGE, create().select(desDecrypt(desEncrypt(MESSAGE))).fetchOne(0));
-        assertEquals(MESSAGE, create().select(uncompress(compress(MESSAGE))).fetchOne(0));
-        assertEquals(3, create().select(uncompressedLength(compress(MESSAGE))).fetchOne(0));
+        assertArrayEquals(MESSAGE, create().select(decode(encode(MESSAGE, SECRET), val(SECRET))).fetchOne().value1());
+        assertArrayEquals(MESSAGE, create().select(aesDecrypt(aesEncrypt(MESSAGE, SECRET), val(SECRET))).fetchOne().value1());
+        assertArrayEquals(MESSAGE, create().select(desDecrypt(desEncrypt(MESSAGE, SECRET), val(SECRET))).fetchOne().value1());
+        assertArrayEquals(MESSAGE, create().select(desDecrypt(desEncrypt(MESSAGE))).fetchOne().value1());
+        assertArrayEquals(MESSAGE, create().select(uncompress(compress(MESSAGE))).fetchOne().value1());
+        assertEquals(5, create().select(uncompressedLength(compress(MESSAGE))).fetchOne(0));
     }
 
     @Test

@@ -43,7 +43,6 @@ package org.jooq.test;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
-import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.isOneOf;
 import static org.hamcrest.Matchers.not;
 import static org.jooq.SQLDialect.CUBRID;
@@ -459,7 +458,10 @@ public abstract class jOOQAbstractTest<
         assumeThat(dialectString, not(isOneOf("", null)));
         assumeThat(
             dialect().name().toLowerCase(),
-            anyOf(stream(dialectString.split("[,;]"))
+
+            // Using Matchers.anyOf() causes issues with Eclipse as a wrong version of Hamcrest seems
+            // to be pulled by m2e, which doesn't have anyOf() :-(
+            isOneOf(stream(dialectString.split("[,;]"))
                 .map(String::trim)
                 .map(Matchers::equalTo)
                 .collect(toList()))

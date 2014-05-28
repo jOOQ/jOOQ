@@ -42,7 +42,6 @@ package org.jooq.test;
 
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.toList;
 import static org.hamcrest.Matchers.isOneOf;
 import static org.hamcrest.Matchers.not;
 import static org.jooq.SQLDialect.CUBRID;
@@ -463,7 +462,7 @@ public abstract class jOOQAbstractTest<
             isOneOf(stream(dialectString.split("[,;]"))
                 .map(String::trim)
                 .map(String::toLowerCase)
-                .collect(toList()))
+                .toArray(String[]::new))
         );
 
         connection = getConnection();

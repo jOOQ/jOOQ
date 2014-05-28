@@ -179,7 +179,6 @@ import org.jooq.util.jaxb.Jdbc;
 import org.jooq.util.jaxb.Property;
 
 import org.apache.commons.io.FileUtils;
-import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -463,7 +462,7 @@ public abstract class jOOQAbstractTest<
             // to be pulled by m2e, which doesn't have anyOf() :-(
             isOneOf(stream(dialectString.split("[,;]"))
                 .map(String::trim)
-                .map(Matchers::equalTo)
+                .map(String::toLowerCase)
                 .collect(toList()))
         );
 

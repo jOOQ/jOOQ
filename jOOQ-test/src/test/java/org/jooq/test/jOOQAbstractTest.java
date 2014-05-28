@@ -42,8 +42,6 @@ package org.jooq.test;
 
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
-import static org.hamcrest.Matchers.isOneOf;
-import static org.hamcrest.Matchers.not;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.test.all.listeners.ConnectionProviderLifecycleListener.ACQUIRE_COUNT;
@@ -55,7 +53,6 @@ import static org.jooq.test.all.listeners.JDBCLifecycleListener.STMT_START_COUNT
 import static org.jooq.test.all.listeners.LifecycleWatcherListener.LISTENER_END_COUNT;
 import static org.jooq.test.all.listeners.LifecycleWatcherListener.LISTENER_START_COUNT;
 import static org.jooq.tools.reflect.Reflect.on;
-import static org.junit.Assume.assumeThat;
 
 import java.io.File;
 import java.io.InputStream;
@@ -77,6 +74,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
+import java.util.function.DoublePredicate;
+import java.util.function.DoubleSupplier;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import org.jooq.AggregateFunction;
 // ...
@@ -183,6 +184,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.internal.AssumptionViolatedException;
 import org.postgresql.util.PSQLException;
 
 // ...
@@ -448,21 +450,89 @@ public abstract class jOOQAbstractTest<
         }
     }
 
+    static final String DEFAULT_MESSAGE = "Test failed";
+
+    static <T> void assertThat(T actual, Predicate<T> expected) {
+        assertThat(() -> actual, expected, DEFAULT_MESSAGE);
+    }
+
+    static <T> void assertThat(T actual, Predicate<T> expected, String message) {
+        assertThat(() -> actual, expected, message);
+    }
+
+    static <T> void assertThat(Supplier<T> actual, Predicate<T> expected) {
+        assertThat(actual, expected, DEFAULT_MESSAGE);
+    }
+
+    static <T> void assertThat(Supplier<T> actual, Predicate<T> expected, String message) {
+        if (!expected.test(actual.get()))
+            throw new AssertionError(message);
+    }
+
+    static void assertThat(double actual, DoublePredicate expected) {
+        assertThat(() -> actual, expected, DEFAULT_MESSAGE);
+    }
+
+    static void assertThat(double actual, DoublePredicate expected, String message) {
+        assertThat(() -> actual, expected, message);
+    }
+
+    static void assertThat(DoubleSupplier actual, DoublePredicate expected) {
+        assertThat(actual, expected, DEFAULT_MESSAGE);
+    }
+
+    static void assertThat(DoubleSupplier actual, DoublePredicate expected, String message) {
+        if (!expected.test(actual.getAsDouble()))
+            throw new AssertionError(message);
+    }
+
+    static <T> void assume(T actual, Predicate<T> expected) {
+        assume(() -> actual, expected, DEFAULT_MESSAGE);
+    }
+
+    static <T> void assume(T actual, Predicate<T> expected, String message) {
+        assume(() -> actual, expected, message);
+    }
+
+    static <T> void assume(Supplier<T> actual, Predicate<T> expected) {
+        assume(actual, expected, DEFAULT_MESSAGE);
+    }
+
+    static <T> void assume(Supplier<T> actual, Predicate<T> expected, String message) {
+        if (!expected.test(actual.get()))
+            throw new AssumptionViolatedException(message);
+    }
+
+    static void assume(double actual, DoublePredicate expected) {
+        assume(() -> actual, expected, DEFAULT_MESSAGE);
+    }
+
+    static void assume(double actual, DoublePredicate expected, String message) {
+        assume(() -> actual, expected, message);
+    }
+
+    static void assume(DoubleSupplier actual, DoublePredicate expected) {
+        assume(actual, expected, DEFAULT_MESSAGE);
+    }
+
+    static void assume(DoubleSupplier actual, DoublePredicate expected, String message) {
+        if (!expected.test(actual.getAsDouble()))
+            throw new AssumptionViolatedException(message);
+    }
+
     @Before
     public void setUp() throws Exception {
 
         // Skip integration tests, for all dialects that are not in this property
         String dialectString = System.getProperty("org.jooq.test-dialects");
-        assumeThat(dialectString, not(isOneOf("", null)));
-        assumeThat(
+        assume(dialectString, s -> s != null && s.length() > 0);
+        assume(
             dialect().name().toLowerCase(),
 
-            // Using Matchers.anyOf() causes issues with Eclipse as a wrong version of Hamcrest seems
-            // to be pulled by m2e, which doesn't have anyOf() :-(
-            isOneOf(stream(dialectString.split("[,;]"))
+            d -> stream(dialectString.split("[,;]"))
                 .map(String::trim)
                 .map(String::toLowerCase)
-                .toArray(String[]::new))
+                .anyMatch(d::equals)
         );
 
         connection = getConnection();

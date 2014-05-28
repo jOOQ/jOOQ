@@ -41,6 +41,11 @@
 package org.jooq.test;
 
 import static java.util.Arrays.asList;
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.toList;
+import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.Matchers.isOneOf;
+import static org.hamcrest.Matchers.not;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.test.all.listeners.ConnectionProviderLifecycleListener.ACQUIRE_COUNT;
@@ -52,6 +57,7 @@ import static org.jooq.test.all.listeners.JDBCLifecycleListener.STMT_START_COUNT
 import static org.jooq.test.all.listeners.LifecycleWatcherListener.LISTENER_END_COUNT;
 import static org.jooq.test.all.listeners.LifecycleWatcherListener.LISTENER_START_COUNT;
 import static org.jooq.tools.reflect.Reflect.on;
+import static org.junit.Assume.assumeThat;
 
 import java.io.File;
 import java.io.InputStream;
@@ -174,6 +180,7 @@ import org.jooq.util.jaxb.Jdbc;
 import org.jooq.util.jaxb.Property;
 
 import org.apache.commons.io.FileUtils;
+import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -446,6 +453,18 @@ public abstract class jOOQAbstractTest<
 
     @Before
     public void setUp() throws Exception {
+
+        // Skip integration tests, for all dialects that are not in this property
+        String dialectString = System.getProperty("org.jooq.test-dialects");
+        assumeThat(dialectString, not(isOneOf("", null)));
+        assumeThat(
+            dialect().name().toLowerCase(),
+            anyOf(stream(dialectString.split("[,;]"))
+                .map(String::trim)
+                .map(Matchers::equalTo)
+                .collect(toList()))
+        );
+
         connection = getConnection();
         // connectionMultiSchema = getConnectionMultiSchema();
 
@@ -476,11 +495,12 @@ public abstract class jOOQAbstractTest<
 
     @After
     public void tearDown() throws Exception {
-        connection.setAutoCommit(autocommit);
+        if (connection != null)
+            connection.setAutoCommit(autocommit);
     }
 
     public void clean(Table<?>... tables) {
-        this.clean = tables;
+        clean = tables;
     }
 
     @BeforeClass
@@ -492,16 +512,20 @@ public abstract class jOOQAbstractTest<
     public static void quit() throws Exception {
         log.info("QUITTING");
 
-        // Issue a log dump on adaptive server. Don't know why this is needed
-        // http://www.faqs.org/faqs/databases/sybase-faq/part6/
-        if (connection.getClass().getPackage().getName().contains("jtds") &&
-            !connection.getMetaData().getURL().contains("sqlserver")) {
+        if (connection != null) {
 
-            log.info("RUNNING", "dump tran TEST with truncate_only");
-            connection.createStatement().execute("dump tran TEST with truncate_only");
+            // Issue a log dump on adaptive server. Don't know why this is needed
+            // http://www.faqs.org/faqs/databases/sybase-faq/part6/
+            if (connection.getClass().getPackage().getName().contains("jtds") &&
+                !connection.getMetaData().getURL().contains("sqlserver")) {
+
+                log.info("RUNNING", "dump tran TEST with truncate_only");
+                connection.createStatement().execute("dump tran TEST with truncate_only");
+            }
+
+            connection.close();
+            connection = null;
         }
-
-        connection.close();
 
         JooqLogger logStat = JooqLogger.getLogger(TestStatisticsListener.class);
         logStat.info("TEST STATISTICS");

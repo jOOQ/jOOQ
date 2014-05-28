@@ -1554,7 +1554,7 @@ public interface DSLContext {
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
      */
-    @Support({ DB2, FIREBIRD, ORACLE, POSTGRES })
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     WithAsStep with(String alias);
 
     /**
@@ -1563,6 +1563,7 @@ public interface DSLContext {
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
      */
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     WithAsStep with(String alias, String... fieldAliases);
 
     /**
@@ -1579,6 +1580,7 @@ public interface DSLContext {
      * {@link DerivedColumnList#as(Select)}</li>
      * </ul>
      */
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     WithStep with(CommonTableExpression<?>... tables);
 
     /**
@@ -1587,6 +1589,7 @@ public interface DSLContext {
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
      */
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     WithAsStep withRecursive(String alias);
 
     /**
@@ -1595,6 +1598,7 @@ public interface DSLContext {
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
      */
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     WithAsStep withRecursive(String alias, String... fieldAliases);
 
     /**
@@ -1611,6 +1615,7 @@ public interface DSLContext {
      * {@link DerivedColumnList#as(Select)}</li>
      * </ul>
      */
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     WithStep withRecursive(CommonTableExpression<?>... tables);
 
     /**

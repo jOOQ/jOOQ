@@ -42,9 +42,11 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
@@ -52,6 +54,7 @@ import java.util.Collection;
 
 import javax.annotation.Generated;
 
+import org.jooq.api.annotation.State;
 import org.jooq.api.annotation.Transition;
 import org.jooq.impl.DSL;
 
@@ -73,6 +76,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
+@State
 public interface WithStep extends QueryPart {
 
     // -------------------------------------------------------------------------
@@ -82,11 +86,13 @@ public interface WithStep extends QueryPart {
     /**
      * Add another common table expression to the <code>WITH</code> clause.
      */
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     WithAsStep with(String alias);
 
     /**
      * Add another common table expression to the <code>WITH</code> clause.
      */
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     WithAsStep with(String alias, String... fieldAliases);
 
     /**
@@ -100,6 +106,7 @@ public interface WithStep extends QueryPart {
      * {@link DerivedColumnList#as(Select)}</li>
      * </ul>
      */
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     WithStep with(CommonTableExpression<?>... tables);
 
     // -------------------------------------------------------------------------

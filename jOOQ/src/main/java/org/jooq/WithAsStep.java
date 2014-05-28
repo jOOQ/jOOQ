@@ -40,6 +40,16 @@
  */
 package org.jooq;
 
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+
+import org.jooq.api.annotation.State;
+
 /**
  * This type is part of the jOOQ DSL to create {@link Select}, {@link Insert},
  * {@link Update}, {@link Delete}, {@link Merge} statements prefixed with a
@@ -57,10 +67,12 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
+@State
 public interface WithAsStep {
 
     /**
      * Associate a subselect with a common table expression's table and column names.
      */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     WithStep as(Select<?> select);
 }

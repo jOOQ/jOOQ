@@ -527,7 +527,7 @@ public abstract class jOOQAbstractTest<
         String dialectString = System.getProperty("org.jooq.test-dialects");
         assume(dialectString, s -> s != null && s.length() > 0);
         assume(
-            dialect().name().toLowerCase(),
+            dialect().family().name().toLowerCase(),
 
             d -> stream(dialectString.split("[,;]"))
                 .map(String::trim)
@@ -775,7 +775,7 @@ public abstract class jOOQAbstractTest<
                     Properties properties = new Properties();
                     properties.load(config);
 
-                    String d = dialect().name().toLowerCase();
+                    String d = dialect().family().name().toLowerCase();
                     if (properties.containsKey("db." + d + ".driver")) {
                         jdbcURL = properties.getProperty("db." + d + ".url") + getSchemaSuffix();
                         jdbcSchema = properties.getProperty("db." + d + ".schema") + getSchemaSuffix();

@@ -1554,7 +1554,7 @@ public interface DSLContext {
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     WithAsStep with(String alias);
 
     /**
@@ -1563,6 +1563,7 @@ public interface DSLContext {
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
      */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     WithAsStep with(String alias, String... fieldAliases);
 
     /**
@@ -1579,6 +1580,7 @@ public interface DSLContext {
      * {@link DerivedColumnList#as(Select)}</li>
      * </ul>
      */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     WithStep with(CommonTableExpression<?>... tables);
 
     /**
@@ -1587,6 +1589,7 @@ public interface DSLContext {
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
      */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     WithAsStep withRecursive(String alias);
 
     /**
@@ -1595,6 +1598,7 @@ public interface DSLContext {
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
      */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     WithAsStep withRecursive(String alias, String... fieldAliases);
 
     /**
@@ -1611,6 +1615,7 @@ public interface DSLContext {
      * {@link DerivedColumnList#as(Select)}</li>
      * </ul>
      */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     WithStep withRecursive(CommonTableExpression<?>... tables);
 
     /**

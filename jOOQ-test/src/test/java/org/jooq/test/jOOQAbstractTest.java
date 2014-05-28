@@ -42,7 +42,6 @@ package org.jooq.test;
 
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.toList;
 import static org.hamcrest.Matchers.isOneOf;
 import static org.hamcrest.Matchers.not;
 import static org.jooq.SQLDialect.CUBRID;
@@ -179,7 +178,6 @@ import org.jooq.util.jaxb.Jdbc;
 import org.jooq.util.jaxb.Property;
 
 import org.apache.commons.io.FileUtils;
-import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -463,8 +461,8 @@ public abstract class jOOQAbstractTest<
             // to be pulled by m2e, which doesn't have anyOf() :-(
             isOneOf(stream(dialectString.split("[,;]"))
                 .map(String::trim)
-                .map(Matchers::equalTo)
-                .collect(toList()))
+                .map(String::toLowerCase)
+                .toArray(String[]::new))
         );
 
         connection = getConnection();

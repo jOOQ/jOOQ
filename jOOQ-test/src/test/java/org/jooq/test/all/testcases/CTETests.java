@@ -44,6 +44,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.tableByName;
@@ -96,7 +97,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCTESimple() throws Exception {
-        assumeFamilyNotIn(CUBRID, H2, MARIADB, MYSQL);
+        assumeFamilyNotIn(CUBRID, H2, MARIADB, MYSQL, SQLITE);
 
         Result<Record> result1 =
         create().with("t", "f1", "f2").as(select(val(1, Integer.class), val("a")))
@@ -115,7 +116,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCTEMultiple() throws Exception {
-        assumeFamilyNotIn(CUBRID, H2, MARIADB, MYSQL);
+        assumeFamilyNotIn(CUBRID, H2, MARIADB, MYSQL, SQLITE);
 
         CommonTableExpression<Record2<Integer, String>> t1 = name("t1").fields("f1", "f2").as(select(val(1), val("a")));
         CommonTableExpression<Record2<Integer, String>> t2 = name("t2").fields("f3", "f4").as(select(val(2), val("b")));
@@ -151,7 +152,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCTEAliasing() throws Exception {
-        assumeFamilyNotIn(CUBRID, H2, MARIADB, MYSQL);
+        assumeFamilyNotIn(CUBRID, H2, MARIADB, MYSQL, SQLITE);
 
         CommonTableExpression<Record2<Integer, String>> t1 = name("t1").fields("f1", "f2").as(select(val(1), val("a")));
         CommonTableExpression<Record2<Integer, String>> t2 = name("t2").fields("f3", "f4").as(select(val(2), val("b")));
@@ -203,7 +204,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCTEWithNoExplicitColumnLists() throws Exception {
-        assumeFamilyNotIn(CUBRID, H2, MARIADB, MYSQL);
+        assumeFamilyNotIn(CUBRID, H2, MARIADB, MYSQL, SQLITE);
 
         Result<Record> result1 =
         create().with("a").as(select(

@@ -780,8 +780,11 @@ public abstract class jOOQAbstractTest<
                         jdbcURL = properties.getProperty("db." + d + ".url") + getSchemaSuffix();
                         jdbcSchema = properties.getProperty("db." + d + ".schema") + getSchemaSuffix();
 
-                        jdbcUser = properties.getProperty("db." + d + ".username");
-                        jdbcPassword = properties.getProperty("db." + d + ".password");
+                        if (jdbcUser == null)
+                            jdbcUser = properties.getProperty("db." + d + ".username");
+
+                        if (jdbcPassword == null)
+                            jdbcPassword = properties.getProperty("db." + d + ".password");
 
                         return getConnection1(jdbcUser, jdbcPassword, properties.getProperty("db." + d + ".driver"));
                     }

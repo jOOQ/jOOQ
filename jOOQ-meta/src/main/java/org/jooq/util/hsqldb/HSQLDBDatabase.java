@@ -65,6 +65,7 @@ import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
+import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -335,11 +336,19 @@ public class HSQLDBDatabase extends AbstractDatabase {
                     ROUTINES.ROUTINE_NAME)
                 .fetch()) {
 
+            String datatype = record.getValue("datatype", String.class);
+
+            // [#3285] We currently do not recognise HSQLDB table-valued functions as such.
+            if (datatype != null && datatype.toUpperCase().startsWith("ROW")) {
+                JooqLogger.getLogger(getClass()).info("A row : " +datatype);
+                datatype = "ROW";
+            }
+
             result.add(new HSQLDBRoutineDefinition(
                 getSchema(record.getValue(ROUTINES.ROUTINE_SCHEMA)),
                 record.getValue(ROUTINES.ROUTINE_NAME),
                 record.getValue(ROUTINES.SPECIFIC_NAME),
-                record.getValue("datatype", String.class),
+                datatype,
                 record.getValue(ROUTINES.NUMERIC_PRECISION),
                 record.getValue(ROUTINES.NUMERIC_SCALE),
                 record.getValue("aggregate", boolean.class)));

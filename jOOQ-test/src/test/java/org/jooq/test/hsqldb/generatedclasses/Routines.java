@@ -348,7 +348,7 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F_GET_ONE_CURSOR</code>
 	 */
-	public static java.lang.Object fGetOneCursor(org.jooq.Configuration configuration, java.lang.Integer[] bookIds) {
+	public static org.jooq.Result<org.jooq.Record> fGetOneCursor(org.jooq.Configuration configuration, java.lang.Integer[] bookIds) {
 		org.jooq.test.hsqldb.generatedclasses.routines.FGetOneCursor f = new org.jooq.test.hsqldb.generatedclasses.routines.FGetOneCursor();
 		f.setBookIds(bookIds);
 
@@ -359,7 +359,7 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_GET_ONE_CURSOR</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object> fGetOneCursor(java.lang.Integer[] bookIds) {
+	public static org.jooq.Field<org.jooq.Result<org.jooq.Record>> fGetOneCursor(java.lang.Integer[] bookIds) {
 		org.jooq.test.hsqldb.generatedclasses.routines.FGetOneCursor f = new org.jooq.test.hsqldb.generatedclasses.routines.FGetOneCursor();
 		f.setBookIds(bookIds);
 
@@ -369,7 +369,7 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_GET_ONE_CURSOR</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object> fGetOneCursor(org.jooq.Field<java.lang.Integer[]> bookIds) {
+	public static org.jooq.Field<org.jooq.Result<org.jooq.Record>> fGetOneCursor(org.jooq.Field<java.lang.Integer[]> bookIds) {
 		org.jooq.test.hsqldb.generatedclasses.routines.FGetOneCursor f = new org.jooq.test.hsqldb.generatedclasses.routines.FGetOneCursor();
 		f.setBookIds(bookIds);
 

@@ -4752,6 +4752,7 @@
                                             <deprecated>true</deprecated>
                                             <instanceFields>true</instanceFields>
                                             <generatedAnnotation>false</generatedAnnotation>
+                                            <jpaAnnotations>true</jpaAnnotations>
                                         </generate>
                                         <target>
                                             <packageName>org.jooq.test.sqlserver.generatedclasses</packageName>

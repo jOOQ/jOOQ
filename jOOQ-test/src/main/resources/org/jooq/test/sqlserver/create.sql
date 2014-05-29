@@ -52,6 +52,7 @@ DROP TABLE t_identity_pk/
 DROP TABLE t_error_on_update/
 DROP TABLE t_3084/
 DROP TABLE t_3084_a/
+DROP TABLE t_3084_two_unique_keys/
 DROP TABLE t_3090_a/
 DROP TABLE t_3090_b/
 DROP TABLE t_3085/
@@ -209,8 +210,20 @@ CREATE TABLE t_3084_a (
 )
 /
 
+CREATE TABLE t_3084_two_unique_keys (
+  ID1   INTEGER NOT NULL,
+  ID2   INTEGER     NULL,
+  ID3   INTEGER NOT NULL,
+  ID4   INTEGER     NULL,
+  data  INTEGER
+)
+/
+
 CREATE UNIQUE INDEX uk_t_3084 ON t_3084 (ID)/
 CREATE UNIQUE INDEX uk_t_3084_a2 ON t_3084_a (ID)/
+CREATE UNIQUE INDEX uk_t_3084_two_unique_keys_1 ON t_3084_two_unique_keys (ID1, ID2, ID3, ID4)/
+CREATE UNIQUE INDEX uk_t_3084_two_unique_keys_2 ON t_3084_two_unique_keys (ID1, ID3, ID2, ID4)/
+
 
 CREATE TABLE t_3090_a (
   id1  INTEGER NOT NULL,

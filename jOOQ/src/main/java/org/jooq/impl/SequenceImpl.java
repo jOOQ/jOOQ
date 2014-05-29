@@ -75,13 +75,19 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
     private static final Clause[] CLAUSES          = { SEQUENCE, SEQUENCE_REFERENCE };
 
     final String                  name;
+    final boolean                 nameIsPlainSQL;
     final Schema                  schema;
     final DataType<T>             type;
 
     public SequenceImpl(String name, Schema schema, DataType<T> type) {
+        this(name, schema, type, false);
+    }
+
+    SequenceImpl(String name, Schema schema, DataType<T> type, boolean nameIsPlainSQL) {
         this.name = name;
         this.schema = schema;
         this.type = type;
+        this.nameIsPlainSQL = nameIsPlainSQL;
     }
 
     @Override
@@ -169,7 +175,9 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
                                .join("sys.schemas sc")
                                .on("sq.schema_id = sc.schema_id")
                                .where("sq.name = ?", name)
-                               .and("sc.name = ?", schema.getName())
+                               .and(
+                                   schema == null ? "1 = 1"       : "sc.name = ?",
+                                   schema == null ? new Object[0] : new Object[] { schema.getName() })
                                .asField()
                                .cast(type);
                     }
@@ -220,7 +228,10 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
             ctx.sql(".");
         }
 
-        ctx.literal(name);
+        if (nameIsPlainSQL)
+            ctx.sql(name);
+        else
+            ctx.literal(name);
     }
 
     @Override

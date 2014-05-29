@@ -41,9 +41,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
-import org.jooq.impl.SchemaImpl;
-import org.jooq.impl.SequenceImpl;
 
 import org.h2.api.Trigger;
 
@@ -60,9 +59,7 @@ public class TTriggersTrigger implements Trigger {
 
     @Override
     public void fire(Connection conn, Object[] oldRow, Object[] newRow) throws SQLException {
-        int maxID = using(conn, SQLDialect.H2).nextval(
-            new SequenceImpl<Integer>("s_triggers_sequence", new SchemaImpl("public"), SQLDataType.INTEGER)
-        ).intValue();
+        int maxID = using(conn, SQLDialect.H2).nextval(DSL.sequence("public.s_triggers_sequence", SQLDataType.INTEGER));
 
         newRow[0] = maxID;
         newRow[1] = maxID;

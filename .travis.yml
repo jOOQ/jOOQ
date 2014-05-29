@@ -13,4 +13,4 @@ script:
   - sh -c 'mvn test'
   - sh -c 'cd jOOQ-examples/jOOQ-spring-example && mvn test'
   - sh -c 'cd jOOQ-examples/jOOQ-spring-guice-example && mvn test'
-  - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-test && mvn test -Dorg.jooq.test-dialects=h2' || echo "Skipping for JDK6 and 7"
+  - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-test && mvn test -Dorg.jooq.test-dialects=h2 -Dorg.jooq.test.pretty-printer=false' || echo "Skipping for JDK6 and 7"

@@ -71,6 +71,8 @@ public class PrettyPrinter extends DefaultExecuteListener {
      */
     @Override
     public void renderEnd(ExecuteContext ctx) {
+        if (!Boolean.valueOf(System.getProperty("org.jooq.test.pretty-printer", "true")))
+            return;
 
         // Create a new factory for logging rendering purposes
         DSLContext pretty = DSL.using(new DefaultConfiguration()

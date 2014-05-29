@@ -51,4 +51,11 @@ public class T_2698Dao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generatedc
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_2698> fetchByXx(java.lang.Integer... values) {
 		return fetch(org.jooq.test.h2.generatedclasses.tables.T_2698.XX, values);
 	}
+
+	/**
+	 * Fetch records that have <code>YY IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_2698> fetchByYy(java.lang.Integer... values) {
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_2698.YY, values);
+	}
 }

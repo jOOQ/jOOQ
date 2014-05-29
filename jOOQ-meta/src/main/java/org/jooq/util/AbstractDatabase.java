@@ -45,6 +45,7 @@ import static org.jooq.impl.DSL.falseCondition;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -55,6 +56,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+
+import javax.xml.bind.JAXB;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
@@ -361,9 +364,22 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final CustomType getConfiguredCustomType(String typeName) {
-        for (CustomType type : configuredCustomTypes) {
+        Iterator<CustomType> it = configuredCustomTypes.iterator();
+
+        while (it.hasNext()) {
+            CustomType type = it.next();
+
             if (type == null || (type.getName() == null && type.getType() == null)) {
-                log.warn("Invalid custom type encountered: " + type);
+                try {
+                    StringWriter writer = new StringWriter();
+                    JAXB.marshal(type, writer);
+                    log.warn("Invalid custom type encountered: " + writer.toString());
+                }
+                catch (Exception e) {
+                    log.warn("Invalid custom type encountered: " + type);
+                }
+
+                it.remove();
                 continue;
             }
 

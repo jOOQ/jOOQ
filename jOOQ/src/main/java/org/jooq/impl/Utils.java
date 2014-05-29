@@ -45,6 +45,7 @@ import static java.lang.Boolean.FALSE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.SettingsTools.reflectionCaching;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.DSL.concat;
@@ -1090,7 +1091,7 @@ final class Utils {
             else if (sqlChars[i] == '?' && substituteIndex < substitutes.size()) {
                 QueryPart substitute = substitutes.get(substituteIndex++);
 
-                if (render.paramType() == INLINED) {
+                if (render.paramType() == INLINED || render.paramType() == NAMED) {
                     render.visit(substitute);
                 }
                 else {

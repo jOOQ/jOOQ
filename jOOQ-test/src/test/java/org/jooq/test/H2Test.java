@@ -43,6 +43,7 @@ package org.jooq.test;
 
 import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.test.h2.generatedclasses.Tables.T_2698;
@@ -62,6 +63,8 @@ import static org.jooq.test.h2.generatedclasses.Tables.V_BOOK;
 import static org.jooq.test.h2.generatedclasses.tables.TAuthor.FIRST_NAME;
 import static org.jooq.test.h2.generatedclasses.tables.TAuthor.LAST_NAME;
 import static org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID;
+import static org.jooq.test.h2.generatedclasses.tables.T_2698.XX;
+import static org.jooq.test.h2.generatedclasses.tables.T_2698.YY;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -933,16 +936,54 @@ public class H2Test extends jOOQAbstractTest<
         assertEquals(-1, (int) record.getXx());
     }
 
-    // TODO [#2700] @Test
+    @Test
     public void testH2T2698InsertPojoThroughDaoWithDefault() throws Exception {
         jOOQAbstractTest.reset = false;
 
+        // [#2700] Check if DEFAULT NOT NULL columns are used sensibly for
+        // INSERT and UPDATE statements through DAOs
         T_2698Dao dao = new T_2698Dao(create().configuration());
-        dao.insert(new T_2698(1, null));
-        List<T_2698> list = dao.fetchById(1);
+        List<T_2698> list;
+
+        dao.insert(new T_2698(1, null, null));
+        list = dao.fetchById(1);
         assertEquals(1, list.size());
         assertEquals(1, (int) list.get(0).getId());
         assertEquals(-1, (int) list.get(0).getXx());
+        assertEquals(-2, (int) list.get(0).getYy());
+
+        dao.update(new T_2698(1, 42, 42));
+        list = dao.fetchById(1);
+        assertEquals(1, list.size());
+        assertEquals(1, (int) list.get(0).getId());
+        assertEquals(42, (int) list.get(0).getXx());
+        assertEquals(42, (int) list.get(0).getYy());
+
+        assertEquals(1,
+        create().update(T_2698)
+                .set(XX, defaultValue(Integer.class))
+                .set(YY, defaultValue(Integer.class))
+                .execute());
+
+        dao.update(new T_2698(1, null, 42));
+        list = dao.fetchById(1);
+        assertEquals(1, list.size());
+        assertEquals(1, (int) list.get(0).getId());
+        assertEquals(-1, (int) list.get(0).getXx());
+        assertEquals(42, (int) list.get(0).getYy());
+
+        assertEquals(1,
+        create().update(T_2698)
+                .set(XX, defaultValue(Integer.class))
+                .set(YY, defaultValue(Integer.class))
+                .execute());
+
+        dao.update(new T_2698(1, 42, null));
+        list = dao.fetchById(1);
+        assertEquals(1, list.size());
+        assertEquals(1, (int) list.get(0).getId());
+        assertEquals(42, (int) list.get(0).getXx());
+        assertEquals(-2, (int) list.get(0).getYy());
     }
 
     @SuppressWarnings("unchecked")

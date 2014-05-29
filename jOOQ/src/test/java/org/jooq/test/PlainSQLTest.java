@@ -41,6 +41,7 @@
 package org.jooq.test;
 
 import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.val;
 
 import org.jooq.QueryPart;
 
@@ -50,6 +51,15 @@ import org.junit.Test;
  * @author Lukas Eder
  */
 public class PlainSQLTest extends AbstractTest {
+
+    @Test
+    public void testBindVariables() {
+        QueryPart q = condition("a = ? and b = ?", val(1), 2);
+
+        assertEquals("(a = ? and b = ?)", create.render(q));
+        assertEquals("(a = 1 and b = 2)", create.renderInlined(q));
+        assertEquals("(a = :1 and b = :2)", create.renderNamedParams(q));
+    }
 
     @Test
     public void testIndexedParameters() {

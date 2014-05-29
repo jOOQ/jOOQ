@@ -453,11 +453,11 @@ public abstract class jOOQAbstractTest<
     static final String DEFAULT_MESSAGE = "Test failed";
 
     static <T> void assertThat(T actual, Predicate<T> expected) {
-        assertThat(() -> actual, expected, DEFAULT_MESSAGE);
+        assertThat((Supplier<T>) () -> actual, expected, DEFAULT_MESSAGE);
     }
 
     static <T> void assertThat(T actual, Predicate<T> expected, String message) {
-        assertThat(() -> actual, expected, message);
+        assertThat((Supplier<T>) () -> actual, expected, message);
     }
 
     static <T> void assertThat(Supplier<T> actual, Predicate<T> expected) {
@@ -470,11 +470,11 @@ public abstract class jOOQAbstractTest<
     }
 
     static void assertThat(double actual, DoublePredicate expected) {
-        assertThat(() -> actual, expected, DEFAULT_MESSAGE);
+        assertThat((DoubleSupplier) () -> actual, expected, DEFAULT_MESSAGE);
     }
 
     static void assertThat(double actual, DoublePredicate expected, String message) {
-        assertThat(() -> actual, expected, message);
+        assertThat((DoubleSupplier) () -> actual, expected, message);
     }
 
     static void assertThat(DoubleSupplier actual, DoublePredicate expected) {
@@ -487,11 +487,11 @@ public abstract class jOOQAbstractTest<
     }
 
     static <T> void assume(T actual, Predicate<T> expected) {
-        assume(() -> actual, expected, DEFAULT_MESSAGE);
+        assume((Supplier<T>) () -> actual, expected, DEFAULT_MESSAGE);
     }
 
     static <T> void assume(T actual, Predicate<T> expected, String message) {
-        assume(() -> actual, expected, message);
+        assume((Supplier<T>) () -> actual, expected, message);
     }
 
     static <T> void assume(Supplier<T> actual, Predicate<T> expected) {
@@ -504,11 +504,11 @@ public abstract class jOOQAbstractTest<
     }
 
     static void assume(double actual, DoublePredicate expected) {
-        assume(() -> actual, expected, DEFAULT_MESSAGE);
+        assume((DoubleSupplier) () -> actual, expected, DEFAULT_MESSAGE);
     }
 
     static void assume(double actual, DoublePredicate expected, String message) {
-        assume(() -> actual, expected, message);
+        assume((DoubleSupplier) () -> actual, expected, message);
     }
 
     static void assume(DoubleSupplier actual, DoublePredicate expected) {

@@ -5576,7 +5576,7 @@ public class DSL {
      */
     @Support
     public static <T extends Number> Sequence<T> sequence(String sql, DataType<T> type) {
-        return new SequenceImpl<T>(sql, null, type);
+        return new SequenceImpl<T>(sql, null, type, true);
     }
 
     /**

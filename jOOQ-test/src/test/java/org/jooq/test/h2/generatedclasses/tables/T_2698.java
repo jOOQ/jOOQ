@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2698 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.T_2698Record> {
 
-	private static final long serialVersionUID = 2072069763;
+	private static final long serialVersionUID = 1161406396;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_2698</code>
@@ -33,6 +33,11 @@ public class T_2698 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedcl
 	 * The column <code>PUBLIC.T_2698.XX</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_2698Record, java.lang.Integer> XX = createField("XX", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), T_2698, "");
+
+	/**
+	 * The column <code>PUBLIC.T_2698.YY</code>.
+	 */
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_2698Record, java.lang.Integer> YY = createField("YY", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), T_2698, "");
 
 	/**
 	 * No further instances allowed

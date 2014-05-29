@@ -51,6 +51,7 @@ import static org.jooq.Clause.SELECT;
 import static org.jooq.Clause.SELECT_FROM;
 import static org.jooq.Clause.SELECT_WHERE;
 import static org.jooq.Clause.TABLE_ALIAS;
+import static org.jooq.Clause.TEMPLATE;
 import static org.jooq.Clause.UPDATE;
 import static org.jooq.Clause.UPDATE_UPDATE;
 import static org.jooq.Clause.UPDATE_WHERE;
@@ -632,7 +633,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
                     xx xxx xxxxx xxxxxxxxxx
-                    xx xxxxxxxxxxxxxxxxxxxxxxxxxx x
+                    xx xxxxxxxxxxxxxxxxxxxxxxxxx
+                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx x
 
                     xx xxx xxxxx xxxxxxx xxx xxxxx xx xx xxxxxxxxxx
                     xx xxxx xxxx x xxxxx xxxxxx xxxxxx

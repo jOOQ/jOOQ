@@ -554,7 +554,7 @@ public abstract class jOOQAbstractTest<
         if (clean != null && clean.length > 0) {
             for (Table<?> table : clean) {
                 try {
-                    create().delete(table);
+                    create().delete(table).execute();
                 }
                 catch (Exception e) {
                     e.printStackTrace();

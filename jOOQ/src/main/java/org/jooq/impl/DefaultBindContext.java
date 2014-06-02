@@ -131,7 +131,7 @@ class DefaultBindContext extends AbstractBindContext {
             /* [/pro] */
             // [#1126] Oracle's UDTs need to be bound with their type name
             if (UDTRecord.class.isAssignableFrom(type)) {
-                String typeName = Utils.newRecord((Class<UDTRecord<?>>) type)
+                String typeName = Utils.newRecord(false, (Class<UDTRecord<?>>) type)
                                        .<RuntimeException>operate(null)
                                        .getUDT()
                                        .getName();

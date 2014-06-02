@@ -342,51 +342,51 @@ final class Utils {
     /**
      * Create a new record
      */
-    static final <R extends Record> RecordDelegate<R> newRecord(Class<R> type) {
-        return newRecord(type, null);
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Class<R> type) {
+        return newRecord(fetched, type, null);
     }
 
     /**
      * Create a new record
      */
-    static final <R extends Record> RecordDelegate<R> newRecord(Class<R> type, Field<?>[] fields) {
-        return newRecord(type, fields, null);
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Class<R> type, Field<?>[] fields) {
+        return newRecord(fetched, type, fields, null);
     }
 
     /**
      * Create a new record
      */
-    static final <R extends Record> RecordDelegate<R> newRecord(Table<R> type) {
-        return newRecord(type, null);
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Table<R> type) {
+        return newRecord(fetched, type, null);
     }
 
     /**
      * Create a new record
      */
     @SuppressWarnings("unchecked")
-    static final <R extends Record> RecordDelegate<R> newRecord(Table<R> type, Configuration configuration) {
-        return (RecordDelegate<R>) newRecord(type.getRecordType(), type.fields(), configuration);
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Table<R> type, Configuration configuration) {
+        return (RecordDelegate<R>) newRecord(fetched, type.getRecordType(), type.fields(), configuration);
     }
 
     /**
      * Create a new UDT record
      */
-    static final <R extends UDTRecord<R>> RecordDelegate<R> newRecord(UDT<R> type) {
-        return newRecord(type, null);
+    static final <R extends UDTRecord<R>> RecordDelegate<R> newRecord(boolean fetched, UDT<R> type) {
+        return newRecord(fetched, type, null);
     }
 
     /**
      * Create a new UDT record
      */
-    static final <R extends UDTRecord<R>> RecordDelegate<R> newRecord(UDT<R> type, Configuration configuration) {
-        return newRecord(type.getRecordType(), type.fields(), configuration);
+    static final <R extends UDTRecord<R>> RecordDelegate<R> newRecord(boolean fetched, UDT<R> type, Configuration configuration) {
+        return newRecord(fetched, type.getRecordType(), type.fields(), configuration);
     }
 
     /**
      * Create a new record
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    static final <R extends Record> RecordDelegate<R> newRecord(Class<R> type, Field<?>[] fields, Configuration configuration) {
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Class<R> type, Field<?>[] fields, Configuration configuration) {
         try {
             R record;
 
@@ -401,6 +401,10 @@ final class Utils {
                 // [#919] Allow for accessing non-public constructors
                 record = Reflect.accessible(type.getDeclaredConstructor()).newInstance();
             }
+
+            // [#3300] Records that were fetched from the database
+            if (record instanceof AbstractRecord)
+                ((AbstractRecord) record).fetched = fetched;
 
             return new RecordDelegate<R>(configuration, record);
         }
@@ -2989,7 +2993,7 @@ final class Utils {
             return null;
         }
 
-        return Utils.newRecord((Class<UDTRecord<?>>) type)
+        return Utils.newRecord(true, (Class<UDTRecord<?>>) type)
                     .operate(new RecordOperation<UDTRecord<?>, SQLException>() {
 
                 @Override

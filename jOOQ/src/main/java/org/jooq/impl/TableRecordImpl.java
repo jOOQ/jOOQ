@@ -181,6 +181,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
             }
 
             changed(false);
+            fetched = true;
         }
 
         return result;

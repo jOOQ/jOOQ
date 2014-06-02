@@ -1673,7 +1673,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public Record newRecord(Field<?>... fields) {
-        return Utils.newRecord(RecordImpl.class, fields, configuration).<RuntimeException>operate(null);
+        return Utils.newRecord(false, RecordImpl.class, fields, configuration).<RuntimeException>operate(null);
     }
 
     // [jooq-tools] START [newRecord]
@@ -1814,17 +1814,17 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public <R extends UDTRecord<R>> R newRecord(UDT<R> type) {
-        return Utils.newRecord(type, configuration).<RuntimeException>operate(null);
+        return Utils.newRecord(false, type, configuration).<RuntimeException>operate(null);
     }
 
     @Override
     public <R extends Record> R newRecord(Table<R> table) {
-        return Utils.newRecord(table, configuration).<RuntimeException>operate(null);
+        return Utils.newRecord(false, table, configuration).<RuntimeException>operate(null);
     }
 
     @Override
     public <R extends Record> R newRecord(Table<R> table, final Object source) {
-        return Utils.newRecord(table, configuration)
+        return Utils.newRecord(false, table, configuration)
                     .operate(new RecordOperation<R, RuntimeException>() {
 
             @Override

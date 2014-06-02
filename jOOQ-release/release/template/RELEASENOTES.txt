@@ -10,7 +10,7 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 3.4.0-SNAPSHOT - February 18, 2014
+Version 3.4.0-SNAPSHOT - June 2, 2014
 ================================================================================
 
 This is a snapshot preview version of jOOQ 3.4.0. Please do not use this version
@@ -18,6 +18,7 @@ in production.
 
 Features and improvements
 -------------------------
+#682  - Mavenise jooq-test
 #1061 - Support "DEFAULT" keyword in INSERT and UPDATE statements
 #2573 - Generate DAOs for tables with composite primary keys
 #2646 - SQL Server error "The text, ntext, and image data types cannot be
@@ -75,6 +76,15 @@ Features and improvements
 #3240 - Add DSL.sequence() methods for plain SQL sequence construction
 #3252 - Relax bounds on <R> for DSLContext.batchInsert()
 #3253 - Pull up TableRecord.insert()
+#3264 - Use try-with-resources statements in the manual
+#3265 - Add manual examples for include / exclude that explicitly use schemas
+        (and other fully qualified object names)
+#3275 - Use maven-plugin-annotations in jOOQ-codegen-maven instead of Javadoc
+        tags
+#3286 - Add MySQLDSL.encode(byte[]) and decode(byte[])
+#3288 - Add DSL.date(String), DSL.time(String), and DSL.timestamp(String), as
+        shortcuts for respective valueOf() methods
+#3305 - Add SQLDialect.families() to access all SQLDialect families
 
 API changes (backwards-compatible)
 ----------------------------------
@@ -93,17 +103,24 @@ Behavioural changes (backwards-incompatible)
 #3131 - Query.getBindValues() should not return inlined bind values
 #3132 - Quoting identifiers that contain "special characters" may lead to
         unexpected results when using RenderNameStyle.AS_IS
+#3306 - Let Record.key() return a "copy record", instead of a view to the
+        original record
 
 Bug fixes
 ---------
+#2700 - DAO.insert() and other DAO operations do not respect DEFAULT values
 #2973 - Field.in(Collection) should accept wildcard instead of T
 #3011 - Routines do not propagate errors raised from T-SQL with sqljdbc_4.0
+#3018 - Add <outputSchemaToDefault/> to support "default schemas" during code
+        generation 
 #3055 - Add missing MariaDB and MS Access support to the manual
 #3057 - Wrong paths in maven-install.sh and maven-install.bat
 #3060 - Conversion fails for Oracle VARRAY / TABLE types, nested in UDTs
 #3069 - jOOQ calls Clob.free(), which is available only in JDBC 4.0 / Java 1.6
 #3090 - Bad predicates generated from nullable keys on refresh(), update(),
         delete()
+#3099 - UpdatableRecord.store() executes INSERT instead of UPDATE when used
+        with nullable composite primary keys
 #3101 - MutablePOJOMapper doesn't work with annotated boolean getters
 #3108 - Local Fields' Converters should be preferred over globally registered
         Converters 
@@ -117,6 +134,7 @@ Bug fixes
         "JSONAware" 
 #3147 - Field.sortAsc() and sortDesc() should generate inlined values for sort
         indirection
+#3155 - Improve documentation of <forcedType>'s <types/> element
 #3156 - "Column ambiguously defined" when emulating derived column lists with
         duplicate column names 
 #3159 - Replace BoneCP with Apache DBCP in examples and manual
@@ -127,6 +145,8 @@ Bug fixes
 #3176 - Don't generate "assignment-constructors" for POJOs and Records with more
         than 255 columns 
 #3179 - PDF manual's white-on-black code sections are hard to read with Kindle
+#3183 - Add some clarification to the manual's section about the H2 MERGE
+        statement
 #3186 - Bad SQL rendered for FOR UPDATE clause in Firebird
 #3187 - Manual section about Groovy has a couple of Scala references in them
 #3191 - ResultQuery.keepStatement(true) doesn't work correctly with
@@ -147,6 +167,18 @@ Bug fixes
         with respect to NoSuchElementException
 #3244 - InsertQuery.setDefaultValues() is not supported by the ACCESS dialect
 #3249 - DSL.selectZero() and DSL.selectOne() should alias column names
+#3267 - Misleading DSLContext.batch() Javadoc. It should be clear that an
+        additional call to execute() is needed.
+#3277 - SQLite DECIMAL(p, s) types are not correctly recognised
+#3282 - inputSchema / outputSchema codegen configuration has no effect in
+        Oracle, if inputSchema is lower-cased
+#3293 - Bad composite foreign key references generated for H2
+#3294 - DSLContext.renderNamedParameters() doesn't replace ?, ? by :1, :2 in
+        plain SQL QueryParts
+#3297 - Bind variables are erroneously inlined into quoted identifiers, if
+        identifiers contain question marks
+#3300 - UpdatableRecord.store() executes INSERT instead of UPDATE when nullable
+        primary keys are NULL, and the updatablePrimaryKeys setting is active
 
 
 Version 3.3.0 - February 14, 2014

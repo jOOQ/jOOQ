@@ -49,6 +49,10 @@ import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.RenderNameStyle.LOWER;
 import static org.jooq.conf.RenderNameStyle.QUOTED;
 import static org.jooq.conf.RenderNameStyle.UPPER;
+import static org.jooq.impl.Identifiers.QUOTES;
+import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
+import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
+import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
 import static org.jooq.impl.Utils.DATA_COUNT_BIND_VALUES;
 
 import java.util.Arrays;
@@ -365,41 +369,11 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             sql(literal);
         }
         else {
-            switch (family) {
+            String[][] quotes = QUOTES.get(family);
 
-                // MySQL supports backticks and double quotes
-                case MARIADB:
-                case MYSQL:
-                    sql("`").sql(StringUtils.replace(literal, "`", "``")).sql("`");
-                    break;
-
-                /* [pro] */
-                // T-SQL databases use brackets
-                case ACCESS:
-                case ASE:
-                case SQLSERVER:
-                case SYBASE:
-                    sql("[").sql(StringUtils.replace(literal, "]", "]]")).sql("]");
-                    break;
-
-                /* [/pro] */
-                // Most dialects implement the SQL standard, using double quotes
-                /* [pro] */
-                case DB2:
-                case INGRES:
-                case ORACLE:
-                /* [/pro] */
-                case CUBRID:
-                case DERBY:
-                case FIREBIRD:
-                case H2:
-                case HSQLDB:
-                case POSTGRES:
-                case SQLITE:
-                default:
-                    sql('"').sql(StringUtils.replace(literal, "\"", "\"\"")).sql('"');
-                    break;
-            }
+            sql(quotes[QUOTE_START_DELIMITER][0]);
+            sql(StringUtils.replace(literal, quotes[QUOTE_END_DELIMITER][0], quotes[QUOTE_END_DELIMITER_ESCAPED][0]));
+            sql(quotes[QUOTE_END_DELIMITER][0]);
         }
 
         return this;

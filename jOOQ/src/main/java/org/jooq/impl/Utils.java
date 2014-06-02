@@ -55,6 +55,10 @@ import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
+import static org.jooq.impl.Identifiers.QUOTES;
+import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
+import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
+import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
 import static org.jooq.tools.reflect.Reflect.accessible;
@@ -1030,6 +1034,10 @@ final class Utils {
         // [#1593] Create a dummy renderer if we're in bind mode
         if (render == null) render = new DefaultRenderContext(bind.configuration());
 
+        SQLDialect dialect = render.configuration().dialect();
+        SQLDialect family = dialect.family();
+        String[][] quotes = QUOTES.get(family);
+
         for (int i = 0; i < sqlChars.length; i++) {
 
             // [#1797] Skip content inside of single-line comments, e.g.
@@ -1085,6 +1093,50 @@ final class Utils {
 
                 // Consume the terminal string literal delimiter
                 render.sql(sqlChars[i]);
+            }
+
+            // [#3297] Skip ? inside of quoted identifiers, e.g.
+            // update x set v = "Column Name with a ? (question mark)"
+            else if (peekAny(sqlChars, i, quotes[QUOTE_START_DELIMITER])) {
+
+                // Main identifier delimiter or alternative one?
+                int delimiter = 0;
+                for (int d = 0; d < quotes[QUOTE_START_DELIMITER].length; d++) {
+                    if (peek(sqlChars, i, quotes[QUOTE_START_DELIMITER][d])) {
+                        delimiter = d;
+                        break;
+                    }
+                }
+
+                // Consume the initial identifier delimiter
+                for (int d = 0; d < quotes[QUOTE_START_DELIMITER][delimiter].length(); d++)
+                    render.sql(sqlChars[i++]);
+
+                // Consume the whole identifier
+                for (;;) {
+
+                    // Consume an escaped quote
+                    if (peek(sqlChars, i, quotes[QUOTE_END_DELIMITER_ESCAPED][delimiter])) {
+                        for (int d = 0; d < quotes[QUOTE_END_DELIMITER_ESCAPED][delimiter].length(); d++)
+                            render.sql(sqlChars[i++]);
+                    }
+
+                    // Break on the terminal identifier delimiter
+                    else if (peek(sqlChars, i, quotes[QUOTE_END_DELIMITER][delimiter])) {
+                        break;
+                    }
+
+                    // Consume identifier content
+                    render.sql(sqlChars[i++]);
+                }
+
+                // Consume the terminal identifier delimiter
+                for (int d = 0; d < quotes[QUOTE_END_DELIMITER][delimiter].length(); d++) {
+                    if (d > 0)
+                        i++;
+
+                    render.sql(sqlChars[i]);
+                }
             }
 
             // Inline bind variables only outside of string literals
@@ -1163,6 +1215,21 @@ final class Utils {
         }
 
         return true;
+    }
+
+    /**
+     * Peek for several strings at a given <code>index</code> of a <code>char[]</code>
+     *
+     * @param sqlChars The char array to peek into
+     * @param index The index within the char array to peek for a string
+     * @param peek The strings to peek for
+     */
+    static final boolean peekAny(char[] sqlChars, int index, String[] peekAny) {
+        for (String peek : peekAny)
+            if (peek(sqlChars, index, peek))
+                return true;
+
+        return false;
     }
 
     /**

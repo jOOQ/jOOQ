@@ -281,14 +281,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(TBook_ID(), bKey.field1());
         assertEquals(TBookToBookStore_BOOK_STORE_NAME(), b2sKey.field1());
         assertEquals(TBookToBookStore_BOOK_ID(), b2sKey.field2());
-
-        // [#1690] Check if modifications to the key() record are reflected in
-        // the original record, and vice versa
-        bKey.setValue(TBook_ID(), 5);
-        assertEquals(5, (int) b.getValue(TBook_ID()));
-
-        b.setValue(TBook_ID(), 6);
-        assertEquals(6, (int) bKey.value1());
     }
 
     public void testUpdatablesInsertUpdate() throws Exception {

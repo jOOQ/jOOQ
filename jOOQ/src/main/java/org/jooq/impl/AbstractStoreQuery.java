@@ -449,7 +449,11 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
 
                                 @Override
                                 public R operate(R record) throws RuntimeException {
-                                    ((AbstractRecord) record).setValue(field, new Value<Number>(id));
+                                    int index = record.fieldsRow().indexOf(field);
+
+                                    ((AbstractRecord) record).values[index] = id;
+                                    ((AbstractRecord) record).originals[index] = id;
+
                                     return record;
                                 }
                             }));

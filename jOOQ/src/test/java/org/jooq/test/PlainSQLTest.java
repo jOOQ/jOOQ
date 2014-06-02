@@ -40,11 +40,13 @@
  */
 package org.jooq.test;
 
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.val;
 
 import org.jooq.Condition;
 import org.jooq.QueryPart;
+import org.jooq.impl.DSL;
 
 import org.junit.Test;
 
@@ -64,6 +66,33 @@ public class PlainSQLTest extends AbstractTest {
         assertEquals("((a = ? and b = ?) and (a = ? and b = ?))", create.render(q.and(q)));
         assertEquals("((a = 1 and b = 2) and (a = 1 and b = 2))", create.renderInlined(q.and(q)));
         assertEquals("((a = :1 and b = :2) and (a = :3 and b = :4))", create.renderNamedParams(q.and(q)));
+    }
+
+    @Test
+    public void testStringLiterals() {
+        Condition q = condition("a = '?' and b = '{0}' and c = ?", 1);
+
+        assertEquals("(a = '?' and b = '{0}' and c = ?)", create.render(q));
+        assertEquals("(a = '?' and b = '{0}' and c = 1)", create.renderInlined(q));
+        assertEquals("(a = '?' and b = '{0}' and c = :1)", create.renderNamedParams(q));
+    }
+
+    @Test
+    public void testQuotedIdentifiers() {
+        Condition c1 = condition("a = `?` and b = `{0}` and c = ?", 1);
+        Condition c2 = condition("a = \"?\" and b = \"{0}\" and c = ?", 1);
+
+        assertEquals("(a = `?` and b = `{0}` and c = ?)", create.render(c1));
+        assertEquals("(a = `?` and b = `{0}` and c = 1)", create.renderInlined(c1));
+        assertEquals("(a = `?` and b = `{0}` and c = :1)", create.renderNamedParams(c1));
+
+        assertEquals("(a = \"?\" and b = \"{0}\" and c = ?)", create.render(c2));
+        assertEquals("(a = \"?\" and b = \"{0}\" and c = 1)", create.renderInlined(c2));
+        assertEquals("(a = \"?\" and b = \"{0}\" and c = :1)", create.renderNamedParams(c2));
+
+        assertEquals("(a = \"?\" and b = \"{0}\" and c = ?)", DSL.using(POSTGRES).render(c2));
+        assertEquals("(a = \"?\" and b = \"{0}\" and c = 1)", DSL.using(POSTGRES).renderInlined(c2));
+        assertEquals("(a = \"?\" and b = \"{0}\" and c = :1)", DSL.using(POSTGRES).renderNamedParams(c2));
     }
 
     @Test

@@ -444,7 +444,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 if (returning.size() == 1 && new Fields<Record>(returning).field(field) != null) {
                     for (final Number id : ids) {
                         getReturnedRecords().add(
-                        Utils.newRecord(into, configuration)
+                        Utils.newRecord(true, into, configuration)
                              .operate(new RecordOperation<R, RuntimeException>() {
 
                                 @Override

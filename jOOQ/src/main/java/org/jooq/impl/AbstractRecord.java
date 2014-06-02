@@ -91,7 +91,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     final Object[]            values;
     final Object[]            originals;
     final BitSet              changed;
-    // final BitSet           def;
+    boolean                   fetched;
 
     AbstractRecord(Collection<? extends Field<?>> fields) {
         this(new RowImpl(fields));
@@ -108,7 +108,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         this.values = new Object[size];
         this.originals = new Object[size];
         this.changed = new BitSet(size);
-        // this.def = new BitSet(size);
     }
 
     // ------------------------------------------------------------------------
@@ -299,9 +298,10 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     private final <T> void setValue(int index, Field<T> field, T value) {
         // Relevant issues documenting this method's behaviour:
-        // [#945]
-        // [#948]
-        // [#979]
+        // [#945] Avoid bugs resulting from setting the same value twice
+        // [#948] To allow for controlling the number of hard-parses
+        //        To allow for explicitly overriding default values
+        // [#979] Avoid modifying chnaged flag on unchanged primary key values
 
         UniqueKey<?> key = getPrimaryKey();
 
@@ -347,6 +347,8 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     final void setValues(Field<?>[] fields, AbstractRecord record) {
+        fetched = record.fetched;
+
         for (Field<?> field : fields) {
             int targetIndex = indexOrFail(fieldsRow(), field);
             int sourceIndex = indexOrFail(record.fieldsRow(), field);
@@ -385,7 +387,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
      */
     @Override
     public Record original() {
-        return Utils.newRecord((Class<AbstractRecord>) getClass(), fields.fields.fields, configuration())
+        return Utils.newRecord(fetched, (Class<AbstractRecord>) getClass(), fields.fields.fields, configuration())
                     .operate(new RecordOperation<AbstractRecord, RuntimeException>() {
 
             @Override
@@ -544,11 +546,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <R extends Record> R into(Table<R> table) {
-        return Utils.newRecord(table, configuration()).operate(new TransferRecordState<R>());
+        return Utils.newRecord(fetched, table, configuration()).operate(new TransferRecordState<R>());
     }
 
     final <R extends Record> R intoRecord(Class<R> type) {
-        return Utils.newRecord(type, fields(), configuration()).operate(new TransferRecordState<R>());
+        return Utils.newRecord(fetched, type, fields(), configuration()).operate(new TransferRecordState<R>());
     }
 
     private class TransferRecordState<R extends Record> implements RecordOperation<R, MappingException> {

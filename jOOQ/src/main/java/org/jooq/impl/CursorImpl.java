@@ -1408,7 +1408,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                         rs.updateRow();
                     }
 
-                    record = Utils.newRecord((Class<AbstractRecord>) type, fields, ctx.configuration())
+                    record = Utils.newRecord(true, (Class<AbstractRecord>) type, fields, ctx.configuration())
                                   .operate(initialiser);
 
                     rows++;

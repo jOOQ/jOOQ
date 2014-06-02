@@ -141,19 +141,13 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         TableField<R, ?>[] keys = getPrimaryKey().getFieldsArray();
         boolean executeUpdate = false;
 
-        for (TableField<R, ?> field : keys) {
-
-            // [#2764] If primary key values are allowed to be changed,
-            // inserting is only possible without prior loading of pk values
-            if (updatablePrimaryKeys(settings(this))) {
-                if (original(field) == null) {
-                    executeUpdate = false;
-                    break;
-                }
-            }
-
-            // [#2764] Primary key value changes are interpreted as record copies
-            else {
+        // [#2764] If primary key values are allowed to be changed,
+        // inserting is only possible without prior loading of pk values
+        if (updatablePrimaryKeys(settings(this))) {
+            executeUpdate = fetched;
+        }
+        else {
+            for (TableField<R, ?> field : keys) {
 
                 // If any primary key value is null or changed
                 if (changed(field) ||
@@ -163,10 +157,10 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
                     executeUpdate = false;
                     break;
                 }
-            }
 
-            // Otherwise, updates are possible
-            executeUpdate = true;
+                // Otherwise, updates are possible
+                executeUpdate = true;
+            }
         }
 
         int result = 0;
@@ -316,7 +310,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final R copy() {
-        return Utils.newRecord(getTable(), configuration())
+        return Utils.newRecord(fetched, getTable(), configuration())
                     .operate(new RecordOperation<R, RuntimeException>() {
 
         	@Override

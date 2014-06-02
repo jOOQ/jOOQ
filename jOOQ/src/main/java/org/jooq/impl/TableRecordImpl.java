@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
+import static org.jooq.impl.Utils.indexOrFail;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -170,7 +171,11 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
             if (key != null && !key.isEmpty()) {
                 if (insert.getReturnedRecord() != null) {
                     for (Field<?> field : key) {
-                        setValue(field, new Value<Object>(insert.getReturnedRecord().getValue(field)));
+                        int index = indexOrFail(fieldsRow(), field);
+                        Object value = insert.getReturnedRecord().getValue(field);
+
+                        values[index] = value;
+                        originals[index] = value;
                     }
                 }
             }
@@ -188,11 +193,21 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     final void setRecordVersionAndTimestamp(BigInteger version, Timestamp timestamp) {
         if (version != null) {
             TableField<R, ?> field = getTable().getRecordVersion();
-            setValue(field, new Value<Object>(field.getDataType().convert(version)));
+            int fieldIndex = indexOrFail(fieldsRow(), field);
+            Object value = field.getDataType().convert(version);
+
+            values[fieldIndex] = value;
+            originals[fieldIndex] = value;
+            changed.clear(fieldIndex);
         }
         if (timestamp != null) {
             TableField<R, ?> field = getTable().getRecordTimestamp();
-            setValue(field, new Value<Object>(field.getDataType().convert(timestamp)));
+            int fieldIndex = indexOrFail(fieldsRow(), field);
+            Object value = field.getDataType().convert(timestamp);
+
+            values[fieldIndex] = value;
+            originals[fieldIndex] = value;
+            changed.clear(fieldIndex);
         }
     }
 
@@ -201,7 +216,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
      */
     final void addChangedValues(StoreQuery<R> query) {
         for (Field<?> field : fields.fields.fields) {
-            if (getValue0(field).isChanged()) {
+            if (changed(field)) {
                 addValue(query, field);
             }
         }

@@ -45,7 +45,7 @@ import java.io.Serializable;
 /**
  * @author Lukas Eder
  */
-class Value<T> implements Serializable {
+class Value0<T> implements Serializable {
 
     /**
      * Generated UID
@@ -55,11 +55,11 @@ class Value<T> implements Serializable {
     private T                 value;
     private boolean           isChanged;
 
-    Value(T value) {
+    Value0(T value) {
         this(value, value, false);
     }
 
-    Value(T value, T original, boolean isChanged) {
+    Value0(T value, T original, boolean isChanged) {
         this.value = value;
         this.original = original;
         this.isChanged = isChanged;
@@ -142,34 +142,34 @@ class Value<T> implements Serializable {
     // ------------------------------------------------------------------------
     // XXX: Object API
     // ------------------------------------------------------------------------
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (obj instanceof Value<?>) {
-            Value<?> other = (Value<?>) obj;
-
-            if (value == null) {
-                return other.getValue() == null;
-            }
-
-            return value.equals(other.getValue());
-        }
-
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        if (value == null) {
-            return 0;
-        }
-
-        return value.hashCode();
-    }
+//
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (this == obj) {
+//            return true;
+//        }
+//
+//        if (obj instanceof Value0<?>) {
+//            Value0<?> other = (Value0<?>) obj;
+//
+//            if (value == null) {
+//                return other.getValue() == null;
+//            }
+//
+//            return value.equals(other.getValue());
+//        }
+//
+//        return false;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        if (value == null) {
+//            return 0;
+//        }
+//
+//        return value.hashCode();
+//    }
 
     @Override
     public String toString() {

@@ -770,7 +770,8 @@ public class DefaultDSLContext implements DSLContext, Serializable {
                     RecordImpl record = new RecordImpl(fields);
 
                     for (int i = 0; i < Math.min(values.length, fields.size()); i++) {
-                        record.setValue(i, new Value<Object>(values[i]));
+                        record.values[i] = values[i];
+                        record.originals[i] = values[i];
                     }
 
                     result.add(record);

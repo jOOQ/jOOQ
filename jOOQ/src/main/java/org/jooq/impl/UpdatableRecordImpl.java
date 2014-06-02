@@ -156,7 +156,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
             else {
 
                 // If any primary key value is null or changed
-                if (getValue0(field).isChanged() ||
+                if (changed(field) ||
 
                 // [#3237] or if a NOT NULL primary key value is null, then execute an INSERT
                    (field.getDataType().nullable() == false && getValue(field) == null)) {
@@ -384,11 +384,8 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         }
 
         for (Field<?> field : fields.fields.fields) {
-            Value<?> thisValue = getValue0(field);
-            Value<?> thatValue = ((AbstractRecord) record).getValue0(field);
-
-            Object thisObject = thisValue.getOriginal();
-            Object thatObject = thatValue.getOriginal();
+            Object thisObject = original(field);
+            Object thatObject = record.original(field);
 
             if (!StringUtils.equals(thisObject, thatObject)) {
                 throw new DataChangedException("Database record has been changed");

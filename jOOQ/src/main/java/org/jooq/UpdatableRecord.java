@@ -82,10 +82,7 @@ import org.jooq.exception.InvalidResultException;
 public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableRecord<R> {
 
     /**
-     * A view holding values for the {@link Table#getPrimaryKey()}
-     * <p>
-     * This method returns a "view" of this record itself. Modifications to the
-     * returned record will affect values in this record.
+     * A Record copy holding values for the {@link Table#getPrimaryKey()}.
      * <p>
      * The returned record consists exactly of those fields as returned by the
      * table's primary key: {@link UniqueKey#getFields()}.

@@ -2268,6 +2268,16 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testCTEWithLimit() throws Exception {
+        new CTETests(this).testCTEWithLimit();
+    }
+
+    @Test
+    public void testCTEWithLimitOffset() throws Exception {
+        new CTETests(this).testCTEWithLimitOffset();
+    }
+
+    @Test
     public void testJoinDuplicateFieldNames() throws Exception {
         new JoinTests(this).testJoinDuplicateFieldNames();
     }

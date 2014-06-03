@@ -35,20 +35,20 @@ public class XTestCase_64_69Dao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.g
 	 * Fetch records that have <code>ID IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XTestCase_64_69> fetchById(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.ID, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID, values);
 	}
 
 	/**
 	 * Fetch a unique record that has <code>ID = value</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.pojos.XTestCase_64_69 fetchOneById(java.lang.Integer value) {
-		return fetchOne(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.ID, value);
+		return fetchOne(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID, value);
 	}
 
 	/**
 	 * Fetch records that have <code>UNUSED_ID IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XTestCase_64_69> fetchByUnusedId(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID, values);
 	}
 }

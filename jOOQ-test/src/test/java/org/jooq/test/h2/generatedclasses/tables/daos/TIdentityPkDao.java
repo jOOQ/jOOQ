@@ -35,20 +35,20 @@ public class TIdentityPkDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.gener
 	 * Fetch records that have <code>ID IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TIdentityPk> fetchById(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TIdentityPk.ID, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID, values);
 	}
 
 	/**
 	 * Fetch a unique record that has <code>ID = value</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.pojos.TIdentityPk fetchOneById(java.lang.Integer value) {
-		return fetchOne(org.jooq.test.h2.generatedclasses.tables.TIdentityPk.ID, value);
+		return fetchOne(org.jooq.test.h2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID, value);
 	}
 
 	/**
 	 * Fetch records that have <code>VAL IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TIdentityPk> fetchByVal(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TIdentityPk.VAL, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.VAL, values);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.Object[], java.lang.Object[], java.lang.Object[]>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITArrays {
 
-	private static final long serialVersionUID = -92472528;
+	private static final long serialVersionUID = -431406040;
 
 	/**
 	 * Setter for <code>PUBLIC.T_ARRAYS.ID</code>.
@@ -116,7 +116,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.h2.generatedclasses.tables.TArrays.ID;
+		return org.jooq.test.h2.generatedclasses.tables.TArrays.T_ARRAYS.ID;
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Object[]> field2() {
-		return org.jooq.test.h2.generatedclasses.tables.TArrays.STRING_ARRAY;
+		return org.jooq.test.h2.generatedclasses.tables.TArrays.T_ARRAYS.STRING_ARRAY;
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Object[]> field3() {
-		return org.jooq.test.h2.generatedclasses.tables.TArrays.NUMBER_ARRAY;
+		return org.jooq.test.h2.generatedclasses.tables.TArrays.T_ARRAYS.NUMBER_ARRAY;
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Object[]> field4() {
-		return org.jooq.test.h2.generatedclasses.tables.TArrays.DATE_ARRAY;
+		return org.jooq.test.h2.generatedclasses.tables.TArrays.T_ARRAYS.DATE_ARRAY;
 	}
 
 	/**

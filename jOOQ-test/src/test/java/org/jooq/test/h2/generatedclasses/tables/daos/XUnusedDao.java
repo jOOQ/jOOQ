@@ -35,118 +35,118 @@ public class XUnusedDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generated
 	 * Fetch records that have <code>ID IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XUnused> fetchById(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.ID, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED.ID, values);
 	}
 
 	/**
 	 * Fetch a unique record that has <code>ID = value</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.pojos.XUnused fetchOneById(java.lang.Integer value) {
-		return fetchOne(org.jooq.test.h2.generatedclasses.tables.XUnused.ID, value);
+		return fetchOne(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED.ID, value);
 	}
 
 	/**
 	 * Fetch records that have <code>NAME IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XUnused> fetchByName(java.lang.String... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.NAME, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED.NAME, values);
 	}
 
 	/**
 	 * Fetch records that have <code>BIG_INTEGER IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XUnused> fetchByBigInteger(java.math.BigInteger... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.BIG_INTEGER, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED.BIG_INTEGER, values);
 	}
 
 	/**
 	 * Fetch records that have <code>ID_REF IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XUnused> fetchByIdRef(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.ID_REF, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED.ID_REF, values);
 	}
 
 	/**
 	 * Fetch records that have <code>NAME_REF IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XUnused> fetchByNameRef(java.lang.String... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.NAME_REF, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED.NAME_REF, values);
 	}
 
 	/**
 	 * Fetch records that have <code>CLASS IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XUnused> fetchByClass(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.CLASS, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED.CLASS, values);
 	}
 
 	/**
 	 * Fetch records that have <code>FIELDS IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XUnused> fetchByFields(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.FIELDS, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED.FIELDS, values);
 	}
 
 	/**
 	 * Fetch records that have <code>TABLE IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XUnused> fetchByTable(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.TABLE, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED.TABLE, values);
 	}
 
 	/**
 	 * Fetch records that have <code>CONFIGURATION IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XUnused> fetchByConfiguration(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.CONFIGURATION, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED.CONFIGURATION, values);
 	}
 
 	/**
 	 * Fetch records that have <code>U_D_T IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XUnused> fetchByUDT(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.U_D_T, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED.U_D_T, values);
 	}
 
 	/**
 	 * Fetch records that have <code>META_DATA IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XUnused> fetchByMetaData(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.META_DATA, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED.META_DATA, values);
 	}
 
 	/**
 	 * Fetch records that have <code>VALUES IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XUnused> fetchByValues(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.VALUES, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED.VALUES, values);
 	}
 
 	/**
 	 * Fetch records that have <code>TYPE0 IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XUnused> fetchByType0(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.TYPE0, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED.TYPE0, values);
 	}
 
 	/**
 	 * Fetch records that have <code>PRIMARY_KEY IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XUnused> fetchByPrimaryKey(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.PRIMARY_KEY, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED.PRIMARY_KEY, values);
 	}
 
 	/**
 	 * Fetch records that have <code>PRIMARYKEY IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XUnused> fetchByPrimarykey(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.PRIMARYKEY, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED.PRIMARYKEY, values);
 	}
 
 	/**
 	 * Fetch records that have <code>FIELD 737 IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.XUnused> fetchByField_737(java.math.BigDecimal... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.FIELD_737, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED.FIELD_737, values);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer, java.sql.Timestamp>, org.jooq.test.h2.generatedclasses.tables.interfaces.IVBook {
 
-	private static final long serialVersionUID = -1676587641;
+	private static final long serialVersionUID = 1399887711;
 
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.ID</code>.
@@ -223,7 +223,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.h2.generatedclasses.tables.VBook.ID;
+		return org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK.ID;
 	}
 
 	/**
@@ -231,7 +231,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.jooq.test.h2.generatedclasses.tables.VBook.AUTHOR_ID;
+		return org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK.AUTHOR_ID;
 	}
 
 	/**
@@ -239,7 +239,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field3() {
-		return org.jooq.test.h2.generatedclasses.tables.VBook.CO_AUTHOR_ID;
+		return org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK.CO_AUTHOR_ID;
 	}
 
 	/**
@@ -247,7 +247,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field4() {
-		return org.jooq.test.h2.generatedclasses.tables.VBook.DETAILS_ID;
+		return org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK.DETAILS_ID;
 	}
 
 	/**
@@ -255,7 +255,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field5() {
-		return org.jooq.test.h2.generatedclasses.tables.VBook.TITLE;
+		return org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK.TITLE;
 	}
 
 	/**
@@ -263,7 +263,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field6() {
-		return org.jooq.test.h2.generatedclasses.tables.VBook.PUBLISHED_IN;
+		return org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK.PUBLISHED_IN;
 	}
 
 	/**
@@ -271,7 +271,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field7() {
-		return org.jooq.test.h2.generatedclasses.tables.VBook.LANGUAGE_ID;
+		return org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK.LANGUAGE_ID;
 	}
 
 	/**
@@ -279,7 +279,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field8() {
-		return org.jooq.test.h2.generatedclasses.tables.VBook.CONTENT_TEXT;
+		return org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK.CONTENT_TEXT;
 	}
 
 	/**
@@ -287,7 +287,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public org.jooq.Field<byte[]> field9() {
-		return org.jooq.test.h2.generatedclasses.tables.VBook.CONTENT_PDF;
+		return org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK.CONTENT_PDF;
 	}
 
 	/**
@@ -295,7 +295,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field10() {
-		return org.jooq.test.h2.generatedclasses.tables.VBook.REC_VERSION;
+		return org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK.REC_VERSION;
 	}
 
 	/**
@@ -303,7 +303,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public org.jooq.Field<java.sql.Timestamp> field11() {
-		return org.jooq.test.h2.generatedclasses.tables.VBook.REC_TIMESTAMP;
+		return org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK.REC_TIMESTAMP;
 	}
 
 	/**

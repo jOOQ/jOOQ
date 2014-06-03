@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITTriggers {
 
-	private static final long serialVersionUID = 384329494;
+	private static final long serialVersionUID = 1937447660;
 
 	/**
 	 * Setter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>.
@@ -99,7 +99,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.h2.generatedclasses.tables.TTriggers.ID_GENERATED;
+		return org.jooq.test.h2.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED;
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.jooq.test.h2.generatedclasses.tables.TTriggers.ID;
+		return org.jooq.test.h2.generatedclasses.tables.TTriggers.T_TRIGGERS.ID;
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field3() {
-		return org.jooq.test.h2.generatedclasses.tables.TTriggers.COUNTER;
+		return org.jooq.test.h2.generatedclasses.tables.TTriggers.T_TRIGGERS.COUNTER;
 	}
 
 	/**

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_2025Record> {
 
-	private static final long serialVersionUID = 5847026;
+	private static final long serialVersionUID = 2064068692;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.X_TEST_CASE_2025</code>
@@ -27,18 +27,25 @@ public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.h2.gen
 	/**
 	 * The column <code>PUBLIC.X_TEST_CASE_2025.REF_ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_2025Record, java.lang.Integer> REF_ID = createField("REF_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_2025, "");
+	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_2025Record, java.lang.Integer> REF_ID = createField("REF_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>PUBLIC.X_TEST_CASE_2025.REF_NAME</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_2025Record, java.lang.String> REF_NAME = createField("REF_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), X_TEST_CASE_2025, "");
+	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_2025Record, java.lang.String> REF_NAME = createField("REF_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), this, "");
 
 	/**
-	 * No further instances allowed
+	 * Create a <code>PUBLIC.X_TEST_CASE_2025</code> table reference
 	 */
-	private XTestCase_2025() {
+	public XTestCase_2025() {
 		this("X_TEST_CASE_2025", null);
+	}
+
+	/**
+	 * Create an aliased <code>PUBLIC.X_TEST_CASE_2025</code> table reference
+	 */
+	public XTestCase_2025(java.lang.String alias) {
+		this(alias, org.jooq.test.h2.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025);
 	}
 
 	private XTestCase_2025(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_2025Record> aliased) {
@@ -55,5 +62,20 @@ public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.h2.gen
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_2025Record, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_2025Record, ?>>asList(org.jooq.test.h2.generatedclasses.Keys.FK_X_TEST_CASE_2025_1, org.jooq.test.h2.generatedclasses.Keys.FK_X_TEST_CASE_2025_2, org.jooq.test.h2.generatedclasses.Keys.FK_X_TEST_CASE_2025_3);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.h2.generatedclasses.tables.XTestCase_2025 as(java.lang.String alias) {
+		return new org.jooq.test.h2.generatedclasses.tables.XTestCase_2025(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.h2.generatedclasses.tables.XTestCase_2025 rename(java.lang.String name) {
+		return new org.jooq.test.h2.generatedclasses.tables.XTestCase_2025(name, null);
 	}
 }

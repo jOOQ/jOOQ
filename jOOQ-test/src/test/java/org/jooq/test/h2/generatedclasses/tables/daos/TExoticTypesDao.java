@@ -35,20 +35,20 @@ public class TExoticTypesDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.gene
 	 * Fetch records that have <code>ID IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TExoticTypes> fetchById(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TExoticTypes.ID, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.ID, values);
 	}
 
 	/**
 	 * Fetch a unique record that has <code>ID = value</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.pojos.TExoticTypes fetchOneById(java.lang.Integer value) {
-		return fetchOne(org.jooq.test.h2.generatedclasses.tables.TExoticTypes.ID, value);
+		return fetchOne(org.jooq.test.h2.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.ID, value);
 	}
 
 	/**
 	 * Fetch records that have <code>UU IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TExoticTypes> fetchByUu(java.util.UUID... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TExoticTypes.UU, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.UU, values);
 	}
 }

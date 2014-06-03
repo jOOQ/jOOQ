@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITLanguage {
 
-	private static final long serialVersionUID = -1678958667;
+	private static final long serialVersionUID = 48545115;
 
 	/**
 	 * Setter for <code>PUBLIC.T_LANGUAGE.CD</code>. The language ISO code
@@ -118,7 +118,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field1() {
-		return org.jooq.test.h2.generatedclasses.tables.TLanguage.CD;
+		return org.jooq.test.h2.generatedclasses.tables.TLanguage.T_LANGUAGE.CD;
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field2() {
-		return org.jooq.test.h2.generatedclasses.tables.TLanguage.DESCRIPTION;
+		return org.jooq.test.h2.generatedclasses.tables.TLanguage.T_LANGUAGE.DESCRIPTION;
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field3() {
-		return org.jooq.test.h2.generatedclasses.tables.TLanguage.DESCRIPTION_ENGLISH;
+		return org.jooq.test.h2.generatedclasses.tables.TLanguage.T_LANGUAGE.DESCRIPTION_ENGLISH;
 	}
 
 	/**
@@ -142,7 +142,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field4() {
-		return org.jooq.test.h2.generatedclasses.tables.TLanguage.ID;
+		return org.jooq.test.h2.generatedclasses.tables.TLanguage.T_LANGUAGE.ID;
 	}
 
 	/**

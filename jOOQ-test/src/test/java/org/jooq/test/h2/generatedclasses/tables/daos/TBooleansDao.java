@@ -35,83 +35,83 @@ public class TBooleansDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generat
 	 * Fetch records that have <code>ID IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBooleans> fetchById(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.ID, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS.ID, values);
 	}
 
 	/**
 	 * Fetch a unique record that has <code>ID = value</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.pojos.TBooleans fetchOneById(java.lang.Integer value) {
-		return fetchOne(org.jooq.test.h2.generatedclasses.tables.TBooleans.ID, value);
+		return fetchOne(org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS.ID, value);
 	}
 
 	/**
 	 * Fetch records that have <code>ONE_ZERO IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBooleans> fetchByOneZero(org.jooq.test.all.converters.Boolean_10... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.ONE_ZERO, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS.ONE_ZERO, values);
 	}
 
 	/**
 	 * Fetch records that have <code>TRUE_FALSE_LC IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBooleans> fetchByTrueFalseLc(org.jooq.test.all.converters.Boolean_TF_LC... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.TRUE_FALSE_LC, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS.TRUE_FALSE_LC, values);
 	}
 
 	/**
 	 * Fetch records that have <code>TRUE_FALSE_UC IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBooleans> fetchByTrueFalseUc(org.jooq.test.all.converters.Boolean_TF_UC... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.TRUE_FALSE_UC, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS.TRUE_FALSE_UC, values);
 	}
 
 	/**
 	 * Fetch records that have <code>YES_NO_LC IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBooleans> fetchByYesNoLc(org.jooq.test.all.converters.Boolean_YES_NO_LC... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.YES_NO_LC, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS.YES_NO_LC, values);
 	}
 
 	/**
 	 * Fetch records that have <code>YES_NO_UC IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBooleans> fetchByYesNoUc(org.jooq.test.all.converters.Boolean_YES_NO_UC... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.YES_NO_UC, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS.YES_NO_UC, values);
 	}
 
 	/**
 	 * Fetch records that have <code>Y_N_LC IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBooleans> fetchByYNLc(org.jooq.test.all.converters.Boolean_YN_LC... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.Y_N_LC, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS.Y_N_LC, values);
 	}
 
 	/**
 	 * Fetch records that have <code>Y_N_UC IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBooleans> fetchByYNUc(org.jooq.test.all.converters.Boolean_YN_UC... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.Y_N_UC, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS.Y_N_UC, values);
 	}
 
 	/**
 	 * Fetch records that have <code>VC_BOOLEAN IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBooleans> fetchByVcBoolean(java.lang.Boolean... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.VC_BOOLEAN, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS.VC_BOOLEAN, values);
 	}
 
 	/**
 	 * Fetch records that have <code>C_BOOLEAN IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBooleans> fetchByCBoolean(java.lang.Boolean... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.C_BOOLEAN, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS.C_BOOLEAN, values);
 	}
 
 	/**
 	 * Fetch records that have <code>N_BOOLEAN IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBooleans> fetchByNBoolean(java.lang.Boolean... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.N_BOOLEAN, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS.N_BOOLEAN, values);
 	}
 }

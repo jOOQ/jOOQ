@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -1273713920;
+	private static final long serialVersionUID = -856391516;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_725_LOB_TEST</code>
@@ -27,18 +27,25 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.h2.gener
 	/**
 	 * The column <code>PUBLIC.T_725_LOB_TEST.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_725_LOB_TEST, "");
+	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>PUBLIC.T_725_LOB_TEST.LOB</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB.length(2147483647), T_725_LOB_TEST, "");
+	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB.length(2147483647), this, "");
 
 	/**
-	 * No further instances allowed
+	 * Create a <code>PUBLIC.T_725_LOB_TEST</code> table reference
 	 */
-	private T_725LobTest() {
+	public T_725LobTest() {
 		this("T_725_LOB_TEST", null);
+	}
+
+	/**
+	 * Create an aliased <code>PUBLIC.T_725_LOB_TEST</code> table reference
+	 */
+	public T_725LobTest(java.lang.String alias) {
+		this(alias, org.jooq.test.h2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST);
 	}
 
 	private T_725LobTest(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord> aliased) {
@@ -63,5 +70,20 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.h2.gener
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_T_725_LOB_TEST);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.h2.generatedclasses.tables.T_725LobTest as(java.lang.String alias) {
+		return new org.jooq.test.h2.generatedclasses.tables.T_725LobTest(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.h2.generatedclasses.tables.T_725LobTest rename(java.lang.String name) {
+		return new org.jooq.test.h2.generatedclasses.tables.T_725LobTest(name, null);
 	}
 }

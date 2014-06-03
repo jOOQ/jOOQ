@@ -553,6 +553,13 @@ public class DSL {
      * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String)} for strictly
+     * recursive CTE.
      */
     public static WithAsStep with(String alias) {
         return new WithImpl(null, false).with(alias);
@@ -563,6 +570,13 @@ public class DSL {
      * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
      */
     public static WithAsStep with(String alias, String... fieldAliases) {
         return new WithImpl(null, false).with(alias, fieldAliases);
@@ -581,6 +595,13 @@ public class DSL {
      * <li>
      * {@link DerivedColumnList#as(Select)}</li>
      * </ul>
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(CommonTableExpression...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(CommonTableExpression...)} for strictly
+     * recursive CTE.
      */
     public static WithStep with(CommonTableExpression<?>... tables) {
         return new WithImpl(null, false).with(tables);
@@ -591,6 +612,13 @@ public class DSL {
      * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String)} for strictly
+     * recursive CTE.
      * <p>
      * Note that the {@link SQLDialect#H2} database only supports single-table,
      * <code>RECURSIVE</code> common table expression lists.
@@ -604,6 +632,13 @@ public class DSL {
      * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
      * <p>
      * Note that the {@link SQLDialect#H2} database only supports single-table,
      * <code>RECURSIVE</code> common table expression lists.
@@ -625,6 +660,13 @@ public class DSL {
      * <li>
      * {@link DerivedColumnList#as(Select)}</li>
      * </ul>
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(CommonTableExpression...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(CommonTableExpression...)} for strictly
+     * recursive CTE.
      * <p>
      * Note that the {@link SQLDialect#H2} database only supports single-table,
      * <code>RECURSIVE</code> common table expression lists.

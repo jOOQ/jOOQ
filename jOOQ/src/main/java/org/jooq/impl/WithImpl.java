@@ -40,7 +40,11 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.WITH;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
@@ -175,7 +179,7 @@ class WithImpl extends AbstractQueryPart implements WithStep, WithAsStep {
         ctx.keyword("with")
            .sql(" ");
 
-        if (recursive)
+        if (recursive && !asList(DB2, ORACLE, SQLSERVER).contains(ctx.configuration().dialect().family()))
             ctx.keyword("recursive")
                .sql(" ");
 

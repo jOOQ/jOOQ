@@ -1588,8 +1588,11 @@ public interface DSLContext {
      * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     WithAsStep withRecursive(String alias);
 
     /**
@@ -1597,8 +1600,11 @@ public interface DSLContext {
      * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     WithAsStep withRecursive(String alias, String... fieldAliases);
 
     /**
@@ -1614,8 +1620,11 @@ public interface DSLContext {
      * <li>
      * {@link DerivedColumnList#as(Select)}</li>
      * </ul>
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     WithStep withRecursive(CommonTableExpression<?>... tables);
 
     /**

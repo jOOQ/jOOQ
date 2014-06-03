@@ -591,6 +591,9 @@ public class DSL {
      * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
      */
     public static WithAsStep withRecursive(String alias) {
         return new WithImpl(null, true).with(alias);
@@ -601,6 +604,9 @@ public class DSL {
      * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
      */
     public static WithAsStep withRecursive(String alias, String... fieldAliases) {
         return new WithImpl(null, true).with(alias, fieldAliases);
@@ -619,6 +625,9 @@ public class DSL {
      * <li>
      * {@link DerivedColumnList#as(Select)}</li>
      * </ul>
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
      */
     public static WithStep withRecursive(CommonTableExpression<?>... tables) {
         return new WithImpl(null, true).with(tables);

@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = 1399637894;
+	private static final long serialVersionUID = -172391482;
 
 	/**
 	 * The singleton instance of <code>public.t_arrays</code>
@@ -58,6 +58,21 @@ public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gene
 	 * The column <code>public.t_arrays.array_array</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.lang.Integer[]> ARRAY_ARRAY = createField("array_array", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType(), this, "");
+
+	/**
+	 * The column <code>public.t_arrays.number_list</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.lang.String[]> NUMBER_LIST = createField("number_list", org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType(), this, "");
+
+	/**
+	 * The column <code>public.t_arrays.string_list</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.lang.String[]> STRING_LIST = createField("string_list", org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType(), this, "");
+
+	/**
+	 * The column <code>public.t_arrays.date_list</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord, java.lang.String[]> DATE_LIST = createField("date_list", org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType(), this, "");
 
 	/**
 	 * Create a <code>public.t_arrays</code> table reference

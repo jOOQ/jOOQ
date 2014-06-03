@@ -407,6 +407,9 @@ CREATE TABLE t_arrays (
   udt_array u_street_type[],
   enum_array u_country[],
   array_array INTEGER[][],
+  number_list VARCHAR(20)[],
+  string_list VARCHAR(20)[],
+  date_list VARCHAR(20)[],
 
   CONSTRAINT pk_t_arrays PRIMARY KEY (ID)
 )

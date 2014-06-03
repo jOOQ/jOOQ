@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused implements org.jooq.test.postgres.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = -1872004946;
+	private static final long serialVersionUID = -1995298873;
 
 	private final java.lang.Integer    id;
 	private final java.lang.String     name;
@@ -107,7 +107,7 @@ public class XUnused implements org.jooq.test.postgres.generatedclasses.tables.i
 	}
 
 	@Override
-	public java.lang.Integer getValues_() {
+	public java.lang.Integer getValues() {
 		return this.values;
 	}
 

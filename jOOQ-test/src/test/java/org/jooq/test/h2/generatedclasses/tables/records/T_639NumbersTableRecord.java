@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.T_639NumbersTableRecord> implements org.jooq.Record13<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal, java.lang.Float, java.lang.Double>, org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable {
 
-	private static final long serialVersionUID = 668560781;
+	private static final long serialVersionUID = 392234922;
 
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.ID</code>.
@@ -269,7 +269,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.ID;
+		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID;
 	}
 
 	/**
@@ -277,7 +277,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Byte> field2() {
-		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.BYTE;
+		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BYTE;
 	}
 
 	/**
@@ -285,7 +285,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Short> field3() {
-		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.SHORT;
+		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.SHORT;
 	}
 
 	/**
@@ -293,7 +293,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field4() {
-		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.INTEGER;
+		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.INTEGER;
 	}
 
 	/**
@@ -301,7 +301,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Long> field5() {
-		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.LONG;
+		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG;
 	}
 
 	/**
@@ -309,7 +309,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Byte> field6() {
-		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.BYTE_DECIMAL;
+		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BYTE_DECIMAL;
 	}
 
 	/**
@@ -317,7 +317,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Short> field7() {
-		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.SHORT_DECIMAL;
+		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.SHORT_DECIMAL;
 	}
 
 	/**
@@ -325,7 +325,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field8() {
-		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.INTEGER_DECIMAL;
+		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.INTEGER_DECIMAL;
 	}
 
 	/**
@@ -333,7 +333,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Long> field9() {
-		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.LONG_DECIMAL;
+		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG_DECIMAL;
 	}
 
 	/**
@@ -341,7 +341,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public org.jooq.Field<java.math.BigInteger> field10() {
-		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.BIG_INTEGER;
+		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_INTEGER;
 	}
 
 	/**
@@ -349,7 +349,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public org.jooq.Field<java.math.BigDecimal> field11() {
-		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.BIG_DECIMAL;
+		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_DECIMAL;
 	}
 
 	/**
@@ -357,7 +357,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Float> field12() {
-		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.FLOAT;
+		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.FLOAT;
 	}
 
 	/**
@@ -365,7 +365,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Double> field13() {
-		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.DOUBLE;
+		return org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.DOUBLE;
 	}
 
 	/**

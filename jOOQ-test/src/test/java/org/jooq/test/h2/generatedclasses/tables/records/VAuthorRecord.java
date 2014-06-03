@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor {
 
-	private static final long serialVersionUID = 1018764485;
+	private static final long serialVersionUID = -1737704365;
 
 	/**
 	 * Setter for <code>PUBLIC.V_AUTHOR.ID</code>.
@@ -138,7 +138,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.h2.generatedclasses.tables.VAuthor.ID;
+		return org.jooq.test.h2.generatedclasses.tables.VAuthor.V_AUTHOR.ID;
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field2() {
-		return org.jooq.test.h2.generatedclasses.tables.VAuthor.FIRST_NAME;
+		return org.jooq.test.h2.generatedclasses.tables.VAuthor.V_AUTHOR.FIRST_NAME;
 	}
 
 	/**
@@ -154,7 +154,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field3() {
-		return org.jooq.test.h2.generatedclasses.tables.VAuthor.LAST_NAME;
+		return org.jooq.test.h2.generatedclasses.tables.VAuthor.V_AUTHOR.LAST_NAME;
 	}
 
 	/**
@@ -162,7 +162,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public org.jooq.Field<java.sql.Date> field4() {
-		return org.jooq.test.h2.generatedclasses.tables.VAuthor.DATE_OF_BIRTH;
+		return org.jooq.test.h2.generatedclasses.tables.VAuthor.V_AUTHOR.DATE_OF_BIRTH;
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field5() {
-		return org.jooq.test.h2.generatedclasses.tables.VAuthor.YEAR_OF_BIRTH;
+		return org.jooq.test.h2.generatedclasses.tables.VAuthor.V_AUTHOR.YEAR_OF_BIRTH;
 	}
 
 	/**
@@ -178,7 +178,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field6() {
-		return org.jooq.test.h2.generatedclasses.tables.VAuthor.ADDRESS;
+		return org.jooq.test.h2.generatedclasses.tables.VAuthor.V_AUTHOR.ADDRESS;
 	}
 
 	/**

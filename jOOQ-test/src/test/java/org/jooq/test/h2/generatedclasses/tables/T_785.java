@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = 2104879169;
+	private static final long serialVersionUID = 136898189;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_785</code>
@@ -27,23 +27,30 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedcla
 	/**
 	 * The column <code>PUBLIC.T_785.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_785, "");
+	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>PUBLIC.T_785.NAME</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_785, "");
+	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
 	 * The column <code>PUBLIC.T_785.VALUE</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_785, "");
+	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
-	 * No further instances allowed
+	 * Create a <code>PUBLIC.T_785</code> table reference
 	 */
-	private T_785() {
+	public T_785() {
 		this("T_785", null);
+	}
+
+	/**
+	 * Create an aliased <code>PUBLIC.T_785</code> table reference
+	 */
+	public T_785(java.lang.String alias) {
+		this(alias, org.jooq.test.h2.generatedclasses.tables.T_785.T_785);
 	}
 
 	private T_785(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.T_785Record> aliased) {
@@ -52,5 +59,20 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedcla
 
 	private T_785(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.T_785Record> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, org.jooq.test.h2.generatedclasses.Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.h2.generatedclasses.tables.T_785 as(java.lang.String alias) {
+		return new org.jooq.test.h2.generatedclasses.tables.T_785(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.h2.generatedclasses.tables.T_785 rename(java.lang.String name) {
+		return new org.jooq.test.h2.generatedclasses.tables.T_785(name, null);
 	}
 }

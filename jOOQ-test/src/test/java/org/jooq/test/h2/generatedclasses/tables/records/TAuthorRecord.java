@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = -245216268;
+	private static final long serialVersionUID = 1768212918;
 
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.ID</code>. The author ID
@@ -152,7 +152,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.h2.generatedclasses.tables.TAuthor.ID;
+		return org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR.ID;
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field2() {
-		return org.jooq.test.h2.generatedclasses.tables.TAuthor.FIRST_NAME;
+		return org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR.FIRST_NAME;
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field3() {
-		return org.jooq.test.h2.generatedclasses.tables.TAuthor.LAST_NAME;
+		return org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR.LAST_NAME;
 	}
 
 	/**
@@ -176,7 +176,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Field<java.sql.Date> field4() {
-		return org.jooq.test.h2.generatedclasses.tables.TAuthor.DATE_OF_BIRTH;
+		return org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR.DATE_OF_BIRTH;
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field5() {
-		return org.jooq.test.h2.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH;
+		return org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR.YEAR_OF_BIRTH;
 	}
 
 	/**
@@ -192,7 +192,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field6() {
-		return org.jooq.test.h2.generatedclasses.tables.TAuthor.ADDRESS;
+		return org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR.ADDRESS;
 	}
 
 	/**

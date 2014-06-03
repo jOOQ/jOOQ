@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = 1484857932;
+	private static final long serialVersionUID = 1670925887;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_IDENTITY_PK</code>
@@ -27,18 +27,25 @@ public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.h2.genera
 	/**
 	 * The column <code>PUBLIC.T_IDENTITY_PK.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), T_IDENTITY_PK, "");
+	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>PUBLIC.T_IDENTITY_PK.VAL</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> VAL = createField("VAL", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY_PK, "");
+	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> VAL = createField("VAL", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * No further instances allowed
+	 * Create a <code>PUBLIC.T_IDENTITY_PK</code> table reference
 	 */
-	private TIdentityPk() {
+	public TIdentityPk() {
 		this("T_IDENTITY_PK", null);
+	}
+
+	/**
+	 * Create an aliased <code>PUBLIC.T_IDENTITY_PK</code> table reference
+	 */
+	public TIdentityPk(java.lang.String alias) {
+		this(alias, org.jooq.test.h2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
 	}
 
 	private TIdentityPk(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord> aliased) {
@@ -71,5 +78,20 @@ public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.h2.genera
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_T_IDENTITY_PK);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.h2.generatedclasses.tables.TIdentityPk as(java.lang.String alias) {
+		return new org.jooq.test.h2.generatedclasses.tables.TIdentityPk(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.h2.generatedclasses.tables.TIdentityPk rename(java.lang.String name) {
+		return new org.jooq.test.h2.generatedclasses.tables.TIdentityPk(name, null);
 	}
 }

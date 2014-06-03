@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 694968662;
+	private static final long serialVersionUID = 549144398;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_TRIGGERS</code>
@@ -27,23 +27,30 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.h2.generate
 	/**
 	 * The column <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), T_TRIGGERS, "");
+	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>PUBLIC.T_TRIGGERS.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS, "");
+	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>PUBLIC.T_TRIGGERS.COUNTER</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("COUNTER", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS, "");
+	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("COUNTER", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * No further instances allowed
+	 * Create a <code>PUBLIC.T_TRIGGERS</code> table reference
 	 */
-	private TTriggers() {
+	public TTriggers() {
 		this("T_TRIGGERS", null);
+	}
+
+	/**
+	 * Create an aliased <code>PUBLIC.T_TRIGGERS</code> table reference
+	 */
+	public TTriggers(java.lang.String alias) {
+		this(alias, org.jooq.test.h2.generatedclasses.tables.TTriggers.T_TRIGGERS);
 	}
 
 	private TTriggers(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord> aliased) {
@@ -76,5 +83,20 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.h2.generate
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_T_TRIGGERS);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.h2.generatedclasses.tables.TTriggers as(java.lang.String alias) {
+		return new org.jooq.test.h2.generatedclasses.tables.TTriggers(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.h2.generatedclasses.tables.TTriggers rename(java.lang.String name) {
+		return new org.jooq.test.h2.generatedclasses.tables.TTriggers(name, null);
 	}
 }

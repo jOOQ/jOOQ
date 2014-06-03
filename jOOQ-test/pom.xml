@@ -1271,9 +1271,6 @@
                                             <deprecated>
                                                 true
                                             </deprecated>
-                                            <instanceFields>
-                                                false
-                                            </instanceFields>
                                             <generatedAnnotation>false</generatedAnnotation>
                                             <interfaces>true</interfaces>
                                             <jpaAnnotations>false</jpaAnnotations>

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_85 {
 
-	private static final long serialVersionUID = 833386051;
+	private static final long serialVersionUID = -1034887057;
 
 	/**
 	 * Setter for <code>PUBLIC.X_TEST_CASE_85.ID</code>.
@@ -99,7 +99,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.h2.generatedclasses.tables.XTestCase_85.ID;
+		return org.jooq.test.h2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.ID;
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.jooq.test.h2.generatedclasses.tables.XTestCase_85.X_UNUSED_ID;
+		return org.jooq.test.h2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID;
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field3() {
-		return org.jooq.test.h2.generatedclasses.tables.XTestCase_85.X_UNUSED_NAME;
+		return org.jooq.test.h2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME;
 	}
 
 	/**

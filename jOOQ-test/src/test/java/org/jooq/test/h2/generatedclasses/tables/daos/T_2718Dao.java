@@ -35,20 +35,20 @@ public class T_2718Dao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generatedc
 	 * Fetch records that have <code>EXCLUDE_ME IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_2718> fetchByExcludeMe(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_2718.EXCLUDE_ME, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_2718.T_2718.EXCLUDE_ME, values);
 	}
 
 	/**
 	 * Fetch a unique record that has <code>EXCLUDE_ME = value</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.pojos.T_2718 fetchOneByExcludeMe(java.lang.Integer value) {
-		return fetchOne(org.jooq.test.h2.generatedclasses.tables.T_2718.EXCLUDE_ME, value);
+		return fetchOne(org.jooq.test.h2.generatedclasses.tables.T_2718.T_2718.EXCLUDE_ME, value);
 	}
 
 	/**
 	 * Fetch records that have <code>XX IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_2718> fetchByXx(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_2718.XX, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_2718.T_2718.XX, values);
 	}
 }

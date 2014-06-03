@@ -35,97 +35,97 @@ public class T_639NumbersTableDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2
 	 * Fetch records that have <code>ID IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_639NumbersTable> fetchById(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.ID, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID, values);
 	}
 
 	/**
 	 * Fetch a unique record that has <code>ID = value</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.pojos.T_639NumbersTable fetchOneById(java.lang.Integer value) {
-		return fetchOne(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.ID, value);
+		return fetchOne(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID, value);
 	}
 
 	/**
 	 * Fetch records that have <code>BYTE IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_639NumbersTable> fetchByByte(java.lang.Byte... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.BYTE, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BYTE, values);
 	}
 
 	/**
 	 * Fetch records that have <code>SHORT IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_639NumbersTable> fetchByShort(java.lang.Short... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.SHORT, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.SHORT, values);
 	}
 
 	/**
 	 * Fetch records that have <code>INTEGER IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_639NumbersTable> fetchByInteger(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.INTEGER, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.INTEGER, values);
 	}
 
 	/**
 	 * Fetch records that have <code>LONG IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_639NumbersTable> fetchByLong(java.lang.Long... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.LONG, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG, values);
 	}
 
 	/**
 	 * Fetch records that have <code>BYTE_DECIMAL IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_639NumbersTable> fetchByByteDecimal(java.lang.Byte... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.BYTE_DECIMAL, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BYTE_DECIMAL, values);
 	}
 
 	/**
 	 * Fetch records that have <code>SHORT_DECIMAL IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_639NumbersTable> fetchByShortDecimal(java.lang.Short... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.SHORT_DECIMAL, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.SHORT_DECIMAL, values);
 	}
 
 	/**
 	 * Fetch records that have <code>INTEGER_DECIMAL IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_639NumbersTable> fetchByIntegerDecimal(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.INTEGER_DECIMAL, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.INTEGER_DECIMAL, values);
 	}
 
 	/**
 	 * Fetch records that have <code>LONG_DECIMAL IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_639NumbersTable> fetchByLongDecimal(java.lang.Long... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.LONG_DECIMAL, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG_DECIMAL, values);
 	}
 
 	/**
 	 * Fetch records that have <code>BIG_INTEGER IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_639NumbersTable> fetchByBigInteger(java.math.BigInteger... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.BIG_INTEGER, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_INTEGER, values);
 	}
 
 	/**
 	 * Fetch records that have <code>BIG_DECIMAL IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_639NumbersTable> fetchByBigDecimal(java.math.BigDecimal... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.BIG_DECIMAL, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_DECIMAL, values);
 	}
 
 	/**
 	 * Fetch records that have <code>FLOAT IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_639NumbersTable> fetchByFloat(java.lang.Float... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.FLOAT, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.FLOAT, values);
 	}
 
 	/**
 	 * Fetch records that have <code>DOUBLE IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_639NumbersTable> fetchByDouble(java.lang.Double... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.DOUBLE, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.DOUBLE, values);
 	}
 }

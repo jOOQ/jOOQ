@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer, java.sql.Timestamp>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = -498143223;
+	private static final long serialVersionUID = -549487245;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.ID</code>. The book ID
@@ -237,7 +237,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.h2.generatedclasses.tables.TBook.ID;
+		return org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK.ID;
 	}
 
 	/**
@@ -245,7 +245,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID;
+		return org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID;
 	}
 
 	/**
@@ -253,7 +253,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field3() {
-		return org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID;
+		return org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID;
 	}
 
 	/**
@@ -261,7 +261,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field4() {
-		return org.jooq.test.h2.generatedclasses.tables.TBook.DETAILS_ID;
+		return org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK.DETAILS_ID;
 	}
 
 	/**
@@ -269,7 +269,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field5() {
-		return org.jooq.test.h2.generatedclasses.tables.TBook.TITLE;
+		return org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK.TITLE;
 	}
 
 	/**
@@ -277,7 +277,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field6() {
-		return org.jooq.test.h2.generatedclasses.tables.TBook.PUBLISHED_IN;
+		return org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK.PUBLISHED_IN;
 	}
 
 	/**
@@ -285,7 +285,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field7() {
-		return org.jooq.test.h2.generatedclasses.tables.TBook.LANGUAGE_ID;
+		return org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID;
 	}
 
 	/**
@@ -293,7 +293,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field8() {
-		return org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_TEXT;
+		return org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK.CONTENT_TEXT;
 	}
 
 	/**
@@ -301,7 +301,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<byte[]> field9() {
-		return org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_PDF;
+		return org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK.CONTENT_PDF;
 	}
 
 	/**
@@ -309,7 +309,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field10() {
-		return org.jooq.test.h2.generatedclasses.tables.TBook.REC_VERSION;
+		return org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK.REC_VERSION;
 	}
 
 	/**
@@ -317,7 +317,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<java.sql.Timestamp> field11() {
-		return org.jooq.test.h2.generatedclasses.tables.TBook.REC_TIMESTAMP;
+		return org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK.REC_TIMESTAMP;
 	}
 
 	/**

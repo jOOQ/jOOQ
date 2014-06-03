@@ -35,27 +35,27 @@ public class T_2698Dao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generatedc
 	 * Fetch records that have <code>ID IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_2698> fetchById(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_2698.ID, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_2698.T_2698.ID, values);
 	}
 
 	/**
 	 * Fetch a unique record that has <code>ID = value</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.pojos.T_2698 fetchOneById(java.lang.Integer value) {
-		return fetchOne(org.jooq.test.h2.generatedclasses.tables.T_2698.ID, value);
+		return fetchOne(org.jooq.test.h2.generatedclasses.tables.T_2698.T_2698.ID, value);
 	}
 
 	/**
 	 * Fetch records that have <code>XX IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_2698> fetchByXx(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_2698.XX, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_2698.T_2698.XX, values);
 	}
 
 	/**
 	 * Fetch records that have <code>YY IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_2698> fetchByYy(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_2698.YY, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_2698.T_2698.YY, values);
 	}
 }

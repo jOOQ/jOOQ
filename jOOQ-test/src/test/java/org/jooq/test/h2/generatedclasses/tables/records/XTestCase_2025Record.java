@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_2025Record> implements org.jooq.Record2<java.lang.Integer, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_2025 {
 
-	private static final long serialVersionUID = 1547798333;
+	private static final long serialVersionUID = -1927806683;
 
 	/**
 	 * Setter for <code>PUBLIC.X_TEST_CASE_2025.REF_ID</code>.
@@ -70,7 +70,7 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.h2.generatedclasses.tables.XTestCase_2025.REF_ID;
+		return org.jooq.test.h2.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025.REF_ID;
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field2() {
-		return org.jooq.test.h2.generatedclasses.tables.XTestCase_2025.REF_NAME;
+		return org.jooq.test.h2.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025.REF_NAME;
 	}
 
 	/**

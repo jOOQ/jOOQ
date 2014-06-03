@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record6<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITDates {
 
-	private static final long serialVersionUID = -308225441;
+	private static final long serialVersionUID = -1971363617;
 
 	/**
 	 * Setter for <code>PUBLIC.T_DATES.ID</code>.
@@ -150,7 +150,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.h2.generatedclasses.tables.TDates.ID;
+		return org.jooq.test.h2.generatedclasses.tables.TDates.T_DATES.ID;
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public org.jooq.Field<java.sql.Date> field2() {
-		return org.jooq.test.h2.generatedclasses.tables.TDates.D;
+		return org.jooq.test.h2.generatedclasses.tables.TDates.T_DATES.D;
 	}
 
 	/**
@@ -166,7 +166,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public org.jooq.Field<java.sql.Time> field3() {
-		return org.jooq.test.h2.generatedclasses.tables.TDates.T;
+		return org.jooq.test.h2.generatedclasses.tables.TDates.T_DATES.T;
 	}
 
 	/**
@@ -174,7 +174,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public org.jooq.Field<java.sql.Timestamp> field4() {
-		return org.jooq.test.h2.generatedclasses.tables.TDates.TS;
+		return org.jooq.test.h2.generatedclasses.tables.TDates.T_DATES.TS;
 	}
 
 	/**
@@ -182,7 +182,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field5() {
-		return org.jooq.test.h2.generatedclasses.tables.TDates.D_INT;
+		return org.jooq.test.h2.generatedclasses.tables.TDates.T_DATES.D_INT;
 	}
 
 	/**
@@ -190,7 +190,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Long> field6() {
-		return org.jooq.test.h2.generatedclasses.tables.TDates.TS_BIGINT;
+		return org.jooq.test.h2.generatedclasses.tables.TDates.T_DATES.TS_BIGINT;
 	}
 
 	/**

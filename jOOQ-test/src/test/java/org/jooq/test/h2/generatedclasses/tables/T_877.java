@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_877 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.T_877Record> {
 
-	private static final long serialVersionUID = -1726102823;
+	private static final long serialVersionUID = -109354273;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_877</code>
@@ -27,13 +27,20 @@ public class T_877 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedcla
 	/**
 	 * The column <code>PUBLIC.T_877.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_877Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), T_877, "");
+	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_877Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * No further instances allowed
+	 * Create a <code>PUBLIC.T_877</code> table reference
 	 */
-	private T_877() {
+	public T_877() {
 		this("T_877", null);
+	}
+
+	/**
+	 * Create an aliased <code>PUBLIC.T_877</code> table reference
+	 */
+	public T_877(java.lang.String alias) {
+		this(alias, org.jooq.test.h2.generatedclasses.tables.T_877.T_877);
 	}
 
 	private T_877(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.T_877Record> aliased) {
@@ -50,5 +57,20 @@ public class T_877 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedcla
 	@Override
 	public org.jooq.Identity<org.jooq.test.h2.generatedclasses.tables.records.T_877Record, java.lang.Integer> getIdentity() {
 		return org.jooq.test.h2.generatedclasses.Keys.IDENTITY_T_877;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.h2.generatedclasses.tables.T_877 as(java.lang.String alias) {
+		return new org.jooq.test.h2.generatedclasses.tables.T_877(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.h2.generatedclasses.tables.T_877 rename(java.lang.String name) {
+		return new org.jooq.test.h2.generatedclasses.tables.T_877(name, null);
 	}
 }

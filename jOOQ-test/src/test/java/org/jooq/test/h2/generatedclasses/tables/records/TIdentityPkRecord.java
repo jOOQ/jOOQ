@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentityPk {
 
-	private static final long serialVersionUID = -1872953045;
+	private static final long serialVersionUID = 234393905;
 
 	/**
 	 * Setter for <code>PUBLIC.T_IDENTITY_PK.ID</code>.
@@ -82,7 +82,7 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.h2.generatedclasses.tables.TIdentityPk.ID;
+		return org.jooq.test.h2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID;
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.jooq.test.h2.generatedclasses.tables.TIdentityPk.VAL;
+		return org.jooq.test.h2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.VAL;
 	}
 
 	/**

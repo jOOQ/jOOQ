@@ -191,7 +191,6 @@
     </dependencyManagement>
 
     <build>
-        <defaultGoal>deploy</defaultGoal>
         <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
             <plugin>

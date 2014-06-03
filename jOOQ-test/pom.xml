@@ -2775,6 +2775,22 @@
                                                     <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
                                                     <converter>org.jooq.test.all.converters.Boolean_YES_NO_UC_Converter</converter>
                                                 </customType>
+                                                
+                                                <customType>
+                                                    <name>StringArrayToStringList</name>
+                                                    <type>java.util.List&lt;java.lang.String></type>
+                                                    <converter>org.jooq.test.all.converters.StringArrayToStringListConverter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>StringArrayToIntegerList</name>
+                                                    <type>java.util.List&lt;java.lang.Integer></type>
+                                                    <converter>org.jooq.test.all.converters.StringArrayToIntegerListConverter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>StringArrayToDateList</name>
+                                                    <type>java.util.List&lt;java.sql.Date></type>
+                                                    <converter>org.jooq.test.all.converters.StringArrayToDateListConverter</converter>
+                                                </customType>
                                             </customTypes>
                                 
                                             <forcedTypes>
@@ -2845,6 +2861,21 @@
                                                     <name>B10</name>
                                                     <expression>(?i:(.*?.)?T_BOOLEANS.ONE_ZERO)</expression>
                                                 </forcedType>
+                                                
+                                                <!-- [#3310] Re-enable this, when it is fixed 
+                                                <forcedType>
+                                                    <name>StringArrayToStringList</name>
+                                                    <expression>(?i:(.*?.)?t_arrays\.string_list)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>StringArrayToIntegerList</name>
+                                                    <expression>(?i:(.*?.)?t_arrays\.number_list)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>StringArrayToDateList</name>
+                                                    <expression>(?i:(.*?.)?t_arrays\.date_list)</expression>
+                                                </forcedType>
+                                                  -->
                                             </forcedTypes>
                                         </database>
                                         <generate>

@@ -40,6 +40,9 @@
  */
 package org.jooq.test.all.testcases;
 
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Stream.iterate;
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -49,11 +52,16 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.tools.StringUtils.leftPad;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
 
@@ -223,16 +231,116 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(2, result1.fields().length);
         assertEquals("x", result1.field(0).getName());
         assertEquals("y", result1.field(1).getName());
-     // assertEquals(Integer.class, result1.field(0).getType());
+        // Not all databases will deserialise this as Integer, e.g. Oracle (BigDecimal)
+        assertTrue(Number.class.isAssignableFrom(result1.field(0).getType()));
         assertEquals(String.class, result1.field(1).getType());
         assertEquals(1, (int) result1.get(0).getValue(0, Integer.class));
         assertEquals("a", result1.getValue(0, 1));
 
-        // TODO: Test CTE with no explicit column lists
-        // TODO: Test recursive CTE
         // TODO: Test CTE with UNIONs (may not work due to #1658)
         // TODO: Test CTE with LIMIT .. OFFSET (may not work due to ROWNUM emulation, etc)
         // TODO: Test CTE with complex subqueries
-        // TODO: Run tests on all databases, not just SQL Server
+    }
+
+    public void testRecursiveCTESimple() throws Exception {
+
+        // This is currently the only use case supported by H2
+        assumeFamilyNotIn(CUBRID, DERBY, MARIADB, MYSQL, SQLITE);
+
+        CommonTableExpression<Record2<Integer, String>> t1 =
+        name("t1").fields("f1", "f2").as(
+            select(
+                inline(1),
+
+                // SQL Server is a bit restrictive, here:
+                // Types don't match between the anchor and the recursive part in column "f2" of recursive query "t1".
+                inline("a").cast(VARCHAR.length(15))
+            )
+            .unionAll(
+                select(
+                    fieldByName(Integer.class, "t1", "f1").add(inline(1)),
+                    fieldByName(String.class, "t1", "f2").concat(inline("a")).cast(VARCHAR.length(15))
+                )
+                .from(tableByName("t1"))
+                // H2 support is *very* experimental...
+                // https://groups.google.com/d/msg/h2-database/OJfqNF_Iqyo/brxu-Lu3c78J
+                .where(fieldByName("t1", "f1").lt(inline(10)))
+            )
+        );
+
+        Result<Record> result=
+        create().withRecursive(t1)
+                .select()
+                .from(t1)
+                .fetch();
+
+        assertEquals(10, result.size());
+        assertEquals(asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), result.getValues(0, int.class));
+        assertEquals(iterate(1, i -> i + 1)
+                         .limit(10)
+                         .map(i -> leftPad("", i, "a"))
+                         .collect(toList()),
+                     result.getValues(1));
+    }
+
+    public void testRecursiveCTEMultiple() throws Exception {
+        assumeFamilyNotIn(CUBRID, DERBY, H2, MARIADB, MYSQL, SQLITE);
+
+        CommonTableExpression<Record2<Integer, String>> t1 =
+        name("t1").fields("f1", "f2").as(
+            select(
+                val(1),
+
+                // And we don't want to reach the end of the DB2 mainframe tape, here...
+                // A temporary table could not be created because there is no available system temporary table space that has a compatible page size.. SQLCODE=-1585, SQLSTATE=54048, DRIVER=4.7.85
+                val("a").cast(VARCHAR.length(15))
+            )
+            .unionAll(
+                select(
+                    fieldByName(Integer.class, "t1", "f1").add(1),
+                    fieldByName(String.class, "t1", "f2").concat("a").cast(VARCHAR.length(15))
+                )
+                .from(tableByName("t1"))
+                .where(fieldByName("t1", "f1").lt(10))
+            )
+        );
+
+        CommonTableExpression<Record2<Integer, String>> t2 =
+        name("t2").fields("g1", "g2").as(
+            select(
+                val(1),
+                val("b").cast(VARCHAR.length(15))
+            )
+            .unionAll(
+                select(
+                    fieldByName(Integer.class, "t2", "g1").add(1),
+                    fieldByName(String.class, "t2", "g2").concat("b").cast(VARCHAR.length(15))
+                )
+                .from(tableByName("t2"))
+                .where(fieldByName("t2", "g1").lt(10))
+            )
+        );
+
+        Result<Record> result=
+        create().withRecursive(t1, t2)
+                .select()
+                .from(t1)
+                .join(t2)
+                .on(fieldByName("t1", "f1").eq(fieldByName("t2", "g1")))
+                .fetch();
+
+        assertEquals(10, result.size());
+        assertEquals(asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), result.getValues(0, int.class));
+        assertEquals(iterate(1, i -> i + 1)
+                         .limit(10)
+                         .map(i -> leftPad("", i, "a"))
+                         .collect(toList()),
+                     result.getValues(1));
+        assertEquals(asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), result.getValues(2, int.class));
+        assertEquals(iterate(1, i -> i + 1)
+                        .limit(10)
+                        .map(i -> leftPad("", i, "b"))
+                        .collect(toList()),
+                     result.getValues(3));
     }
 }

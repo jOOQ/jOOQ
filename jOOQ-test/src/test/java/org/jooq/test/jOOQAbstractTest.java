@@ -2258,6 +2258,16 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRecursiveCTESimple() throws Exception {
+        new CTETests(this).testRecursiveCTESimple();
+    }
+
+    @Test
+    public void testRecursiveCTEMultiple() throws Exception {
+        new CTETests(this).testRecursiveCTEMultiple();
+    }
+
+    @Test
     public void testJoinDuplicateFieldNames() throws Exception {
         new JoinTests(this).testJoinDuplicateFieldNames();
     }

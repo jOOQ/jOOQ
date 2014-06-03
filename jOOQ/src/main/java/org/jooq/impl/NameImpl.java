@@ -43,9 +43,12 @@ package org.jooq.impl;
 import java.util.Arrays;
 
 import org.jooq.Clause;
+import org.jooq.CommonTableExpression;
 import org.jooq.Context;
 import org.jooq.DerivedColumnList;
 import org.jooq.Name;
+import org.jooq.Record;
+import org.jooq.Select;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
 import org.jooq.tools.StringUtils;
@@ -93,6 +96,11 @@ class NameImpl extends AbstractQueryPart implements Name {
     @Override
     public final WindowDefinition as(WindowSpecification window) {
         return new WindowDefinitionImpl(this, window);
+    }
+
+    @Override
+    public final <R extends Record> CommonTableExpression<R> as(Select<R> select) {
+        return fields(new String[0]).as(select);
     }
 
     @Override

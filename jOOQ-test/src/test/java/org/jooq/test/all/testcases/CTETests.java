@@ -236,10 +236,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(String.class, result1.field(1).getType());
         assertEquals(1, (int) result1.get(0).getValue(0, Integer.class));
         assertEquals("a", result1.getValue(0, 1));
-
-        // TODO: Test CTE with UNIONs (may not work due to #1658)
-        // TODO: Test CTE with LIMIT .. OFFSET (may not work due to ROWNUM emulation, etc)
-        // TODO: Test CTE with complex subqueries
     }
 
     public void testRecursiveCTESimple() throws Exception {
@@ -342,5 +338,59 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                         .map(i -> leftPad("", i, "b"))
                         .collect(toList()),
                      result.getValues(3));
+    }
+
+    public void testCTEWithLimit() throws Exception {
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, INGRES, MARIADB, MYSQL, SQLITE);
+
+        CommonTableExpression<Record3<String, String, Integer>> t1 = name("t1").as(
+            select(TAuthor_FIRST_NAME(), TAuthor_LAST_NAME(), TBook_ID())
+            .from(TAuthor())
+            .join(TBook())
+            .on(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+            .orderBy(TBook_ID())
+            .limit(3)
+        );
+
+        Result<Record> result =
+        create().with(t1)
+                .select(t1.fields())
+                .from(t1)
+                .orderBy(t1.field(2).desc())
+                .limit(2)
+                .fetch();
+
+        assertEquals(2, result.size());
+        assertEquals(asList("Paulo", "George"), result.getValues(0));
+        assertEquals(asList("Coelho", "Orwell"), result.getValues(1));
+        assertEquals(asList(3, 2), result.getValues(2, int.class));
+    }
+
+    public void testCTEWithLimitOffset() throws Exception {
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, INGRES, MARIADB, MYSQL, SQLITE);
+
+        CommonTableExpression<Record3<String, String, Integer>> t1 = name("t1").as(
+            select(TAuthor_FIRST_NAME(), TAuthor_LAST_NAME(), TBook_ID())
+            .from(TAuthor())
+            .join(TBook())
+            .on(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+            .orderBy(TBook_ID())
+            .limit(3)
+            .offset(1)
+        );
+
+        Result<Record> result =
+        create().with(t1)
+                .select(t1.fields())
+                .from(t1)
+                .orderBy(t1.field(2).desc())
+                .limit(2)
+                .offset(1)
+                .fetch();
+
+        assertEquals(2, result.size());
+        assertEquals(asList("Paulo", "George"), result.getValues(0));
+        assertEquals(asList("Coelho", "Orwell"), result.getValues(1));
+        assertEquals(asList(3, 2), result.getValues(2, int.class));
     }
 }

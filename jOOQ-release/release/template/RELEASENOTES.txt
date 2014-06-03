@@ -18,6 +18,7 @@ in production.
 
 Features and improvements
 -------------------------
+#454  - Add support for CTE (Common Table Expressions / WITH-clause)
 #682  - Mavenise jooq-test
 #1061 - Support "DEFAULT" keyword in INSERT and UPDATE statements
 #2573 - Generate DAOs for tables with composite primary keys
@@ -85,6 +86,8 @@ Features and improvements
 #3288 - Add DSL.date(String), DSL.time(String), and DSL.timestamp(String), as
         shortcuts for respective valueOf() methods
 #3305 - Add SQLDialect.families() to access all SQLDialect families
+#3307 - Change internal representation of AbstractRecord to use Object[] and
+        BitSet instead of Value[]
 
 API changes (backwards-compatible)
 ----------------------------------
@@ -179,6 +182,7 @@ Bug fixes
         identifiers contain question marks
 #3300 - UpdatableRecord.store() executes INSERT instead of UPDATE when nullable
         primary keys are NULL, and the updatablePrimaryKeys setting is active
+#3309 - Don't use "deploy" as Maven <defaultGoal/> 
 
 
 Version 3.3.0 - February 14, 2014

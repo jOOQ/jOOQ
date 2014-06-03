@@ -3,10 +3,10 @@
     xmlns:jooq-pro="http://www.jooq.org/xsd/jooq-pro-3.4.0.xsd"
     targetNamespace="http://www.jooq.org/xsd/jooq-pro-3.4.0.xsd">
     
-    <!-- [trial] -->
     <!-- [pro] xxx
+    xxxx xxxxxxx xxx
     xxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+    xxxx xxxxxxxx xxx
     xxxx [/pro] -->
-    <!-- [/trial] -->
 
 </schema>

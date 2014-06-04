@@ -53,6 +53,7 @@ import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.RecordContext;
+import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.DataAccessException;
@@ -90,12 +91,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testRecordListenerLoad() throws Exception {
 
         // Check if lifecycle is handled correctly when initialising new records.
-        ReadListener listener1 = new ReadListener();
+        ReadListener listener1 = new ReadListener(TBook());
         create(listener1).newRecord(TBook());
         assertEquals(asList("loadStart", "loadEnd"), listener1.events);
 
         // Check if lifecycle is handled correctly when loading records from the DB.
-        ReadListener listener2 = new ReadListener();
+        ReadListener listener2 = new ReadListener(TBook());
         B book1 =
         create(listener2)
             .selectFrom(TBook())
@@ -113,34 +114,42 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList("loadStart", "loadEnd"), listener2.events);
     }
 
-    private static class ReadListener extends DefaultRecordListener {
+    private static class ReadListener extends BaseListener {
         List<String> events = new ArrayList<String>();
+
+        ReadListener(Table<?> table) {
+            super(table);
+        }
 
         @Override
         public void loadStart(RecordContext ctx) {
             events.add("loadStart");
+            assertions(ctx);
         }
 
         @Override
         public void loadEnd(RecordContext ctx) {
             events.add("loadEnd");
+            assertions(ctx);
         }
 
         @Override
         public void refreshStart(RecordContext ctx) {
             events.add("refreshStart");
+            assertions(ctx);
         }
 
         @Override
         public void refreshEnd(RecordContext ctx) {
             events.add("refreshEnd");
+            assertions(ctx);
         }
     }
 
     public void testRecordListenerStore() throws Exception {
         jOOQAbstractTest.reset = false;
 
-        WriteListener listener1 = new WriteListener();
+        WriteListener listener1 = new WriteListener(TBook());
         B book1 = newBook(5);
         book1.attach(create(listener1).configuration());
         assertEquals(1, book1.store());
@@ -151,7 +160,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(1, book1.store());
         assertEquals(asList("storeStart", "updateStart", "updateEnd", "storeEnd"), listener1.events);
 
-        WriteListener listener2 = new WriteListener();
+        WriteListener listener2 = new WriteListener(TBook());
         B book2 = newBook(6);
         book2.attach(create(listener2).configuration());
         assertEquals(1, book2.insert());
@@ -169,7 +178,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testRecordListenerWithException() throws Exception {
         jOOQAbstractTest.reset = false;
-        WriteListener listener1 = new WriteListener();
+        WriteListener listener1 = new WriteListener(TBook());
 
         B book = create(listener1).fetchOne(TBook(), TBook_ID().eq(1));
 
@@ -186,7 +195,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testRecordListenerBatchStore() throws Exception {
         jOOQAbstractTest.reset = false;
-        WriteListener listener1 = new WriteListener();
+        WriteListener listener1 = new WriteListener(TBook());
 
         B book1 = newBook(5);
         B book2 = newBook(6);
@@ -211,7 +220,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .where(TBook_ID().eq(1))
             .fetchOne();
 
-        ReadListener listener1 = new ReadListener();
+        ReadListener listener1 = new ReadListener(TBook());
         book.attach(create(listener1).configuration());
 
         // TODO: There is an internal load operation involved here. Is that
@@ -220,53 +229,79 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList("loadStart", "loadEnd", "refreshStart", "refreshEnd"), listener1.events);
     }
 
-    private static class WriteListener extends DefaultRecordListener {
+    private static class WriteListener extends BaseListener {
         List<String> events = new ArrayList<String>();
         List<Exception> exceptions = new ArrayList<Exception>();
+
+        WriteListener(Table<?> table) {
+            super(table);
+        }
 
         @Override
         public void storeStart(RecordContext ctx) {
             events.add("storeStart");
+            assertions(ctx);
         }
 
         @Override
         public void storeEnd(RecordContext ctx) {
             events.add("storeEnd");
+            assertions(ctx);
         }
 
         @Override
         public void insertStart(RecordContext ctx) {
             events.add("insertStart");
+            assertions(ctx);
         }
 
         @Override
         public void insertEnd(RecordContext ctx) {
             events.add("insertEnd");
+            assertions(ctx);
         }
 
         @Override
         public void updateStart(RecordContext ctx) {
             events.add("updateStart");
+            assertions(ctx);
         }
 
         @Override
         public void updateEnd(RecordContext ctx) {
             events.add("updateEnd");
+            assertions(ctx);
         }
 
         @Override
         public void deleteStart(RecordContext ctx) {
             events.add("deleteStart");
+            assertions(ctx);
         }
 
         @Override
         public void deleteEnd(RecordContext ctx) {
             events.add("deleteEnd");
+            assertions(ctx);
         }
 
         @Override
         public void exception(RecordContext ctx) {
             exceptions.add(ctx.exception());
+            assertions(ctx);
+        }
+    }
+
+    private static class BaseListener extends DefaultRecordListener {
+
+        private final Table<?> table;
+
+        BaseListener(Table<?> table) {
+            this.table = table;
+        }
+
+        void assertions(RecordContext ctx) {
+            assertEquals(table.recordType(), ctx.recordType());
         }
     }
 }

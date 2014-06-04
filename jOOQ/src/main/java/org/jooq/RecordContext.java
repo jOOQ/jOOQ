@@ -137,6 +137,15 @@ public interface RecordContext {
     Record record();
 
     /**
+     * The <code>RecordType</code> of the {@link #record()} that is being
+     * manipulated.
+     *
+     * @return The <code>RecordType</code> being manipulated. This is never
+     *         <code>null</code>.
+     */
+    RecordType<?> recordType();
+
+    /**
      * The <code>Record</code>(s) that are being manipulated in batch mode.
      * <p>
      * If a single <code>Record</code> is being manipulated in non-batch mode,

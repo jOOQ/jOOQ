@@ -69,15 +69,12 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
 import static org.jooq.SortOrder.ASC;
-import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.impl.DSL.denseRank;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.Dual.DUAL_ACCESS;
 import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Utils.DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE;
@@ -85,13 +82,11 @@ import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import static org.jooq.impl.Utils.DATA_WINDOW_DEFINITIONS;
 import static org.jooq.impl.Utils.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -102,9 +97,7 @@ import org.jooq.GroupField;
 import org.jooq.JoinType;
 import org.jooq.Operator;
 import org.jooq.Param;
-import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
 import org.jooq.SortField;
@@ -114,7 +107,6 @@ import org.jooq.TableLike;
 import org.jooq.TableOnStep;
 import org.jooq.TablePartitionByStep;
 import org.jooq.WindowDefinition;
-import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.StringUtils;
 
@@ -202,44 +194,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     }
 
     @Override
-    public final void bind(BindContext context) {
-        if (with != null)
-            context.visit(with);
-
-        pushWindow(context);
-
-        context.declareFields(true)
-               .visit(getSelect0())
-               .declareFields(false)
-               .declareTables(true)
-               .visit(getFrom())
-               .declareTables(false)
-               .visit(getWhere())
-               .visit(getConnectByStartWith())
-               .visit(getConnectBy())
-               .visit(getGroupBy())
-               .visit(getHaving());
-
-        if (asList(POSTGRES).contains(context.configuration().dialect().family())) {
-            context.declareWindows(true)
-                   .visit(getWindow())
-                   .declareWindows(false);
-        }
-
-        context.visit(getOrderBy());
-
-        // TOP clauses never bind values. So this can be safely applied at the
-        // end for LIMIT .. OFFSET clauses, or ROW_NUMBER() filtering
-        if (getLimit().isApplicable()) {
-            context.visit(getLimit());
-        }
-
-        context.visit(forUpdateOf)
-               .visit(forUpdateOfTables);
-    }
-
-    @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> context) {
         if (with != null)
             context.visit(with).formatSeparator();
 
@@ -427,7 +382,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     /**
      * The default LIMIT / OFFSET clause in most dialects
      */
-    private void toSQLReferenceLimitDefault(RenderContext context) {
+    private void toSQLReferenceLimitDefault(Context<?> context) {
         toSQLReference0(context);
         context.visit(getLimit());
     }
@@ -437,99 +392,132 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
      x xxxxxxxx xxx xxxxx x xxxxxx xxxxxx xx xxx xxxxxx xxxxxxxxxxxxxxxx
      x xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxx
      xx
-    xxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx x
+    xxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx x
 
-        xx xxxxxxx xxxxxx xxxxxxxx xxxxxx xxxxx xx xxxxxx x xxxxxxxx xxxx xxxx
-        xxxxxxxxxxxxx xxxxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxxxxxxxx x xxxxxxxxxxxxxxxxxx
+        xx xxxxxxxxxx xxxxxxxx xxxxxxxxxx
+        xxxxxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxx xxxxxxxxxxxx x xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxxxxxxx x xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxx
+        xx xxx xxx xxxxx
+        xxxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xx xxxxxx xxxxxxxx xxxxxx xxxxxx xxxxxx xx xxxxxxxxxx xxxxxxxxxxxx xxxxxx
-        xx xxxxxx xxxxxxxxx xxxxxxxxxxx xxx xxxxxxx xxx xxx xxxxx xx xxxxxx xxxxxx
-        xxxxxxxxxxxxx xxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxx
+        xx xxx xxx xx
+        xxxxxxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xx xxxxxxx xxxx xxxxxxxx xx xxxxxxxx xx xxxxxxx xxx xxxxxxxxxxxx xxxxxxx
-        xx xxxxx xxxxxxx xxx xxxxxxxx xxxxxxxxxx xxxxxxxx xxx xxxxxxxxxxxx xxxxxxx
-        xx xxxxxxxx xx xxx xxxxxxxx xxxxx xx xxxxxx xxx xxx xxx xxxxxxxxxxx xxxx
-        xx xxx xxxxxxxxxx
-        xx xxxxxxxxxx x
-            xxxxxxxxxxxxxxxxxx xxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xx xxxxxxxxx xx xxx xxxxxxx xx xxx xxxxxxxxxx xx xx
+        xx xxxxxxx xxx xx xxxx x xx xx xxxx xx xxxxx xxxxx xxxxx xxxxx xxxx xxxxx xxx xxxxxx xxx xxxxxxxxx
+        xxxxxxxxxx xxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxx xx x
+                x xxx xxxxxxx x xxxxxxxxxxxxxx x
+                x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
 
-            xx xxxxx xxxxxxxxx xxxx xxxx xxxx xx xxxxxxxxxx xxxxxx xxxxxxx xxxxxxxxxxx
-            xxx xxxxxxxxx xxxxx x xxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
-        xxxx x
-            xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
-        xxxxxx xxxxxxxx x xxxxxxxxxxxxxxx
+            xx xxxxxxx xxxx xxxxxxxx xx xxxxxxxx xx xxxxxxx xxx xxxxxxxxxxxx xxxxxxx
+            xx xxxxx xxxxxxx xxx xxxxxxxx xxxxxxxxxx xxxxxxxx xxx xxxxxxxxxxxx xxxxxxx
+            xx xxxxxxxx xx xxx xxxxxxxx xxxxx xx xxxxxx xxx xxx xxx xxxxxxxxxxx xxxx
+            xx xxx xxxxxxxxxx
+            xxxxxxxx
+                x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xx
 
-        xxxxxxxxxxxxxxxxxxxxxxx x xxxx xxx
-               xxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxx
-               xxxxxxx xxxxxxxxxxxxxxxxxxxxxx xx
-               xxxxxxxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxxxxxxx xx
-               xxxxxxxxxxxxxxxxxxxxxxxx
-               xxxxxx x xx
-               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxxxxx xx
-               xxxxxxxxxxxxxxxxxxxxxxxx
-               xxxxxx xx xx
-               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xx xx xx xxx xx xx xxx xx xx xxxxx
+        xxxxxxxxxx xxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+
+        xxxxxxx xxxxxxxx x xxxxxxxxxxxxxxx
+
+        xxxxxxxxxxxxxxxxxxxxxxxxxxx xx
+           xxxxxxxxxxxxxxxxxxxx
+           xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxxxxxxxx xxx
+           xxxxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxx
+
+        xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
+
+        xxxxxxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxx
+           xxxxxxx xx
+           xxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxxxxxxxxx xx
+           xxxxxxxxxxxxxxxxxx
+           xxxxxx x xx
+           xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxxxxxxx xx
+           xxxxxxxxxxxxxxxxxx
+           xxxxxx xx xx
+           xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     x
 
     xxx
      x xxxxxxxx xxx xxxxx x xxxxxx xxxxxx xx xxx xxxxxx xxxxxxxxxxxxxxxxxx
      x xxxxxxx
      xx
-    xxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx x
-        xxxxxxxxxxxxx xxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxxxxx x xxxxxxxxxxxxxxx
+    xxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx x
 
-        xxxxxx xxxxxxxxxxxx x xxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxxxxxxx x xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
+        xx xxxxxxxxxx xxxxxxxx xxxxxxxxxx
+        xxxxxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxx xxx
-               xxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxx
-                 xxxxxxxxxxxxxxxxxxxxxxxx xx
-                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx
-                 xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xx
-                 xxxxxxxxxxxxxxxxxxxxxxxx
-                 xxxxxxxxxxxxxxxxxx
-                 xxxxxxxxxxxxxxxxxxxxxx xxx
-                 xxxxxxxxxxxxxxxxxxxx
-                 xxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxx
-                 xxxxxxxxxxxxxxxxxx
-                 xxxxxxxxxxxxxxxx
-                 xxxxxxx xx
-                 xxxxxxxxxxxxxxxxxxxxxxxxxx
-                 xxxxxxxxxxxxxxxxxx
-                 xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xx xx
-                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxx
-               xxxxxxx xx
-               xxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxxxxxxx xx
-               xxxxxxxxxxxxxxxxxxxxxxxx
-               xxxxxx x xx
-               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xx xxx xxx xxxxx
+        xxxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+        xx xxx xxx xx
+        xxxxxxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+        xx xxxxxxxxx xx xxx xxxxxxx xx xxx xxxxxxxxxx xx xx
+        xxxxxxxxxx xxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+
+        xx xxxxx xxxxx xxxxx xxxxxx xx
+        xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxx
+
+            xx xxxxxxx xxx xx xxxx x xx xx xxxx xx xxxxx xxxxx xxxxx xxxxx xxxx xxxxx xxx xxxxxx xxx xxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxx xx x
+                x xxx xxxxxxx x xxxxxxxxxxxxxxxxxx xxxxxxxxxx x
+                x xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxx
+        xx
+
+        xx xx xx xxx xx xx xxx xx xx xxxxx
+        xxxxxxxxxx xxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+
+        xxxxxxxxxxxxxxxxxxxxxxxxxxx xx
+           xxxxxxxxxxxxxxxxxxxx
+           xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxxxxxxxx xxx
+           xxxxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxx
+             xxxxxxxxxxxxxxxxxxxxxxxx xx
+             xxxxxxxxxxxxxxxxxxxx
+             xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+             xxxxxxxxxxxxxxxxxxxxx
+             xxxxxxxxxxxxxxxxxx
+             xxxxxxxxxxxxxxxxxxxxxx xxx
+             xxxxxxxxxxxxxxxxxxxx
+             xxxxxxxxxxxxxxxxx
+
+        xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
+
+        xxx  xxxxxxxxxxxxxxxxxx
+             xxxxxxxxxxxxxxxx
+             xxxxxxx xx
+             xxxxxxxxxxxxxxxxx
+             xxxxxxxxxxxxxxxxxx
+             xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xx
+             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxx
+           xxxxxxx xx
+           xxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxxxxxxxxx xx
+           xxxxxxxxxxxxxxxxxx
+           xxxxxx x xx
+           xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     x
     xx [/pro] */
 
@@ -537,7 +525,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
      * This method renders the main part of a query without the LIMIT clause.
      * This part is common to any type of limited query
      */
-    private final void toSQLReference0(RenderContext context) {
+    private final void toSQLReference0(Context<?> context) {
         toSQLReference0(context, null);
     }
 
@@ -545,7 +533,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
      * This method renders the main part of a query without the LIMIT clause.
      * This part is common to any type of limited query
      */
-    private final void toSQLReference0(RenderContext context, QueryPart limitOffsetRownumber) {
+    private final void toSQLReference0(Context<?> context, Field<?>[] alternativeFields) {
         SQLDialect dialect = context.configuration().dialect();
 
         // SELECT clause
@@ -610,10 +598,16 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         context.declareFields(true);
 
+        // [#2335] When emulating LIMIT .. OFFSET, the SELECT clause needs to generate
+        // non-ambiguous column names as ambiguous column names are not allowed in subqueries
+        if (alternativeFields != null) {
+            context.visit(new SelectFieldList(alternativeFields));
+        }
+
         // [#1905] H2 only knows arrays, no row value expressions. Subqueries
         // in the context of a row value expression predicate have to render
         // arrays explicitly, as the subquery doesn't form an implicit RVE
-        if (context.subquery() && dialect == H2 && context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY) != null) {
+        else if (context.subquery() && dialect == H2 && context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY) != null) {
             Object data = context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY);
 
             try {
@@ -632,22 +626,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             context.visit(getSelect1());
         }
 
-        if (limitOffsetRownumber != null) {
-
-            // [#1724] Inlining is necessary to avoid further complexity between
-            // toSQL()'s LIMIT .. OFFSET rendering and bind()'s "obliviousness"
-            // thereof. This should be improved by delegating to composed Select
-            // objects.
-            ParamType paramType = context.paramType();
-            context.paramType(INLINED)
-                   .sql(",")
-                   .formatIndentStart()
-                   .formatSeparator()
-                   .visit(limitOffsetRownumber)
-                   .formatIndentEnd()
-                   .paramType(paramType);
-        }
-
+        
         context.declareFields(false)
                .end(SELECT_SELECT);
 
@@ -811,14 +790,16 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                    .visit(getOrderBy());
         }
 
-        // [#2423] SQL Server 2012 requires an ORDER BY clause, along with
-        // OFFSET .. FETCH
-        else if (getLimit().isApplicable() && asList().contains(dialect)){
-            context.formatSeparator()
-                   .keyword("order by")
-                   .sql(" ")
-                   .keyword("@@version");
-        }
+        /* [pro] xx
+        xx xxxxxxx xxx xxxxxx xxxx xxxxxxxx xx xxxxx xx xxxxxxx xxxxx xxxx
+        xx xxxxxx xx xxxxx
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxx xxxx
+                   xxxxxx xx
+                   xxxxxxxxxxxxxxxxxxxxxx
+        x
+        xx [/pro] */
 
         context.end(SELECT_ORDER_BY);
     }
@@ -1098,16 +1079,38 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         return seek;
     }
 
-    @Deprecated // Can this be written any better?
-    final SortFieldList getNonEmptyOrderBy() {
-        if (getOrderBy().isEmpty()) {
-            SortFieldList result = new SortFieldList();
-            result.add(DSL.field("@@version").asc());
-            return result;
-        }
+    /* [pro] xx
+    xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx x
+        xx xxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxx xxxxxx x xxx xxxxxxxxxxxxxxxx
 
-        return getOrderBy();
-    }
+            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                xxxx xxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxx
+
+                xxxx xxxxxxxxxx
+                xxxx xxxxxxx
+                xxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxx
+            x
+            xxxxxx xxxxxxx
+        x
+
+        xxxxxx xxxxxxxxxxxxx
+    x
+
+    xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx x
+        xxxxxxxxxxxxx xxxxx x xxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+        xxx xxxxxxxxx xxxxx x xxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxx
+
+        xxxxxx xxxxxx
+    x
+    xx [/pro] */
 
     @Override
     public final void addOrderBy(Collection<? extends SortField<?>> fields) {

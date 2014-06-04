@@ -596,6 +596,43 @@ final class Utils {
         return result;
     }
 
+    static final String[] fieldNames(Field<?>[] fields) {
+        String[] result = new String[fields.length];
+
+        for (int i = 0; i < fields.length; i++)
+            result[i] = fields[i].getName();
+
+        return result;
+    }
+
+    static final Field<?>[] fields(int length) {
+        Field<?>[] result = new Field[length];
+        String[] names = fieldNames(length);
+
+        for (int i = 0; i < length; i++)
+            result[i] = fieldByName(names[i]);
+
+        return result;
+    }
+
+    static final Field<?>[] aliasedFields(Field<?>[] fields, String[] aliases) {
+        Field<?>[] result = new Field[fields.length];
+
+        for (int i = 0; i < fields.length; i++)
+            result[i] = fields[i].as(aliases[i]);
+
+        return result;
+    }
+
+    static final Field<?>[] fieldsByName(String tableName, String[] fieldNames) {
+        Field<?>[] result = new Field[fieldNames.length];
+
+        for (int i = 0; i < fieldNames.length; i++)
+            result[i] = fieldByName(tableName, fieldNames[i]);
+
+        return result;
+    }
+
     /**
      * Be sure that a given object is a field.
      *

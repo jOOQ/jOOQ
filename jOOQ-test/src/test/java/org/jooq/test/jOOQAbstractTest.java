@@ -1408,6 +1408,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testPlainSQLLimitOffset() throws Exception {
+        new PlainSQLTests(this).testPlainSQLLimitOffset();
+    }
+
+    @Test
     public void testCustomSQL() throws Exception {
         new PlainSQLTests(this).testCustomSQL();
     }

@@ -77,6 +77,17 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
     int insert() throws DataAccessException;
 
     /**
+     * Store parts of this record to the database using an <code>INSERT</code>
+     * statement.
+     *
+     * @return <code>1</code> if the record was stored to the database. <code>0
+     *         </code> if storing was not necessary.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see #insert()
+     */
+    int insert(Field<?>... fields) throws DataAccessException;
+
+    /**
      * Fetch a parent record of this record, given a foreign key
      * <p>
      * This returns a parent record referenced by this record through a given

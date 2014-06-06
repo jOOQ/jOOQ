@@ -2073,6 +2073,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testUpdatablesPartialUpdates() throws Exception {
+        new CRUDTests(this).testUpdatablesPartialUpdates();
+    }
+
+    @Test
     public void testUpdatablesPKChangePK() throws Exception {
         new CRUDTests(this).testUpdatablesPKChangePK();
     }

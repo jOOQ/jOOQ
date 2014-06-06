@@ -69,6 +69,7 @@ import org.jooq.TableRecord;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
+import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataChangedException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.StringUtils;
@@ -117,6 +118,11 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final int store() {
+        return store(fields.fields.fields);
+    }
+
+    @Override
+    public final int store(final Field<?>... storeFields) throws DataAccessException, DataChangedException {
         final int[] result = new int[1];
 
         delegate(configuration(), (Record) this, STORE)
@@ -124,7 +130,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
             @Override
             public Record operate(Record record) throws RuntimeException {
-                result[0] = store0();
+                result[0] = store0(storeFields);
                 return record;
             }
         });
@@ -134,10 +140,15 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final int update() {
-        return storeUpdate(getPrimaryKey().getFieldsArray());
+        return update(fields.fields.fields);
     }
 
-    private final int store0() {
+    @Override
+    public int update(Field<?>... storeFields) throws DataAccessException, DataChangedException {
+        return storeUpdate(storeFields, getPrimaryKey().getFieldsArray());
+    }
+
+    private final int store0(Field<?>[] storeFields) {
         TableField<R, ?>[] keys = getPrimaryKey().getFieldsArray();
         boolean executeUpdate = false;
 
@@ -166,16 +177,16 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         int result = 0;
 
         if (executeUpdate) {
-            result = storeUpdate(keys);
+            result = storeUpdate(storeFields, keys);
         }
         else {
-            result = storeInsert();
+            result = storeInsert(storeFields);
         }
 
         return result;
     }
 
-    private final int storeUpdate(final TableField<R, ?>[] keys) {
+    private final int storeUpdate(final Field<?>[] storeFields, final TableField<R, ?>[] keys) {
         final int[] result = new int[1];
 
         delegate(configuration(), (Record) this, UPDATE)
@@ -183,7 +194,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
             @Override
             public Record operate(Record record) throws RuntimeException {
-                result[0] = storeUpdate0(keys);
+                result[0] = storeUpdate0(storeFields, keys);
                 return record;
             }
         });
@@ -192,9 +203,9 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     }
 
-    private final int storeUpdate0(TableField<R, ?>[] keys) {
+    private final int storeUpdate0(Field<?>[] storeFields, TableField<R, ?>[] keys) {
         UpdateQuery<R> update = create().updateQuery(getTable());
-        addChangedValues(update);
+        addChangedValues(storeFields, update);
         Utils.addConditions(update, this, keys);
 
         // Don't store records if no value was set by client code
@@ -223,7 +234,8 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         checkIfChanged(result, version, timestamp);
 
         if (result > 0) {
-            changed(false);
+            for (Field<?> storeField : storeFields)
+                changed(storeField, false);
         }
 
         return result;
@@ -285,9 +297,9 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     @Override
-    public final void refresh(final Field<?>... f) {
+    public final void refresh(final Field<?>... refreshFields) {
         SelectQuery<Record> select = create().selectQuery();
-        select.addSelect(f);
+        select.addSelect(refreshFields);
         select.addFrom(getTable());
         Utils.addConditions(select, this, getPrimaryKey().getFieldsArray());
 
@@ -298,7 +310,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
                 .operate(new RecordOperation<Record, RuntimeException>() {
                     @Override
                     public Record operate(Record record) throws RuntimeException {
-                        setValues(f, source);
+                        setValues(refreshFields, source);
                         return record;
                     }
                 });

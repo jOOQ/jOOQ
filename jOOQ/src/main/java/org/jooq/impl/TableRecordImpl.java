@@ -120,10 +120,15 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
 
     @Override
     public final int insert() {
-        return storeInsert();
+        return insert(fields.fields.fields);
     }
 
-    final int storeInsert() {
+    @Override
+    public final int insert(Field<?>... storeFields) {
+        return storeInsert(storeFields);
+    }
+
+    final int storeInsert(final Field<?>[] storeFields) {
         final int[] result = new int[1];
 
         delegate(configuration(), (Record) this, INSERT)
@@ -131,7 +136,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
 
             @Override
             public Record operate(Record record) throws RuntimeException {
-                result[0] = storeInsert0();
+                result[0] = storeInsert0(storeFields);
                 return record;
             }
         });
@@ -139,10 +144,10 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         return result[0];
     }
 
-    final int storeInsert0() {
+    final int storeInsert0(Field<?>[] storeFields) {
         DSLContext create = create();
         InsertQuery<R> insert = create.insertQuery(getTable());
-        addChangedValues(insert);
+        addChangedValues(storeFields, insert);
 
         // Don't store records if no value was set by client code
         if (!insert.isExecutable()) return 0;
@@ -180,7 +185,9 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
                 }
             }
 
-            changed(false);
+            for (Field<?> storeField : storeFields)
+                changed(storeField, false);
+
             fetched = true;
         }
 
@@ -215,9 +222,11 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     /**
      * Set all changed values of this record to a store query
      */
-    final void addChangedValues(StoreQuery<R> query) {
+    final void addChangedValues(Field<?>[] storeFields, StoreQuery<R> query) {
+        Fields<Record> f = new Fields<Record>(storeFields);
+
         for (Field<?> field : fields.fields.fields) {
-            if (changed(field)) {
+            if (changed(field) && f.field(field) != null) {
                 addValue(query, field);
             }
         }

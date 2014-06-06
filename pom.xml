@@ -158,6 +158,8 @@
         <module>jOOQ-codegen-maven</module>
         <module>jOOQ-meta</module>
         <module>jOOQ-scala</module>
+        <module>jOOQ-test-utils</module>
+        <module>jOOQ-test</module>
     </modules>
 
     <dependencyManagement>

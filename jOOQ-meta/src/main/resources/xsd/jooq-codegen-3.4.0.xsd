@@ -372,6 +372,19 @@
       <element name="recordTimestampFields" type="string" default="" minOccurs="0" maxOccurs="1" />
       
       <!--
+        A regular expression matching all columns that participate in "synthetic" primary keys,
+        which should be placed on generated UpdatableRecords, to be used with
+        
+        - UpdatableRecord.store()
+        - UpdatableRecord.update() 
+        - UpdatableRecord.delete()
+        - UpdatableRecord.refresh()
+        
+        Synthetic primary keys will override existing primary keys.
+        -->
+      <element name="syntheticPrimaryKeys" type="string" default="" minOccurs="0" maxOccurs="1" />
+      
+      <!--
         All (UNIQUE) key names that should be used instead of primary keys on
         generated UpdatableRecords, to be used with
         
@@ -381,6 +394,8 @@
         - UpdatableRecord.refresh()
         
         If several keys match, a warning is emitted and the first one encountered will be used.
+        
+        This flag will also replace synthetic primary keys, if it matches.
         -->
       <element name="overridePrimaryKeys" type="string" default="" minOccurs="0" maxOccurs="1" />
 

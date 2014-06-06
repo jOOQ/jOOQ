@@ -1170,6 +1170,13 @@
                                                      | ASDF_ASDF_ASDF        # This should not have any effect
                                                      | ASDF_ASDF_ASDF        # This should not have any effect
                                             </recordTimestampFields>
+                                            <syntheticPrimaryKeys>
+                                                     .*\.                    # All schemas
+                                                     (?i:
+                                                       V_AUTHOR\.ID          # Some updatable view columns
+                                                     | V_BOOK\.ID            # Some updatable view columns
+                                                     )
+                                            </syntheticPrimaryKeys>
                                             <dateAsTimestamp>false</dateAsTimestamp>
                                             <unsignedTypes>true</unsignedTypes>
                                             <inputSchema>${db.h2.schema}</inputSchema>

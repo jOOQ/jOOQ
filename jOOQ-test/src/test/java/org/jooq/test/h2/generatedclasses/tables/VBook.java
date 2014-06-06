@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 2008359507;
+	private static final long serialVersionUID = 424616229;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.V_BOOK</code>
@@ -99,6 +99,38 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedcla
 
 	private VBook(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.VBookRecord> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, org.jooq.test.h2.generatedclasses.Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.VBookRecord> getPrimaryKey() {
+		return org.jooq.test.h2.generatedclasses.Keys.SYNTHETIC_PK_V_BOOK;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.VBookRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.VBookRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.SYNTHETIC_PK_V_BOOK);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.VBookRecord, java.lang.Integer> getRecordVersion() {
+		return org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK.REC_VERSION;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.VBookRecord, java.sql.Timestamp> getRecordTimestamp() {
+		return org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK.REC_TIMESTAMP;
 	}
 
 	/**

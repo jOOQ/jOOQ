@@ -94,6 +94,7 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          includeExcludeColumns;
     private String[]                                                         recordVersionFields;
     private String[]                                                         recordTimestampFields;
+    private String[]                                                         syntheticPrimaryKeys;
     private String[]                                                         overridePrimaryKeys;
     private boolean                                                          supportsUnsignedTypes;
     private boolean                                                          dateAsTimestamp;
@@ -330,6 +331,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public String[] getRecordTimestampFields() {
         return recordTimestampFields;
+    }
+
+    @Override
+    public void setSyntheticPrimaryKeys(String[] syntheticPrimaryKeys) {
+        this.syntheticPrimaryKeys = syntheticPrimaryKeys;
+    }
+
+    @Override
+    public String[] getSyntheticPrimaryKeys() {
+        return syntheticPrimaryKeys;
     }
 
     @Override
@@ -884,6 +895,13 @@ public abstract class AbstractDatabase implements Database {
         }
 
         try {
+            syntheticPrimaryKeys(result);
+        }
+        catch (Exception e) {
+            log.error("Error while generating synthetic primary keys", e);
+        }
+
+        try {
             overridePrimaryKeys(result);
         }
         catch (Exception e) {
@@ -908,6 +926,28 @@ public abstract class AbstractDatabase implements Database {
 
     static final String fetchedSize(List<?> fetched, List<?> included) {
         return fetched.size() + " (" + included.size() + " included, " + (fetched.size() - included.size()) + " excluded)";
+    }
+
+    private final void syntheticPrimaryKeys(DefaultRelations r) {
+        List<UniqueKeyDefinition> syntheticKeys = new ArrayList<UniqueKeyDefinition>();
+
+        for (SchemaDefinition schema : getSchemata()) {
+            for (TableDefinition table : schema.getTables()) {
+                List<ColumnDefinition> columns = filterExcludeInclude(table.getColumns(), null, getSyntheticPrimaryKeys());
+
+                if (!columns.isEmpty()) {
+                    DefaultUniqueKeyDefinition syntheticKey = new DefaultUniqueKeyDefinition(schema, "SYNTHETIC_PK_" + table.getName(), table, true);
+                    syntheticKey.getKeyColumns().addAll(columns);
+                    syntheticKeys.add(syntheticKey);
+                }
+            }
+        }
+
+        log.info("Synthetic primary keys", fetchedSize(syntheticKeys, syntheticKeys));
+
+        for (UniqueKeyDefinition key : syntheticKeys) {
+            r.overridePrimaryKey(key);
+        }
     }
 
     private final void overridePrimaryKeys(DefaultRelations r) {

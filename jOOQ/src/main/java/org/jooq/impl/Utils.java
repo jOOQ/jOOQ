@@ -1263,7 +1263,7 @@ final class Utils {
      *
      * @param sqlChars The char array to peek into
      * @param index The index within the char array to peek for a string
-     * @param peek The strings to peek for
+     * @param peekAny The strings to peek for
      */
     static final boolean peekAny(char[] sqlChars, int index, String[] peekAny) {
         for (String peek : peekAny)

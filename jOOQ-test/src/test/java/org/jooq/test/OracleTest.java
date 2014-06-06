@@ -45,6 +45,8 @@ package org.jooq.test;
 
 xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -1717,6 +1719,28 @@ xxxxxx xxxxx xxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxx
     xxxxx
     xxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    x
+
+    xxxxx
+    xxxxxx xxxx xxxxxxxxxxxxxxxxxxxxx x
+        xxxxxxxxxxxxxxxx
+
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxx xxxxx
+                xxxxxxxxxxx
+
+        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxx xxxxxx x
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxx
+
+        xxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxx xx xx xx xxx xxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
     x
 x
 

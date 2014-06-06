@@ -1196,6 +1196,13 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         return new QuantifiedComparisonCondition(query, this, comparator);
     }
 
+    /* [pro] xx
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxx
+    x
+    xx [/pro] */
+
     // ------------------------------------------------------------------------
     // XXX: Pre-2.0 API. This API is maintained for backwards-compatibility. It
     // will be removed in the future. Consider using equivalent methods from

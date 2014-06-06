@@ -833,6 +833,18 @@ public abstract class BaseTest<
     }
 
     /**
+     * Convenience method to create a new dummy book
+     */
+    protected final A newAuthor(int id) {
+        A record = create().newRecord(TAuthor());
+
+        record.setValue(TAuthor_ID(), id);
+        record.setValue(TAuthor_LAST_NAME(), "XX");
+
+        return record;
+    }
+
+    /**
      * Convenience method to get an author
      */
     protected final A getAuthor(int id) {

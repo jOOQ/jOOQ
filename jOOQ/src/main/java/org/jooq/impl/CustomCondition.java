@@ -73,8 +73,7 @@ public abstract class CustomCondition extends AbstractCondition {
     private static final long     serialVersionUID = -3439681086987884991L;
     private static final Clause[] CLAUSES          = { CUSTOM };
 
-    protected CustomCondition() {
-    }
+    protected CustomCondition() {}
 
     // -------------------------------------------------------------------------
     // Implementation required
@@ -84,9 +83,12 @@ public abstract class CustomCondition extends AbstractCondition {
      * Subclasses must implement this method
      * <hr/>
      * {@inheritDoc}
+     *
+     * @deprecated - 3.4.0 - [#2694] - Use {@link #accept(Context)} instead.
      */
     @Override
-    public abstract void toSQL(RenderContext context);
+    @Deprecated
+    public void toSQL(RenderContext context) {}
 
     // -------------------------------------------------------------------------
     // Implementation optional
@@ -109,10 +111,12 @@ public abstract class CustomCondition extends AbstractCondition {
      * Subclasses may implement this method
      * <hr/>
      * {@inheritDoc}
+     *
+     * @deprecated - 3.4.0 - [#2694] - Use {@link #accept(Context)} instead.
      */
     @Override
-    public void bind(BindContext context) throws DataAccessException {
-    }
+    @Deprecated
+    public void bind(BindContext context) throws DataAccessException {}
 
     // -------------------------------------------------------------------------
     // No further overrides allowed

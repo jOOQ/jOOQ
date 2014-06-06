@@ -43,6 +43,7 @@ package org.jooq.test;
 import static org.jooq.impl.DSL.val;
 
 import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 import org.jooq.impl.CustomQueryPart;
@@ -64,12 +65,7 @@ public class CustomQueryPartTest extends AbstractTest {
         QueryPart p = new CustomQueryPart() {
 
             @Override
-            public void toSQL(RenderContext ctx) {
-                ctx.visit(val("abc"));
-            }
-
-            @Override
-            public void bind(BindContext ctx) {
+            public void accept(Context<?> ctx) {
                 ctx.visit(val("abc"));
             }
         };

@@ -3760,4 +3760,27 @@ public interface Field<T> extends GroupField {
     @Support
     Field<T> coalesce(Field<T> option, Field<?>... options);
 
+    /* [pro] */
+    /**
+     * Turn this field into an Oracle-specific field for use in outer-join
+     * predicates.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * TABLE1.COL.plus().eq(TABLE2.COL);
+     * TABLE1.COL.eq(TABLE2.COL.plus());
+     * </pre></code>
+     * <p>
+     * The above will generate
+     * <p>
+     * <code><pre>
+     * TABLE1.COL(+) = TABLE2.COL
+     * TABLE1.COL = TABLE2.COL(+)
+     * </pre></code>
+     */
+    @Support(ORACLE)
+    Field<T> plus();
+    /* [/pro] */
+
 }

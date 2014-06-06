@@ -45,6 +45,8 @@ package org.jooq.test;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
+import static org.apache.commons.collections4.ListUtils.union;
 import static org.jooq.impl.DSL.cumeDist;
 import static org.jooq.impl.DSL.currentUser;
 import static org.jooq.impl.DSL.denseRank;
@@ -1717,6 +1719,28 @@ public class OracleTest extends jOOQAbstractTest<
     @Test
     public void testOracleProceduresReturningNULLObjectTypes() {
         assertNull(Routines.p3005(create().configuration()));
+    }
+
+    @Test
+    public void testOracleOuterJoin() {
+        clean(T_AUTHOR);
+
+        create().insertInto(T_AUTHOR, T_AUTHOR.ID, T_AUTHOR.LAST_NAME)
+                .values(3, "XX")
+                .execute();
+
+        Result<Record3<Integer, String, String>> result =
+        create().select(T_AUTHOR.ID, T_AUTHOR.LAST_NAME, T_BOOK.TITLE)
+                .from(T_AUTHOR, T_BOOK)
+                .where(T_AUTHOR.ID.eq(T_BOOK.AUTHOR_ID.plus()))
+                .and(T_BOOK.AUTHOR_ID.plus().eq(T_AUTHOR.ID))
+                .orderBy(T_BOOK.ID.asc().nullsLast())
+                .fetch();
+
+        assertEquals(5, result.size());
+        assertEquals(asList(1, 1, 2, 2, 3), result.getValues(0));
+        assertEquals(union(BOOK_LAST_NAMES, singletonList("XX")), result.getValues(1));
+        assertEquals(union(BOOK_TITLES, singletonList(null)), result.getValues(2));
     }
 }
 

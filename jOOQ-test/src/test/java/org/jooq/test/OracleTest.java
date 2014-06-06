@@ -1723,7 +1723,7 @@ public class OracleTest extends jOOQAbstractTest<
 
     @Test
     public void testOracleOuterJoin() {
-        clean(T_AUTHOR);
+        jOOQAbstractTest.reset = false;
 
         create().insertInto(T_AUTHOR, T_AUTHOR.ID, T_AUTHOR.LAST_NAME)
                 .values(3, "XX")

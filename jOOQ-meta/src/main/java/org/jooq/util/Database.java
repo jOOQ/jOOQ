@@ -260,6 +260,18 @@ public interface Database {
     String[] getRecordTimestampFields();
 
     /**
+     * Columns matching these regular expressions will be considered as members
+     * of synthetic primary keys in generated code.
+     */
+    void setSyntheticPrimaryKeys(String[] primaryKeys);
+
+    /**
+     * Columns matching these regular expressions will be considered as members
+     * of synthetic primary keys in generated code.
+     */
+    String[] getSyntheticPrimaryKeys();
+
+    /**
      * Unique keys matching these regular expressions will be considered as
      * primary keys in generated code.
      */

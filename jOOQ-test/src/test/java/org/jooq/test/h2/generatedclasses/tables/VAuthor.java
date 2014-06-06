@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = -1789099087;
+	private static final long serialVersionUID = 2131959173;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.V_AUTHOR</code>
@@ -74,6 +74,22 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedc
 
 	private VAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, org.jooq.test.h2.generatedclasses.Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord> getPrimaryKey() {
+		return org.jooq.test.h2.generatedclasses.Keys.SYNTHETIC_PK_V_AUTHOR;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.SYNTHETIC_PK_V_AUTHOR);
 	}
 
 	/**

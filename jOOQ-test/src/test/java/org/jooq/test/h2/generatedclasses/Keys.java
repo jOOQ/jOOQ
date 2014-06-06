@@ -46,6 +46,8 @@ public class Keys {
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_64_69Record> PK_X_TEST_CASE_64_69 = UniqueKeys0.PK_X_TEST_CASE_64_69;
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record> PK_X_TEST_CASE_71 = UniqueKeys0.PK_X_TEST_CASE_71;
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_85Record> PK_X_TEST_CASE_85 = UniqueKeys0.PK_X_TEST_CASE_85;
+	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord> SYNTHETIC_PK_V_AUTHOR = UniqueKeys0.SYNTHETIC_PK_V_AUTHOR;
+	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.VBookRecord> SYNTHETIC_PK_V_BOOK = UniqueKeys0.SYNTHETIC_PK_V_BOOK;
 
 	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
@@ -98,6 +100,8 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_64_69Record> PK_X_TEST_CASE_64_69 = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69, org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record> PK_X_TEST_CASE_71 = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71, org.jooq.test.h2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_85Record> PK_X_TEST_CASE_85 = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85, org.jooq.test.h2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord> SYNTHETIC_PK_V_AUTHOR = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.VAuthor.V_AUTHOR, org.jooq.test.h2.generatedclasses.tables.VAuthor.V_AUTHOR.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.VBookRecord> SYNTHETIC_PK_V_BOOK = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK, org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK.ID);
 	}
 
 	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {

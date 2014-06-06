@@ -68,6 +68,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SQLSERVER2008;
+import static org.jooq.SQLDialect.SQLSERVER2012;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.SortOrder.ASC;
 import static org.jooq.impl.DSL.inline;
@@ -626,7 +627,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             context.visit(getSelect1());
         }
 
-        
+
         context.declareFields(false)
                .end(SELECT_SELECT);
 
@@ -793,7 +794,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         /* [pro] */
         // [#2423] SQL Server 2012 requires an ORDER BY clause, along with
         // OFFSET .. FETCH
-        else if (getLimit().isApplicable() && asList(SQLSERVER).contains(dialect.family())) {
+        else if (getLimit().isApplicable() && asList(SQLSERVER, SQLSERVER2012).contains(dialect)) {
             context.formatSeparator()
                    .keyword("order by")
                    .sql(" ")

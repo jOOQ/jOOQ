@@ -45,12 +45,10 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.val;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Param;
-import org.jooq.RenderContext;
 import org.jooq.RenderContext.CastMode;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
@@ -72,7 +70,7 @@ class Limit extends AbstractQueryPart {
     private boolean           rendersParams;
 
     @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> context) {
         ParamType paramType = context.paramType();
         CastMode castMode = context.castMode();
 
@@ -222,121 +220,6 @@ class Limit extends AbstractQueryPart {
                        .sql(" ").visit(offsetOrZero)
                        .castMode(castMode);
 
-                break;
-            }
-        }
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        switch (context.configuration().dialect()) {
-
-            // OFFSET .. LIMIT support provided by the following dialects
-            // ----------------------------------------------------------
-            /* [pro] xx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxxxxxxxxx
-            xx [/pro] */
-            case DERBY: {
-                context.visit(offsetOrZero);
-                context.visit(numberOfRows);
-                break;
-            }
-
-            // LIMIT .. OFFSET support provided by the following dialects
-            // ----------------------------------------------------------
-            case MARIADB:
-            case MYSQL:
-            case HSQLDB:
-            case H2:
-            case POSTGRES:
-            case SQLITE: {
-                context.visit(numberOfRows);
-                context.visit(offsetOrZero);
-                break;
-            }
-
-            // LIMIT [offset], [limit] supported by CUBRID
-            // -------------------------------------------
-            case CUBRID: {
-                context.visit(offsetOrZero);
-                context.visit(numberOfRows);
-                break;
-            }
-
-            // No bind variables in the FIRST .. SKIP clause
-            // ---------------------------------------------
-            case FIREBIRD: {
-                context.visit(getLowerRownum());
-                context.visit(getUpperRownum());
-                break;
-            }
-
-            /* [pro] xx
-            xx xxxxx xxxxxxxx xxxxx xxxxxxx xxxx xxxxxxxxx xx xxx
-            xxxx xxxx
-            xxxx xxxxxxx x
-                xxxxxx
-            x
-
-            xx xx xxxx xxxxxxxxx xx xxx xxx xx xxxxx xx xxxxxx
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxx xxxxxxx x
-
-                xx xxx xx xxxxx xx xxxxxxx xxxxxxx xxxx xxxxxxxxx
-                xx xxxxxxxxxxxxxxxx x
-                x
-
-                xx xxxx xxxxxxxxx xxxxxxxx xx xxxxxx xxxx xxxxxxx
-                xxxx x
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                x
-
-                xxxxxx
-            x
-
-            xx xxxxx xxxxxxxx xxxxx xxxxx xxxx xxxxxxxxx xx xxxxx xxx xxxxxxx
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxxx
-            xxxx xxxx
-            xxxx xxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxxxxxx x
-
-                xx xxx xxxxxxx xxxxxxx xxxx xxxxxxxxx
-                xx xxxxxxx xx xxxx xx xxxxxxxxxxxxxxx x
-                x
-
-                xx xxxx xxxxxxxxx xxxxxxxx xx xxxxxx xxxx xxxxxxx
-                xxxx x
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                x
-
-                xxxxxx
-            x
-
-            xx xxxxxx xxxxx xx xxxxx xx xxx xxxxxxx xxxxxx xxx xxxxxx xxxxx
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxxxxx x
-
-                xx xxxxxxx xxxx xxx xxxxxx xxxxxxxxx xxxxxxxxxxxx xxx xxxxx
-                xx xxxxx xx xxxxx xxxxxx xxx xxxxx xxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxx
-            x
-
-            xx [/pro] */
-            // [#2057] Bind the same values as rendered in toSQL() by default
-            default: {
-                context.visit(numberOfRows);
-                context.visit(offsetOrZero);
                 break;
             }
         }

@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
@@ -106,13 +107,12 @@ class Val<T> extends AbstractParam<T> {
     @Override
     public void accept(Context<?> ctx) {
         if (ctx instanceof RenderContext)
-            toSQL((RenderContext) ctx);
+            toSQL0((RenderContext) ctx);
         else
-            bind((BindContext) ctx);
+            bind0((BindContext) ctx);
     }
 
-    @Override
-    public final void toSQL(RenderContext context) {
+    final void toSQL0(RenderContext context) {
 
         // Casting can be enforced or prevented
         switch (context.castMode()) {
@@ -610,11 +610,10 @@ class Val<T> extends AbstractParam<T> {
         return val.toString().replace("'", "''");
     }
 
-    @Override
-    public final void bind(BindContext context) {
+    final void bind0(BindContext context) {
 
         // [#1302] Bind value only if it was not explicitly forced to be inlined
-        if (!isInline()) {
+        if (!isInline() && context.paramType() != INLINED) {
             context.bindValue(value, this);
         }
     }

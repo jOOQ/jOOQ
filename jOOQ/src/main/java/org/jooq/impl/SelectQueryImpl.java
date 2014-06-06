@@ -69,6 +69,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SortOrder.ASC;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
@@ -626,7 +627,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             context.visit(getSelect1());
         }
 
-        
+
         context.declareFields(false)
                .end(SELECT_SELECT);
 
@@ -793,7 +794,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         /* [pro] xx
         xx xxxxxxx xxx xxxxxx xxxx xxxxxxxx xx xxxxx xx xxxxxxx xxxxx xxxx
         xx xxxxxx xx xxxxx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxxxxxxxxxxxxxxxxxxxxx
                    xxxxxxxxxxxxxxx xxxx
                    xxxxxx xx

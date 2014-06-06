@@ -12,3 +12,6 @@
 /access
 /velocity.log
 /target
+
+/.idea
+/*.iml

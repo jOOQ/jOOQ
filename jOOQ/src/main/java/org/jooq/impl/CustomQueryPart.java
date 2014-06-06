@@ -95,9 +95,11 @@ public abstract class CustomQueryPart extends AbstractQueryPart {
      * Subclasses must implement this method
      * <hr/>
      * {@inheritDoc}
+     * @deprecated - 3.4.0 - [#2694] - Use {@link #accept(Context)} instead.
      */
+    @Deprecated
     @Override
-    public abstract void toSQL(RenderContext context);
+    public void toSQL(RenderContext context) {}
 
     // -------------------------------------------------------------------------
     // Implementation optional
@@ -120,7 +122,9 @@ public abstract class CustomQueryPart extends AbstractQueryPart {
      * Subclasses may implement this method
      * <hr/>
      * {@inheritDoc}
+     * @deprecated - 3.4.0 - [#2694] - Use {@link #accept(Context)} instead.
      */
+    @Deprecated
     @Override
     public void bind(BindContext context) throws DataAccessException {
     }

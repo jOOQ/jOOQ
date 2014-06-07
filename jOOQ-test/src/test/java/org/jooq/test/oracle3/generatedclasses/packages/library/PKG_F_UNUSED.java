@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.packages.library;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PKG_F_UNUSED extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 725704135;
+	private static final long serialVersionUID = 1712542007;
 
 	/**
-	 * The parameter <code>LIBRARY.PKG_F_UNUSED.RETURN_VALUE</code>. 
+	 * The parameter <code>LIBRARY.PKG_F_UNUSED.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 

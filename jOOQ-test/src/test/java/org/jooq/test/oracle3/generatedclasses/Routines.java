@@ -700,6 +700,18 @@ public class Routines {
 	}
 
 	/**
+	 * Call <code>P_NESTED</code>
+	 */
+	public static org.jooq.test.oracle3.generatedclasses.routines.P_NESTED call_P_NESTED(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_3 P1, org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_3 P2) {
+		org.jooq.test.oracle3.generatedclasses.routines.P_NESTED p = new org.jooq.test.oracle3.generatedclasses.routines.P_NESTED();
+		p.setP1(P1);
+		p.setP2(P2);
+
+		p.execute(configuration);
+		return p;
+	}
+
+	/**
 	 * Call <code>P_TABLES1</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE call_P_TABLES1(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE IN_TABLE) {
@@ -763,6 +775,16 @@ public class Routines {
 		p.setvalue(value);
 
 		p.execute(configuration);
+	}
+
+	/**
+	 * Call <code>P3005</code>
+	 */
+	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_3005 call_P3005(org.jooq.Configuration configuration) {
+		org.jooq.test.oracle3.generatedclasses.routines.P3005 p = new org.jooq.test.oracle3.generatedclasses.routines.P3005();
+
+		p.execute(configuration);
+		return p.getP1();
 	}
 
 	/**

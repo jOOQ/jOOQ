@@ -689,4 +689,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(2), result.getValue(1, nestedID));
         assertEquals(Integer.valueOf(1), result.getValue(1, 1));
     }
+
+    public void testLimitWithLOBs() throws Exception {
+        // [#2646] Emulated LIMIT .. OFFSET clauses must not synthetically sort on
+        // LOB columns
+        Result<Record1<String>> result =
+        create().select(TBook_CONTENT_TEXT())
+                .from(TBook())
+                .limit(2)
+                .fetch();
+
+        assertEquals(2, result.size());
+
+        result =
+        create().select(TBook_CONTENT_TEXT())
+                .from(TBook())
+                .limit(2)
+                .offset(1)
+                .fetch();
+
+        assertEquals(2, result.size());
+    }
 }

@@ -49,6 +49,10 @@ import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.RenderNameStyle.LOWER;
 import static org.jooq.conf.RenderNameStyle.QUOTED;
 import static org.jooq.conf.RenderNameStyle.UPPER;
+import static org.jooq.impl.Identifiers.QUOTES;
+import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
+import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
+import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
 import static org.jooq.impl.Utils.DATA_COUNT_BIND_VALUES;
 
 import java.util.Arrays;
@@ -147,6 +151,47 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return sql.toString();
     }
 
+    /* [pro] */ /* [trial] */
+    private static final long exp;
+    private static final java.util.concurrent.atomic.AtomicLong cnt;
+
+    static {
+        String d = "2014-12-31";
+        java.io.RandomAccessFile f = null;
+
+        try {
+            f = new java.io.RandomAccessFile(
+                new java.io.File(DefaultRenderContext.class.getResource("/xsd/jooq-pro.xsd").toURI()), "r");
+
+            String xsd = null;
+            byte[] contents = new byte[(int) f.length()];
+            f.readFully(contents);
+            xsd = new String(contents);
+
+            java.util.regex.Pattern p = Pattern.compile("name=\"d-([\\w-]+)\"");
+            java.util.regex.Matcher m = p.matcher(xsd);
+
+            if (m.find()) {
+                 d = m.group(1);
+            }
+        }
+        catch (Exception ignore) {}
+        finally {
+            if (f != null) {
+                try {
+                    f.close();
+                }
+                catch (Exception ignore) {}
+            }
+        }
+
+        // "Close enough" date arithmetic
+        cnt = new java.util.concurrent.atomic.AtomicLong();
+        exp = java.sql.Date.valueOf(d).getTime();
+    }
+
+    /* [/trial] */ /* [/pro] */
+
     @Override
     public final String render(QueryPart part) {
         RenderContext local = new DefaultRenderContext(this).visit(part);
@@ -172,6 +217,14 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             else {
                 local.sql(" -- SQL rendered with a free trial version of jOOQ " + Constants.FULL_VERSION);
             }
+        }
+
+        if (cnt.incrementAndGet() > 100000) {
+            throw new RuntimeException("You have executed > 100000 queries with the free trial version. Please consider upgrading to a commercial license or contact sales@datageekery.com, if you wish to run more queries with your free trial.");
+        }
+
+        if (exp < System.currentTimeMillis()) {
+            throw new RuntimeException("Your 30 day trial period has ended some time ago. Please consider upgrading to a commercial license or contact sales@datageekery.com, if you wish to extend your free trial.");
         }
 
         /* [/trial] */ /* [/pro] */
@@ -365,41 +418,11 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             sql(literal);
         }
         else {
-            switch (family) {
+            String[][] quotes = QUOTES.get(family);
 
-                // MySQL supports backticks and double quotes
-                case MARIADB:
-                case MYSQL:
-                    sql("`").sql(StringUtils.replace(literal, "`", "``")).sql("`");
-                    break;
-
-                /* [pro] */
-                // T-SQL databases use brackets
-                case ACCESS:
-                case ASE:
-                case SQLSERVER:
-                case SYBASE:
-                    sql("[").sql(StringUtils.replace(literal, "]", "]]")).sql("]");
-                    break;
-
-                /* [/pro] */
-                // Most dialects implement the SQL standard, using double quotes
-                /* [pro] */
-                case DB2:
-                case INGRES:
-                case ORACLE:
-                /* [/pro] */
-                case CUBRID:
-                case DERBY:
-                case FIREBIRD:
-                case H2:
-                case HSQLDB:
-                case POSTGRES:
-                case SQLITE:
-                default:
-                    sql('"').sql(StringUtils.replace(literal, "\"", "\"\"")).sql('"');
-                    break;
-            }
+            sql(quotes[QUOTE_START_DELIMITER][0]);
+            sql(StringUtils.replace(literal, quotes[QUOTE_END_DELIMITER][0], quotes[QUOTE_END_DELIMITER_ESCAPED][0]));
+            sql(quotes[QUOTE_END_DELIMITER][0]);
         }
 
         return this;

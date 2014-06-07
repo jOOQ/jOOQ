@@ -73,15 +73,14 @@ class ArrayConstant<R extends ArrayRecord<?>> extends AbstractParam<R> {
     }
 
     @Override
-    public void accept(Context<?> ctx) {
+    public final void accept(Context<?> ctx) {
         if (ctx instanceof RenderContext)
-            toSQL((RenderContext) ctx);
+            toSQL0((RenderContext) ctx);
         else
-            bind((BindContext) ctx);
+            bind0((BindContext) ctx);
     }
 
-    @Override
-    public final void toSQL(RenderContext context) {
+    final void toSQL0(RenderContext context) {
         if (context.paramType() == INLINED) {
             context.sql(array.getName());
             context.sql("(");
@@ -101,8 +100,7 @@ class ArrayConstant<R extends ArrayRecord<?>> extends AbstractParam<R> {
         }
     }
 
-    @Override
-    public final void bind(BindContext context) {
+    final void bind0(BindContext context) {
         context.bindValue(array, this);
     }
 }

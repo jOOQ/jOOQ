@@ -9,15 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class P_CREATE_AUTHOR_BY_NAME extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -110277243;
+	private static final long serialVersionUID = 908906081;
 
 	/**
-	 * The parameter <code>P_CREATE_AUTHOR_BY_NAME.FIRST_NAME</code>. 
+	 * The parameter <code>P_CREATE_AUTHOR_BY_NAME.FIRST_NAME</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> FIRST_NAME = createParameter("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The parameter <code>P_CREATE_AUTHOR_BY_NAME.LAST_NAME</code>. 
+	 * The parameter <code>P_CREATE_AUTHOR_BY_NAME.LAST_NAME</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> LAST_NAME = createParameter("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR);
 

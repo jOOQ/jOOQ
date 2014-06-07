@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class P1490 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 222954721;
+	private static final long serialVersionUID = 428272377;
 
 	/**
-	 * The parameter <code>P1490.value</code>. 
+	 * The parameter <code>P1490.value</code>.
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> value = createParameter("value", org.jooq.impl.SQLDataType.NUMERIC);
 

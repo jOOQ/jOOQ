@@ -62,7 +62,6 @@ import org.jooq.ExecuteListenerProvider;
 import org.jooq.RecordListenerProvider;
 import org.jooq.RecordMapperProvider;
 import org.jooq.SQLDialect;
-import org.jooq.SchemaMapping;
 import org.jooq.TransactionProvider;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
@@ -503,12 +502,13 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("deprecation")
     public final Configuration set(Settings newSettings) {
         this.settings = newSettings != null
             ? SettingsTools.clone(newSettings)
             : SettingsTools.defaultSettings();
 
-        this.mapping = new SchemaMapping(this);
+        this.mapping = new org.jooq.SchemaMapping(this);
         return this;
     }
 

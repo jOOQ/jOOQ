@@ -9,28 +9,54 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_NUMBER_TABLE extends org.jooq.impl.ArrayRecordImpl<java.lang.Integer> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 898400497;
+	private static final long serialVersionUID = 119608656;
 
 	/**
-	 * Create a new <code>U_NUMBER_TABLE</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #U_NUMBER_TABLE()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public U_NUMBER_TABLE(org.jooq.Configuration configuration) {
 		super(org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, "U_NUMBER_TABLE", org.jooq.impl.SQLDataType.INTEGER, configuration);
 	}
 
 	/**
-	 * Create a new <code>U_NUMBER_TABLE</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #U_NUMBER_TABLE()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public U_NUMBER_TABLE(org.jooq.Configuration configuration, java.lang.Integer... array) {
 		this(configuration);
 		set(array);
 	}
 
 	/**
-	 * Create a new <code>U_NUMBER_TABLE</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #U_NUMBER_TABLE()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public U_NUMBER_TABLE(org.jooq.Configuration configuration, java.util.List<? extends java.lang.Integer> list) {
 		this(configuration);
 		setList(list);
+	}
+
+	/**
+	 * Create a new <code>U_NUMBER_TABLE</code> record
+	 */
+	public U_NUMBER_TABLE() {
+		super(org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, "U_NUMBER_TABLE", org.jooq.impl.SQLDataType.INTEGER);
+	}
+
+	/**
+	 * Create a new <code>U_NUMBER_TABLE</code> record
+	 */
+	public U_NUMBER_TABLE(java.lang.Integer... array) {
+		this();
+		set(array);
+	}
+
+	/**
+	 * Create a new <code>U_NUMBER_TABLE</code> record
+	 */
+	public U_NUMBER_TABLE(java.util.Collection<? extends java.lang.Integer> collection) {
+		this();
+		set(collection);
 	}
 }

@@ -488,9 +488,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
                     // Check if relations are correctly loaded (and typed) as well
                     if (generatedTable.getPrimaryKey() != null) {
-                        assertNotNull(metaTable.getPrimaryKey());
-                        assertEquals(generatedTable, metaTable.getPrimaryKey().getTable());
-                        assertEquals(generatedTable.getPrimaryKey().getFields(), metaTable.getPrimaryKey().getFields());
+
+                        // [#3154] In H2, we now have synthetic primary keys on views
+                        if (dialect() != H2 || !generatedTable.getName().toLowerCase().startsWith("v_")) {
+                            assertNotNull(metaTable.getPrimaryKey());
+                            assertEquals(generatedTable, metaTable.getPrimaryKey().getTable());
+                            assertEquals(generatedTable.getPrimaryKey().getFields(), metaTable.getPrimaryKey().getFields());
+                        }
                     }
 
                     // Only truly updatable tables should be "Updatable"

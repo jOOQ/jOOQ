@@ -9,74 +9,66 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_UNSIGNED")
-public class T_UNSIGNED extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_UNSIGNED> implements java.lang.Cloneable, org.jooq.Record4<java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_UNSIGNED_INTERFACE {
+public class T_UNSIGNED extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_UNSIGNED> implements java.lang.Cloneable, org.jooq.Record4<java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger> {
 
-	private static final long serialVersionUID = 991139178;
+	private static final long serialVersionUID = -930888961;
 
 	/**
-	 * Setter for <code>T_UNSIGNED.U_BYTE</code>. 
+	 * Setter for <code>T_UNSIGNED.U_BYTE</code>.
 	 */
-	@Override
 	public void setU_BYTE(java.lang.Short value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>T_UNSIGNED.U_BYTE</code>. 
+	 * Getter for <code>T_UNSIGNED.U_BYTE</code>.
 	 */
 	@javax.persistence.Column(name = "U_BYTE", precision = 3)
-	@Override
 	public java.lang.Short getU_BYTE() {
 		return (java.lang.Short) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>T_UNSIGNED.U_SHORT</code>. 
+	 * Setter for <code>T_UNSIGNED.U_SHORT</code>.
 	 */
-	@Override
 	public void setU_SHORT(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>T_UNSIGNED.U_SHORT</code>. 
+	 * Getter for <code>T_UNSIGNED.U_SHORT</code>.
 	 */
 	@javax.persistence.Column(name = "U_SHORT", precision = 5)
-	@Override
 	public java.lang.Integer getU_SHORT() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>T_UNSIGNED.U_INT</code>. 
+	 * Setter for <code>T_UNSIGNED.U_INT</code>.
 	 */
-	@Override
 	public void setU_INT(java.lang.Long value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>T_UNSIGNED.U_INT</code>. 
+	 * Getter for <code>T_UNSIGNED.U_INT</code>.
 	 */
 	@javax.persistence.Column(name = "U_INT", precision = 10)
-	@Override
 	public java.lang.Long getU_INT() {
 		return (java.lang.Long) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>T_UNSIGNED.U_LONG</code>. 
+	 * Setter for <code>T_UNSIGNED.U_LONG</code>.
 	 */
-	@Override
 	public void setU_LONG(java.math.BigInteger value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>T_UNSIGNED.U_LONG</code>. 
+	 * Getter for <code>T_UNSIGNED.U_LONG</code>.
 	 */
 	@javax.persistence.Column(name = "U_LONG", precision = 20)
-	@Override
 	public java.math.BigInteger getU_LONG() {
 		return (java.math.BigInteger) getValue(3);
 	}
@@ -207,30 +199,6 @@ public class T_UNSIGNED extends org.jooq.impl.TableRecordImpl<org.jooq.test.orac
 	@Override
 	public T_UNSIGNED values(java.lang.Short value1, java.lang.Integer value2, java.lang.Long value3, java.math.BigInteger value4) {
 		return this;
-	}
-
-	// -------------------------------------------------------------------------
-	// FROM and INTO
-	// -------------------------------------------------------------------------
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_UNSIGNED_INTERFACE from) {
-		setU_BYTE(from.getU_BYTE());
-		setU_SHORT(from.getU_SHORT());
-		setU_INT(from.getU_INT());
-		setU_LONG(from.getU_LONG());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_UNSIGNED_INTERFACE> E into(E into) {
-		into.from(this);
-		return into;
 	}
 
 	// -------------------------------------------------------------------------

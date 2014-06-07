@@ -67,6 +67,16 @@ public class Tables {
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE T_LANGUAGE = org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE;
 
 	/**
+	 * The table TRANSACTIONS_WITH_CREDIT_DEBIT
+	 */
+	public static final org.jooq.test.oracle3.generatedclasses.tables.TRANSACTIONS_WITH_CREDIT_DEBIT TRANSACTIONS_WITH_CREDIT_DEBIT = org.jooq.test.oracle3.generatedclasses.tables.TRANSACTIONS_WITH_CREDIT_DEBIT.TRANSACTIONS_WITH_CREDIT_DEBIT;
+
+	/**
+	 * The table T_TEMP
+	 */
+	public static final org.jooq.test.oracle3.generatedclasses.tables.T_TEMP T_TEMP = org.jooq.test.oracle3.generatedclasses.tables.T_TEMP.T_TEMP;
+
+	/**
 	 * The table T_TRIGGERS
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS T_TRIGGERS = org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS;
@@ -117,6 +127,21 @@ public class Tables {
 	public static final org.jooq.test.oracle3.generatedclasses.tables.V_LIBRARY V_LIBRARY = org.jooq.test.oracle3.generatedclasses.tables.V_LIBRARY.V_LIBRARY;
 
 	/**
+	 * The table V_TRANSACTIONS
+	 */
+	public static final org.jooq.test.oracle3.generatedclasses.tables.V_TRANSACTIONS V_TRANSACTIONS = org.jooq.test.oracle3.generatedclasses.tables.V_TRANSACTIONS.V_TRANSACTIONS;
+
+	/**
+	 * The table V_TRANSACTIONS_BY_TIME
+	 */
+	public static final org.jooq.test.oracle3.generatedclasses.tables.V_TRANSACTIONS_BY_TIME V_TRANSACTIONS_BY_TIME = org.jooq.test.oracle3.generatedclasses.tables.V_TRANSACTIONS_BY_TIME.V_TRANSACTIONS_BY_TIME;
+
+	/**
+	 * The table V_TRANSACTIONS_CREDIT_FIRST
+	 */
+	public static final org.jooq.test.oracle3.generatedclasses.tables.V_TRANSACTIONS_CREDIT_FIRST V_TRANSACTIONS_CREDIT_FIRST = org.jooq.test.oracle3.generatedclasses.tables.V_TRANSACTIONS_CREDIT_FIRST.V_TRANSACTIONS_CREDIT_FIRST;
+
+	/**
 	 * The table X_TEST_CASE_2025
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_2025 X_TEST_CASE_2025 = org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_2025.X_TEST_CASE_2025;
@@ -137,7 +162,9 @@ public class Tables {
 	public static final org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85 X_TEST_CASE_85 = org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85;
 
 	/**
-	 * An unused table in the same schema.
+	 * An unused table in the same schema. 
+
+"Its comments contain special characters"
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED X_UNUSED = org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED;
 }

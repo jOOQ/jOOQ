@@ -101,7 +101,7 @@ public class SybaseTableDefinition extends AbstractTableDefinition {
             ColumnDefinition column = new DefaultColumnDefinition(
             	getDatabase().getTable(getSchema(), getName()),
                 record.getValue(SYSTABCOL.COLUMN_NAME),
-                record.getValue(SYSTABCOL.COLUMN_ID),
+                record.getValue(SYSTABCOL.COLUMN_ID, Integer.class),
                 type,
                 "autoincrement".equalsIgnoreCase(record.getValue(SYSTABCOL.DEFAULT)),
                 null

@@ -9,40 +9,36 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "X_TEST_CASE_2025")
-public class X_TEST_CASE_2025 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_2025> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_2025_INTERFACE {
+public class X_TEST_CASE_2025 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_2025> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 111901317;
+	private static final long serialVersionUID = 1495271324;
 
 	/**
-	 * Setter for <code>X_TEST_CASE_2025.REF_ID</code>. 
+	 * Setter for <code>X_TEST_CASE_2025.REF_ID</code>.
 	 */
-	@Override
 	public void setREF_ID(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>X_TEST_CASE_2025.REF_ID</code>. 
+	 * Getter for <code>X_TEST_CASE_2025.REF_ID</code>.
 	 */
 	@javax.persistence.Column(name = "REF_ID", nullable = false, precision = 7)
-	@Override
 	public java.lang.Integer getREF_ID() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>X_TEST_CASE_2025.REF_NAME</code>. 
+	 * Setter for <code>X_TEST_CASE_2025.REF_NAME</code>.
 	 */
-	@Override
 	public void setREF_NAME(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>X_TEST_CASE_2025.REF_NAME</code>. 
+	 * Getter for <code>X_TEST_CASE_2025.REF_NAME</code>.
 	 */
 	@javax.persistence.Column(name = "REF_NAME", nullable = false, length = 10)
-	@Override
 	public java.lang.String getREF_NAME() {
 		return (java.lang.String) getValue(1);
 	}
@@ -123,28 +119,6 @@ public class X_TEST_CASE_2025 extends org.jooq.impl.TableRecordImpl<org.jooq.tes
 	@Override
 	public X_TEST_CASE_2025 values(java.lang.Integer value1, java.lang.String value2) {
 		return this;
-	}
-
-	// -------------------------------------------------------------------------
-	// FROM and INTO
-	// -------------------------------------------------------------------------
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_2025_INTERFACE from) {
-		setREF_ID(from.getREF_ID());
-		setREF_NAME(from.getREF_NAME());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_2025_INTERFACE> E into(E into) {
-		into.from(this);
-		return into;
 	}
 
 	// -------------------------------------------------------------------------

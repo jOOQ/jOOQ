@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.SettingsTools.reflectionCaching;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.DSL.concat;
@@ -54,6 +55,10 @@ import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
+import static org.jooq.impl.Identifiers.QUOTES;
+import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
+import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
+import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
 import static org.jooq.tools.reflect.Reflect.accessible;
@@ -337,51 +342,51 @@ final class Utils {
     /**
      * Create a new record
      */
-    static final <R extends Record> RecordDelegate<R> newRecord(Class<R> type) {
-        return newRecord(type, null);
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Class<R> type) {
+        return newRecord(fetched, type, null);
     }
 
     /**
      * Create a new record
      */
-    static final <R extends Record> RecordDelegate<R> newRecord(Class<R> type, Field<?>[] fields) {
-        return newRecord(type, fields, null);
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Class<R> type, Field<?>[] fields) {
+        return newRecord(fetched, type, fields, null);
     }
 
     /**
      * Create a new record
      */
-    static final <R extends Record> RecordDelegate<R> newRecord(Table<R> type) {
-        return newRecord(type, null);
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Table<R> type) {
+        return newRecord(fetched, type, null);
     }
 
     /**
      * Create a new record
      */
     @SuppressWarnings("unchecked")
-    static final <R extends Record> RecordDelegate<R> newRecord(Table<R> type, Configuration configuration) {
-        return (RecordDelegate<R>) newRecord(type.getRecordType(), type.fields(), configuration);
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Table<R> type, Configuration configuration) {
+        return (RecordDelegate<R>) newRecord(fetched, type.getRecordType(), type.fields(), configuration);
     }
 
     /**
      * Create a new UDT record
      */
-    static final <R extends UDTRecord<R>> RecordDelegate<R> newRecord(UDT<R> type) {
-        return newRecord(type, null);
+    static final <R extends UDTRecord<R>> RecordDelegate<R> newRecord(boolean fetched, UDT<R> type) {
+        return newRecord(fetched, type, null);
     }
 
     /**
      * Create a new UDT record
      */
-    static final <R extends UDTRecord<R>> RecordDelegate<R> newRecord(UDT<R> type, Configuration configuration) {
-        return newRecord(type.getRecordType(), type.fields(), configuration);
+    static final <R extends UDTRecord<R>> RecordDelegate<R> newRecord(boolean fetched, UDT<R> type, Configuration configuration) {
+        return newRecord(fetched, type.getRecordType(), type.fields(), configuration);
     }
 
     /**
      * Create a new record
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    static final <R extends Record> RecordDelegate<R> newRecord(Class<R> type, Field<?>[] fields, Configuration configuration) {
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Class<R> type, Field<?>[] fields, Configuration configuration) {
         try {
             R record;
 
@@ -396,6 +401,10 @@ final class Utils {
                 // [#919] Allow for accessing non-public constructors
                 record = Reflect.accessible(type.getDeclaredConstructor()).newInstance();
             }
+
+            // [#3300] Records that were fetched from the database
+            if (record instanceof AbstractRecord)
+                ((AbstractRecord) record).fetched = fetched;
 
             return new RecordDelegate<R>(configuration, record);
         }
@@ -583,6 +592,43 @@ final class Utils {
 
         for (int i = 0; i < length; i++)
             result[i] = "v" + i;
+
+        return result;
+    }
+
+    static final String[] fieldNames(Field<?>[] fields) {
+        String[] result = new String[fields.length];
+
+        for (int i = 0; i < fields.length; i++)
+            result[i] = fields[i].getName();
+
+        return result;
+    }
+
+    static final Field<?>[] fields(int length) {
+        Field<?>[] result = new Field[length];
+        String[] names = fieldNames(length);
+
+        for (int i = 0; i < length; i++)
+            result[i] = fieldByName(names[i]);
+
+        return result;
+    }
+
+    static final Field<?>[] aliasedFields(Field<?>[] fields, String[] aliases) {
+        Field<?>[] result = new Field[fields.length];
+
+        for (int i = 0; i < fields.length; i++)
+            result[i] = fields[i].as(aliases[i]);
+
+        return result;
+    }
+
+    static final Field<?>[] fieldsByName(String tableName, String[] fieldNames) {
+        Field<?>[] result = new Field[fieldNames.length];
+
+        for (int i = 0; i < fieldNames.length; i++)
+            result[i] = fieldByName(tableName, fieldNames[i]);
 
         return result;
     }
@@ -1029,6 +1075,10 @@ final class Utils {
         // [#1593] Create a dummy renderer if we're in bind mode
         if (render == null) render = new DefaultRenderContext(bind.configuration());
 
+        SQLDialect dialect = render.configuration().dialect();
+        SQLDialect family = dialect.family();
+        String[][] quotes = QUOTES.get(family);
+
         for (int i = 0; i < sqlChars.length; i++) {
 
             // [#1797] Skip content inside of single-line comments, e.g.
@@ -1086,11 +1136,55 @@ final class Utils {
                 render.sql(sqlChars[i]);
             }
 
+            // [#3297] Skip ? inside of quoted identifiers, e.g.
+            // update x set v = "Column Name with a ? (question mark)"
+            else if (peekAny(sqlChars, i, quotes[QUOTE_START_DELIMITER])) {
+
+                // Main identifier delimiter or alternative one?
+                int delimiter = 0;
+                for (int d = 0; d < quotes[QUOTE_START_DELIMITER].length; d++) {
+                    if (peek(sqlChars, i, quotes[QUOTE_START_DELIMITER][d])) {
+                        delimiter = d;
+                        break;
+                    }
+                }
+
+                // Consume the initial identifier delimiter
+                for (int d = 0; d < quotes[QUOTE_START_DELIMITER][delimiter].length(); d++)
+                    render.sql(sqlChars[i++]);
+
+                // Consume the whole identifier
+                for (;;) {
+
+                    // Consume an escaped quote
+                    if (peek(sqlChars, i, quotes[QUOTE_END_DELIMITER_ESCAPED][delimiter])) {
+                        for (int d = 0; d < quotes[QUOTE_END_DELIMITER_ESCAPED][delimiter].length(); d++)
+                            render.sql(sqlChars[i++]);
+                    }
+
+                    // Break on the terminal identifier delimiter
+                    else if (peek(sqlChars, i, quotes[QUOTE_END_DELIMITER][delimiter])) {
+                        break;
+                    }
+
+                    // Consume identifier content
+                    render.sql(sqlChars[i++]);
+                }
+
+                // Consume the terminal identifier delimiter
+                for (int d = 0; d < quotes[QUOTE_END_DELIMITER][delimiter].length(); d++) {
+                    if (d > 0)
+                        i++;
+
+                    render.sql(sqlChars[i]);
+                }
+            }
+
             // Inline bind variables only outside of string literals
             else if (sqlChars[i] == '?' && substituteIndex < substitutes.size()) {
                 QueryPart substitute = substitutes.get(substituteIndex++);
 
-                if (render.paramType() == INLINED) {
+                if (render.paramType() == INLINED || render.paramType() == NAMED) {
                     render.visit(substitute);
                 }
                 else {
@@ -1162,6 +1256,21 @@ final class Utils {
         }
 
         return true;
+    }
+
+    /**
+     * Peek for several strings at a given <code>index</code> of a <code>char[]</code>
+     *
+     * @param sqlChars The char array to peek into
+     * @param index The index within the char array to peek for a string
+     * @param peekAny The strings to peek for
+     */
+    static final boolean peekAny(char[] sqlChars, int index, String[] peekAny) {
+        for (String peek : peekAny)
+            if (peek(sqlChars, index, peek))
+                return true;
+
+        return false;
     }
 
     /**
@@ -1381,13 +1490,14 @@ final class Utils {
      * [#2591] Type-safely copy a value from one record to another, preserving flags.
      */
     static final <T> void copyValue(AbstractRecord target, Field<T> targetField, Record source, Field<?> sourceField) {
-        Value<T> value = new Value<T>(
-            targetField.getDataType().convert(source.getValue(sourceField)),
-            targetField.getDataType().convert(source.original(sourceField)),
-            source.changed(sourceField)
-        );
+        DataType<T> targetType = targetField.getDataType();
 
-        target.setValue(targetField, value);
+        int targetIndex = indexOrFail(target.fieldsRow(), targetField);
+        int sourceIndex = indexOrFail(source.fieldsRow(), sourceField);
+
+        target.values[targetIndex] = targetType.convert(source.getValue(sourceIndex));
+        target.originals[targetIndex] = targetType.convert(source.original(sourceIndex));
+        target.changed.set(targetIndex, source.changed(sourceIndex));
     }
 
     /**
@@ -2920,7 +3030,7 @@ final class Utils {
             return null;
         }
 
-        return Utils.newRecord((Class<UDTRecord<?>>) type)
+        return Utils.newRecord(true, (Class<UDTRecord<?>>) type)
                     .operate(new RecordOperation<UDTRecord<?>, SQLException>() {
 
                 @Override

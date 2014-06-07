@@ -43,4 +43,19 @@ public interface ITArrays extends java.io.Serializable {
 	 * Getter for <code>public.t_arrays.array_array</code>.
 	 */
 	public java.lang.Integer[] getArrayArray();
+
+	/**
+	 * Getter for <code>public.t_arrays.number_list</code>.
+	 */
+	public java.lang.String[] getNumberList();
+
+	/**
+	 * Getter for <code>public.t_arrays.string_list</code>.
+	 */
+	public java.lang.String[] getStringList();
+
+	/**
+	 * Getter for <code>public.t_arrays.date_list</code>.
+	 */
+	public java.lang.String[] getDateList();
 }

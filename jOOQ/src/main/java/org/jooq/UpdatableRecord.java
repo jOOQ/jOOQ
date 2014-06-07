@@ -82,10 +82,7 @@ import org.jooq.exception.InvalidResultException;
 public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableRecord<R> {
 
     /**
-     * A view holding values for the {@link Table#getPrimaryKey()}
-     * <p>
-     * This method returns a "view" of this record itself. Modifications to the
-     * returned record will affect values in this record.
+     * A Record copy holding values for the {@link Table#getPrimaryKey()}.
      * <p>
      * The returned record consists exactly of those fields as returned by the
      * table's primary key: {@link UniqueKey#getFields()}.
@@ -107,8 +104,9 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <ul>
      * <li>If this record was created by client code, an <code>INSERT</code>
      * statement is executed</li>
-     * <li>If this record was loaded by jOOQ, but the primary key value was
-     * changed, an <code>INSERT</code> statement is executed. jOOQ expects that
+     * <li>If this record was loaded by jOOQ and the primary key value was
+     * changed, an <code>INSERT</code> statement is executed (unless
+     * {@link Settings#isUpdatablePrimaryKeys()} is set). jOOQ expects that
      * primary key values will never change due to the principle of
      * normalisation in RDBMS. So if client code changes primary key values,
      * this is interpreted by jOOQ as client code wanting to duplicate this
@@ -213,6 +211,8 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * this record were changed, you can explicitly set the changed flags for
      * all values with {@link #changed(boolean)} or for single values with
      * {@link #changed(Field, boolean)}, prior to storing.
+     * <p>
+     * This is the same as calling <code>record.store(record.fields())</code>
      *
      * @return <code>1</code> if the record was stored to the database. <code>0
      *         </code> if storing was not necessary.
@@ -225,6 +225,20 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
     int store() throws DataAccessException, DataChangedException;
 
     /**
+     * Store parts of this record to the database.
+     *
+     * @return <code>1</code> if the record was stored to the database. <code>0
+     *         </code> if storing was not necessary.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws DataChangedException If optimistic locking is enabled and the
+     *             record has already been changed/deleted in the database
+     * @see #store()
+     * @see #insert(Field...)
+     * @see #update(Field...)
+     */
+    int store(Field<?>... fields) throws DataAccessException, DataChangedException;
+
+    /**
      * Store this record back to the database using an <code>INSERT</code>
      * statement.
      * <p>
@@ -235,6 +249,8 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * this record were changed, you can explicitly set the changed flags for
      * all values with {@link #changed(boolean)} or for single values with
      * {@link #changed(Field, boolean)}, prior to insertion.
+     * <p>
+     * This is the same as calling <code>record.insert(record.fields())</code>
      *
      * @return <code>1</code> if the record was stored to the database. <code>0
      *         </code> if storing was not necessary.
@@ -243,6 +259,18 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      */
     @Override
     int insert() throws DataAccessException;
+
+    /**
+     * Store parts of this record to the database using an <code>INSERT</code>
+     * statement.
+     *
+     * @return <code>1</code> if the record was stored to the database. <code>0
+     *         </code> if storing was not necessary.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see #insert()
+     */
+    @Override
+    int insert(Field<?>... fields) throws DataAccessException;
 
     /**
      * Store this record back to the database using an <code>UPDATE</code>
@@ -255,6 +283,8 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * this record were changed, you can explicitly set the changed flags for
      * all values with {@link #changed(boolean)} or for single values with
      * {@link #changed(Field, boolean)}, prior to updating.
+     * <p>
+     * This is the same as calling <code>record.update(record.fields())</code>
      *
      * @return <code>1</code> if the record was stored to the database. <code>0
      *         </code> if storing was not necessary.
@@ -264,6 +294,19 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see #store()
      */
     int update() throws DataAccessException, DataChangedException;
+
+    /**
+     * Store parts of this record to the database using an <code>UPDATE</code>
+     * statement.
+     *
+     * @return <code>1</code> if the record was stored to the database. <code>0
+     *         </code> if storing was not necessary.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws DataChangedException If optimistic locking is enabled and the
+     *             record has already been changed/deleted in the database
+     * @see #update()
+     */
+    int update(Field<?>... fields) throws DataAccessException, DataChangedException;
 
     /**
      * Deletes this record from the database, based on the value of the primary

@@ -54,6 +54,7 @@ import static org.jooq.impl.Utils.settings;
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -71,6 +72,7 @@ import org.jooq.UniqueKey;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
+import org.jooq.tools.StringUtils;
 
 /**
  * A general base class for all {@link Record} types
@@ -83,10 +85,13 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     /**
      * Generated UID
      */
-    private static final long   serialVersionUID = -6052512608911220404L;
+    private static final long serialVersionUID = -6052512608911220404L;
 
-    final RowImpl               fields;
-    final Value<?>[]            values;
+    final RowImpl             fields;
+    final Object[]            values;
+    final Object[]            originals;
+    final BitSet              changed;
+    boolean                   fetched;
 
     AbstractRecord(Collection<? extends Field<?>> fields) {
         this(new RowImpl(fields));
@@ -97,12 +102,12 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     AbstractRecord(RowImpl fields) {
-        this.fields = fields;
-        this.values = new Value<?>[fields.size()];
+        int size = fields.size();
 
-        for (int i = 0; i < values.length; i++) {
-            values[i] = new Value<Object>(null);
-        }
+        this.fields = fields;
+        this.values = new Object[size];
+        this.originals = new Object[size];
+        this.changed = new BitSet(size);
     }
 
     // ------------------------------------------------------------------------
@@ -115,10 +120,8 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
         int size = size();
         for (int i = 0; i < size; i++) {
-            Object value = getValue0(i).getValue();
-
-            if (value instanceof Attachable) {
-                result.add((Attachable) value);
+            if (values[i] instanceof Attachable) {
+                result.add((Attachable) values[i]);
             }
         }
 
@@ -175,13 +178,14 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> T getValue(Field<T> field) {
-        return getValue0(field).getValue();
+        return (T) getValue(indexOrFail(fieldsRow(), field));
     }
 
     @Override
     @Deprecated
     public final <T> T getValue(Field<T> field, T defaultValue) {
-        return getValue0(field).getValue(defaultValue);
+        T result = getValue(field);
+        return result != null ? result : defaultValue;
     }
 
     @Override
@@ -210,7 +214,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final Object getValue(int index) {
-        return getValue0(index).getValue();
+        return values[safeIndex(index)];
     }
 
     @Override
@@ -279,24 +283,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return result == null ? defaultValue : result;
     }
 
-    final <T> Value<T> getValue0(int index) {
-        Value<?>[] v = getValues();
-
-        if (index >= v.length) {
-            throw new IllegalArgumentException("Field " + index + " is not contained in list");
-        }
-
-        return (Value<T>) v[index];
-    }
-
-    final <T> Value<T> getValue0(Field<T> field) {
-        return getValue0(indexOrFail(fieldsRow(), field));
-    }
-
-    final Value<?>[] getValues() {
-        return values;
-    }
-
     /**
      * Subclasses may type-unsafely set a value to a record index. This method
      * takes care of converting the value to the appropriate type.
@@ -311,39 +297,48 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     private final <T> void setValue(int index, Field<T> field, T value) {
-        Value<T> val = getValue0(index);
+        // Relevant issues documenting this method's behaviour:
+        // [#945] Avoid bugs resulting from setting the same value twice
+        // [#948] To allow for controlling the number of hard-parses
+        //        To allow for explicitly overriding default values
+        // [#979] Avoid modifying chnaged flag on unchanged primary key values
+
         UniqueKey<?> key = getPrimaryKey();
 
         // Normal fields' changed flag is always set to true
         if (key == null || !key.getFields().contains(field)) {
-            val.setValue(value);
+            changed.set(index);
         }
 
         // The primary key's changed flag might've been set previously
-        else if (val.isChanged()) {
-            val.setValue(value);
+        else if (changed.get(index)) {
+            changed.set(index);
         }
 
         // [#2764] Users may override updatability of primary key values
         else if (updatablePrimaryKeys(settings(this))) {
-            val.setValue(value);
+            changed.set(index);
         }
 
         // [#2698] If the primary key has not yet been set
-        else if (val.getOriginal() == null) {
-            val.setValue(value);
+        else if (originals[index] == null) {
+            changed.set(index);
         }
 
         // [#979] If the primary key is being changed, all other fields' flags
         // need to be set to true for in case this record is stored again, an
         // INSERT statement will thus be issued
         else {
-            val.setValue(value, true);
 
-            if (val.isChanged()) {
+            // [#945] Be sure that changed is never reset to false
+            changed.set(index, changed.get(index) || !StringUtils.equals(values[index], value));
+
+            if (changed.get(index)) {
                 changed(true);
             }
         }
+
+        values[index] = value;
     }
 
     @Override
@@ -352,17 +347,32 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     final void setValues(Field<?>[] fields, AbstractRecord record) {
+        fetched = record.fetched;
+
         for (Field<?> field : fields) {
-            setValue(field, record.getValue0(field));
+            int targetIndex = indexOrFail(fieldsRow(), field);
+            int sourceIndex = indexOrFail(record.fieldsRow(), field);
+
+            values[targetIndex] = record.getValue(sourceIndex);
+            originals[targetIndex] = record.original(sourceIndex);
+            changed.set(targetIndex, record.changed(sourceIndex));
         }
     }
 
-    final void setValue(Field<?> field, Value<?> value) {
-        setValue(indexOrFail(fieldsRow(), field), value);
+    final void intern0(int fieldIndex) {
+        safeIndex(fieldIndex);
+
+        if (field(fieldIndex).getType() == String.class) {
+            values[fieldIndex] = ((String) values[fieldIndex]).intern();
+            originals[fieldIndex] = ((String) originals[fieldIndex]).intern();
+        }
     }
 
-    final void setValue(int index, Value<?> value) {
-        getValues()[index] = value;
+    final int safeIndex(int index) {
+        if (index >= 0 && index < values.length)
+            return index;
+
+        throw new IllegalArgumentException("No field at index " + index + " in Record type " + fieldsRow());
     }
 
     /**
@@ -377,15 +387,14 @@ abstract class AbstractRecord extends AbstractStore implements Record {
      */
     @Override
     public Record original() {
-        return Utils.newRecord((Class<AbstractRecord>) getClass(), fields.fields.fields, configuration())
+        return Utils.newRecord(fetched, (Class<AbstractRecord>) getClass(), fields.fields.fields, configuration())
                     .operate(new RecordOperation<AbstractRecord, RuntimeException>() {
 
             @Override
             public AbstractRecord operate(AbstractRecord record) throws RuntimeException {
-                Value<?>[] v = getValues();
-
-                for (int i = 0; i < v.length; i++) {
-                    record.setValue(i, new Value<Object>(v[i].getOriginal()));
+                for (int i = 0; i < originals.length; i++) {
+                    record.values[i] = originals[i];
+                    record.originals[i] = originals[i];
                 }
 
                 return record;
@@ -400,7 +409,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final Object original(int fieldIndex) {
-        return getValues()[fieldIndex].getOriginal();
+        return originals[safeIndex(fieldIndex)];
     }
 
     @Override
@@ -410,13 +419,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final boolean changed() {
-        for (Value<?> value : getValues()) {
-            if (value.isChanged()) {
-                return true;
-            }
-        }
-
-        return false;
+        return !changed.isEmpty();
     }
 
     @Override
@@ -426,7 +429,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final boolean changed(int fieldIndex) {
-        return getValue0(fieldIndex).isChanged();
+        return changed.get(safeIndex(fieldIndex));
     }
 
     @Override
@@ -435,32 +438,43 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public final void changed(boolean changed) {
-        for (Value<?> value : getValues()) {
-            value.setChanged(changed);
+    public final void changed(boolean c) {
+        changed.set(0, values.length, c);
+
+        // [#1995] If a value is meant to be "unchanged", the "original" should
+        // match the supposedly "unchanged" value.
+        if (!c) {
+            System.arraycopy(values, 0, originals, 0, values.length);
         }
     }
 
     @Override
-    public final void changed(Field<?> field, boolean changed) {
-        changed(indexOrFail(fieldsRow(), field), changed);
+    public final void changed(Field<?> field, boolean c) {
+        changed(indexOrFail(fieldsRow(), field), c);
     }
 
     @Override
-    public final void changed(int fieldIndex, boolean changed) {
-        getValue0(fieldIndex).setChanged(changed);
+    public final void changed(int fieldIndex, boolean c) {
+        safeIndex(fieldIndex);
+
+        changed.set(fieldIndex, c);
+
+        // [#1995] If a value is meant to be "unchanged", the "original" should
+        // match the supposedly "unchanged" value.
+        if (!c)
+            originals[fieldIndex] = values[fieldIndex];
     }
 
     @Override
-    public final void changed(String fieldName, boolean changed) {
-        changed(indexOrFail(fieldsRow(), fieldName), changed);
+    public final void changed(String fieldName, boolean c) {
+        changed(indexOrFail(fieldsRow(), fieldName), c);
     }
 
     @Override
     public final void reset() {
-        for (Value<?> value : getValues()) {
-            value.reset();
-        }
+        changed.clear();
+
+        System.arraycopy(originals, 0, values, 0, originals.length);
     }
 
     @Override
@@ -470,7 +484,10 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void reset(int fieldIndex) {
-        getValue0(fieldIndex).reset();
+        safeIndex(fieldIndex);
+
+        changed.clear(fieldIndex);
+        values[fieldIndex] = originals[fieldIndex];
     }
 
     @Override
@@ -529,11 +546,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <R extends Record> R into(Table<R> table) {
-        return Utils.newRecord(table, configuration()).operate(new TransferRecordState<R>());
+        return Utils.newRecord(fetched, table, configuration()).operate(new TransferRecordState<R>());
     }
 
     final <R extends Record> R intoRecord(Class<R> type) {
-        return Utils.newRecord(type, fields(), configuration()).operate(new TransferRecordState<R>());
+        return Utils.newRecord(fetched, type, fields(), configuration()).operate(new TransferRecordState<R>());
     }
 
     private class TransferRecordState<R extends Record> implements RecordOperation<R, MappingException> {
@@ -555,13 +572,10 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
                         if (sourceIndex >= 0) {
                             DataType<?> targetType = targetField.getDataType();
-                            Value<?> sourceValue = values[sourceIndex];
 
-                            t.values[targetIndex] = new Value<Object>(
-                                targetType.convert(sourceValue.getValue()),
-                                targetType.convert(sourceValue.getOriginal()),
-                                sourceValue.isChanged()
-                            );
+                            t.values[targetIndex] = targetType.convert(values[sourceIndex]);
+                            t.originals[targetIndex] = targetType.convert(originals[sourceIndex]);
+                            t.changed.set(targetIndex, changed.get(sourceIndex));
                         }
                     }
                 }

@@ -11,9 +11,9 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_BOOLEANS", schema = "TEST")
 public class TBooleans implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1742242220;
+	private static final long serialVersionUID = 102683720;
 
-	private java.lang.Integer                            id;
+	private java.lang.Integer                              id;
 	private org.jooq.test.all.converters.Boolean_10        oneZero;
 	private org.jooq.test.all.converters.Boolean_TF_LC     trueFalseLc;
 	private org.jooq.test.all.converters.Boolean_TF_UC     trueFalseUc;
@@ -21,14 +21,14 @@ public class TBooleans implements java.io.Serializable {
 	private org.jooq.test.all.converters.Boolean_YES_NO_UC yesNoUc;
 	private org.jooq.test.all.converters.Boolean_YN_LC     yNLc;
 	private org.jooq.test.all.converters.Boolean_YN_UC     yNUc;
-	private java.lang.Boolean                            vcBoolean;
-	private java.lang.Boolean                            cBoolean;
-	private java.lang.Boolean                            nBoolean;
+	private java.lang.Boolean                              vcBoolean;
+	private java.lang.Boolean                              cBoolean;
+	private java.lang.Boolean                              nBoolean;
 
 	public TBooleans() {}
 
 	public TBooleans(
-		java.lang.Integer                            id,
+		java.lang.Integer                              id,
 		org.jooq.test.all.converters.Boolean_10        oneZero,
 		org.jooq.test.all.converters.Boolean_TF_LC     trueFalseLc,
 		org.jooq.test.all.converters.Boolean_TF_UC     trueFalseUc,
@@ -36,9 +36,9 @@ public class TBooleans implements java.io.Serializable {
 		org.jooq.test.all.converters.Boolean_YES_NO_UC yesNoUc,
 		org.jooq.test.all.converters.Boolean_YN_LC     yNLc,
 		org.jooq.test.all.converters.Boolean_YN_UC     yNUc,
-		java.lang.Boolean                            vcBoolean,
-		java.lang.Boolean                            cBoolean,
-		java.lang.Boolean                            nBoolean
+		java.lang.Boolean                              vcBoolean,
+		java.lang.Boolean                              cBoolean,
+		java.lang.Boolean                              nBoolean
 	) {
 		this.id = id;
 		this.oneZero = oneZero;

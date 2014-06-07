@@ -125,6 +125,10 @@ object Conversions {
 
     def <=>(value : T)                : Condition
     def <=>(value : Field[T])         : Condition
+
+    /* [pro] */
+    def <+>                           : Field[T]
+    /* [/pro] */
   }
 
   /**
@@ -245,6 +249,10 @@ object Conversions {
 
              def <=>(value : T)                = underlying.isNotDistinctFrom(value)
              def <=>(value : Field[T])         = underlying.isNotDistinctFrom(value)
+
+             /* [pro] */
+             def <+>                           = underlying.plus()
+             /* [/pro] */
   }
 
   /**

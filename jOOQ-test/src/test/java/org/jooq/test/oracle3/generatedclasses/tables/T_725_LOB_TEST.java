@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725_LOB_TEST extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1730319287;
+	private static final long serialVersionUID = -521752441;
 
 	/**
 	 * The singleton instance of <code>T_725_LOB_TEST</code>
@@ -25,27 +25,35 @@ public class T_725_LOB_TEST extends org.jooq.impl.TableImpl<org.jooq.test.oracle
 	}
 
 	/**
-	 * The column <code>T_725_LOB_TEST.ID</code>. 
+	 * The column <code>T_725_LOB_TEST.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>T_725_LOB_TEST.LOB</code>. 
+	 * The column <code>T_725_LOB_TEST.LOB</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB, this, "");
 
 	/**
 	 * Create a <code>T_725_LOB_TEST</code> table reference
 	 */
 	public T_725_LOB_TEST() {
-		super("T_725_LOB_TEST", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("T_725_LOB_TEST", null);
 	}
 
 	/**
 	 * Create an aliased <code>T_725_LOB_TEST</code> table reference
 	 */
 	public T_725_LOB_TEST(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST);
+		this(alias, org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST);
+	}
+
+	private T_725_LOB_TEST(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_725_LOB_TEST(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**
@@ -69,6 +77,13 @@ public class T_725_LOB_TEST extends org.jooq.impl.TableImpl<org.jooq.test.oracle
 	 */
 	@Override
 	public org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST as(java.lang.String alias) {
-		return new org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST(alias);
+		return new org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST rename(java.lang.String name) {
+		return new org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST(name, null);
 	}
 }

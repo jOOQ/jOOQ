@@ -9,7 +9,7 @@ package org.jooq.test.mariadb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.mariadb.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -843084885;
+	private static final long serialVersionUID = 948688681;
 
 	/**
 	 * The singleton instance of <code>test.t_exotic_types</code>

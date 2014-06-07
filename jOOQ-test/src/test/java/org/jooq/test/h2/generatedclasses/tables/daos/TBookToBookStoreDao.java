@@ -37,20 +37,20 @@ public class TBookToBookStoreDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.
 	 * Fetch records that have <code>BOOK_STORE_NAME IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBookToBookStore> fetchByBookStoreName(java.lang.String... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, values);
 	}
 
 	/**
 	 * Fetch records that have <code>BOOK_ID IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBookToBookStore> fetchByBookId(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_ID, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, values);
 	}
 
 	/**
 	 * Fetch records that have <code>STOCK IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TBookToBookStore> fetchByStock(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.STOCK, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.STOCK, values);
 	}
 }

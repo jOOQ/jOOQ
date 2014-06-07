@@ -44,7 +44,6 @@ import java.io.File
 import java.util.ArrayList
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.regex.Pattern
 import org.apache.commons.lang3.tuple.ImmutablePair
@@ -95,7 +94,7 @@ class Splitter extends Generators {
 //        System::out.println("Percentage   : " + (100.0 * charsMasked.get / charsTotal.get));
     }
 
-    def transform(File inRoot, File outRoot, File in) {
+    def void transform(File inRoot, File outRoot, File in) {
         val out = new File(outRoot.canonicalPath + "/" + in.canonicalPath.replace(inRoot.canonicalPath, ""));
         
         if (in.directory) {
@@ -279,5 +278,6 @@ For more information, please visit: http://www.jooq.org/licenses''');
         // Remove sections of delimited code
         translateAll.add(compile('''(?s:(/\* \[«token»\])( \*.*?/\* )(\[/«token»\] \*/))'''));
         translateAll.add(compile('''(?s:(<!-- \[«token»\])( -->.*?<!-- )(\[/«token»\] -->))'''));
+        translateAll.add(compile('''(?s:(# \[«token»\])()(?:.*?)(# \[/«token»\]))'''));
     }
 }

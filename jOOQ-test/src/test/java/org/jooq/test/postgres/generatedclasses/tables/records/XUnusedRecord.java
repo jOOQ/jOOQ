@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record15<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal>, org.jooq.test.postgres.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = -1578394394;
+	private static final long serialVersionUID = 131102754;
 
 	/**
 	 * Setter for <code>public.x_unused.id</code>.
@@ -158,7 +158,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Setter for <code>public.x_unused.values</code>.
 	 */
-	public XUnusedRecord setValues_(java.lang.Integer value) {
+	public XUnusedRecord setValues(java.lang.Integer value) {
 		setValue(9, value);
 		return this;
 	}
@@ -167,7 +167,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Getter for <code>public.x_unused.values</code>.
 	 */
 	@Override
-	public java.lang.Integer getValues_() {
+	public java.lang.Integer getValues() {
 		return (java.lang.Integer) getValue(9);
 	}
 
@@ -480,7 +480,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.Integer value10() {
-		return getValues_();
+		return getValues();
 	}
 
 	/**
@@ -609,7 +609,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public XUnusedRecord value10(java.lang.Integer value) {
-		setValues_(value);
+		setValues(value);
 		return this;
 	}
 

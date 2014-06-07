@@ -9,15 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.udt.u_author_type;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class GET_AUTHOR extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 723833280;
+	private static final long serialVersionUID = 1717511338;
 
 	/**
-	 * The parameter <code>U_AUTHOR_TYPE.GET_AUTHOR.RETURN_VALUE</code>. 
+	 * The parameter <code>U_AUTHOR_TYPE.GET_AUTHOR.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.U_AUTHOR_TYPE.getDataType());
 
 	/**
-	 * The parameter <code>U_AUTHOR_TYPE.GET_AUTHOR.P_ID</code>. 
+	 * The parameter <code>U_AUTHOR_TYPE.GET_AUTHOR.P_ID</code>.
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> P_ID = createParameter("P_ID", org.jooq.impl.SQLDataType.NUMERIC);
 

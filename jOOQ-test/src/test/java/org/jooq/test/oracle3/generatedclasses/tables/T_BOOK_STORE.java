@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_BOOK_STORE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1337457314;
+	private static final long serialVersionUID = 1415932384;
 
 	/**
 	 * The singleton instance of <code>T_BOOK_STORE</code>
@@ -29,20 +29,28 @@ public class T_BOOK_STORE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.
 	/**
 	 * The column <code>T_BOOK_STORE.NAME</code>. The books store name
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "The books store name");
 
 	/**
 	 * Create a <code>T_BOOK_STORE</code> table reference
 	 */
 	public T_BOOK_STORE() {
-		super("T_BOOK_STORE", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("T_BOOK_STORE", null);
 	}
 
 	/**
 	 * Create an aliased <code>T_BOOK_STORE</code> table reference
 	 */
 	public T_BOOK_STORE(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE.T_BOOK_STORE);
+		this(alias, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE.T_BOOK_STORE);
+	}
+
+	private T_BOOK_STORE(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_BOOK_STORE(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "A book store");
 	}
 
 	/**
@@ -66,6 +74,13 @@ public class T_BOOK_STORE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.
 	 */
 	@Override
 	public org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE as(java.lang.String alias) {
-		return new org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE(alias);
+		return new org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE rename(java.lang.String name) {
+		return new org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE(name, null);
 	}
 }

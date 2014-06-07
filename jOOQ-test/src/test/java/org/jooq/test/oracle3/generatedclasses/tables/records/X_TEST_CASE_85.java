@@ -9,58 +9,52 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "X_TEST_CASE_85")
-public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_85> implements java.lang.Cloneable, org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_85_INTERFACE {
+public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_85> implements java.lang.Cloneable, org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 176709233;
+	private static final long serialVersionUID = -995543849;
 
 	/**
-	 * Setter for <code>X_TEST_CASE_85.ID</code>. 
+	 * Setter for <code>X_TEST_CASE_85.ID</code>.
 	 */
-	@Override
 	public void setID(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>X_TEST_CASE_85.ID</code>. 
+	 * Getter for <code>X_TEST_CASE_85.ID</code>.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
-	@Override
 	public java.lang.Integer getID() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>X_TEST_CASE_85.X_UNUSED_ID</code>. 
+	 * Setter for <code>X_TEST_CASE_85.X_UNUSED_ID</code>.
 	 */
-	@Override
 	public void setX_UNUSED_ID(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>X_TEST_CASE_85.X_UNUSED_ID</code>. 
+	 * Getter for <code>X_TEST_CASE_85.X_UNUSED_ID</code>.
 	 */
 	@javax.persistence.Column(name = "X_UNUSED_ID", precision = 7)
-	@Override
 	public java.lang.Integer getX_UNUSED_ID() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 * Setter for <code>X_TEST_CASE_85.X_UNUSED_NAME</code>.
 	 */
-	@Override
 	public void setX_UNUSED_NAME(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 * Getter for <code>X_TEST_CASE_85.X_UNUSED_NAME</code>.
 	 */
 	@javax.persistence.Column(name = "X_UNUSED_NAME", length = 10)
-	@Override
 	public java.lang.String getX_UNUSED_NAME() {
 		return (java.lang.String) getValue(2);
 	}
@@ -178,29 +172,6 @@ public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	@Override
 	public X_TEST_CASE_85 values(java.lang.Integer value1, java.lang.Integer value2, java.lang.String value3) {
 		return this;
-	}
-
-	// -------------------------------------------------------------------------
-	// FROM and INTO
-	// -------------------------------------------------------------------------
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_85_INTERFACE from) {
-		setID(from.getID());
-		setX_UNUSED_ID(from.getX_UNUSED_ID());
-		setX_UNUSED_NAME(from.getX_UNUSED_NAME());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_85_INTERFACE> E into(E into) {
-		into.from(this);
-		return into;
 	}
 
 	// -------------------------------------------------------------------------

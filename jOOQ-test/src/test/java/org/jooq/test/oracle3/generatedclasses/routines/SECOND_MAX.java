@@ -9,15 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SECOND_MAX extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1999491148;
+	private static final long serialVersionUID = 1707635288;
 
 	/**
-	 * The parameter <code>SECOND_MAX.RETURN_VALUE</code>. 
+	 * The parameter <code>SECOND_MAX.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The parameter <code>SECOND_MAX.INPUT</code>. 
+	 * The parameter <code>SECOND_MAX.INPUT</code>.
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> INPUT = createParameter("INPUT", org.jooq.impl.SQLDataType.NUMERIC);
 

@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 215575887;
+	private static final long serialVersionUID = 1380485895;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOK_STORE</code>
@@ -29,13 +29,20 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.h2.generat
 	/**
 	 * The column <code>PUBLIC.T_BOOK_STORE.NAME</code>. The books store name
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), T_BOOK_STORE, "The books store name");
+	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "The books store name");
 
 	/**
-	 * No further instances allowed
+	 * Create a <code>PUBLIC.T_BOOK_STORE</code> table reference
 	 */
-	private TBookStore() {
+	public TBookStore() {
 		this("T_BOOK_STORE", null);
+	}
+
+	/**
+	 * Create an aliased <code>PUBLIC.T_BOOK_STORE</code> table reference
+	 */
+	public TBookStore(java.lang.String alias) {
+		this(alias, org.jooq.test.h2.generatedclasses.tables.TBookStore.T_BOOK_STORE);
 	}
 
 	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord> aliased) {
@@ -60,5 +67,20 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.h2.generat
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.UK_T_BOOK_STORE_NAME);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.h2.generatedclasses.tables.TBookStore as(java.lang.String alias) {
+		return new org.jooq.test.h2.generatedclasses.tables.TBookStore(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.h2.generatedclasses.tables.TBookStore rename(java.lang.String name) {
+		return new org.jooq.test.h2.generatedclasses.tables.TBookStore(name, null);
 	}
 }

@@ -60,6 +60,7 @@ import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
+import org.jooq.types.UByte;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -124,7 +125,7 @@ public class SybaseDatabase extends AbstractDatabase {
             .join(SYSTABCOL)
             .on(SYSIDXCOL.TABLE_ID.equal(SYSTABCOL.TABLE_ID))
             .and(SYSIDXCOL.COLUMN_ID.equal(SYSTABCOL.COLUMN_ID))
-            .where(SYSIDX.INDEX_CATEGORY.equal((byte) 1))
+            .where(SYSIDX.INDEX_CATEGORY.equal(UByte.valueOf((byte) 1)))
             .orderBy(SYSIDXCOL.SEQUENCE)
             .fetch()) {
 
@@ -155,8 +156,8 @@ public class SybaseDatabase extends AbstractDatabase {
             .join(SYSTABCOL)
             .on(SYSIDXCOL.TABLE_ID.equal(SYSTABCOL.TABLE_ID))
             .and(SYSIDXCOL.COLUMN_ID.equal(SYSTABCOL.COLUMN_ID))
-            .where(SYSIDX.INDEX_CATEGORY.equal((byte) 3))
-            .and(SYSIDX.UNIQUE.equal((byte) 2))
+            .where(SYSIDX.INDEX_CATEGORY.equal(UByte.valueOf((byte) 3)))
+            .and(SYSIDX.UNIQUE.equal(UByte.valueOf((byte) 2)))
             .orderBy(SYSIDXCOL.SEQUENCE)
             .fetch()) {
 

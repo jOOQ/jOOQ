@@ -45,6 +45,7 @@ import static org.jooq.impl.DSL.falseCondition;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -55,6 +56,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+
+import javax.xml.bind.JAXB;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
@@ -91,6 +94,7 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          includeExcludeColumns;
     private String[]                                                         recordVersionFields;
     private String[]                                                         recordTimestampFields;
+    private String[]                                                         syntheticPrimaryKeys;
     private String[]                                                         overridePrimaryKeys;
     private boolean                                                          supportsUnsignedTypes;
     private boolean                                                          dateAsTimestamp;
@@ -246,7 +250,7 @@ public abstract class AbstractDatabase implements Database {
                 for (Schema schema : configuredSchemata) {
                     /* [pro] */
 
-                    // [#1418] Oracle has case-insensitive schema names.
+                    // [#1418] [#3282] Oracle has case-insensitive schema names.
                     if (this instanceof OracleDatabase) {
                         inputSchemata.add(schema.getInputSchema().toUpperCase());
                     }
@@ -330,6 +334,16 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public void setSyntheticPrimaryKeys(String[] syntheticPrimaryKeys) {
+        this.syntheticPrimaryKeys = syntheticPrimaryKeys;
+    }
+
+    @Override
+    public String[] getSyntheticPrimaryKeys() {
+        return syntheticPrimaryKeys;
+    }
+
+    @Override
     public void setOverridePrimaryKeys(String[] overridePrimaryKeys) {
         this.overridePrimaryKeys = overridePrimaryKeys;
     }
@@ -361,9 +375,22 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final CustomType getConfiguredCustomType(String typeName) {
-        for (CustomType type : configuredCustomTypes) {
+        Iterator<CustomType> it = configuredCustomTypes.iterator();
+
+        while (it.hasNext()) {
+            CustomType type = it.next();
+
             if (type == null || (type.getName() == null && type.getType() == null)) {
-                log.warn("Invalid custom type encountered: " + type);
+                try {
+                    StringWriter writer = new StringWriter();
+                    JAXB.marshal(type, writer);
+                    log.warn("Invalid custom type encountered: " + writer.toString());
+                }
+                catch (Exception e) {
+                    log.warn("Invalid custom type encountered: " + type);
+                }
+
+                it.remove();
                 continue;
             }
 
@@ -868,6 +895,13 @@ public abstract class AbstractDatabase implements Database {
         }
 
         try {
+            syntheticPrimaryKeys(result);
+        }
+        catch (Exception e) {
+            log.error("Error while generating synthetic primary keys", e);
+        }
+
+        try {
             overridePrimaryKeys(result);
         }
         catch (Exception e) {
@@ -892,6 +926,28 @@ public abstract class AbstractDatabase implements Database {
 
     static final String fetchedSize(List<?> fetched, List<?> included) {
         return fetched.size() + " (" + included.size() + " included, " + (fetched.size() - included.size()) + " excluded)";
+    }
+
+    private final void syntheticPrimaryKeys(DefaultRelations r) {
+        List<UniqueKeyDefinition> syntheticKeys = new ArrayList<UniqueKeyDefinition>();
+
+        for (SchemaDefinition schema : getSchemata()) {
+            for (TableDefinition table : schema.getTables()) {
+                List<ColumnDefinition> columns = filterExcludeInclude(table.getColumns(), null, getSyntheticPrimaryKeys());
+
+                if (!columns.isEmpty()) {
+                    DefaultUniqueKeyDefinition syntheticKey = new DefaultUniqueKeyDefinition(schema, "SYNTHETIC_PK_" + table.getName(), table, true);
+                    syntheticKey.getKeyColumns().addAll(columns);
+                    syntheticKeys.add(syntheticKey);
+                }
+            }
+        }
+
+        log.info("Synthetic primary keys", fetchedSize(syntheticKeys, syntheticKeys));
+
+        for (UniqueKeyDefinition key : syntheticKeys) {
+            r.overridePrimaryKey(key);
+        }
     }
 
     private final void overridePrimaryKeys(DefaultRelations r) {

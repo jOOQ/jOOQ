@@ -45,12 +45,10 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.val;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Param;
-import org.jooq.RenderContext;
 import org.jooq.RenderContext.CastMode;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
@@ -72,7 +70,7 @@ class Limit extends AbstractQueryPart {
     private boolean           rendersParams;
 
     @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> context) {
         ParamType paramType = context.paramType();
         CastMode castMode = context.castMode();
 
@@ -222,121 +220,6 @@ class Limit extends AbstractQueryPart {
                        .sql(" ").visit(offsetOrZero)
                        .castMode(castMode);
 
-                break;
-            }
-        }
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        switch (context.configuration().dialect()) {
-
-            // OFFSET .. LIMIT support provided by the following dialects
-            // ----------------------------------------------------------
-            /* [pro] */
-            case SQLSERVER:
-            case SQLSERVER2012:
-            /* [/pro] */
-            case DERBY: {
-                context.visit(offsetOrZero);
-                context.visit(numberOfRows);
-                break;
-            }
-
-            // LIMIT .. OFFSET support provided by the following dialects
-            // ----------------------------------------------------------
-            case MARIADB:
-            case MYSQL:
-            case HSQLDB:
-            case H2:
-            case POSTGRES:
-            case SQLITE: {
-                context.visit(numberOfRows);
-                context.visit(offsetOrZero);
-                break;
-            }
-
-            // LIMIT [offset], [limit] supported by CUBRID
-            // -------------------------------------------
-            case CUBRID: {
-                context.visit(offsetOrZero);
-                context.visit(numberOfRows);
-                break;
-            }
-
-            // No bind variables in the FIRST .. SKIP clause
-            // ---------------------------------------------
-            case FIREBIRD: {
-                context.visit(getLowerRownum());
-                context.visit(getUpperRownum());
-                break;
-            }
-
-            /* [pro] */
-            // These dialects don't support bind variables at all
-            case ASE:
-            case INGRES: {
-                break;
-            }
-
-            // No bind variables in the TOP .. START AT clause
-            // -----------------------------------------------
-            case SYBASE: {
-
-                // TOP .. START AT clauses without bind variables
-                if (!rendersParams) {
-                }
-
-                // With simulated OFFSETs, no break, fall through
-                else {
-                    context.visit(getLowerRownum());
-                    context.visit(getUpperRownum());
-                }
-
-                break;
-            }
-
-            // These dialects don't allow bind variables in their TOP clauses
-            // --------------------------------------------------------------
-            case ACCESS:
-            case ACCESS2013:
-            case DB2:
-            case DB2_9:
-            case DB2_10:
-            case SQLSERVER2008: {
-
-                // TOP clauses without bind variables
-                if (offset == null && !rendersParams) {
-                }
-
-                // With simulated OFFSETs, no break, fall through
-                else {
-                    context.visit(getLowerRownum());
-                    context.visit(getUpperRownum());
-                }
-
-                break;
-            }
-
-            // Oracle knows no LIMIT or TOP clause, limits are always bound
-            // ------------------------------------------------------------
-            case ORACLE:
-            case ORACLE10G:
-            case ORACLE11G:
-            case ORACLE12C: {
-
-                // [#1020] With the ROWNUM filtering improvement, the upper
-                // limit is bound before the lower limit
-                context.visit(getUpperRownum());
-                context.visit(getLowerRownum());
-                break;
-            }
-
-            /* [/pro] */
-            // [#2057] Bind the same values as rendered in toSQL() by default
-            default: {
-                context.visit(numberOfRows);
-                context.visit(offsetOrZero);
                 break;
             }
         }

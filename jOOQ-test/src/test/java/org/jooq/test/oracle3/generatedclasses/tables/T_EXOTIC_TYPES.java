@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_EXOTIC_TYPES extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1224026690;
+	private static final long serialVersionUID = 1953571474;
 
 	/**
 	 * The singleton instance of <code>T_EXOTIC_TYPES</code>
@@ -25,27 +25,35 @@ public class T_EXOTIC_TYPES extends org.jooq.impl.TableImpl<org.jooq.test.oracle
 	}
 
 	/**
-	 * The column <code>T_EXOTIC_TYPES.ID</code>. 
+	 * The column <code>T_EXOTIC_TYPES.ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>T_EXOTIC_TYPES.UU</code>. 
+	 * The column <code>T_EXOTIC_TYPES.UU</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES, java.lang.String> UU = createField("UU", org.jooq.impl.SQLDataType.CHAR.length(36), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES, java.lang.String> UU = createField("UU", org.jooq.impl.SQLDataType.CHAR.length(36), this, "");
 
 	/**
 	 * Create a <code>T_EXOTIC_TYPES</code> table reference
 	 */
 	public T_EXOTIC_TYPES() {
-		super("T_EXOTIC_TYPES", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		this("T_EXOTIC_TYPES", null);
 	}
 
 	/**
 	 * Create an aliased <code>T_EXOTIC_TYPES</code> table reference
 	 */
 	public T_EXOTIC_TYPES(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES.T_EXOTIC_TYPES);
+		this(alias, org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES.T_EXOTIC_TYPES);
+	}
+
+	private T_EXOTIC_TYPES(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private T_EXOTIC_TYPES(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
 	}
 
 	/**
@@ -69,6 +77,13 @@ public class T_EXOTIC_TYPES extends org.jooq.impl.TableImpl<org.jooq.test.oracle
 	 */
 	@Override
 	public org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES as(java.lang.String alias) {
-		return new org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES(alias);
+		return new org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES rename(java.lang.String name) {
+		return new org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES(name, null);
 	}
 }

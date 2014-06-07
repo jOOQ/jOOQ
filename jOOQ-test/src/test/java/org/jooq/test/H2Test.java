@@ -43,9 +43,14 @@ package org.jooq.test;
 
 import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.test.h2.generatedclasses.Tables.T_2698;
+import static org.jooq.test.h2.generatedclasses.Tables.T_639_NUMBERS_TABLE;
+import static org.jooq.test.h2.generatedclasses.Tables.T_725_LOB_TEST;
+import static org.jooq.test.h2.generatedclasses.Tables.T_785;
+import static org.jooq.test.h2.generatedclasses.Tables.T_ARRAYS;
 import static org.jooq.test.h2.generatedclasses.Tables.T_AUTHOR;
 import static org.jooq.test.h2.generatedclasses.Tables.T_BOOK;
 import static org.jooq.test.h2.generatedclasses.Tables.T_BOOK_STORE;
@@ -55,13 +60,13 @@ import static org.jooq.test.h2.generatedclasses.Tables.T_DATES;
 import static org.jooq.test.h2.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.h2.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.h2.generatedclasses.Tables.T_IDENTITY_PK;
+import static org.jooq.test.h2.generatedclasses.Tables.T_TRIGGERS;
 import static org.jooq.test.h2.generatedclasses.Tables.T_UNSIGNED;
 import static org.jooq.test.h2.generatedclasses.Tables.V_2603;
 import static org.jooq.test.h2.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.h2.generatedclasses.Tables.V_BOOK;
-import static org.jooq.test.h2.generatedclasses.tables.TAuthor.FIRST_NAME;
-import static org.jooq.test.h2.generatedclasses.tables.TAuthor.LAST_NAME;
-import static org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID;
+import static org.jooq.test.h2.generatedclasses.Tables.V_LIBRARY;
+import static org.jooq.test.h2.generatedclasses.Tables.X_UNUSED;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -98,17 +103,9 @@ import org.jooq.test.h2.generatedclasses.Tables;
 import org.jooq.test.h2.generatedclasses.tables.TArrays;
 import org.jooq.test.h2.generatedclasses.tables.TAuthor;
 import org.jooq.test.h2.generatedclasses.tables.TBook;
-import org.jooq.test.h2.generatedclasses.tables.TBookStore;
-import org.jooq.test.h2.generatedclasses.tables.TBookToBookStore;
-import org.jooq.test.h2.generatedclasses.tables.TBooleans;
-import org.jooq.test.h2.generatedclasses.tables.TExoticTypes;
-import org.jooq.test.h2.generatedclasses.tables.TIdentity;
-import org.jooq.test.h2.generatedclasses.tables.TIdentityPk;
 import org.jooq.test.h2.generatedclasses.tables.TTriggers;
-import org.jooq.test.h2.generatedclasses.tables.TUnsigned;
 import org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.h2.generatedclasses.tables.T_725LobTest;
-import org.jooq.test.h2.generatedclasses.tables.T_785;
 import org.jooq.test.h2.generatedclasses.tables.VLibrary;
 import org.jooq.test.h2.generatedclasses.tables.daos.TAuthorDao;
 import org.jooq.test.h2.generatedclasses.tables.daos.T_2698Dao;
@@ -186,27 +183,27 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected TableField<TAuthorRecord, String> TAuthor_LAST_NAME() {
-        return TAuthor.LAST_NAME;
+        return T_AUTHOR.LAST_NAME;
     }
 
     @Override
     protected TableField<TAuthorRecord, String> TAuthor_FIRST_NAME() {
-        return TAuthor.FIRST_NAME;
+        return T_AUTHOR.FIRST_NAME;
     }
 
     @Override
     protected TableField<TAuthorRecord, Date> TAuthor_DATE_OF_BIRTH() {
-        return TAuthor.DATE_OF_BIRTH;
+        return T_AUTHOR.DATE_OF_BIRTH;
     }
 
     @Override
     protected TableField<TAuthorRecord, Integer> TAuthor_YEAR_OF_BIRTH() {
-        return TAuthor.YEAR_OF_BIRTH;
+        return T_AUTHOR.YEAR_OF_BIRTH;
     }
 
     @Override
     protected TableField<TAuthorRecord, Integer> TAuthor_ID() {
-        return TAuthor.ID;
+        return T_AUTHOR.ID;
     }
 
     @Override
@@ -221,32 +218,32 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected TableField<TBookRecord, Integer> TBook_ID() {
-        return TBook.ID;
+        return T_BOOK.ID;
     }
 
     @Override
     protected TableField<TBookRecord, Integer> TBook_AUTHOR_ID() {
-        return TBook.AUTHOR_ID;
+        return T_BOOK.AUTHOR_ID;
     }
 
     @Override
     protected TableField<TBookRecord, Integer> TBook_CO_AUTHOR_ID() {
-        return TBook.CO_AUTHOR_ID;
+        return T_BOOK.CO_AUTHOR_ID;
     }
 
     @Override
     protected TableField<TBookRecord, String> TBook_TITLE() {
-        return TBook.TITLE;
+        return T_BOOK.TITLE;
     }
 
     @Override
     protected TableField<TBookRecord, Integer> TBook_REC_VERSION() {
-        return TBook.REC_VERSION;
+        return T_BOOK.REC_VERSION;
     }
 
     @Override
     protected TableField<TBookRecord, Timestamp> TBook_REC_TIMESTAMP() {
-        return TBook.REC_TIMESTAMP;
+        return T_BOOK.REC_TIMESTAMP;
     }
 
     @Override
@@ -256,7 +253,7 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected TableField<TBookStoreRecord, String> TBookStore_NAME() {
-        return TBookStore.NAME;
+        return T_BOOK_STORE.NAME;
     }
 
     @Override
@@ -271,17 +268,17 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected TableField<TBookToBookStoreRecord, Integer> TBookToBookStore_BOOK_ID() {
-        return TBookToBookStore.BOOK_ID;
+        return T_BOOK_TO_BOOK_STORE.BOOK_ID;
     }
 
     @Override
     protected TableField<TBookToBookStoreRecord, String> TBookToBookStore_BOOK_STORE_NAME() {
-        return TBookToBookStore.BOOK_STORE_NAME;
+        return T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME;
     }
 
     @Override
     protected TableField<TBookToBookStoreRecord, Integer> TBookToBookStore_STOCK() {
-        return TBookToBookStore.STOCK;
+        return T_BOOK_TO_BOOK_STORE.STOCK;
     }
 
     @Override
@@ -291,67 +288,67 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected TableField<T_639NumbersTableRecord, Integer> T639_ID() {
-        return T_639NumbersTable.ID;
+        return T_639_NUMBERS_TABLE.ID;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, BigDecimal> T639_BIG_DECIMAL() {
-        return T_639NumbersTable.BIG_DECIMAL;
+        return T_639_NUMBERS_TABLE.BIG_DECIMAL;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, BigInteger> T639_BIG_INTEGER() {
-        return T_639NumbersTable.BIG_INTEGER;
+        return T_639_NUMBERS_TABLE.BIG_INTEGER;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Byte> T639_BYTE() {
-        return T_639NumbersTable.BYTE;
+        return T_639_NUMBERS_TABLE.BYTE;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Byte> T639_BYTE_DECIMAL() {
-        return T_639NumbersTable.BYTE_DECIMAL;
+        return T_639_NUMBERS_TABLE.BYTE_DECIMAL;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Short> T639_SHORT() {
-        return T_639NumbersTable.SHORT;
+        return T_639_NUMBERS_TABLE.SHORT;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Short> T639_SHORT_DECIMAL() {
-        return T_639NumbersTable.SHORT_DECIMAL;
+        return T_639_NUMBERS_TABLE.SHORT_DECIMAL;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Integer> T639_INTEGER() {
-        return T_639NumbersTable.INTEGER;
+        return T_639_NUMBERS_TABLE.INTEGER;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Integer> T639_INTEGER_DECIMAL() {
-        return T_639NumbersTable.INTEGER_DECIMAL;
+        return T_639_NUMBERS_TABLE.INTEGER_DECIMAL;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Long> T639_LONG() {
-        return T_639NumbersTable.LONG;
+        return T_639_NUMBERS_TABLE.LONG;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Long> T639_LONG_DECIMAL() {
-        return T_639NumbersTable.LONG_DECIMAL;
+        return T_639_NUMBERS_TABLE.LONG_DECIMAL;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Double> T639_DOUBLE() {
-        return T_639NumbersTable.DOUBLE;
+        return T_639_NUMBERS_TABLE.DOUBLE;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Float> T639_FLOAT() {
-        return T_639NumbersTable.FLOAT;
+        return T_639_NUMBERS_TABLE.FLOAT;
     }
 
     @Override
@@ -361,17 +358,17 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected TableField<T_725LobTestRecord, Integer> T725_ID() {
-        return T_725LobTest.ID;
+        return T_725_LOB_TEST.ID;
     }
 
     @Override
     protected TableField<T_725LobTestRecord, byte[]> T725_LOB() {
-        return T_725LobTest.LOB;
+        return T_725_LOB_TEST.LOB;
     }
 
     @Override
     protected Table<T_785Record> T785() {
-        return T_785.T_785;
+        return T_785;
     }
 
     @Override
@@ -401,22 +398,22 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected TableField<TUnsignedRecord, UByte> TUnsigned_U_BYTE() {
-        return TUnsigned.U_BYTE;
+        return T_UNSIGNED.U_BYTE;
     }
 
     @Override
     protected TableField<TUnsignedRecord, UShort> TUnsigned_U_SHORT() {
-        return TUnsigned.U_SHORT;
+        return T_UNSIGNED.U_SHORT;
     }
 
     @Override
     protected TableField<TUnsignedRecord, UInteger> TUnsigned_U_INT() {
-        return TUnsigned.U_INT;
+        return T_UNSIGNED.U_INT;
     }
 
     @Override
     protected TableField<TUnsignedRecord, ULong> TUnsigned_U_LONG() {
-        return TUnsigned.U_LONG;
+        return T_UNSIGNED.U_LONG;
     }
 
     @Override
@@ -426,12 +423,12 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected TableField<TExoticTypesRecord, Integer> TExoticTypes_ID() {
-        return TExoticTypes.ID;
+        return T_EXOTIC_TYPES.ID;
     }
 
     @Override
     protected TableField<TExoticTypesRecord, UUID> TExoticTypes_UU() {
-        return TExoticTypes.UU;
+        return T_EXOTIC_TYPES.UU;
     }
 
     @Override
@@ -446,57 +443,57 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected TableField<TBooleansRecord, Integer> TBooleans_ID() {
-        return TBooleans.ID;
+        return T_BOOLEANS.ID;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean_10> TBooleans_BOOLEAN_10() {
-        return TBooleans.ONE_ZERO;
+        return T_BOOLEANS.ONE_ZERO;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean_TF_LC> TBooleans_Boolean_TF_LC() {
-        return TBooleans.TRUE_FALSE_LC;
+        return T_BOOLEANS.TRUE_FALSE_LC;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean_TF_UC> TBooleans_Boolean_TF_UC() {
-        return TBooleans.TRUE_FALSE_UC;
+        return T_BOOLEANS.TRUE_FALSE_UC;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean_YN_LC> TBooleans_Boolean_YN_LC() {
-        return TBooleans.Y_N_LC;
+        return T_BOOLEANS.Y_N_LC;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean_YN_UC> TBooleans_Boolean_YN_UC() {
-        return TBooleans.Y_N_UC;
+        return T_BOOLEANS.Y_N_UC;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean_YES_NO_LC> TBooleans_Boolean_YES_NO_LC() {
-        return TBooleans.YES_NO_LC;
+        return T_BOOLEANS.YES_NO_LC;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean_YES_NO_UC> TBooleans_Boolean_YES_NO_UC() {
-        return TBooleans.YES_NO_UC;
+        return T_BOOLEANS.YES_NO_UC;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_VC() {
-        return TBooleans.VC_BOOLEAN;
+        return T_BOOLEANS.VC_BOOLEAN;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_C() {
-        return TBooleans.C_BOOLEAN;
+        return T_BOOLEANS.C_BOOLEAN;
     }
 
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_N() {
-        return TBooleans.N_BOOLEAN;
+        return T_BOOLEANS.N_BOOLEAN;
     }
 
     @Override
@@ -506,25 +503,25 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected TableField<TArraysRecord, Integer> TArrays_ID() {
-        return TArrays.ID;
+        return T_ARRAYS.ID;
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     protected TableField<TArraysRecord, String[]> TArrays_STRING() {
-        return (TableField) TArrays.STRING_ARRAY;
+        return (TableField) T_ARRAYS.STRING_ARRAY;
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     protected TableField<TArraysRecord, Integer[]> TArrays_NUMBER() {
-        return (TableField) TArrays.NUMBER_ARRAY;
+        return (TableField) T_ARRAYS.NUMBER_ARRAY;
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     protected TableField<TArraysRecord, Date[]> TArrays_DATE() {
-        return (TableField) TArrays.DATE_ARRAY;
+        return (TableField) T_ARRAYS.DATE_ARRAY;
     }
 
     @Override
@@ -556,22 +553,22 @@ public class H2Test extends jOOQAbstractTest<
     /* [/pro] */
     @Override
     protected TableField<TBookRecord, Integer> TBook_LANGUAGE_ID() {
-        return TBook.LANGUAGE_ID;
+        return T_BOOK.LANGUAGE_ID;
     }
 
     @Override
     protected TableField<TBookRecord, Integer> TBook_PUBLISHED_IN() {
-        return TBook.PUBLISHED_IN;
+        return T_BOOK.PUBLISHED_IN;
     }
 
     @Override
     protected TableField<TBookRecord, String> TBook_CONTENT_TEXT() {
-        return TBook.CONTENT_TEXT;
+        return T_BOOK.CONTENT_TEXT;
     }
 
     @Override
     protected TableField<TBookRecord, byte[]> TBook_CONTENT_PDF() {
-        return TBook.CONTENT_PDF;
+        return T_BOOK.CONTENT_PDF;
     }
 
     @Override
@@ -596,12 +593,12 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected TableField<VLibraryRecord, String> VLibrary_TITLE() {
-        return VLibrary.TITLE;
+        return V_LIBRARY.TITLE;
     }
 
     @Override
     protected TableField<VLibraryRecord, String> VLibrary_AUTHOR() {
-        return VLibrary.AUTHOR;
+        return V_LIBRARY.AUTHOR;
     }
 
     @Override
@@ -646,17 +643,17 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected TableField<TTriggersRecord, Integer> TTriggers_ID_GENERATED() {
-        return TTriggers.ID_GENERATED;
+        return T_TRIGGERS.ID_GENERATED;
     }
 
     @Override
     protected TableField<TTriggersRecord, Integer> TTriggers_ID() {
-        return TTriggers.ID;
+        return T_TRIGGERS.ID;
     }
 
     @Override
     protected TableField<TTriggersRecord, Integer> TTriggers_COUNTER() {
-        return TTriggers.COUNTER;
+        return T_TRIGGERS.COUNTER;
     }
 
     @Override
@@ -666,12 +663,12 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected TableField<TIdentityRecord, Integer> TIdentity_ID() {
-        return TIdentity.ID;
+        return T_IDENTITY.ID;
     }
 
     @Override
     protected TableField<TIdentityRecord, Integer> TIdentity_VAL() {
-        return TIdentity.VAL;
+        return T_IDENTITY.VAL;
     }
 
     @Override
@@ -681,12 +678,12 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected TableField<TIdentityPkRecord, Integer> TIdentityPK_ID() {
-        return TIdentityPk.ID;
+        return T_IDENTITY_PK.ID;
     }
 
     @Override
     protected TableField<TIdentityPkRecord, Integer> TIdentityPK_VAL() {
-        return TIdentityPk.VAL;
+        return T_IDENTITY_PK.VAL;
     }
 
     @Override
@@ -881,12 +878,12 @@ public class H2Test extends jOOQAbstractTest<
     public void testH2CreateViewPlainSQL() throws Exception {
         try {
             create().execute("CREATE VIEW my_view AS\n{0};",
-                select(FIRST_NAME, LAST_NAME, count().cast(Long.class).as("Books Written"))
+                select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count().cast(Long.class).as("Books Written"))
                 .from(T_AUTHOR)
                 .join(T_BOOK)
-                .on(TAuthor.ID.eq(AUTHOR_ID))
-                .groupBy(FIRST_NAME, LAST_NAME)
-                .orderBy(FIRST_NAME, LAST_NAME)
+                .on(T_AUTHOR.ID.eq(T_BOOK.AUTHOR_ID))
+                .groupBy(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
+                .orderBy(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
             );
 
             Result<Record> result = create().fetch("SELECT * FROM my_view");
@@ -933,16 +930,54 @@ public class H2Test extends jOOQAbstractTest<
         assertEquals(-1, (int) record.getXx());
     }
 
-    // TODO [#2700] @Test
+    @Test
     public void testH2T2698InsertPojoThroughDaoWithDefault() throws Exception {
         jOOQAbstractTest.reset = false;
 
+        // [#2700] Check if DEFAULT NOT NULL columns are used sensibly for
+        // INSERT and UPDATE statements through DAOs
         T_2698Dao dao = new T_2698Dao(create().configuration());
-        dao.insert(new T_2698(1, null));
-        List<T_2698> list = dao.fetchById(1);
+        List<T_2698> list;
+
+        dao.insert(new T_2698(1, null, null));
+        list = dao.fetchById(1);
         assertEquals(1, list.size());
         assertEquals(1, (int) list.get(0).getId());
         assertEquals(-1, (int) list.get(0).getXx());
+        assertEquals(-2, (int) list.get(0).getYy());
+
+        dao.update(new T_2698(1, 42, 42));
+        list = dao.fetchById(1);
+        assertEquals(1, list.size());
+        assertEquals(1, (int) list.get(0).getId());
+        assertEquals(42, (int) list.get(0).getXx());
+        assertEquals(42, (int) list.get(0).getYy());
+
+        assertEquals(1,
+        create().update(T_2698)
+                .set(T_2698.XX, defaultValue(Integer.class))
+                .set(T_2698.YY, defaultValue(Integer.class))
+                .execute());
+
+        dao.update(new T_2698(1, null, 42));
+        list = dao.fetchById(1);
+        assertEquals(1, list.size());
+        assertEquals(1, (int) list.get(0).getId());
+        assertEquals(-1, (int) list.get(0).getXx());
+        assertEquals(42, (int) list.get(0).getYy());
+
+        assertEquals(1,
+        create().update(T_2698)
+                .set(T_2698.XX, defaultValue(Integer.class))
+                .set(T_2698.YY, defaultValue(Integer.class))
+                .execute());
+
+        dao.update(new T_2698(1, 42, null));
+        list = dao.fetchById(1);
+        assertEquals(1, list.size());
+        assertEquals(1, (int) list.get(0).getId());
+        assertEquals(42, (int) list.get(0).getXx());
+        assertEquals(-2, (int) list.get(0).getYy());
     }
 
     @SuppressWarnings("unchecked")
@@ -951,14 +986,14 @@ public class H2Test extends jOOQAbstractTest<
         jOOQAbstractTest.reset = false;
 
         Record2<Integer, String> key1 = create().newRecord(
-            org.jooq.test.h2.generatedclasses.tables.XUnused.ID,
-            org.jooq.test.h2.generatedclasses.tables.XUnused.NAME);
+            X_UNUSED.ID,
+            X_UNUSED.NAME);
 
         Record2<Integer, String> key2 = create().newRecord(
-            org.jooq.test.h2.generatedclasses.tables.XUnused.ID,
-            org.jooq.test.h2.generatedclasses.tables.XUnused.NAME);
-        key2.setValue(org.jooq.test.h2.generatedclasses.tables.XUnused.ID, 1);
-        key2.setValue(org.jooq.test.h2.generatedclasses.tables.XUnused.NAME, "name");
+            X_UNUSED.ID,
+            X_UNUSED.NAME);
+        key2.setValue(X_UNUSED.ID, 1);
+        key2.setValue(X_UNUSED.NAME, "name");
 
         XUnusedDao dao = new XUnusedDao(create().configuration());
         dao.insert(new XUnused().setId(1).setName("name").setFields(1));

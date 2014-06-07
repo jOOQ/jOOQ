@@ -35,20 +35,20 @@ public class T_725LobTestDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.gene
 	 * Fetch records that have <code>ID IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_725LobTest> fetchById(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_725LobTest.ID, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID, values);
 	}
 
 	/**
 	 * Fetch a unique record that has <code>ID = value</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.pojos.T_725LobTest fetchOneById(java.lang.Integer value) {
-		return fetchOne(org.jooq.test.h2.generatedclasses.tables.T_725LobTest.ID, value);
+		return fetchOne(org.jooq.test.h2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID, value);
 	}
 
 	/**
 	 * Fetch records that have <code>LOB IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.T_725LobTest> fetchByLob(byte[]... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.T_725LobTest.LOB, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.LOB, values);
 	}
 }

@@ -9,15 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class F691CURSOR_IN extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1250226712;
+	private static final long serialVersionUID = 1702211436;
 
 	/**
-	 * The parameter <code>F691CURSOR_IN.RETURN_VALUE</code>. 
+	 * The parameter <code>F691CURSOR_IN.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The parameter <code>F691CURSOR_IN.C</code>. 
+	 * The parameter <code>F691CURSOR_IN.C</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> C = createParameter("C", org.jooq.impl.SQLDataType.RESULT);
 

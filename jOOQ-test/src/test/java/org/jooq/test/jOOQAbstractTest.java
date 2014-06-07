@@ -41,6 +41,7 @@
 package org.jooq.test;
 
 import static java.util.Arrays.asList;
+import static java.util.Arrays.stream;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.test.all.listeners.ConnectionProviderLifecycleListener.ACQUIRE_COUNT;
@@ -73,6 +74,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
+import java.util.function.DoublePredicate;
+import java.util.function.DoubleSupplier;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
@@ -179,6 +184,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.internal.AssumptionViolatedException;
 import org.postgresql.util.PSQLException;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
@@ -270,6 +276,7 @@ public abstract class jOOQAbstractTest<
     public static String                 jdbcURL;
     public static String                 jdbcSchema;
     public static Map<String, String>    scripts                = new HashMap<String, String>();
+    public static Table<?>[]             clean;
 
     protected void execute(String script) throws Exception {
         Statement stmt = null;
@@ -280,7 +287,7 @@ public abstract class jOOQAbstractTest<
                 log.info("Loading", script);
                 File file = new File(getClass().getResource(script).toURI());
                 allSQL = FileUtils.readFileToString(file);
-                testSQLWatch.splitDebug("Loaded SQL file");
+                testSQLWatch.splitInfo("Loaded SQL file");
             }
             catch (Exception ignore) {
                 allSQL = "";
@@ -307,10 +314,13 @@ public abstract class jOOQAbstractTest<
                     }
 
                     stmt.execute(sql.trim());
-                    testSQLWatch.splitDebug(StringUtils.abbreviate(sql.trim().replaceAll("[\\n\\r]|\\s+", " "), 25));
+                    testSQLWatch.splitInfo(StringUtils.abbreviate(sql.trim().replaceAll("[\\n\\r]|\\s+", " "), 25));
                 }
             }
             catch (Exception e) {
+                if (e.getMessage() == null)
+                    throw e;
+
                 log.debug("Ignoring", e.getMessage().replaceAll("\n", " "));
 
                 // Ignore all errors on DROP statements
@@ -440,8 +450,91 @@ public abstract class jOOQAbstractTest<
         }
     }
 
+    static final String DEFAULT_MESSAGE = "Test failed";
+
+    static <T> void assertThat(T actual, Predicate<T> expected) {
+        assertThat((Supplier<T>) () -> actual, expected, DEFAULT_MESSAGE);
+    }
+
+    static <T> void assertThat(T actual, Predicate<T> expected, String message) {
+        assertThat((Supplier<T>) () -> actual, expected, message);
+    }
+
+    static <T> void assertThat(Supplier<T> actual, Predicate<T> expected) {
+        assertThat(actual, expected, DEFAULT_MESSAGE);
+    }
+
+    static <T> void assertThat(Supplier<T> actual, Predicate<T> expected, String message) {
+        if (!expected.test(actual.get()))
+            throw new AssertionError(message);
+    }
+
+    static void assertThat(double actual, DoublePredicate expected) {
+        assertThat((DoubleSupplier) () -> actual, expected, DEFAULT_MESSAGE);
+    }
+
+    static void assertThat(double actual, DoublePredicate expected, String message) {
+        assertThat((DoubleSupplier) () -> actual, expected, message);
+    }
+
+    static void assertThat(DoubleSupplier actual, DoublePredicate expected) {
+        assertThat(actual, expected, DEFAULT_MESSAGE);
+    }
+
+    static void assertThat(DoubleSupplier actual, DoublePredicate expected, String message) {
+        if (!expected.test(actual.getAsDouble()))
+            throw new AssertionError(message);
+    }
+
+    static <T> void assume(T actual, Predicate<T> expected) {
+        assume((Supplier<T>) () -> actual, expected, DEFAULT_MESSAGE);
+    }
+
+    static <T> void assume(T actual, Predicate<T> expected, String message) {
+        assume((Supplier<T>) () -> actual, expected, message);
+    }
+
+    static <T> void assume(Supplier<T> actual, Predicate<T> expected) {
+        assume(actual, expected, DEFAULT_MESSAGE);
+    }
+
+    static <T> void assume(Supplier<T> actual, Predicate<T> expected, String message) {
+        if (!expected.test(actual.get()))
+            throw new AssumptionViolatedException(message);
+    }
+
+    static void assume(double actual, DoublePredicate expected) {
+        assume((DoubleSupplier) () -> actual, expected, DEFAULT_MESSAGE);
+    }
+
+    static void assume(double actual, DoublePredicate expected, String message) {
+        assume((DoubleSupplier) () -> actual, expected, message);
+    }
+
+    static void assume(DoubleSupplier actual, DoublePredicate expected) {
+        assume(actual, expected, DEFAULT_MESSAGE);
+    }
+
+    static void assume(DoubleSupplier actual, DoublePredicate expected, String message) {
+        if (!expected.test(actual.getAsDouble()))
+            throw new AssumptionViolatedException(message);
+    }
+
     @Before
     public void setUp() throws Exception {
+
+        // Skip integration tests, for all dialects that are not in this property
+        String dialectString = System.getProperty("org.jooq.test-dialects");
+        assume(dialectString, s -> s != null && s.length() > 0);
+        assume(
+            dialect().family().name().toLowerCase(),
+
+            d -> stream(dialectString.split("[,;]"))
+                .map(String::trim)
+                .map(String::toLowerCase)
+                .anyMatch(d::equals)
+        );
+
         connection = getConnection();
         // connectionMultiSchema = getConnectionMultiSchema();
 
@@ -457,11 +550,27 @@ public abstract class jOOQAbstractTest<
             reset = true;
             execute(getResetScript());
         }
+
+        if (clean != null && clean.length > 0) {
+            for (Table<?> table : clean) {
+                try {
+                    create().delete(table).execute();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     @After
     public void tearDown() throws Exception {
-        connection.setAutoCommit(autocommit);
+        if (connection != null)
+            connection.setAutoCommit(autocommit);
+    }
+
+    public void clean(Table<?>... tables) {
+        clean = tables;
     }
 
     @BeforeClass
@@ -473,16 +582,20 @@ public abstract class jOOQAbstractTest<
     public static void quit() throws Exception {
         log.info("QUITTING");
 
-        // Issue a log dump on adaptive server. Don't know why this is needed
-        // http://www.faqs.org/faqs/databases/sybase-faq/part6/
-        if (connection.getClass().getPackage().getName().contains("jtds") &&
-            !connection.getMetaData().getURL().contains("sqlserver")) {
+        if (connection != null) {
 
-            log.info("RUNNING", "dump tran TEST with truncate_only");
-            connection.createStatement().execute("dump tran TEST with truncate_only");
+            // Issue a log dump on adaptive server. Don't know why this is needed
+            // http://www.faqs.org/faqs/databases/sybase-faq/part6/
+            if (connection.getClass().getPackage().getName().contains("jtds") &&
+                !connection.getMetaData().getURL().contains("sqlserver")) {
+
+                log.info("RUNNING", "dump tran TEST with truncate_only");
+                connection.createStatement().execute("dump tran TEST with truncate_only");
+            }
+
+            connection.close();
+            connection = null;
         }
-
-        connection.close();
 
         JooqLogger logStat = JooqLogger.getLogger(TestStatisticsListener.class);
         logStat.info("TEST STATISTICS");
@@ -655,6 +768,31 @@ public abstract class jOOQAbstractTest<
 
     final Connection getConnection0(String jdbcUser, String jdbcPassword) {
         try {
+
+            // [#682] We reuse the config.properties that is also used for the Maven pom.xml
+            try (InputStream config = GenerationTool.class.getResourceAsStream("/config.properties")) {
+                if (config != null) {
+                    Properties properties = new Properties();
+                    properties.load(config);
+
+                    String d = dialect().family().name().toLowerCase();
+                    if (properties.containsKey("db." + d + ".driver")) {
+                        jdbcURL = properties.getProperty("db." + d + ".url") + getSchemaSuffix();
+                        jdbcSchema = properties.getProperty("db." + d + ".schema") + getSchemaSuffix();
+
+                        if (jdbcUser == null)
+                            jdbcUser = properties.getProperty("db." + d + ".username");
+
+                        if (jdbcPassword == null)
+                            jdbcPassword = properties.getProperty("db." + d + ".password");
+
+                        return getConnection1(jdbcUser, jdbcPassword, properties.getProperty("db." + d + ".driver"));
+                    }
+                }
+            }
+
+
+
             String configuration = System.getProperty("org.jooq.configuration");
             if (configuration == null) {
                 log.error("No system property 'org.jooq.configuration' found");
@@ -686,26 +824,30 @@ public abstract class jOOQAbstractTest<
                 jdbc.getPassword() != null ? jdbc.getPassword() :
                 getProperty(jdbc.getProperties(), "password");
 
-            Properties info = new Properties();
-            if (getClass().getSimpleName().toLowerCase().contains("ingres")) {
-                info.setProperty("timezone", "EUROPE-CENTRAL");
-            }
-            Driver d = ((Driver) Class.forName(driver).newInstance());
-            if (!StringUtils.isBlank(jdbcUser)) {
-                info.put("user", jdbcUser);
-                info.put("password", jdbcPassword);
-            }
-            else {
-                return DriverManager.getConnection(getJdbcURL(), jdbcUser, jdbcPassword);
-            }
-
-            return d != null
-                ? d.connect(getJdbcURL(), info)
-                : DriverManager.getConnection(getJdbcURL(), info);
+            return getConnection1(jdbcUser, jdbcPassword, driver);
         }
         catch (Exception e) {
             throw new Error(e);
         }
+    }
+
+    private Connection getConnection1(String jdbcUser, String jdbcPassword, String driver) throws Exception {
+        Properties info = new Properties();
+        if (getClass().getSimpleName().toLowerCase().contains("ingres")) {
+            info.setProperty("timezone", "EUROPE-CENTRAL");
+        }
+        Driver d = ((Driver) Class.forName(driver).newInstance());
+        if (!StringUtils.isBlank(jdbcUser)) {
+            info.put("user", jdbcUser);
+            info.put("password", jdbcPassword);
+        }
+        else {
+            return DriverManager.getConnection(getJdbcURL(), jdbcUser, jdbcPassword);
+        }
+
+        return d != null
+            ? d.connect(getJdbcURL(), info)
+            : DriverManager.getConnection(getJdbcURL(), info);
     }
 
     /**
@@ -1263,6 +1405,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testPlainSQLBlobAndClob() throws Exception {
         new PlainSQLTests(this).testPlainSQLBlobAndClob();
+    }
+
+    @Test
+    public void testPlainSQLLimitOffset() throws Exception {
+        new PlainSQLTests(this).testPlainSQLLimitOffset();
     }
 
     @Test
@@ -1926,6 +2073,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testUpdatablesPartialUpdates() throws Exception {
+        new CRUDTests(this).testUpdatablesPartialUpdates();
+    }
+
+    @Test
     public void testUpdatablesPKChangePK() throws Exception {
         new CRUDTests(this).testUpdatablesPKChangePK();
     }
@@ -2070,6 +2222,11 @@ public abstract class jOOQAbstractTest<
         new OrderByTests(this).testLimitDistinct();
     }
 
+    @Test
+    public void testLimitWithLOBs() throws Exception {
+        new OrderByTests(this).testLimitWithLOBs();
+    }
+
     // [#2080] TODO @Test
     public void testLimitAliased() throws Exception {
         new OrderByTests(this).testLimitAliased();
@@ -2108,6 +2265,26 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testCTEWithNoExplicitColumnLists() throws Exception {
         new CTETests(this).testCTEWithNoExplicitColumnLists();
+    }
+
+    @Test
+    public void testRecursiveCTESimple() throws Exception {
+        new CTETests(this).testRecursiveCTESimple();
+    }
+
+    @Test
+    public void testRecursiveCTEMultiple() throws Exception {
+        new CTETests(this).testRecursiveCTEMultiple();
+    }
+
+    @Test
+    public void testCTEWithLimit() throws Exception {
+        new CTETests(this).testCTEWithLimit();
+    }
+
+    @Test
+    public void testCTEWithLimitOffset() throws Exception {
+        new CTETests(this).testCTEWithLimitOffset();
     }
 
     @Test
@@ -2403,6 +2580,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testFetchIntoConvertedType() throws Exception {
         new EnumTests(this).testFetchIntoConvertedType();
+    }
+
+    @Test
+    public void testFetchCustomTypeIntoPOJO() throws Exception {
+        new EnumTests(this).testFetchCustomTypeIntoPOJO();
     }
 
     @Test
@@ -2703,6 +2885,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testCsvLoader() throws Exception {
         new CsvLoaderTests(this).testLoader();
+    }
+
+    @Test
+    public void testCsvLoaderConverter() throws Exception {
+        new CsvLoaderTests(this).testLoaderConverter();
     }
 
     @Test

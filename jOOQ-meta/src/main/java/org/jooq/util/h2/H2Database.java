@@ -162,6 +162,7 @@ public class H2Database extends AbstractDatabase {
                 .and(CrossReferences.PKTABLE_NAME.equal(Constraints.TABLE_NAME))
                 .and(CrossReferences.PKTABLE_SCHEMA.equal(Constraints.TABLE_SCHEMA))
                 .where(CrossReferences.FKTABLE_SCHEMA.in(getInputSchemata()))
+                .and(Constraints.CONSTRAINT_TYPE.in("PRIMARY KEY", "UNIQUE"))
                 .orderBy(
                     CrossReferences.FKTABLE_SCHEMA.asc(),
                     CrossReferences.FK_NAME.asc(),

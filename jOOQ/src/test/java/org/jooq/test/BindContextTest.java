@@ -41,6 +41,7 @@
 package org.jooq.test;
 
 import org.jooq.BindContext;
+import org.jooq.Context;
 import org.jooq.RenderContext;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.CustomCondition;
@@ -74,11 +75,7 @@ public class BindContextTest extends AbstractTest {
         Object value;
 
         @Override
-        public void toSQL(RenderContext context) {
-        }
-
-        @Override
-        public void bind(BindContext context) throws DataAccessException {
+        public void accept(Context<?> context) throws DataAccessException {
             value = context.data("key");
         }
 

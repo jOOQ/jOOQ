@@ -9,9 +9,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_2845_CASE_sensitivity")
-public class T_2845_CASE_sensitivity_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_2845_CASE_sensitivity_INTERFACE {
+public class T_2845_CASE_sensitivity_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, java.io.Serializable {
 
-	private static final long serialVersionUID = 210934842;
+	private static final long serialVersionUID = -1407433210;
 
 	private java.math.BigDecimal ID;
 	private java.math.BigDecimal INSENSITIVE;
@@ -37,82 +37,47 @@ public class T_2845_CASE_sensitivity_POJO extends java.lang.ThreadDeath implemen
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 22)
-	@Override
 	public java.math.BigDecimal getID() {
 		return this.ID;
 	}
 
-	@Override
 	public void setID(java.math.BigDecimal ID) {
 		this.ID = ID;
 	}
 
 	@javax.persistence.Column(name = "INSENSITIVE", length = 22)
-	@Override
 	public java.math.BigDecimal getINSENSITIVE() {
 		return this.INSENSITIVE;
 	}
 
-	@Override
 	public void setINSENSITIVE(java.math.BigDecimal INSENSITIVE) {
 		this.INSENSITIVE = INSENSITIVE;
 	}
 
 	@javax.persistence.Column(name = "UPPER", length = 22)
-	@Override
 	public java.math.BigDecimal getUPPER() {
 		return this.UPPER;
 	}
 
-	@Override
 	public void setUPPER(java.math.BigDecimal UPPER) {
 		this.UPPER = UPPER;
 	}
 
 	@javax.persistence.Column(name = "lower", length = 22)
-	@Override
 	public java.math.BigDecimal getlower() {
 		return this.lower;
 	}
 
-	@Override
 	public void setlower(java.math.BigDecimal lower) {
 		this.lower = lower;
 	}
 
 	@javax.persistence.Column(name = "Mixed", length = 22)
-	@Override
 	public java.math.BigDecimal getMixed() {
 		return this.Mixed;
 	}
 
-	@Override
 	public void setMixed(java.math.BigDecimal Mixed) {
 		this.Mixed = Mixed;
-	}
-
-	// -------------------------------------------------------------------------
-	// FROM and INTO
-	// -------------------------------------------------------------------------
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_2845_CASE_sensitivity_INTERFACE from) {
-		setID(from.getID());
-		setINSENSITIVE(from.getINSENSITIVE());
-		setUPPER(from.getUPPER());
-		setlower(from.getlower());
-		setMixed(from.getMixed());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_2845_CASE_sensitivity_INTERFACE> E into(E into) {
-		into.from(this);
-		return into;
 	}
 }

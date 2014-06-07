@@ -47,6 +47,7 @@ import org.jooq.Configuration;
 import org.jooq.ExecuteType;
 import org.jooq.Record;
 import org.jooq.RecordContext;
+import org.jooq.RecordType;
 
 /**
  * A default implementation for {@link RecordContext}.
@@ -101,6 +102,12 @@ class DefaultRecordContext implements RecordContext {
     @Override
     public final Record[] batchRecords() {
         return records;
+    }
+
+    @Override
+    public final RecordType<?> recordType() {
+        Record record = record();
+        return record != null ? new Fields<Record>(record.fields()) : null;
     }
 
     @Override

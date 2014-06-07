@@ -181,7 +181,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create.configuration().set(provider);
 
         Integer result =
-        create.transaction(c1 -> {
+        create.transactionResult(c1 -> {
             assertAutoCommit(c1.connectionProvider(), false);
 
             inserted[0] =
@@ -236,7 +236,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create.configuration().set(provider);
 
         try {
-            create.transaction(c1 -> {
+            create.transactionResult(c1 -> {
                 assertAutoCommit(c1.connectionProvider(), false);
 
                 inserted[0] =

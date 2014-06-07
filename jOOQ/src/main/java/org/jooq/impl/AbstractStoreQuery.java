@@ -444,12 +444,16 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 if (returning.size() == 1 && new Fields<Record>(returning).field(field) != null) {
                     for (final Number id : ids) {
                         getReturnedRecords().add(
-                        Utils.newRecord(into, configuration)
+                        Utils.newRecord(true, into, configuration)
                              .operate(new RecordOperation<R, RuntimeException>() {
 
                                 @Override
                                 public R operate(R record) throws RuntimeException {
-                                    ((AbstractRecord) record).setValue(field, new Value<Number>(id));
+                                    int index = record.fieldsRow().indexOf(field);
+
+                                    ((AbstractRecord) record).values[index] = id;
+                                    ((AbstractRecord) record).originals[index] = id;
+
                                     return record;
                                 }
                             }));

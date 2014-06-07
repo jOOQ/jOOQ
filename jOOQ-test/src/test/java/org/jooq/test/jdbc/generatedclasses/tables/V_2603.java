@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class V_2603 extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedclasses.tables.records.V_2603Record> {
 
-	private static final long serialVersionUID = 756086337;
+	private static final long serialVersionUID = 7874475;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.V_2603</code>
@@ -25,29 +25,37 @@ public class V_2603 extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generated
 	}
 
 	/**
-	 * The column <code>PUBLIC.V_2603.COL1</code>. 
+	 * The column <code>PUBLIC.V_2603.COL1</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.V_2603Record, java.lang.Integer> COL1 = createField("COL1", org.jooq.impl.SQLDataType.INTEGER, V_2603);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.V_2603Record, java.lang.Integer> COL1 = createField("COL1", org.jooq.impl.SQLDataType.INTEGER, V_2603, "");
 
 	/**
-	 * The column <code>PUBLIC.V_2603.COL2</code>. 
+	 * The column <code>PUBLIC.V_2603.COL2</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.V_2603Record, java.lang.Integer> COL2 = createField("COL2", org.jooq.impl.SQLDataType.INTEGER, V_2603);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.V_2603Record, java.lang.Integer> COL2 = createField("COL2", org.jooq.impl.SQLDataType.INTEGER, V_2603, "");
 
 	/**
-	 * The column <code>PUBLIC.V_2603.COL3</code>. 
+	 * The column <code>PUBLIC.V_2603.COL3</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.V_2603Record, java.lang.Integer> COL3 = createField("COL3", org.jooq.impl.SQLDataType.INTEGER, V_2603);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.V_2603Record, java.lang.Integer> COL3 = createField("COL3", org.jooq.impl.SQLDataType.INTEGER, V_2603, "");
 
 	/**
-	 * The column <code>PUBLIC.V_2603.COL4</code>. 
+	 * The column <code>PUBLIC.V_2603.COL4</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.V_2603Record, java.lang.Integer> COL4 = createField("COL4", org.jooq.impl.SQLDataType.INTEGER, V_2603);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.V_2603Record, java.lang.Integer> COL4 = createField("COL4", org.jooq.impl.SQLDataType.INTEGER, V_2603, "");
 
 	/**
 	 * No further instances allowed
 	 */
 	private V_2603() {
-		super("V_2603", org.jooq.test.jdbc.generatedclasses.Public.PUBLIC);
+		this("V_2603", null);
+	}
+
+	private V_2603(java.lang.String alias, org.jooq.Table<org.jooq.test.jdbc.generatedclasses.tables.records.V_2603Record> aliased) {
+		this(alias, aliased, null);
+	}
+
+	private V_2603(java.lang.String alias, org.jooq.Table<org.jooq.test.jdbc.generatedclasses.tables.records.V_2603Record> aliased, org.jooq.Field<?>[] parameters) {
+		super(alias, org.jooq.test.jdbc.generatedclasses.Public.PUBLIC, aliased, parameters, "");
 	}
 }

@@ -9,35 +9,35 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class P391 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 2096103895;
+	private static final long serialVersionUID = -1265586103;
 
 	/**
-	 * The parameter <code>P391.I1</code>. 
+	 * The parameter <code>P391.I1</code>.
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> I1 = createParameter("I1", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The parameter <code>P391.IO1</code>. 
+	 * The parameter <code>P391.IO1</code>.
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> IO1 = createParameter("IO1", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The parameter <code>P391.O1</code>. 
+	 * The parameter <code>P391.O1</code>.
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> O1 = createParameter("O1", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The parameter <code>P391.O2</code>. 
+	 * The parameter <code>P391.O2</code>.
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> O2 = createParameter("O2", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The parameter <code>P391.IO2</code>. 
+	 * The parameter <code>P391.IO2</code>.
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> IO2 = createParameter("IO2", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The parameter <code>P391.I2</code>. 
+	 * The parameter <code>P391.I2</code>.
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> I2 = createParameter("I2", org.jooq.impl.SQLDataType.NUMERIC);
 

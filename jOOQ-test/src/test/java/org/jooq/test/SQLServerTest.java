@@ -49,6 +49,7 @@ import static org.jooq.test.sqlserver.generatedclasses.Routines.fTables1;
 import static org.jooq.test.sqlserver.generatedclasses.Routines.fTables4;
 import static org.jooq.test.sqlserver.generatedclasses.Routines.fTables5;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_3084;
+import static org.jooq.test.sqlserver.generatedclasses.Tables.T_3084_TWO_UNIQUE_KEYS;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_3085;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_3090_B;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_639_NUMBERS_TABLE;
@@ -85,6 +86,7 @@ import java.sql.SQLWarning;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
+import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.ExecuteContext;
 import org.jooq.Field;
@@ -123,6 +125,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TUnsignedRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.T_3084Record;
+import org.jooq.test.sqlserver.generatedclasses.tables.records.T_3084TwoUniqueKeysRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.T_3085Record;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.T_3090BRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.T_639NumbersTableRecord;
@@ -955,11 +958,14 @@ public class SQLServerTest extends jOOQAbstractTest<
 
     @Test
     public void testSQLServerStoreNullableUniqueKey() {
+        clean(T_3090_B);
+
         T_3090BRecord record = create().newRecord(T_3090_B);
         record.setId1(1);
         record.setId2(null);
         assertEquals(1, record.insert());
         assertNull(record.getData());
+        assertEquals(1, create().fetchCount(T_3090_B));
 
         // REFRESH()
         record.setData(2);
@@ -967,12 +973,22 @@ public class SQLServerTest extends jOOQAbstractTest<
         assertEquals(1, (int) record.getId1());
         assertNull(record.getId2());
         assertNull(record.getData());
+        assertEquals(1, create().fetchCount(T_3090_B));
 
         record.setData(2);
         record.refresh(T_3090_B.DATA);
         assertEquals(1, (int) record.getId1());
         assertNull(record.getId2());
         assertNull(record.getData());
+        assertEquals(1, create().fetchCount(T_3090_B));
+
+        // STORE()
+        record.setData(2);
+        assertEquals(1, record.store());
+        assertEquals(1, (int) record.getId1());
+        assertNull(record.getId2());
+        assertEquals(2, (int) record.getData());
+        assertEquals(1, create().fetchCount(T_3090_B));
 
         // UPDATE()
         record.setData(2);
@@ -980,18 +996,23 @@ public class SQLServerTest extends jOOQAbstractTest<
         assertEquals(1, (int) record.getId1());
         assertNull(record.getId2());
         assertEquals(2, (int) record.getData());
+        assertEquals(1, create().fetchCount(T_3090_B));
 
         // DELETE()
         assertEquals(1, record.delete());
         assertNull(create().fetchOne(T_3090_B));
+        assertEquals(0, create().fetchCount(T_3090_B));
     }
 
     @Test
     public void testSQLServerStoreNullableUniqueKeyWithBatchStore() {
+        clean(T_3084);
+
         T_3084Record r1 = create().newRecord(T_3084);
         T_3084Record r2 = create().newRecord(T_3084);
 
         // STORE() means INSERT, no batch
+        r1.setId(null);
         r1.setData(1);
         r2.setId(2);
         r2.setData(2);
@@ -1015,6 +1036,110 @@ public class SQLServerTest extends jOOQAbstractTest<
         assertEquals(1, result[0]);
         assertEquals(1, result[1]);
         assertEquals(asList(21, 22), create().select(T_3084.DATA).from(T_3084).orderBy(T_3084.ID).fetchInto(int.class));
+    }
+
+    @Test
+    public void testSQLServerStoreNullableUniqueKeyWithMultipleUniqueKeysAndBatchStore() {
+        clean(T_3084_TWO_UNIQUE_KEYS);
+
+        T_3084TwoUniqueKeysRecord r1 = create().newRecord(T_3084_TWO_UNIQUE_KEYS);
+        T_3084TwoUniqueKeysRecord r2 = create().newRecord(T_3084_TWO_UNIQUE_KEYS);
+
+        // STORE() means INSERT, no batch
+        r1.setId1(1);
+        r1.setId2(null);
+        r1.setId3(1);
+        r1.setId4(null);
+        r1.setData(1);
+
+        r2.setId1(2);
+        r2.setId2(null);
+        r2.setId3(2);
+        r2.setId4(null);
+        r2.setData(2);
+
+        assertEquals(1, r1.store());
+        assertEquals(1, r2.store());
+        assertEquals(asList(1, 2), create().select(T_3084_TWO_UNIQUE_KEYS.DATA).from(T_3084_TWO_UNIQUE_KEYS).orderBy(T_3084_TWO_UNIQUE_KEYS.ID1).fetchInto(int.class));
+
+        Result<T_3084TwoUniqueKeysRecord> records;
+
+        // STORE() means UPDATE, no batch
+        records = create().selectFrom(T_3084_TWO_UNIQUE_KEYS).orderBy(T_3084_TWO_UNIQUE_KEYS.ID1).fetch();
+        r1 = records.get(0);
+        r2 = records.get(1);
+        r1.setData(11);
+        r2.setData(12);
+
+        assertEquals(1, r1.store());
+        assertEquals(1, r2.store());
+        assertEquals(asList(11, 12), create().select(T_3084_TWO_UNIQUE_KEYS.DATA).from(T_3084_TWO_UNIQUE_KEYS).orderBy(T_3084_TWO_UNIQUE_KEYS.ID1).fetchInto(int.class));
+
+        // STORE() means UPDATE, with batch
+        records = create().selectFrom(T_3084_TWO_UNIQUE_KEYS).orderBy(T_3084_TWO_UNIQUE_KEYS.ID1).fetch();
+        r1 = records.get(0);
+        r2 = records.get(1);
+
+        r1.setData(21);
+        r2.setData(22);
+        int[] result = create().batchStore(r1, r2).execute();
+        assertEquals(1, result[0]);
+        assertEquals(1, result[1]);
+        assertEquals(asList(21, 22), create().select(T_3084_TWO_UNIQUE_KEYS.DATA).from(T_3084_TWO_UNIQUE_KEYS).orderBy(T_3084_TWO_UNIQUE_KEYS.ID1).fetchInto(int.class));
+    }
+
+    @Test
+    public void testSQLServerStoreNullableUniqueKeyWithMultipleUniqueKeysAndBatchStoreAndUpdatablePrimaryKeys() {
+        //[#3300] ;-) What a method name
+        clean(T_3084_TWO_UNIQUE_KEYS);
+
+        DSLContext create = create();
+        create.configuration().settings().setUpdatablePrimaryKeys(true);
+
+        T_3084TwoUniqueKeysRecord r1 = create.newRecord(T_3084_TWO_UNIQUE_KEYS);
+        T_3084TwoUniqueKeysRecord r2 = create.newRecord(T_3084_TWO_UNIQUE_KEYS);
+
+        // STORE() means INSERT, no batch
+        r1.setId1(1);
+        r1.setId2(null);
+        r1.setId3(1);
+        r1.setId4(null);
+        r1.setData(1);
+
+        r2.setId1(2);
+        r2.setId2(null);
+        r2.setId3(2);
+        r2.setId4(null);
+        r2.setData(2);
+
+        assertEquals(1, r1.store());
+        assertEquals(1, r2.store());
+        assertEquals(asList(1, 2), create.select(T_3084_TWO_UNIQUE_KEYS.DATA).from(T_3084_TWO_UNIQUE_KEYS).orderBy(T_3084_TWO_UNIQUE_KEYS.ID1).fetchInto(int.class));
+
+        Result<T_3084TwoUniqueKeysRecord> records;
+
+        // STORE() means UPDATE, no batch
+        records = create.selectFrom(T_3084_TWO_UNIQUE_KEYS).orderBy(T_3084_TWO_UNIQUE_KEYS.ID1).fetch();
+        r1 = records.get(0);
+        r2 = records.get(1);
+        r1.setData(11);
+        r2.setData(12);
+
+        assertEquals(1, r1.store());
+        assertEquals(1, r2.store());
+        assertEquals(asList(11, 12), create.select(T_3084_TWO_UNIQUE_KEYS.DATA).from(T_3084_TWO_UNIQUE_KEYS).orderBy(T_3084_TWO_UNIQUE_KEYS.ID1).fetchInto(int.class));
+
+        // STORE() means UPDATE, with batch
+        records = create.selectFrom(T_3084_TWO_UNIQUE_KEYS).orderBy(T_3084_TWO_UNIQUE_KEYS.ID1).fetch();
+        r1 = records.get(0);
+        r2 = records.get(1);
+
+        r1.setData(21);
+        r2.setData(22);
+        int[] result = create.batchStore(r1, r2).execute();
+        assertEquals(1, result[0]);
+        assertEquals(1, result[1]);
+        assertEquals(asList(21, 22), create.select(T_3084_TWO_UNIQUE_KEYS.DATA).from(T_3084_TWO_UNIQUE_KEYS).orderBy(T_3084_TWO_UNIQUE_KEYS.ID1).fetchInto(int.class));
     }
 
     @Test

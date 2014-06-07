@@ -71,13 +71,11 @@ import static org.jooq.SQLDialect.SQLSERVER2008;
 import static org.jooq.SQLDialect.SQLSERVER2012;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.SortOrder.ASC;
-import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.impl.DSL.denseRank;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.Dual.DUAL_ACCESS;
 import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Utils.DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE;
@@ -85,13 +83,11 @@ import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import static org.jooq.impl.Utils.DATA_WINDOW_DEFINITIONS;
 import static org.jooq.impl.Utils.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -102,9 +98,7 @@ import org.jooq.GroupField;
 import org.jooq.JoinType;
 import org.jooq.Operator;
 import org.jooq.Param;
-import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
 import org.jooq.SortField;
@@ -114,7 +108,6 @@ import org.jooq.TableLike;
 import org.jooq.TableOnStep;
 import org.jooq.TablePartitionByStep;
 import org.jooq.WindowDefinition;
-import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.StringUtils;
 
@@ -202,44 +195,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     }
 
     @Override
-    public final void bind(BindContext context) {
-        if (with != null)
-            context.visit(with);
-
-        pushWindow(context);
-
-        context.declareFields(true)
-               .visit(getSelect0())
-               .declareFields(false)
-               .declareTables(true)
-               .visit(getFrom())
-               .declareTables(false)
-               .visit(getWhere())
-               .visit(getConnectByStartWith())
-               .visit(getConnectBy())
-               .visit(getGroupBy())
-               .visit(getHaving());
-
-        if (asList(POSTGRES, SYBASE).contains(context.configuration().dialect().family())) {
-            context.declareWindows(true)
-                   .visit(getWindow())
-                   .declareWindows(false);
-        }
-
-        context.visit(getOrderBy());
-
-        // TOP clauses never bind values. So this can be safely applied at the
-        // end for LIMIT .. OFFSET clauses, or ROW_NUMBER() filtering
-        if (getLimit().isApplicable()) {
-            context.visit(getLimit());
-        }
-
-        context.visit(forUpdateOf)
-               .visit(forUpdateOfTables);
-    }
-
-    @Override
-    public final void toSQL(RenderContext context) {
+    public final void accept(Context<?> context) {
         if (with != null)
             context.visit(with).formatSeparator();
 
@@ -427,7 +383,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     /**
      * The default LIMIT / OFFSET clause in most dialects
      */
-    private void toSQLReferenceLimitDefault(RenderContext context) {
+    private void toSQLReferenceLimitDefault(Context<?> context) {
         toSQLReference0(context);
         context.visit(getLimit());
     }
@@ -437,99 +393,132 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
      * Simulate the LIMIT / OFFSET clause in the {@link SQLDialect#DB2},
      * {@link SQLDialect#SQLSERVER2008} and {@link SQLDialect#SYBASE} dialects
      */
-    private final void toSQLReferenceLimitDB2SQLServer2008Sybase(RenderContext context) {
+    private final void toSQLReferenceLimitDB2SQLServer2008Sybase(Context<?> ctx) {
 
-        // [#1954] Render enclosed SELECT first to obtain a "unique" hash code
-        RenderContext tmpLocal = new DefaultRenderContext(context);
-        tmpLocal.subquery(true);
-        toSQLReference0(tmpLocal);
-        String tmpEnclosed = tmpLocal.render();
+        // AUTHOR.ID, BOOK.ID, BOOK.TITLE
+        Field<?>[] originalFields = Utils.fieldArray(getSelect());
 
-        String subqueryName = "limit_" + Utils.hash(tmpEnclosed);
-        String rownumName = "rownum_" + Utils.hash(tmpEnclosed);
+        // ID, ID, TITLE
+        String[] originalNames = Utils.fieldNames(originalFields);
 
-        // Render enclosed SELECT again, adding an additional ROW_NUMBER() OVER()
-        // window function, calculating row numbers for the LIMIT .. OFFSET clause
-        RenderContext local = new DefaultRenderContext(context);
-        local.subquery(true);
+        // v1, v2, v3
+        String[] alternativeNames = Utils.fieldNames(originalFields.length);
 
-        // [#2580] When DISTINCT is applied, we mustn't use ROW_NUMBER() OVER(),
-        // which changes the DISTINCT semantics. Instead, use DENSE_RANK() OVER(),
-        // ordering by the SELECT's ORDER BY clause AND all the expressions from
-        // the projection
-        if (distinct) {
-            List<SortField<?>> order = new ArrayList<SortField<?>>();
-            order.addAll(getNonEmptyOrderBy());
+        // AUTHOR.ID as v1, BOOK.ID as v2, BOOK.TITLE as v3
+        // Enforce x.* or just * if we have no known field names (e.g. when plain SQL tables are involved)
+        Field<?>[] alternativeFields = Utils.combine(
+            alternativeNames.length == 0
+                ? new Field[] { DSL.field("*") }
+                : Utils.aliasedFields(originalFields, alternativeNames),
 
-            // TODO: Challenge this with lots of additional tests, improve readability
-            for (Field<?> field : getSelect())
-                order.add(field.asc());
-            toSQLReference0(local, denseRank().over().orderBy(order).as(rownumName));
-        }
-        else {
-            toSQLReference0(local, rowNumber().over().orderBy(getNonEmptyOrderBy()).as(rownumName));
-        }
-        String enclosed = local.render();
+            // [#2580] When DISTINCT is applied, we mustn't use ROW_NUMBER() OVER(),
+            // which changes the DISTINCT semantics. Instead, use DENSE_RANK() OVER(),
+            // ordering by the SELECT's ORDER BY clause AND all the expressions from
+            // the projection
+            distinct
+                ? DSL.denseRank().over(orderBy(getNonEmptyOrderByForDistinct(ctx.configuration()))).as("rn")
+                : DSL.rowNumber().over(orderBy(getNonEmptyOrderBy(ctx.configuration()))).as("rn")
+        );
 
-        context.keyword("select * from (")
-               .formatIndentStart()
-               .formatNewLine()
-               .sql(enclosed)
-               .formatIndentEnd()
-               .formatNewLine()
-               .sql(") ").keyword("as").sql(" ")
-               .visit(name(subqueryName))
-               .formatSeparator()
-               .keyword("where").sql(" ")
-               .visit(name(rownumName))
-               .sql(" > ")
-               .visit(getLimit().getLowerRownum())
-               .formatSeparator()
-               .keyword("and").sql(" ")
-               .visit(name(rownumName))
-               .sql(" <= ")
-               .visit(getLimit().getUpperRownum());
+        // v1 as ID, v2 as ID, v3 as TITLE
+        Field<?>[] unaliasedFields = Utils.aliasedFields(Utils.fields(originalFields.length), originalNames);
+
+        boolean subquery = ctx.subquery();
+
+        ctx.keyword("select").sql(" ")
+           .declareFields(true)
+           .visit(new SelectFieldList(unaliasedFields))
+           .declareFields(false)
+           .formatSeparator()
+           .keyword("from").sql(" (")
+           .formatIndentStart()
+           .formatNewLine()
+           .subquery(true);
+
+        toSQLReference0(ctx, alternativeFields);
+
+        ctx.subquery(subquery)
+           .formatIndentEnd()
+           .formatNewLine()
+           .sql(") ")
+           .visit(name("x"))
+           .formatSeparator()
+           .keyword("where").sql(" ")
+           .visit(name("rn"))
+           .sql(" > ")
+           .visit(getLimit().getLowerRownum())
+           .formatSeparator()
+           .keyword("and").sql(" ")
+           .visit(name("rn"))
+           .sql(" <= ")
+           .visit(getLimit().getUpperRownum());
     }
 
     /**
      * Simulate the LIMIT / OFFSET clause in the {@link SQLDialect#ORACLE}
      * dialect
      */
-    private final void toSQLReferenceLimitOracle(RenderContext context) {
-        RenderContext local = new DefaultRenderContext(context);
-        toSQLReference0(local);
-        String enclosed = local.render();
+    private final void toSQLReferenceLimitOracle(Context<?> ctx) {
 
-        String subqueryName = "limit_" + Utils.hash(enclosed);
-        String rownumName = "rownum_" + Utils.hash(enclosed);
+        // AUTHOR.ID, BOOK.ID, BOOK.TITLE
+        Field<?>[] originalFields = Utils.fieldArray(getSelect());
 
-        context.keyword("select").sql(" * ").keyword("from").sql(" (")
-               .formatIndentStart()
-               .formatNewLine()
-                 .keyword("select").sql(" ")
-                 .visit(name(subqueryName)).sql(".*, ")
-                 .keyword("rownum").sql(" ").keyword("as").sql(" ")
-                 .visit(name(rownumName))
-                 .formatSeparator()
-                 .keyword("from").sql(" (")
-                 .formatIndentStart()
-                 .formatNewLine()
-                   .sql(enclosed)
-                 .formatIndentEnd()
-                 .formatNewLine()
-                 .sql(") ")
-                 .visit(name(subqueryName))
-                 .formatSeparator()
-                 .keyword("where").sql(" ").keyword("rownum").sql(" <= ")
-                 .visit(getLimit().getUpperRownum())
-               .formatIndentEnd()
-               .formatNewLine()
-               .sql(") ")
-               .formatSeparator()
-               .keyword("where").sql(" ")
-               .visit(name(rownumName))
-               .sql(" > ")
-               .visit(getLimit().getLowerRownum());
+        // ID, ID, TITLE
+        String[] originalNames = Utils.fieldNames(originalFields);
+
+        // v1, v2, v3
+        String[] alternativeNames = Utils.fieldNames(originalFields.length);
+
+        // AUTHOR.ID as v1, BOOK.ID as v2, BOOK.TITLE as v3
+        Field<?>[] alternativeFields = Utils.aliasedFields(originalFields, alternativeNames);
+
+        // x.v1, x.v2, x.v3, rownum rn
+        Field<?>[] qualifiedAlternativeFields = Utils.combine(
+
+            // Enforce x.* or just * if we have no known field names (e.g. when plain SQL tables are involved)
+            alternativeNames.length == 0
+                ? new Field[] { DSL.field("{0}.*", name("x")) }
+                : Utils.fieldsByName("x", alternativeNames),
+            DSL.rownum().as("rn")
+        );
+
+        // v1 as ID, v2 as ID, v3 as TITLE
+        Field<?>[] unaliasedFields = Utils.aliasedFields(Utils.fields(originalFields.length), originalNames);
+
+        ctx.keyword("select").sql(" ")
+           .declareFields(true)
+           .visit(new SelectFieldList(unaliasedFields))
+           .declareFields(false)
+           .formatSeparator()
+           .keyword("from").sql(" (")
+           .formatIndentStart()
+           .formatNewLine()
+             .keyword("select").sql(" ")
+             .declareFields(true)
+             .visit(new SelectFieldList(qualifiedAlternativeFields))
+             .declareFields(false)
+             .formatSeparator()
+             .keyword("from").sql(" (")
+             .formatIndentStart()
+             .formatNewLine();
+
+        toSQLReference0(ctx, alternativeFields);
+
+        ctx  .formatIndentEnd()
+             .formatNewLine()
+             .sql(") ")
+             .visit(name("x"))
+             .formatSeparator()
+             .keyword("where").sql(" ").visit(DSL.rownum()).sql(" <= ")
+             .visit(getLimit().getUpperRownum())
+           .formatIndentEnd()
+           .formatNewLine()
+           .sql(") ")
+           .formatSeparator()
+           .keyword("where").sql(" ")
+           .visit(name("rn"))
+           .sql(" > ")
+           .visit(getLimit().getLowerRownum());
     }
     /* [/pro] */
 
@@ -537,7 +526,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
      * This method renders the main part of a query without the LIMIT clause.
      * This part is common to any type of limited query
      */
-    private final void toSQLReference0(RenderContext context) {
+    private final void toSQLReference0(Context<?> context) {
         toSQLReference0(context, null);
     }
 
@@ -545,7 +534,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
      * This method renders the main part of a query without the LIMIT clause.
      * This part is common to any type of limited query
      */
-    private final void toSQLReference0(RenderContext context, QueryPart limitOffsetRownumber) {
+    private final void toSQLReference0(Context<?> context, Field<?>[] alternativeFields) {
         SQLDialect dialect = context.configuration().dialect();
 
         // SELECT clause
@@ -610,10 +599,16 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         context.declareFields(true);
 
+        // [#2335] When emulating LIMIT .. OFFSET, the SELECT clause needs to generate
+        // non-ambiguous column names as ambiguous column names are not allowed in subqueries
+        if (alternativeFields != null) {
+            context.visit(new SelectFieldList(alternativeFields));
+        }
+
         // [#1905] H2 only knows arrays, no row value expressions. Subqueries
         // in the context of a row value expression predicate have to render
         // arrays explicitly, as the subquery doesn't form an implicit RVE
-        if (context.subquery() && dialect == H2 && context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY) != null) {
+        else if (context.subquery() && dialect == H2 && context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY) != null) {
             Object data = context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY);
 
             try {
@@ -632,21 +627,6 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             context.visit(getSelect1());
         }
 
-        if (limitOffsetRownumber != null) {
-
-            // [#1724] Inlining is necessary to avoid further complexity between
-            // toSQL()'s LIMIT .. OFFSET rendering and bind()'s "obliviousness"
-            // thereof. This should be improved by delegating to composed Select
-            // objects.
-            ParamType paramType = context.paramType();
-            context.paramType(INLINED)
-                   .sql(",")
-                   .formatIndentStart()
-                   .formatSeparator()
-                   .visit(limitOffsetRownumber)
-                   .formatIndentEnd()
-                   .paramType(paramType);
-        }
 
         context.declareFields(false)
                .end(SELECT_SELECT);
@@ -811,13 +791,16 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                    .visit(getOrderBy());
         }
 
+        /* [pro] */
         // [#2423] SQL Server 2012 requires an ORDER BY clause, along with
         // OFFSET .. FETCH
-        else if (getLimit().isApplicable() && asList(SQLSERVER, SQLSERVER2012).contains(dialect)){
+        else if (getLimit().isApplicable() && asList(SQLSERVER, SQLSERVER2012).contains(dialect)) {
             context.formatSeparator()
                    .keyword("order by")
-                   .sql(" 1");
+                   .sql(" ")
+                   .keyword("@@version");
         }
+        /* [/pro] */
 
         context.end(SELECT_ORDER_BY);
     }
@@ -1097,15 +1080,38 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         return seek;
     }
 
-    final SortFieldList getNonEmptyOrderBy() {
+    /* [pro] */
+    final SortFieldList getNonEmptyOrderBy(Configuration configuration) {
         if (getOrderBy().isEmpty()) {
             SortFieldList result = new SortFieldList();
-            result.add(getSelect().get(0).asc());
+
+            switch (configuration.dialect().family()) {
+                case DB2:
+                    result.add(DSL.one().asc());
+                    break;
+
+                case SQLSERVER:
+                case SYBASE:
+                default:
+                    result.add(DSL.field("@@version").asc());
+                    break;
+            }
             return result;
         }
 
         return getOrderBy();
     }
+
+    final SortFieldList getNonEmptyOrderByForDistinct(Configuration configuration) {
+        SortFieldList order = new SortFieldList();
+        order.addAll(getNonEmptyOrderBy(configuration));
+
+        for (Field<?> field : getSelect())
+            order.add(field.asc());
+
+        return order;
+    }
+    /* [/pro] */
 
     @Override
     public final void addOrderBy(Collection<? extends SortField<?>> fields) {

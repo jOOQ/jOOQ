@@ -9,15 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class P_ENHANCE_ADDRESS1 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 333464849;
+	private static final long serialVersionUID = -1298242563;
 
 	/**
-	 * The parameter <code>P_ENHANCE_ADDRESS1.ADDRESS</code>. 
+	 * The parameter <code>P_ENHANCE_ADDRESS1.ADDRESS</code>.
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> ADDRESS = createParameter("ADDRESS", org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE.U_ADDRESS_TYPE.getDataType());
 
 	/**
-	 * The parameter <code>P_ENHANCE_ADDRESS1.NO</code>. 
+	 * The parameter <code>P_ENHANCE_ADDRESS1.NO</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> NO = createParameter("NO", org.jooq.impl.SQLDataType.VARCHAR);
 

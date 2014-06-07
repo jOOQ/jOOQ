@@ -37,48 +37,48 @@ public class TAuthorDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generated
 	 * Fetch records that have <code>ID IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor> fetchById(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR.ID, values);
 	}
 
 	/**
 	 * Fetch a unique record that has <code>ID = value</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor fetchOneById(java.lang.Integer value) {
-		return fetchOne(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID, value);
+		return fetchOne(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR.ID, value);
 	}
 
 	/**
 	 * Fetch records that have <code>FIRST_NAME IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor> fetchByFirstName(java.lang.String... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TAuthor.FIRST_NAME, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR.FIRST_NAME, values);
 	}
 
 	/**
 	 * Fetch records that have <code>LAST_NAME IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor> fetchByLastName(java.lang.String... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TAuthor.LAST_NAME, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR.LAST_NAME, values);
 	}
 
 	/**
 	 * Fetch records that have <code>DATE_OF_BIRTH IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor> fetchByDateOfBirth(java.sql.Date... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TAuthor.DATE_OF_BIRTH, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR.DATE_OF_BIRTH, values);
 	}
 
 	/**
 	 * Fetch records that have <code>YEAR_OF_BIRTH IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor> fetchByYearOfBirth(java.lang.Integer... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR.YEAR_OF_BIRTH, values);
 	}
 
 	/**
 	 * Fetch records that have <code>ADDRESS IN (values)</code>
 	 */
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor> fetchByAddress(java.lang.String... values) {
-		return fetch(org.jooq.test.h2.generatedclasses.tables.TAuthor.ADDRESS, values);
+		return fetch(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR.ADDRESS, values);
 	}
 }

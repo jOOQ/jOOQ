@@ -29,6 +29,16 @@ public interface IT_2698 extends java.io.Serializable {
 	 */
 	public java.lang.Integer getXx();
 
+	/**
+	 * Setter for <code>PUBLIC.T_2698.YY</code>.
+	 */
+	public IT_2698 setYy(java.lang.Integer value);
+
+	/**
+	 * Getter for <code>PUBLIC.T_2698.YY</code>.
+	 */
+	public java.lang.Integer getYy();
+
 	// -------------------------------------------------------------------------
 	// FROM and INTO
 	// -------------------------------------------------------------------------

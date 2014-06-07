@@ -42,7 +42,22 @@ public class UDTs {
 	public static org.jooq.test.oracle3.generatedclasses.udt.U_INVALID_TYPE U_INVALID_TYPE = org.jooq.test.oracle3.generatedclasses.udt.U_INVALID_TYPE.U_INVALID_TYPE;
 
 	/**
+	 * The type <code>U_NESTED_1</code>
+	 */
+	public static org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_1 U_NESTED_1 = org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_1.U_NESTED_1;
+
+	/**
+	 * The type <code>U_NESTED_3</code>
+	 */
+	public static org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_3 U_NESTED_3 = org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_3.U_NESTED_3;
+
+	/**
 	 * The type <code>U_STREET_TYPE</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE U_STREET_TYPE = org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE.U_STREET_TYPE;
+
+	/**
+	 * The type <code>U_3005</code>
+	 */
+	public static org.jooq.test.oracle3.generatedclasses.udt.U_3005 U_3005 = org.jooq.test.oracle3.generatedclasses.udt.U_3005.U_3005;
 }

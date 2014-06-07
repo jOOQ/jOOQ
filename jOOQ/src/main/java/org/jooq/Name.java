@@ -71,6 +71,15 @@ public interface Name extends QueryPart {
     WindowDefinition as(WindowSpecification window);
 
     /**
+     * Specify a subselect to refer to by the <code>Name</code> to form a common
+     * table expression.
+     * <p>
+     * Column names are implicitly inherited from the <code>SELECT</code>
+     * statement.
+     */
+    <R extends Record> CommonTableExpression<R> as(Select<R> select);
+
+    /**
      * Add a list of fields to this name to make this name a
      * {@link DerivedColumnList}.
      * <p>

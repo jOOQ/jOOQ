@@ -166,15 +166,40 @@ public interface DSLContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Run a {@link Transactional} in the context of this
+     * Run a {@link TransactionalCallable} in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link Configuration#transactionProvider()}, and return the
+     * <code>transactional</code>'s outcome.
+     * <p>
+     * Both javac and Eclipse compilers contain bugs when overloading methods
+     * that take both "void-compatible" and "value-compatible" functional
+     * interfaces:
+     * <ul>
+     * <li><a
+     * href="https://bugs.openjdk.java.net/browse/JDK-8029718">JDK-8029718</a></li>
+     * <li><a
+     * href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=434642">Eclipse
+     * 434642</a></li>
+     * </ul>
+     * This is why this method was renamed to <code>transactionResult()</code>.
+     * Future versions of jOOQ may create a better synonym for this, called
+     * <code>transaction()</code>, which doesn't conflict with
+     * {@link #transaction(TransactionalRunnable)}
+     *
+     * @param transactional The transactional code
+     * @return The transactional outcome
+     */
+    <T> T transactionResult(TransactionalCallable<T> transactional);
+
+    /**
+     * Run a {@link TransactionalCallable} in the context of this
      * <code>DSLContext</code>'s underlying {@link #configuration()}'s
      * {@link Configuration#transactionProvider()}, and return the
      * <code>transactional</code>'s outcome.
      *
      * @param transactional The transactional code
-     * @return The transactional outcome
      */
-    <T> T transaction(Transactional<T> transactional);
+    void transaction(TransactionalRunnable transactional);
 
     // -------------------------------------------------------------------------
     // XXX RenderContext and BindContext accessors
@@ -1528,8 +1553,15 @@ public interface DSLContext {
      * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String)} for strictly
+     * recursive CTE.
      */
-    @Support({ DB2, FIREBIRD, ORACLE, POSTGRES })
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     WithAsStep with(String alias);
 
     /**
@@ -1537,7 +1569,15 @@ public interface DSLContext {
      * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
      */
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     WithAsStep with(String alias, String... fieldAliases);
 
     /**
@@ -1553,7 +1593,15 @@ public interface DSLContext {
      * <li>
      * {@link DerivedColumnList#as(Select)}</li>
      * </ul>
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(CommonTableExpression...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(CommonTableExpression...)} for strictly
+     * recursive CTE.
      */
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     WithStep with(CommonTableExpression<?>... tables);
 
     /**
@@ -1561,7 +1609,18 @@ public interface DSLContext {
      * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
      */
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     WithAsStep withRecursive(String alias);
 
     /**
@@ -1569,7 +1628,18 @@ public interface DSLContext {
      * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
      */
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     WithAsStep withRecursive(String alias, String... fieldAliases);
 
     /**
@@ -1585,7 +1655,18 @@ public interface DSLContext {
      * <li>
      * {@link DerivedColumnList#as(Select)}</li>
      * </ul>
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(CommonTableExpression...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(CommonTableExpression...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
      */
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     WithStep withRecursive(CommonTableExpression<?>... tables);
 
     /**
@@ -4482,7 +4563,8 @@ public interface DSLContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Execute a set of queries in batch mode (without bind values).
+     * Create a batch statement to execute a set of queries in batch mode
+     * (without bind values).
      * <p>
      * This essentially runs the following logic: <code><pre>
      * Statement s = connection.createStatement();
@@ -4500,7 +4582,8 @@ public interface DSLContext {
     Batch batch(Query... queries);
 
     /**
-     * Execute a set of queries in batch mode (without bind values).
+     * Create a batch statement to execute a set of queries in batch mode
+     * (without bind values).
      * <p>
      * This is a convenience method for calling
      * <code><pre>batch(query(queries[0]), query(queries[1]), ...)</pre></code>.
@@ -4513,7 +4596,8 @@ public interface DSLContext {
     Batch batch(String... queries);
 
     /**
-     * Execute a set of queries in batch mode (without bind values).
+     * Create a batch statement to execute a set of queries in batch mode
+     * (without bind values).
      * <p>
      * This essentially runs the following logic: <code><pre>
      * Statement s = connection.createStatement();
@@ -4531,7 +4615,8 @@ public interface DSLContext {
     Batch batch(Collection<? extends Query> queries);
 
     /**
-     * Execute a set of queries in batch mode (with bind values).
+     * Create a batch statement to execute a set of queries in batch mode (with
+     * bind values).
      * <p>
      * When running <code><pre>
      * create.batch(query)
@@ -4564,7 +4649,8 @@ public interface DSLContext {
     BatchBindStep batch(Query query);
 
     /**
-     * Execute a set of queries in batch mode (with bind values).
+     * Create a batch statement to execute a set of queries in batch mode (with
+     * bind values).
      * <p>
      * This is a convenience method for calling
      * <code><pre>batch(query(sql))</pre></code>.
@@ -4577,7 +4663,8 @@ public interface DSLContext {
     BatchBindStep batch(String sql);
 
     /**
-     * Execute a set of queries in batch mode (with bind values).
+     * Create a batch statement to execute a set of queries in batch mode (with
+     * bind values).
      * <p>
      * This is a convenience method for calling {@link #batch(Query)} and then
      * binding values one by one using {@link BatchBindStep#bind(Object...)}
@@ -4593,7 +4680,8 @@ public interface DSLContext {
     Batch batch(Query query, Object[]... bindings);
 
     /**
-     * Execute a set of queries in batch mode (with bind values).
+     * Create a batch statement to execute a set of queries in batch mode (with
+     * bind values).
      * <p>
      * This is a convenience method for calling
      * <code><pre>batch(query(sql), bindings)</pre></code>.
@@ -4606,8 +4694,8 @@ public interface DSLContext {
     Batch batch(String sql, Object[]... bindings);
 
     /**
-     * Execute a set of <code>INSERT</code> and <code>UPDATE</code> queries in
-     * batch mode (with bind values).
+     * Create a batch statement to execute a set of <code>INSERT</code> and
+     * <code>UPDATE</code> queries in batch mode (with bind values).
      * <p>
      * This batch operation can be executed in two modes:
      * <p>
@@ -4650,8 +4738,8 @@ public interface DSLContext {
     Batch batchStore(UpdatableRecord<?>... records);
 
     /**
-     * Execute a set of <code>INSERT</code> and <code>UPDATE</code> queries in
-     * batch mode (with bind values).
+     * Create a batch statement to execute a set of <code>INSERT</code> and
+     * <code>UPDATE</code> queries in batch mode (with bind values).
      *
      * @see #batchStore(UpdatableRecord...)
      * @see Statement#executeBatch()
@@ -4660,8 +4748,8 @@ public interface DSLContext {
     Batch batchStore(Collection<? extends UpdatableRecord<?>> records);
 
     /**
-     * Execute a set of <code>INSERT</code> queries in batch mode (with bind
-     * values).
+     * Create a batch statement to execute a set of <code>INSERT</code> queries
+     * in batch mode (with bind values).
      *
      * @see #batchStore(UpdatableRecord...)
      * @see Statement#executeBatch()
@@ -4670,8 +4758,8 @@ public interface DSLContext {
     Batch batchInsert(TableRecord<?>... records);
 
     /**
-     * Execute a set of <code>INSERT</code> queries in batch mode (with bind
-     * values).
+     * Create a batch statement to execute a set of <code>INSERT</code> queries
+     * in batch mode (with bind values).
      *
      * @see #batchStore(UpdatableRecord...)
      * @see Statement#executeBatch()
@@ -4680,8 +4768,8 @@ public interface DSLContext {
     Batch batchInsert(Collection<? extends TableRecord<?>> records);
 
     /**
-     * Execute a set of <code>UPDATE</code> queries in batch mode (with bind
-     * values).
+     * Create a batch statement to execute a set of <code>UPDATE</code> queries
+     * in batch mode (with bind values).
      *
      * @see #batchStore(UpdatableRecord...)
      * @see Statement#executeBatch()
@@ -4690,8 +4778,8 @@ public interface DSLContext {
     Batch batchUpdate(UpdatableRecord<?>... records);
 
     /**
-     * Execute a set of <code>UPDATE</code> queries in batch mode (with bind
-     * values).
+     * Create a batch statement to execute a set of <code>UPDATE</code> queries
+     * in batch mode (with bind values).
      *
      * @see #batchStore(UpdatableRecord...)
      * @see Statement#executeBatch()
@@ -4700,8 +4788,8 @@ public interface DSLContext {
     Batch batchUpdate(Collection<? extends UpdatableRecord<?>> records);
 
     /**
-     * Execute a set of <code>DELETE</code> queries in batch mode (with bind
-     * values).
+     * Create a batch statement to execute a set of <code>DELETE</code> queries
+     * in batch mode (with bind values).
      * <p>
      * This batch operation can be executed in two modes:
      * <p>
@@ -4744,7 +4832,8 @@ public interface DSLContext {
     Batch batchDelete(UpdatableRecord<?>... records);
 
     /**
-     * Execute a set of <code>DELETE</code> in batch mode (with bind values).
+     * Create a batch statement to execute a set of <code>DELETE</code> in batch
+     * mode (with bind values).
      *
      * @see #batchDelete(UpdatableRecord...)
      * @see Statement#executeBatch()

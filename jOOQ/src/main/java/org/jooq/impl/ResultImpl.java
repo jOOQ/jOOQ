@@ -1206,7 +1206,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         for (int fieldIndex : fieldIndexes) {
             if (fields.fields[fieldIndex].getType() == String.class) {
                 for (Record record : this) {
-                    ((AbstractRecord) record).getValue0(fieldIndex).intern();
+                    ((AbstractRecord) record).intern0(fieldIndex);
                 }
             }
         }

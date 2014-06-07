@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.packages.library_767_package_test
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LIBRARY_767_PACKAGE_TEST extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> implements java.io.Serializable, java.lang.Cloneable {
 
-	private static final long serialVersionUID = -125872484;
+	private static final long serialVersionUID = 1439172478;
 
 	/**
-	 * The parameter <code>LIBRARY_767_PACKAGE_TEST.LIBRARY_767_PACKAGE_TEST.RETURN_VALUE</code>. 
+	 * The parameter <code>LIBRARY_767_PACKAGE_TEST.LIBRARY_767_PACKAGE_TEST.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 

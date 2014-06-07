@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Ää extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.ÄäRecord> {
 
-	private static final long serialVersionUID = 1291680637;
+	private static final long serialVersionUID = -799540649;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.Ää</code>
@@ -27,13 +27,20 @@ public class Ää extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclas
 	/**
 	 * The column <code>PUBLIC.Ää.Öö</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.ÄäRecord, java.lang.Integer> ÖÖ = createField("Öö", org.jooq.impl.SQLDataType.INTEGER, ÄÄ, "");
+	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.ÄäRecord, java.lang.Integer> ÖÖ = createField("Öö", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * No further instances allowed
+	 * Create a <code>PUBLIC.Ää</code> table reference
 	 */
-	private Ää() {
+	public Ää() {
 		this("Ää", null);
+	}
+
+	/**
+	 * Create an aliased <code>PUBLIC.Ää</code> table reference
+	 */
+	public Ää(java.lang.String alias) {
+		this(alias, org.jooq.test.h2.generatedclasses.tables.Ää.ÄÄ);
 	}
 
 	private Ää(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.ÄäRecord> aliased) {
@@ -42,5 +49,20 @@ public class Ää extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclas
 
 	private Ää(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.ÄäRecord> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, org.jooq.test.h2.generatedclasses.Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.h2.generatedclasses.tables.Ää as(java.lang.String alias) {
+		return new org.jooq.test.h2.generatedclasses.tables.Ää(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.h2.generatedclasses.tables.Ää rename(java.lang.String name) {
+		return new org.jooq.test.h2.generatedclasses.tables.Ää(name, null);
 	}
 }

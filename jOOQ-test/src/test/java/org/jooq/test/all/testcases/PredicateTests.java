@@ -530,6 +530,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testInPredicateWithSubselectAndLimitOffset() throws Exception {
 
+        // [#2335] [#3195] Subqueries must not render additional columns when emulating
+        // LIMIT .. OFFSET
+
         // This query is not yet supported in these databases
         assumeFamilyNotIn(MARIADB, MYSQL);
 

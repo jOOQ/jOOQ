@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2327UkOnlyRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.T_2327UkOnlyRecord> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2327UkOnly {
 
-	private static final long serialVersionUID = -1273487369;
+	private static final long serialVersionUID = -2003697684;
 
 	/**
 	 * Setter for <code>PUBLIC.T_2327_UK_ONLY.ID</code>.
@@ -53,7 +53,7 @@ public class T_2327UkOnlyRecord extends org.jooq.impl.TableRecordImpl<org.jooq.t
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly.ID;
+		return org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly.T_2327_UK_ONLY.ID;
 	}
 
 	/**

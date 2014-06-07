@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TExoticTypesRecord> implements org.jooq.Record2<java.lang.Integer, java.util.UUID>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITExoticTypes {
 
-	private static final long serialVersionUID = 610442093;
+	private static final long serialVersionUID = 1862631567;
 
 	/**
 	 * Setter for <code>PUBLIC.T_EXOTIC_TYPES.ID</code>.
@@ -82,7 +82,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.h2.generatedclasses.tables.TExoticTypes.ID;
+		return org.jooq.test.h2.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.ID;
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Field<java.util.UUID> field2() {
-		return org.jooq.test.h2.generatedclasses.tables.TExoticTypes.UU;
+		return org.jooq.test.h2.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.UU;
 	}
 
 	/**

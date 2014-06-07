@@ -13,9 +13,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_BOOK_TO_BOOK_STORE", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"BOOK_STORE_NAME", "BOOK_ID"})
 })
-public class T_BOOK_TO_BOOK_STORE_POJO extends java.lang.Object implements java.io.Serializable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_STORE_INTERFACE {
+public class T_BOOK_TO_BOOK_STORE_POJO extends java.lang.Object implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1077157260;
+	private static final long serialVersionUID = -441732702;
 
 	private java.lang.String  BOOK_STORE_NAME;
 	private java.lang.Integer BOOK_ID;
@@ -34,58 +34,29 @@ public class T_BOOK_TO_BOOK_STORE_POJO extends java.lang.Object implements java.
 	}
 
 	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
-	@Override
 	public java.lang.String getBOOK_STORE_NAME() {
 		return this.BOOK_STORE_NAME;
 	}
 
-	@Override
 	public void setBOOK_STORE_NAME(java.lang.String BOOK_STORE_NAME) {
 		this.BOOK_STORE_NAME = BOOK_STORE_NAME;
 	}
 
 	@javax.persistence.Column(name = "BOOK_ID", nullable = false, precision = 7)
-	@Override
 	public java.lang.Integer getBOOK_ID() {
 		return this.BOOK_ID;
 	}
 
-	@Override
 	public void setBOOK_ID(java.lang.Integer BOOK_ID) {
 		this.BOOK_ID = BOOK_ID;
 	}
 
 	@javax.persistence.Column(name = "STOCK", precision = 7)
-	@Override
 	public java.lang.Integer getSTOCK() {
 		return this.STOCK;
 	}
 
-	@Override
 	public void setSTOCK(java.lang.Integer STOCK) {
 		this.STOCK = STOCK;
-	}
-
-	// -------------------------------------------------------------------------
-	// FROM and INTO
-	// -------------------------------------------------------------------------
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_STORE_INTERFACE from) {
-		setBOOK_STORE_NAME(from.getBOOK_STORE_NAME());
-		setBOOK_ID(from.getBOOK_ID());
-		setSTOCK(from.getSTOCK());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_STORE_INTERFACE> E into(E into) {
-		into.from(this);
-		return into;
 	}
 }

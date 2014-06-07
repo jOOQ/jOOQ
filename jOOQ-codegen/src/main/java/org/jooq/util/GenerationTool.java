@@ -248,10 +248,14 @@ public class GenerationTool {
             Database database = databaseClass.newInstance();
 
             List<Schema> schemata = d.getSchemata();
+
+            // For convenience and backwards-compatibility, the schema configuration can be set also directly
+            // in the <database/> element
             if (schemata.isEmpty()) {
                 Schema schema = new Schema();
                 schema.setInputSchema(trim(d.getInputSchema()));
                 schema.setOutputSchema(trim(d.getOutputSchema()));
+                schema.setOutputSchemaToDefault(d.isOutputSchemaToDefault());
                 schemata.add(schema);
             }
             else {
@@ -272,9 +276,29 @@ public class GenerationTool {
                     schema.setInputSchema(trim(j.getSchema()));
                 }
 
-                if (schema.getOutputSchema() == null) {
+                // [#3018] Prior to <outputSchemaToDefault/>, empty <outputSchema/> elements meant that
+                // the outputSchema should be the default schema. This is a bit too clever, and doesn't
+                // work when Maven parses the XML configurations.
+                if ("".equals(schema.getOutputSchema())) {
+                    log.warn("WARNING: Empty <outputSchema/> should no longer be used to model default outputSchemas. Use <outputSchemaToDefault>true</outputSchemaToDefault>, instead. See also: https://github.com/jOOQ/jOOQ/issues/3018");
+                }
+
+                // [#3018] If users want the output schema to be "" then, ignore the actual <outputSchema/> configuration
+                if (TRUE.equals(schema.isOutputSchemaToDefault())) {
+                    schema.setOutputSchema("");
+                }
+
+                else if (schema.getOutputSchema() == null) {
                     schema.setOutputSchema(trim(schema.getInputSchema()));
                 }
+
+                /* [pro] */
+                // [#3282] Oracle database only knows case-insensitive schema names.
+                if (database instanceof OracleDatabase) {
+                    schema.setInputSchema(schema.getInputSchema().toUpperCase());
+                    schema.setOutputSchema(schema.getOutputSchema().toUpperCase());
+                }
+                /* [/pro] */
             }
 
             if (schemata.size() == 1) {
@@ -290,6 +314,7 @@ public class GenerationTool {
             database.setIncludeExcludeColumns(TRUE.equals(d.isIncludeExcludeColumns()));
             database.setRecordVersionFields(new String[] { defaultString(d.getRecordVersionFields()) });
             database.setRecordTimestampFields(new String[] { defaultString(d.getRecordTimestampFields()) });
+            database.setSyntheticPrimaryKeys(new String[] { defaultString(d.getSyntheticPrimaryKeys()) });
             database.setOverridePrimaryKeys(new String[] { defaultString(d.getOverridePrimaryKeys()) });
             database.setConfiguredCustomTypes(d.getCustomTypes());
             database.setConfiguredEnumTypes(d.getEnumTypes());

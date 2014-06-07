@@ -122,12 +122,12 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.VALUES</code>.
 	 */
-	public IXUnused setValues_(java.lang.Integer value);
+	public IXUnused setValues(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.VALUES</code>.
 	 */
-	public java.lang.Integer getValues_();
+	public java.lang.Integer getValues();
 
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.TYPE0</code>.

@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
+import static org.jooq.impl.Utils.indexOrFail;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -119,10 +120,15 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
 
     @Override
     public final int insert() {
-        return storeInsert();
+        return insert(fields.fields.fields);
     }
 
-    final int storeInsert() {
+    @Override
+    public final int insert(Field<?>... storeFields) {
+        return storeInsert(storeFields);
+    }
+
+    final int storeInsert(final Field<?>[] storeFields) {
         final int[] result = new int[1];
 
         delegate(configuration(), (Record) this, INSERT)
@@ -130,7 +136,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
 
             @Override
             public Record operate(Record record) throws RuntimeException {
-                result[0] = storeInsert0();
+                result[0] = storeInsert0(storeFields);
                 return record;
             }
         });
@@ -138,10 +144,10 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         return result[0];
     }
 
-    final int storeInsert0() {
+    final int storeInsert0(Field<?>[] storeFields) {
         DSLContext create = create();
         InsertQuery<R> insert = create.insertQuery(getTable());
-        addChangedValues(insert);
+        addChangedValues(storeFields, insert);
 
         // Don't store records if no value was set by client code
         if (!insert.isExecutable()) return 0;
@@ -170,12 +176,19 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
             if (key != null && !key.isEmpty()) {
                 if (insert.getReturnedRecord() != null) {
                     for (Field<?> field : key) {
-                        setValue(field, new Value<Object>(insert.getReturnedRecord().getValue(field)));
+                        int index = indexOrFail(fieldsRow(), field);
+                        Object value = insert.getReturnedRecord().getValue(field);
+
+                        values[index] = value;
+                        originals[index] = value;
                     }
                 }
             }
 
-            changed(false);
+            for (Field<?> storeField : storeFields)
+                changed(storeField, false);
+
+            fetched = true;
         }
 
         return result;
@@ -188,20 +201,32 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     final void setRecordVersionAndTimestamp(BigInteger version, Timestamp timestamp) {
         if (version != null) {
             TableField<R, ?> field = getTable().getRecordVersion();
-            setValue(field, new Value<Object>(field.getDataType().convert(version)));
+            int fieldIndex = indexOrFail(fieldsRow(), field);
+            Object value = field.getDataType().convert(version);
+
+            values[fieldIndex] = value;
+            originals[fieldIndex] = value;
+            changed.clear(fieldIndex);
         }
         if (timestamp != null) {
             TableField<R, ?> field = getTable().getRecordTimestamp();
-            setValue(field, new Value<Object>(field.getDataType().convert(timestamp)));
+            int fieldIndex = indexOrFail(fieldsRow(), field);
+            Object value = field.getDataType().convert(timestamp);
+
+            values[fieldIndex] = value;
+            originals[fieldIndex] = value;
+            changed.clear(fieldIndex);
         }
     }
 
     /**
      * Set all changed values of this record to a store query
      */
-    final void addChangedValues(StoreQuery<R> query) {
+    final void addChangedValues(Field<?>[] storeFields, StoreQuery<R> query) {
+        Fields<Record> f = new Fields<Record>(storeFields);
+
         for (Field<?> field : fields.fields.fields) {
-            if (getValue0(field).isChanged()) {
+            if (changed(field) && f.field(field) != null) {
                 addValue(query, field);
             }
         }

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2718 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.T_2718Record> {
 
-	private static final long serialVersionUID = 1056360386;
+	private static final long serialVersionUID = -386944549;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_2718</code>
@@ -27,18 +27,25 @@ public class T_2718 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedcl
 	/**
 	 * The column <code>PUBLIC.T_2718.EXCLUDE_ME</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_2718Record, java.lang.Integer> EXCLUDE_ME = createField("EXCLUDE_ME", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_2718, "");
+	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_2718Record, java.lang.Integer> EXCLUDE_ME = createField("EXCLUDE_ME", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>PUBLIC.T_2718.XX</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_2718Record, java.lang.Integer> XX = createField("XX", org.jooq.impl.SQLDataType.INTEGER, T_2718, "");
+	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_2718Record, java.lang.Integer> XX = createField("XX", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * No further instances allowed
+	 * Create a <code>PUBLIC.T_2718</code> table reference
 	 */
-	private T_2718() {
+	public T_2718() {
 		this("T_2718", null);
+	}
+
+	/**
+	 * Create an aliased <code>PUBLIC.T_2718</code> table reference
+	 */
+	public T_2718(java.lang.String alias) {
+		this(alias, org.jooq.test.h2.generatedclasses.tables.T_2718.T_2718);
 	}
 
 	private T_2718(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.T_2718Record> aliased) {
@@ -63,5 +70,20 @@ public class T_2718 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedcl
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_2718Record>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_2718Record>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_T_2718);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.h2.generatedclasses.tables.T_2718 as(java.lang.String alias) {
+		return new org.jooq.test.h2.generatedclasses.tables.T_2718(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.h2.generatedclasses.tables.T_2718 rename(java.lang.String name) {
+		return new org.jooq.test.h2.generatedclasses.tables.T_2718(name, null);
 	}
 }

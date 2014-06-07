@@ -1408,7 +1408,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                         rs.updateRow();
                     }
 
-                    record = Utils.newRecord((Class<AbstractRecord>) type, fields, ctx.configuration())
+                    record = Utils.newRecord(true, (Class<AbstractRecord>) type, fields, ctx.configuration())
                                   .operate(initialiser);
 
                     rows++;
@@ -1451,7 +1451,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                     setValue(record, fields[i], i);
 
                     if (intern[i]) {
-                        record.getValue0(i).intern();
+                        record.intern0(i);
                     }
                 }
 
@@ -1466,7 +1466,9 @@ class CursorImpl<R extends Record> implements Cursor<R> {
              */
             private final <T> void setValue(AbstractRecord record, Field<T> field, int index) throws SQLException {
                 T value = Utils.getFromResultSet(ctx, field, index + 1);
-                record.setValue(index, new Value<T>(value));
+
+                record.values[index] = value;
+                record.originals[index] = value;
             }
         }
     }

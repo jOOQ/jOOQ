@@ -63,7 +63,6 @@ import static org.jooq.impl.DSL.replace;
 import static org.jooq.impl.DSL.round;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.sum;
 import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.trueCondition;

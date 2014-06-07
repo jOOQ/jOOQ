@@ -47,6 +47,11 @@ public class Tables {
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_3084A T_3084_A = org.jooq.test.sqlserver.generatedclasses.tables.T_3084A.T_3084_A;
 
 	/**
+	 * The table dbo.t_3084_two_unique_keys
+	 */
+	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_3084TwoUniqueKeys T_3084_TWO_UNIQUE_KEYS = org.jooq.test.sqlserver.generatedclasses.tables.T_3084TwoUniqueKeys.T_3084_TWO_UNIQUE_KEYS;
+
+	/**
 	 * The table dbo.t_3085
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_3085 T_3085 = org.jooq.test.sqlserver.generatedclasses.tables.T_3085.T_3085;

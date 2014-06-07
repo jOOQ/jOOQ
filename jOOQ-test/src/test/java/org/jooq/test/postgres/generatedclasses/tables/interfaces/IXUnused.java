@@ -57,7 +57,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Getter for <code>public.x_unused.values</code>.
 	 */
-	public java.lang.Integer getValues_();
+	public java.lang.Integer getValues();
 
 	/**
 	 * Getter for <code>public.x_unused.type0</code>.

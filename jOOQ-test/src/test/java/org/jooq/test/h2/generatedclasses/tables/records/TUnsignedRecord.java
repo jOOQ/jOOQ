@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TUnsignedRecord> implements org.jooq.Record4<org.jooq.types.UByte, org.jooq.types.UShort, org.jooq.types.UInteger, org.jooq.types.ULong>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITUnsigned {
 
-	private static final long serialVersionUID = 1430434390;
+	private static final long serialVersionUID = -1306504928;
 
 	/**
 	 * Setter for <code>PUBLIC.T_UNSIGNED.U_BYTE</code>.
@@ -104,7 +104,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<org.jooq.types.UByte> field1() {
-		return org.jooq.test.h2.generatedclasses.tables.TUnsigned.U_BYTE;
+		return org.jooq.test.h2.generatedclasses.tables.TUnsigned.T_UNSIGNED.U_BYTE;
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<org.jooq.types.UShort> field2() {
-		return org.jooq.test.h2.generatedclasses.tables.TUnsigned.U_SHORT;
+		return org.jooq.test.h2.generatedclasses.tables.TUnsigned.T_UNSIGNED.U_SHORT;
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<org.jooq.types.UInteger> field3() {
-		return org.jooq.test.h2.generatedclasses.tables.TUnsigned.U_INT;
+		return org.jooq.test.h2.generatedclasses.tables.TUnsigned.T_UNSIGNED.U_INT;
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Field<org.jooq.types.ULong> field4() {
-		return org.jooq.test.h2.generatedclasses.tables.TUnsigned.U_LONG;
+		return org.jooq.test.h2.generatedclasses.tables.TUnsigned.T_UNSIGNED.U_LONG;
 	}
 
 	/**

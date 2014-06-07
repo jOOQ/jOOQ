@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2327UkOnly extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.T_2327UkOnlyRecord> {
 
-	private static final long serialVersionUID = -1801962018;
+	private static final long serialVersionUID = -2132821454;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_2327_UK_ONLY</code>
@@ -27,13 +27,20 @@ public class T_2327UkOnly extends org.jooq.impl.TableImpl<org.jooq.test.h2.gener
 	/**
 	 * The column <code>PUBLIC.T_2327_UK_ONLY.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_2327UkOnlyRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_2327_UK_ONLY, "");
+	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.T_2327UkOnlyRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * No further instances allowed
+	 * Create a <code>PUBLIC.T_2327_UK_ONLY</code> table reference
 	 */
-	private T_2327UkOnly() {
+	public T_2327UkOnly() {
 		this("T_2327_UK_ONLY", null);
+	}
+
+	/**
+	 * Create an aliased <code>PUBLIC.T_2327_UK_ONLY</code> table reference
+	 */
+	public T_2327UkOnly(java.lang.String alias) {
+		this(alias, org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly.T_2327_UK_ONLY);
 	}
 
 	private T_2327UkOnly(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.T_2327UkOnlyRecord> aliased) {
@@ -50,5 +57,20 @@ public class T_2327UkOnly extends org.jooq.impl.TableImpl<org.jooq.test.h2.gener
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_2327UkOnlyRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_2327UkOnlyRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.UK_T_2327_UK_ONLY);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly as(java.lang.String alias) {
+		return new org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly(alias, this);
+	}
+
+	/**
+	 * Rename this table
+	 */
+	public org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly rename(java.lang.String name) {
+		return new org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly(name, null);
 	}
 }

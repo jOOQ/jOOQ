@@ -69,6 +69,7 @@ import org.jooq.TableRecord;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
+import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataChangedException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.StringUtils;
@@ -117,6 +118,11 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final int store() {
+        return store(fields.fields.fields);
+    }
+
+    @Override
+    public final int store(final Field<?>... storeFields) throws DataAccessException, DataChangedException {
         final int[] result = new int[1];
 
         delegate(configuration(), (Record) this, STORE)
@@ -124,7 +130,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
             @Override
             public Record operate(Record record) throws RuntimeException {
-                result[0] = store0();
+                result[0] = store0(storeFields);
                 return record;
             }
         });
@@ -134,51 +140,53 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final int update() {
-        return storeUpdate(getPrimaryKey().getFieldsArray());
+        return update(fields.fields.fields);
     }
 
-    private final int store0() {
+    @Override
+    public int update(Field<?>... storeFields) throws DataAccessException, DataChangedException {
+        return storeUpdate(storeFields, getPrimaryKey().getFieldsArray());
+    }
+
+    private final int store0(Field<?>[] storeFields) {
         TableField<R, ?>[] keys = getPrimaryKey().getFieldsArray();
         boolean executeUpdate = false;
 
-        for (TableField<R, ?> field : keys) {
+        // [#2764] If primary key values are allowed to be changed,
+        // inserting is only possible without prior loading of pk values
+        if (updatablePrimaryKeys(settings(this))) {
+            executeUpdate = fetched;
+        }
+        else {
+            for (TableField<R, ?> field : keys) {
 
-            // [#2764] If primary key values are allowed to be changed,
-            // inserting is only possible without prior loading of pk values
-            if (updatablePrimaryKeys(settings(this))) {
-                if (original(field) == null) {
+                // If any primary key value is null or changed
+                if (changed(field) ||
+
+                // [#3237] or if a NOT NULL primary key value is null, then execute an INSERT
+                   (field.getDataType().nullable() == false && getValue(field) == null)) {
                     executeUpdate = false;
                     break;
                 }
+
+                // Otherwise, updates are possible
+                executeUpdate = true;
             }
-
-            // [#2764] Primary key value changes are interpreted as record copies
-            else {
-
-                // If any primary key value is null or changed, execute an insert
-                if (getValue(field) == null || getValue0(field).isChanged()) {
-                    executeUpdate = false;
-                    break;
-                }
-            }
-
-            // Otherwise, updates are possible
-            executeUpdate = true;
         }
 
         int result = 0;
 
         if (executeUpdate) {
-            result = storeUpdate(keys);
+            result = storeUpdate(storeFields, keys);
         }
         else {
-            result = storeInsert();
+            result = storeInsert(storeFields);
         }
 
         return result;
     }
 
-    private final int storeUpdate(final TableField<R, ?>[] keys) {
+    private final int storeUpdate(final Field<?>[] storeFields, final TableField<R, ?>[] keys) {
         final int[] result = new int[1];
 
         delegate(configuration(), (Record) this, UPDATE)
@@ -186,7 +194,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
             @Override
             public Record operate(Record record) throws RuntimeException {
-                result[0] = storeUpdate0(keys);
+                result[0] = storeUpdate0(storeFields, keys);
                 return record;
             }
         });
@@ -195,9 +203,9 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     }
 
-    private final int storeUpdate0(TableField<R, ?>[] keys) {
+    private final int storeUpdate0(Field<?>[] storeFields, TableField<R, ?>[] keys) {
         UpdateQuery<R> update = create().updateQuery(getTable());
-        addChangedValues(update);
+        addChangedValues(storeFields, update);
         Utils.addConditions(update, this, keys);
 
         // Don't store records if no value was set by client code
@@ -226,7 +234,8 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         checkIfChanged(result, version, timestamp);
 
         if (result > 0) {
-            changed(false);
+            for (Field<?> storeField : storeFields)
+                changed(storeField, false);
         }
 
         return result;
@@ -288,9 +297,9 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     @Override
-    public final void refresh(final Field<?>... f) {
+    public final void refresh(final Field<?>... refreshFields) {
         SelectQuery<Record> select = create().selectQuery();
-        select.addSelect(f);
+        select.addSelect(refreshFields);
         select.addFrom(getTable());
         Utils.addConditions(select, this, getPrimaryKey().getFieldsArray());
 
@@ -301,7 +310,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
                 .operate(new RecordOperation<Record, RuntimeException>() {
                     @Override
                     public Record operate(Record record) throws RuntimeException {
-                        setValues(f, source);
+                        setValues(refreshFields, source);
                         return record;
                     }
                 });
@@ -313,7 +322,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final R copy() {
-        return Utils.newRecord(getTable(), configuration())
+        return Utils.newRecord(fetched, getTable(), configuration())
                     .operate(new RecordOperation<R, RuntimeException>() {
 
         	@Override
@@ -381,11 +390,8 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         }
 
         for (Field<?> field : fields.fields.fields) {
-            Value<?> thisValue = getValue0(field);
-            Value<?> thatValue = ((AbstractRecord) record).getValue0(field);
-
-            Object thisObject = thisValue.getOriginal();
-            Object thatObject = thatValue.getOriginal();
+            Object thisObject = original(field);
+            Object thatObject = record.original(field);
 
             if (!StringUtils.equals(thisObject, thatObject)) {
                 throw new DataChangedException("Database record has been changed");

@@ -9,28 +9,54 @@ package org.jooq.test.oracle2.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DateAsTimestampT_976VarrayTypeRecord extends org.jooq.impl.ArrayRecordImpl<java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 508709148;
+	private static final long serialVersionUID = -1849397152;
 
 	/**
-	 * Create a new <code>TEST.T_976_VARRAY_TYPE</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #DateAsTimestampT_976VarrayTypeRecord()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public DateAsTimestampT_976VarrayTypeRecord(org.jooq.Configuration configuration) {
 		super(org.jooq.test.oracle2.generatedclasses.DateAsTimestampTest.DATE_AS_TIMESTAMP_TEST, "T_976_VARRAY_TYPE", org.jooq.impl.SQLDataType.TIMESTAMP, configuration);
 	}
 
 	/**
-	 * Create a new <code>TEST.T_976_VARRAY_TYPE</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #DateAsTimestampT_976VarrayTypeRecord()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public DateAsTimestampT_976VarrayTypeRecord(org.jooq.Configuration configuration, java.sql.Timestamp... array) {
 		this(configuration);
 		set(array);
 	}
 
 	/**
-	 * Create a new <code>TEST.T_976_VARRAY_TYPE</code> record
+	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #DateAsTimestampT_976VarrayTypeRecord()} constructor instead
 	 */
+	@java.lang.Deprecated
 	public DateAsTimestampT_976VarrayTypeRecord(org.jooq.Configuration configuration, java.util.List<? extends java.sql.Timestamp> list) {
 		this(configuration);
 		setList(list);
+	}
+
+	/**
+	 * Create a new <code>TEST.T_976_VARRAY_TYPE</code> record
+	 */
+	public DateAsTimestampT_976VarrayTypeRecord() {
+		super(org.jooq.test.oracle2.generatedclasses.DateAsTimestampTest.DATE_AS_TIMESTAMP_TEST, "T_976_VARRAY_TYPE", org.jooq.impl.SQLDataType.TIMESTAMP);
+	}
+
+	/**
+	 * Create a new <code>TEST.T_976_VARRAY_TYPE</code> record
+	 */
+	public DateAsTimestampT_976VarrayTypeRecord(java.sql.Timestamp... array) {
+		this();
+		set(array);
+	}
+
+	/**
+	 * Create a new <code>TEST.T_976_VARRAY_TYPE</code> record
+	 */
+	public DateAsTimestampT_976VarrayTypeRecord(java.util.Collection<? extends java.sql.Timestamp> collection) {
+		this();
+		set(collection);
 	}
 }

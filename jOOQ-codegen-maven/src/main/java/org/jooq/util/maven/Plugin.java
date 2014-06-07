@@ -40,6 +40,8 @@
  */
 package org.jooq.util.maven;
 
+import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
+
 import java.io.File;
 import java.io.StringWriter;
 
@@ -50,38 +52,42 @@ import org.jooq.util.jaxb.Configuration;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 /**
- * @goal generate
- * @phase generate-sources
- * @version $Id$
+ * The jOOQ Codegen Plugin
+ *
  * @author Sander Plas
  * @author Lukas Eder
  */
+@Mojo(
+    name = "generate",
+    defaultPhase = GENERATE_SOURCES
+)
 public class Plugin extends AbstractMojo {
 
     /**
      * The Maven project.
-     *
-     * @parameter property="project"
-     * @required
-     * @readonly
      */
+    @Parameter(
+        property = "project",
+        required = true,
+        readonly = true
+    )
     private MavenProject                 project;
 
     /**
      * The jdbc settings.
-     *
-     * @parameter
      */
+    @Parameter
     private org.jooq.util.jaxb.Jdbc      jdbc;
 
     /**
      * The generator settings
-     *
-     * @parameter
      */
+    @Parameter
     private org.jooq.util.jaxb.Generator generator;
 
     @Override

@@ -40,7 +40,6 @@
  */
 package org.jooq.test.data;
 
-import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
@@ -54,7 +53,7 @@ public class BoolTable extends TableImpl<BoolRecord> {
      */
     private static final long                 serialVersionUID = 2618099850927000707L;
 
-    public static final Table<BoolRecord>     BOOL_TABLE       = new BoolTable();
+    public static final BoolTable             BOOL_TABLE       = new BoolTable();
 
     public final TableField<BoolRecord, Bool> BOOL             = createField("BOOL",
                                                                    SQLDataType.BOOLEAN

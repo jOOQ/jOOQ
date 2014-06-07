@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends org.jooq.impl.SchemaImpl implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 179640451;
+	private static final long serialVersionUID = 293802235;
 
 	/**
 	 * The singleton instance of <code></code>
@@ -60,6 +60,8 @@ public class DefaultSchema extends org.jooq.impl.SchemaImpl implements java.lang
 			org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY,
 			org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES.T_EXOTIC_TYPES,
 			org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE,
+			org.jooq.test.oracle3.generatedclasses.tables.TRANSACTIONS_WITH_CREDIT_DEBIT.TRANSACTIONS_WITH_CREDIT_DEBIT,
+			org.jooq.test.oracle3.generatedclasses.tables.T_TEMP.T_TEMP,
 			org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS,
 			org.jooq.test.oracle3.generatedclasses.tables.T_UNSIGNED.T_UNSIGNED,
 			org.jooq.test.oracle3.generatedclasses.tables.T_2845_CASE_sensitivity.T_2845_CASE_sensitivity,
@@ -70,6 +72,9 @@ public class DefaultSchema extends org.jooq.impl.SchemaImpl implements java.lang
 			org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK,
 			org.jooq.test.oracle3.generatedclasses.tables.V_INCOMPLETE.V_INCOMPLETE,
 			org.jooq.test.oracle3.generatedclasses.tables.V_LIBRARY.V_LIBRARY,
+			org.jooq.test.oracle3.generatedclasses.tables.V_TRANSACTIONS.V_TRANSACTIONS,
+			org.jooq.test.oracle3.generatedclasses.tables.V_TRANSACTIONS_BY_TIME.V_TRANSACTIONS_BY_TIME,
+			org.jooq.test.oracle3.generatedclasses.tables.V_TRANSACTIONS_CREDIT_FIRST.V_TRANSACTIONS_CREDIT_FIRST,
 			org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_2025.X_TEST_CASE_2025,
 			org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69.X_TEST_CASE_64_69,
 			org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_71.X_TEST_CASE_71,
@@ -92,6 +97,9 @@ public class DefaultSchema extends org.jooq.impl.SchemaImpl implements java.lang
 			org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE,
 			org.jooq.test.oracle3.generatedclasses.udt.U_INVALID_TABLE.U_INVALID_TABLE,
 			org.jooq.test.oracle3.generatedclasses.udt.U_INVALID_TYPE.U_INVALID_TYPE,
-			org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE.U_STREET_TYPE);
+			org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_1.U_NESTED_1,
+			org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_3.U_NESTED_3,
+			org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE.U_STREET_TYPE,
+			org.jooq.test.oracle3.generatedclasses.udt.U_3005.U_3005);
 	}
 }

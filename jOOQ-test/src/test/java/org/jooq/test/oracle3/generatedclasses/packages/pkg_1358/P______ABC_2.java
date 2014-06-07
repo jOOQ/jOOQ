@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.packages.pkg_1358;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class P______ABC_2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 609787862;
+	private static final long serialVersionUID = 1992498870;
 
 	/**
-	 * The parameter <code>PKG_1358.P.J</code>. 
+	 * The parameter <code>PKG_1358.P.J</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> J = createParameter("J", org.jooq.impl.SQLDataType.VARCHAR);
 

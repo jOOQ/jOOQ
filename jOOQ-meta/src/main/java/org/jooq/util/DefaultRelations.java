@@ -105,8 +105,9 @@ public class DefaultRelations implements Relations {
 
         // Remove the existing key from the column -> key mapping
         primaryKeysByColumn = null;
+        uniqueKeysByColumn = null;
 
-        // Remove the existing key from the key mapping
+        // Remove the existing key from the primary key mapping (not from the unique key mapping!)
         Iterator<Entry<Key, UniqueKeyDefinition>> it = primaryKeys.entrySet().iterator();
         while (it.hasNext()) {
             Entry<Key, UniqueKeyDefinition> entry = it.next();
@@ -119,7 +120,9 @@ public class DefaultRelations implements Relations {
         }
 
         // Add the new primary key
-        primaryKeys.put(key(key.getTable(), key.getName()), key);
+        Key mapKey = key(key.getTable(), key.getName());
+        primaryKeys.put(mapKey, key);
+        uniqueKeys.put(mapKey, key);
         log.info("Overriding primary key", "Table : " + key.getTable() +
                  ", previous key : " + ((old == null) ? "none" : old.getName()) +
                  ", new key : " + key.getName());

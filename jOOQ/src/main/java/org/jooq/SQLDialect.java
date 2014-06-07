@@ -41,6 +41,9 @@
 
 package org.jooq;
 
+import java.util.EnumSet;
+import java.util.Set;
+
 /**
  * Dialects and dialect families as supported by jOOQ.
  * <p>
@@ -229,6 +232,18 @@ public enum SQLDialect {
 
     ;
 
+    private static final SQLDialect[] FAMILIES;
+
+    static {
+        Set<SQLDialect> set = EnumSet.noneOf(SQLDialect.class);
+
+        for (SQLDialect dialect : values()) {
+            set.add(dialect.family());
+        }
+
+        FAMILIES = set.toArray(new SQLDialect[set.size()]);
+    }
+
     private final String     name;
     private final boolean    commercial;
     private final SQLDialect family;
@@ -283,5 +298,12 @@ public enum SQLDialect {
      */
     public final String getNameUC() {
         return name == null ? null : name.toUpperCase();
+    }
+
+    /**
+     * Get a list of all {@link SQLDialect#family()} values.
+     */
+    public static final SQLDialect[] families() {
+        return FAMILIES.clone();
     }
 }

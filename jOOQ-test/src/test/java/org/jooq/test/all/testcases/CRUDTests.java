@@ -281,14 +281,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(TBook_ID(), bKey.field1());
         assertEquals(TBookToBookStore_BOOK_STORE_NAME(), b2sKey.field1());
         assertEquals(TBookToBookStore_BOOK_ID(), b2sKey.field2());
-
-        // [#1690] Check if modifications to the key() record are reflected in
-        // the original record, and vice versa
-        bKey.setValue(TBook_ID(), 5);
-        assertEquals(5, (int) b.getValue(TBook_ID()));
-
-        b.setValue(TBook_ID(), 6);
-        assertEquals(6, (int) bKey.value1());
     }
 
     public void testUpdatablesInsertUpdate() throws Exception {
@@ -506,6 +498,71 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .where(TAuthor_FIRST_NAME().equal("Leonard"))
             .and(TAuthor_LAST_NAME().equal("Cohen"))
             .fetchOne(0));
+    }
+
+    public void testUpdatablesPartialUpdates() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        A author1 = create().fetchOne(TAuthor(), TAuthor_ID().eq(1));
+
+        // Store only FIRST_NAME, keep a changed value for LAST_NAME in the updatable record
+        author1.setValue(TAuthor_FIRST_NAME(), "A1");
+        author1.setValue(TAuthor_LAST_NAME(), "B1");
+        assertEquals(1, author1.store(TAuthor_FIRST_NAME()));
+        assertTrue(author1.changed());
+        assertFalse(author1.changed(TAuthor_ID()));
+        assertFalse(author1.changed(TAuthor_FIRST_NAME()));
+        assertTrue(author1.changed(TAuthor_LAST_NAME()));
+
+        // Store the LAST_NAME value as well
+        assertEquals(1, author1.store());
+        assertFalse(author1.changed());
+        assertFalse(author1.changed(TAuthor_ID()));
+        assertFalse(author1.changed(TAuthor_FIRST_NAME()));
+        assertFalse(author1.changed(TAuthor_LAST_NAME()));
+
+        // Repeat, but this time, don't store LAST_NAME at all
+        author1.setValue(TAuthor_FIRST_NAME(), "A2");
+        author1.setValue(TAuthor_LAST_NAME(), "B2");
+        assertEquals(1, author1.store(TAuthor_FIRST_NAME()));
+        assertTrue(author1.changed());
+        assertFalse(author1.changed(TAuthor_ID()));
+        assertFalse(author1.changed(TAuthor_FIRST_NAME()));
+        assertTrue(author1.changed(TAuthor_LAST_NAME()));
+
+        author1.refresh();
+        assertEquals(1, (int) author1.getValue(TAuthor_ID()));
+        assertEquals("A2", author1.getValue(TAuthor_FIRST_NAME()));
+        assertEquals("B1", author1.getValue(TAuthor_LAST_NAME()));
+
+
+        // Can't store only FIRST_NAME, because of a missing primary key value
+        A author2 = newAuthor(3);
+        author2.setValue(TAuthor_FIRST_NAME(), "A3");
+        author2.setValue(TAuthor_LAST_NAME(), "B3");
+        try {
+            author2.store(TAuthor_FIRST_NAME());
+            fail();
+        }
+        catch (DataAccessException expected) {
+            assertTrue(author2.changed());
+            assertTrue(author2.changed(TAuthor_ID()));
+            assertTrue(author2.changed(TAuthor_FIRST_NAME()));
+            assertTrue(author2.changed(TAuthor_LAST_NAME()));
+            assertNull(create().fetchOne(TAuthor(), TAuthor_ID().eq(3)));
+        }
+
+        // Now insert ID and LAST_NAME
+        assertEquals(1, author2.store(TAuthor_ID(), TAuthor_LAST_NAME()));
+        assertTrue(author2.changed());
+        assertFalse(author2.changed(TAuthor_ID()));
+        assertTrue(author2.changed(TAuthor_FIRST_NAME()));
+        assertFalse(author2.changed(TAuthor_LAST_NAME()));
+
+        author2.refresh();
+        assertEquals(3, (int) author2.getValue(TAuthor_ID()));
+        assertNull(author2.getValue(TAuthor_FIRST_NAME()));
+        assertEquals("B3", author2.getValue(TAuthor_LAST_NAME()));
     }
 
     public void testUpdatablesPKChangePK() throws Exception {

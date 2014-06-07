@@ -342,7 +342,14 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     @Override
-    public final void bind(BindContext context) {
+    public void accept(Context<?> ctx) {
+        if (ctx instanceof RenderContext)
+            toSQL0((RenderContext) ctx);
+        else
+            bind0((BindContext) ctx);
+    }
+
+    final void bind0(BindContext context) {
         for (Parameter<?> parameter : getParameters()) {
 
             // [#1183] Skip defaulted parameters
@@ -371,8 +378,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         }
     }
 
-    @Override
-    public final void toSQL(RenderContext context) {
+    final void toSQL0(RenderContext context) {
         toSQLBegin(context);
 
         if (getReturnParameter() != null) {
@@ -566,7 +572,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                     case ORACLE: {
                         if (sqlType == Types.STRUCT) {
                             UDTRecord<?> record = Utils
-                                .newRecord((Class<? extends UDTRecord<?>>) parameter.getType())
+                                .newRecord(false, (Class<? extends UDTRecord<?>>) parameter.getType())
                                 .<RuntimeException>operate(null);
                             statement.registerOutParameter(index, Types.STRUCT, record.getSQLTypeName());
                         }

@@ -166,18 +166,79 @@ public class DefaultConfiguration implements Configuration {
      *
      * @deprecated Use
      *             {@link #DefaultConfiguration(ConnectionProvider, TransactionProvider, RecordMapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], SQLDialect, Settings, Map)}
-     *             instead
+     *             instead. This constructor is maintained to provide jOOQ 3.0 backwards-compatibility if called with reflection from Spring configurations.
      */
     @Deprecated
     DefaultConfiguration(
-            ConnectionProvider connectionProvider,
-            RecordMapperProvider recordMapperProvider,
-            RecordListenerProvider[] recordListenerProviders,
-            ExecuteListenerProvider[] executeListenerProviders,
-            VisitListenerProvider[] visitListenerProviders,
-            SQLDialect dialect,
-            Settings settings,
-            Map<Object, Object> data)
+        ConnectionProvider connectionProvider,
+        ExecuteListenerProvider[] executeListenerProviders,
+        SQLDialect dialect,
+        Settings settings,
+        Map<Object, Object> data)
+    {
+        this(
+            connectionProvider,
+            null,
+            null,
+            null,
+            executeListenerProviders,
+            null,
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    /**
+     * This constructor is maintained for backwards-compatibility reasons.
+     * Spring users tend to construct this <code>DefaultConfiguration</code>
+     * through reflection.
+     *
+     * @deprecated Use
+     *             {@link #DefaultConfiguration(ConnectionProvider, TransactionProvider, RecordMapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], SQLDialect, Settings, Map)}
+     *             instead. This constructor is maintained to provide jOOQ 3.1 backwards-compatibility if called with reflection from Spring configurations.
+     */
+    @Deprecated
+    DefaultConfiguration(
+        ConnectionProvider connectionProvider,
+        RecordMapperProvider recordMapperProvider,
+        ExecuteListenerProvider[] executeListenerProviders,
+        SQLDialect dialect,
+        Settings settings,
+        Map<Object, Object> data)
+    {
+        this(
+            connectionProvider,
+            null,
+            recordMapperProvider,
+            null,
+            executeListenerProviders,
+            null,
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    /**
+     * This constructor is maintained for backwards-compatibility reasons.
+     * Spring users tend to construct this <code>DefaultConfiguration</code>
+     * through reflection.
+     *
+     * @deprecated Use
+     *             {@link #DefaultConfiguration(ConnectionProvider, TransactionProvider, RecordMapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], SQLDialect, Settings, Map)}
+     *             instead. This constructor is maintained to provide jOOQ 3.2, 3.3 backwards-compatibility if called with reflection from Spring configurations.
+     */
+    @Deprecated
+    DefaultConfiguration(
+        ConnectionProvider connectionProvider,
+        RecordMapperProvider recordMapperProvider,
+        RecordListenerProvider[] recordListenerProviders,
+        ExecuteListenerProvider[] executeListenerProviders,
+        VisitListenerProvider[] visitListenerProviders,
+        SQLDialect dialect,
+        Settings settings,
+        Map<Object, Object> data)
     {
         this(
             connectionProvider,
@@ -201,15 +262,15 @@ public class DefaultConfiguration implements Configuration {
      * <code>derive()</code> methods.
      */
     DefaultConfiguration(
-            ConnectionProvider connectionProvider,
-            TransactionProvider transactionProvider,
-            RecordMapperProvider recordMapperProvider,
-            RecordListenerProvider[] recordListenerProviders,
-            ExecuteListenerProvider[] executeListenerProviders,
-            VisitListenerProvider[] visitListenerProviders,
-            SQLDialect dialect,
-            Settings settings,
-            Map<Object, Object> data)
+        ConnectionProvider connectionProvider,
+        TransactionProvider transactionProvider,
+        RecordMapperProvider recordMapperProvider,
+        RecordListenerProvider[] recordListenerProviders,
+        ExecuteListenerProvider[] executeListenerProviders,
+        VisitListenerProvider[] visitListenerProviders,
+        SQLDialect dialect,
+        Settings settings,
+        Map<Object, Object> data)
     {
         set(connectionProvider);
         set(transactionProvider);

@@ -9,9 +9,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_UNSIGNED")
-public class T_UNSIGNED_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, java.io.Serializable {
+public class T_UNSIGNED_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_UNSIGNED_INTERFACE {
 
-	private static final long serialVersionUID = 1287006086;
+	private static final long serialVersionUID = -1552148118;
 
 	private java.lang.Short      U_BYTE;
 	private java.lang.Integer    U_SHORT;
@@ -33,38 +33,70 @@ public class T_UNSIGNED_POJO extends java.lang.ThreadDeath implements java.lang.
 	}
 
 	@javax.persistence.Column(name = "U_BYTE", precision = 3)
+	@Override
 	public java.lang.Short getU_BYTE() {
 		return this.U_BYTE;
 	}
 
+	@Override
 	public void setU_BYTE(java.lang.Short U_BYTE) {
 		this.U_BYTE = U_BYTE;
 	}
 
 	@javax.persistence.Column(name = "U_SHORT", precision = 5)
+	@Override
 	public java.lang.Integer getU_SHORT() {
 		return this.U_SHORT;
 	}
 
+	@Override
 	public void setU_SHORT(java.lang.Integer U_SHORT) {
 		this.U_SHORT = U_SHORT;
 	}
 
 	@javax.persistence.Column(name = "U_INT", precision = 10)
+	@Override
 	public java.lang.Long getU_INT() {
 		return this.U_INT;
 	}
 
+	@Override
 	public void setU_INT(java.lang.Long U_INT) {
 		this.U_INT = U_INT;
 	}
 
 	@javax.persistence.Column(name = "U_LONG", precision = 20)
+	@Override
 	public java.math.BigInteger getU_LONG() {
 		return this.U_LONG;
 	}
 
+	@Override
 	public void setU_LONG(java.math.BigInteger U_LONG) {
 		this.U_LONG = U_LONG;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_UNSIGNED_INTERFACE from) {
+		setU_BYTE(from.getU_BYTE());
+		setU_SHORT(from.getU_SHORT());
+		setU_INT(from.getU_INT());
+		setU_LONG(from.getU_LONG());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_UNSIGNED_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

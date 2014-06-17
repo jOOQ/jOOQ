@@ -9,13 +9,14 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_2845_CASE_sensitivity")
-public class T_2845_CASE_sensitivity extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_2845_CASE_sensitivity> implements java.lang.Cloneable, org.jooq.Record5<java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal> {
+public class T_2845_CASE_sensitivity extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_2845_CASE_sensitivity> implements java.lang.Cloneable, org.jooq.Record5<java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_2845_CASE_sensitivity_INTERFACE {
 
-	private static final long serialVersionUID = 1955867137;
+	private static final long serialVersionUID = -1747374096;
 
 	/**
 	 * Setter for <code>T_2845_CASE_sensitivity.ID</code>.
 	 */
+	@Override
 	public void setID(java.math.BigDecimal value) {
 		setValue(0, value);
 	}
@@ -25,6 +26,7 @@ public class T_2845_CASE_sensitivity extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 22)
+	@Override
 	public java.math.BigDecimal getID() {
 		return (java.math.BigDecimal) getValue(0);
 	}
@@ -32,6 +34,7 @@ public class T_2845_CASE_sensitivity extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * Setter for <code>T_2845_CASE_sensitivity.INSENSITIVE</code>.
 	 */
+	@Override
 	public void setINSENSITIVE(java.math.BigDecimal value) {
 		setValue(1, value);
 	}
@@ -40,6 +43,7 @@ public class T_2845_CASE_sensitivity extends org.jooq.impl.UpdatableRecordImpl<o
 	 * Getter for <code>T_2845_CASE_sensitivity.INSENSITIVE</code>.
 	 */
 	@javax.persistence.Column(name = "INSENSITIVE", length = 22)
+	@Override
 	public java.math.BigDecimal getINSENSITIVE() {
 		return (java.math.BigDecimal) getValue(1);
 	}
@@ -47,6 +51,7 @@ public class T_2845_CASE_sensitivity extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * Setter for <code>T_2845_CASE_sensitivity.UPPER</code>.
 	 */
+	@Override
 	public void setUPPER(java.math.BigDecimal value) {
 		setValue(2, value);
 	}
@@ -55,6 +60,7 @@ public class T_2845_CASE_sensitivity extends org.jooq.impl.UpdatableRecordImpl<o
 	 * Getter for <code>T_2845_CASE_sensitivity.UPPER</code>.
 	 */
 	@javax.persistence.Column(name = "UPPER", length = 22)
+	@Override
 	public java.math.BigDecimal getUPPER() {
 		return (java.math.BigDecimal) getValue(2);
 	}
@@ -62,6 +68,7 @@ public class T_2845_CASE_sensitivity extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * Setter for <code>T_2845_CASE_sensitivity.lower</code>.
 	 */
+	@Override
 	public void setlower(java.math.BigDecimal value) {
 		setValue(3, value);
 	}
@@ -70,6 +77,7 @@ public class T_2845_CASE_sensitivity extends org.jooq.impl.UpdatableRecordImpl<o
 	 * Getter for <code>T_2845_CASE_sensitivity.lower</code>.
 	 */
 	@javax.persistence.Column(name = "lower", length = 22)
+	@Override
 	public java.math.BigDecimal getlower() {
 		return (java.math.BigDecimal) getValue(3);
 	}
@@ -77,6 +85,7 @@ public class T_2845_CASE_sensitivity extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * Setter for <code>T_2845_CASE_sensitivity.Mixed</code>.
 	 */
+	@Override
 	public void setMixed(java.math.BigDecimal value) {
 		setValue(4, value);
 	}
@@ -85,6 +94,7 @@ public class T_2845_CASE_sensitivity extends org.jooq.impl.UpdatableRecordImpl<o
 	 * Getter for <code>T_2845_CASE_sensitivity.Mixed</code>.
 	 */
 	@javax.persistence.Column(name = "Mixed", length = 22)
+	@Override
 	public java.math.BigDecimal getMixed() {
 		return (java.math.BigDecimal) getValue(4);
 	}
@@ -252,6 +262,31 @@ public class T_2845_CASE_sensitivity extends org.jooq.impl.UpdatableRecordImpl<o
 	@Override
 	public T_2845_CASE_sensitivity values(java.math.BigDecimal value1, java.math.BigDecimal value2, java.math.BigDecimal value3, java.math.BigDecimal value4, java.math.BigDecimal value5) {
 		return this;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_2845_CASE_sensitivity_INTERFACE from) {
+		setID(from.getID());
+		setINSENSITIVE(from.getINSENSITIVE());
+		setUPPER(from.getUPPER());
+		setlower(from.getlower());
+		setMixed(from.getMixed());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_2845_CASE_sensitivity_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 
 	// -------------------------------------------------------------------------

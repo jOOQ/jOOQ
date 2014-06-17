@@ -9,13 +9,14 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "TRANSACTIONS_WITH_CREDIT_DEBIT")
-public class TRANSACTIONS_WITH_CREDIT_DEBIT extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.TRANSACTIONS_WITH_CREDIT_DEBIT> implements java.lang.Cloneable, org.jooq.Record6<java.lang.Long, java.lang.Long, java.sql.Date, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal> {
+public class TRANSACTIONS_WITH_CREDIT_DEBIT extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.TRANSACTIONS_WITH_CREDIT_DEBIT> implements java.lang.Cloneable, org.jooq.Record6<java.lang.Long, java.lang.Long, java.sql.Date, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.TRANSACTIONS_WITH_CREDIT_DEBIT_INTERFACE {
 
-	private static final long serialVersionUID = -513046343;
+	private static final long serialVersionUID = -609013023;
 
 	/**
 	 * Setter for <code>TRANSACTIONS_WITH_CREDIT_DEBIT.ID</code>.
 	 */
+	@Override
 	public void setID(java.lang.Long value) {
 		setValue(0, value);
 	}
@@ -24,6 +25,7 @@ public class TRANSACTIONS_WITH_CREDIT_DEBIT extends org.jooq.impl.TableRecordImp
 	 * Getter for <code>TRANSACTIONS_WITH_CREDIT_DEBIT.ID</code>.
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 10)
+	@Override
 	public java.lang.Long getID() {
 		return (java.lang.Long) getValue(0);
 	}
@@ -31,6 +33,7 @@ public class TRANSACTIONS_WITH_CREDIT_DEBIT extends org.jooq.impl.TableRecordImp
 	/**
 	 * Setter for <code>TRANSACTIONS_WITH_CREDIT_DEBIT.ACCOUNT_ID</code>.
 	 */
+	@Override
 	public void setACCOUNT_ID(java.lang.Long value) {
 		setValue(1, value);
 	}
@@ -39,6 +42,7 @@ public class TRANSACTIONS_WITH_CREDIT_DEBIT extends org.jooq.impl.TableRecordImp
 	 * Getter for <code>TRANSACTIONS_WITH_CREDIT_DEBIT.ACCOUNT_ID</code>.
 	 */
 	@javax.persistence.Column(name = "ACCOUNT_ID", nullable = false, precision = 10)
+	@Override
 	public java.lang.Long getACCOUNT_ID() {
 		return (java.lang.Long) getValue(1);
 	}
@@ -46,6 +50,7 @@ public class TRANSACTIONS_WITH_CREDIT_DEBIT extends org.jooq.impl.TableRecordImp
 	/**
 	 * Setter for <code>TRANSACTIONS_WITH_CREDIT_DEBIT.VALUE_DATE</code>.
 	 */
+	@Override
 	public void setVALUE_DATE(java.sql.Date value) {
 		setValue(2, value);
 	}
@@ -54,6 +59,7 @@ public class TRANSACTIONS_WITH_CREDIT_DEBIT extends org.jooq.impl.TableRecordImp
 	 * Getter for <code>TRANSACTIONS_WITH_CREDIT_DEBIT.VALUE_DATE</code>.
 	 */
 	@javax.persistence.Column(name = "VALUE_DATE", nullable = false, length = 7)
+	@Override
 	public java.sql.Date getVALUE_DATE() {
 		return (java.sql.Date) getValue(2);
 	}
@@ -61,6 +67,7 @@ public class TRANSACTIONS_WITH_CREDIT_DEBIT extends org.jooq.impl.TableRecordImp
 	/**
 	 * Setter for <code>TRANSACTIONS_WITH_CREDIT_DEBIT.AMOUNT</code>.
 	 */
+	@Override
 	public void setAMOUNT(java.math.BigDecimal value) {
 		setValue(3, value);
 	}
@@ -69,6 +76,7 @@ public class TRANSACTIONS_WITH_CREDIT_DEBIT extends org.jooq.impl.TableRecordImp
 	 * Getter for <code>TRANSACTIONS_WITH_CREDIT_DEBIT.AMOUNT</code>.
 	 */
 	@javax.persistence.Column(name = "AMOUNT", nullable = false, precision = 10, scale = 2)
+	@Override
 	public java.math.BigDecimal getAMOUNT() {
 		return (java.math.BigDecimal) getValue(3);
 	}
@@ -76,6 +84,7 @@ public class TRANSACTIONS_WITH_CREDIT_DEBIT extends org.jooq.impl.TableRecordImp
 	/**
 	 * Setter for <code>TRANSACTIONS_WITH_CREDIT_DEBIT.CREDIT</code>.
 	 */
+	@Override
 	public void setCREDIT(java.math.BigDecimal value) {
 		setValue(4, value);
 	}
@@ -84,6 +93,7 @@ public class TRANSACTIONS_WITH_CREDIT_DEBIT extends org.jooq.impl.TableRecordImp
 	 * Getter for <code>TRANSACTIONS_WITH_CREDIT_DEBIT.CREDIT</code>.
 	 */
 	@javax.persistence.Column(name = "CREDIT", length = 22)
+	@Override
 	public java.math.BigDecimal getCREDIT() {
 		return (java.math.BigDecimal) getValue(4);
 	}
@@ -91,6 +101,7 @@ public class TRANSACTIONS_WITH_CREDIT_DEBIT extends org.jooq.impl.TableRecordImp
 	/**
 	 * Setter for <code>TRANSACTIONS_WITH_CREDIT_DEBIT.DEBIT</code>.
 	 */
+	@Override
 	public void setDEBIT(java.math.BigDecimal value) {
 		setValue(5, value);
 	}
@@ -99,6 +110,7 @@ public class TRANSACTIONS_WITH_CREDIT_DEBIT extends org.jooq.impl.TableRecordImp
 	 * Getter for <code>TRANSACTIONS_WITH_CREDIT_DEBIT.DEBIT</code>.
 	 */
 	@javax.persistence.Column(name = "DEBIT", length = 22)
+	@Override
 	public java.math.BigDecimal getDEBIT() {
 		return (java.math.BigDecimal) getValue(5);
 	}
@@ -279,6 +291,32 @@ public class TRANSACTIONS_WITH_CREDIT_DEBIT extends org.jooq.impl.TableRecordImp
 	@Override
 	public TRANSACTIONS_WITH_CREDIT_DEBIT values(java.lang.Long value1, java.lang.Long value2, java.sql.Date value3, java.math.BigDecimal value4, java.math.BigDecimal value5, java.math.BigDecimal value6) {
 		return this;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.TRANSACTIONS_WITH_CREDIT_DEBIT_INTERFACE from) {
+		setID(from.getID());
+		setACCOUNT_ID(from.getACCOUNT_ID());
+		setVALUE_DATE(from.getVALUE_DATE());
+		setAMOUNT(from.getAMOUNT());
+		setCREDIT(from.getCREDIT());
+		setDEBIT(from.getDEBIT());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.TRANSACTIONS_WITH_CREDIT_DEBIT_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 
 	// -------------------------------------------------------------------------

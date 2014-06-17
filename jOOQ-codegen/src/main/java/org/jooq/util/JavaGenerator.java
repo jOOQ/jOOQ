@@ -578,15 +578,31 @@ public class JavaGenerator extends AbstractGenerator {
             final String setter = getStrategy().getJavaSetterName(column, Mode.DEFAULT);
             final String getter = getStrategy().getJavaGetterName(column, Mode.DEFAULT);
             final String type = getJavaType(column.getType());
+            final String typeInterface = getJavaType(column.getType(), Mode.INTERFACE);
             final String name = column.getQualifiedOutputName();
+            final boolean isUDT = database.getUDT(column.getSchema(), column.getType().getUserType()) != null;
 
             out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
-            out.tab(1).overrideIf(generateInterfaces() && !generateImmutablePojos());
+            out.tab(1).overrideIf(generateInterfaces() && !generateImmutablePojos() && !isUDT);
             out.tab(1).println("public %s %s(%s value) {", setterReturnType, setter, type);
             out.tab(2).println("setValue(%s, value);", i);
             if (fluentSetters())
                 out.tab(2).println("return this;");
             out.tab(1).println("}");
+
+            // [#3117] Avoid covariant setters for UDTs when generating interfaces
+            if (generateInterfaces() && !generateImmutablePojos() && isUDT) {
+                out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
+                out.tab(1).override();
+                out.tab(1).println("public %s %s(%s value) {", setterReturnType, setter, typeInterface);
+                out.tab(2).println("if (value == null)");
+                out.tab(3).println("setValue(%s, null);", i);
+                out.tab(2).println("else");
+                out.tab(3).println("setValue(%s, value.into(new %s()));", i, type);
+                if (fluentSetters())
+                    out.tab(2).println("return this;");
+                out.tab(1).println("}");
+            }
 
             out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
             if (tableOrUdt instanceof TableDefinition)
@@ -1634,10 +1650,12 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
             final String columnType = getJavaType(column.getType(), Mode.POJO);
+            final String columnTypeInterface = getJavaType(column.getType(), Mode.INTERFACE);
             final String columnSetterReturnType = fluentSetters() ? className : "void";
             final String columnSetter = getStrategy().getJavaSetterName(column, Mode.POJO);
             final String columnGetter = getStrategy().getJavaGetterName(column, Mode.POJO);
             final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+            final boolean isUDT = database.getUDT(column.getSchema(), column.getType().getUserType()) != null;
 
             // Getter
             out.println();
@@ -1654,12 +1672,26 @@ public class JavaGenerator extends AbstractGenerator {
             // Setter
             if (!generateImmutablePojos()) {
                 out.println();
-                out.tab(1).overrideIf(generateInterfaces());
+                out.tab(1).overrideIf(generateInterfaces() && !isUDT);
                 out.tab(1).println("public %s %s(%s %s) {", columnSetterReturnType, columnSetter, columnType, columnMember);
                 out.tab(2).println("this.%s = %s;", columnMember, columnMember);
                 if (fluentSetters())
                     out.tab(2).println("return this;");
                 out.tab(1).println("}");
+
+                // [#3117] To avoid covariant setters on POJOs, we need to generate two setter overloads
+                if (generateInterfaces() && isUDT) {
+                    out.println();
+                    out.tab(1).override();
+                    out.tab(1).println("public %s %s(%s %s) {", columnSetterReturnType, columnSetter, columnTypeInterface, columnMember);
+                    out.tab(2).println("if (%s == null)", columnMember);
+                    out.tab(3).println("this.%s = null;", columnMember);
+                    out.tab(2).println("else");
+                    out.tab(3).println("this.%s = %s.into(new %s());", columnMember, columnMember, columnType);
+                    if (fluentSetters())
+                        out.tab(2).println("return this;");
+                    out.tab(1).println("}");
+                }
             }
         }
 
@@ -2591,10 +2623,21 @@ public class JavaGenerator extends AbstractGenerator {
         out.tab(2).println("p.execute(%s);", instance ? "configuration()" : configurationArgument);
 
         if (procedure.getOutParameters().size() > 0) {
-            final String getter = getStrategy().getJavaGetterName(procedure.getOutParameters().get(0), Mode.DEFAULT);
+            final ParameterDefinition parameter = procedure.getOutParameters().get(0);
+
+            final String getter = getStrategy().getJavaGetterName(parameter, Mode.DEFAULT);
+            final String columnTypeInterface = getJavaType(parameter.getType(), Mode.INTERFACE);
+            final boolean isUDT = database.getUDT(parameter.getSchema(), parameter.getType().getUserType()) != null;
 
             if (instance) {
-                out.tab(2).println("from(p.%s());", getter);
+
+                // [#3117] Avoid funny call-site ambiguity if this is a UDT that is implemented by an interface
+                if (generateInterfaces() && isUDT) {
+                    out.tab(2).println("from((%s) p.%s());", columnTypeInterface, getter);
+                }
+                else {
+                    out.tab(2).println("from(p.%s());", getter);
+                }
             }
 
             if (procedure.getOutParameters().size() == 1) {

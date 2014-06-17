@@ -9,9 +9,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "V_AUTHOR")
-public class V_AUTHOR_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, java.io.Serializable {
+public class V_AUTHOR_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_AUTHOR_INTERFACE {
 
-	private static final long serialVersionUID = 1213403127;
+	private static final long serialVersionUID = -1240046236;
 
 	private java.lang.Integer                                                    ID;
 	private java.lang.String                                                     FIRST_NAME;
@@ -39,56 +39,101 @@ public class V_AUTHOR_POJO extends java.lang.ThreadDeath implements java.lang.Cl
 	}
 
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
+	@Override
 	public java.lang.Integer getID() {
 		return this.ID;
 	}
 
+	@Override
 	public void setID(java.lang.Integer ID) {
 		this.ID = ID;
 	}
 
 	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
+	@Override
 	public java.lang.String getFIRST_NAME() {
 		return this.FIRST_NAME;
 	}
 
+	@Override
 	public void setFIRST_NAME(java.lang.String FIRST_NAME) {
 		this.FIRST_NAME = FIRST_NAME;
 	}
 
 	@javax.persistence.Column(name = "LAST_NAME", nullable = false, length = 50)
+	@Override
 	public java.lang.String getLAST_NAME() {
 		return this.LAST_NAME;
 	}
 
+	@Override
 	public void setLAST_NAME(java.lang.String LAST_NAME) {
 		this.LAST_NAME = LAST_NAME;
 	}
 
 	@javax.persistence.Column(name = "DATE_OF_BIRTH", length = 7)
+	@Override
 	public java.sql.Date getDATE_OF_BIRTH() {
 		return this.DATE_OF_BIRTH;
 	}
 
+	@Override
 	public void setDATE_OF_BIRTH(java.sql.Date DATE_OF_BIRTH) {
 		this.DATE_OF_BIRTH = DATE_OF_BIRTH;
 	}
 
 	@javax.persistence.Column(name = "YEAR_OF_BIRTH", precision = 7)
+	@Override
 	public java.lang.Integer getYEAR_OF_BIRTH() {
 		return this.YEAR_OF_BIRTH;
 	}
 
+	@Override
 	public void setYEAR_OF_BIRTH(java.lang.Integer YEAR_OF_BIRTH) {
 		this.YEAR_OF_BIRTH = YEAR_OF_BIRTH;
 	}
 
 	@javax.persistence.Column(name = "ADDRESS", length = 40)
+	@Override
 	public org.jooq.test.oracle3.generatedclasses.udt.pojos.U_ADDRESS_TYPE_POJO getADDRESS() {
 		return this.ADDRESS;
 	}
 
 	public void setADDRESS(org.jooq.test.oracle3.generatedclasses.udt.pojos.U_ADDRESS_TYPE_POJO ADDRESS) {
 		this.ADDRESS = ADDRESS;
+	}
+
+	@Override
+	public void setADDRESS(org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_ADDRESS_TYPE_INTERFACE ADDRESS) {
+		if (ADDRESS == null)
+			this.ADDRESS = null;
+		else
+			this.ADDRESS = ADDRESS.into(new org.jooq.test.oracle3.generatedclasses.udt.pojos.U_ADDRESS_TYPE_POJO());
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_AUTHOR_INTERFACE from) {
+		setID(from.getID());
+		setFIRST_NAME(from.getFIRST_NAME());
+		setLAST_NAME(from.getLAST_NAME());
+		setDATE_OF_BIRTH(from.getDATE_OF_BIRTH());
+		setYEAR_OF_BIRTH(from.getYEAR_OF_BIRTH());
+		setADDRESS(from.getADDRESS());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_AUTHOR_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

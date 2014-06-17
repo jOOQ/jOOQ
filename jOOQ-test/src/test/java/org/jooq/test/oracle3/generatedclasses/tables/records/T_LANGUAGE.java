@@ -11,13 +11,14 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_LANGUAGE")
-public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> implements java.lang.Cloneable, org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
+public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> implements java.lang.Cloneable, org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE {
 
-	private static final long serialVersionUID = 820207359;
+	private static final long serialVersionUID = 1920290859;
 
 	/**
 	 * Setter for <code>T_LANGUAGE.CD</code>. The language ISO code
 	 */
+	@Override
 	public void setCD(java.lang.String value) {
 		setValue(0, value);
 	}
@@ -26,6 +27,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * Getter for <code>T_LANGUAGE.CD</code>. The language ISO code
 	 */
 	@javax.persistence.Column(name = "CD", nullable = false, length = 2)
+	@Override
 	public java.lang.String getCD() {
 		return (java.lang.String) getValue(0);
 	}
@@ -33,6 +35,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	/**
 	 * Setter for <code>T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
+	@Override
 	public void setDESCRIPTION(java.lang.String value) {
 		setValue(1, value);
 	}
@@ -41,6 +44,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * Getter for <code>T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
 	@javax.persistence.Column(name = "DESCRIPTION", length = 50)
+	@Override
 	public java.lang.String getDESCRIPTION() {
 		return (java.lang.String) getValue(1);
 	}
@@ -48,6 +52,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	/**
 	 * Setter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
+	@Override
 	public void setDESCRIPTION_ENGLISH(java.lang.String value) {
 		setValue(2, value);
 	}
@@ -56,6 +61,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * Getter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
 	@javax.persistence.Column(name = "DESCRIPTION_ENGLISH", length = 50)
+	@Override
 	public java.lang.String getDESCRIPTION_ENGLISH() {
 		return (java.lang.String) getValue(2);
 	}
@@ -63,6 +69,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	/**
 	 * Setter for <code>T_LANGUAGE.ID</code>. The language ID
 	 */
+	@Override
 	public void setID(java.lang.Integer value) {
 		setValue(3, value);
 	}
@@ -72,6 +79,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@Override
 	public java.lang.Integer getID() {
 		return (java.lang.Integer) getValue(3);
 	}
@@ -214,6 +222,30 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	@Override
 	public T_LANGUAGE values(java.lang.String value1, java.lang.String value2, java.lang.String value3, java.lang.Integer value4) {
 		return this;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE from) {
+		setCD(from.getCD());
+		setDESCRIPTION(from.getDESCRIPTION());
+		setDESCRIPTION_ENGLISH(from.getDESCRIPTION_ENGLISH());
+		setID(from.getID());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 
 	// -------------------------------------------------------------------------

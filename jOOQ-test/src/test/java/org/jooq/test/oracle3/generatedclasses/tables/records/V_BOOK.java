@@ -9,13 +9,14 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "V_BOOK")
-public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK> implements java.lang.Cloneable, org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.math.BigDecimal, java.sql.Timestamp> {
+public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK> implements java.lang.Cloneable, org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.math.BigDecimal, java.sql.Timestamp>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = -1535446927;
+	private static final long serialVersionUID = -2100562241;
 
 	/**
 	 * Setter for <code>V_BOOK.ID</code>.
 	 */
+	@Override
 	public void setID(java.lang.Integer value) {
 		setValue(0, value);
 	}
@@ -24,6 +25,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	 * Getter for <code>V_BOOK.ID</code>.
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
+	@Override
 	public java.lang.Integer getID() {
 		return (java.lang.Integer) getValue(0);
 	}
@@ -31,6 +33,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * Setter for <code>V_BOOK.AUTHOR_ID</code>.
 	 */
+	@Override
 	public void setAUTHOR_ID(java.lang.Integer value) {
 		setValue(1, value);
 	}
@@ -39,6 +42,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	 * Getter for <code>V_BOOK.AUTHOR_ID</code>.
 	 */
 	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 7)
+	@Override
 	public java.lang.Integer getAUTHOR_ID() {
 		return (java.lang.Integer) getValue(1);
 	}
@@ -46,6 +50,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * Setter for <code>V_BOOK.CO_AUTHOR_ID</code>.
 	 */
+	@Override
 	public void setCO_AUTHOR_ID(java.lang.Integer value) {
 		setValue(2, value);
 	}
@@ -54,6 +59,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	 * Getter for <code>V_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	@javax.persistence.Column(name = "CO_AUTHOR_ID", precision = 7)
+	@Override
 	public java.lang.Integer getCO_AUTHOR_ID() {
 		return (java.lang.Integer) getValue(2);
 	}
@@ -61,6 +67,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * Setter for <code>V_BOOK.DETAILS_ID</code>.
 	 */
+	@Override
 	public void setDETAILS_ID(java.lang.Integer value) {
 		setValue(3, value);
 	}
@@ -69,6 +76,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	 * Getter for <code>V_BOOK.DETAILS_ID</code>.
 	 */
 	@javax.persistence.Column(name = "DETAILS_ID", precision = 7)
+	@Override
 	public java.lang.Integer getDETAILS_ID() {
 		return (java.lang.Integer) getValue(3);
 	}
@@ -76,6 +84,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * Setter for <code>V_BOOK.TITLE</code>.
 	 */
+	@Override
 	public void setTITLE(java.lang.String value) {
 		setValue(4, value);
 	}
@@ -84,6 +93,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	 * Getter for <code>V_BOOK.TITLE</code>.
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
+	@Override
 	public java.lang.String getTITLE() {
 		return (java.lang.String) getValue(4);
 	}
@@ -91,6 +101,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * Setter for <code>V_BOOK.PUBLISHED_IN</code>.
 	 */
+	@Override
 	public void setPUBLISHED_IN(java.lang.Integer value) {
 		setValue(5, value);
 	}
@@ -99,6 +110,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	 * Getter for <code>V_BOOK.PUBLISHED_IN</code>.
 	 */
 	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false, precision = 7)
+	@Override
 	public java.lang.Integer getPUBLISHED_IN() {
 		return (java.lang.Integer) getValue(5);
 	}
@@ -106,6 +118,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * Setter for <code>V_BOOK.LANGUAGE_ID</code>.
 	 */
+	@Override
 	public void setLANGUAGE_ID(java.lang.Integer value) {
 		setValue(6, value);
 	}
@@ -114,6 +127,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	 * Getter for <code>V_BOOK.LANGUAGE_ID</code>.
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
+	@Override
 	public java.lang.Integer getLANGUAGE_ID() {
 		return (java.lang.Integer) getValue(6);
 	}
@@ -121,6 +135,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * Setter for <code>V_BOOK.CONTENT_TEXT</code>.
 	 */
+	@Override
 	public void setCONTENT_TEXT(java.lang.String value) {
 		setValue(7, value);
 	}
@@ -129,6 +144,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	 * Getter for <code>V_BOOK.CONTENT_TEXT</code>.
 	 */
 	@javax.persistence.Column(name = "CONTENT_TEXT")
+	@Override
 	public java.lang.String getCONTENT_TEXT() {
 		return (java.lang.String) getValue(7);
 	}
@@ -136,6 +152,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * Setter for <code>V_BOOK.CONTENT_PDF</code>.
 	 */
+	@Override
 	public void setCONTENT_PDF(byte[] value) {
 		setValue(8, value);
 	}
@@ -144,6 +161,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	 * Getter for <code>V_BOOK.CONTENT_PDF</code>.
 	 */
 	@javax.persistence.Column(name = "CONTENT_PDF")
+	@Override
 	public byte[] getCONTENT_PDF() {
 		return (byte[]) getValue(8);
 	}
@@ -151,6 +169,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * Setter for <code>V_BOOK.REC_VERSION</code>.
 	 */
+	@Override
 	public void setREC_VERSION(java.math.BigDecimal value) {
 		setValue(9, value);
 	}
@@ -159,6 +178,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	 * Getter for <code>V_BOOK.REC_VERSION</code>.
 	 */
 	@javax.persistence.Column(name = "REC_VERSION", length = 22)
+	@Override
 	public java.math.BigDecimal getREC_VERSION() {
 		return (java.math.BigDecimal) getValue(9);
 	}
@@ -166,6 +186,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * Setter for <code>V_BOOK.REC_TIMESTAMP</code>.
 	 */
+	@Override
 	public void setREC_TIMESTAMP(java.sql.Timestamp value) {
 		setValue(10, value);
 	}
@@ -174,6 +195,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	 * Getter for <code>V_BOOK.REC_TIMESTAMP</code>.
 	 */
 	@javax.persistence.Column(name = "REC_TIMESTAMP", length = 11)
+	@Override
 	public java.sql.Timestamp getREC_TIMESTAMP() {
 		return (java.sql.Timestamp) getValue(10);
 	}
@@ -479,6 +501,37 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	@Override
 	public V_BOOK values(java.lang.Integer value1, java.lang.Integer value2, java.lang.Integer value3, java.lang.Integer value4, java.lang.String value5, java.lang.Integer value6, java.lang.Integer value7, java.lang.String value8, byte[] value9, java.math.BigDecimal value10, java.sql.Timestamp value11) {
 		return this;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_BOOK_INTERFACE from) {
+		setID(from.getID());
+		setAUTHOR_ID(from.getAUTHOR_ID());
+		setCO_AUTHOR_ID(from.getCO_AUTHOR_ID());
+		setDETAILS_ID(from.getDETAILS_ID());
+		setTITLE(from.getTITLE());
+		setPUBLISHED_IN(from.getPUBLISHED_IN());
+		setLANGUAGE_ID(from.getLANGUAGE_ID());
+		setCONTENT_TEXT(from.getCONTENT_TEXT());
+		setCONTENT_PDF(from.getCONTENT_PDF());
+		setREC_VERSION(from.getREC_VERSION());
+		setREC_TIMESTAMP(from.getREC_TIMESTAMP());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_BOOK_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 
 	// -------------------------------------------------------------------------

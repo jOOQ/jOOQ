@@ -9,9 +9,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_TEMP")
-public class T_TEMP_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, java.io.Serializable {
+public class T_TEMP_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TEMP_INTERFACE {
 
-	private static final long serialVersionUID = -897086386;
+	private static final long serialVersionUID = -826820458;
 
 	private java.lang.Integer ID;
 
@@ -25,11 +25,34 @@ public class T_TEMP_POJO extends java.lang.ThreadDeath implements java.lang.Clon
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@Override
 	public java.lang.Integer getID() {
 		return this.ID;
 	}
 
+	@Override
 	public void setID(java.lang.Integer ID) {
 		this.ID = ID;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TEMP_INTERFACE from) {
+		setID(from.getID());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TEMP_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

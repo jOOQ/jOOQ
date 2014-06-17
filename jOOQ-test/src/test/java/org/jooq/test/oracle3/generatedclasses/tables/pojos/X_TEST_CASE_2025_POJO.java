@@ -9,9 +9,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "X_TEST_CASE_2025")
-public class X_TEST_CASE_2025_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, java.io.Serializable {
+public class X_TEST_CASE_2025_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_2025_INTERFACE {
 
-	private static final long serialVersionUID = -182181610;
+	private static final long serialVersionUID = 1986948954;
 
 	private java.lang.Integer REF_ID;
 	private java.lang.String  REF_NAME;
@@ -27,20 +27,46 @@ public class X_TEST_CASE_2025_POJO extends java.lang.ThreadDeath implements java
 	}
 
 	@javax.persistence.Column(name = "REF_ID", nullable = false, precision = 7)
+	@Override
 	public java.lang.Integer getREF_ID() {
 		return this.REF_ID;
 	}
 
+	@Override
 	public void setREF_ID(java.lang.Integer REF_ID) {
 		this.REF_ID = REF_ID;
 	}
 
 	@javax.persistence.Column(name = "REF_NAME", nullable = false, length = 10)
+	@Override
 	public java.lang.String getREF_NAME() {
 		return this.REF_NAME;
 	}
 
+	@Override
 	public void setREF_NAME(java.lang.String REF_NAME) {
 		this.REF_NAME = REF_NAME;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_2025_INTERFACE from) {
+		setREF_ID(from.getREF_ID());
+		setREF_NAME(from.getREF_NAME());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_2025_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

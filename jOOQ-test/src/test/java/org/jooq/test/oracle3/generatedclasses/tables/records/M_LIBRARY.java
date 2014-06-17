@@ -11,13 +11,14 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "M_LIBRARY")
-public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY> implements java.io.Serializable, java.lang.Cloneable, org.jooq.Record2<java.lang.String, java.lang.String> {
+public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY> implements java.io.Serializable, java.lang.Cloneable, org.jooq.Record2<java.lang.String, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERFACE {
 
-	private static final long serialVersionUID = 1701475137;
+	private static final long serialVersionUID = -2083795333;
 
 	/**
 	 * Setter for <code>M_LIBRARY.AUTHOR</code>.
 	 */
+	@Override
 	public void setAUTHOR(java.lang.String value) {
 		setValue(0, value);
 	}
@@ -26,6 +27,7 @@ public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	 * Getter for <code>M_LIBRARY.AUTHOR</code>.
 	 */
 	@javax.persistence.Column(name = "AUTHOR", length = 101)
+	@Override
 	public java.lang.String getAUTHOR() {
 		return (java.lang.String) getValue(0);
 	}
@@ -33,6 +35,7 @@ public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	/**
 	 * Setter for <code>M_LIBRARY.TITLE</code>.
 	 */
+	@Override
 	public void setTITLE(java.lang.String value) {
 		setValue(1, value);
 	}
@@ -41,6 +44,7 @@ public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	 * Getter for <code>M_LIBRARY.TITLE</code>.
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
+	@Override
 	public java.lang.String getTITLE() {
 		return (java.lang.String) getValue(1);
 	}
@@ -121,6 +125,28 @@ public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	@Override
 	public M_LIBRARY values(java.lang.String value1, java.lang.String value2) {
 		return this;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERFACE from) {
+		setAUTHOR(from.getAUTHOR());
+		setTITLE(from.getTITLE());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 
 	// -------------------------------------------------------------------------

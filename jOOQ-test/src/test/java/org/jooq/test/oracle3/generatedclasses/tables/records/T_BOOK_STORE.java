@@ -11,13 +11,14 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_BOOK_STORE")
-public class T_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE> implements java.lang.Cloneable, org.jooq.Record1<java.lang.String> {
+public class T_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE> implements java.lang.Cloneable, org.jooq.Record1<java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INTERFACE {
 
-	private static final long serialVersionUID = -551651381;
+	private static final long serialVersionUID = -1308869353;
 
 	/**
 	 * Setter for <code>T_BOOK_STORE.NAME</code>. The books store name
 	 */
+	@Override
 	public void setNAME(java.lang.String value) {
 		setValue(0, value);
 	}
@@ -27,6 +28,7 @@ public class T_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "NAME", unique = true, nullable = false, length = 400)
+	@Override
 	public java.lang.String getNAME() {
 		return (java.lang.String) getValue(0);
 	}
@@ -94,6 +96,27 @@ public class T_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	@Override
 	public T_BOOK_STORE values(java.lang.String value1) {
 		return this;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INTERFACE from) {
+		setNAME(from.getNAME());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 
 	// -------------------------------------------------------------------------

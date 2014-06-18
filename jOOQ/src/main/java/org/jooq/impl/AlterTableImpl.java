@@ -199,6 +199,10 @@ class AlterTableImpl extends AbstractQuery implements
                 case ORACLE:
                     ctx.sql(" ").keyword("modify");
                     break;
+
+                case SQLSERVER:
+                    ctx.sql(" ").keyword("alter column");
+                    break;
                 /* [/pro] */
 
                 default:
@@ -257,6 +261,7 @@ class AlterTableImpl extends AbstractQuery implements
             switch (family) {
                 /* [pro] */
                 case ORACLE:
+                case SQLSERVER:
                     ctx.sql(" ").keyword("drop column");
                     break;
                 /* [/pro] */

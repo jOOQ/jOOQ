@@ -46,8 +46,10 @@ import static org.jooq.Clause.ALTER_TABLE_ALTER;
 import static org.jooq.Clause.ALTER_TABLE_ALTER_DEFAULT;
 import static org.jooq.Clause.ALTER_TABLE_DROP;
 import static org.jooq.Clause.ALTER_TABLE_TABLE;
+import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.queryPart;
 
 import org.jooq.AlterTableAlterStep;
 import org.jooq.AlterTableDropStep;
@@ -56,6 +58,7 @@ import org.jooq.AlterTableStep;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
@@ -166,6 +169,21 @@ class AlterTableImpl extends AbstractQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        SQLDialect family = ctx.configuration().dialect().family();
+
+        /* [pro] */
+        // SQL Server doesn't really allow to ALTER DEFAULT values, but we can run a T-SQL script to do that
+        if (family == SQLSERVER && alterDefault != null) {
+            alterDefaultSQLServer(ctx);
+        }
+        else
+        /* [/pro] */
+        {
+            accept0(ctx);
+        }
+    }
+
+    private final void accept0(Context<?> ctx) {
         SQLDialect family = ctx.configuration().dialect().family();
 
         ctx.start(ALTER_TABLE_TABLE)
@@ -283,6 +301,40 @@ class AlterTableImpl extends AbstractQuery implements
             ctx.end(ALTER_TABLE_DROP);
         }
     }
+
+    /* [pro] */
+    private void alterDefaultSQLServer(Context<?> ctx) {
+        DSLContext create = DSL.using(ctx.configuration());
+
+        String inlinedTable = create.renderInlined(table);
+        String inlinedAlter = create.renderInlined(alter);
+        String inlinedAlterDefault = create.renderInlined(alterDefault);
+
+        ctx.visit(queryPart(
+                "DECLARE @constraint NVARCHAR(max);"
+            + "\nDECLARE @command NVARCHAR(max);"
+            + "\n"
+            + "\nSELECT @constraint = name"
+            + "\nFROM sys.default_constraints"
+            + "\nWHERE parent_object_id = object_id('" + inlinedTable + "')"
+            + "\nAND parent_column_id = columnproperty(object_id('" + inlinedTable + "'), '" + inlinedAlter + "', 'ColumnId');"
+            + "\n"
+            + "\nIF @constraint IS NOT NULL"
+            + "\nBEGIN"
+            + "\n  SET @command = 'ALTER TABLE " + inlinedTable + " DROP CONSTRAINT ' + @constraint"
+            + "\n  EXECUTE sp_executeSQL @command"
+            + "\n"
+            + "\n  SET @command = 'ALTER TABLE " + inlinedTable + " ADD CONSTRAINT ' + @constraint + ' DEFAULT '" + inlinedAlterDefault + "' FOR " + inlinedAlter + "'"
+            + "\n  EXECUTE sp_executeSQL @command"
+            + "\nEND"
+            + "\nELSE"
+            + "\nBEGIN"
+            + "\n  SET @command = 'ALTER TABLE " + inlinedTable + " ADD DEFAULT '" + inlinedAlterDefault + "' FOR " + inlinedAlter + "'"
+            + "\n  EXECUTE sp_executeSQL @command"
+            + "\nEND"
+        ));
+    }
+    /* [/pro] */
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {

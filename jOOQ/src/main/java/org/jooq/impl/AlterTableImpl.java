@@ -184,6 +184,11 @@ class AlterTableImpl extends AbstractQuery implements
                 ctx.sql(" ").keyword("not null");
             }
 
+            // Some databases default to NOT NULL, so explicitly setting columns to NULL is required here
+            else {
+                ctx.sql(" ").keyword("null");
+            }
+
             ctx.end(ALTER_TABLE_ADD);
         }
         else if (alter != null) {

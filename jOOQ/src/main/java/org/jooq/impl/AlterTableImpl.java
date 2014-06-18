@@ -46,8 +46,10 @@ import static org.jooq.Clause.ALTER_TABLE_ALTER;
 import static org.jooq.Clause.ALTER_TABLE_ALTER_DEFAULT;
 import static org.jooq.Clause.ALTER_TABLE_DROP;
 import static org.jooq.Clause.ALTER_TABLE_TABLE;
+// ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.queryPart;
 
 import org.jooq.AlterTableAlterStep;
 import org.jooq.AlterTableDropStep;
@@ -56,6 +58,7 @@ import org.jooq.AlterTableStep;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
@@ -168,6 +171,21 @@ class AlterTableImpl extends AbstractQuery implements
     public final void accept(Context<?> ctx) {
         SQLDialect family = ctx.configuration().dialect().family();
 
+        /* [pro] xx
+        xx xxx xxxxxx xxxxxxx xxxxxx xxxxx xx xxxxx xxxxxxx xxxxxxx xxx xx xxx xxx x xxxxx xxxxxx xx xx xxxx
+        xx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxxxx xx xxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+        xxxx
+        xx [/pro] */
+        {
+            accept0(ctx);
+        }
+    }
+
+    private final void accept0(Context<?> ctx) {
+        SQLDialect family = ctx.configuration().dialect().family();
+
         ctx.start(ALTER_TABLE_TABLE)
            .keyword("alter table").sql(" ").visit(table)
            .end(ALTER_TABLE_TABLE);
@@ -198,6 +216,10 @@ class AlterTableImpl extends AbstractQuery implements
                 /* [pro] xx
                 xxxx xxxxxxx
                     xxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
+                    xxxxxx
+
+                xxxx xxxxxxxxxx
+                    xxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxx
                     xxxxxx
                 xx [/pro] */
 
@@ -257,6 +279,7 @@ class AlterTableImpl extends AbstractQuery implements
             switch (family) {
                 /* [pro] xx
                 xxxx xxxxxxx
+                xxxx xxxxxxxxxx
                     xxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxx
                     xxxxxx
                 xx [/pro] */
@@ -278,6 +301,40 @@ class AlterTableImpl extends AbstractQuery implements
             ctx.end(ALTER_TABLE_DROP);
         }
     }
+
+    /* [pro] xx
+    xxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx x
+        xxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+        xxxxxx xxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+        xxxxxxxxxxxxxxxxxxxx
+                xxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxx
+            x xxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxx
+            x xxxx
+            x xxxxxxxxx xxxxxxxxxxx x xxxxx
+            x xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
+            x xxxxxxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxx x xxxxxxxxxxxx x xxxx
+            x xxxxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxx x xxxx xx x xxxxxxxxxxxx x xxx xxxxxxxxxxxxx
+            x xxxx
+            x xxxxx xxxxxxxxxxx xx xxx xxxxx
+            x xxxxxxxxx
+            x xxx  xxx xxxxxxxx x xxxxxx xxxxx x x xxxxxxxxxxxx x x xxxx xxxxxxxxxx x x xxxxxxxxxxxx
+            x xxx  xxxxxxx xxxxxxxxxxxxx xxxxxxxxx
+            x xxxx
+            x xxx  xxx xxxxxxxx x xxxxxx xxxxx x x xxxxxxxxxxxx x x xxx xxxxxxxxxx x x xxxxxxxxxxx x x xxxxxxx xx x xxxxxxxxxxxxxxxxxxx x xx xxx x x xxxxxxxxxxxx x xxx
+            x xxx  xxxxxxx xxxxxxxxxxxxx xxxxxxxxx
+            x xxxxxxx
+            x xxxxxxxx
+            x xxxxxxxxx
+            x xxx  xxx xxxxxxxx x xxxxxx xxxxx x x xxxxxxxxxxxx x x xxx xxxxxxx xx x xxxxxxxxxxxxxxxxxxx x xx xxx x x xxxxxxxxxxxx x xxx
+            x xxx  xxxxxxx xxxxxxxxxxxxx xxxxxxxxx
+            x xxxxxxx
+        xxx
+    x
+    xx [/pro] */
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {

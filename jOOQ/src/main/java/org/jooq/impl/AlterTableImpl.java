@@ -196,6 +196,7 @@ class AlterTableImpl extends AbstractQuery implements
                .qualify(false)
                .visit(add).sql(" ")
                .qualify(true)
+                // [#3341] This is currently incorrect for MySQL and MariaDB
                .keyword(addType.getCastTypeName(ctx.configuration()));
 
             if (!addType.nullable()) {
@@ -223,6 +224,13 @@ class AlterTableImpl extends AbstractQuery implements
                     break;
                 /* [/pro] */
 
+                case MARIADB:
+                case MYSQL:
+                    // MySQL's CHANGE COLUMN clause has a mandatory RENAMING syntax...
+                    ctx.sql(" ").keyword("change column")
+                       .sql(" ").qualify(false).visit(alter).qualify(true);
+                    break;
+
                 default:
                     ctx.sql(" ").keyword("alter");
                     break;
@@ -246,6 +254,7 @@ class AlterTableImpl extends AbstractQuery implements
                         break;
                 }
 
+                // [#3341] This is currently incorrect for MySQL and MariaDB
                 ctx.sql(" ").keyword(alterType.getCastTypeName(ctx.configuration()));
 
                 if (!alterType.nullable()) {

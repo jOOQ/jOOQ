@@ -775,6 +775,9 @@ public class VisitContextTest extends AbstractTest {
             asList(ALTER_TABLE, ALTER_TABLE_TABLE, TABLE, TABLE_REFERENCE),
             asList(ALTER_TABLE, ALTER_TABLE_ALTER),
             asList(ALTER_TABLE, ALTER_TABLE_ALTER, FIELD),
+            asList(ALTER_TABLE, ALTER_TABLE_ALTER, FIELD, FIELD_REFERENCE),
+            // MySQL repeats the field reference for ALTER TABLE .. ALTER TYPE statements
+            asList(ALTER_TABLE, ALTER_TABLE_ALTER, FIELD),
             asList(ALTER_TABLE, ALTER_TABLE_ALTER, FIELD, FIELD_REFERENCE)
         ),
         ctx.alterTable(TABLE1).alter(FIELD_NAME1).set(SQLDataType.INTEGER));
@@ -788,6 +791,9 @@ public class VisitContextTest extends AbstractTest {
             asList(ALTER_TABLE, ALTER_TABLE_TABLE, TABLE),
             asList(ALTER_TABLE, ALTER_TABLE_TABLE, TABLE, TABLE_REFERENCE),
             asList(ALTER_TABLE, ALTER_TABLE_ALTER),
+            asList(ALTER_TABLE, ALTER_TABLE_ALTER, FIELD),
+            asList(ALTER_TABLE, ALTER_TABLE_ALTER, FIELD, FIELD_REFERENCE),
+            // MySQL repeats the field reference for ALTER TABLE .. ALTER DEFAULT statements
             asList(ALTER_TABLE, ALTER_TABLE_ALTER, FIELD),
             asList(ALTER_TABLE, ALTER_TABLE_ALTER, FIELD, FIELD_REFERENCE),
             asList(ALTER_TABLE, ALTER_TABLE_ALTER, ALTER_TABLE_ALTER_DEFAULT),

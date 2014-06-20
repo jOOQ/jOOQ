@@ -32,7 +32,7 @@ public interface IT_725LobTest extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_725_LOB_TEST.LOB</code>.
 	 */
-	@javax.persistence.Column(name = "LOB", length = 8)
+	@javax.persistence.Column(name = "LOB")
 	public byte[] getLob();
 
 	// -------------------------------------------------------------------------

@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_BOOK")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IVBook {
 
-	private static final long serialVersionUID = 1510572261;
+	private static final long serialVersionUID = 397209822;
 
 	/**
 	 * Setter for <code>V_BOOK.ID</code>.
@@ -144,8 +144,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	/**
 	 * Getter for <code>V_BOOK.CONTENT_TEXT</code>.
 	 */
-	@javax.persistence.Column(name = "CONTENT_TEXT", length = 8)
-	@javax.validation.constraints.Size(max = 8)
+	@javax.persistence.Column(name = "CONTENT_TEXT")
 	@Override
 	public java.lang.String getContentText() {
 		return (java.lang.String) getValue(7);
@@ -162,7 +161,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	/**
 	 * Getter for <code>V_BOOK.CONTENT_PDF</code>.
 	 */
-	@javax.persistence.Column(name = "CONTENT_PDF", length = 8)
+	@javax.persistence.Column(name = "CONTENT_PDF")
 	@Override
 	public byte[] getContentPdf() {
 		return (byte[]) getValue(8);

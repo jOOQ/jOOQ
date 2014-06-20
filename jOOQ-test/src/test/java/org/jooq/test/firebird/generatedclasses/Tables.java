@@ -12,6 +12,11 @@ package org.jooq.test.firebird.generatedclasses;
 public class Tables {
 
 	/**
+	 * The table T_3342
+	 */
+	public static final org.jooq.test.firebird.generatedclasses.tables.T_3342 T_3342 = org.jooq.test.firebird.generatedclasses.tables.T_3342.T_3342;
+
+	/**
 	 * The table T_639_NUMBERS_TABLE
 	 */
 	public static final org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;

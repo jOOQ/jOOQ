@@ -1143,7 +1143,37 @@ public class SQLServerTest extends jOOQAbstractTest<
     }
 
     @Test
+    public void testSQLServerInsertNullableUniqueKeysAfterCopy() {
+        clean(T_3084_TWO_UNIQUE_KEYS);
+
+        DSLContext create = create();
+        create.configuration().settings().setUpdatablePrimaryKeys(true);
+
+        T_3084TwoUniqueKeysRecord r1 = create.newRecord(T_3084_TWO_UNIQUE_KEYS);
+
+        r1.setId1(1);
+        r1.setId2(null);
+        r1.setId3(1);
+        r1.setId4(null);
+        r1.setData(1);
+        assertEquals(1, r1.insert());
+        assertEquals(1, create.fetchCount(T_3084_TWO_UNIQUE_KEYS));
+
+        r1 = create.fetchOne(T_3084_TWO_UNIQUE_KEYS);
+        T_3084TwoUniqueKeysRecord r2 = r1.copy();
+        r2.setId1(2);
+        r2.setId2(null);
+        r2.setId3(2);
+        r2.setId4(null);
+
+        assertEquals(1, r2.insert());
+        assertEquals(2, create.fetchCount(T_3084_TWO_UNIQUE_KEYS));
+    }
+
+    @Test
     public void testSQLServerPlainSQLWithSpecialTypes() {
+        jOOQAbstractTest.reset = false;
+
         create().execute("insert into t_3085 values (null, null)");
         T_3085Record record = create().resultQuery("select * from t_3085").fetchAnyInto(T_3085);
         assertEquals(asList(null, null), asList(record.intoArray()));

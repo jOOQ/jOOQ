@@ -36,6 +36,7 @@ DROP TABLE "t_941"/
 DROP TABLE T_943/
 DROP TABLE t_unsigned/
 DROP TABLE t_booleans/
+DROP TABLE t_3342/
 
 
 
@@ -286,6 +287,11 @@ CREATE TABLE x_test_case_2025 (
   CONSTRAINT fk_x_test_case_2025_1 FOREIGN KEY(ref_id) REFERENCES x_test_case_85(ID),
   CONSTRAINT fk_x_test_case_2025_2 FOREIGN KEY(ref_id) REFERENCES x_test_case_71(ID),
   CONSTRAINT fk_x_test_case_2025_3 FOREIGN KEY(ref_id, ref_name) REFERENCES X_UNUSED(id, name)
+);
+/
+
+CREATE TABLE t_3342 (
+  b BLOB SUB_TYPE 1 SEGMENT SIZE 80 CHARACTER SET NONE COLLATE NONE
 );
 /
 

@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -500033945;
+	private static final long serialVersionUID = -402557881;
 
 	/**
 	 * The singleton instance of <code>T_BOOK</code>
@@ -62,12 +62,12 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.firebird.genera
 	/**
 	 * The column <code>T_BOOK.CONTENT_TEXT</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB.length(8), this, "");
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB, this, "");
 
 	/**
 	 * The column <code>T_BOOK.CONTENT_PDF</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB.length(8), this, "");
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, this, "");
 
 	/**
 	 * The column <code>T_BOOK.REC_VERSION</code>.

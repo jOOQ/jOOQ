@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 689343034;
+	private static final long serialVersionUID = -315496449;
 
 	/**
 	 * The singleton instance of <code></code>
@@ -44,6 +44,7 @@ public class DefaultSchema extends org.jooq.impl.SchemaImpl {
 
 	private final java.util.List<org.jooq.Table<?>> getTables0() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
+			org.jooq.test.firebird.generatedclasses.tables.T_3342.T_3342,
 			org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,
 			org.jooq.test.firebird.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST,
 			org.jooq.test.firebird.generatedclasses.tables.T_785.T_785,

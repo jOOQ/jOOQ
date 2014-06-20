@@ -103,8 +103,7 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_BOOK.CONTENT_TEXT</code>.
 	 */
-	@javax.persistence.Column(name = "CONTENT_TEXT", length = 8)
-	@javax.validation.constraints.Size(max = 8)
+	@javax.persistence.Column(name = "CONTENT_TEXT")
 	public java.lang.String getContentText();
 
 	/**
@@ -115,7 +114,7 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_BOOK.CONTENT_PDF</code>.
 	 */
-	@javax.persistence.Column(name = "CONTENT_PDF", length = 8)
+	@javax.persistence.Column(name = "CONTENT_PDF")
 	public byte[] getContentPdf();
 
 	/**

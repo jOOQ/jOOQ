@@ -76,7 +76,7 @@ public final class Constants {
     /**
      * The current jooq-runtime XML namespace
      */
-    public static final String NS_RUNTIME     = "http://www.jooq.org/xsd/jooq-runtime-3.3.0.xsd";
+    public static final String NS_RUNTIME     = "http://www.jooq.org/xsd" + XSD_RUNTIME;
 
     /**
      * The current jooq-codegen XSD file name.
@@ -86,7 +86,7 @@ public final class Constants {
     /**
      * The current jooq-codegen XML namespace.
      */
-    public static final String NS_CODEGEN     = "http://www.jooq.org/xsd/jooq-codegen-3.4.0.xsd";
+    public static final String NS_CODEGEN     = "http://www.jooq.org/xsd/" + XSD_CODEGEN;
 
     /**
      * The maximum degree of {@link Row} and {@link Record} subtypes

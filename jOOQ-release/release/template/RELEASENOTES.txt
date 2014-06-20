@@ -13,13 +13,42 @@ http://www.jooq.org/inc/RELEASENOTES.txt
 Version 3.4.0 - June 20, 2014
 ================================================================================
 
-This is a snapshot preview version of jOOQ 3.4.0. Please do not use this version
-in production.
+With this awesome new minor release version, we have finally started supporting
+a couple of very important aspects of the SQL language:
+
+- Common table expressions
+- Transactions
+- DDL
+
+Common table expressions have been missing from jOOQ for a long time, and
+they're now finally part of our DSL API, both for recursive or regular usage.
+
+Transactions are handled very nicely in JavaEE or through Spring TX. But if
+you're running small standalone programs with JDBC (and jOOQ) only, you have to
+resort to a transaction API that is no longer contemporay. With jOOQ 3.4, we're
+now shipping a Java-8 ready transaction API and a default implementation backed
+by JDBC transactions. Our manual also contains an example implementation that is
+backed by Spring TX. While we do not want to compete with popular transaction
+models, we do want to provide a simple, functional-interface oriented API to
+apply transactions in client code.
+
+DDL is very hard to standardise across databases, and with jOOQ 3.4, we have now
+started adding type safe support for some DDL statements, including thus far:
+
+- ALTER SEQUENCE
+- ALTER TABLE
+
+We're going to be adding support for more DDL statements in jOOQ 3.5 as part of
+our more general DDL support strategy.
+
+Apart from that, there is a tremendous amount of minor improvements. See below
+for details:
 
 Features and improvements
 -------------------------
 #454  - Add support for CTE (Common Table Expressions / WITH-clause)
 #682  - Mavenise jooq-test
+#883  - Add support for DDL statements
 #1061 - Support "DEFAULT" keyword in INSERT and UPDATE statements
 #2573 - Generate DAOs for tables with composite primary keys
 #2646 - SQL Server error "The text, ntext, and image data types cannot be
@@ -27,6 +56,7 @@ Features and improvements
         statement
 #2675 - Add test to verify if jOOQ correctly binds NULL values with the right
         JDBC type in batch INSERT operations
+#2694 - Unify RenderContext and BindContext traversal
 #3010 - Generate POJOs for Oracle and PostgreSQL UDTs
 #3016 - Adapt manual to recommend also other popular connection pools
 #3030 - Add support for ALTER SEQUENCE ... RESTART [ WITH ... ]
@@ -53,6 +83,8 @@ Features and improvements
         DSLContext.newResult(Field<T1>, ..., Field<T[N]>)
 #3153 - Add a paragraph to the manual explaining classpath behaviour of the
         standalone code generator
+#3154 - Add code-generation configuration to generate synthetic primary keys for
+        updatable views 
 #3169 - Add more ResultQuery.fetchAnyXXX() convenience methods
 #3180 - Add a Java 8 example to the documentation
 #3181 - Update external manual links to point to the JavaSE 8 Javadoc
@@ -88,6 +120,12 @@ Features and improvements
 #3305 - Add SQLDialect.families() to access all SQLDialect families
 #3307 - Change internal representation of AbstractRecord to use Object[] and
         BitSet instead of Value[]
+#3319 - Update the jOOQ LIMIT .. OFFSET manual page
+#3316 - Add RecordContext.recordType() to allow for introspecting record types
+        when implementing RecordListeners
+#3321 - Add support for Oracle's (+) JOIN syntax
+#3322 - Add UpdatableRecord.store(Field<?>...), insert(Field<?>...), 
+        update(Field<?>...) 
 
 API changes (backwards-compatible)
 ----------------------------------
@@ -111,6 +149,8 @@ Behavioural changes (backwards-incompatible)
 
 Bug fixes
 ---------
+#2335 - SQL syntax error when projecting two columns of the same name along with
+        a LIMIT clause in Oracle 
 #2700 - DAO.insert() and other DAO operations do not respect DEFAULT values
 #2973 - Field.in(Collection) should accept wildcard instead of T
 #3011 - Routines do not propagate errors raised from T-SQL with sqljdbc_4.0
@@ -127,6 +167,8 @@ Bug fixes
 #3101 - MutablePOJOMapper doesn't work with annotated boolean getters
 #3108 - Local Fields' Converters should be preferred over globally registered
         Converters 
+#3117 - jOOQ illegally generates covariant setters on UDTRecords and UDT Pojos
+        when <pojos/> and <interfaces/> are activated
 #3119 - Upgrade to JUnit 4.11 and omit using deprecated junit.framework.Assert
         in tests
 #3120 - Outdated link to Spring TX in the manual
@@ -156,6 +198,7 @@ Bug fixes
         DataSourceConnectionProvider 
 #3194 - Avoid using deprecated Maven mojo descriptor @parameter
         expression="${property}"
+#3195 - IN predicate with subquery cannot have LIMIT .. OFFSET clause in Oracle
 #3200 - Converter does not work when loading CSV files
 #3211 - Dead codegen example POM link in manual
 #3214 - Error when inserting PostgreSQL enum array
@@ -183,7 +226,11 @@ Bug fixes
 #3300 - UpdatableRecord.store() executes INSERT instead of UPDATE when nullable
         primary keys are NULL, and the updatablePrimaryKeys setting is active
 #3309 - Don't use "deploy" as Maven <defaultGoal/> 
-
+#3328 - Re-create old DefaultConfiguration constructors for backwards-
+        compatibility
+#3333 - maven-compiler-plugin configuration in jooq-parent pom file uses the
+        deprecated compilerArguments parameter 
+#3342 - Cannot INSERT into tables with Firebird BLOB types
 
 Version 3.3.0 - February 14, 2014
 ================================================================================

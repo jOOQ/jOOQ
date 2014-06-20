@@ -80,6 +80,8 @@ import org.jooq.exception.InvalidResultException;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
+import org.junit.Assume;
+
 public class CRUDTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,
@@ -254,12 +256,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(1, r2.store());
         assertEquals(0, r3.store());
         assertEquals(1, r4.store());
+        assertEquals(3, create().fetchCount(TTriggers()));
+    }
 
-        assertEquals(3, (int) create().selectCount().from(TTriggers()).fetchOne(0, int.class));
+    public void testUpdatablesCopyAndInsert() throws Exception {
+        Assume.assumeNotNull(TTriggers());
+
+        jOOQAbstractTest.reset = false;
+
+        DSLContext create = create();
+        T r1 = create.newRecord(TTriggers());
+        r1.setValue(TTriggers_COUNTER(), 1);
+        assertEquals(1, r1.store());
+
+        T r2 = r1.copy();
+        assertEquals(1, r2.insert());
+        assertEquals(2, create.fetchCount(TTriggers()));
     }
 
     @SuppressWarnings("unchecked")
-
     public void testUpdatablesKeysMethod() throws Exception {
         B b = create().selectFrom(TBook())
                       .where(TBook_ID().eq(1))

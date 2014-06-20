@@ -2053,6 +2053,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testUpdatablesCopyAndInsert() throws Exception {
+        new CRUDTests(this).testUpdatablesCopyAndInsert();
+    }
+
+    @Test
     public void testUpdatablesKeysMethod() throws Exception {
         new CRUDTests(this).testUpdatablesKeysMethod();
     }

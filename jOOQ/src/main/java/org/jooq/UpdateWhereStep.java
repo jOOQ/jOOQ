@@ -68,30 +68,18 @@ public interface UpdateWhereStep<R extends Record> extends UpdateFinalStep<R>, U
      * Add conditions to the query
      */
     @Support
-    @Transition(
-        name = "WHERE",
-        args = "Condition+"
-    )
     UpdateConditionStep<R> where(Condition... conditions);
 
     /**
      * Add conditions to the query
      */
     @Support
-    @Transition(
-        name = "WHERE",
-        args = "Condition+"
-    )
     UpdateConditionStep<R> where(Collection<? extends Condition> conditions);
 
     /**
      * Add conditions to the query
      */
     @Support
-    @Transition(
-        name = "WHERE",
-        args = "Condition"
-    )
     UpdateConditionStep<R> where(Field<Boolean> condition);
 
     /**

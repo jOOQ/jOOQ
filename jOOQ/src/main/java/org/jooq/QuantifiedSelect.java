@@ -55,7 +55,6 @@ import org.jooq.api.annotation.State;
  *
  * @author Lukas Eder
  */
-@State(terminal = true)
 public interface QuantifiedSelect<R extends Record> extends QueryPart {
 
 }

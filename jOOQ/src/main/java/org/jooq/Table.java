@@ -75,17 +75,6 @@ import org.jooq.impl.DSL;
  * @param <R> The record type associated with this table
  * @author Lukas Eder
  */
-@State(
-    name = "Table",
-    aliases = {
-        "AliasedTable",
-        "JoinedTable",
-        "PivotTable",
-        "DividedTable",
-        "UnnestedTable"
-    },
-    terminal = true
-)
 public interface Table<R extends Record> extends TableLike<R> {
 
     /**
@@ -251,11 +240,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @return The table alias
      */
     @Support
-    @Transition(
-        name = "AS",
-        to = "AliasedTable",
-        args = "String"
-    )
     Table<R> as(String alias);
 
     /**
@@ -310,14 +294,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @return The table alias
      */
     @Support
-    @Transition(
-        name = "AS",
-        to = "AliasedTable",
-        args = {
-            "String",
-            "String+"
-        }
-    )
     Table<R> as(String alias, String... fieldAliases);
 
     // -------------------------------------------------------------------------
@@ -340,10 +316,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * <code>INNER JOIN</code> a table to this table.
      */
     @Support
-    @Transition(
-        name = "JOIN",
-        args = "Table"
-    )
     TableOnStep join(TableLike<?> table);
 
     /**
@@ -357,10 +329,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support
-    @Transition(
-        name = "JOIN",
-        args = "Table"
-    )
     TableOnStep join(String sql);
 
     /**
@@ -374,10 +342,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support
-    @Transition(
-        name = "JOIN",
-        args = "Table"
-    )
     TableOnStep join(String sql, Object... bindings);
 
     /**
@@ -391,20 +355,12 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support
-    @Transition(
-        name = "JOIN",
-        args = "Table"
-    )
     TableOnStep join(String sql, QueryPart... parts);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
      */
     @Support
-    @Transition(
-        name = "LEFT OUTER JOIN",
-        args = "Table"
-    )
     TablePartitionByStep leftOuterJoin(TableLike<?> table);
 
     /**
@@ -418,10 +374,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support
-    @Transition(
-        name = "LEFT OUTER JOIN",
-        args = "Table"
-    )
     TablePartitionByStep leftOuterJoin(String sql);
 
     /**
@@ -435,10 +387,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support
-    @Transition(
-        name = "LEFT OUTER JOIN",
-        args = "Table"
-    )
     TablePartitionByStep leftOuterJoin(String sql, Object... bindings);
 
     /**
@@ -452,10 +400,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support
-    @Transition(
-        name = "LEFT OUTER JOIN",
-        args = "Table"
-    )
     TablePartitionByStep leftOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -464,10 +408,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * This is only possible where the underlying RDBMS supports it
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @Transition(
-        name = "RIGHT OUTER JOIN",
-        args = "Table"
-    )
     TablePartitionByStep rightOuterJoin(TableLike<?> table);
 
     /**
@@ -483,10 +423,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @Transition(
-        name = "RIGHT OUTER JOIN",
-        args = "Table"
-    )
     TablePartitionByStep rightOuterJoin(String sql);
 
     /**
@@ -502,10 +438,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @Transition(
-        name = "RIGHT OUTER JOIN",
-        args = "Table"
-    )
     TablePartitionByStep rightOuterJoin(String sql, Object... bindings);
 
     /**
@@ -521,10 +453,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @Transition(
-        name = "RIGHT OUTER JOIN",
-        args = "Table"
-    )
     TablePartitionByStep rightOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -533,10 +461,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * This is only possible where the underlying RDBMS supports it
      */
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
-    @Transition(
-        name = "FULL OUTER JOIN",
-        args = "Table"
-    )
     TableOnStep fullOuterJoin(TableLike<?> table);
 
     /**
@@ -552,10 +476,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
-    @Transition(
-        name = "FULL OUTER JOIN",
-        args = "Table"
-    )
     TableOnStep fullOuterJoin(String sql);
 
     /**
@@ -571,10 +491,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
-    @Transition(
-        name = "FULL OUTER JOIN",
-        args = "Table"
-    )
     TableOnStep fullOuterJoin(String sql, Object... bindings);
 
     /**
@@ -590,10 +506,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
-    @Transition(
-        name = "FULL OUTER JOIN",
-        args = "Table"
-    )
     TableOnStep fullOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -607,11 +519,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * </pre></code>
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    @Transition(
-        name = "CROSS JOIN",
-        args = "Table",
-        to = "JoinedTable"
-    )
     Table<Record> crossJoin(TableLike<?> table);
 
     /**
@@ -632,11 +539,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    @Transition(
-        name = "CROSS JOIN",
-        args = "Table",
-        to = "JoinedTable"
-    )
     Table<Record> crossJoin(String sql);
 
     /**
@@ -657,11 +559,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    @Transition(
-        name = "CROSS JOIN",
-        args = "Table",
-        to = "JoinedTable"
-    )
     Table<Record> crossJoin(String sql, Object... bindings);
 
     /**
@@ -682,11 +579,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    @Transition(
-        name = "CROSS JOIN",
-        args = "Table",
-        to = "JoinedTable"
-    )
     Table<Record> crossJoin(String sql, QueryPart... parts);
 
     /**
@@ -696,11 +588,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * this behaviour using the information provided in this query.
      */
     @Support
-    @Transition(
-        name = "NATURAL JOIN",
-        args = "Table",
-        to = "JoinedTable"
-    )
     Table<Record> naturalJoin(TableLike<?> table);
 
     /**
@@ -717,11 +604,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support
-    @Transition(
-        name = "NATURAL JOIN",
-        args = "Table",
-        to = "JoinedTable"
-    )
     Table<Record> naturalJoin(String sql);
 
     /**
@@ -738,11 +620,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support
-    @Transition(
-        name = "NATURAL JOIN",
-        args = "Table",
-        to = "JoinedTable"
-    )
     Table<Record> naturalJoin(String sql, Object... bindings);
 
     /**
@@ -759,11 +636,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support
-    @Transition(
-        name = "NATURAL JOIN",
-        args = "Table",
-        to = "JoinedTable"
-    )
     Table<Record> naturalJoin(String sql, QueryPart... parts);
 
     /**
@@ -773,11 +645,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * this behaviour using the information provided in this query.
      */
     @Support
-    @Transition(
-        name = "NATURAL LEFT OUTER JOIN",
-        args = "Table",
-        to = "JoinedTable"
-    )
     Table<Record> naturalLeftOuterJoin(TableLike<?> table);
 
     /**
@@ -794,11 +661,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support
-    @Transition(
-        name = "NATURAL LEFT OUTER JOIN",
-        args = "Table",
-        to = "JoinedTable"
-    )
     Table<Record> naturalLeftOuterJoin(String sql);
 
     /**
@@ -815,11 +677,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support
-    @Transition(
-        name = "NATURAL LEFT OUTER JOIN",
-        args = "Table",
-        to = "JoinedTable"
-    )
     Table<Record> naturalLeftOuterJoin(String sql, Object... bindings);
 
     /**
@@ -836,11 +693,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support
-    @Transition(
-        name = "NATURAL LEFT OUTER JOIN",
-        args = "Table",
-        to = "JoinedTable"
-    )
     Table<Record> naturalLeftOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -850,11 +702,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * this behaviour using the information provided in this query.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @Transition(
-        name = "NATURAL RIGHT OUTER JOIN",
-        args = "Table",
-        to = "JoinedTable"
-    )
     Table<Record> naturalRightOuterJoin(TableLike<?> table);
 
     /**
@@ -871,11 +718,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @Transition(
-        name = "NATURAL RIGHT OUTER JOIN",
-        args = "Table",
-        to = "JoinedTable"
-    )
     Table<Record> naturalRightOuterJoin(String sql);
 
     /**
@@ -892,11 +734,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @Transition(
-        name = "NATURAL RIGHT OUTER JOIN",
-        args = "Table",
-        to = "JoinedTable"
-    )
     Table<Record> naturalRightOuterJoin(String sql, Object... bindings);
 
     /**
@@ -913,11 +750,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @Transition(
-        name = "NATURAL RIGHT OUTER JOIN",
-        args = "Table",
-        to = "JoinedTable"
-    )
     Table<Record> naturalRightOuterJoin(String sql, QueryPart... parts);
 
     // -------------------------------------------------------------------------
@@ -930,11 +762,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
      xx
     xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxx xxxxxxx
-        xxxx x xxxxxxxx
-        xx x xxxxxxxxxxxxx
-    x
     xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
 
     xxx
@@ -948,11 +775,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxxxxxxxxxxxxx
      xx
     xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxx xxxxxxx
-        xxxx x xxxxxxxx
-        xx x xxxxxxxxxxxxx
-    x
     xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxx
 
     xxx
@@ -966,11 +788,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxx
      xx
     xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxx xxxxxxx
-        xxxx x xxxxxxxx
-        xx x xxxxxxxxxxxxx
-    x
     xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxxx
 
     xxx
@@ -984,22 +801,12 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
      xx
     xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxx xxxxxxx
-        xxxx x xxxxxxxx
-        xx x xxxxxxxxxxxxx
-    x
     xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxxx
 
     xxx
      x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
      xx
     xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxx xxxxxxx
-        xxxx x xxxxxxxx
-        xx x xxxxxxxxxxxxx
-    x
     xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
 
     xxx
@@ -1013,11 +820,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxxxxxxxxxxxxx
      xx
     xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxx xxxxxxx
-        xxxx x xxxxxxxx
-        xx x xxxxxxxxxxxxx
-    x
     xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxx
 
     xxx
@@ -1031,11 +833,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxx
      xx
     xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxx xxxxxxx
-        xxxx x xxxxxxxx
-        xx x xxxxxxxxxxxxx
-    x
     xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxxx
 
     xxx
@@ -1049,11 +846,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
      xx
     xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxx xxxxxxx
-        xxxx x xxxxxxxx
-        xx x xxxxxxxxxxxxx
-    x
     xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxxx
 
     xx [/pro] */
@@ -1086,10 +878,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
      xx
     xxxxxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxxx
-        xxxx x xxxxxxxx
-    x
     xxxxxxxx xxxxxxxxxxx xxxxxx
 
     xxx
@@ -1108,10 +896,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxxxxx x xxx xxxxxx xx xxxxxx xxx xxxxxxxxxxxxxxxxxx xxxxxxxxxx
      xx
     xxxxxxxxxx xxxxxxxxxx xxxxxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxxxx
-        xxxx x xxxxxxxx
-    x
     xxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx
 
     xxx
@@ -1125,10 +909,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxxxxxxxxxxxx
      xx
     xxxxxxxxxx xxxxxxxxxx xxxxxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxxxx
-        xxxx x xxxxxxxx
-    x
     xxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxxx
 
     xx [/pro] */
@@ -1185,10 +965,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      * This has been observed to work with all dialects
      */
     @Support
-    @Transition(
-        name = "DIVIDE BY",
-        args = "Table"
-    )
     DivideByOnStep divideBy(Table<?> divisor);
 
     /* [pro] xx
@@ -1197,10 +973,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxx
      xx
     xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxxxxx xxxxxxx xxxxx
-        xxxx x xxxxxxx
-    x
     xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxx
 
     xxx
@@ -1208,10 +980,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxx
      xx
     xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxxxxx xxxxxxx xxxxx
-        xxxx x xxxxxxx
-    x
     xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxx xxxxx
 
     xxx
@@ -1219,9 +987,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxx
      xx
     xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxxxxx xxxxxxx xxx xxxxxxxxx
-    x
     xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
     xxx
@@ -1229,10 +994,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxx
      xx
     xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxxxxx xxxxxxx xxxxxxxxxxx
-        xxxx x xxxxxxx
-    x
     xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
 
     xxx
@@ -1240,10 +1001,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxx
      xx
     xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxxxxx xxxxxxx xxxxxxxxxxx
-        xxxx x xxxxxxx
-    x
     xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
 
     xxx
@@ -1251,9 +1008,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxx
      xx
     xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxxxx
-    x
     xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
     xxx
@@ -1261,10 +1015,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxxxx
      xx
     xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxx xx xxxxx
-        xxxx x xxxxxxx
-    x
     xxxxxxxx xxxxxxxxxxxxxx xxxxx
 
     xxx
@@ -1272,10 +1022,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxxxx
      xx
     xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxx xx xxxxx
-        xxxx x xxxxxxx
-    x
     xxxxxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxx xxxxx
 
     xxx
@@ -1283,10 +1029,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxxxx
      xx
     xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxx xx xxxxxxxxxxx
-        xxxx x xxxxxxx
-    x
     xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
 
     xxx
@@ -1294,10 +1036,6 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxxxx
      xx
     xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxx xx xxxxxxxxxxx
-        xxxx x xxxxxxx
-    x
     xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
     xx [/pro] */
 }

@@ -67,39 +67,18 @@ public interface UpdateSetStep<R extends Record> {
      * Set a value for a field in the <code>UPDATE</code> statement.
      */
     @Support
-    @Transition(
-        name = "SET",
-        args = {
-            "Field",
-            "Object"
-        }
-    )
     <T> UpdateSetMoreStep<R> set(Field<T> field, T value);
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement.
      */
     @Support
-    @Transition(
-        name = "SET",
-        args = {
-            "Field",
-            "Field"
-        }
-    )
     <T> UpdateSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement.
      */
     @Support
-    @Transition(
-        name = "SET",
-        args = {
-            "Field",
-            "Select"
-        }
-    )
     <T> UpdateSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
 
     /**

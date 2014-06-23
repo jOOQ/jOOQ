@@ -257,10 +257,6 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * Add an <code>ORDER BY</code> clause to the query
      */
     @Support
-    @Transition(
-        name = "ORDER BY",
-        args = "Field+"
-    )
     SelectSeekStepN<R> orderBy(Field<?>... fields);
 
 // [jooq-tools] START [order-by-sortfield-array]
@@ -426,20 +422,12 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * Add an <code>ORDER BY</code> clause to the query
      */
     @Support
-    @Transition(
-        name = "ORDER BY",
-        args = "SortField+"
-    )
     SelectSeekStepN<R> orderBy(SortField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
     @Support
-    @Transition(
-        name = "ORDER BY",
-        args = "SortField+"
-    )
     SelectSeekStepN<R> orderBy(Collection<? extends SortField<?>> fields);
 
     /**
@@ -452,10 +440,6 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * ordering
      */
     @Support
-    @Transition(
-        name = "ORDER BY",
-        args = "Integer+"
-    )
     SelectLimitStep<R> orderBy(int... fieldIndexes);
 
     /**
@@ -466,10 +450,6 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * and elements of each hierarchy should be ordered among themselves.
      */
     @Support({ CUBRID })
-    @Transition(
-        name = "ORDER SIBLINGS BY",
-        args = "Field+"
-    )
     SelectLimitStep<R> orderSiblingsBy(Field<?>... fields);
 
     /**
@@ -480,10 +460,6 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * and elements of each hierarchy should be ordered among themselves.
      */
     @Support({ CUBRID })
-    @Transition(
-        name = "ORDER SIBLINGS BY",
-        args = "SortField+"
-    )
     SelectLimitStep<R> orderSiblingsBy(SortField<?>... fields);
 
     /**
@@ -494,10 +470,6 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * and elements of each hierarchy should be ordered among themselves.
      */
     @Support({ CUBRID })
-    @Transition(
-        name = "ORDER SIBLINGS BY",
-        args = "SortField+"
-    )
     SelectLimitStep<R> orderSiblingsBy(Collection<? extends SortField<?>> fields);
 
     /**
@@ -514,9 +486,5 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * ordering
      */
     @Support({ CUBRID })
-    @Transition(
-        name = "ORDER SIBLINGS BY",
-        args = "Integer+"
-    )
     SelectLimitStep<R> orderSiblingsBy(int... fieldIndexes);
 }

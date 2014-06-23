@@ -69,10 +69,6 @@ public interface TablePartitionByStep extends TableOnStep {
      x xxxxxxxxxxx xxxxxxxxxxx xxxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxx
-        xxxx x xxxxxxxxxx xxxx
-        xxxx x xxxxxxxx
-    x
     xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
     xxx
@@ -80,10 +76,6 @@ public interface TablePartitionByStep extends TableOnStep {
      x xxxxxxxxxxx xxxxxxxxxxx xxxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxx
-        xxxx x xxxxxxxxxx xxxx
-        xxxx x xxxxxxxx
-    x
     xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxxx
     xx [/pro] */
 }

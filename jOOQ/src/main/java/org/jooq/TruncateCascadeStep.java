@@ -58,9 +58,6 @@ public interface TruncateCascadeStep<R extends Record> extends TruncateFinalStep
      * statement.
      */
     @Support(POSTGRES)
-    @Transition(
-        name = "CASCADE"
-    )
     TruncateFinalStep<R> cascade();
 
     /**
@@ -68,8 +65,5 @@ public interface TruncateCascadeStep<R extends Record> extends TruncateFinalStep
      * statement.
      */
     @Support(POSTGRES)
-    @Transition(
-        name = "RESTRICT"
-    )
     TruncateFinalStep<R> restrict();
 }

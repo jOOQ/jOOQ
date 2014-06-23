@@ -51,9 +51,6 @@ import org.jooq.exception.DataAccessException;
  * @param <R> The record type being returned by this query
  * @author Lukas Eder
  */
-@State(
-    terminal = true
-)
 public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, FieldLike {
 
     /**

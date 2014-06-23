@@ -79,10 +79,6 @@ public interface MergeNotMatchedValuesStepN<R extends Record> {
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
     @Support({ CUBRID, HSQLDB })
-    @Transition(
-        name = "VALUES",
-        args = "Object+"
-    )
     MergeNotMatchedWhereStep<R> values(Object... values);
 
     /**
@@ -90,10 +86,6 @@ public interface MergeNotMatchedValuesStepN<R extends Record> {
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
     @Support({ CUBRID, HSQLDB })
-    @Transition(
-        name = "VALUES",
-        args = "Field+"
-    )
     MergeNotMatchedWhereStep<R> values(Field<?>... values);
 
     /**
@@ -101,9 +93,5 @@ public interface MergeNotMatchedValuesStepN<R extends Record> {
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
     @Support({ CUBRID, HSQLDB })
-    @Transition(
-        name = "VALUES",
-        args = "Field+"
-    )
     MergeNotMatchedWhereStep<R> values(Collection<?> values);
 }

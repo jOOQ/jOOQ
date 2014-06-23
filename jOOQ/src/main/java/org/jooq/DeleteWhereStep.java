@@ -66,30 +66,18 @@ public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R> {
      * Add conditions to the query.
      */
     @Support
-    @Transition(
-        name = "WHERE",
-        args = "Condition+"
-    )
     DeleteConditionStep<R> where(Condition... conditions);
 
     /**
      * Add conditions to the query.
      */
     @Support
-    @Transition(
-        name = "WHERE",
-        args = "Condition+"
-    )
     DeleteConditionStep<R> where(Collection<? extends Condition> conditions);
 
     /**
      * Add conditions to the query.
      */
     @Support
-    @Transition(
-        name = "WHERE",
-        args = "Condition"
-    )
     DeleteConditionStep<R> where(Field<Boolean> condition);
 
     /**

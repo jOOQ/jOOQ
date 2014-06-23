@@ -60,14 +60,6 @@ import org.jooq.api.annotation.Transition;
  *
  * @author Lukas Eder
  */
-@State(
-    aliases = {
-        "StatisticalFunction",
-        "OrderedAggregateFunction",
-        "LinearRegressionFunction"
-    },
-    terminal = true
-)
 public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
 
     /**
@@ -82,9 +74,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      */
     @Override
     @Support({ CUBRID, POSTGRES })
-    @Transition(
-        name = "OVER"
-    )
     WindowPartitionByStep<T> over();
 
     /**
@@ -102,9 +91,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      */
     @Override
     @Support({ CUBRID, POSTGRES })
-    @Transition(
-        name = "OVER"
-    )
     WindowFinalStep<T> over(Name name);
 
     /**
@@ -122,9 +108,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      */
     @Override
     @Support({ CUBRID, POSTGRES })
-    @Transition(
-        name = "OVER"
-    )
     WindowFinalStep<T> over(String name);
 
     /**
@@ -139,9 +122,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      */
     @Override
     @Support({ CUBRID, POSTGRES })
-    @Transition(
-        name = "OVER"
-    )
     WindowFinalStep<T> over(WindowSpecification specification);
 
     /**
@@ -159,9 +139,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      */
     @Override
     @Support({ CUBRID, POSTGRES })
-    @Transition(
-        name = "OVER"
-    )
     WindowFinalStep<T> over(WindowDefinition definition);
 
     /* [pro] xx
@@ -176,10 +153,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxx
-        xxxx x xxxxx xxxxxxxxxx xxxxx xxxxx xxxx
-        xxxx x xxxxxxxx
-    x
     xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
     xxx
@@ -193,10 +166,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxx
-        xxxx x xxxxx xxxxxxxxxx xxxxx xxxxx xxxx
-        xxxx x xxxxxxxxxxxx
-    x
     xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
     xxx
@@ -210,10 +179,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxx
-        xxxx x xxxxx xxxxxxxxxx xxxxx xxxxx xxxx
-        xxxx x xxxxxxxxxxxx
-    x
     xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxx
 
     xxx
@@ -227,10 +192,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxx
-        xxxx x xxxxx xxxxxxxxxx xxxx xxxxx xxxx
-        xxxx x xxxxxxxx
-    x
     xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
     xxx
@@ -244,10 +205,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxx
-        xxxx x xxxxx xxxxxxxxxx xxxx xxxxx xxxx
-        xxxx x xxxxxxxxxxxx
-    x
     xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
     xxx
@@ -261,10 +218,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxx
-        xxxx x xxxxx xxxxxxxxxx xxxx xxxxx xxxx
-        xxxx x xxxxxxxxxxxx
-    x
     xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxx
     xx [/pro] */
 }

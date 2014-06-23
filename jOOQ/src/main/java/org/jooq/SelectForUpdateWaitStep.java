@@ -101,10 +101,6 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
      x xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxx xxx xxxx xxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxx
-        xxxx x xxxxxxx
-        xxxx x xxxxxxxxx
-    x
     xxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxx
     xx [/pro] */
 
@@ -115,9 +111,6 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
      * @see SelectQuery#setForUpdateNoWait() see LockProvider for more details
      */
     @Support({ POSTGRES })
-    @Transition(
-        name = "NOWAIT"
-    )
     SelectOptionStep<R> noWait();
 
     /* [pro] xx
@@ -129,9 +122,6 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
      x      xxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxx
-        xxxx x xxxxx xxxxxxx
-    x
     xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
     xx [/pro] */
 }

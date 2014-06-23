@@ -95,30 +95,18 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * Add a <code>HAVING</code> clause to the query.
      */
     @Support
-    @Transition(
-        name = "HAVING",
-        args = "Condition+"
-    )
     SelectHavingConditionStep<R> having(Condition... conditions);
 
     /**
      * Add a <code>HAVING</code> clause to the query.
      */
     @Support
-    @Transition(
-        name = "HAVING",
-        args = "Condition+"
-    )
     SelectHavingConditionStep<R> having(Collection<? extends Condition> conditions);
 
     /**
      * Add a <code>HAVING</code> clause to the query.
      */
     @Support
-    @Transition(
-        name = "HAVING",
-        args = "Condition"
-    )
     SelectHavingConditionStep<R> having(Field<Boolean> condition);
 
     /**

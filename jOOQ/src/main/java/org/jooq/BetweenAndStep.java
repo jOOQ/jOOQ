@@ -56,21 +56,11 @@ public interface BetweenAndStep<T> {
      * Create a condition to check this field against some bounds
      */
     @Support
-    @Transition(
-        name = "AND",
-        args = "Field",
-        to = "BetweenPredicate"
-    )
     Condition and(T value);
 
     /**
      * Create a condition to check this field against some bounds
      */
     @Support
-    @Transition(
-        name = "AND",
-        args = "Field",
-        to = "BetweenPredicate"
-    )
     Condition and(Field<T> field);
 }

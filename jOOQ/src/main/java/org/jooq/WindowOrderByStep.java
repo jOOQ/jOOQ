@@ -75,29 +75,17 @@ public interface WindowOrderByStep<T> extends WindowFinalStep<T> {
      * Add an <code>ORDER BY</code> clause to the window function.
      */
     @Support({ CUBRID, POSTGRES })
-    @Transition(
-        name = "ORDER BY",
-        args = "Field+"
-    )
     WindowRowsStep<T> orderBy(Field<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the window function.
      */
     @Support({ CUBRID, POSTGRES })
-    @Transition(
-        name = "ORDER BY",
-        args = "SortField+"
-    )
     WindowRowsStep<T> orderBy(SortField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the window function.
      */
     @Support({ CUBRID, POSTGRES })
-    @Transition(
-        name = "ORDER BY",
-        args = "SortField+"
-    )
     WindowRowsStep<T> orderBy(Collection<? extends SortField<?>> fields);
 }

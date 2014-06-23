@@ -64,18 +64,11 @@ public interface AlterSequenceRestartStep<T extends Number> {
      * Restart the sequence at its initial value.
      */
     @Support({ HSQLDB, POSTGRES })
-    @Transition(
-        name = "RESTART"
-    )
     AlterSequenceFinalStep restart();
 
     /**
      * Restart the sequence at a given value.
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    @Transition(
-        name = "RESTART WITH",
-        args = "Number"
-    )
     AlterSequenceFinalStep restartWith(T value);
 }

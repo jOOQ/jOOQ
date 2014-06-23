@@ -81,10 +81,6 @@ public interface MergeMatchedDeleteStep<R extends Record> extends MergeNotMatche
      * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
      */
     @Support({ CUBRID })
-    @Transition(
-        name = "DELETE WHERE",
-        args = "Condition"
-    )
     MergeNotMatchedStep<R> deleteWhere(Condition condition);
 
     /**
@@ -100,9 +96,5 @@ public interface MergeMatchedDeleteStep<R extends Record> extends MergeNotMatche
      * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
      */
     @Support({ CUBRID })
-    @Transition(
-        name = "DELETE WHERE",
-        args = "Condition"
-    )
     MergeNotMatchedStep<R> deleteWhere(Field<Boolean> condition);
 }

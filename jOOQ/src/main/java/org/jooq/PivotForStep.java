@@ -52,9 +52,6 @@ import org.jooq.api.annotation.Transition;
  *
  * @author Lukas Eder
  */
-@State(
-    name = "PivotForStep"
-)
 public interface PivotForStep {
 
     /* [pro] xx
@@ -68,10 +65,6 @@ public interface PivotForStep {
      x xxxxxxx x xxx xxxxxx xx xxxxxx xxx xxxxxxxxxxxxxxxxxx xxxxxxxxxx
      xx
     xxxxxxxxxx xxxxxxxxxx xxxxxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxx
-        xxxx x xxxxxxx
-    x
     xxx xxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxx
     xx [/pro] */
 }

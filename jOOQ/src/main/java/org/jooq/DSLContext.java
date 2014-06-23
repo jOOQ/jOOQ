@@ -112,7 +112,6 @@ import org.jooq.impl.DSL;
  * @see Configuration
  * @author Lukas Eder
  */
-@State(terminal = true)
 public interface DSLContext {
 
     // -------------------------------------------------------------------------
@@ -1758,10 +1757,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1> SelectSelectStep<Record1<T1>> select(Field<T1> field1);
 
     /**
@@ -1792,10 +1787,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2> SelectSelectStep<Record2<T1, T2>> select(Field<T1> field1, Field<T2> field2);
 
     /**
@@ -1826,10 +1817,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3);
 
     /**
@@ -1860,10 +1847,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
 
     /**
@@ -1894,10 +1877,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
 
     /**
@@ -1928,10 +1907,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
     /**
@@ -1962,10 +1937,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
 
     /**
@@ -1996,10 +1967,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
 
     /**
@@ -2030,10 +1997,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
 
     /**
@@ -2064,10 +2027,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
 
     /**
@@ -2098,10 +2057,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
 
     /**
@@ -2132,10 +2087,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
 
     /**
@@ -2166,10 +2117,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
 
     /**
@@ -2200,10 +2147,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
 
     /**
@@ -2234,10 +2177,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
 
     /**
@@ -2268,10 +2207,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
 
     /**
@@ -2302,10 +2237,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
 
     /**
@@ -2336,10 +2267,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
 
     /**
@@ -2370,10 +2297,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
 
     /**
@@ -2404,10 +2327,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
 
     /**
@@ -2438,10 +2357,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
 
     /**
@@ -2472,10 +2387,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
 
 // [jooq-tools] END [select]
@@ -2558,10 +2469,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1> SelectSelectStep<Record1<T1>> selectDistinct(Field<T1> field1);
 
     /**
@@ -2592,10 +2499,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2> SelectSelectStep<Record2<T1, T2>> selectDistinct(Field<T1> field1, Field<T2> field2);
 
     /**
@@ -2626,10 +2529,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3);
 
     /**
@@ -2660,10 +2559,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
 
     /**
@@ -2694,10 +2589,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
 
     /**
@@ -2728,10 +2619,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
     /**
@@ -2762,10 +2649,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
 
     /**
@@ -2796,10 +2679,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
 
     /**
@@ -2830,10 +2709,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
 
     /**
@@ -2864,10 +2739,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
 
     /**
@@ -2898,10 +2769,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
 
     /**
@@ -2932,10 +2799,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
 
     /**
@@ -2966,10 +2829,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
 
     /**
@@ -3000,10 +2859,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
 
     /**
@@ -3034,10 +2889,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
 
     /**
@@ -3068,10 +2919,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
 
     /**
@@ -3102,10 +2949,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
 
     /**
@@ -3136,10 +2979,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
 
     /**
@@ -3170,10 +3009,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
 
     /**
@@ -3204,10 +3039,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
 
     /**
@@ -3238,10 +3069,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
 
     /**
@@ -3272,10 +3099,6 @@ public interface DSLContext {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    @Transition(
-        name = "SELECT DISTINCT",
-        args = "Field+"
-    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
 
 // [jooq-tools] END [selectDistinct]
@@ -3303,9 +3126,6 @@ public interface DSLContext {
      * @see DSL#selectZero()
      */
     @Support
-    @Transition(
-        name = "SELECT ZERO"
-    )
     SelectSelectStep<Record1<Integer>> selectZero();
 
     /**
@@ -3331,9 +3151,6 @@ public interface DSLContext {
      * @see DSL#selectOne()
      */
     @Support
-    @Transition(
-        name = "SELECT ONE"
-    )
     SelectSelectStep<Record1<Integer>> selectOne();
 
     /**
@@ -3358,9 +3175,6 @@ public interface DSLContext {
      * @see DSL#selectCount()
      */
     @Support
-    @Transition(
-        name = "SELECT COUNT"
-    )
     SelectSelectStep<Record1<Integer>> selectCount();
 
     /**
@@ -3880,10 +3694,6 @@ public interface DSLContext {
      * </pre></code>
      */
     @Support
-    @Transition(
-        name = "UPDATE",
-        args = "Table"
-    )
     <R extends Record> UpdateSetFirstStep<R> update(Table<R> table);
 
     /**
@@ -3961,10 +3771,6 @@ public interface DSLContext {
      * {@link #mergeInto(Table, Field...)}
      */
     @Support({ CUBRID, HSQLDB })
-    @Transition(
-        name = "MERGE INTO",
-        args = "Table"
-    )
     <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table);
 
     // [jooq-tools] START [merge]
@@ -4553,9 +4359,6 @@ public interface DSLContext {
      * Some but not all databases support aliased tables in delete statements.
      */
     @Support
-    @Transition(
-        name = "DELETE"
-    )
     <R extends Record> DeleteWhereStep<R> delete(Table<R> table);
 
     // -------------------------------------------------------------------------
@@ -4851,10 +4654,6 @@ public interface DSLContext {
      * @see DSL#alterSequence(Sequence)
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    @Transition(
-        name = "ALTER SEQUENCE",
-        args = "Sequence"
-    )
     <T extends Number> AlterSequenceRestartStep<T> alterSequence(Sequence<T> sequence);
 
     /**
@@ -4863,10 +4662,6 @@ public interface DSLContext {
      * @see DSL#alterSequence(String)
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    @Transition(
-        name = "ALTER SEQUENCE",
-        args = "Sequence"
-    )
     AlterSequenceRestartStep<BigInteger> alterSequence(String sequence);
 
     /**
@@ -4875,10 +4670,6 @@ public interface DSLContext {
      * @see DSL#alterTable(Table)
      */
     @Support
-    @Transition(
-        name = "ALTER TABLE",
-        args = "Table"
-    )
     AlterTableStep alterTable(Table<?> table);
 
     /**
@@ -4887,10 +4678,6 @@ public interface DSLContext {
      * @see DSL#alterTable(String)
      */
     @Support
-    @Transition(
-        name = "ALTER TABLE",
-        args = "Table"
-    )
     AlterTableStep alterTable(String table);
 
     /**
@@ -4899,10 +4686,6 @@ public interface DSLContext {
      * @see DSL#dropTable(Table)
      */
     @Support
-    @Transition(
-        name = "DROP TABLE",
-        args = "Table"
-    )
     DropTableStep dropTable(Table<?> table);
 
     /**
@@ -4911,10 +4694,6 @@ public interface DSLContext {
      * @see DSL#dropTable(String)
      */
     @Support
-    @Transition(
-        name = "DROP TABLE",
-        args = "Table"
-    )
     DropTableStep dropTable(String table);
 
     /**
@@ -4954,10 +4733,6 @@ public interface DSLContext {
      * dialects that do not support them natively.
      */
     @Support
-    @Transition(
-        name = "TRUNCATE",
-        args = "Table"
-    )
     <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table);
 
     // -------------------------------------------------------------------------

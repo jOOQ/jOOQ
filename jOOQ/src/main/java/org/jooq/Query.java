@@ -59,10 +59,6 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-@State(
-    name = "Query",
-    terminal = true
-)
 public interface Query extends QueryPart, Attachable {
 
     /**

@@ -97,10 +97,6 @@ public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep
      * <code>CONNECT BY</code> clause.
      */
     @Support({ CUBRID })
-    @Transition(
-        name = "START WITH",
-        args = "Condition"
-    )
     SelectGroupByStep<R> startWith(Condition condition);
 
     /**
@@ -108,10 +104,6 @@ public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep
      * <code>CONNECT BY</code> clause.
      */
     @Support({ CUBRID })
-    @Transition(
-        name = "START WITH",
-        args = "Condition"
-    )
     SelectGroupByStep<R> startWith(Field<Boolean> condition);
 
     /**

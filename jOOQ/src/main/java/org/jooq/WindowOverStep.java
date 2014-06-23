@@ -86,9 +86,6 @@ public interface WindowOverStep<T> {
      * Server and Sybase.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, POSTGRES })
-    @Transition(
-        name = "OVER"
-    )
     WindowPartitionByStep<T> over();
 
     /**
@@ -105,9 +102,6 @@ public interface WindowOverStep<T> {
      * referenced windows will be inlined.
      */
     @Support({ CUBRID, POSTGRES })
-    @Transition(
-        name = "OVER"
-    )
     WindowFinalStep<T> over(Name name);
 
     /**
@@ -124,9 +118,6 @@ public interface WindowOverStep<T> {
      * referenced windows will be inlined.
      */
     @Support({ CUBRID, POSTGRES })
-    @Transition(
-        name = "OVER"
-    )
     WindowFinalStep<T> over(String name);
 
     /**
@@ -140,9 +131,6 @@ public interface WindowOverStep<T> {
      * Server and Sybase.
      */
     @Support({ CUBRID, POSTGRES })
-    @Transition(
-        name = "OVER"
-    )
     WindowFinalStep<T> over(WindowSpecification specification);
 
     /**
@@ -159,9 +147,6 @@ public interface WindowOverStep<T> {
      * referenced windows will be inlined.
      */
     @Support({ CUBRID, POSTGRES })
-    @Transition(
-        name = "OVER"
-    )
     WindowFinalStep<T> over(WindowDefinition definition);
 
 }

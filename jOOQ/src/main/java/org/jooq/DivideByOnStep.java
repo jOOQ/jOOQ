@@ -50,29 +50,18 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-@State(
-    name = "DivideByOnStep"
-)
 public interface DivideByOnStep {
 
     /**
      * Add a division condition to the <code>DIVIDE BY</code> clause
      */
     @Support
-    @Transition(
-        name = "ON",
-        args = "Condition+"
-    )
     DivideByOnConditionStep on(Condition... conditions);
 
     /**
      * Add a division condition to the <code>DIVIDE BY</code> clause
      */
     @Support
-    @Transition(
-        name = "ON",
-        args = "Condition"
-    )
     DivideByOnConditionStep on(Field<Boolean> condition);
 
     /**

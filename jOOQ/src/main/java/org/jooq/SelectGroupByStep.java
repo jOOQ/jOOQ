@@ -97,10 +97,6 @@ public interface SelectGroupByStep<R extends Record> extends SelectHavingStep<R>
      * <code>GROUP BY ()</code> clause being rendered.
      */
     @Support
-    @Transition(
-        name = "GROUP BY",
-        args = "GroupField+"
-    )
     SelectHavingStep<R> groupBy(GroupField... fields);
 
     /**
@@ -110,9 +106,5 @@ public interface SelectGroupByStep<R extends Record> extends SelectHavingStep<R>
      * <code>GROUP BY ()</code> clause being rendered.
      */
     @Support
-    @Transition(
-        name = "GROUP BY",
-        args = "GroupField+"
-    )
     SelectHavingStep<R> groupBy(Collection<? extends GroupField> fields);
 }

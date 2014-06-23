@@ -72,9 +72,6 @@ public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
      x xxxxx xxx xx xxxxxxxxx xx xxx xxxxxxxxx
      xx
     xxxxxxxxxx xxxx xxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxxx xxxxxx
-    x
     xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
 
     xxx
@@ -82,9 +79,6 @@ public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
      x xxxxx xxx xx xxxxxxxxx xx xxx xxxxxxxxx
      xx
     xxxxxxxxxx xxxx xxxxxxx xxxxxx xx
-    xxxxxxxxxxxx
-        xxxx x xxxxxxxx xxxxxx
-    x
     xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
     xx [/pro] */
 }

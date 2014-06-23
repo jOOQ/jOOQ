@@ -95,30 +95,18 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
      * Add a <code>WHERE</code> clause to the query.
      */
     @Support
-    @Transition(
-        name = "WHERE",
-        args = "Condition+"
-    )
     SelectConditionStep<R> where(Condition... conditions);
 
     /**
      * Add a <code>WHERE</code> clause to the query.
      */
     @Support
-    @Transition(
-        name = "WHERE",
-        args = "Condition+"
-    )
     SelectConditionStep<R> where(Collection<? extends Condition> conditions);
 
     /**
      * Add a <code>WHERE</code> clause to the query.
      */
     @Support
-    @Transition(
-        name = "WHERE",
-        args = "Condition"
-    )
     SelectConditionStep<R> where(Field<Boolean> field);
 
     /**

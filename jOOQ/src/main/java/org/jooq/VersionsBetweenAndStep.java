@@ -53,29 +53,18 @@ xxx
  x
  x xxxxxxx xxxxx xxxx
  xx
-xxxxxxx
-    xxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-x
 xxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxx xx x
 
     xxx
      x xxx xx xxxxxxxxxxxxxxxx xxxxxx xx xxx xxxxxxxxx xxxxxxxx xxxxx xxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxx
-        xxxx x xxxxxx
-        xxxx x xxxxxxx
-    x
     xxxxxxxx xxxxx xxxxx
 
     xxx
      x xxx xx xxxxxxxxxxxxxxxx xxxxxx xx xxx xxxxxxxxx xxxxxxxx xxxxx xxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxx
-        xxxx x xxxxxx
-        xxxx x xxxxxxx
-    x
     xxxxxxxx xxxxxxxxxxx xxxxxxx xx xxxxx
 
     xxx
@@ -83,9 +72,6 @@ xxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxx xx x
      x xxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxx
-        xxxx x xxxx xxxxxxxxx
-    x
     xxxxxxxx xxxxxxxxxxxxxx
 x
 xx [/pro] */

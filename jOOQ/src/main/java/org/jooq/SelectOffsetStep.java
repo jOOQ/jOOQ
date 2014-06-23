@@ -112,10 +112,6 @@ public interface SelectOffsetStep<R extends Record> extends SelectForUpdateStep<
      * <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    @Transition(
-        name = "OFFSET",
-        args = "Integer"
-    )
     SelectForUpdateStep<R> offset(int offset);
 
     /**

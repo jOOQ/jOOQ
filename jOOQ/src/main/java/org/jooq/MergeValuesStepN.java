@@ -74,30 +74,18 @@ public interface MergeValuesStepN<R extends Record> {
      * Specify a <code>VALUES</code> clause
      */
     @Support({ CUBRID, H2, HSQLDB })
-    @Transition(
-        name = "VALUES",
-        args = "Object+"
-    )
     Merge<R> values(Object... values);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
     @Support({ CUBRID, H2, HSQLDB })
-    @Transition(
-        name = "VALUES",
-        args = "Field+"
-    )
     Merge<R> values(Field<?>... values);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
     @Support({ CUBRID, H2, HSQLDB })
-    @Transition(
-        name = "VALUES",
-        args = "Field+"
-    )
     Merge<R> values(Collection<?> values);
 
     /**
@@ -111,9 +99,5 @@ public interface MergeValuesStepN<R extends Record> {
      * {@link DSLContext#mergeInto(Table, Collection)}
      */
     @Support({ CUBRID, H2, HSQLDB })
-    @Transition(
-        name = "SELECT",
-        args = "Select"
-    )
     Merge<R> select(Select<?> select);
 }

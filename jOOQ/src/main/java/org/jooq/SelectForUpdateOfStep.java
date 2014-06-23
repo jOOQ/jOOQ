@@ -108,10 +108,6 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      *      details
      */
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
-    @Transition(
-        name = "OF",
-        args = "Field+"
-    )
     SelectForUpdateWaitStep<R> of(Field<?>... fields);
 
     /**
@@ -122,10 +118,6 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      *      more details
      */
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
-    @Transition(
-        name = "OF",
-        args = "Field+"
-    )
     SelectForUpdateWaitStep<R> of(Collection<? extends Field<?>> fields);
 
     /**
@@ -136,10 +128,6 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      *      details
      */
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
-    @Transition(
-        name = "OF",
-        args = "Table+"
-    )
     SelectForUpdateWaitStep<R> of(Table<?>... tables);
 
 }

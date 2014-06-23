@@ -73,20 +73,12 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      * Add a <code>FROM</code> clause to the query.
      */
     @Support({ POSTGRES })
-    @Transition(
-        name = "FROM",
-        args = "Table+"
-    )
     UpdateWhereStep<R> from(TableLike<?>... table);
 
     /**
      * Add a <code>FROM</code> clause to the query.
      */
     @Support({ POSTGRES })
-    @Transition(
-        name = "FROM",
-        args = "Table+"
-    )
     UpdateWhereStep<R> from(Collection<? extends TableLike<?>> tables);
 
     /**

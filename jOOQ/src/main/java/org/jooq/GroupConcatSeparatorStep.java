@@ -69,9 +69,5 @@ public interface GroupConcatSeparatorStep extends AggregateFunction<String> {
      * Specify the separator on the <code>GROUP_CONCAT</code> function
      */
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    @Transition(
-        name = "SEPARATOR",
-        args = "String"
-    )
     AggregateFunction<String> separator(String separator);
 }

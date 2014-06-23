@@ -116,9 +116,6 @@ public interface SelectForUpdateStep<R extends Record> extends SelectOptionStep<
      *      details
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    @Transition(
-        name = "FOR UPDATE"
-    )
     SelectForUpdateOfStep<R> forUpdate();
 
     /**
@@ -128,9 +125,6 @@ public interface SelectForUpdateStep<R extends Record> extends SelectOptionStep<
      *      details
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
-    @Transition(
-        name = "FOR SHARE"
-    )
     SelectOptionStep<R> forShare();
 
 }

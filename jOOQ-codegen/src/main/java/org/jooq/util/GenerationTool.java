@@ -191,7 +191,7 @@ public class GenerationTool {
             // ---------------------
             if (connection == null) {
                 errorIfNull(j, "The <jdbc/> tag is mandatory.");
-                loadClass(j.getDriver());
+                loadClass(driverClass(j));
 
                 Properties properties = new Properties();
                 for (Property p : j.getProperties()) {
@@ -382,6 +382,17 @@ public class GenerationTool {
                 connection.close();
             }
         }
+    }
+
+    private String driverClass(Jdbc j) {
+        String result = j.getDriver();
+
+        if (result == null) {
+            result = JDBCUtils.driver(j.getUrl());
+            log.info("Database", "Inferring driver " + result + " from URL " + j.getUrl());
+        }
+
+        return result;
     }
 
     private Class<? extends Database> databaseClass(Jdbc j) {

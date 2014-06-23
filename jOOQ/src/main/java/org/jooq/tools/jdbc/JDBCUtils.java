@@ -180,6 +180,51 @@ public class JDBCUtils {
     }
 
     /**
+     * "Guess" the JDBC driver from a connection URL.
+     */
+    public static final String driver(String url) {
+        switch (dialect(url).family()) {
+            case CUBRID:
+                return "cubrid.jdbc.driver.CUBRIDDriver";
+            case DERBY:
+                return "org.apache.derby.jdbc.ClientDriver";
+            case FIREBIRD:
+                return "org.firebirdsql.jdbc.FBDriver";
+            case H2:
+                return "org.h2.Driver";
+            case HSQLDB:
+                return "org.hsqldb.jdbcDriver";
+            case MARIADB:
+                return "org.mariadb.jdbc.Driver";
+            case MYSQL:
+                return "com.mysql.jdbc.Driver";
+            case POSTGRES:
+                return "org.postgresql.Driver";
+            case SQLITE:
+                return "org.sqlite.JDBC";
+
+            /* [pro] xx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxx xxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxx xxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxx xxxxxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxx xxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xx [/pro] */
+        }
+
+        return "java.sql.Driver";
+    }
+
+    /**
      * Safely close a connection.
      * <p>
      * This method will silently ignore if <code>connection</code> is

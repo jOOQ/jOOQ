@@ -101,4 +101,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             cp.release(c);
         }
     }
+
+    public void testDriverGuessing() throws Exception {
+        Class.forName(JDBCUtils.driver(getConnection().getMetaData().getURL()));
+    }
 }

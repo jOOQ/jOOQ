@@ -1288,6 +1288,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testCreateIndex() throws Exception {
+        new DDLTests(this).testCreateIndex();
+    }
+
+    @Test
     public void testAlterSequence() throws Exception {
         new DDLTests(this).testAlterSequence();
     }

@@ -65,6 +65,7 @@ import static org.jooq.Clause.CONDITION_NOT_BETWEEN_SYMMETRIC;
 import static org.jooq.Clause.CONDITION_NOT_EXISTS;
 import static org.jooq.Clause.CONDITION_NOT_IN;
 import static org.jooq.Clause.CONDITION_OR;
+import static org.jooq.Clause.CREATE_INDEX;
 import static org.jooq.Clause.DELETE;
 import static org.jooq.Clause.DELETE_DELETE;
 import static org.jooq.Clause.DELETE_WHERE;
@@ -735,6 +736,20 @@ public class VisitContextTest extends AbstractTest {
         ctx.update(TABLE1)
            .set(FIELD_NAME1, "value")
            .returning(FIELD_ID1, FIELD_NAME1));
+    }
+
+    @Test
+    public void test_CREATE_INDEX() {
+        assertEvents(asList(
+            asList(CREATE_INDEX),
+            asList(CREATE_INDEX, TABLE),
+            asList(CREATE_INDEX, TABLE, TABLE_REFERENCE),
+            asList(CREATE_INDEX, FIELD),
+            asList(CREATE_INDEX, FIELD, FIELD_REFERENCE),
+            asList(CREATE_INDEX, FIELD),
+            asList(CREATE_INDEX, FIELD, FIELD_REFERENCE)
+        ),
+        ctx.createIndex("i").on(TABLE1, FIELD_ID1, FIELD_NAME1));
     }
 
     @Test

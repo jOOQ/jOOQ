@@ -86,6 +86,7 @@ import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
+import org.jooq.CreateIndexStep;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DatePart;
@@ -223,8 +224,6 @@ import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.WindowSpecificationRowsStep;
 import org.jooq.WithAsStep;
 import org.jooq.WithStep;
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -4136,6 +4135,16 @@ public class DSL {
     // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
+
+    /**
+     * Create a new DSL <code>CREATE INDEX</code> statement.
+     *
+     * @see DSLContext#createIndex(String)
+     */
+    @Support
+    public static CreateIndexStep createIndex(String index) {
+        return using(new DefaultConfiguration()).createIndex(index);
+    }
 
     /**
      * Create a new DSL <code>ALTER SEQUENCE</code> statement.

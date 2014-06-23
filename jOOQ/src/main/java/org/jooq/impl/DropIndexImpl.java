@@ -40,62 +40,33 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CREATE_INDEX;
+import static org.jooq.Clause.DROP_INDEX;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
-import org.jooq.CreateIndexFinalStep;
-import org.jooq.CreateIndexStep;
-import org.jooq.Field;
-import org.jooq.QueryPart;
-import org.jooq.Table;
+import org.jooq.DropIndexFinalStep;
 
 /**
  * @author Lukas Eder
  */
-class CreateIndexImpl extends AbstractQuery implements
+class DropIndexImpl extends AbstractQuery implements
 
-    // Cascading interface implementations for CREATE INDEX behaviour
-    CreateIndexStep,
-    CreateIndexFinalStep {
+    // Cascading interface implementations for DROP INDEX behaviour
+    DropIndexFinalStep {
 
     /**
      * Generated UID
      */
     private static final long     serialVersionUID = 8904572826501186329L;
-    private static final Clause[] CLAUSES          = { CREATE_INDEX };
+    private static final Clause[] CLAUSES          = { DROP_INDEX };
 
     private final String index;
-    private Table<?>     table;
-    private Field<?>[]   fields;
 
-    CreateIndexImpl(Configuration configuration, String index) {
+    DropIndexImpl(Configuration configuration, String index) {
         super(configuration);
 
         this.index = index;
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: DSL API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final CreateIndexFinalStep on(Table<?> t, Field<?>... f) {
-        this.table = t;
-        this.fields = f;
-
-        return this;
-    }
-
-    @Override
-    public final CreateIndexFinalStep on(String tableName, String... fieldNames) {
-        Field<?>[] f = new Field[fieldNames.length];
-
-        for (int i = 0; i < f.length; i++)
-            f[i] = DSL.field(fieldNames[i]);
-
-        return on(DSL.table(tableName), f);
     }
 
     // ------------------------------------------------------------------------
@@ -104,18 +75,9 @@ class CreateIndexImpl extends AbstractQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.keyword("create index")
+        ctx.keyword("drop index")
            .sql(" ")
-           .visit(DSL.name(index))
-           .sql(" ")
-           .keyword("on")
-           .sql(" ")
-           .visit(table)
-           .sql("(")
-           .qualify(false)
-           .visit(new QueryPartList<QueryPart>(fields))
-           .qualify(true)
-           .sql(")");
+           .visit(DSL.name(index));
     }
 
     @Override

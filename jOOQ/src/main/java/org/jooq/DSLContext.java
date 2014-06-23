@@ -4703,6 +4703,14 @@ public interface DSLContext {
     DropTableStep dropTable(String table);
 
     /**
+     * Create a new DSL <code>DROP INDEX</code> statement.
+     *
+     * @see DSL#dropIndex(String)
+     */
+    @Support
+    DropIndexFinalStep dropIndex(String index);
+
+    /**
      * Create a new DSL truncate statement.
      * <p>
      * Example:

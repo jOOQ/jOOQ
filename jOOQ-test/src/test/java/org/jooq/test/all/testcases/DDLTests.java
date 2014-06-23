@@ -110,6 +110,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
+    public void testDropIndex() throws Exception {
+        try {
+            // TODO: Re-use jOOQ API for this
+            create().execute("create table t (a int, b int)");
+            create().createIndex("idx1").on("t", "a").execute();
+            create().createIndex("idx2").on("t", "a", "b").execute();
+            create().dropIndex("idx2").execute();
+            create().createIndex("idx2").on("t", "b").execute();
+        }
+        finally {
+            create().dropTable("t").execute();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public void testAlterSequence() throws Exception {
         if (cSequences() == null || asList(DERBY, ORACLE).contains(dialect().family())) {

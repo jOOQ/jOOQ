@@ -880,6 +880,11 @@ public enum Clause {
      */
     DROP_TABLE_TABLE,
 
+    /**
+     * A complete <code>DROP INDEX</code> statement.
+     */
+    DROP_INDEX,
+
     // -------------------------------------------------------------------------
     // Other clauses
     // -------------------------------------------------------------------------

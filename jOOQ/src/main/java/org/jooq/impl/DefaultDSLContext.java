@@ -87,6 +87,7 @@ import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DeleteQuery;
 import org.jooq.DeleteWhereStep;
+import org.jooq.DropIndexFinalStep;
 import org.jooq.DropTableStep;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
@@ -1604,6 +1605,11 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     @Override
     public DropTableStep dropTable(String table) {
         return dropTable(table(table));
+    }
+
+    @Override
+    public DropIndexFinalStep dropIndex(String index) {
+        return new DropIndexImpl(configuration, index);
     }
 
     @Override

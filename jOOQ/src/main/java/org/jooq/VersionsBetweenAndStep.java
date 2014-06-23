@@ -53,29 +53,18 @@ import org.jooq.api.annotation.Transition;
  *
  * @author Lukas Eder
  */
-@State(
-    name = "VersionsBetweenAndTimestampStep"
-)
 public interface VersionsBetweenAndStep<R extends Record, T> {
 
     /**
      * Add an <code>AND</code> clause to the flashback versions query clause.
      */
     @Support(ORACLE)
-    @Transition(
-        name = "AND",
-        args = "Field"
-    )
     Table<R> and(T scn);
 
     /**
      * Add an <code>AND</code> clause to the flashback versions query clause.
      */
     @Support(ORACLE)
-    @Transition(
-        name = "AND",
-        args = "Field"
-    )
     Table<R> and(Field<? extends T> scn);
 
     /**
@@ -83,9 +72,6 @@ public interface VersionsBetweenAndStep<R extends Record, T> {
      * clause.
      */
     @Support(ORACLE)
-    @Transition(
-        name = "AND MAXVALUE"
-    )
     Table<R> andMaxvalue();
 }
 /* [/pro] */

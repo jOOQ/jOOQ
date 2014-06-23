@@ -81,9 +81,6 @@ public interface WindowBeforeOverStep<T> extends WindowOverStep<T>, Field<T> {
      */
     @Override
     @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, POSTGRES, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "OVER"
-    )
     WindowPartitionByStep<T> over();
 
 }

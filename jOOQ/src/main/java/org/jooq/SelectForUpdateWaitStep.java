@@ -101,10 +101,6 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
      * @see SelectQuery#setForUpdateWait(int) see LockProvider for more details
      */
     @Support(ORACLE)
-    @Transition(
-        name = "WAIT",
-        args = "Integer"
-    )
     SelectOptionStep<R> wait(int seconds);
     /* [/pro] */
 
@@ -115,9 +111,6 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
      * @see SelectQuery#setForUpdateNoWait() see LockProvider for more details
      */
     @Support({ ORACLE, POSTGRES })
-    @Transition(
-        name = "NOWAIT"
-    )
     SelectOptionStep<R> noWait();
 
     /* [pro] */
@@ -129,9 +122,6 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
      *      details
      */
     @Support(ORACLE)
-    @Transition(
-        name = "SKIP LOCKED"
-    )
     SelectOptionStep<R> skipLocked();
     /* [/pro] */
 }

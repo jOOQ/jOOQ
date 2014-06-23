@@ -71,29 +71,17 @@ public interface GroupConcatOrderByStep extends GroupConcatSeparatorStep {
      * Add an <code>ORDER BY</code> clause to the query
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE11G, ORACLE12C, POSTGRES, SYBASE })
-    @Transition(
-        name = "ORDER BY",
-        args = "Field+"
-    )
     GroupConcatSeparatorStep orderBy(Field<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE11G, ORACLE12C, POSTGRES, SYBASE })
-    @Transition(
-        name = "ORDER BY",
-        args = "SortField+"
-    )
     GroupConcatSeparatorStep orderBy(SortField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE11G, ORACLE12C, POSTGRES, SYBASE })
-    @Transition(
-        name = "ORDER BY",
-        args = "SortField+"
-    )
     GroupConcatSeparatorStep orderBy(Collection<? extends SortField<?>> fields);
 }

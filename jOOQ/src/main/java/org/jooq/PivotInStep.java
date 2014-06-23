@@ -54,9 +54,6 @@ import org.jooq.api.annotation.Transition;
  *
  * @author Lukas Eder
  */
-@State(
-    name = "PivotInStep"
-)
 public interface PivotInStep<T> {
 
     /* [pro] */
@@ -80,11 +77,6 @@ public interface PivotInStep<T> {
      * @return A new pivoted table
      */
     @Support({ ORACLE11G, ORACLE12C })
-    @Transition(
-        name = "IN",
-        args = "Field+",
-        to = "PivotTable"
-    )
     Table<Record> in(Field<?>... fields);
 
     /**

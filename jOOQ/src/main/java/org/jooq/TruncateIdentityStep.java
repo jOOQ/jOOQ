@@ -59,9 +59,6 @@ public interface TruncateIdentityStep<R extends Record> extends TruncateCascadeS
      * statement.
      */
     @Support({ HSQLDB, POSTGRES })
-    @Transition(
-        name = "RESTART IDENTITY"
-    )
     TruncateCascadeStep<R> restartIdentity();
 
     /**
@@ -69,8 +66,5 @@ public interface TruncateIdentityStep<R extends Record> extends TruncateCascadeS
      * <code>TRUNCATE</code> statement.
      */
     @Support({ HSQLDB, POSTGRES })
-    @Transition(
-        name = "CONTINUE IDENTITY"
-    )
     TruncateCascadeStep<R> continueIdentity();
 }

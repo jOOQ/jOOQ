@@ -110,10 +110,6 @@ public interface SelectSeekLimitStep<R extends Record> extends SelectForUpdateSt
      * function and nested <code>SELECT</code> statements.
      */
     @Support
-    @Transition(
-        name = "LIMIT",
-        args = "Integer"
-    )
     SelectForUpdateStep<R> limit(int numberOfRows);
 
     /**

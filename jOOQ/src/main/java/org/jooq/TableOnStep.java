@@ -62,22 +62,12 @@ public interface TableOnStep {
      * Add an <code>ON</code> clause to the <code>JOIN</code>.
      */
     @Support
-    @Transition(
-        name = "ON",
-        args = "Condition+",
-        to = "JoinedTable"
-    )
     TableOnConditionStep on(Condition... conditions);
 
     /**
      * Add an <code>ON</code> clause to the <code>JOIN</code>.
      */
     @Support
-    @Transition(
-        name = "ON",
-        args = "Condition",
-        to = "JoinedTable"
-    )
     TableOnConditionStep on(Field<Boolean> condition);
 
     /**
@@ -126,11 +116,6 @@ public interface TableOnStep {
      * this behaviour using the information provided in this query.
      */
     @Support
-    @Transition(
-        name = "USING",
-        args = "Field+",
-        to = "JoinedTable"
-    )
     Table<Record> using(Field<?>... fields);
 
     /**

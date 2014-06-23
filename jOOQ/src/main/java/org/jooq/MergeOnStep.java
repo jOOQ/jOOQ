@@ -77,20 +77,12 @@ public interface MergeOnStep<R extends Record> {
      * Provide join conditions and proceed to the next step
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "ON",
-        args = "Condition+"
-    )
     MergeOnConditionStep<R> on(Condition... conditions);
 
     /**
      * Provide join conditions and proceed to the next step
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "ON",
-        args = "Condition"
-    )
     MergeOnConditionStep<R> on(Field<Boolean> condition);
 
     /**

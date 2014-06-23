@@ -87,11 +87,6 @@ public interface OrderedAggregateFunction<T> {
      * aggregate function
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE11G, ORACLE12C, POSTGRES, SYBASE })
-    @Transition(
-        name = "WITHIN GROUP ORDER BY",
-        args = "Field+",
-        to = "OrderedAggregateFunction"
-    )
     AggregateFunction<T> withinGroupOrderBy(Field<?>... fields);
 
     /**
@@ -99,11 +94,6 @@ public interface OrderedAggregateFunction<T> {
      * aggregate function
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE11G, ORACLE12C, POSTGRES, SYBASE })
-    @Transition(
-        name = "WITHIN GROUP ORDER BY",
-        args = "SortField+",
-        to = "OrderedAggregateFunction"
-    )
     AggregateFunction<T> withinGroupOrderBy(SortField<?>... fields);
 
     /**
@@ -111,10 +101,5 @@ public interface OrderedAggregateFunction<T> {
      * aggregate function
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE11G, ORACLE12C, POSTGRES, SYBASE })
-    @Transition(
-        name = "WITHIN GROUP ORDER BY",
-        args = "SortField+",
-        to = "OrderedAggregateFunction"
-    )
     AggregateFunction<T> withinGroupOrderBy(Collection<? extends SortField<?>> fields);
 }

@@ -69,10 +69,6 @@ public interface TablePartitionByStep extends TableOnStep {
      * <code>OUTER JOIN</code> keywords
      */
     @Support(ORACLE)
-    @Transition(
-        name = "PARTITION BY",
-        args = "Field+"
-    )
     TableOnStep partitionBy(Field<?>... fields);
 
     /**
@@ -80,10 +76,6 @@ public interface TablePartitionByStep extends TableOnStep {
      * <code>OUTER JOIN</code> keywords
      */
     @Support(ORACLE)
-    @Transition(
-        name = "PARTITION BY",
-        args = "Field+"
-    )
     TableOnStep partitionBy(Collection<? extends Field<?>> fields);
     /* [/pro] */
 }

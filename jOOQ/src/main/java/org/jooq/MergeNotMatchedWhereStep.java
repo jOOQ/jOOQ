@@ -81,10 +81,6 @@ public interface MergeNotMatchedWhereStep<R extends Record> extends MergeFinalSt
      * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
      */
     @Support({ CUBRID, ORACLE })
-    @Transition(
-        name = "WHERE",
-        args = "Condition"
-    )
     MergeFinalStep<R> where(Condition condition);
 
     /**
@@ -100,9 +96,5 @@ public interface MergeNotMatchedWhereStep<R extends Record> extends MergeFinalSt
      * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
      */
     @Support({ CUBRID, ORACLE })
-    @Transition(
-        name = "WHERE",
-        args = "Condition"
-    )
     MergeFinalStep<R> where(Field<Boolean> condition);
 }

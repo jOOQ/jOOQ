@@ -95,20 +95,12 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * Add a <code>FROM</code> clause to the query.
      */
     @Support
-    @Transition(
-        name = "FROM",
-        args = "Table+"
-    )
     SelectJoinStep<R> from(TableLike<?>... table);
 
     /**
      * Add a <code>FROM</code> clause to the query.
      */
     @Support
-    @Transition(
-        name = "FROM",
-        args = "Table+"
-    )
     SelectJoinStep<R> from(Collection<? extends TableLike<?>> tables);
 
     /**

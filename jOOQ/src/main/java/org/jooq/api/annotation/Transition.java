@@ -50,9 +50,12 @@ import java.lang.reflect.Method;
  * Defines a "transition" in the state machine modelled by the DSL API.
  *
  * @author Lukas Eder
+ * @deprecated - 3.5.0 - [#3345] - The DSL API annotation is in a prototype
+ *             state and will be removed from the 3.x APIs
  */
 @Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.METHOD)
+@Deprecated
 public @interface Transition {
 
     /**

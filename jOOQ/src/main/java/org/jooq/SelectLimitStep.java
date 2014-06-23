@@ -114,10 +114,6 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * calling <code>.limit(numberOfRows).offset(0)</code>
      */
     @Support
-    @Transition(
-        name = "LIMIT",
-        args = "Integer"
-    )
     SelectOffsetStep<R> limit(int numberOfRows);
 
     /**
@@ -150,13 +146,6 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "LIMIT",
-        args = {
-            "Integer",
-            "Integer"
-        }
-    )
     SelectForUpdateStep<R> limit(int offset, int numberOfRows);
 
     /**

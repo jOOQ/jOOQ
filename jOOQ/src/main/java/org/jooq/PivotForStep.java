@@ -52,9 +52,6 @@ import org.jooq.api.annotation.Transition;
  *
  * @author Lukas Eder
  */
-@State(
-    name = "PivotForStep"
-)
 public interface PivotForStep {
 
     /* [pro] */
@@ -68,10 +65,6 @@ public interface PivotForStep {
      * @return A DSL object to create the <code>PIVOT</code> expression
      */
     @Support({ ORACLE11G, ORACLE12C })
-    @Transition(
-        name = "FOR",
-        args = "Field"
-    )
     <T> PivotInStep<T> on(Field<T> field);
     /* [/pro] */
 }

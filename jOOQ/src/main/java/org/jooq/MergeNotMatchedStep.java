@@ -87,9 +87,6 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
      * <code>INSERT SET a = x, b = y</code> syntax.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "WHEN NOT MATCHED THEN INSERT"
-    )
     MergeNotMatchedSetStep<R> whenNotMatchedThenInsert();
 
     /**
@@ -251,10 +248,6 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
      * <code>MERGE</code> statement
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "WHEN NOT MATCHED THEN INSERT",
-        args = "Field+"
-    )
     MergeNotMatchedValuesStepN<R> whenNotMatchedThenInsert(Field<?>... fields);
 
     /**
@@ -262,9 +255,5 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
      * <code>MERGE</code> statement
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "WHEN NOT MATCHED THEN INSERT",
-        args = "Field+"
-    )
     MergeNotMatchedValuesStepN<R> whenNotMatchedThenInsert(Collection<? extends Field<?>> fields);
 }

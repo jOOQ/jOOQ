@@ -73,9 +73,6 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
-    @Transition(
-        name = "ROWS UNBOUNDED PRECEDING"
-    )
     WindowFinalStep<T> rowsUnboundedPreceding();
 
     /**
@@ -83,19 +80,12 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
-    @Transition(
-        name = "ROWS PRECEDING",
-        args = "Integer"
-    )
     WindowFinalStep<T> rowsPreceding(int number);
 
     /**
      * Add a <code>ROWS CURRENT ROW</code> frame clause to the window function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
-    @Transition(
-        name = "ROWS CURRENT ROW"
-    )
     WindowFinalStep<T> rowsCurrentRow();
 
     /**
@@ -103,9 +93,6 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
-    @Transition(
-        name = "ROWS UNBOUNDED FOLLOWING"
-    )
     WindowFinalStep<T> rowsUnboundedFollowing();
 
     /**
@@ -113,10 +100,6 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
-    @Transition(
-        name = "ROWS FOLLOWING",
-        args = "Integer"
-    )
     WindowFinalStep<T> rowsFollowing(int number);
 
     /**
@@ -124,9 +107,6 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
-    @Transition(
-        name = "ROWS BETWEEN UNBOUNDED PRECEDING"
-    )
     WindowRowsAndStep<T> rowsBetweenUnboundedPreceding();
 
     /**
@@ -134,10 +114,6 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
-    @Transition(
-        name = "ROWS BETWEEN PRECEDING",
-        args = "Integer"
-    )
     WindowRowsAndStep<T> rowsBetweenPreceding(int number);
 
     /**
@@ -145,9 +121,6 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
-    @Transition(
-        name = "ROWS BETWEEN CURRENT ROW"
-    )
     WindowRowsAndStep<T> rowsBetweenCurrentRow();
 
     /**
@@ -155,9 +128,6 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
-    @Transition(
-        name = "ROWS BETWEEN UNBOUNDED FOLLOWING"
-    )
     WindowRowsAndStep<T> rowsBetweenUnboundedFollowing();
 
     /**
@@ -165,9 +135,5 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
-    @Transition(
-        name = "ROWS BETWEEN FOLLOWING",
-        args = "Integer"
-    )
     WindowRowsAndStep<T> rowsBetweenFollowing(int number);
 }

@@ -60,14 +60,6 @@ import org.jooq.api.annotation.Transition;
  *
  * @author Lukas Eder
  */
-@State(
-    aliases = {
-        "StatisticalFunction",
-        "OrderedAggregateFunction",
-        "LinearRegressionFunction"
-    },
-    terminal = true
-)
 public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
 
     /**
@@ -82,9 +74,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      */
     @Override
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "OVER"
-    )
     WindowPartitionByStep<T> over();
 
     /**
@@ -102,9 +91,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      */
     @Override
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "OVER"
-    )
     WindowFinalStep<T> over(Name name);
 
     /**
@@ -122,9 +108,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      */
     @Override
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "OVER"
-    )
     WindowFinalStep<T> over(String name);
 
     /**
@@ -139,9 +122,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      */
     @Override
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "OVER"
-    )
     WindowFinalStep<T> over(WindowSpecification specification);
 
     /**
@@ -159,9 +139,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      */
     @Override
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "OVER"
-    )
     WindowFinalStep<T> over(WindowDefinition definition);
 
     /* [pro] */
@@ -176,10 +153,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
      */
     @Support(ORACLE)
-    @Transition(
-        name = "KEEP DENSE_RANK FIRST ORDER BY",
-        args = "Field+"
-    )
     WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Field<?>... fields);
 
     /**
@@ -193,10 +166,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
      */
     @Support(ORACLE)
-    @Transition(
-        name = "KEEP DENSE_RANK FIRST ORDER BY",
-        args = "SortField+"
-    )
     WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(SortField<?>... fields);
 
     /**
@@ -210,10 +179,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
      */
     @Support(ORACLE)
-    @Transition(
-        name = "KEEP DENSE_RANK FIRST ORDER BY",
-        args = "SortField+"
-    )
     WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Collection<? extends SortField<?>> fields);
 
     /**
@@ -227,10 +192,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
      */
     @Support(ORACLE)
-    @Transition(
-        name = "KEEP DENSE_RANK LAST ORDER BY",
-        args = "Field+"
-    )
     WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Field<?>... fields);
 
     /**
@@ -244,10 +205,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
      */
     @Support(ORACLE)
-    @Transition(
-        name = "KEEP DENSE_RANK LAST ORDER BY",
-        args = "SortField+"
-    )
     WindowBeforeOverStep<T> keepDenseRankLastOrderBy(SortField<?>... fields);
 
     /**
@@ -261,10 +218,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
      */
     @Support(ORACLE)
-    @Transition(
-        name = "KEEP DENSE_RANK LAST ORDER BY",
-        args = "SortField+"
-    )
     WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Collection<? extends SortField<?>> fields);
     /* [/pro] */
 }

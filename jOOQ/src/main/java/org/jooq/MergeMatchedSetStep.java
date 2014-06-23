@@ -79,13 +79,6 @@ public interface MergeMatchedSetStep<R extends Record> {
      * <code>WHEN MATCHED</code> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "SET",
-        args = {
-            "Field",
-            "Object"
-        }
-    )
     <T> MergeMatchedSetMoreStep<R> set(Field<T> field, T value);
 
     /**
@@ -93,13 +86,6 @@ public interface MergeMatchedSetStep<R extends Record> {
      * <code>WHEN MATCHED</code> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "SET",
-        args = {
-            "Field",
-            "Field"
-        }
-    )
     <T> MergeMatchedSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
@@ -107,13 +93,6 @@ public interface MergeMatchedSetStep<R extends Record> {
      * <code>WHEN MATCHED</code> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "SET",
-        args = {
-            "Field",
-            "Select"
-        }
-    )
     <T> MergeMatchedSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
 
     /**

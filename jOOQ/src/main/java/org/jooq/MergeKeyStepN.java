@@ -77,10 +77,6 @@ public interface MergeKeyStepN<R extends Record> extends MergeValuesStepN<R> {
      * <code>PRIMARY KEY</code>.
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "KEY",
-        args = "Field+"
-    )
     MergeValuesStepN<R> key(Field<?>... keys);
 
     /**
@@ -90,9 +86,5 @@ public interface MergeKeyStepN<R extends Record> extends MergeValuesStepN<R> {
      * <code>PRIMARY KEY</code>.
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "KEY",
-        args = "Field+"
-    )
     MergeValuesStepN<R> key(Collection<? extends Field<?>> keys);
 }

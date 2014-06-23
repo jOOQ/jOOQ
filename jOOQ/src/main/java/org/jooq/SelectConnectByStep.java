@@ -96,20 +96,12 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
      */
     @Support({ CUBRID, ORACLE })
-    @Transition(
-        name = "CONNECT BY",
-        args = "Condition"
-    )
     SelectConnectByConditionStep<R> connectBy(Condition condition);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
      */
     @Support({ CUBRID, ORACLE })
-    @Transition(
-        name = "CONNECT BY",
-        args = "Condition"
-    )
     SelectConnectByConditionStep<R> connectBy(Field<Boolean> condition);
 
     /**
@@ -156,10 +148,6 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      * query
      */
     @Support({ CUBRID, ORACLE })
-    @Transition(
-        name = "CONNECT BY NOCYCLE",
-        args = "Condition"
-    )
     SelectConnectByConditionStep<R> connectByNoCycle(Condition condition);
 
     /**
@@ -167,10 +155,6 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      * query
      */
     @Support({ CUBRID, ORACLE })
-    @Transition(
-        name = "CONNECT BY NOCYCLE",
-        args = "Condition"
-    )
     SelectConnectByConditionStep<R> connectByNoCycle(Field<Boolean> condition);
 
     /**

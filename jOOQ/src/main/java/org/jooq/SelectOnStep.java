@@ -96,20 +96,12 @@ public interface SelectOnStep<R extends Record> {
      * Add an <code>ON</code> clause to the previous <code>JOIN</code>.
      */
     @Support
-    @Transition(
-        name = "ON",
-        args = "Condition+"
-    )
     SelectOnConditionStep<R> on(Condition... conditions);
 
     /**
      * Add an <code>ON</code> clause to the previous <code>JOIN</code>.
      */
     @Support
-    @Transition(
-        name = "ON",
-        args = "Condition"
-    )
     SelectOnConditionStep<R> on(Field<Boolean> condition);
 
     /**
@@ -196,10 +188,6 @@ public interface SelectOnStep<R extends Record> {
      * this behaviour using the information provided in this query.
      */
     @Support
-    @Transition(
-        name = "USING",
-        args = "Field+"
-    )
     SelectJoinStep<R> using(Field<?>... fields);
 
     /**

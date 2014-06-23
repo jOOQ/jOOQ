@@ -47,7 +47,6 @@ import org.jooq.api.annotation.State;
  *
  * @author Lukas Eder
  */
-@State(terminal = true)
 public interface Update<R extends Record> extends Query {
 
 }

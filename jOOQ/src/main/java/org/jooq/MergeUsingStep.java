@@ -77,10 +77,6 @@ public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
      * statement
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "USING",
-        args = "Table"
-    )
     MergeOnStep<R> using(TableLike<?> table);
 
     /**
@@ -92,8 +88,5 @@ public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
      * Server, where derived tables need to be aliased.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "USING DUAL"
-    )
     MergeOnStep<R> usingDual();
 }

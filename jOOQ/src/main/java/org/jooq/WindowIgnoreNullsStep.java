@@ -72,9 +72,6 @@ public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
      * might not be supported by all dialects.
      */
     @Support({ DB2, ORACLE, SYBASE })
-    @Transition(
-        name = "IGNORE NULLS"
-    )
     WindowOverStep<T> ignoreNulls();
 
     /**
@@ -82,9 +79,6 @@ public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
      * might not be supported by all dialects.
      */
     @Support({ DB2, ORACLE, SYBASE })
-    @Transition(
-        name = "RESPECT NULLS"
-    )
     WindowOverStep<T> respectNulls();
     /* [/pro] */
 }

@@ -77,8 +77,5 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
      * <code>MERGE</code> statement
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "WHEN MATCHED THEN UPDATE"
-    )
     MergeMatchedSetStep<R> whenMatchedThenUpdate();
 }

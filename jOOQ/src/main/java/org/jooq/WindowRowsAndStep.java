@@ -73,9 +73,6 @@ public interface WindowRowsAndStep<T> {
      * function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
-    @Transition(
-        name = "AND UNBOUNDED PRECEDING"
-    )
     WindowFinalStep<T> andUnboundedPreceding();
 
     /**
@@ -83,10 +80,6 @@ public interface WindowRowsAndStep<T> {
      * function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
-    @Transition(
-        name = "AND PRECEDING",
-        args = "Integer"
-    )
     WindowFinalStep<T> andPreceding(int number);
 
     /**
@@ -94,9 +87,6 @@ public interface WindowRowsAndStep<T> {
      * function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
-    @Transition(
-        name = "AND CURRENT ROW"
-    )
     WindowFinalStep<T> andCurrentRow();
 
     /**
@@ -104,9 +94,6 @@ public interface WindowRowsAndStep<T> {
      * function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
-    @Transition(
-        name = "AND UNBOUNDED FOLLOWING"
-    )
     WindowFinalStep<T> andUnboundedFollowing();
 
     /**
@@ -114,9 +101,5 @@ public interface WindowRowsAndStep<T> {
      * function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
-    @Transition(
-        name = "AND FOLLOWING",
-        args = "Integer"
-    )
     WindowFinalStep<T> andFollowing(int number);
 }

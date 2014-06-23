@@ -61,10 +61,6 @@ import org.jooq.api.annotation.State;
  * @param <T> The function return type
  * @author Lukas Eder
  */
-@State(
-    name = "WindowFunction",
-    terminal = true
-)
 public interface WindowFinalStep<T> extends Field<T> {
 
 }

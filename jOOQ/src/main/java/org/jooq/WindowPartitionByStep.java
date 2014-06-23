@@ -73,10 +73,6 @@ public interface WindowPartitionByStep<T> extends WindowOrderByStep<T> {
      * Add a <code>PARTITION BY</code> clause to the window functions.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "PARTITION BY",
-        args = "Field+"
-    )
     WindowOrderByStep<T> partitionBy(Field<?>... fields);
 
     /**
@@ -87,9 +83,6 @@ public interface WindowPartitionByStep<T> extends WindowOrderByStep<T> {
      * If you use it, jOOQ will simply ignore it.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
-    @Transition(
-        name = "PARTITION BY ONE"
-    )
     WindowOrderByStep<T> partitionByOne();
 
 }

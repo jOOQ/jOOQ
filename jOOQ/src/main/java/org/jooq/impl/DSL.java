@@ -66,13 +66,16 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
 
 import javax.annotation.Generated;
 import javax.sql.DataSource;
@@ -312,6 +315,69 @@ public class DSL {
      */
     public static DSLContext using(SQLDialect dialect, Settings settings) {
         return new DefaultDSLContext(dialect, settings);
+    }
+
+    /**
+     * Create an executor from a JDBC connection URL.
+     * <p>
+     * The connections created this way will be closed upon finalization. This
+     * is useful for standalone scripts, but not for managed connections.
+     *
+     * @param url The connection URL.
+     * @see DefaultConnectionProvider
+     * @see JDBCUtils#dialect(String)
+     */
+    public static DSLContext using(String url) {
+        try {
+            Connection connection = DriverManager.getConnection(url);
+            return using(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
+        }
+        catch (SQLException e) {
+            throw Utils.translate("Error when initialising Connection", e);
+        }
+    }
+
+    /**
+     * Create an executor from a JDBC connection URL.
+     * <p>
+     * The connections created this way will be closed upon finalization. This
+     * is useful for standalone scripts, but not for managed connections.
+     *
+     * @param url The connection URL.
+     * @param username The connection user name.
+     * @param password The connection password.
+     * @see DefaultConnectionProvider
+     * @see JDBCUtils#dialect(String)
+     */
+    public static DSLContext using(String url, String username, String password) {
+        try {
+            Connection connection = DriverManager.getConnection(url, username, password);
+            return using(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
+        }
+        catch (SQLException e) {
+            throw Utils.translate("Error when initialising Connection", e);
+        }
+    }
+
+    /**
+     * Create an executor from a JDBC connection URL.
+     * <p>
+     * The connections created this way will be closed upon finalization. This
+     * is useful for standalone scripts, but not for managed connections.
+     *
+     * @param url The connection URL.
+     * @param properties The connection properties.
+     * @see DefaultConnectionProvider
+     * @see JDBCUtils#dialect(String)
+     */
+    public static DSLContext using(String url, Properties properties) {
+        try {
+            Connection connection = DriverManager.getConnection(url, properties);
+            return using(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
+        }
+        catch (SQLException e) {
+            throw Utils.translate("Error when initialising Connection", e);
+        }
     }
 
     /**

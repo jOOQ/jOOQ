@@ -1293,6 +1293,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testDropIndex() throws Exception {
+        new DDLTests(this).testDropIndex();
+    }
+
+    @Test
     public void testAlterSequence() throws Exception {
         new DDLTests(this).testAlterSequence();
     }

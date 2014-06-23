@@ -69,6 +69,7 @@ import static org.jooq.Clause.CREATE_INDEX;
 import static org.jooq.Clause.DELETE;
 import static org.jooq.Clause.DELETE_DELETE;
 import static org.jooq.Clause.DELETE_WHERE;
+import static org.jooq.Clause.DROP_INDEX;
 import static org.jooq.Clause.DROP_TABLE;
 import static org.jooq.Clause.DROP_TABLE_TABLE;
 import static org.jooq.Clause.FIELD;
@@ -750,6 +751,14 @@ public class VisitContextTest extends AbstractTest {
             asList(CREATE_INDEX, FIELD, FIELD_REFERENCE)
         ),
         ctx.createIndex("i").on(TABLE1, FIELD_ID1, FIELD_NAME1));
+    }
+
+    @Test
+    public void test_DROP_INDEX() {
+        assertEvents(asList(
+            asList(DROP_INDEX)
+        ),
+        ctx.dropIndex("i"));
     }
 
     @Test

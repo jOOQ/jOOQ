@@ -93,6 +93,7 @@ import org.jooq.DatePart;
 import org.jooq.Delete;
 import org.jooq.DeleteWhereStep;
 import org.jooq.DerivedColumnList;
+import org.jooq.DropIndexFinalStep;
 import org.jooq.DropTableStep;
 import org.jooq.Field;
 import org.jooq.GroupConcatOrderByStep;
@@ -4204,6 +4205,16 @@ public class DSL {
     @Support
     public static DropTableStep dropTable(String table) {
         return using(new DefaultConfiguration()).dropTable(table);
+    }
+
+    /**
+     * Create a new DSL <code>DROP INDEX</code> statement.
+     *
+     * @see DSLContext#dropIndex(String)
+     */
+    @Support
+    public static DropIndexFinalStep dropIndex(String index) {
+        return using(new DefaultConfiguration()).dropIndex(index);
     }
 
     /**

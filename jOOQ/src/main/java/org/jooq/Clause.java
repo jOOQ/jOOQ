@@ -773,6 +773,11 @@ public enum Clause {
     // -------------------------------------------------------------------------
 
     /**
+     * A complete <code>CREATE INDEX</code> statement.
+     */
+    CREATE_INDEX,
+
+    /**
      * A complete <code>ALTER SEQUENCE</code> statement.
      */
     ALTER_SEQUENCE,

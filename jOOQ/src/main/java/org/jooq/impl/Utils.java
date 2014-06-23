@@ -624,11 +624,18 @@ final class Utils {
         return result;
     }
 
+    static final Field<?>[] fieldsByName(String[] fieldNames) {
+        return fieldsByName(null, fieldNames);
+    }
+
     static final Field<?>[] fieldsByName(String tableName, String[] fieldNames) {
         Field<?>[] result = new Field[fieldNames.length];
 
         for (int i = 0; i < fieldNames.length; i++)
-            result[i] = fieldByName(tableName, fieldNames[i]);
+            if (tableName == null)
+                result[i] = fieldByName(fieldNames[i]);
+            else
+                result[i] = fieldByName(tableName, fieldNames[i]);
 
         return result;
     }

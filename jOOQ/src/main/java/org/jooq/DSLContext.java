@@ -68,8 +68,6 @@ import java.util.Map;
 
 import javax.annotation.Generated;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
@@ -4647,6 +4645,14 @@ public interface DSLContext {
     // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
+
+    /**
+     * Create a new DSL <code>CREATE INDEX</code> statement.
+     *
+     * @see DSL#createIndex(String)
+     */
+    @Support
+    CreateIndexStep createIndex(String index);
 
     /**
      * Create a new DSL <code>ALTER SEQUENCE</code> statement.

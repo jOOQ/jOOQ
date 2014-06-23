@@ -81,6 +81,7 @@ import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
+import org.jooq.CreateIndexStep;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -1569,6 +1570,11 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
+
+    @Override
+    public CreateIndexStep createIndex(String index) {
+        return new CreateIndexImpl(configuration, index);
+    }
 
     @Override
     public <T extends Number> AlterSequenceRestartStep<T> alterSequence(Sequence<T> sequence) {

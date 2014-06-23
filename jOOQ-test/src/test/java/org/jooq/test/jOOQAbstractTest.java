@@ -2968,6 +2968,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testDriverGuessing() throws Exception {
+        new JDBCTests(this).testDriverGuessing();
+    }
+
+    @Test
     public void testTransactionsWithJDBCSimple() throws Exception {
         new TransactionTests(this).testTransactionsWithJDBCSimple();
     }

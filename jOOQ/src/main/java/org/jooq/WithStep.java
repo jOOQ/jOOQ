@@ -54,8 +54,6 @@ import java.util.Collection;
 
 import javax.annotation.Generated;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
 import org.jooq.impl.DSL;
 
 
@@ -76,7 +74,6 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-@State
 public interface WithStep extends QueryPart {
 
     // -------------------------------------------------------------------------

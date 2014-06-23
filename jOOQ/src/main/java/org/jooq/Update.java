@@ -40,7 +40,6 @@
  */
 package org.jooq;
 
-import org.jooq.api.annotation.State;
 
 /**
  * A {@link Query} that can update data in the database.

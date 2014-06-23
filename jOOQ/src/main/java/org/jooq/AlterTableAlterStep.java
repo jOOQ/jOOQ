@@ -56,15 +56,12 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 
-import org.jooq.api.annotation.State;
-
 /**
  * The step in the <code>ALTER TABLE</code> DSL used to <code>ALTER</code>
  * columns.
  *
  * @author Lukas Eder
  */
-@State
 public interface AlterTableAlterStep<T> {
 
     /**

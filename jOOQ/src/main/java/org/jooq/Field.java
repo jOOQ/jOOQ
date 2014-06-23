@@ -62,8 +62,6 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Map;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 import org.jooq.types.Interval;

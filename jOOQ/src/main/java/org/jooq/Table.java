@@ -64,8 +64,6 @@ import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 

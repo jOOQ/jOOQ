@@ -49,9 +49,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Collection;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
-
 
 /**
  * An aggregate function is a special field that is usually used in a

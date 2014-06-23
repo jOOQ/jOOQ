@@ -58,7 +58,6 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 
-import org.jooq.api.annotation.State;
 import org.jooq.impl.DSL;
 
 /**
@@ -103,7 +102,6 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-@State
 public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
 
     /**

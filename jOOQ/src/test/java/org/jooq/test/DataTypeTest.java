@@ -41,9 +41,9 @@
 
 package org.jooq.test;
 
-import static org.junit.Assert.assertTrue;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.val;
+import static org.junit.Assert.assertTrue;
 
 import java.sql.Timestamp;
 

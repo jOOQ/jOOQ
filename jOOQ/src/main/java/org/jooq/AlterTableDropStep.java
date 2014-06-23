@@ -40,7 +40,6 @@
  */
 package org.jooq;
 
-import org.jooq.api.annotation.State;
 
 /**
  * The step in the <code>ALTER TABLE</code> DSL used to <code>DROP</code>
@@ -48,7 +47,6 @@ import org.jooq.api.annotation.State;
  *
  * @author Lukas Eder
  */
-@State
 public interface AlterTableDropStep extends AlterTableFinalStep {
 
     /**

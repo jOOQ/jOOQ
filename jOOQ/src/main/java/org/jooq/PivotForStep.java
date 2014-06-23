@@ -43,9 +43,6 @@ package org.jooq;
 // ...
 // ...
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
-
 /**
  * This type is used for the Oracle <code>PIVOT</code> clause DSL API, pivoting
  * {@link Table} objects to new tables.

@@ -43,9 +43,6 @@ package org.jooq;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
-
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
@@ -88,7 +85,6 @@ import org.jooq.api.annotation.Transition;
  *
  * @author Lukas Eder
  */
-@State
 public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionStep<R> {
 
     /* [pro] xx

@@ -43,15 +43,11 @@ package org.jooq;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.POSTGRES;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
-
 /**
  * A {@link Query} that can truncate a table in the database.
  *
  * @author Lukas Eder
  */
-@State
 public interface TruncateIdentityStep<R extends Record> extends TruncateCascadeStep<R> {
 
     /**

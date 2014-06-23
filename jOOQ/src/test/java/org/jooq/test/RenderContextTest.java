@@ -40,10 +40,8 @@
  */
 package org.jooq.test;
 
-import org.jooq.BindContext;
 import org.jooq.Context;
 import org.jooq.RenderContext;
-import org.jooq.exception.DataAccessException;
 import org.jooq.impl.CustomCondition;
 
 import org.junit.Test;

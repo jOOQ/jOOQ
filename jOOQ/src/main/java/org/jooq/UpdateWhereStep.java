@@ -42,8 +42,6 @@ package org.jooq;
 
 import java.util.Collection;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
 import org.jooq.impl.DSL;
 
 /**
@@ -61,7 +59,6 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-@State
 public interface UpdateWhereStep<R extends Record> extends UpdateFinalStep<R>, UpdateReturningStep<R> {
 
     /**

@@ -44,9 +44,6 @@ package org.jooq;
 
 xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
 xxx
  x xxxx xxxx xx xxxx xxx xxx xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xxx xxxx
  x xxxxxxxxx xxxxxx xx xxx xxxxxxxxx xxxxxxxx xxxxx xxxxxxxx

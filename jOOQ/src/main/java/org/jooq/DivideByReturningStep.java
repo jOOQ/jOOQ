@@ -42,9 +42,6 @@ package org.jooq;
 
 import java.util.Collection;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
-
 /**
  * An intermediate type for the construction of a relational division
  *

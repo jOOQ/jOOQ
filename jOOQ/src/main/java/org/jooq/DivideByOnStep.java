@@ -40,8 +40,6 @@
  */
 package org.jooq;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
 import org.jooq.impl.DSL;
 
 

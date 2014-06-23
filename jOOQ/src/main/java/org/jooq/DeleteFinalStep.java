@@ -40,7 +40,6 @@
  */
 package org.jooq;
 
-import org.jooq.api.annotation.State;
 
 /**
  * This type is used for the {@link Delete}'s DSL API.
@@ -55,7 +54,6 @@ import org.jooq.api.annotation.State;
  *
  * @author Lukas Eder
  */
-@State
 public interface DeleteFinalStep<R extends Record> extends Delete<R> {
 
 }

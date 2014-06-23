@@ -42,9 +42,6 @@ package org.jooq;
 
 import java.util.Map;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
-
 /**
  * This type is used for the {@link Update}'s DSL API.
  * <p>
@@ -60,7 +57,6 @@ import org.jooq.api.annotation.Transition;
  *
  * @author Lukas Eder
  */
-@State
 public interface UpdateSetStep<R extends Record> {
 
     /**

@@ -50,9 +50,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
-
 /**
  * This type is used for the window function DSL API.
  * <p>
@@ -72,7 +69,6 @@ import org.jooq.api.annotation.Transition;
  * @param <T> The function return type
  * @author Lukas Eder
  */
-@State
 public interface WindowOverStep<T> {
 
     /**

@@ -47,9 +47,6 @@ import java.util.Collection;
 
 import javax.annotation.Generated;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
-
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
@@ -92,7 +89,6 @@ import org.jooq.api.annotation.Transition;
  *
  * @author Lukas Eder
  */
-@State
 public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> {
 
 // [jooq-tools] START [order-by-field-array]

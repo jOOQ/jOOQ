@@ -42,8 +42,6 @@ package org.jooq;
 
 import java.util.Collection;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 
@@ -89,7 +87,6 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-@State
 public interface SelectOnStep<R extends Record> {
 
     /**

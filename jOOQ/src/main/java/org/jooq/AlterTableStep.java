@@ -40,14 +40,12 @@
  */
 package org.jooq;
 
-import org.jooq.api.annotation.State;
 
 /**
  * The step in the <code>ALTER TABLE</code> where the action can be decided.
  *
  * @author Lukas Eder
  */
-@State
 public interface AlterTableStep {
 
     /**

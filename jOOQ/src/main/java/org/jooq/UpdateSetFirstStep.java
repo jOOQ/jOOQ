@@ -49,9 +49,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 
 import javax.annotation.Generated;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
-
 /**
  * This type is used for the {@link Update}'s DSL API.
  * <p>
@@ -67,7 +64,6 @@ import org.jooq.api.annotation.Transition;
  * @author Lukas Eder
  */
 @Generated("This class was generated using jOOQ-tools")
-@State
 public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
 
     /**

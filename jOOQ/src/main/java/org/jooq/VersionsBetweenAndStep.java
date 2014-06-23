@@ -44,9 +44,6 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.ORACLE;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
-
 /**
  * This type is used for the Oracle <code>VERSIONS</code> clause DSL API,
  * providing access to the flashback versions query clauses.

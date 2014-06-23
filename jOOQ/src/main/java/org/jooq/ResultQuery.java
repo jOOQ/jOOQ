@@ -48,7 +48,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
-import org.jooq.api.annotation.State;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
@@ -72,7 +71,6 @@ import org.jooq.impl.DefaultRecordMapper;
  *
  * @author Lukas Eder
  */
-@State
 public interface ResultQuery<R extends Record> extends Query {
 
     /**

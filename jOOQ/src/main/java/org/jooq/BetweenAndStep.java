@@ -40,8 +40,6 @@
  */
 package org.jooq;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
 
 /**
  * An intermediate DSL type for the construction of a <code>BETWEEN</code>
@@ -49,7 +47,6 @@ import org.jooq.api.annotation.Transition;
  *
  * @author Lukas Eder
  */
-@State
 public interface BetweenAndStep<T> {
 
     /**

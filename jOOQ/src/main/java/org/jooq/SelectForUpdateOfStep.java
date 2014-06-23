@@ -52,9 +52,6 @@ import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
-
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
@@ -97,7 +94,6 @@ import org.jooq.api.annotation.Transition;
  *
  * @author Lukas Eder
  */
-@State
 public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdateWaitStep<R> {
 
     /**

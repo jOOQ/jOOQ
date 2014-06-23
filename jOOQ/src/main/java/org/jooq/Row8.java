@@ -40,9 +40,6 @@
  */
 package org.jooq;
 
-import org.jooq.Comparator;
-import org.jooq.api.annotation.State;
-
 import java.util.Collection;
 
 import javax.annotation.Generated;
@@ -57,7 +54,6 @@ import javax.annotation.Generated;
  * @author Lukas Eder
  */
 @Generated("This class was generated using jOOQ-tools")
-@State
 public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
 
     // ------------------------------------------------------------------------

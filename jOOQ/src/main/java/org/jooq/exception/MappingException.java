@@ -40,8 +40,8 @@
  */
 package org.jooq.exception;
 
-import org.jooq.DSLContext;
 import org.jooq.Cursor;
+import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultQuery;

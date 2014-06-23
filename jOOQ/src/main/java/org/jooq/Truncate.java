@@ -40,7 +40,6 @@
  */
 package org.jooq;
 
-import org.jooq.api.annotation.State;
 
 /**
  * A {@link Query} that can truncate a table in the database.

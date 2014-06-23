@@ -40,7 +40,6 @@
  */
 package org.jooq;
 
-import org.jooq.api.annotation.State;
 
 /**
  * A participant of a quantified comparison predicate

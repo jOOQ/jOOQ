@@ -53,9 +53,6 @@ import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
-
 /**
  * An ordered aggregate function.
  * <p>
@@ -79,7 +76,6 @@ import org.jooq.api.annotation.Transition;
  *
  * @author Lukas Eder
  */
-@State
 public interface OrderedAggregateFunction<T> {
 
     /**

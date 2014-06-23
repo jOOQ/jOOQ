@@ -40,8 +40,6 @@
  */
 package org.jooq;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
 
 /**
  * A wrapper for a {@link Field} and a {@link SortField}

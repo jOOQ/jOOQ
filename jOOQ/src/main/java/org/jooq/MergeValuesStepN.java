@@ -50,9 +50,6 @@ import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
-
 /**
  * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
  * <p>
@@ -67,7 +64,6 @@ import org.jooq.api.annotation.Transition;
  *
  * @author Lukas Eder
  */
-@State
 public interface MergeValuesStepN<R extends Record> {
 
     /**

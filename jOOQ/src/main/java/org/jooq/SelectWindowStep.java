@@ -49,8 +49,6 @@ import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
 
-import org.jooq.api.annotation.State;
-
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
@@ -93,7 +91,6 @@ import org.jooq.api.annotation.State;
  *
  * @author Lukas Eder
  */
-@State
 public interface SelectWindowStep<R extends Record> extends SelectOrderByStep<R> {
 
     /**

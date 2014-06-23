@@ -43,9 +43,6 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.ORACLE;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
-
 /**
  * This type is used for the {@link Merge}'s DSL API.
  * <p>
@@ -65,7 +62,6 @@ import org.jooq.api.annotation.Transition;
  *
  * @author Lukas Eder
  */
-@State
 public interface MergeMatchedDeleteStep<R extends Record> extends MergeNotMatchedStep<R> {
 
     /**

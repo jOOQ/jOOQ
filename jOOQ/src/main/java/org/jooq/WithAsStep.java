@@ -48,8 +48,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
-import org.jooq.api.annotation.State;
-
 /**
  * This type is part of the jOOQ DSL to create {@link Select}, {@link Insert},
  * {@link Update}, {@link Delete}, {@link Merge} statements prefixed with a
@@ -67,7 +65,6 @@ import org.jooq.api.annotation.State;
  *
  * @author Lukas Eder
  */
-@State
 public interface WithAsStep {
 
     /**

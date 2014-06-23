@@ -42,10 +42,8 @@ package org.jooq.test;
 
 import static org.jooq.impl.DSL.val;
 
-import org.jooq.BindContext;
 import org.jooq.Context;
 import org.jooq.QueryPart;
-import org.jooq.RenderContext;
 import org.jooq.impl.CustomQueryPart;
 import org.jooq.impl.DSL;
 

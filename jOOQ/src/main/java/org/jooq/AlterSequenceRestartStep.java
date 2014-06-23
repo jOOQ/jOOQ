@@ -49,15 +49,11 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER2012;
 import static org.jooq.SQLDialect.SYBASE;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
-
 /**
  * A {@link Query} that can alter sequences.
  *
  * @author Lukas Eder
  */
-@State
 public interface AlterSequenceRestartStep<T extends Number> {
 
     /**

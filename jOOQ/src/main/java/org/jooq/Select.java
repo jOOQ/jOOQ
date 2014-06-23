@@ -42,7 +42,6 @@ package org.jooq;
 
 import java.util.List;
 
-import org.jooq.api.annotation.State;
 import org.jooq.exception.DataAccessException;
 
 /**

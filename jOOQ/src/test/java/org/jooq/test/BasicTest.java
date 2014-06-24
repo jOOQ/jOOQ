@@ -926,6 +926,21 @@ public class BasicTest extends AbstractTest {
     }
 
     @Test
+    public void testPlainSQLInPredicate() throws Exception {
+        List<String> v1 = Arrays.asList("1", "2");
+        Condition c1 = field("f").in(v1);
+
+        assertEquals("f in (?, ?)", r_ref().render(c1));
+        assertEquals("f in ('1', '2')", r_refI().render(c1));
+
+        Set<String> v2 = new TreeSet<String>(Arrays.asList("1", "2"));
+        Condition c2 = field("f").in(v2);
+
+        assertEquals("f in (?, ?)", r_ref().render(c2));
+        assertEquals("f in ('1', '2')", r_refI().render(c2));
+    }
+
+    @Test
     public void testPlainSQLCondition() throws Exception {
         Condition c1 = condition("TABLE1.ID = 10");
         Condition c2 = condition("TABLE1.ID = ? and TABLE2.ID = ?", 10, "20");

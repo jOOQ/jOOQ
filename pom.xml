@@ -159,14 +159,14 @@
         <module>jOOQ-meta</module>
         <module>jOOQ-scala</module>
 
-        <!-- 
+        <!--
         These modules have a Java 8 dependency, which is currently not suitable for Travis-CI
+         -->
         <module>jOOQ-examples/jOOQ-spring-example</module>
         <module>jOOQ-examples/jOOQ-spring-guice-example</module>
 
         <module>jOOQ-test-utils</module>
         <module>jOOQ-test</module>
-         -->
     </modules>
 
     <dependencyManagement>

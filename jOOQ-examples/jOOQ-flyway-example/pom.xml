@@ -64,27 +64,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <fork>true</fork>
-                    <maxmem>1024m</maxmem>
-                    <meminitial>256m</meminitial>
-                    <encoding>UTF-8</encoding>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <debug>true</debug>
-                    <debuglevel>lines,vars,source</debuglevel>
-                    <!-- [#2413] Make compiler warnings a bit more visible
-                         But don't fail (yet) -->
-                    <compilerArgs>
-                        <arg>-Xlint:varargs</arg>
-                    </compilerArgs>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>3.0</version>
@@ -126,9 +105,7 @@
                             <generator>
                                 <name>org.jooq.util.DefaultGenerator</name>
                                 <database>
-                                    <name>org.jooq.util.h2.H2Database</name>
                                     <includes>.*</includes>
-                                    <excludes></excludes>
                                     <inputSchema>FLYWAY_TEST</inputSchema>
                                 </database>
                                 <target>
@@ -139,13 +116,6 @@
                         </configuration>
                     </execution>
                 </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>1.4.177</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>

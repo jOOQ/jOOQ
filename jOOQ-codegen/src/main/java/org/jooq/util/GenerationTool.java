@@ -51,6 +51,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.util.List;
 import java.util.Properties;
@@ -191,7 +192,7 @@ public class GenerationTool {
             // ---------------------
             if (connection == null) {
                 errorIfNull(j, "The <jdbc/> tag is mandatory.");
-                loadClass(driverClass(j));
+                Class<? extends Driver> driver = (Class<? extends Driver>) loadClass(driverClass(j));
 
                 Properties properties = new Properties();
                 for (Property p : j.getProperties()) {
@@ -203,7 +204,7 @@ public class GenerationTool {
                 if (!properties.containsKey("password"))
                     properties.put("password", defaultString(j.getPassword()));
 
-                connection = DriverManager.getConnection(defaultString(j.getUrl()), properties);
+                connection = driver.newInstance().connect(defaultString(j.getUrl()), properties);
                 close = true;
             }
             else {

@@ -41,9 +41,13 @@
 package org.jooq.util.maven;
 
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
+import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
 
 import java.io.File;
 import java.io.StringWriter;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.List;
 
 import javax.xml.bind.JAXB;
 
@@ -64,7 +68,8 @@ import org.apache.maven.project.MavenProject;
  */
 @Mojo(
     name = "generate",
-    defaultPhase = GENERATE_SOURCES
+    defaultPhase = GENERATE_SOURCES,
+    requiresDependencyResolution = TEST
 )
 public class Plugin extends AbstractMojo {
 
@@ -92,9 +97,13 @@ public class Plugin extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-        try {
+        ClassLoader oldCL = Thread.currentThread().getContextClassLoader();
 
-            // [#2887] Patch relative paths to take plugin execution basedir into accountcd joo
+        try {
+            // [#2886] Add the surrounding project's dependencies to the current classloader
+            Thread.currentThread().setContextClassLoader(getClassLoader());
+
+            // [#2887] Patch relative paths to take plugin execution basedir into account
             String dir = generator.getTarget().getDirectory();
             if (!new File(dir).isAbsolute()) {
                 generator.getTarget().setDirectory(project.getBasedir() + File.separator + dir);
@@ -113,6 +122,29 @@ public class Plugin extends AbstractMojo {
         catch (Exception ex) {
             throw new MojoExecutionException("Error running jOOQ code generation tool", ex);
         }
+        
+        // [#2886] Restore old class loader
+        finally {
+            Thread.currentThread().setContextClassLoader(oldCL);
+        }
+        
         project.addCompileSourceRoot(generator.getTarget().getDirectory());
+    }
+
+    @SuppressWarnings("unchecked")
+    private ClassLoader getClassLoader() throws MojoExecutionException {
+        try {
+            List<String> classpathElements = project.getRuntimeClasspathElements();
+            URL urls[] = new URL[classpathElements.size()];
+
+            for (int i = 0; i < urls.length; i++) {
+                urls[i] = new File(classpathElements.get(i)).toURI().toURL();
+            }
+
+            return new URLClassLoader(urls, getClass().getClassLoader());
+        }
+        catch (Exception e) {
+            throw new MojoExecutionException("Couldn't create a classloader.", e);
+        }
     }
 }

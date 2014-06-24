@@ -1,6 +1,5 @@
 org\jooq\example\flyway\db\h2\tables\records\BookRecord.class
 org\jooq\example\flyway\db\h2\tables\Author.class
-org\jooq\flyway\Migrate.class
 org\jooq\example\flyway\db\h2\Keys$UniqueKeys0.class
 org\jooq\example\flyway\db\h2\Tables.class
 org\jooq\example\flyway\db\h2\Sequences.class

@@ -78,19 +78,19 @@ import java.util.Properties;
  *         };
  *     }
  * };
- * Connection connection = new MockConnection(provider);
+ * Connection connection = new SelectableMockConnection(provider);
  * DSLContext create = DSL.using(connection, dialect);
  * assertEquals(1, create.selectOne().fetch().size());
  * </pre></code>
  * <p>
- * While this <code>MockConnection</code> can be used independently of jOOQ, it
+ * While this <code>SelectableMockConnection</code> can be used independently of jOOQ, it
  * has been optimised for usage with jOOQ. JDBC features that are not used by
  * jOOQ (e.g. procedure bind value access by parameter name) are not supported
  * in this mock framework
  *
  * @author Lukas Eder
  */
-public class SelectableMockConnection extends JDBC41Connection implements Connection {
+public class SelectableSelectableMockConnection extends JDBC41Connection implements Connection {
 
     private final SelectableMockDataProvider data;
     private boolean                isClosed;
@@ -99,7 +99,7 @@ public class SelectableMockConnection extends JDBC41Connection implements Connec
     	data.setSelection(value);
     }
 
-    public MockConnection(MockDataProvider data) {
+    public SelectableMockConnection(MockDataProvider data) {
         this.data = data;
     }
 

@@ -63,6 +63,22 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <fork>true</fork>
+                    <maxmem>1024m</maxmem>
+                    <meminitial>256m</meminitial>
+                    <encoding>UTF-8</encoding>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <debug>true</debug>
+                    <debuglevel>lines,vars,source</debuglevel>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>3.0</version>
@@ -94,24 +110,25 @@
                         <goals>
                             <goal>generate</goal>
                         </goals>
-                        <configuration>
-                            <jdbc>
-                                <url>${db.url}</url>
-                                <user>${db.username}</user>
-                            </jdbc>
-                            <generator>
-                                <database>
-                                    <includes>.*</includes>
-                                    <inputSchema>FLYWAY_TEST</inputSchema>
-                                </database>
-                                <target>
-                                    <packageName>org.jooq.example.flyway.db.h2</packageName>
-                                    <directory>target/generated-sources/jooq-h2</directory>
-                                </target>
-                            </generator>
-                        </configuration>
                     </execution>
                 </executions>
+
+                <configuration>
+                    <jdbc>
+                        <url>${db.url}</url>
+                        <user>${db.username}</user>
+                    </jdbc>
+                    <generator>
+                        <database>
+                            <includes>.*</includes>
+                            <inputSchema>FLYWAY_TEST</inputSchema>
+                        </database>
+                        <target>
+                            <packageName>org.jooq.example.flyway.db.h2</packageName>
+                            <directory>target/generated-sources/jooq-h2</directory>
+                        </target>
+                    </generator>
+                </configuration>
             </plugin>
         </plugins>
     </build>

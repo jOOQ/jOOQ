@@ -44,7 +44,6 @@ import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Clob;
-import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.NClob;
 import java.sql.PreparedStatement;
@@ -90,7 +89,7 @@ import java.util.Properties;
  *
  * @author Lukas Eder
  */
-public class SelectableSelectableMockConnection extends JDBC41Connection implements Connection {
+public class SelectableMockConnection extends MockConnection {
 
     private final SelectableMockDataProvider data;
     private boolean                isClosed;
@@ -99,7 +98,8 @@ public class SelectableSelectableMockConnection extends JDBC41Connection impleme
     	data.setSelection(value);
     }
 
-    public SelectableMockConnection(MockDataProvider data) {
+    public SelectableMockConnection(SelectableMockDataProvider data) {
+        super(data);
         this.data = data;
     }
 

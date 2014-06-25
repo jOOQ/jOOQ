@@ -144,7 +144,8 @@ public abstract class SelectableMockDataProvider implements MockDataProvider {
      * @throws SQLException A <code>SQLException</code> that is passed through
      *             to jOOQ.
      */
-    abstract MockResult[] execute(MockExecuteContext ctx) throws SQLException;
+    @Override
+    public abstract MockResult[] execute(MockExecuteContext ctx) throws SQLException;
 
     /**
      * Sets a selection value so that it can be used by the execute() method to

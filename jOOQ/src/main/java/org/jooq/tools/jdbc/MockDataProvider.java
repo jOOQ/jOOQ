@@ -141,5 +141,5 @@ public interface MockDataProvider {
      * @throws SQLException A <code>SQLException</code> that is passed through
      *             to jOOQ.
      */
-    MockResult[] execute(MockExecuteContext ctx) throws SQLException;
+    abstract MockResult[] execute(MockExecuteContext ctx) throws SQLException;
 }

@@ -51,15 +51,18 @@ import org.jooq.ResultQuery;
 /**
  * A data provider for mock query executions.
  * <p>
- * Supply this data provider to your {@link MockConnection} in order to globally
+ * Supply this data provider to your {@link SelectableMockConnection} in order to globally
  * provide data for SQL statements.
  * <p>
  * See {@link #execute(MockExecuteContext)} for details.
  *
  * @author Lukas Eder
+ * @author Deven Phillips
  * @see MockConnection
  */
-public interface MockDataProvider {
+public abstract class SelectableMockDataProvider implements MockDataProvider {
+
+	protected int selector;
 
     /**
      * Execution callback for a JDBC query execution.
@@ -141,5 +144,15 @@ public interface MockDataProvider {
      * @throws SQLException A <code>SQLException</code> that is passed through
      *             to jOOQ.
      */
-    abstract MockResult[] execute(MockExecuteContext ctx) throws SQLException;
+    @Override
+    public abstract MockResult[] execute(MockExecuteContext ctx) throws SQLException;
+
+    /**
+     * Sets a selection value so that it can be used by the execute() method to
+     * choose the result sets to be returned.
+     * @param value The integer value to be used as a selector.
+     */
+    public void setSelection(int value) {
+    	this.selector = value;
+    }
 }

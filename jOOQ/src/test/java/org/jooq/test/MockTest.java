@@ -49,12 +49,14 @@ import static org.jooq.test.data.Table2.FIELD_ID2;
 import static org.jooq.test.data.Table2.FIELD_NAME2;
 import static org.jooq.test.data.Table2.TABLE2;
 import static org.jooq.test.data.Table3.FIELD_NAME3;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import org.jooq.Constants;
@@ -75,6 +77,8 @@ import org.jooq.tools.jdbc.MockDataProvider;
 import org.jooq.tools.jdbc.MockExecuteContext;
 import org.jooq.tools.jdbc.MockFileDatabase;
 import org.jooq.tools.jdbc.MockResult;
+import org.jooq.tools.jdbc.SelectableMockConnection;
+import org.jooq.tools.jdbc.SelectableMockDataProvider;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -83,6 +87,7 @@ import org.junit.Test;
  * This test suite contains tests for the JDBC mock implementations.
  *
  * @author Lukas Eder
+ * @author Deven Phillips
  */
 public class MockTest extends AbstractTest {
 
@@ -425,5 +430,58 @@ public class MockTest extends AbstractTest {
         assertEquals("x", r2.getValue(0, 0));
         assertEquals("y", r2.getValue(0, 1));
         assertEquals("z", r2.getValue(0, 2));
+    }
+
+    private static final int RESULTONE = 0;
+    private static final int RESULTTWO = 1;
+    private static final int RESULTSTRINGS = 3;
+
+    private class SelectableResults extends SelectableMockDataProvider {
+        @Override
+        public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
+            switch(selector) {
+                case RESULTONE:
+                    return new MockResult[] {
+                        new MockResult(1, resultOne)
+                    };
+                case RESULTTWO:
+                    return new MockResult[] {
+                        new MockResult(1, resultTwo)
+                    };
+                case RESULTSTRINGS:
+                    return new MockResult[] {
+                        new MockResult(1, resultStrings)
+                    };
+                default:
+                    return new MockResult[] {
+                        new MockResult(0, resultOne)
+                    };
+            }
+        }
+    }
+
+    @Test
+    public void testSelectableMockDataProvider() {
+        SelectableMockDataProvider provider = new SelectableResults();
+        SelectableMockConnection sConn = new SelectableMockConnection(provider);
+        DSLContext selectCtx = DSL.using(sConn, SQLDialect.POSTGRES);
+        sConn.setSelection(RESULTONE);
+        Record resOne = selectCtx.select(TABLE1.fields()).from(TABLE1).fetchOne();
+        assertNotNull("The first selectable result should not be null.", resOne);
+        assertEquals("resultOne.field0 should be equal", resultOne.getValue(0, 0), resOne.getValue(TABLE1.fields()[0], Integer.class));
+        assertEquals("resultOne.field1 should be equal", resultOne.getValue(0, 1), resOne.getValue(TABLE1.fields()[1], String.class));
+        assertEquals("resultOne.field2 should be equal", resultOne.getValue(0, 2), resOne.getValue(TABLE1.fields()[2], Date.class));
+        sConn.setSelection(RESULTTWO);
+        Record resTwo = selectCtx.select(TABLE1.fields()).from(TABLE1).fetchAny();
+        assertNotNull("The first selectable result should not be null.", resTwo);
+        assertEquals("resultTwo.field0 should be equal", resultTwo.getValue(0, 0), resTwo.getValue(TABLE1.fields()[0], Integer.class));
+        assertEquals("resultTwo.field1 should be equal", resultTwo.getValue(0, 1), resTwo.getValue(TABLE1.fields()[1], String.class));
+        assertEquals("resultTwo.field2 should be equal", resultTwo.getValue(0, 2), resTwo.getValue(TABLE1.fields()[2], Date.class));
+        sConn.setSelection(RESULTSTRINGS);
+        Record resThree = selectCtx.select(FIELD_NAME1, FIELD_NAME2, FIELD_NAME3).from(TABLE1).fetchAny();
+        assertNotNull("The first selectable result should not be null.", resThree);
+        assertEquals("resultStrings.field0 should be equal", resultStrings.getValue(0, 0), resThree.getValue(0));
+        assertEquals("resultStrings.field1 should be equal", resultStrings.getValue(0, 1), resThree.getValue(1));
+        assertEquals("resultStrings.field2 should be equal", resultStrings.getValue(0, 2), resThree.getValue(2));
     }
 }

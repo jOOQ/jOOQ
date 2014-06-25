@@ -1,2 +1,3 @@
 lukaseder = Lukas Eder <lukas.eder@gmail.com>
 Chrriis = Chrriis <chrriis@gmail.com>
+InfoSec812 = Deven Phillips <deven.phillips@gmail.com>

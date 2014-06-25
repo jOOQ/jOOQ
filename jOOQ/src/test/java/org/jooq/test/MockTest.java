@@ -87,6 +87,7 @@ import org.junit.Test;
  * This test suite contains tests for the JDBC mock implementations.
  *
  * @author Lukas Eder
+ * @author Deven Phillips
  */
 public class MockTest extends AbstractTest {
 

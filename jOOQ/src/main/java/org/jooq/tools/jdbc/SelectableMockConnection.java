@@ -88,6 +88,7 @@ import java.util.Properties;
  * in this mock framework
  *
  * @author Lukas Eder
+ * @author Deven Phillips
  */
 public class SelectableMockConnection extends MockConnection {
 

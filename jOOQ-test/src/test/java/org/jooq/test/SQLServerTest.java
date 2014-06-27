@@ -1002,6 +1002,71 @@ public class SQLServerTest extends jOOQAbstractTest<
         assertEquals(1, record.delete());
         assertNull(create().fetchOne(T_3090_B));
         assertEquals(0, create().fetchCount(T_3090_B));
+
+        // INSERT()
+        assertEquals(1, record.store());
+        assertEquals(1, (int) record.getId1());
+        assertNull(record.getId2());
+        assertEquals(2, (int) record.getData());
+        assertEquals(1, create().fetchCount(T_3090_B));
+    }
+
+    @Test
+    public void testSQLServerStoreNullableUniqueKeyAndUpdatablePrimaryKeys() {
+        clean(T_3090_B);
+
+        DSLContext create = create();
+        create.configuration().settings().setUpdatablePrimaryKeys(true);
+
+        T_3090BRecord record = create.newRecord(T_3090_B);
+        record.setId1(1);
+        record.setId2(null);
+        assertEquals(1, record.insert());
+        assertNull(record.getData());
+        assertEquals(1, create.fetchCount(T_3090_B));
+
+        // REFRESH()
+        record.setData(2);
+        record.refresh();
+        assertEquals(1, (int) record.getId1());
+        assertNull(record.getId2());
+        assertNull(record.getData());
+        assertEquals(1, create.fetchCount(T_3090_B));
+
+        record.setData(2);
+        record.refresh(T_3090_B.DATA);
+        assertEquals(1, (int) record.getId1());
+        assertNull(record.getId2());
+        assertNull(record.getData());
+        assertEquals(1, create.fetchCount(T_3090_B));
+
+        // STORE()
+        record.setData(2);
+        assertEquals(1, record.store());
+        assertEquals(1, (int) record.getId1());
+        assertNull(record.getId2());
+        assertEquals(2, (int) record.getData());
+        assertEquals(1, create.fetchCount(T_3090_B));
+
+        // UPDATE()
+        record.setData(2);
+        assertEquals(1, record.update());
+        assertEquals(1, (int) record.getId1());
+        assertNull(record.getId2());
+        assertEquals(2, (int) record.getData());
+        assertEquals(1, create.fetchCount(T_3090_B));
+
+        // DELETE()
+        assertEquals(1, record.delete());
+        assertNull(create.fetchOne(T_3090_B));
+        assertEquals(0, create.fetchCount(T_3090_B));
+
+        // INSERT()
+        assertEquals(1, record.store());
+        assertEquals(1, (int) record.getId1());
+        assertNull(record.getId2());
+        assertEquals(2, (int) record.getData());
+        assertEquals(1, create.fetchCount(T_3090_B));
     }
 
     @Test
@@ -1033,6 +1098,18 @@ public class SQLServerTest extends jOOQAbstractTest<
         r1.setData(21);
         r2.setData(22);
         int[] result = create().batchStore(r1, r2).execute();
+        assertEquals(1, result[0]);
+        assertEquals(1, result[1]);
+        assertEquals(asList(21, 22), create().select(T_3084.DATA).from(T_3084).orderBy(T_3084.ID).fetchInto(int.class));
+
+        // DELETE()
+        result = create().batchDelete(r1, r2).execute();
+        assertEquals(1, result[0]);
+        assertEquals(1, result[1]);
+        assertEquals(0, create().fetchCount(T_3084));
+
+        // STORE() means INSERT, with batch
+        result = create().batchStore(r1, r2).execute();
         assertEquals(1, result[0]);
         assertEquals(1, result[1]);
         assertEquals(asList(21, 22), create().select(T_3084.DATA).from(T_3084).orderBy(T_3084.ID).fetchInto(int.class));
@@ -1137,6 +1214,18 @@ public class SQLServerTest extends jOOQAbstractTest<
         r1.setData(21);
         r2.setData(22);
         int[] result = create.batchStore(r1, r2).execute();
+        assertEquals(1, result[0]);
+        assertEquals(1, result[1]);
+        assertEquals(asList(21, 22), create.select(T_3084_TWO_UNIQUE_KEYS.DATA).from(T_3084_TWO_UNIQUE_KEYS).orderBy(T_3084_TWO_UNIQUE_KEYS.ID1).fetchInto(int.class));
+
+        // DELETE()
+        result = create.batchDelete(r1, r2).execute();
+        assertEquals(1, result[0]);
+        assertEquals(1, result[1]);
+        assertEquals(0, create.fetchCount(T_3084_TWO_UNIQUE_KEYS));
+
+        // STORE() means INSERT, with batch
+        result = create.batchStore(r1, r2).execute();
         assertEquals(1, result[0]);
         assertEquals(1, result[1]);
         assertEquals(asList(21, 22), create.select(T_3084_TWO_UNIQUE_KEYS.DATA).from(T_3084_TWO_UNIQUE_KEYS).orderBy(T_3084_TWO_UNIQUE_KEYS.ID1).fetchInto(int.class));

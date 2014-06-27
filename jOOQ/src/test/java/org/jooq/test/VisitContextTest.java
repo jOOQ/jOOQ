@@ -70,6 +70,8 @@ import static org.jooq.Clause.DELETE;
 import static org.jooq.Clause.DELETE_DELETE;
 import static org.jooq.Clause.DELETE_WHERE;
 import static org.jooq.Clause.DROP_INDEX;
+import static org.jooq.Clause.DROP_SEQUENCE;
+import static org.jooq.Clause.DROP_SEQUENCE_SEQUENCE;
 import static org.jooq.Clause.DROP_TABLE;
 import static org.jooq.Clause.DROP_TABLE_TABLE;
 import static org.jooq.Clause.FIELD;
@@ -774,6 +776,17 @@ public class VisitContextTest extends AbstractTest {
             asList(ALTER_SEQUENCE, ALTER_SEQUENCE_RESTART)
         ),
         ctx.alterSequence("seq").restart());
+    }
+
+    @Test
+    public void test_DROP_SEQUENCE() {
+        assertEvents(asList(
+            asList(DROP_SEQUENCE),
+            asList(DROP_SEQUENCE, DROP_SEQUENCE_SEQUENCE),
+            asList(DROP_SEQUENCE, DROP_SEQUENCE_SEQUENCE, SEQUENCE),
+            asList(DROP_SEQUENCE, DROP_SEQUENCE_SEQUENCE, SEQUENCE, SEQUENCE_REFERENCE)
+        ),
+        ctx.dropSequence("i"));
     }
 
     @Test

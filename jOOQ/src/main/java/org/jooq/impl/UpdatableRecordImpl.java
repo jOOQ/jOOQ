@@ -284,10 +284,11 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
             return result;
         }
 
-        // [#673] If store() is called after delete(), a new INSERT should
+        // [#673] [#3363] If store() is called after delete(), a new INSERT should
         // be executed and the record should be recreated
         finally {
             changed(true);
+            fetched = false;
         }
     }
 

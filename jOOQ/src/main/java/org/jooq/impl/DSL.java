@@ -97,6 +97,7 @@ import org.jooq.Delete;
 import org.jooq.DeleteWhereStep;
 import org.jooq.DerivedColumnList;
 import org.jooq.DropIndexFinalStep;
+import org.jooq.DropSequenceFinalStep;
 import org.jooq.DropTableStep;
 import org.jooq.Field;
 import org.jooq.GroupConcatOrderByStep;
@@ -4281,6 +4282,26 @@ public class DSL {
     @Support
     public static DropIndexFinalStep dropIndex(String index) {
         return using(new DefaultConfiguration()).dropIndex(index);
+    }
+
+    /**
+     * Create a new DSL <code>DROP SEQUENCE</code> statement.
+     *
+     * @see DSLContext#dropSequence(Sequence)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static <T extends Number> DropSequenceFinalStep dropSequence(Sequence<?> sequence) {
+        return using(new DefaultConfiguration()).dropSequence(sequence);
+    }
+
+    /**
+     * Create a new DSL <code>DROP SEQUENCE</code> statement.
+     *
+     * @see DSLContext#dropSequence(Sequence)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static <T extends Number> DropSequenceFinalStep dropSequence(String sequence) {
+        return using(new DefaultConfiguration()).dropSequence(sequence);
     }
 
     /**

@@ -885,6 +885,16 @@ public enum Clause {
      */
     DROP_INDEX,
 
+    /**
+     * A complete <code>DROP SEQUENCE</code> statement.
+     */
+    DROP_SEQUENCE,
+
+    /**
+     * A <code>SEQUENCE</code> clause within a {@link #DROP_SEQUENCE} statement.
+     */
+    DROP_SEQUENCE_SEQUENCE,
+
     // -------------------------------------------------------------------------
     // Other clauses
     // -------------------------------------------------------------------------

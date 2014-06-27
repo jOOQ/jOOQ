@@ -4711,6 +4711,22 @@ public interface DSLContext {
     DropIndexFinalStep dropIndex(String index);
 
     /**
+     * Create a new DSL <code>DROP SEQUENCE</code> statement.
+     *
+     * @see DSLContext#dropSequence(Sequence)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    DropSequenceFinalStep dropSequence(Sequence<?> sequence);
+
+    /**
+     * Create a new DSL <code>DROP SEQUENCE</code> statement.
+     *
+     * @see DSLContext#dropSequence(Sequence)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    DropSequenceFinalStep dropSequence(String sequence);
+
+    /**
      * Create a new DSL truncate statement.
      * <p>
      * Example:

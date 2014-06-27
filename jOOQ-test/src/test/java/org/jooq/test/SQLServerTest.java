@@ -1168,6 +1168,15 @@ public class SQLServerTest extends jOOQAbstractTest<
 
         assertEquals(1, r2.insert());
         assertEquals(2, create.fetchCount(T_3084_TWO_UNIQUE_KEYS));
+
+        T_3084TwoUniqueKeysRecord r3 = r1.copy();
+        r3.setId1(3);
+        r3.setId2(null);
+        r3.setId3(3);
+        r3.setId4(null);
+
+        assertEquals(1, r3.store());
+        assertEquals(3, create.fetchCount(T_3084_TWO_UNIQUE_KEYS));
     }
 
     @Test

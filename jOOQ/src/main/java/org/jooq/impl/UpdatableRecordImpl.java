@@ -323,7 +323,10 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final R copy() {
-        return Utils.newRecord(fetched, getTable(), configuration())
+
+        // [#3359] The "fetched" flag must be set to false to enforce INSERT statements on
+        // subsequent store() calls - when Settings.updatablePrimaryKeys is set.
+        return Utils.newRecord(false, getTable(), configuration())
                     .operate(new RecordOperation<R, RuntimeException>() {
 
         	@Override

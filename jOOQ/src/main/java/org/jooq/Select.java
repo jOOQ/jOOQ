@@ -82,8 +82,8 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
     List<Field<?>> getSelect();
 
     /**
-     * Execute this query in the context of its attached executor and return
-     * a <code>COUNT(*)</code> value.
+     * Execute this query in the context of its attached executor and return a
+     * <code>COUNT(*)</code> value.
      * <p>
      * This wraps a pre-existing <code>SELECT</code> query in another one to
      * calculate the <code>COUNT(*)</code> value, without modifying the original
@@ -101,6 +101,15 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
      *
      * @return The <code>COUNT(*)</code> result
      * @throws DataAccessException if something went wrong executing the query
+     * @deprecated - 3.5.0 - [#3356] - This method is being removed as it is
+     *             confusingly different from all the other types of
+     *             {@link #fetch()} methods, in that it modifies the original
+     *             {@link Select} statement by wrapping it. In particular, this
+     *             method can be easily confused with {@link #fetch(Field)}, or
+     *             more concretely <code>fetch(count())</code>, which has an
+     *             entirely different semantics. Use
+     *             {@link DSLContext#fetchCount(Select)} instead.
      */
+    @Deprecated
     int fetchCount() throws DataAccessException;
 }

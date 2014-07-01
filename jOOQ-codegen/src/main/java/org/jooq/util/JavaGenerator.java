@@ -317,6 +317,7 @@ public class JavaGenerator extends AbstractGenerator {
         printPackage(out, schema);
         printClassJavadoc(out,
             "A class modelling foreign key relationships between tables of the <code>" + schema.getOutputName() + "</code> schema");
+        printClassAnnotations(out);
 
         out.println("public class Keys {");
         out.tab(1).header("IDENTITY definitions");
@@ -540,7 +541,13 @@ public class JavaGenerator extends AbstractGenerator {
 
         JavaWriter out = new JavaWriter(getStrategy().getFile(tableOrUdt, Mode.RECORD));
         printPackage(out, tableOrUdt, Mode.RECORD);
-        printClassJavadoc(out, tableOrUdt);
+
+        if (tableOrUdt instanceof TableDefinition)
+            generateRecordClassJavadoc((TableDefinition) tableOrUdt, out);
+        else
+            generateUDTRecordClassJavadoc((UDTDefinition) tableOrUdt, out);
+
+        printClassAnnotations(out);
         if (tableOrUdt instanceof TableDefinition)
             printTableJPAAnnotation(out, (TableDefinition) tableOrUdt);
 
@@ -776,11 +783,16 @@ public class JavaGenerator extends AbstractGenerator {
 
     /**
      * Subclasses may override this method to provide record class footer code.
-     *
-     * @param table The table
-     * @param out The writer
      */
+    @SuppressWarnings("unused")
     protected void generateRecordClassFooter(TableDefinition table, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateRecordClassJavadoc(TableDefinition table, JavaWriter out) {
+        printClassJavadoc(out, table);
+    }
 
     private final String getRowType(Collection<? extends TypedElementDefinition<?>> columns) {
         StringBuilder result = new StringBuilder();
@@ -822,7 +834,12 @@ public class JavaGenerator extends AbstractGenerator {
 
         JavaWriter out = new JavaWriter(getStrategy().getFile(tableOrUDT, Mode.INTERFACE));
         printPackage(out, tableOrUDT, Mode.INTERFACE);
-        printClassJavadoc(out, tableOrUDT);
+        if (tableOrUDT instanceof TableDefinition)
+            generateInterfaceClassJavadoc((TableDefinition) tableOrUDT, out);
+        else
+            generateUDTInterfaceClassJavadoc((UDTDefinition) tableOrUDT, out);
+
+        printClassAnnotations(out);
 
         if (tableOrUDT instanceof TableDefinition)
             printTableJPAAnnotation(out, (TableDefinition) tableOrUDT);
@@ -865,12 +882,10 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
 
-        if (tableOrUDT instanceof TableDefinition) {
+        if (tableOrUDT instanceof TableDefinition)
             generateInterfaceClassFooter((TableDefinition) tableOrUDT, out);
-        }
-        else {
+        else
             generateUDTInterfaceClassFooter((UDTDefinition) tableOrUDT, out);
-        }
 
         out.println("}");
         out.close();
@@ -879,11 +894,16 @@ public class JavaGenerator extends AbstractGenerator {
     /**
      * Subclasses may override this method to provide interface class footer
      * code.
-     *
-     * @param table The table
-     * @param out The writer
      */
+    @SuppressWarnings("unused")
     protected void generateInterfaceClassFooter(TableDefinition table, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateInterfaceClassJavadoc(TableDefinition table, JavaWriter out) {
+        printClassJavadoc(out, table);
+    }
 
     protected void generateUDTs(SchemaDefinition schema) {
         log.info("Generating UDTs");
@@ -910,7 +930,8 @@ public class JavaGenerator extends AbstractGenerator {
 
         JavaWriter out = new JavaWriter(getStrategy().getFile(udt));
         printPackage(out, udt);
-        printClassJavadoc(out, udt);
+        generateUDTClassJavadoc(udt, out);
+        printClassAnnotations(out);
 
         // [#799] Oracle UDTs with member procedures have similarities with packages
         if (udt.getRoutines().size() > 0) {
@@ -976,11 +997,16 @@ public class JavaGenerator extends AbstractGenerator {
 
     /**
      * Subclasses may override this method to provide udt class footer code.
-     *
-     * @param udt The udt
-     * @param out The writer
      */
+    @SuppressWarnings("unused")
     protected void generateUDTClassFooter(UDTDefinition udt, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateUDTClassJavadoc(UDTDefinition udt, JavaWriter out) {
+        printClassJavadoc(out, udt);
+    }
 
     protected void generateUDTPojos(SchemaDefinition schema) {
         log.info("Generating UDT POJOs");
@@ -999,11 +1025,16 @@ public class JavaGenerator extends AbstractGenerator {
 
     /**
      * Subclasses may override this method to provide UDT POJO class footer code.
-     *
-     * @param udt The UDT
-     * @param out The writer
      */
+    @SuppressWarnings("unused")
     protected void generateUDTPojoClassFooter(UDTDefinition udt, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateUDTPojoClassJavadoc(UDTDefinition udt, JavaWriter out) {
+        printClassJavadoc(out, udt);
+    }
 
     protected void generateUDTInterfaces(SchemaDefinition schema) {
         log.info("Generating UDT interfaces");
@@ -1021,11 +1052,16 @@ public class JavaGenerator extends AbstractGenerator {
 
     /**
      * Subclasses may override this method to provide UDT interface class footer code.
-     *
-     * @param udt The UDT
-     * @param out The writer
      */
+    @SuppressWarnings("unused")
     protected void generateUDTInterfaceClassFooter(UDTDefinition udt, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateUDTInterfaceClassJavadoc(UDTDefinition udt, JavaWriter out) {
+        printClassJavadoc(out, udt);
+    }
 
     /**
      * Generating UDT record classes
@@ -1050,11 +1086,16 @@ public class JavaGenerator extends AbstractGenerator {
 
     /**
      * Subclasses may override this method to provide udt record class footer code.
-     *
-     * @param udt The udt
-     * @param out The writer
      */
+    @SuppressWarnings("unused")
     protected void generateUDTRecordClassFooter(UDTDefinition udt, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateUDTRecordClassJavadoc(UDTDefinition udt, JavaWriter out) {
+        printClassJavadoc(out, udt);
+    }
 
     protected void generateUDTRoutines(SchemaDefinition schema) {
         for (UDTDefinition udt : database.getUDTs(schema)) {
@@ -1087,6 +1128,7 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = new JavaWriter(new File(getStrategy().getFile(schema).getParentFile(), "UDTs.java"));
         printPackage(out, schema);
         printClassJavadoc(out, "Convenience access to all UDTs in " + schema.getOutputName());
+        printClassAnnotations(out);
         out.println("public class UDTs {");
 
         for (UDTDefinition udt : database.getUDTs(schema)) {
@@ -1131,7 +1173,8 @@ public class JavaGenerator extends AbstractGenerator {
 
         JavaWriter out = new JavaWriter(getStrategy().getFile(array, Mode.RECORD));
         printPackage(out, array, Mode.RECORD);
-        printClassJavadoc(out, array);
+        generateArrayClassJavadoc(array, out);
+        printClassAnnotations(out);
 
         out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, ArrayRecordImpl.class, elementType, interfaces);
         out.printSerial();
@@ -1183,11 +1226,16 @@ public class JavaGenerator extends AbstractGenerator {
 
     /**
      * Subclasses may override this method to provide array class footer code.
-     *
-     * @param array The array
-     * @param out The writer
      */
+    @SuppressWarnings("unused")
     protected void generateArrayClassFooter(ArrayDefinition array, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateArrayClassJavadoc(ArrayDefinition array, JavaWriter out) {
+        printClassJavadoc(out, array);
+    }
 
     protected void generateEnums(SchemaDefinition schema) {
         log.info("Generating ENUMs");
@@ -1211,7 +1259,8 @@ public class JavaGenerator extends AbstractGenerator {
 
         JavaWriter out = new JavaWriter(getStrategy().getFile(e, Mode.ENUM));
         printPackage(out, e);
-        printClassJavadoc(out, e);
+        generateEnumClassJavadoc(e, out);
+        printClassAnnotations(out);
 
         interfaces.add(EnumType.class.getName());
 
@@ -1266,22 +1315,28 @@ public class JavaGenerator extends AbstractGenerator {
 
     /**
      * Subclasses may override this method to provide enum class footer code.
-     *
-     * @param e The enum
-     * @param out The writer
      */
+    @SuppressWarnings("unused")
     protected void generateEnumClassFooter(EnumDefinition e, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateEnumClassJavadoc(EnumDefinition e, JavaWriter out) {
+        printClassJavadoc(out, e);
+    }
 
     protected void generateRoutines(SchemaDefinition schema) {
         log.info("Generating routines and table-valued functions");
 
-        JavaWriter outR = new JavaWriter(new File(getStrategy().getFile(schema).getParentFile(), "Routines.java"));
-        printPackage(outR, schema);
-        printClassJavadoc(outR, "Convenience access to all stored procedures and functions in " + schema.getOutputName());
+        JavaWriter out = new JavaWriter(new File(getStrategy().getFile(schema).getParentFile(), "Routines.java"));
+        printPackage(out, schema);
+        printClassJavadoc(out, "Convenience access to all stored procedures and functions in " + schema.getOutputName());
+        printClassAnnotations(out);
 
-        outR.println("public class Routines {");
+        out.println("public class Routines {");
         for (RoutineDefinition routine : database.getRoutines(schema)) {
-            printRoutine(outR, routine);
+            printRoutine(out, routine);
 
             try {
                 generateRoutine(schema, routine);
@@ -1292,12 +1347,12 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (TableDefinition table : database.getTables(schema)) {
             if (table.isTableValuedFunction()) {
-                printTableValuedFunction(outR, table);
+                printTableValuedFunction(out, table);
             }
         }
 
-        outR.println("}");
-        outR.close();
+        out.println("}");
+        out.close();
 
         watch.splitInfo("Routines generated");
     }
@@ -1351,7 +1406,8 @@ public class JavaGenerator extends AbstractGenerator {
         // Static convenience methods
         JavaWriter out = new JavaWriter(getStrategy().getFile(pkg));
         printPackage(out, pkg);
-        printClassJavadoc(out, "Convenience access to all stored procedures and functions in " + pkg.getName());
+        generatePackageClassJavadoc(pkg, out);
+        printClassAnnotations(out);
 
         out.println("public class %s extends %s[[before= implements ][%s]] {", className, PackageImpl.class, interfaces);
         out.printSerial();
@@ -1379,11 +1435,16 @@ public class JavaGenerator extends AbstractGenerator {
 
     /**
      * Subclasses may override this method to provide package class footer code.
-     *
-     * @param pkg The package
-     * @param out The writer
      */
+    @SuppressWarnings("unused")
     protected void generatePackageClassFooter(PackageDefinition pkg, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generatePackageClassJavadoc(PackageDefinition pkg, JavaWriter out) {
+        printClassJavadoc(out, "Convenience access to all stored procedures and functions in " + pkg.getName());
+    }
 
     /**
      * Generating central static table access
@@ -1394,6 +1455,7 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = new JavaWriter(new File(getStrategy().getFile(schema).getParentFile(), "Tables.java"));
         printPackage(out, schema);
         printClassJavadoc(out, "Convenience access to all tables in " + schema.getOutputName());
+        printClassAnnotations(out);
         out.println("public class Tables {");
 
         for (TableDefinition table : database.getTables(schema)) {
@@ -1468,7 +1530,8 @@ public class JavaGenerator extends AbstractGenerator {
 
         JavaWriter out = new JavaWriter(getStrategy().getFile(table, Mode.DAO));
         printPackage(out, table, Mode.DAO);
-        printClassJavadoc(out, table);
+        generateDaoClassJavadoc(table, out);
+        printClassAnnotations(out);
 
         out.println("public class %s extends %s<%s, %s, %s> {", className, daoImpl, tableRecord, pType, tType);
 
@@ -1547,11 +1610,16 @@ public class JavaGenerator extends AbstractGenerator {
 
     /**
      * Subclasses may override this method to provide dao class footer code.
-     *
-     * @param table The table
-     * @param out The writer
      */
+    @SuppressWarnings("unused")
     protected void generateDaoClassFooter(TableDefinition table, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateDaoClassJavadoc(TableDefinition table, JavaWriter out) {
+        printClassJavadoc(out, table);
+    }
 
     protected void generatePojos(SchemaDefinition schema) {
         log.info("Generating table POJOs");
@@ -1585,7 +1653,13 @@ public class JavaGenerator extends AbstractGenerator {
 
         JavaWriter out = new JavaWriter(getStrategy().getFile(tableOrUDT, Mode.POJO));
         printPackage(out, tableOrUDT, Mode.POJO);
-        printClassJavadoc(out, tableOrUDT);
+
+        if (tableOrUDT instanceof TableDefinition)
+            generatePojoClassJavadoc((TableDefinition) tableOrUDT, out);
+        else
+            generateUDTPojoClassJavadoc((UDTDefinition) tableOrUDT, out);
+
+        printClassAnnotations(out);
 
         if (tableOrUDT instanceof TableDefinition)
             printTableJPAAnnotation(out, (TableDefinition) tableOrUDT);
@@ -1699,12 +1773,10 @@ public class JavaGenerator extends AbstractGenerator {
             printFromAndInto(out, tableOrUDT);
         }
 
-        if (tableOrUDT instanceof TableDefinition) {
+        if (tableOrUDT instanceof TableDefinition)
             generatePojoClassFooter((TableDefinition) tableOrUDT, out);
-        }
-        else {
+        else
             generateUDTPojoClassFooter((UDTDefinition) tableOrUDT, out);
-        }
 
         out.println("}");
         out.close();
@@ -1727,11 +1799,16 @@ public class JavaGenerator extends AbstractGenerator {
 
     /**
      * Subclasses may override this method to provide POJO class footer code.
-     *
-     * @param table The table
-     * @param out The writer
      */
+    @SuppressWarnings("unused")
     protected void generatePojoClassFooter(TableDefinition table, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generatePojoClassJavadoc(TableDefinition table, JavaWriter out) {
+        printClassJavadoc(out, table);
+    }
 
     protected void generateTables(SchemaDefinition schema) {
         log.info("Generating tables");
@@ -1767,7 +1844,8 @@ public class JavaGenerator extends AbstractGenerator {
 
         JavaWriter out = new JavaWriter(getStrategy().getFile(table));
         printPackage(out, table);
-        printClassJavadoc(out, table);
+        generateTableClassJavadoc(table, out);
+        printClassAnnotations(out);
 
         out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, TableImpl.class, recordType, interfaces);
         out.printSerial();
@@ -1999,11 +2077,16 @@ public class JavaGenerator extends AbstractGenerator {
 
     /**
      * Subclasses may override this method to provide table class footer code.
-     *
-     * @param table The table
-     * @param out The writer
      */
+    @SuppressWarnings("unused")
     protected void generateTableClassFooter(TableDefinition table, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateTableClassJavadoc(TableDefinition table, JavaWriter out) {
+        printClassJavadoc(out, table);
+    }
 
     protected void generateSequences(SchemaDefinition schema) {
         log.info("Generating sequences");
@@ -2011,6 +2094,7 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = new JavaWriter(new File(getStrategy().getFile(schema).getParentFile(), "Sequences.java"));
         printPackage(out, schema);
         printClassJavadoc(out, "Convenience access to all sequences in " + schema.getOutputName());
+        printClassAnnotations(out);
         out.println("public class Sequences {");
 
         for (SequenceDefinition sequence : database.getSequences(schema)) {
@@ -2041,7 +2125,8 @@ public class JavaGenerator extends AbstractGenerator {
 
         JavaWriter out = new JavaWriter(getStrategy().getFile(schema));
         printPackage(out, schema);
-        printClassJavadoc(out, schema);
+        generateSchemaClassJavadoc(schema, out);
+        printClassAnnotations(out);
 
         out.println("public class %s extends %s[[before= implements ][%s]] {", className, SchemaImpl.class, interfaces);
         out.printSerial();
@@ -2068,11 +2153,16 @@ public class JavaGenerator extends AbstractGenerator {
 
     /**
      * Subclasses may override this method to provide schema class footer code.
-     *
-     * @param schema The schema
-     * @param out The writer
      */
+    @SuppressWarnings("unused")
     protected void generateSchemaClassFooter(SchemaDefinition schema, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateSchemaClassJavadoc(SchemaDefinition schema, JavaWriter out) {
+        printClassJavadoc(out, schema);
+    }
 
     protected void printFromAndInto(JavaWriter out, TableDefinition table) {
         printFromAndInto(out, (Definition) table);
@@ -2269,7 +2359,8 @@ public class JavaGenerator extends AbstractGenerator {
 
         JavaWriter out = new JavaWriter(getStrategy().getFile(routine));
         printPackage(out, routine);
-        printClassJavadoc(out, routine);
+        generateRoutineClassJavadoc(routine, out);
+        printClassAnnotations(out);
 
         out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, AbstractRoutine.class, returnType, interfaces);
         out.printSerial();
@@ -2367,11 +2458,16 @@ public class JavaGenerator extends AbstractGenerator {
 
     /**
      * Subclasses may override this method to provide routine class footer code.
-     *
-     * @param routine The routine
-     * @param out The writer
      */
+    @SuppressWarnings("unused")
     protected void generateRoutineClassFooter(RoutineDefinition routine, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateRoutineClassJavadoc(RoutineDefinition routine, JavaWriter out) {
+        printClassJavadoc(out, routine);
+    }
 
     protected void printConvenienceMethodFunctionAsField(JavaWriter out, RoutineDefinition function, boolean parametersAsField) {
         // [#281] - Java can't handle more than 255 method parameters
@@ -2683,7 +2779,9 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         out.println(" */");
+    }
 
+    protected void printClassAnnotations(JavaWriter out) {
         if (generateGeneratedAnnotation()) {
             out.println("@javax.annotation.Generated(value    = { \"http://www.jooq.org\", \"%s\" },", Constants.VERSION);
             out.println("                            comments = \"This class is generated by jOOQ\")");

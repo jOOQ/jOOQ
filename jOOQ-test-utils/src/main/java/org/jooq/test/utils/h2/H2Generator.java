@@ -53,4 +53,17 @@ public class H2Generator extends JavaGenerator {
         out.println();
         out.tab(1).println("// Here, a toString() method could be generated");
     }
+
+    @Override
+    protected void generatePojoClassJavadoc(TableDefinition table, JavaWriter out) {
+        out.println("/**");
+        out.println(" * This is a POJO for table " + table.getOutputName() + ".");
+
+        if (table.getComment() != null && !"".equals(table.getComment())) {
+            out.println(" * <p>");
+            out.println(" * " + table.getComment());
+        }
+
+        out.println(" */");
+    }
 }

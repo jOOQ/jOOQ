@@ -52,7 +52,6 @@ import java.io.OutputStream;
 import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.Driver;
-import java.sql.DriverManager;
 import java.util.List;
 import java.util.Properties;
 

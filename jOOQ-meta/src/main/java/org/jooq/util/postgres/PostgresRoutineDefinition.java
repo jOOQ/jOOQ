@@ -91,6 +91,13 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
         specificName = record.getValue(ROUTINES.SPECIFIC_NAME);
     }
 
+    // [#3375] This internal constructor is used for table-valued functions. It should not be used otherwise
+    PostgresRoutineDefinition(Database database, String schema, String name, String specificName) {
+        super(database.getSchema(schema), null, name, null, null);
+
+        this.specificName = specificName;
+    }
+
     @Override
     protected void init0() throws SQLException {
         for (Record record : create().select(

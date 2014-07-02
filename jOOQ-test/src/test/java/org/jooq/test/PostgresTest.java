@@ -124,6 +124,10 @@ import org.jooq.test.postgres.generatedclasses.Routines;
 import org.jooq.test.postgres.generatedclasses.Sequences;
 import org.jooq.test.postgres.generatedclasses.enums.UCountry;
 import org.jooq.test.postgres.generatedclasses.enums.U_959;
+import org.jooq.test.postgres.generatedclasses.tables.FTables1;
+import org.jooq.test.postgres.generatedclasses.tables.FTables2;
+import org.jooq.test.postgres.generatedclasses.tables.FTables3;
+import org.jooq.test.postgres.generatedclasses.tables.FTables4;
 import org.jooq.test.postgres.generatedclasses.tables.TArrays;
 import org.jooq.test.postgres.generatedclasses.tables.records.FTables2Record;
 import org.jooq.test.postgres.generatedclasses.tables.records.FTables3Record;
@@ -1004,47 +1008,54 @@ public class PostgresTest extends jOOQAbstractTest<
 //        create().select().from(fSearchBook("Animal", 1L, 0L).toString()).fetch();
 //        System.out.println(create().select(fSearchBook("Animal", 1L, 0L)).fetch());
 
+        // [#3378] Aliasing shouldn't be necessary
+        FTables1 t1 = F_TABLES1.call().as("t1");
+        FTables2 t2 = F_TABLES2.call().as("t2");
+        FTables3 t3 = F_TABLES3.call().as("t3");
+        FTables4 t4a = F_TABLES4.call(val(null, Integer.class)).as("t4");
+        FTables4 t4b = F_TABLES4.call(T_BOOK.ID).as("t4");
+
         // Simple call with SELECT clause
         Result<Record1<Integer>> result1 =
-        create().select(F_TABLES1.COLUMN_VALUE)
-                .from(F_TABLES1.call())
+        create().select(t1.COLUMN_VALUE)
+                .from(t1)
                 .fetch();
 
         assertEquals(1, result1.size());
         assertEquals(1, result1.get(0).size());
-        assertEquals(1, (int) result1.getValue(0, F_TABLES1.COLUMN_VALUE));
+        assertEquals(1, (int) result1.getValue(0, t1.COLUMN_VALUE));
 
         // Typesafe call to get a TableRecord
         FTables2Record result2 =
-        create().selectFrom(F_TABLES2.call())
+        create().selectFrom(t2)
                 .fetchOne();
 
         assertEquals(1L, (long) result2.getColumnValue());
 
         FTables3Record result3 =
-        create().selectFrom(F_TABLES3.call())
+        create().selectFrom(t3)
                 .fetchOne();
 
         assertEquals("1", result3.getColumnValue());
 
         // In parameters
         Result<FTables4Record> result4a =
-        create().selectFrom(F_TABLES4.call(val(null, Integer.class)))
+        create().selectFrom(t4a)
                 .fetch();
 
-        assertEquals(BOOK_IDS, result4a.getValues(F_TABLES4.ID));
-        assertEquals(BOOK_TITLES, result4a.getValues(F_TABLES4.TITLE));
+        assertEquals(BOOK_IDS, result4a.getValues(t4a.ID));
+        assertEquals(BOOK_TITLES, result4a.getValues(t4a.TITLE));
 
         // Lateral JOIN
         Result<Record2<Integer, String>> result4b =
-        create().select(F_TABLES4.ID, F_TABLES4.TITLE)
-                .from(T_BOOK, lateral(F_TABLES4.call(T_BOOK.ID)))
-                .where(F_TABLES4.TITLE.like("%a%"))
-                .orderBy(F_TABLES4.ID)
+        create().select(t4b.ID, t4b.TITLE)
+                .from(T_BOOK, lateral(t4b))
+                .where(t4b.TITLE.like("%a%"))
+                .orderBy(t4b.ID)
                 .fetch();
 
-        assertEquals(BOOK_IDS.subList(1, 4), result4b.getValues(F_TABLES4.ID));
-        assertEquals(BOOK_TITLES.subList(1, 4), result4b.getValues(F_TABLES4.TITLE));
+        assertEquals(BOOK_IDS.subList(1, 4), result4b.getValues(t4b.ID));
+        assertEquals(BOOK_TITLES.subList(1, 4), result4b.getValues(t4b.TITLE));
     }
 
     @Test

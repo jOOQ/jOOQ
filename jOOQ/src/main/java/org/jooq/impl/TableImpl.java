@@ -44,7 +44,6 @@ package org.jooq.impl;
 import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_ALIAS;
 import static org.jooq.Clause.TABLE_REFERENCE;
-import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Arrays;
 
@@ -132,11 +131,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
             alias.accept(ctx);
         }
         else {
-            if (ctx.qualify()
-
-                    // [#3375] PostgreSQL table-valued function references must not include the schema, e.g. in the
-                    // SELECT list. Only in the FROM clause this is permitted.
-                    && ((parameters != null && ctx.declareTables()) || ctx.configuration().dialect().family() != POSTGRES)) {
+            if (ctx.qualify()) {
                 Schema mappedSchema = Utils.getMappedSchema(ctx.configuration(), getSchema());
 
                 if (mappedSchema != null) {

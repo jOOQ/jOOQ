@@ -5,6 +5,11 @@ DROP VIEW IF EXISTS v_library/
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
 
+DROP FUNCTION f_tables1()/
+DROP FUNCTION f_tables2()/
+DROP FUNCTION f_tables3()/
+DROP FUNCTION f_tables4(in_id INTEGER)/
+DROP FUNCTION f_tables5 (v1 INTEGER, v2 INTEGER, v3 INTEGER)/
 DROP FUNCTION f_arrays(in_array IN integer[])/
 DROP FUNCTION f_arrays(in_array IN bigint[])/
 DROP FUNCTION f_arrays(in_array IN text[])/
@@ -125,7 +130,7 @@ CREATE TABLE t_3111 (
   inverse int,
   bool1 boolean,
   bool2 boolean,
-  
+
   CONSTRAINT pk_t_3111 PRIMARY KEY (id)
 )
 /
@@ -458,7 +463,7 @@ CREATE TABLE t_exotic_types (
   ID INT NOT NULL,
   UU UUID,
   JS JSON,
-  
+
   CONSTRAINT pk_t_exotic_types PRIMARY KEY(ID)
 )
 /
@@ -514,7 +519,7 @@ CREATE TABLE x_test_case_85 (
 CREATE TABLE x_test_case_2025 (
   ref_id INTEGER NOT NULL,
   ref_name VARCHAR(10) NOT NULL,
-  
+
   CONSTRAINT fk_x_test_case_2025_1 FOREIGN KEY(ref_id) REFERENCES x_test_case_85(ID),
   CONSTRAINT fk_x_test_case_2025_2 FOREIGN KEY(ref_id) REFERENCES x_test_case_71(ID),
   CONSTRAINT fk_x_test_case_2025_3 FOREIGN KEY(ref_id, ref_name) REFERENCES X_UNUSED(id, name)
@@ -691,6 +696,74 @@ AS $$
 BEGIN
 	return in_array;
 END;
+$$ LANGUAGE plpgsql;
+/
+
+CREATE FUNCTION f_tables1 ()
+RETURNS TABLE (
+    column_value INTEGER
+)
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 1;
+END;
+$$ LANGUAGE plpgsql;
+/
+
+CREATE FUNCTION f_tables2 ()
+RETURNS TABLE (
+    column_value BIGINT
+)
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT CAST(1 AS BIGINT);
+END
+$$ LANGUAGE plpgsql;
+/
+
+CREATE FUNCTION f_tables3 ()
+RETURNS TABLE (
+    column_value VARCHAR(5)
+)
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT CAST('1' AS VARCHAR(5));
+END
+$$ LANGUAGE plpgsql;
+/
+
+CREATE FUNCTION f_tables4 (in_id INTEGER)
+RETURNS TABLE (
+    id INTEGER,
+    title VARCHAR(400)
+)
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT b.id, b.title
+    FROM t_book b
+    WHERE in_id IS NULL OR b.id = in_id
+    ORDER BY b.id;
+END
+$$ LANGUAGE plpgsql;
+/
+
+CREATE FUNCTION f_tables5 (v1 INTEGER, v2 INTEGER, v3 INTEGER)
+RETURNS TABLE (
+    v INTEGER,
+    s INTEGER
+)
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT *
+    FROM (VALUES(v1, v1),
+                (v2, v1 + v2),
+                (v3, v1 + v2 + v3)) t(a, b);
+END
 $$ LANGUAGE plpgsql;
 /
 

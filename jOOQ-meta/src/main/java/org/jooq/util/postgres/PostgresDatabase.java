@@ -44,6 +44,7 @@ package org.jooq.util.postgres;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
@@ -64,6 +65,7 @@ import static org.jooq.util.postgres.pg_catalog.Tables.PG_CLASS;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_ENUM;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_INHERITS;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_NAMESPACE;
+import static org.jooq.util.postgres.pg_catalog.Tables.PG_PROC;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_TYPE;
 
 import java.sql.SQLException;
@@ -254,23 +256,46 @@ public class PostgresDatabase extends AbstractDatabase {
         Map<Name, PostgresTableDefinition> map = new HashMap<Name, PostgresTableDefinition>();
 
         for (Record record : create()
-                .select(
-                    TABLES.TABLE_SCHEMA,
-                    TABLES.TABLE_NAME)
-                .from(TABLES)
-                .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()))
-                .orderBy(
-                    TABLES.TABLE_SCHEMA,
-                    TABLES.TABLE_NAME)
+                .select()
+                .from(
+                     select(
+                        TABLES.TABLE_SCHEMA,
+                        TABLES.TABLE_NAME,
+                        TABLES.TABLE_NAME.as("specific_name"),
+                        inline(false).as("table_valued_function"))
+                    .from(TABLES)
+                    .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()))
+
+                // [#3375] Include table-valued functions in the set of tables
+                .unionAll(
+                    select(
+                        ROUTINES.ROUTINE_SCHEMA,
+                        ROUTINES.ROUTINE_NAME,
+                        ROUTINES.SPECIFIC_NAME,
+                        inline(true).as("table_valued_function"))
+                    .from(ROUTINES)
+                    .join(PG_NAMESPACE).on(ROUTINES.SPECIFIC_SCHEMA.eq(PG_NAMESPACE.NSPNAME))
+                    .join(PG_PROC).on(PG_PROC.PRONAMESPACE.eq(oid(PG_NAMESPACE)))
+                                  .and(PG_PROC.PRONAME.concat("_").concat(oid(PG_PROC)).eq(ROUTINES.SPECIFIC_NAME))
+                    .where(ROUTINES.ROUTINE_SCHEMA.in(getInputSchemata()))
+                    .and(PG_PROC.PRORETSET))
+                .asTable("tables"))
+                .orderBy(1, 2)
                 .fetch()) {
 
             SchemaDefinition schema = getSchema(record.getValue(TABLES.TABLE_SCHEMA));
             String name = record.getValue(TABLES.TABLE_NAME);
+            boolean tableValuedFunction = record.getValue("table_valued_function", boolean.class);
             String comment = "";
 
-            PostgresTableDefinition t = new PostgresTableDefinition(schema, name, comment);
-            result.add(t);
-            map.put(name(schema.getName(), name), t);
+            if (tableValuedFunction) {
+                result.add(new PostgresTableValuedFunction(schema, name, record.getValue(ROUTINES.SPECIFIC_NAME), comment));
+            }
+            else {
+                PostgresTableDefinition t = new PostgresTableDefinition(schema, name, comment);
+                result.add(t);
+                map.put(name(schema.getName(), name), t);
+            }
         }
 
         PgClass ct = PG_CLASS.as("ct");
@@ -470,9 +495,9 @@ public class PostgresDatabase extends AbstractDatabase {
                     .when(DSL.exists(
                         selectOne()
                         .from(PARAMETERS)
-                        .where(PARAMETERS.SPECIFIC_SCHEMA.equal(r1.SPECIFIC_SCHEMA))
-                        .and(PARAMETERS.SPECIFIC_NAME.equal(r1.SPECIFIC_NAME))
-                        .and(upper(PARAMETERS.PARAMETER_MODE).notEqual("IN"))),
+                        .where(PARAMETERS.SPECIFIC_SCHEMA.eq(r1.SPECIFIC_SCHEMA))
+                        .and(PARAMETERS.SPECIFIC_NAME.eq(r1.SPECIFIC_NAME))
+                        .and(upper(PARAMETERS.PARAMETER_MODE).ne("IN"))),
                             val("void"))
                     .otherwise(r1.DATA_TYPE).as("data_type"),
                 r1.CHARACTER_MAXIMUM_LENGTH,
@@ -486,18 +511,24 @@ public class PostgresDatabase extends AbstractDatabase {
                     selectOne()
                     .from(r2)
                     .where(r2.ROUTINE_SCHEMA.in(getInputSchemata()))
-                    .and(r2.ROUTINE_SCHEMA.equal(r1.ROUTINE_SCHEMA))
-                    .and(r2.ROUTINE_NAME.equal(r1.ROUTINE_NAME))
-                    .and(r2.SPECIFIC_NAME.notEqual(r1.SPECIFIC_NAME))),
+                    .and(r2.ROUTINE_SCHEMA.eq(r1.ROUTINE_SCHEMA))
+                    .and(r2.ROUTINE_NAME.eq(r1.ROUTINE_NAME))
+                    .and(r2.SPECIFIC_NAME.ne(r1.SPECIFIC_NAME))),
                     select(count())
                     .from(r2)
                     .where(r2.ROUTINE_SCHEMA.in(getInputSchemata()))
-                    .and(r2.ROUTINE_SCHEMA.equal(r1.ROUTINE_SCHEMA))
-                    .and(r2.ROUTINE_NAME.equal(r1.ROUTINE_NAME))
-                    .and(r2.SPECIFIC_NAME.lessOrEqual(r1.SPECIFIC_NAME)).asField())
+                    .and(r2.ROUTINE_SCHEMA.eq(r1.ROUTINE_SCHEMA))
+                    .and(r2.ROUTINE_NAME.eq(r1.ROUTINE_NAME))
+                    .and(r2.SPECIFIC_NAME.le(r1.SPECIFIC_NAME)).asField())
                 .as("overload"))
             .from(r1)
+
+            // [#3375] Exclude table-valued functions as they're already generated as tables
+            .join(PG_NAMESPACE).on(PG_NAMESPACE.NSPNAME.eq(r1.SPECIFIC_SCHEMA))
+            .join(PG_PROC).on(PG_PROC.PRONAMESPACE.eq(oid(PG_NAMESPACE)))
+                          .and(PG_PROC.PRONAME.concat("_").concat(oid(PG_PROC)).eq(r1.SPECIFIC_NAME))
             .where(r1.ROUTINE_SCHEMA.in(getInputSchemata()))
+            .andNot(PG_PROC.PRORETSET)
             .orderBy(
                 r1.ROUTINE_SCHEMA.asc(),
                 r1.ROUTINE_NAME.asc())

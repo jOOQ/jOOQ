@@ -14,37 +14,6 @@ public class Routines {
 	/**
 	 * Call <code>public.f_arrays</code>
 	 */
-	public static java.lang.String[] fArrays3(org.jooq.Configuration configuration, java.lang.String[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.FArrays3 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays3();
-		f.setInArray(inArray);
-
-		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Get <code>public.f_arrays</code> as a field
-	 */
-	public static org.jooq.Field<java.lang.String[]> fArrays3(java.lang.String[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.FArrays3 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays3();
-		f.setInArray(inArray);
-
-		return f.asField();
-	}
-
-	/**
-	 * Get <code>public.f_arrays</code> as a field
-	 */
-	public static org.jooq.Field<java.lang.String[]> fArrays3(org.jooq.Field<java.lang.String[]> inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.FArrays3 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays3();
-		f.setInArray(inArray);
-
-		return f.asField();
-	}
-
-	/**
-	 * Call <code>public.f_arrays</code>
-	 */
 	public static java.lang.Integer[] fArrays1(org.jooq.Configuration configuration, java.lang.Integer[] inArray) {
 		org.jooq.test.postgres.generatedclasses.routines.FArrays1 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays1();
 		f.setInArray(inArray);
@@ -99,6 +68,37 @@ public class Routines {
 	 */
 	public static org.jooq.Field<java.lang.Long[]> fArrays2(org.jooq.Field<java.lang.Long[]> inArray) {
 		org.jooq.test.postgres.generatedclasses.routines.FArrays2 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays2();
+		f.setInArray(inArray);
+
+		return f.asField();
+	}
+
+	/**
+	 * Call <code>public.f_arrays</code>
+	 */
+	public static java.lang.String[] fArrays3(org.jooq.Configuration configuration, java.lang.String[] inArray) {
+		org.jooq.test.postgres.generatedclasses.routines.FArrays3 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays3();
+		f.setInArray(inArray);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get <code>public.f_arrays</code> as a field
+	 */
+	public static org.jooq.Field<java.lang.String[]> fArrays3(java.lang.String[] inArray) {
+		org.jooq.test.postgres.generatedclasses.routines.FArrays3 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays3();
+		f.setInArray(inArray);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get <code>public.f_arrays</code> as a field
+	 */
+	public static org.jooq.Field<java.lang.String[]> fArrays3(org.jooq.Field<java.lang.String[]> inArray) {
+		org.jooq.test.postgres.generatedclasses.routines.FArrays3 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays3();
 		f.setInArray(inArray);
 
 		return f.asField();
@@ -212,43 +212,6 @@ public class Routines {
 	 */
 	public static org.jooq.Field<java.lang.Integer> fOne() {
 		org.jooq.test.postgres.generatedclasses.routines.FOne f = new org.jooq.test.postgres.generatedclasses.routines.FOne();
-
-		return f.asField();
-	}
-
-	/**
-	 * Call <code>public.f_search_book</code>
-	 */
-	public static java.lang.Object fSearchBook(org.jooq.Configuration configuration, java.lang.String pTitle, java.lang.Long pLimit, java.lang.Long pOffset) {
-		org.jooq.test.postgres.generatedclasses.routines.FSearchBook f = new org.jooq.test.postgres.generatedclasses.routines.FSearchBook();
-		f.setPTitle(pTitle);
-		f.setPLimit(pLimit);
-		f.setPOffset(pOffset);
-
-		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Get <code>public.f_search_book</code> as a field
-	 */
-	public static org.jooq.Field<java.lang.Object> fSearchBook(java.lang.String pTitle, java.lang.Long pLimit, java.lang.Long pOffset) {
-		org.jooq.test.postgres.generatedclasses.routines.FSearchBook f = new org.jooq.test.postgres.generatedclasses.routines.FSearchBook();
-		f.setPTitle(pTitle);
-		f.setPLimit(pLimit);
-		f.setPOffset(pOffset);
-
-		return f.asField();
-	}
-
-	/**
-	 * Get <code>public.f_search_book</code> as a field
-	 */
-	public static org.jooq.Field<java.lang.Object> fSearchBook(org.jooq.Field<java.lang.String> pTitle, org.jooq.Field<java.lang.Long> pLimit, org.jooq.Field<java.lang.Long> pOffset) {
-		org.jooq.test.postgres.generatedclasses.routines.FSearchBook f = new org.jooq.test.postgres.generatedclasses.routines.FSearchBook();
-		f.setPTitle(pTitle);
-		f.setPLimit(pLimit);
-		f.setPOffset(pOffset);
 
 		return f.asField();
 	}
@@ -453,5 +416,68 @@ public class Routines {
 
 		p.execute(configuration);
 		return p;
+	}
+
+	/**
+	 * Get <code>public.f_search_book</code> as a field
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.FSearchBook fSearchBook(java.lang.String pTitle, java.lang.Long pLimit, java.lang.Long pOffset) {
+		return org.jooq.test.postgres.generatedclasses.tables.FSearchBook.F_SEARCH_BOOK.call(pTitle, pLimit, pOffset);
+	}
+
+	/**
+	 * Get <code>public.f_search_book</code> as a field
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.FSearchBook fSearchBook(org.jooq.Field<java.lang.String> pTitle, org.jooq.Field<java.lang.Long> pLimit, org.jooq.Field<java.lang.Long> pOffset) {
+		return org.jooq.test.postgres.generatedclasses.tables.FSearchBook.F_SEARCH_BOOK.call(pTitle, pLimit, pOffset);
+	}
+
+	/**
+	 * Get <code>public.f_tables1</code> as a field
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.FTables1 fTables1() {
+		return org.jooq.test.postgres.generatedclasses.tables.FTables1.F_TABLES1.call();
+	}
+
+	/**
+	 * Get <code>public.f_tables2</code> as a field
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.FTables2 fTables2() {
+		return org.jooq.test.postgres.generatedclasses.tables.FTables2.F_TABLES2.call();
+	}
+
+	/**
+	 * Get <code>public.f_tables3</code> as a field
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.FTables3 fTables3() {
+		return org.jooq.test.postgres.generatedclasses.tables.FTables3.F_TABLES3.call();
+	}
+
+	/**
+	 * Get <code>public.f_tables4</code> as a field
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.FTables4 fTables4(java.lang.Integer inId) {
+		return org.jooq.test.postgres.generatedclasses.tables.FTables4.F_TABLES4.call(inId);
+	}
+
+	/**
+	 * Get <code>public.f_tables4</code> as a field
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.FTables4 fTables4(org.jooq.Field<java.lang.Integer> inId) {
+		return org.jooq.test.postgres.generatedclasses.tables.FTables4.F_TABLES4.call(inId);
+	}
+
+	/**
+	 * Get <code>public.f_tables5</code> as a field
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.FTables5 fTables5(java.lang.Integer v1, java.lang.Integer v2, java.lang.Integer v3) {
+		return org.jooq.test.postgres.generatedclasses.tables.FTables5.F_TABLES5.call(v1, v2, v3);
+	}
+
+	/**
+	 * Get <code>public.f_tables5</code> as a field
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.FTables5 fTables5(org.jooq.Field<java.lang.Integer> v1, org.jooq.Field<java.lang.Integer> v2, org.jooq.Field<java.lang.Integer> v3) {
+		return org.jooq.test.postgres.generatedclasses.tables.FTables5.F_TABLES5.call(v1, v2, v3);
 	}
 }

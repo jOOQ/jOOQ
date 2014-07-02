@@ -41,6 +41,15 @@
 
 package org.jooq.util.postgres;
 
+import static org.jooq.impl.DSL.partitionBy;
+import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.DSL.rowNumber;
+import static org.jooq.util.postgres.PostgresDSL.oid;
+import static org.jooq.util.postgres.information_schema.Tables.PARAMETERS;
+import static org.jooq.util.postgres.information_schema.Tables.ROUTINES;
+import static org.jooq.util.postgres.pg_catalog.Tables.PG_NAMESPACE;
+import static org.jooq.util.postgres.pg_catalog.Tables.PG_PROC;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +62,10 @@ import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.ParameterDefinition;
 import org.jooq.util.SchemaDefinition;
+import org.jooq.util.postgres.information_schema.tables.Parameters;
+import org.jooq.util.postgres.information_schema.tables.Routines;
+import org.jooq.util.postgres.pg_catalog.tables.PgNamespace;
+import org.jooq.util.postgres.pg_catalog.tables.PgProc;
 
 /**
  * @author Lukas Eder
@@ -72,60 +85,55 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
 	@Override
 	public List<ColumnDefinition> getElements0() throws SQLException {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
-		Long oid = null;
 
-		try {
-		    oid = Long.valueOf(specificName.substring(specificName.lastIndexOf("_") + 1));
-		}
-		catch (Exception ignore) {}
+        Routines r = ROUTINES;
+        Parameters p = PARAMETERS;
+        PgNamespace pg_n = PG_NAMESPACE;
+        PgProc pg_p = PG_PROC;
 
-		if (oid != null) {
-            for (Record record : create().fetch(
+        for (Record record : create().select(
+                r.ROUTINE_NAME,
+                p.PARAMETER_NAME,
+                rowNumber().over(partitionBy(p.SPECIFIC_NAME).orderBy(p.ORDINAL_POSITION)).as(p.ORDINAL_POSITION.getName()),
+                p.DATA_TYPE,
+                p.CHARACTER_MAXIMUM_LENGTH,
+                p.NUMERIC_PRECISION,
+                p.NUMERIC_SCALE
+            )
+            .from(r)
+            .join(p).on(row(r.SPECIFIC_CATALOG, r.SPECIFIC_SCHEMA, r.SPECIFIC_NAME)
+                        .eq(p.SPECIFIC_CATALOG, p.SPECIFIC_SCHEMA, p.SPECIFIC_NAME))
+            .join(pg_n).on(r.SPECIFIC_SCHEMA.eq(pg_n.NSPNAME))
+            .join(pg_p).on(pg_p.PRONAMESPACE.eq(oid(pg_n)))
+                       .and(pg_p.PRONAME.eq(r.ROUTINE_NAME))
+            .where(r.SPECIFIC_NAME.eq(specificName))
+            .and(p.PARAMETER_MODE.ne("IN"))
+            .and(pg_p.PRORETSET)
+            .fetch()
+        ) {
 
-                // [#3375] This query mimicks what SQL Server knows as INFORMATION_SCHEMA.COLUMNS for table-valued
-                // functions, which are really tables with result COLUMNS.
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
+                record.getValue(p.DATA_TYPE),
+                record.getValue(p.CHARACTER_MAXIMUM_LENGTH),
+                record.getValue(p.NUMERIC_PRECISION),
+                record.getValue(p.NUMERIC_SCALE),
+                true,
+                false,
+                null
+            );
 
-                  " SELECT columns.proargname AS column_name,"
-                + "        ROW_NUMBER() OVER(PARTITION BY p.oid ORDER BY o.ordinal) AS ordinal_position,"
-                + "        format_type(t.oid, t.typtypmod) AS data_type,"
-                + "        information_schema._pg_char_max_length(t.oid, t.typtypmod) AS character_maximum_length,"
-                + "        information_schema._pg_numeric_precision(t.oid, t.typtypmod) AS numeric_precision,"
-                + "        information_schema._pg_numeric_scale(t.oid, t.typtypmod) AS numeric_scale,"
-                + "        not(t.typnotnull) AS is_nullable"
-                + " FROM pg_proc p,"
-                + " LATERAL generate_series(1, array_length(p.proargmodes, 1)) o(ordinal),"
-                + " LATERAL (SELECT p.proargnames[o.ordinal], p.proargmodes[o.ordinal], p.proallargtypes[o.ordinal]) columns(proargname, proargmode, proargtype),"
-                + " LATERAL ("
-                + "   SELECT pg_type.oid oid, pg_type.* FROM pg_type WHERE pg_type.oid = columns.proargtype"
-                + " ) t"
-                + " WHERE p.proretset"
-                + " AND columns.proargmode = 't'"
-                + " AND p.oid = ?", oid)
-            ) {
+			ColumnDefinition column = new DefaultColumnDefinition(
+			    getDatabase().getTable(getSchema(), getName()),
+			    record.getValue(p.PARAMETER_NAME),
+			    record.getValue(p.ORDINAL_POSITION),
+			    type,
+			    false,
+			    null
+		    );
 
-                DataTypeDefinition type = new DefaultDataTypeDefinition(
-                    getDatabase(),
-                    getSchema(),
-                    record.getValue("data_type", String.class),
-                    record.getValue("character_maximum_length", Integer.class),
-                    record.getValue("numeric_precision", Integer.class),
-                    record.getValue("numeric_scale", Integer.class),
-                    record.getValue("is_nullable", boolean.class),
-                    false,
-                    null
-                );
-
-    			ColumnDefinition column = new DefaultColumnDefinition(
-    			    getDatabase().getTable(getSchema(), getName()),
-    			    record.getValue("column_name", String.class),
-    			    record.getValue("ordinal_position", int.class),
-    			    type,
-    			    false,
-    			    null
-    		    );
-
-    			result.add(column);
-    		}
+			result.add(column);
 		}
 
 		return result;

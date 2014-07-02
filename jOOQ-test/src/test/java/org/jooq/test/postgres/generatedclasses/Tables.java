@@ -12,6 +12,36 @@ package org.jooq.test.postgres.generatedclasses;
 public class Tables {
 
 	/**
+	 * The table public.f_search_book
+	 */
+	public static final org.jooq.test.postgres.generatedclasses.tables.FSearchBook F_SEARCH_BOOK = org.jooq.test.postgres.generatedclasses.tables.FSearchBook.F_SEARCH_BOOK;
+
+	/**
+	 * The table public.f_tables1
+	 */
+	public static final org.jooq.test.postgres.generatedclasses.tables.FTables1 F_TABLES1 = org.jooq.test.postgres.generatedclasses.tables.FTables1.F_TABLES1;
+
+	/**
+	 * The table public.f_tables2
+	 */
+	public static final org.jooq.test.postgres.generatedclasses.tables.FTables2 F_TABLES2 = org.jooq.test.postgres.generatedclasses.tables.FTables2.F_TABLES2;
+
+	/**
+	 * The table public.f_tables3
+	 */
+	public static final org.jooq.test.postgres.generatedclasses.tables.FTables3 F_TABLES3 = org.jooq.test.postgres.generatedclasses.tables.FTables3.F_TABLES3;
+
+	/**
+	 * The table public.f_tables4
+	 */
+	public static final org.jooq.test.postgres.generatedclasses.tables.FTables4 F_TABLES4 = org.jooq.test.postgres.generatedclasses.tables.FTables4.F_TABLES4;
+
+	/**
+	 * The table public.f_tables5
+	 */
+	public static final org.jooq.test.postgres.generatedclasses.tables.FTables5 F_TABLES5 = org.jooq.test.postgres.generatedclasses.tables.FTables5.F_TABLES5;
+
+	/**
 	 * The table public.t_2781
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.T_2781 T_2781 = org.jooq.test.postgres.generatedclasses.tables.T_2781.T_2781;

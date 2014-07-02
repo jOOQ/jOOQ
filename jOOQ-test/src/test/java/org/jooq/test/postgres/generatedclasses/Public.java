@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 1407093112;
+	private static final long serialVersionUID = -1604588567;
 
 	/**
 	 * The singleton instance of <code>public</code>
@@ -44,6 +44,12 @@ public class Public extends org.jooq.impl.SchemaImpl {
 
 	private final java.util.List<org.jooq.Table<?>> getTables0() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
+			org.jooq.test.postgres.generatedclasses.tables.FSearchBook.F_SEARCH_BOOK,
+			org.jooq.test.postgres.generatedclasses.tables.FTables1.F_TABLES1,
+			org.jooq.test.postgres.generatedclasses.tables.FTables2.F_TABLES2,
+			org.jooq.test.postgres.generatedclasses.tables.FTables3.F_TABLES3,
+			org.jooq.test.postgres.generatedclasses.tables.FTables4.F_TABLES4,
+			org.jooq.test.postgres.generatedclasses.tables.FTables5.F_TABLES5,
 			org.jooq.test.postgres.generatedclasses.tables.T_2781.T_2781,
 			org.jooq.test.postgres.generatedclasses.tables.T_3111.T_3111,
 			org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,

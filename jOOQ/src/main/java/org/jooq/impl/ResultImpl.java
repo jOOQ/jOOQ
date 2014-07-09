@@ -71,6 +71,28 @@ import org.jooq.Converter;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.Record1;
+import org.jooq.Record10;
+import org.jooq.Record11;
+import org.jooq.Record12;
+import org.jooq.Record13;
+import org.jooq.Record14;
+import org.jooq.Record15;
+import org.jooq.Record16;
+import org.jooq.Record17;
+import org.jooq.Record18;
+import org.jooq.Record19;
+import org.jooq.Record2;
+import org.jooq.Record20;
+import org.jooq.Record21;
+import org.jooq.Record22;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.Record5;
+import org.jooq.Record6;
+import org.jooq.Record7;
+import org.jooq.Record8;
+import org.jooq.Record9;
 import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
 import org.jooq.RecordType;
@@ -94,6 +116,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * @author Lukas Eder
  * @author Ivan Dugic
  */
+@SuppressWarnings({"rawtypes", "unchecked" })
 class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     /**
@@ -153,7 +176,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return fields;
     }
 
-    @SuppressWarnings({ "rawtypes" })
     @Override
     public final Row fieldsRow() {
         return new RowImpl(fields);
@@ -222,7 +244,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return get(index).getValue(fieldName, defaultValue);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <T> List<T> getValues(Field<T> field) {
         return (List<T>) getValues(indexOrFail(fieldsRow(), field));
@@ -772,7 +793,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <K> Map<K, R> intoMap(Field<K> key) {
         int index = indexOrFail(fieldsRow(), key);
@@ -787,7 +807,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return map;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <K, V> Map<K, V> intoMap(Field<K> key, Field<V> value) {
         int kIndex = indexOrFail(fieldsRow(), key);
@@ -812,8 +831,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
         Map<Record, R> map = new LinkedHashMap<Record, R>();
         for (R record : this) {
-
-            @SuppressWarnings({ "rawtypes", "unchecked" })
             RecordImpl key = new RecordImpl(keys);
 
             for (Field<?> field : keys) {
@@ -860,7 +877,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return intoMap(key, Utils.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <K, E> Map<K, E> intoMap(Field<K> key, RecordMapper<? super R, E> mapper) {
         int index = indexOrFail(fieldsRow(), key);
@@ -875,7 +891,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return map;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <K> Map<K, Result<R>> intoGroups(Field<K> key) {
         int index = indexOrFail(fieldsRow(), key);
@@ -896,7 +911,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return map;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(Field<K> key, Field<V> value) {
         int kIndex = indexOrFail(fieldsRow(), key);
@@ -928,8 +942,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
         Map<Record, Result<R>> map = new LinkedHashMap<Record, Result<R>>();
         for (R record : this) {
-
-            @SuppressWarnings({ "rawtypes", "unchecked" })
             RecordImpl key = new RecordImpl(keys);
 
             for (Field<?> field : keys) {
@@ -953,7 +965,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return intoGroups(key, Utils.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, RecordMapper<? super R, E> mapper) {
         int index = indexOrFail(fieldsRow(), key);
@@ -987,8 +998,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
         Map<Record, List<E>> map = new LinkedHashMap<Record, List<E>>();
         for (R record : this) {
-
-            @SuppressWarnings({ "rawtypes", "unchecked" })
             RecordImpl key = new RecordImpl(keys);
 
             for (Field<?> field : keys) {
@@ -1026,7 +1035,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return list.toArray((Object[]) Array.newInstance(type, list.size()));
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <T> T[] intoArray(int fieldIndex, Class<? extends T> type) {
         return (T[]) Convert.convertArray(intoArray(fieldIndex), type);
@@ -1044,7 +1052,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return list.toArray((Object[]) Array.newInstance(type, list.size()));
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <T> T[] intoArray(String fieldName, Class<? extends T> type) {
         return (T[]) Convert.convertArray(intoArray(fieldName), type);
@@ -1055,13 +1062,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return Convert.convertArray(intoArray(fieldName), converter);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <T> T[] intoArray(Field<T> field) {
         return getValues(field).toArray((T[]) Array.newInstance(field.getType(), 0));
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <T> T[] intoArray(Field<?> field, Class<? extends T> type) {
         return (T[]) Convert.convertArray(intoArray(field), type);
@@ -1071,6 +1076,130 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     public final <T, U> U[] intoArray(Field<T> field, Converter<? super T, U> converter) {
         return Convert.convertArray(intoArray(field), converter);
     }
+
+    @Override
+    public final Result<Record> into(Field<?>... f) {
+        Result<Record> result = new ResultImpl<Record>(Utils.configuration(this), f);
+
+        for (Record record : this)
+            result.add(record.into(f));
+
+        return result;
+    }
+
+    // [jooq-tools] START [into-fields]
+
+/**/@Override
+    public final <T1> Result<Record1<T1>> into(Field<T1> field1) {
+        return (Result) into(new Field[] { field1 });
+    }
+
+/**/@Override
+    public final <T1, T2> Result<Record2<T1, T2>> into(Field<T1> field1, Field<T2> field2) {
+        return (Result) into(new Field[] { field1, field2 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3> Result<Record3<T1, T2, T3>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
+        return (Result) into(new Field[] { field1, field2, field3 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4> Result<Record4<T1, T2, T3, T4>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
+        return (Result) into(new Field[] { field1, field2, field3, field4 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4, T5> Result<Record5<T1, T2, T3, T4, T5>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
+        return (Result) into(new Field[] { field1, field2, field3, field4, field5 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4, T5, T6> Result<Record6<T1, T2, T3, T4, T5, T6>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
+        return (Result) into(new Field[] { field1, field2, field3, field4, field5, field6 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4, T5, T6, T7> Result<Record7<T1, T2, T3, T4, T5, T6, T7>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
+        return (Result) into(new Field[] { field1, field2, field3, field4, field5, field6, field7 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8> Result<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
+        return (Result) into(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9> Result<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
+        return (Result) into(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Result<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
+        return (Result) into(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Result<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
+        return (Result) into(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Result<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
+        return (Result) into(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Result<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
+        return (Result) into(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Result<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
+        return (Result) into(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Result<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
+        return (Result) into(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Result<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
+        return (Result) into(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Result<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
+        return (Result) into(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Result<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
+        return (Result) into(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Result<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
+        return (Result) into(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Result<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
+        return (Result) into(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Result<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
+        return (Result) into(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
+    }
+
+/**/@Override
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Result<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
+        return (Result) into(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
+    }
+
+// [jooq-tools] END [into-fields]
 
     @Override
     public final <E> List<E> into(Class<? extends E> type) {
@@ -1125,13 +1254,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return sortAsc(field, new NaturalComparator<T>());
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public final Result<R> sortAsc(int fieldIndex) {
         return sortAsc(fieldIndex, new NaturalComparator());
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public final Result<R> sortAsc(String fieldName) {
         return sortAsc(fieldName, new NaturalComparator());
@@ -1142,7 +1269,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return sortAsc(indexOrFail(fieldsRow(), field), comparator);
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final Result<R> sortAsc(int fieldIndex, Comparator<?> comparator) {
         return sortAsc(new RecordComparator(fieldIndex, comparator));
@@ -1164,13 +1290,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return sortAsc(field, Collections.reverseOrder(new NaturalComparator<T>()));
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final Result<R> sortDesc(int fieldIndex) {
         return sortAsc(fieldIndex, Collections.reverseOrder(new NaturalComparator()));
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final Result<R> sortDesc(String fieldName) {
         return sortAsc(fieldName, Collections.reverseOrder(new NaturalComparator()));
@@ -1232,7 +1356,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             this.comparator = comparator;
         }
 
-        @SuppressWarnings("unchecked")
         @Override
         public int compare(R record1, R record2) {
             return comparator.compare((T) record1.getValue(fieldIndex), (T) record2.getValue(fieldIndex));
@@ -1273,7 +1396,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return records.hashCode();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

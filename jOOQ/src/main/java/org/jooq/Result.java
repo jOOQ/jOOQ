@@ -46,6 +46,8 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Generated;
+
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
@@ -893,6 +895,239 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      */
     <T, U> U[] intoArray(Field<T> field, Converter<? super T, U> converter) throws IllegalArgumentException,
         DataTypeException;
+
+    /**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    Result<Record> into(Field<?>... fields);
+
+    // [jooq-tools] START [into-fields]
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1> Result<Record1<T1>> into(Field<T1> field1);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2> Result<Record2<T1, T2>> into(Field<T1> field1, Field<T2> field2);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3> Result<Record3<T1, T2, T3>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4> Result<Record4<T1, T2, T3, T4>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4, T5> Result<Record5<T1, T2, T3, T4, T5>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4, T5, T6> Result<Record6<T1, T2, T3, T4, T5, T6>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4, T5, T6, T7> Result<Record7<T1, T2, T3, T4, T5, T6, T7>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4, T5, T6, T7, T8> Result<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9> Result<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Result<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Result<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Result<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Result<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Result<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Result<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Result<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Result<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Result<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Result<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Result<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Result<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
+
+/**//**
+     * Copy all records from this result into a new result with new records
+     * holding only a subset of the previous fields.
+     *
+     * @param fields The fields of the new records
+     * @return The new result
+     */
+    @Generated("This class was generated using jOOQ-tools")
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Result<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
+
+// [jooq-tools] END [into-fields]
 
     /**
      * Map resulting records onto a custom type.

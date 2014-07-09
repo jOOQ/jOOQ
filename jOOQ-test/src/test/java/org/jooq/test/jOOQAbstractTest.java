@@ -147,6 +147,7 @@ import org.jooq.test.all.testcases.OrderByTests;
 import org.jooq.test.all.testcases.PlainSQLTests;
 import org.jooq.test.all.testcases.PredicateTests;
 import org.jooq.test.all.testcases.RecordListenerTests;
+import org.jooq.test.all.testcases.RecordMapperTests;
 import org.jooq.test.all.testcases.RecordTests;
 import org.jooq.test.all.testcases.ReferentialTests;
 import org.jooq.test.all.testcases.RenderAndBindTests;
@@ -1259,7 +1260,7 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testFetchGroupsMapper() throws Exception {
-        new FetchTests(this).testFetchGroupsMapper();
+        new RecordMapperTests(this).testFetchGroupsMapper();
     }
 
     @Test
@@ -1804,17 +1805,17 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testFetchIntoRecordHandler() throws Exception {
-        new FetchTests(this).testFetchIntoRecordHandler();
+        new RecordMapperTests(this).testFetchIntoRecordHandler();
     }
 
     @Test
     public void testFetchIntoRecordMapper() throws Exception {
-        new FetchTests(this).testFetchIntoRecordMapper();
+        new RecordMapperTests(this).testFetchIntoRecordMapper();
     }
 
     @Test
     public void testFetchIntoWithRecordMapperProvider() throws Exception {
-        new FetchTests(this).testFetchIntoWithRecordMapperProvider();
+        new RecordMapperTests(this).testFetchIntoWithRecordMapperProvider();
     }
 
     @Test

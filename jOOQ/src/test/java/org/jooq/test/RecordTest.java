@@ -41,8 +41,11 @@
 
 package org.jooq.test;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import org.jooq.Record1;
 import org.jooq.test.data.Table1;
 import org.jooq.test.data.Table1Record;
 import org.jooq.test.data.Table2;
@@ -111,5 +114,25 @@ public class RecordTest extends AbstractTest {
 
         r4b.setValue(Table4.FIELD_ARRAY4, new Object[] { 1, 1 });
         assertEquals(-1, r4a.compareTo(r4b));
+    }
+
+    @Test
+    public void testRecordInto() {
+        Table1Record r1 = create.newRecord(Table1.TABLE1);
+        r1.setValue(Table1.FIELD_ID1, 1);
+        r1.setValue(Table1.FIELD_NAME1, "x");
+
+        Record1<Integer> r2 = r1.into(Table1.FIELD_ID1);
+        assertEquals(1, r2.size());
+        assertEquals(Table1.FIELD_ID1, r2.field(0));
+        assertEquals(1, (int) r2.value1());
+        assertTrue(r2.changed());
+
+        r1.changed(false);
+        r2 = r1.into(Table1.FIELD_ID1);
+        assertEquals(1, r2.size());
+        assertEquals(Table1.FIELD_ID1, r2.field(0));
+        assertEquals(1, (int) r2.value1());
+        assertFalse(r2.changed());
     }
 }

@@ -46,23 +46,25 @@ import org.jooq.Constants
  * @author Lukas Eder
  */
 class Records extends Generators {
-    
+
     def static void main(String[] args) {
         val records = new Records();
         records.generateRecords();
         records.generateRecordImpl();
+        records.generateRecordInto();
+        records.generateResultInto();
     }
-    
+
     def generateRecords() {
         for (degree : (1..Constants::MAX_ROW_DEGREE)) {
             val out = new StringBuilder();
-            
+
             out.append('''
             «classHeader»
             package org.jooq;
 
             import javax.annotation.Generated;
-            
+
             /**
              * A model type for a records with degree <code>«degree»</code>
              *
@@ -75,19 +77,19 @@ class Records extends Generators {
                 // ------------------------------------------------------------------------
                 // Row value expressions
                 // ------------------------------------------------------------------------
-            
+
                 /**
                  * Get this record's fields as a {@link Row«degree»}.
                  */
                 @Override
                 Row«degree»<«TN(degree)»> fieldsRow();
-            
+
                 /**
                  * Get this record's values as a {@link Row«degree»}.
                  */
                 @Override
                 Row«degree»<«TN(degree)»> valuesRow();
-            
+
                 // ------------------------------------------------------------------------
                 // Field accessors
                 // ------------------------------------------------------------------------
@@ -121,31 +123,31 @@ class Records extends Generators {
                  * Set all values.
                  */
                 Record«recTypeSuffix(degree)» values(«TN_tn(degree)»);
-            
+
             }
             ''');
-             
+
             write("org.jooq.Record" + degree, out);
         }
     }
-    
+
     def generateRecordImpl() {
         val out = new StringBuilder();
-        
+
         out.append('''
         «classHeader»
         package org.jooq.impl;
-        
+
         import java.util.Collection;
-        
+
         import javax.annotation.Generated;
-        
+
         import org.jooq.Field;
         import org.jooq.Record;
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
         import org.jooq.Record«degree»;
         «ENDFOR»
-        
+
         /**
          * A general purpose record, typically used for ad-hoc types.
          * <p>
@@ -159,25 +161,25 @@ class Records extends Generators {
         @SuppressWarnings({ "unchecked", "rawtypes" })
         class RecordImpl<«TN(Constants::MAX_ROW_DEGREE)»> extends AbstractRecord
         implements
-        
+
             // This record implementation implements all record types. Type-safety is
             // being checked through the type-safe API. No need for further checks here
             «FOR degree : (1..Constants::MAX_ROW_DEGREE) SEPARATOR ','»
             Record«degree»<«TN(degree)»>«IF degree == Constants::MAX_ROW_DEGREE» {«ENDIF»
             «ENDFOR»
-        
+
             /**
              * Generated UID
              */
             private static final long serialVersionUID = -2201346180421463830L;
-        
+
             /**
              * Create a new general purpose record
              */
             public RecordImpl(Field<?>... fields) {
                 super(fields);
             }
-        
+
             /**
              * Create a new general purpose record
              */
@@ -188,12 +190,12 @@ class Records extends Generators {
             // ------------------------------------------------------------------------
             // XXX: Type-safe Record APIs
             // ------------------------------------------------------------------------
-        
+
             @Override
             public RowImpl<«TN(Constants::MAX_ROW_DEGREE)»> fieldsRow() {
                 return fields;
             }
-        
+
             @Override
             public final RowImpl<«TN(Constants::MAX_ROW_DEGREE)»> valuesRow() {
                 return new RowImpl(Utils.fields(intoArray(), fields.fields()));
@@ -229,7 +231,73 @@ class Records extends Generators {
             «ENDFOR»
         }
         ''');
-        
+
         write("org.jooq.impl.RecordImpl", out);
+    }
+
+    def generateRecordInto() {
+        val outAPI = new StringBuilder();
+        val outImpl = new StringBuilder();
+
+        outAPI.append('''
+        «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+
+        /**//**
+             * Copy this record into a new record holding only a subset of the previous
+             * fields.
+             *
+             * @return The new record
+             * @see #into(Record)
+             */
+            «generatedAnnotation»
+            <«TN(degree)»> Record«degree»<«TN(degree)»> into(«Field_TN_fieldn(degree)»);
+        «ENDFOR»
+        ''')
+
+        outImpl.append('''
+        «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+
+        /**/@Override
+            public final <«TN(degree)»> Record«degree»<«TN(degree)»> into(«Field_TN_fieldn(degree)») {
+                return (Record«degree») into(new Field[] { «fieldn(degree)» });
+            }
+        «ENDFOR»
+        ''')
+
+        insert("org.jooq.Record", outAPI, "into-fields");
+        insert("org.jooq.impl.AbstractRecord", outImpl, "into-fields");
+    }
+
+    def generateResultInto() {
+        val outAPI = new StringBuilder();
+        val outImpl = new StringBuilder();
+
+        outAPI.append('''
+        «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+
+        /**//**
+             * Copy all records from this result into a new result with new records
+             * holding only a subset of the previous fields.
+             *
+             * @param fields The fields of the new records
+             * @return The new result
+             */
+            «generatedAnnotation»
+            <«TN(degree)»> Result<Record«degree»<«TN(degree)»>> into(«Field_TN_fieldn(degree)»);
+        «ENDFOR»
+        ''')
+
+        outImpl.append('''
+        «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+
+        /**/@Override
+            public final <«TN(degree)»> Result<Record«degree»<«TN(degree)»>> into(«Field_TN_fieldn(degree)») {
+                return (Result) into(new Field[] { «fieldn(degree)» });
+            }
+        «ENDFOR»
+        ''')
+
+        insert("org.jooq.Result", outAPI, "into-fields");
+        insert("org.jooq.impl.ResultImpl", outImpl, "into-fields");
     }
 }

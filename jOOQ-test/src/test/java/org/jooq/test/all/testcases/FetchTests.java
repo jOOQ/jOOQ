@@ -46,7 +46,6 @@ import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.val;
@@ -70,26 +69,19 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
-import java.util.Queue;
 
 import org.jooq.AttachableInternal;
 import org.jooq.Cursor;
-import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
-import org.jooq.RecordHandler;
-import org.jooq.RecordMapper;
-import org.jooq.RecordMapperProvider;
-import org.jooq.RecordType;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Select;
@@ -1422,139 +1414,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Collections.nCopies(4, null), result.getValues(BookTable.UNMATCHED));
     }
 
-    public void testFetchIntoRecordHandler() throws Exception {
-
-        // Test a simple query with typed records
-        // --------------------------------------
-        final Queue<Integer> ids = new LinkedList<Integer>();
-        final Queue<String> titles = new LinkedList<String>();
-
-        ids.addAll(BOOK_IDS);
-        titles.addAll(BOOK_TITLES);
-
-        create().selectFrom(TBook())
-                .orderBy(TBook_ID())
-                .fetchInto(new RecordHandler<B>() {
-                    @Override
-                    public void next(B record) {
-                        assertEquals(ids.poll(), record.getValue(TBook_ID()));
-                        assertEquals(titles.poll(), record.getValue(TBook_TITLE()));
-                    }
-                });
-
-        assertTrue(ids.isEmpty());
-        assertTrue(titles.isEmpty());
-
-        // Test lazy fetching
-        // --------------------------------------
-        ids.addAll(BOOK_IDS);
-        titles.addAll(BOOK_TITLES);
-
-        create().selectFrom(TBook())
-                .orderBy(TBook_ID())
-                .fetchLazy()
-                .fetchInto(new RecordHandler<B>() {
-                    @Override
-                    public void next(B record) {
-                        assertEquals(ids.poll(), record.getValue(TBook_ID()));
-                        assertEquals(titles.poll(), record.getValue(TBook_TITLE()));
-                    }
-                });
-
-        assertTrue(ids.isEmpty());
-        assertTrue(titles.isEmpty());
-
-        // Test a generic query with any records
-        // -------------------------------------
-        final Queue<Integer> authorIDs = new LinkedList<Integer>();
-        final Queue<Integer> count = new LinkedList<Integer>();
-
-        authorIDs.addAll(Arrays.asList(1, 2));
-        count.addAll(Arrays.asList(2, 2));
-
-        create().select(TBook_AUTHOR_ID(), count())
-                .from(TBook())
-                .groupBy(TBook_AUTHOR_ID())
-                .orderBy(TBook_AUTHOR_ID())
-                .fetchInto(new RecordHandler<Record>() {
-                    @Override
-                    public void next(Record record) {
-                        assertEquals(authorIDs.poll(), record.getValue(TBook_AUTHOR_ID()));
-                        assertEquals(count.poll(), record.getValue(count()));
-                    }
-                });
-    }
-
-    public void testFetchIntoRecordMapper() throws Exception {
-        assertEquals(BOOK_IDS,
-        create().selectFrom(TBook())
-                .orderBy(TBook_ID())
-                .fetch(new RecordMapper<B, Integer>() {
-                    @Override
-                    public Integer map(B record) {
-                        return record.getValue(TBook_ID());
-                    }
-                }));
-
-        assertEquals(BOOK_TITLES,
-        create().selectFrom(TBook())
-                .orderBy(TBook_ID())
-                .fetch(new RecordMapper<Record, String>() {
-                    @Override
-                    public String map(Record record) {
-                        return record.getValue(TBook_TITLE());
-                    }
-                }));
-    }
-
-    @SuppressWarnings("serial")
-    static class NoRecordMapperAvailableException extends RuntimeException {}
-
-    @SuppressWarnings("unchecked")
-    public void testFetchIntoWithRecordMapperProvider() throws Exception {
-        DSLContext create = create(create().configuration().derive(
-            new RecordMapperProvider() {
-                @Override
-                public <R extends Record, E> RecordMapper<R, E> provide(RecordType<R> rowType, Class<? extends E> type) {
-                    if (type == Integer.class) {
-                        return record -> (E) record.getValue(TBook_ID());
-                    }
-
-                    if (type == String.class && rowType.field(TBook_TITLE()) != null) {
-                        return record -> (E) record.getValue(TBook_TITLE());
-                    }
-
-                    throw new NoRecordMapperAvailableException();
-                }
-            }
-        ));
-
-        assertEquals(BOOK_IDS,
-        create.selectFrom(TBook())
-              .orderBy(TBook_ID())
-              .fetchInto(Integer.class));
-
-        assertEquals(BOOK_TITLES,
-        create.selectFrom(TBook())
-              .orderBy(TBook_ID())
-              .fetchInto(String.class));
-
-        try {
-            create.selectFrom(TBook())
-                  .fetchInto(Object.class);
-            fail();
-        }
-        catch (NoRecordMapperAvailableException expected) {}
-
-        try {
-            create.select(TBook_ID())
-                  .from(TBook())
-                  .fetchInto(String.class);
-            fail();
-        }
-        catch (NoRecordMapperAvailableException expected) {}
-    }
-
     public void testFetchResultSet() throws Exception {
         for (int i = 0; i < 2; i++) {
             // Fetching ResultSets into Results
@@ -2207,91 +2066,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(keyList.getValue(1), on(result.get(0)).call("getLanguageId").get());
             assertEquals(keyList.getValue(2), on(result.get(0)).call("getTitle").get());
         }
-    }
-
-    public void testFetchGroupsMapper() throws Exception {
-        RecordMapper<Record, String> bookIdMapper = new RecordMapper<Record, String>() {
-            @Override
-            public String map(Record record) {
-                return record.getValue(TBook_ID(), String.class);
-            }
-        };
-        RecordMapper<Record, String> authorIdMapper = new RecordMapper<Record, String>() {
-            @Override
-            public String map(Record record) {
-                return record.getValue(TBook_AUTHOR_ID(), String.class);
-            }
-        };
-
-        Map<Integer, List<String>> groups1 =
-        create().select(TBook_AUTHOR_ID(), TBook_ID())
-                .from(TBook())
-                .orderBy(TBook_AUTHOR_ID(), TBook_ID())
-                .fetchGroups(TBook_AUTHOR_ID(), bookIdMapper);
-
-        assertEquals(asList(1, 2), new ArrayList<Integer>(groups1.keySet()));
-        assertEquals(asList("1", "2"), groups1.get(1));
-        assertEquals(asList("3", "4"), groups1.get(2));
-
-        Map<Record, List<String>> groups2 =
-        create().select(TBook_AUTHOR_ID(), TBook_ID())
-                .from(TBook())
-                .orderBy(TBook_AUTHOR_ID(), TBook_ID())
-                .fetchGroups(new Field[] {
-                    TBook_ID(),
-                    TBook_AUTHOR_ID()
-                }, bookIdMapper);
-
-        assertEquals(4, groups2.size());
-        assertEquals(1, (int) new ArrayList<Record>(groups2.keySet()).get(0).getValue(TBook_ID()));
-        assertEquals(2, (int) new ArrayList<Record>(groups2.keySet()).get(1).getValue(TBook_ID()));
-        assertEquals(3, (int) new ArrayList<Record>(groups2.keySet()).get(2).getValue(TBook_ID()));
-        assertEquals(4, (int) new ArrayList<Record>(groups2.keySet()).get(3).getValue(TBook_ID()));
-        assertEquals(1, (int) new ArrayList<Record>(groups2.keySet()).get(0).getValue(TBook_AUTHOR_ID()));
-        assertEquals(1, (int) new ArrayList<Record>(groups2.keySet()).get(1).getValue(TBook_AUTHOR_ID()));
-        assertEquals(2, (int) new ArrayList<Record>(groups2.keySet()).get(2).getValue(TBook_AUTHOR_ID()));
-        assertEquals(2, (int) new ArrayList<Record>(groups2.keySet()).get(3).getValue(TBook_AUTHOR_ID()));
-        assertEquals("1", new ArrayList<List<String>>(groups2.values()).get(0).get(0));
-        assertEquals("2", new ArrayList<List<String>>(groups2.values()).get(1).get(0));
-        assertEquals("3", new ArrayList<List<String>>(groups2.values()).get(2).get(0));
-        assertEquals("4", new ArrayList<List<String>>(groups2.values()).get(3).get(0));
-        assertEquals(1, new ArrayList<List<String>>(groups2.values()).get(0).size());
-        assertEquals(1, new ArrayList<List<String>>(groups2.values()).get(1).size());
-        assertEquals(1, new ArrayList<List<String>>(groups2.values()).get(2).size());
-        assertEquals(1, new ArrayList<List<String>>(groups2.values()).get(3).size());
-
-
-        Map<Integer, String> maps1 =
-        create().select(TBook_AUTHOR_ID(), TBook_ID())
-                .from(TBook())
-                .orderBy(TBook_AUTHOR_ID(), TBook_ID())
-                .fetchMap(TBook_ID(), authorIdMapper);
-
-        assertEquals(asList(1, 2, 3, 4), new ArrayList<Integer>(maps1.keySet()));
-        assertEquals(asList("1", "1", "2", "2"), new ArrayList<String>(maps1.values()));
-
-        Map<List<?>, String> maps2 =
-        create().select(TBook_AUTHOR_ID(), TBook_ID())
-                .from(TBook())
-                .orderBy(TBook_AUTHOR_ID(), TBook_ID())
-                .fetchMap(new Field[] {
-                    TBook_ID(),
-                    TBook_AUTHOR_ID()
-                }, bookIdMapper);
-
-        assertEquals(4, maps2.size());
-        assertEquals(1, new ArrayList<List<?>>(maps2.keySet()).get(0).get(0));
-        assertEquals(2, new ArrayList<List<?>>(maps2.keySet()).get(1).get(0));
-        assertEquals(3, new ArrayList<List<?>>(maps2.keySet()).get(2).get(0));
-        assertEquals(4, new ArrayList<List<?>>(maps2.keySet()).get(3).get(0));
-        assertEquals(1, new ArrayList<List<?>>(maps2.keySet()).get(0).get(1));
-        assertEquals(1, new ArrayList<List<?>>(maps2.keySet()).get(1).get(1));
-        assertEquals(2, new ArrayList<List<?>>(maps2.keySet()).get(2).get(1));
-        assertEquals(2, new ArrayList<List<?>>(maps2.keySet()).get(3).get(1));
-        assertEquals("1", new ArrayList<String>(maps2.values()).get(0));
-        assertEquals("2", new ArrayList<String>(maps2.values()).get(1));
-        assertEquals("3", new ArrayList<String>(maps2.values()).get(2));
-        assertEquals("4", new ArrayList<String>(maps2.values()).get(3));
     }
 
     public void testFetchWithMaxRows() throws Exception {

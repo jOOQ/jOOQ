@@ -43,6 +43,10 @@ DROP TABLE t_3342/
 DROP TABLE t_identity/
 DROP TABLE t_identity_pk/
 
+DROP DOMAIN d_3382/
+
+CREATE DOMAIN d_3382 AS INT NOT NULL/
+
 
 CREATE TABLE t_dates (
   id int,
@@ -228,9 +232,9 @@ CREATE TABLE x_unused (
 /
 
 CREATE TABLE t_exotic_types (
-  ID INT NOT NULL,
+  ID d_3382 NOT NULL,
   UU CHAR(36),
-  
+
   CONSTRAINT pk_t_exotic_types PRIMARY KEY(ID)
 );
 /
@@ -283,7 +287,7 @@ CREATE TABLE x_test_case_85 (
 CREATE TABLE x_test_case_2025 (
   ref_id int NOT NULL,
   ref_name VARCHAR(10) NOT NULL,
-  
+
   CONSTRAINT fk_x_test_case_2025_1 FOREIGN KEY(ref_id) REFERENCES x_test_case_85(ID),
   CONSTRAINT fk_x_test_case_2025_2 FOREIGN KEY(ref_id) REFERENCES x_test_case_71(ID),
   CONSTRAINT fk_x_test_case_2025_3 FOREIGN KEY(ref_id, ref_name) REFERENCES X_UNUSED(id, name)

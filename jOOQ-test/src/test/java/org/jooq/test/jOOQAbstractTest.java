@@ -158,6 +158,7 @@ import org.jooq.test.all.testcases.RowValueExpressionTests;
 import org.jooq.test.all.testcases.SchemaAndMappingTests;
 import org.jooq.test.all.testcases.SelectTests;
 import org.jooq.test.all.testcases.StatementTests;
+import org.jooq.test.all.testcases.StreamsTest;
 import org.jooq.test.all.testcases.TableFunctionTests;
 import org.jooq.test.all.testcases.ThreadSafetyTests;
 import org.jooq.test.all.testcases.TransactionTests;
@@ -2991,5 +2992,15 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testTransactionsWithJDBCNestedWithoutSavepoints() throws Exception {
         new TransactionTests(this).testTransactionsWithJDBCNestedWithoutSavepoints();
+    }
+
+    @Test
+    public void testStreamsCollectRecords() {
+        new StreamsTest(this).testStreamsCollectRecords();
+    }
+
+    @Test
+    public void testStreamsCollectPOJOs() {
+        new StreamsTest(this).testStreamsCollectPOJOs();
     }
 }

@@ -61,7 +61,6 @@ import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
-import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
 import org.jooq.RecordType;
@@ -109,12 +108,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         create().selectFrom(TBook())
                 .orderBy(TBook_ID())
-                .fetchInto(new RecordHandler<B>() {
-                    @Override
-                    public void next(B record) {
-                        assertEquals(ids.poll(), record.getValue(TBook_ID()));
-                        assertEquals(titles.poll(), record.getValue(TBook_TITLE()));
-                    }
+                .fetchInto(record -> {
+                    assertEquals(ids.poll(), record.getValue(TBook_ID()));
+                    assertEquals(titles.poll(), record.getValue(TBook_TITLE()));
                 });
 
         assertTrue(ids.isEmpty());
@@ -128,12 +124,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create().selectFrom(TBook())
                 .orderBy(TBook_ID())
                 .fetchLazy()
-                .fetchInto(new RecordHandler<B>() {
-                    @Override
-                    public void next(B record) {
-                        assertEquals(ids.poll(), record.getValue(TBook_ID()));
-                        assertEquals(titles.poll(), record.getValue(TBook_TITLE()));
-                    }
+                .fetchInto(record -> {
+                    assertEquals(ids.poll(), record.getValue(TBook_ID()));
+                    assertEquals(titles.poll(), record.getValue(TBook_TITLE()));
                 });
 
         assertTrue(ids.isEmpty());
@@ -151,12 +144,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .from(TBook())
                 .groupBy(TBook_AUTHOR_ID())
                 .orderBy(TBook_AUTHOR_ID())
-                .fetchInto(new RecordHandler<Record>() {
-                    @Override
-                    public void next(Record record) {
-                        assertEquals(authorIDs.poll(), record.getValue(TBook_AUTHOR_ID()));
-                        assertEquals(count.poll(), record.getValue(count()));
-                    }
+                .fetchInto(record -> {
+                    assertEquals(authorIDs.poll(), record.getValue(TBook_AUTHOR_ID()));
+                    assertEquals(count.poll(), record.getValue(count()));
                 });
     }
 
@@ -164,22 +154,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(BOOK_IDS,
         create().selectFrom(TBook())
                 .orderBy(TBook_ID())
-                .fetch(new RecordMapper<B, Integer>() {
-                    @Override
-                    public Integer map(B record) {
-                        return record.getValue(TBook_ID());
-                    }
-                }));
+                .fetch(record -> record.getValue(TBook_ID())));
 
         assertEquals(BOOK_TITLES,
         create().selectFrom(TBook())
                 .orderBy(TBook_ID())
-                .fetch(new RecordMapper<Record, String>() {
-                    @Override
-                    public String map(Record record) {
-                        return record.getValue(TBook_TITLE());
-                    }
-                }));
+                .fetch(record -> record.getValue(TBook_TITLE())));
     }
 
     @SuppressWarnings("serial")
@@ -231,18 +211,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testFetchGroupsMapper() throws Exception {
-        RecordMapper<Record, String> bookIdMapper = new RecordMapper<Record, String>() {
-            @Override
-            public String map(Record record) {
-                return record.getValue(TBook_ID(), String.class);
-            }
-        };
-        RecordMapper<Record, String> authorIdMapper = new RecordMapper<Record, String>() {
-            @Override
-            public String map(Record record) {
-                return record.getValue(TBook_AUTHOR_ID(), String.class);
-            }
-        };
+        RecordMapper<Record, String> bookIdMapper = record -> record.getValue(TBook_ID(), String.class);
+        RecordMapper<Record, String> authorIdMapper = record -> record.getValue(TBook_AUTHOR_ID(), String.class);
 
         Map<Integer, List<String>> groups1 =
         create().select(TBook_AUTHOR_ID(), TBook_ID())

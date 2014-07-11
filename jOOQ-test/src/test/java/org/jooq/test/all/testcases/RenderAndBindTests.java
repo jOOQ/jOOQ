@@ -483,6 +483,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testRenderNameStyle() throws Exception {
+        // [#3360] With default RenderNameStyle.QUOTED, we should be sure that special characters
+        // are properly escaped, even in SQLite:
+        assertEquals(
+            "test with whitespace",
+            create().select(val("test with whitespace").as("test with whitespace"))
+                    .fetchOne()
+                    .value1());
+
         Select<?> s =
         create(new Settings().withRenderNameStyle(RenderNameStyle.AS_IS))
             .select(TBook_ID(), TBook_TITLE(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())

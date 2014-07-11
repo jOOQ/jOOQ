@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
@@ -84,9 +85,10 @@ import org.jooq.tools.StringUtils;
  */
 class DefaultRenderContext extends AbstractContext<RenderContext> implements RenderContext {
 
-    private static final JooqLogger  log         = JooqLogger.getLogger(DefaultRenderContext.class);
+    private static final JooqLogger  log                = JooqLogger.getLogger(DefaultRenderContext.class);
 
-    private static final Pattern     NEWLINE     = Pattern.compile("[\\n\\r]");
+    private static final Pattern     IDENTIFIER_PATTERN = Pattern.compile("[A-Za-z][A-Za-z0-9_]*");
+    private static final Pattern     NEWLINE            = Pattern.compile("[\\n\\r]");
     private static final Set<String> SQLITE_KEYWORDS;
 
     private final StringBuilder      sql;
@@ -394,18 +396,21 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
         // Quoting is needed when explicitly requested...
         boolean needsQuote =
-            (QUOTED == cachedRenderNameStyle
 
-        // [#2367] ... but in SQLite, quoting "normal" literals is generally
-        // asking for trouble, as SQLite bends the rules here, see
-        // http://www.sqlite.org/lang_keywords.html for details ...
-            && family != SQLDialect.SQLITE)
+            // [#2367] ... but in SQLite, quoting "normal" literals is generally
+            // asking for trouble, as SQLite bends the rules here, see
+            // http://www.sqlite.org/lang_keywords.html for details ...
+            (family != SQLITE && QUOTED == cachedRenderNameStyle)
 
         ||
 
-        // [#2367] ... yet, do quote when an identifier is a SQLite keyword
-            (family == SQLDialect.SQLITE
-            && SQLITE_KEYWORDS.contains(literal.toUpperCase()));
+            // [#2367] ... yet, do quote when an identifier is a SQLite keyword
+            (family == SQLITE && SQLITE_KEYWORDS.contains(literal.toUpperCase()))
+
+        ||
+
+            // [#1982] [#3360] ... yet, do quote when an identifier contains special characters
+            (family == SQLITE && !IDENTIFIER_PATTERN.matcher(literal).matches());
 
         if (!needsQuote) {
             if (LOWER == cachedRenderNameStyle) {

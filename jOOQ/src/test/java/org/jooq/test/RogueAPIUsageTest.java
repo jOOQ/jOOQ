@@ -38,63 +38,36 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq;
+package org.jooq.test;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.jooq.Condition;
+import org.jooq.Field;
+import org.jooq.impl.DSL;
+
+import org.junit.Test;
 
 /**
- * Some publicly available constants used in jOOQ
+ * Test cases in this class check if the jOOQ API implementation defends itself against "rogue API usage".
+ * <p>
+ * By "rogue API usage", we mean that for some reason (e.g. API flaws, such as [#3347], or raw types, etc.), a "wrong" overloaded method is invoked
+ * leading to misbehaviour that is not immediately visible from the call-site's API usage.
  *
  * @author Lukas Eder
  */
-public final class Constants {
+public class RogueAPIUsageTest extends AbstractTest {
 
-    /**
-     * The latest jOOQ minor version.
-     */
-    public static final String MINOR_VERSION  = "3.4";
+    @Test
+    public void testInPredicate() {
+        Field<Object> a = DSL.field("a");
+        List<String> values = Arrays.asList("a", "b");
 
-    /**
-     * The latest jOOQ version.
-     * <p>
-     * This is the same as {@link #MINOR_VERSION}, but it may include patch
-     * version suffixes.
-     */
-    public static final String VERSION        = "3.4.1";
+        Condition c = a.in(new Object[] { values });
 
-    /**
-     * The latest jOOQ full version.
-     * <p>
-     * This is the same as {@link #VERSION}, but it may include release
-     * candidate and other suffixes.
-     */
-    public static final String FULL_VERSION   = "3.4.1";
-
-    /**
-     * The current jooq-runtime XSD file name.
-     */
-    public static final String XSD_RUNTIME    = "jooq-runtime-3.3.0.xsd";
-
-    /**
-     * The current jooq-runtime XML namespace
-     */
-    public static final String NS_RUNTIME     = "http://www.jooq.org/xsd" + XSD_RUNTIME;
-
-    /**
-     * The current jooq-codegen XSD file name.
-     */
-    public static final String XSD_CODEGEN    = "jooq-codegen-3.4.0.xsd";
-
-    /**
-     * The current jooq-codegen XML namespace.
-     */
-    public static final String NS_CODEGEN     = "http://www.jooq.org/xsd/" + XSD_CODEGEN;
-
-    /**
-     * The maximum degree of {@link Row} and {@link Record} subtypes
-     */
-    public static final int    MAX_ROW_DEGREE = 22;
-
-    /**
-     * No further instances
-     */
-    private Constants() {}
+        assertEquals("a in (?, ?)", create.render(c));
+        assertEquals("a in ('a', 'b')", create.renderInlined(c));
+        assertEquals("a in (:1, :2)", create.renderNamedParams(c));
+    }
 }

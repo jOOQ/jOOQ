@@ -49,6 +49,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.impl.DSL;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultColumnDefinition;
@@ -79,7 +80,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                 r.RDB$FIELD_NAME.trim(),
                 r.RDB$DESCRIPTION,
                 r.RDB$DEFAULT_VALUE,
-                r.RDB$NULL_FLAG.nvl((short) 0),
+                DSL.bitOr(r.RDB$NULL_FLAG.nvl((short) 0), f.RDB$NULL_FLAG.nvl((short) 0)).as(r.RDB$NULL_FLAG.getName()),
                 r.RDB$DEFAULT_SOURCE,
                 r.RDB$FIELD_POSITION,
 
@@ -140,7 +141,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     record.getValue("FIELD_LENGTH", short.class),
                     record.getValue(f.RDB$FIELD_PRECISION),
                     record.getValue("FIELD_SCALE", Integer.class),
-                    record.getValue(r.RDB$NULL_FLAG.nvl((short) 0)) == 0,
+                    record.getValue(r.RDB$NULL_FLAG) == 0,
                     record.getValue(r.RDB$DEFAULT_SOURCE) != null
             );
 

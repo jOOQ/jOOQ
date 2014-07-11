@@ -38,54 +38,13 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.impl;
-
-import static org.jooq.Clause.DROP_SEQUENCE;
-import static org.jooq.Clause.DROP_SEQUENCE_SEQUENCE;
-
-import org.jooq.Clause;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.DropSequenceFinalStep;
-import org.jooq.Sequence;
+package org.jooq;
 
 /**
+ * A {@link Query} that can create sequences.
+ *
  * @author Lukas Eder
  */
-class DropSequenceImpl extends AbstractQuery implements
+public interface CreateSequenceFinalStep extends Query {
 
-    // Cascading interface implementations for DROP SEQUENCE behaviour
-    DropSequenceFinalStep {
-
-    /**
-     * Generated UID
-     */
-    private static final long     serialVersionUID = 8904572826501186329L;
-    private static final Clause[] CLAUSES          = { DROP_SEQUENCE };
-
-    private final Sequence<?>     sequence;
-
-    DropSequenceImpl(Configuration configuration, Sequence<?> sequence) {
-        super(configuration);
-
-        this.sequence = sequence;
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: QueryPart API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final void accept(Context<?> ctx) {
-        ctx.start(DROP_SEQUENCE_SEQUENCE)
-           .keyword("drop sequence")
-           .sql(" ")
-           .visit(sequence)
-           .end(DROP_SEQUENCE_SEQUENCE);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
-    }
 }

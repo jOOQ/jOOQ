@@ -4655,6 +4655,22 @@ public interface DSLContext {
     CreateIndexStep createIndex(String index);
 
     /**
+     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSL#createSequence(String)
+     */
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    CreateSequenceFinalStep createSequence(Sequence<?> sequence);
+
+    /**
+     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSL#createSequence(String)
+     */
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    CreateSequenceFinalStep createSequence(String sequence);
+
+    /**
      * Create a new DSL <code>ALTER SEQUENCE</code> statement.
      *
      * @see DSL#alterSequence(Sequence)

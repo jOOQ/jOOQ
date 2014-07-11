@@ -40,32 +40,32 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DROP_SEQUENCE;
-import static org.jooq.Clause.DROP_SEQUENCE_SEQUENCE;
+import static org.jooq.Clause.CREATE_SEQUENCE;
+import static org.jooq.Clause.CREATE_SEQUENCE_SEQUENCE;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
-import org.jooq.DropSequenceFinalStep;
+import org.jooq.CreateSequenceFinalStep;
 import org.jooq.Sequence;
 
 /**
  * @author Lukas Eder
  */
-class DropSequenceImpl extends AbstractQuery implements
+class CreateSequenceImpl extends AbstractQuery implements
 
-    // Cascading interface implementations for DROP SEQUENCE behaviour
-    DropSequenceFinalStep {
+    // Cascading interface implementations for CREATE SEQUENCE behaviour
+    CreateSequenceFinalStep {
 
     /**
      * Generated UID
      */
     private static final long     serialVersionUID = 8904572826501186329L;
-    private static final Clause[] CLAUSES          = { DROP_SEQUENCE };
+    private static final Clause[] CLAUSES          = { CREATE_SEQUENCE };
 
     private final Sequence<?>     sequence;
 
-    DropSequenceImpl(Configuration configuration, Sequence<?> sequence) {
+    CreateSequenceImpl(Configuration configuration, Sequence<?> sequence) {
         super(configuration);
 
         this.sequence = sequence;
@@ -77,11 +77,11 @@ class DropSequenceImpl extends AbstractQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.start(DROP_SEQUENCE_SEQUENCE)
-           .keyword("drop sequence")
+        ctx.start(CREATE_SEQUENCE_SEQUENCE)
+           .keyword("create sequence")
            .sql(" ")
            .visit(sequence)
-           .end(DROP_SEQUENCE_SEQUENCE);
+           .end(CREATE_SEQUENCE_SEQUENCE);
     }
 
     @Override

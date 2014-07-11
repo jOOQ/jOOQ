@@ -1300,8 +1300,18 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testCreateSequence() throws Exception {
+        new DDLTests(this).testCreateSequence();
+    }
+
+    @Test
     public void testAlterSequence() throws Exception {
         new DDLTests(this).testAlterSequence();
+    }
+
+    @Test
+    public void testDropSequence() throws Exception {
+        new DDLTests(this).testDropSequence();
     }
 
     @Test

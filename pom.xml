@@ -12,7 +12,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-parent</artifactId>
-    <version>3.4.0</version>
+    <version>3.4.1</version>
     <packaging>pom</packaging>
 
     <name>jOOQ Parent</name>
@@ -40,7 +40,7 @@
     </licenses>
 
     <properties>
-        <jooq.version>3.4.0</jooq.version>
+        <jooq.version>3.4.1</jooq.version>
     </properties>
 
     <scm>
@@ -148,7 +148,7 @@
             <email>truesaint@gmail.com</email>
             <roles>
                 <role>firebird-support</role>
-            </roles>    
+            </roles>
         </contributor>
     </contributors>
 
@@ -159,7 +159,7 @@
         <module>jOOQ-meta</module>
         <module>jOOQ-scala</module>
 
-        <!-- 
+        <!--
         These modules have a Java 8 dependency, which is currently not suitable for Travis-CI
         <module>jOOQ-examples/jOOQ-spring-example</module>
         <module>jOOQ-examples/jOOQ-spring-guice-example</module>
@@ -222,7 +222,7 @@
                     </compilerArgs>
                 </configuration>
             </plugin>
-            
+
             <!-- If generated test sources are available, attach them to the
                  test source path -->
             <plugin>
@@ -303,7 +303,7 @@
                             <useDefaultExcludes>true</useDefaultExcludes>
                         </configuration>
                     </plugin>
-                    
+
                     <plugin>
                         <inherited>true</inherited>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -323,7 +323,7 @@
                             <encoding>UTF-8</encoding>
                             <show>protected</show>
                             <notree>true</notree>
-                            
+
                             <!-- Avoid running into Java 8's very restrictive doclint issues -->
                             <additionalparam>-Xdoclint:none</additionalparam>
                         </configuration>
@@ -331,7 +331,7 @@
                 </plugins>
             </build>
         </profile>
-        
+
         <!-- [pro] -->
         <profile>
             <id>release-trial</id>
@@ -356,7 +356,7 @@
                             <encoding>UTF-8</encoding>
                             <show>protected</show>
                             <notree>true</notree>
-                            
+
                             <!-- Avoid running into Java 8's very restrictive doclint issues -->
                             <additionalparam>-Xdoclint:none</additionalparam>
                         </configuration>
@@ -364,7 +364,7 @@
                 </plugins>
             </build>
         </profile>
-        
+
         <profile>
             <id>release-pro</id>
             <build>
@@ -387,7 +387,7 @@
                             <useDefaultExcludes>true</useDefaultExcludes>
                         </configuration>
                     </plugin>
-                    
+
                     <plugin>
                         <inherited>true</inherited>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -413,7 +413,7 @@
                                   var _gaq = _gaq || [];
                                   _gaq.push(['_setAccount', 'UA-30716479-1']);
                                   _gaq.push(['_trackPageview']);
-                        
+
                                   (function() {
                                     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
                                     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
@@ -422,7 +422,7 @@
                                 </script>
                             ]]>
                             </header>
-                            
+
                             <!-- Avoid running into Java 8's very restrictive doclint issues -->
                             <additionalparam>-Xdoclint:none</additionalparam>
                         </configuration>

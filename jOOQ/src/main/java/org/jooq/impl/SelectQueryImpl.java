@@ -797,8 +797,9 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         else if (getLimit().isApplicable() && asList(SQLSERVER, SQLSERVER2012).contains(dialect)) {
             context.formatSeparator()
                    .keyword("order by")
-                   .sql(" ")
-                   .keyword("@@version");
+                   .sql(" (")
+                   .keyword("select")
+                   .sql(" 0)");
         }
         /* [/pro] */
 
@@ -1093,7 +1094,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                 case SQLSERVER:
                 case SYBASE:
                 default:
-                    result.add(DSL.field("@@version").asc());
+                    result.add(DSL.field("({select} 0)").asc());
                     break;
             }
             return result;

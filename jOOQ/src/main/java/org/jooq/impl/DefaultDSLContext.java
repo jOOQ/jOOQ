@@ -82,6 +82,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.CreateIndexStep;
+import org.jooq.CreateSequenceFinalStep;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -1576,6 +1577,16 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     @Override
     public CreateIndexStep createIndex(String index) {
         return new CreateIndexImpl(configuration, index);
+    }
+
+    @Override
+    public CreateSequenceFinalStep createSequence(Sequence<?> sequence) {
+        return new CreateSequenceImpl(configuration, sequence);
+    }
+
+    @Override
+    public CreateSequenceFinalStep createSequence(String sequence) {
+        return createSequence(sequence(sequence));
     }
 
     @Override

@@ -48,7 +48,9 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.table;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeNotNull;
 
+import java.math.BigInteger;
 import java.sql.Date;
 
 import org.jooq.Record1;
@@ -124,12 +126,34 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
+    public void testCreateSequence() throws Exception {
+        assumeNotNull(cSequences());
+
+        try {
+            create().createSequence("s").execute();
+            assertEquals(BigInteger.ONE, create().nextval("s"));
+        }
+        finally {
+            create().dropSequence("s").execute();
+        }
+    }
+
+    public void testDropSequence() throws Exception {
+        assumeNotNull(SAuthorID());
+
+        try {
+            create().dropSequence(SAuthorID()).execute();
+            create().nextval(SAuthorID());
+
+            fail();
+        }
+        catch (DataAccessException expected) {}
+    }
+
     @SuppressWarnings("unchecked")
     public void testAlterSequence() throws Exception {
-        if (cSequences() == null || asList(DERBY).contains(dialect().family())) {
-            log.info("SKIPPING", "Skipping ALTER SEQUENCE test");
-            return;
-        }
+        assumeNotNull(cSequences());
+        assumeFamilyNotIn(DERBY);
 
         jOOQAbstractTest.reset = false;
         Sequence<Number> S_AUTHOR_ID = (Sequence<Number>) SAuthorID();

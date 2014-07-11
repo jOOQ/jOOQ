@@ -66,6 +66,8 @@ import static org.jooq.Clause.CONDITION_NOT_EXISTS;
 import static org.jooq.Clause.CONDITION_NOT_IN;
 import static org.jooq.Clause.CONDITION_OR;
 import static org.jooq.Clause.CREATE_INDEX;
+import static org.jooq.Clause.CREATE_SEQUENCE;
+import static org.jooq.Clause.CREATE_SEQUENCE_SEQUENCE;
 import static org.jooq.Clause.DELETE;
 import static org.jooq.Clause.DELETE_DELETE;
 import static org.jooq.Clause.DELETE_WHERE;
@@ -761,6 +763,17 @@ public class VisitContextTest extends AbstractTest {
             asList(DROP_INDEX)
         ),
         ctx.dropIndex("i"));
+    }
+
+    @Test
+    public void test_CREATE_SEQUENCE() {
+        assertEvents(asList(
+            asList(CREATE_SEQUENCE),
+            asList(CREATE_SEQUENCE, CREATE_SEQUENCE_SEQUENCE),
+            asList(CREATE_SEQUENCE, CREATE_SEQUENCE_SEQUENCE, SEQUENCE),
+            asList(CREATE_SEQUENCE, CREATE_SEQUENCE_SEQUENCE, SEQUENCE, SEQUENCE_REFERENCE)
+        ),
+        ctx.createSequence("i"));
     }
 
     @Test

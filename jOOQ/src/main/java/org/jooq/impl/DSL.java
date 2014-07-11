@@ -90,6 +90,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.CreateIndexStep;
+import org.jooq.CreateSequenceFinalStep;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DatePart;
@@ -4212,6 +4213,26 @@ public class DSL {
     @Support
     public static CreateIndexStep createIndex(String index) {
         return using(new DefaultConfiguration()).createIndex(index);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSLContext#createSequence(Sequence)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static CreateSequenceFinalStep createSequence(Sequence<?> sequence) {
+        return using(new DefaultConfiguration()).createSequence(sequence);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSLContext#createSequence(String)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static CreateSequenceFinalStep createSequence(String sequence) {
+        return using(new DefaultConfiguration()).createSequence(sequence);
     }
 
     /**

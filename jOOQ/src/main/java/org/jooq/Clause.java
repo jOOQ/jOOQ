@@ -778,6 +778,22 @@ public enum Clause {
     CREATE_INDEX,
 
     /**
+     * A complete <code>CREATE SEQUENCE</code> statement.
+     */
+    CREATE_SEQUENCE,
+
+    /**
+     * A <code>SEQUENCE</code> clause within a {@link #CREATE_SEQUENCE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>CREATE SEQUENCE</code> keywords</li>
+     * <li>the sequence that is being created</li>
+     * </ul>
+     */
+    CREATE_SEQUENCE_SEQUENCE,
+
+    /**
      * A complete <code>ALTER SEQUENCE</code> statement.
      */
     ALTER_SEQUENCE,
@@ -892,6 +908,12 @@ public enum Clause {
 
     /**
      * A <code>SEQUENCE</code> clause within a {@link #DROP_SEQUENCE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>DROP SEQUENCE</code> keywords</li>
+     * <li>the sequence that is being dropped</li>
+     * </ul>
      */
     DROP_SEQUENCE_SEQUENCE,
 

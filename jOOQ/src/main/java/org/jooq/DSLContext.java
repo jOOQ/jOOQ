@@ -4790,7 +4790,16 @@ public interface DSLContext {
 
     /**
      * Convenience method to fetch the NEXTVAL for a sequence directly from this
-     * {@link DSLContext}'s underlying JDBC {@link Connection}
+     * {@link DSLContext}'s underlying JDBC {@link Connection}.
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    BigInteger nextval(String sequence) throws DataAccessException;
+
+    /**
+     * Convenience method to fetch the NEXTVAL for a sequence directly from this
+     * {@link DSLContext}'s underlying JDBC {@link Connection}.
      *
      * @throws DataAccessException if something went wrong executing the query
      */
@@ -4799,7 +4808,16 @@ public interface DSLContext {
 
     /**
      * Convenience method to fetch the CURRVAL for a sequence directly from this
-     * {@link DSLContext}'s underlying JDBC {@link Connection}
+     * {@link DSLContext}'s underlying JDBC {@link Connection}.
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support({ CUBRID, DB2, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    BigInteger currval(String sequence) throws DataAccessException;
+
+    /**
+     * Convenience method to fetch the CURRVAL for a sequence directly from this
+     * {@link DSLContext}'s underlying JDBC {@link Connection}.
      *
      * @throws DataAccessException if something went wrong executing the query
      */

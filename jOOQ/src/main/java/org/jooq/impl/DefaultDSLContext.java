@@ -1679,9 +1679,19 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
+    public BigInteger nextval(String sequence) {
+        return nextval(sequence(sequence));
+    }
+
+    @Override
     public <T extends Number> T nextval(Sequence<T> sequence) {
         Field<T> nextval = sequence.nextval();
         return select(nextval).fetchOne(nextval);
+    }
+
+    @Override
+    public BigInteger currval(String sequence) {
+        return currval(sequence(sequence));
     }
 
     @Override

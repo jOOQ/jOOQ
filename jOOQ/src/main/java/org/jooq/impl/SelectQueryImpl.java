@@ -1116,36 +1116,38 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         return seek;
     }
 
-    final SortFieldList getNonEmptyOrderBy(Configuration configuration) {
-        if (getOrderBy().isEmpty()) {
-            SortFieldList result = new SortFieldList();
+    /* [pro] xx
+    xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx x
+        xx xxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxx xxxxxx x xxx xxxxxxxxxxxxxxxx
 
-            switch (configuration.dialect().family()) {
-                case DB2:
-                    result.add(DSL.one().asc());
-                    break;
+            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                xxxx xxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxx
 
-                case SQLSERVER:
-                case SYBASE:
-                default:
-                    result.add(DSL.field("({select} 0)").asc());
-                    break;
-            }
-            return result;
-        }
+                xxxx xxxxxxxxxx
+                xxxx xxxxxxx
+                xxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+                    xxxxxx
+            x
+            xxxxxx xxxxxxx
+        x
 
-        return getOrderBy();
-    }
+        xxxxxx xxxxxxxxxxxxx
+    x
 
-    final SortFieldList getNonEmptyOrderByForDistinct(Configuration configuration) {
-        SortFieldList order = new SortFieldList();
-        order.addAll(getNonEmptyOrderBy(configuration));
+    xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx x
+        xxxxxxxxxxxxx xxxxx x xxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        for (Field<?> field : getSelect())
-            order.add(field.asc());
+        xxx xxxxxxxxx xxxxx x xxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxx
 
-        return order;
-    }
+        xxxxxx xxxxxx
+    x
+    xx [/pro] */
 
     @Override
     public final void addOrderBy(Collection<? extends SortField<?>> fields) {

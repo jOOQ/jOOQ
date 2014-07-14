@@ -641,4 +641,45 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("text", r3.getValue(0));
         assertEquals("pdf", new String((byte[]) r3.getValue(1), "UTF-8"));
     }
+
+    public void testPlainSQLLimitOffset() throws Exception {
+        int titleIndex;
+
+        Result<Record> r1 =
+        create().select()
+                .from("t_book")
+                .orderBy(field("id"))
+                .limit(3)
+                .fetch();
+
+        titleIndex = titleIndex(r1);
+
+        assertEquals(3, r1.size());
+        assertEquals(asList(1, 2, 3), r1.getValues(0, int.class));
+        assertEquals(BOOK_TITLES.subList(0, 3), r1.getValues(titleIndex));
+
+        Result<Record> r2 =
+        create().select()
+                .from("t_book")
+                .orderBy(field("id"))
+                .limit(3)
+                .offset(1)
+                .fetch();
+
+        titleIndex = titleIndex(r2);
+
+        assertEquals(3, r2.size());
+        assertEquals(asList(2, 3, 4), r2.getValues(0, int.class));
+        assertEquals(BOOK_TITLES.subList(1, 4), r2.getValues(titleIndex));
+    }
+
+    private int titleIndex(Result<Record> r1) {
+        Field<?>[] fields = r1.fieldsRow().fields();
+
+        for (int i = 0; i < fields.length; i++)
+            if (fields[i].getName().equalsIgnoreCase("title"))
+                return i;
+
+        throw new AssertionError();
+    }
 }

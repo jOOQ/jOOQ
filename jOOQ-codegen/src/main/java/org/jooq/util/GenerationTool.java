@@ -275,6 +275,14 @@ public class GenerationTool {
                 if (schema.getOutputSchema() == null) {
                     schema.setOutputSchema(trim(schema.getInputSchema()));
                 }
+
+                /* [pro] xx
+                xx xxxxxxx xxxxxx xxxxxxxx xxxx xxxxx xxxxxxxxxxxxxxxx xxxxxx xxxxxx
+                xx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxx x
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                x
+                xx [/pro] */
             }
 
             if (schemata.size() == 1) {

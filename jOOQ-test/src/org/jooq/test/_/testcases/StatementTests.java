@@ -46,16 +46,26 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.param;
 import static org.jooq.impl.DSL.val;
 
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
+import javax.sql.DataSource;
+
+import org.jooq.Configuration;
+import org.jooq.ConnectionProvider;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
@@ -69,9 +79,12 @@ import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.DSL;
+import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
+import org.jooq.tools.jdbc.DefaultConnection;
 import org.jooq.tools.reflect.Reflect;
 
 import org.junit.Test;
@@ -164,6 +177,186 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         cursor.close();
         query.close();
+    }
+
+    public void testKeepStatementWithConnectionPool() throws Exception {
+
+        // "Normal" DataSource behaviour, without keeping an open statement
+        CountingDataSource ds1 = new CountingDataSource(getConnection());
+        ConnectionProviderProxy p1 = new ConnectionProviderProxy(new DataSourceConnectionProvider(ds1));
+
+        Configuration c1 = create().configuration().derive(p1);
+        for (int i = 0; i < 5; i++) {
+            ResultQuery<Record1<Integer>> query =
+            DSL.using(c1)
+               .select(TBook_ID())
+               .from(TBook())
+               .where(TBook_ID().eq(param("p", 0)));
+
+            assertEquals(i * 2, p1.acquire);
+            assertEquals(i * 2, p1.release);
+            assertEquals(i * 2, ds1.open);
+            assertEquals(i * 2, ds1.close);
+
+            query.bind("p", 1);
+            assertEquals(1, (int) query.fetchOne().getValue(TBook_ID()));
+            assertEquals(i * 2 + 1, p1.acquire);
+            assertEquals(i * 2 + 1, p1.release);
+            assertEquals(i * 2 + 1, ds1.open);
+            assertEquals(i * 2 + 1, ds1.close);
+
+            query.bind("p", 2);
+            assertEquals(2, (int) query.fetchOne().getValue(TBook_ID()));
+
+            assertEquals(i * 2 + 2, p1.acquire);
+            assertEquals(i * 2 + 2, p1.release);
+            assertEquals(i * 2 + 2, ds1.open);
+            assertEquals(i * 2 + 2, ds1.close);
+
+            // Has no effect
+            query.close();
+
+            assertEquals(i * 2 + 2, p1.acquire);
+            assertEquals(i * 2 + 2, p1.release);
+            assertEquals(i * 2 + 2, ds1.open);
+            assertEquals(i * 2 + 2, ds1.close);
+        }
+
+        assertEquals(10, ds1.open);
+        assertEquals(10, ds1.close);
+
+        // Keeping an open statement [#3191]
+        CountingDataSource ds2 = new CountingDataSource(getConnection());
+        ConnectionProviderProxy p2 = new ConnectionProviderProxy(new DataSourceConnectionProvider(ds2));
+
+        Configuration c2 = create().configuration().derive(p2);
+        for (int i = 0; i < 5; i++) {
+            ResultQuery<Record1<Integer>> query =
+            DSL.using(c2)
+               .select(TBook_ID())
+               .from(TBook())
+               .where(TBook_ID().eq(param("p", 0)))
+               .keepStatement(true);
+
+            assertEquals(i, p2.acquire);
+            assertEquals(i, p2.release);
+            assertEquals(i, ds2.open);
+            assertEquals(i, ds2.close);
+
+            query.bind("p", 1);
+            assertEquals(1, (int) query.fetchOne().getValue(TBook_ID()));
+
+            assertEquals(i + 1, p2.acquire);
+            assertEquals(i    , p2.release);
+            assertEquals(i + 1, ds2.open);
+            assertEquals(i    , ds2.close);
+
+            query.bind("p", 2);
+            assertEquals(2, (int) query.fetchOne().getValue(TBook_ID()));
+
+            assertEquals(i + 1, p2.acquire);
+            assertEquals(i    , p2.release);
+            assertEquals(i + 1, ds2.open);
+            assertEquals(i    , ds2.close);
+
+            query.close();
+
+            assertEquals(i + 1, p2.acquire);
+            assertEquals(i + 1, p2.release);
+            assertEquals(i + 1, ds2.open);
+            assertEquals(i + 1, ds2.close);
+        }
+
+        assertEquals(5, ds2.open);
+        assertEquals(5, ds2.close);
+    }
+
+    private static class ConnectionProviderProxy implements ConnectionProvider {
+
+        final ConnectionProvider delegate;
+        int                      acquire;
+        int                      release;
+
+        ConnectionProviderProxy(ConnectionProvider delegate) {
+            this.delegate = delegate;
+        }
+
+        @Override
+        public Connection acquire() throws DataAccessException {
+            acquire++;
+            return delegate.acquire();
+        }
+
+        @Override
+        public void release(Connection connection) throws DataAccessException {
+            release++;
+            delegate.release(connection);
+        }
+
+    }
+
+    private static class CountingDataSource implements DataSource {
+
+        final Connection connection;
+        int              open;
+        int              close;
+
+        public CountingDataSource(Connection connection) {
+            this.connection = connection;
+        }
+
+        @Override
+        public PrintWriter getLogWriter() throws SQLException {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void setLogWriter(PrintWriter out) throws SQLException {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void setLoginTimeout(int seconds) throws SQLException {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public int getLoginTimeout() throws SQLException {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public <T> T unwrap(Class<T> iface) throws SQLException {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean isWrapperFor(Class<?> iface) throws SQLException {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Connection getConnection() throws SQLException {
+            open++;
+
+            return new DefaultConnection(connection) {
+
+                @Override
+                public void close() throws SQLException {
+                    close++;
+                }
+            };
+        }
+
+        @Override
+        public Connection getConnection(String username, String password) throws SQLException {
+            throw new UnsupportedOperationException();
+        }
     }
 
     public static class KeepStatementListener extends DefaultExecuteListener {

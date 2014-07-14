@@ -304,6 +304,11 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             fetchOutParameters(ctx);
             return 0;
         }
+        catch (RuntimeException e) {
+            ctx.exception(e);
+            listener.exception(ctx);
+            throw ctx.exception();
+        }
         catch (SQLException e) {
             ctx.sqlException(e);
             listener.exception(ctx);

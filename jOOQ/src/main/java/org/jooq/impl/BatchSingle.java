@@ -160,6 +160,11 @@ class BatchSingle implements BatchBindStep {
             listener.executeEnd(ctx);
             return result;
         }
+        catch (RuntimeException e) {
+            ctx.exception(e);
+            listener.exception(ctx);
+            throw ctx.exception();
+        }
         catch (SQLException e) {
             ctx.sqlException(e);
             listener.exception(ctx);

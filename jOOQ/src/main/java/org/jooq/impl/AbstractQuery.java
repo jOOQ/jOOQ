@@ -270,19 +270,19 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             //         This may be used to provide jOOQ with a JDBC connection,
             //         in case this Query / Configuration was previously
             //         deserialised
-            ExecuteContext ctx = new DefaultExecuteContext(c, this);
+            DefaultExecuteContext ctx = new DefaultExecuteContext(c, this);
             ExecuteListener listener = new ExecuteListeners(ctx);
 
             int result = 0;
             try {
-                if (ctx.connection() == null) {
-                    throw new DetachedException("Cannot execute query. No Connection configured");
-                }
 
                 // [#385] If a statement was previously kept open
                 if (keepStatement() && statement != null) {
                     ctx.sql(sql);
                     ctx.statement(statement);
+
+                    // [#3191] Pre-initialise the ExecuteContext with a previous connection, if available.
+                    ctx.connection(c.connectionProvider(), statement.getConnection());
                 }
 
                 // [#385] First time statement preparing
@@ -292,6 +292,13 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                     listener.renderEnd(ctx);
 
                     sql = ctx.sql();
+
+                    // [#3234] Defer initialising of a connection until the prepare step
+                    // This optimises unnecessary ConnectionProvider.acquire() calls when
+                    // ControlFlowSignals are thrown
+                    if (ctx.connection() == null) {
+                        throw new DetachedException("Cannot execute query. No Connection configured");
+                    }
 
                     listener.prepareStart(ctx);
                     prepare(ctx);
@@ -322,6 +329,11 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
                 result = execute(ctx, listener);
                 return result;
+            }
+            catch (RuntimeException e) {
+                ctx.exception(e);
+                listener.exception(ctx);
+                throw ctx.exception();
             }
             catch (SQLException e) {
                 ctx.sqlException(e);

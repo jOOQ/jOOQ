@@ -49,6 +49,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.impl.DSL;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultColumnDefinition;
@@ -79,10 +80,15 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                 r.RDB$FIELD_NAME.trim(),
                 r.RDB$DESCRIPTION,
                 r.RDB$DEFAULT_VALUE,
-                r.RDB$NULL_FLAG.nvl((short) 0),
+                DSL.bitOr(r.RDB$NULL_FLAG.nvl((short) 0), f.RDB$NULL_FLAG.nvl((short) 0)).as(r.RDB$NULL_FLAG.getName()),
                 r.RDB$DEFAULT_SOURCE,
                 r.RDB$FIELD_POSITION,
-                f.RDB$FIELD_LENGTH,
+
+                // [#3342] FIELD_LENGTH should be ignored for LOBs
+                decode().value(f.RDB$FIELD_TYPE)
+                        .when((short) 261, (short) 0)
+                        .otherwise(f.RDB$FIELD_LENGTH)
+                        .as("FIELD_LENGTH"),
                 f.RDB$FIELD_PRECISION,
                 f.RDB$FIELD_SCALE.neg().as("FIELD_SCALE"),
 
@@ -132,10 +138,10 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     getDatabase(),
                     getSchema(),
                     record.getValue("FIELD_TYPE", String.class),
-                    record.getValue(f.RDB$FIELD_LENGTH),
+                    record.getValue("FIELD_LENGTH", short.class),
                     record.getValue(f.RDB$FIELD_PRECISION),
                     record.getValue("FIELD_SCALE", Integer.class),
-                    record.getValue(r.RDB$NULL_FLAG.nvl((short) 0)) == 0,
+                    record.getValue(r.RDB$NULL_FLAG) == 0,
                     record.getValue(r.RDB$DEFAULT_SOURCE) != null
             );
 

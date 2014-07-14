@@ -45,6 +45,7 @@ import static java.lang.Boolean.FALSE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.SettingsTools.reflectionCaching;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.DSL.concat;
@@ -67,6 +68,7 @@ import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Clob;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -567,6 +569,43 @@ final class Utils {
         return result;
     }
 
+    static final String[] fieldNames(Field<?>[] fields) {
+        String[] result = new String[fields.length];
+
+        for (int i = 0; i < fields.length; i++)
+            result[i] = fields[i].getName();
+
+        return result;
+    }
+
+    static final Field<?>[] fields(int length) {
+        Field<?>[] result = new Field[length];
+        String[] names = fieldNames(length);
+
+        for (int i = 0; i < length; i++)
+            result[i] = fieldByName(names[i]);
+
+        return result;
+    }
+
+    static final Field<?>[] aliasedFields(Field<?>[] fields, String[] aliases) {
+        Field<?>[] result = new Field[fields.length];
+
+        for (int i = 0; i < fields.length; i++)
+            result[i] = fields[i].as(aliases[i]);
+
+        return result;
+    }
+
+    static final Field<?>[] fieldsByName(String tableName, String[] fieldNames) {
+        Field<?>[] result = new Field[fieldNames.length];
+
+        for (int i = 0; i < fieldNames.length; i++)
+            result[i] = fieldByName(tableName, fieldNames[i]);
+
+        return result;
+    }
+
     /**
      * Be sure that a given object is a field.
      *
@@ -678,7 +717,13 @@ final class Utils {
 
         if (values != null && field != null) {
             for (int i = 0; i < values.length; i++) {
-                result.add(field(values[i], field));
+
+                // [#3347] Defend against rogue API usage, e.g. when calling
+                // Field.in(T...) with a Collection argument
+                if (values[i] instanceof Collection)
+                    result.addAll(fields(((Collection<?>) values[i]).toArray(), field));
+                else
+                    result.add(field(values[i], field));
             }
         }
 
@@ -1066,7 +1111,7 @@ final class Utils {
             else if (sqlChars[i] == '?' && substituteIndex < substitutes.size()) {
                 QueryPart substitute = substitutes.get(substituteIndex++);
 
-                if (render.paramType() == INLINED) {
+                if (render.paramType() == INLINED || render.paramType() == NAMED) {
                     render.visit(substitute);
                 }
                 else {
@@ -1313,8 +1358,22 @@ final class Utils {
 
         // [#385] Close statements only if not requested to keep open
         if (!keepStatement) {
-            JDBCUtils.safeClose(ctx.statement());
-            ctx.statement(null);
+            PreparedStatement statement = ctx.statement();
+
+            if (statement != null) {
+                JDBCUtils.safeClose(statement);
+                ctx.statement(null);
+            }
+
+            // [#3234] We must ensure that any connection we may still have will be released,
+            // in the event of an exception
+            else {
+                Connection connection = localConnection();
+
+                if (connection != null) {
+                    ctx.configuration().connectionProvider().release(connection);
+                }
+            }
         }
 
         // [#1868] [#2373] Terminate ExecuteListener lifecycle, if needed

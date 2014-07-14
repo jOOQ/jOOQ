@@ -62,7 +62,7 @@ import org.jooq.tools.JooqLogger;
  */
 public class DefaultConnectionProvider implements ConnectionProvider {
 
-    private static final JooqLogger log = JooqLogger.getLogger(DSL.class);
+    private static final JooqLogger log = JooqLogger.getLogger(DefaultConnectionProvider.class);
     private Connection              connection;
 
     public DefaultConnectionProvider(Connection connection) {

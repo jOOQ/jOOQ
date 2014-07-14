@@ -74,6 +74,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 
 import junit.framework.Assert;
@@ -1763,8 +1764,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertFalse(cursor.hasNext());
             assertTrue(cursor.isClosed());
 
-            assertEquals(null, it.next());
-            assertEquals(null, it.next());
+            try {
+                it.next();
+                fail();
+            }
+            catch (NoSuchElementException expected) {}
+
+            try {
+                it.next();
+                fail();
+            }
+            catch (NoSuchElementException expected) {}
+
             assertEquals(null, cursor.fetchOne());
             assertEquals(null, cursor.fetchOne());
 

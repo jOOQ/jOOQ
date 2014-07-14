@@ -66,6 +66,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
@@ -194,13 +195,12 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         iterator();
 
         ResultImpl<R> result = new ResultImpl<R>(ctx.configuration(), fields);
-        R record = null;
 
         ctx.result(result);
         listener.resultStart(ctx);
 
-        for (int i = 0; i < number && ((record = iterator().next()) != null); i++) {
-            result.addRecord(record);
+        for (int i = 0; i < number && iterator().hasNext(); i++) {
+            result.addRecord(iterator().next());
         }
 
         ctx.result(result);
@@ -1385,9 +1385,8 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
         @Override
         public final R next() {
-            if (hasNext == null) {
-                return fetchOne();
-            }
+            if (!hasNext())
+                throw new NoSuchElementException("There are no more records to fetch from this Cursor");
 
             R result = next;
             hasNext = null;
@@ -1414,6 +1413,11 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
                     rows++;
                 }
+            }
+            catch (RuntimeException e) {
+                ctx.exception(e);
+                listener.exception(ctx);
+                throw ctx.exception();
             }
             catch (SQLException e) {
                 ctx.sqlException(e);

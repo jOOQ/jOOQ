@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2013, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * This work is dual-licensed
@@ -38,61 +38,52 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.impl;
+package org.jooq.test;
 
-import org.jooq.Configuration;
-import org.jooq.Converter;
-import org.jooq.DataType;
+import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.val;
+
+import org.jooq.Condition;
+import org.jooq.QueryPart;
+
+import org.junit.Test;
 
 /**
- * A <code>DataType</code> used for converted types using {@link Converter}
- *
  * @author Lukas Eder
  */
-class ConvertedDataType<T, U> extends DefaultDataType<U> {
+public class PlainSQLTest extends AbstractTest {
 
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = -2321926692580974126L;
+    @Test
+    public void testBindVariables() {
+        Condition q = condition("a = ? and b = ?", val(1), 2);
 
-    private final DataType<T>             delegate;
-    private final Converter<? super T, U> converter;
+        assertEquals("(a = ? and b = ?)", create.render(q));
+        assertEquals("(a = 1 and b = 2)", create.renderInlined(q));
+        assertEquals("(a = :1 and b = :2)", create.renderNamedParams(q));
 
-    ConvertedDataType(DataType<T> delegate, Converter<? super T, U> converter) {
-        super(null, converter.toType(), delegate.getTypeName(), delegate.getCastTypeName());
-
-        this.delegate = delegate;
-        this.converter = converter;
-
-        DataTypes.registerConverter(converter.toType(), converter);
+        assertEquals("((a = ? and b = ?) and (a = ? and b = ?))", create.render(q.and(q)));
+        assertEquals("((a = 1 and b = 2) and (a = 1 and b = 2))", create.renderInlined(q.and(q)));
+        assertEquals("((a = :1 and b = :2) and (a = :3 and b = :4))", create.renderNamedParams(q.and(q)));
     }
 
-    @Override
-    public int getSQLType() {
-        return delegate.getSQLType();
+    @Test
+    public void testIndexedParameters() {
+        QueryPart q = condition("a = ? and b = ? and ? = ?", 1, 2, "a", "b");
+
+        assertEquals("(a = ? and b = ? and ? = ?)", create.render(q));
+        assertEquals("(a = 1 and b = 2 and 'a' = 'b')", create.renderInlined(q));
     }
 
-    @Override
-    public String getTypeName(Configuration configuration) {
-        return delegate.getTypeName(configuration);
-    }
+    @Test
+    public void testNamedParameters() {
 
-    @Override
-    public String getCastTypeName(Configuration configuration) {
-        return delegate.getCastTypeName(configuration);
-    }
+        // [#2906] TODO: It's not clear how we want to deal with all sorts of named bind variables. There
+        // is substantial risk of breaking actual SQL syntax, e.g. PostgreSQL's :: operator
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public U convert(Object object) {
-        if (converter.toType().isInstance(object)) {
-            return (U) object;
-        }
-
-        // [#3200] Try to convert arbitrary objects to T
-        else {
-            return converter.from(delegate.convert(object));
-        }
+//        QueryPart q = condition("a = :1 and b = :2 and :3 = :4", 1, 2, "a", "b");
+//
+//        assertEquals("(a = ? and b = ? and ? = ?)", create.render(q));
+//        assertEquals("(a = :1 and b = :2 and :3 = :4)", create.renderNamedParams(q));
+//        assertEquals("(a = 1 and b = 2 and 'a' = 'b')", create.renderInlined(q));
     }
 }

@@ -154,6 +154,65 @@ public class DefaultConfiguration implements Configuration {
     }
 
     /**
+     * This constructor is maintained for backwards-compatibility reasons.
+     * Spring users tend to construct this <code>DefaultConfiguration</code>
+     * through reflection.
+     *
+     * @deprecated Use
+     *             {@link #DefaultConfiguration(ConnectionProvider, TransactionProvider, RecordMapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], SQLDialect, Settings, Map)}
+     *             instead. This constructor is maintained to provide jOOQ 3.0 backwards-compatibility if called with reflection from Spring configurations.
+     */
+    @Deprecated
+    DefaultConfiguration(
+        ConnectionProvider connectionProvider,
+        ExecuteListenerProvider[] executeListenerProviders,
+        SQLDialect dialect,
+        Settings settings,
+        Map<Object, Object> data)
+    {
+        this(
+            connectionProvider,
+            null,
+            null,
+            executeListenerProviders,
+            null,
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    /**
+     * This constructor is maintained for backwards-compatibility reasons.
+     * Spring users tend to construct this <code>DefaultConfiguration</code>
+     * through reflection.
+     *
+     * @deprecated Use
+     *             {@link #DefaultConfiguration(ConnectionProvider, TransactionProvider, RecordMapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], SQLDialect, Settings, Map)}
+     *             instead. This constructor is maintained to provide jOOQ 3.1 backwards-compatibility if called with reflection from Spring configurations.
+     */
+    @Deprecated
+    DefaultConfiguration(
+        ConnectionProvider connectionProvider,
+        RecordMapperProvider recordMapperProvider,
+        ExecuteListenerProvider[] executeListenerProviders,
+        SQLDialect dialect,
+        Settings settings,
+        Map<Object, Object> data)
+    {
+        this(
+            connectionProvider,
+            recordMapperProvider,
+            null,
+            executeListenerProviders,
+            null,
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    /**
      * Create the actual configuration object.
      * <p>
      * This constructor has been made package-private to allow for adding new

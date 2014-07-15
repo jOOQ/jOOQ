@@ -72,6 +72,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 
 import junit.framework.Assert;
@@ -1204,14 +1205,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         B b1 = create().selectFrom(TBook()).where(TBook_ID().eq(1)).fetchOne();
         B b2 = b1.into(TBook().getRecordType());
-        
+
         assertNotNull(((AttachableInternal) b1).configuration());
         assertNotNull(((AttachableInternal) b2).configuration());
-        
+
         B b3 = create(new Settings().withAttachRecords(false))
                     .selectFrom(TBook()).where(TBook_ID().eq(1)).fetchOne();
         B b4 = b3.into(TBook().getRecordType());
-        
+
         assertNull(((AttachableInternal) b3).configuration());
         assertNull(((AttachableInternal) b4).configuration());
     }
@@ -1668,8 +1669,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertFalse(cursor.hasNext());
             assertTrue(cursor.isClosed());
 
-            assertEquals(null, it.next());
-            assertEquals(null, it.next());
+            try {
+                it.next();
+                fail();
+            }
+            catch (NoSuchElementException expected) {}
+
+            try {
+                it.next();
+                fail();
+            }
+            catch (NoSuchElementException expected) {}
+
             assertEquals(null, cursor.fetchOne());
             assertEquals(null, cursor.fetchOne());
 

@@ -244,7 +244,7 @@ public abstract class AbstractDatabase implements Database {
                 for (Schema schema : configuredSchemata) {
                     /* [pro] xx
 
-                    xx xxxxxxx xxxxxx xxx xxxxxxxxxxxxxxxx xxxxxx xxxxxx
+                    xx xxxxxxx xxxxxxx xxxxxx xxx xxxxxxxxxxxxxxxx xxxxxx xxxxxx
                     xx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxx x
                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                     x

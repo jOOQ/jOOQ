@@ -1169,6 +1169,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testPlainSQLLimitOffset() throws Exception {
+        new PlainSQLTests(this).testPlainSQLLimitOffset();
+    }
+
+    @Test
     public void testCustomSQL() throws Exception {
         new PlainSQLTests(this).testCustomSQL();
     }
@@ -1266,6 +1271,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testConditions() throws Exception {
         new PredicateTests(this).testConditions();
+    }
+
+    @Test
+    public void testInPredicateWithSubselectAndLimitOffset() throws Exception {
+        new PredicateTests(this).testInPredicateWithSubselectAndLimitOffset();
     }
 
     @Test
@@ -1874,7 +1884,7 @@ public abstract class jOOQAbstractTest<
         new OrderByTests(this).testLimitDistinct();
     }
 
-    @Test
+    // @Test
     public void testLimitAliased() throws Exception {
         new OrderByTests(this).testLimitAliased();
     }
@@ -1892,6 +1902,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testLimitNamedParams() throws Exception {
         new OrderByTests(this).testLimitNamedParams();
+    }
+
+    @Test
+    public void testLimitWithLOBs() throws Exception {
+        new OrderByTests(this).testLimitWithLOBs();
     }
 
     @Test
@@ -2412,6 +2427,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testKeepStatement() throws Exception {
         new StatementTests(this).testKeepStatement();
+    }
+
+    @Test
+    public void testKeepStatementWithConnectionPool() throws Exception {
+        new StatementTests(this).testKeepStatementWithConnectionPool();
     }
 
     @Test

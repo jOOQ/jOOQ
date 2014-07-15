@@ -1,6 +1,7 @@
 /hsqldb
 /sqlite
 /bin
+/target
 /test.tmp
 /derby.log
 /test.lck

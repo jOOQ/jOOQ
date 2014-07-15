@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2013, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * This work is dual-licensed
@@ -38,61 +38,36 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.impl;
+package org.jooq.test;
 
-import org.jooq.Configuration;
-import org.jooq.Converter;
-import org.jooq.DataType;
+import java.util.Arrays;
+import java.util.List;
+
+import org.jooq.Condition;
+import org.jooq.Field;
+import org.jooq.impl.DSL;
+
+import org.junit.Test;
 
 /**
- * A <code>DataType</code> used for converted types using {@link Converter}
+ * Test cases in this class check if the jOOQ API implementation defends itself against "rogue API usage".
+ * <p>
+ * By "rogue API usage", we mean that for some reason (e.g. API flaws, such as [#3347], or raw types, etc.), a "wrong" overloaded method is invoked
+ * leading to misbehaviour that is not immediately visible from the call-site's API usage.
  *
  * @author Lukas Eder
  */
-class ConvertedDataType<T, U> extends DefaultDataType<U> {
+public class RogueAPIUsageTest extends AbstractTest {
 
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = -2321926692580974126L;
+    @Test
+    public void testInPredicate() {
+        Field<Object> a = DSL.field("a");
+        List<String> values = Arrays.asList("a", "b");
 
-    private final DataType<T>             delegate;
-    private final Converter<? super T, U> converter;
+        Condition c = a.in(new Object[] { values });
 
-    ConvertedDataType(DataType<T> delegate, Converter<? super T, U> converter) {
-        super(null, converter.toType(), delegate.getTypeName(), delegate.getCastTypeName());
-
-        this.delegate = delegate;
-        this.converter = converter;
-
-        DataTypes.registerConverter(converter.toType(), converter);
-    }
-
-    @Override
-    public int getSQLType() {
-        return delegate.getSQLType();
-    }
-
-    @Override
-    public String getTypeName(Configuration configuration) {
-        return delegate.getTypeName(configuration);
-    }
-
-    @Override
-    public String getCastTypeName(Configuration configuration) {
-        return delegate.getCastTypeName(configuration);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public U convert(Object object) {
-        if (converter.toType().isInstance(object)) {
-            return (U) object;
-        }
-
-        // [#3200] Try to convert arbitrary objects to T
-        else {
-            return converter.from(delegate.convert(object));
-        }
+        assertEquals("a in (?, ?)", create.render(c));
+        assertEquals("a in ('a', 'b')", create.renderInlined(c));
+        assertEquals("a in (:1, :2)", create.renderNamedParams(c));
     }
 }

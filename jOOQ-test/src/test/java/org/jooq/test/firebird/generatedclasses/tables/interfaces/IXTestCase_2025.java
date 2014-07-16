@@ -19,7 +19,7 @@ public interface IXTestCase_2025 extends java.io.Serializable {
 	/**
 	 * Getter for <code>X_TEST_CASE_2025.REF_ID</code>.
 	 */
-	@javax.persistence.Column(name = "REF_ID", nullable = false, length = 4)
+	@javax.persistence.Column(name = "REF_ID", nullable = false)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getRefId();
 

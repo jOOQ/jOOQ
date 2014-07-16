@@ -19,7 +19,7 @@ public interface ITUnsigned extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_UNSIGNED.U_BYTE</code>.
 	 */
-	@javax.persistence.Column(name = "U_BYTE", length = 2)
+	@javax.persistence.Column(name = "U_BYTE")
 	public org.jooq.types.UByte getUByte();
 
 	/**
@@ -30,7 +30,7 @@ public interface ITUnsigned extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_UNSIGNED.U_SHORT</code>.
 	 */
-	@javax.persistence.Column(name = "U_SHORT", length = 4)
+	@javax.persistence.Column(name = "U_SHORT")
 	public org.jooq.types.UShort getUShort();
 
 	/**
@@ -41,7 +41,7 @@ public interface ITUnsigned extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_UNSIGNED.U_INT</code>.
 	 */
-	@javax.persistence.Column(name = "U_INT", length = 8)
+	@javax.persistence.Column(name = "U_INT")
 	public org.jooq.types.UInteger getUInt();
 
 	/**

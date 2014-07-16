@@ -20,7 +20,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	 * Getter for <code>T_639_NUMBERS_TABLE.ID</code>.
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId();
 
@@ -32,7 +32,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_639_NUMBERS_TABLE.SHORT</code>.
 	 */
-	@javax.persistence.Column(name = "SHORT", length = 2)
+	@javax.persistence.Column(name = "SHORT")
 	public java.lang.Short getShort();
 
 	/**
@@ -43,7 +43,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_639_NUMBERS_TABLE.INTEGER</code>.
 	 */
-	@javax.persistence.Column(name = "INTEGER", length = 4)
+	@javax.persistence.Column(name = "INTEGER")
 	public java.lang.Integer getInteger();
 
 	/**
@@ -54,7 +54,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_639_NUMBERS_TABLE.LONG</code>.
 	 */
-	@javax.persistence.Column(name = "LONG", length = 8)
+	@javax.persistence.Column(name = "LONG")
 	public java.lang.Long getLong();
 
 	/**
@@ -120,7 +120,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_639_NUMBERS_TABLE.FLOAT</code>.
 	 */
-	@javax.persistence.Column(name = "FLOAT", length = 4)
+	@javax.persistence.Column(name = "FLOAT")
 	public java.lang.Float getFloat();
 
 	/**
@@ -131,7 +131,7 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_639_NUMBERS_TABLE.DOUBLE</code>.
 	 */
-	@javax.persistence.Column(name = "DOUBLE", length = 8)
+	@javax.persistence.Column(name = "DOUBLE")
 	public java.lang.Double getDouble();
 
 	// -------------------------------------------------------------------------

@@ -20,7 +20,7 @@ public interface IT_725LobTest extends java.io.Serializable {
 	 * Getter for <code>T_725_LOB_TEST.ID</code>.
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId();
 

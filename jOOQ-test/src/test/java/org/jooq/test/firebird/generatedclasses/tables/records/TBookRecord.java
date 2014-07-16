@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_BOOK")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = -1204600851;
+	private static final long serialVersionUID = 1808234380;
 
 	/**
 	 * Setter for <code>T_BOOK.ID</code>.
@@ -25,7 +25,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * Getter for <code>T_BOOK.ID</code>.
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	@Override
 	public java.lang.Integer getId() {
@@ -43,7 +43,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * Getter for <code>T_BOOK.AUTHOR_ID</code>.
 	 */
-	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, length = 4)
+	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false)
 	@javax.validation.constraints.NotNull
 	@Override
 	public java.lang.Integer getAuthorId() {
@@ -61,7 +61,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * Getter for <code>T_BOOK.CO_AUTHOR_ID</code>.
 	 */
-	@javax.persistence.Column(name = "CO_AUTHOR_ID", length = 4)
+	@javax.persistence.Column(name = "CO_AUTHOR_ID")
 	@Override
 	public java.lang.Integer getCoAuthorId() {
 		return (java.lang.Integer) getValue(2);
@@ -78,7 +78,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * Getter for <code>T_BOOK.DETAILS_ID</code>.
 	 */
-	@javax.persistence.Column(name = "DETAILS_ID", length = 4)
+	@javax.persistence.Column(name = "DETAILS_ID")
 	@Override
 	public java.lang.Integer getDetailsId() {
 		return (java.lang.Integer) getValue(3);
@@ -114,7 +114,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * Getter for <code>T_BOOK.PUBLISHED_IN</code>.
 	 */
-	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false, length = 4)
+	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false)
 	@javax.validation.constraints.NotNull
 	@Override
 	public java.lang.Integer getPublishedIn() {
@@ -132,7 +132,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * Getter for <code>T_BOOK.LANGUAGE_ID</code>.
 	 */
-	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, length = 4)
+	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false)
 	@javax.validation.constraints.NotNull
 	@Override
 	public java.lang.Integer getLanguageId() {
@@ -184,7 +184,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * Getter for <code>T_BOOK.REC_VERSION</code>.
 	 */
-	@javax.persistence.Column(name = "REC_VERSION", length = 4)
+	@javax.persistence.Column(name = "REC_VERSION")
 	@Override
 	public java.lang.Integer getRecVersion() {
 		return (java.lang.Integer) getValue(9);

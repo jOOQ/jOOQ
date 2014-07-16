@@ -13,7 +13,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record16<java.lang.Integer, java.lang.String, java.lang.Long, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal, java.lang.Integer, java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = 1909806358;
+	private static final long serialVersionUID = -919572778;
 
 	/**
 	 * Setter for <code>X_UNUSED.ID</code>.
@@ -26,7 +26,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Getter for <code>X_UNUSED.ID</code>.
 	 */
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	@Override
 	public java.lang.Integer getId() {
@@ -80,7 +80,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Getter for <code>X_UNUSED.ID_REF</code>.
 	 */
-	@javax.persistence.Column(name = "ID_REF", length = 4)
+	@javax.persistence.Column(name = "ID_REF")
 	@Override
 	public java.lang.Integer getIdRef() {
 		return (java.lang.Integer) getValue(3);
@@ -97,7 +97,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Getter for <code>X_UNUSED.CLASS</code>.
 	 */
-	@javax.persistence.Column(name = "CLASS", length = 4)
+	@javax.persistence.Column(name = "CLASS")
 	@Override
 	public java.lang.Integer getClass_() {
 		return (java.lang.Integer) getValue(4);
@@ -114,7 +114,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Getter for <code>X_UNUSED.FIELDS</code>.
 	 */
-	@javax.persistence.Column(name = "FIELDS", length = 4)
+	@javax.persistence.Column(name = "FIELDS")
 	@Override
 	public java.lang.Integer getFields() {
 		return (java.lang.Integer) getValue(5);
@@ -131,7 +131,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Getter for <code>X_UNUSED.CONFIGURATION</code>.
 	 */
-	@javax.persistence.Column(name = "CONFIGURATION", length = 4)
+	@javax.persistence.Column(name = "CONFIGURATION")
 	@Override
 	public java.lang.Integer getConfiguration() {
 		return (java.lang.Integer) getValue(6);
@@ -148,7 +148,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Getter for <code>X_UNUSED.U_D_T</code>.
 	 */
-	@javax.persistence.Column(name = "U_D_T", length = 4)
+	@javax.persistence.Column(name = "U_D_T")
 	@Override
 	public java.lang.Integer getUDT() {
 		return (java.lang.Integer) getValue(7);
@@ -165,7 +165,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Getter for <code>X_UNUSED.META_DATA</code>.
 	 */
-	@javax.persistence.Column(name = "META_DATA", length = 4)
+	@javax.persistence.Column(name = "META_DATA")
 	@Override
 	public java.lang.Integer getMetaData() {
 		return (java.lang.Integer) getValue(8);
@@ -182,7 +182,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Getter for <code>X_UNUSED.TYPE0</code>.
 	 */
-	@javax.persistence.Column(name = "TYPE0", length = 4)
+	@javax.persistence.Column(name = "TYPE0")
 	@Override
 	public java.lang.Integer getType0() {
 		return (java.lang.Integer) getValue(9);
@@ -199,7 +199,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Getter for <code>X_UNUSED.PRIMARY_KEY</code>.
 	 */
-	@javax.persistence.Column(name = "PRIMARY_KEY", length = 4)
+	@javax.persistence.Column(name = "PRIMARY_KEY")
 	@Override
 	public java.lang.Integer getPrimaryKey_() {
 		return (java.lang.Integer) getValue(10);
@@ -216,7 +216,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Getter for <code>X_UNUSED.PRIMARYKEY</code>.
 	 */
-	@javax.persistence.Column(name = "PRIMARYKEY", length = 4)
+	@javax.persistence.Column(name = "PRIMARYKEY")
 	@Override
 	public java.lang.Integer getPrimarykey() {
 		return (java.lang.Integer) getValue(11);
@@ -268,7 +268,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Getter for <code>X_UNUSED.CONNECTION</code>.
 	 */
-	@javax.persistence.Column(name = "CONNECTION", length = 4)
+	@javax.persistence.Column(name = "CONNECTION")
 	@Override
 	public java.lang.Integer getConnection() {
 		return (java.lang.Integer) getValue(14);
@@ -285,7 +285,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Getter for <code>X_UNUSED.PREPARED_STATEMENT</code>.
 	 */
-	@javax.persistence.Column(name = "PREPARED_STATEMENT", length = 4)
+	@javax.persistence.Column(name = "PREPARED_STATEMENT")
 	@Override
 	public java.lang.Integer getPreparedStatement() {
 		return (java.lang.Integer) getValue(15);

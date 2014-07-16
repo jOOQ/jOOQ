@@ -21,7 +21,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Getter for <code>X_UNUSED.ID</code>.
 	 */
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId();
 
@@ -57,7 +57,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Getter for <code>X_UNUSED.ID_REF</code>.
 	 */
-	@javax.persistence.Column(name = "ID_REF", length = 4)
+	@javax.persistence.Column(name = "ID_REF")
 	public java.lang.Integer getIdRef();
 
 	/**
@@ -68,7 +68,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Getter for <code>X_UNUSED.CLASS</code>.
 	 */
-	@javax.persistence.Column(name = "CLASS", length = 4)
+	@javax.persistence.Column(name = "CLASS")
 	public java.lang.Integer getClass_();
 
 	/**
@@ -79,7 +79,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Getter for <code>X_UNUSED.FIELDS</code>.
 	 */
-	@javax.persistence.Column(name = "FIELDS", length = 4)
+	@javax.persistence.Column(name = "FIELDS")
 	public java.lang.Integer getFields();
 
 	/**
@@ -90,7 +90,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Getter for <code>X_UNUSED.CONFIGURATION</code>.
 	 */
-	@javax.persistence.Column(name = "CONFIGURATION", length = 4)
+	@javax.persistence.Column(name = "CONFIGURATION")
 	public java.lang.Integer getConfiguration();
 
 	/**
@@ -101,7 +101,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Getter for <code>X_UNUSED.U_D_T</code>.
 	 */
-	@javax.persistence.Column(name = "U_D_T", length = 4)
+	@javax.persistence.Column(name = "U_D_T")
 	public java.lang.Integer getUDT();
 
 	/**
@@ -112,7 +112,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Getter for <code>X_UNUSED.META_DATA</code>.
 	 */
-	@javax.persistence.Column(name = "META_DATA", length = 4)
+	@javax.persistence.Column(name = "META_DATA")
 	public java.lang.Integer getMetaData();
 
 	/**
@@ -123,7 +123,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Getter for <code>X_UNUSED.TYPE0</code>.
 	 */
-	@javax.persistence.Column(name = "TYPE0", length = 4)
+	@javax.persistence.Column(name = "TYPE0")
 	public java.lang.Integer getType0();
 
 	/**
@@ -134,7 +134,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Getter for <code>X_UNUSED.PRIMARY_KEY</code>.
 	 */
-	@javax.persistence.Column(name = "PRIMARY_KEY", length = 4)
+	@javax.persistence.Column(name = "PRIMARY_KEY")
 	public java.lang.Integer getPrimaryKey_();
 
 	/**
@@ -145,7 +145,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Getter for <code>X_UNUSED.PRIMARYKEY</code>.
 	 */
-	@javax.persistence.Column(name = "PRIMARYKEY", length = 4)
+	@javax.persistence.Column(name = "PRIMARYKEY")
 	public java.lang.Integer getPrimarykey();
 
 	/**
@@ -179,7 +179,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Getter for <code>X_UNUSED.CONNECTION</code>.
 	 */
-	@javax.persistence.Column(name = "CONNECTION", length = 4)
+	@javax.persistence.Column(name = "CONNECTION")
 	public java.lang.Integer getConnection();
 
 	/**
@@ -190,7 +190,7 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Getter for <code>X_UNUSED.PREPARED_STATEMENT</code>.
 	 */
-	@javax.persistence.Column(name = "PREPARED_STATEMENT", length = 4)
+	@javax.persistence.Column(name = "PREPARED_STATEMENT")
 	public java.lang.Integer getPreparedStatement();
 
 	// -------------------------------------------------------------------------

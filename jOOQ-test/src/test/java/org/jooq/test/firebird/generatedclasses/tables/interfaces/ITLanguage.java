@@ -57,7 +57,7 @@ public interface ITLanguage extends java.io.Serializable {
 	 * Getter for <code>T_LANGUAGE.ID</code>.
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId();
 

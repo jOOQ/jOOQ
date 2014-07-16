@@ -20,7 +20,7 @@ public interface ITAuthor extends java.io.Serializable {
 	 * Getter for <code>T_AUTHOR.ID</code>.
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId();
 
@@ -57,7 +57,7 @@ public interface ITAuthor extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_AUTHOR.DATE_OF_BIRTH</code>.
 	 */
-	@javax.persistence.Column(name = "DATE_OF_BIRTH", length = 4)
+	@javax.persistence.Column(name = "DATE_OF_BIRTH")
 	public java.sql.Date getDateOfBirth();
 
 	/**
@@ -68,7 +68,7 @@ public interface ITAuthor extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_AUTHOR.YEAR_OF_BIRTH</code>.
 	 */
-	@javax.persistence.Column(name = "YEAR_OF_BIRTH", length = 4)
+	@javax.persistence.Column(name = "YEAR_OF_BIRTH")
 	public java.lang.Integer getYearOfBirth();
 
 	/**

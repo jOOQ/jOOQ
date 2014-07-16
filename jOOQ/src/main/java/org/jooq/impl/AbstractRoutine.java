@@ -579,7 +579,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
                         else if (sqlType == Types.ARRAY) {
                             ArrayRecord<?> record = Utils.newArrayRecord(
-                                (Class<? extends ArrayRecord<?>>) parameter.getType(), c);
+                                (Class<? extends ArrayRecord<?>>) parameter.getType());
                             statement.registerOutParameter(index, Types.ARRAY, record.getName());
                         }
 

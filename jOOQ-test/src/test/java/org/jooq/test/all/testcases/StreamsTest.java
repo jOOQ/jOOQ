@@ -60,8 +60,6 @@ import org.jooq.UpdatableRecord;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
-import org.junit.Test;
-
 /**
  * This test suite checks jOOQ's Java 8 interaction readiness
  *
@@ -94,7 +92,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    @Test
     public void testStreamsCollectRecords() {
 
         // Collect the AUTHOR / BOOK relationship grouping books by author
@@ -142,7 +139,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(BOOK_TITLES.get(3), entries.get(1).getValue().get(1).getValue(TBook_TITLE()));
     }
 
-    @Test
     public void testStreamsCollectPOJOs() {
 
         // Collect the AUTHOR / BOOK relationship grouping books by author

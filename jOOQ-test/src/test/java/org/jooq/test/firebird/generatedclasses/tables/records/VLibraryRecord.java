@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_LIBRARY")
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IVLibrary {
 
-	private static final long serialVersionUID = -239099017;
+	private static final long serialVersionUID = 991699623;
 
 	/**
 	 * Setter for <code>V_LIBRARY.AUTHOR</code>.
@@ -24,8 +24,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	/**
 	 * Getter for <code>V_LIBRARY.AUTHOR</code>.
 	 */
-	@javax.persistence.Column(name = "AUTHOR", length = 101)
-	@javax.validation.constraints.Size(max = 101)
+	@javax.persistence.Column(name = "AUTHOR")
 	@Override
 	public java.lang.String getAuthor() {
 		return (java.lang.String) getValue(0);

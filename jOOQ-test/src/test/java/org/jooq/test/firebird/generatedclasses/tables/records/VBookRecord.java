@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_BOOK")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IVBook {
 
-	private static final long serialVersionUID = 397209822;
+	private static final long serialVersionUID = -380873825;
 
 	/**
 	 * Setter for <code>V_BOOK.ID</code>.
@@ -24,7 +24,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	/**
 	 * Getter for <code>V_BOOK.ID</code>.
 	 */
-	@javax.persistence.Column(name = "ID", length = 4)
+	@javax.persistence.Column(name = "ID")
 	@Override
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
@@ -41,7 +41,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	/**
 	 * Getter for <code>V_BOOK.AUTHOR_ID</code>.
 	 */
-	@javax.persistence.Column(name = "AUTHOR_ID", length = 4)
+	@javax.persistence.Column(name = "AUTHOR_ID")
 	@Override
 	public java.lang.Integer getAuthorId() {
 		return (java.lang.Integer) getValue(1);
@@ -58,7 +58,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	/**
 	 * Getter for <code>V_BOOK.CO_AUTHOR_ID</code>.
 	 */
-	@javax.persistence.Column(name = "CO_AUTHOR_ID", length = 4)
+	@javax.persistence.Column(name = "CO_AUTHOR_ID")
 	@Override
 	public java.lang.Integer getCoAuthorId() {
 		return (java.lang.Integer) getValue(2);
@@ -75,7 +75,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	/**
 	 * Getter for <code>V_BOOK.DETAILS_ID</code>.
 	 */
-	@javax.persistence.Column(name = "DETAILS_ID", length = 4)
+	@javax.persistence.Column(name = "DETAILS_ID")
 	@Override
 	public java.lang.Integer getDetailsId() {
 		return (java.lang.Integer) getValue(3);
@@ -110,7 +110,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	/**
 	 * Getter for <code>V_BOOK.PUBLISHED_IN</code>.
 	 */
-	@javax.persistence.Column(name = "PUBLISHED_IN", length = 4)
+	@javax.persistence.Column(name = "PUBLISHED_IN")
 	@Override
 	public java.lang.Integer getPublishedIn() {
 		return (java.lang.Integer) getValue(5);
@@ -127,7 +127,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	/**
 	 * Getter for <code>V_BOOK.LANGUAGE_ID</code>.
 	 */
-	@javax.persistence.Column(name = "LANGUAGE_ID", length = 4)
+	@javax.persistence.Column(name = "LANGUAGE_ID")
 	@Override
 	public java.lang.Integer getLanguageId() {
 		return (java.lang.Integer) getValue(6);
@@ -178,7 +178,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	/**
 	 * Getter for <code>V_BOOK.REC_VERSION</code>.
 	 */
-	@javax.persistence.Column(name = "REC_VERSION", length = 4)
+	@javax.persistence.Column(name = "REC_VERSION")
 	@Override
 	public java.lang.Integer getRecVersion() {
 		return (java.lang.Integer) getValue(9);

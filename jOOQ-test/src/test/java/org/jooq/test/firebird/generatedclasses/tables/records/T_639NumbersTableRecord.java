@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_639_NUMBERS_TABLE")
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigDecimal, java.lang.Float, java.lang.Double>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_639NumbersTable {
 
-	private static final long serialVersionUID = -659833679;
+	private static final long serialVersionUID = 1053779865;
 
 	/**
 	 * Setter for <code>T_639_NUMBERS_TABLE.ID</code>.
@@ -25,7 +25,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 * Getter for <code>T_639_NUMBERS_TABLE.ID</code>.
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	@Override
 	public java.lang.Integer getId() {
@@ -43,7 +43,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * Getter for <code>T_639_NUMBERS_TABLE.SHORT</code>.
 	 */
-	@javax.persistence.Column(name = "SHORT", length = 2)
+	@javax.persistence.Column(name = "SHORT")
 	@Override
 	public java.lang.Short getShort() {
 		return (java.lang.Short) getValue(1);
@@ -60,7 +60,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * Getter for <code>T_639_NUMBERS_TABLE.INTEGER</code>.
 	 */
-	@javax.persistence.Column(name = "INTEGER", length = 4)
+	@javax.persistence.Column(name = "INTEGER")
 	@Override
 	public java.lang.Integer getInteger() {
 		return (java.lang.Integer) getValue(2);
@@ -77,7 +77,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * Getter for <code>T_639_NUMBERS_TABLE.LONG</code>.
 	 */
-	@javax.persistence.Column(name = "LONG", length = 8)
+	@javax.persistence.Column(name = "LONG")
 	@Override
 	public java.lang.Long getLong() {
 		return (java.lang.Long) getValue(3);
@@ -179,7 +179,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * Getter for <code>T_639_NUMBERS_TABLE.FLOAT</code>.
 	 */
-	@javax.persistence.Column(name = "FLOAT", length = 4)
+	@javax.persistence.Column(name = "FLOAT")
 	@Override
 	public java.lang.Float getFloat() {
 		return (java.lang.Float) getValue(9);
@@ -196,7 +196,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * Getter for <code>T_639_NUMBERS_TABLE.DOUBLE</code>.
 	 */
-	@javax.persistence.Column(name = "DOUBLE", length = 8)
+	@javax.persistence.Column(name = "DOUBLE")
 	@Override
 	public java.lang.Double getDouble() {
 		return (java.lang.Double) getValue(10);

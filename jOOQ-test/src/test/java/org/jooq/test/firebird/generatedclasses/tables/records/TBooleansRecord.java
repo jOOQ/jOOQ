@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_BOOLEANS")
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBooleansRecord> implements org.jooq.Record11<java.lang.Integer, org.jooq.test.all.converters.Boolean_10, org.jooq.test.all.converters.Boolean_TF_LC, org.jooq.test.all.converters.Boolean_TF_UC, org.jooq.test.all.converters.Boolean_YES_NO_LC, org.jooq.test.all.converters.Boolean_YES_NO_UC, org.jooq.test.all.converters.Boolean_YN_LC, org.jooq.test.all.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITBooleans {
 
-	private static final long serialVersionUID = -1718486724;
+	private static final long serialVersionUID = -584900867;
 
 	/**
 	 * Setter for <code>T_BOOLEANS.ID</code>.
@@ -25,7 +25,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * Getter for <code>T_BOOLEANS.ID</code>.
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	@Override
 	public java.lang.Integer getId() {
@@ -43,7 +43,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * Getter for <code>T_BOOLEANS.ONE_ZERO</code>.
 	 */
-	@javax.persistence.Column(name = "ONE_ZERO", length = 4)
+	@javax.persistence.Column(name = "ONE_ZERO")
 	@Override
 	public org.jooq.test.all.converters.Boolean_10 getOneZero() {
 		return (org.jooq.test.all.converters.Boolean_10) getValue(1);
@@ -196,7 +196,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * Getter for <code>T_BOOLEANS.N_BOOLEAN</code>.
 	 */
-	@javax.persistence.Column(name = "N_BOOLEAN", length = 4)
+	@javax.persistence.Column(name = "N_BOOLEAN")
 	@Override
 	public java.lang.Boolean getNBoolean() {
 		return (java.lang.Boolean) getValue(10);

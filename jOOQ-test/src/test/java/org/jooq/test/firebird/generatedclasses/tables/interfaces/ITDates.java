@@ -20,7 +20,7 @@ public interface ITDates extends java.io.Serializable {
 	 * Getter for <code>T_DATES.ID</code>.
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId();
 
@@ -32,7 +32,7 @@ public interface ITDates extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_DATES.D</code>.
 	 */
-	@javax.persistence.Column(name = "D", length = 4)
+	@javax.persistence.Column(name = "D")
 	public java.sql.Date getD();
 
 	/**
@@ -43,7 +43,7 @@ public interface ITDates extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_DATES.T</code>.
 	 */
-	@javax.persistence.Column(name = "T", length = 4)
+	@javax.persistence.Column(name = "T")
 	public java.sql.Time getT();
 
 	/**
@@ -54,7 +54,7 @@ public interface ITDates extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_DATES.TS</code>.
 	 */
-	@javax.persistence.Column(name = "TS", length = 8)
+	@javax.persistence.Column(name = "TS")
 	public java.sql.Timestamp getTs();
 
 	/**
@@ -65,7 +65,7 @@ public interface ITDates extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_DATES.D_INT</code>.
 	 */
-	@javax.persistence.Column(name = "D_INT", length = 4)
+	@javax.persistence.Column(name = "D_INT")
 	public java.lang.Integer getDInt();
 
 	/**
@@ -76,7 +76,7 @@ public interface ITDates extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_DATES.TS_BIGINT</code>.
 	 */
-	@javax.persistence.Column(name = "TS_BIGINT", length = 8)
+	@javax.persistence.Column(name = "TS_BIGINT")
 	public java.lang.Long getTsBigint();
 
 	// -------------------------------------------------------------------------

@@ -19,7 +19,7 @@ public interface IT_785 extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_785.ID</code>.
 	 */
-	@javax.persistence.Column(name = "ID", length = 4)
+	@javax.persistence.Column(name = "ID")
 	public java.lang.Integer getId();
 
 	/**

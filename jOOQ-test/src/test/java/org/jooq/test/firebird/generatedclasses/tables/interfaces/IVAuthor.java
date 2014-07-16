@@ -19,7 +19,7 @@ public interface IVAuthor extends java.io.Serializable {
 	/**
 	 * Getter for <code>V_AUTHOR.ID</code>.
 	 */
-	@javax.persistence.Column(name = "ID", length = 4)
+	@javax.persistence.Column(name = "ID")
 	public java.lang.Integer getId();
 
 	/**
@@ -54,7 +54,7 @@ public interface IVAuthor extends java.io.Serializable {
 	/**
 	 * Getter for <code>V_AUTHOR.DATE_OF_BIRTH</code>.
 	 */
-	@javax.persistence.Column(name = "DATE_OF_BIRTH", length = 4)
+	@javax.persistence.Column(name = "DATE_OF_BIRTH")
 	public java.sql.Date getDateOfBirth();
 
 	/**
@@ -65,7 +65,7 @@ public interface IVAuthor extends java.io.Serializable {
 	/**
 	 * Getter for <code>V_AUTHOR.YEAR_OF_BIRTH</code>.
 	 */
-	@javax.persistence.Column(name = "YEAR_OF_BIRTH", length = 4)
+	@javax.persistence.Column(name = "YEAR_OF_BIRTH")
 	public java.lang.Integer getYearOfBirth();
 
 	/**

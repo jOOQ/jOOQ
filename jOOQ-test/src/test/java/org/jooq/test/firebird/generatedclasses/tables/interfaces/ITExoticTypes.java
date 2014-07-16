@@ -20,7 +20,7 @@ public interface ITExoticTypes extends java.io.Serializable {
 	 * Getter for <code>T_EXOTIC_TYPES.ID</code>.
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId();
 

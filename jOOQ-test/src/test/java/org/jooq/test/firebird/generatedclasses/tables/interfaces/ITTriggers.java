@@ -20,7 +20,7 @@ public interface ITTriggers extends java.io.Serializable {
 	 * Getter for <code>T_TRIGGERS.ID_GENERATED</code>.
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID_GENERATED", unique = true, nullable = false, length = 4)
+	@javax.persistence.Column(name = "ID_GENERATED", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getIdGenerated();
 
@@ -32,7 +32,7 @@ public interface ITTriggers extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_TRIGGERS.ID</code>.
 	 */
-	@javax.persistence.Column(name = "ID", length = 4)
+	@javax.persistence.Column(name = "ID")
 	public java.lang.Integer getId();
 
 	/**
@@ -43,7 +43,7 @@ public interface ITTriggers extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_TRIGGERS.COUNTER</code>.
 	 */
-	@javax.persistence.Column(name = "COUNTER", length = 4)
+	@javax.persistence.Column(name = "COUNTER")
 	public java.lang.Integer getCounter();
 
 	// -------------------------------------------------------------------------

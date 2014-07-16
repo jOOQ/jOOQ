@@ -20,7 +20,7 @@ public interface IT_937 extends java.io.Serializable {
 	 * Getter for <code>T_937.T_937</code>.
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "T_937", unique = true, nullable = false, length = 4)
+	@javax.persistence.Column(name = "T_937", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getT_937();
 

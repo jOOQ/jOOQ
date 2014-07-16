@@ -19,7 +19,7 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Getter for <code>V_BOOK.ID</code>.
 	 */
-	@javax.persistence.Column(name = "ID", length = 4)
+	@javax.persistence.Column(name = "ID")
 	public java.lang.Integer getId();
 
 	/**
@@ -30,7 +30,7 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Getter for <code>V_BOOK.AUTHOR_ID</code>.
 	 */
-	@javax.persistence.Column(name = "AUTHOR_ID", length = 4)
+	@javax.persistence.Column(name = "AUTHOR_ID")
 	public java.lang.Integer getAuthorId();
 
 	/**
@@ -41,7 +41,7 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Getter for <code>V_BOOK.CO_AUTHOR_ID</code>.
 	 */
-	@javax.persistence.Column(name = "CO_AUTHOR_ID", length = 4)
+	@javax.persistence.Column(name = "CO_AUTHOR_ID")
 	public java.lang.Integer getCoAuthorId();
 
 	/**
@@ -52,7 +52,7 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Getter for <code>V_BOOK.DETAILS_ID</code>.
 	 */
-	@javax.persistence.Column(name = "DETAILS_ID", length = 4)
+	@javax.persistence.Column(name = "DETAILS_ID")
 	public java.lang.Integer getDetailsId();
 
 	/**
@@ -75,7 +75,7 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Getter for <code>V_BOOK.PUBLISHED_IN</code>.
 	 */
-	@javax.persistence.Column(name = "PUBLISHED_IN", length = 4)
+	@javax.persistence.Column(name = "PUBLISHED_IN")
 	public java.lang.Integer getPublishedIn();
 
 	/**
@@ -86,7 +86,7 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Getter for <code>V_BOOK.LANGUAGE_ID</code>.
 	 */
-	@javax.persistence.Column(name = "LANGUAGE_ID", length = 4)
+	@javax.persistence.Column(name = "LANGUAGE_ID")
 	public java.lang.Integer getLanguageId();
 
 	/**
@@ -119,7 +119,7 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Getter for <code>V_BOOK.REC_VERSION</code>.
 	 */
-	@javax.persistence.Column(name = "REC_VERSION", length = 4)
+	@javax.persistence.Column(name = "REC_VERSION")
 	public java.lang.Integer getRecVersion();
 
 	// -------------------------------------------------------------------------

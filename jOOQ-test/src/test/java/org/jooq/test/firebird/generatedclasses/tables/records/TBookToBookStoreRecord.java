@@ -13,7 +13,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = 601666080;
+	private static final long serialVersionUID = 1366536512;
 
 	/**
 	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>.
@@ -45,7 +45,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	/**
 	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>.
 	 */
-	@javax.persistence.Column(name = "BOOK_ID", nullable = false, length = 4)
+	@javax.persistence.Column(name = "BOOK_ID", nullable = false)
 	@javax.validation.constraints.NotNull
 	@Override
 	public java.lang.Integer getBookId() {
@@ -63,7 +63,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	/**
 	 * Getter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>.
 	 */
-	@javax.persistence.Column(name = "STOCK", length = 4)
+	@javax.persistence.Column(name = "STOCK")
 	@Override
 	public java.lang.Integer getStock() {
 		return (java.lang.Integer) getValue(2);

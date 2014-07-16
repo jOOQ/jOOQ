@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_64_69")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IXTestCase_64_69 {
 
-	private static final long serialVersionUID = 1545477213;
+	private static final long serialVersionUID = -1921617145;
 
 	/**
 	 * Setter for <code>X_TEST_CASE_64_69.ID</code>.
@@ -25,7 +25,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * Getter for <code>X_TEST_CASE_64_69.ID</code>.
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	@Override
 	public java.lang.Integer getId() {
@@ -43,7 +43,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	/**
 	 * Getter for <code>X_TEST_CASE_64_69.UNUSED_ID</code>.
 	 */
-	@javax.persistence.Column(name = "UNUSED_ID", length = 4)
+	@javax.persistence.Column(name = "UNUSED_ID")
 	@Override
 	public java.lang.Integer getUnusedId() {
 		return (java.lang.Integer) getValue(1);

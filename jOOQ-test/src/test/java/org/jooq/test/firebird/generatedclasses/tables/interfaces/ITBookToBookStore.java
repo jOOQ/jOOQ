@@ -34,7 +34,7 @@ public interface ITBookToBookStore extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>.
 	 */
-	@javax.persistence.Column(name = "BOOK_ID", nullable = false, length = 4)
+	@javax.persistence.Column(name = "BOOK_ID", nullable = false)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getBookId();
 
@@ -46,7 +46,7 @@ public interface ITBookToBookStore extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>.
 	 */
-	@javax.persistence.Column(name = "STOCK", length = 4)
+	@javax.persistence.Column(name = "STOCK")
 	public java.lang.Integer getStock();
 
 	// -------------------------------------------------------------------------

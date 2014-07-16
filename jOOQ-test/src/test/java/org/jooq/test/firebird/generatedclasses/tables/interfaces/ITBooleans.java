@@ -20,7 +20,7 @@ public interface ITBooleans extends java.io.Serializable {
 	 * Getter for <code>T_BOOLEANS.ID</code>.
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId();
 
@@ -32,7 +32,7 @@ public interface ITBooleans extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_BOOLEANS.ONE_ZERO</code>.
 	 */
-	@javax.persistence.Column(name = "ONE_ZERO", length = 4)
+	@javax.persistence.Column(name = "ONE_ZERO")
 	public org.jooq.test.all.converters.Boolean_10 getOneZero();
 
 	/**
@@ -131,7 +131,7 @@ public interface ITBooleans extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_BOOLEANS.N_BOOLEAN</code>.
 	 */
-	@javax.persistence.Column(name = "N_BOOLEAN", length = 4)
+	@javax.persistence.Column(name = "N_BOOLEAN")
 	public java.lang.Boolean getNBoolean();
 
 	// -------------------------------------------------------------------------

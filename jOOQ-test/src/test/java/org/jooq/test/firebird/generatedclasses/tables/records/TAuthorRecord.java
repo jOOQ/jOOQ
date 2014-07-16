@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_AUTHOR")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = 1782485009;
+	private static final long serialVersionUID = 276974758;
 
 	/**
 	 * Setter for <code>T_AUTHOR.ID</code>.
@@ -25,7 +25,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Getter for <code>T_AUTHOR.ID</code>.
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	@Override
 	public java.lang.Integer getId() {
@@ -80,7 +80,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Getter for <code>T_AUTHOR.DATE_OF_BIRTH</code>.
 	 */
-	@javax.persistence.Column(name = "DATE_OF_BIRTH", length = 4)
+	@javax.persistence.Column(name = "DATE_OF_BIRTH")
 	@Override
 	public java.sql.Date getDateOfBirth() {
 		return (java.sql.Date) getValue(3);
@@ -97,7 +97,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Getter for <code>T_AUTHOR.YEAR_OF_BIRTH</code>.
 	 */
-	@javax.persistence.Column(name = "YEAR_OF_BIRTH", length = 4)
+	@javax.persistence.Column(name = "YEAR_OF_BIRTH")
 	@Override
 	public java.lang.Integer getYearOfBirth() {
 		return (java.lang.Integer) getValue(4);

@@ -20,7 +20,7 @@ public interface IXTestCase_64_69 extends java.io.Serializable {
 	 * Getter for <code>X_TEST_CASE_64_69.ID</code>.
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 4)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId();
 
@@ -32,7 +32,7 @@ public interface IXTestCase_64_69 extends java.io.Serializable {
 	/**
 	 * Getter for <code>X_TEST_CASE_64_69.UNUSED_ID</code>.
 	 */
-	@javax.persistence.Column(name = "UNUSED_ID", length = 4)
+	@javax.persistence.Column(name = "UNUSED_ID")
 	public java.lang.Integer getUnusedId();
 
 	// -------------------------------------------------------------------------

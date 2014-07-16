@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_937")
 public class T_937Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_937Record> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_937 {
 
-	private static final long serialVersionUID = 553373681;
+	private static final long serialVersionUID = 103740764;
 
 	/**
 	 * Setter for <code>T_937.T_937</code>.
@@ -25,7 +25,7 @@ public class T_937Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * Getter for <code>T_937.T_937</code>.
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "T_937", unique = true, nullable = false, length = 4)
+	@javax.persistence.Column(name = "T_937", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	@Override
 	public java.lang.Integer getT_937() {

@@ -19,8 +19,7 @@ public interface IVLibrary extends java.io.Serializable {
 	/**
 	 * Getter for <code>V_LIBRARY.AUTHOR</code>.
 	 */
-	@javax.persistence.Column(name = "AUTHOR", length = 101)
-	@javax.validation.constraints.Size(max = 101)
+	@javax.persistence.Column(name = "AUTHOR")
 	public java.lang.String getAuthor();
 
 	/**

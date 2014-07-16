@@ -59,6 +59,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
@@ -1011,5 +1012,40 @@ public abstract class BaseTest<
         if (!new HashSet<Object>(expected).equals(new HashSet<Object>(actual))) {
             Assert.fail("Collections aren't the same : " + expected + " and " + actual);
         }
+    }
+
+    /**
+     * This is needed to allow for throwing Throwables from lambda expressions
+     */
+    @FunctionalInterface
+    public interface ThrowableRunnable {
+        void run() throws Throwable;
+    }
+
+    /**
+     * Assert a Throwable type
+     */
+    public static void assertThrows(Class<?> throwable, ThrowableRunnable runnable) {
+        assertThrows(throwable, runnable, t -> {});
+    }
+
+    /**
+     * Assert a Throwable type and implement more assertions in a consumer
+     */
+    public static void assertThrows(Class<?> throwable, ThrowableRunnable runnable, Consumer<Throwable> exceptionConsumer) {
+        boolean fail = false;
+        try {
+            runnable.run();
+            fail = true;
+        }
+        catch (Throwable t) {
+            if (!throwable.isInstance(t))
+                throw new AssertionError("Bad exception type", t);
+
+            exceptionConsumer.accept(t);
+        }
+
+        if (fail)
+            Assert.fail("No exception was thrown");
     }
 }

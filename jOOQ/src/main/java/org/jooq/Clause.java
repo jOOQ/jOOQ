@@ -773,6 +773,33 @@ public enum Clause {
     // -------------------------------------------------------------------------
 
     /**
+     * A complete <code>CREATE VIEW</code> statement.
+     */
+    CREATE_VIEW,
+
+    /**
+     * A view name clause within a {@link #CREATE_VIEW} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>The view name</li>
+     * <li>The (optional) column names</li>
+     * </ul>
+     */
+    CREATE_VIEW_NAME,
+
+    /**
+     * An as clause within a {@link #CREATE_VIEW} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>The <code>AS</code> keyword</li>
+     * <li>The view code</li>
+     * </ul>
+     */
+    CREATE_VIEW_AS,
+
+    /**
      * A complete <code>CREATE INDEX</code> statement.
      */
     CREATE_INDEX,
@@ -879,6 +906,22 @@ public enum Clause {
      * </ul>
      */
     ALTER_TABLE_DROP,
+
+    /**
+     * A complete <code>DROP VIEW</code> statement.
+     */
+    DROP_VIEW,
+
+    /**
+     * A <code>VIEW</code> clause within an {@link #DROP_VIEW} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>DROP VIEW</code> keywords</li>
+     * <li>the view that is being dropped</li>
+     * </ul>
+     */
+    DROP_VIEW_TABLE,
 
     /**
      * A complete <code>DROP TABLE</code> statement.

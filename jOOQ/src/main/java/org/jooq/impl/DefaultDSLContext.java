@@ -83,6 +83,7 @@ import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateSequenceFinalStep;
+import org.jooq.CreateViewAsStep;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -91,6 +92,7 @@ import org.jooq.DeleteWhereStep;
 import org.jooq.DropIndexFinalStep;
 import org.jooq.DropSequenceFinalStep;
 import org.jooq.DropTableStep;
+import org.jooq.DropViewFinalStep;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
@@ -1575,6 +1577,11 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
 
     @Override
+    public CreateViewAsStep<Record> createView(String viewName, String... columnNames) {
+        return new CreateViewImpl<Record>(configuration, viewName, columnNames);
+    }
+
+    @Override
     public CreateIndexStep createIndex(String index) {
         return new CreateIndexImpl(configuration, index);
     }
@@ -1607,6 +1614,16 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     @Override
     public AlterTableStep alterTable(String table) {
         return alterTable(table(table));
+    }
+
+    @Override
+    public DropViewFinalStep dropView(Table<?> table) {
+        return new DropViewImpl(configuration, table);
+    }
+
+    @Override
+    public DropViewFinalStep dropView(String table) {
+        return dropView(table(table));
     }
 
     @Override

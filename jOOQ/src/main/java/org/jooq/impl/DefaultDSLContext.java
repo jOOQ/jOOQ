@@ -46,7 +46,8 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.queryPart;
 import static org.jooq.impl.DSL.sequence;
-import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.sequenceByName;
+import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.template;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Utils.list;
@@ -1593,7 +1594,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public CreateSequenceFinalStep createSequence(String sequence) {
-        return createSequence(sequence(sequence));
+        return createSequence(sequenceByName(sequence));
     }
 
     @Override
@@ -1603,7 +1604,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public AlterSequenceRestartStep<BigInteger> alterSequence(String sequence) {
-        return alterSequence(sequence(sequence));
+        return alterSequence(sequenceByName(sequence));
     }
 
     @Override
@@ -1613,7 +1614,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public AlterTableStep alterTable(String table) {
-        return alterTable(table(table));
+        return alterTable(tableByName(table));
     }
 
     @Override
@@ -1623,7 +1624,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public DropViewFinalStep dropView(String table) {
-        return dropView(table(table));
+        return dropView(tableByName(table));
     }
 
     @Override
@@ -1633,7 +1634,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public DropTableStep dropTable(String table) {
-        return dropTable(table(table));
+        return dropTable(tableByName(table));
     }
 
     @Override
@@ -1648,7 +1649,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public DropSequenceFinalStep dropSequence(String sequence) {
-        return dropSequence(sequence(sequence));
+        return dropSequence(sequenceByName(sequence));
     }
 
     @Override

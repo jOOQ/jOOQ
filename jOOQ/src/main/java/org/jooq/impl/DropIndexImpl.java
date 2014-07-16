@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.DROP_INDEX;
+import static org.jooq.impl.DSL.name;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -77,7 +78,7 @@ class DropIndexImpl extends AbstractQuery implements
     public final void accept(Context<?> ctx) {
         ctx.keyword("drop index")
            .sql(" ")
-           .visit(DSL.name(index));
+           .visit(name(index));
     }
 
     @Override

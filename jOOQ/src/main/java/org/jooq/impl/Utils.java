@@ -326,9 +326,9 @@ final class Utils {
     /**
      * Create a new Oracle-style VARRAY {@link ArrayRecord}
      */
-    static final <R extends ArrayRecord<?>> R newArrayRecord(Class<R> type, Configuration configuration) {
+    static final <R extends ArrayRecord<?>> R newArrayRecord(Class<R> type) {
         try {
-            return type.getConstructor(Configuration.class).newInstance(configuration);
+            return type.newInstance();
         }
         catch (Exception e) {
             throw new IllegalStateException(
@@ -2609,7 +2609,7 @@ final class Utils {
         }
         else {
             // TODO: [#523] Use array record meta data instead
-            return set(Utils.newArrayRecord(type, configuration), array);
+            return set(Utils.newArrayRecord(type), array);
         }
     }
 

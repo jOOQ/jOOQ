@@ -123,7 +123,7 @@ class DefaultBindContext extends AbstractBindContext {
             /* [pro] */
             // Oracle-style ARRAY types need to be bound with their type name
             if (ArrayRecord.class.isAssignableFrom(type)) {
-                String typeName = Utils.newArrayRecord((Class<ArrayRecord<?>>) type, configuration).getName();
+                String typeName = Utils.newArrayRecord((Class<ArrayRecord<?>>) type).getName();
                 stmt.setNull(nextIndex(), sqlType, typeName);
             }
 

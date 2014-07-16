@@ -98,7 +98,7 @@ class ArrayTable extends AbstractTable<Record> {
         // VARRAY / TABLE types returned from functions
         else if (ArrayRecord.class.isAssignableFrom(array.getDataType().getType())) {
             // TODO [#523] This information should be available in ARRAY meta-data
-            ArrayRecord<?> dummy = Utils.newArrayRecord((Class<ArrayRecord<?>>) array.getDataType().getType(), new DefaultConfiguration());
+            ArrayRecord<?> dummy = Utils.newArrayRecord((Class<ArrayRecord<?>>) array.getDataType().getType());
             arrayType = dummy.getDataType().getType();
         }
 

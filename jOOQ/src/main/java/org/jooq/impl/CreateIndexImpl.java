@@ -41,6 +41,9 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.CREATE_INDEX;
+import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.tableByName;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -93,9 +96,9 @@ class CreateIndexImpl extends AbstractQuery implements
         Field<?>[] f = new Field[fieldNames.length];
 
         for (int i = 0; i < f.length; i++)
-            f[i] = DSL.field(fieldNames[i]);
+            f[i] = fieldByName(fieldNames[i]);
 
-        return on(DSL.table(tableName), f);
+        return on(tableByName(tableName), f);
     }
 
     // ------------------------------------------------------------------------
@@ -106,7 +109,7 @@ class CreateIndexImpl extends AbstractQuery implements
     public final void accept(Context<?> ctx) {
         ctx.keyword("create index")
            .sql(" ")
-           .visit(DSL.name(index))
+           .visit(name(index))
            .sql(" ")
            .keyword("on")
            .sql(" ")

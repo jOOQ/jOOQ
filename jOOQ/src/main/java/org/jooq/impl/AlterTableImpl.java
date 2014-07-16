@@ -48,7 +48,7 @@ import static org.jooq.Clause.ALTER_TABLE_DROP;
 import static org.jooq.Clause.ALTER_TABLE_TABLE;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.queryPart;
 
@@ -103,7 +103,7 @@ class AlterTableImpl extends AbstractQuery implements
 
     @Override
     public final AlterTableImpl add(String field, DataType<?> type) {
-        return add((Field) field(field, type), type);
+        return add((Field) fieldByName(type, field), type);
     }
 
     @Override
@@ -115,7 +115,7 @@ class AlterTableImpl extends AbstractQuery implements
 
     @Override
     public final AlterTableImpl alter(String field) {
-        return alter(field(field));
+        return alter(fieldByName(field));
     }
 
     @Override
@@ -143,7 +143,7 @@ class AlterTableImpl extends AbstractQuery implements
 
     @Override
     public final AlterTableImpl drop(String field) {
-        return drop(field(field));
+        return drop(fieldByName(field));
     }
 
     @Override

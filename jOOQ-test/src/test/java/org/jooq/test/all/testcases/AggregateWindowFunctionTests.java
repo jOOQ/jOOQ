@@ -110,6 +110,7 @@ import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -120,11 +121,13 @@ import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Record9;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
+import org.jooq.impl.DSL;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 

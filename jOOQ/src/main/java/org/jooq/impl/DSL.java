@@ -91,6 +91,7 @@ import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateSequenceFinalStep;
+import org.jooq.CreateViewAsStep;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DatePart;
@@ -100,6 +101,7 @@ import org.jooq.DerivedColumnList;
 import org.jooq.DropIndexFinalStep;
 import org.jooq.DropSequenceFinalStep;
 import org.jooq.DropTableStep;
+import org.jooq.DropViewFinalStep;
 import org.jooq.Field;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupField;
@@ -4206,6 +4208,16 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     *
+     * @see DSLContext#createView(String, String...)
+     */
+    @Support
+    public static CreateViewAsStep createView(String viewName, String... columnNames) {
+        return using(new DefaultConfiguration()).createView(viewName, columnNames);
+    }
+
+    /**
      * Create a new DSL <code>CREATE INDEX</code> statement.
      *
      * @see DSLContext#createIndex(String)
@@ -4273,6 +4285,26 @@ public class DSL {
     @Support
     public static AlterTableStep alterTable(String table) {
         return using(new DefaultConfiguration()).alterTable(table);
+    }
+
+    /**
+     * Create a new DSL <code>DROP VIEW</code> statement.
+     *
+     * @see DSLContext#dropView(Table)
+     */
+    @Support
+    public static DropViewFinalStep dropView(Table<?> table) {
+        return using(new DefaultConfiguration()).dropView(table);
+    }
+
+    /**
+     * Create a new DSL <code>DROP VIEW</code> statement.
+     *
+     * @see DSLContext#dropView(String)
+     */
+    @Support
+    public static DropViewFinalStep dropView(String table) {
+        return using(new DefaultConfiguration()).dropView(table);
     }
 
     /**

@@ -1290,6 +1290,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testCreateView() throws Exception {
+        new DDLTests(this).testCreateView();
+    }
+
+    @Test
     public void testCreateIndex() throws Exception {
         new DDLTests(this).testCreateIndex();
     }

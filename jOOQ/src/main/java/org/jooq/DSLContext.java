@@ -4647,6 +4647,14 @@ public interface DSLContext {
     // -------------------------------------------------------------------------
 
     /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     *
+     * @see DSL#createView(String, String...)
+     */
+    @Support
+    CreateViewAsStep<Record> createView(String viewName, String... columnNames);
+
+    /**
      * Create a new DSL <code>CREATE INDEX</code> statement.
      *
      * @see DSL#createIndex(String)
@@ -4701,6 +4709,22 @@ public interface DSLContext {
      */
     @Support
     AlterTableStep alterTable(String table);
+
+    /**
+     * Create a new DSL <code>DROP VIEW</code> statement.
+     *
+     * @see DSL#dropView(Table)
+     */
+    @Support
+    DropViewFinalStep dropView(Table<?> table);
+
+    /**
+     * Create a new DSL <code>DROP VIEW</code> statement.
+     *
+     * @see DSL#dropView(String)
+     */
+    @Support
+    DropViewFinalStep dropView(String table);
 
     /**
      * Create a new DSL <code>DROP TABLE</code> statement.

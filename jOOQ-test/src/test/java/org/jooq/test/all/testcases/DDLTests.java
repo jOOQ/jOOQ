@@ -45,7 +45,13 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.tableByName;
+import static org.jooq.impl.DSL.two;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
@@ -90,6 +96,28 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public DDLTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
         super(delegate);
+    }
+
+    public void testCreateView() throws Exception {
+        try {
+            create().createView("v1").as(select(one().as("one"))).execute();
+            create().createView("v2", "two").as(select(two())).execute();
+
+            assertEquals(1, create().fetchValue(select(fieldByName("one")).from(tableByName("v1"))));
+            assertEquals(2, create().fetchValue(select(fieldByName("two")).from(tableByName("v2"))));
+        }
+        finally {
+            create().dropView(tableByName("v1")).execute();
+            create().dropView(tableByName("v2")).execute();
+
+            assertThrows(DataAccessException.class, () -> {
+                create().fetch("select * from {0}", name("v1"));
+            });
+
+            assertThrows(DataAccessException.class, () -> {
+                create().fetch("select * from {0}", name("v2"));
+            });
+        }
     }
 
     public void testCreateIndex() throws Exception {

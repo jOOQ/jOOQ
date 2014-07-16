@@ -546,6 +546,21 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
+    public List<?> fetchValues(String sql) {
+        return fetchValues((ResultQuery) resultQuery(sql));
+    }
+
+    @Override
+    public List<?> fetchValues(String sql, Object... bindings) {
+        return fetchValues((ResultQuery) resultQuery(sql, bindings));
+    }
+
+    @Override
+    public List<?> fetchValues(String sql, QueryPart... parts) {
+        return fetchValues((ResultQuery) resultQuery(sql, parts));
+    }
+
+    @Override
     public int execute(String sql) {
         return query(sql).execute();
     }
@@ -647,6 +662,26 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     @Override
     public <T> T fetchValue(ResultSet rs, Class<T> type) {
         return (T) value1((Record1) fetchOne(rs, type));
+    }
+
+    @Override
+    public List<?> fetchValues(ResultSet rs) {
+        return fetch(rs).getValues(0);
+    }
+
+    @Override
+    public <T> List<T> fetchValues(ResultSet rs, Field<T> field) {
+        return fetch(rs).getValues(field);
+    }
+
+    @Override
+    public <T> List<T> fetchValues(ResultSet rs, DataType<T> type) {
+        return fetch(rs).getValues(0, type.getType());
+    }
+
+    @Override
+    public <T> List<T> fetchValues(ResultSet rs, Class<T> type) {
+        return fetch(rs).getValues(0, type);
     }
 
     @Override
@@ -2110,6 +2145,11 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         finally {
             query.attach(previous);
         }
+    }
+
+    @Override
+    public <T, R extends Record1<T>> List<T> fetchValues(ResultQuery<R> query) {
+        return (List) fetch(query).getValues(0);
     }
 
     private final <T, R extends Record1<T>> T value1(R record) {

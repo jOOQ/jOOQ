@@ -857,10 +857,96 @@ public interface DSLContext {
      * @return The results from the executed query. This may be
      *         <code>null</code> if the database returned no records
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record or a record with more than one value.
+     * @throws InvalidResultException if the query returned more than one record
+     *             or a record with more than one value.
      */
     @Support
     Object fetchValue(String sql, QueryPart... parts) throws DataAccessException, InvalidResultException;
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The result values from the executed query. This is never
+     *         <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    List<?> fetchValues(String sql) throws DataAccessException;
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * There must be as many bind variables contained in the SQL, as passed in
+     * the bindings parameter
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @param bindings The bindings
+     * @return The results from the executed query. This is never
+     *         <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    List<?> fetchValues(String sql, Object... bindings) throws DataAccessException;
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Unlike {@link #fetchValue(String, Object...)}, the SQL passed to this
+     * method should not contain any bind variables. Instead, you can pass
+     * {@link QueryPart} objects to the method which will be rendered at indexed
+     * locations of your SQL string as such: <code><pre>
+     * // The following query
+     * fetchOne("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
+     *
+     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * select ?, 'test' from "DUAL"
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link DSL#name(String...)} and similar methods
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return The results from the executed query. This is never
+     *         <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    List<?> fetchValues(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
      * Execute a query holding plain SQL.
@@ -1276,6 +1362,62 @@ public interface DSLContext {
      */
     @Support
     <T> T fetchValue(ResultSet rs, Class<T> type) throws DataAccessException, InvalidResultException;
+
+    /**
+     * Fetch a result from a JDBC {@link ResultSet} and return the only
+     * contained column's values.
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @return The resulting values
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    List<?> fetchValues(ResultSet rs) throws DataAccessException;
+
+    /**
+     * Fetch a result from a JDBC {@link ResultSet} and return the only
+     * contained column's values.
+     * <p>
+     * The additional <code>field</code> argument is used by jOOQ to coerce
+     * field names and data types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param field The field to use in the desired output
+     * @return The resulting values
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T> List<T> fetchValues(ResultSet rs, Field<T> field) throws DataAccessException;
+
+    /**
+     * Fetch a result from a JDBC {@link ResultSet} and return the only
+     * contained column's values.
+     * <p>
+     * The additional <code>type</code> argument is used by jOOQ to coerce data
+     * types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param type The data type to use in the desired output
+     * @return The resulting values
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T> List<T> fetchValues(ResultSet rs, DataType<T> type) throws DataAccessException;
+
+    /**
+     * Fetch a result from a JDBC {@link ResultSet} and return the only
+     * contained column's values.
+     * <p>
+     * The additional <code>type</code> argument is used by jOOQ to coerce data
+     * types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param type The data types to use in the desired output
+     * @return The resulting values
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <T> List<T> fetchValues(ResultSet rs, Class<T> type) throws DataAccessException;
 
     /**
      * Wrap a JDBC {@link ResultSet} into a jOOQ {@link Cursor}.
@@ -5554,6 +5696,16 @@ public interface DSLContext {
      *             or a record with more than one value.
      */
     <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query) throws DataAccessException, InvalidResultException;
+
+    /**
+     * Execute a {@link ResultQuery} in the context of this
+     * <code>DSLContext</code> and return all values for the only column.
+     *
+     * @param query The query to execute
+     * @return The values.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <T, R extends Record1<T>> List<T> fetchValues(ResultQuery<R> query) throws DataAccessException;
 
     /**
      * Execute a {@link Select} query in the context of this <code>DSLContext</code> and return

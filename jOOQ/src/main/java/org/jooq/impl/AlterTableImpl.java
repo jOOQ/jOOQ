@@ -321,6 +321,9 @@ class AlterTableImpl extends AbstractQuery implements
         String inlinedAlter = create.renderInlined(alter);
         String inlinedAlterDefault = create.renderInlined(alterDefault);
 
+        // [#2626] TODO: Externalise this SQL string in a .properties file and use jOOQ's
+        //               templating mechanism to load it
+
         ctx.visit(queryPart(
                 "DECLARE @constraint NVARCHAR(max);"
             + "\nDECLARE @command NVARCHAR(max);"

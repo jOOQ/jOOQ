@@ -55,6 +55,7 @@ import java.util.List;
 import org.jooq.example.db.oracle.packages.Library;
 import org.jooq.example.db.oracle.udt.records.AuthorTRecord;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.DSL;
 import org.jooq.util.oracle.OracleDSL.DBMS_AQ;
 import org.jooq.util.oracle.OracleDSL.DBMS_AQ.DEQUEUE_OPTIONS_T;
 import org.jooq.util.oracle.OracleDSL.DBMS_AQ.ENQUEUE_OPTIONS_T;
@@ -125,24 +126,50 @@ public class QueriesWithTypes extends Utils {
     }
 
     @Test
-    public void testAQTransactions() throws Exception {
-        dsl.transaction((ctx) -> {
+    public void testAQOptions() throws Exception {
+        dsl.transaction(c -> {
 
             ENQUEUE_OPTIONS_T enq = new ENQUEUE_OPTIONS_T().visibility(IMMEDIATE);
 
             // Enqueue two authors
-            DBMS_AQ.enqueue(dsl.configuration(), NEW_AUTHOR_AQ, authors.get(0), enq);
-            DBMS_AQ.enqueue(dsl.configuration(), NEW_AUTHOR_AQ, authors.get(1), enq);
+            DBMS_AQ.enqueue(c, NEW_AUTHOR_AQ, authors.get(0), enq);
+            DBMS_AQ.enqueue(c, NEW_AUTHOR_AQ, authors.get(1), enq);
 
             // Dequeue them again
             DEQUEUE_OPTIONS_T deq = new DEQUEUE_OPTIONS_T().wait(NO_WAIT);
 
-            assertEquals(authors.get(0), DBMS_AQ.dequeue(dsl.configuration(), NEW_AUTHOR_AQ, deq));
-            assertEquals(authors.get(1), DBMS_AQ.dequeue(dsl.configuration(), NEW_AUTHOR_AQ, deq));
+            assertEquals(authors.get(0), DBMS_AQ.dequeue(c, NEW_AUTHOR_AQ, deq));
+            assertEquals(authors.get(1), DBMS_AQ.dequeue(c, NEW_AUTHOR_AQ, deq));
 
             // The queue is empty, this should fail
             assertThrows(DataAccessException.class, () -> {
-                DBMS_AQ.dequeue(dsl.configuration(), NEW_AUTHOR_AQ, deq);
+                DBMS_AQ.dequeue(c, NEW_AUTHOR_AQ, deq);
+            });
+        });
+    }
+
+    @Test
+    public void testAQTransactions() throws Exception {
+        dsl.transaction(c1 -> {
+
+            // Enqueue an author
+            DBMS_AQ.enqueue(c1, NEW_AUTHOR_AQ, authors.get(0));
+
+            // This nested transaction is rolled back to its savepoint
+            assertThrows(RuntimeException.class, () -> {
+                DSL.using(c1).transaction(c2 -> {
+                    DBMS_AQ.enqueue(c1, NEW_AUTHOR_AQ, authors.get(1));
+                    throw new RuntimeException();
+                });
+            });
+
+            // Dequeue the first author
+            DEQUEUE_OPTIONS_T deq = new DEQUEUE_OPTIONS_T().wait(NO_WAIT);
+            assertEquals(authors.get(0), DBMS_AQ.dequeue(c1, NEW_AUTHOR_AQ, deq));
+
+            // The queue is empty (due to the rollback), this should fail
+            assertThrows(DataAccessException.class, () -> {
+                DBMS_AQ.dequeue(c1, NEW_AUTHOR_AQ, deq);
             });
         });
     }

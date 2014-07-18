@@ -158,7 +158,7 @@ public class QueriesWithTypes extends Utils {
             // This nested transaction is rolled back to its savepoint
             assertThrows(RuntimeException.class, () -> {
                 DSL.using(c1).transaction(c2 -> {
-                    DBMS_AQ.enqueue(c1, NEW_AUTHOR_AQ, authors.get(1));
+                    DBMS_AQ.enqueue(c2, NEW_AUTHOR_AQ, authors.get(1));
                     throw new RuntimeException();
                 });
             });

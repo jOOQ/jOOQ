@@ -78,7 +78,9 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String udtName, String converter) {
         this.database = database;
         this.schema = schema;
-        this.typeName = typeName;
+
+        // [#3420] Some databases report NULL as a data type, e.g. Oracle for (some) AQ tables
+        this.typeName = typeName == null ? "OTHER" : typeName;
         this.udtName = udtName;
         this.converter = converter;
 

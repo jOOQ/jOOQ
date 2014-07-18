@@ -95,6 +95,10 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
 import org.jooq.util.GeneratorStrategy.Mode;
+// ...
+// ...
+// ...
+// ...
 import org.jooq.util.postgres.PostgresDatabase;
 
 
@@ -296,9 +300,54 @@ public class JavaGenerator extends AbstractGenerator {
             generatePackages(schema);
         }
 
+        /* [pro] xx
+        xx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+        xx [/pro] */
+
         // XXX [#651] Refactoring-cursor
         watch.splitInfo("GENERATION FINISHED!");
     }
+
+    /* [pro] xx
+    xxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxxxxxxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxx xxxxxxxxx
+
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+    x
+
+    xxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxxxxxxxxxxxxxxxxx xxxxxxxxx
+        xxxxxxxxxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxx xxxxxxxxx
+
+        xxxxxxxxxx xxx x xxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxx xxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxx xx xxx xxxxxx xx x x xxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxx xxxxx xxxxxx xxxx
+
+        xxx xxxxxxxxxxxxxxxxxxxxxx xxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxx xxxxxxxxxxxxx xxx x xxxxxxxxxxxxxxx
+
+            xxxxx xxxxxx xxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxx xxxxxx xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxx
+            xxxxx xxxxxx xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
+            xxxxx xxxxxx xxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxx xxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+            xxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxx xxxxxx xx x xxx xxxxxxxxxxxxxx xxx xxxxxx xxxxxxxxxxxx xxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxxxxx xxxxxxx
+        x
+
+        xxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxx
+
+        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+    x
+    xx [/pro] */
 
     private boolean hasTableValuedFunctions(SchemaDefinition schema) {
         for (TableDefinition table : database.getTables(schema)) {

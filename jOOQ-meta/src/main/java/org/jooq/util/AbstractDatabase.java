@@ -781,7 +781,7 @@ public abstract class AbstractDatabase implements Database {
         return filterSchema(packages, schema, packagesBySchema);
     }
 
-    static final <D extends Definition> D getDefinition(List<D> definitions, String name, boolean ignoreCase) {
+    protected static final <D extends Definition> D getDefinition(List<D> definitions, String name, boolean ignoreCase) {
         for (D definition : definitions) {
             if ((ignoreCase && definition.getName().equalsIgnoreCase(name)) ||
                 (!ignoreCase && definition.getName().equals(name))) {
@@ -793,7 +793,7 @@ public abstract class AbstractDatabase implements Database {
         return null;
     }
 
-    private final <T extends Definition> List<T> filterSchema(List<T> definitions, SchemaDefinition schema, Map<SchemaDefinition, List<T>> cache) {
+    protected final <T extends Definition> List<T> filterSchema(List<T> definitions, SchemaDefinition schema, Map<SchemaDefinition, List<T>> cache) {
         List<T> result = cache.get(schema);
 
         if (result == null) {
@@ -804,7 +804,7 @@ public abstract class AbstractDatabase implements Database {
         return result;
     }
 
-    private final <T extends Definition> List<T> filterSchema(List<T> definitions, SchemaDefinition schema) {
+    protected final <T extends Definition> List<T> filterSchema(List<T> definitions, SchemaDefinition schema) {
         if (schema == null) {
             return definitions;
         }
@@ -821,11 +821,11 @@ public abstract class AbstractDatabase implements Database {
         }
     }
 
-    private final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions) {
+    protected final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions) {
         return filterExcludeInclude(definitions, excludes, includes);
     }
 
-    static final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String[] excludes, String[] includes) {
+    protected static final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String[] excludes, String[] includes) {
         List<T> result = new ArrayList<T>();
 
         definitionsLoop: for (T definition : definitions) {
@@ -924,7 +924,7 @@ public abstract class AbstractDatabase implements Database {
         return false;
     }
 
-    static final String fetchedSize(List<?> fetched, List<?> included) {
+    protected static final String fetchedSize(List<?> fetched, List<?> included) {
         return fetched.size() + " (" + included.size() + " included, " + (fetched.size() - included.size()) + " excluded)";
     }
 

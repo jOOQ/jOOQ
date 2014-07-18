@@ -47,6 +47,7 @@ import java.util.List;
 
 import org.jooq.DAO;
 import org.jooq.tools.StringUtils;
+// ...
 
 /**
  * The default naming strategy for the {@link JavaGenerator}
@@ -188,6 +189,12 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         else if (mode == Mode.INTERFACE) {
             sb.append(".interfaces");
         }
+
+        /* [pro] xx
+        xxxx xx xxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxx
+        x
+        xx [/pro] */
 
         return sb.toString();
     }

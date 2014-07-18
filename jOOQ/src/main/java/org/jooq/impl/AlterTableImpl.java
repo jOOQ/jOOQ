@@ -321,6 +321,9 @@ class AlterTableImpl extends AbstractQuery implements
         xxxxxx xxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxx
         xxxxxx xxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+        xx xxxxxxx xxxxx xxxxxxxxxxx xxxx xxx xxxxxx xx x xxxxxxxxxxx xxxx xxx xxx xxxxxx
+        xx               xxxxxxxxxx xxxxxxxxx xx xxxx xx
+
         xxxxxxxxxxxxxxxxxxxx
                 xxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxx
             x xxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxx

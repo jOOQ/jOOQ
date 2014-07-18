@@ -4875,6 +4875,15 @@ public class DSL {
     }
 
     /**
+     * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
+     * <code>UPDATE</code>, or <code>MERGE</code> statements.
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    public static <T> Field<T> defaultValue(Field<T> field) {
+        return new SQLField<T>(field.getDataType(), keyword("default"));
+    }
+
+    /**
      * Create a new SQL identifier using a qualified name.
      * <p>
      * Use this method to construct syntax-safe, SQL-injection-safe SQL

@@ -95,6 +95,10 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
 import org.jooq.util.GeneratorStrategy.Mode;
+import org.jooq.util.oracle.OracleDatabase;
+import org.jooq.util.oracle.OracleQueueDefinition;
+import org.jooq.util.oracle.Queue;
+import org.jooq.util.oracle.QueueImpl;
 import org.jooq.util.postgres.PostgresDatabase;
 
 
@@ -296,9 +300,54 @@ public class JavaGenerator extends AbstractGenerator {
             generatePackages(schema);
         }
 
+        /* [pro] */
+        if (database instanceof OracleDatabase) {
+            generateOracleObjects(schema);
+        }
+        /* [/pro] */
+
         // XXX [#651] Refactoring-cursor
         watch.splitInfo("GENERATION FINISHED!");
     }
+
+    /* [pro] */
+    protected void generateOracleObjects(SchemaDefinition schema) {
+        OracleDatabase oracleDatabase = (OracleDatabase) database;
+
+        if (oracleDatabase.getQueues(schema).size() > 0) {
+            generateOracleQueueReferences(schema);
+        }
+    }
+
+    protected void generateOracleQueueReferences(SchemaDefinition schema) {
+        log.info("Generating Queues");
+        OracleDatabase oracleDatabase = (OracleDatabase) database;
+
+        JavaWriter out = new JavaWriter(new File(getStrategy().getFile(schema).getParentFile(), "Queues.java"));
+        printPackage(out, schema);
+        printClassJavadoc(out, "Convenience access to all Queues in " + schema.getOutputName());
+        printClassAnnotations(out);
+        out.println("public class Queues {");
+
+        for (OracleQueueDefinition queue : oracleDatabase.getQueues(schema)) {
+            final UDTDefinition udt = queue.getUDT();
+
+            final String queueId = getStrategy().getJavaIdentifier(queue);
+            final String queueName = queue.getOutputName();
+            final String udtRecord = getStrategy().getFullJavaClassName(udt, Mode.RECORD);
+            final String udtId = getStrategy().getFullJavaIdentifier(udt);
+            final String schemaId = getStrategy().getFullJavaIdentifier(schema);
+
+            out.tab(1).javadoc("The queue <code>%s</code>", queue.getQualifiedOutputName());
+            out.tab(1).println("public static final %s<%s> %s = new %s<%s>(\"%s\", %s, %s);", Queue.class, udtRecord, queueId, QueueImpl.class, udtRecord, queueName, schemaId, udtId);
+        }
+
+        out.println("}");
+        out.close();
+
+        watch.splitInfo("Queues generated");
+    }
+    /* [/pro] */
 
     private boolean hasTableValuedFunctions(SchemaDefinition schema) {
         for (TableDefinition table : database.getTables(schema)) {

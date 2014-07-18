@@ -43,13 +43,27 @@ package org.jooq.util.oracle;
 import static org.jooq.SQLDialect.ORACLE;
 
 import java.math.BigDecimal;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import org.jooq.Configuration;
+import org.jooq.ConnectionProvider;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.Support;
+import org.jooq.UDTRecord;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
+import org.jooq.tools.JooqLogger;
+import org.jooq.tools.jdbc.JDBCUtils;
 
 /**
  * The {@link SQLDialect#ORACLE} specific DSL.
@@ -57,6 +71,8 @@ import org.jooq.impl.SQLDataType;
  * @author Lukas Eder
  */
 public class OracleDSL extends DSL {
+
+    private static final JooqLogger log = JooqLogger.getLogger(OracleDSL.class);
 
     /**
      * No instances
@@ -264,4 +280,306 @@ public class OracleDSL extends DSL {
         return field("{match_score}({0})", SQLDataType.NUMERIC, inline(label));
     }
 
+    /**
+     * Oracle AQ related features are located here.
+     *
+     * @author Lukas Eder
+     */
+    public static final class DBMS_AQ {
+
+        /**
+         * A flag corresponding to
+         * <code>DBMS_AQ.DEQUEUE_OPTIONS_T.DEQUEUE_MODE</code>.
+         */
+        public static enum DEQUEUE_MODE {
+            BROWSE,
+            LOCKED,
+            REMOVE,
+            REMOVE_NODATA
+        }
+
+        /**
+         * A flag corresponding to
+         * <code>DBMS_AQ.DEQUEUE_OPTIONS_T.NAVIGATION</code>.
+         */
+        public static enum NAVIGATION {
+            NEXT_MESSAGE,
+            NEXT_TRANSACTION,
+            NEXT_MESSAGE_MULTI_GROUP,
+            FIRST_MESSAGE,
+            FIRST_MESSAGE_MULTI_GROUP
+        }
+
+        /**
+         * A flag corresponding to
+         * <code>DBMS_AQ.DEQUEUE_OPTIONS_T.VISIBILITY</code> and to
+         * <code>DBMS_AQ.ENQUEUE_OPTIONS_T.VISIBILITY</code>.
+         */
+        public static enum VISIBILITY {
+            ON_COMMIT,
+            IMMEDIATE
+        }
+
+        /**
+         * A flag corresponding to <code>DBMS_AQ.DEQUEUE_OPTIONS_T.WAIT</code>.
+         */
+        public static enum WAIT {
+            FOREVER,
+            NO_WAIT
+        }
+
+        /**
+         * A flag corresponding to
+         * <code>DBMS_AQ.DEQUEUE_OPTIONS_T.DELIVERY_MODE</code> and to
+         * <code>DBMS_AQ.ENQUEUE_OPTIONS_T.DELIVERY_MODE</code>.
+         */
+        public static enum DELIVERY_MODE {
+            BUFFERED,
+            PERSISTENT,
+            PERSISTENT_OR_BUFFERED
+        }
+
+        /**
+         * A flag corresponding to <code>DBMS_AQ.ENQUEUE_OPTIONS_T.SEQUENCE_DEVIATION</code>.
+         */
+        public static enum SEQUENCE_DEVIATION {
+            BEFORE,
+            TOP
+        }
+
+        /**
+         * A <code>RECORD</code> corresponding to <code>DBMS_AQ.DEQUEUE_OPTIONS_T</code>.
+         */
+        public static final class DEQUEUE_OPTIONS_T {
+
+            public String        consumer_name;
+            public DEQUEUE_MODE  dequeue_mode;
+            public NAVIGATION    navigation;
+            public VISIBILITY    visibility;
+            public WAIT          wait;
+            public String        correlation;
+            public String        deq_condition;
+            public String        transformation;
+            public DELIVERY_MODE delivery_mode;
+
+            public DEQUEUE_OPTIONS_T consumer_name(String newValue) {
+                this.consumer_name = newValue;
+                return this;
+            }
+
+            public DEQUEUE_OPTIONS_T dequeue_mode(DEQUEUE_MODE newValue) {
+                this.dequeue_mode = newValue;
+                return this;
+            }
+
+            public DEQUEUE_OPTIONS_T navigation(NAVIGATION newValue) {
+                this.navigation = newValue;
+                return this;
+            }
+
+            public DEQUEUE_OPTIONS_T visibility(VISIBILITY newValue) {
+                this.visibility = newValue;
+                return this;
+            }
+
+            public DEQUEUE_OPTIONS_T wait(WAIT newValue) {
+                this.wait = newValue;
+                return this;
+            }
+
+            public DEQUEUE_OPTIONS_T correlation(String newValue) {
+                this.correlation = newValue;
+                return this;
+            }
+
+            public DEQUEUE_OPTIONS_T deq_condition(String newValue) {
+                this.deq_condition = newValue;
+                return this;
+            }
+
+            public DEQUEUE_OPTIONS_T transformation(String newValue) {
+                this.transformation = newValue;
+                return this;
+            }
+
+            public DEQUEUE_OPTIONS_T delivery_mode(DELIVERY_MODE newValue) {
+                this.delivery_mode = newValue;
+                return this;
+            }
+        }
+
+        /**
+         * A <code>RECORD</code> corresponding to <code>DBMS_AQ.ENQUEUE_OPTIONS_T</code>.
+         */
+        public static final class ENQUEUE_OPTIONS_T {
+
+            public VISIBILITY         visibility;
+            public SEQUENCE_DEVIATION sequence_deviation;
+            public String             transformation;
+            public DELIVERY_MODE      delivery_mode;
+
+            public ENQUEUE_OPTIONS_T visibility(VISIBILITY newValue) {
+                this.visibility = newValue;
+                return this;
+            }
+
+            public ENQUEUE_OPTIONS_T sequence_deviation(SEQUENCE_DEVIATION newValue) {
+                this.sequence_deviation = newValue;
+                return this;
+            }
+
+            public ENQUEUE_OPTIONS_T transformation(String newValue) {
+                this.transformation = newValue;
+                return this;
+            }
+
+            public ENQUEUE_OPTIONS_T delivery_mode(DELIVERY_MODE newValue) {
+                this.delivery_mode = newValue;
+                return this;
+            }
+        }
+
+        /**
+         * Enqueue a message in an Oracle AQ.
+         *
+         * @param configuration The configuration from which to get a connection.
+         * @param queue The queue reference.
+         * @param payload The message payload.
+         */
+        public static <R extends UDTRecord<R>> void enqueue(Configuration configuration, Queue<R> queue, R payload) {
+            enqueue(configuration, queue, payload, null);
+        }
+
+        /**
+         * Enqueue a message in an Oracle AQ.
+         *
+         * @param configuration The configuration from which to get a connection.
+         * @param queue The queue reference.
+         * @param payload The message payload.
+         */
+        public static <R extends UDTRecord<R>> void enqueue(Configuration configuration, Queue<R> queue, R payload, ENQUEUE_OPTIONS_T options) {
+            if (options == null)
+                options = new ENQUEUE_OPTIONS_T();
+
+            // [#2626] TODO: Externalise this SQL string in a .properties file and use jOOQ's
+            //               templating mechanism to load it
+
+            List<Object> bindings = new ArrayList<Object>();
+            if (options.transformation != null)
+                bindings.add(options.transformation);
+            bindings.add(queue.name());
+            bindings.add(payload);
+
+
+            DSL.using(configuration)
+               .execute("DECLARE"
+                    + "\n  v_msgid              RAW(16);"
+                    + "\n  v_enqueue_options    DBMS_AQ.enqueue_options_t;"
+                    + "\n  v_message_properties DBMS_AQ.message_properties_t;"
+                    + "\nBEGIN"                                                                                         + (options.transformation     == null ? "" :
+                      "\n  v_enqueue_options.transformation     := ?;")                                                 + (options.delivery_mode      == null ? "" :
+                      "\n  v_enqueue_options.delivery_mode      := DBMS_AQ." + options.delivery_mode.name()      + ";") + (options.sequence_deviation == null ? "" :
+                      "\n  v_enqueue_options.sequence_deviation := DBMS_AQ." + options.sequence_deviation.name() + ";") + (options.visibility         == null ? "" :
+                      "\n  v_enqueue_options.visibility         := DBMS_AQ." + options.visibility.name()         + ";")
+                    + "\n  DBMS_AQ.ENQUEUE("
+                    + "\n    queue_name         => ?,"
+                    + "\n    enqueue_options    => v_enqueue_options,"
+                    + "\n    message_properties => v_message_properties,"
+                    + "\n    payload            => ?,"
+                    + "\n    msgid              => v_msgid"
+                    + "\n  );"
+                    + "\nEND;", bindings.toArray());
+
+        }
+
+        /**
+         * Dequeue a message in an Oracle AQ.
+         *
+         * @param configuration The configuration from which to get a connection.
+         * @param queue The queue reference.
+         * @return The message payload.
+         */
+        public static <R extends UDTRecord<R>> R dequeue(Configuration configuration, Queue<R> queue) {
+            return dequeue(configuration, queue, null);
+        }
+
+        /**
+         * Dequeue a message in an Oracle AQ.
+         *
+         * @param configuration The configuration from which to get a connection.
+         * @param queue The queue reference.
+         * @return The message payload.
+         */
+        public static <R extends UDTRecord<R>> R dequeue(Configuration configuration, Queue<R> queue, DEQUEUE_OPTIONS_T options) {
+            if (options == null)
+                options = new DEQUEUE_OPTIONS_T();
+
+            // [#2626] TODO: Externalise this SQL string in a .properties file and use jOOQ's
+            //               templating mechanism to load it
+            // [#3426] TODO: Replace this explicit call to Connection.prepareCall() by
+            //               a call to the new DSLContext.callable() API in order to go through
+            //               the complete jOOQ query execution lifecycle.
+
+            String sql ="DECLARE"
+                    + "\n  v_msgid              RAW(16);"
+                    + "\n  v_dequeue_options    DBMS_AQ.dequeue_options_t;"
+                    + "\n  v_message_properties DBMS_AQ.message_properties_t;"
+                    + "\nBEGIN"                                                                                + (options.consumer_name  == null ? "" :
+                      "\n  v_dequeue_options.consumer_name  := ?;")                                            + (options.correlation    == null ? "" :
+                      "\n  v_dequeue_options.correlation    := ?;")                                            + (options.deq_condition  == null ? "" :
+                      "\n  v_dequeue_options.deq_condition  := ?;")                                            + (options.transformation == null ? "" :
+                      "\n  v_dequeue_options.transformation := ?;")                                            + (options.delivery_mode  == null ? "" :
+                      "\n  v_dequeue_options.delivery_mode  := DBMS_AQ." + options.delivery_mode.name() + ";") + (options.dequeue_mode   == null ? "" :
+                      "\n  v_dequeue_options.dequeue_mode   := DBMS_AQ." + options.dequeue_mode.name()  + ";") + (options.navigation     == null ? "" :
+                      "\n  v_dequeue_options.navigation   := DBMS_AQ." + options.navigation.name()      + ";") + (options.visibility     == null ? "" :
+                      "\n  v_dequeue_options.visibility   := DBMS_AQ." + options.visibility.name()      + ";") + (options.wait           == null ? "" :
+                      "\n  v_dequeue_options.wait   := DBMS_AQ." + options.wait.name()                  + ";")
+                    + "\n  DBMS_AQ.DEQUEUE("
+                    + "\n    queue_name         => ?,"
+                    + "\n    dequeue_options    => v_dequeue_options,"
+                    + "\n    message_properties => v_message_properties,"
+                    + "\n    payload            => ?,"
+                    + "\n    msgid              => v_msgid"
+                    + "\n  );"
+                    + "\nEND;";
+
+            ConnectionProvider cp = configuration.connectionProvider();
+            Connection connection = cp.acquire();
+            CallableStatement stmt = null;
+
+            try {
+                int i = 1;
+                stmt = connection.prepareCall(sql);
+
+                if (options.consumer_name != null)
+                    stmt.setString(i++, options.consumer_name);
+                if (options.correlation != null)
+                    stmt.setString(i++, options.correlation);
+                if (options.deq_condition != null)
+                    stmt.setString(i++, options.deq_condition);
+                if (options.transformation != null)
+                    stmt.setString(i++, options.transformation);
+
+                stmt.setString(i++, queue.name());
+                stmt.registerOutParameter(i++, Types.STRUCT, queue.type().getName());
+                stmt.execute();
+
+                Map<String, Class<?>> map = new HashMap<String, Class<?>>();
+                map.put(queue.type().getName(), queue.type().getRecordType());
+                return (R) stmt.getObject(2, map);
+            }
+            catch (SQLException e) {
+                throw new DataAccessException("Error while dequeuing message", e);
+            }
+            finally {
+                JDBCUtils.safeClose(stmt);
+                cp.release(connection);
+            }
+        }
+
+        /**
+         * No instances
+         */
+        private DBMS_AQ() {}
+    }
 }

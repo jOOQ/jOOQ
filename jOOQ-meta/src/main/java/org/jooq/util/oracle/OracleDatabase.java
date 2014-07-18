@@ -50,6 +50,8 @@ import static org.jooq.util.oracle.sys.Tables.ALL_CONS_COLUMNS;
 import static org.jooq.util.oracle.sys.Tables.ALL_MVIEW_COMMENTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_OBJECTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_PROCEDURES;
+import static org.jooq.util.oracle.sys.Tables.ALL_QUEUES;
+import static org.jooq.util.oracle.sys.Tables.ALL_QUEUE_TABLES;
 import static org.jooq.util.oracle.sys.Tables.ALL_SEQUENCES;
 import static org.jooq.util.oracle.sys.Tables.ALL_TAB_COMMENTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_TYPES;
@@ -59,7 +61,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -68,6 +72,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
+import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -91,7 +96,12 @@ import org.jooq.util.oracle.sys.tables.AllConstraints;
  */
 public class OracleDatabase extends AbstractDatabase {
 
-    private static Boolean is10g;
+    private static final JooqLogger                                      log = JooqLogger.getLogger(OracleDatabase.class);
+
+    private List<OracleQueueDefinition>                                  queues;
+    private transient Map<SchemaDefinition, List<OracleQueueDefinition>> queuesBySchema;
+
+    private static Boolean                                               is10g;
 
     /**
      * {@inheritDoc}
@@ -450,6 +460,47 @@ public class OracleDatabase extends AbstractDatabase {
         return result;
     }
 
+    protected List<OracleQueueDefinition> getQueues0() {
+        List<OracleQueueDefinition> result = new ArrayList<OracleQueueDefinition>();
+
+        for (Record record : create().select(
+                    ALL_QUEUES.OWNER,
+                    ALL_QUEUES.NAME,
+                    ALL_QUEUES.USER_COMMENT,
+                    ALL_QUEUE_TABLES.OBJECT_TYPE
+                )
+                .from(ALL_QUEUES)
+                .join(ALL_QUEUE_TABLES)
+                .on(ALL_QUEUES.OWNER.eq(ALL_QUEUE_TABLES.OWNER))
+                .and(ALL_QUEUES.QUEUE_TABLE.eq(ALL_QUEUE_TABLES.QUEUE_TABLE))
+                .where(ALL_QUEUES.OWNER.upper().in(getInputSchemata()))
+                .and(ALL_QUEUE_TABLES.TYPE.eq("OBJECT"))
+                .orderBy(
+                    ALL_QUEUES.OWNER,
+                    ALL_QUEUES.NAME)
+                .fetch()) {
+
+            SchemaDefinition schema = getSchema(record.getValue(ALL_QUEUES.OWNER));
+            String name = record.getValue(ALL_QUEUES.NAME);
+            String comment = record.getValue(ALL_QUEUES.USER_COMMENT);
+            String objectType = record.getValue(ALL_QUEUE_TABLES.OBJECT_TYPE);
+            UDTDefinition udt = null;
+
+            if (objectType != null && objectType.contains(".")) {
+                String[] split = objectType.split("\\.");
+                SchemaDefinition udtSchema = getSchema(split[0]);
+                udt = getUDT(udtSchema, split[1], true);
+            }
+            else {
+                log.info("Invalid UDT", objectType);
+            }
+
+            result.add(new OracleQueueDefinition(schema, name, comment, udt));
+        }
+
+        return result;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -475,5 +526,38 @@ public class OracleDatabase extends AbstractDatabase {
         }
 
         return is10g;
+    }
+
+    // --------------------------------------------------------------------------------------------
+    // Oracle-specific API
+    // --------------------------------------------------------------------------------------------
+
+    public final List<OracleQueueDefinition> getQueues(SchemaDefinition schema) {
+        if (queues == null) {
+            queues = new ArrayList<OracleQueueDefinition>();
+
+            try {
+                List<OracleQueueDefinition> u = getQueues0();
+
+                queues = filterExcludeInclude(u);
+                log.info("Queues fetched", fetchedSize(u, queues));
+            } catch (Exception e) {
+                log.error("Error while fetching queues", e);
+            }
+        }
+
+        if (queuesBySchema == null) {
+            queuesBySchema = new LinkedHashMap<SchemaDefinition, List<OracleQueueDefinition>>();
+        }
+
+        return filterSchema(queues, schema, queuesBySchema);
+    }
+
+    public final OracleQueueDefinition getQueue(SchemaDefinition schema, String name) {
+        return getQueue(schema, name, false);
+    }
+
+    public final OracleQueueDefinition getQueue(SchemaDefinition schema, String name, boolean ignoreCase) {
+        return getDefinition(getQueues(schema), name, ignoreCase);
     }
 }

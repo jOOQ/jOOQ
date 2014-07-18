@@ -47,6 +47,7 @@ import java.util.List;
 
 import org.jooq.DAO;
 import org.jooq.tools.StringUtils;
+import org.jooq.util.oracle.OracleQueueDefinition;
 
 /**
  * The default naming strategy for the {@link JavaGenerator}
@@ -188,6 +189,12 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         else if (mode == Mode.INTERFACE) {
             sb.append(".interfaces");
         }
+
+        /* [pro] */
+        else if (definition instanceof OracleQueueDefinition) {
+            sb.append(".aq");
+        }
+        /* [/pro] */
 
         return sb.toString();
     }

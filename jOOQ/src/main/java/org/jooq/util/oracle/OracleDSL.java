@@ -440,14 +440,60 @@ public class OracleDSL extends DSL {
         }
 
         /**
-         * Enqueue a message in an Oracle AQ.
-         *
-         * @param configuration The configuration from which to get a connection.
-         * @param queue The queue reference.
-         * @param payload The message payload.
+         * A <code>RECORD</code> corresponding to <code>DBMS_AQ.MESSAGE_PROPERTIES_T</code>.
          */
-        public static <R extends UDTRecord<R>> void enqueue(Configuration configuration, Queue<R> queue, R payload) {
-            enqueue(configuration, queue, payload, null);
+        public static final class MESSAGE_PROPERTIES_T {
+
+            public Integer       priority;
+            public BigDecimal    delay;
+            public BigDecimal    expires;
+            public String        correlation;
+            public Integer       attempts;
+            public String        exception_queue;
+            public Timestamp     enqueue_time;
+            public Integer       state;
+            public String        transaction_group;
+            public DELIVERY_MODE delivery_mode;
+
+            public void priority(Integer newValue) {
+                this.priority = newValue;
+            }
+
+            public void delay(BigDecimal newValue) {
+                this.delay = newValue;
+            }
+
+            public void expires(BigDecimal newValue) {
+                this.expires = newValue;
+            }
+
+            public void correlation(String newValue) {
+                this.correlation = newValue;
+            }
+
+            public void attempts(Integer newValue) {
+                this.attempts = newValue;
+            }
+
+            public void exception_queue(String newValue) {
+                this.exception_queue = newValue;
+            }
+
+            public void enqueue_time(Timestamp newValue) {
+                this.enqueue_time = newValue;
+            }
+
+            public void state(Integer newValue) {
+                this.state = newValue;
+            }
+
+            public void transaction_group(String newValue) {
+                this.transaction_group = newValue;
+            }
+
+            public void delivery_mode(DELIVERY_MODE newValue) {
+                this.delivery_mode = newValue;
+            }
         }
 
         /**
@@ -457,16 +503,52 @@ public class OracleDSL extends DSL {
          * @param queue The queue reference.
          * @param payload The message payload.
          */
-        public static <R extends UDTRecord<R>> void enqueue(Configuration configuration, Queue<R> queue, R payload, ENQUEUE_OPTIONS_T options) {
+        public static <R extends UDTRecord<R>> void enqueue(Configuration configuration, Queue<R> queue, R payload) {
+            enqueue(configuration, queue, payload, null, null);
+        }
+
+        /**
+         * Enqueue a message in an Oracle AQ.
+         *
+         * @param configuration The configuration from which to get a connection.
+         * @param queue The queue reference.
+         * @param payload The message payload.
+         * @param options The enqueue options.
+         * @param properties The message properties.
+         */
+        public static <R extends UDTRecord<R>> void enqueue(Configuration configuration, Queue<R> queue, R payload, ENQUEUE_OPTIONS_T options, MESSAGE_PROPERTIES_T properties) {
             if (options == null)
                 options = new ENQUEUE_OPTIONS_T();
+            if (properties == null)
+                properties = new MESSAGE_PROPERTIES_T();
 
             // [#2626] TODO: Externalise this SQL string in a .properties file and use jOOQ's
             //               templating mechanism to load it
 
             List<Object> bindings = new ArrayList<Object>();
+
             if (options.transformation != null)
                 bindings.add(options.transformation);
+
+            if (properties.attempts != null)
+                bindings.add(properties.attempts);
+            if (properties.correlation != null)
+                bindings.add(properties.correlation);
+            if (properties.delay != null)
+                bindings.add(properties.delay);
+            if (properties.enqueue_time != null)
+                bindings.add(properties.enqueue_time);
+            if (properties.exception_queue != null)
+                bindings.add(properties.exception_queue);
+            if (properties.expires != null)
+                bindings.add(properties.expires);
+            if (properties.priority != null)
+                bindings.add(properties.priority);
+            if (properties.state != null)
+                bindings.add(properties.state);
+            if (properties.transaction_group != null)
+                bindings.add(properties.transaction_group);
+
             bindings.add(queue.name());
             bindings.add(payload);
 
@@ -476,11 +558,21 @@ public class OracleDSL extends DSL {
                     + "\n  v_msgid              RAW(16);"
                     + "\n  v_enqueue_options    DBMS_AQ.enqueue_options_t;"
                     + "\n  v_message_properties DBMS_AQ.message_properties_t;"
-                    + "\nBEGIN"                                                                                         + (options.transformation     == null ? "" :
-                      "\n  v_enqueue_options.transformation     := ?;")                                                 + (options.delivery_mode      == null ? "" :
-                      "\n  v_enqueue_options.delivery_mode      := DBMS_AQ." + options.delivery_mode.name()      + ";") + (options.sequence_deviation == null ? "" :
-                      "\n  v_enqueue_options.sequence_deviation := DBMS_AQ." + options.sequence_deviation.name() + ";") + (options.visibility         == null ? "" :
-                      "\n  v_enqueue_options.visibility         := DBMS_AQ." + options.visibility.name()         + ";")
+                    + "\nBEGIN"                                                                                           + (options.transformation       == null ? "" :
+                      "\n  v_enqueue_options.transformation       := ?;")                                                 + (options.delivery_mode        == null ? "" :
+                      "\n  v_enqueue_options.delivery_mode        := DBMS_AQ." + options.delivery_mode.name()      + ";") + (options.sequence_deviation   == null ? "" :
+                      "\n  v_enqueue_options.sequence_deviation   := DBMS_AQ." + options.sequence_deviation.name() + ";") + (options.visibility           == null ? "" :
+                      "\n  v_enqueue_options.visibility           := DBMS_AQ." + options.visibility.name()         + ";") + (properties.attempts          == null ? "" :
+                      "\n  v_message_properties.attempts          := ?")                                                  + (properties.correlation       == null ? "" :
+                      "\n  v_message_properties.correlation       := ?")                                                  + (properties.delay             == null ? "" :
+                      "\n  v_message_properties.delay             := ?")                                                  + (properties.delivery_mode     == null ? "" :
+                      "\n  v_message_properties.delivery_mode     := DBMS_AQ." + properties.delivery_mode.name()   + ";") + (properties.enqueue_time      == null ? "" :
+                      "\n  v_message_properties.enqueue_time      := ?")                                                  + (properties.exception_queue   == null ? "" :
+                      "\n  v_message_properties.exception_queue   := ?")                                                  + (properties.expires           == null ? "" :
+                      "\n  v_message_properties.expires           := ?")                                                  + (properties.priority          == null ? "" :
+                      "\n  v_message_properties.priority          := ?")                                                  + (properties.state             == null ? "" :
+                      "\n  v_message_properties.state             := ?")                                                  + (properties.transaction_group == null ? "" :
+                      "\n  v_message_properties.transaction_group := ?")
                     + "\n  DBMS_AQ.ENQUEUE("
                     + "\n    queue_name         => ?,"
                     + "\n    enqueue_options    => v_enqueue_options,"
@@ -500,7 +592,7 @@ public class OracleDSL extends DSL {
          * @return The message payload.
          */
         public static <R extends UDTRecord<R>> R dequeue(Configuration configuration, Queue<R> queue) {
-            return dequeue(configuration, queue, null);
+            return dequeue(configuration, queue, null, null);
         }
 
         /**
@@ -509,10 +601,14 @@ public class OracleDSL extends DSL {
          * @param configuration The configuration from which to get a connection.
          * @param queue The queue reference.
          * @return The message payload.
+         * @param options The dequeue options.
+         * @param properties The message properties.
          */
-        public static <R extends UDTRecord<R>> R dequeue(Configuration configuration, Queue<R> queue, DEQUEUE_OPTIONS_T options) {
+        public static <R extends UDTRecord<R>> R dequeue(Configuration configuration, Queue<R> queue, DEQUEUE_OPTIONS_T options, MESSAGE_PROPERTIES_T properties) {
             if (options == null)
                 options = new DEQUEUE_OPTIONS_T();
+            if (properties == null)
+                properties = new MESSAGE_PROPERTIES_T();
 
             // [#2626] TODO: Externalise this SQL string in a .properties file and use jOOQ's
             //               templating mechanism to load it
@@ -524,16 +620,26 @@ public class OracleDSL extends DSL {
                     + "\n  v_msgid              RAW(16);"
                     + "\n  v_dequeue_options    DBMS_AQ.dequeue_options_t;"
                     + "\n  v_message_properties DBMS_AQ.message_properties_t;"
-                    + "\nBEGIN"                                                                                + (options.consumer_name  == null ? "" :
-                      "\n  v_dequeue_options.consumer_name  := ?;")                                            + (options.correlation    == null ? "" :
-                      "\n  v_dequeue_options.correlation    := ?;")                                            + (options.deq_condition  == null ? "" :
-                      "\n  v_dequeue_options.deq_condition  := ?;")                                            + (options.transformation == null ? "" :
-                      "\n  v_dequeue_options.transformation := ?;")                                            + (options.delivery_mode  == null ? "" :
-                      "\n  v_dequeue_options.delivery_mode  := DBMS_AQ." + options.delivery_mode.name() + ";") + (options.dequeue_mode   == null ? "" :
-                      "\n  v_dequeue_options.dequeue_mode   := DBMS_AQ." + options.dequeue_mode.name()  + ";") + (options.navigation     == null ? "" :
-                      "\n  v_dequeue_options.navigation   := DBMS_AQ." + options.navigation.name()      + ";") + (options.visibility     == null ? "" :
-                      "\n  v_dequeue_options.visibility   := DBMS_AQ." + options.visibility.name()      + ";") + (options.wait           == null ? "" :
-                      "\n  v_dequeue_options.wait   := DBMS_AQ." + options.wait.name()                  + ";")
+                    + "\nBEGIN"                                                                                              + (options.consumer_name        == null ? "" :
+                      "\n  v_dequeue_options.consumer_name        := ?;")                                                    + (options.correlation          == null ? "" :
+                      "\n  v_dequeue_options.correlation          := ?;")                                                    + (options.deq_condition        == null ? "" :
+                      "\n  v_dequeue_options.deq_condition        := ?;")                                                    + (options.transformation       == null ? "" :
+                      "\n  v_dequeue_options.transformation       := ?;")                                                    + (options.delivery_mode        == null ? "" :
+                      "\n  v_dequeue_options.delivery_mode        := DBMS_AQ." + options.delivery_mode.name()    + ";")      + (options.dequeue_mode         == null ? "" :
+                      "\n  v_dequeue_options.dequeue_mode         := DBMS_AQ." + options.dequeue_mode.name()     + ";")      + (options.navigation           == null ? "" :
+                      "\n  v_dequeue_options.navigation           := DBMS_AQ." + options.navigation.name()       + ";")      + (options.visibility           == null ? "" :
+                      "\n  v_dequeue_options.visibility           := DBMS_AQ." + options.visibility.name()       + ";")      + (options.wait                 == null ? "" :
+                      "\n  v_dequeue_options.wait                 := DBMS_AQ." + options.wait.name()             + ";")      + (properties.attempts          == null ? "" :
+                      "\n  v_message_properties.attempts          := ?")                                                     + (properties.correlation       == null ? "" :
+                      "\n  v_message_properties.correlation       := ?")                                                     + (properties.delay             == null ? "" :
+                      "\n  v_message_properties.delay             := ?")                                                     + (properties.delivery_mode     == null ? "" :
+                      "\n  v_message_properties.delivery_mode     := DBMS_AQ." + properties.delivery_mode.name() + ";")      + (properties.enqueue_time      == null ? "" :
+                      "\n  v_message_properties.enqueue_time      := ?")                                                     + (properties.exception_queue   == null ? "" :
+                      "\n  v_message_properties.exception_queue   := ?")                                                     + (properties.expires           == null ? "" :
+                      "\n  v_message_properties.expires           := ?")                                                     + (properties.priority          == null ? "" :
+                      "\n  v_message_properties.priority          := ?")                                                     + (properties.state             == null ? "" :
+                      "\n  v_message_properties.state             := ?")                                                     + (properties.transaction_group == null ? "" :
+                      "\n  v_message_properties.transaction_group := ?")
                     + "\n  DBMS_AQ.DEQUEUE("
                     + "\n    queue_name         => ?,"
                     + "\n    dequeue_options    => v_dequeue_options,"
@@ -559,6 +665,25 @@ public class OracleDSL extends DSL {
                     stmt.setString(i++, options.deq_condition);
                 if (options.transformation != null)
                     stmt.setString(i++, options.transformation);
+
+                if (properties.attempts != null)
+                    stmt.setInt(i++, properties.attempts);
+                if (properties.correlation != null)
+                    stmt.setString(i++, properties.correlation);
+                if (properties.delay != null)
+                    stmt.setBigDecimal(i++, properties.delay);
+                if (properties.enqueue_time != null)
+                    stmt.setTimestamp(i++, properties.enqueue_time);
+                if (properties.exception_queue != null)
+                    stmt.setString(i++, properties.exception_queue);
+                if (properties.expires != null)
+                    stmt.setBigDecimal(i++, properties.expires);
+                if (properties.priority != null)
+                    stmt.setInt(i++, properties.priority);
+                if (properties.state != null)
+                    stmt.setInt(i++, properties.state);
+                if (properties.transaction_group != null)
+                    stmt.setString(i++, properties.transaction_group);
 
                 stmt.setString(i++, queue.name());
                 stmt.registerOutParameter(i++, Types.STRUCT, queue.type().getName());

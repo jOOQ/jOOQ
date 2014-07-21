@@ -1413,6 +1413,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testPlainSQLAndJDBCEscapeSyntax() throws Exception {
+        new PlainSQLTests(this).testPlainSQLAndJDBCEscapeSyntax();
+    }
+
+    @Test
     public void testCustomSQL() throws Exception {
         new PlainSQLTests(this).testCustomSQL();
     }

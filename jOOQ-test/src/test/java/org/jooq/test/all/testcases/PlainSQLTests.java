@@ -92,8 +92,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
-import org.junit.Test;
-
 public class PlainSQLTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,
@@ -674,7 +672,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         throw new AssertionError();
     }
 
-    @Test
     public void testPlainSQLAndJDBCEscapeSyntax() throws Exception {
         Record result = create()
             .select(

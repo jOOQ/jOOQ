@@ -322,11 +322,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     /**
-     * Subclasses should indicate whether a Postgres refcursor is being selected
-     */
-    abstract boolean isSelectingRefCursor();
-
-    /**
      * Subclasses should indicate whether they want an updatable {@link ResultSet}
      */
     abstract boolean isForUpdate();

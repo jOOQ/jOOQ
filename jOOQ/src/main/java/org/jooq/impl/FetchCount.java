@@ -113,11 +113,6 @@ class FetchCount extends AbstractResultQuery<Record1<Integer>> {
     }
 
     @Override
-    final boolean isSelectingRefCursor() {
-        return false;
-    }
-
-    @Override
     final boolean isForUpdate() {
         return false;
     }

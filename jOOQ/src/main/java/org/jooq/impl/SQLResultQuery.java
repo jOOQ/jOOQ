@@ -100,11 +100,6 @@ class SQLResultQuery extends AbstractResultQuery<Record> {
     }
 
     @Override
-    final boolean isSelectingRefCursor() {
-        return false;
-    }
-
-    @Override
     final boolean isForUpdate() {
         return false;
     }

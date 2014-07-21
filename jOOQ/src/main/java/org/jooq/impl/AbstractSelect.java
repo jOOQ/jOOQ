@@ -49,7 +49,6 @@ import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -165,16 +164,5 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
         }
 
         return fieldArray(fields);
-    }
-
-    @Override
-    final boolean isSelectingRefCursor() {
-        for (Field<?> field : getSelect()) {
-            if (Result.class.isAssignableFrom(field.getType())) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

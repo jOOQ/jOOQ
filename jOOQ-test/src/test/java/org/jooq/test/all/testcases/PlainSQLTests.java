@@ -62,6 +62,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -89,6 +91,8 @@ import org.jooq.impl.CustomField;
 import org.jooq.impl.SQLDataType;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
+
+import org.junit.Test;
 
 public class PlainSQLTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
@@ -668,5 +672,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 return i;
 
         throw new AssertionError();
+    }
+
+    @Test
+    public void testPlainSQLAndJDBCEscapeSyntax() throws Exception {
+        Record result = create()
+            .select(
+                field("{d '2014-01-01'}", Date.class).as("a"),
+                field("{t '19:00:00'}", Time.class).as("b"),
+                field("{ts '2014-01-01 19:00:00'}", Timestamp.class).as("c")
+            )
+            .fetchOne();
+
+        assertEquals(Date.valueOf("2014-01-01"), result.getValue(0));
+        assertEquals(Time.valueOf("19:00:00"), result.getValue(1));
+        assertEquals(Timestamp.valueOf("2014-01-01 19:00:00"), result.getValue(2));
     }
 }

@@ -123,9 +123,6 @@ class UpdateDSL extends Generators {
         
         import javax.annotation.Generated;
         
-        import org.jooq.api.annotation.State;
-        import org.jooq.api.annotation.Transition;
-
         /**
          * This type is used for the {@link Update}'s DSL API.
          * <p>
@@ -141,7 +138,6 @@ class UpdateDSL extends Generators {
          * @author Lukas Eder
          */
         «generatedAnnotation»
-        @State
         public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
         
@@ -152,13 +148,6 @@ class UpdateDSL extends Generators {
              * value expressions aren't supported.
              */
             @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
-            @Transition(
-                name = "SET",
-                args = {
-                	"Row",
-                	"Row"
-            	}
-            )
             <«TN(degree)»> UpdateFromStep<R> set(Row«degree»<«TN(degree)»> row, Row«degree»<«TN(degree)»> value);
         «ENDFOR»
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -167,13 +156,6 @@ class UpdateDSL extends Generators {
              * Specify a multi-column set clause for the <code>UPDATE</code> statement.
              */
             @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
-            @Transition(
-                name = "SET",
-                args = {
-                	"Row",
-                	"Select"
-            	}
-            )
             <«TN(degree)»> UpdateFromStep<R> set(Row«degree»<«TN(degree)»> row, Select<? extends Record«degree»<«TN(degree)»>> select);
         «ENDFOR»
         

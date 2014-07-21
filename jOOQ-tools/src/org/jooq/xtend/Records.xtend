@@ -241,8 +241,8 @@ class Records extends Generators {
 
         outAPI.append('''
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
-
-        /**//**
+        
+            /**
              * Copy this record into a new record holding only a subset of the previous
              * fields.
              *
@@ -256,8 +256,8 @@ class Records extends Generators {
 
         outImpl.append('''
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
-
-        /**/@Override
+        
+            @Override
             public final <«TN(degree)»> Record«degree»<«TN(degree)»> into(«Field_TN_fieldn(degree)») {
                 return (Record«degree») into(new Field[] { «fieldn(degree)» });
             }

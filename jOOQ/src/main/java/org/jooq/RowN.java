@@ -40,6 +40,8 @@
  */
 package org.jooq;
 
+import org.jooq.Comparator;
+
 import java.util.Collection;
 
 import javax.annotation.Generated;
@@ -64,7 +66,7 @@ public interface RowN extends Row {
      * Compare this row value expression with another row value expression
      * using a dynamic comparator.
      * <p>
-     * See the explicit comparison methods for details. Note, not all 
+     * See the explicit comparison methods for details. Note, not all
      * {@link Comparator} types are supported
      *
      * @see #equal(RowN)
@@ -81,7 +83,7 @@ public interface RowN extends Row {
      * Compare this row value expression with a record record
      * using a dynamic comparator.
      * <p>
-     * See the explicit comparison methods for details. Note, not all 
+     * See the explicit comparison methods for details. Note, not all
      * {@link Comparator} types are supported
      *
      * @see #equal(RowN)
@@ -98,7 +100,7 @@ public interface RowN extends Row {
      * Compare this row value expression with another row value expression
      * using a dynamic comparator.
      * <p>
-     * See the explicit comparison methods for details. Note, not all 
+     * See the explicit comparison methods for details. Note, not all
      * {@link Comparator} types are supported
      *
      * @see #equal(RowN)
@@ -115,7 +117,7 @@ public interface RowN extends Row {
      * Compare this row value expression with another row value expression
      * using a dynamic comparator.
      * <p>
-     * See the explicit comparison methods for details. Note, not all 
+     * See the explicit comparison methods for details. Note, not all
      * {@link Comparator} types are supported
      *
      * @see #equal(RowN)

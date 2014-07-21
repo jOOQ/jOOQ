@@ -66,7 +66,6 @@ class Rows extends Generators {
             package org.jooq;
 
             import org.jooq.Comparator;
-            import org.jooq.api.annotation.State;
 
             import java.util.Collection;
 
@@ -82,7 +81,6 @@ class Rows extends Generators {
              * @author Lukas Eder
              */
             «generatedAnnotation»
-            @State
             public interface Row«typeSuffix» extends Row {
             «IF degree > 0»
             
@@ -106,7 +104,7 @@ class Rows extends Generators {
                  * Compare this row value expression with another row value expression
                  * using a dynamic comparator.
                  * <p>
-                 * See the explicit comparison methods for details. Note, not all 
+                 * See the explicit comparison methods for details. Note, not all
                  * {@link Comparator} types are supported
                  *
                  * @see #equal(Row«typeSuffixRaw»)
@@ -123,7 +121,7 @@ class Rows extends Generators {
                  * Compare this row value expression with a record record
                  * using a dynamic comparator.
                  * <p>
-                 * See the explicit comparison methods for details. Note, not all 
+                 * See the explicit comparison methods for details. Note, not all
                  * {@link Comparator} types are supported
                  *
                  * @see #equal(Row«typeSuffixRaw»)
@@ -140,7 +138,7 @@ class Rows extends Generators {
                  * Compare this row value expression with another row value expression
                  * using a dynamic comparator.
                  * <p>
-                 * See the explicit comparison methods for details. Note, not all 
+                 * See the explicit comparison methods for details. Note, not all
                  * {@link Comparator} types are supported
                  *
                  * @see #equal(Row«typeSuffixRaw»)
@@ -157,7 +155,7 @@ class Rows extends Generators {
                  * Compare this row value expression with another row value expression
                  * using a dynamic comparator.
                  * <p>
-                 * See the explicit comparison methods for details. Note, not all 
+                 * See the explicit comparison methods for details. Note, not all
                  * {@link Comparator} types are supported
                  *
                  * @see #equal(Row«typeSuffixRaw»)
@@ -1239,7 +1237,7 @@ class Rows extends Generators {
             // being checked through the type-safe API. No need for further checks here
             «FOR degree : (0..Constants::MAX_ROW_DEGREE) SEPARATOR ','»
             Row«typeSuffix(degree)»
-            «ENDFOR» 
+            «ENDFOR»
         {
 
             /**

@@ -66,10 +66,6 @@ class DSL extends Generators {
                  */
                 «generatedMethod»
                 @Support
-                @Transition(
-                    name = "ROW",
-                    args = "Field+"
-                )
                 public static <«TN(degree)»> Row«degree»<«TN(degree)»> row(«TN_tn(degree)») {
                     return row(«Utils_field_tn(degree)»);
                 }
@@ -94,10 +90,6 @@ class DSL extends Generators {
                  */
                 «generatedMethod»
                 @Support
-                @Transition(
-                    name = "ROW",
-                    args = "Field+"
-                )
                 public static <«TN(degree)»> Row«degree»<«TN(degree)»> row(«Field_TN_tn(degree)») {
                     return new RowImpl(«tn(degree)»);
                 }
@@ -141,10 +133,6 @@ class DSL extends Generators {
                  */
                 «generatedMethod»
                 @Support
-                @Transition(
-                    name = "VALUES",
-                    args = "Row+"
-                )
                 public static <«TN(degree)»> Table<Record«degree»<«TN(degree)»>> values(Row«degree»<«TN(degree)»>... rows) {
                     return new Values<Record«degree»<«TN(degree)»>>(rows).as("v", «FOR d : (1..degree) SEPARATOR ', '»"c«d»"«ENDFOR»);
                 }

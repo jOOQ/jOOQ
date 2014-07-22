@@ -272,6 +272,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(1), books.getValue(1, TBook_AUTHOR_ID()));
     }
 
+    public void testPlainSQLInsert() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        assertEquals(1, create()
+            .insertInto(
+                tableByName(TAuthor().getName()),
+                fieldByName(TAuthor().getName(), TAuthor_ID().getName()),
+                fieldByName(TAuthor().getName(), TAuthor_LAST_NAME().getName()))
+            .values(3, "X")
+            .execute()
+        );
+
+        assertEquals(3, create().fetchCount(TAuthor()));
+    }
+
     public void testPlainSQLWithSelfJoins()  throws Exception {
 
         // [#1860] In case of ambiguous field names in plain SQL, access by

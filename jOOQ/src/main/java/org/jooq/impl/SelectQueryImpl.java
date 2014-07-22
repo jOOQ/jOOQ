@@ -81,8 +81,10 @@ import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.Dual.DUAL_ACCESS;
 import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
+import static org.jooq.impl.Utils.DATA_OMIT_INTO_CLAUSE;
 import static org.jooq.impl.Utils.DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE;
 import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
+import static org.jooq.impl.Utils.DATA_SELECT_INTO_TABLE;
 import static org.jooq.impl.Utils.DATA_WINDOW_DEFINITIONS;
 import static org.jooq.impl.Utils.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
@@ -200,15 +202,16 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
     @Override
     public final void accept(Context<?> context) {
+        if (into != null
+                && context.data(DATA_OMIT_INTO_CLAUSE) == null
+                && asList(CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE).contains(context.configuration().dialect().family())) {
 
-        // [#3381] TODO: Delegate to a jOOQ CREATE TABLE AS statement
-        if (into != null && asList(CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE).contains(context.configuration().dialect().family()))
-            context.keyword("create table")
-                   .sql(" ")
-                   .visit(into)
-                   .formatSeparator()
-                   .keyword("as")
-                   .formatSeparator();
+            context.data(DATA_OMIT_INTO_CLAUSE, true);
+            context.visit(DSL.createTable(into).as(this));
+            context.data().remove(DATA_OMIT_INTO_CLAUSE);
+
+            return;
+        }
 
         if (with != null)
             context.visit(with).formatSeparator();
@@ -649,11 +652,18 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         // ------------
         context.start(SELECT_INTO);
 
-        if (into != null && asList(ACCESS, ASE, HSQLDB, POSTGRES, SQLSERVER, SYBASE).contains(dialect.family())) {
+        Table<?> actualInto = (Table<?>) context.data(DATA_SELECT_INTO_TABLE);
+        if (actualInto == null)
+            actualInto = into;
+
+        if (actualInto != null
+                && context.data(DATA_OMIT_INTO_CLAUSE) == null
+                && asList(ACCESS, ASE, HSQLDB, POSTGRES, SQLSERVER, SYBASE).contains(dialect.family())) {
+
             context.formatSeparator()
                    .keyword("into")
                    .sql(" ")
-                   .visit(into);
+                   .visit(actualInto);
         }
 
         context.end(SELECT_INTO);

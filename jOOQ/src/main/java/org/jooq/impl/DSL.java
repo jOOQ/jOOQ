@@ -91,6 +91,7 @@ import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateSequenceFinalStep;
+import org.jooq.CreateTableAsStep;
 import org.jooq.CreateViewAsStep;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -4206,6 +4207,26 @@ public class DSL {
     // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
+
+    /**
+     * Create a new DSL <code>CREATE TABLE</code> statement.
+     *
+     * @see DSLContext#createTable(String)
+     */
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    public static CreateTableAsStep<Record> createTable(String tableName) {
+        return createTable(tableByName(tableName));
+    }
+
+    /**
+     * Create a new DSL <code>CREATE TABLE</code> statement.
+     *
+     * @see DSLContext#createTable(Table)
+     */
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    public static CreateTableAsStep<Record> createTable(Table<?> table) {
+        return using(new DefaultConfiguration()).createTable(table);
+    }
 
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.

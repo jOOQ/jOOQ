@@ -84,6 +84,7 @@ import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateSequenceFinalStep;
+import org.jooq.CreateTableAsStep;
 import org.jooq.CreateViewAsStep;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
@@ -1613,8 +1614,18 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
 
     @Override
-    public CreateViewAsStep<Record> createView(String viewName, String... columnNames) {
-        return new CreateViewImpl<Record>(configuration, viewName, columnNames);
+    public CreateViewAsStep<Record> createView(String viewName, String... fieldNames) {
+        return new CreateViewImpl<Record>(configuration, viewName, fieldNames);
+    }
+
+    @Override
+    public CreateTableAsStep<Record> createTable(String tableName) {
+        return createTable(tableByName(tableName));
+    }
+
+    @Override
+    public CreateTableAsStep<Record> createTable(Table<?> table) {
+        return new CreateTableImpl<Record>(configuration, table);
     }
 
     @Override

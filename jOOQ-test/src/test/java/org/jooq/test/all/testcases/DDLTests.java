@@ -137,7 +137,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             catch (DataAccessException expected) {}
         }
         finally {
-            create().dropTable("t").execute();
+            ignoreThrows(() -> create().dropTable("t").execute());
         }
     }
 
@@ -151,7 +151,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().createIndex("idx2").on("t", "b").execute();
         }
         finally {
-            create().dropTable("t").execute();
+            ignoreThrows(() -> create().dropTable("t").execute());
         }
     }
 
@@ -163,7 +163,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(BigInteger.ONE, create().nextval("s"));
         }
         finally {
-            create().dropSequence("s").execute();
+            ignoreThrows(() -> create().dropSequence("s").execute());
         }
     }
 
@@ -245,7 +245,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(asList("1", null, null, null, null, null, null), asList(create().fetchOne(tableByName("t")).intoArray()));
         }
         finally {
-            create().dropTable("t").execute();
+            ignoreThrows(() -> create().dropTable("t").execute());
         }
     }
 
@@ -260,7 +260,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals("1", create().fetchOne("select * from {0}", name("t")).getValue(0));
         }
         finally {
-            create().dropTable("t").execute();
+            ignoreThrows(() -> create().dropTable("t").execute());
         }
     }
 
@@ -274,7 +274,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals("empty", create().fetchValue("select {0} from {1}", name("b"), name("t")));
         }
         finally {
-            create().dropTable("t").execute();
+            ignoreThrows(() -> create().dropTable("t").execute());
         }
     }
 
@@ -292,7 +292,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(asList("1"), asList(create().fetchOne(tableByName("t")).intoArray()));
         }
         finally {
-            create().dropTable("t").execute();
+            ignoreThrows(() -> create().dropTable("t").execute());
         }
     }
 
@@ -315,18 +315,35 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         return SQLDataType.VARCHAR.length(10).getCastTypeName(create().configuration());
     }
 
-    public void testSelectInto() throws Exception {
+    public void testCreateTableAsSelect() throws Exception {
         try {
-            create().select(val("value").as("value")).into(tableByName("value")).execute();
-            Result<Record> r2 = create().selectFrom(tableByName("value")).fetch();
+            create().createTable("t").as(
+                select(val("value").as("value"))
+            ).execute();
+            Result<Record> r1 = create().selectFrom(tableByName("t")).fetch();
 
-            assertEquals(1, r2.size());
-            assertEquals(1, r2.fields().length);
-            assertEquals("value", r2.field(0).getName());
-            assertEquals("value", r2.get(0).getValue(0));
+            assertEquals(1, r1.size());
+            assertEquals(1, r1.fields().length);
+            assertEquals("value", r1.field(0).getName());
+            assertEquals("value", r1.get(0).getValue(0));
         }
         finally {
-            create().dropTable("value").execute();
+            ignoreThrows(() -> create().dropTable("t").execute());
+        }
+    }
+
+    public void testSelectInto() throws Exception {
+        try {
+            create().select(val("value").as("value")).into(tableByName("t")).execute();
+            Result<Record> result = create().selectFrom(tableByName("t")).fetch();
+
+            assertEquals(1, result.size());
+            assertEquals(1, result.fields().length);
+            assertEquals("value", result.field(0).getName());
+            assertEquals("value", result.get(0).getValue(0));
+        }
+        finally {
+            ignoreThrows(() -> create().dropTable("t").execute());
         }
     }
 }

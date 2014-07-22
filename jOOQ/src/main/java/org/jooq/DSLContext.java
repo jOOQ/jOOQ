@@ -4811,7 +4811,15 @@ public interface DSLContext {
      * @see DSL#createView(String, String...)
      */
     @Support
-    CreateViewAsStep<Record> createView(String viewName, String... columnNames);
+    CreateViewAsStep<Record> createView(String viewName, String... fieldNames);
+
+    /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     *
+     * @see DSL#createView(Table, Field...)
+     */
+    @Support
+    CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields);
 
     /**
      * Create a new DSL <code>CREATE INDEX</code> statement.

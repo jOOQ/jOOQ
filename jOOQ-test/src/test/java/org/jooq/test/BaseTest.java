@@ -1048,4 +1048,13 @@ public abstract class BaseTest<
         if (fail)
             Assert.fail("No exception was thrown");
     }
+
+    public static void ignoreThrows(ThrowableRunnable runnable) {
+        try {
+            runnable.run();
+        }
+        catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
 }

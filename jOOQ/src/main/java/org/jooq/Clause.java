@@ -788,6 +788,33 @@ public enum Clause {
     // -------------------------------------------------------------------------
 
     /**
+     * A complete <code>CREATE TABLE</code> statement.
+     */
+    CREATE_TABLE,
+
+    /**
+     * A view name clause within a {@link #CREATE_TABLE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>The table name</li>
+     * <li>The (optional) column names</li>
+     * </ul>
+     */
+    CREATE_TABLE_NAME,
+
+    /**
+     * An <code>AS</code> clause within a {@link #CREATE_TABLE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>The <code>AS</code> keyword</li>
+     * <li>The select code</li>
+     * </ul>
+     */
+    CREATE_TABLE_AS,
+
+    /**
      * A complete <code>CREATE VIEW</code> statement.
      */
     CREATE_VIEW,
@@ -804,7 +831,7 @@ public enum Clause {
     CREATE_VIEW_NAME,
 
     /**
-     * An as clause within a {@link #CREATE_VIEW} statement.
+     * An <code>AS</code> clause within a {@link #CREATE_VIEW} statement.
      * <p>
      * This clause surrounds
      * <ul>

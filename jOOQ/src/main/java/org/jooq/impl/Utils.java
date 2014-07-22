@@ -274,6 +274,16 @@ final class Utils {
     static final String          DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION = "org.jooq.configuration.default-transaction-provider-connection-provider";
 
     /**
+     * [#3381] The table to be used for the {@link Clause#SELECT_INTO} clause.
+     */
+    static final String           DATA_SELECT_INTO_TABLE                      = "org.jooq.configuration.select-into-table";
+
+    /**
+     * [#3381] Omit the {@link Clause#SELECT_INTO}, as it is being emulated.
+     */
+    static final String           DATA_OMIT_INTO_CLAUSE                       = "org.jooq.configuration.omit-into-clause";
+
+    /**
      * [#2965] These are {@link ConcurrentHashMap}s containing caches for
      * reflection information.
      * <p>

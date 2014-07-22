@@ -41,6 +41,7 @@
 package org.jooq;
 
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -4787,6 +4788,22 @@ public interface DSLContext {
     // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
+
+    /**
+     * Create a new DSL <code>CREATE TABLE</code> statement.
+     *
+     * @see DSL#createTable(String)
+     */
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateTableAsStep<Record> createTable(String tableName);
+
+    /**
+     * Create a new DSL <code>CREATE TABLE</code> statement.
+     *
+     * @see DSL#createTable(Table)
+     */
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateTableAsStep<Record> createTable(Table<?> table);
 
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.

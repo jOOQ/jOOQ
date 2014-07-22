@@ -43,8 +43,6 @@ package org.jooq.impl;
 import static org.jooq.Clause.CREATE_VIEW;
 import static org.jooq.Clause.CREATE_VIEW_AS;
 import static org.jooq.Clause.CREATE_VIEW_NAME;
-import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.Utils.fieldsByName;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -54,6 +52,7 @@ import org.jooq.CreateViewFinalStep;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Select;
+import org.jooq.Table;
 
 /**
  * @author Lukas Eder
@@ -71,15 +70,15 @@ class CreateViewImpl<R extends Record> extends AbstractQuery implements
     private static final long     serialVersionUID = 8904572826501186329L;
     private static final Clause[] CLAUSES          = { CREATE_VIEW };
 
-    private final String          viewName;
-    private final String[]        columnNames;
+    private final Table<?>        view;
+    private final Field<?>[]      fields;
     private Select<?>             select;
 
-    CreateViewImpl(Configuration configuration, String viewName, String[] columnNames) {
+    CreateViewImpl(Configuration configuration, Table<?> view, Field<?>[] fields) {
         super(configuration);
 
-        this.viewName = viewName;
-        this.columnNames = columnNames;
+        this.view = view;
+        this.fields = fields;
     }
 
     // ------------------------------------------------------------------------
@@ -101,11 +100,15 @@ class CreateViewImpl<R extends Record> extends AbstractQuery implements
         ctx.start(CREATE_VIEW_NAME)
            .keyword("create view")
            .sql(" ")
-           .visit(name(viewName));
+           .visit(view);
 
-        if (columnNames != null && columnNames.length > 0) {
+        if (fields != null && fields.length > 0) {
+            boolean qualify = ctx.qualify();
+
             ctx.sql("(")
-               .visit(new QueryPartList<Field<?>>(fieldsByName(columnNames)))
+               .qualify(false)
+               .visit(new QueryPartList<Field<?>>(fields))
+               .qualify(qualify)
                .sql(")");
         }
 

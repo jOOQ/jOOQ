@@ -1615,7 +1615,12 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public CreateViewAsStep<Record> createView(String viewName, String... fieldNames) {
-        return new CreateViewImpl<Record>(configuration, viewName, fieldNames);
+        return createView(tableByName(viewName), Utils.fieldsByName(viewName, fieldNames));
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields) {
+        return new CreateViewImpl<Record>(configuration, view, fields);
     }
 
     @Override

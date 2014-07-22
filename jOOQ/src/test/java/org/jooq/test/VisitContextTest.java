@@ -68,6 +68,12 @@ import static org.jooq.Clause.CONDITION_OR;
 import static org.jooq.Clause.CREATE_INDEX;
 import static org.jooq.Clause.CREATE_SEQUENCE;
 import static org.jooq.Clause.CREATE_SEQUENCE_SEQUENCE;
+import static org.jooq.Clause.CREATE_TABLE;
+import static org.jooq.Clause.CREATE_TABLE_AS;
+import static org.jooq.Clause.CREATE_TABLE_NAME;
+import static org.jooq.Clause.CREATE_VIEW;
+import static org.jooq.Clause.CREATE_VIEW_AS;
+import static org.jooq.Clause.CREATE_VIEW_NAME;
 import static org.jooq.Clause.DELETE;
 import static org.jooq.Clause.DELETE_DELETE;
 import static org.jooq.Clause.DELETE_WHERE;
@@ -759,6 +765,64 @@ public class VisitContextTest extends AbstractTest {
             asList(CREATE_INDEX, FIELD, FIELD_REFERENCE)
         ),
         ctx.createIndex("i").on(TABLE1, FIELD_ID1, FIELD_NAME1));
+    }
+
+    @Test
+    public void test_CREATE_VIEW_AS() {
+
+        // Omit "dual" with Postgres
+        ctx.configuration().set(POSTGRES);
+        assertEvents(asList(
+            asList(CREATE_VIEW),
+            asList(CREATE_VIEW, CREATE_VIEW_NAME),
+            asList(CREATE_VIEW, CREATE_VIEW_NAME, TABLE),
+            asList(CREATE_VIEW, CREATE_VIEW_NAME, TABLE, TABLE_REFERENCE),
+            asList(CREATE_VIEW, CREATE_VIEW_NAME, FIELD),
+            asList(CREATE_VIEW, CREATE_VIEW_NAME, FIELD),
+            asList(CREATE_VIEW, CREATE_VIEW_AS),
+            asList(CREATE_VIEW, CREATE_VIEW_AS, SELECT),
+            asList(CREATE_VIEW, CREATE_VIEW_AS, SELECT, SELECT_SELECT),
+            asList(CREATE_VIEW, CREATE_VIEW_AS, SELECT, SELECT_SELECT, FIELD),
+            asList(CREATE_VIEW, CREATE_VIEW_AS, SELECT, SELECT_SELECT, FIELD, FIELD_VALUE),
+            asList(CREATE_VIEW, CREATE_VIEW_AS, SELECT, SELECT_INTO),
+            asList(CREATE_VIEW, CREATE_VIEW_AS, SELECT, SELECT_FROM),
+            asList(CREATE_VIEW, CREATE_VIEW_AS, SELECT, SELECT_WHERE),
+            asList(CREATE_VIEW, CREATE_VIEW_AS, SELECT, SELECT_START_WITH),
+            asList(CREATE_VIEW, CREATE_VIEW_AS, SELECT, SELECT_CONNECT_BY),
+            asList(CREATE_VIEW, CREATE_VIEW_AS, SELECT, SELECT_GROUP_BY),
+            asList(CREATE_VIEW, CREATE_VIEW_AS, SELECT, SELECT_HAVING),
+            asList(CREATE_VIEW, CREATE_VIEW_AS, SELECT, SELECT_WINDOW),
+            asList(CREATE_VIEW, CREATE_VIEW_AS, SELECT, SELECT_ORDER_BY)
+        ),
+        ctx.createView("v", "a", "b").as(select(one())));
+    }
+
+    @Test
+    public void test_CREATE_TABLE_AS() {
+
+        // Omit "dual" with Postgres
+        ctx.configuration().set(POSTGRES);
+        assertEvents(asList(
+            asList(CREATE_TABLE),
+            asList(CREATE_TABLE, CREATE_TABLE_NAME),
+            asList(CREATE_TABLE, CREATE_TABLE_NAME, TABLE),
+            asList(CREATE_TABLE, CREATE_TABLE_NAME, TABLE, TABLE_REFERENCE),
+            asList(CREATE_TABLE, CREATE_TABLE_AS),
+            asList(CREATE_TABLE, CREATE_TABLE_AS, SELECT),
+            asList(CREATE_TABLE, CREATE_TABLE_AS, SELECT, SELECT_SELECT),
+            asList(CREATE_TABLE, CREATE_TABLE_AS, SELECT, SELECT_SELECT, FIELD),
+            asList(CREATE_TABLE, CREATE_TABLE_AS, SELECT, SELECT_SELECT, FIELD, FIELD_VALUE),
+            asList(CREATE_TABLE, CREATE_TABLE_AS, SELECT, SELECT_INTO),
+            asList(CREATE_TABLE, CREATE_TABLE_AS, SELECT, SELECT_FROM),
+            asList(CREATE_TABLE, CREATE_TABLE_AS, SELECT, SELECT_WHERE),
+            asList(CREATE_TABLE, CREATE_TABLE_AS, SELECT, SELECT_START_WITH),
+            asList(CREATE_TABLE, CREATE_TABLE_AS, SELECT, SELECT_CONNECT_BY),
+            asList(CREATE_TABLE, CREATE_TABLE_AS, SELECT, SELECT_GROUP_BY),
+            asList(CREATE_TABLE, CREATE_TABLE_AS, SELECT, SELECT_HAVING),
+            asList(CREATE_TABLE, CREATE_TABLE_AS, SELECT, SELECT_WINDOW),
+            asList(CREATE_TABLE, CREATE_TABLE_AS, SELECT, SELECT_ORDER_BY)
+        ),
+        ctx.createTable("v").as(select(one())));
     }
 
     @Test

@@ -4234,8 +4234,18 @@ public class DSL {
      * @see DSLContext#createView(String, String...)
      */
     @Support
-    public static CreateViewAsStep createView(String viewName, String... columnNames) {
-        return using(new DefaultConfiguration()).createView(viewName, columnNames);
+    public static CreateViewAsStep createView(String viewName, String... fieldNames) {
+        return createView(tableByName(viewName), Utils.fieldsByName(viewName, fieldNames));
+    }
+
+    /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     *
+     * @see DSLContext#createView(Table, Field...)
+     */
+    @Support
+    public static CreateViewAsStep createView(Table<?> view, Field<?>... fields) {
+        return using(new DefaultConfiguration()).createView(view, fields);
     }
 
     /**

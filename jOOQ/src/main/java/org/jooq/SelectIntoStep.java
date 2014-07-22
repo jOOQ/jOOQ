@@ -102,7 +102,7 @@ import static org.jooq.SQLDialect.SQLITE;
 public interface SelectIntoStep<R extends Record> extends SelectFromStep<R> {
 
     /**
-     * Add additional fields to the <code>SELECT</code> clause of this query
+     * Add an <code>INTO</code> clause to the <code>SELECT</code> statement.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectIntoStep<Record> into(Table<?> table);

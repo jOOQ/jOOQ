@@ -51,6 +51,7 @@ import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.param;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.tableByName;
@@ -673,7 +674,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testPlainSQLAndJDBCEscapeSyntax() throws Exception {
-        Record result = create()
+        Record r1 = create()
             .select(
                 field("{d '2014-01-01'}", Date.class).as("a"),
                 field("{t '19:00:00'}", Time.class).as("b"),
@@ -681,8 +682,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             )
             .fetchOne();
 
-        assertEquals(Date.valueOf("2014-01-01"), result.getValue(0));
-        assertEquals(Time.valueOf("19:00:00"), result.getValue(1));
-        assertEquals(Timestamp.valueOf("2014-01-01 19:00:00"), result.getValue(2));
+        assertEquals(Date.valueOf("2014-01-01"), r1.getValue(0));
+        assertEquals(Time.valueOf("19:00:00"), r1.getValue(1));
+        assertEquals(Timestamp.valueOf("2014-01-01 19:00:00"), r1.getValue(2));
+
+        // [#3430] Don't let newline characters break the parsing of JDBC escape syntax:
+        Record r2 = create()
+            .select(one().as("one"))
+            .where("{d '2014-01-01'}           < {d '2014-01-02'}\n"
+             + "and {t '00:00:00'}             < {t '01:00:00'}\n"
+             + "and {ts '2014-01-01 00:00:00'} < {ts '2014-01-02 00:00:00'}")
+            .fetchOne();
+
+        assertEquals(1, r2.getValue(0));
     }
 }

@@ -211,6 +211,12 @@ CREATE TABLE t_book (
   COMMENT = 'An entity holding books';
 /
 
+CREATE INDEX i_book_a ON t_book(author_id)
+/
+
+CREATE INDEX i_book_b ON t_book(language_id)
+/
+
 CREATE TABLE t_book_store (
   name VARCHAR(400) NOT NULL COMMENT 'The books store name',
 
@@ -390,10 +396,10 @@ END
 /
 
 CREATE PROCEDURE p2412(
-        In p_in_1 integer, 
+        In p_in_1 integer,
         p_in_2 integer,
-        Out p_out_1 decimal(12,2), 
-        out p_out_2 decimal(12,2), 
+        Out p_out_1 decimal(12,2),
+        out p_out_2 decimal(12,2),
         InOut p_in_out decimal(12,2))
 BEGIN
   SET p_out_1 = 0;

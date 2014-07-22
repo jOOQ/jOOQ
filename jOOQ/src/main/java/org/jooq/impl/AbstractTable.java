@@ -352,11 +352,71 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         return tableField;
     }
 
-    /* [pro] */
     // ------------------------------------------------------------------------
     // XXX: Other API
     // ------------------------------------------------------------------------
 
+    @Override
+    public final Table<R> useIndex(String... indexes) {
+        return new HintedTable<R>(this, "use index", indexes);
+    }
+
+    @Override
+    public final Table<R> useIndexForJoin(String... indexes) {
+        return new HintedTable<R>(this, "use index for join", indexes);
+    }
+
+    @Override
+    public final Table<R> useIndexForOrderBy(String... indexes) {
+        return new HintedTable<R>(this, "use index for order by", indexes);
+    }
+
+    @Override
+    public final Table<R> useIndexForGroupBy(String... indexes) {
+        return new HintedTable<R>(this, "use index for group by", indexes);
+    }
+
+    @Override
+    public final Table<R> ignoreIndex(String... indexes) {
+        return new HintedTable<R>(this, "ignore index", indexes);
+    }
+
+    @Override
+    public final Table<R> ignoreIndexForJoin(String... indexes) {
+        return new HintedTable<R>(this, "ignore index for join", indexes);
+    }
+
+    @Override
+    public final Table<R> ignoreIndexForOrderBy(String... indexes) {
+        return new HintedTable<R>(this, "ignore index for order by", indexes);
+    }
+
+    @Override
+    public final Table<R> ignoreIndexForGroupBy(String... indexes) {
+        return new HintedTable<R>(this, "ignore index for group by", indexes);
+    }
+
+    @Override
+    public final Table<R> forceIndex(String... indexes) {
+        return new HintedTable<R>(this, "force index", indexes);
+    }
+
+    @Override
+    public final Table<R> forceIndexForJoin(String... indexes) {
+        return new HintedTable<R>(this, "force index for join", indexes);
+    }
+
+    @Override
+    public final Table<R> forceIndexForOrderBy(String... indexes) {
+        return new HintedTable<R>(this, "force index for order by", indexes);
+    }
+
+    @Override
+    public final Table<R> forceIndexForGroupBy(String... indexes) {
+        return new HintedTable<R>(this, "force index for group by", indexes);
+    }
+
+    /* [pro] */
     @Override
     public final Table<R> with(String hint) {
         return new WithTable<R>(this, hint);

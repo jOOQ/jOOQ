@@ -41,6 +41,7 @@
 package org.jooq;
 
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -92,6 +93,12 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      */
     @Support
     void setDistinct(boolean distinct);
+
+    /**
+     * Add <code>INTO</code> clause to the <code>SELECT</code> statement.
+     */
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    void setInto(Table<?> table);
 
     /**
      * Add tables to the table product.

@@ -50,6 +50,7 @@ import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.two;
+import static org.jooq.impl.DSL.val;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
@@ -57,10 +58,12 @@ import static org.junit.Assume.assumeNotNull;
 import java.math.BigInteger;
 import java.sql.Date;
 
+import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
+import org.jooq.Result;
 import org.jooq.Sequence;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
@@ -310,5 +313,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     private String varchar() {
         return SQLDataType.VARCHAR.length(10).getCastTypeName(create().configuration());
+    }
+
+    public void testSelectInto() throws Exception {
+        try {
+            create().select(val("value").as("value")).into(tableByName("value")).execute();
+            Result<Record> r2 = create().selectFrom(tableByName("value")).fetch();
+
+            assertEquals(1, r2.size());
+            assertEquals(1, r2.fields().length);
+            assertEquals("value", r2.field(0).getName());
+            assertEquals("value", r2.get(0).getValue(0));
+        }
+        finally {
+            create().dropTable("value").execute();
+        }
     }
 }

@@ -214,6 +214,7 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    @Deprecated
     public final int fetchCount() {
         return getDelegate().fetchCount();
     }
@@ -235,6 +236,12 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final SelectImpl select(Collection<? extends Field<?>> fields) {
         getQuery().addSelect(fields);
+        return this;
+    }
+
+    @Override
+    public final SelectImpl into(Table<?> table) {
+        getQuery().setInto(table);
         return this;
     }
 

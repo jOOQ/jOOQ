@@ -355,6 +355,21 @@ public enum Clause {
     SELECT_SELECT,
 
     /**
+     * A <code>INTO</code> clause within a {@link #SELECT} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>INTO</code> keyword</li>
+     * <li>the table reference</li>
+     * </ul>
+     * <p>
+     * See {@link #TABLE} and related clauses for possible table references.
+     *
+     * @see #TABLE
+     */
+    SELECT_INTO,
+
+    /**
      * A <code>FROM</code> clause within a {@link #SELECT} statement or
      * subselect.
      * <p>

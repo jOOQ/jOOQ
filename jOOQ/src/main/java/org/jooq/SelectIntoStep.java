@@ -40,7 +40,21 @@
  */
 package org.jooq;
 
-import java.util.Collection;
+import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
 
 
 /**
@@ -85,17 +99,11 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectSelectStep<R extends Record> extends SelectIntoStep<R> {
+public interface SelectIntoStep<R extends Record> extends SelectFromStep<R> {
 
     /**
      * Add additional fields to the <code>SELECT</code> clause of this query
      */
-    @Support
-    SelectSelectStep<Record> select(Field<?>... fields);
-
-    /**
-     * Add additional fields to the <code>SELECT</code> clause of this query
-     */
-    @Support
-    SelectSelectStep<Record> select(Collection<? extends Field<?>> fields);
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    SelectIntoStep<Record> into(Table<?> table);
 }

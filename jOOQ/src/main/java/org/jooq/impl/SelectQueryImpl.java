@@ -47,6 +47,7 @@ import static org.jooq.Clause.SELECT_CONNECT_BY;
 import static org.jooq.Clause.SELECT_FROM;
 import static org.jooq.Clause.SELECT_GROUP_BY;
 import static org.jooq.Clause.SELECT_HAVING;
+import static org.jooq.Clause.SELECT_INTO;
 import static org.jooq.Clause.SELECT_ORDER_BY;
 import static org.jooq.Clause.SELECT_SELECT;
 import static org.jooq.Clause.SELECT_START_WITH;
@@ -57,6 +58,7 @@ import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ACCESS2013;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -64,6 +66,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -128,6 +131,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
     private final WithImpl                  with;
     private final SelectFieldList           select;
+    private Table<?>                        into;
     private String                          hint;
     private String                          option;
     private boolean                         distinct;
@@ -196,6 +200,16 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
     @Override
     public final void accept(Context<?> context) {
+
+        // [#3381] TODO: Delegate to a jOOQ CREATE TABLE AS statement
+        if (into != null && asList(CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE).contains(context.configuration().dialect().family()))
+            context.keyword("create table")
+                   .sql(" ")
+                   .visit(into)
+                   .formatSeparator()
+                   .keyword("as")
+                   .formatSeparator();
+
         if (with != null)
             context.visit(with).formatSeparator();
 
@@ -631,6 +645,19 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         context.declareFields(false)
                .end(SELECT_SELECT);
 
+        // INTO clauses
+        // ------------
+        context.start(SELECT_INTO);
+
+        if (into != null && asList(ACCESS, ASE, HSQLDB, POSTGRES, SQLSERVER, SYBASE).contains(dialect.family())) {
+            context.formatSeparator()
+                   .keyword("into")
+                   .sql(" ")
+                   .visit(into);
+        }
+
+        context.end(SELECT_INTO);
+
         // FROM and JOIN clauses
         // ---------------------
         context.start(SELECT_FROM)
@@ -819,6 +846,11 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     @Override
     public final void setDistinct(boolean distinct) {
         this.distinct = distinct;
+    }
+
+    @Override
+    public final void setInto(Table<?> into) {
+        this.into = into;
     }
 
     @Override

@@ -920,4 +920,26 @@ public class MySQLTest extends jOOQAbstractTest<
         assertEquals(1, (int) Routines.fp1908_FUNCTION(create().configuration(), 1));
         assertEquals(2, (int) Routines.fp1908_PROCEDURE(create().configuration(), 1));
     }
+
+    @Test
+    public void testMySQLIndexHints() throws Exception {
+        assertEquals(4, create().selectFrom(TBook().useIndex("i_book_a", "i_book_b")).fetch().size());
+        assertEquals(4, create().selectFrom(TBook().useIndexForJoin("i_book_a", "i_book_b")).fetch().size());
+        assertEquals(4, create().selectFrom(TBook().useIndexForOrderBy("i_book_a", "i_book_b")).fetch().size());
+        assertEquals(4, create().selectFrom(TBook().useIndexForGroupBy("i_book_a", "i_book_b")).fetch().size());
+        assertEquals(4, create().selectFrom(TBook().forceIndex("i_book_a", "i_book_b")).fetch().size());
+        assertEquals(4, create().selectFrom(TBook().forceIndexForJoin("i_book_a", "i_book_b")).fetch().size());
+        assertEquals(4, create().selectFrom(TBook().forceIndexForOrderBy("i_book_a", "i_book_b")).fetch().size());
+        assertEquals(4, create().selectFrom(TBook().forceIndexForGroupBy("i_book_a", "i_book_b")).fetch().size());
+        assertEquals(4, create().selectFrom(TBook().ignoreIndex("i_book_a", "i_book_b")).fetch().size());
+        assertEquals(4, create().selectFrom(TBook().ignoreIndexForJoin("i_book_a", "i_book_b")).fetch().size());
+        assertEquals(4, create().selectFrom(TBook().ignoreIndexForOrderBy("i_book_a", "i_book_b")).fetch().size());
+        assertEquals(4, create().selectFrom(TBook().ignoreIndexForGroupBy("i_book_a", "i_book_b")).fetch().size());
+
+        // Combine random hints
+        assertEquals(4, create().selectFrom(
+            TBook().useIndexForGroupBy("i_book_a")
+                   .useIndexForJoin("i_book_b")
+                   .ignoreIndexForOrderBy("i_book_a")).fetch().size());
+    }
 }

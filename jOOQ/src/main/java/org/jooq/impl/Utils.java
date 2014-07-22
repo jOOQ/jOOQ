@@ -117,6 +117,7 @@ import org.jooq.EnumType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -651,6 +652,15 @@ final class Utils {
                 result[i] = fieldByName(fieldNames[i]);
             else
                 result[i] = fieldByName(tableName, fieldNames[i]);
+
+        return result;
+    }
+
+    static final Name[] names(String[] names) {
+        Name[] result = new Name[names.length];
+
+        for (int i = 0; i < names.length; i++)
+            result[i] = DSL.name(names[i]);
 
         return result;
     }

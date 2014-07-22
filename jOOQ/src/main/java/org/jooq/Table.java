@@ -852,9 +852,213 @@ public interface Table<R extends Record> extends TableLike<R> {
     // XXX: Exotic and vendor-specific clauses on tables
     // -------------------------------------------------------------------------
 
+    /**
+     * Specify a MySQL style table hint for query optimisation.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * create.select()
+     *       .from(BOOK.as("b").useIndex("MY_INDEX")
+     *       .fetch();
+     * </pre></code>
+     *
+     * @see <a
+     *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
+     */
+    @Support({ MARIADB, MYSQL })
+    Table<R> useIndex(String... indexes);
+
+    /**
+     * Specify a MySQL style table hint for query optimisation.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * create.select()
+     *       .from(BOOK.as("b").useIndexForJoin("MY_INDEX")
+     *       .fetch();
+     * </pre></code>
+     *
+     * @see <a
+     *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
+     */
+    @Support({ MARIADB, MYSQL })
+    Table<R> useIndexForJoin(String... indexes);
+
+    /**
+     * Specify a MySQL style table hint for query optimisation.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * create.select()
+     *       .from(BOOK.as("b").useIndexForOrderBy("MY_INDEX")
+     *       .fetch();
+     * </pre></code>
+     *
+     * @see <a
+     *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
+     */
+    @Support({ MARIADB, MYSQL })
+    Table<R> useIndexForOrderBy(String... indexes);
+
+    /**
+     * Specify a MySQL style table hint for query optimisation.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * create.select()
+     *       .from(BOOK.as("b").useIndexForGroupBy("MY_INDEX")
+     *       .fetch();
+     * </pre></code>
+     *
+     * @see <a
+     *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
+     */
+    @Support({ MARIADB, MYSQL })
+    Table<R> useIndexForGroupBy(String... indexes);
+
+    /**
+     * Specify a MySQL style table hint for query optimisation.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * create.select()
+     *       .from(BOOK.as("b").useIndex("MY_INDEX")
+     *       .fetch();
+     * </pre></code>
+     *
+     * @see <a
+     *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
+     */
+    @Support({ MARIADB, MYSQL })
+    Table<R> ignoreIndex(String... indexes);
+
+    /**
+     * Specify a MySQL style table hint for query optimisation.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * create.select()
+     *       .from(BOOK.as("b").useIndexForJoin("MY_INDEX")
+     *       .fetch();
+     * </pre></code>
+     *
+     * @see <a
+     *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
+     */
+    @Support({ MARIADB, MYSQL })
+    Table<R> ignoreIndexForJoin(String... indexes);
+
+    /**
+     * Specify a MySQL style table hint for query optimisation.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * create.select()
+     *       .from(BOOK.as("b").useIndexForOrderBy("MY_INDEX")
+     *       .fetch();
+     * </pre></code>
+     *
+     * @see <a
+     *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
+     */
+    @Support({ MARIADB, MYSQL })
+    Table<R> ignoreIndexForOrderBy(String... indexes);
+
+    /**
+     * Specify a MySQL style table hint for query optimisation.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * create.select()
+     *       .from(BOOK.as("b").useIndexForGroupBy("MY_INDEX")
+     *       .fetch();
+     * </pre></code>
+     *
+     * @see <a
+     *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
+     */
+    @Support({ MARIADB, MYSQL })
+    Table<R> ignoreIndexForGroupBy(String... indexes);
+
+    /**
+     * Specify a MySQL style table hint for query optimisation.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * create.select()
+     *       .from(BOOK.as("b").useIndex("MY_INDEX")
+     *       .fetch();
+     * </pre></code>
+     *
+     * @see <a
+     *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
+     */
+    @Support({ MARIADB, MYSQL })
+    Table<R> forceIndex(String... indexes);
+
+    /**
+     * Specify a MySQL style table hint for query optimisation.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * create.select()
+     *       .from(BOOK.as("b").useIndexForJoin("MY_INDEX")
+     *       .fetch();
+     * </pre></code>
+     *
+     * @see <a
+     *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
+     */
+    @Support({ MARIADB, MYSQL })
+    Table<R> forceIndexForJoin(String... indexes);
+
+    /**
+     * Specify a MySQL style table hint for query optimisation.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * create.select()
+     *       .from(BOOK.as("b").useIndexForOrderBy("MY_INDEX")
+     *       .fetch();
+     * </pre></code>
+     *
+     * @see <a
+     *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
+     */
+    @Support({ MARIADB, MYSQL })
+    Table<R> forceIndexForOrderBy(String... indexes);
+
+    /**
+     * Specify a MySQL style table hint for query optimisation.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * create.select()
+     *       .from(BOOK.as("b").useIndexForGroupBy("MY_INDEX")
+     *       .fetch();
+     * </pre></code>
+     *
+     * @see <a
+     *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
+     */
+    @Support({ MARIADB, MYSQL })
+    Table<R> forceIndexForGroupBy(String... indexes);
+
     /* [pro] xx
     xxx
-     x xxxxxxx x xxx xxxxxx xxxxx xxxxx xxxx xxx xxxxx xxxxxxxxxxxx
+     x xxxxxxx x xxx xxxxxx xxxxx xxxxx xxxx xxx xxxxx xxxxxxxxxxxxx
      x xxx
      x xxxx xxxxx xxxxx xxxx xx xx xxxxxx xxxxxxxx xxxxx xx xxxxx xxx xx xxxxx
      x xxxxxxxx xxxxx xxxxxxxx
@@ -880,7 +1084,7 @@ public interface Table<R extends Record> extends TableLike<R> {
 
     xxx
      x xxxxxx x xxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxx xxxx xxxxxx xxxxxxxx xx
-     x xxxx xxxxxxx xxxx
+     x xxxx xxxxxxx xxxxx
      x xxx
      x xxxx xxx xxxx xxxxxxxx xx xxxx xxxx
      x xxxx
@@ -898,7 +1102,7 @@ public interface Table<R extends Record> extends TableLike<R> {
 
     xxx
      x xxxxxx x xxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxx xxxx xxxxxx xxxxxxxx xx
-     x xxxx xxxxxxx xxxx
+     x xxxx xxxxxxx xxxxx
      x xxx
      x xxx xxxx xxxxxxxx xxx xxxxxx xxxxxxxxxxxxxxxxx
      x

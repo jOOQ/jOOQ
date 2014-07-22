@@ -102,7 +102,7 @@ import static org.jooq.SQLDialect.SYBASE;
 public interface SelectIntoStep<R extends Record> extends SelectFromStep<R> {
 
     /**
-     * Add additional fields to the <code>SELECT</code> clause of this query
+     * Add an <code>INTO</code> clause to the <code>SELECT</code> statement.
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     SelectIntoStep<Record> into(Table<?> table);

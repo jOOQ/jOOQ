@@ -2835,6 +2835,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testReusingBindValueReference() throws Exception {
+        new RenderAndBindTests(this).testReusingBindValueReference();
+    }
+
+    @Test
     public void testUUIDDataType() throws Exception {
         new DataTypeTests(this).testUUIDDataType();
     }

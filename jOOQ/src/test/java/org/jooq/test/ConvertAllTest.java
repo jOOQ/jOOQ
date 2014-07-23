@@ -41,6 +41,7 @@
 package org.jooq.test;
 
 import static org.jooq.tools.reflect.Reflect.wrapper;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -48,9 +49,12 @@ import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.tools.Convert;
 
 import org.junit.Test;
@@ -303,5 +307,51 @@ public class ConvertAllTest extends AbstractTest {
         assertTrue(toArrayClass.isInstance(conv3));
         assertTrue(toArrayClass.isInstance(conv4));
         assertTrue(toArrayClass.isInstance(conv5));
+    }
+
+    @Test
+    public void testToJDBCArray() throws SQLException {
+        Object[] from1 = null;
+        java.sql.Array a1 = Convert.convert(from1, java.sql.Array.class);
+        assertNull(a1);
+
+        Object[] from2 = new Object[0];
+        java.sql.Array a2 = Convert.convert(from2, java.sql.Array.class);
+        Result<Record> r2 = create.fetch(a2.getResultSet());
+        assertArrayEquals(from2, (Object[]) a2.getArray());
+        assertEquals(0, r2.size());
+        assertEquals(2, r2.fields().length);
+        assertEquals("INDEX", r2.field(0).getName());
+        assertEquals(Long.class, r2.field(0).getType());
+        assertEquals("VALUE", r2.field(1).getName());
+        assertEquals(Object.class, r2.field(1).getType());
+
+        Object[] from3 = { 1 };
+        java.sql.Array a3 = Convert.convert(from3, java.sql.Array.class);
+        Result<Record> r3 = create.fetch(a3.getResultSet());
+        assertArrayEquals(from3, (Object[]) a3.getArray());
+        assertEquals(1, r3.size());
+        assertEquals(1L, r3.getValue(0, "INDEX"));
+        assertEquals(1, r3.getValue(0, "VALUE"));
+        assertEquals(2, r3.fields().length);
+        assertEquals("INDEX", r3.field(0).getName());
+        assertEquals(Long.class, r3.field(0).getType());
+        assertEquals("VALUE", r3.field(1).getName());
+        assertEquals(Object.class, r3.field(1).getType());
+
+        String[] from4 = { "A", "B" };
+        java.sql.Array a4 = Convert.convert(from4, java.sql.Array.class);
+        Result<Record> r4 = create.fetch(a4.getResultSet());
+        assertArrayEquals(from4, (String[]) a4.getArray());
+        assertEquals(2, r4.size());
+        assertEquals(1L, r4.getValue(0, "INDEX"));
+        assertEquals("A", r4.getValue(0, "VALUE"));
+        assertEquals(2L, r4.getValue(1, "INDEX"));
+        assertEquals("B", r4.getValue(1, "VALUE"));
+        assertEquals(2, r4.fields().length);
+        assertEquals("INDEX", r4.field(0).getName());
+        assertEquals(Long.class, r4.field(0).getType());
+        assertEquals("VALUE", r4.field(1).getName());
+        assertEquals(String.class, r4.field(1).getType());
     }
 }

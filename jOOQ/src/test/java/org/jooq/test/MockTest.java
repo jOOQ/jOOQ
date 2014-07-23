@@ -41,6 +41,8 @@
 package org.jooq.test;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.nCopies;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.test.data.Table1.FIELD_ID1;
 import static org.jooq.test.data.Table1.FIELD_NAME1;
@@ -49,16 +51,21 @@ import static org.jooq.test.data.Table2.FIELD_ID2;
 import static org.jooq.test.data.Table2.FIELD_NAME2;
 import static org.jooq.test.data.Table2.TABLE2;
 import static org.jooq.test.data.Table3.FIELD_NAME3;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.RandomAccessFile;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Constants;
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.InsertResultStep;
 import org.jooq.Query;
 import org.jooq.Record;
@@ -425,5 +432,81 @@ public class MockTest extends AbstractTest {
         assertEquals("x", r2.getValue(0, 0));
         assertEquals("y", r2.getValue(0, 1));
         assertEquals("z", r2.getValue(0, 2));
+    }
+
+    final Field<String[]>  strings  = field("STRINGS", String[].class);
+    final Field<Integer[]> integers = field("INTEGERS", Integer[].class);
+
+    class ArrayResult extends AbstractResult {
+
+        final int              length;
+
+        ArrayResult(int length) {
+            this.length = length;
+        }
+
+        @Override
+        public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
+            Result<Record2<String[], Integer[]>> result = create.newResult(strings, integers);
+
+            Record2<String[], Integer[]> empty = create.newRecord(strings, integers);
+            result.add(empty);
+
+            for (int i = 0; i < length; i++) {
+                Record2<String[], Integer[]> record = create.newRecord(strings, integers);
+
+                record.setValue(strings, nCopies(i, "" + i).toArray(new String[i]));
+                record.setValue(integers, nCopies(i, i).toArray(new Integer[i]));
+
+                result.add(record);
+            }
+
+            return new MockResult[] {
+                new MockResult(0, result)
+            };
+        }
+    }
+
+    @Test
+    public void testArrays() {
+        DSLContext e = DSL.using(new MockConnection(new ArrayResult(3)), SQLDialect.POSTGRES);
+
+        Result<Record2<String[], Integer[]>> r = e.select(strings, integers).fetch();
+        assertEquals(4, r.size());
+        assertEquals(2, r.fields().length);
+        assertNull(r.getValue(0, "STRINGS"));
+        assertNull(r.getValue(0, "INTEGERS"));
+        assertArrayEquals(new String[0], (String[]) r.getValue(1, "STRINGS"));
+        assertArrayEquals(new Integer[0], (Integer[]) r.getValue(1, "INTEGERS"));
+        assertArrayEquals(new String[] { "1" }, (String[]) r.getValue(2, "STRINGS"));
+        assertArrayEquals(new Integer[] { 1 }, (Integer[]) r.getValue(2, "INTEGERS"));
+        assertArrayEquals(new String[] { "2", "2" }, (String[]) r.getValue(3, "STRINGS"));
+        assertArrayEquals(new Integer[] { 2, 2 }, (Integer[]) r.getValue(3, "INTEGERS"));
+    }
+
+    @Test
+    public void testJDBCArrays() throws SQLException {
+        DSLContext e = DSL.using(new MockConnection(new ArrayResult(3)), SQLDialect.POSTGRES);
+
+        ResultSet r = e.select(strings, integers).fetchResultSet();
+        assertEquals(2, r.getMetaData().getColumnCount());
+
+        assertTrue(r.next());
+        assertNull(r.getArray("STRINGS"));
+        assertNull(r.getArray("INTEGERS"));
+
+        assertTrue(r.next());
+        assertArrayEquals(new String[0], (String[]) r.getArray("STRINGS").getArray());
+        assertArrayEquals(new Integer[0], (Integer[]) r.getArray("INTEGERS").getArray());
+
+        assertTrue(r.next());
+        assertArrayEquals(new String[] { "1" }, (String[]) r.getArray("STRINGS").getArray());
+        assertArrayEquals(new Integer[] { 1 }, (Integer[]) r.getArray("INTEGERS").getArray());
+
+        assertTrue(r.next());
+        assertArrayEquals(new String[] { "2", "2" }, (String[]) r.getArray("STRINGS").getArray());
+        assertArrayEquals(new Integer[] { 2, 2 }, (Integer[]) r.getArray("INTEGERS").getArray());
+
+        assertFalse(r.next());
     }
 }

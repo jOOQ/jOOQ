@@ -65,6 +65,7 @@ import java.util.Collections;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Insert;
+import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -558,5 +559,28 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                                   .from(TBook())
                                   .where(TBook_ID().eq(1))
                                   .fetchOne(TBook_TITLE()));
+    }
+
+    public void testReusingBindValueReference() throws Exception {
+
+        // It should be possible to reuse bind value references multiple times and then
+        // change that value only once
+        Param<Integer> value = val(1);
+
+        Select<Record2<Integer,Integer>> query =
+        create().select(value.as("a"), value.as("b"))
+                .where(value.lt(3));
+
+        Record2<Integer, Integer> r1 = query.fetchOne();
+        assertEquals(1, (int) r1.value1());
+        assertEquals(1, (int) r1.value2());
+
+        value.setValue(2);
+        Record2<Integer, Integer> r2 = query.fetchOne();
+        assertEquals(2, (int) r2.value1());
+        assertEquals(2, (int) r2.value2());
+
+        value.setValue(3);
+        assertNull(query.fetchOne());
     }
 }

@@ -74,6 +74,7 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.exception.DataTypeException;
+import org.jooq.tools.jdbc.MockArray;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
@@ -415,7 +416,7 @@ public final class Convert {
             this.toClass = toClass;
         }
 
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         @Override
         public U from(Object from) {
             if (from == null) {
@@ -459,7 +460,14 @@ public final class Convert {
                     return convert(Arrays.toString((byte[]) from), toClass);
                 }
                 else if (fromClass.isArray()) {
-                    return (U) convertArray((Object[]) from, toClass);
+
+                    // [#3443] Conversion from Object[] to JDBC Array
+                    if (toClass == java.sql.Array.class) {
+                        return (U) new MockArray(null, (Object[]) from, fromClass);
+                    }
+                    else {
+                        return (U) convertArray((Object[]) from, toClass);
+                    }
                 }
 
                 // All types can be converted into String
@@ -727,9 +735,7 @@ public final class Convert {
                 // literals to Enum values without a Converter
                 else if ((fromClass == String.class) && java.lang.Enum.class.isAssignableFrom(toClass)) {
                     try {
-                        @SuppressWarnings("rawtypes")
-                        Class raw = toClass;
-                        return (U) java.lang.Enum.valueOf(raw, (String) from);
+                        return (U) java.lang.Enum.valueOf((Class) toClass, (String) from);
                     }
                     catch (IllegalArgumentException e) {
                         return null;
@@ -780,6 +786,11 @@ public final class Convert {
                         catch (Exception e) {
                             throw new DataTypeException("Cannot convert from " + fromClass + " to " + toClass, e);
                         }
+                    }
+
+                    // [#3443] Conversion of ArrayRecord to JDBC Array
+                    else if (toClass == java.sql.Array.class) {
+                        return (U) new MockArray(null, record.get(), record.getArrayType().getType());
                     }
                     else {
                         return (U) convertArray(record.get(), toClass);

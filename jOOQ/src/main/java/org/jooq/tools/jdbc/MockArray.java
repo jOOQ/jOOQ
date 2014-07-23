@@ -38,22 +38,38 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.impl;
+package org.jooq.tools.jdbc;
+
+import static java.lang.reflect.Array.newInstance;
+import static org.jooq.impl.DSL.fieldByName;
 
 import java.sql.Array;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Map;
 
+import org.jooq.DSLContext;
+import org.jooq.Field;
+import org.jooq.Record2;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultDataType;
 
-class DefaultArray implements Array {
+/**
+ * A mock {@link Array}.
+ *
+ * @author Lukas Eder
+ * @see MockConnection
+ */
+public class MockArray<T> implements Array {
 
-    private final SQLDialect dialect;
-    private final Object[] array;
-    private final Class<?> type;
+    private final SQLDialect           dialect;
+    private final T[]                  array;
+    private final Class<? extends T[]> type;
 
-    public DefaultArray(SQLDialect dialect, Object[] array, Class<?> type) {
+    public MockArray(SQLDialect dialect, T[] array, Class<? extends T[]> type) {
         this.dialect = dialect;
         this.array = array;
         this.type = type;
@@ -66,47 +82,74 @@ class DefaultArray implements Array {
 
     @Override
     public int getBaseType() {
-        throw new SQLDialectNotSupportedException("Array.getBaseType()");
+        return DefaultDataType.getDataType(dialect, type.getComponentType()).getSQLType();
     }
 
     @Override
-    public Object getArray() {
+    public T[] getArray() {
         return array;
     }
 
     @Override
-    public Object getArray(Map<String, Class<?>> map) {
+    public T[] getArray(Map<String, Class<?>> map) {
         return array;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Object getArray(long index, int count) {
-        throw new SQLDialectNotSupportedException("Array.getArray(long, int)");
+    public T[] getArray(long index, int count) throws SQLException {
+        if (index - 1 > Integer.MAX_VALUE)
+            throw new SQLException("Cannot access array indexes beyond Integer.MAX_VALUE");
+
+        return array == null ? null : Arrays
+            .asList(array)
+            .subList(((int) index) - 1, ((int) index) - 1 + count)
+            .toArray((T[]) newInstance(array.getClass().getComponentType(), count));
     }
 
     @Override
-    public Object getArray(long index, int count, Map<String, Class<?>> map) {
-        throw new SQLDialectNotSupportedException("Array.getArray(long, int, Map)");
+    public T[] getArray(long index, int count, Map<String, Class<?>> map) throws SQLException {
+        return getArray(index, count);
     }
 
     @Override
     public ResultSet getResultSet() {
-        throw new SQLDialectNotSupportedException("Array.getResultSet()");
+        return getResultSet0(array);
     }
 
     @Override
     public ResultSet getResultSet(Map<String, Class<?>> map) {
-        throw new SQLDialectNotSupportedException("Array.getResultSet(Map)");
+        return getResultSet();
     }
 
     @Override
-    public ResultSet getResultSet(long index, int count) {
-        throw new SQLDialectNotSupportedException("Array.getResultSet(long, int)");
+    public ResultSet getResultSet(long index, int count) throws SQLException {
+        return getResultSet0(getArray(index, count));
     }
 
     @Override
-    public ResultSet getResultSet(long index, int count, Map<String, Class<?>> map) {
-        throw new SQLDialectNotSupportedException("Array.getResultSet(long, int, Map)");
+    public ResultSet getResultSet(long index, int count, Map<String, Class<?>> map) throws SQLException {
+        return getResultSet(index, count);
+    }
+
+    @SuppressWarnings("unchecked")
+    private ResultSet getResultSet0(T[] a) {
+        DSLContext create = DSL.using(dialect);
+
+        Field<Long> index = fieldByName(Long.class, "INDEX");
+        Field<T> value = (Field<T>) fieldByName(type.getComponentType(), "VALUE");
+        Result<Record2<Long, T>> result = create.newResult(index, value);
+
+        for (int i = 0; i < a.length; i++) {
+            Record2<Long, T> record = create.newRecord(index, value);
+            
+            record.setValue(index, i + 1L);
+            record.setValue(value, a[i]);
+            
+            result.add(record);
+        }
+
+        return new MockResultSet(result);
     }
 
     @Override

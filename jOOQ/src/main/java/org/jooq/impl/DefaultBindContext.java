@@ -78,6 +78,7 @@ import org.jooq.UDTRecord;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.jdbc.MockArray;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -373,7 +374,7 @@ class DefaultBindContext extends AbstractBindContext {
                             t = String[].class;
                         }
 
-                        stmt.setArray(nextIndex(), new DefaultArray(dialect, a, t));
+                        stmt.setArray(nextIndex(), new MockArray(dialect, a, t));
                         break;
                     }
                     case H2: {

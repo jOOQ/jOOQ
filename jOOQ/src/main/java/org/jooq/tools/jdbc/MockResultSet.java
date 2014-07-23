@@ -703,12 +703,12 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
 
     @Override
     public Array getArray(int columnIndex) throws SQLException {
-        throw new SQLFeatureNotSupportedException("Unsupported data type. Use getObject() instead");
+        return getValue(columnIndex, Array.class);
     }
 
     @Override
     public Array getArray(String columnLabel) throws SQLException {
-        throw new SQLFeatureNotSupportedException("Unsupported data type. Use getObject() instead");
+        return getValue(columnLabel, Array.class);
     }
 
     @Override

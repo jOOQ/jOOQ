@@ -69,6 +69,7 @@ import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectCount;
+import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.trueCondition;
@@ -1400,12 +1401,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case POSTGRES:
                 Table<B> b1 = TBook().as("b1");
 
+                // [#3455] Ensure also that this works for derived (aliased) tables
+                Table<A> a1 = selectFrom(TAuthor()).asTable("a1");
+
                 assertEquals(4,
                 create().update(b1)
-                        .set(b1.field(TBook_TITLE()), concat(TAuthor_FIRST_NAME(), inline(" "), TAuthor_LAST_NAME(), inline(": "), TBook_TITLE()))
-                        .from(TBook().join(
-                            TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID())
-                                      .and(TBook_ID().lt(5))))
+                        .set(b1.field(TBook_TITLE()), concat(
+                            a1.field(TAuthor_FIRST_NAME()),
+                            inline(" "),
+                            a1.field(TAuthor_LAST_NAME()),
+                            inline(": "),
+                            TBook_TITLE()
+                        ))
+                        .from(TBook().join(a1)
+                                     .on(TBook_AUTHOR_ID().eq(a1.field(TAuthor_ID()))
+                                     .and(TBook_ID().lt(5))))
                         .where(TBook_ID().eq(b1.field(TBook_ID())))
                         .execute());
                 break;

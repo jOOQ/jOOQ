@@ -63,13 +63,14 @@ public class Tables {
 
 	/**
 	 * An entity holding language master data
+
+Oh oh. Newline character.
+
+"Quotes". And \Escaping\That\Shouldn't\Be\Escaping
+
+Oh, and beware of end-of-javadoc * /
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TLanguage T_LANGUAGE = org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE;
-
-	/**
-	 * The table TEST.TRANSACTIONS_WITH_CREDIT_DEBIT
-	 */
-	public static final org.jooq.test.oracle.generatedclasses.test.tables.TransactionsWithCreditDebit TRANSACTIONS_WITH_CREDIT_DEBIT = org.jooq.test.oracle.generatedclasses.test.tables.TransactionsWithCreditDebit.TRANSACTIONS_WITH_CREDIT_DEBIT;
 
 	/**
 	 * The table TEST.T_TEMP
@@ -127,21 +128,6 @@ public class Tables {
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.VLibrary V_LIBRARY = org.jooq.test.oracle.generatedclasses.test.tables.VLibrary.V_LIBRARY;
 
 	/**
-	 * The table TEST.V_TRANSACTIONS
-	 */
-	public static final org.jooq.test.oracle.generatedclasses.test.tables.VTransactions V_TRANSACTIONS = org.jooq.test.oracle.generatedclasses.test.tables.VTransactions.V_TRANSACTIONS;
-
-	/**
-	 * The table TEST.V_TRANSACTIONS_BY_TIME
-	 */
-	public static final org.jooq.test.oracle.generatedclasses.test.tables.VTransactionsByTime V_TRANSACTIONS_BY_TIME = org.jooq.test.oracle.generatedclasses.test.tables.VTransactionsByTime.V_TRANSACTIONS_BY_TIME;
-
-	/**
-	 * The table TEST.V_TRANSACTIONS_CREDIT_FIRST
-	 */
-	public static final org.jooq.test.oracle.generatedclasses.test.tables.VTransactionsCreditFirst V_TRANSACTIONS_CREDIT_FIRST = org.jooq.test.oracle.generatedclasses.test.tables.VTransactionsCreditFirst.V_TRANSACTIONS_CREDIT_FIRST;
-
-	/**
 	 * The table TEST.X_TEST_CASE_2025
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025;
@@ -162,7 +148,7 @@ public class Tables {
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85 X_TEST_CASE_85 = org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85;
 
 	/**
-	 * An unused table in the same schema. 
+	 * An unused table in the same schema.
 
 "Its comments contain special characters"
 	 */

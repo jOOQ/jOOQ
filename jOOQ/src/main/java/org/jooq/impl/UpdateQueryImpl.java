@@ -481,7 +481,9 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
             if (!from.isEmpty()) {
                 ctx.formatSeparator()
                    .keyword("from").sql(" ")
-                   .visit(from);
+                   .declareTables(true)
+                   .visit(from)
+                   .declareTables(false);
             }
 
             ctx.end(UPDATE_FROM);
@@ -554,7 +556,9 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 if (!from.isEmpty()) {
                     ctx.formatSeparator()
                        .keyword("from").sql(" ")
-                       .visit(from);
+                       .declareTables(true)
+                       .visit(from)
+                       .declareTables(false);
                 }
 
                 ctx.end(UPDATE_FROM);

@@ -4238,6 +4238,166 @@
 
 
         <profile>
+            <id>codegen-oracle-xml</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${jooq.version}</version>
+
+                        <executions>
+                            <execution>
+                                <id>generate-oracle-xml</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+
+                                <configuration>
+                                    <generator>
+                                        <name>org.jooq.util.DefaultGenerator</name>
+                                        <database>
+                                            <name>org.jooq.util.xml.XMLDatabase</name>
+                                            <properties>
+                                                <property>
+                                                    <key>dialect</key>
+                                                    <value>ORACLE</value>
+                                                </property>
+                                                <property>
+                                                    <key>xml-file</key>
+                                                    <value>src/main/resources/database.xml</value>
+                                                </property>
+                                            </properties>
+                                            <includes>.*</includes>
+                                            <excludes>T_BOOK_DETAILS|S_TRIGGERS_SEQUENCE|.*976.*|.*1358.*|U_SECOND_MAX</excludes>
+                                            <recordVersionFields>REC_VERSION</recordVersionFields>
+                                            <recordTimestampFields>REC_TIMESTAMP</recordTimestampFields>
+                                            <dateAsTimestamp>false</dateAsTimestamp>
+                                            <unsignedTypes>true</unsignedTypes>
+                                            <schemata>
+                                                <schema>
+                                                    <inputSchema>TEST</inputSchema>
+                                                </schema>
+                                                <schema>
+                                                    <inputSchema>MULTI_SCHEMA</inputSchema>
+                                                </schema>
+                                            </schemata>
+
+                                            <customTypes>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_10</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_10_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_TF_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_TF_UC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YN_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YN_UC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YES_NO_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YES_NO_UC_Converter</converter>
+                                                </customType>
+                                            </customTypes>
+
+                                            <forcedTypes>
+                                                <forcedType>
+                                                    <name>BOOLEAN</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>UUID</name>
+                                                    <expression>(?i:(.*?.)?T_EXOTIC_TYPES.UU)</expression>
+                                                </forcedType>
+
+                                                <!-- [#2477] Check if unsigned types work correctly -->
+                                                <forcedType>
+                                                    <name>TINYINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_BYTE)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>SMALLINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_SHORT)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>INTEGERUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_INT)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>BIGINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_LONG)</expression>
+                                                </forcedType>
+
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_10</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.ONE_ZERO)</expression>
+                                                </forcedType>
+                                            </forcedTypes>
+                                        </database>
+                                        <generate>
+                                            <relations>true</relations>
+                                            <deprecated>true</deprecated>
+                                            <instanceFields>true</instanceFields>
+                                            <generatedAnnotation>false</generatedAnnotation>
+                                            <pojos>false</pojos>
+                                            <daos>true</daos>
+                                            <jpaAnnotations>true</jpaAnnotations>
+                                            <validationAnnotations>true</validationAnnotations>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.test.oracle4.generatedclasses</packageName>
+                                            <directory>./src/test/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
+        <profile>
             <id>codegen-oracle-jdbc</id>
             <build>
                 <plugins>

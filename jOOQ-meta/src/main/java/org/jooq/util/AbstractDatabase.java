@@ -55,6 +55,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.regex.Pattern;
 
 import javax.xml.bind.JAXB;
@@ -86,6 +87,7 @@ public abstract class AbstractDatabase implements Database {
     // Configuration elements
     // -------------------------------------------------------------------------
 
+    private Properties                                                       properties;
     private SQLDialect                                                       dialect;
     private Connection                                                       connection;
     private DSLContext                                                       create;
@@ -281,6 +283,15 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final void setConfiguredSchemata(List<Schema> schemata) {
         this.configuredSchemata = schemata;
+    }
+
+    @Override
+    public final void setProperties(Properties properties) {
+        this.properties = properties;
+    }
+
+    public final Properties getProperties() {
+        return properties;
     }
 
     @Override

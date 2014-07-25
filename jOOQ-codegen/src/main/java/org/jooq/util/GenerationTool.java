@@ -189,15 +189,10 @@ public class GenerationTool {
 
             // Initialise connection
             // ---------------------
-            if (connection == null) {
-                errorIfNull(j, "The <jdbc/> tag is mandatory.");
+            if (connection == null && j != null) {
                 Class<? extends Driver> driver = (Class<? extends Driver>) loadClass(driverClass(j));
 
-                Properties properties = new Properties();
-                for (Property p : j.getProperties()) {
-                    properties.put(p.getKey(), p.getValue());
-                }
-
+                Properties properties = properties(j.getProperties());
                 if (!properties.containsKey("user"))
                     properties.put("user", defaultString(j.getUser()));
                 if (!properties.containsKey("password"))
@@ -246,6 +241,7 @@ public class GenerationTool {
                 ? databaseClass(j)
                 : (Class<? extends Database>) loadClass(databaseName);
             Database database = databaseClass.newInstance();
+            database.setProperties(properties(d.getProperties()));
 
             List<Schema> schemata = d.getSchemata();
 
@@ -382,6 +378,16 @@ public class GenerationTool {
                 connection.close();
             }
         }
+    }
+
+    private Properties properties(List<Property> properties) {
+        Properties result = new Properties();
+
+        for (Property p : properties) {
+            result.put(p.getKey(), p.getValue());
+        }
+
+        return result;
     }
 
     private String driverClass(Jdbc j) {

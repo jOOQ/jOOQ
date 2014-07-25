@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<information_schema xmlns="http://www.jooq.org/xsd/jooq-meta-3.5.0.xsd">
+    <schemata>
+        <schema>
+            <schema_name>TEST</schema_name>
+        </schema>
+    </schemata>
+
+    <tables>
+        <table>
+            <table_schema>TEST</table_schema>
+            <table_name>T_AUTHOR</table_name>
+        </table>
+    </tables>
+
+    <columns>
+        <column>
+            <table_schema>TEST</table_schema>
+            <table_name>T_AUTHOR</table_name>
+            <column_name>ID</column_name>
+            <data_type>NUMBER</data_type>
+            <numeric_precision>7</numeric_precision>
+            <ordinal_position>1</ordinal_position>
+            <is_nullable>false</is_nullable>
+        </column>
+    </columns>
+
+    <sequences>
+        <sequence>
+            <sequence_schema>TEST</sequence_schema>
+            <sequence_name>S_AUTHOR_ID</sequence_name>
+            <data_type>NUMBER</data_type>
+            <numeric_precision>7</numeric_precision>
+        </sequence>
+    </sequences>
+</information_schema>

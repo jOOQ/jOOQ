@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="http://www.jooq.org/xsd/jooq-meta-3.5.0.xsd"
+    targetNamespace="http://www.jooq.org/xsd/jooq-meta-3.5.0.xsd"
+    elementFormDefault="qualified">
+
+    <element name="information_schema">
+        <complexType>
+            <all>
+                <element name="schemata" type="tns:Schemata" minOccurs="0" maxOccurs="1" />
+                <element name="sequences" type="tns:Sequences" minOccurs="0" maxOccurs="1" />
+                <element name="tables" type="tns:Tables" minOccurs="0" maxOccurs="1" />
+                <element name="columns" type="tns:Columns" minOccurs="0" maxOccurs="1" />
+            </all>
+        </complexType>
+    </element>
+    
+    <complexType name="Schemata">
+        <all>
+            <element name="schema" type="tns:Schema" minOccurs="0" maxOccurs="unbounded" />
+        </all>
+    </complexType>
+    
+    <complexType name="Schema">
+        <all>
+            <element name="catalog_name" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="schema_name" type="string" minOccurs="1" maxOccurs="1" />
+        </all>
+    </complexType>
+    
+    <complexType name="Sequences">
+        <all>
+            <element name="sequence" type="tns:Sequence" minOccurs="0" maxOccurs="unbounded" />
+        </all>
+    </complexType>
+    
+    <complexType name="Sequence">
+        <all>
+            <element name="sequence_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="sequence_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="sequence_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="data_type" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="character_maximum_length" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="numeric_precision" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="numeric_scale" type="int" minOccurs="0" maxOccurs="1" />
+        </all>
+    </complexType>
+    
+    <complexType name="Tables">
+        <all>
+            <element name="table" type="tns:Table" minOccurs="0" maxOccurs="unbounded" />
+        </all>
+    </complexType>
+    
+    <complexType name="Table">
+        <all>
+            <element name="table_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="table_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="table_name" type="string" minOccurs="1" maxOccurs="1" />
+        </all>
+    </complexType>
+    
+    <complexType name="Columns">
+        <all>
+            <element name="column" type="tns:Column" minOccurs="0" maxOccurs="unbounded" />
+        </all>
+    </complexType>
+    
+    <complexType name="Column">
+        <all>
+            <element name="table_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="table_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="table_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="column_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="data_type" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="character_maximum_length" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="numeric_precision" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="numeric_scale" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="ordinal_position" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="identity_generation" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="is_nullable" type="boolean" minOccurs="0" maxOccurs="1" />
+            <element name="column_default" type="string" minOccurs="0" maxOccurs="1" />
+        </all>
+    </complexType>
+</schema>

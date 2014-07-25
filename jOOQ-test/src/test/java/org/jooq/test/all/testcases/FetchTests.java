@@ -239,6 +239,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Map<Integer, Result<B>> map1 = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchGroups(TBook_ID());
         for (Entry<Integer, Result<B>> entry : map1.entrySet()) {
             assertEquals(1, entry.getValue().size());
+            assertEquals(1, entry.getValue().getValues(TBook_ID()).size());
+            assertEquals(1, entry.getValue().getValues(TBook_TITLE()).size());
+
             assertEquals(entry.getKey(), entry.getValue().get(0).getValue(TBook_ID()));
         }
         assertEquals(4, map1.size());
@@ -254,11 +257,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(2, entry21.getValue().size());
         assertEquals(1, (int) entry21.getValue().get(0).getValue(TBook_ID()));
         assertEquals(2, (int) entry21.getValue().get(1).getValue(TBook_ID()));
+        assertEquals(1, (int) entry21.getValue().getValues(TBook_ID()).get(0));
+        assertEquals(2, (int) entry21.getValue().getValues(TBook_ID()).get(1));
 
         Entry<Integer, Result<B>> entry22 = it.next();
         assertEquals(2, entry22.getValue().size());
         assertEquals(3, (int) entry22.getValue().get(0).getValue(TBook_ID()));
         assertEquals(4, (int) entry22.getValue().get(1).getValue(TBook_ID()));
+        assertEquals(3, (int) entry22.getValue().getValues(TBook_ID()).get(0));
+        assertEquals(4, (int) entry22.getValue().getValues(TBook_ID()).get(1));
 
         assertFalse(it.hasNext());
 

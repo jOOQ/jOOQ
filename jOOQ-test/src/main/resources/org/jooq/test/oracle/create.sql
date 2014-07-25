@@ -469,7 +469,16 @@ CREATE TABLE t_language (
   CONSTRAINT pk_t_language PRIMARY KEY (ID)
 )
 /
-COMMENT ON TABLE t_language IS 'An entity holding language master data'/
+BEGIN
+  EXECUTE IMMEDIATE 'COMMENT ON TABLE t_language IS ''An entity holding language master data
+
+Oh oh. Newline character.
+
+"Quotes". And \Escaping\That\Shouldn''''t\Be\Escaping
+
+Oh, and beware of end-of-javadoc *' || CHR(47) || '''';
+END;
+/
 COMMENT ON COLUMN t_language.id IS 'The language ID'/
 COMMENT ON COLUMN t_language.cd IS 'The language ISO code'/
 COMMENT ON COLUMN t_language.description IS 'The language description'/
@@ -490,7 +499,7 @@ CREATE TABLE t_785 (
 )
 /
 
-CREATE TABLE "T_2845_CASE_sensitivity" ( 
+CREATE TABLE "T_2845_CASE_sensitivity" (
   id int,
   
   insensitive int,
@@ -688,11 +697,11 @@ CREATE TABLE x_unused (
     REFERENCES MULTI_SCHEMA_UNUSED.X_UNUSED(ID, NAME)
 )
 /
-COMMENT ON TABLE x_unused IS 'An unused table in the same schema. 
+COMMENT ON TABLE x_unused IS 'An unused table in the same schema.
 
 "Its comments contain special characters"'
 /
-COMMENT ON COLUMN x_unused.id IS 'An unused column of an unused table in the same schema. 
+COMMENT ON COLUMN x_unused.id IS 'An unused column of an unused table in the same schema.
 
 "Its comments contain special characters"'
 /

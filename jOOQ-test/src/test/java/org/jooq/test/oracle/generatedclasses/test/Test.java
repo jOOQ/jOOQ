@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 228380003;
+	private static final long serialVersionUID = -296897509;
 
 	/**
 	 * The singleton instance of <code>TEST</code>
@@ -60,7 +60,6 @@ public class Test extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY,
 			org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes.T_EXOTIC_TYPES,
 			org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE,
-			org.jooq.test.oracle.generatedclasses.test.tables.TransactionsWithCreditDebit.TRANSACTIONS_WITH_CREDIT_DEBIT,
 			org.jooq.test.oracle.generatedclasses.test.tables.TTemp.T_TEMP,
 			org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS,
 			org.jooq.test.oracle.generatedclasses.test.tables.TUnsigned.T_UNSIGNED,
@@ -72,9 +71,6 @@ public class Test extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK,
 			org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE,
 			org.jooq.test.oracle.generatedclasses.test.tables.VLibrary.V_LIBRARY,
-			org.jooq.test.oracle.generatedclasses.test.tables.VTransactions.V_TRANSACTIONS,
-			org.jooq.test.oracle.generatedclasses.test.tables.VTransactionsByTime.V_TRANSACTIONS_BY_TIME,
-			org.jooq.test.oracle.generatedclasses.test.tables.VTransactionsCreditFirst.V_TRANSACTIONS_CREDIT_FIRST,
 			org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025,
 			org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_64_69.X_TEST_CASE_64_69,
 			org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_71.X_TEST_CASE_71,

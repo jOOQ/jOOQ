@@ -11,8 +11,12 @@
         <mkdir dir="${dir.release}/${version}" />
         <mkdir dir="${dir.release}/${version}/jOOQ-lib" />
 		<mkdir dir="${dir.release}/${version}/jOOQ-pom"/>
-		<mkdir dir="${dir.release}/${version}/jOOQ-pom/jooq-parent"/>
-
+		<mkdir dir="${dir.release}/${version}/jOOQ-pom/jooq"/>
+		<mkdir dir="${dir.release}/${version}/jOOQ-pom/jooq-meta"/>
+		<mkdir dir="${dir.release}/${version}/jOOQ-pom/jooq-codegen"/>
+		<mkdir dir="${dir.release}/${version}/jOOQ-pom/jooq-codegen-maven"/>
+		<mkdir dir="${dir.release}/${version}/jOOQ-pom/jooq-scala"/>
+		
         <copy todir="${dir.release}/${version}/jOOQ-lib" file="${dir.workspace}/jOOQ/target/jooq-${version}.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-lib" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-lib" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}.jar"/>
@@ -24,8 +28,13 @@
         <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}-javadoc.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version}-javadoc.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version}-javadoc.jar"/>
-
-		<copy todir="${dir.release}/${version}/jOOQ-pom/jooq-parent" file="${dir.workspace}/pom.xml"/>
+		
+        <copy todir="${dir.release}/${version}/jOOQ-pom"                    file="${dir.workspace}/pom.xml"/>
+        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq"               file="${dir.workspace}/jooq/pom.xml"/>
+        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-meta"          file="${dir.workspace}/jooq-meta/pom.xml"/>
+        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-codegen"       file="${dir.workspace}/jooq-codegen/pom.xml"/>
+        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-codegen-maven" file="${dir.workspace}/jooq-codegen-maven/pom.xml"/>
+        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-scala"         file="${dir.workspace}/jooq-scala/pom.xml"/>
 	</target>
 
     <target name="copy-src">

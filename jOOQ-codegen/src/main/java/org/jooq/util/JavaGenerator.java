@@ -46,6 +46,7 @@ import static org.jooq.tools.StringUtils.defaultString;
 
 import java.io.File;
 import java.lang.reflect.TypeVariable;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -141,9 +142,12 @@ public class JavaGenerator extends AbstractGenerator {
     public final void generate(Database db) {
         this.database = db;
 
-        String url = null;
+        String url = "";
         try {
-            url = database.getConnection().getMetaData().getURL();
+            Connection connection = database.getConnection();
+
+            if (connection != null)
+                url = connection.getMetaData().getURL();
         }
         catch (SQLException ignore) {}
 

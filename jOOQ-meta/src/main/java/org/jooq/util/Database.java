@@ -43,6 +43,7 @@ package org.jooq.util;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Properties;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
@@ -375,4 +376,9 @@ public interface Database {
      * Check for the existence of a table in the dictionary views.
      */
     boolean exists(Table<?> table);
+
+    /**
+     * Database properties.
+     */
+    void setProperties(Properties properties);
 }

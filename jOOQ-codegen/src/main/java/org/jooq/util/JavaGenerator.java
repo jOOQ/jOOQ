@@ -2125,7 +2125,12 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private String escapeString(String comment) {
-        return comment.replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "\\r");
+
+        // [#3450] Escape also the escape sequence, among other things that break Java strings.
+        return comment.replace("\\", "\\\\")
+                      .replace("\"", "\\\"")
+                      .replace("\n", "\\n")
+                      .replace("\r", "\\r");
     }
 
     /**
@@ -2847,7 +2852,10 @@ public class JavaGenerator extends AbstractGenerator {
      * This method is used to add line breaks in lengthy javadocs
      */
     protected void printJavadocParagraph(JavaWriter out, String comment, String indent) {
-        printParagraph(out, comment, indent + " * ");
+
+        // [#3450] Must not print */ inside Javadoc
+        String escaped = comment.replace("*/", "* /");
+        printParagraph(out, escaped, indent + " * ");
     }
 
     protected void printParagraph(GeneratorWriter<?> out, String comment, String indent) {

@@ -28,9 +28,12 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     public JavaWriter javadoc(String string, Object... args) {
         final int t = tab();
 
+        // [#3450] Must not print */ inside Javadoc
+        String escaped = string.replace("*/", "* /");
+
         tab(t).println();
         tab(t).println("/**");
-        tab(t).println(" * " + string, args);
+        tab(t).println(" * " + escaped, args);
         tab(t).println(" */");
 
         return this;

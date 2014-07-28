@@ -55,10 +55,8 @@ import static org.jooq.Comparator.NOT_EQUALS;
 import static org.jooq.Comparator.NOT_IN;
 import static org.jooq.Comparator.NOT_LIKE;
 import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
-import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.nullSafe;
-import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.DIVIDE;
@@ -774,12 +772,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition in(Field<?>... values) {
-        if (values == null || values.length == 0) {
-            return falseCondition();
-        }
-        else {
-            return new InCondition<T>(this, nullSafe(values), IN);
-        }
+        return new InCondition<T>(this, nullSafe(values), IN);
     }
 
     @Override
@@ -800,12 +793,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notIn(T... values) {
-        if (values == null || values.length == 0) {
-            return trueCondition();
-        }
-        else {
-            return notIn(Utils.fields(values, this).toArray(new Field<?>[0]));
-        }
+        return notIn(Utils.fields(values, this).toArray(new Field<?>[0]));
     }
 
     @Override

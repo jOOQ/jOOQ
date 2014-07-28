@@ -765,8 +765,26 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         return like(concat, Utils.ESCAPE);
     }
 
+    private final boolean isAccidentalSelect(T[] values) {
+        return (values != null && values.length == 1 && values[0] instanceof Select);
+    }
+
+    private final boolean isAccidentalCollection(T[] values) {
+        return (values != null && values.length == 1 && values[0] instanceof Collection);
+    }
+
+    @SuppressWarnings("unchecked")
     @Override
     public final Condition in(T... values) {
+
+        // [#3362] Prevent "rogue" API usage when using Field<Object>.in(Object... values)
+        if (isAccidentalSelect(values))
+            return in((Select<Record1<T>>) values[0]);
+
+        // [#3347] Prevent "rogue" API usage when using Field<Object>.in(Object... values)
+        if (isAccidentalCollection(values))
+            return in((Collection<?>) values[0]);
+
         return in(Utils.fields(values, this).toArray(new Field<?>[0]));
     }
 
@@ -791,8 +809,18 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         return compare(IN, query);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final Condition notIn(T... values) {
+
+        // [#3362] Prevent "rogue" API usage when using Field<Object>.in(Object... values)
+        if (isAccidentalSelect(values))
+            return notIn((Select<Record1<T>>) values[0]);
+
+        // [#3347] Prevent "rogue" API usage when using Field<Object>.in(Object... values)
+        if (isAccidentalCollection(values))
+            return notIn((Collection<?>) values[0]);
+
         return notIn(Utils.fields(values, this).toArray(new Field<?>[0]));
     }
 

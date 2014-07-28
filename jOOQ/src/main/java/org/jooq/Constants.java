@@ -76,7 +76,7 @@ public final class Constants {
     /**
      * The current jooq-runtime XML namespace
      */
-    public static final String NS_RUNTIME     = "http://www.jooq.org/xsd" + XSD_RUNTIME;
+    public static final String NS_RUNTIME     = "http://www.jooq.org/xsd/" + XSD_RUNTIME;
 
     /**
      * The current jooq-codegen XSD file name.

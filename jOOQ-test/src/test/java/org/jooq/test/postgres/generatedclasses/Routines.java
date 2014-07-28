@@ -12,6 +12,40 @@ package org.jooq.test.postgres.generatedclasses;
 public class Routines {
 
 	/**
+	 * Call <code>public.f</code>
+	 */
+	public static java.lang.Integer f(org.jooq.Configuration configuration, java.lang.Integer f, java.lang.Integer f_) {
+		org.jooq.test.postgres.generatedclasses.routines.F f__ = new org.jooq.test.postgres.generatedclasses.routines.F();
+		f__.setF(f);
+		f__.setF_(f_);
+
+		f__.execute(configuration);
+		return f__.getReturnValue();
+	}
+
+	/**
+	 * Get <code>public.f</code> as a field
+	 */
+	public static org.jooq.Field<java.lang.Integer> f(java.lang.Integer f, java.lang.Integer f_) {
+		org.jooq.test.postgres.generatedclasses.routines.F f__ = new org.jooq.test.postgres.generatedclasses.routines.F();
+		f__.setF(f);
+		f__.setF_(f_);
+
+		return f__.asField();
+	}
+
+	/**
+	 * Get <code>public.f</code> as a field
+	 */
+	public static org.jooq.Field<java.lang.Integer> f(org.jooq.Field<java.lang.Integer> f, org.jooq.Field<java.lang.Integer> f_) {
+		org.jooq.test.postgres.generatedclasses.routines.F f__ = new org.jooq.test.postgres.generatedclasses.routines.F();
+		f__.setF(f);
+		f__.setF_(f_);
+
+		return f__.asField();
+	}
+
+	/**
 	 * Call <code>public.f_arrays</code>
 	 */
 	public static java.lang.Integer[] fArrays1(org.jooq.Configuration configuration, java.lang.Integer[] inArray) {
@@ -254,6 +288,17 @@ public class Routines {
 		f.setP4(p4);
 
 		return f.asField();
+	}
+
+	/**
+	 * Call <code>public.p</code>
+	 */
+	public static void p(org.jooq.Configuration configuration, java.lang.Integer p, java.lang.Integer p_) {
+		org.jooq.test.postgres.generatedclasses.routines.P p__ = new org.jooq.test.postgres.generatedclasses.routines.P();
+		p__.setP(p);
+		p__.setP_(p_);
+
+		p__.execute(configuration);
 	}
 
 	/**

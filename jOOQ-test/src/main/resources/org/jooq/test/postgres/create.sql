@@ -24,6 +24,8 @@ DROP FUNCTION p391(
 /
 DROP FUNCTION f_author_exists(author_name VARCHAR);/
 DROP FUNCTION f_one();/
+DROP FUNCTION f(f int, f_ int);/
+DROP FUNCTION p(p int, p_ int);/
 DROP FUNCTION f_number(n int);/
 DROP FUNCTION f317(p1 int, p2 int, p3 int, p4 int);/
 DROP FUNCTION p_get_two_cursors(books OUT refcursor, authors OUT refcursor)/
@@ -711,11 +713,28 @@ END;
 $$ LANGUAGE plpgsql;
 /
 
+CREATE FUNCTION f (f int, f_ int)
+RETURNS INT
+AS $$
+BEGIN
+    RETURN f;
+END;
+$$ LANGUAGE plpgsql;
+/
+
+CREATE FUNCTION p (p int, p_ int)
+RETURNS VOID
+AS $$
+BEGIN
+END;
+$$ LANGUAGE plpgsql;
+/
+
 CREATE FUNCTION f_one ()
 RETURNS INT
 AS $$
 BEGIN
-	RETURN 1;
+    RETURN 1;
 END;
 $$ LANGUAGE plpgsql;
 /

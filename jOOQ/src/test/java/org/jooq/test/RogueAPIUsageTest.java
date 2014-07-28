@@ -40,11 +40,14 @@
  */
 package org.jooq.test;
 
+import static org.jooq.impl.DSL.val;
+
 import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.Select;
 import org.jooq.impl.DSL;
 
 import org.junit.Test;
@@ -60,7 +63,7 @@ import org.junit.Test;
 public class RogueAPIUsageTest extends AbstractTest {
 
     @Test
-    public void testInPredicate() {
+    public void testInPredicateWithCollection() {
         Field<Object> a = DSL.field("a");
         List<String> values = Arrays.asList("a", "b");
 
@@ -69,5 +72,17 @@ public class RogueAPIUsageTest extends AbstractTest {
         assertEquals("a in (?, ?)", create.render(c));
         assertEquals("a in ('a', 'b')", create.renderInlined(c));
         assertEquals("a in (:1, :2)", create.renderNamedParams(c));
+    }
+
+    @Test
+    public void testInPredicateWithSelect() {
+        Field<Object> a = DSL.field("a");
+        Select<?> values = DSL.select(val(1));
+
+        Condition c = a.in(values);
+
+        assertEquals("a in (select ? from dual)", create.render(c));
+        assertEquals("a in (select 1 from dual)", create.renderInlined(c));
+        assertEquals("a in (select :1 from dual)", create.renderNamedParams(c));
     }
 }

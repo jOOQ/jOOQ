@@ -786,13 +786,7 @@ final class Utils {
 
         if (values != null && field != null) {
             for (int i = 0; i < values.length; i++) {
-
-                // [#3347] Defend against rogue API usage, e.g. when calling
-                // Field.in(T...) with a Collection argument
-                if (values[i] instanceof Collection)
-                    result.addAll(fields(((Collection<?>) values[i]).toArray(), field));
-                else
-                    result.add(field(values[i], field));
+                result.add(field(values[i], field));
             }
         }
 

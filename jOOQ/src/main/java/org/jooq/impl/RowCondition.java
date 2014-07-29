@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
@@ -112,7 +113,7 @@ class RowCondition extends AbstractCondition {
 
         // Regular comparison predicate simulation
         if (asList(EQUALS, NOT_EQUALS).contains(comparator) &&
-            asList(ACCESS, ASE, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(dialect.family())) {
+            asList(ACCESS, ASE, DERBY, FIREBIRD, INFORMIX, INGRES, SQLSERVER, SQLITE, SYBASE).contains(dialect.family())) {
             List<Condition> conditions = new ArrayList<Condition>();
 
             Field<?>[] leftFields = left.fields();

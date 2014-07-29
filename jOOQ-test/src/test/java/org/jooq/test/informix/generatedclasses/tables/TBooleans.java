@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -61065311;
+	private static final long serialVersionUID = -1324920999;
 
 	/**
 	 * The singleton instance of <code>informix.t_booleans</code>
@@ -99,6 +99,22 @@ public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.informix.ge
 
 	private TBooleans(java.lang.String alias, org.jooq.Table<org.jooq.test.informix.generatedclasses.tables.records.TBooleansRecord> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, org.jooq.test.informix.generatedclasses.Informix.INFORMIX, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBooleansRecord> getPrimaryKey() {
+		return org.jooq.test.informix.generatedclasses.Keys.PK_T_BOOLEANS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBooleansRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBooleansRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.PK_T_BOOLEANS);
 	}
 
 	/**

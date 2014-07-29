@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -1683261905;
+	private static final long serialVersionUID = -382405446;
 
 	/**
 	 * The singleton instance of <code>informix.t_725_lob_test</code>
@@ -54,6 +54,22 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.informix
 
 	private T_725LobTest(java.lang.String alias, org.jooq.Table<org.jooq.test.informix.generatedclasses.tables.records.T_725LobTestRecord> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, org.jooq.test.informix.generatedclasses.Informix.INFORMIX, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.T_725LobTestRecord> getPrimaryKey() {
+		return org.jooq.test.informix.generatedclasses.Keys.PK_T_725_LOB_TEST;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.T_725LobTestRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.T_725LobTestRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.PK_T_725_LOB_TEST);
 	}
 
 	/**

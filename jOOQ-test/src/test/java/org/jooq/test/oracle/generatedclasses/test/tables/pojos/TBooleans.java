@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_BOOLEANS", schema = "TEST")
 public class TBooleans implements java.io.Serializable {
 
-	private static final long serialVersionUID = 102683720;
+	private static final long serialVersionUID = 2096164488;
 
 	private java.lang.Integer                              id;
 	private org.jooq.test.all.converters.Boolean_10        oneZero;
@@ -127,7 +127,7 @@ public class TBooleans implements java.io.Serializable {
 		this.yNUc = yNUc;
 	}
 
-	@javax.persistence.Column(name = "VC_BOOLEAN", length = 1)
+	@javax.persistence.Column(name = "VC_BOOLEAN")
 	public java.lang.Boolean getVcBoolean() {
 		return this.vcBoolean;
 	}
@@ -136,7 +136,7 @@ public class TBooleans implements java.io.Serializable {
 		this.vcBoolean = vcBoolean;
 	}
 
-	@javax.persistence.Column(name = "C_BOOLEAN", length = 1)
+	@javax.persistence.Column(name = "C_BOOLEAN")
 	public java.lang.Boolean getCBoolean() {
 		return this.cBoolean;
 	}
@@ -145,7 +145,7 @@ public class TBooleans implements java.io.Serializable {
 		this.cBoolean = cBoolean;
 	}
 
-	@javax.persistence.Column(name = "N_BOOLEAN", precision = 7)
+	@javax.persistence.Column(name = "N_BOOLEAN")
 	public java.lang.Boolean getNBoolean() {
 		return this.nBoolean;
 	}

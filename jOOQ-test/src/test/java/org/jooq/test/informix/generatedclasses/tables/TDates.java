@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -1211420861;
+	private static final long serialVersionUID = 198466593;
 
 	/**
 	 * The singleton instance of <code>informix.t_dates</code>
@@ -74,6 +74,22 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.informix.gener
 
 	private TDates(java.lang.String alias, org.jooq.Table<org.jooq.test.informix.generatedclasses.tables.records.TDatesRecord> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, org.jooq.test.informix.generatedclasses.Informix.INFORMIX, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TDatesRecord> getPrimaryKey() {
+		return org.jooq.test.informix.generatedclasses.Keys.PK_T_DATES;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TDatesRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TDatesRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.PK_T_DATES);
 	}
 
 	/**

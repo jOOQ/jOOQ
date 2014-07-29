@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -2125327625;
+	private static final long serialVersionUID = 1133716739;
 
 	/**
 	 * The singleton instance of <code>informix.t_author</code>
@@ -74,6 +74,22 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.informix.gene
 
 	private TAuthor(java.lang.String alias, org.jooq.Table<org.jooq.test.informix.generatedclasses.tables.records.TAuthorRecord> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, org.jooq.test.informix.generatedclasses.Informix.INFORMIX, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TAuthorRecord> getPrimaryKey() {
+		return org.jooq.test.informix.generatedclasses.Keys.PK_T_AUTHOR;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TAuthorRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TAuthorRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.PK_T_AUTHOR);
 	}
 
 	/**

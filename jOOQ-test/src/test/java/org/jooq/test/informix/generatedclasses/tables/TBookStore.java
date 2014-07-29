@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -1996083054;
+	private static final long serialVersionUID = 1302945933;
 
 	/**
 	 * The singleton instance of <code>informix.t_book_store</code>
@@ -49,6 +49,22 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.informix.g
 
 	private TBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.informix.generatedclasses.tables.records.TBookStoreRecord> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, org.jooq.test.informix.generatedclasses.Informix.INFORMIX, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBookStoreRecord> getPrimaryKey() {
+		return org.jooq.test.informix.generatedclasses.Keys.UK_T_BOOK_STORE_NAME;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBookStoreRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBookStoreRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.UK_T_BOOK_STORE_NAME);
 	}
 
 	/**

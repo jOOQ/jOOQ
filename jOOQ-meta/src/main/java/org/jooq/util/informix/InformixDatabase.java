@@ -40,7 +40,11 @@
  */
 package org.jooq.util.informix;
 
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.selectDistinct;
+import static org.jooq.util.informix.sys.Tables.SYSCOLUMNS;
+import static org.jooq.util.informix.sys.Tables.SYSCONSTRAINTS;
+import static org.jooq.util.informix.sys.Tables.SYSINDEXES;
 import static org.jooq.util.informix.sys.Tables.SYSSEQUENCES;
 import static org.jooq.util.informix.sys.Tables.SYSTABLES;
 
@@ -50,8 +54,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.SelectJoinStep;
 import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -65,6 +72,7 @@ import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
+import org.jooq.util.informix.sys.tables.Syscolumns;
 
 /**
  * Informix implementation of {@link AbstractDatabase}
@@ -80,10 +88,83 @@ public class InformixDatabase extends AbstractDatabase {
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
+        for (Record record : fetchKeys("P")) {
+            SchemaDefinition schema = getSchema(record.getValue(SYSTABLES.OWNER));
+            String key = record.getValue(SYSCONSTRAINTS.CONSTRNAME);
+            String tableName = record.getValue(SYSTABLES.TABNAME);
+
+            for (int i = 3; i < record.size(); i++) {
+                String columnName = record.getValue(i, String.class);
+
+                if (columnName != null) {
+                    TableDefinition table = getTable(schema, tableName);
+
+                    if (table != null) {
+                        relations.addPrimaryKey(key, table.getColumn(columnName));
+                    }
+                }
+            }
+        }
     }
 
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
+        for (Record record : fetchKeys("U")) {
+            SchemaDefinition schema = getSchema(record.getValue(SYSTABLES.OWNER));
+            String key = record.getValue(SYSCONSTRAINTS.CONSTRNAME);
+            String tableName = record.getValue(SYSTABLES.TABNAME);
+
+            for (int i = 3; i < record.size(); i++) {
+                String columnName = record.getValue(i, String.class);
+
+                if (columnName != null) {
+                    TableDefinition table = getTable(schema, tableName);
+
+                    if (table != null) {
+                        relations.addUniqueKey(key, table.getColumn(columnName));
+                    }
+                }
+            }
+        }
+    }
+
+    private Result<?> fetchKeys(String constraintType) {
+        Syscolumns[] ci = new Syscolumns[16];
+        Field<?>[] cn = new Field[16];
+
+        for (int i = 0; i < ci.length; i++)
+            ci[i] = SYSCOLUMNS.as("c" + i);
+
+        for (int i = 0; i < cn.length; i++)
+            cn[i] = ci[i].COLNAME.trim().as(ci[i].COLNAME);
+
+        SelectJoinStep<?> join =
+        create().select(
+                    SYSTABLES.OWNER.trim().as(SYSTABLES.OWNER),
+                    SYSTABLES.TABNAME.trim().as(SYSTABLES.TABNAME),
+                    SYSCONSTRAINTS.CONSTRNAME.trim().as(SYSCONSTRAINTS.CONSTRNAME)
+                )
+                .select(cn)
+                .from(SYSCONSTRAINTS)
+                .join(SYSTABLES)
+                .on(SYSCONSTRAINTS.TABID.eq(SYSTABLES.TABID))
+                .join(SYSINDEXES)
+                .on(row(SYSCONSTRAINTS.OWNER, SYSCONSTRAINTS.IDXNAME)
+                    .eq(SYSINDEXES.OWNER    , SYSINDEXES.IDXNAME));
+
+        for (int i = 0; i < ci.length; i++)
+            join.leftOuterJoin(ci[i])
+                .on(SYSTABLES.TABID.eq(ci[i].TABID))
+                .and(SYSINDEXES.field(SYSINDEXES.PART1.getName().replace("1", "" + (i + 1))).coerce(SYSINDEXES.PART1).eq(ci[i].COLNO));
+
+        return
+        join.where(SYSCONSTRAINTS.OWNER.in(getInputSchemata()))
+            .and(SYSCONSTRAINTS.CONSTRTYPE.equal(constraintType))
+            .orderBy(
+                SYSCONSTRAINTS.OWNER.asc(),
+                SYSTABLES.TABNAME.asc(),
+                SYSCONSTRAINTS.CONSTRNAME.asc())
+            .fetch();
     }
 
     @Override

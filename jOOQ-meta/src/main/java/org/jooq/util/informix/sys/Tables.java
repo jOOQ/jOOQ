@@ -24,6 +24,11 @@ public class Tables {
 	public static final org.jooq.util.informix.sys.tables.Syscolumns SYSCOLUMNS = org.jooq.util.informix.sys.tables.Syscolumns.SYSCOLUMNS;
 
 	/**
+	 * The table informix.sysconstraints
+	 */
+	public static final org.jooq.util.informix.sys.tables.Sysconstraints SYSCONSTRAINTS = org.jooq.util.informix.sys.tables.Sysconstraints.SYSCONSTRAINTS;
+
+	/**
 	 * The table informix.sysxtdtypes
 	 */
 	public static final org.jooq.util.informix.sys.tables.Sysxtdtypes SYSXTDTYPES = org.jooq.util.informix.sys.tables.Sysxtdtypes.SYSXTDTYPES;
@@ -32,4 +37,9 @@ public class Tables {
 	 * The table informix.syssequences
 	 */
 	public static final org.jooq.util.informix.sys.tables.Syssequences SYSSEQUENCES = org.jooq.util.informix.sys.tables.Syssequences.SYSSEQUENCES;
+
+	/**
+	 * The table informix.sysindexes
+	 */
+	public static final org.jooq.util.informix.sys.tables.Sysindexes SYSINDEXES = org.jooq.util.informix.sys.tables.Sysindexes.SYSINDEXES;
 }

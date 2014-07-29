@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 919219556;
+	private static final long serialVersionUID = 770629589;
 
 	/**
 	 * The singleton instance of <code>informix.t_language</code>
@@ -64,6 +64,22 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.informix.ge
 
 	private TLanguage(java.lang.String alias, org.jooq.Table<org.jooq.test.informix.generatedclasses.tables.records.TLanguageRecord> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, org.jooq.test.informix.generatedclasses.Informix.INFORMIX, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TLanguageRecord> getPrimaryKey() {
+		return org.jooq.test.informix.generatedclasses.Keys.PK_T_LANGUAGE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TLanguageRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TLanguageRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.PK_T_LANGUAGE);
 	}
 
 	/**

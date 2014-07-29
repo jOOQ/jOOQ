@@ -21,6 +21,23 @@ public class Keys {
 	// UNIQUE and PRIMARY KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TIdentityPkRecord> PK_T_IDENTITY_PK = UniqueKeys0.PK_T_IDENTITY_PK;
+	public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TDatesRecord> PK_T_DATES = UniqueKeys0.PK_T_DATES;
+	public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBooleansRecord> PK_T_BOOLEANS = UniqueKeys0.PK_T_BOOLEANS;
+	public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TTriggersRecord> PK_T_TRIGGERS = UniqueKeys0.PK_T_TRIGGERS;
+	public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TLanguageRecord> PK_T_LANGUAGE = UniqueKeys0.PK_T_LANGUAGE;
+	public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST = UniqueKeys0.PK_T_725_LOB_TEST;
+	public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TAuthorRecord> PK_T_AUTHOR = UniqueKeys0.PK_T_AUTHOR;
+	public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBookRecord> PK_T_BOOK = UniqueKeys0.PK_T_BOOK;
+	public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBookStoreRecord> UK_T_BOOK_STORE_NAME = UniqueKeys0.UK_T_BOOK_STORE_NAME;
+	public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord> U1431_2068 = UniqueKeys0.U1431_2068;
+	public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XUnusedRecord> U1432_2073 = UniqueKeys0.U1432_2073;
+	public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XUnusedRecord> U1432_2074 = UniqueKeys0.U1432_2074;
+	public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TExoticTypesRecord> U1433_2078 = UniqueKeys0.U1433_2078;
+	public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord> U1434_2080 = UniqueKeys0.U1434_2080;
+	public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_64_69Record> U1435_2082 = UniqueKeys0.U1435_2082;
+	public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_71Record> U1436_2085 = UniqueKeys0.U1436_2085;
+	public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_85Record> U1437_2088 = UniqueKeys0.U1437_2088;
 
 	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
@@ -30,4 +47,24 @@ public class Keys {
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
 	// -------------------------------------------------------------------------
+
+	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
+		public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TIdentityPkRecord> PK_T_IDENTITY_PK = createUniqueKey(org.jooq.test.informix.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.informix.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TDatesRecord> PK_T_DATES = createUniqueKey(org.jooq.test.informix.generatedclasses.tables.TDates.T_DATES, org.jooq.test.informix.generatedclasses.tables.TDates.T_DATES.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBooleansRecord> PK_T_BOOLEANS = createUniqueKey(org.jooq.test.informix.generatedclasses.tables.TBooleans.T_BOOLEANS, org.jooq.test.informix.generatedclasses.tables.TBooleans.T_BOOLEANS.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TTriggersRecord> PK_T_TRIGGERS = createUniqueKey(org.jooq.test.informix.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.informix.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED);
+		public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TLanguageRecord> PK_T_LANGUAGE = createUniqueKey(org.jooq.test.informix.generatedclasses.tables.TLanguage.T_LANGUAGE, org.jooq.test.informix.generatedclasses.tables.TLanguage.T_LANGUAGE.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST = createUniqueKey(org.jooq.test.informix.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.informix.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TAuthorRecord> PK_T_AUTHOR = createUniqueKey(org.jooq.test.informix.generatedclasses.tables.TAuthor.T_AUTHOR, org.jooq.test.informix.generatedclasses.tables.TAuthor.T_AUTHOR.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBookRecord> PK_T_BOOK = createUniqueKey(org.jooq.test.informix.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.informix.generatedclasses.tables.TBook.T_BOOK.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBookStoreRecord> UK_T_BOOK_STORE_NAME = createUniqueKey(org.jooq.test.informix.generatedclasses.tables.TBookStore.T_BOOK_STORE, org.jooq.test.informix.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME);
+		public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord> U1431_2068 = createUniqueKey(org.jooq.test.informix.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE, org.jooq.test.informix.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, org.jooq.test.informix.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XUnusedRecord> U1432_2073 = createUniqueKey(org.jooq.test.informix.generatedclasses.tables.XUnused.X_UNUSED, org.jooq.test.informix.generatedclasses.tables.XUnused.X_UNUSED.ID, org.jooq.test.informix.generatedclasses.tables.XUnused.X_UNUSED.NAME);
+		public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XUnusedRecord> U1432_2074 = createUniqueKey(org.jooq.test.informix.generatedclasses.tables.XUnused.X_UNUSED, org.jooq.test.informix.generatedclasses.tables.XUnused.X_UNUSED.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TExoticTypesRecord> U1433_2078 = createUniqueKey(org.jooq.test.informix.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES, org.jooq.test.informix.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord> U1434_2080 = createUniqueKey(org.jooq.test.informix.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.informix.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_64_69Record> U1435_2082 = createUniqueKey(org.jooq.test.informix.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69, org.jooq.test.informix.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_71Record> U1436_2085 = createUniqueKey(org.jooq.test.informix.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71, org.jooq.test.informix.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_85Record> U1437_2088 = createUniqueKey(org.jooq.test.informix.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85, org.jooq.test.informix.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.ID);
+	}
 }

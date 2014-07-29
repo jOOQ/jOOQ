@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 1744385137;
+	private static final long serialVersionUID = -2128312231;
 
 	/**
 	 * The singleton instance of <code>informix.t_triggers</code>
@@ -59,6 +59,22 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.informix.ge
 
 	private TTriggers(java.lang.String alias, org.jooq.Table<org.jooq.test.informix.generatedclasses.tables.records.TTriggersRecord> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, org.jooq.test.informix.generatedclasses.Informix.INFORMIX, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TTriggersRecord> getPrimaryKey() {
+		return org.jooq.test.informix.generatedclasses.Keys.PK_T_TRIGGERS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TTriggersRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TTriggersRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.PK_T_TRIGGERS);
 	}
 
 	/**

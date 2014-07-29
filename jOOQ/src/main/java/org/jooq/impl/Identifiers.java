@@ -101,6 +101,7 @@ class Identifiers {
                 // Most dialects implement the SQL standard, using double quotes
                 /* [pro] xx
                 xxxx xxxx
+                xxxx xxxxxxxxx
                 xxxx xxxxxxx
                 xxxx xxxxxxx
                 xx [/pro] */

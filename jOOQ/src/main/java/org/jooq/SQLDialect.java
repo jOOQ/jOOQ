@@ -166,6 +166,13 @@ public enum SQLDialect {
     xxxxxxxxxxxxx xxxxx xxxxx
 
     xxx
+     x xxx xxxxxxxx xxx xxxxxxxx
+     x xxx
+     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
+     xx
+    xxxxxxxxxxxxxxxxxxxx xxxxxx
+
+    xxx
      x xxx xxxxxx xxxxxxx xxxxxxx
      x xxx
      x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx

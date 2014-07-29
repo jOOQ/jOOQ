@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
@@ -158,6 +159,10 @@ public class JDBCUtils {
         xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxx xxxx
         x
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+              xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxx xxxxxxxxx
+        x
         xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxx xxxxxxx
         x
@@ -210,6 +215,8 @@ public class JDBCUtils {
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxx xxxx
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxx xxxxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxx xxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxx xxxxxxx

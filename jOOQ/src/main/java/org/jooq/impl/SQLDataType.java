@@ -67,6 +67,7 @@ import org.jooq.util.firebird.FirebirdDataType;
 import org.jooq.util.h2.H2DataType;
 import org.jooq.util.hsqldb.HSQLDBDataType;
 // ...
+// ...
 import org.jooq.util.mariadb.MariaDBDataType;
 import org.jooq.util.mysql.MySQLDataType;
 // ...
@@ -326,6 +327,7 @@ public final class SQLDataType {
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

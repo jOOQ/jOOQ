@@ -143,6 +143,10 @@ class Dual extends AbstractTable<Record> {
                        xxxxxxxxxxxxxxxxx
                     xxxxxx
 
+                xxxx xxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxxxx
+
                 xxxx xxxxxxx
                     xxxxxxxxxxxxxxxxxxxx x xx xxxxx xx xxxxxxx
                     xxxxxx

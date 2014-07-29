@@ -75,6 +75,7 @@ import org.jooq.util.firebird.FirebirdDatabase;
 import org.jooq.util.h2.H2Database;
 import org.jooq.util.hsqldb.HSQLDBDatabase;
 // ...
+// ...
 import org.jooq.util.jaxb.Configuration;
 import org.jooq.util.jaxb.Generate;
 import org.jooq.util.jaxb.Jdbc;
@@ -410,6 +411,7 @@ public class GenerationTool {
             xxxx xxxxxxx    xxxxxx x xxxxxxxxxxxxxxxxxxx      xxxxxx
             xxxx xxxx       xxxxxx x xxxxxxxxxxxxxxxxxx       xxxxxx
             xxxx xxxx       xxxxxx x xxxxxxxxxxxxxxxxxx       xxxxxx
+            xxxx xxxxxxxxx  xxxxxx x xxxxxxxxxxxxxxxxxxxxxxx  xxxxxx
             xxxx xxxxxxx    xxxxxx x xxxxxxxxxxxxxxxxxxxxx    xxxxxx
             xxxx xxxxxxx    xxxxxx x xxxxxxxxxxxxxxxxxxxxx    xxxxxx
             xxxx xxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx

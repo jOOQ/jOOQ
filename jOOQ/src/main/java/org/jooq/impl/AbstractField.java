@@ -154,6 +154,11 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    public final Field<T> as(Field<?> otherField) {
+        return as(otherField.getName());
+    }
+
+    @Override
     public final String getName() {
         return name;
     }

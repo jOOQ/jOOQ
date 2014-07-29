@@ -46,6 +46,7 @@ import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.test.h2.generatedclasses.Tables.T_2486;
 import static org.jooq.test.h2.generatedclasses.Tables.T_2698;
 import static org.jooq.test.h2.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.h2.generatedclasses.Tables.T_725_LOB_TEST;
@@ -124,6 +125,7 @@ import org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TUnsignedRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.T_2486Record;
 import org.jooq.test.h2.generatedclasses.tables.records.T_2698Record;
 import org.jooq.test.h2.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord;
@@ -1015,4 +1017,47 @@ public class H2Test extends jOOQAbstractTest<
         dao.deleteById(key2);
         assertNull(dao.findById(key2));
     }
+
+    @Test
+    @SuppressWarnings("unused")
+    public void testH2ForcedTypes2486() {
+
+        // This should compile
+        TableField<T_2486Record, BigDecimal> val1 = T_2486.VAL1;
+        TableField<T_2486Record, BigDecimal> val2 = T_2486.VAL2;
+        TableField<T_2486Record, BigDecimal> val3 = T_2486.VAL3;
+        TableField<T_2486Record, BigDecimal> val4 = T_2486.VAL4;
+        TableField<T_2486Record, BigDecimal> val5 = T_2486.VAL5;
+        TableField<T_2486Record, BigDecimal> val6 = T_2486.VAL6;
+        TableField<T_2486Record, BigInteger> val7 = T_2486.VAL7;
+        TableField<T_2486Record, BigInteger> val8 = T_2486.VAL8;
+
+        assertEquals(BigDecimal.class, T_2486.VAL1.getType());
+        assertEquals(BigDecimal.class, T_2486.VAL2.getType());
+        assertEquals(BigDecimal.class, T_2486.VAL3.getType());
+        assertEquals(BigDecimal.class, T_2486.VAL4.getType());
+        assertEquals(BigDecimal.class, T_2486.VAL5.getType());
+        assertEquals(BigDecimal.class, T_2486.VAL6.getType());
+        assertEquals(BigInteger.class, T_2486.VAL7.getType());
+        assertEquals(BigInteger.class, T_2486.VAL8.getType());
+
+        assertEquals(0, T_2486.VAL1.getDataType().precision());
+        assertEquals(21, T_2486.VAL2.getDataType().precision());
+        assertEquals(0, T_2486.VAL3.getDataType().precision());
+        assertEquals(21, T_2486.VAL4.getDataType().precision());
+        assertEquals(0, T_2486.VAL5.getDataType().precision());
+        assertEquals(21, T_2486.VAL6.getDataType().precision());
+        assertEquals(20, T_2486.VAL7.getDataType().precision());
+        assertEquals(20, T_2486.VAL8.getDataType().precision());
+
+        assertEquals(0, T_2486.VAL1.getDataType().scale());
+        assertEquals(4, T_2486.VAL2.getDataType().scale());
+        assertEquals(0, T_2486.VAL3.getDataType().scale());
+        assertEquals(4, T_2486.VAL4.getDataType().scale());
+        assertEquals(0, T_2486.VAL5.getDataType().scale());
+        assertEquals(4, T_2486.VAL6.getDataType().scale());
+        assertEquals(0, T_2486.VAL7.getDataType().scale());
+        assertEquals(0, T_2486.VAL8.getDataType().scale());
+    }
+
 }

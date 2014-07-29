@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -158,6 +159,10 @@ public class JDBCUtils {
         else if (url.startsWith("jdbc:db2:")) {
             return DB2;
         }
+        else if (url.startsWith("jdbc:informix:")
+              || url.startsWith("jdbc:informix-sqli:")) {
+            return INFORMIX;
+        }
         else if (url.startsWith("jdbc:ingres:")) {
             return INGRES;
         }
@@ -210,6 +215,8 @@ public class JDBCUtils {
                 return "net.sourceforge.jtds.jdbc.Driver";
             case DB2:
                 return "com.ibm.db2.jcc.DB2Driver";
+            case INFORMIX:
+                return "com.informix.jdbc.IfxDriver";
             case INGRES:
                 return "com.ingres.jdbc.IngresDriver";
             case ORACLE:

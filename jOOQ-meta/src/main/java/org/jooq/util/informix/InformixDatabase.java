@@ -45,6 +45,7 @@ import static org.jooq.impl.DSL.selectDistinct;
 import static org.jooq.util.informix.sys.Tables.SYSCOLUMNS;
 import static org.jooq.util.informix.sys.Tables.SYSCONSTRAINTS;
 import static org.jooq.util.informix.sys.Tables.SYSINDEXES;
+import static org.jooq.util.informix.sys.Tables.SYSREFERENCES;
 import static org.jooq.util.informix.sys.Tables.SYSSEQUENCES;
 import static org.jooq.util.informix.sys.Tables.SYSTABLES;
 
@@ -62,6 +63,7 @@ import org.jooq.SelectJoinStep;
 import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
+import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
@@ -73,6 +75,10 @@ import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
 import org.jooq.util.informix.sys.tables.Syscolumns;
+import org.jooq.util.informix.sys.tables.Sysconstraints;
+import org.jooq.util.informix.sys.tables.Sysindexes;
+import org.jooq.util.informix.sys.tables.Sysreferences;
+import org.jooq.util.informix.sys.tables.Systables;
 
 /**
  * Informix implementation of {@link AbstractDatabase}
@@ -153,6 +159,7 @@ public class InformixDatabase extends AbstractDatabase {
                     .eq(SYSINDEXES.OWNER    , SYSINDEXES.IDXNAME));
 
         for (int i = 0; i < ci.length; i++)
+            join =
             join.leftOuterJoin(ci[i])
                 .on(SYSTABLES.TABID.eq(ci[i].TABID))
                 .and(SYSINDEXES.field(SYSINDEXES.PART1.getName().replace("1", "" + (i + 1))).coerce(SYSINDEXES.PART1).eq(ci[i].COLNO));
@@ -169,6 +176,76 @@ public class InformixDatabase extends AbstractDatabase {
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
+        Sysreferences r = SYSREFERENCES.as("r");
+        Sysconstraints uk = SYSCONSTRAINTS.as("uk");
+        Sysconstraints fk = SYSCONSTRAINTS.as("fk");
+        Systables fkTable = SYSTABLES.as("fkTable");
+        Sysindexes fkIndex = SYSINDEXES.as("fkIndex");
+
+        Syscolumns[] ci = new Syscolumns[16];
+        Field<?>[] cn = new Field[16];
+
+        for (int i = 0; i < ci.length; i++)
+            ci[i] = SYSCOLUMNS.as("c" + i);
+
+        for (int i = 0; i < cn.length; i++)
+            cn[i] = ci[i].COLNAME.trim().as(ci[i].COLNAME);
+
+        SelectJoinStep<?> join =
+        create().select(
+                    uk.OWNER,
+                    uk.CONSTRNAME,
+                    fk.OWNER,
+                    fk.CONSTRNAME,
+                    fkTable.TABNAME
+                )
+                .select(cn)
+                .from(r)
+                .join(fk)
+                .on(r.CONSTRID.eq(fk.CONSTRID))
+                .join(fkTable)
+                .on(fk.TABID.eq(fkTable.TABID))
+                .join(fkIndex)
+                .on(row(fk.OWNER, fk.IDXNAME)
+                    .eq(fkIndex.OWNER, fkIndex.IDXNAME))
+                .join(uk)
+                .on(r.PRIMARY.eq(uk.CONSTRID));
+
+        for (int i = 0; i < ci.length; i++)
+            join =
+            join.leftOuterJoin(ci[i])
+                .on(fk.TABID.eq(ci[i].TABID))
+                .and(fkIndex.field(fkIndex.PART1.getName().replace("1", "" + (i + 1))).coerce(fkIndex.PART1).eq(ci[i].COLNO));
+
+        for (Record record : join
+                .where(fk.OWNER.in(getInputSchemata()))
+                .and(uk.OWNER.in(getInputSchemata()))
+                .orderBy(
+                    fk.OWNER.asc(),
+                    fk.CONSTRNAME.asc())
+                .fetch()) {
+
+            SchemaDefinition foreignKeySchema = getSchema(record.getValue(fk.OWNER).trim());
+            SchemaDefinition uniqueKeySchema = getSchema(record.getValue(uk.OWNER).trim());
+
+            String foreignKeyTableName = record.getValue(fkTable.TABNAME).trim();
+            String foreignKey = record.getValue(fk.CONSTRNAME).trim();
+            String uniqueKey = record.getValue(uk.CONSTRNAME).trim();
+
+            for (int i = 5; i < record.size(); i++) {
+                String foreignKeyColumn = record.getValue(i, String.class);
+
+                if (foreignKeyColumn != null) {
+                    TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
+
+                    if (foreignKeyTable != null) {
+                        ColumnDefinition referencingColumn = foreignKeyTable.getColumn(foreignKeyColumn.trim());
+
+                        relations.addForeignKey(foreignKey, uniqueKey, referencingColumn, uniqueKeySchema);
+                    }
+                }
+            }
+        }
     }
 
     @Override

@@ -11,7 +11,7 @@ package org.jooq.util.informix.sys;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Informix extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 977496750;
+	private static final long serialVersionUID = 931653246;
 
 	/**
 	 * The singleton instance of <code>informix</code>
@@ -37,6 +37,7 @@ public class Informix extends org.jooq.impl.SchemaImpl {
 			org.jooq.util.informix.sys.tables.Systables.SYSTABLES,
 			org.jooq.util.informix.sys.tables.Syscolumns.SYSCOLUMNS,
 			org.jooq.util.informix.sys.tables.Sysconstraints.SYSCONSTRAINTS,
+			org.jooq.util.informix.sys.tables.Sysreferences.SYSREFERENCES,
 			org.jooq.util.informix.sys.tables.Sysxtdtypes.SYSXTDTYPES,
 			org.jooq.util.informix.sys.tables.Syssequences.SYSSEQUENCES,
 			org.jooq.util.informix.sys.tables.Sysindexes.SYSINDEXES);

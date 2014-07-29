@@ -83,7 +83,7 @@ public class InformixTableDefinition extends AbstractTableDefinition {
                             .when(inline(3   ), inline("FLOAT"     ))
                             .when(inline(4   ), inline("SMALLFLOAT"))
                             .when(inline(5   ), inline("DECIMAL"   ))
-                            .when(inline(6   ), inline("INTEGER"   )) // This is in fact SERIAL, but we currently don't support that
+                            .when(inline(6   ), inline("SERIAL"    ))
                             .when(inline(7   ), inline("DATE"      ))
                             .when(inline(8   ), inline("MONEY"     ))
                             .when(inline(9   ), inline("NULL"      ))
@@ -95,7 +95,7 @@ public class InformixTableDefinition extends AbstractTableDefinition {
                             .when(inline(15  ), inline("NCHAR"     ))
                             .when(inline(16  ), inline("NVARCHAR"  ))
                             .when(inline(17  ), inline("INT8"      ))
-                            .when(inline(18  ), inline("INT8"      )) // This is in fact SERIAL8, but we currently don't support that
+                            .when(inline(18  ), inline("SERIAL8"   ))
                             .when(inline(19  ), inline("SET"       ))
                             .when(inline(20  ), inline("MULTISET"  ))
                             .when(inline(21  ), inline("LIST"      ))

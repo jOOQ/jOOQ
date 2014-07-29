@@ -11,7 +11,7 @@ package org.jooq.util.informix.sys.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Syssequences extends org.jooq.impl.TableImpl<org.jooq.Record> {
 
-	private static final long serialVersionUID = 367922992;
+	private static final long serialVersionUID = -1273342658;
 
 	/**
 	 * The singleton instance of <code>informix.syssequences</code>
@@ -29,7 +29,7 @@ public class Syssequences extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>informix.syssequences.seqid</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Object> SEQID = createField("seqid", org.jooq.impl.DefaultDataType.getDefaultDataType("SERIAL    "), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> SEQID = createField("seqid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>informix.syssequences.tabid</code>.
@@ -39,22 +39,22 @@ public class Syssequences extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>informix.syssequences.start_val</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Object> START_VAL = createField("start_val", org.jooq.impl.DefaultDataType.getDefaultDataType("INT8      "), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Long> START_VAL = createField("start_val", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>informix.syssequences.inc_val</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Object> INC_VAL = createField("inc_val", org.jooq.impl.DefaultDataType.getDefaultDataType("INT8      "), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Long> INC_VAL = createField("inc_val", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>informix.syssequences.min_val</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Object> MIN_VAL = createField("min_val", org.jooq.impl.DefaultDataType.getDefaultDataType("INT8      "), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Long> MIN_VAL = createField("min_val", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>informix.syssequences.max_val</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Object> MAX_VAL = createField("max_val", org.jooq.impl.DefaultDataType.getDefaultDataType("INT8      "), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Long> MAX_VAL = createField("max_val", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>informix.syssequences.cycle</code>.
@@ -64,7 +64,7 @@ public class Syssequences extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>informix.syssequences.restart_val</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Object> RESTART_VAL = createField("restart_val", org.jooq.impl.DefaultDataType.getDefaultDataType("INT8      "), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Long> RESTART_VAL = createField("restart_val", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>informix.syssequences.cache</code>.

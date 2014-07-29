@@ -19,6 +19,16 @@ public class Tables {
 	public static final org.jooq.util.informix.sys.tables.Systables SYSTABLES = org.jooq.util.informix.sys.tables.Systables.SYSTABLES;
 
 	/**
+	 * The table informix.syscolumns
+	 */
+	public static final org.jooq.util.informix.sys.tables.Syscolumns SYSCOLUMNS = org.jooq.util.informix.sys.tables.Syscolumns.SYSCOLUMNS;
+
+	/**
+	 * The table informix.sysxtdtypes
+	 */
+	public static final org.jooq.util.informix.sys.tables.Sysxtdtypes SYSXTDTYPES = org.jooq.util.informix.sys.tables.Sysxtdtypes.SYSXTDTYPES;
+
+	/**
 	 * The table informix.syssequences
 	 */
 	public static final org.jooq.util.informix.sys.tables.Syssequences SYSSEQUENCES = org.jooq.util.informix.sys.tables.Syssequences.SYSSEQUENCES;

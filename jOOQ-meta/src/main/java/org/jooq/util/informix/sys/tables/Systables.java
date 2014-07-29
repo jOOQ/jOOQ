@@ -11,7 +11,7 @@ package org.jooq.util.informix.sys.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Systables extends org.jooq.impl.TableImpl<org.jooq.Record> {
 
-	private static final long serialVersionUID = 1876457393;
+	private static final long serialVersionUID = -40147214;
 
 	/**
 	 * The singleton instance of <code>informix.systables</code>
@@ -44,7 +44,7 @@ public class Systables extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>informix.systables.tabid</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Object> TABID = createField("tabid", org.jooq.impl.DefaultDataType.getDefaultDataType("SERIAL    "), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> TABID = createField("tabid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>informix.systables.rowsize</code>.
@@ -64,7 +64,7 @@ public class Systables extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>informix.systables.nrows</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Double> NROWS = createField("nrows", org.jooq.impl.SQLDataType.FLOAT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Double> NROWS = createField("nrows", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
 
 	/**
 	 * The column <code>informix.systables.created</code>.
@@ -89,7 +89,7 @@ public class Systables extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>informix.systables.npused</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Double> NPUSED = createField("npused", org.jooq.impl.SQLDataType.FLOAT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Double> NPUSED = createField("npused", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
 
 	/**
 	 * The column <code>informix.systables.fextsize</code>.
@@ -134,7 +134,7 @@ public class Systables extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>informix.systables.ustlowts</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Object> USTLOWTS = createField("ustlowts", org.jooq.impl.DefaultDataType.getDefaultDataType("DATETIME  "), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.sql.Timestamp> USTLOWTS = createField("ustlowts", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false), this, "");
 
 	/**
 	 * The column <code>informix.systables.secpolicyid</code>.

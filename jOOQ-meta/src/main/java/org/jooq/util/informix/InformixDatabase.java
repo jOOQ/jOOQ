@@ -41,8 +41,10 @@
 package org.jooq.util.informix;
 
 import static org.jooq.impl.DSL.selectDistinct;
+import static org.jooq.util.informix.sys.Tables.SYSSEQUENCES;
 import static org.jooq.util.informix.sys.Tables.SYSTABLES;
 
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +55,9 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
+import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultRelations;
+import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
@@ -110,7 +114,22 @@ public class InformixDatabase extends AbstractDatabase {
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
 
-        // tabtype = 'Q'
+        for (Record record : create()
+                .select(
+                    SYSTABLES.OWNER.trim().as(SYSTABLES.OWNER),
+                    SYSTABLES.TABNAME.trim().as(SYSTABLES.TABNAME),
+                    SYSSEQUENCES.MAX_VAL
+                )
+                .from(SYSTABLES)
+                .join(SYSSEQUENCES).on(SYSTABLES.TABID.eq(SYSSEQUENCES.TABID))
+                .fetch()) {
+
+            SchemaDefinition schema = getSchema(record.getValue(SYSTABLES.OWNER));
+            String name = record.getValue(SYSTABLES.TABNAME);
+            DataTypeDefinition type = getDataTypeForMAX_VAL(schema, record.getValue(SYSSEQUENCES.MAX_VAL, BigInteger.class));
+
+            result.add(new DefaultSequenceDefinition(schema, name, type));
+        }
 
         return result;
     }

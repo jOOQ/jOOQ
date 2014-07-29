@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 149547916;
+	private static final long serialVersionUID = -616927962;
 
 	/**
 	 * The singleton instance of <code>PUBLIC</code>
@@ -56,6 +56,7 @@ public class Public extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.h2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST,
 			org.jooq.test.h2.generatedclasses.tables.T_785.T_785,
 			org.jooq.test.h2.generatedclasses.tables.T_877.T_877,
+			org.jooq.test.h2.generatedclasses.tables.T_2486.T_2486,
 			org.jooq.test.h2.generatedclasses.tables.T_2698.T_2698,
 			org.jooq.test.h2.generatedclasses.tables.T_2718.T_2718,
 			org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR,

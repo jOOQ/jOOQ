@@ -45,7 +45,6 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.UUID;
 
 import org.jooq.DataType;
 import org.jooq.SQLDialect;
@@ -64,55 +63,57 @@ public class InformixDataType {
     // Default SQL data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final DataType<Short>      SMALLINT           = new DefaultDataType<Short>(SQLDialect.DB2, SQLDataType.SMALLINT, "smallint");
-    public static final DataType<Integer>    INTEGER            = new DefaultDataType<Integer>(SQLDialect.DB2, SQLDataType.INTEGER, "integer");
-    public static final DataType<Long>       BIGINT             = new DefaultDataType<Long>(SQLDialect.DB2, SQLDataType.BIGINT, "bigint");
-    public static final DataType<Float>      REAL               = new DefaultDataType<Float>(SQLDialect.DB2, SQLDataType.REAL, "real");
-    public static final DataType<Double>     DOUBLE             = new DefaultDataType<Double>(SQLDialect.DB2, SQLDataType.DOUBLE, "double");
-    public static final DataType<BigDecimal> DECIMAL            = new DefaultDataType<BigDecimal>(SQLDialect.DB2, SQLDataType.DECIMAL, "decimal");
-    public static final DataType<BigDecimal> DECFLOAT           = new DefaultDataType<BigDecimal>(SQLDialect.DB2, SQLDataType.DECIMAL, "decfloat");
-    public static final DataType<String>     VARCHAR            = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.VARCHAR, "varchar", "varchar(32672)");
-    public static final DataType<String>     CHAR               = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.CHAR, "char", "varchar(32672)");
-    public static final DataType<String>     CHARACTER          = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.CHAR, "character", "varchar(32672)");
-    public static final DataType<String>     LONGVARCHAR        = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.LONGVARCHAR, "long varchar", "clob");
-    public static final DataType<String>     CLOB               = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.CLOB, "clob");
-    public static final DataType<byte[]>     BLOB               = new DefaultDataType<byte[]>(SQLDialect.DB2, SQLDataType.BLOB, "blob");
-    public static final DataType<Date>       DATE               = new DefaultDataType<Date>(SQLDialect.DB2, SQLDataType.DATE, "date");
-    public static final DataType<Time>       TIME               = new DefaultDataType<Time>(SQLDialect.DB2, SQLDataType.TIME, "time");
-    public static final DataType<Timestamp>  TIMESTAMP          = new DefaultDataType<Timestamp>(SQLDialect.DB2, SQLDataType.TIMESTAMP, "timestamp");
+    public static final DataType<Boolean>    BOOLEAN            = new DefaultDataType<Boolean>(SQLDialect.INFORMIX, SQLDataType.BOOLEAN, "boolean");
+    public static final DataType<Short>      SMALLINT           = new DefaultDataType<Short>(SQLDialect.INFORMIX, SQLDataType.SMALLINT, "smallint");
+    public static final DataType<Integer>    INTEGER            = new DefaultDataType<Integer>(SQLDialect.INFORMIX, SQLDataType.INTEGER, "integer");
+    public static final DataType<Integer>    INT                = new DefaultDataType<Integer>(SQLDialect.INFORMIX, SQLDataType.INTEGER, "int");
+    public static final DataType<Long>       BIGINT             = new DefaultDataType<Long>(SQLDialect.INFORMIX, SQLDataType.BIGINT, "bigint");
+    public static final DataType<Long>       INT8               = new DefaultDataType<Long>(SQLDialect.INFORMIX, SQLDataType.BIGINT, "int8");
+    public static final DataType<Float>      SMALLFLOAT         = new DefaultDataType<Float>(SQLDialect.INFORMIX, SQLDataType.REAL, "smallfloat");
+    public static final DataType<Float>      REAL               = new DefaultDataType<Float>(SQLDialect.INFORMIX, SQLDataType.REAL, "real");
+    public static final DataType<Double>     FLOAT              = new DefaultDataType<Double>(SQLDialect.INFORMIX, SQLDataType.DOUBLE, "float");
+    public static final DataType<Double>     DOUBLE_PRECISION   = new DefaultDataType<Double>(SQLDialect.INFORMIX, SQLDataType.DOUBLE, "double precision");
+    public static final DataType<BigDecimal> DECIMAL            = new DefaultDataType<BigDecimal>(SQLDialect.INFORMIX, SQLDataType.DECIMAL, "decimal");
+    public static final DataType<BigDecimal> DEC                = new DefaultDataType<BigDecimal>(SQLDialect.INFORMIX, SQLDataType.DECIMAL, "dec");
+    public static final DataType<BigDecimal> NUMERIC            = new DefaultDataType<BigDecimal>(SQLDialect.INFORMIX, SQLDataType.NUMERIC, "numeric");
+    public static final DataType<String>     LVARCHAR           = new DefaultDataType<String>(SQLDialect.INFORMIX, SQLDataType.VARCHAR, "lvarchar");
+    public static final DataType<String>     VARCHAR            = new DefaultDataType<String>(SQLDialect.INFORMIX, SQLDataType.VARCHAR, "varchar", "lvarchar(254)");
+    public static final DataType<String>     CHAR               = new DefaultDataType<String>(SQLDialect.INFORMIX, SQLDataType.CHAR, "char");
+    public static final DataType<String>     CHARACTER          = new DefaultDataType<String>(SQLDialect.INFORMIX, SQLDataType.CHAR, "character");
+    public static final DataType<String>     LONGVARCHAR        = new DefaultDataType<String>(SQLDialect.INFORMIX, SQLDataType.LONGVARCHAR, "lvarchar", "clob");
+    public static final DataType<String>     NCHAR              = new DefaultDataType<String>(SQLDialect.INFORMIX, SQLDataType.NCHAR, "nchar");
+    public static final DataType<String>     NVARCHAR           = new DefaultDataType<String>(SQLDialect.INFORMIX, SQLDataType.NVARCHAR, "nvarchar", "nvarchar(254)");
+    public static final DataType<String>     TEXT               = new DefaultDataType<String>(SQLDialect.INFORMIX, SQLDataType.CLOB, "text");
+    public static final DataType<String>     CLOB               = new DefaultDataType<String>(SQLDialect.INFORMIX, SQLDataType.CLOB, "clob");
+    public static final DataType<byte[]>     BYTE               = new DefaultDataType<byte[]>(SQLDialect.INFORMIX, SQLDataType.VARBINARY, "byte");
+    public static final DataType<byte[]>     BLOB               = new DefaultDataType<byte[]>(SQLDialect.INFORMIX, SQLDataType.BLOB, "blob");
+    public static final DataType<Date>       DATE               = new DefaultDataType<Date>(SQLDialect.INFORMIX, SQLDataType.DATE, "date");
+    public static final DataType<Timestamp>  DATETIME           = new DefaultDataType<Timestamp>(SQLDialect.INFORMIX, SQLDataType.TIMESTAMP, "datetime");
 
     // -------------------------------------------------------------------------
-    // Compatibility types for supported SQLDialect.DB2, SQLDataTypes
+    // Compatibility types for supported SQLDialect.INFORMIX, SQLDataTypes
     // -------------------------------------------------------------------------
 
-    protected static final DataType<byte[]>     __BINARY        = new DefaultDataType<byte[]>(SQLDialect.DB2, SQLDataType.BINARY, "blob");
-    protected static final DataType<Boolean>    __BIT           = new DefaultDataType<Boolean>(SQLDialect.DB2, SQLDataType.BIT, "smallint");
-    protected static final DataType<Boolean>    __BOOLEAN       = new DefaultDataType<Boolean>(SQLDialect.DB2, SQLDataType.BOOLEAN, "smallint");
-    protected static final DataType<byte[]>     __LONGVARBINARY = new DefaultDataType<byte[]>(SQLDialect.DB2, SQLDataType.LONGVARBINARY, "blob");
-    protected static final DataType<String>     __NCHAR         = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.NCHAR, "char", "varchar(32672)");
-    protected static final DataType<String>     __NCLOB         = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.NCLOB, "clob");
-    protected static final DataType<String>     __LONGNVARCHAR  = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.LONGNVARCHAR, "long varchar", "clob");
-    protected static final DataType<BigDecimal> __NUMERIC       = new DefaultDataType<BigDecimal>(SQLDialect.DB2, SQLDataType.NUMERIC, "decimal", "decimal");
-    protected static final DataType<String>     __NVARCHAR      = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.NVARCHAR, "varchar", "varchar(32672)");
-    protected static final DataType<Byte>       __TINYINT       = new DefaultDataType<Byte>(SQLDialect.DB2, SQLDataType.TINYINT, "smallint");
-    protected static final DataType<byte[]>     __VARBINARY     = new DefaultDataType<byte[]>(SQLDialect.DB2, SQLDataType.VARBINARY, "blob");
+    protected static final DataType<byte[]>     __BINARY        = new DefaultDataType<byte[]>(SQLDialect.INFORMIX, SQLDataType.BINARY, "blob");
+    protected static final DataType<Boolean>    __BIT           = new DefaultDataType<Boolean>(SQLDialect.INFORMIX, SQLDataType.BIT, "boolean");
+    protected static final DataType<byte[]>     __LONGVARBINARY = new DefaultDataType<byte[]>(SQLDialect.INFORMIX, SQLDataType.LONGVARBINARY, "blob");
+    protected static final DataType<String>     __NCLOB         = new DefaultDataType<String>(SQLDialect.INFORMIX, SQLDataType.NCLOB, "clob");
+    protected static final DataType<String>     __LONGNVARCHAR  = new DefaultDataType<String>(SQLDialect.INFORMIX, SQLDataType.LONGNVARCHAR, "long varchar", "clob");
+    protected static final DataType<BigDecimal> __NUMERIC       = new DefaultDataType<BigDecimal>(SQLDialect.INFORMIX, SQLDataType.NUMERIC, "decimal", "decimal");
+    protected static final DataType<Byte>       __TINYINT       = new DefaultDataType<Byte>(SQLDialect.INFORMIX, SQLDataType.TINYINT, "smallint");
+    protected static final DataType<Time>       __TIME          = new DefaultDataType<Time>(SQLDialect.INFORMIX, SQLDataType.TIME, "datetime");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
     // -------------------------------------------------------------------------
 
-    protected static final DataType<BigInteger> __BIGINTEGER    = new DefaultDataType<BigInteger>(SQLDialect.DB2, SQLDataType.DECIMAL_INTEGER, "decimal", "decimal(31)");
-    protected static final DataType<UUID>       __UUID          = new DefaultDataType<UUID>(SQLDialect.DB2, SQLDataType.UUID, "varchar", "varchar(36)");
+    protected static final DataType<BigInteger> __BIGINTEGER    = new DefaultDataType<BigInteger>(SQLDialect.INFORMIX, SQLDataType.DECIMAL_INTEGER, "decimal", "decimal(31)");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final DataType<String> XML                    = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.CLOB, "xml");
-    public static final DataType<String> DBCLOB                 = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.CLOB, "dbclob");
-    public static final DataType<String> GRAPHIC                = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.CLOB, "graphic");
-    public static final DataType<String> VARGRAPHIC             = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.CLOB, "vargraphic");
-    public static final DataType<byte[]> CHARFORBITDATA         = new DefaultDataType<byte[]>(SQLDialect.DB2, SQLDataType.BLOB, "char for bit data");
-    public static final DataType<byte[]> VARCHARFORBITDATA      = new DefaultDataType<byte[]>(SQLDialect.DB2, SQLDataType.BLOB, "varchar(32672) for bit data");
-    public static final DataType<byte[]> ROWID                  = new DefaultDataType<byte[]>(SQLDialect.DB2, SQLDataType.BLOB, "rowid");
+    public static final DataType<Integer>    SERIAL             = new DefaultDataType<Integer>(SQLDialect.INFORMIX, SQLDataType.INTEGER, "serial");
+    public static final DataType<Long>       SERIAL8            = new DefaultDataType<Long>(SQLDialect.INFORMIX, SQLDataType.BIGINT, "serial8");
+    public static final DataType<BigDecimal> MONEY              = new DefaultDataType<BigDecimal>(SQLDialect.INFORMIX, SQLDataType.DECIMAL, "money");
 }

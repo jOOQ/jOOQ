@@ -40,11 +40,15 @@
  */
 package org.jooq.util.informix;
 
+import static org.jooq.impl.DSL.selectDistinct;
+import static org.jooq.util.informix.sys.Tables.SYSTABLES;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.DSLContext;
+import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
@@ -91,6 +95,13 @@ public class InformixDatabase extends AbstractDatabase {
     protected List<SchemaDefinition> getSchemata0() throws SQLException {
         List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
 
+        for (String owner : create().fetchValues(
+                 selectDistinct(SYSTABLES.OWNER.trim())
+                .from(SYSTABLES)
+                .where(SYSTABLES.OWNER.in(getInputSchemata())))) {
+
+            result.add(new SchemaDefinition(this, owner, ""));
+        }
 
         return result;
     }
@@ -99,6 +110,7 @@ public class InformixDatabase extends AbstractDatabase {
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
 
+        // tabtype = 'Q'
 
         return result;
     }
@@ -106,6 +118,20 @@ public class InformixDatabase extends AbstractDatabase {
     @Override
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
+
+        for (Record record : create()
+                .select(
+                    SYSTABLES.OWNER.trim().as(SYSTABLES.OWNER),
+                    SYSTABLES.TABNAME.trim().as(SYSTABLES.TABNAME))
+                .from(SYSTABLES)
+                .where(SYSTABLES.OWNER.in(getInputSchemata()))
+                .and(SYSTABLES.TABTYPE.in("T", "V"))
+                .fetch()) {
+
+            SchemaDefinition schema = getSchema(record.getValue("owner", String.class).trim());
+
+            result.add(new InformixTableDefinition(schema, record.getValue("tabname", String.class), ""));
+        }
 
         return result;
     }

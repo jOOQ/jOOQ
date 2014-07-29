@@ -117,6 +117,7 @@ class Splitter extends Generators {
                        !path.canonicalPath.contains("\\access\\")
                     && !path.canonicalPath.contains("\\ase\\")
                     && !path.canonicalPath.contains("\\db2\\")
+                    && !path.canonicalPath.contains("\\informix\\")
                     && !path.canonicalPath.contains("\\ingres\\")
                     && !path.canonicalPath.contains("\\jdbcoracle\\")
                     && !path.canonicalPath.contains("\\oracle\\")

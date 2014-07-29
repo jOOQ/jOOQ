@@ -144,6 +144,19 @@ public interface Field<T> extends GroupField {
     Field<T> as(String alias);
 
     /**
+     * Create an alias for this field based on another field's name.
+     * <p>
+     * Note that the case-sensitivity of the returned field depends on
+     * {@link Settings#getRenderNameStyle()}. By default, field aliases are
+     * quoted, and thus case-sensitive!
+     *
+     * @param otherField The other field whose name this field is aliased with.
+     * @return The field alias.
+     */
+    @Support
+    Field<T> as(Field<?> otherField);
+
+    /**
      * {@inheritDoc}
      * <p>
      * <strong>Watch out! This is {@link Object#equals(Object)}, not a jOOQ DSL

@@ -1225,6 +1225,25 @@
                                             </customTypes>
 
                                             <forcedTypes>
+                                            
+                                                <!-- [#2486] Remove precision and scale from existing DECIMALs -->
+                                                <forcedType>
+                                                    <name>DECIMAL</name>
+                                                    <expression>(?i:.*?\.t_2486\.(val1|val3|val5))</expression>
+                                                </forcedType>
+
+                                                <!-- [#2486] Add precision and scale from existing DECIMALs -->
+                                                <forcedType>
+                                                    <name>DECIMAL(21, 4)</name>
+                                                    <expression>(?i:.*?\.t_2486\.(val2|val4|val6))</expression>
+                                                </forcedType>
+                                            
+                                                <!-- [#2486] Add precision but remove scale from existing DECIMALs -->
+                                                <forcedType>
+                                                    <name>DECIMAL(20)</name>
+                                                    <expression>(?i:.*?\.t_2486\.(val7|val8))</expression>
+                                                </forcedType>
+                                            
                                                 <forcedType>
                                                     <name>BOOLEAN</name>
                                                     <expression>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expression>

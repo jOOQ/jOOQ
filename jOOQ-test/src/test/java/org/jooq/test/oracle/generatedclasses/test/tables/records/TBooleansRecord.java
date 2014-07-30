@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_BOOLEANS", schema = "TEST")
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord> implements org.jooq.Record11<java.lang.Integer, org.jooq.test.all.converters.Boolean_10, org.jooq.test.all.converters.Boolean_TF_LC, org.jooq.test.all.converters.Boolean_TF_UC, org.jooq.test.all.converters.Boolean_YES_NO_LC, org.jooq.test.all.converters.Boolean_YES_NO_UC, org.jooq.test.all.converters.Boolean_YN_LC, org.jooq.test.all.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean> {
 
-	private static final long serialVersionUID = 1551224022;
+	private static final long serialVersionUID = -1834062446;
 
 	/**
 	 * Setter for <code>TEST.T_BOOLEANS.ID</code>.
@@ -145,7 +145,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * Getter for <code>TEST.T_BOOLEANS.VC_BOOLEAN</code>.
 	 */
-	@javax.persistence.Column(name = "VC_BOOLEAN", length = 1)
+	@javax.persistence.Column(name = "VC_BOOLEAN")
 	public java.lang.Boolean getVcBoolean() {
 		return (java.lang.Boolean) getValue(8);
 	}
@@ -160,7 +160,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * Getter for <code>TEST.T_BOOLEANS.C_BOOLEAN</code>.
 	 */
-	@javax.persistence.Column(name = "C_BOOLEAN", length = 1)
+	@javax.persistence.Column(name = "C_BOOLEAN")
 	public java.lang.Boolean getCBoolean() {
 		return (java.lang.Boolean) getValue(9);
 	}
@@ -175,7 +175,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * Getter for <code>TEST.T_BOOLEANS.N_BOOLEAN</code>.
 	 */
-	@javax.persistence.Column(name = "N_BOOLEAN", precision = 7)
+	@javax.persistence.Column(name = "N_BOOLEAN")
 	public java.lang.Boolean getNBoolean() {
 		return (java.lang.Boolean) getValue(10);
 	}

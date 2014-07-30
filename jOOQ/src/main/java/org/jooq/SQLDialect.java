@@ -166,6 +166,13 @@ public enum SQLDialect {
     DB2_10("DB2", true, DB2),
 
     /**
+     * The Informix SQL dialect.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
+     */
+    INFORMIX("Informix", true),
+
+    /**
      * The Ingres dialect family.
      * <p>
      * This dialect is available in commercial jOOQ distributions, only.

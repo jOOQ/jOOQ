@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_UNSIGNED", schema = "TEST")
 public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TUnsignedRecord> implements org.jooq.Record4<org.jooq.types.UByte, org.jooq.types.UShort, org.jooq.types.UInteger, org.jooq.types.ULong> {
 
-	private static final long serialVersionUID = -1497047976;
+	private static final long serialVersionUID = 73703535;
 
 	/**
 	 * Setter for <code>TEST.T_UNSIGNED.U_BYTE</code>.
@@ -23,7 +23,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	/**
 	 * Getter for <code>TEST.T_UNSIGNED.U_BYTE</code>.
 	 */
-	@javax.persistence.Column(name = "U_BYTE", precision = 3)
+	@javax.persistence.Column(name = "U_BYTE")
 	public org.jooq.types.UByte getUByte() {
 		return (org.jooq.types.UByte) getValue(0);
 	}
@@ -38,7 +38,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	/**
 	 * Getter for <code>TEST.T_UNSIGNED.U_SHORT</code>.
 	 */
-	@javax.persistence.Column(name = "U_SHORT", precision = 5)
+	@javax.persistence.Column(name = "U_SHORT")
 	public org.jooq.types.UShort getUShort() {
 		return (org.jooq.types.UShort) getValue(1);
 	}
@@ -53,7 +53,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	/**
 	 * Getter for <code>TEST.T_UNSIGNED.U_INT</code>.
 	 */
-	@javax.persistence.Column(name = "U_INT", precision = 10)
+	@javax.persistence.Column(name = "U_INT")
 	public org.jooq.types.UInteger getUInt() {
 		return (org.jooq.types.UInteger) getValue(2);
 	}
@@ -68,7 +68,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	/**
 	 * Getter for <code>TEST.T_UNSIGNED.U_LONG</code>.
 	 */
-	@javax.persistence.Column(name = "U_LONG", precision = 20)
+	@javax.persistence.Column(name = "U_LONG")
 	public org.jooq.types.ULong getULong() {
 		return (org.jooq.types.ULong) getValue(3);
 	}

@@ -158,6 +158,19 @@ class Limit extends AbstractQueryPart {
                 break;
             }
 
+            // Nice SKIP .. FIRST support
+            // ----------------------------
+            case INFORMIX: {
+                context.paramType(INLINED)
+                       .keyword("skip")
+                       .sql(" ").visit(offsetOrZero)
+                       .sql(" ").keyword("first")
+                       .sql(" ").visit(numberOfRows)
+                       .paramType(paramType);
+
+                break;
+            }
+
             // Nice TOP .. START AT support
             // ----------------------------
             case SYBASE: {

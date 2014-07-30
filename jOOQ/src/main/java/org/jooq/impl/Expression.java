@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -135,7 +136,7 @@ class Expression<T> extends AbstractFunction<T> {
         // ---------------------------------------------------------------------
 
         // DB2, H2 and HSQLDB know functions, instead of operators
-        if (BIT_AND == operator && asList(DB2, H2, HSQLDB, ORACLE).contains(family)) {
+        if (BIT_AND == operator && asList(DB2, H2, HSQLDB, INFORMIX, ORACLE).contains(family)) {
             return function("bitand", getDataType(), getArguments());
         }
         else if (BIT_AND == operator && FIREBIRD == family) {
@@ -147,7 +148,7 @@ class Expression<T> extends AbstractFunction<T> {
         else if (BIT_XOR == operator && FIREBIRD == family) {
             return function("bin_xor", getDataType(), getArguments());
         }
-        else if (BIT_OR == operator && asList(DB2, H2, HSQLDB).contains(family)) {
+        else if (BIT_OR == operator && asList(DB2, H2, HSQLDB, INFORMIX).contains(family)) {
             return function("bitor", getDataType(), getArguments());
         }
         else if (BIT_OR == operator && FIREBIRD == family) {

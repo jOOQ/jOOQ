@@ -76,6 +76,7 @@ class Least<T> extends AbstractFunction<T> {
             /* [pro] */
             case ACCESS:
             case ASE:
+            case INFORMIX:
             case SQLSERVER:
             case SYBASE:
             /* [/pro] */

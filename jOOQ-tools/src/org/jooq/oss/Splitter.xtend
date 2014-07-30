@@ -98,8 +98,8 @@ class Splitter extends Generators {
         val out = new File(outRoot.canonicalPath + "/" + in.canonicalPath.replace(inRoot.canonicalPath, ""));
         
         if (in.directory) {
-            val files = in.listFiles[path | 
-                   !path.canonicalPath.endsWith(".class") 
+            val files = in.listFiles[path |
+                   !path.canonicalPath.endsWith(".class")
                 && !path.canonicalPath.endsWith(".dat")
                 && !path.canonicalPath.endsWith(".git")
                 && !path.canonicalPath.endsWith(".jar")
@@ -110,12 +110,14 @@ class Splitter extends Generators {
                 && !path.canonicalPath.contains("jOOQ-website")
                 && !path.canonicalPath.contains("jOOQ-websites")
                 && !path.canonicalPath.contains("jOOQ-webservices")
+                && !path.canonicalPath.contains("jOOQ-parse")
                 && !path.canonicalPath.contains("\\target\\")
                 && !path.canonicalPath.contains("\\bin\\")
                 && (token.equals("trial") || (
                        !path.canonicalPath.contains("\\access\\")
                     && !path.canonicalPath.contains("\\ase\\")
                     && !path.canonicalPath.contains("\\db2\\")
+                    && !path.canonicalPath.contains("\\informix\\")
                     && !path.canonicalPath.contains("\\ingres\\")
                     && !path.canonicalPath.contains("\\jdbcoracle\\")
                     && !path.canonicalPath.contains("\\oracle\\")
@@ -128,7 +130,7 @@ class Splitter extends Generators {
 
             for (file : files) {
                 transform(inRoot, outRoot, file);
-            }            
+            }
         }
         else if (token == "pro" && in.name.equals("LICENSE.txt")) {
             ex.submit[ |
@@ -158,7 +160,7 @@ For more information, please visit: http://www.jooq.org/licenses''');
             ];
         }
         else {
-            ex.submit[ | 
+            ex.submit[ |
                 var original = read(in);
                 var content = original;
     

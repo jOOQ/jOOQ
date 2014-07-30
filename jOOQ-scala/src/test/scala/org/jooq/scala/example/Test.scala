@@ -91,5 +91,22 @@ object Test {
 
     println("first name : " + tuple._1);
     println("last name : " + tuple._2);
+
+    val predicate =
+      if (1 == 1)
+        "AND a.id = 1"
+      else
+        ""
+
+    // Plain SQL
+    println(f fetch (
+      s"""
+      SELECT a.first_name, a.last_name, b.title
+      FROM t_author a
+      JOIN t_book b ON a.id = b.author_id
+      WHERE 1 = 1 $predicate
+      ORDER BY a.id, b.id
+      """)
+    )
   }
 }

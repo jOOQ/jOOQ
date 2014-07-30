@@ -143,6 +143,10 @@ class Dual extends AbstractTable<Record> {
                        .literal("DUAL");
                     break;
 
+                case INFORMIX:
+                    ctx.keyword("table(set {1})");
+                    break;
+
                 case INGRES:
                     ctx.keyword("(select 1 as dual) as dual");
                     break;

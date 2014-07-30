@@ -54,6 +54,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -124,7 +125,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // "simple class specifications", or "common table expression references".
             // Hence, wrap the table reference in a subselect
             if (fieldAliases != null
-                    && asList(CUBRID, FIREBIRD, INGRES, SQLSERVER, SYBASE).contains(dialect.family())
+                    && asList(CUBRID, FIREBIRD, INFORMIX, INGRES, SQLSERVER, SYBASE).contains(dialect.family())
                     && (wrapped instanceof TableImpl || wrapped instanceof CommonTableExpressionImpl)) {
 
                 @SuppressWarnings("unchecked")

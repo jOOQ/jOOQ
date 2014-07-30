@@ -41,9 +41,14 @@
 package org.jooq.util;
 
 
+import static org.jooq.tools.Convert.convert;
+import static org.jooq.tools.StringUtils.isEmpty;
+
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jooq.DataType;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -58,7 +63,8 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
     extends AbstractDefinition
     implements TypedElementDefinition<T> {
 
-    private static final JooqLogger      log = JooqLogger.getLogger(AbstractTypedElementDefinition.class);
+    private static final JooqLogger      log                            = JooqLogger.getLogger(AbstractTypedElementDefinition.class);
+    private static final Pattern         LENGTH_PRECISION_SCALE_PATTERN = Pattern.compile("[\\w\\s]+(?:\\(\\s*?(\\d+)\\s*?\\)|\\(\\s*?(\\d+)\\s*?,\\s*?(\\d+)\\s*?\\))");
 
     private final T                      container;
     private final DataTypeDefinition     definedType;
@@ -146,12 +152,24 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
             log.info("Forcing type", child + " into " + type + (converter != null ? " using converter " + converter : ""));
             DataType<?> forcedDataType = null;
 
-            String t = result.getType();
-            int l = result.getLength();
-            int p = result.getPrecision();
-            int s = result.getScale();
             boolean n = result.isNullable();
             boolean d = result.isDefaulted();
+
+            int l = 0;
+            int p = 0;
+            int s = 0;
+
+            // [#2486] Allow users to override length, precision, and scale
+            Matcher matcher = LENGTH_PRECISION_SCALE_PATTERN.matcher(type);
+            if (matcher.find()) {
+                if (!isEmpty(matcher.group(1))) {
+                    l = p = convert(matcher.group(1), int.class);
+                }
+                else {
+                    p = convert(matcher.group(2), int.class);
+                    s = convert(matcher.group(3), int.class);
+                }
+            }
 
             try {
                 forcedDataType = DefaultDataType.getDataType(db.getDialect(), type, p, s);
@@ -164,6 +182,10 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
 
             // Other forced types are UDT's, enums, etc.
             else {
+                l = result.getLength();
+                p = result.getPrecision();
+                s = result.getScale();
+                String t = result.getType();
                 result = new DefaultDataTypeDefinition(db, child.getSchema(), t, l, p, s, n, d, type, converter);
             }
         }

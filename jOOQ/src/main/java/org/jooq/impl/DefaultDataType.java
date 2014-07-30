@@ -97,7 +97,7 @@ public class DefaultDataType<T> implements DataType<T> {
     /**
      * A pattern for data type name normalisation.
      */
-    private static final Pattern                         NORMALISE_PATTERN = Pattern.compile("\"|\\.|\\s|\\(\\w+(,\\w+)*\\)|(NOT\\s*NULL)?");
+    private static final Pattern                         NORMALISE_PATTERN = Pattern.compile("\"|\\.|\\s|\\(\\w+(\\s*,\\s*\\w+)*\\)|(NOT\\s*NULL)?");
 
     /**
      * A pattern to be used to replace all precision, scale, and length

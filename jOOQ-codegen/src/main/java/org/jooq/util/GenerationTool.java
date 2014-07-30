@@ -74,6 +74,7 @@ import org.jooq.util.derby.DerbyDatabase;
 import org.jooq.util.firebird.FirebirdDatabase;
 import org.jooq.util.h2.H2Database;
 import org.jooq.util.hsqldb.HSQLDBDatabase;
+import org.jooq.util.informix.InformixDatabase;
 import org.jooq.util.ingres.IngresDatabase;
 import org.jooq.util.jaxb.Configuration;
 import org.jooq.util.jaxb.Generate;
@@ -410,6 +411,7 @@ public class GenerationTool {
             case ACCESS:    result = JDBCDatabase.class;      break;
             case ASE:       result = ASEDatabase.class;       break;
             case DB2:       result = DB2Database.class;       break;
+            case INFORMIX:  result = InformixDatabase.class;  break;
             case INGRES:    result = IngresDatabase.class;    break;
             case ORACLE:    result = OracleDatabase.class;    break;
             case SQLSERVER: result = SQLServerDatabase.class; break;

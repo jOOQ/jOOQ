@@ -46,6 +46,7 @@
         <!-- [pro] -->
         <db.ase.version>1.3.1</db.ase.version>
         <db.db2.version>3.1.57</db.db2.version>
+        <db.informix.version>12.10</db.informix.version>
         <db.ingres.version>10.0-4.0.6</db.ingres.version>
         <db.oracle.version>10.2.0.3.0</db.oracle.version>
         <db.sqlserver.version>3.0</db.sqlserver.version>
@@ -221,6 +222,13 @@
         </dependency>
 
         <!-- [pro] -->
+        <dependency>
+            <groupId>com.informix.jdbc</groupId>
+            <artifactId>ifxjdbc</artifactId>
+            <version>${db.informix.version}</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/ifxjdbc.jar</systemPath>
+        </dependency>
         <dependency>
             <groupId>com.ingres.jdbc</groupId>
             <artifactId>iijdbc</artifactId>
@@ -1217,6 +1225,25 @@
                                             </customTypes>
 
                                             <forcedTypes>
+                                            
+                                                <!-- [#2486] Remove precision and scale from existing DECIMALs -->
+                                                <forcedType>
+                                                    <name>DECIMAL</name>
+                                                    <expression>(?i:.*?\.t_2486\.(val1|val3|val5))</expression>
+                                                </forcedType>
+
+                                                <!-- [#2486] Add precision and scale from existing DECIMALs -->
+                                                <forcedType>
+                                                    <name>DECIMAL(21, 4)</name>
+                                                    <expression>(?i:.*?\.t_2486\.(val2|val4|val6))</expression>
+                                                </forcedType>
+                                            
+                                                <!-- [#2486] Add precision but remove scale from existing DECIMALs -->
+                                                <forcedType>
+                                                    <name>DECIMAL(20)</name>
+                                                    <expression>(?i:.*?\.t_2486\.(val7|val8))</expression>
+                                                </forcedType>
+                                            
                                                 <forcedType>
                                                     <name>BOOLEAN</name>
                                                     <expression>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expression>
@@ -2734,7 +2761,7 @@
                                         </strategy>
                                         <database>
                                             <name>org.jooq.util.postgres.PostgresDatabase</name>
-                                            <includes>t_.*|x_.*|v_.*|m_.*|V_.*|p_.*|f_.*|u_.*|(f|p)[0-9]+|s_.*</includes>
+                                            <includes>t_.*|x_.*|v_.*|m_.*|V_.*|p(_.*)?|f(_.*)?|u_.*|(f|p)[0-9]+|s_.*</includes>
                                             <excludes>t_book_details|.*?_seq|_.*</excludes>
                                             <dateAsTimestamp>false</dateAsTimestamp>
                                             <unsignedTypes>true</unsignedTypes>
@@ -3841,6 +3868,222 @@
                                 <version>${db.db2.version}</version>
                                 <scope>system</scope>
                                 <systemPath>${basedir}/lib/db2jcc4.jar</systemPath>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
+        <profile>
+            <id>codegen-informix</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${jooq.version}</version>
+
+                        <executions>
+                            <execution>
+                                <id>generate-informix</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.informix.driver}</driver>
+                                        <url>${db.informix.url}</url>
+                                        <schema>${db.informix.schema}</schema>
+                                        <user>${db.informix.username}</user>
+                                        <password>${db.informix.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <name>org.jooq.util.DefaultGenerator</name>
+                                        <database>
+                                            <name>org.jooq.util.informix.InformixDatabase</name>
+                                            <includes>t_.*|x_.*|v_.*|p_.*|f_.*|(f|p)[0-9]+|s_.*</includes>
+                                            <excludes>t_book_details</excludes>
+                                            <dateAsTimestamp>false</dateAsTimestamp>
+                                            <unsignedTypes>true</unsignedTypes>
+
+                                            <customTypes>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_10</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_10_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_TF_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_TF_UC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YN_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YN_UC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YES_NO_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YES_NO_UC_Converter</converter>
+                                                </customType>
+                                            </customTypes>
+
+                                            <forcedTypes>
+                                                <forcedType>
+                                                    <name>BOOLEAN</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>UUID</name>
+                                                    <expression>(?i:(.*?.)?T_EXOTIC_TYPES.UU)</expression>
+                                                </forcedType>
+
+                                                <!-- [#2477] Check if unsigned types work correctly -->
+                                                <forcedType>
+                                                    <name>TINYINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_BYTE)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>SMALLINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_SHORT)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>INTEGERUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_INT)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>BIGINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_LONG)</expression>
+                                                </forcedType>
+
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_10</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.ONE_ZERO)</expression>
+                                                </forcedType>
+                                            </forcedTypes>
+                                        </database>
+                                        <generate>
+                                            <relations>true</relations>
+                                            <deprecated>true</deprecated>
+                                            <generatedAnnotation>false</generatedAnnotation>
+                                            <records>true</records>
+                                            <pojos>false</pojos>
+                                            <jpaAnnotations>false</jpaAnnotations>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.test.informix.generatedclasses</packageName>
+                                            <directory>./src/test/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.informix.jdbc</groupId>
+                                <artifactId>ifxjdbc</artifactId>
+                                <version>${db.informix.version}</version>
+                                <scope>system</scope>
+                                <systemPath>${basedir}/lib/ifxjdbc.jar</systemPath>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
+
+
+        <profile>
+            <id>codegen-informix-sys</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${jooq.version}</version>
+
+                        <executions>
+                            <execution>
+                                <id>generate-informix-sys</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.informix.driver}</driver>
+                                        <url>${db.informix.url}</url>
+                                        <schema>informix</schema>
+                                        <user>${db.informix.username}</user>
+                                        <password>${db.informix.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <name>org.jooq.util.DefaultGenerator</name>
+                                        <database>
+                                            <name>org.jooq.util.informix.InformixDatabase</name>
+                                            <includes>sys(columns|constraints|indexes|references|sequences|tables|xtdtypes)</includes>
+                                        </database>
+                                        <generate>
+                                            <relations>false</relations>
+                                            <deprecated>false</deprecated>
+                                            <generatedAnnotation>true</generatedAnnotation>
+                                            <records>false</records>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.util.informix.sys</packageName>
+                                            <directory>../jOOQ-meta/src/main/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.informix.jdbc</groupId>
+                                <artifactId>ifxjdbc</artifactId>
+                                <version>${db.informix.version}</version>
+                                <scope>system</scope>
+                                <systemPath>${basedir}/lib/ifxjdbc.jar</systemPath>
                             </dependency>
                         </dependencies>
                     </plugin>

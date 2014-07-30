@@ -70,6 +70,7 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -265,15 +266,15 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     }
 
     private final boolean emulateNaturalJoin(Context<?> context) {
-        return type == NATURAL_JOIN && asList(ACCESS, ASE, CUBRID, DB2, INGRES, SQLSERVER).contains(context.configuration().dialect().family());
+        return type == NATURAL_JOIN && asList(ACCESS, ASE, CUBRID, DB2, INFORMIX, INGRES, SQLSERVER).contains(context.configuration().dialect().family());
     }
 
     private final boolean emulateNaturalLeftOuterJoin(Context<?> context) {
-        return type == NATURAL_LEFT_OUTER_JOIN && asList(ACCESS, ASE, CUBRID, DB2, H2, INGRES, SQLSERVER).contains(context.configuration().dialect().family());
+        return type == NATURAL_LEFT_OUTER_JOIN && asList(ACCESS, ASE, CUBRID, DB2, H2, INFORMIX, INGRES, SQLSERVER).contains(context.family());
     }
 
     private final boolean emulateNaturalRightOuterJoin(Context<?> context) {
-        return type == NATURAL_RIGHT_OUTER_JOIN && asList(ACCESS, ASE, CUBRID, DB2, H2, INGRES, SQLSERVER).contains(context.configuration().dialect().family());
+        return type == NATURAL_RIGHT_OUTER_JOIN && asList(ACCESS, ASE, CUBRID, DB2, H2, INFORMIX, INGRES, SQLSERVER).contains(context.family());
     }
 
     private final void toSQLJoinCondition(Context<?> context) {
@@ -281,7 +282,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
 
             // [#582] Some dialects don't explicitly support a JOIN .. USING
             // syntax. This can be simulated with JOIN .. ON
-            if (asList(ACCESS, ASE, CUBRID, DB2, H2, SQLSERVER, SYBASE).contains(context.configuration().dialect().family())) {
+            if (asList(ACCESS, ASE, CUBRID, DB2, H2, INFORMIX, SQLSERVER, SYBASE).contains(context.family())) {
                 boolean first = true;
                 for (Field<?> field : using) {
                     context.formatSeparator();

@@ -113,6 +113,7 @@ class Substring extends AbstractFunction<String> {
                 break;
 
             case DB2:
+            case INFORMIX:
             case ORACLE:
             /* [/pro] */
             case DERBY:

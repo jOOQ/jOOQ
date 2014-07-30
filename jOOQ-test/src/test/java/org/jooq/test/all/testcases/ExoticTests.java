@@ -53,7 +53,6 @@ import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.prior;
-import static org.jooq.impl.DSL.rownum;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.sum;
@@ -422,35 +421,35 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
-            create().select(rownum())
+            create().select(level())
                     .connectBy(level().lessThan(10))
-                    .fetch(rownum()));
+                    .fetch(level()));
         assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
-            create().select(rownum())
+            create().select(level())
                     .connectByNoCycle(level().lessThan(10))
-                    .fetch(rownum()));
+                    .fetch(level()));
 
         assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
-            create().select(rownum())
+            create().select(level())
                     .connectBy(level().lessThan(10))
                     .and("1 = ?", 1)
                     .startWith("? = ?", 1, 1)
-                    .fetch(rownum()));
+                    .fetch(level()));
         assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
-            create().select(rownum())
+            create().select(level())
                     .connectByNoCycle(level().lessThan(10))
                     .and("1 = ?", 1)
                     .startWith("? = ?", 1, 1)
-                    .fetch(rownum()));
+                    .fetch(level()));
 
         Result<Record3<Integer, Boolean, Boolean>> result =
-        create().select(rownum(), connectByIsCycle(), connectByIsLeaf())
+        create().select(level(), connectByIsCycle(), connectByIsLeaf())
                 .connectByNoCycle(level().lessThan(4))
                 .fetch();
 
-        assertEquals(Integer.valueOf(1), result.getValue(0, rownum()));
-        assertEquals(Integer.valueOf(2), result.getValue(1, rownum()));
-        assertEquals(Integer.valueOf(3), result.getValue(2, rownum()));
+        assertEquals(Integer.valueOf(1), result.getValue(0, level()));
+        assertEquals(Integer.valueOf(2), result.getValue(1, level()));
+        assertEquals(Integer.valueOf(3), result.getValue(2, level()));
 
         assertEquals(Boolean.FALSE, result.getValue(0, connectByIsLeaf()));
         assertEquals(Boolean.FALSE, result.getValue(1, connectByIsLeaf()));

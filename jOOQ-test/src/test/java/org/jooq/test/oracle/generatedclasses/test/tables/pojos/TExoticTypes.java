@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_EXOTIC_TYPES", schema = "TEST")
 public class TExoticTypes implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1882683689;
+	private static final long serialVersionUID = -543620569;
 
 	private java.lang.Integer id;
 	private java.util.UUID    uu;
@@ -37,7 +37,7 @@ public class TExoticTypes implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "UU", length = 36)
+	@javax.persistence.Column(name = "UU")
 	public java.util.UUID getUu() {
 		return this.uu;
 	}

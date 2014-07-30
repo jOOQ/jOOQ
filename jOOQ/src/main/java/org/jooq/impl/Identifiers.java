@@ -101,6 +101,7 @@ class Identifiers {
                 // Most dialects implement the SQL standard, using double quotes
                 /* [pro] */
                 case DB2:
+                case INFORMIX:
                 case INGRES:
                 case ORACLE:
                 /* [/pro] */

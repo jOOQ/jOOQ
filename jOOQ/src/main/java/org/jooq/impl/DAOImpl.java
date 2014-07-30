@@ -55,6 +55,7 @@ import org.jooq.DAO;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -101,6 +102,16 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     @Override
     public final Configuration configuration() {
         return configuration;
+    }
+
+    @Override
+    public final SQLDialect dialect() {
+        return Utils.configuration(configuration()).dialect();
+    }
+
+    @Override
+    public final SQLDialect family() {
+        return dialect().family();
     }
 
     /**

@@ -205,7 +205,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         xx [/pro] */
     }
 
-    public void testAggregateFunctions() throws Exception {
+    public void testAggregateFunctionsSimple() throws Exception {
 
         // Standard aggregate functions, available in all dialects:
         // --------------------------------------------------------
@@ -216,7 +216,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // are the same
         switch (dialect().family()) {
             /* [pro] xx
+            xxxx xxxxxxx
             xxxx xxxx
+            xxxx xxxxxxxxx
             xxxx xxxxxxx
             xxxx xxxx
             xxxx xxxxxxxxxx
@@ -289,6 +291,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#868] Derby, HSQLDB, and SQL Server perform rounding/truncation
         // This may need to be corrected by jOOQ
         assertTrue(asList(1.0, 1.5, 2.0).contains(distinct5));
+    }
+
+    public void testAggregateFunctionsStatistics() throws Exception {
 
         // Statistical aggregate functions, available in some dialects:
         // ------------------------------------------------------------
@@ -317,8 +322,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 assertEquals(0.5, result2.get(1).getValue(1, Double.class), 0.0);
                 assertEquals(0.25, result2.get(1).getValue(3, Double.class), 0.0);
 
-                // DB2 only knows STDDEV_POP / VAR_POP
-                if (true/* [pro] xx xx xxxxxxxxx xx xxxxxxxxxxxxxxxx [/pro] */) {
+                // DB2 and INFORMIX only know STDDEV_POP / VAR_POP
+                if (!asList(SQLDialect.SQLDialect.).contains(dialect().family())) {
                     assertEquals("0.707", result2.get(0).getValue(2, String.class).substring(0, 5));
                     assertEquals(0.5, result2.get(0).getValue(4, Double.class), 0.0);
                     assertEquals("0.707", result2.get(1).getValue(2, String.class).substring(0, 5));

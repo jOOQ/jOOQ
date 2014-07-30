@@ -165,6 +165,7 @@ class Val<T> extends AbstractParam<T> {
                     // These dialects can hardly detect the type of a bound constant.
                     /* [pro] xx
                     xxxx xxxx
+                    xxxx xxxxxxxxx
                     xx [/pro] */
                     case DERBY:
                     case FIREBIRD:

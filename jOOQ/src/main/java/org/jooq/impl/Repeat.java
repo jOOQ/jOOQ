@@ -69,6 +69,7 @@ class Repeat extends AbstractFunction<String> {
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx
+            xxxx xxxxxxxxx
             xxxx xxxxxxx
             xxxx xxxxxxx
             xx [/pro] */

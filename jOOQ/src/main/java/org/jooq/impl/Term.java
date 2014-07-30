@@ -188,6 +188,9 @@ enum Term {
                 xxxx xxxx
                     xxxxxx xxxxxxxxx
 
+                xxxx xxxxxxxxx
+                    xxxxxx xxxxxxxx
+
                 xxxx xxxxxxxxxx
                     xxxxxx xxxxxxxxx
             x
@@ -204,6 +207,9 @@ enum Term {
                 xxxx xxxx
                     xxxxxx xxxxxxxxx
 
+                xxxx xxxxxxxxx
+                    xxxxxx xxxxxxxx
+
                 xxxx xxxxxxxxxx
                     xxxxxx xxxxxxxx
             x
@@ -218,6 +224,7 @@ enum Term {
             /* [pro] xx
             xxxxxx xxxxxxxxxxxxxxxxxx x
                 xxxx xxxx
+                xxxx xxxxxxxxx
                     xxxxxx xxxxxxxxxxx
 
                 xxxx xxxxxxxxxx
@@ -234,6 +241,7 @@ enum Term {
             /* [pro] xx
             xxxxxx xxxxxxxxxxxxxxxxxx x
                 xxxx xxxx
+                xxxx xxxxxxxxx
                     xxxxxx xxxxxxxxxxx
 
                 xxxx xxxxxxxxxx

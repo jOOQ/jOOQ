@@ -64,6 +64,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
@@ -226,7 +227,9 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         // If a limit applies
         if (getLimit().isApplicable()) {
-            switch (context.configuration().dialect()) {
+            SQLDialect dialect = context.configuration().dialect();
+
+            switch (dialect) {
 
                 /* [pro] xx
                 xx xxxxxx xxxxx xxx xxxxxx xxxxxxxxxxxxxx xxxx xxxxx xxxxxx xxxxxx
@@ -277,11 +280,11 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                 x
 
                 xx xxxxxx xxx xxx xx xxxxx xx xxxxxxx xxx xxxx xxxxxxx
-                xx xxxxxxxx xxx xxxxx xx xxxx xxxxxxx xxx xxxx xxxxxxx
+                xxxx xxxxxxxxx
                 xxxx xxxxxxx x
 
                     xx xxxxxx xxx xxxxxxxx xxxxxxx xxxxxx xxx xxxxxxx xxxx xxxxxx
-                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx xx xxxxxxxxx x
                         xxxxxxxxxxxxxxxxxxxxxxxxx
                     x
 
@@ -552,7 +555,8 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
      * This part is common to any type of limited query
      */
     private final void toSQLReference0(Context<?> context, Field<?>[] alternativeFields) {
-        SQLDialect dialect = context.configuration().dialect();
+        SQLDialect dialect = context.dialect();
+        SQLDialect family = dialect.family();
 
         // SELECT clause
         // -------------
@@ -565,13 +569,20 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             context.sql(hint).sql(" ");
         }
 
+        /* [pro] xx
+        xx xxxxxxxx xxxxxxxx xxxx xx xxxxx xx xx xx xxxxxx xxxxxx xxxxxxxx
+        xx xxxxxxxx xx xxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
+        x
+        xx [/pro] */
+
         if (distinct) {
             context.keyword("distinct").sql(" ");
         }
 
         /* [pro] xx
         xx xxxxxx xxx xxx xxxxxx xxxx xxxxxxx xxx xxxxxxx
-        xxxxxx xxxxxxxxxxxxxxxxxx x
+        xxxxxx xxxxxxxx x
             xxxx xxxxxxx
             xxxx xxxx
             xxxx xxxxxxxxxx x
@@ -586,7 +597,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                 x
 
                 xx xxxxxx xxx xxxxxx xxxxx x xxx xxxxxx xx xxxxxxx xxxxxxxxxx
-                xxxx xx xxxxxxxxxxxxxxxxx xx xxxxxxxxx
+                xxxx xx xxxxxxx xx xxxxxxxxx
                         xx xxxxxxxxxxxxxxxxxx
                         xx xxxxxxxxxxxxxxxxxxxxxxxx x
 
@@ -658,7 +669,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         if (actualInto != null
                 && context.data(DATA_OMIT_INTO_CLAUSE) == null
-                && asList(HSQLDB, POSTGRES).contains(dialect.family())) {
+                && asList(HSQLDB, POSTGRES).contains(family)) {
 
             context.formatSeparator()
                    .keyword("into")
@@ -802,7 +813,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         // -------------
         context.start(SELECT_WINDOW);
 
-        if (!getWindow().isEmpty() && asList(POSTGRES).contains(dialect.family())) {
+        if (!getWindow().isEmpty() && asList(POSTGRES).contains(family)) {
             context.formatSeparator()
                    .keyword("window")
                    .sql(" ")

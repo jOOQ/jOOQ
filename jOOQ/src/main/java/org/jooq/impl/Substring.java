@@ -113,6 +113,7 @@ class Substring extends AbstractFunction<String> {
                 xxxxxx
 
             xxxx xxxx
+            xxxx xxxxxxxxx
             xxxx xxxxxxx
             xx [/pro] */
             case DERBY:

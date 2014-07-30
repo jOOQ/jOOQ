@@ -99,9 +99,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private int                      printMargin = 80;
 
     // [#1632] Cached values from Settings
-    private RenderKeywordStyle       cachedRenderKeywordStyle;
-    private RenderNameStyle          cachedRenderNameStyle;
-    private boolean                  cachedRenderFormatted;
+    RenderKeywordStyle               cachedRenderKeywordStyle;
+    RenderNameStyle                  cachedRenderNameStyle;
+    boolean                          cachedRenderFormatted;
 
     DefaultRenderContext(Configuration configuration) {
         super(configuration, null);

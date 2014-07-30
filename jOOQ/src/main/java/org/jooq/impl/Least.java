@@ -76,6 +76,7 @@ class Least<T> extends AbstractFunction<T> {
             /* [pro] xx
             xxxx xxxxxxx
             xxxx xxxx
+            xxxx xxxxxxxxx
             xxxx xxxxxxxxxx
             xxxx xxxxxxx
             xx [/pro] */

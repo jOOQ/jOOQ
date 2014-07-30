@@ -9372,7 +9372,7 @@ public class DSL {
      */
     @Support({ CUBRID })
     public static <T> Field<T> prior(Field<T> field) {
-        return field("{prior} {0}", nullSafe(field).getDataType(), field);
+        return new Prior<T>(field);
     }
 
     // -------------------------------------------------------------------------

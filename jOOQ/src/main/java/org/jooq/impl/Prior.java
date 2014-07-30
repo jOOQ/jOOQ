@@ -40,74 +40,68 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
+import static org.jooq.conf.RenderNameStyle.AS_IS;
+import static org.jooq.impl.DSL.nullSafe;
 
-import org.jooq.Configuration;
-import org.jooq.DataType;
+import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.TableField;
+import org.jooq.conf.RenderNameStyle;
 
 /**
  * @author Lukas Eder
  */
-class Greatest<T> extends AbstractFunction<T> {
+class Prior<T> extends AbstractField<T> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 4532570030471782063L;
+    private final Field<T>    field;
 
-    Greatest(DataType<T> type, Field<?>... arguments) {
-        super("greatest", type, arguments);
+    Prior(Field<T> field) {
+        super("prior", nullSafe(field).getDataType());
+
+        this.field = field;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    final Field<T> getFunction0(Configuration configuration) {
-
-        // In any dialect, a single argument is always the greatest
-        if (getArguments().length == 1) {
-            return (Field<T>) getArguments()[0];
-        }
-
-        switch (configuration.dialect().family()) {
-            // This implementation has O(2^n) complexity. Better implementations
-            // are very welcome
-            // [#1049] TODO Fix this!
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
 
             /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxxxxx
+            xx xxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxx xxxxxx xxxxx xxxxxxxxxxx xxxx xxx xxxxx xxxxxxx
+            xx xxxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxx xxxxxxxxx x
+                xxxxxxxxxxxxxxx xxxxxxxx x xxxxx
+
+                xxx x
+                    xx xxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx x
+                        xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxx
+                    x
+
+                    xx xxxxx xxx xxxxxx xxxxxxx xx xxxxx xxxxxxxxx
+                    xxxxxxxx x x xxxxxx xxxxxxxxxx xxxxxxxxxxx
+                        x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+                        x xxxxxx
+
+                    xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+                x
+                xxxxxxx x
+                    xx xxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx x
+                        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxx
+                    x
+                x
+                xxxxxx
+            x
+
             xxxx xxxxxxx
             xx [/pro] */
-            case DERBY: {
-                Field<T> first = (Field<T>) getArguments()[0];
-                Field<T> other = (Field<T>) getArguments()[1];
-
-                if (getArguments().length > 2) {
-                    Field<?>[] remaining = new Field[getArguments().length - 2];
-                    System.arraycopy(getArguments(), 2, remaining, 0, remaining.length);
-
-                    return DSL.decode()
-                        .when(first.greaterThan(other), DSL.greatest(first, remaining))
-                        .otherwise(DSL.greatest(other, remaining));
-                }
-                else {
-                    return DSL.decode()
-                        .when(first.greaterThan(other), first)
-                        .otherwise(other);
-                }
-            }
-
-            case FIREBIRD:
-                return function("maxvalue", getDataType(), getArguments());
-
-            case SQLITE:
-                return function("max", getDataType(), getArguments());
-
+            case CUBRID:
             default:
-                return function("greatest", getDataType(), getArguments());
+                ctx.keyword("prior").sql(" ").visit(field);
+                break;
         }
     }
 }

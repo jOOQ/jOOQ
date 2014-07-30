@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="org.jooq:jooq:3.4.1" type="repository">
+    <properties maven-id="org.jooq:jooq:3.4.1" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jooq-3.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/jooq-3.4.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/jooq-3.4.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

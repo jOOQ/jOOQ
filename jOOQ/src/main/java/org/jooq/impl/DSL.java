@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -9409,7 +9410,7 @@ public class DSL {
     /**
      * Get the count(distinct field) function.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, FIREBIRD, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, FIREBIRD, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static AggregateFunction<Integer> countDistinct(Field<?> field) {
         return new Function<Integer>("count", true, SQLDataType.INTEGER, nullSafe(field));
     }
@@ -9503,7 +9504,7 @@ public class DSL {
     /**
      * Get the population standard deviation of a numeric field: stddev_pop(field).
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> stddevPop(Field<? extends Number> field) {
         return new Function<BigDecimal>(Term.STDDEV_POP, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -9511,7 +9512,7 @@ public class DSL {
     /**
      * Get the sample standard deviation of a numeric field: stddev_samp(field).
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field) {
         return new Function<BigDecimal>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -9519,7 +9520,7 @@ public class DSL {
     /**
      * Get the population variance of a numeric field: var_pop(field).
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> varPop(Field<? extends Number> field) {
         return new Function<BigDecimal>(Term.VAR_POP, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -9527,7 +9528,7 @@ public class DSL {
     /**
      * Get the sample variance of a numeric field: var_samp(field).
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
         return new Function<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, nullSafe(field));
     }

@@ -165,6 +165,7 @@ class Val<T> extends AbstractParam<T> {
                     // These dialects can hardly detect the type of a bound constant.
                     /* [pro] */
                     case DB2:
+                    case INFORMIX:
                     /* [/pro] */
                     case DERBY:
                     case FIREBIRD:

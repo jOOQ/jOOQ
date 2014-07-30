@@ -63,6 +63,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -226,7 +227,9 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         // If a limit applies
         if (getLimit().isApplicable()) {
-            switch (context.configuration().dialect()) {
+            SQLDialect dialect = context.configuration().dialect();
+
+            switch (dialect) {
 
                 /* [pro] */
                 // Oracle knows the ROWNUM pseudo-column. That makes things simple
@@ -277,11 +280,11 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                 }
 
                 // Sybase has TOP .. START AT support (no bind values)
-                // Firebird has FIRST .. SKIP support (no bind values)
+                case INFORMIX:
                 case SYBASE: {
 
                     // Native TOP support, without OFFSET and without bind values
-                    if (!getLimit().rendersParams()) {
+                    if (!getLimit().rendersParams() || dialect == INFORMIX) {
                         toSQLReference0(context);
                     }
 
@@ -552,7 +555,8 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
      * This part is common to any type of limited query
      */
     private final void toSQLReference0(Context<?> context, Field<?>[] alternativeFields) {
-        SQLDialect dialect = context.configuration().dialect();
+        SQLDialect dialect = context.dialect();
+        SQLDialect family = dialect.family();
 
         // SELECT clause
         // -------------
@@ -565,13 +569,20 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             context.sql(hint).sql(" ");
         }
 
+        /* [pro] */
+        // Informix requires SKIP .. FIRST .. to be placed before DISTINCT
+        if (dialect == INFORMIX && getLimit().isApplicable()) {
+            context.visit(getLimit()).sql(" ");
+        }
+        /* [/pro] */
+
         if (distinct) {
             context.keyword("distinct").sql(" ");
         }
 
         /* [pro] */
         // Sybase and SQL Server have leading TOP clauses
-        switch (dialect.family()) {
+        switch (family) {
             case ACCESS:
             case ASE:
             case SQLSERVER: {
@@ -586,7 +597,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                 }
 
                 // [#759] SQL Server needs a TOP clause in ordered subqueries
-                else if (dialect.family() == SQLSERVER
+                else if (family == SQLSERVER
                         && context.subquery()
                         && !getOrderBy().isEmpty()) {
 
@@ -658,7 +669,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         if (actualInto != null
                 && context.data(DATA_OMIT_INTO_CLAUSE) == null
-                && asList(ACCESS, ASE, HSQLDB, POSTGRES, SQLSERVER, SYBASE).contains(dialect.family())) {
+                && asList(ACCESS, ASE, HSQLDB, POSTGRES, SQLSERVER, SYBASE).contains(family)) {
 
             context.formatSeparator()
                    .keyword("into")
@@ -802,7 +813,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         // -------------
         context.start(SELECT_WINDOW);
 
-        if (!getWindow().isEmpty() && asList(POSTGRES, SYBASE).contains(dialect.family())) {
+        if (!getWindow().isEmpty() && asList(POSTGRES, SYBASE).contains(family)) {
             context.formatSeparator()
                    .keyword("window")
                    .sql(" ")

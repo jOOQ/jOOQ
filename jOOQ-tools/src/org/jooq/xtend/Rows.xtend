@@ -1198,6 +1198,7 @@ class Rows extends Generators {
         package org.jooq.impl;
 
         import static org.jooq.Clause.FIELD_ROW;
+        import static org.jooq.SQLDialect.INFORMIX;
         import static org.jooq.impl.DSL.row;
 
         import java.util.Arrays;
@@ -1208,7 +1209,6 @@ class Rows extends Generators {
         «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
         import org.jooq.BetweenAndStep«typeSuffixRaw(degree)»;
         «ENDFOR»
-        import org.jooq.BindContext;
         import org.jooq.Clause;
         import org.jooq.Comparator;
         import org.jooq.Condition;
@@ -1267,23 +1267,23 @@ class Rows extends Generators {
             // ------------------------------------------------------------------------
 
             @Override
-            public final void toSQL(RenderContext context) {
+            public final void accept(Context<?> context) {
+                /* [pro] */
+                if (context.family() == INFORMIX)
+                    context.keyword("row").sql(" ");
+        
+                /* [/pro] */
                 context.sql("(");
-
+        
                 String separator = "";
                 for (Field<?> field : fields.fields) {
                     context.sql(separator);
                     context.visit(field);
-
+        
                     separator = ", ";
                 }
-
+        
                 context.sql(")");
-            }
-
-            @Override
-            public final void bind(BindContext context) {
-                context.visit(fields);
             }
         
             @Override

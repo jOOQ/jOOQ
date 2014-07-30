@@ -188,6 +188,9 @@ enum Term {
                 case DB2:
                     return "stddev";
 
+                case INFORMIX:
+                    return "stdev";
+
                 case SQLSERVER:
                     return "stdevp";
             }
@@ -204,6 +207,9 @@ enum Term {
                 case DB2:
                     return "stddev";
 
+                case INFORMIX:
+                    return "stdev";
+
                 case SQLSERVER:
                     return "stdev";
             }
@@ -218,6 +224,7 @@ enum Term {
             /* [pro] */
             switch (dialect.family()) {
                 case DB2:
+                case INFORMIX:
                     return "variance";
 
                 case SQLSERVER:
@@ -234,6 +241,7 @@ enum Term {
             /* [pro] */
             switch (dialect.family()) {
                 case DB2:
+                case INFORMIX:
                     return "variance";
 
                 case SQLSERVER:

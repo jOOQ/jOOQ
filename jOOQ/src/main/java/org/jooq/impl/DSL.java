@@ -9324,7 +9324,7 @@ public class DSL {
      * Retrieve the Oracle-specific <code>LEVEL</code> pseudo-field (to be used
      * along with <code>CONNECT BY</code> clauses).
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     public static Field<Integer> level() {
         return field("level", Integer.class);
     }
@@ -9333,7 +9333,7 @@ public class DSL {
      * Retrieve the Oracle-specific <code>CONNECT_BY_ISCYCLE</code> pseudo-field
      * (to be used along with <code>CONNECT BY</code> clauses).
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     public static Field<Boolean> connectByIsCycle() {
         return field("connect_by_iscycle", Boolean.class);
     }
@@ -9342,7 +9342,7 @@ public class DSL {
      * Retrieve the Oracle-specific <code>CONNECT_BY_ISLEAF</code> pseudo-field
      * (to be used along with <code>CONNECT BY</code> clauses).
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     public static Field<Boolean> connectByIsLeaf() {
         return field("connect_by_isleaf", Boolean.class);
     }
@@ -9351,7 +9351,7 @@ public class DSL {
      * Retrieve the Oracle-specific <code>CONNECT_BY_ROOT</code> pseudo-column
      * (to be used along with <code>CONNECT BY</code> clauses).
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     public static <T> Field<T> connectByRoot(Field<T> field) {
         return field("{connect_by_root} {0}", nullSafe(field).getDataType(), field);
     }
@@ -9361,7 +9361,7 @@ public class DSL {
      * <code>SYS_CONNECT_BY_PATH(field, separator)</code> function (to be used
      * along with <code>CONNECT BY</code> clauses).
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     public static Field<String> sysConnectByPath(Field<?> field, String separator) {
         return field("{sys_connect_by_path}({0}, {1})", String.class, field, inline(separator));
     }
@@ -9370,9 +9370,9 @@ public class DSL {
      * Add the Oracle-specific <code>PRIOR</code> unary operator before a field
      * (to be used along with <code>CONNECT BY</code> clauses).
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     public static <T> Field<T> prior(Field<T> field) {
-        return field("{prior} {0}", nullSafe(field).getDataType(), field);
+        return new Prior<T>(field);
     }
 
     // -------------------------------------------------------------------------

@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -109,7 +110,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCTESimple() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, INGRES, MARIADB, MYSQL, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, INFORMIX, INGRES, MARIADB, MYSQL, SQLITE);
 
         Result<Record> result1 =
         create().with("t", "f1", "f2").as(select(val(1, Integer.class), val("a")))
@@ -128,7 +129,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCTEMultiple() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, INGRES, MARIADB, MYSQL, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, INFORMIX, INGRES, MARIADB, MYSQL, SQLITE);
 
         CommonTableExpression<Record2<Integer, String>> t1 = name("t1").fields("f1", "f2").as(select(val(1), val("a")));
         CommonTableExpression<Record2<Integer, String>> t2 = name("t2").fields("f3", "f4").as(select(val(2), val("b")));
@@ -164,7 +165,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCTEAliasing() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, INGRES, MARIADB, MYSQL, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, INFORMIX, INGRES, MARIADB, MYSQL, SQLITE);
 
         CommonTableExpression<Record2<Integer, String>> t1 = name("t1").fields("f1", "f2").as(select(val(1), val("a")));
         CommonTableExpression<Record2<Integer, String>> t2 = name("t2").fields("f3", "f4").as(select(val(2), val("b")));
@@ -216,7 +217,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCTEWithNoExplicitColumnLists() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, INGRES, MARIADB, MYSQL, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, INFORMIX, INGRES, MARIADB, MYSQL, SQLITE);
 
         Result<Record> result1 =
         create().with("a").as(select(
@@ -241,7 +242,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testRecursiveCTESimple() throws Exception {
 
         // This is currently the only use case supported by H2
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, INGRES, MARIADB, MYSQL, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, INFORMIX, INGRES, MARIADB, MYSQL, SQLITE);
 
         CommonTableExpression<Record2<Integer, String>> t1 =
         name("t1").fields("f1", "f2").as(
@@ -280,7 +281,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testRecursiveCTEMultiple() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, INGRES, MARIADB, MYSQL, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, INFORMIX, INGRES, MARIADB, MYSQL, SQLITE);
 
         CommonTableExpression<Record2<Integer, String>> t1 =
         name("t1").fields("f1", "f2").as(
@@ -341,7 +342,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCTEWithLimit() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, INGRES, MARIADB, MYSQL, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, INFORMIX, INGRES, MARIADB, MYSQL, SQLITE);
 
         CommonTableExpression<Record3<String, String, Integer>> t1 = name("t1").as(
             select(TAuthor_FIRST_NAME(), TAuthor_LAST_NAME(), TBook_ID())
@@ -367,7 +368,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCTEWithLimitOffset() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, INGRES, MARIADB, MYSQL, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, INFORMIX, INGRES, MARIADB, MYSQL, SQLITE);
 
         CommonTableExpression<Record3<String, String, Integer>> t1 = name("t1").as(
             select(TAuthor_FIRST_NAME(), TAuthor_LAST_NAME(), TBook_ID())

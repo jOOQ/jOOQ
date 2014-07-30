@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = 1631157654;
+	private static final long serialVersionUID = -278909970;
 
 	/**
 	 * The singleton instance of <code>informix.t_exotic_types</code>
@@ -61,7 +61,7 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.informix
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TExoticTypesRecord> getPrimaryKey() {
-		return org.jooq.test.informix.generatedclasses.Keys.U1433_2078;
+		return org.jooq.test.informix.generatedclasses.Keys.U5143_4829;
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.informix
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TExoticTypesRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TExoticTypesRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.U1433_2078);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TExoticTypesRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.U5143_4829);
 	}
 
 	/**

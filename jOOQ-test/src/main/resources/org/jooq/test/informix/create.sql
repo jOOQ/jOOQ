@@ -12,6 +12,7 @@ DROP TABLE t_book/
 DROP TABLE t_book_details/
 DROP TABLE t_author/
 DROP TABLE t_language/
+DROP TABLE t_directory/
 DROP TABLE x_test_case_2025/
 DROP TABLE x_test_case_71/
 DROP TABLE x_test_case_64_69/
@@ -88,6 +89,16 @@ CREATE TABLE t_triggers (
   id_generated int not null PRIMARY KEY CONSTRAINT pk_t_triggers,
   id int,
   counter int
+)
+/
+
+CREATE TABLE t_directory (
+  id           INT NOT NULL PRIMARY KEY CONSTRAINT pk_t_directory,
+  parent_id    INT,
+  is_directory INT,
+  "name"       varchar(50),
+
+  FOREIGN KEY (PARENT_ID) REFERENCES t_directory(ID) ON DELETE CASCADE
 )
 /
 

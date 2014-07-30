@@ -188,6 +188,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             /* [/pro] */
             case DERBY:
             case FIREBIRD:
+            case INFORMIX:
             case H2:
             case HSQLDB:
             case POSTGRES:

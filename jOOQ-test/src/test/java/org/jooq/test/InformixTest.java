@@ -52,6 +52,7 @@ import static org.jooq.test.informix.generatedclasses.Tables.T_BOOK_STORE;
 import static org.jooq.test.informix.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.informix.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.informix.generatedclasses.Tables.T_DATES;
+import static org.jooq.test.informix.generatedclasses.Tables.T_DIRECTORY;
 import static org.jooq.test.informix.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.informix.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.informix.generatedclasses.Tables.T_IDENTITY_PK;
@@ -84,7 +85,6 @@ import org.jooq.test.all.converters.Boolean_YES_NO_LC;
 import org.jooq.test.all.converters.Boolean_YES_NO_UC;
 import org.jooq.test.all.converters.Boolean_YN_LC;
 import org.jooq.test.all.converters.Boolean_YN_UC;
-import org.jooq.test.informix.generatedclasses.Keys;
 import org.jooq.test.informix.generatedclasses.Sequences;
 import org.jooq.test.informix.generatedclasses.Tables;
 import org.jooq.test.informix.generatedclasses.tables.records.TAuthorRecord;
@@ -93,6 +93,7 @@ import org.jooq.test.informix.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord;
 import org.jooq.test.informix.generatedclasses.tables.records.TBooleansRecord;
 import org.jooq.test.informix.generatedclasses.tables.records.TDatesRecord;
+import org.jooq.test.informix.generatedclasses.tables.records.TDirectoryRecord;
 import org.jooq.test.informix.generatedclasses.tables.records.TExoticTypesRecord;
 import org.jooq.test.informix.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.informix.generatedclasses.tables.records.TIdentityRecord;
@@ -125,7 +126,7 @@ public class InformixTest extends jOOQAbstractTest<
         XUnusedRecord,
         TDatesRecord,
         TBooleansRecord,
-        XUnusedRecord,
+        TDirectoryRecord,
         TTriggersRecord,
         XUnusedRecord,
         TExoticTypesRecord,
@@ -533,12 +534,12 @@ public class InformixTest extends jOOQAbstractTest<
 
     @Override
     protected ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_AUTHOR_ID() {
-        return Keys.R1429_2057;
+        return T_BOOK.getReferencesTo(T_AUTHOR).get(0);
     }
 
     @Override
     protected ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID() {
-        return Keys.R1429_2058;
+        return T_BOOK.getReferencesTo(T_AUTHOR).get(1);
     }
 
     @Override
@@ -567,28 +568,28 @@ public class InformixTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected Table<XUnusedRecord> TDirectory() {
-        return null;
+    protected Table<TDirectoryRecord> TDirectory() {
+        return T_DIRECTORY;
     }
 
     @Override
-    protected TableField<XUnusedRecord, Integer> TDirectory_ID() {
-        return null;
+    protected TableField<TDirectoryRecord, Integer> TDirectory_ID() {
+        return T_DIRECTORY.ID;
     }
 
     @Override
-    protected TableField<XUnusedRecord, Integer> TDirectory_PARENT_ID() {
-        return null;
+    protected TableField<TDirectoryRecord, Integer> TDirectory_PARENT_ID() {
+        return T_DIRECTORY.PARENT_ID;
     }
 
     @Override
-    protected TableField<XUnusedRecord, Integer> TDirectory_IS_DIRECTORY() {
-        return null;
+    protected TableField<TDirectoryRecord, Integer> TDirectory_IS_DIRECTORY() {
+        return T_DIRECTORY.IS_DIRECTORY;
     }
 
     @Override
-    protected TableField<XUnusedRecord, String> TDirectory_NAME() {
-        return null;
+    protected TableField<TDirectoryRecord, String> TDirectory_NAME() {
+        return T_DIRECTORY.NAME;
     }
 
     @Override

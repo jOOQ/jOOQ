@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Informix extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -2140135165;
+	private static final long serialVersionUID = 2004586568;
 
 	/**
 	 * The singleton instance of <code>informix</code>
@@ -51,10 +51,11 @@ public class Informix extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.informix.generatedclasses.tables.TBooleans.T_BOOLEANS,
 			org.jooq.test.informix.generatedclasses.tables.TUnsigned.T_UNSIGNED,
 			org.jooq.test.informix.generatedclasses.tables.TTriggers.T_TRIGGERS,
+			org.jooq.test.informix.generatedclasses.tables.TDirectory.T_DIRECTORY,
 			org.jooq.test.informix.generatedclasses.tables.TLanguage.T_LANGUAGE,
 			org.jooq.test.informix.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST,
-			org.jooq.test.informix.generatedclasses.tables.T_785.T_785,
 			org.jooq.test.informix.generatedclasses.tables.T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY,
+			org.jooq.test.informix.generatedclasses.tables.T_785.T_785,
 			org.jooq.test.informix.generatedclasses.tables.TAuthor.T_AUTHOR,
 			org.jooq.test.informix.generatedclasses.tables.TBook.T_BOOK,
 			org.jooq.test.informix.generatedclasses.tables.TBookStore.T_BOOK_STORE,

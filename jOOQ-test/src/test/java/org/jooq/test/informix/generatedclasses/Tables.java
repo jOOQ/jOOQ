@@ -42,6 +42,11 @@ public class Tables {
 	public static final org.jooq.test.informix.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.informix.generatedclasses.tables.TTriggers.T_TRIGGERS;
 
 	/**
+	 * The table informix.t_directory
+	 */
+	public static final org.jooq.test.informix.generatedclasses.tables.TDirectory T_DIRECTORY = org.jooq.test.informix.generatedclasses.tables.TDirectory.T_DIRECTORY;
+
+	/**
 	 * The table informix.t_language
 	 */
 	public static final org.jooq.test.informix.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.informix.generatedclasses.tables.TLanguage.T_LANGUAGE;
@@ -52,14 +57,14 @@ public class Tables {
 	public static final org.jooq.test.informix.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = org.jooq.test.informix.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST;
 
 	/**
-	 * The table informix.t_785
-	 */
-	public static final org.jooq.test.informix.generatedclasses.tables.T_785 T_785 = org.jooq.test.informix.generatedclasses.tables.T_785.T_785;
-
-	/**
 	 * The table informix.t_2845_case_sensitivity
 	 */
 	public static final org.jooq.test.informix.generatedclasses.tables.T_2845CaseSensitivity T_2845_CASE_SENSITIVITY = org.jooq.test.informix.generatedclasses.tables.T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY;
+
+	/**
+	 * The table informix.t_785
+	 */
+	public static final org.jooq.test.informix.generatedclasses.tables.T_785 T_785 = org.jooq.test.informix.generatedclasses.tables.T_785.T_785;
 
 	/**
 	 * The table informix.t_author

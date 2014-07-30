@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import org.jooq.Configuration;
+import org.jooq.SQLDialect;
 import org.jooq.Transaction;
 import org.jooq.TransactionContext;
 
@@ -60,6 +61,16 @@ class DefaultTransactionContext implements TransactionContext {
     @Override
     public final Configuration configuration() {
         return configuration;
+    }
+
+    @Override
+    public final SQLDialect dialect() {
+        return Utils.configuration(configuration()).dialect();
+    }
+
+    @Override
+    public final SQLDialect family() {
+        return dialect().family();
     }
 
     @Override

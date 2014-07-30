@@ -246,6 +246,16 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
         }
 
         @Override
+        public final SQLDialect dialect() {
+            return Utils.configuration(configuration()).dialect();
+        }
+
+        @Override
+        public final SQLDialect family() {
+            return dialect().family();
+        }
+
+        @Override
         public final Clause clause() {
             return visitClauses.peekLast();
         }
@@ -304,6 +314,16 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     @Override
     public final Configuration configuration() {
         return configuration;
+    }
+
+    @Override
+    public final SQLDialect dialect() {
+        return Utils.configuration(configuration()).dialect();
+    }
+
+    @Override
+    public final SQLDialect family() {
+        return dialect().family();
     }
 
     @Override

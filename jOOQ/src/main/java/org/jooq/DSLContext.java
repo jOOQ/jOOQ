@@ -124,6 +124,22 @@ public interface DSLContext {
     Configuration configuration();
 
     /**
+     * The {@link SQLDialect} wrapped by this context.
+     * <p>
+     * This method is a convenient way of accessing
+     * <code>configuration().dialect()</code>.
+     */
+    SQLDialect dialect();
+
+    /**
+     * The {@link SQLDialect#family()} wrapped by this context.
+     * <p>
+     * This method is a convenient way of accessing
+     * <code>configuration().dialect().family()</code>.
+     */
+    SQLDialect family();
+
+    /**
      * Map a schema to another one.
      * <p>
      * This will map a schema onto another one, depending on configured schema

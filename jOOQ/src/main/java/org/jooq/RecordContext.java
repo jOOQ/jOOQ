@@ -106,6 +106,22 @@ public interface RecordContext {
     Configuration configuration();
 
     /**
+     * The {@link SQLDialect} wrapped by this context.
+     * <p>
+     * This method is a convenient way of accessing
+     * <code>configuration().dialect()</code>.
+     */
+    SQLDialect dialect();
+
+    /**
+     * The {@link SQLDialect#family()} wrapped by this context.
+     * <p>
+     * This method is a convenient way of accessing
+     * <code>configuration().dialect().family()</code>.
+     */
+    SQLDialect family();
+
+    /**
      * The type of database interaction that is being executed.
      * <p>
      * Unlike {@link ExecuteContext#type()}, this can only result in any of

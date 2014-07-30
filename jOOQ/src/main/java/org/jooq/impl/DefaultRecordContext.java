@@ -48,6 +48,7 @@ import org.jooq.ExecuteType;
 import org.jooq.Record;
 import org.jooq.RecordContext;
 import org.jooq.RecordType;
+import org.jooq.SQLDialect;
 
 /**
  * A default implementation for {@link RecordContext}.
@@ -87,6 +88,16 @@ class DefaultRecordContext implements RecordContext {
     @Override
     public final Configuration configuration() {
         return configuration;
+    }
+
+    @Override
+    public final SQLDialect dialect() {
+        return Utils.configuration(configuration()).dialect();
+    }
+
+    @Override
+    public final SQLDialect family() {
+        return dialect().family();
     }
 
     @Override

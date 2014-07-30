@@ -65,6 +65,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Routine;
+import org.jooq.SQLDialect;
 import org.jooq.Truncate;
 import org.jooq.Update;
 import org.jooq.tools.jdbc.JDBCUtils;
@@ -408,6 +409,16 @@ class DefaultExecuteContext implements ExecuteContext {
     @Override
     public final Configuration configuration() {
         return configuration;
+    }
+
+    @Override
+    public final SQLDialect dialect() {
+        return Utils.configuration(configuration()).dialect();
+    }
+
+    @Override
+    public final SQLDialect family() {
+        return dialect().family();
     }
 
     @Override

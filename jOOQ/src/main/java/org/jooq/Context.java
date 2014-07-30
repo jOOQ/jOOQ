@@ -68,6 +68,22 @@ public interface Context<C extends Context<C>> {
     Configuration configuration();
 
     /**
+     * The {@link SQLDialect} wrapped by this context.
+     * <p>
+     * This method is a convenient way of accessing
+     * <code>configuration().dialect()</code>.
+     */
+    SQLDialect dialect();
+
+    /**
+     * The {@link SQLDialect#family()} wrapped by this context.
+     * <p>
+     * This method is a convenient way of accessing
+     * <code>configuration().dialect().family()</code>.
+     */
+    SQLDialect family();
+
+    /**
      * Get all custom data from this <code>Context</code>.
      * <p>
      * This is custom data that was previously set to the context using

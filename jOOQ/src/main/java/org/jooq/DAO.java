@@ -69,6 +69,22 @@ public interface DAO<R extends TableRecord<R>, P, T> {
     Configuration configuration();
 
     /**
+     * The {@link SQLDialect} wrapped by this context.
+     * <p>
+     * This method is a convenient way of accessing
+     * <code>configuration().dialect()</code>.
+     */
+    SQLDialect dialect();
+
+    /**
+     * The {@link SQLDialect#family()} wrapped by this context.
+     * <p>
+     * This method is a convenient way of accessing
+     * <code>configuration().dialect().family()</code>.
+     */
+    SQLDialect family();
+
+    /**
      * Expose the {@link RecordMapper} that is used internally by this
      * <code>DAO</code> to map from records of type <code>R</code> to POJOs of
      * type <code>P</code>.

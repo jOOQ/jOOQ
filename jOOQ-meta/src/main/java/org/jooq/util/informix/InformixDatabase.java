@@ -40,9 +40,7 @@
  */
 package org.jooq.util.informix;
 
-import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.selectDistinct;
-import static org.jooq.util.informix.sys.Tables.SYSCOLUMNS;
 import static org.jooq.util.informix.sys.Tables.SYSCONSTRAINTS;
 import static org.jooq.util.informix.sys.Tables.SYSINDEXES;
 import static org.jooq.util.informix.sys.Tables.SYSREFERENCES;
@@ -55,11 +53,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.DSLContext;
-import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.SelectJoinStep;
 import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -74,7 +70,6 @@ import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
-import org.jooq.util.informix.sys.tables.Syscolumns;
 import org.jooq.util.informix.sys.tables.Sysconstraints;
 import org.jooq.util.informix.sys.tables.Sysindexes;
 import org.jooq.util.informix.sys.tables.Sysreferences;
@@ -100,13 +95,13 @@ public class InformixDatabase extends AbstractDatabase {
             String tableName = record.getValue(SYSTABLES.TABNAME);
 
             for (int i = 3; i < record.size(); i++) {
-                String columnName = record.getValue(i, String.class);
+                int colNo = record.getValue(i, int.class);
 
-                if (columnName != null) {
+                if (colNo != 0) {
                     TableDefinition table = getTable(schema, tableName);
 
                     if (table != null) {
-                        relations.addPrimaryKey(key, table.getColumn(columnName));
+                        relations.addPrimaryKey(key, table.getColumns().get(colNo - 1));
                     }
                 }
             }
@@ -121,13 +116,13 @@ public class InformixDatabase extends AbstractDatabase {
             String tableName = record.getValue(SYSTABLES.TABNAME);
 
             for (int i = 3; i < record.size(); i++) {
-                String columnName = record.getValue(i, String.class);
+                int colNo = record.getValue(i, int.class);
 
-                if (columnName != null) {
+                if (colNo != 0) {
                     TableDefinition table = getTable(schema, tableName);
 
                     if (table != null) {
-                        relations.addUniqueKey(key, table.getColumn(columnName));
+                        relations.addUniqueKey(key, table.getColumns().get(colNo - 1));
                     }
                 }
             }
@@ -135,43 +130,41 @@ public class InformixDatabase extends AbstractDatabase {
     }
 
     private Result<?> fetchKeys(String constraintType) {
-        Syscolumns[] ci = new Syscolumns[16];
-        Field<?>[] cn = new Field[16];
-
-        for (int i = 0; i < ci.length; i++)
-            ci[i] = SYSCOLUMNS.as("c" + i);
-
-        for (int i = 0; i < cn.length; i++)
-            cn[i] = ci[i].COLNAME.trim().as(ci[i].COLNAME);
-
-        SelectJoinStep<?> join =
+        return
         create().select(
                     SYSTABLES.OWNER.trim().as(SYSTABLES.OWNER),
                     SYSTABLES.TABNAME.trim().as(SYSTABLES.TABNAME),
-                    SYSCONSTRAINTS.CONSTRNAME.trim().as(SYSCONSTRAINTS.CONSTRNAME)
+                    SYSCONSTRAINTS.CONSTRNAME.trim().as(SYSCONSTRAINTS.CONSTRNAME),
+                    SYSINDEXES.PART1,
+                    SYSINDEXES.PART2,
+                    SYSINDEXES.PART3,
+                    SYSINDEXES.PART4,
+                    SYSINDEXES.PART5,
+                    SYSINDEXES.PART6,
+                    SYSINDEXES.PART7,
+                    SYSINDEXES.PART8,
+                    SYSINDEXES.PART9,
+                    SYSINDEXES.PART10,
+                    SYSINDEXES.PART11,
+                    SYSINDEXES.PART12,
+                    SYSINDEXES.PART13,
+                    SYSINDEXES.PART14,
+                    SYSINDEXES.PART15,
+                    SYSINDEXES.PART16
                 )
-                .select(cn)
                 .from(SYSCONSTRAINTS)
                 .join(SYSTABLES)
                 .on(SYSCONSTRAINTS.TABID.eq(SYSTABLES.TABID))
                 .join(SYSINDEXES)
-                .on(row(SYSCONSTRAINTS.OWNER, SYSCONSTRAINTS.IDXNAME)
-                    .eq(SYSINDEXES.OWNER    , SYSINDEXES.IDXNAME));
-
-        for (int i = 0; i < ci.length; i++)
-            join =
-            join.leftOuterJoin(ci[i])
-                .on(SYSTABLES.TABID.eq(ci[i].TABID))
-                .and(SYSINDEXES.field(SYSINDEXES.PART1.getName().replace("1", "" + (i + 1))).coerce(SYSINDEXES.PART1).eq(ci[i].COLNO));
-
-        return
-        join.where(SYSCONSTRAINTS.OWNER.in(getInputSchemata()))
-            .and(SYSCONSTRAINTS.CONSTRTYPE.equal(constraintType))
-            .orderBy(
-                SYSCONSTRAINTS.OWNER.asc(),
-                SYSTABLES.TABNAME.asc(),
-                SYSCONSTRAINTS.CONSTRNAME.asc())
-            .fetch();
+                .on(SYSCONSTRAINTS.OWNER.eq(SYSINDEXES.OWNER))
+                .and(SYSCONSTRAINTS.IDXNAME.eq(SYSINDEXES.IDXNAME))
+                .where(SYSCONSTRAINTS.OWNER.in(getInputSchemata()))
+                .and(SYSCONSTRAINTS.CONSTRTYPE.equal(constraintType))
+                .orderBy(
+                    SYSCONSTRAINTS.OWNER.asc(),
+                    SYSTABLES.TABNAME.asc(),
+                    SYSCONSTRAINTS.CONSTRNAME.asc())
+                .fetch();
     }
 
     @Override
@@ -182,42 +175,40 @@ public class InformixDatabase extends AbstractDatabase {
         Systables fkTable = SYSTABLES.as("fkTable");
         Sysindexes fkIndex = SYSINDEXES.as("fkIndex");
 
-        Syscolumns[] ci = new Syscolumns[16];
-        Field<?>[] cn = new Field[16];
-
-        for (int i = 0; i < ci.length; i++)
-            ci[i] = SYSCOLUMNS.as("c" + i);
-
-        for (int i = 0; i < cn.length; i++)
-            cn[i] = ci[i].COLNAME.trim().as(ci[i].COLNAME);
-
-        SelectJoinStep<?> join =
-        create().select(
+        for (Record record : create()
+                .select(
                     uk.OWNER,
                     uk.CONSTRNAME,
                     fk.OWNER,
                     fk.CONSTRNAME,
-                    fkTable.TABNAME
+                    fkTable.TABNAME,
+                    fkIndex.PART1,
+                    fkIndex.PART2,
+                    fkIndex.PART3,
+                    fkIndex.PART4,
+                    fkIndex.PART5,
+                    fkIndex.PART6,
+                    fkIndex.PART7,
+                    fkIndex.PART8,
+                    fkIndex.PART9,
+                    fkIndex.PART10,
+                    fkIndex.PART11,
+                    fkIndex.PART12,
+                    fkIndex.PART13,
+                    fkIndex.PART14,
+                    fkIndex.PART15,
+                    fkIndex.PART16
                 )
-                .select(cn)
                 .from(r)
                 .join(fk)
                 .on(r.CONSTRID.eq(fk.CONSTRID))
                 .join(fkTable)
                 .on(fk.TABID.eq(fkTable.TABID))
                 .join(fkIndex)
-                .on(row(fk.OWNER, fk.IDXNAME)
-                    .eq(fkIndex.OWNER, fkIndex.IDXNAME))
+                .on(fk.OWNER.eq(fkIndex.OWNER))
+                .and(fk.IDXNAME.eq(fkIndex.IDXNAME))
                 .join(uk)
-                .on(r.PRIMARY.eq(uk.CONSTRID));
-
-        for (int i = 0; i < ci.length; i++)
-            join =
-            join.leftOuterJoin(ci[i])
-                .on(fk.TABID.eq(ci[i].TABID))
-                .and(fkIndex.field(fkIndex.PART1.getName().replace("1", "" + (i + 1))).coerce(fkIndex.PART1).eq(ci[i].COLNO));
-
-        for (Record record : join
+                .on(r.PRIMARY.eq(uk.CONSTRID))
                 .where(fk.OWNER.in(getInputSchemata()))
                 .and(uk.OWNER.in(getInputSchemata()))
                 .orderBy(
@@ -233,13 +224,13 @@ public class InformixDatabase extends AbstractDatabase {
             String uniqueKey = record.getValue(uk.CONSTRNAME).trim();
 
             for (int i = 5; i < record.size(); i++) {
-                String foreignKeyColumn = record.getValue(i, String.class);
+                int foreignKeyColumnNo = record.getValue(i, int.class);
 
-                if (foreignKeyColumn != null) {
+                if (foreignKeyColumnNo != 0) {
                     TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
 
                     if (foreignKeyTable != null) {
-                        ColumnDefinition referencingColumn = foreignKeyTable.getColumn(foreignKeyColumn.trim());
+                        ColumnDefinition referencingColumn = foreignKeyTable.getColumns().get(foreignKeyColumnNo - 1);
 
                         relations.addForeignKey(foreignKey, uniqueKey, referencingColumn, uniqueKeySchema);
                     }

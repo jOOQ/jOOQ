@@ -91,7 +91,7 @@ extends AbstractDefinition {
 
                 // [#2603] Filter exclude / include also for table columns
                 if (this instanceof TableDefinition && db.getIncludeExcludeColumns()) {
-                    elements = filterExcludeInclude(e, db.getExcludes(), db.getIncludes());
+                    elements = filterExcludeInclude(e, db.getExcludes(), db.getIncludes(), db.getFilters());
                     log.info("Columns fetched", fetchedSize(e, elements));
                 }
                 else {

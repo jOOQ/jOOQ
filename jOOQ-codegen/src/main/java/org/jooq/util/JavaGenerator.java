@@ -51,8 +51,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -141,6 +143,7 @@ public class JavaGenerator extends AbstractGenerator {
     @Override
     public final void generate(Database db) {
         this.database = db;
+        this.database.addFilter(new AvoidAmbiguousClassesFilter());
 
         String url = "";
         try {
@@ -312,6 +315,32 @@ public class JavaGenerator extends AbstractGenerator {
 
         // XXX [#651] Refactoring-cursor
         watch.splitInfo("GENERATION FINISHED!");
+    }
+
+    private class AvoidAmbiguousClassesFilter implements Database.Filter {
+
+        private Map<String, String> included = new HashMap<String, String>();
+
+        @Override
+        public boolean exclude(Definition definition) {
+
+            // These definitions don't generate types of their own.
+            if (    definition instanceof ColumnDefinition
+                 || definition instanceof AttributeDefinition
+                 || definition instanceof ParameterDefinition)
+                return false;
+
+            // Check if we've previously encountered a Java type of the same case-insensitive, fully-qualified name.
+            String name = getStrategy().getFullJavaClassName(definition);
+            String nameLC = name.toLowerCase();
+            String existing = included.put(nameLC, name);
+
+            if (existing == null)
+                return false;
+
+            log.warn("Ambiguous type name", "The object " + definition.getQualifiedOutputName() + " generates a type " + name + " which conflicts with the existing type " + existing + " on some operating systems. Use a custom generator strategy to disambiguate the types.");
+            return true;
+        }
     }
 
     /* [pro] */

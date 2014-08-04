@@ -50,6 +50,7 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -91,6 +92,7 @@ public abstract class AbstractDatabase implements Database {
     private SQLDialect                                                       dialect;
     private Connection                                                       connection;
     private DSLContext                                                       create;
+    private List<Filter>                                                     filters;
     private String[]                                                         excludes;
     private String[]                                                         includes;
     private boolean                                                          includeExcludeColumns;
@@ -142,6 +144,7 @@ public abstract class AbstractDatabase implements Database {
 
     protected AbstractDatabase() {
         exists = new HashMap<Table<?>, Boolean>();
+        filters = new ArrayList<Database.Filter>();
     }
 
     @Override
@@ -292,6 +295,16 @@ public abstract class AbstractDatabase implements Database {
 
     public final Properties getProperties() {
         return properties;
+    }
+
+    @Override
+    public final List<Filter> getFilters() {
+        return Collections.unmodifiableList(filters);
+    }
+
+    @Override
+    public final void addFilter(Filter filter) {
+        filters.add(filter);
     }
 
     @Override
@@ -833,10 +846,10 @@ public abstract class AbstractDatabase implements Database {
     }
 
     protected final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions) {
-        return filterExcludeInclude(definitions, excludes, includes);
+        return filterExcludeInclude(definitions, excludes, includes, filters);
     }
 
-    protected static final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String[] excludes, String[] includes) {
+    protected static final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String[] excludes, String[] includes, List<Filter> filters) {
         List<T> result = new ArrayList<T>();
 
         definitionsLoop: for (T definition : definitions) {
@@ -850,6 +863,12 @@ public abstract class AbstractDatabase implements Database {
 
                         continue definitionsLoop;
                     }
+                }
+            }
+
+            for (Filter filter : filters) {
+                if (filter.exclude(definition)) {
+                    continue definitionsLoop;
                 }
             }
 
@@ -944,7 +963,7 @@ public abstract class AbstractDatabase implements Database {
 
         for (SchemaDefinition schema : getSchemata()) {
             for (TableDefinition table : schema.getTables()) {
-                List<ColumnDefinition> columns = filterExcludeInclude(table.getColumns(), null, getSyntheticPrimaryKeys());
+                List<ColumnDefinition> columns = filterExcludeInclude(table.getColumns(), null, getSyntheticPrimaryKeys(), filters);
 
                 if (!columns.isEmpty()) {
                     DefaultUniqueKeyDefinition syntheticKey = new DefaultUniqueKeyDefinition(schema, "SYNTHETIC_PK_" + table.getName(), table, true);
@@ -963,7 +982,7 @@ public abstract class AbstractDatabase implements Database {
 
     private final void overridePrimaryKeys(DefaultRelations r) {
         List<UniqueKeyDefinition> allKeys = r.getUniqueKeys();
-        List<UniqueKeyDefinition> filteredKeys = filterExcludeInclude(allKeys, null, overridePrimaryKeys);
+        List<UniqueKeyDefinition> filteredKeys = filterExcludeInclude(allKeys, null, overridePrimaryKeys, filters);
 
         log.info("Overriding primary keys", fetchedSize(allKeys, filteredKeys));
 

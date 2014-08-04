@@ -217,6 +217,7 @@ class AlterTableImpl extends AbstractQuery implements
 
             switch (family) {
                 /* [pro] */
+                case INFORMIX:
                 case ORACLE:
                     ctx.sql(" ").keyword("modify");
                     break;

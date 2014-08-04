@@ -68,6 +68,7 @@ class CurrentUser extends AbstractFunction<String> {
                 return field("{currentuser}()", SQLDataType.VARCHAR);
 
             case ASE:
+            case INFORMIX:
             case ORACLE:
                 return field("{user}", SQLDataType.VARCHAR);
 

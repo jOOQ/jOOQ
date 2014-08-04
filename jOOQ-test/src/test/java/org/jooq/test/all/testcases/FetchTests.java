@@ -43,8 +43,11 @@ package org.jooq.test.all.testcases;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.selectOne;
@@ -428,17 +431,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testFetchMany() throws Exception {
-        switch (dialect().family()) {
-            /* [pro] */
-            case ACCESS:
-            case ORACLE:
-            case SYBASE:
-            /* [/pro] */
-            case SQLITE:
-                log.info("SKIPPING", "Fetch Many tests");
-                return;
-        }
-
+        assumeFamilyNotIn(ACCESS, INFORMIX, ORACLE, SYBASE, SQLITE);
         List<Result<Record>> results = create().fetchMany(
             "select * from t_book order by " + TBook_ID().getName());
 

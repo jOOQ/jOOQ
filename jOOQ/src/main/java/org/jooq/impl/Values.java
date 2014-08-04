@@ -99,6 +99,7 @@ class Values<R extends Record> extends AbstractTable<R> {
             // for those dialects that do not support a VALUES() constructor
             /* [pro] */
             case ACCESS:
+            case INFORMIX:
             case INGRES:
             case ORACLE:
             case SYBASE:

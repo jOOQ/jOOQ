@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -108,8 +109,8 @@ class IsDistinctFrom<T> extends AbstractCondition {
      */
     private final QueryPartInternal delegate(Configuration configuration) {
 
-        // These dialects need to simulate the IS DISTINCT FROM predicate
-        if (asList(ACCESS, ASE, CUBRID, DB2, DERBY, INGRES, ORACLE, SQLSERVER, SYBASE).contains(configuration.dialect().family())) {
+        // These dialects need to emulate the IS DISTINCT FROM predicate
+        if (asList(ACCESS, ASE, CUBRID, DB2, DERBY, INFORMIX, INGRES, ORACLE, SQLSERVER, SYBASE).contains(configuration.dialect().family())) {
             if (caseExpression == null) {
                 if (comparator == Comparator.IS_DISTINCT_FROM) {
                     caseExpression = (QueryPartInternal) decode()

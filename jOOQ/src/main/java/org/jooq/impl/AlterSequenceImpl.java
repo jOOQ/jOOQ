@@ -110,7 +110,7 @@ class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
             if (ctx.family() == INFORMIX)
                 ctx.sql(" ").keyword("restart with 1");
             else
-            /* [pro] */
+            /* [/pro] */
                 ctx.sql(" ").keyword("restart");
         }
         else {

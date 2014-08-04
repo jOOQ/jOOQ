@@ -285,9 +285,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(1, books.size());
         assertEquals(5, (int) books.get(0).getValue(TBook_ID()));
 
+        // [#1423] Add checks for the ILIKE operator
+        // -----------------------------------------
+        books =
+        create().selectFrom(TBook())
+                .where(TBook_TITLE().likeIgnoreCase("%IM%"))
+                .and(TBook_TITLE().notLikeIgnoreCase("%o%"))
+                .fetch();
+
+        assertEquals(1, books.size());
+        assertEquals(asList(2), books.getValues(TBook_ID()));
+    }
+
+    public void testLikeWithNumbers() throws Exception {
+
         // [#1159] Add checks for matching numbers with LIKE
         // -------------------------------------------------
-        books =
+        Result<B> books =
         create().selectFrom(TBook())
                 .where(TBook_PUBLISHED_IN().like("194%"))
                 .orderBy(TBook_ID())
@@ -318,17 +332,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals(1, books.size());
         assertEquals(asList(3), books.getValues(TBook_ID()));
-
-        // [#1423] Add checks for the ILIKE operator
-        // -----------------------------------------
-        books =
-        create().selectFrom(TBook())
-                .where(TBook_TITLE().likeIgnoreCase("%IM%"))
-                .and(TBook_TITLE().notLikeIgnoreCase("%o%"))
-                .fetch();
-
-        assertEquals(1, books.size());
-        assertEquals(asList(2), books.getValues(TBook_ID()));
     }
 
     public void testLikeRegex() throws Exception {

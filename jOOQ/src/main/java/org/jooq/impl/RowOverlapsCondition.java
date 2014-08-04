@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -110,8 +111,8 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         boolean standardOverlaps = type0.isDateTime() && type1.isTemporal();
         boolean intervalOverlaps = type0.isDateTime() && (type1.isInterval() || type1.isNumeric());
 
-        // The non-standard OVERLAPS predicate is always simulated
-        if (!standardOverlaps || asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, MARIADB, MYSQL, SQLSERVER, SQLITE, SYBASE).contains(configuration.dialect().family())) {
+        // The non-standard OVERLAPS predicate is always emulated
+        if (!standardOverlaps || asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, INFORMIX, INGRES, MARIADB, MYSQL, SQLSERVER, SQLITE, SYBASE).contains(configuration.dialect().family())) {
 
             // Interval OVERLAPS predicates need some additional arithmetic
             if (intervalOverlaps) {
@@ -129,7 +130,7 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         }
 
         // These dialects seem to have trouble with INTERVAL OVERLAPS predicates
-        else if (intervalOverlaps && asList(HSQLDB).contains(configuration.dialect())) {
+        else if (intervalOverlaps && asList(HSQLDB, INFORMIX).contains(configuration.dialect())) {
                 return (QueryPartInternal)
                         right1.le(left1.add(left2)).and(
                         left1.le(right1.add(right2)));

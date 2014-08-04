@@ -1268,22 +1268,28 @@ class Rows extends Generators {
 
             @Override
             public final void accept(Context<?> context) {
-                /* [pro] */
-                if (context.family() == INFORMIX)
-                    context.keyword("row").sql(" ");
-        
-                /* [/pro] */
-                context.sql("(");
-        
-                String separator = "";
-                for (Field<?> field : fields.fields) {
-                    context.sql(separator);
-                    context.visit(field);
-        
-                    separator = ", ";
+                if (fields.fields.length == 1) {
+                    context.visit(fields.fields[0]);
                 }
+                else {
         
-                context.sql(")");
+                    /* [pro] */
+                    if (context.family() == INFORMIX)
+                        context.keyword("row").sql(" ");
+        
+                    /* [/pro] */
+                    context.sql("(");
+        
+                    String separator = "";
+                    for (Field<?> field : fields.fields) {
+                        context.sql(separator);
+                        context.visit(field);
+        
+                        separator = ", ";
+                    }
+        
+                    context.sql(")");
+                }
             }
         
             @Override

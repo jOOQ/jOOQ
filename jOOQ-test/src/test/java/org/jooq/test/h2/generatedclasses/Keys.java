@@ -34,6 +34,7 @@ public class Keys {
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST = UniqueKeys0.PK_T_725_LOB_TEST;
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_2698Record> PK_T_2698 = UniqueKeys0.PK_T_2698;
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_2718Record> PK_T_2718 = UniqueKeys0.PK_T_2718;
+	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_3488AbcXyzEeeRecord> PK_T_3488_1 = UniqueKeys0.PK_T_3488_1;
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord> PK_T_AUTHOR = UniqueKeys0.PK_T_AUTHOR;
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> PK_T_BOOK = UniqueKeys0.PK_T_BOOK;
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord> UK_T_BOOK_STORE_NAME = UniqueKeys0.UK_T_BOOK_STORE_NAME;
@@ -88,6 +89,7 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.h2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_2698Record> PK_T_2698 = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.T_2698.T_2698, org.jooq.test.h2.generatedclasses.tables.T_2698.T_2698.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_2718Record> PK_T_2718 = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.T_2718.T_2718, org.jooq.test.h2.generatedclasses.tables.T_2718.T_2718.EXCLUDE_ME);
+		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_3488AbcXyzEeeRecord> PK_T_3488_1 = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.T_3488AbcXyzEee.T_3488_ABC_XYZ_EEE, org.jooq.test.h2.generatedclasses.tables.T_3488AbcXyzEee.T_3488_ABC_XYZ_EEE.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord> PK_T_AUTHOR = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR, org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> PK_T_BOOK = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord> UK_T_BOOK_STORE_NAME = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.TBookStore.T_BOOK_STORE, org.jooq.test.h2.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME);

@@ -82,6 +82,11 @@ public class Tables {
 	public static final org.jooq.test.h2.generatedclasses.tables.T_2718 T_2718 = org.jooq.test.h2.generatedclasses.tables.T_2718.T_2718;
 
 	/**
+	 * The table PUBLIC.T_3488_ABC_XYZ_EEE
+	 */
+	public static final org.jooq.test.h2.generatedclasses.tables.T_3488AbcXyzEee T_3488_ABC_XYZ_EEE = org.jooq.test.h2.generatedclasses.tables.T_3488AbcXyzEee.T_3488_ABC_XYZ_EEE;
+
+	/**
 	 * An entity holding authors of books
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.TAuthor T_AUTHOR = org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR;

@@ -279,8 +279,10 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                     break;
                 }
 
-                // Sybase has TOP .. START AT support (no bind values)
+                // Informix has SKIP .. FIRST support
                 case INFORMIX:
+
+                // Sybase has TOP .. START AT support (no bind values)
                 case SYBASE: {
 
                     // Native TOP support, without OFFSET and without bind values
@@ -558,6 +560,21 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         SQLDialect dialect = context.dialect();
         SQLDialect family = dialect.family();
 
+        /* [pro] */
+
+        // Informix doesn't allow SKIP .. FIRST in correlated subqueries, but we can
+        // transform the subquery into a derived table, where SKIP .. FIRST are permitted.
+        boolean wrapInDerivedTable = family == INFORMIX && context.subquery() && (getLimit().isApplicable() || !getOrderBy().isEmpty());
+
+        if (wrapInDerivedTable)
+            context.keyword("select").sql(" *")
+                   .formatSeparator()
+                   .keyword("from").sql(" (")
+                   .formatIndentStart()
+                   .formatNewLine();
+
+        /* [/pro] */
+
         // SELECT clause
         // -------------
         context.start(SELECT_SELECT)
@@ -571,7 +588,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         /* [pro] */
         // Informix requires SKIP .. FIRST .. to be placed before DISTINCT
-        if (dialect == INFORMIX && getLimit().isApplicable()) {
+        if (family == INFORMIX && getLimit().isApplicable()) {
             context.visit(getLimit()).sql(" ");
         }
         /* [/pro] */
@@ -852,6 +869,13 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         /* [/pro] */
 
         context.end(SELECT_ORDER_BY);
+
+        /* [pro] */
+        if (wrapInDerivedTable)
+            context.formatIndentEnd()
+                   .formatNewLine()
+                   .sql(")");
+        /* [/pro] */
     }
 
     @Override

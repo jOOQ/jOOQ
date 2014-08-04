@@ -597,8 +597,8 @@ public class BasicTest extends AbstractTest {
         assertEquals(val("8"), t8.field8());
 
         // Rendering
-        assertEquals("(?)", r_ref().render(t1));
-        assertEquals("(1)", r_refI().render(t1));
+        assertEquals("?", r_ref().render(t1));
+        assertEquals("1", r_refI().render(t1));
         assertEquals("(?, ?)", r_ref().render(t2));
         assertEquals("(1, '2')", r_refI().render(t2));
         assertEquals("(?, ?, ?)", r_ref().render(t3));
@@ -631,8 +631,8 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testRowCompareConditions() throws Exception {
-        assertEquals("(?) = (?)", r_ref().render(row(1).eq(row(1))));
-        assertEquals("(1) = (1)", r_refI().render(row(1).eq(row(1))));
+        assertEquals("? = ?", r_ref().render(row(1).eq(row(1))));
+        assertEquals("1 = 1", r_refI().render(row(1).eq(row(1))));
         assertEquals("(?, ?) = (?, ?)", r_ref().render(row(1, "2").eq(row(1, "2"))));
         assertEquals("(1, '2') = (1, '2')", r_refI().render(row(1, "2").eq(row(1, "2"))));
         assertEquals("(?, ?, ?) = (?, ?, ?)", r_ref().render(row(1, "2", 3).eq(row(1, "2", 3))));

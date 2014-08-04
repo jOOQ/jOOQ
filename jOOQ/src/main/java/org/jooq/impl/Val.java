@@ -350,11 +350,15 @@ class Val<T> extends AbstractParam<T> {
             }
             else if (type == Boolean.class) {
 
-                // [#1153] Some dialects don't support boolean literals
-                // TRUE and FALSE
+                // [#1153] Some dialects don't support boolean literals TRUE and FALSE
                 if (asList(ASE, DB2, FIREBIRD, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(family)) {
                     context.sql(((Boolean) val) ? "1" : "0");
                 }
+                /* [pro] */
+                else if (family == INFORMIX) {
+                    context.sql(((Boolean) val) ? "'t'" : "'f'");
+                }
+                /* [/pro] */
                 else {
                     context.keyword(((Boolean) val).toString());
                 }

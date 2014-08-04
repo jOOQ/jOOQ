@@ -279,8 +279,10 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                     xxxxxx
                 x
 
-                xx xxxxxx xxx xxx xx xxxxx xx xxxxxxx xxx xxxx xxxxxxx
+                xx xxxxxxxx xxx xxxx xx xxxxx xxxxxxx
                 xxxx xxxxxxxxx
+
+                xx xxxxxx xxx xxx xx xxxxx xx xxxxxxx xxx xxxx xxxxxxx
                 xxxx xxxxxxx x
 
                     xx xxxxxx xxx xxxxxxxx xxxxxxx xxxxxx xxx xxxxxxx xxxx xxxxxx
@@ -558,6 +560,21 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         SQLDialect dialect = context.dialect();
         SQLDialect family = dialect.family();
 
+        /* [pro] xx
+
+        xx xxxxxxxx xxxxxxx xxxxx xxxx xx xxxxx xx xxxxxxxxxx xxxxxxxxxxx xxx xx xxx
+        xx xxxxxxxxx xxx xxxxxxxx xxxx x xxxxxxx xxxxxx xxxxx xxxx xx xxxxx xxx xxxxxxxxxx
+        xxxxxxx xxxxxxxxxxxxxxxxxx x xxxxxx xx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxx
+
+        xx xxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
+                   xxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxxxx xxx
+                   xxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxx
+
+        xx [/pro] */
+
         // SELECT clause
         // -------------
         context.start(SELECT_SELECT)
@@ -571,7 +588,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         /* [pro] xx
         xx xxxxxxxx xxxxxxxx xxxx xx xxxxx xx xx xx xxxxxx xxxxxx xxxxxxxx
-        xx xxxxxxxx xx xxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx x
+        xx xxxxxxx xx xxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
         x
         xx [/pro] */
@@ -852,6 +869,13 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         xx [/pro] */
 
         context.end(SELECT_ORDER_BY);
+
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxx
+                   xxxxxxxxxx
+        xx [/pro] */
     }
 
     @Override

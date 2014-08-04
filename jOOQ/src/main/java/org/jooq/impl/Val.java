@@ -350,11 +350,15 @@ class Val<T> extends AbstractParam<T> {
             }
             else if (type == Boolean.class) {
 
-                // [#1153] Some dialects don't support boolean literals
-                // TRUE and FALSE
+                // [#1153] Some dialects don't support boolean literals TRUE and FALSE
                 if (asList(FIREBIRD, SQLITE).contains(family)) {
                     context.sql(((Boolean) val) ? "1" : "0");
                 }
+                /* [pro] xx
+                xxxx xx xxxxxxx xx xxxxxxxxx x
+                    xxxxxxxxxxxxxxxxxxxxxx xxxx x xxxxx x xxxxxxx
+                x
+                xx [/pro] */
                 else {
                     context.keyword(((Boolean) val).toString());
                 }

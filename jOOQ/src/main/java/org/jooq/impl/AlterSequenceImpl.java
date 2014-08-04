@@ -106,11 +106,11 @@ class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
         T with = restartWith;
         if (with == null) {
 
-            /* [pro] */
-            if (ctx.family() == INFORMIX)
-                ctx.sql(" ").keyword("restart with 1");
-            else
-            /* [pro] */
+            /* [pro] xx
+            xx xxxxxxxxxxxxx xx xxxxxxxxx
+                xxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxx xxxx
+            xxxx
+            xx [/pro] */
                 ctx.sql(" ").keyword("restart");
         }
         else {

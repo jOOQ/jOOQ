@@ -191,22 +191,28 @@ implements
 
     @Override
     public final void accept(Context<?> context) {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxx xx xxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
-
-        xx [/pro] */
-        context.sql("(");
-
-        String separator = "";
-        for (Field<?> field : fields.fields) {
-            context.sql(separator);
-            context.visit(field);
-
-            separator = ", ";
+        if (fields.fields.length == 1) {
+            context.visit(fields.fields[0]);
         }
+        else {
 
-        context.sql(")");
+            /* [pro] xx
+            xx xxxxxxxxxxxxxxxxx xx xxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
+
+            xx [/pro] */
+            context.sql("(");
+
+            String separator = "";
+            for (Field<?> field : fields.fields) {
+                context.sql(separator);
+                context.visit(field);
+
+                separator = ", ";
+            }
+
+            context.sql(")");
+        }
     }
 
     @Override

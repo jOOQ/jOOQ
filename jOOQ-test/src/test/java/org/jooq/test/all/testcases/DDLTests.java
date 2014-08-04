@@ -44,6 +44,7 @@ import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
+// ...
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
@@ -265,6 +266,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testAlterTableAlterDefault() throws Exception {
+        assumeFamilyNotIn();
+
         try {
             // TODO: Re-use jOOQ API for this
             create().execute("create table {0} ({1} int, {2} " + varchar() + ")", name("t"), name("a"), name("b"));

@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
@@ -108,7 +109,7 @@ class IsDistinctFrom<T> extends AbstractCondition {
      */
     private final QueryPartInternal delegate(Configuration configuration) {
 
-        // These dialects need to simulate the IS DISTINCT FROM predicate
+        // These dialects need to emulate the IS DISTINCT FROM predicate
         if (asList(CUBRID, DERBY).contains(configuration.dialect().family())) {
             if (caseExpression == null) {
                 if (comparator == Comparator.IS_DISTINCT_FROM) {

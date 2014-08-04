@@ -90,11 +90,12 @@ class FieldMapsForInsert extends AbstractQueryPart {
 
         // True SQL92 multi-record inserts aren't always supported
         else {
-            switch (ctx.configuration().dialect().family()) {
+            switch (ctx.family()) {
 
                 // Some dialects don't support multi-record inserts
                 /* [pro] xx
-                xxxx xxxxxxx x
+                xxxx xxxxxxx
+                xxxx xxxxxxxxx x
                     xxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxx
 
                     xx xx xxxxxx xxxx xxx xxxxxxx xxxxxx xx xxxxxx xxx xx xxxxx xxxxxx xxx xx xxxxxxxxxxx xxxx
@@ -103,7 +104,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
                     xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
                     xxxxxxxxxxxxxxxxxxxxx
-                           xxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxxxxxx
                     xxxxxxxxxxxxxxxxxx
                     xxxxxxxxxxxxxxxxxxxxxxx
 
@@ -117,7 +118,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
                 case FIREBIRD:
                 case SQLITE: {
                     ctx.formatSeparator()
-                           .start(INSERT_SELECT);
+                       .start(INSERT_SELECT);
                     ctx.visit(insertSelect(ctx));
                     ctx.end(INSERT_SELECT);
 
@@ -126,9 +127,9 @@ class FieldMapsForInsert extends AbstractQueryPart {
 
                 default: {
                     ctx.formatSeparator()
-                           .start(INSERT_VALUES)
-                           .keyword("values")
-                           .sql(" ");
+                       .start(INSERT_VALUES)
+                       .keyword("values")
+                       .sql(" ");
                     toSQL92Values(ctx);
                     ctx.end(INSERT_VALUES);
 

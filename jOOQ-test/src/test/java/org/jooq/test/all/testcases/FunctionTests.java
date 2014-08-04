@@ -186,11 +186,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testFunctionPosition() throws Exception {
-        // SQLite does not have anything like the position function
-        if (dialect() == SQLDialect.SQLITE) {
-            log.info("SKIPPING", "position function test");
-            return;
-        }
+        assumeFamilyNotIn(SQLITE);
 
         SelectQuery<?> q = create().selectQuery();
         q.addFrom(VLibrary());

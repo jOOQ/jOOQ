@@ -2710,6 +2710,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testLikeWithNumbers() throws Exception {
+        new PredicateTests(this).testLikeWithNumbers();
+    }
+
+    @Test
     public void testLikeRegex() throws Exception {
         new PredicateTests(this).testLikeRegex();
     }

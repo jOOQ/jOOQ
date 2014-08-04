@@ -52,6 +52,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
@@ -110,7 +111,7 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         boolean standardOverlaps = type0.isDateTime() && type1.isTemporal();
         boolean intervalOverlaps = type0.isDateTime() && (type1.isInterval() || type1.isNumeric());
 
-        // The non-standard OVERLAPS predicate is always simulated
+        // The non-standard OVERLAPS predicate is always emulated
         if (!standardOverlaps || asList(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE).contains(configuration.dialect().family())) {
 
             // Interval OVERLAPS predicates need some additional arithmetic

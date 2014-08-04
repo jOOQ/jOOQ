@@ -384,13 +384,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCountDistinct() throws Exception {
-
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxx xxxxxxxx
-            xxxxxxx
-        x
-        xx [/pro] */
+        assumeFamilyNotIn();
 
         assertEquals(2, create()
             .select(countDistinct(TBook_AUTHOR_ID()))
@@ -614,10 +608,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
                 // Ordered PERCENT_RANK()
                 column++;
-                assertEquals("1", result.get(0).getValue(column, String.class).substring(0, 1));
+                assertEquals("1"  , result.get(0).getValue(column, String.class).substring(0, 1));
                 assertEquals("0.6", result.get(1).getValue(column, String.class).substring(0, 3));
                 assertEquals("0.3", result.get(2).getValue(column, String.class).substring(0, 3));
-                assertEquals("0", result.get(3).getValue(column, String.class).substring(0, 1));
+                assertEquals("0"  , result.get(3).getValue(column, String.class).substring(0, 1));
 
                 // Partitioned and ordered PERCENT_RANK()
                 column++;
@@ -628,17 +622,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
                 // Ordered CUME_DIST()
                 column++;
-                assertEquals("1", result.get(0).getValue(column, String.class).substring(0, 1));
-                assertEquals("0.75", result.get(1).getValue(column, String.class));
-                assertEquals("0.5", result.get(2).getValue(column, String.class));
-                assertEquals("0.25", result.get(3).getValue(column, String.class));
+                assertEquals("1"   , result.get(0).getValue(column, String.class).substring(0, 1));
+                assertEquals("0.75", result.get(1).getValue(column, String.class).substring(0, 4));
+                assertEquals("0.5" , result.get(2).getValue(column, String.class).substring(0, 3));
+                assertEquals("0.25", result.get(3).getValue(column, String.class).substring(0, 4));
 
                 // Partitioned and ordered CUME_DIST()
                 column++;
-                assertEquals("1", result.get(0).getValue(column, String.class).substring(0, 1));
-                assertEquals("0.5", result.get(1).getValue(column, String.class));
-                assertEquals("1", result.get(2).getValue(column, String.class).substring(0, 1));
-                assertEquals("0.5", result.get(3).getValue(column, String.class));
+                assertEquals("1"  , result.get(0).getValue(column, String.class).substring(0, 1));
+                assertEquals("0.5", result.get(1).getValue(column, String.class).substring(0, 3));
+                assertEquals("1"  , result.get(2).getValue(column, String.class).substring(0, 1));
+                assertEquals("0.5", result.get(3).getValue(column, String.class).substring(0, 3));
 
                 break;
             }
@@ -698,7 +692,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(0.25, result.get(0).getValue(7, Double.class), 0.0);
 
         // DB2 only knows STDDEV_POP / VAR_POP
-        if (true/* [pro] xx xx xxxxxxxxx xx xxxxxxxxxxxxxxxx [/pro] */) {
+        if (true && !asList().contains(dialect().family())) {
             assertEquals("1.290", result.get(0).getValue(2, String.class).substring(0, 5));
             assertEquals("1.666", result.get(0).getValue(4, String.class).substring(0, 5));
             assertEquals("0.707", result.get(0).getValue(6, String.class).substring(0, 5));

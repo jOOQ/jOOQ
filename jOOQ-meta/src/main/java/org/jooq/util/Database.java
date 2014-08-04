@@ -236,6 +236,17 @@ public interface Database {
     boolean getIncludeExcludeColumns();
 
     /**
+     * [#3488] Add an additional filter to the database that is applied in
+     * addition to include / exclude.
+     */
+    void addFilter(Filter filter);
+
+    /**
+     * [#3488] The filters that are applied in addition to include / exclude.
+     */
+    List<Filter> getFilters();
+
+    /**
      * Table columns matching these regular expressions will be considered as
      * record version fields in generated code.
      */
@@ -375,4 +386,15 @@ public interface Database {
      * Check for the existence of a table in the dictionary views.
      */
     boolean exists(Table<?> table);
+
+    /**
+     * A filter type that can be used with {@link Database#addFilter(Filter)}
+     */
+    public interface Filter {
+
+        /**
+         * Whether to include an object in this database.
+         */
+        boolean exclude(Definition definition);
+    }
 }

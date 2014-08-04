@@ -122,7 +122,11 @@ public class DefaultTransactionProvider implements TransactionProvider {
     @Override
     public final void commit(TransactionContext ctx) {
         Stack<Savepoint> savepoints = savepoints(ctx.configuration());
-        savepoints.pop();
+        Savepoint savepoint = savepoints.pop();
+
+        // [#3489] Explicitly release savepoints prior to commit
+        if (savepoint != null)
+            connection(ctx.configuration()).releaseSavepoint(savepoint);
 
         // This is the top-level transaction
         if (savepoints.isEmpty()) {

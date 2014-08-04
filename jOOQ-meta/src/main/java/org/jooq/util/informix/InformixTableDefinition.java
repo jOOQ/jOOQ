@@ -40,10 +40,7 @@
  */
 package org.jooq.util.informix;
 
-import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.nvl;
 import static org.jooq.util.informix.sys.Tables.SYSCOLUMNS;
 import static org.jooq.util.informix.sys.Tables.SYSTABLES;
 import static org.jooq.util.informix.sys.Tables.SYSXTDTYPES;
@@ -59,6 +56,9 @@ import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.SchemaDefinition;
+import org.jooq.util.informix.sys.tables.Syscolumns;
+import org.jooq.util.informix.sys.tables.Systables;
+import org.jooq.util.informix.sys.tables.Sysxtdtypes;
 
 /**
  * Informix table definition
@@ -75,49 +75,28 @@ public class InformixTableDefinition extends AbstractTableDefinition {
     public List<ColumnDefinition> getElements0() throws SQLException {
         List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
+        Syscolumns c = SYSCOLUMNS.as("c");
+        Systables t = SYSTABLES.as("t");
+        Sysxtdtypes x = SYSXTDTYPES.as("x");
+
         for (Record record : create().select(
-                    field("syscolumns.colname", String.class).trim().as("colname"),
-                    field("syscolumns.colno", Integer.class).as("colno"),
+                    c.COLNAME.trim().as(c.COLNAME),
+                    c.COLNO,
 
                     // http://publib.boulder.ibm.com/infocenter/idshelp/v10/index.jsp?topic=/com.ibm.sqlr.doc/sqlrmst41.htm
-                    nvl(SYSXTDTYPES.NAME,
-                        decode().value(field("bitand(syscolumns.coltype, 255)", Integer.class))
-                                .when(inline(0   ), inline("CHAR"      ))
-                                .when(inline(1   ), inline("SMALLINT"  ))
-                                .when(inline(2   ), inline("INTEGER"   ))
-                                .when(inline(3   ), inline("FLOAT"     ))
-                                .when(inline(4   ), inline("SMALLFLOAT"))
-                                .when(inline(5   ), inline("DECIMAL"   ))
-                                .when(inline(6   ), inline("SERIAL"    ))
-                                .when(inline(7   ), inline("DATE"      ))
-                                .when(inline(8   ), inline("MONEY"     ))
-                                .when(inline(9   ), inline("NULL"      ))
-                                .when(inline(10  ), inline("DATETIME"  ))
-                                .when(inline(11  ), inline("BYTE"      ))
-                                .when(inline(12  ), inline("TEXT"      ))
-                                .when(inline(13  ), inline("VARCHAR"   ))
-                                .when(inline(14  ), inline("INTERVAL"  ))
-                                .when(inline(15  ), inline("NCHAR"     ))
-                                .when(inline(16  ), inline("NVARCHAR"  ))
-                                .when(inline(17  ), inline("INT8"      ))
-                                .when(inline(18  ), inline("SERIAL8"   ))
-                                .when(inline(19  ), inline("SET"       ))
-                                .when(inline(20  ), inline("MULTISET"  ))
-                                .when(inline(21  ), inline("LIST"      ))
-                                .when(inline(22  ), inline("ROW"       ))
-                                .when(inline(40  ), inline("OTHER"     ))
-                                .when(inline(4118), inline("ROW"       ))
-                                .otherwise(         inline("OTHER"     ))
-                        ).as("coltype"),
-                    field("syscolumns.collength", Integer.class).as("collength"),
-                    field("bitand(syscolumns.coltype, 256) / 256", boolean.class).as("nullable")
+                    field("informix.schema_coltypename({0}, {1})", String.class, c.COLTYPE, c.EXTENDED_ID).trim().as("coltype"),
+                    field("informix.schema_charlen({0}, {1}, {2})", int.class, c.COLTYPE, c.EXTENDED_ID, c.COLLENGTH).as("collength"),
+                    field("informix.schema_precision({0}, {1}, {2})", int.class, c.COLTYPE, c.EXTENDED_ID, c.COLLENGTH).as("precision"),
+                    field("informix.schema_numscale({0}, {1})", int.class, c.COLTYPE, c.COLLENGTH).as("scale"),
+                    field("informix.schema_isnullable({0})", boolean.class, c.COLTYPE).as("nullable"),
+                    field("informix.schema_isautoincr({0})", boolean.class, c.COLTYPE).as("identity")
                 )
-                .from(SYSTABLES)
-                .join(SYSCOLUMNS).on(SYSTABLES.TABID.eq(SYSCOLUMNS.TABID))
-                .leftOuterJoin(SYSXTDTYPES).on(SYSCOLUMNS.EXTENDED_ID.eq(SYSXTDTYPES.EXTENDED_ID))
-                .where(SYSTABLES.OWNER.eq(getSchema().getInputName()))
-                .and(SYSTABLES.TABNAME.eq(getInputName()))
-                .orderBy(SYSCOLUMNS.COLNO)
+                .from(t)
+                .join(c).on(t.TABID.eq(c.TABID))
+                .leftOuterJoin(x).on(c.EXTENDED_ID.eq(x.EXTENDED_ID))
+                .where(t.OWNER.eq(getSchema().getInputName()))
+                .and(t.TABNAME.eq(getInputName()))
+                .orderBy(c.COLNO)
                 .fetch()) {
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
@@ -125,18 +104,18 @@ public class InformixTableDefinition extends AbstractTableDefinition {
                 getSchema(),
                 record.getValue("coltype", String.class),
                 record.getValue("collength", Integer.class),
-                record.getValue("collength", Integer.class),
-                0,
+                record.getValue("precision", Integer.class),
+                record.getValue("scale", Integer.class),
                 record.getValue("nullable", boolean.class),
                 false
             );
 
             ColumnDefinition column = new DefaultColumnDefinition(
             	getDatabase().getTable(getSchema(), getName()),
-                record.getValue("colname", String.class),
-                record.getValue("colno", Integer.class),
+                record.getValue(c.COLNAME),
+                record.getValue(c.COLNO),
                 type,
-                false, // identity
+                record.getValue("identity", boolean.class),
                 null
             );
 

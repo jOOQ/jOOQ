@@ -254,7 +254,7 @@ public class InformixTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<T_639NumbersTableRecord, BigDecimal> T639_BIG_DECIMAL() {
-        return null; // T_639_NUMBERS_TABLE.BIG_DECIMAL;
+        return T_639_NUMBERS_TABLE.BIG_DECIMAL;
     }
 
     @Override
@@ -269,7 +269,7 @@ public class InformixTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<T_639NumbersTableRecord, Byte> T639_BYTE_DECIMAL() {
-        return null; // T_639_NUMBERS_TABLE.BYTE_DECIMAL;
+        return T_639_NUMBERS_TABLE.BYTE_DECIMAL;
     }
 
     @Override
@@ -279,7 +279,7 @@ public class InformixTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<T_639NumbersTableRecord, Short> T639_SHORT_DECIMAL() {
-        return null; // T_639_NUMBERS_TABLE.SHORT_DECIMAL;
+        return T_639_NUMBERS_TABLE.SHORT_DECIMAL;
     }
 
     @Override
@@ -289,17 +289,17 @@ public class InformixTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<T_639NumbersTableRecord, Integer> T639_INTEGER_DECIMAL() {
-        return null; // T_639_NUMBERS_TABLE.INTEGER_DECIMAL;
+        return T_639_NUMBERS_TABLE.INTEGER_DECIMAL;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Long> T639_LONG() {
-        return null; // T_639_NUMBERS_TABLE.LONG;
+        return T_639_NUMBERS_TABLE.LONG;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Long> T639_LONG_DECIMAL() {
-        return null; // T_639_NUMBERS_TABLE.LONG_DECIMAL;
+        return T_639_NUMBERS_TABLE.LONG_DECIMAL;
     }
 
     @Override

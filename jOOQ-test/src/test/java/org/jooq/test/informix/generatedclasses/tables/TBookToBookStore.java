@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -1424899449;
+	private static final long serialVersionUID = -891204386;
 
 	/**
 	 * The singleton instance of <code>informix.t_book_to_book_store</code>
@@ -27,17 +27,17 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.info
 	/**
 	 * The column <code>informix.t_book_to_book_store.book_store_name</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR.length(100), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR.length(100).nullable(false), this, "");
 
 	/**
 	 * The column <code>informix.t_book_to_book_store.book_id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("book_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("book_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>informix.t_book_to_book_store.stock</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("stock", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("stock", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>informix.t_book_to_book_store</code> table reference
@@ -66,7 +66,7 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.info
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord> getPrimaryKey() {
-		return org.jooq.test.informix.generatedclasses.Keys.U7552_8147;
+		return org.jooq.test.informix.generatedclasses.Keys.U8187_8787;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.info
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.U7552_8147);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.U8187_8787);
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.info
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.informix.generatedclasses.Keys.R7552_8148, org.jooq.test.informix.generatedclasses.Keys.R7552_8149);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.informix.generatedclasses.Keys.R8187_8788, org.jooq.test.informix.generatedclasses.Keys.R8187_8789);
 	}
 
 	/**

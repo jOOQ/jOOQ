@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = -955687350;
+	private static final long serialVersionUID = 948697219;
 
 	/**
 	 * The singleton instance of <code>informix.x_test_case_64_69</code>
@@ -27,12 +27,12 @@ public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.infor
 	/**
 	 * The column <code>informix.x_test_case_64_69.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>informix.x_test_case_64_69.unused_id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> UNUSED_ID = createField("unused_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> UNUSED_ID = createField("unused_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>informix.x_test_case_64_69</code> table reference
@@ -61,7 +61,7 @@ public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.infor
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_64_69Record> getPrimaryKey() {
-		return org.jooq.test.informix.generatedclasses.Keys.U7556_8161;
+		return org.jooq.test.informix.generatedclasses.Keys.U8191_8801;
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.infor
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_64_69Record>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_64_69Record>>asList(org.jooq.test.informix.generatedclasses.Keys.U7556_8161);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_64_69Record>>asList(org.jooq.test.informix.generatedclasses.Keys.U8191_8801);
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.infor
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_64_69Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_64_69Record, ?>>asList(org.jooq.test.informix.generatedclasses.Keys.R7556_8162);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_64_69Record, ?>>asList(org.jooq.test.informix.generatedclasses.Keys.R8191_8802);
 	}
 
 	/**

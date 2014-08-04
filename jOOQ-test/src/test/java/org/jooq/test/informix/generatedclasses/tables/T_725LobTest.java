@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = 599311934;
+	private static final long serialVersionUID = -1754892339;
 
 	/**
 	 * The singleton instance of <code>informix.t_725_lob_test</code>
@@ -27,12 +27,12 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.informix
 	/**
 	 * The column <code>informix.t_725_lob_test.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>informix.t_725_lob_test.lob</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("lob", org.jooq.impl.SQLDataType.BLOB.length(72).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("lob", org.jooq.impl.SQLDataType.BLOB.length(2147483647), this, "");
 
 	/**
 	 * Create a <code>informix.t_725_lob_test</code> table reference

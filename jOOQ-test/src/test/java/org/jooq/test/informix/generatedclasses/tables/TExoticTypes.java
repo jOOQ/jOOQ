@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -369005550;
+	private static final long serialVersionUID = -283220856;
 
 	/**
 	 * The singleton instance of <code>informix.t_exotic_types</code>
@@ -27,12 +27,12 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.informix
 	/**
 	 * The column <code>informix.t_exotic_types.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TExoticTypesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TExoticTypesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>informix.t_exotic_types.uu</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("uu", org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("uu", org.jooq.impl.SQLDataType.UUID, this, "");
 
 	/**
 	 * Create a <code>informix.t_exotic_types</code> table reference
@@ -61,7 +61,7 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.informix
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TExoticTypesRecord> getPrimaryKey() {
-		return org.jooq.test.informix.generatedclasses.Keys.U7554_8157;
+		return org.jooq.test.informix.generatedclasses.Keys.U8189_8797;
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.informix
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TExoticTypesRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TExoticTypesRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.U7554_8157);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TExoticTypesRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.U8189_8797);
 	}
 
 	/**

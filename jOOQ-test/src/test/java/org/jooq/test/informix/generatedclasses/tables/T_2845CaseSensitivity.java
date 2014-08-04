@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2845CaseSensitivity extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.T_2845CaseSensitivityRecord> {
 
-	private static final long serialVersionUID = 2126049582;
+	private static final long serialVersionUID = 230012077;
 
 	/**
 	 * The singleton instance of <code>informix.t_2845_case_sensitivity</code>
@@ -27,7 +27,7 @@ public class T_2845CaseSensitivity extends org.jooq.impl.TableImpl<org.jooq.test
 	/**
 	 * The column <code>informix.t_2845_case_sensitivity.insensitive</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_2845CaseSensitivityRecord, java.lang.Integer> INSENSITIVE = createField("insensitive", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_2845CaseSensitivityRecord, java.lang.Integer> INSENSITIVE = createField("insensitive", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>informix.t_2845_case_sensitivity</code> table reference

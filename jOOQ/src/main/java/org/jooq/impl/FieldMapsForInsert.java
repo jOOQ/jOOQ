@@ -90,11 +90,12 @@ class FieldMapsForInsert extends AbstractQueryPart {
 
         // True SQL92 multi-record inserts aren't always supported
         else {
-            switch (ctx.configuration().dialect().family()) {
+            switch (ctx.family()) {
 
                 // Some dialects don't support multi-record inserts
                 /* [pro] */
-                case ACCESS: {
+                case ACCESS:
+                case INFORMIX: {
                     Select<Record> select = insertSelect(ctx);
 
                     // MS Access does not support INSERT .. SELECT a1, b1 UNION SELECT a2, b2 statements. This
@@ -103,7 +104,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
                     select = DSL.select().from(select.asTable("t", Utils.fieldNames(select.getSelect().size())));
 
                     ctx.formatSeparator()
-                           .start(INSERT_SELECT);
+                       .start(INSERT_SELECT);
                     ctx.visit(select);
                     ctx.end(INSERT_SELECT);
 
@@ -117,7 +118,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
                 case FIREBIRD:
                 case SQLITE: {
                     ctx.formatSeparator()
-                           .start(INSERT_SELECT);
+                       .start(INSERT_SELECT);
                     ctx.visit(insertSelect(ctx));
                     ctx.end(INSERT_SELECT);
 
@@ -126,9 +127,9 @@ class FieldMapsForInsert extends AbstractQueryPart {
 
                 default: {
                     ctx.formatSeparator()
-                           .start(INSERT_VALUES)
-                           .keyword("values")
-                           .sql(" ");
+                       .start(INSERT_VALUES)
+                       .keyword("values")
+                       .sql(" ");
                     toSQL92Values(ctx);
                     ctx.end(INSERT_VALUES);
 

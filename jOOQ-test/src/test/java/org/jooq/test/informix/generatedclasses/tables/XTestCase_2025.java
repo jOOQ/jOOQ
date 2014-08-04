@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_2025Record> {
 
-	private static final long serialVersionUID = 1691842786;
+	private static final long serialVersionUID = -652816599;
 
 	/**
 	 * The singleton instance of <code>informix.x_test_case_2025</code>
@@ -27,12 +27,12 @@ public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.inform
 	/**
 	 * The column <code>informix.x_test_case_2025.ref_id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_2025Record, java.lang.Integer> REF_ID = createField("ref_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_2025Record, java.lang.Integer> REF_ID = createField("ref_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>informix.x_test_case_2025.ref_name</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_2025Record, java.lang.String> REF_NAME = createField("ref_name", org.jooq.impl.SQLDataType.VARCHAR.length(10), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_2025Record, java.lang.String> REF_NAME = createField("ref_name", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), this, "");
 
 	/**
 	 * Create a <code>informix.x_test_case_2025</code> table reference
@@ -61,7 +61,7 @@ public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.inform
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_2025Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_2025Record, ?>>asList(org.jooq.test.informix.generatedclasses.Keys.R7559_8170, org.jooq.test.informix.generatedclasses.Keys.R7559_8171, org.jooq.test.informix.generatedclasses.Keys.R7559_8172);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_2025Record, ?>>asList(org.jooq.test.informix.generatedclasses.Keys.R8194_8810, org.jooq.test.informix.generatedclasses.Keys.R8194_8811, org.jooq.test.informix.generatedclasses.Keys.R8194_8812);
 	}
 
 	/**

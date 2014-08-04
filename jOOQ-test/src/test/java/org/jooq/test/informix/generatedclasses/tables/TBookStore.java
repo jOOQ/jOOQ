@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 1302945933;
+	private static final long serialVersionUID = 1349054124;
 
 	/**
 	 * The singleton instance of <code>informix.t_book_store</code>
@@ -27,7 +27,7 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.informix.g
 	/**
 	 * The column <code>informix.t_book_store.name</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(100), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(100).nullable(false), this, "");
 
 	/**
 	 * Create a <code>informix.t_book_store</code> table reference

@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 1733377488;
+	private static final long serialVersionUID = 171447048;
 
 	/**
 	 * The singleton instance of <code>informix.t_639_numbers_table</code>
@@ -27,62 +27,62 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.inf
 	/**
 	 * The column <code>informix.t_639_numbers_table.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>informix.t_639_numbers_table.short</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Short> SHORT = createField("short", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Short> SHORT = createField("short", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.t_639_numbers_table.INTEGER</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> INTEGER = createField("INTEGER", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> INTEGER = createField("INTEGER", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.t_639_numbers_table.LONG</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Object> LONG = createField("LONG", org.jooq.impl.SQLDataType.OTHER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> LONG = createField("LONG", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
 	/**
 	 * The column <code>informix.t_639_numbers_table.byte_decimal</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigInteger> BYTE_DECIMAL = createField("byte_decimal", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(512).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Byte> BYTE_DECIMAL = createField("byte_decimal", org.jooq.impl.SQLDataType.TINYINT, this, "");
 
 	/**
 	 * The column <code>informix.t_639_numbers_table.short_decimal</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigInteger> SHORT_DECIMAL = createField("short_decimal", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(1024).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Short> SHORT_DECIMAL = createField("short_decimal", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.t_639_numbers_table.integer_decimal</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigInteger> INTEGER_DECIMAL = createField("integer_decimal", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(2304).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> INTEGER_DECIMAL = createField("integer_decimal", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.t_639_numbers_table.long_decimal</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigInteger> LONG_DECIMAL = createField("long_decimal", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(4608).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Long> LONG_DECIMAL = createField("long_decimal", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
 	/**
 	 * The column <code>informix.t_639_numbers_table.big_integer</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigInteger> BIG_INTEGER = createField("big_integer", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(5632).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigInteger> BIG_INTEGER = createField("big_integer", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(22), this, "");
 
 	/**
 	 * The column <code>informix.t_639_numbers_table.big_decimal</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigInteger> BIG_DECIMAL = createField("big_decimal", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(5637).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.math.BigDecimal> BIG_DECIMAL = createField("big_decimal", org.jooq.impl.SQLDataType.DECIMAL.precision(22, 5), this, "");
 
 	/**
 	 * The column <code>informix.t_639_numbers_table.FLOAT</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Float> FLOAT = createField("FLOAT", org.jooq.impl.SQLDataType.REAL.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Float> FLOAT = createField("FLOAT", org.jooq.impl.SQLDataType.REAL, this, "");
 
 	/**
 	 * The column <code>informix.t_639_numbers_table.DOUBLE</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Double> DOUBLE = createField("DOUBLE", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Double> DOUBLE = createField("DOUBLE", org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
 	/**
 	 * Create a <code>informix.t_639_numbers_table</code> table reference
@@ -111,7 +111,7 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.inf
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord> getPrimaryKey() {
-		return org.jooq.test.informix.generatedclasses.Keys.U7555_8159;
+		return org.jooq.test.informix.generatedclasses.Keys.U8190_8799;
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.inf
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.U7555_8159);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.U8190_8799);
 	}
 
 	/**

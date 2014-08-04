@@ -355,9 +355,8 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             }
         }
         else {
-            if (log.isDebugEnabled()) {
+            if (log.isDebugEnabled())
                 log.debug("Query is not executable", this);
-            }
 
             return 0;
         }

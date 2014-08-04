@@ -217,6 +217,7 @@ class AlterTableImpl extends AbstractQuery implements
 
             switch (family) {
                 /* [pro] xx
+                xxxx xxxxxxxxx
                 xxxx xxxxxxx
                     xxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
                     xxxxxx

@@ -229,6 +229,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 // [#1260] TODO CUBRID supports this, but there's a JDBC bug
                 /* [pro] xx
                 xxxx xxxx
+                xxxx xxxxxxxxx
                 xxxx xxxxxxx
                 xxxx xxxxxxxxxx
                 xx [/pro] */
@@ -332,6 +333,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 // [#1260] TODO CUBRID supports this, but there's a JDBC bug
                 /* [pro] xx
                 xxxx xxxx
+                xxxx xxxxxxxxx
                 xxxx xxxxxxx
                 xxxx xxxxxxxxxx
                 xx [/pro] */

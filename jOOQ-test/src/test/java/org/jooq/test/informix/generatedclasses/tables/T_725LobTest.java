@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -382405446;
+	private static final long serialVersionUID = 599311934;
 
 	/**
 	 * The singleton instance of <code>informix.t_725_lob_test</code>
@@ -32,7 +32,7 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.informix
 	/**
 	 * The column <code>informix.t_725_lob_test.lob</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Object> LOB = createField("lob", org.jooq.impl.SQLDataType.OTHER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("lob", org.jooq.impl.SQLDataType.BLOB.length(72).nullable(false), this, "");
 
 	/**
 	 * Create a <code>informix.t_725_lob_test</code> table reference

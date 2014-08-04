@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -230,13 +231,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testInsertDefaultValues() throws Exception {
-        /* [pro] */
-        if (dialect().family() == ACCESS) {
-            log.info("SKIPPING", "Default values test");
-            return;
-        }
-        /* [/pro] */
-
+        assumeFamilyNotIn(ACCESS, INFORMIX);
         jOOQAbstractTest.reset = false;
 
         assertEquals(1,
@@ -249,8 +244,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testInsertDefaultValue() throws Exception {
-        assumeFamilyNotIn(ACCESS, FIREBIRD);
-
+        assumeFamilyNotIn(ACCESS, INFORMIX, FIREBIRD);
         jOOQAbstractTest.reset = false;
 
         assertEquals(1,
@@ -263,8 +257,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testUpdateDefaultValue() throws Exception {
-        assumeFamilyNotIn(ACCESS, FIREBIRD);
-
+        assumeFamilyNotIn(ACCESS, INFORMIX, FIREBIRD);
         jOOQAbstractTest.reset = false;
 
         assertEquals(4,

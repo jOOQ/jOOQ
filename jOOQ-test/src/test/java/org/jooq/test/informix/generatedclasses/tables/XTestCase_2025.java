@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_2025Record> {
 
-	private static final long serialVersionUID = 23903312;
+	private static final long serialVersionUID = 1691842786;
 
 	/**
 	 * The singleton instance of <code>informix.x_test_case_2025</code>
@@ -61,7 +61,7 @@ public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.inform
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_2025Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_2025Record, ?>>asList(org.jooq.test.informix.generatedclasses.Keys.R5148_4842, org.jooq.test.informix.generatedclasses.Keys.R5148_4843, org.jooq.test.informix.generatedclasses.Keys.R5148_4844);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_2025Record, ?>>asList(org.jooq.test.informix.generatedclasses.Keys.R7559_8170, org.jooq.test.informix.generatedclasses.Keys.R7559_8171, org.jooq.test.informix.generatedclasses.Keys.R7559_8172);
 	}
 
 	/**

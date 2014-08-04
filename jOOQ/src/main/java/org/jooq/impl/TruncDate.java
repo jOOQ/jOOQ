@@ -136,6 +136,20 @@ class TruncDate<T extends java.util.Date> extends AbstractFunction<T> {
 //            }
 
             /* [pro] */
+            case INFORMIX: {
+                switch (part) {
+                    case YEAR:   keyword = "YEAR";   break;
+                    case MONTH:  keyword = "MONTH";  break;
+                    case DAY:    keyword = "DD";     break;
+                    case HOUR:   keyword = "HH";     break;
+                    case MINUTE: keyword = "MI";     break;
+                    case SECOND: return field("{cast}({0} {as datetime year to second})", date);
+                    default: throwUnsupported();
+                }
+
+                return field("{trunc}({0}, {1})", getDataType(), date, inline(keyword));
+            }
+
             case DB2: {
                 switch (part) {
                     case YEAR:   keyword = "YYYY";   break;

@@ -43,6 +43,7 @@ package org.jooq.test.all.testcases;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -716,6 +717,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testFunctionsOnNumbers_RAND() throws Exception {
+        assumeFamilyNotIn(INFORMIX);
 
         // The random function
         BigDecimal rand = create().select(rand()).fetchOne(rand());
@@ -999,7 +1001,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("02:00:00", record.getValue(t2).toString());
     }
 
-    public void testFunctionsOnDates() throws Exception {
+    public void testFunctionsOnDates_EXTRACT() throws Exception {
 
         // Some checks on current_timestamp functions
         // ------------------------------------------
@@ -1055,12 +1057,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(record.getValue(hour1), record.getValue(hour2));
         assertEquals(record.getValue(minute1), record.getValue(minute2));
         assertEquals(record.getValue(second1), record.getValue(second2));
+    }
+
+    public void testFunctionsOnDates_ARITHMETIC() throws Exception {
 
         // Timestamp arithmetic
         // --------------------
+        Field<Timestamp> now = currentTimestamp();
+        Field<Timestamp> ts = now.as("ts");
         Field<Timestamp> tomorrow = now.add(1);
         Field<Timestamp> yesterday = now.sub(1);
-        record = create().select(tomorrow, ts, yesterday).fetchOne();
+        Record record = create().select(tomorrow, ts, yesterday).fetchOne();
 
         // Be sure this test doesn't fail when we switch from CET to CEST :-)
         Calendar cal = Calendar.getInstance();

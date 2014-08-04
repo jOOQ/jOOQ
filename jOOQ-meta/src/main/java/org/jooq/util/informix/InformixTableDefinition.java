@@ -43,6 +43,10 @@ package org.jooq.util.informix;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.nvl;
+import static org.jooq.util.informix.sys.Tables.SYSCOLUMNS;
+import static org.jooq.util.informix.sys.Tables.SYSTABLES;
+import static org.jooq.util.informix.sys.Tables.SYSXTDTYPES;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -76,42 +80,44 @@ public class InformixTableDefinition extends AbstractTableDefinition {
                     field("syscolumns.colno", Integer.class).as("colno"),
 
                     // http://publib.boulder.ibm.com/infocenter/idshelp/v10/index.jsp?topic=/com.ibm.sqlr.doc/sqlrmst41.htm
-                    decode().value(field("bitand(syscolumns.coltype, 255)", Integer.class))
-                            .when(inline(0   ), inline("CHAR"      ))
-                            .when(inline(1   ), inline("SMALLINT"  ))
-                            .when(inline(2   ), inline("INTEGER"   ))
-                            .when(inline(3   ), inline("FLOAT"     ))
-                            .when(inline(4   ), inline("SMALLFLOAT"))
-                            .when(inline(5   ), inline("DECIMAL"   ))
-                            .when(inline(6   ), inline("SERIAL"    ))
-                            .when(inline(7   ), inline("DATE"      ))
-                            .when(inline(8   ), inline("MONEY"     ))
-                            .when(inline(9   ), inline("NULL"      ))
-                            .when(inline(10  ), inline("DATETIME"  ))
-                            .when(inline(11  ), inline("BYTE"      ))
-                            .when(inline(12  ), inline("TEXT"      ))
-                            .when(inline(13  ), inline("VARCHAR"   ))
-                            .when(inline(14  ), inline("INTERVAL"  ))
-                            .when(inline(15  ), inline("NCHAR"     ))
-                            .when(inline(16  ), inline("NVARCHAR"  ))
-                            .when(inline(17  ), inline("INT8"      ))
-                            .when(inline(18  ), inline("SERIAL8"   ))
-                            .when(inline(19  ), inline("SET"       ))
-                            .when(inline(20  ), inline("MULTISET"  ))
-                            .when(inline(21  ), inline("LIST"      ))
-                            .when(inline(22  ), inline("ROW"       ))
-                            .when(inline(40  ), inline("OTHER"     ))
-                            .when(inline(4118), inline("ROW"       ))
-                            .otherwise(         inline("OTHER"     ))
-                            .as("coltype"),
+                    nvl(SYSXTDTYPES.NAME,
+                        decode().value(field("bitand(syscolumns.coltype, 255)", Integer.class))
+                                .when(inline(0   ), inline("CHAR"      ))
+                                .when(inline(1   ), inline("SMALLINT"  ))
+                                .when(inline(2   ), inline("INTEGER"   ))
+                                .when(inline(3   ), inline("FLOAT"     ))
+                                .when(inline(4   ), inline("SMALLFLOAT"))
+                                .when(inline(5   ), inline("DECIMAL"   ))
+                                .when(inline(6   ), inline("SERIAL"    ))
+                                .when(inline(7   ), inline("DATE"      ))
+                                .when(inline(8   ), inline("MONEY"     ))
+                                .when(inline(9   ), inline("NULL"      ))
+                                .when(inline(10  ), inline("DATETIME"  ))
+                                .when(inline(11  ), inline("BYTE"      ))
+                                .when(inline(12  ), inline("TEXT"      ))
+                                .when(inline(13  ), inline("VARCHAR"   ))
+                                .when(inline(14  ), inline("INTERVAL"  ))
+                                .when(inline(15  ), inline("NCHAR"     ))
+                                .when(inline(16  ), inline("NVARCHAR"  ))
+                                .when(inline(17  ), inline("INT8"      ))
+                                .when(inline(18  ), inline("SERIAL8"   ))
+                                .when(inline(19  ), inline("SET"       ))
+                                .when(inline(20  ), inline("MULTISET"  ))
+                                .when(inline(21  ), inline("LIST"      ))
+                                .when(inline(22  ), inline("ROW"       ))
+                                .when(inline(40  ), inline("OTHER"     ))
+                                .when(inline(4118), inline("ROW"       ))
+                                .otherwise(         inline("OTHER"     ))
+                        ).as("coltype"),
                     field("syscolumns.collength", Integer.class).as("collength"),
                     field("bitand(syscolumns.coltype, 256) / 256", boolean.class).as("nullable")
                 )
-                .from("systables")
-                .join("syscolumns").on("systables.tabid = syscolumns.tabid")
-                .where("systables.owner = ?", getSchema().getInputName())
-                .and("systables.tabname = ?", getInputName())
-                .orderBy(field("syscolumns.colno"))
+                .from(SYSTABLES)
+                .join(SYSCOLUMNS).on(SYSTABLES.TABID.eq(SYSCOLUMNS.TABID))
+                .leftOuterJoin(SYSXTDTYPES).on(SYSCOLUMNS.EXTENDED_ID.eq(SYSXTDTYPES.EXTENDED_ID))
+                .where(SYSTABLES.OWNER.eq(getSchema().getInputName()))
+                .and(SYSTABLES.TABNAME.eq(getInputName()))
+                .orderBy(SYSCOLUMNS.COLNO)
                 .fetch()) {
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(

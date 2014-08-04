@@ -370,10 +370,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testRowValueExpressionNULLPredicate() throws Exception {
-        assertEquals(3, (int)
+        assertEquals(4, (int)
         create().selectCount()
                 .from(TBook())
-                .where(row(TBook_CONTENT_PDF(), TBook_CONTENT_TEXT()).isNull())
+                .where(row(TBook_CO_AUTHOR_ID(), TBook_CO_AUTHOR_ID()).isNull())
                 .and(row(TBook_ID(), TBook_AUTHOR_ID()).isNotNull())
                 .fetchOne(0, Integer.class));
 

@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -970,7 +971,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testListAgg() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, INGRES, SQLSERVER);
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, INFORMIX, INGRES, SQLSERVER);
 
         // [#3045] Skip this test for the time being
         if (!asList(ORACLE).contains(dialect().family())) {

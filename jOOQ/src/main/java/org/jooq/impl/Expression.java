@@ -142,7 +142,7 @@ class Expression<T> extends AbstractFunction<T> {
         else if (BIT_AND == operator && FIREBIRD == family) {
             return function("bin_and", getDataType(), getArguments());
         }
-        else if (BIT_XOR == operator && asList(DB2, H2, HSQLDB).contains(family)) {
+        else if (BIT_XOR == operator && asList(DB2, H2, HSQLDB, INFORMIX).contains(family)) {
             return function("bitxor", getDataType(), getArguments());
         }
         else if (BIT_XOR == operator && FIREBIRD == family) {
@@ -170,10 +170,10 @@ class Expression<T> extends AbstractFunction<T> {
         }
 
         // Many dialects don't support shifts. Use multiplication/division instead
-        else if (SHL == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(family)) {
+        else if (SHL == operator && asList(ASE, DB2, H2, HSQLDB, INFORMIX, INGRES, ORACLE, SQLSERVER, SYBASE).contains(family)) {
             return lhs.mul(DSL.power(two(), rhsAsNumber()));
         }
-        else if (SHR == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(family)) {
+        else if (SHR == operator && asList(ASE, DB2, H2, HSQLDB, INFORMIX, INGRES, ORACLE, SQLSERVER, SYBASE).contains(family)) {
             return lhs.div(DSL.power(two(), rhsAsNumber()));
         }
 
@@ -518,6 +518,15 @@ class Expression<T> extends AbstractFunction<T> {
                 }
 
                 /* [pro] */
+                case INFORMIX: {
+                    if (operator == ADD) {
+                        return field("{0} + {interval} ({1}) {day to day}", getDataType(), lhs, rhsAsNumber());
+                    }
+                    else {
+                        return field("{0} - {interval} ({1}) {day to day}", getDataType(), lhs, rhsAsNumber());
+                    }
+                }
+
                 // Ingres is not working yet
                 case INGRES: {
                     if (operator == ADD) {

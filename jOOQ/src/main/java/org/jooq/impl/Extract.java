@@ -88,6 +88,24 @@ class Extract extends AbstractFunction<Integer> {
                 }
 
             /* [pro] */
+            case INFORMIX:
+                switch (datePart) {
+                    case YEAR:
+                        return field("{year}({0})", SQLDataType.INTEGER, field);
+                    case MONTH:
+                        return field("{month}({0})", SQLDataType.INTEGER, field);
+                    case DAY:
+                        return field("{day}({0})", SQLDataType.INTEGER, field);
+                    case HOUR:
+                        return field("{0}::{datetime hour to hour}::{char(2)}::{int}", SQLDataType.INTEGER, field);
+                    case MINUTE:
+                        return field("{0}::{datetime minute to minute}::{char(2)}::{int}", SQLDataType.INTEGER, field);
+                    case SECOND:
+                        return field("{0}::{datetime second to second}::{char(2)}::{int}", SQLDataType.INTEGER, field);
+                    default:
+                        throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
+                }
+
             case DB2:
             /* [/pro] */
             case DERBY:

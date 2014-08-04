@@ -78,6 +78,9 @@ class CurrentDate extends AbstractFunction<Date> {
             case SYBASE:
                 return field("{current date}", SQLDataType.DATE);
 
+            case INFORMIX:
+                return field("{current year to day}", SQLDataType.DATE);
+
             case DB2:
             case INGRES:
             /* [/pro] */

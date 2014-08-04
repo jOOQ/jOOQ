@@ -70,6 +70,7 @@ class Euler extends AbstractFunction<BigDecimal> {
             case ACCESS:
             case ASE:
             case DB2:
+            case INFORMIX:
             case INGRES:
             case ORACLE:
             case SQLSERVER:

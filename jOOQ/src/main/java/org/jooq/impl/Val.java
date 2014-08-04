@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -425,6 +426,10 @@ class Val<T> extends AbstractParam<T> {
                 else if (asList(ACCESS).contains(family)) {
                     context.sql("#").sql(new SimpleDateFormat("yyyy/MM/dd").format((Date) val)).sql("#");
                 }
+
+                else if (family == INFORMIX) {
+                    context.keyword("datetime").sql("(").sql(escape(val)).sql(") ").keyword("year to day");
+                }
                 /* [/pro] */
 
                 // [#1253] Derby doesn't support the standard literal
@@ -448,6 +453,10 @@ class Val<T> extends AbstractParam<T> {
                 /* [pro] */
                 else if (asList(ACCESS).contains(family)) {
                     context.sql("#").sql(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format((Timestamp) val)).sql("#");
+                }
+
+                else if (family == INFORMIX) {
+                    context.keyword("datetime").sql("(").sql(escape(val)).sql(") ").keyword("year to fraction");
                 }
                 /* [/pro] */
 
@@ -477,6 +486,10 @@ class Val<T> extends AbstractParam<T> {
                 /* [pro] */
                 else if (asList(ACCESS).contains(family)) {
                     context.sql("{t '").sql(escape(val)).sql("'}");
+                }
+
+                else if (family == INFORMIX) {
+                    context.keyword("datetime").sql("(").sql(escape(val)).sql(") ").keyword("hour to second");
                 }
                 /* [/pro] */
 

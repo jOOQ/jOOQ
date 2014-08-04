@@ -78,6 +78,9 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
             case SYBASE:
                 return field("{current timestamp}", SQLDataType.TIMESTAMP);
 
+            case INFORMIX:
+                return field("{current}", SQLDataType.TIMESTAMP);
+
             case DB2:
             case INGRES:
             case SQLSERVER:

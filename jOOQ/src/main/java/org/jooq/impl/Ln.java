@@ -77,6 +77,9 @@ class Ln extends AbstractFunction<BigDecimal> {
         if (base == null) {
             switch (configuration.dialect().family()) {
                 /* [pro] */
+                case INFORMIX:
+                    return function("logn", SQLDataType.NUMERIC, argument);
+
                 case ACCESS:
                 case ASE:
                 case SQLSERVER:
@@ -94,6 +97,7 @@ class Ln extends AbstractFunction<BigDecimal> {
                 case ACCESS:
                 case ASE:
                 case DB2:
+                case INFORMIX:
                 case INGRES:
                 case SQLSERVER:
                 case SYBASE:

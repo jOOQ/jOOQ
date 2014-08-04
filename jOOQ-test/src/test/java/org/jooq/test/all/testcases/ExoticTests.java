@@ -160,6 +160,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case FIREBIRD:
             case H2:
             case HSQLDB:
+            case INFORMIX:
             case MARIADB:
             case MYSQL:
             case POSTGRES:

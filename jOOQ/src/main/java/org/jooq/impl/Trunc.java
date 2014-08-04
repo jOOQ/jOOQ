@@ -75,20 +75,6 @@ class Trunc<T> extends AbstractFunction<T> {
 
     @Override
     final Field<T> getFunction0(Configuration configuration) {
-        if (decimals != null) {
-            return getNumericFunction(configuration);
-        }
-        else {
-            return getDateTimeFunction(configuration);
-        }
-    }
-
-    @SuppressWarnings("unused")
-    private final Field<T> getDateTimeFunction(Configuration configuration) {
-        return null;
-    }
-
-    private final Field<T> getNumericFunction(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] */
             case ACCESS:

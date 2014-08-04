@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -537037630;
+	private static final long serialVersionUID = -1096680002;
 
 	/**
 	 * The singleton instance of <code>informix.v_book</code>
@@ -67,7 +67,7 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.informix.genera
 	/**
 	 * The column <code>informix.v_book.content_pdf</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.VBookRecord, java.lang.Object> CONTENT_PDF = createField("content_pdf", org.jooq.impl.SQLDataType.OTHER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("content_pdf", org.jooq.impl.SQLDataType.BLOB.length(72).nullable(false), this, "");
 
 	/**
 	 * Create a <code>informix.v_book</code> table reference

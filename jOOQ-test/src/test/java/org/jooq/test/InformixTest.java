@@ -324,7 +324,7 @@ public class InformixTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<T_725LobTestRecord, byte[]> T725_LOB() {
-        return null; // T_725_LOB_TEST.LOB;
+        return T_725_LOB_TEST.LOB;
     }
 
     @Override
@@ -524,7 +524,7 @@ public class InformixTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<TBookRecord, byte[]> TBook_CONTENT_PDF() {
-        return null; // T_BOOK.CONTENT_PDF;
+        return T_BOOK.CONTENT_PDF;
     }
 
     @Override

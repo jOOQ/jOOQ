@@ -70,6 +70,7 @@ class Cot extends AbstractFunction<BigDecimal> {
         switch (configuration.dialect().family()) {
             /* [pro] */
             case ACCESS:
+            case INFORMIX:
             case INGRES:
             case ORACLE:
                 return DSL.cos(argument).div(DSL.sin(argument));

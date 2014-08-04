@@ -89,7 +89,7 @@ public class InformixDataType {
     public static final DataType<byte[]>     BYTE               = new DefaultDataType<byte[]>(SQLDialect.INFORMIX, SQLDataType.VARBINARY, "byte");
     public static final DataType<byte[]>     BLOB               = new DefaultDataType<byte[]>(SQLDialect.INFORMIX, SQLDataType.BLOB, "blob");
     public static final DataType<Date>       DATE               = new DefaultDataType<Date>(SQLDialect.INFORMIX, SQLDataType.DATE, "date");
-    public static final DataType<Timestamp>  DATETIME           = new DefaultDataType<Timestamp>(SQLDialect.INFORMIX, SQLDataType.TIMESTAMP, "datetime");
+    public static final DataType<Timestamp>  DATETIME           = new DefaultDataType<Timestamp>(SQLDialect.INFORMIX, SQLDataType.TIMESTAMP, "datetime", "datetime year to fraction");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported SQLDialect.INFORMIX, SQLDataTypes
@@ -102,7 +102,7 @@ public class InformixDataType {
     protected static final DataType<String>     __LONGNVARCHAR  = new DefaultDataType<String>(SQLDialect.INFORMIX, SQLDataType.LONGNVARCHAR, "long varchar", "clob");
     protected static final DataType<BigDecimal> __NUMERIC       = new DefaultDataType<BigDecimal>(SQLDialect.INFORMIX, SQLDataType.NUMERIC, "decimal", "decimal");
     protected static final DataType<Byte>       __TINYINT       = new DefaultDataType<Byte>(SQLDialect.INFORMIX, SQLDataType.TINYINT, "smallint");
-    protected static final DataType<Time>       __TIME          = new DefaultDataType<Time>(SQLDialect.INFORMIX, SQLDataType.TIME, "datetime");
+    protected static final DataType<Time>       __TIME          = new DefaultDataType<Time>(SQLDialect.INFORMIX, SQLDataType.TIME, "datetime", "datetime hour to second");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types

@@ -8170,7 +8170,7 @@ public class DSL {
      *
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNot(T value) {
         return bitNot(Utils.field(value));
     }
@@ -8181,7 +8181,7 @@ public class DSL {
      * Most dialects natively support this using <code>~[field]</code>. jOOQ
      * simulates this operator in some dialects using <code>-[field] - 1</code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNot(Field<T> field) {
         return new Neg<T>(nullSafe(field), ExpressionOperator.BIT_NOT);
     }
@@ -8191,7 +8191,7 @@ public class DSL {
      *
      * @see #bitAnd(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitAnd(T value1, T value2) {
         return bitAnd(Utils.field(value1), Utils.field(value2));
     }
@@ -8201,7 +8201,7 @@ public class DSL {
      *
      * @see #bitAnd(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitAnd(T value1, Field<T> value2) {
         return bitAnd(Utils.field(value1), nullSafe(value2));
     }
@@ -8211,7 +8211,7 @@ public class DSL {
      *
      * @see #bitAnd(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitAnd(Field<T> value1, T value2) {
         return bitAnd(nullSafe(value1), Utils.field(value2));
     }
@@ -8226,7 +8226,7 @@ public class DSL {
      * ... or the and function elsewhere:
      * <code><pre>bitand([field1], [field2])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitAnd(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_AND, nullSafe(field1), nullSafe(field2));
     }
@@ -8237,7 +8237,7 @@ public class DSL {
      * @see #bitNand(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNand(T value1, T value2) {
         return bitNand(Utils.field(value1), Utils.field(value2));
     }
@@ -8248,7 +8248,7 @@ public class DSL {
      * @see #bitNand(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNand(T value1, Field<T> value2) {
         return bitNand(Utils.field(value1), nullSafe(value2));
     }
@@ -8259,7 +8259,7 @@ public class DSL {
      * @see #bitNand(Field, Field)
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNand(Field<T> value1, T value2) {
         return bitNand(nullSafe(value1), Utils.field(value2));
     }
@@ -8276,7 +8276,7 @@ public class DSL {
      *
      * @see #bitNot(Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNand(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_NAND, nullSafe(field1), nullSafe(field2));
     }
@@ -8568,7 +8568,7 @@ public class DSL {
     /**
      * Get the rand() function.
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<BigDecimal> rand() {
         return new Rand();
     }
@@ -8778,7 +8778,7 @@ public class DSL {
      *
      * @see #trunc(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T extends Number> Field<T> trunc(T number) {
         return trunc(Utils.field(number), inline(0));
     }
@@ -8788,7 +8788,7 @@ public class DSL {
      *
      * @see #trunc(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T extends Number> Field<T> trunc(T number, int decimals) {
         return trunc(Utils.field(number), inline(decimals));
     }
@@ -8798,7 +8798,7 @@ public class DSL {
      *
      * @see #trunc(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T extends Number> Field<T> trunc(Field<T> number, int decimals) {
         return trunc(nullSafe(number), inline(decimals));
     }
@@ -8808,7 +8808,7 @@ public class DSL {
      *
      * @see #trunc(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T extends Number> Field<T> trunc(T number, Field<Integer> decimals) {
         return trunc(Utils.field(number), nullSafe(decimals));
     }
@@ -8856,7 +8856,7 @@ public class DSL {
      *
      * @see #trunc(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T extends Number> Field<T> trunc(Field<T> number, Field<Integer> decimals) {
         return new Trunc<T>(nullSafe(number), nullSafe(decimals));
     }
@@ -8866,7 +8866,7 @@ public class DSL {
      *
      * @see #sqrt(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sqrt(Number value) {
         return sqrt(Utils.field(value));
     }
@@ -8879,7 +8879,7 @@ public class DSL {
      * power (which in turn may also be simulated using ln and exp functions):
      * <code><pre>power([field], 0.5)</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sqrt(Field<? extends Number> field) {
         return new Sqrt(nullSafe(field));
     }
@@ -8889,7 +8889,7 @@ public class DSL {
      *
      * @see #exp(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> exp(Number value) {
         return exp(Utils.field(value));
     }
@@ -8900,7 +8900,7 @@ public class DSL {
      * This renders the same on all dialects:
      * <code><pre>exp([field])</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> exp(Field<? extends Number> field) {
         return function("exp", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -8910,7 +8910,7 @@ public class DSL {
      *
      * @see #ln(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> ln(Number value) {
         return ln(Utils.field(value));
     }
@@ -8922,7 +8922,7 @@ public class DSL {
      * <code><pre>ln([field]) or
      * log([field])</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> ln(Field<? extends Number> field) {
         return new Ln(nullSafe(field));
     }
@@ -8932,7 +8932,7 @@ public class DSL {
      *
      * @see #log(Field, int)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> log(Number value, int base) {
         return log(Utils.field(value), base);
     }
@@ -8945,7 +8945,7 @@ public class DSL {
      * most RDBMS) using the natural logarithm:
      * <code><pre>ln([field]) / ln([base])</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> log(Field<? extends Number> field, int base) {
         return new Ln(nullSafe(field), base);
     }
@@ -8955,7 +8955,7 @@ public class DSL {
      *
      * @see #power(Field, Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> power(Number value, Number exponent) {
         return power(Utils.field(value), Utils.field(exponent));
     }
@@ -8965,7 +8965,7 @@ public class DSL {
      *
      * @see #power(Field, Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> power(Field<? extends Number> field, Number exponent) {
         return power(nullSafe(field), Utils.field(exponent));
     }
@@ -8975,7 +8975,7 @@ public class DSL {
      *
      * @see #power(Field, Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> power(Number value, Field<? extends Number> exponent) {
         return power(Utils.field(value), nullSafe(exponent));
     }
@@ -8988,7 +8988,7 @@ public class DSL {
      * elsewhere using ln and exp:
      * <code><pre>exp(ln([field]) * [exponent])</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> power(Field<? extends Number> field, Field<? extends Number> exponent) {
         return new Power(nullSafe(field), nullSafe(exponent));
     }
@@ -8998,7 +8998,7 @@ public class DSL {
      *
      * @see #acos(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> acos(Number value) {
         return acos(Utils.field(value));
     }
@@ -9009,7 +9009,7 @@ public class DSL {
      * This renders the acos function where available:
      * <code><pre>acos([field])</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> acos(Field<? extends Number> field) {
         return new Acos(nullSafe(field));
     }
@@ -9019,7 +9019,7 @@ public class DSL {
      *
      * @see #asin(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> asin(Number value) {
         return asin(Utils.field(value));
     }
@@ -9030,7 +9030,7 @@ public class DSL {
      * This renders the asin function where available:
      * <code><pre>asin([field])</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> asin(Field<? extends Number> field) {
         return new Asin(nullSafe(field));
     }
@@ -9040,7 +9040,7 @@ public class DSL {
      *
      * @see #atan(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan(Number value) {
         return atan(Utils.field(value));
     }
@@ -9051,7 +9051,7 @@ public class DSL {
      * This renders the atan function where available:
      * <code><pre>atan([field])</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan(Field<? extends Number> field) {
         return new Atan(nullSafe(field));
     }
@@ -9061,7 +9061,7 @@ public class DSL {
      *
      * @see #atan2(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan2(Number x, Number y) {
         return atan2(Utils.field(x), Utils.field(y));
     }
@@ -9071,7 +9071,7 @@ public class DSL {
      *
      * @see #atan2(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan2(Number x, Field<? extends Number> y) {
         return atan2(Utils.field(x), nullSafe(y));
     }
@@ -9081,7 +9081,7 @@ public class DSL {
       *
      * @see #atan2(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
         return atan2(nullSafe(x), Utils.field(y));
     }
@@ -9093,7 +9093,7 @@ public class DSL {
      * <code><pre>atan2([x], [y]) or
      * atn2([x], [y])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Field<? extends Number> y) {
         return new Function<BigDecimal>(Term.ATAN2, SQLDataType.NUMERIC, nullSafe(x), nullSafe(y));
     }
@@ -9103,7 +9103,7 @@ public class DSL {
      *
      * @see #cos(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cos(Number value) {
         return cos(Utils.field(value));
     }
@@ -9114,7 +9114,7 @@ public class DSL {
      * This renders the cos function where available:
      * <code><pre>cos([field])</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cos(Field<? extends Number> field) {
         return function("cos", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -9124,7 +9124,7 @@ public class DSL {
      *
      * @see #sin(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sin(Number value) {
         return sin(Utils.field(value));
     }
@@ -9135,7 +9135,7 @@ public class DSL {
      * This renders the sin function where available:
      * <code><pre>sin([field])</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sin(Field<? extends Number> field) {
         return function("sin", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -9145,7 +9145,7 @@ public class DSL {
      *
      * @see #tan(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> tan(Number value) {
         return tan(Utils.field(value));
     }
@@ -9156,7 +9156,7 @@ public class DSL {
      * This renders the tan function where available:
      * <code><pre>tan([field])</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> tan(Field<? extends Number> field) {
         return function("tan", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -9166,7 +9166,7 @@ public class DSL {
      *
      * @see #cot(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cot(Number value) {
         return cot(Utils.field(value));
     }
@@ -9178,7 +9178,7 @@ public class DSL {
      * <code><pre>cot([field])</pre></code> ... or simulates it elsewhere using
      * sin and cos: <code><pre>cos([field]) / sin([field])</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cot(Field<? extends Number> field) {
         return new Cot(nullSafe(field));
     }
@@ -9188,7 +9188,7 @@ public class DSL {
      *
      * @see #sinh(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sinh(Number value) {
         return sinh(Utils.field(value));
     }
@@ -9200,7 +9200,7 @@ public class DSL {
      * <code><pre>sinh([field])</pre></code> ... or simulates it elsewhere using
      * exp: <code><pre>(exp([field] * 2) - 1) / (exp([field] * 2))</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sinh(Field<? extends Number> field) {
         return new Sinh(nullSafe(field));
     }
@@ -9210,7 +9210,7 @@ public class DSL {
      *
      * @see #cosh(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cosh(Number value) {
         return cosh(Utils.field(value));
     }
@@ -9222,7 +9222,7 @@ public class DSL {
      * <code><pre>cosh([field])</pre></code> ... or simulates it elsewhere using
      * exp: <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2))</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cosh(Field<? extends Number> field) {
         return new Cosh(nullSafe(field));
     }
@@ -9232,7 +9232,7 @@ public class DSL {
      *
      * @see #tanh(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> tanh(Number value) {
         return tanh(Utils.field(value));
     }
@@ -9245,7 +9245,7 @@ public class DSL {
      * exp:
      * <code><pre>(exp([field] * 2) - 1) / (exp([field] * 2) + 1)</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> tanh(Field<? extends Number> field) {
         return new Tanh(nullSafe(field));
     }
@@ -9255,7 +9255,7 @@ public class DSL {
      *
      * @see #coth(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> coth(Number value) {
         return coth(Utils.field(value));
     }
@@ -9266,7 +9266,7 @@ public class DSL {
      * This is not supported by any RDBMS, but simulated using exp exp:
      * <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2) - 1)</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> coth(Field<? extends Number> field) {
         field = nullSafe(field);
         return exp(field.mul(2)).add(1).div(exp(field.mul(2)).sub(1));

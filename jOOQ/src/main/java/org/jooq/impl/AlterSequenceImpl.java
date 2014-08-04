@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static org.jooq.Clause.ALTER_SEQUENCE;
 import static org.jooq.Clause.ALTER_SEQUENCE_RESTART;
 import static org.jooq.Clause.ALTER_SEQUENCE_SEQUENCE;
+import static org.jooq.SQLDialect.INFORMIX;
 
 import org.jooq.AlterSequenceFinalStep;
 import org.jooq.AlterSequenceRestartStep;
@@ -104,7 +105,13 @@ class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
 
         T with = restartWith;
         if (with == null) {
-            ctx.sql(" ").keyword("restart");
+
+            /* [pro] */
+            if (ctx.family() == INFORMIX)
+                ctx.sql(" ").keyword("restart with 1");
+            else
+            /* [pro] */
+                ctx.sql(" ").keyword("restart");
         }
         else {
             ctx.sql(" ").keyword("restart with")

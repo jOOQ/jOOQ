@@ -72,6 +72,9 @@ class CurrentTime extends AbstractFunction<Time> {
             case ORACLE:
                 return field("{sysdate}", SQLDataType.TIME);
 
+            case INFORMIX:
+                return field("{current hour to second}", SQLDataType.TIME);
+
             case DB2:
             case INGRES:
             /* [/pro] */

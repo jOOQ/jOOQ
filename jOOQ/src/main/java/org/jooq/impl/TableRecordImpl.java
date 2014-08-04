@@ -62,6 +62,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.tools.JooqLogger;
 
 /**
  * A record implementation for a record originating from a single table
@@ -75,8 +76,9 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 3216746611562261641L;
-    private final Table<R>    table;
+    private static final long       serialVersionUID = 3216746611562261641L;
+    private static final JooqLogger log              = JooqLogger.getLogger(TableRecordImpl.class);
+    private final Table<R>          table;
 
     public TableRecordImpl(Table<R> table) {
         super(table.fields());
@@ -150,7 +152,12 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         addChangedValues(storeFields, insert);
 
         // Don't store records if no value was set by client code
-        if (!insert.isExecutable()) return 0;
+        if (!insert.isExecutable()) {
+            if (log.isDebugEnabled())
+                log.debug("Query is not executable", this);
+
+            return 0;
+        }
 
         // [#1596] Set timestamp and/or version columns to appropriate values
         BigInteger version = addRecordVersion(insert);

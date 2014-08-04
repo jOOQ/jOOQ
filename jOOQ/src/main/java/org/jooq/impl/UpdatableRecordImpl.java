@@ -72,6 +72,7 @@ import org.jooq.UpdateQuery;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataChangedException;
 import org.jooq.exception.InvalidResultException;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -86,7 +87,8 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     /**
      * Generated UID
      */
-    private static final long serialVersionUID      = -1012420583600561579L;
+    private static final long       serialVersionUID = -1012420583600561579L;
+    private static final JooqLogger log              = JooqLogger.getLogger(UpdatableRecordImpl.class);
 
     public UpdatableRecordImpl(Table<R> table) {
         super(table);
@@ -209,7 +211,12 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         Utils.addConditions(update, this, keys);
 
         // Don't store records if no value was set by client code
-        if (!update.isExecutable()) return 0;
+        if (!update.isExecutable()) {
+            if (log.isDebugEnabled())
+                log.debug("Query is not executable", this);
+
+            return 0;
+        }
 
         // [#1596] Set timestamp and/or version columns to appropriate values
         BigInteger version = addRecordVersion(update);

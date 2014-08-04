@@ -52,6 +52,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
@@ -425,6 +426,10 @@ class Val<T> extends AbstractParam<T> {
                 xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
                     xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
                 x
+
+                xxxx xx xxxxxxx xx xxxxxxxxx x
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xx xxxxxx
+                x
                 xx [/pro] */
 
                 // [#1253] Derby doesn't support the standard literal
@@ -448,6 +453,10 @@ class Val<T> extends AbstractParam<T> {
                 /* [pro] xx
                 xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
                     xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+                x
+
+                xxxx xx xxxxxxx xx xxxxxxxxx x
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xx xxxxxxxxxxx
                 x
                 xx [/pro] */
 
@@ -477,6 +486,10 @@ class Val<T> extends AbstractParam<T> {
                 /* [pro] xx
                 xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
                     xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                x
+
+                xxxx xx xxxxxxx xx xxxxxxxxx x
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xx xxxxxxxxx
                 x
                 xx [/pro] */
 

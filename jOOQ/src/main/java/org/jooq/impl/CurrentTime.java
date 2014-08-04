@@ -72,6 +72,9 @@ class CurrentTime extends AbstractFunction<Time> {
             xxxx xxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
 
+            xxxx xxxxxxxxx
+                xxxxxx xxxxxxxxxxxxxxx xxxx xx xxxxxxxxx xxxxxxxxxxxxxxxxxx
+
             xxxx xxxx
             xxxx xxxxxxx
             xx [/pro] */

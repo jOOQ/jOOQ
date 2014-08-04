@@ -52,6 +52,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
@@ -104,7 +105,7 @@ class RowIsNull extends AbstractCondition {
     private final QueryPartInternal delegate(Configuration configuration) {
 
         // CUBRID 9.0.0 and HSQLDB have buggy implementations of the NULL predicate.
-        // Let's wait for them to be fixed
+        // Informix doesn't implement the RVE IS NULL predicate.
         if (asList(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, SQLITE).contains(configuration.dialect().family())) {
             List<Condition> conditions = new ArrayList<Condition>();
 

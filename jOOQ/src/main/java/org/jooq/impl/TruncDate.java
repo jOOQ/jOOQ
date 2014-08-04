@@ -136,6 +136,20 @@ class TruncDate<T extends java.util.Date> extends AbstractFunction<T> {
 //            }
 
             /* [pro] xx
+            xxxx xxxxxxxxx x
+                xxxxxx xxxxxx x
+                    xxxx xxxxx   xxxxxxx x xxxxxxx   xxxxxx
+                    xxxx xxxxxx  xxxxxxx x xxxxxxxx  xxxxxx
+                    xxxx xxxx    xxxxxxx x xxxxx     xxxxxx
+                    xxxx xxxxx   xxxxxxx x xxxxx     xxxxxx
+                    xxxx xxxxxxx xxxxxxx x xxxxx     xxxxxx
+                    xxxx xxxxxxx xxxxxx xxxxxxxxxxxxxxxxx xxx xxxxxxxx xxxx xx xxxxxxxxxx xxxxxx
+                    xxxxxxxx xxxxxxxxxxxxxxxxxxx
+                x
+
+                xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxx
+            x
+
             xxxx xxxx x
                 xxxxxx xxxxxx x
                     xxxx xxxxx   xxxxxxx x xxxxxxx   xxxxxx

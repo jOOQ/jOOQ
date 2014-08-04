@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -230,13 +231,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testInsertDefaultValues() throws Exception {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxx xxxxxxx
-            xxxxxxx
-        x
-        xx [/pro] */
-
+        assumeFamilyNotIn();
         jOOQAbstractTest.reset = false;
 
         assertEquals(1,
@@ -250,7 +245,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testInsertDefaultValue() throws Exception {
         assumeFamilyNotIn(FIREBIRD);
-
         jOOQAbstractTest.reset = false;
 
         assertEquals(1,
@@ -264,7 +258,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testUpdateDefaultValue() throws Exception {
         assumeFamilyNotIn(FIREBIRD);
-
         jOOQAbstractTest.reset = false;
 
         assertEquals(4,

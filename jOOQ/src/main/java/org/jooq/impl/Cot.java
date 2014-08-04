@@ -70,6 +70,7 @@ class Cot extends AbstractFunction<BigDecimal> {
         switch (configuration.dialect().family()) {
             /* [pro] xx
             xxxx xxxxxxx
+            xxxx xxxxxxxxx
             xxxx xxxxxxx
             xxxx xxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

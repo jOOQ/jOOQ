@@ -69,6 +69,7 @@ class Pi extends AbstractFunction<BigDecimal> {
         switch (configuration.dialect().family()) {
             /* [pro] xx
             xxxx xxxx
+            xxxx xxxxxxxxx
             xxxx xxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
 

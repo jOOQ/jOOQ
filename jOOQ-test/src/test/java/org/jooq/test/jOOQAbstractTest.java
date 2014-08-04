@@ -2515,8 +2515,13 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testFunctionsOnDates() throws Exception {
-        new FunctionTests(this).testFunctionsOnDates();
+    public void testFunctionsOnDates_EXTRACT() throws Exception {
+        new FunctionTests(this).testFunctionsOnDates_EXTRACT();
+    }
+
+    @Test
+    public void testFunctionsOnDates_ARITHMETIC() throws Exception {
+        new FunctionTests(this).testFunctionsOnDates_ARITHMETIC();
     }
 
     @Test

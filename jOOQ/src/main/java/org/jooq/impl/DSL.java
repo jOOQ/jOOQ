@@ -8568,7 +8568,7 @@ public class DSL {
     /**
      * Get the rand() function.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<BigDecimal> rand() {
         return new Rand();
     }

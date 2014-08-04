@@ -70,6 +70,7 @@ class Euler extends AbstractFunction<BigDecimal> {
             xxxx xxxxxxx
             xxxx xxxx
             xxxx xxxx
+            xxxx xxxxxxxxx
             xxxx xxxxxxx
             xxxx xxxxxxx
             xxxx xxxxxxxxxx

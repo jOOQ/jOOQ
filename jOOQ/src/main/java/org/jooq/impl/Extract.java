@@ -88,6 +88,24 @@ class Extract extends AbstractFunction<Integer> {
                 }
 
             /* [pro] xx
+            xxxx xxxxxxxxx
+                xxxxxx xxxxxxxxxx x
+                    xxxx xxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxx xxxxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxxxxxx
+                        xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxx x x xxxxxxxxxx
+                x
+
             xxxx xxxx
             xx [/pro] */
             case DERBY:

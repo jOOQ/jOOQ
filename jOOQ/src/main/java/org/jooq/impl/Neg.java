@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
+// ...
 import static org.jooq.impl.ExpressionOperator.BIT_NOT;
 
 import org.jooq.Context;
@@ -83,7 +84,7 @@ class Neg<T> extends AbstractField<T> {
                .sql(" - 1)");
         }
         /* [pro] xx
-        xxxx xx xxxxxxxxx xx xxxxxxx xx xxxxxx xx xxxx x
+        xxxx xx xxxxxxxxx xx xxxxxxx xx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxxxxxxxxxxxxxxxxxx
                xxxxxxxxxxxxx
                xxxxxxxxxx

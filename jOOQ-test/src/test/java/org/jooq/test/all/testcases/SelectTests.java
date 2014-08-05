@@ -70,6 +70,7 @@ import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConnectionProvider;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -442,20 +443,28 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             /* [/pro] */
             default: {
-                Result<Record1<Integer>> result3 = create()
-                    .select(TAuthor_ID())
-                    .from(TAuthor())
-                    .limit(5)
-                    .offset(0)
-                    .forUpdate()
-                    .fetch();
-                assertEquals(2, result3.size());
-                Result<A> result4 = create().selectFrom(TAuthor())
-                                            .limit(5)
-                                            .offset(0)
-                                            .forUpdate()
-                                            .fetch();
-                assertEquals(2, result4.size());
+
+                // A transaction is needed for FOR UPDATE clauses in certain dialects
+                create().transaction(ctx -> {
+
+                    Result<Record1<Integer>> result3 = DSL.using(ctx)
+                        .select(TAuthor_ID())
+                        .from(TAuthor())
+                        .limit(5)
+                        .offset(0)
+                        .forUpdate()
+                        .fetch();
+                    assertEquals(2, result3.size());
+                    Result<A> result4 = DSL.using(ctx)
+                        .selectFrom(TAuthor())
+                        .limit(5)
+                        .offset(0)
+                        .forUpdate()
+                        .fetch();
+                    assertEquals(2, result4.size());
+                });
+
+                break;
             }
         }
 
@@ -463,6 +472,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             /* [pro] */
             case ASE:
             case DB2:
+            case INFORMIX:
             case INGRES:
             case SYBASE:
             /* [/pro] */
@@ -525,6 +535,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     assertEquals(2, r3b.size());
                 }
                 /* [/pro] */
+
+                break;
             }
         }
 
@@ -537,29 +549,33 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // Most dialects support the OF clause
             default: {
-                Result<Record1<Integer>> result =
-                create().select(TAuthor_ID())
-                        .from(TAuthor())
-                        .forUpdate()
 
-                        // DB2 requires a key column to be contained in the
-                        // FOR UPDATE OF ... clause
-                        .of(TAuthor_ID(),
-                            TAuthor_LAST_NAME(),
-                            TAuthor_FIRST_NAME())
-                        .fetch();
-                assertEquals(2, result.size());
+                // A transaction is needed for FOR UPDATE clauses in certain dialects
+                create().transaction(ctx -> {
+                    Result<Record1<Integer>> result =
+                    create().select(TAuthor_ID())
+                            .from(TAuthor())
+                            .forUpdate()
 
-                Result<A> result2 =
-                create().selectFrom(TAuthor())
-                        .forUpdate()
-                        .of(TAuthor_ID(),
-                            TAuthor_LAST_NAME(),
-                            TAuthor_FIRST_NAME())
-                        .fetch();
-                assertEquals(2, result2.size());
+                            // DB2 requires a key column to be contained in the
+                            // FOR UPDATE OF ... clause
+                            .of(TAuthor_ID(),
+                                TAuthor_LAST_NAME(),
+                                TAuthor_FIRST_NAME())
+                            .fetch();
+                    assertEquals(2, result.size());
 
-                // NO BREAK: Fall through to POSTGRES
+                    Result<A> result2 =
+                    create().selectFrom(TAuthor())
+                            .forUpdate()
+                            .of(TAuthor_ID(),
+                                TAuthor_LAST_NAME(),
+                                TAuthor_FIRST_NAME())
+                            .fetch();
+                    assertEquals(2, result2.size());
+                });
+
+                break;
             }
         }
 
@@ -575,19 +591,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // Postgres only supports the OF clause with tables as parameters
             case POSTGRES:
             default: {
-                Result<Record1<Integer>> result = create()
-                    .select(TAuthor_ID())
-                    .from(TAuthor())
-                    .forUpdate()
-                    .of(TAuthor())
-                    .fetch();
-                assertEquals(2, result.size());
 
-                Result<A> result2 = create().selectFrom(TAuthor())
+                // A transaction is needed for FOR UPDATE clauses in certain dialects
+                create().transaction(ctx -> {
+                    Result<Record1<Integer>> result = create()
+                        .select(TAuthor_ID())
+                        .from(TAuthor())
                         .forUpdate()
                         .of(TAuthor())
                         .fetch();
-                assertEquals(2, result2.size());
+                    assertEquals(2, result.size());
+
+                    Result<A> result2 = create().selectFrom(TAuthor())
+                            .forUpdate()
+                            .of(TAuthor())
+                            .fetch();
+                    assertEquals(2, result2.size());
+                });
 
                 break;
             }
@@ -598,17 +618,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case MARIADB:
             case MYSQL:
             case POSTGRES: {
-                Result<Record1<Integer>> result = create()
-                    .select(TAuthor_ID())
-                    .from(TAuthor())
-                    .forShare()
-                    .fetch();
-                assertEquals(2, result.size());
 
-                Result<A> result2 = create().selectFrom(TAuthor())
-                                  .forShare()
-                                  .fetch();
-                assertEquals(2, result2.size());
+                // A transaction is needed for FOR UPDATE clauses in certain dialects
+                create().transaction(ctx -> {
+                    Result<Record1<Integer>> result = create()
+                        .select(TAuthor_ID())
+                        .from(TAuthor())
+                        .forShare()
+                        .fetch();
+                    assertEquals(2, result.size());
+
+                    Result<A> result2 = create().selectFrom(TAuthor())
+                                      .forShare()
+                                      .fetch();
+                    assertEquals(2, result2.size());
+                });
+
                 break;
             }
 

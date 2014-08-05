@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -833423341;
+	private static final long serialVersionUID = 1694556257;
 
 	/**
 	 * The singleton instance of <code>informix.t_book</code>
@@ -57,17 +57,17 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.informix.genera
 	/**
 	 * The column <code>informix.t_book.language_id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>informix.t_book.content_text</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("content_text", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("content_text", org.jooq.impl.SQLDataType.CLOB, this, "");
 
 	/**
 	 * The column <code>informix.t_book.content_pdf</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("content_pdf", org.jooq.impl.SQLDataType.BLOB.length(2147483647), this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("content_pdf", org.jooq.impl.SQLDataType.BLOB, this, "");
 
 	/**
 	 * Create a <code>informix.t_book</code> table reference
@@ -112,7 +112,7 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.informix.genera
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.TBookRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.informix.generatedclasses.Keys.R8185_8776, org.jooq.test.informix.generatedclasses.Keys.R8185_8777, org.jooq.test.informix.generatedclasses.Keys.R8185_8779);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.informix.generatedclasses.Keys.R15910_16721, org.jooq.test.informix.generatedclasses.Keys.R15910_16722, org.jooq.test.informix.generatedclasses.Keys.R15910_16724);
 	}
 
 	/**

@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1759475579;
+	private static final long serialVersionUID = 459682917;
 
 	/**
 	 * The singleton instance of <code>informix.x_unused</code>
@@ -131,7 +131,7 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.informix.gene
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XUnusedRecord> getPrimaryKey() {
-		return org.jooq.test.informix.generatedclasses.Keys.U8188_8792;
+		return org.jooq.test.informix.generatedclasses.Keys.U15913_16737;
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.informix.gene
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XUnusedRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XUnusedRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.U8188_8792, org.jooq.test.informix.generatedclasses.Keys.U8188_8793);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XUnusedRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.U15913_16737, org.jooq.test.informix.generatedclasses.Keys.U15913_16738);
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.informix.gene
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.XUnusedRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.XUnusedRecord, ?>>asList(org.jooq.test.informix.generatedclasses.Keys.R8188_8794);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.XUnusedRecord, ?>>asList(org.jooq.test.informix.generatedclasses.Keys.R15913_16739);
 	}
 
 	/**

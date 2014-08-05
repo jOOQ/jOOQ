@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = -1176695287;
+	private static final long serialVersionUID = 525994050;
 
 	/**
 	 * The singleton instance of <code>informix.x_test_case_85</code>
@@ -66,7 +66,7 @@ public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.informix
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_85Record> getPrimaryKey() {
-		return org.jooq.test.informix.generatedclasses.Keys.U8193_8807;
+		return org.jooq.test.informix.generatedclasses.Keys.U15918_16752;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.informix
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_85Record>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_85Record>>asList(org.jooq.test.informix.generatedclasses.Keys.U8193_8807);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_85Record>>asList(org.jooq.test.informix.generatedclasses.Keys.U15918_16752);
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.informix
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_85Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_85Record, ?>>asList(org.jooq.test.informix.generatedclasses.Keys.R8193_8808);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.XTestCase_85Record, ?>>asList(org.jooq.test.informix.generatedclasses.Keys.R15918_16753);
 	}
 
 	/**

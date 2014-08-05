@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -891204386;
+	private static final long serialVersionUID = -1267351624;
 
 	/**
 	 * The singleton instance of <code>informix.t_book_to_book_store</code>
@@ -66,7 +66,7 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.info
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord> getPrimaryKey() {
-		return org.jooq.test.informix.generatedclasses.Keys.U8187_8787;
+		return org.jooq.test.informix.generatedclasses.Keys.U15912_16732;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.info
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.U8187_8787);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.U15912_16732);
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.info
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.informix.generatedclasses.Keys.R8187_8788, org.jooq.test.informix.generatedclasses.Keys.R8187_8789);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.informix.generatedclasses.Keys.R15912_16733, org.jooq.test.informix.generatedclasses.Keys.R15912_16734);
 	}
 
 	/**

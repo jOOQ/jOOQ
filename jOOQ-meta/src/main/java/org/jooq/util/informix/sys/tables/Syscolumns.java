@@ -11,7 +11,7 @@ package org.jooq.util.informix.sys.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Syscolumns extends org.jooq.impl.TableImpl<org.jooq.Record> {
 
-	private static final long serialVersionUID = 208699994;
+	private static final long serialVersionUID = 299786520;
 
 	/**
 	 * The singleton instance of <code>informix.syscolumns</code>
@@ -29,52 +29,52 @@ public class Syscolumns extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>informix.syscolumns.colname</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> COLNAME = createField("colname", org.jooq.impl.SQLDataType.VARCHAR.length(128).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> COLNAME = createField("colname", org.jooq.impl.SQLDataType.VARCHAR.length(128), this, "");
 
 	/**
 	 * The column <code>informix.syscolumns.tabid</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> TABID = createField("tabid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> TABID = createField("tabid", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.syscolumns.colno</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> COLNO = createField("colno", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> COLNO = createField("colno", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.syscolumns.coltype</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> COLTYPE = createField("coltype", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> COLTYPE = createField("coltype", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.syscolumns.collength</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> COLLENGTH = createField("collength", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> COLLENGTH = createField("collength", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.syscolumns.colmin</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> COLMIN = createField("colmin", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> COLMIN = createField("colmin", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.syscolumns.colmax</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> COLMAX = createField("colmax", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> COLMAX = createField("colmax", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.syscolumns.extended_id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> EXTENDED_ID = createField("extended_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> EXTENDED_ID = createField("extended_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.syscolumns.seclabelid</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> SECLABELID = createField("seclabelid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> SECLABELID = createField("seclabelid", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.syscolumns.colattr</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> COLATTR = createField("colattr", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> COLATTR = createField("colattr", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * Create a <code>informix.syscolumns</code> table reference

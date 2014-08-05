@@ -81,6 +81,7 @@ import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.Dual.DUAL_ACCESS;
+import static org.jooq.impl.Dual.DUAL_INFORMIX;
 import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Utils.DATA_OMIT_INTO_CLAUSE;
 import static org.jooq.impl.Utils.DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE;
@@ -203,9 +204,12 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
     @Override
     public final void accept(Context<?> context) {
+        SQLDialect dialect = context.dialect();
+        SQLDialect family = context.family();
+
         if (into != null
                 && context.data(DATA_OMIT_INTO_CLAUSE) == null
-                && asList(CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE).contains(context.configuration().dialect().family())) {
+                && asList(CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE).contains(family)) {
 
             context.data(DATA_OMIT_INTO_CLAUSE, true);
             context.visit(DSL.createTable(into).as(this));
@@ -227,8 +231,6 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         // If a limit applies
         if (getLimit().isApplicable()) {
-            SQLDialect dialect = context.configuration().dialect();
-
             switch (dialect) {
 
                 /* [pro] */
@@ -313,7 +315,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         }
 
         // [#1296] FOR UPDATE is simulated in some dialects using ResultSet.CONCUR_UPDATABLE
-        if (forUpdate && !asList(CUBRID, SQLSERVER).contains(context.configuration().dialect().family())) {
+        if (forUpdate && !asList(CUBRID, SQLSERVER).contains(family)) {
             context.formatSeparator()
                    .keyword("for update");
 
@@ -324,12 +326,13 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             else if (!forUpdateOfTables.isEmpty()) {
                 context.sql(" ").keyword("of").sql(" ");
 
-                switch (context.configuration().dialect().family()) {
+                switch (family) {
 
                     // Some dialects don't allow for an OF [table-names] clause
-                    // It can be simulated by listing the table's fields, though
+                    // It can be emulated by listing the table's fields, though
                     /* [pro] */
                     case DB2:
+                    case INFORMIX:
                     case INGRES:
                     case ORACLE:
                     /* [/pro] */
@@ -347,7 +350,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
             // [#3186] Firebird's FOR UPDATE clause has a different semantics. To achieve "regular"
             // FOR UPDATE semantics, we should use FOR UPDATE WITH LOCK
-            if (context.configuration().dialect().family() == FIREBIRD) {
+            if (family == FIREBIRD) {
                 context.sql(" ").keyword("with lock");
             }
 
@@ -362,7 +365,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             }
         }
         else if (forShare) {
-            switch (context.configuration().dialect()) {
+            switch (dialect) {
 
                 // MySQL has a non-standard implementation for the "FOR SHARE" clause
                 case MARIADB:
@@ -390,6 +393,30 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             context.sql(")")
                    .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
         }
+
+        /* [pro] */
+        // INTO clauses
+        // ------------
+        if (asList(INFORMIX).contains(family)) {
+            context.start(SELECT_INTO);
+
+            Table<?> actualInto = (Table<?>) context.data(DATA_SELECT_INTO_TABLE);
+            if (actualInto == null)
+                actualInto = into;
+
+            if (actualInto != null
+                    && context.data(DATA_OMIT_INTO_CLAUSE) == null) {
+
+                context.formatSeparator()
+                       .keyword("into")
+                       .sql(" ")
+                       .visit(actualInto);
+            }
+
+            context.end(SELECT_INTO);
+        }
+
+        /* [/pro] */
     }
 
     @SuppressWarnings("unchecked")
@@ -678,23 +705,25 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         // INTO clauses
         // ------------
-        context.start(SELECT_INTO);
+        if (!asList(INFORMIX).contains(family)) {
+            context.start(SELECT_INTO);
 
-        Table<?> actualInto = (Table<?>) context.data(DATA_SELECT_INTO_TABLE);
-        if (actualInto == null)
-            actualInto = into;
+            Table<?> actualInto = (Table<?>) context.data(DATA_SELECT_INTO_TABLE);
+            if (actualInto == null)
+                actualInto = into;
 
-        if (actualInto != null
-                && context.data(DATA_OMIT_INTO_CLAUSE) == null
-                && asList(ACCESS, ASE, HSQLDB, POSTGRES, SQLSERVER, SYBASE).contains(family)) {
+            if (actualInto != null
+                    && context.data(DATA_OMIT_INTO_CLAUSE) == null
+                    && asList(ACCESS, ASE, HSQLDB, POSTGRES, SQLSERVER, SYBASE).contains(family)) {
 
-            context.formatSeparator()
-                   .keyword("into")
-                   .sql(" ")
-                   .visit(actualInto);
+                context.formatSeparator()
+                       .keyword("into")
+                       .sql(" ")
+                       .visit(actualInto);
+            }
+
+            context.end(SELECT_INTO);
         }
-
-        context.end(SELECT_INTO);
 
         // FROM and JOIN clauses
         // ---------------------
@@ -707,7 +736,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         boolean hasFrom = (context.data(DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE) != null);
 
         if (!hasFrom) {
-            DefaultConfiguration c = new DefaultConfiguration(context.configuration().dialect());
+            DefaultConfiguration c = new DefaultConfiguration(dialect);
             String renderedFrom = new DefaultRenderContext(c).render(getFrom());
             hasFrom = !renderedFrom.isEmpty();
         }
@@ -719,16 +748,15 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                    .visit(getFrom());
 
             /* [pro] */
-            // [#1681] Sybase ASE and Ingres need a cross-joined dummy table
+            // [#1665] [#1681] Sybase ASE and Ingres need a cross-joined dummy table
             // To be able to GROUP BY () empty sets
-            if (grouping && getGroupBy().isEmpty()) {
-                if (asList(ASE, INGRES).contains(dialect)) {
-                    context.sql(", (select 1 as x) as empty_grouping_dummy_table");
-                }
-                else if (asList(ACCESS).contains(dialect)) {
+            if (grouping && getGroupBy().isEmpty())
+                if (asList(ASE, INGRES).contains(dialect))
+                    context.sql(", (select 1 as dual) as empty_grouping_dummy_table");
+                else if (family == INFORMIX)
+                    context.sql(", (").sql(DUAL_INFORMIX).sql(") as empty_grouping_dummy_table");
+                else if (asList(ACCESS).contains(dialect))
                     context.sql(", (").sql(DUAL_ACCESS).sql(") as empty_grouping_dummy_table");
-                }
-            }
             /* [/pro] */
         }
 
@@ -792,8 +820,8 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             if (getGroupBy().isEmpty()) {
 
                 // [#1681] Use the constant field from the dummy table Sybase ASE, Ingres
-                if (asList(ACCESS, ASE, INGRES).contains(dialect)) {
-                    context.sql("empty_grouping_dummy_table.x");
+                if (asList(ACCESS, ASE, INFORMIX, INGRES).contains(dialect)) {
+                    context.sql("empty_grouping_dummy_table.dual");
                 }
 
                 // Some dialects don't support empty GROUP BY () clauses

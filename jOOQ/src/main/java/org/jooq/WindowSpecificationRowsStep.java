@@ -41,6 +41,7 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER2012;
@@ -65,70 +66,70 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>ROWS UNBOUNDED PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     WindowSpecificationFinalStep rowsUnboundedPreceding();
 
     /**
      * Add a <code>ROWS [number] PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     WindowSpecificationFinalStep rowsPreceding(int number);
 
     /**
      * Add a <code>ROWS CURRENT ROW</code> frame clause to the window
      * specification.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     WindowSpecificationFinalStep rowsCurrentRow();
 
     /**
      * Add a <code>ROWS UNBOUNDED FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     WindowSpecificationFinalStep rowsUnboundedFollowing();
 
     /**
      * Add a <code>ROWS [number] FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     WindowSpecificationFinalStep rowsFollowing(int number);
 
     /**
      * Add a <code>ROWS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     WindowSpecificationRowsAndStep rowsBetweenUnboundedPreceding();
 
     /**
      * Add a <code>ROWS BETWEEN [number] PRECEDING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     WindowSpecificationRowsAndStep rowsBetweenPreceding(int number);
 
     /**
      * Add a <code>ROWS BETWEEN CURRENT ROW ...</code> frame clause to the
      * window specification.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     WindowSpecificationRowsAndStep rowsBetweenCurrentRow();
 
     /**
      * Add a <code>ROWS BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     WindowSpecificationRowsAndStep rowsBetweenUnboundedFollowing();
 
     /**
      * Add a <code>ROWS BETWEEN [number] FOLLOWING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     WindowSpecificationRowsAndStep rowsBetweenFollowing(int number);
 
 }

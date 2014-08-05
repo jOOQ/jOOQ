@@ -43,6 +43,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
@@ -88,7 +89,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * <p>
      * These are the dialects that fulfill the above requirements:
      */
-    @Support({ CUBRID, DB2, HSQLDB, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     InsertOnDuplicateSetStep<R> onDuplicateKeyUpdate();
 
     /**
@@ -133,6 +134,6 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * </tr>
      * </table>
      */
-    @Support({ CUBRID, DB2, HSQLDB, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     InsertFinalStep<R> onDuplicateKeyIgnore();
 }

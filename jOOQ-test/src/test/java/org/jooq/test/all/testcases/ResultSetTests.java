@@ -41,7 +41,10 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.INFORMIX;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SYBASE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -151,16 +154,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @SuppressWarnings("serial")
 
     public void testResultSetConcurrency() throws Exception {
-        switch (dialect()) {
-            /* [pro] */
-            case SYBASE:
-            /* [/pro] */
-            case MARIADB:
-            case SQLITE:
-                log.info("SKIPPING", "ResultSet concurrency tests");
-                return;
-        }
-
+        assumeFamilyNotIn(INFORMIX, SYBASE, MARIADB, SQLITE);
         jOOQAbstractTest.reset = false;
 
         assertEquals(

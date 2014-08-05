@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = 311080118;
+	private static final long serialVersionUID = 388753873;
 
 	/**
 	 * The singleton instance of <code>informix.t_identity</code>
@@ -54,6 +54,14 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.informix.ge
 
 	private TIdentity(java.lang.String alias, org.jooq.Table<org.jooq.test.informix.generatedclasses.tables.records.TIdentityRecord> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, org.jooq.test.informix.generatedclasses.Informix.INFORMIX, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Identity<org.jooq.test.informix.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> getIdentity() {
+		return org.jooq.test.informix.generatedclasses.Keys.IDENTITY_T_IDENTITY;
 	}
 
 	/**

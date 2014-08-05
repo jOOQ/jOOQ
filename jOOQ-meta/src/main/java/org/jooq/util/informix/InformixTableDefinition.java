@@ -42,6 +42,7 @@ package org.jooq.util.informix;
 
 import static org.jooq.impl.DSL.field;
 import static org.jooq.util.informix.sys.Tables.SYSCOLUMNS;
+import static org.jooq.util.informix.sys.Tables.SYSDEFAULTS;
 import static org.jooq.util.informix.sys.Tables.SYSTABLES;
 import static org.jooq.util.informix.sys.Tables.SYSXTDTYPES;
 
@@ -57,6 +58,7 @@ import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.SchemaDefinition;
 import org.jooq.util.informix.sys.tables.Syscolumns;
+import org.jooq.util.informix.sys.tables.Sysdefaults;
 import org.jooq.util.informix.sys.tables.Systables;
 import org.jooq.util.informix.sys.tables.Sysxtdtypes;
 
@@ -78,6 +80,7 @@ public class InformixTableDefinition extends AbstractTableDefinition {
         Syscolumns c = SYSCOLUMNS.as("c");
         Systables t = SYSTABLES.as("t");
         Sysxtdtypes x = SYSXTDTYPES.as("x");
+        Sysdefaults d = SYSDEFAULTS.as("d");
 
         for (Record record : create().select(
                     c.COLNAME.trim().as(c.COLNAME),
@@ -89,25 +92,33 @@ public class InformixTableDefinition extends AbstractTableDefinition {
                     field("informix.schema_precision({0}, {1}, {2})", int.class, c.COLTYPE, c.EXTENDED_ID, c.COLLENGTH).as("precision"),
                     field("informix.schema_numscale({0}, {1})", int.class, c.COLTYPE, c.COLLENGTH).as("scale"),
                     field("informix.schema_isnullable({0})", boolean.class, c.COLTYPE).as("nullable"),
-                    field("informix.schema_isautoincr({0})", boolean.class, c.COLTYPE).as("identity")
+                    field("informix.schema_isautoincr({0})", String.class, c.COLTYPE).as("identity"),
+                    d.TYPE
                 )
                 .from(t)
                 .join(c).on(t.TABID.eq(c.TABID))
                 .leftOuterJoin(x).on(c.EXTENDED_ID.eq(x.EXTENDED_ID))
+                .leftOuterJoin(d).on(d.TABID.eq(c.TABID).and(d.COLNO.eq(c.COLNO)))
                 .where(t.OWNER.eq(getSchema().getInputName()))
                 .and(t.TABNAME.eq(getInputName()))
                 .orderBy(c.COLNO)
                 .fetch()) {
 
+            // Informix reports TEXT, BLOB types and similar to be of length Integer.MAX_VALUE
+            // We shouldn't use this information in jOOQ, though.
+            Integer collength = record.getValue("collength", Integer.class);
+            if (Integer.valueOf(Integer.MAX_VALUE).equals(collength))
+                collength = 0;
+
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
                 record.getValue("coltype", String.class),
-                record.getValue("collength", Integer.class),
+                collength,
                 record.getValue("precision", Integer.class),
                 record.getValue("scale", Integer.class),
                 record.getValue("nullable", boolean.class),
-                false
+                record.getValue(d.TYPE) != null
             );
 
             ColumnDefinition column = new DefaultColumnDefinition(

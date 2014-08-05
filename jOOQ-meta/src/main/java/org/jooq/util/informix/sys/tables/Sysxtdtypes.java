@@ -11,7 +11,7 @@ package org.jooq.util.informix.sys.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sysxtdtypes extends org.jooq.impl.TableImpl<org.jooq.Record> {
 
-	private static final long serialVersionUID = 766755704;
+	private static final long serialVersionUID = 611610872;
 
 	/**
 	 * The singleton instance of <code>informix.sysxtdtypes</code>
@@ -34,62 +34,62 @@ public class Sysxtdtypes extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>informix.sysxtdtypes.domain</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> DOMAIN = createField("domain", org.jooq.impl.SQLDataType.CHAR.length(1).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> DOMAIN = createField("domain", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
 
 	/**
 	 * The column <code>informix.sysxtdtypes.mode</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> MODE = createField("mode", org.jooq.impl.SQLDataType.CHAR.length(1).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> MODE = createField("mode", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
 
 	/**
 	 * The column <code>informix.sysxtdtypes.owner</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> OWNER = createField("owner", org.jooq.impl.SQLDataType.CHAR.length(32).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> OWNER = createField("owner", org.jooq.impl.SQLDataType.CHAR.length(32), this, "");
 
 	/**
 	 * The column <code>informix.sysxtdtypes.name</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(128).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(128), this, "");
 
 	/**
 	 * The column <code>informix.sysxtdtypes.type</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> TYPE = createField("type", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> TYPE = createField("type", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysxtdtypes.source</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> SOURCE = createField("source", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> SOURCE = createField("source", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.sysxtdtypes.maxlen</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> MAXLEN = createField("maxlen", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> MAXLEN = createField("maxlen", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.sysxtdtypes.length</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> LENGTH = createField("length", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> LENGTH = createField("length", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.sysxtdtypes.byvalue</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> BYVALUE = createField("byvalue", org.jooq.impl.SQLDataType.CHAR.length(1).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> BYVALUE = createField("byvalue", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
 
 	/**
 	 * The column <code>informix.sysxtdtypes.cannothash</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> CANNOTHASH = createField("cannothash", org.jooq.impl.SQLDataType.CHAR.length(1).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> CANNOTHASH = createField("cannothash", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
 
 	/**
 	 * The column <code>informix.sysxtdtypes.align</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> ALIGN = createField("align", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> ALIGN = createField("align", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysxtdtypes.locator</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> LOCATOR = createField("locator", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> LOCATOR = createField("locator", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>informix.sysxtdtypes</code> table reference

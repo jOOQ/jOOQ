@@ -40,6 +40,16 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 import org.jooq.conf.Settings;
 
 /**
@@ -68,6 +78,7 @@ public interface Name extends QueryPart {
      * {@link AggregateFunction#over(WindowDefinition)}</li>
      * </ul>
      */
+    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowDefinition as(WindowSpecification window);
 
     /**
@@ -77,6 +88,7 @@ public interface Name extends QueryPart {
      * Column names are implicitly inherited from the <code>SELECT</code>
      * statement.
      */
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     <R extends Record> CommonTableExpression<R> as(Select<R> select);
 
     /**
@@ -87,6 +99,7 @@ public interface Name extends QueryPart {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     DerivedColumnList fields(String... fieldNames);
 
 }

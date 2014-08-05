@@ -4061,7 +4061,7 @@
                                         <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.informix.InformixDatabase</name>
-                                            <includes>sys(columns|constraints|indexes|references|sequences|tables|xtdtypes)</includes>
+                                            <includes>sys(columns|constraints|defaults|indexes|references|sequences|tables|xtdtypes)</includes>
                                         </database>
                                         <generate>
                                             <relations>false</relations>

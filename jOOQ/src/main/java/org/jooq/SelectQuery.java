@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -282,7 +283,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param definitions The definitions
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     void addWindow(WindowDefinition... definitions);
 
     /**
@@ -290,7 +291,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param definitions The definitions
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     void addWindow(Collection<? extends WindowDefinition> definitions);
 
     /**
@@ -359,21 +360,21 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query.
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     void addConnectBy(Condition condition);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
      * query.
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     void addConnectByNoCycle(Condition condition);
 
     /**
      * Add an Oracle-specific <code>START WITH</code> clause to the query's
      * <code>CONNECT BY</code> clause.
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     void setConnectByStartWith(Condition condition);
 
     // ------------------------------------------------------------------------
@@ -457,7 +458,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param orderBySiblings
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     void setOrderBySiblings(boolean orderBySiblings);
 
     /**
@@ -518,7 +519,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     void addLimit(Param<Integer> numberOfRows);
 
     /**
@@ -535,7 +536,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     void addLimit(int offset, int numberOfRows);
 
     /**
@@ -553,7 +554,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     void addLimit(Param<Integer> offset, int numberOfRows);
 
     /**
@@ -571,7 +572,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     void addLimit(int offset, Param<Integer> numberOfRows);
 
     /**
@@ -589,7 +590,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     void addLimit(Param<Integer> offset, Param<Integer> numberOfRows);
 
     /**
@@ -653,7 +654,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param forUpdate The flag's value
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     void setForUpdate(boolean forUpdate);
 
     /**
@@ -680,7 +681,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param fields The fields that should be locked
      */
-    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, SYBASE })
     void setForUpdateOf(Field<?>... fields);
 
     /**
@@ -690,7 +691,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @see #setForUpdateOf(Field...)
      */
-    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, SYBASE })
     void setForUpdateOf(Collection<? extends Field<?>> fields);
 
     /**
@@ -719,7 +720,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param tables The tables that should be locked
      */
-    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, POSTGRES, ORACLE, SYBASE })
     void setForUpdateOf(Table<?>... tables);
 
     /* [pro] */

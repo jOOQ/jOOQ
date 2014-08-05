@@ -11,7 +11,7 @@ package org.jooq.util.informix.sys.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Systables extends org.jooq.impl.TableImpl<org.jooq.Record> {
 
-	private static final long serialVersionUID = -40147214;
+	private static final long serialVersionUID = -1545312501;
 
 	/**
 	 * The singleton instance of <code>informix.systables</code>
@@ -29,17 +29,17 @@ public class Systables extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>informix.systables.tabname</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> TABNAME = createField("tabname", org.jooq.impl.SQLDataType.VARCHAR.length(128).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> TABNAME = createField("tabname", org.jooq.impl.SQLDataType.VARCHAR.length(128), this, "");
 
 	/**
 	 * The column <code>informix.systables.owner</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> OWNER = createField("owner", org.jooq.impl.SQLDataType.CHAR.length(32).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> OWNER = createField("owner", org.jooq.impl.SQLDataType.CHAR.length(32), this, "");
 
 	/**
 	 * The column <code>informix.systables.partnum</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> PARTNUM = createField("partnum", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> PARTNUM = createField("partnum", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.systables.tabid</code>.
@@ -49,112 +49,112 @@ public class Systables extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>informix.systables.rowsize</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> ROWSIZE = createField("rowsize", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> ROWSIZE = createField("rowsize", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.systables.ncols</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> NCOLS = createField("ncols", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> NCOLS = createField("ncols", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.systables.nindexes</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> NINDEXES = createField("nindexes", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> NINDEXES = createField("nindexes", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.systables.nrows</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Double> NROWS = createField("nrows", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Double> NROWS = createField("nrows", org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
 	/**
 	 * The column <code>informix.systables.created</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.sql.Date> CREATED = createField("created", org.jooq.impl.SQLDataType.DATE.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.sql.Date> CREATED = createField("created", org.jooq.impl.SQLDataType.DATE, this, "");
 
 	/**
 	 * The column <code>informix.systables.version</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> VERSION = createField("version", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> VERSION = createField("version", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.systables.tabtype</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> TABTYPE = createField("tabtype", org.jooq.impl.SQLDataType.CHAR.length(1).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> TABTYPE = createField("tabtype", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
 
 	/**
 	 * The column <code>informix.systables.locklevel</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> LOCKLEVEL = createField("locklevel", org.jooq.impl.SQLDataType.CHAR.length(1).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> LOCKLEVEL = createField("locklevel", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
 
 	/**
 	 * The column <code>informix.systables.npused</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Double> NPUSED = createField("npused", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Double> NPUSED = createField("npused", org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
 	/**
 	 * The column <code>informix.systables.fextsize</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> FEXTSIZE = createField("fextsize", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> FEXTSIZE = createField("fextsize", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.systables.nextsize</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> NEXTSIZE = createField("nextsize", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> NEXTSIZE = createField("nextsize", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.systables.flags</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> FLAGS = createField("flags", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> FLAGS = createField("flags", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.systables.site</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> SITE = createField("site", org.jooq.impl.SQLDataType.VARCHAR.length(128).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> SITE = createField("site", org.jooq.impl.SQLDataType.VARCHAR.length(128), this, "");
 
 	/**
 	 * The column <code>informix.systables.dbname</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> DBNAME = createField("dbname", org.jooq.impl.SQLDataType.VARCHAR.length(128).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> DBNAME = createField("dbname", org.jooq.impl.SQLDataType.VARCHAR.length(128), this, "");
 
 	/**
 	 * The column <code>informix.systables.type_xid</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> TYPE_XID = createField("type_xid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> TYPE_XID = createField("type_xid", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.systables.am_id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> AM_ID = createField("am_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> AM_ID = createField("am_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.systables.pagesize</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> PAGESIZE = createField("pagesize", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> PAGESIZE = createField("pagesize", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.systables.ustlowts</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.sql.Timestamp> USTLOWTS = createField("ustlowts", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.sql.Timestamp> USTLOWTS = createField("ustlowts", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
 	 * The column <code>informix.systables.secpolicyid</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> SECPOLICYID = createField("secpolicyid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> SECPOLICYID = createField("secpolicyid", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.systables.protgranularity</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> PROTGRANULARITY = createField("protgranularity", org.jooq.impl.SQLDataType.CHAR.length(1).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> PROTGRANULARITY = createField("protgranularity", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
 
 	/**
 	 * The column <code>informix.systables.statchange</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> STATCHANGE = createField("statchange", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> STATCHANGE = createField("statchange", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.systables.statlevel</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> STATLEVEL = createField("statlevel", org.jooq.impl.SQLDataType.CHAR.length(1).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> STATLEVEL = createField("statlevel", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
 
 	/**
 	 * Create a <code>informix.systables</code> table reference

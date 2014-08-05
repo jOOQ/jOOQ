@@ -80,10 +80,6 @@ class Concat extends AbstractFunction<String> {
         System.arraycopy(cast, 1, others, 0, others.length);
 
         switch (configuration.dialect().family()) {
-            /* [pro] */
-            case INFORMIX:
-            /* [/pro] */
-
             case MARIADB:
             case MYSQL:
                 return function("concat", SQLDataType.VARCHAR, cast);

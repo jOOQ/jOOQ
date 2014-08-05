@@ -167,11 +167,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         int firstId = create().select(max(id)).from(table).fetchOne(max(id));
 
-        if (dialect() != POSTGRES/* [pro] */ &&
-            dialect() != DB2/* [/pro] */) {
-
+        if (!asList(DB2, INFORMIX, POSTGRES).contains(dialect().family()))
             assertEquals(new BigInteger("" + firstId), create().lastID());
-        }
 
         R r1 = create().selectFrom(table).fetchOne();
 
@@ -186,9 +183,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .returning()
                 .fetchOne();
 
-        if (dialect() != POSTGRES/* [pro] */ &&
-            dialect() != DB2/* [/pro] */) {
-
+        if (!asList(DB2, INFORMIX, POSTGRES).contains(dialect().family())) {
             assertEquals(new BigInteger("" + (firstId + 1)), create().lastID());
             assertEquals(new BigInteger("" + (firstId + 1)), create().lastID());
         }

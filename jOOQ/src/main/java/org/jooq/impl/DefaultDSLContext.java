@@ -51,6 +51,7 @@ import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.template;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Utils.list;
+import static org.jooq.tools.Convert.convert;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -1749,6 +1750,10 @@ public class DefaultDSLContext implements DSLContext, Serializable {
             }
 
             /* [pro] */
+            case INFORMIX: {
+                return convert(fetchValue("select dbinfo('sqlca.sqlerrd1') from systables where tabid = 1"), BigInteger.class);
+            }
+
             case INGRES: {
                 Field<BigInteger> field = field("last_identity()", BigInteger.class);
                 return select(field).fetchOne(field);

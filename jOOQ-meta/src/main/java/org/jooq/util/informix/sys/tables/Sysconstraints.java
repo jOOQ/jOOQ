@@ -11,7 +11,7 @@ package org.jooq.util.informix.sys.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sysconstraints extends org.jooq.impl.TableImpl<org.jooq.Record> {
 
-	private static final long serialVersionUID = 2083095204;
+	private static final long serialVersionUID = 158898982;
 
 	/**
 	 * The singleton instance of <code>informix.sysconstraints</code>
@@ -34,32 +34,32 @@ public class Sysconstraints extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>informix.sysconstraints.constrname</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> CONSTRNAME = createField("constrname", org.jooq.impl.SQLDataType.VARCHAR.length(128).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> CONSTRNAME = createField("constrname", org.jooq.impl.SQLDataType.VARCHAR.length(128), this, "");
 
 	/**
 	 * The column <code>informix.sysconstraints.owner</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> OWNER = createField("owner", org.jooq.impl.SQLDataType.CHAR.length(32).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> OWNER = createField("owner", org.jooq.impl.SQLDataType.CHAR.length(32), this, "");
 
 	/**
 	 * The column <code>informix.sysconstraints.tabid</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> TABID = createField("tabid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> TABID = createField("tabid", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.sysconstraints.constrtype</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> CONSTRTYPE = createField("constrtype", org.jooq.impl.SQLDataType.CHAR.length(1).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> CONSTRTYPE = createField("constrtype", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
 
 	/**
 	 * The column <code>informix.sysconstraints.idxname</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> IDXNAME = createField("idxname", org.jooq.impl.SQLDataType.VARCHAR.length(128).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> IDXNAME = createField("idxname", org.jooq.impl.SQLDataType.VARCHAR.length(128), this, "");
 
 	/**
 	 * The column <code>informix.sysconstraints.collation</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> COLLATION = createField("collation", org.jooq.impl.SQLDataType.CHAR.length(36).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> COLLATION = createField("collation", org.jooq.impl.SQLDataType.CHAR.length(36), this, "");
 
 	/**
 	 * Create a <code>informix.sysconstraints</code> table reference

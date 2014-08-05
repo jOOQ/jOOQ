@@ -51,6 +51,7 @@ import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.POSTGRES;
 
 import org.jooq.Clause;
@@ -95,7 +96,7 @@ class CompareCondition extends AbstractCondition {
         // [#293] TODO: This could apply to other operators, too
         if ((op == LIKE || op == NOT_LIKE)
                 && field1.getType() != String.class
-                && asList(ASE, DERBY, POSTGRES).contains(family)) {
+                && asList(ASE, DERBY, INFORMIX, POSTGRES).contains(family)) {
 
             lhs = lhs.cast(String.class);
         }

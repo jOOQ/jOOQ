@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 171447048;
+	private static final long serialVersionUID = -81756724;
 
 	/**
 	 * The singleton instance of <code>informix.t_639_numbers_table</code>
@@ -111,7 +111,7 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.inf
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord> getPrimaryKey() {
-		return org.jooq.test.informix.generatedclasses.Keys.U8190_8799;
+		return org.jooq.test.informix.generatedclasses.Keys.U15915_16744;
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.inf
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.U8190_8799);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.informix.generatedclasses.tables.records.T_639NumbersTableRecord>>asList(org.jooq.test.informix.generatedclasses.Keys.U15915_16744);
 	}
 
 	/**

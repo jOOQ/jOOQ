@@ -41,6 +41,7 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER2012;
@@ -65,35 +66,35 @@ public interface WindowSpecificationRowsAndStep {
      * Add a <code>... AND UNBOUNDED PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     WindowSpecificationFinalStep andUnboundedPreceding();
 
     /**
      * Add a <code>... AND [number] PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     WindowSpecificationFinalStep andPreceding(int number);
 
     /**
      * Add a <code>... AND CURRENT ROW</code> frame clause to the window
      * specification.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     WindowSpecificationFinalStep andCurrentRow();
 
     /**
      * Add a <code>... AND UNBOUNDED FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     WindowSpecificationFinalStep andUnboundedFollowing();
 
     /**
      * Add a <code>... AND [number] FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     WindowSpecificationFinalStep andFollowing(int number);
 
 }

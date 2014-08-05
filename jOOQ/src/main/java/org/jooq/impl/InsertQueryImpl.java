@@ -180,16 +180,15 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     break;
                 }
 
-                // Some dialects can't really handle this clause. Simulation
-                // should be done in two steps
+                // Some dialects can't really handle this clause. Emulation should be done in two steps
                 case H2: {
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + ctx.configuration().dialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be emulated for " + ctx.configuration().dialect());
                 }
 
-                // Some databases allow for simulating this clause using a
-                // MERGE statement
+                // Some databases allow for emulating this clause using a MERGE statement
                 /* [pro] */
                 case DB2:
+                case INFORMIX:
                 case ORACLE:
                 case SQLSERVER:
                 case SYBASE:
@@ -200,7 +199,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 }
 
                 default:
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + ctx.configuration().dialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be emulated for " + ctx.configuration().dialect());
             }
         }
 
@@ -235,16 +234,15 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     break;
                 }
 
-                // Some dialects can't really handle this clause. Simulation
-                // should be done in two steps
+                // Some dialects can't really handle this clause. Emulation should be done in two steps
                 case H2: {
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + ctx.configuration().dialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be emulated for " + ctx.configuration().dialect());
                 }
 
-                // Some databases allow for simulating this clause using a
-                // MERGE statement
+                // Some databases allow for emulating this clause using a MERGE statement
                 /* [pro] */
                 case DB2:
+                case INFORMIX:
                 case ORACLE:
                 case SQLSERVER:
                 case SYBASE:
@@ -255,7 +253,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 }
 
                 default:
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + ctx.configuration().dialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be emulated for " + ctx.configuration().dialect());
             }
         }
 

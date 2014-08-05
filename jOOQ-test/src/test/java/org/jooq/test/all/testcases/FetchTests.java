@@ -42,8 +42,11 @@ package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.INFORMIX;
+import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
@@ -474,17 +477,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testFetchIntoWithAnnotations() throws Exception {
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        switch (dialect()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case INGRES:
-            /* [/pro] */
-            case CUBRID:
-            case POSTGRES:
-                log.info("SKIPPING", "fetchInto() tests");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, INFORMIX, INGRES, CUBRID, POSTGRES);
 
         Select<?> select =
         create().select(
@@ -654,17 +647,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testFetchIntoWithoutAnnotations() throws Exception {
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        switch (dialect()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case INGRES:
-            /* [/pro] */
-            case CUBRID:
-            case POSTGRES:
-                log.info("SKIPPING", "fetchInto() tests");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, INFORMIX, INGRES, CUBRID, POSTGRES);
 
         Select<?> select =
         create().select(
@@ -742,17 +725,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testRecordFromWithAnnotations() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        switch (dialect()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case INGRES:
-            /* [/pro] */
-            case CUBRID:
-            case POSTGRES:
-                log.info("SKIPPING", "fetchInto() tests");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, INFORMIX, INGRES, CUBRID, POSTGRES);
 
         BookWithAnnotations b = new BookWithAnnotations();
         b.firstName = "Edgar Allen";
@@ -786,17 +759,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testRecordFromWithoutAnnotations() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        switch (dialect()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case INGRES:
-            /* [/pro] */
-            case CUBRID:
-            case POSTGRES:
-                log.info("SKIPPING", "fetchInto() tests");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, INFORMIX, INGRES, CUBRID, POSTGRES);
 
         BookWithoutAnnotations b = new BookWithoutAnnotations();
         b.firstName = "Edgar Allen";
@@ -852,17 +815,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testRecordFromUpdatePK() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        switch (dialect()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case INGRES:
-            /* [/pro] */
-            case CUBRID:
-            case POSTGRES:
-                log.info("SKIPPING", "testRecordFromUpdatePK() tests");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, INFORMIX, INGRES, CUBRID, POSTGRES);
 
         jOOQAbstractTest.reset = false;
 
@@ -949,17 +902,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testReflectionWithAnnotations() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        switch (dialect()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case INGRES:
-            /* [/pro] */
-            case CUBRID:
-            case POSTGRES:
-                log.info("SKIPPING", "fetchInto() tests");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, INFORMIX, INGRES, CUBRID, POSTGRES);
 
         // [#933] Map values to char / Character
         A author1 = create().newRecord(TAuthor());
@@ -1014,17 +957,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testReflectionWithoutAnnotations() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        switch (dialect()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case INGRES:
-            /* [/pro] */
-            case CUBRID:
-            case POSTGRES:
-                log.info("SKIPPING", "fetchInto() tests");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, INFORMIX, INGRES, CUBRID, POSTGRES);
 
         // Arbitrary sources should have no effect
         assertEquals(create().newRecord(TBook()), create().newRecord(TBook(), (Object) null));
@@ -1115,17 +1048,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testReflectionWithImmutablesAndConstructorProperties() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        switch (dialect()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case INGRES:
-            /* [/pro] */
-            case CUBRID:
-            case POSTGRES:
-                log.info("SKIPPING", "fetchInto() tests");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, INFORMIX, INGRES, CUBRID, POSTGRES);
 
         Record author =
         create().select(
@@ -1364,17 +1287,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFetchIntoCustomTable() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        switch (dialect()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case INGRES:
-            /* [/pro] */
-            case CUBRID:
-            case POSTGRES:
-                log.info("SKIPPING", "fetchInto() tests");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, INFORMIX, INGRES, CUBRID, POSTGRES);
 
         Result<BookRecord> result =
             create().select(

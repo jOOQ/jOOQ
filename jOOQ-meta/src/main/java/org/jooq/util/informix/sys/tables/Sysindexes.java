@@ -11,7 +11,7 @@ package org.jooq.util.informix.sys.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sysindexes extends org.jooq.impl.TableImpl<org.jooq.Record> {
 
-	private static final long serialVersionUID = 793075650;
+	private static final long serialVersionUID = -897200469;
 
 	/**
 	 * The singleton instance of <code>informix.sysindexes</code>
@@ -29,127 +29,127 @@ public class Sysindexes extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>informix.sysindexes.idxname</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> IDXNAME = createField("idxname", org.jooq.impl.SQLDataType.VARCHAR.length(128).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> IDXNAME = createField("idxname", org.jooq.impl.SQLDataType.VARCHAR.length(128), this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.owner</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> OWNER = createField("owner", org.jooq.impl.SQLDataType.CHAR.length(32).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> OWNER = createField("owner", org.jooq.impl.SQLDataType.CHAR.length(32), this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.tabid</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> TABID = createField("tabid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> TABID = createField("tabid", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.idxtype</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> IDXTYPE = createField("idxtype", org.jooq.impl.SQLDataType.CHAR.length(1).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> IDXTYPE = createField("idxtype", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.clustered</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> CLUSTERED = createField("clustered", org.jooq.impl.SQLDataType.CHAR.length(1).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> CLUSTERED = createField("clustered", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.part1</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART1 = createField("part1", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART1 = createField("part1", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.part2</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART2 = createField("part2", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART2 = createField("part2", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.part3</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART3 = createField("part3", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART3 = createField("part3", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.part4</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART4 = createField("part4", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART4 = createField("part4", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.part5</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART5 = createField("part5", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART5 = createField("part5", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.part6</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART6 = createField("part6", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART6 = createField("part6", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.part7</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART7 = createField("part7", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART7 = createField("part7", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.part8</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART8 = createField("part8", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART8 = createField("part8", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.part9</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART9 = createField("part9", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART9 = createField("part9", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.part10</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART10 = createField("part10", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART10 = createField("part10", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.part11</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART11 = createField("part11", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART11 = createField("part11", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.part12</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART12 = createField("part12", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART12 = createField("part12", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.part13</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART13 = createField("part13", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART13 = createField("part13", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.part14</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART14 = createField("part14", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART14 = createField("part14", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.part15</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART15 = createField("part15", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART15 = createField("part15", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.part16</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART16 = createField("part16", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> PART16 = createField("part16", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.levels</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> LEVELS = createField("levels", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Short> LEVELS = createField("levels", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.leaves</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Double> LEAVES = createField("leaves", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Double> LEAVES = createField("leaves", org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.nunique</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Double> NUNIQUE = createField("nunique", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Double> NUNIQUE = createField("nunique", org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
 	/**
 	 * The column <code>informix.sysindexes.clust</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Double> CLUST = createField("clust", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Double> CLUST = createField("clust", org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
 	/**
 	 * Create a <code>informix.sysindexes</code> table reference

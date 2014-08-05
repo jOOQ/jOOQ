@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -81,7 +82,7 @@ public interface WindowOverStep<T> {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<T> over();
 
     /**
@@ -97,7 +98,7 @@ public interface WindowOverStep<T> {
      * (see {@link SelectWindowStep#window(WindowDefinition...)}, then
      * referenced windows will be inlined.
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowFinalStep<T> over(Name name);
 
     /**
@@ -113,7 +114,7 @@ public interface WindowOverStep<T> {
      * (see {@link SelectWindowStep#window(WindowDefinition...)}, then
      * referenced windows will be inlined.
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowFinalStep<T> over(String name);
 
     /**
@@ -126,7 +127,7 @@ public interface WindowOverStep<T> {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowFinalStep<T> over(WindowSpecification specification);
 
     /**
@@ -142,7 +143,7 @@ public interface WindowOverStep<T> {
      * (see {@link SelectWindowStep#window(WindowDefinition...)}, then
      * referenced windows will be inlined.
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowFinalStep<T> over(WindowDefinition definition);
 
 }

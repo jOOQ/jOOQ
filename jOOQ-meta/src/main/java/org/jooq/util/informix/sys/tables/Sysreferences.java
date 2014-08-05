@@ -11,7 +11,7 @@ package org.jooq.util.informix.sys.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sysreferences extends org.jooq.impl.TableImpl<org.jooq.Record> {
 
-	private static final long serialVersionUID = 2086101909;
+	private static final long serialVersionUID = 387706386;
 
 	/**
 	 * The singleton instance of <code>informix.sysreferences</code>
@@ -29,37 +29,37 @@ public class Sysreferences extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>informix.sysreferences.constrid</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> CONSTRID = createField("constrid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> CONSTRID = createField("constrid", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.sysreferences.primary</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> PRIMARY = createField("primary", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> PRIMARY = createField("primary", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.sysreferences.ptabid</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> PTABID = createField("ptabid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> PTABID = createField("ptabid", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>informix.sysreferences.updrule</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> UPDRULE = createField("updrule", org.jooq.impl.SQLDataType.CHAR.length(1).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> UPDRULE = createField("updrule", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
 
 	/**
 	 * The column <code>informix.sysreferences.delrule</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> DELRULE = createField("delrule", org.jooq.impl.SQLDataType.CHAR.length(1).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> DELRULE = createField("delrule", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
 
 	/**
 	 * The column <code>informix.sysreferences.matchtype</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> MATCHTYPE = createField("matchtype", org.jooq.impl.SQLDataType.CHAR.length(1).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> MATCHTYPE = createField("matchtype", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
 
 	/**
 	 * The column <code>informix.sysreferences.pendant</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> PENDANT = createField("pendant", org.jooq.impl.SQLDataType.CHAR.length(1).nullable(false), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> PENDANT = createField("pendant", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
 
 	/**
 	 * Create a <code>informix.sysreferences</code> table reference

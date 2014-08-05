@@ -57,7 +57,8 @@ class Dual extends AbstractTable<Record> {
 
     private static final long          serialVersionUID = -7492790780048090156L;
     private static final Table<Record> FORCED_DUAL      = select(new Field[] { inline("X").as("DUMMY") }).asTable("DUAL");
-    static final String                DUAL_ACCESS      = "select count(*) from MSysResources";
+    static final String                DUAL_ACCESS      = "select count(*) dual from MSysResources";
+    static final String                DUAL_INFORMIX    = "select 1 as dual from systables where tabid = 1";
 
     private final boolean              force;
 
@@ -144,7 +145,7 @@ class Dual extends AbstractTable<Record> {
                     break;
 
                 case INFORMIX:
-                    ctx.keyword("(select 1 as dual from systables where tabid = 1) as dual");
+                    ctx.sql("(").sql(DUAL_INFORMIX).sql(") as dual");
                     break;
 
                 case INGRES:

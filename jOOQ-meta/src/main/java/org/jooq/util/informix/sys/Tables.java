@@ -34,6 +34,11 @@ public class Tables {
 	public static final org.jooq.util.informix.sys.tables.Sysreferences SYSREFERENCES = org.jooq.util.informix.sys.tables.Sysreferences.SYSREFERENCES;
 
 	/**
+	 * The table informix.sysdefaults
+	 */
+	public static final org.jooq.util.informix.sys.tables.Sysdefaults SYSDEFAULTS = org.jooq.util.informix.sys.tables.Sysdefaults.SYSDEFAULTS;
+
+	/**
 	 * The table informix.sysxtdtypes
 	 */
 	public static final org.jooq.util.informix.sys.tables.Sysxtdtypes SYSXTDTYPES = org.jooq.util.informix.sys.tables.Sysxtdtypes.SYSXTDTYPES;

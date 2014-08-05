@@ -945,6 +945,7 @@ implements
         switch (config.dialect().family()) {
             /* [pro] */
             case DB2:
+            case INFORMIX:
             case ORACLE:
             case SQLSERVER:
             case SYBASE:

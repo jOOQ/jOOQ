@@ -3,6 +3,7 @@ DROP VIEW v_author/
 DROP VIEW v_book/
 
 DROP TRIGGER t_triggers_trigger/
+DROP PROCEDURE p_triggers/
 
 DROP TABLE t_dates/
 DROP TABLE t_triggers/
@@ -90,6 +91,21 @@ CREATE TABLE t_triggers (
   id int,
   counter int
 )
+/
+
+CREATE PROCEDURE p_triggers() REFERENCING OLD AS o NEW AS n FOR t_triggers;
+
+    LET n.id = s_trigger_id.nextval;
+    LET n.id_generated = n.id;
+    LET n.counter = n.id * 2;
+
+END PROCEDURE;
+/
+
+CREATE TRIGGER t_triggers_trigger
+INSERT ON t_triggers
+REFERENCING NEW AS n
+FOR EACH ROW(EXECUTE PROCEDURE p_triggers() WITH TRIGGER REFERENCES);
 /
 
 CREATE TABLE t_directory (

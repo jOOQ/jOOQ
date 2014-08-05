@@ -42,6 +42,7 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -70,7 +71,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * Server and Sybase.
      */
     @Override
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<T> over();
 
     /**
@@ -87,7 +88,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * referenced windows will be inlined.
      */
     @Override
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowFinalStep<T> over(Name name);
 
     /**
@@ -104,7 +105,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * referenced windows will be inlined.
      */
     @Override
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowFinalStep<T> over(String name);
 
     /**
@@ -118,7 +119,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * Server and Sybase.
      */
     @Override
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowFinalStep<T> over(WindowSpecification specification);
 
     /**
@@ -135,7 +136,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * referenced windows will be inlined.
      */
     @Override
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowFinalStep<T> over(WindowDefinition definition);
 
     /* [pro] */

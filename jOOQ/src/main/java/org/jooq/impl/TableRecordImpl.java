@@ -154,7 +154,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         // Don't store records if no value was set by client code
         if (!insert.isExecutable()) {
             if (log.isDebugEnabled())
-                log.debug("Query is not executable", this);
+                log.debug("Query is not executable", insert);
 
             return 0;
         }

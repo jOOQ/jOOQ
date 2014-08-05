@@ -530,10 +530,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testUpdateWithRowValueExpression() throws Exception {
-        if (asList(ASE, CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL, SQLSERVER, SQLITE, SYBASE).contains(dialect().family())) {
-            log.info("SKIPPING", "UPDATE with row value expression tests");
-            return;
-        }
+        assumeFamilyNotIn(ASE, CUBRID, DERBY, FIREBIRD, INFORMIX, MARIADB, MYSQL, SQLSERVER, SQLITE, SYBASE);
 
         jOOQAbstractTest.reset = false;
         A author;

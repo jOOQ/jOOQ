@@ -144,7 +144,7 @@ class Dual extends AbstractTable<Record> {
                     break;
 
                 case INFORMIX:
-                    ctx.keyword("table(set {1})");
+                    ctx.keyword("(select 1 as dual from systables where tabid = 1) as dual");
                     break;
 
                 case INGRES:

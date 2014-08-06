@@ -247,6 +247,7 @@ final class Utils {
      */
     static final String          DATA_WINDOW_DEFINITIONS                      = "org.jooq.configuration.local-window-definitions";
 
+    /* [pro] */
     /**
      * [#2744] Currently rendering the DB2 FINAL TABLE clause.
      * <p>
@@ -254,6 +255,7 @@ final class Utils {
      * corresponds to the PostgreSQL <code>INSERT .. RETURNING</code> clause.
      */
     static final String          DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE        = "org.jooq.configuration.rendering-db2-final-table-clause";
+    /* [/pro] */
 
     /**
      * [#1629] The {@link Connection#getAutoCommit()} flag value before starting

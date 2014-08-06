@@ -57,9 +57,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -1075,6 +1077,51 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @Override
     public final <T, U> U[] intoArray(Field<T> field, Converter<? super T, U> converter) {
         return Convert.convertArray(intoArray(field), converter);
+    }
+
+    @Override
+    public final Set<?> intoSet(int fieldIndex) {
+        return new LinkedHashSet<Object>(getValues(fieldIndex));
+    }
+
+    @Override
+    public final <T> Set<T> intoSet(int fieldIndex, Class<? extends T> type) {
+        return new LinkedHashSet<T>(getValues(fieldIndex, type));
+    }
+
+    @Override
+    public final <U> Set<U> intoSet(int fieldIndex, Converter<?, U> converter) {
+        return new LinkedHashSet<U>(getValues(fieldIndex, converter));
+    }
+
+    @Override
+    public final Set<?> intoSet(String fieldName) {
+        return new LinkedHashSet<Object>(getValues(fieldName));
+    }
+
+    @Override
+    public final <T> Set<T> intoSet(String fieldName, Class<? extends T> type) {
+        return new LinkedHashSet<T>(getValues(fieldName, type));
+    }
+
+    @Override
+    public final <U> Set<U> intoSet(String fieldName, Converter<?, U> converter) {
+        return new LinkedHashSet<U>(getValues(fieldName, converter));
+    }
+
+    @Override
+    public final <T> Set<T> intoSet(Field<T> field) {
+        return new LinkedHashSet<T>(getValues(field));
+    }
+
+    @Override
+    public final <T> Set<T> intoSet(Field<?> field, Class<? extends T> type) {
+        return new LinkedHashSet<T>(getValues(field, type));
+    }
+
+    @Override
+    public final <T, U> Set<U> intoSet(Field<T> field, Converter<? super T, U> converter) {
+        return new LinkedHashSet<U>(getValues(field, converter));
     }
 
     @Override

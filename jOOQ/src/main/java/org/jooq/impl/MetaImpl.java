@@ -261,8 +261,6 @@ class MetaImpl implements Meta, Serializable {
          * Generated UID
          */
         private static final long                            serialVersionUID = -2621899850912554198L;
-
-        private transient volatile List<Table<?>>            tableCache;
         private transient volatile Map<Name, Result<Record>> columnCache;
 
         MetaSchema(String name) {
@@ -271,10 +269,6 @@ class MetaImpl implements Meta, Serializable {
 
         @Override
         public final synchronized List<Table<?>> getTables() {
-            if (tableCache != null) {
-                return tableCache;
-            }
-
             try {
                 String[] types = null;
 

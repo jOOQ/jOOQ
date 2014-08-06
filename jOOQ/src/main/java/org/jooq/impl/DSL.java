@@ -6384,7 +6384,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> coalesce(Field<T> field, Field<?>... fields) {
-        return function("coalesce", nullSafeDataType(field), nullSafe(combine(field, fields)));
+        return new Coalesce<T>(nullSafeDataType(field), nullSafe(combine(field, fields)));
     }
 
     /**

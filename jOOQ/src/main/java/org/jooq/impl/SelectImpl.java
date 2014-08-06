@@ -50,6 +50,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
 import javax.annotation.Generated;
@@ -2592,6 +2593,51 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final <T, U> U[] fetchArray(Field<T> field, Converter<? super T, U> converter) {
         return getDelegate().fetchArray(field, converter);
+    }
+
+    @Override
+    public final Set<?> fetchSet(int fieldIndex) {
+        return getDelegate().fetchSet(fieldIndex);
+    }
+
+    @Override
+    public final <T> Set<T> fetchSet(int fieldIndex, Class<? extends T> type) {
+        return getDelegate().fetchSet(fieldIndex, type);
+    }
+
+    @Override
+    public final <U> Set<U> fetchSet(int fieldIndex, Converter<?, U> converter) {
+        return getDelegate().fetchSet(fieldIndex, converter);
+    }
+
+    @Override
+    public final Set<?> fetchSet(String fieldName) {
+        return getDelegate().fetchSet(fieldName);
+    }
+
+    @Override
+    public final <T> Set<T> fetchSet(String fieldName, Class<? extends T> type) {
+        return getDelegate().fetchSet(fieldName, type);
+    }
+
+    @Override
+    public final <U> Set<U> fetchSet(String fieldName, Converter<?, U> converter) {
+        return getDelegate().fetchSet(fieldName, converter);
+    }
+
+    @Override
+    public final <T> Set<T> fetchSet(Field<T> field) {
+        return getDelegate().fetchSet(field);
+    }
+
+    @Override
+    public final <T> Set<T> fetchSet(Field<?> field, Class<? extends T> type) {
+        return getDelegate().fetchSet(field, type);
+    }
+
+    @Override
+    public final <T, U> Set<U> fetchSet(Field<T> field, Converter<? super T, U> converter) {
+        return getDelegate().fetchSet(field, converter);
     }
 
     @Override

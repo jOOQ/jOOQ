@@ -75,6 +75,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -394,6 +395,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(create().selectFrom(TBook()).orderBy(TBook_ID()).fetch(TBook_ID().getName()),
             Arrays.asList(array3));
         assertTrue(array3 instanceof Integer[]);
+    }
+
+    public void testFetchSet() throws Exception {
+        assertEquals(
+            new LinkedHashSet<>(AUTHOR_IDS),
+            create().select(TBook_AUTHOR_ID()).from(TBook()).fetchSet(TBook_AUTHOR_ID())
+        );
     }
 
     public void testFetch() throws Exception {

@@ -46,6 +46,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
 import org.jooq.conf.Settings;
@@ -1140,6 +1141,96 @@ public interface ResultQuery<R extends Record> extends Query {
      * @see Result#intoArray(Field, Converter)
      */
     <T, U> U[] fetchArray(Field<T> field, Converter<? super T, U> converter) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field index from the
+     * generated result.
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(int)
+     */
+    Set<?> fetchSet(int fieldIndex) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field index from the
+     * generated result.
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(int, Class)
+     */
+    <T> Set<T> fetchSet(int fieldIndex, Class<? extends T> type) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field index from the
+     * generated result.
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(int, Converter)
+     */
+    <U> Set<U> fetchSet(int fieldIndex, Converter<?, U> converter) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field name from the
+     * generated result.
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(String)
+     */
+    Set<?> fetchSet(String fieldName) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field name from the
+     * generated result.
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(String, Converter)
+     */
+    <T> Set<T> fetchSet(String fieldName, Class<? extends T> type) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field name from the
+     * generated result.
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(String, Class)
+     */
+    <U> Set<U> fetchSet(String fieldName, Converter<?, U> converter) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field from the generated
+     * result.
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(Field)
+     */
+    <T> Set<T> fetchSet(Field<T> field) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field from the generated
+     * result.
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(Field, Class)
+     */
+    <T> Set<T> fetchSet(Field<?> field, Class<? extends T> type) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field from the generated
+     * result.
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(Field, Converter)
+     */
+    <T, U> Set<U> fetchSet(Field<T> field, Converter<? super T, U> converter) throws DataAccessException;
 
     /**
      * Map resulting records onto a custom type.

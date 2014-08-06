@@ -1262,6 +1262,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchSet() throws Exception {
+        new FetchTests(this).testFetchSet();
+    }
+
+    @Test
     public void testFetchGroupsPOJO() throws Exception {
         new FetchTests(this).testFetchGroupsPOJO();
     }

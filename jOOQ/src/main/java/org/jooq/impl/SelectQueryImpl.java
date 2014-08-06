@@ -733,7 +733,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         // The simplest way to see if no FROM clause needs to be rendered is to
         // render it. But use a new RenderContext (without any VisitListeners)
         // for that purpose!
-        boolean hasFrom = true
+        boolean hasFrom = false
             /* [pro] xx
             xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx
             xx [/pro] */

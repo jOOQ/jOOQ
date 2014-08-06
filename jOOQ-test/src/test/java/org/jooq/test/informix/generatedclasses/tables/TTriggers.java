@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -1314503332;
+	private static final long serialVersionUID = -1428296948;
 
 	/**
 	 * The singleton instance of <code>informix.t_triggers</code>
@@ -32,7 +32,7 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.informix.ge
 	/**
 	 * The column <code>informix.t_triggers.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.jooq.test.informix.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>informix.t_triggers.counter</code>.
@@ -59,6 +59,14 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.informix.ge
 
 	private TTriggers(java.lang.String alias, org.jooq.Table<org.jooq.test.informix.generatedclasses.tables.records.TTriggersRecord> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, org.jooq.test.informix.generatedclasses.Informix.INFORMIX, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Identity<org.jooq.test.informix.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> getIdentity() {
+		return org.jooq.test.informix.generatedclasses.Keys.IDENTITY_T_TRIGGERS;
 	}
 
 	/**

@@ -83,19 +83,15 @@ CREATE TABLE t_unsigned (
 )
 /
 
-DROP SEQUENCE s_trigger_id/
-CREATE SEQUENCE s_trigger_id/
-
 CREATE TABLE t_triggers (
   id_generated int not null PRIMARY KEY CONSTRAINT pk_t_triggers,
-  id int,
+  id serial,
   counter int
 )
 /
 
 CREATE PROCEDURE p_triggers() REFERENCING OLD AS o NEW AS n FOR t_triggers;
 
-    LET n.id = s_trigger_id.nextval;
     LET n.id_generated = n.id;
     LET n.counter = n.id * 2;
 
@@ -173,7 +169,7 @@ CREATE TABLE t_book (
   TITLE VARCHAR(100) NOT NULL,
   PUBLISHED_IN INT NOT NULL,
   LANGUAGE_ID INT NOT NULL DEFAULT 1,
-  CONTENT_TEXT TEXT,
+  CONTENT_TEXT LVARCHAR,
   CONTENT_PDF BLOB,
 
   FOREIGN KEY (AUTHOR_ID) REFERENCES T_AUTHOR(ID),

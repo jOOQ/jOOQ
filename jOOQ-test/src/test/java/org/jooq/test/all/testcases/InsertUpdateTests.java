@@ -1001,7 +1001,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // --------------------------------
         create().mergeInto(TAuthor())
                 .using(selectOne())
-                .on(TAuthor_ID().equal(1))
+                // Inline this bind value. In this particular case, INFORMIX doesn't like bind values...
+                .on(TAuthor_ID().equal(inline(1)))
                 .whenMatchedThenUpdate()
                 .set(TAuthor_FIRST_NAME(), "John")
                 .whenNotMatchedThenInsert(TAuthor_ID(), TAuthor_LAST_NAME())

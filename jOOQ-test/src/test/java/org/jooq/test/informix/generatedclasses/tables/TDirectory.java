@@ -9,7 +9,7 @@ package org.jooq.test.informix.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDirectory extends org.jooq.impl.TableImpl<org.jooq.test.informix.generatedclasses.tables.records.TDirectoryRecord> {
 
-	private static final long serialVersionUID = -837116115;
+	private static final long serialVersionUID = -2012333352;
 
 	/**
 	 * The singleton instance of <code>informix.t_directory</code>
@@ -87,7 +87,7 @@ public class TDirectory extends org.jooq.impl.TableImpl<org.jooq.test.informix.g
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.TDirectoryRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.TDirectoryRecord, ?>>asList(org.jooq.test.informix.generatedclasses.Keys.R15903_16706);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.informix.generatedclasses.tables.records.TDirectoryRecord, ?>>asList(org.jooq.test.informix.generatedclasses.Keys.R19136_20535);
 	}
 
 	/**

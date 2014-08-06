@@ -400,6 +400,32 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
+                case INFORMIX: {
+                    if (rhs.get(0).getType() == YearToMonth.class) {
+                        if (operator == ADD) {
+                            return lhs.add(field("{0} {units month}", val(rhsAsYTM().intValue())));
+                        }
+                        else {
+                            return lhs.sub(field("{0} {units month}", val(rhsAsYTM().intValue())));
+                        }
+                    }
+                    else {
+                        // Informix needs this cast if lhs is of type DATE.
+                        DataType<T> type = lhs.getDataType();
+
+                        if (operator == ADD) {
+                            return lhs.cast(Timestamp.class)
+                                .add(field("{0} units fraction", val(rhsAsDTS().getTotalMilli() / 1000.0)))
+                                .cast(type);
+                        }
+                        else {
+                            return lhs.cast(Timestamp.class)
+                                .sub(field("{0} units fraction", val(rhsAsDTS().getTotalMilli() / 1000.0)))
+                                .cast(type);
+                        }
+                    }
+                }
+
                 case DB2: {
                     if (rhs.get(0).getType() == YearToMonth.class) {
                         if (operator == ADD) {
@@ -520,10 +546,10 @@ class Expression<T> extends AbstractFunction<T> {
                 /* [pro] */
                 case INFORMIX: {
                     if (operator == ADD) {
-                        return field("{0} + {interval} ({1}) {day to day}", getDataType(), lhs, rhsAsNumber());
+                        return field("{0} + {1} {units day}", getDataType(), lhs, rhsAsNumber());
                     }
                     else {
-                        return field("{0} - {interval} ({1}) {day to day}", getDataType(), lhs, rhsAsNumber());
+                        return field("{0} - {1} {units day}", getDataType(), lhs, rhsAsNumber());
                     }
                 }
 

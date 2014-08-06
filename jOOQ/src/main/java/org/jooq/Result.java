@@ -45,6 +45,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Generated;
 
@@ -894,6 +895,113 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *             that might have occurred
      */
     <T, U> U[] intoArray(Field<T> field, Converter<? super T, U> converter) throws IllegalArgumentException,
+        DataTypeException;
+
+    /**
+     * Return all values for a field index from the result.
+     *
+     * @return The resulting values. This may be an array type more concrete
+     *         than <code>Object[]</code>, depending on whether jOOQ has any
+     *         knowledge about <code>fieldIndex</code>'s actual type.
+     * @see #getValues(int)
+     * @throws IllegalArgumentException If the argument fieldIndex is not
+     *             contained in {@link #fieldsRow()}
+     */
+    Set<?> intoSet(int fieldIndex) throws IllegalArgumentException;
+
+    /**
+     * Return all values for a field index from the result.
+     *
+     * @return The resulting values.
+     * @see #getValues(int, Class)
+     * @throws IllegalArgumentException If the argument fieldIndex is not
+     *             contained in {@link #fieldsRow()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     */
+    <T> Set<T> intoSet(int fieldIndex, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Return all values for a field index from the result.
+     *
+     * @return The resulting values.
+     * @see #getValues(int, Converter)
+     * @throws IllegalArgumentException If the argument fieldIndex is not
+     *             contained in {@link #fieldsRow()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     */
+    <U> Set<U> intoSet(int fieldIndex, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Return all values for a field name from the result.
+     *
+     * @return The resulting values. This may be an array type more concrete
+     *         than <code>Object[]</code>, depending on whether jOOQ has any
+     *         knowledge about <code>fieldName</code>'s actual type.
+     * @see #getValues(String)
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in {@link #fieldsRow()}
+     */
+    Set<?> intoSet(String fieldName) throws IllegalArgumentException;
+
+    /**
+     * Return all values for a field name from the result.
+     *
+     * @return The resulting values.
+     * @see #getValues(String, Class)
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in {@link #fieldsRow()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     */
+    <T> Set<T> intoSet(String fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Return all values for a field name from the result.
+     *
+     * @return The resulting values.
+     * @see #getValues(String, Converter)
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in {@link #fieldsRow()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     */
+    <U> Set<U> intoSet(String fieldName, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Return all values for a field from the result.
+     *
+     * @return The resulting values.
+     * @see #getValues(Field)
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #fieldsRow()}
+     */
+    <T> Set<T> intoSet(Field<T> field) throws IllegalArgumentException;
+
+    /**
+     * Return all values for a field from the result.
+     *
+     * @return The resulting values.
+     * @see #getValues(Field, Class)
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #fieldsRow()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     */
+    <T> Set<T> intoSet(Field<?> field, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Return all values for a field from the result.
+     *
+     * @return The resulting values.
+     * @see #getValues(Field, Converter)
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #fieldsRow()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     */
+    <T, U> Set<U> intoSet(Field<T> field, Converter<? super T, U> converter) throws IllegalArgumentException,
         DataTypeException;
 
     /**

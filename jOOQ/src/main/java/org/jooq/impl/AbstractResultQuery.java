@@ -57,6 +57,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -702,6 +703,51 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final <T, U> U[] fetchArray(Field<T> field, Converter<? super T, U> converter) {
         return fetch().intoArray(field, converter);
+    }
+
+    @Override
+    public final Set<?> fetchSet(int fieldIndex) {
+        return fetch().intoSet(fieldIndex);
+    }
+
+    @Override
+    public final <T> Set<T> fetchSet(int fieldIndex, Class<? extends T> type) {
+        return fetch().intoSet(fieldIndex, type);
+    }
+
+    @Override
+    public final <U> Set<U> fetchSet(int fieldIndex, Converter<?, U> converter) {
+        return fetch().intoSet(fieldIndex, converter);
+    }
+
+    @Override
+    public final Set<?> fetchSet(String fieldName) {
+        return fetch().intoSet(fieldName);
+    }
+
+    @Override
+    public final <T> Set<T> fetchSet(String fieldName, Class<? extends T> type) {
+        return fetch().intoSet(fieldName, type);
+    }
+
+    @Override
+    public final <U> Set<U> fetchSet(String fieldName, Converter<?, U> converter) {
+        return fetch().intoSet(fieldName, converter);
+    }
+
+    @Override
+    public final <T> Set<T> fetchSet(Field<T> field) {
+        return fetch().intoSet(field);
+    }
+
+    @Override
+    public final <T> Set<T> fetchSet(Field<?> field, Class<? extends T> type) {
+        return fetch().intoSet(field, type);
+    }
+
+    @Override
+    public final <T, U> Set<U> fetchSet(Field<T> field, Converter<? super T, U> converter) {
+        return fetch().intoSet(field, converter);
     }
 
     /**

@@ -196,6 +196,20 @@ class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
                 return field("{dateadd}({0}, {1}, {2})", getDataType(), keyword(keyword), interval, date);
             }
 
+            case INFORMIX: {
+                switch (datePart) {
+                    case YEAR:   keyword = "year";   break;
+                    case MONTH:  keyword = "month";  break;
+                    case DAY:    keyword = "day";    break;
+                    case HOUR:   keyword = "hour";   break;
+                    case MINUTE: keyword = "minute"; break;
+                    case SECOND: keyword = "second"; break;
+                    default: throwUnsupported();
+                }
+
+                return date.add(field("{0} {units} {1}", interval, keyword(keyword)));
+            }
+
             case DB2: {
                 switch (datePart) {
                     case YEAR:   keyword = "year";   break;

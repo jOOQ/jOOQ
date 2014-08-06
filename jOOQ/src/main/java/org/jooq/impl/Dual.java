@@ -57,8 +57,10 @@ class Dual extends AbstractTable<Record> {
 
     private static final long          serialVersionUID = -7492790780048090156L;
     private static final Table<Record> FORCED_DUAL      = select(new Field[] { inline("X").as("DUMMY") }).asTable("DUAL");
+    /* [pro] */
     static final String                DUAL_ACCESS      = "select count(*) dual from MSysResources";
     static final String                DUAL_INFORMIX    = "select 1 as dual from systables where tabid = 1";
+    /* [/pro] */
 
     private final boolean              force;
 

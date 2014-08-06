@@ -38,7 +38,9 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package experiments
+package org.jooq.parse
+
+import org.omg.PortableInterceptor.NON_EXISTENT
 
 /**
  * @author Lukas Eder
@@ -47,32 +49,9 @@ object AST {
 
   trait QueryPart
 
-  // ---------------------------------------------------------------------
-  /*
-    <predicate> ::=
-      <comparison predicate>
-      | <between predicate>
-      | <in predicate>
-      | <like predicate>
-      | <similar predicate>
-      | <regex like predicate>
-      | <null predicate>
-      | <quantified comparison predicate>
-      | <exists predicate>
-      | <unique predicate>
-      | <normalized predicate>
-      | <match predicate>
-      | <overlaps predicate>
-      | <distinct predicate>
-      | <member predicate>
-      | <submultiset predicate>
-      | <set predicate>
-      | <type predicate>
-      | <period predicate>
-   */
 
   trait Predicate extends QueryPart
-  trait ComparisonPredicate extends Predicate
+  case class ComparisonPredicate(lhs : RowValuePredicand, compOp : CompOp, rhs : RowValuePredicand) extends Predicate
   trait BetweenPredicate extends Predicate
   trait InPredicate extends Predicate
   trait LikePredicate extends Predicate
@@ -90,6 +69,15 @@ object AST {
   trait Ge extends CompOp
   trait Lt extends CompOp
   trait Le extends CompOp
+
+  trait RowValuePredicand extends QueryPart
+  trait RowValueSpecialCase extends RowValuePredicand
+  trait NonparenthesizedValueExpressionPrimary extends RowValueSpecialCase
+  trait UnsignedValueSpecification extends NonparenthesizedValueExpressionPrimary
+  trait UnsignedLiteral extends UnsignedValueSpecification
+  trait UnsignedNumericLiteral extends UnsignedLiteral
+  case class ExactNumericLiteral[T](value : T) extends UnsignedNumericLiteral
+  case class UnsignedInteger(value : BigInt)
 
   trait RowValueExpression extends QueryPart
 }

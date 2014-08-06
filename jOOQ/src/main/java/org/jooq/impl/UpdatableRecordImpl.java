@@ -213,7 +213,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         // Don't store records if no value was set by client code
         if (!update.isExecutable()) {
             if (log.isDebugEnabled())
-                log.debug("Query is not executable", this);
+                log.debug("Query is not executable", update);
 
             return 0;
         }

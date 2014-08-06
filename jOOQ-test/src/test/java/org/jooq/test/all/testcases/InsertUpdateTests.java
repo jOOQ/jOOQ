@@ -167,11 +167,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         int firstId = create().select(max(id)).from(table).fetchOne(max(id));
 
-        if (dialect() != POSTGRES/* [pro] xx xx
-            xxxxxxxxx xx xxxxx [/pro] */) {
-
+        if (!asList(POSTGRES).contains(dialect().family()))
             assertEquals(new BigInteger("" + firstId), create().lastID());
-        }
 
         R r1 = create().selectFrom(table).fetchOne();
 
@@ -186,9 +183,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .returning()
                 .fetchOne();
 
-        if (dialect() != POSTGRES/* [pro] xx xx
-            xxxxxxxxx xx xxxxx [/pro] */) {
-
+        if (!asList(POSTGRES).contains(dialect().family())) {
             assertEquals(new BigInteger("" + (firstId + 1)), create().lastID());
             assertEquals(new BigInteger("" + (firstId + 1)), create().lastID());
         }
@@ -530,10 +525,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testUpdateWithRowValueExpression() throws Exception {
-        if (asList(CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL, SQLITE).contains(dialect().family())) {
-            log.info("SKIPPING", "UPDATE with row value expression tests");
-            return;
-        }
+        assumeFamilyNotIn(CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL, SQLITE);
 
         jOOQAbstractTest.reset = false;
         A author;

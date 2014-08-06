@@ -80,10 +80,11 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.Dual.DUAL_ACCESS;
+// ...
+// ...
 import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Utils.DATA_OMIT_INTO_CLAUSE;
-import static org.jooq.impl.Utils.DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE;
+// ...
 import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import static org.jooq.impl.Utils.DATA_SELECT_INTO_TABLE;
 import static org.jooq.impl.Utils.DATA_WINDOW_DEFINITIONS;
@@ -203,9 +204,12 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
     @Override
     public final void accept(Context<?> context) {
+        SQLDialect dialect = context.dialect();
+        SQLDialect family = context.family();
+
         if (into != null
                 && context.data(DATA_OMIT_INTO_CLAUSE) == null
-                && asList(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE).contains(context.configuration().dialect().family())) {
+                && asList(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE).contains(family)) {
 
             context.data(DATA_OMIT_INTO_CLAUSE, true);
             context.visit(DSL.createTable(into).as(this));
@@ -227,8 +231,6 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         // If a limit applies
         if (getLimit().isApplicable()) {
-            SQLDialect dialect = context.configuration().dialect();
-
             switch (dialect) {
 
                 /* [pro] xx
@@ -313,7 +315,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         }
 
         // [#1296] FOR UPDATE is simulated in some dialects using ResultSet.CONCUR_UPDATABLE
-        if (forUpdate && !asList(CUBRID).contains(context.configuration().dialect().family())) {
+        if (forUpdate && !asList(CUBRID).contains(family)) {
             context.formatSeparator()
                    .keyword("for update");
 
@@ -324,12 +326,13 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             else if (!forUpdateOfTables.isEmpty()) {
                 context.sql(" ").keyword("of").sql(" ");
 
-                switch (context.configuration().dialect().family()) {
+                switch (family) {
 
                     // Some dialects don't allow for an OF [table-names] clause
-                    // It can be simulated by listing the table's fields, though
+                    // It can be emulated by listing the table's fields, though
                     /* [pro] xx
                     xxxx xxxx
+                    xxxx xxxxxxxxx
                     xxxx xxxxxxx
                     xxxx xxxxxxx
                     xx [/pro] */
@@ -347,7 +350,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
             // [#3186] Firebird's FOR UPDATE clause has a different semantics. To achieve "regular"
             // FOR UPDATE semantics, we should use FOR UPDATE WITH LOCK
-            if (context.configuration().dialect().family() == FIREBIRD) {
+            if (family == FIREBIRD) {
                 context.sql(" ").keyword("with lock");
             }
 
@@ -362,7 +365,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             }
         }
         else if (forShare) {
-            switch (context.configuration().dialect()) {
+            switch (dialect) {
 
                 // MySQL has a non-standard implementation for the "FOR SHARE" clause
                 case MARIADB:
@@ -390,6 +393,30 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             context.sql(")")
                    .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
         }
+
+        /* [pro] xx
+        xx xxxx xxxxxxx
+        xx xxxxxxxxxxxx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+            xxxxxxxx xxxxxxxxxx x xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xx xxxxxxxxxxx xx xxxxx
+                xxxxxxxxxx x xxxxx
+
+            xx xxxxxxxxxxx xx xxxx
+                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx x
+
+                xxxxxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxx
+                       xxxxxx xx
+                       xxxxxxxxxxxxxxxxxxx
+            x
+
+            xxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+
+        xx [/pro] */
     }
 
     @SuppressWarnings("unchecked")
@@ -678,23 +705,25 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         // INTO clauses
         // ------------
-        context.start(SELECT_INTO);
+        if (!asList().contains(family)) {
+            context.start(SELECT_INTO);
 
-        Table<?> actualInto = (Table<?>) context.data(DATA_SELECT_INTO_TABLE);
-        if (actualInto == null)
-            actualInto = into;
+            Table<?> actualInto = (Table<?>) context.data(DATA_SELECT_INTO_TABLE);
+            if (actualInto == null)
+                actualInto = into;
 
-        if (actualInto != null
-                && context.data(DATA_OMIT_INTO_CLAUSE) == null
-                && asList(HSQLDB, POSTGRES).contains(family)) {
+            if (actualInto != null
+                    && context.data(DATA_OMIT_INTO_CLAUSE) == null
+                    && asList(HSQLDB, POSTGRES).contains(family)) {
 
-            context.formatSeparator()
-                   .keyword("into")
-                   .sql(" ")
-                   .visit(actualInto);
+                context.formatSeparator()
+                       .keyword("into")
+                       .sql(" ")
+                       .visit(actualInto);
+            }
+
+            context.end(SELECT_INTO);
         }
-
-        context.end(SELECT_INTO);
 
         // FROM and JOIN clauses
         // ---------------------
@@ -704,10 +733,14 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         // The simplest way to see if no FROM clause needs to be rendered is to
         // render it. But use a new RenderContext (without any VisitListeners)
         // for that purpose!
-        boolean hasFrom = (context.data(DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE) != null);
+        boolean hasFrom = true
+            /* [pro] xx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx
+            xx [/pro] */
+        ;
 
         if (!hasFrom) {
-            DefaultConfiguration c = new DefaultConfiguration(context.configuration().dialect());
+            DefaultConfiguration c = new DefaultConfiguration(dialect);
             String renderedFrom = new DefaultRenderContext(c).render(getFrom());
             hasFrom = !renderedFrom.isEmpty();
         }
@@ -719,16 +752,15 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                    .visit(getFrom());
 
             /* [pro] xx
-            xx xxxxxxx xxxxxx xxx xxx xxxxxx xxxx x xxxxxxxxxxxx xxxxx xxxxx
+            xx xxxxxxx xxxxxxx xxxxxx xxx xxx xxxxxx xxxx x xxxxxxxxxxxx xxxxx xxxxx
             xx xx xx xxxx xx xxxxx xx xx xxxxx xxxx
-            xx xxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxx x
-                xx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx x
-                    xxxxxxxxxxxxxx xxxxxxx x xx xx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                x
-                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xx xxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxx
+                xx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxx xxxxxxx x xx xxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxx xx xxxxxxx xx xxxxxxxxx
+                    xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                     xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                x
-            x
             xx [/pro] */
         }
 
@@ -793,7 +825,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
                 // [#1681] Use the constant field from the dummy table Sybase ASE, Ingres
                 if (asList().contains(dialect)) {
-                    context.sql("empty_grouping_dummy_table.x");
+                    context.sql("empty_grouping_dummy_table.dual");
                 }
 
                 // Some dialects don't support empty GROUP BY () clauses

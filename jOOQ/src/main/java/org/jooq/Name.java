@@ -40,6 +40,16 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+
 import org.jooq.conf.Settings;
 
 /**
@@ -68,6 +78,7 @@ public interface Name extends QueryPart {
      * {@link AggregateFunction#over(WindowDefinition)}</li>
      * </ul>
      */
+    @Support({ CUBRID, POSTGRES })
     WindowDefinition as(WindowSpecification window);
 
     /**
@@ -77,6 +88,7 @@ public interface Name extends QueryPart {
      * Column names are implicitly inherited from the <code>SELECT</code>
      * statement.
      */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     <R extends Record> CommonTableExpression<R> as(Select<R> select);
 
     /**
@@ -87,6 +99,7 @@ public interface Name extends QueryPart {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     DerivedColumnList fields(String... fieldNames);
 
 }

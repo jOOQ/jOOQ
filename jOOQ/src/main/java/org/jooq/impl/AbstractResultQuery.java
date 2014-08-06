@@ -254,7 +254,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             /* [pro] xx
             xx xxxx xxxxxxx xxxx xx xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
             xx xxxxxxxxxx xx xxxxx xxx xxx xxxxxxx
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxx x
+            xx xxxxxxxxxxxxx xx xxxx x
                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             x
 

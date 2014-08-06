@@ -945,6 +945,7 @@ implements
         switch (config.dialect().family()) {
             /* [pro] xx
             xxxx xxxx
+            xxxx xxxxxxxxx
             xxxx xxxxxxx
             xxxx xxxxxxxxxx
             xxxx xxxxxxx

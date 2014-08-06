@@ -40,15 +40,19 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.val;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Param;
 import org.jooq.QuantifiedSelect;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.Select;
 
 /**
@@ -126,11 +130,30 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
                 // the array in a subselect
                 case H2:
                 case HSQLDB:
+                    return (QueryPartInternal) create(ctx).select().from(table(array));
 
                 // [#1048] All other dialects simulate unnesting of arrays using
                 // UNION ALL-connected subselects
                 default: {
-                    return (QueryPartInternal) create(ctx).select().from(table(array));
+
+                    // The Informix database has an interesting bug when quantified comparison predicates
+                    // use nested derived tables with UNION ALL
+                    if (array instanceof Param) {
+                        Object[] values = ((Param<? extends Object[]>) array).getValue();
+
+                        Select<Record1<Object>> select = null;
+                        for (Object value : values) {
+                            if (select == null)
+                                select = select(val(value));
+                            else
+                                select = select.unionAll(select(val(value)));
+                        }
+
+                        return (QueryPartInternal) select;
+                    }
+                    else {
+                        return (QueryPartInternal) select().from(table(array));
+                    }
                 }
             }
         }

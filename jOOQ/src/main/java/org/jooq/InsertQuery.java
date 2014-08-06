@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
@@ -157,7 +158,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ HSQLDB, MARIADB, MYSQL })
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL })
     <T> void addValueForUpdate(Field<T> field, T value);
 
     /**
@@ -166,7 +167,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ HSQLDB, MARIADB, MYSQL })
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL })
     <T> void addValueForUpdate(Field<T> field, Field<T> value);
 
     /**
@@ -179,7 +180,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ HSQLDB, MARIADB, MYSQL })
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL })
     void addValuesForUpdate(Map<? extends Field<?>, ?> map);
 
     /**

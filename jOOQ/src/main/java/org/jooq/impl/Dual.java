@@ -57,7 +57,10 @@ class Dual extends AbstractTable<Record> {
 
     private static final long          serialVersionUID = -7492790780048090156L;
     private static final Table<Record> FORCED_DUAL      = select(new Field[] { inline("X").as("DUMMY") }).asTable("DUAL");
-    static final String                DUAL_ACCESS      = "select count(*) from MSysResources";
+    /* [pro] xx
+    xxxxxx xxxxx xxxxxx                xxxxxxxxxxx      x xxxxxxx xxxxxxxx xxxx xxxx xxxxxxxxxxxxxxx
+    xxxxxx xxxxx xxxxxx                xxxxxxxxxxxxx    x xxxxxxx x xx xxxx xxxx xxxxxxxxx xxxxx xxxxx x xxx
+    xx [/pro] */
 
     private final boolean              force;
 
@@ -144,7 +147,7 @@ class Dual extends AbstractTable<Record> {
                     xxxxxx
 
                 xxxx xxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx
                     xxxxxx
 
                 xxxx xxxxxxx

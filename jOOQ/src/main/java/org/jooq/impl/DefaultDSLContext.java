@@ -51,6 +51,7 @@ import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.template;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Utils.list;
+import static org.jooq.tools.Convert.convert;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -1749,6 +1750,10 @@ public class DefaultDSLContext implements DSLContext, Serializable {
             }
 
             /* [pro] xx
+            xxxx xxxxxxxxx x
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxxxx x xxxx xxxxxxxxxxxxxxxxxx
+            x
+
             xxxx xxxxxxx x
                 xxxxxxxxxxxxxxxxx xxxxx x xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

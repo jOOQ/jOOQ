@@ -44,6 +44,7 @@ import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
 import static org.jooq.test.all.listeners.ConnectionProviderLifecycleListener.ACQUIRE_COUNT;
 import static org.jooq.test.all.listeners.ConnectionProviderLifecycleListener.RELEASE_COUNT;
 import static org.jooq.test.all.listeners.JDBCLifecycleListener.RS_CLOSE_COUNT;
@@ -676,6 +677,12 @@ public abstract class jOOQAbstractTest<
         if (!connectionInitialised) {
             connectionInitialised = true;
             connection = getConnection0(null, null);
+
+            /* [pro] xx
+            xx xxxxxxxxx xxxx xxxxxxxxxxx
+            xx xxxxxxxxxxxxxxxxxxx xx xxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx
+            xx [/pro] */
 
             final Connection c = connection;
 

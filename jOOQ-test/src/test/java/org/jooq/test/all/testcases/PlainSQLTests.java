@@ -51,6 +51,7 @@ import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.param;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.tableByName;
@@ -62,6 +63,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -267,6 +270,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(2), books.getValue(1, TBook_ID()));
         assertEquals(Integer.valueOf(1), books.getValue(0, TBook_AUTHOR_ID()));
         assertEquals(Integer.valueOf(1), books.getValue(1, TBook_AUTHOR_ID()));
+    }
+
+    public void testPlainSQLInsert() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        assertEquals(1, create()
+            .insertInto(
+                tableByName(TAuthor().getName()),
+                fieldByName(TAuthor().getName(), TAuthor_ID().getName()),
+                fieldByName(TAuthor().getName(), TAuthor_LAST_NAME().getName()))
+            .values(3, "X")
+            .execute()
+        );
+
+        assertEquals(3, create().fetchCount(TAuthor()));
     }
 
     public void testPlainSQLWithSelfJoins()  throws Exception {
@@ -668,5 +686,29 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 return i;
 
         throw new AssertionError();
+    }
+
+    public void testPlainSQLAndJDBCEscapeSyntax() throws Exception {
+        Record r1 = create()
+            .select(
+                field("{d '2014-01-01'}", Date.class).as("a"),
+                field("{t '19:00:00'}", Time.class).as("b"),
+                field("{ts '2014-01-01 19:00:00'}", Timestamp.class).as("c")
+            )
+            .fetchOne();
+
+        assertEquals(Date.valueOf("2014-01-01"), r1.getValue(0));
+        assertEquals(Time.valueOf("19:00:00"), r1.getValue(1));
+        assertEquals(Timestamp.valueOf("2014-01-01 19:00:00"), r1.getValue(2));
+
+        // [#3430] Don't let newline characters break the parsing of JDBC escape syntax:
+        Record r2 = create()
+            .select(one().as("one"))
+            .where("{d '2014-01-01'}           < {d '2014-01-02'}\n"
+             + "and {t '00:00:00'}             < {t '01:00:00'}\n"
+             + "and {ts '2014-01-01 00:00:00'} < {ts '2014-01-02 00:00:00'}")
+            .fetchOne();
+
+        assertEquals(1, r2.getValue(0));
     }
 }

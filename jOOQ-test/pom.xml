@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.4.1</version>
+        <version>3.4.2</version>
     </parent>
 
     <artifactId>jooq-test</artifactId>
@@ -1086,7 +1086,7 @@
                                         <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.firebird.FirebirdDatabase</name>
-                                            <includes>RDB\$RELATIONS|RDB\$RELATION_FIELDS|RDB\$FIELDS|RDB\$RELATION_CONSTRAINTS|RDB\$REF_CONSTRAINTS|RDB\$INDEX_SEGMENTS|RDB\$GENERATORS</includes>
+                                            <includes>RDB\$(FIELDS|GENERATORS|INDEX_SEGMENTS|REF_CONSTRAINTS|RELATION_CONSTRAINTS|RELATION_FIELDS|RELATIONS)</includes>
                                             <excludes></excludes>
                                             <recordVersionFields></recordVersionFields>
                                             <recordTimestampFields></recordTimestampFields>
@@ -2734,7 +2734,7 @@
                                         </strategy>
                                         <database>
                                             <name>org.jooq.util.postgres.PostgresDatabase</name>
-                                            <includes>t_.*|x_.*|v_.*|m_.*|V_.*|p_.*|f_.*|u_.*|(f|p)[0-9]+|s_.*</includes>
+                                            <includes>t_.*|x_.*|v_.*|m_.*|V_.*|p(_.*)?|f(_.*)?|u_.*|(f|p)[0-9]+|s_.*</includes>
                                             <excludes>t_book_details|.*?_seq|_.*</excludes>
                                             <dateAsTimestamp>false</dateAsTimestamp>
                                             <unsignedTypes>true</unsignedTypes>

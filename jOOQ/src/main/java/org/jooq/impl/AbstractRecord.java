@@ -250,13 +250,13 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final Object getValue(String fieldName) {
-        return getValue(field(fieldName));
+        return getValue(indexOrFail(fieldsRow(), fieldName));
     }
 
     @Override
     @Deprecated
     public final Object getValue(String fieldName, Object defaultValue) {
-        return getValue((Field<Object>) field(fieldName), defaultValue);
+        return getValue(indexOrFail(fieldsRow(), fieldName), defaultValue);
     }
 
     @Override

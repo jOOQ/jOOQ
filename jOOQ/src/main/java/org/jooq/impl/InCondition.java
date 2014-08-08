@@ -45,6 +45,8 @@ import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_IN;
 import static org.jooq.Clause.CONDITION_NOT_IN;
 import static org.jooq.Comparator.IN;
+import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.trueCondition;
 
 import java.util.Arrays;
 import java.util.List;
@@ -83,7 +85,13 @@ class InCondition<T> extends AbstractCondition {
     public final void accept(Context<?> ctx) {
         List<Field<?>> list = Arrays.asList(values);
 
-        if (list.size() > IN_LIMIT) {
+        if (list.size() == 0) {
+            if (comparator == IN)
+                ctx.visit(falseCondition());
+            else
+                ctx.visit(trueCondition());
+        }
+        else if (list.size() > IN_LIMIT) {
             // [#798] Oracle and some other dialects can only hold 1000 values
             // in an IN (...) clause
             switch (ctx.configuration().dialect().family()) {

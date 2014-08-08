@@ -1368,6 +1368,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testPlainSQLInsert() throws Exception {
+        new PlainSQLTests(this).testPlainSQLInsert();
+    }
+
+    @Test
     public void testPlainSQLWithSelfJoins() throws Exception {
         new PlainSQLTests(this).testPlainSQLWithSelfJoins();
     }
@@ -1410,6 +1415,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testPlainSQLLimitOffset() throws Exception {
         new PlainSQLTests(this).testPlainSQLLimitOffset();
+    }
+
+    @Test
+    public void testPlainSQLAndJDBCEscapeSyntax() throws Exception {
+        new PlainSQLTests(this).testPlainSQLAndJDBCEscapeSyntax();
     }
 
     @Test

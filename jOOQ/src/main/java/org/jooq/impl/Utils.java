@@ -314,9 +314,24 @@ final class Utils {
     private static final Pattern PLUS_PATTERN                                 = Pattern.compile("\\+(-+)(?=\\+)");
 
     /**
-     * A pattern for the JDBC escape syntax
+     * All characters that are matched by Java's interpretation of \s.
+     * <p>
+     * For a more accurate set of whitespaces, refer to
+     * http://stackoverflow.com/a/4731164/521799. In the event of SQL
+     * processing, it is probably safe to ignore most of those alternative
+     * Unicode whitespaces.
      */
-    private static final Pattern JDBC_ESCAPE_PATTERN                          = Pattern.compile("\\{(fn|d|t|ts)\\b.*");
+    private static final String   WHITESPACE                                  = " \t\n\u000B\f\r";
+
+    /**
+     * Acceptable prefixes for JDBC escape syntax.
+     */
+    private static final String[] JDBC_ESCAPE_PREFIXES                        = {
+        "{fn ",
+        "{d ",
+        "{t ",
+        "{ts "
+    };
 
     // ------------------------------------------------------------------------
     // XXX: Record constructors and related methods
@@ -326,9 +341,9 @@ final class Utils {
     xxx
      x xxxxxx x xxx xxxxxxxxxxxx xxxxxx xxxxxx xxxxxxxxxxxx
      xx
-    xxxxxx xxxxx xx xxxxxxx xxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxx x
+    xxxxxx xxxxx xx xxxxxxx xxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxx xxxxx x
         xxx x
-            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxx xxxxxxxxxxxxxxxxxxx
         x
         xxxxx xxxxxxxxxx xx x
             xxxxx xxx xxxxxxxxxxxxxxxxxxxxxx
@@ -744,13 +759,7 @@ final class Utils {
 
         if (values != null && field != null) {
             for (int i = 0; i < values.length; i++) {
-
-                // [#3347] Defend against rogue API usage, e.g. when calling
-                // Field.in(T...) with a Collection argument
-                if (values[i] instanceof Collection)
-                    result.addAll(fields(((Collection<?>) values[i]).toArray(), field));
-                else
-                    result.add(field(values[i], field));
+                result.add(field(values[i], field));
             }
         }
 
@@ -1206,7 +1215,7 @@ final class Utils {
             else if (sqlChars[i] == '{') {
 
                 // [#1461] Be careful not to match any JDBC escape syntax
-                if (JDBC_ESCAPE_PATTERN.matcher(sql.substring(i)).matches()) {
+                if (peekAny(sqlChars, i, JDBC_ESCAPE_PREFIXES, true)) {
                     render.sql(sqlChars[i]);
                 }
 
@@ -1250,13 +1259,38 @@ final class Utils {
      * @param peek The string to peek for
      */
     static final boolean peek(char[] sqlChars, int index, String peek) {
+        return peek(sqlChars, index, peek, false);
+    }
+
+    /**
+     * Peek for a string at a given <code>index</code> of a <code>char[]</code>
+     *
+     * @param sqlChars The char array to peek into
+     * @param index The index within the char array to peek for a string
+     * @param peek The string to peek for
+     * @param anyWhitespace A whitespace character in <code>peekAny</code>
+     *            represents "any" whitespace character as defined in
+     *            {@link #WHITESPACE}, or in Java Regex "\s".
+     */
+    static final boolean peek(char[] sqlChars, int index, String peek, boolean anyWhitespace) {
         char[] peekArray = peek.toCharArray();
 
+        peekArrayLoop:
         for (int i = 0; i < peekArray.length; i++) {
             if (index + i >= sqlChars.length) {
                 return false;
             }
             if (sqlChars[index + i] != peekArray[i]) {
+
+                // [#3430] In some cases, we don't care about the type of whitespace.
+                if (anyWhitespace && peekArray[i] == ' ') {
+                    for (int j = 0; j < WHITESPACE.length(); j++) {
+                        if (sqlChars[index + i] == WHITESPACE.charAt(j)) {
+                            continue peekArrayLoop;
+                        }
+                    }
+                }
+
                 return false;
             }
         }
@@ -1272,8 +1306,23 @@ final class Utils {
      * @param peekAny The strings to peek for
      */
     static final boolean peekAny(char[] sqlChars, int index, String[] peekAny) {
+        return peekAny(sqlChars, index, peekAny, false);
+    }
+
+    /**
+     * Peek for several strings at a given <code>index</code> of a
+     * <code>char[]</code>
+     *
+     * @param sqlChars The char array to peek into
+     * @param index The index within the char array to peek for a string
+     * @param peekAny The strings to peek for
+     * @param anyWhitespace A whitespace character in <code>peekAny</code>
+     *            represents "any" whitespace character as defined in
+     *            {@link #WHITESPACE}, or in Java Regex "\s".
+     */
+    static final boolean peekAny(char[] sqlChars, int index, String[] peekAny, boolean anyWhitespace) {
         for (String peek : peekAny)
-            if (peek(sqlChars, index, peek))
+            if (peek(sqlChars, index, peek, anyWhitespace))
                 return true;
 
         return false;
@@ -2609,7 +2658,7 @@ final class Utils {
         x
         xxxx x
             xx xxxxx xxxxxx xxx xxxxx xxxxxx xxxx xxxx xxxxxxx
-            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxx
+            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
         x
     x
 

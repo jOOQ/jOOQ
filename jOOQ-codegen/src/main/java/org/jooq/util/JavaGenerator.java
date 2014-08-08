@@ -50,8 +50,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -136,6 +138,7 @@ public class JavaGenerator extends AbstractGenerator {
     @Override
     public final void generate(Database db) {
         this.database = db;
+        this.database.addFilter(new AvoidAmbiguousClassesFilter());
 
         String url = null;
         try {
@@ -298,6 +301,32 @@ public class JavaGenerator extends AbstractGenerator {
 
         // XXX [#651] Refactoring-cursor
         watch.splitInfo("GENERATION FINISHED!");
+    }
+
+    private class AvoidAmbiguousClassesFilter implements Database.Filter {
+
+        private Map<String, String> included = new HashMap<String, String>();
+
+        @Override
+        public boolean exclude(Definition definition) {
+
+            // These definitions don't generate types of their own.
+            if (    definition instanceof ColumnDefinition
+                 || definition instanceof AttributeDefinition
+                 || definition instanceof ParameterDefinition)
+                return false;
+
+            // Check if we've previously encountered a Java type of the same case-insensitive, fully-qualified name.
+            String name = getStrategy().getFullJavaClassName(definition);
+            String nameLC = name.toLowerCase();
+            String existing = included.put(nameLC, name);
+
+            if (existing == null)
+                return false;
+
+            log.warn("Ambiguous type name", "The object " + definition.getQualifiedOutputName() + " generates a type " + name + " which conflicts with the existing type " + existing + " on some operating systems. Use a custom generator strategy to disambiguate the types.");
+            return true;
+        }
     }
 
     private boolean hasTableValuedFunctions(SchemaDefinition schema) {
@@ -1994,7 +2023,12 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private String escapeString(String comment) {
-        return comment.replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "\\r");
+
+        // [#3450] Escape also the escape sequence, among other things that break Java strings.
+        return comment.replace("\\", "\\\\")
+                      .replace("\"", "\\\"")
+                      .replace("\n", "\\n")
+                      .replace("\r", "\\r");
     }
 
     /**
@@ -2388,6 +2422,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         final String className = getStrategy().getFullJavaClassName(function);
+        final String localVar = disambiguateJavaMemberName(function.getInParameters(), "f");
 
         out.tab(1).javadoc("Get <code>%s</code> as a field", function.getQualifiedOutputName());
         out.tab(1).print("public static %s<%s> %s(",
@@ -2410,17 +2445,17 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         out.println(") {");
-        out.tab(2).println("%s f = new %s();", className, className);
+        out.tab(2).println("%s %s = new %s();", className, localVar, className);
 
         for (ParameterDefinition parameter : function.getInParameters()) {
             final String paramSetter = getStrategy().getJavaSetterName(parameter, Mode.DEFAULT);
             final String paramMember = getStrategy().getJavaMemberName(parameter);
 
-            out.tab(2).println("f.%s(%s);", paramSetter, paramMember);
+            out.tab(2).println("%s.%s(%s);", localVar, paramSetter, paramMember);
         }
 
         out.println();
-        out.tab(2).println("return f.as%s();", function.isAggregate() ? "AggregateFunction" : "Field");
+        out.tab(2).println("return %s.as%s();", localVar, function.isAggregate() ? "AggregateFunction" : "Field");
         out.tab(1).println("}");
     }
 
@@ -2508,7 +2543,10 @@ public class JavaGenerator extends AbstractGenerator {
         final String functionName = function.getQualifiedOutputName();
         final String functionType = getJavaType(function.getReturnType());
         final String methodName = getStrategy().getJavaMethodName(function, Mode.DEFAULT);
+
+        // [#3456] Local variables should not collide with actual function arguments
         final String configurationArgument = disambiguateJavaMemberName(function.getInParameters(), "configuration");
+        final String localVar = disambiguateJavaMemberName(function.getInParameters(), "f");
 
         out.tab(1).javadoc("Call <code>%s</code>", functionName);
         out.tab(1).print("public %s%s %s(",
@@ -2534,7 +2572,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         out.println(") {");
-        out.tab(2).println("%s f = new %s();", className, className);
+        out.tab(2).println("%s %s = new %s();", className, localVar, className);
 
         for (ParameterDefinition parameter : function.getInParameters()) {
             final String paramSetter = getStrategy().getJavaSetterName(parameter, Mode.DEFAULT);
@@ -2542,15 +2580,15 @@ public class JavaGenerator extends AbstractGenerator {
                 ? "this"
                 : getStrategy().getJavaMemberName(parameter);
 
-            out.tab(2).println("f.%s(%s);", paramSetter, paramMember);
+            out.tab(2).println("%s.%s(%s);", localVar, paramSetter, paramMember);
         }
 
         out.println();
-        out.tab(2).println("f.execute(%s);", instance ? "configuration()" : configurationArgument);
+        out.tab(2).println("%s.execute(%s);", localVar, instance ? "configuration()" : configurationArgument);
 
         // TODO [#956] Find a way to register "SELF" as OUT parameter
         // in case this is a UDT instance (member) function
-        out.tab(2).println("return f.getReturnValue();");
+        out.tab(2).println("return %s.getReturnValue();", localVar);
         out.tab(1).println("}");
     }
 
@@ -2563,6 +2601,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         final String className = getStrategy().getFullJavaClassName(procedure);
         final String configurationArgument = disambiguateJavaMemberName(procedure.getInParameters(), "configuration");
+        final String localVar = disambiguateJavaMemberName(procedure.getInParameters(), "p");
 
         out.tab(1).javadoc("Call <code>%s</code>", procedure.getQualifiedOutputName());
         out.print("\tpublic ");
@@ -2608,7 +2647,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         out.println(") {");
-        out.tab(2).println("%s p = new %s();", className, className);
+        out.tab(2).println("%s %s = new %s();", className, localVar, className);
 
         for (ParameterDefinition parameter : procedure.getInParameters()) {
             final String setter = getStrategy().getJavaSetterName(parameter, Mode.DEFAULT);
@@ -2616,11 +2655,11 @@ public class JavaGenerator extends AbstractGenerator {
                 ? "this"
                 : getStrategy().getJavaMemberName(parameter);
 
-            out.tab(2).println("p.%s(%s);", setter, arg);
+            out.tab(2).println("%s.%s(%s);", localVar, setter, arg);
         }
 
         out.println();
-        out.tab(2).println("p.execute(%s);", instance ? "configuration()" : configurationArgument);
+        out.tab(2).println("%s.execute(%s);", localVar, instance ? "configuration()" : configurationArgument);
 
         if (procedure.getOutParameters().size() > 0) {
             final ParameterDefinition parameter = procedure.getOutParameters().get(0);
@@ -2633,18 +2672,18 @@ public class JavaGenerator extends AbstractGenerator {
 
                 // [#3117] Avoid funny call-site ambiguity if this is a UDT that is implemented by an interface
                 if (generateInterfaces() && isUDT) {
-                    out.tab(2).println("from((%s) p.%s());", columnTypeInterface, getter);
+                    out.tab(2).println("from((%s) %s.%s());", columnTypeInterface, localVar, getter);
                 }
                 else {
-                    out.tab(2).println("from(p.%s());", getter);
+                    out.tab(2).println("from(%s.%s());", localVar, getter);
                 }
             }
 
             if (procedure.getOutParameters().size() == 1) {
-                out.tab(2).println("return p.%s();", getter);
+                out.tab(2).println("return %s.%s();", localVar, getter);
             }
             else if (procedure.getOutParameters().size() > 1) {
-                out.tab(2).println("return p;");
+                out.tab(2).println("return %s;", localVar);
             }
         }
 
@@ -2696,7 +2735,10 @@ public class JavaGenerator extends AbstractGenerator {
      * This method is used to add line breaks in lengthy javadocs
      */
     protected void printJavadocParagraph(JavaWriter out, String comment, String indent) {
-        printParagraph(out, comment, indent + " * ");
+
+        // [#3450] Must not print */ inside Javadoc
+        String escaped = comment.replace("*/", "* /");
+        printParagraph(out, escaped, indent + " * ");
     }
 
     protected void printParagraph(GeneratorWriter<?> out, String comment, String indent) {

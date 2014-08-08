@@ -46,6 +46,7 @@ import static org.jooq.Clause.ALTER_TABLE_ALTER;
 import static org.jooq.Clause.ALTER_TABLE_ALTER_DEFAULT;
 import static org.jooq.Clause.ALTER_TABLE_DROP;
 import static org.jooq.Clause.ALTER_TABLE_TABLE;
+import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
@@ -203,8 +204,9 @@ class AlterTableImpl extends AbstractQuery implements
                 ctx.sql(" ").keyword("not null");
             }
 
-            // Some databases default to NOT NULL, so explicitly setting columns to NULL is required here
-            else {
+            // Some databases default to NOT NULL, so explicitly setting columns to NULL is mostly required here
+            // [#3400] ... but not in Firebird
+            else if (family != FIREBIRD) {
                 ctx.sql(" ").keyword("null");
             }
 

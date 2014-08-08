@@ -40,7 +40,23 @@
  */
 package org.jooq;
 
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+
 import org.jooq.Comparator;
+import org.jooq.impl.DSL;
 
 import java.util.Collection;
 
@@ -159,18 +175,18 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition compare(Comparator comparator, Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row);
 
     /**
-     * Compare this row value expression with a record record
+     * Compare this row value expression with a record
      * using a dynamic comparator.
      * <p>
      * See the explicit comparison methods for details. Note, not all
      * {@link Comparator} types are supported
      *
-     * @see #equal(Row15)
-     * @see #notEqual(Row15)
-     * @see #lessThan(Row15)
-     * @see #lessOrEqual(Row15)
-     * @see #greaterThan(Row15)
-     * @see #greaterOrEqual(Row15)
+     * @see #equal(Record15)
+     * @see #notEqual(Record15)
+     * @see #lessThan(Record15)
+     * @see #lessOrEqual(Record15)
+     * @see #greaterThan(Record15)
+     * @see #greaterOrEqual(Record15)
      */
     @Support
     Condition compare(Comparator comparator, Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record);
@@ -208,6 +224,40 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      */
     @Support
     Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15);
+
+    /**
+     * Compare this row value expression with a subselect
+     * using a dynamic comparator.
+     * <p>
+     * See the explicit comparison methods for details. Note, not all
+     * {@link Comparator} types are supported
+     *
+     * @see #equal(Select)
+     * @see #notEqual(Select)
+     * @see #lessThan(Select)
+     * @see #lessOrEqual(Select)
+     * @see #greaterThan(Select)
+     * @see #greaterOrEqual(Select)
+     */
+    @Support
+    Condition compare(Comparator comparator, Select<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
+
+    /**
+     * Compare this row value expression with a subselect
+     * using a dynamic comparator.
+     * <p>
+     * See the explicit comparison methods for details. Note, not all
+     * {@link Comparator} types are supported
+     *
+     * @see #equal(Select)
+     * @see #notEqual(Select)
+     * @see #lessThan(Select)
+     * @see #lessOrEqual(Select)
+     * @see #greaterThan(Select)
+     * @see #greaterOrEqual(Select)
+     */
+    @Support
+    Condition compare(Comparator comparator, QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     // ------------------------------------------------------------------------
     // Equal / Not equal comparison predicates
@@ -260,6 +310,19 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition equal(Select<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
+     * Compare this row value expression with a subselect for equality.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Condition equal(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
+
+    /**
      * Compare this row value expression with another row value expression for
      * equality.
      *
@@ -301,6 +364,19 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      */
     @Support
     Condition eq(Select<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
+
+    /**
+     * Compare this row value expression with a subselect for equality.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Condition eq(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -349,6 +425,19 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition notEqual(Select<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
+     * Compare this row value expression with a subselect for non-equality.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Condition notEqual(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
+
+    /**
      * Compare this row value expression with another row value expression for
      * non-equality.
      *
@@ -390,6 +479,19 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      */
     @Support
     Condition ne(Select<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
+
+    /**
+     * Compare this row value expression with a subselect for non-equality.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Condition ne(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     // ------------------------------------------------------------------------
     // Ordering comparison predicates
@@ -442,6 +544,19 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition lessThan(Select<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
+     * Compare this row value expression with a subselect for order.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Condition lessThan(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
+
+    /**
      * Compare this row value expression with another row value expression for
      * order.
      *
@@ -483,6 +598,19 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      */
     @Support
     Condition lt(Select<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
+
+    /**
+     * Compare this row value expression with a subselect for order.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Condition lt(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -531,6 +659,19 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition lessOrEqual(Select<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
+     * Compare this row value expression with a subselect for order.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Condition lessOrEqual(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
+
+    /**
      * Compare this row value expression with another row value expression for
      * order.
      *
@@ -572,6 +713,19 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      */
     @Support
     Condition le(Select<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
+
+    /**
+     * Compare this row value expression with a subselect for order.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Condition le(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -620,6 +774,19 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition greaterThan(Select<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
+     * Compare this row value expression with a subselect for order.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Condition greaterThan(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
+
+    /**
      * Compare this row value expression with another row value expression for
      * order.
      *
@@ -661,6 +828,19 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      */
     @Support
     Condition gt(Select<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
+
+    /**
+     * Compare this row value expression with a subselect for order.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Condition gt(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -709,6 +889,19 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition greaterOrEqual(Select<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
+     * Compare this row value expression with a subselect for order.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Condition greaterOrEqual(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
+
+    /**
      * Compare this row value expression with another row value expression for
      * order.
      *
@@ -750,6 +943,19 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      */
     @Support
     Condition ge(Select<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
+
+    /**
+     * Compare this row value expression with a subselect for order.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Condition ge(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     // ------------------------------------------------------------------------
     // [NOT] BETWEEN predicates

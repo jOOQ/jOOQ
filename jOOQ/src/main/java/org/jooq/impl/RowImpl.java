@@ -78,6 +78,7 @@ import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.QuantifiedSelect;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -101,7 +102,6 @@ import org.jooq.Record19;
 import org.jooq.Record20;
 import org.jooq.Record21;
 import org.jooq.Record22;
-import org.jooq.RenderContext;
 import org.jooq.Row;
 import org.jooq.RowN;
 import org.jooq.Row1;
@@ -890,6 +890,16 @@ implements
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
         return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final Condition compare(Comparator comparator, Select select) {
+        return new RowSubqueryCondition(this, select, comparator);
+    }
+
+    @Override
+    public final Condition compare(Comparator comparator, QuantifiedSelect select) {
+        return new RowSubqueryCondition(this, select, comparator);
     }
 
     // ------------------------------------------------------------------------
@@ -9946,7 +9956,12 @@ implements
 
     @Override
     public final Condition equal(Select select) {
-        return new RowSubqueryCondition(this, select, Comparator.EQUALS);
+        return compare(Comparator.EQUALS, select);
+    }
+
+    @Override
+    public final Condition equal(QuantifiedSelect select) {
+        return compare(Comparator.EQUALS, select);
     }
 
     @Override
@@ -9955,8 +9970,18 @@ implements
     }
 
     @Override
+    public final Condition eq(QuantifiedSelect select) {
+        return equal(select);
+    }
+
+    @Override
     public final Condition notEqual(Select select) {
-        return new RowSubqueryCondition(this, select, Comparator.NOT_EQUALS);
+        return compare(Comparator.NOT_EQUALS, select);
+    }
+
+    @Override
+    public final Condition notEqual(QuantifiedSelect select) {
+        return compare(Comparator.NOT_EQUALS, select);
     }
 
     @Override
@@ -9965,8 +9990,18 @@ implements
     }
 
     @Override
+    public final Condition ne(QuantifiedSelect select) {
+        return notEqual(select);
+    }
+
+    @Override
     public final Condition greaterThan(Select select) {
-        return new RowSubqueryCondition(this, select, Comparator.GREATER);
+        return compare(Comparator.GREATER, select);
+    }
+
+    @Override
+    public final Condition greaterThan(QuantifiedSelect select) {
+        return compare(Comparator.GREATER, select);
     }
 
     @Override
@@ -9975,8 +10010,18 @@ implements
     }
 
     @Override
+    public final Condition gt(QuantifiedSelect select) {
+        return greaterThan(select);
+    }
+
+    @Override
     public final Condition greaterOrEqual(Select select) {
-        return new RowSubqueryCondition(this, select, Comparator.GREATER_OR_EQUAL);
+        return compare(Comparator.GREATER_OR_EQUAL, select);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(QuantifiedSelect select) {
+        return compare(Comparator.GREATER_OR_EQUAL, select);
     }
 
     @Override
@@ -9985,8 +10030,18 @@ implements
     }
 
     @Override
+    public final Condition ge(QuantifiedSelect select) {
+        return greaterOrEqual(select);
+    }
+
+    @Override
     public final Condition lessThan(Select select) {
-        return new RowSubqueryCondition(this, select, Comparator.LESS);
+        return compare(Comparator.LESS, select);
+    }
+
+    @Override
+    public final Condition lessThan(QuantifiedSelect select) {
+        return compare(Comparator.LESS, select);
     }
 
     @Override
@@ -9995,8 +10050,18 @@ implements
     }
 
     @Override
+    public final Condition lt(QuantifiedSelect select) {
+        return lessThan(select);
+    }
+
+    @Override
     public final Condition lessOrEqual(Select select) {
-        return new RowSubqueryCondition(this, select, Comparator.LESS_OR_EQUAL);
+        return compare(Comparator.LESS_OR_EQUAL, select);
+    }
+
+    @Override
+    public final Condition lessOrEqual(QuantifiedSelect select) {
+        return compare(Comparator.LESS_OR_EQUAL, select);
     }
 
     @Override
@@ -10005,13 +10070,18 @@ implements
     }
 
     @Override
+    public final Condition le(QuantifiedSelect select) {
+        return lessOrEqual(select);
+    }
+
+    @Override
     public final Condition in(Select select) {
-        return new RowSubqueryCondition(this, select, Comparator.IN);
+        return compare(Comparator.IN, select);
     }
 
     @Override
     public final Condition notIn(Select select) {
-        return new RowSubqueryCondition(this, select, Comparator.NOT_IN);
+        return compare(Comparator.NOT_IN, select);
     }
 
     // ------------------------------------------------------------------------

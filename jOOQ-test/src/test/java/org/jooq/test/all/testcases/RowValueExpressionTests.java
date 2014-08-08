@@ -42,6 +42,8 @@ package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.impl.DSL.all;
+import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.currentDate;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.not;
@@ -55,6 +57,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
 
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -332,6 +335,69 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .and(row(1, 1, 1).le(select(inline(1), inline(1), inline(2))))
                 .and(row(1, 1, 1).gt(select(inline(1), inline(1), inline(0))))
                 .and(row(1, 1, 1).ge(select(inline(1), inline(1), inline(0))))
+                .fetchOne(0, Integer.class));
+    }
+
+    public void testRowValueExpressionQuantifiedComparisonPredicates() throws Exception {
+        Field<Integer> _0 = inline(0);
+        Field<Integer> _1 = inline(1);
+        Field<Integer> _2 = inline(2);
+
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1).eq(any(  select(_1).unionAll(select(_2))  )))
+                .and(row(1).eq(all(  select(_1).unionAll(select(_1))  )))
+                .and(row(1).ne(any(  select(_1).unionAll(select(_2))  )))
+                .and(row(1).ne(all(  select(_2).unionAll(select(_2))  )))
+
+                .and(row(1).lt(any(  select(_1).unionAll(select(_2))  )))
+                .and(row(1).lt(all(  select(_2).unionAll(select(_2))  )))
+                .and(row(1).le(any(  select(_1).unionAll(select(_1))  )))
+                .and(row(1).le(all(  select(_1).unionAll(select(_2))  )))
+
+                .and(row(1).gt(any(  select(_0).unionAll(select(_1))  )))
+                .and(row(1).gt(all(  select(_0).unionAll(select(_0))  )))
+                .and(row(1).ge(any(  select(_1).unionAll(select(_2))  )))
+                .and(row(1).ge(all(  select(_1).unionAll(select(_1))  )))
+                .fetchOne(0, Integer.class));
+
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1, 1).eq(any(  select(_1, _1).unionAll(select(_1, _2))  )))
+                .and(row(1, 1).eq(all(  select(_1, _1).unionAll(select(_1, _1))  )))
+                .and(row(1, 1).ne(any(  select(_1, _1).unionAll(select(_1, _2))  )))
+                .and(row(1, 1).ne(all(  select(_1, _2).unionAll(select(_2, _2))  )))
+
+                .and(row(1, 1).lt(any(  select(_1, _2).unionAll(select(_1, _1))  )))
+                .and(row(1, 1).lt(all(  select(_1, _2).unionAll(select(_2, _2))  )))
+                .and(row(1, 1).le(any(  select(_1, _0).unionAll(select(_2, _2))  )))
+                .and(row(1, 1).le(all(  select(_1, _2).unionAll(select(_2, _2))  )))
+
+                .and(row(1, 1).gt(any(  select(_1, _0).unionAll(select(_2, _2))  )))
+                .and(row(1, 1).gt(all(  select(_1, _0).unionAll(select(_0, _0))  )))
+                .and(row(1, 1).ge(any(  select(_1, _1).unionAll(select(_2, _2))  )))
+                .and(row(1, 1).ge(all(  select(_1, _0).unionAll(select(_1, _1))  )))
+                .fetchOne(0, Integer.class));
+
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1, 1, 1).eq(any(  select(_1, _1, _1).unionAll(select(_1, _1, _2))  )))
+                .and(row(1, 1, 1).eq(all(  select(_1, _1, _1).unionAll(select(_1, _1, _1))  )))
+                .and(row(1, 1, 1).ne(any(  select(_1, _1, _1).unionAll(select(_1, _1, _2))  )))
+                .and(row(1, 1, 1).ne(all(  select(_1, _1, _2).unionAll(select(_2, _2, _2))  )))
+
+                .and(row(1, 1, 1).lt(any(  select(_1, _1, _2).unionAll(select(_1, _1, _1))  )))
+                .and(row(1, 1, 1).lt(all(  select(_1, _1, _2).unionAll(select(_2, _2, _2))  )))
+                .and(row(1, 1, 1).le(any(  select(_1, _1, _2).unionAll(select(_2, _2, _2))  )))
+                .and(row(1, 1, 1).le(all(  select(_1, _1, _2).unionAll(select(_2, _2, _2))  )))
+
+                .and(row(1, 1, 1).gt(any(  select(_1, _1, _0).unionAll(select(_2, _2, _2))  )))
+                .and(row(1, 1, 1).gt(all(  select(_1, _1, _0).unionAll(select(_0, _0, _0))  )))
+                .and(row(1, 1, 1).ge(any(  select(_1, _1, _0).unionAll(select(_2, _2, _2))  )))
+                .and(row(1, 1, 1).ge(all(  select(_1, _1, _0).unionAll(select(_1, _1, _1))  )))
                 .fetchOne(0, Integer.class));
     }
 

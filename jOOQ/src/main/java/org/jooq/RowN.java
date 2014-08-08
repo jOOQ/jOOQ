@@ -40,7 +40,23 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 import org.jooq.Comparator;
+import org.jooq.impl.DSL;
 
 import java.util.Collection;
 
@@ -80,18 +96,18 @@ public interface RowN extends Row {
     Condition compare(Comparator comparator, RowN row);
 
     /**
-     * Compare this row value expression with a record record
+     * Compare this row value expression with a record
      * using a dynamic comparator.
      * <p>
      * See the explicit comparison methods for details. Note, not all
      * {@link Comparator} types are supported
      *
-     * @see #equal(RowN)
-     * @see #notEqual(RowN)
-     * @see #lessThan(RowN)
-     * @see #lessOrEqual(RowN)
-     * @see #greaterThan(RowN)
-     * @see #greaterOrEqual(RowN)
+     * @see #equal(Record)
+     * @see #notEqual(Record)
+     * @see #lessThan(Record)
+     * @see #lessOrEqual(Record)
+     * @see #greaterThan(Record)
+     * @see #greaterOrEqual(Record)
      */
     @Support
     Condition compare(Comparator comparator, Record record);
@@ -129,6 +145,40 @@ public interface RowN extends Row {
      */
     @Support
     Condition compare(Comparator comparator, Field<?>... values);
+
+    /**
+     * Compare this row value expression with a subselect
+     * using a dynamic comparator.
+     * <p>
+     * See the explicit comparison methods for details. Note, not all
+     * {@link Comparator} types are supported
+     *
+     * @see #equal(Select)
+     * @see #notEqual(Select)
+     * @see #lessThan(Select)
+     * @see #lessOrEqual(Select)
+     * @see #greaterThan(Select)
+     * @see #greaterOrEqual(Select)
+     */
+    @Support
+    Condition compare(Comparator comparator, Select<? extends Record> select);
+
+    /**
+     * Compare this row value expression with a subselect
+     * using a dynamic comparator.
+     * <p>
+     * See the explicit comparison methods for details. Note, not all
+     * {@link Comparator} types are supported
+     *
+     * @see #equal(Select)
+     * @see #notEqual(Select)
+     * @see #lessThan(Select)
+     * @see #lessOrEqual(Select)
+     * @see #greaterThan(Select)
+     * @see #greaterOrEqual(Select)
+     */
+    @Support
+    Condition compare(Comparator comparator, QuantifiedSelect<? extends Record> select);
 
     // ------------------------------------------------------------------------
     // Equal / Not equal comparison predicates
@@ -181,6 +231,19 @@ public interface RowN extends Row {
     Condition equal(Select<? extends Record> select);
 
     /**
+     * Compare this row value expression with a subselect for equality.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition equal(QuantifiedSelect<? extends Record> select);
+
+    /**
      * Compare this row value expression with another row value expression for
      * equality.
      *
@@ -222,6 +285,19 @@ public interface RowN extends Row {
      */
     @Support
     Condition eq(Select<? extends Record> select);
+
+    /**
+     * Compare this row value expression with a subselect for equality.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition eq(QuantifiedSelect<? extends Record> select);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -270,6 +346,19 @@ public interface RowN extends Row {
     Condition notEqual(Select<? extends Record> select);
 
     /**
+     * Compare this row value expression with a subselect for non-equality.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition notEqual(QuantifiedSelect<? extends Record> select);
+
+    /**
      * Compare this row value expression with another row value expression for
      * non-equality.
      *
@@ -311,6 +400,19 @@ public interface RowN extends Row {
      */
     @Support
     Condition ne(Select<? extends Record> select);
+
+    /**
+     * Compare this row value expression with a subselect for non-equality.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition ne(QuantifiedSelect<? extends Record> select);
 
     // ------------------------------------------------------------------------
     // Ordering comparison predicates
@@ -363,6 +465,19 @@ public interface RowN extends Row {
     Condition lessThan(Select<? extends Record> select);
 
     /**
+     * Compare this row value expression with a subselect for order.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition lessThan(QuantifiedSelect<? extends Record> select);
+
+    /**
      * Compare this row value expression with another row value expression for
      * order.
      *
@@ -404,6 +519,19 @@ public interface RowN extends Row {
      */
     @Support
     Condition lt(Select<? extends Record> select);
+
+    /**
+     * Compare this row value expression with a subselect for order.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition lt(QuantifiedSelect<? extends Record> select);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -452,6 +580,19 @@ public interface RowN extends Row {
     Condition lessOrEqual(Select<? extends Record> select);
 
     /**
+     * Compare this row value expression with a subselect for order.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition lessOrEqual(QuantifiedSelect<? extends Record> select);
+
+    /**
      * Compare this row value expression with another row value expression for
      * order.
      *
@@ -493,6 +634,19 @@ public interface RowN extends Row {
      */
     @Support
     Condition le(Select<? extends Record> select);
+
+    /**
+     * Compare this row value expression with a subselect for order.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition le(QuantifiedSelect<? extends Record> select);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -541,6 +695,19 @@ public interface RowN extends Row {
     Condition greaterThan(Select<? extends Record> select);
 
     /**
+     * Compare this row value expression with a subselect for order.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition greaterThan(QuantifiedSelect<? extends Record> select);
+
+    /**
      * Compare this row value expression with another row value expression for
      * order.
      *
@@ -582,6 +749,19 @@ public interface RowN extends Row {
      */
     @Support
     Condition gt(Select<? extends Record> select);
+
+    /**
+     * Compare this row value expression with a subselect for order.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition gt(QuantifiedSelect<? extends Record> select);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -630,6 +810,19 @@ public interface RowN extends Row {
     Condition greaterOrEqual(Select<? extends Record> select);
 
     /**
+     * Compare this row value expression with a subselect for order.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition greaterOrEqual(QuantifiedSelect<? extends Record> select);
+
+    /**
      * Compare this row value expression with another row value expression for
      * order.
      *
@@ -671,6 +864,19 @@ public interface RowN extends Row {
      */
     @Support
     Condition ge(Select<? extends Record> select);
+
+    /**
+     * Compare this row value expression with a subselect for order.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Condition ge(QuantifiedSelect<? extends Record> select);
 
     // ------------------------------------------------------------------------
     // [NOT] BETWEEN predicates

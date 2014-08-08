@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -1750,7 +1751,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equal(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -1787,7 +1788,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition eq(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -1818,7 +1819,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -1855,7 +1856,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition ne(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -1886,7 +1887,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThan(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -1923,7 +1924,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lt(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -1954,7 +1955,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -1991,7 +1992,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition le(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2022,7 +2023,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThan(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2059,7 +2060,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition gt(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2090,7 +2091,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -2127,7 +2128,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition ge(QuantifiedSelect<? extends Record1<T>> query);
 
     /**

@@ -70,6 +70,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.QuantifiedSelect;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -86,16 +87,25 @@ class RowSubqueryCondition extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = -1806139685201770706L;
-    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
+    private static final long         serialVersionUID = -1806139685201770706L;
+    private static final Clause[]     CLAUSES          = { CONDITION, CONDITION_COMPARISON };
 
-    private final Row             left;
-    private final Select<?>       right;
-    private final Comparator      comparator;
+    private final Row                 left;
+    private final Select<?>           right;
+    private final QuantifiedSelect<?> rightQuantified;
+    private final Comparator          comparator;
 
     RowSubqueryCondition(Row left, Select<?> right, Comparator comparator) {
         this.left = left;
         this.right = right;
+        this.rightQuantified = null;
+        this.comparator = comparator;
+    }
+
+    RowSubqueryCondition(Row left, QuantifiedSelect<?> right, Comparator comparator) {
+        this.left = left;
+        this.right = null;
+        this.rightQuantified = right;
         this.comparator = comparator;
     }
 
@@ -115,9 +125,14 @@ class RowSubqueryCondition extends AbstractCondition {
 
         SQLDialect family = configuration.dialect().family();
 
+        // [#3505] TODO: Emulate this where it is not supported
+        if (rightQuantified != null) {
+            return new Native();
+        }
+
         // [#2395] These dialects have full native support for comparison
         // predicates with row value expressions and subqueries:
-        if (asList(H2, HSQLDB, MARIADB, MYSQL, POSTGRES).contains(family)) {
+        else if (asList(H2, HSQLDB, MARIADB, MYSQL, POSTGRES).contains(family)) {
             return new Native();
         }
 
@@ -137,7 +152,7 @@ class RowSubqueryCondition extends AbstractCondition {
             return new Native();
         }
 
-        // [#2395] All other configurations have to be simulated
+        // [#2395] All other configurations have to be emulated
         else {
             String table = render == null ? "t" : render.nextAlias();
 
@@ -190,7 +205,6 @@ class RowSubqueryCondition extends AbstractCondition {
                 default:
                     return (QueryPartInternal) exists(subselect);
             }
-
         }
     }
 
@@ -204,6 +218,9 @@ class RowSubqueryCondition extends AbstractCondition {
         @Override
         public final void accept(Context<?> ctx) {
 
+            // [#2054] Quantified row value expression comparison predicates shouldn't have parentheses before ANY or ALL
+            boolean parentheses = rightQuantified == null;
+
             // Some databases need extra parentheses around the RHS
             boolean extraParentheses = asList(ORACLE).contains(ctx.configuration().dialect().family());
             boolean subquery = ctx.subquery();
@@ -211,15 +228,16 @@ class RowSubqueryCondition extends AbstractCondition {
             ctx.visit(left)
                .sql(" ")
                .keyword(comparator.toSQL())
-               .sql(" (")
+               .sql(" ")
+               .sql(     parentheses ? "(" : "")
                .sql(extraParentheses ? "(" : "");
             ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true);
             ctx.subquery(true)
-               .visit(right)
+               .visit(right != null ? right : rightQuantified)
                .subquery(subquery);
             ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
             ctx.sql(extraParentheses ? ")" : "")
-               .sql(")");
+               .sql(     parentheses ? ")" : "");
         }
 
         @Override

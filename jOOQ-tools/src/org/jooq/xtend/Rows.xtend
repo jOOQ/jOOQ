@@ -60,12 +60,29 @@ class Rows extends Generators {
             val typeSuffix = typeSuffix(degree)
             val typeSuffixRaw = typeSuffixRaw(degree)
             val recTypeSuffix = recTypeSuffix(degree)
+            val recTypeSuffixRaw = recTypeSuffixRaw(degree)
 
             out.append('''
             «classHeader»
             package org.jooq;
 
+            import static org.jooq.SQLDialect.ASE;
+            import static org.jooq.SQLDialect.CUBRID;
+            import static org.jooq.SQLDialect.DB2;
+            import static org.jooq.SQLDialect.DERBY;
+            import static org.jooq.SQLDialect.FIREBIRD;
+            import static org.jooq.SQLDialect.H2;
+            import static org.jooq.SQLDialect.HSQLDB;
+            import static org.jooq.SQLDialect.INGRES;
+            import static org.jooq.SQLDialect.MARIADB;
+            import static org.jooq.SQLDialect.MYSQL;
+            import static org.jooq.SQLDialect.ORACLE;
+            import static org.jooq.SQLDialect.POSTGRES;
+            import static org.jooq.SQLDialect.SQLSERVER;
+            import static org.jooq.SQLDialect.SYBASE;
+
             import org.jooq.Comparator;
+            import org.jooq.impl.DSL;
 
             import java.util.Collection;
 
@@ -118,18 +135,18 @@ class Rows extends Generators {
                 Condition compare(Comparator comparator, Row«typeSuffix» row);
             
                 /**
-                 * Compare this row value expression with a record record
+                 * Compare this row value expression with a record
                  * using a dynamic comparator.
                  * <p>
                  * See the explicit comparison methods for details. Note, not all
                  * {@link Comparator} types are supported
                  *
-                 * @see #equal(Row«typeSuffixRaw»)
-                 * @see #notEqual(Row«typeSuffixRaw»)
-                 * @see #lessThan(Row«typeSuffixRaw»)
-                 * @see #lessOrEqual(Row«typeSuffixRaw»)
-                 * @see #greaterThan(Row«typeSuffixRaw»)
-                 * @see #greaterOrEqual(Row«typeSuffixRaw»)
+                 * @see #equal(Record«recTypeSuffixRaw»)
+                 * @see #notEqual(Record«recTypeSuffixRaw»)
+                 * @see #lessThan(Record«recTypeSuffixRaw»)
+                 * @see #lessOrEqual(Record«recTypeSuffixRaw»)
+                 * @see #greaterThan(Record«recTypeSuffixRaw»)
+                 * @see #greaterOrEqual(Record«recTypeSuffixRaw»)
                  */
                 @Support
                 Condition compare(Comparator comparator, Record«recTypeSuffix» record);
@@ -167,6 +184,40 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition compare(Comparator comparator, «Field_TN_tn(degree)»);
+            
+                /**
+                 * Compare this row value expression with a subselect
+                 * using a dynamic comparator.
+                 * <p>
+                 * See the explicit comparison methods for details. Note, not all
+                 * {@link Comparator} types are supported
+                 *
+                 * @see #equal(Select)
+                 * @see #notEqual(Select)
+                 * @see #lessThan(Select)
+                 * @see #lessOrEqual(Select)
+                 * @see #greaterThan(Select)
+                 * @see #greaterOrEqual(Select)
+                 */
+                @Support
+                Condition compare(Comparator comparator, Select<? extends Record«recTypeSuffix»> select);
+            
+                /**
+                 * Compare this row value expression with a subselect
+                 * using a dynamic comparator.
+                 * <p>
+                 * See the explicit comparison methods for details. Note, not all
+                 * {@link Comparator} types are supported
+                 *
+                 * @see #equal(Select)
+                 * @see #notEqual(Select)
+                 * @see #lessThan(Select)
+                 * @see #lessOrEqual(Select)
+                 * @see #greaterThan(Select)
+                 * @see #greaterOrEqual(Select)
+                 */
+                @Support
+                Condition compare(Comparator comparator, QuantifiedSelect<? extends Record«recTypeSuffix»> select);
             
                 // ------------------------------------------------------------------------
                 // Equal / Not equal comparison predicates
@@ -219,6 +270,19 @@ class Rows extends Generators {
                 Condition equal(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
+                 * Compare this row value expression with a subselect for equality.
+                 *
+                 * @see DSL#all(Field)
+                 * @see DSL#all(Select)
+                 * @see DSL#all(Object...)
+                 * @see DSL#any(Field)
+                 * @see DSL#any(Select)
+                 * @see DSL#any(Object...)
+                 */
+                @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+                Condition equal(QuantifiedSelect<? extends Record«recTypeSuffix»> select);
+
+                /**
                  * Compare this row value expression with another row value expression for
                  * equality.
                  *
@@ -260,6 +324,19 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition eq(Select<? extends Record«recTypeSuffix»> select);
+
+                /**
+                 * Compare this row value expression with a subselect for equality.
+                 *
+                 * @see DSL#all(Field)
+                 * @see DSL#all(Select)
+                 * @see DSL#all(Object...)
+                 * @see DSL#any(Field)
+                 * @see DSL#any(Select)
+                 * @see DSL#any(Object...)
+                 */
+                @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+                Condition eq(QuantifiedSelect<? extends Record«recTypeSuffix»> select);
 
                 /**
                  * Compare this row value expression with another row value expression for
@@ -308,6 +385,19 @@ class Rows extends Generators {
                 Condition notEqual(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
+                 * Compare this row value expression with a subselect for non-equality.
+                 *
+                 * @see DSL#all(Field)
+                 * @see DSL#all(Select)
+                 * @see DSL#all(Object...)
+                 * @see DSL#any(Field)
+                 * @see DSL#any(Select)
+                 * @see DSL#any(Object...)
+                 */
+                @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+                Condition notEqual(QuantifiedSelect<? extends Record«recTypeSuffix»> select);
+
+                /**
                  * Compare this row value expression with another row value expression for
                  * non-equality.
                  *
@@ -349,6 +439,19 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition ne(Select<? extends Record«recTypeSuffix»> select);
+
+                /**
+                 * Compare this row value expression with a subselect for non-equality.
+                 *
+                 * @see DSL#all(Field)
+                 * @see DSL#all(Select)
+                 * @see DSL#all(Object...)
+                 * @see DSL#any(Field)
+                 * @see DSL#any(Select)
+                 * @see DSL#any(Object...)
+                 */
+                @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+                Condition ne(QuantifiedSelect<? extends Record«recTypeSuffix»> select);
 
                 // ------------------------------------------------------------------------
                 // Ordering comparison predicates
@@ -401,6 +504,19 @@ class Rows extends Generators {
                 Condition lessThan(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
+                 * Compare this row value expression with a subselect for order.
+                 *
+                 * @see DSL#all(Field)
+                 * @see DSL#all(Select)
+                 * @see DSL#all(Object...)
+                 * @see DSL#any(Field)
+                 * @see DSL#any(Select)
+                 * @see DSL#any(Object...)
+                 */
+                @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+                Condition lessThan(QuantifiedSelect<? extends Record«recTypeSuffix»> select);
+
+                /**
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
@@ -442,6 +558,19 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition lt(Select<? extends Record«recTypeSuffix»> select);
+
+                /**
+                 * Compare this row value expression with a subselect for order.
+                 *
+                 * @see DSL#all(Field)
+                 * @see DSL#all(Select)
+                 * @see DSL#all(Object...)
+                 * @see DSL#any(Field)
+                 * @see DSL#any(Select)
+                 * @see DSL#any(Object...)
+                 */
+                @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+                Condition lt(QuantifiedSelect<? extends Record«recTypeSuffix»> select);
 
                 /**
                  * Compare this row value expression with another row value expression for
@@ -490,6 +619,19 @@ class Rows extends Generators {
                 Condition lessOrEqual(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
+                 * Compare this row value expression with a subselect for order.
+                 *
+                 * @see DSL#all(Field)
+                 * @see DSL#all(Select)
+                 * @see DSL#all(Object...)
+                 * @see DSL#any(Field)
+                 * @see DSL#any(Select)
+                 * @see DSL#any(Object...)
+                 */
+                @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+                Condition lessOrEqual(QuantifiedSelect<? extends Record«recTypeSuffix»> select);
+
+                /**
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
@@ -531,6 +673,19 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition le(Select<? extends Record«recTypeSuffix»> select);
+
+                /**
+                 * Compare this row value expression with a subselect for order.
+                 *
+                 * @see DSL#all(Field)
+                 * @see DSL#all(Select)
+                 * @see DSL#all(Object...)
+                 * @see DSL#any(Field)
+                 * @see DSL#any(Select)
+                 * @see DSL#any(Object...)
+                 */
+                @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+                Condition le(QuantifiedSelect<? extends Record«recTypeSuffix»> select);
 
                 /**
                  * Compare this row value expression with another row value expression for
@@ -579,6 +734,19 @@ class Rows extends Generators {
                 Condition greaterThan(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
+                 * Compare this row value expression with a subselect for order.
+                 *
+                 * @see DSL#all(Field)
+                 * @see DSL#all(Select)
+                 * @see DSL#all(Object...)
+                 * @see DSL#any(Field)
+                 * @see DSL#any(Select)
+                 * @see DSL#any(Object...)
+                 */
+                @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+                Condition greaterThan(QuantifiedSelect<? extends Record«recTypeSuffix»> select);
+
+                /**
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
@@ -620,6 +788,19 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition gt(Select<? extends Record«recTypeSuffix»> select);
+
+                /**
+                 * Compare this row value expression with a subselect for order.
+                 *
+                 * @see DSL#all(Field)
+                 * @see DSL#all(Select)
+                 * @see DSL#all(Object...)
+                 * @see DSL#any(Field)
+                 * @see DSL#any(Select)
+                 * @see DSL#any(Object...)
+                 */
+                @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+                Condition gt(QuantifiedSelect<? extends Record«recTypeSuffix»> select);
 
                 /**
                  * Compare this row value expression with another row value expression for
@@ -668,6 +849,19 @@ class Rows extends Generators {
                 Condition greaterOrEqual(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
+                 * Compare this row value expression with a subselect for order.
+                 *
+                 * @see DSL#all(Field)
+                 * @see DSL#all(Select)
+                 * @see DSL#all(Object...)
+                 * @see DSL#any(Field)
+                 * @see DSL#any(Select)
+                 * @see DSL#any(Object...)
+                 */
+                @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+                Condition greaterOrEqual(QuantifiedSelect<? extends Record«recTypeSuffix»> select);
+
+                /**
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
@@ -709,6 +903,19 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition ge(Select<? extends Record«recTypeSuffix»> select);
+
+                /**
+                 * Compare this row value expression with a subselect for order.
+                 *
+                 * @see DSL#all(Field)
+                 * @see DSL#all(Select)
+                 * @see DSL#all(Object...)
+                 * @see DSL#any(Field)
+                 * @see DSL#any(Select)
+                 * @see DSL#any(Object...)
+                 */
+                @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+                Condition ge(QuantifiedSelect<? extends Record«recTypeSuffix»> select);
 
                 // ------------------------------------------------------------------------
                 // [NOT] BETWEEN predicates
@@ -1215,10 +1422,10 @@ class Rows extends Generators {
         import org.jooq.Context;
         import org.jooq.DataType;
         import org.jooq.Field;
+        import org.jooq.QuantifiedSelect;
         «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
         import org.jooq.Record«recTypeSuffixRaw(degree)»;
         «ENDFOR»
-        import org.jooq.RenderContext;
         import org.jooq.Row;
         «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
         import org.jooq.Row«typeSuffixRaw(degree)»;
@@ -1433,6 +1640,16 @@ class Rows extends Generators {
                 return compare(comparator, row(«tn(degree)»));
             }
             «ENDFOR»
+
+            @Override
+            public final Condition compare(Comparator comparator, Select select) {
+                return new RowSubqueryCondition(this, select, comparator);
+            }
+
+            @Override
+            public final Condition compare(Comparator comparator, QuantifiedSelect select) {
+                return new RowSubqueryCondition(this, select, comparator);
+            }
 
             // ------------------------------------------------------------------------
             // Equal / Not equal comparison predicates
@@ -1892,7 +2109,12 @@ class Rows extends Generators {
 
             @Override
             public final Condition equal(Select select) {
-                return new RowSubqueryCondition(this, select, Comparator.EQUALS);
+                return compare(Comparator.EQUALS, select);
+            }
+
+            @Override
+            public final Condition equal(QuantifiedSelect select) {
+                return compare(Comparator.EQUALS, select);
             }
 
             @Override
@@ -1901,8 +2123,18 @@ class Rows extends Generators {
             }
 
             @Override
+            public final Condition eq(QuantifiedSelect select) {
+                return equal(select);
+            }
+
+            @Override
             public final Condition notEqual(Select select) {
-                return new RowSubqueryCondition(this, select, Comparator.NOT_EQUALS);
+                return compare(Comparator.NOT_EQUALS, select);
+            }
+
+            @Override
+            public final Condition notEqual(QuantifiedSelect select) {
+                return compare(Comparator.NOT_EQUALS, select);
             }
 
             @Override
@@ -1911,8 +2143,18 @@ class Rows extends Generators {
             }
 
             @Override
+            public final Condition ne(QuantifiedSelect select) {
+                return notEqual(select);
+            }
+
+            @Override
             public final Condition greaterThan(Select select) {
-                return new RowSubqueryCondition(this, select, Comparator.GREATER);
+                return compare(Comparator.GREATER, select);
+            }
+
+            @Override
+            public final Condition greaterThan(QuantifiedSelect select) {
+                return compare(Comparator.GREATER, select);
             }
 
             @Override
@@ -1921,8 +2163,18 @@ class Rows extends Generators {
             }
 
             @Override
+            public final Condition gt(QuantifiedSelect select) {
+                return greaterThan(select);
+            }
+
+            @Override
             public final Condition greaterOrEqual(Select select) {
-                return new RowSubqueryCondition(this, select, Comparator.GREATER_OR_EQUAL);
+                return compare(Comparator.GREATER_OR_EQUAL, select);
+            }
+
+            @Override
+            public final Condition greaterOrEqual(QuantifiedSelect select) {
+                return compare(Comparator.GREATER_OR_EQUAL, select);
             }
 
             @Override
@@ -1931,8 +2183,18 @@ class Rows extends Generators {
             }
 
             @Override
+            public final Condition ge(QuantifiedSelect select) {
+                return greaterOrEqual(select);
+            }
+
+            @Override
             public final Condition lessThan(Select select) {
-                return new RowSubqueryCondition(this, select, Comparator.LESS);
+                return compare(Comparator.LESS, select);
+            }
+
+            @Override
+            public final Condition lessThan(QuantifiedSelect select) {
+                return compare(Comparator.LESS, select);
             }
 
             @Override
@@ -1941,8 +2203,18 @@ class Rows extends Generators {
             }
 
             @Override
+            public final Condition lt(QuantifiedSelect select) {
+                return lessThan(select);
+            }
+
+            @Override
             public final Condition lessOrEqual(Select select) {
-                return new RowSubqueryCondition(this, select, Comparator.LESS_OR_EQUAL);
+                return compare(Comparator.LESS_OR_EQUAL, select);
+            }
+
+            @Override
+            public final Condition lessOrEqual(QuantifiedSelect select) {
+                return compare(Comparator.LESS_OR_EQUAL, select);
             }
 
             @Override
@@ -1951,13 +2223,18 @@ class Rows extends Generators {
             }
 
             @Override
+            public final Condition le(QuantifiedSelect select) {
+                return lessOrEqual(select);
+            }
+
+            @Override
             public final Condition in(Select select) {
-                return new RowSubqueryCondition(this, select, Comparator.IN);
+                return compare(Comparator.IN, select);
             }
 
             @Override
             public final Condition notIn(Select select) {
-                return new RowSubqueryCondition(this, select, Comparator.NOT_IN);
+                return compare(Comparator.NOT_IN, select);
             }
 
             // ------------------------------------------------------------------------

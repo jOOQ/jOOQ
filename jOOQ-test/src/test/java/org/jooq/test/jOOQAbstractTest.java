@@ -2232,6 +2232,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testIntersectAndExcept() throws Exception {
+        new SelectTests(this).testIntersectAndExcept();
+    }
+
+    @Test
     public void testValuesConstructor() throws Exception {
         new ValuesConstructorTests(this).testValuesConstructor();
     }

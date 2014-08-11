@@ -352,6 +352,38 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(4, q.execute());
     }
 
+    public void testIntersectAndExcept() throws Exception {
+
+        // [#3507] Not all dialects support INTERSECT and EXCEPT
+        Result<Record1<Integer>> r1 =
+        create().select(TBook_ID())
+                .from(TBook())
+                .where(TBook_ID().le(3))
+                .intersect(
+                 select(TBook_ID())
+                .from(TBook())
+                .where(TBook_ID().ge(3)))
+                .fetch();
+
+        assertEquals(1, r1.size());
+        assertEquals(3, (int) r1.get(0).getValue(TBook_ID()));
+
+        Result<Record1<Integer>> r2 =
+        create().select(TBook_ID())
+                .from(TBook())
+                .where(TBook_ID().le(3))
+                .except(
+                 select(TBook_ID())
+                .from(TBook())
+                .where(TBook_ID().le(2)))
+                .fetch();
+
+        assertEquals(1, r2.size());
+        assertEquals(3, (int) r2.get(0).getValue(TBook_ID()));
+
+
+    }
+
     public void testForUpdateClauses() throws Exception {
         switch (dialect().family()) {
             /* [pro] */

@@ -65,6 +65,7 @@ import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -83,6 +84,8 @@ import java.util.NoSuchElementException;
 
 import org.jooq.AttachableInternal;
 import org.jooq.Cursor;
+import org.jooq.DSLContext;
+import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -99,6 +102,8 @@ import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
+import org.jooq.impl.DefaultConnectionProvider;
+import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.SQLDataType;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -120,6 +125,8 @@ import org.jooq.test.all.ImmutableAuthorWithConstructorPropertiesAndJPAAnnotatio
 import org.jooq.test.all.ImmutableAuthorWithConstructorPropertiesAndPublicFields;
 import org.jooq.test.all.StaticWithAnnotations;
 import org.jooq.test.all.StaticWithoutAnnotations;
+import org.jooq.tools.jdbc.DefaultConnection;
+import org.jooq.tools.jdbc.DefaultPreparedStatement;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 import org.junit.Assert;
@@ -1462,12 +1469,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testFetchLazy() throws Exception {
+        FetchSizeListener listener = new FetchSizeListener();
+        DSLContext create = create(listener);
+
         for (int fetchSize : Arrays.asList(0, 1)) {
 
             // ---------------------------------------------------------------------
             // A regular pass through the cursor
             // ---------------------------------------------------------------------
-            Cursor<B> cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchSize(fetchSize).fetchLazy();
+            Cursor<B> cursor = create.selectFrom(TBook()).orderBy(TBook_ID()).fetchSize(fetchSize).fetchLazy();
+            assertFetchSize(fetchSize, listener);
 
             assertTrue(cursor.hasNext());
             assertTrue(cursor.hasNext());
@@ -1519,7 +1530,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // ---------------------------------------------------------------------
             // Prematurely closing the cursor
             // ---------------------------------------------------------------------
-            cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchSize(fetchSize).fetchLazy();
+            cursor = create.selectFrom(TBook()).orderBy(TBook_ID()).fetchSize(fetchSize).fetchLazy();
+            assertFetchSize(fetchSize, listener);
 
             assertTrue(cursor.hasNext());
             assertTrue(cursor.hasNext());
@@ -1535,7 +1547,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // ---------------------------------------------------------------------
             // Fetching several records at once
             // ---------------------------------------------------------------------
-            cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchSize(fetchSize).fetchLazy();
+            cursor = create.selectFrom(TBook()).orderBy(TBook_ID()).fetchSize(fetchSize).fetchLazy();
+            assertFetchSize(fetchSize, listener);
             Result<B> fetch0 = cursor.fetch(0);
 
             assertTrue(fetch0.isEmpty());
@@ -1556,6 +1569,34 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertTrue(cursor.isClosed());
             assertEquals(1, fetch1.size());
             assertEquals(Integer.valueOf(4), fetch1.get(0).getValue(TBook_ID()));
+        }
+    }
+
+    private void assertFetchSize(int fetchSize, FetchSizeListener listener) {
+        assertEquals(listener.stmtSize[0], fetchSize);
+        listener.stmtSize[0] = 0;
+    }
+
+    @SuppressWarnings("serial")
+    class FetchSizeListener extends DefaultExecuteListener {
+        int[] stmtSize = new int[1];
+
+        @Override
+        public void start(ExecuteContext ctx) {
+            ctx.connectionProvider(new DefaultConnectionProvider(new DefaultConnection(getConnection()) {
+
+                @Override
+                public PreparedStatement prepareStatement(String sql) throws SQLException {
+                    return new DefaultPreparedStatement(super.prepareStatement(sql)) {
+
+                        @Override
+                        public void setFetchSize(int rows) throws SQLException {
+                            super.setFetchSize(rows);
+                            stmtSize[0] = rows;
+                        }
+                    };
+                }
+            }));
         }
     }
 

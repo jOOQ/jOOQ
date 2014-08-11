@@ -435,7 +435,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * SQL dialects
      */
     @Override
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ DB2, FIREBIRD, POSTGRES })
     void setReturning();
 
     /**
@@ -445,7 +445,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * SQL dialects
      */
     @Override
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ DB2, FIREBIRD, POSTGRES })
     void setReturning(Identity<R, ? extends Number> identity);
 
     /**
@@ -455,7 +455,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * SQL dialects
      */
     @Override
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ DB2, FIREBIRD, POSTGRES })
     void setReturning(Field<?>... fields);
 
     /**
@@ -465,7 +465,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * SQL dialects
      */
     @Override
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ DB2, FIREBIRD, POSTGRES })
     void setReturning(Collection<? extends Field<?>> fields);
 
     /**
@@ -475,7 +475,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * SQL dialects
      */
     @Override
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ DB2, FIREBIRD, POSTGRES })
     R getReturnedRecord();
 
     /**
@@ -485,7 +485,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * SQL dialects
      */
     @Override
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ DB2, FIREBIRD, POSTGRES })
     Result<R> getReturnedRecords();
 
 }

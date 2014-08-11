@@ -40,10 +40,14 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.DB2;
 import static org.jooq.conf.RenderNameStyle.LOWER;
 import static org.jooq.conf.RenderNameStyle.UPPER;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.Utils.DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE;
 import static org.jooq.impl.Utils.consumeWarnings;
 import static org.jooq.impl.Utils.fieldArray;
+import static org.jooq.impl.Utils.unqualify;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
 import java.sql.Connection;
@@ -164,6 +168,24 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
 
         return returned;
     }
+
+    @Override
+    public final void accept(Context<?> ctx) {
+
+        /* [pro] */
+        if (!returning.isEmpty()
+                && ctx.family() == DB2
+                && ctx.data(DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE) == null) {
+            ctx.data(DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE, true);
+            ctx.visit(select(unqualify(returning)).from("{final table}({0})", this));
+            ctx.data(DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE, null);
+        }
+        else {
+            accept0(ctx);
+        }
+    }
+
+    abstract void accept0(Context<?> ctx);
 
     final void toSQLReturning(Context<?> ctx) {
         if (!returning.isEmpty()) {

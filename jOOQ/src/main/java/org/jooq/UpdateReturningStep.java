@@ -40,6 +40,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.POSTGRES;
 
@@ -75,7 +76,7 @@ public interface UpdateReturningStep<R extends Record> {
      *
      * @see UpdateResultStep
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ DB2, FIREBIRD, POSTGRES })
     UpdateResultStep<R> returning();
 
     /**
@@ -85,7 +86,7 @@ public interface UpdateReturningStep<R extends Record> {
      * @param fields Fields to be returned
      * @see UpdateResultStep
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ DB2, FIREBIRD, POSTGRES })
     UpdateResultStep<R> returning(Field<?>... fields);
 
     /**
@@ -95,6 +96,6 @@ public interface UpdateReturningStep<R extends Record> {
      * @param fields Fields to be returned
      * @see UpdateResultStep
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ DB2, FIREBIRD, POSTGRES })
     UpdateResultStep<R> returning(Collection<? extends Field<?>> fields);
 }

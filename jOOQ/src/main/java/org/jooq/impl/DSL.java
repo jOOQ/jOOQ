@@ -9408,11 +9408,27 @@ public class DSL {
     }
 
     /**
+     * Get the count(table) function.
+     */
+    @Support(POSTGRES)
+    public static AggregateFunction<Integer> count(Table<?> table) {
+        return new Function<Integer>("count", SQLDataType.INTEGER, tableByName(table.getName()));
+    }
+
+    /**
      * Get the count(distinct field) function.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static AggregateFunction<Integer> countDistinct(Field<?> field) {
         return new Function<Integer>("count", true, SQLDataType.INTEGER, nullSafe(field));
+    }
+
+    /**
+     * Get the count(distinct table) function.
+     */
+    @Support(POSTGRES)
+    public static AggregateFunction<Integer> countDistinct(Table<?> table) {
+        return new Function<Integer>("count", true, SQLDataType.INTEGER, tableByName(table.getName()));
     }
 
     /**

@@ -464,7 +464,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     @Override
-    public final void accept(Context<?> ctx) {
+    final void accept0(Context<?> ctx) {
         ctx.start(UPDATE_UPDATE)
            .keyword("update")
            .sql(" ")

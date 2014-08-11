@@ -47,12 +47,8 @@ import static org.jooq.Clause.INSERT_INSERT_INTO;
 import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE;
 import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT;
 import static org.jooq.Clause.INSERT_RETURNING;
-// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.impl.DSL.select;
-// ...
-import static org.jooq.impl.Utils.unqualify;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +63,6 @@ import org.jooq.InsertQuery;
 import org.jooq.Merge;
 import org.jooq.MergeNotMatchedStep;
 import org.jooq.MergeOnConditionStep;
-import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -147,18 +142,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     @Override
-    public final void accept(Context<?> ctx) {
-
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxx
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxx
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
-        x
-        xxxx
-        xx [/pro] */
+    final void accept0(Context<?> ctx) {
 
         // ON DUPLICATE KEY UPDATE clause
         // ------------------------------
@@ -269,12 +253,6 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         toSQLReturning(ctx);
         ctx.end(INSERT_RETURNING);
     }
-
-    /* [pro] xx
-    xxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxx
-    x
-    xx [/pro] */
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {

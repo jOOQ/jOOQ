@@ -40,10 +40,14 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.conf.RenderNameStyle.LOWER;
 import static org.jooq.conf.RenderNameStyle.UPPER;
+import static org.jooq.impl.DSL.select;
+// ...
 import static org.jooq.impl.Utils.consumeWarnings;
 import static org.jooq.impl.Utils.fieldArray;
+import static org.jooq.impl.Utils.unqualify;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
 import java.sql.Connection;
@@ -165,30 +169,48 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         return returned;
     }
 
-    final void toSQLReturning(Context<?> ctx) {
-        if (!returning.isEmpty()) {
-            switch (ctx.configuration().dialect()) {
-                case FIREBIRD:
-                case POSTGRES:
-                    ctx.formatSeparator()
-                       .keyword("returning")
-                       .sql(" ")
-                       .visit(returning);
-                    break;
-
-                default:
-                    // Other dialects don't render a RETURNING clause, but
-                    // use JDBC's Statement.RETURN_GENERATED_KEYS mode instead
-                    break;
-            }
-        }
-    }
-
     @Override
-    protected final void prepare(ExecuteContext ctx) throws SQLException {
-        Connection connection = ctx.connection();
+    public final void accept(Context<?> ctx) {
 
         /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxxxx
+                xx xxxxxxxxxxxx xx xxx
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+        x
+        xxxx x
+            xxxxxxxxxxxxx
+        x
+    x
+
+    xxxxxxxx xxxx xxxxxxxxxxxxxxxxxx xxxxx
+
+    xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxx x
+        xx xxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                xxxx xxxxxxxxx
+                xxxx xxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxxxxx
+                       xxxxxx xx
+                       xxxxxxxxxxxxxxxxxx
+                    xxxxxx
+
+                xxxxxxxx
+                    xx xxxxx xxxxxxxx xxxxx xxxxxx x xxxxxxxxx xxxxxxx xxx
+                    xx xxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxx
+                    xxxxxx
+            x
+        x
+    x
+
+    xxxxxxxxx
+    xxxxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxx x
+        xxxxxxxxxx xxxxxxxxxx x xxxxxxxxxxxxxxxxx
+
+        xx xxxxx xx
         xx xxxx xx xxxxx xxxxxx xxx xxxxxx xxx xxxxxxxxx xxxx xx xxxxxx
         xx xxxxxxxxx xxxx xx xxxxxx xxxx xxxxx xx xxxxxx xxxxxxxxxx xxxxxxxxxx
         xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxx x

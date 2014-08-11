@@ -42,12 +42,13 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_NOT;
+import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.not;
 
 import org.jooq.Clause;
-import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.QueryPartInternal;
 
 class NotField extends AbstractField<Boolean> {
 
@@ -63,11 +64,7 @@ class NotField extends AbstractField<Boolean> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        delegate(ctx.configuration()).accept(ctx);
-    }
-
-    private final QueryPartInternal delegate(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (ctx.family()) {
 
             // [#2485] These don't work nicely, yet
             case CUBRID:
@@ -81,7 +78,8 @@ class NotField extends AbstractField<Boolean> {
             xxxx xxxxxxxxxx
             xxxx xxxxxxx
             xx [/pro] */
-                return (QueryPartInternal) DSL.field(DSL.not(DSL.condition(field)));
+                ctx.visit(field(not(condition(field))));
+                break;
 
             /* [pro] xx
             xxxx xxxx
@@ -96,7 +94,8 @@ class NotField extends AbstractField<Boolean> {
             case POSTGRES:
             case SQLITE:
             default:
-                return (QueryPartInternal) DSL.field("{not}({0})", getDataType(), field);
+                ctx.visit(field("{not}({0})", getDataType(), field));
+                break;
         }
     }
 

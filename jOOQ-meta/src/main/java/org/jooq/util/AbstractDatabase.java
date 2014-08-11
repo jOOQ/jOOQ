@@ -869,16 +869,6 @@ public abstract class AbstractDatabase implements Database {
                 }
             }
 
-            for (Filter filter : filters) {
-                if (filter.exclude(definition)) {
-
-                    if (log.isDebugEnabled())
-                        log.debug("Exclude", "Excluding " + definition.getQualifiedName() + " because of filter " + filter);
-
-                    continue definitionsLoop;
-                }
-            }
-
             if (includes != null) {
                 for (String include : includes) {
                     Pattern p = Pattern.compile(include, Pattern.COMMENTS);
@@ -886,6 +876,19 @@ public abstract class AbstractDatabase implements Database {
                     if (include != null &&
                             (p.matcher(definition.getName()).matches() ||
                              p.matcher(definition.getQualifiedName()).matches())) {
+
+                        // [#3488] This allows for filtering out additional objects, in case the applicable
+                        // code generation configuration might cause conflicts in resulting code
+                        // [#3526] Filters should be applied last, after <exclude/> and <include/>
+                        for (Filter filter : filters) {
+                            if (filter.exclude(definition)) {
+
+                                if (log.isDebugEnabled())
+                                    log.debug("Exclude", "Excluding " + definition.getQualifiedName() + " because of filter " + filter);
+
+                                continue definitionsLoop;
+                            }
+                        }
 
                         result.add(definition);
 

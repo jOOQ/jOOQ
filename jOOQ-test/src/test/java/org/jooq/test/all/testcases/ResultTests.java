@@ -93,39 +93,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertTrue(result == result.sortDesc(TBook_ID()));
         assertEquals(asList(4, 3, 2, 1), result.getValues(TBook_ID()));
 
-        class C1 implements Comparator<Integer> {
+        // Put 1 at the end of everything
+        Comparator<Integer> c1 = (o1, o2) ->
+            (o1 == 1 && o2 != 1) ?  1 :
+            (o2 == 1 && o1 != 1) ? -1 :
+             o1.compareTo(o2);
 
-            @Override
-            public int compare(Integer o1, Integer o2) {
-
-                // Put 1 at the end of everything
-                if (o1 == 1 && o2 != 1) return 1;
-                if (o2 == 1 && o1 != 1) return -1;
-
-                return o1.compareTo(o2);
-            }
-        }
-
-        assertTrue(result == result.sortAsc(TBook_ID(), new C1()));
+        assertTrue(result == result.sortAsc(TBook_ID(), c1));
         assertEquals(asList(2, 3, 4, 1), result.getValues(TBook_ID()));
 
-        assertTrue(result == result.sortDesc(TBook_ID(), new C1()));
+        assertTrue(result == result.sortDesc(TBook_ID(), c1));
         assertEquals(asList(1, 4, 3, 2), result.getValues(TBook_ID()));
 
-        class C2 implements Comparator<B> {
+        Comparator<B> c2 = (book1, book2) ->
+            c1.compare(book1.getValue(TBook_ID()), book2.getValue(TBook_ID()));
 
-            private final C1 c1 = new C1();
-
-            @Override
-            public int compare(B book1, B book2) {
-                return c1.compare(book1.getValue(TBook_ID()), book2.getValue(TBook_ID()));
-            }
-        }
-
-        assertTrue(result == result.sortAsc(new C2()));
+        assertTrue(result == result.sortAsc(c2));
         assertEquals(asList(2, 3, 4, 1), result.getValues(TBook_ID()));
 
-        assertTrue(result == result.sortDesc(new C2()));
+        assertTrue(result == result.sortDesc(c2));
         assertEquals(asList(1, 4, 3, 2), result.getValues(TBook_ID()));
     }
 }

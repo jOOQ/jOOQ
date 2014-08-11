@@ -861,6 +861,9 @@ public abstract class AbstractDatabase implements Database {
                             (p.matcher(definition.getName()).matches() ||
                              p.matcher(definition.getQualifiedName()).matches())) {
 
+                        if (log.isDebugEnabled())
+                            log.debug("Exclude", "Excluding " + definition.getQualifiedName() + " because of pattern " + exclude);
+
                         continue definitionsLoop;
                     }
                 }
@@ -868,6 +871,10 @@ public abstract class AbstractDatabase implements Database {
 
             for (Filter filter : filters) {
                 if (filter.exclude(definition)) {
+
+                    if (log.isDebugEnabled())
+                        log.debug("Exclude", "Excluding " + definition.getQualifiedName() + " because of filter " + filter);
+
                     continue definitionsLoop;
                 }
             }
@@ -881,6 +888,10 @@ public abstract class AbstractDatabase implements Database {
                              p.matcher(definition.getQualifiedName()).matches())) {
 
                         result.add(definition);
+
+                        if (log.isDebugEnabled())
+                            log.debug("Include", "Including " + definition.getQualifiedName() + " because of pattern " + include);
+
                         continue definitionsLoop;
                     }
                 }

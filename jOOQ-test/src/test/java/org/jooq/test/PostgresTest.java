@@ -43,6 +43,8 @@ package org.jooq.test;
 
 import static java.util.Arrays.asList;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
+import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.countDistinct;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.lateral;
@@ -105,6 +107,7 @@ import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
+import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -1358,5 +1361,24 @@ public class PostgresTest extends jOOQAbstractTest<
 
         assertEquals(0, (int) create().selectCount().from(T_986_1.join(X_UNUSED).onKey()).fetchOne(0, int.class));
         assertEquals(0, (int) create().selectCount().from(T_986_2.join(X_UNUSED).onKey()).fetchOne(0, int.class));
+    }
+
+    @Test
+    public void testPostgresCountTable() {
+
+        // [#3512] PostgreSQL also supports counting values that originate from one of the table expressions.
+        org.jooq.test.postgres.generatedclasses.tables.TAuthor a = T_AUTHOR.as("a");
+        Record4<Integer, Integer, Integer, Integer> record =
+        create().select(
+                    count(T_BOOK), countDistinct(T_BOOK),
+                    count(a), countDistinct(a))
+                .from(T_BOOK)
+                .join(a).on(a.ID.eq(T_BOOK.AUTHOR_ID))
+                .fetchOne();
+
+        assertEquals(4, (int) record.value1());
+        assertEquals(4, (int) record.value2());
+        assertEquals(4, (int) record.value3());
+        assertEquals(2, (int) record.value4());
     }
 }

@@ -321,6 +321,7 @@
             org.jooq.util.firebird.FirebirdDatabase
             org.jooq.util.h2.H2Database
             org.jooq.util.hsqldb.HSQLDBDatabase
+            org.jooq.util.informix.InformixDatabase
             org.jooq.util.ingres.IngresDatabase
             org.jooq.util.mariadb.MariaDBDatabase
             org.jooq.util.mysql.MySQLDatabase

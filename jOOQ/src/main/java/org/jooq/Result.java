@@ -41,6 +41,8 @@
 
 package org.jooq;
 
+import java.io.OutputStream;
+import java.io.Writer;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
@@ -50,6 +52,7 @@ import java.util.Set;
 import javax.annotation.Generated;
 
 import org.jooq.exception.DataTypeException;
+import org.jooq.exception.IOException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.DefaultRecordMapper;
@@ -442,6 +445,118 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *      href="http://www.jooq.org/xsd/jooq-export-2.6.0.xsd">http://www.jooq.org/xsd/jooq-export-2.6.0.xsd</a>
      */
     String formatXML();
+
+    /**
+     * Like {@link #format()}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void format(OutputStream stream) throws IOException;
+
+    /**
+     * Like {@link #format(int)}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void format(OutputStream stream, int maxRecords) throws IOException;
+
+    /**
+     * Like {@link #formatHTML()}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatHTML(OutputStream stream) throws IOException;
+
+    /**
+     * Like {@link #formatCSV()}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatCSV(OutputStream stream) throws IOException;
+
+    /**
+     * Like {@link #formatCSV(char)}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatCSV(OutputStream stream, char delimiter) throws IOException;
+
+    /**
+     * Like {@link #formatCSV(char, String)}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatCSV(OutputStream stream, char delimiter, String nullString) throws IOException;
+
+    /**
+     * Like {@link #formatJSON()}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatJSON(OutputStream stream) throws IOException;
+
+    /**
+     * Like {@link #formatXML()}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatXML(OutputStream stream) throws IOException;
+
+    /**
+     * Like {@link #format()}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void format(Writer writer) throws IOException;
+
+    /**
+     * Like {@link #format(int)}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void format(Writer writer, int maxRecords) throws IOException;
+
+    /**
+     * Like {@link #formatHTML()}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatHTML(Writer writer) throws IOException;
+
+    /**
+     * Like {@link #formatCSV()}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatCSV(Writer writer) throws IOException;
+
+    /**
+     * Like {@link #formatCSV(char)}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatCSV(Writer writer, char delimiter) throws IOException;
+
+    /**
+     * Like {@link #formatCSV(char, String)}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatCSV(Writer writer, char delimiter, String nullString) throws IOException;
+
+    /**
+     * Like {@link #formatJSON()}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatJSON(Writer writer) throws IOException;
+
+    /**
+     * Like {@link #formatXML()}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatXML(Writer writer) throws IOException;
 
     /**
      * Get this result as XML.

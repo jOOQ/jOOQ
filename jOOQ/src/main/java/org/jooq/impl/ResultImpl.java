@@ -48,6 +48,10 @@ import static org.jooq.tools.StringUtils.abbreviate;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.StringUtils.rightPad;
 
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.lang.reflect.Array;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -101,6 +105,7 @@ import org.jooq.RecordType;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Table;
+import org.jooq.exception.IOException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
@@ -303,151 +308,177 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final String format() {
-        return format(50);
+        StringWriter writer = new StringWriter();
+        format(writer);
+        return writer.toString();
+    }
+
+    @Override
+    public final void format(OutputStream stream) {
+        format(new OutputStreamWriter(stream));
+    }
+
+    @Override
+    public final void format(Writer writer) {
+        format(writer, 50);
     }
 
     @Override
     public final String format(int maxRecords) {
-        final int COL_MIN_WIDTH = 4;
-        final int COL_MAX_WIDTH = 50;
+        StringWriter writer = new StringWriter();
+        format(writer, maxRecords);
+        return writer.toString();
+    }
 
-        // Numeric columns have greater max width because values are aligned
-        final int NUM_COL_MAX_WIDTH = 100;
+    @Override
+    public final void format(OutputStream stream, int maxRecords) {
+        format(new OutputStreamWriter(stream), maxRecords);
+    }
 
-        // The max number of records that will be considered for formatting purposes
-        final int MAX_RECORDS = min(50, maxRecords);
+    @Override
+    public final void format(Writer writer, int maxRecords) {
+        try {
+            final int COL_MIN_WIDTH = 4;
+            final int COL_MAX_WIDTH = 50;
 
-        // Get max decimal places for numeric type columns
-        final int[] decimalPlaces = new int[fields.fields.length];
-        final int[] widths = new int[fields.fields.length];
+            // Numeric columns have greater max width because values are aligned
+            final int NUM_COL_MAX_WIDTH = 100;
 
-        for (int index = 0; index < fields.fields.length; index++) {
-            if (Number.class.isAssignableFrom(fields.fields[index].getType())) {
-                List<Integer> decimalPlacesList = new ArrayList<Integer>();
+            // The max number of records that will be considered for formatting purposes
+            final int MAX_RECORDS = min(50, maxRecords);
 
-                // Initialize
-                decimalPlacesList.add(0);
+            // Get max decimal places for numeric type columns
+            final int[] decimalPlaces = new int[fields.fields.length];
+            final int[] widths = new int[fields.fields.length];
 
-                // Collect all decimal places for the column values
+            for (int index = 0; index < fields.fields.length; index++) {
+                if (Number.class.isAssignableFrom(fields.fields[index].getType())) {
+                    List<Integer> decimalPlacesList = new ArrayList<Integer>();
+
+                    // Initialize
+                    decimalPlacesList.add(0);
+
+                    // Collect all decimal places for the column values
+                    String value;
+                    for (int i = 0; i < min(MAX_RECORDS, size()); i++) {
+                        value = format0(getValue(i, index), get(i).changed(index));
+                        decimalPlacesList.add(getDecimalPlaces(value));
+                    }
+
+                    // Find max
+                    decimalPlaces[index] = Collections.max(decimalPlacesList);
+                }
+            }
+
+            // Get max column widths
+            int colMaxWidth;
+            for (int index = 0; index < fields.fields.length; index++) {
+
+                // Is number column?
+                boolean isNumCol = Number.class.isAssignableFrom(fields.fields[index].getType());
+
+                colMaxWidth = isNumCol ? NUM_COL_MAX_WIDTH : COL_MAX_WIDTH;
+
+                // Collect all widths for the column
+                List<Integer> widthList = new ArrayList<Integer>();
+
+                // Add column name width first
+                widthList.add(min(colMaxWidth, max(COL_MIN_WIDTH, fields.fields[index].getName().length())));
+
+                // Add column values width
                 String value;
                 for (int i = 0; i < min(MAX_RECORDS, size()); i++) {
                     value = format0(getValue(i, index), get(i).changed(index));
-                    decimalPlacesList.add(getDecimalPlaces(value));
+                    // Align number values before width is calculated
+                    if (isNumCol) {
+                        value = alignNumberValue(decimalPlaces[index], value);
+                    }
+
+                    widthList.add(min(colMaxWidth, value.length()));
                 }
 
                 // Find max
-                decimalPlaces[index] = Collections.max(decimalPlacesList);
-            }
-        }
-
-        // Get max column widths
-        int colMaxWidth;
-        for (int index = 0; index < fields.fields.length; index++) {
-
-            // Is number column?
-            boolean isNumCol = Number.class.isAssignableFrom(fields.fields[index].getType());
-
-            colMaxWidth = isNumCol ? NUM_COL_MAX_WIDTH : COL_MAX_WIDTH;
-
-            // Collect all widths for the column
-            List<Integer> widthList = new ArrayList<Integer>();
-
-            // Add column name width first
-            widthList.add(min(colMaxWidth, max(COL_MIN_WIDTH, fields.fields[index].getName().length())));
-
-            // Add column values width
-            String value;
-            for (int i = 0; i < min(MAX_RECORDS, size()); i++) {
-                value = format0(getValue(i, index), get(i).changed(index));
-                // Align number values before width is calculated
-                if (isNumCol) {
-                    value = alignNumberValue(decimalPlaces[index], value);
-                }
-
-                widthList.add(min(colMaxWidth, value.length()));
+                widths[index] = Collections.max(widthList);
             }
 
-            // Find max
-            widths[index] = Collections.max(widthList);
-        }
+            // Begin the writing
+            // ---------------------------------------------------------------------
 
-        // Begin the writing
-        // ---------------------------------------------------------------------
-        StringBuilder sb = new StringBuilder();
-
-        // Write top line
-        sb.append("+");
-        for (int index = 0; index < fields.fields.length; index++) {
-            sb.append(rightPad("", widths[index], "-"));
-            sb.append("+");
-        }
-
-        // Write headers
-        sb.append("\n|");
-        for (int index = 0; index < fields.fields.length; index++) {
-            String padded;
-
-            if (Number.class.isAssignableFrom(fields.fields[index].getType())) {
-                padded = leftPad(fields.fields[index].getName(), widths[index]);
-            }
-            else {
-                padded = rightPad(fields.fields[index].getName(), widths[index]);
-            }
-
-            sb.append(abbreviate(padded, widths[index]));
-            sb.append("|");
-        }
-
-        // Write separator
-        sb.append("\n+");
-        for (int index = 0; index < fields.fields.length; index++) {
-            sb.append(rightPad("", widths[index], "-"));
-            sb.append("+");
-        }
-
-        // Write columns
-        for (int i = 0; i < min(maxRecords, size()); i++) {
-            sb.append("\n|");
-
+            // Write top line
+            writer.append("+");
             for (int index = 0; index < fields.fields.length; index++) {
-                String value = format0(getValue(i, index), get(i).changed(index)).replace("\n", "{lf}").replace("\r", "{cr}");
+                writer.append(rightPad("", widths[index], "-"));
+                writer.append("+");
+            }
 
+            // Write headers
+            writer.append("\n|");
+            for (int index = 0; index < fields.fields.length; index++) {
                 String padded;
-                if (Number.class.isAssignableFrom(fields.fields[index].getType())) {
-                    // Align number value before left pad
-                    value = alignNumberValue(decimalPlaces[index], value);
 
-                    // Left pad
-                    padded = leftPad(value, widths[index]);
+                if (Number.class.isAssignableFrom(fields.fields[index].getType())) {
+                    padded = leftPad(fields.fields[index].getName(), widths[index]);
                 }
                 else {
-                    // Right pad
-                    padded = rightPad(value, widths[index]);
+                    padded = rightPad(fields.fields[index].getName(), widths[index]);
                 }
 
-                sb.append(abbreviate(padded, widths[index]));
-                sb.append("|");
+                writer.append(abbreviate(padded, widths[index]));
+                writer.append("|");
             }
-        }
 
-        // Write bottom line
-        if (size() > 0) {
-            sb.append("\n+");
-
+            // Write separator
+            writer.append("\n+");
             for (int index = 0; index < fields.fields.length; index++) {
-                sb.append(rightPad("", widths[index], "-"));
-                sb.append("+");
+                writer.append(rightPad("", widths[index], "-"));
+                writer.append("+");
+            }
+
+            // Write columns
+            for (int i = 0; i < min(maxRecords, size()); i++) {
+                writer.append("\n|");
+
+                for (int index = 0; index < fields.fields.length; index++) {
+                    String value = format0(getValue(i, index), get(i).changed(index)).replace("\n", "{lf}").replace("\r", "{cr}");
+
+                    String padded;
+                    if (Number.class.isAssignableFrom(fields.fields[index].getType())) {
+                        // Align number value before left pad
+                        value = alignNumberValue(decimalPlaces[index], value);
+
+                        // Left pad
+                        padded = leftPad(value, widths[index]);
+                    }
+                    else {
+                        // Right pad
+                        padded = rightPad(value, widths[index]);
+                    }
+
+                    writer.append(abbreviate(padded, widths[index]));
+                    writer.append("|");
+                }
+            }
+
+            // Write bottom line
+            if (size() > 0) {
+                writer.append("\n+");
+
+                for (int index = 0; index < fields.fields.length; index++) {
+                    writer.append(rightPad("", widths[index], "-"));
+                    writer.append("+");
+                }
+            }
+
+            // Write truncation message, if applicable
+            if (maxRecords < size()) {
+                writer.append("\n|...");
+                writer.append("" + (size() - maxRecords));
+                writer.append(" record(s) truncated...");
             }
         }
-
-        // Write truncation message, if applicable
-        if (maxRecords < size()) {
-            sb.append("\n|...");
-            sb.append(size() - maxRecords);
-            sb.append(" record(s) truncated...");
+        catch (java.io.IOException e) {
+            throw new IOException("Exception while writing TEXT", e);
         }
-
-        return sb.toString();
     }
 
     private static final String alignNumberValue(Integer columnDecimalPlaces, String value) {
@@ -480,78 +511,128 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final String formatHTML() {
-        StringBuilder sb = new StringBuilder();
+        StringWriter writer = new StringWriter();
+        formatHTML(writer);
+        return writer.toString();
+    }
 
-        sb.append("<table>");
-        sb.append("<thead>");
-        sb.append("<tr>");
+    @Override
+    public final void formatHTML(OutputStream stream) {
+        formatHTML(new OutputStreamWriter(stream));
+    }
 
-        for (Field<?> field : fields.fields) {
-            sb.append("<th>");
-            sb.append(field.getName());
-            sb.append("</th>");
-        }
+    @Override
+    public final void formatHTML(Writer writer) {
+        try {
+            writer.append("<table>");
+            writer.append("<thead>");
+            writer.append("<tr>");
 
-        sb.append("</tr>");
-        sb.append("</thead>");
-        sb.append("<tbody>");
-
-        for (Record record : this) {
-            sb.append("<tr>");
-
-            for (int index = 0; index < fields.fields.length; index++) {
-                sb.append("<td>");
-                sb.append(format0(record.getValue(index), false));
-                sb.append("</td>");
+            for (Field<?> field : fields.fields) {
+                writer.append("<th>");
+                writer.append(field.getName());
+                writer.append("</th>");
             }
 
-            sb.append("</tr>");
+            writer.append("</tr>");
+            writer.append("</thead>");
+            writer.append("<tbody>");
+
+            for (Record record : this) {
+                writer.append("<tr>");
+
+                for (int index = 0; index < fields.fields.length; index++) {
+                    writer.append("<td>");
+                    writer.append(format0(record.getValue(index), false));
+                    writer.append("</td>");
+                }
+
+                writer.append("</tr>");
+            }
+
+            writer.append("</tbody>");
+            writer.append("</table>");
         }
-
-        sb.append("</tbody>");
-        sb.append("</table>");
-
-        return sb.toString();
+        catch (java.io.IOException e) {
+            throw new IOException("Exception while writing HTML", e);
+        }
     }
 
     @Override
     public final String formatCSV() {
-        return formatCSV(',', "");
+        StringWriter writer = new StringWriter();
+        formatCSV(writer);
+        return writer.toString();
+    }
+
+    @Override
+    public final void formatCSV(OutputStream stream) {
+        formatCSV(new OutputStreamWriter(stream));
+    }
+
+    @Override
+    public final void formatCSV(Writer writer) {
+        formatCSV(writer, ',', "");
     }
 
     @Override
     public final String formatCSV(char delimiter) {
-        return formatCSV(delimiter, "");
+        StringWriter writer = new StringWriter();
+        formatCSV(writer, delimiter);
+        return writer.toString();
+    }
+
+    @Override
+    public final void formatCSV(OutputStream stream, char delimiter) {
+        formatCSV(new OutputStreamWriter(stream), delimiter);
+    }
+
+    @Override
+    public final void formatCSV(Writer writer, char delimiter) {
+        formatCSV(delimiter, "");
     }
 
     @Override
     public final String formatCSV(char delimiter, String nullString) {
-        StringBuilder sb = new StringBuilder();
+        StringWriter writer = new StringWriter();
+        formatCSV(writer, delimiter, nullString);
+        return writer.toString();
+    }
 
-        String sep1 = "";
-        for (Field<?> field : fields.fields) {
-            sb.append(sep1);
-            sb.append(formatCSV0(field.getName(), ""));
+    @Override
+    public final void formatCSV(OutputStream stream, char delimiter, String nullString) {
+        formatCSV(new OutputStreamWriter(stream), delimiter, nullString);
+    }
 
-            sep1 = Character.toString(delimiter);
-        }
+    @Override
+    public final void formatCSV(Writer writer, char delimiter, String nullString) {
+        try {
+            String sep1 = "";
+            for (Field<?> field : fields.fields) {
+                writer.append(sep1);
+                writer.append(formatCSV0(field.getName(), ""));
 
-        sb.append("\n");
-
-        for (Record record : this) {
-            String sep2 = "";
-
-            for (int index = 0; index < fields.fields.length; index++) {
-                sb.append(sep2);
-                sb.append(formatCSV0(record.getValue(index), nullString));
-
-                sep2 = Character.toString(delimiter);
+                sep1 = Character.toString(delimiter);
             }
 
-            sb.append("\n");
-        }
+            writer.append("\n");
 
-        return sb.toString();
+            for (Record record : this) {
+                String sep2 = "";
+
+                for (int index = 0; index < fields.fields.length; index++) {
+                    writer.append(sep2);
+                    writer.append(formatCSV0(record.getValue(index), nullString));
+
+                    sep2 = Character.toString(delimiter);
+                }
+
+                writer.append("\n");
+            }
+        }
+        catch (java.io.IOException e) {
+            throw new IOException("Exception while writing CSV", e);
+        }
     }
 
     private final String formatCSV0(Object value, String nullString) {
@@ -600,82 +681,112 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final String formatJSON() {
-        List<Map<String, String>> f = new ArrayList<Map<String, String>>();
-        List<List<Object>> r = new ArrayList<List<Object>>();
+        StringWriter writer = new StringWriter();
+        formatJSON(writer);
+        return writer.toString();
+    }
 
-        Map<String, String> fieldMap;
-        for (Field<?> field : fields.fields) {
-            fieldMap = new LinkedHashMap<String, String>();
-            fieldMap.put("name", field.getName());
-            fieldMap.put("type", field.getDataType().getTypeName().toUpperCase());
+    @Override
+    public final void formatJSON(OutputStream stream) {
+        formatJSON(new OutputStreamWriter(stream));
+    }
 
-            f.add(fieldMap);
-        }
+    @Override
+    public final void formatJSON(Writer writer) {
+        try {
+            List<Map<String, String>> f = new ArrayList<Map<String, String>>();
+            List<List<Object>> r = new ArrayList<List<Object>>();
 
-        for (Record record : this) {
-            List<Object> list = new ArrayList<Object>();
+            Map<String, String> fieldMap;
+            for (Field<?> field : fields.fields) {
+                fieldMap = new LinkedHashMap<String, String>();
+                fieldMap.put("name", field.getName());
+                fieldMap.put("type", field.getDataType().getTypeName().toUpperCase());
 
-            for (int index = 0; index < fields.fields.length; index++) {
-                list.add(record.getValue(index));
+                f.add(fieldMap);
             }
 
-            r.add(list);
+            for (Record record : this) {
+                List<Object> list = new ArrayList<Object>();
+
+                for (int index = 0; index < fields.fields.length; index++) {
+                    list.add(record.getValue(index));
+                }
+
+                r.add(list);
+            }
+
+            Map<String, List<?>> map = new LinkedHashMap<String, List<?>>();
+
+            map.put("fields", f);
+            map.put("records", r);
+
+            writer.append(JSONObject.toJSONString(map));
         }
-
-        Map<String, List<?>> map = new LinkedHashMap<String, List<?>>();
-
-        map.put("fields", f);
-        map.put("records", r);
-
-        return JSONObject.toJSONString(map);
+        catch (java.io.IOException e) {
+            throw new IOException("Exception while writing JSON", e);
+        }
     }
 
     @Override
     public final String formatXML() {
-        StringBuilder sb = new StringBuilder();
+        StringWriter writer = new StringWriter();
+        formatXML(writer);
+        return writer.toString();
+    }
 
-        sb.append("<result xmlns=\"http://www.jooq.org/xsd/jooq-export-2.6.0.xsd\">");
-        sb.append("<fields>");
+    @Override
+    public final void formatXML(OutputStream stream) {
+        formatXML(new OutputStreamWriter(stream));
+    }
 
-        for (Field<?> field : fields.fields) {
-            sb.append("<field name=\"");
-            sb.append(escapeXML(field.getName()));
-            sb.append("\" ");
-            sb.append("type=\"");
-            sb.append(field.getDataType().getTypeName().toUpperCase());
-            sb.append("\"/>");
-        }
+    @Override
+    public final void formatXML(Writer writer) {
+        try {
+            writer.append("<result xmlns=\"http://www.jooq.org/xsd/jooq-export-2.6.0.xsd\">");
+            writer.append("<fields>");
 
-        sb.append("</fields>");
-        sb.append("<records>");
-
-        for (Record record : this) {
-            sb.append("<record>");
-
-            for (int index = 0; index < fields.fields.length; index++) {
-                Object value = record.getValue(index);
-
-                sb.append("<value field=\"");
-                sb.append(escapeXML(fields.fields[index].getName()));
-                sb.append("\"");
-
-                if (value == null) {
-                    sb.append("/>");
-                }
-                else {
-                    sb.append(">");
-                    sb.append(escapeXML(format0(value, false)));
-                    sb.append("</value>");
-                }
+            for (Field<?> field : fields.fields) {
+                writer.append("<field name=\"");
+                writer.append(escapeXML(field.getName()));
+                writer.append("\" ");
+                writer.append("type=\"");
+                writer.append(field.getDataType().getTypeName().toUpperCase());
+                writer.append("\"/>");
             }
 
-            sb.append("</record>");
+            writer.append("</fields>");
+            writer.append("<records>");
+
+            for (Record record : this) {
+                writer.append("<record>");
+
+                for (int index = 0; index < fields.fields.length; index++) {
+                    Object value = record.getValue(index);
+
+                    writer.append("<value field=\"");
+                    writer.append(escapeXML(fields.fields[index].getName()));
+                    writer.append("\"");
+
+                    if (value == null) {
+                        writer.append("/>");
+                    }
+                    else {
+                        writer.append(">");
+                        writer.append(escapeXML(format0(value, false)));
+                        writer.append("</value>");
+                    }
+                }
+
+                writer.append("</record>");
+            }
+
+            writer.append("</records>");
+            writer.append("</result>");
         }
-
-        sb.append("</records>");
-        sb.append("</result>");
-
-        return sb.toString();
+        catch (java.io.IOException e) {
+            throw new IOException("Exception while writing XML", e);
+        }
     }
 
     @Override

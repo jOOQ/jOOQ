@@ -1,7 +1,3 @@
-/OSS-jOOQ
-/OSS-jOOQ-meta
-/OSS-jOOQ-codegen
-/OSS-jOOQ-codegen-maven
 /target
-/*.iml
-/.idea
+/**/*.iml
+/**/.idea

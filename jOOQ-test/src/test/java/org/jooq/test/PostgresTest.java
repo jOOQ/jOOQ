@@ -59,6 +59,8 @@ import static org.jooq.test.postgres.generatedclasses.Tables.T_639_NUMBERS_TABLE
 import static org.jooq.test.postgres.generatedclasses.Tables.T_725_LOB_TEST;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_785;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_959;
+import static org.jooq.test.postgres.generatedclasses.Tables.T_986_1;
+import static org.jooq.test.postgres.generatedclasses.Tables.T_986_2;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_ARRAYS;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_AUTHOR;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_BOOK;
@@ -76,6 +78,7 @@ import static org.jooq.test.postgres.generatedclasses.Tables.T_UNSIGNED;
 import static org.jooq.test.postgres.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.postgres.generatedclasses.Tables.V_BOOK;
 import static org.jooq.test.postgres.generatedclasses.Tables.V_LIBRARY;
+import static org.jooq.test.postgres.generatedclasses.Tables.X_UNUSED;
 import static org.jooq.util.postgres.PostgresDSL.arrayAppend;
 import static org.jooq.util.postgres.PostgresDSL.arrayCat;
 import static org.jooq.util.postgres.PostgresDSL.arrayPrepend;
@@ -149,6 +152,8 @@ import org.jooq.test.postgres.generatedclasses.tables.records.T_3111Record;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_785Record;
+import org.jooq.test.postgres.generatedclasses.tables.records.T_986_1Record;
+import org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record;
 import org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.test.postgres.generatedclasses.udt.UAddressType;
@@ -1333,5 +1338,25 @@ public class PostgresTest extends jOOQAbstractTest<
         finally {
             create().delete(T_3111).execute();
         }
+    }
+
+    @Test
+    public void testPostgresMetaReferencesWithSameNameForeignKey() {
+
+        // [#986] [#3520] Be sure that shared foreign key names do not produce any irregular behaviour
+        List<ForeignKey<T_986_1Record, XUnusedRecord>> r1 = T_986_1.getReferencesTo(X_UNUSED);
+        List<ForeignKey<T_986_2Record, XUnusedRecord>> r2 = T_986_2.getReferencesTo(X_UNUSED);
+
+        assertEquals(1, r1.size());
+        assertEquals(1, r2.size());
+
+        assertEquals(T_986_1, r1.get(0).getTable());
+        assertEquals(T_986_2, r2.get(0).getTable());
+
+        assertEquals(asList(T_986_1.REF), r1.get(0).getFields());
+        assertEquals(asList(T_986_2.REF), r2.get(0).getFields());
+
+        assertEquals(0, (int) create().selectCount().from(T_986_1.join(X_UNUSED).onKey()).fetchOne(0, int.class));
+        assertEquals(0, (int) create().selectCount().from(T_986_2.join(X_UNUSED).onKey()).fetchOne(0, int.class));
     }
 }

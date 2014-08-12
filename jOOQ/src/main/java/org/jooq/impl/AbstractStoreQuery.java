@@ -180,57 +180,59 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
         x
-        xxxx x
-            xxxxxxxxxxxxx
-        x
-    x
+        xxxx
+        xx [/pro] */
+        {
+            accept0(ctx);
+        }
+    }
 
-    xxxxx xxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxx x
+    class FinalTable extends CustomQueryPart {
 
-        xxx
-         x xxxxxxxxx xxx
-         xx
-        xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 2722190100084947406L;
 
-        xxxxxxxxx
-        xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxx xxxx x
-            xxxxxxxxxxxxxxxxxx xxxxxxx
-               xxxxxx xxx
-               xxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxx
-               xxxxxxxxxx
-        x
-    x
+        @Override
+        public final void accept(Context<?> ctx) {
+            ctx.keyword("final table")
+               .sql(" (")
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(AbstractStoreQuery.this)
+               .formatIndentEnd()
+               .formatNewLine()
+               .sql(")");
+        }
+    }
 
-    xxxxxxxx xxxx xxxxxxxxxxxxxxxxxx xxxxx
+    abstract void accept0(Context<?> ctx);
 
-    xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxx x
-        xx xxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                xxxx xxxxxxxxx
-                xxxx xxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxxxxxxx
-                       xxxxxx xx
-                       xxxxxxxxxxxxxxxxxx
-                    xxxxxx
+    final void toSQLReturning(Context<?> ctx) {
+        if (!returning.isEmpty()) {
+            switch (ctx.configuration().dialect()) {
+                case FIREBIRD:
+                case POSTGRES:
+                    ctx.formatSeparator()
+                       .keyword("returning")
+                       .sql(" ")
+                       .visit(returning);
+                    break;
 
-                xxxxxxxx
-                    xx xxxxx xxxxxxxx xxxxx xxxxxx x xxxxxxxxx xxxxxxx xxx
-                    xx xxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxx
-                    xxxxxx
-            x
-        x
-    x
+                default:
+                    // Other dialects don't render a RETURNING clause, but
+                    // use JDBC's Statement.RETURN_GENERATED_KEYS mode instead
+                    break;
+            }
+        }
+    }
 
-    xxxxxxxxx
-    xxxxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxx x
-        xxxxxxxxxx xxxxxxxxxx x xxxxxxxxxxxxxxxxx
+    @Override
+    protected final void prepare(ExecuteContext ctx) throws SQLException {
+        Connection connection = ctx.connection();
 
-        xx xxxxx xx
+        /* [pro] xx
         xx xxxx xx xxxxx xxxxxx xxx xxxxxx xxx xxxxxxxxx xxxx xx xxxxxx
         xx xxxxxxxxx xxxx xx xxxxxx xxxx xxxxx xx xxxxxx xxxxxxxxxx xxxxxxxxxx
         xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxx x

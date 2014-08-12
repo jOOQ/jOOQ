@@ -177,11 +177,31 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 && ctx.family() == DB2
                 && ctx.data(DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE) == null) {
             ctx.data(DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE, true);
-            ctx.visit(select(unqualify(returning)).from("{final table}({0})", this));
+            ctx.visit(select(unqualify(returning)).from("{0}", new FinalTable()));
             ctx.data(DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE, null);
         }
         else {
             accept0(ctx);
+        }
+    }
+
+    class FinalTable extends CustomQueryPart {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 2722190100084947406L;
+
+        @Override
+        public final void accept(Context<?> ctx) {
+            ctx.keyword("final table")
+               .sql(" (")
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(AbstractStoreQuery.this)
+               .formatIndentEnd()
+               .formatNewLine()
+               .sql(")");
         }
     }
 

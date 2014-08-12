@@ -45,6 +45,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface CreateViewFinalStep extends Query {
+public interface CreateViewFinalStep extends DDLQuery {
 
 }

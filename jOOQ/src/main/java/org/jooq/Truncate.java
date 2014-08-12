@@ -46,6 +46,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Truncate<R extends Record> extends Query {
+public interface Truncate<R extends Record> extends DDLQuery {
 
 }

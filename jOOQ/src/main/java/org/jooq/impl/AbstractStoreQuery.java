@@ -180,7 +180,9 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
             ctx.visit(select(unqualify(returning)).from("{0}", new FinalTable()));
             ctx.data(DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE, null);
         }
-        else {
+        else
+        /* [/pro] */
+        {
             accept0(ctx);
         }
     }

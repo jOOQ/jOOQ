@@ -324,7 +324,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 assertEquals(0.25, result2.get(1).getValue(3, Double.class), 0.0);
 
                 // DB2 and INFORMIX only know STDDEV_POP / VAR_POP
-                if (!asList(SQLDialect.DB2, SQLDialect.INFORMIX).contains(dialect().family())) {
+                if (!asList(DB2, INFORMIX).contains(dialect().family())) {
                     assertEquals("0.707", result2.get(0).getValue(2, String.class).substring(0, 5));
                     assertEquals(0.5, result2.get(0).getValue(4, Double.class), 0.0);
                     assertEquals("0.707", result2.get(1).getValue(2, String.class).substring(0, 5));

@@ -5981,7 +5981,7 @@ public class DSL {
      */
     @Support
     public static Condition exists(Select<?> query) {
-        return new SelectQueryAsExistsCondition(query, true);
+        return new ExistsCondition(query, true);
     }
 
     /**
@@ -5991,7 +5991,7 @@ public class DSL {
      */
     @Support
     public static Condition notExists(Select<?> query) {
-        return new SelectQueryAsExistsCondition(query, false);
+        return new ExistsCondition(query, false);
     }
 
     /**

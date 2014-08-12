@@ -41,54 +41,66 @@
 
 package org.jooq.impl;
 
+import org.jooq.Clause;
 import org.jooq.Context;
-import org.jooq.DataType;
-import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.Select;
+import org.jooq.Table;
 
 /**
  * @author Lukas Eder
  */
-class SelectQueryAsField<T> extends AbstractField<T> {
+class DerivedTable<R extends Record> extends AbstractTable<R> {
 
-    private static final long serialVersionUID = 3463144434073231750L;
+    private static final long serialVersionUID = 6272398035926615668L;
 
-    private final Select<?>   query;
+    private final Select<R>   query;
 
-    SelectQueryAsField(Select<?> query, DataType<T> type) {
-        super("select", type);
+    DerivedTable(Select<R> query) {
+        super("select");
 
         this.query = query;
     }
 
+    final Select<R> query() {
+        return query;
+    }
+
     @Override
-    public final Field<T> as(String alias) {
-        return new FieldAlias<T>(this, alias);
+    public final Table<R> as(String alias) {
+        return new TableAlias<R>(this, alias, true);
+    }
+
+    @Override
+    public final Table<R> as(String alias, String... fieldAliases) {
+        return new TableAlias<R>(this, alias, fieldAliases, true);
+    }
+
+    @Override
+    final Fields<R> fields0() {
+        return new Fields<R>(query.getSelect());
+    }
+
+    @Override
+    public final Class<? extends R> getRecordType() {
+        return query.getRecordType();
     }
 
     @Override
     public final void accept(Context<?> ctx) {
+        boolean subquery = ctx.subquery();
 
-        // If this is already a subquery, proceed
-        if (ctx.subquery()) {
-            ctx.sql("(")
-               .formatIndentStart()
-               .formatNewLine()
-               .visit(query)
-               .formatIndentEnd()
-               .formatNewLine()
-               .sql(")");
-        }
-        else {
-            ctx.sql("(")
-               .subquery(true)
-               .formatIndentStart()
-               .formatNewLine()
-               .visit(query)
-               .formatIndentEnd()
-               .formatNewLine()
-               .subquery(false)
-               .sql(")");
-        }
+        ctx.subquery(true)
+           .formatIndentStart()
+           .formatNewLine()
+           .visit(query)
+           .formatIndentEnd()
+           .formatNewLine()
+           .subquery(subquery);
+    }
+
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
     }
 }

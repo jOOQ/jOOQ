@@ -44,7 +44,6 @@ package org.jooq.impl;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_EXISTS;
 import static org.jooq.Clause.CONDITION_NOT_EXISTS;
-import static org.jooq.impl.ExistsOperator.EXISTS;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -60,11 +59,11 @@ class SelectQueryAsExistsCondition extends AbstractCondition {
     private static final Clause[] CLAUSES_EXISTS_NOT = { CONDITION, CONDITION_NOT_EXISTS };
 
     private final Select<?>       query;
-    private final ExistsOperator  operator;
+    private final boolean         exists;
 
-    SelectQueryAsExistsCondition(Select<?> query, ExistsOperator operator) {
+    SelectQueryAsExistsCondition(Select<?> query, boolean exists) {
         this.query = query;
-        this.operator = operator;
+        this.exists = exists;
     }
 
     @Override
@@ -72,7 +71,7 @@ class SelectQueryAsExistsCondition extends AbstractCondition {
 
         // If this is already a subquery, proceed
         if (ctx.subquery()) {
-            ctx.keyword(operator.toSQL())
+            ctx.keyword(exists ? "exists" : "not exists")
                .sql(" (")
                .formatIndentStart()
                .formatNewLine()
@@ -82,7 +81,7 @@ class SelectQueryAsExistsCondition extends AbstractCondition {
                .sql(")");
         }
         else {
-            ctx.keyword(operator.toSQL())
+            ctx.keyword(exists ? "exists" : "not exists")
                .sql(" (")
                .subquery(true)
                .formatIndentStart()
@@ -97,6 +96,6 @@ class SelectQueryAsExistsCondition extends AbstractCondition {
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return operator == EXISTS ? CLAUSES_EXISTS : CLAUSES_EXISTS_NOT;
+        return exists ? CLAUSES_EXISTS : CLAUSES_EXISTS_NOT;
     }
 }

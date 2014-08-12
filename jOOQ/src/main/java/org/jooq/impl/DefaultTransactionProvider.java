@@ -52,6 +52,7 @@ import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.TransactionContext;
 import org.jooq.TransactionProvider;
+import org.jooq.exception.DataAccessException;
 
 /**
  * A default implementation for the {@link TransactionProvider} SPI.
@@ -126,7 +127,13 @@ public class DefaultTransactionProvider implements TransactionProvider {
 
         // [#3489] Explicitly release savepoints prior to commit
         if (savepoint != null)
-            connection(ctx.configuration()).releaseSavepoint(savepoint);
+            try {
+                connection(ctx.configuration()).releaseSavepoint(savepoint);
+            }
+
+            // [#3537] Ignore those cases where the JDBC driver incompletely implements the API
+            // See also http://stackoverflow.com/q/10667292/521799
+            catch (DataAccessException ignore) {}
 
         // This is the top-level transaction
         if (savepoints.isEmpty()) {
@@ -142,10 +149,17 @@ public class DefaultTransactionProvider implements TransactionProvider {
     @Override
     public final void rollback(TransactionContext ctx) {
         Stack<Savepoint> savepoints = savepoints(ctx.configuration());
-        Savepoint savepoint = savepoints.pop();
+        Savepoint savepoint = null;
+
+        // [#3537] If something went wrong with the savepoints per se
+        if (!savepoints.isEmpty())
+            savepoint = savepoints.pop();
 
         try {
-            connection(ctx.configuration()).rollback(savepoint);
+            if (savepoint == null)
+                connection(ctx.configuration()).rollback();
+            else
+                connection(ctx.configuration()).rollback(savepoint);
         }
 
         finally {

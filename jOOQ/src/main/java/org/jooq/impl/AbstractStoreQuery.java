@@ -177,11 +177,31 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 xx xxxxxxxxxxxx xx xxx
                 xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx x
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
         x
         xxxx x
             xxxxxxxxxxxxx
+        x
+    x
+
+    xxxxx xxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxx x
+
+        xxx
+         x xxxxxxxxx xxx
+         xx
+        xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
+
+        xxxxxxxxx
+        xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxx xxxx x
+            xxxxxxxxxxxxxxxxxx xxxxxxx
+               xxxxxx xxx
+               xxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxx
+               xxxxxxxxxx
         x
     x
 

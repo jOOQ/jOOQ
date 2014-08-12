@@ -11,6 +11,10 @@
             <table_schema>TEST</table_schema>
             <table_name>T_AUTHOR</table_name>
         </table>
+        <table>
+            <table_schema>TEST</table_schema>
+            <table_name>T_BOOK</table_name>
+        </table>
     </tables>
 
     <columns>
@@ -18,6 +22,25 @@
             <table_schema>TEST</table_schema>
             <table_name>T_AUTHOR</table_name>
             <column_name>ID</column_name>
+            <data_type>NUMBER</data_type>
+            <numeric_precision>7</numeric_precision>
+            <ordinal_position>1</ordinal_position>
+            <is_nullable>false</is_nullable>
+        </column>
+        
+        <column>
+            <table_schema>TEST</table_schema>
+            <table_name>T_BOOK</table_name>
+            <column_name>ID</column_name>
+            <data_type>NUMBER</data_type>
+            <numeric_precision>7</numeric_precision>
+            <ordinal_position>1</ordinal_position>
+            <is_nullable>false</is_nullable>
+        </column>
+        <column>
+            <table_schema>TEST</table_schema>
+            <table_name>T_BOOK</table_name>
+            <column_name>AUTHOR_ID</column_name>
             <data_type>NUMBER</data_type>
             <numeric_precision>7</numeric_precision>
             <ordinal_position>1</ordinal_position>
@@ -42,6 +65,14 @@
             <table_schema>TEST</table_schema>
             <table_name>T_AUTHOR</table_name>
         </table_constraint>
+
+        <table_constraint>
+            <constraint_schema>TEST</constraint_schema>
+            <constraint_name>PK_T_BOOK</constraint_name>
+            <constraint_type>PRIMARY KEY</constraint_type>
+            <table_schema>TEST</table_schema>
+            <table_name>T_BOOK</table_name>
+        </table_constraint>
     </table_constraints>
     
     <key_column_usages>
@@ -53,5 +84,32 @@
             <column_name>ID</column_name>
             <ordinal_position>1</ordinal_position>
         </key_column_usage>
+
+        <key_column_usage>
+            <constraint_schema>TEST</constraint_schema>
+            <constraint_name>PK_T_BOOK</constraint_name>
+            <table_schema>TEST</table_schema>
+            <table_name>T_BOOK</table_name>
+            <column_name>ID</column_name>
+            <ordinal_position>1</ordinal_position>
+        </key_column_usage>
+
+        <key_column_usage>
+            <constraint_schema>TEST</constraint_schema>
+            <constraint_name>FK_T_BOOK_AUTHOR_ID</constraint_name>
+            <table_schema>TEST</table_schema>
+            <table_name>T_BOOK</table_name>
+            <column_name>AUTHOR_ID</column_name>
+            <ordinal_position>1</ordinal_position>
+        </key_column_usage>
     </key_column_usages>
+    
+    <referential_constraints>
+        <referential_constraint>
+            <constraint_schema>TEST</constraint_schema>
+            <constraint_name>FK_T_BOOK_AUTHOR_ID</constraint_name>
+            <unique_constraint_schema>TEST</unique_constraint_schema>
+            <unique_constraint_name>PK_T_AUTHOR</unique_constraint_name>
+        </referential_constraint>
+    </referential_constraints>
 </information_schema>

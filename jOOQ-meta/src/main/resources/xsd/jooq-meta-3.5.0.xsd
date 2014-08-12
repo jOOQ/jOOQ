@@ -13,6 +13,7 @@
                 <element name="columns" type="tns:Columns" minOccurs="0" maxOccurs="1" />
                 <element name="table_constraints" type="tns:TableConstraints" minOccurs="0" maxOccurs="1" />
                 <element name="key_column_usages" type="tns:KeyColumnUsages" minOccurs="0" maxOccurs="1" />
+                <element name="referential_constraints" type="tns:ReferentialConstraints" minOccurs="0" maxOccurs="1" />
             </all>
         </complexType>
     </element>
@@ -131,16 +132,20 @@
         </all>
     </complexType>
     
-    <!--
+    <complexType name="ReferentialConstraints">
+        <all>
+            <element name="referential_constraint" type="tns:ReferentialConstraint" minOccurs="0" maxOccurs="unbounded" />
+        </all>
+    </complexType>
     
-     
-    CONSTRAINT_CATALOG : TableField<Record, String>
-CONSTRAINT_NAME : TableField<Record, String>
-CONSTRAINT_SCHEMA : TableField<Record, String>
-DELETE_RULE : TableField<Record, String>
-MATCH_OPTION : TableField<Record, String>
-UNIQUE_CONSTRAINT_CATALOG : TableField<Record, String>
-UNIQUE_CONSTRAINT_NAME : TableField<Record, String>
-UNIQUE_CONSTRAINT_SCHEMA : TableField<Record, String>
-UPDATE_RULE : TableField<Record, String>-->
+    <complexType name="ReferentialConstraint">
+        <all>
+            <element name="constraint_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="constraint_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="constraint_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="unique_constraint_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="unique_constraint_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="unique_constraint_name" type="string" minOccurs="1" maxOccurs="1" />
+        </all>
+    </complexType>
 </schema>

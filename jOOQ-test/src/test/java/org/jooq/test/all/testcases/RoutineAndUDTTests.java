@@ -50,6 +50,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeNotNull;
+import static org.junit.Assume.assumeTrue;
 
 import java.sql.Date;
 import java.util.Arrays;
@@ -236,31 +238,27 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testStoredProcedureWithDefaultParameters() {
-        if (cRoutines() == null) {
-            log.info("SKIPPING", "procedure tests with default parameters");
-            return;
-        }
+        assumeNotNull(cRoutines());
 
         Reflect pdefault;
         try {
             pdefault = Reflect.on(cRoutines().getPackage().getName() + ".routines.PDefault");
 
-            if (!pdefault.field("P_IN_NUMBER").call("isDefaulted").<Boolean>get()) {
-                log.info("SKIPPING", "procedure tests with default parameters");
-                return;
-            }
+            assumeTrue(pdefault.field("P_IN_NUMBER").call("isDefaulted").<Boolean>get());
         }
         catch (ReflectException e) {
             log.info("SKIPPING", "procedure tests with default parameters");
             return;
         }
 
+        // Call with defaulted IN parameters only
         Reflect executedWithDefaults = pdefault.create();
         executedWithDefaults.call("execute", create().configuration());
         assertEquals(0, executedWithDefaults.call("getPOutNumber").<Number>get().intValue());
         assertEquals("0", executedWithDefaults.call("getPOutVarchar").get());
         assertEquals(Date.valueOf("1981-07-10"), executedWithDefaults.call("getPOutDate").get());
 
+        // Call with all values provided
         Reflect executedWithoutDefault = pdefault.create();
         executedWithoutDefault.call("setPInNumber", 123);
         executedWithoutDefault.call("setPInVarchar", "abc");

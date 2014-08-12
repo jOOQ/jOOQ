@@ -41,6 +41,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.ExecuteType.DDL;
+// ...
 // ...
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
@@ -421,6 +423,16 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     }
 
     private final String getSQL0(ExecuteContext ctx) {
+        /* [pro] xx
+
+        xx xxxxxxx xxxxxx xxx xxxxxxxxxx xx xxx xxxxxxx xxxx xxxxxx
+        xx xxxxxxxxxxx xx xxx xx xxxxxxxxxxxx xx xxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+            xxxxxx xxxxxxxxxxxxxxxx
+        x
+        xxxx
+        xx [/pro] */
+
         if (executePreparedStatements(configuration().settings())) {
             try {
                 RenderContext render = new DefaultRenderContext(configuration);

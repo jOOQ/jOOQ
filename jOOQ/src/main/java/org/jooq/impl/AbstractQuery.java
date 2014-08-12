@@ -41,7 +41,9 @@
 
 package org.jooq.impl;
 
+import static org.jooq.ExecuteType.DDL;
 import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
@@ -421,6 +423,16 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     }
 
     private final String getSQL0(ExecuteContext ctx) {
+        /* [pro] */
+
+        // [#3542] Oracle DDL statements do not support bind values
+        if (ctx.type() == DDL && ctx.family() == ORACLE) {
+            ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+            return getSQL(INLINED);
+        }
+        else
+        /* [/pro] */
+
         if (executePreparedStatements(configuration().settings())) {
             try {
                 RenderContext render = new DefaultRenderContext(configuration);

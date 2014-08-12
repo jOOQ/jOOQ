@@ -1021,7 +1021,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         MergeFinalStep<A> q =
         create().mergeInto(TAuthor())
                 .using(select(f, l))
-                .on(TAuthor_LAST_NAME().equal(l))
+                .on(TAuthor_ID().eq(3))
                 .whenMatchedThenUpdate()
                 .set(TAuthor_FIRST_NAME(), "James")
                 .set(TAuthor_LAST_NAME(), "Dean")

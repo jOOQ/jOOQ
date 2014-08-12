@@ -59,6 +59,7 @@ import org.jooq.impl.DSL;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
+import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultRelations;
@@ -72,6 +73,7 @@ import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
 import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jooq.util.xml.jaxb.KeyColumnUsage;
+import org.jooq.util.xml.jaxb.ReferentialConstraint;
 import org.jooq.util.xml.jaxb.Schema;
 import org.jooq.util.xml.jaxb.Sequence;
 import org.jooq.util.xml.jaxb.Table;
@@ -183,6 +185,32 @@ public class XMLDatabase extends AbstractDatabase {
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) {
+        for (ReferentialConstraint constraint : info().getReferentialConstraints()) {
+            if (getInputSchemata().contains(constraint.getConstraintSchema())) {
+
+                for (KeyColumnUsage usage : info().getKeyColumnUsages()) {
+                    if (    StringUtils.equals(constraint.getConstraintCatalog(), usage.getConstraintCatalog())
+                         && StringUtils.equals(constraint.getConstraintSchema(), usage.getConstraintSchema())
+                         && StringUtils.equals(constraint.getConstraintName(), usage.getConstraintName())) {
+
+                        SchemaDefinition foreignKeySchema = getSchema(constraint.getConstraintSchema());
+                        SchemaDefinition uniqueKeySchema = getSchema(constraint.getUniqueConstraintSchema());
+
+                        String foreignKey = usage.getConstraintName();
+                        String foreignKeyTable = usage.getTableName();
+                        String foreignKeyColumn = usage.getColumnName();
+                        String uniqueKey = constraint.getUniqueConstraintName();
+
+                        TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTable);
+
+                        if (referencingTable != null) {
+                            ColumnDefinition referencingColumn = referencingTable.getColumn(foreignKeyColumn);
+                            relations.addForeignKey(foreignKey, uniqueKey, referencingColumn, uniqueKeySchema);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override

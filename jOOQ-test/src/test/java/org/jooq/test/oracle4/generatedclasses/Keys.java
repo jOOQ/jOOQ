@@ -22,11 +22,13 @@ public class Keys {
 	// -------------------------------------------------------------------------
 
 	public static final org.jooq.UniqueKey<org.jooq.test.oracle4.generatedclasses.tables.records.TAuthorRecord> PK_T_AUTHOR = UniqueKeys0.PK_T_AUTHOR;
+	public static final org.jooq.UniqueKey<org.jooq.test.oracle4.generatedclasses.tables.records.TBookRecord> PK_T_BOOK = UniqueKeys0.PK_T_BOOK;
 
 	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final org.jooq.ForeignKey<org.jooq.test.oracle4.generatedclasses.tables.records.TBookRecord, org.jooq.test.oracle4.generatedclasses.tables.records.TAuthorRecord> FK_T_BOOK_AUTHOR_ID = ForeignKeys0.FK_T_BOOK_AUTHOR_ID;
 
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
@@ -34,5 +36,10 @@ public class Keys {
 
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.UniqueKey<org.jooq.test.oracle4.generatedclasses.tables.records.TAuthorRecord> PK_T_AUTHOR = createUniqueKey(org.jooq.test.oracle4.generatedclasses.tables.TAuthor.T_AUTHOR, org.jooq.test.oracle4.generatedclasses.tables.TAuthor.T_AUTHOR.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.oracle4.generatedclasses.tables.records.TBookRecord> PK_T_BOOK = createUniqueKey(org.jooq.test.oracle4.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.oracle4.generatedclasses.tables.TBook.T_BOOK.ID);
+	}
+
+	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {
+		public static final org.jooq.ForeignKey<org.jooq.test.oracle4.generatedclasses.tables.records.TBookRecord, org.jooq.test.oracle4.generatedclasses.tables.records.TAuthorRecord> FK_T_BOOK_AUTHOR_ID = createForeignKey(org.jooq.test.oracle4.generatedclasses.Keys.PK_T_AUTHOR, org.jooq.test.oracle4.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.oracle4.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID);
 	}
 }

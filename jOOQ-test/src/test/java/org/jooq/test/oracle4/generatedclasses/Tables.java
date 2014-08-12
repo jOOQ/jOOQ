@@ -15,4 +15,9 @@ public class Tables {
 	 * The table TEST.T_AUTHOR
 	 */
 	public static final org.jooq.test.oracle4.generatedclasses.tables.TAuthor T_AUTHOR = org.jooq.test.oracle4.generatedclasses.tables.TAuthor.T_AUTHOR;
+
+	/**
+	 * The table TEST.T_BOOK
+	 */
+	public static final org.jooq.test.oracle4.generatedclasses.tables.TBook T_BOOK = org.jooq.test.oracle4.generatedclasses.tables.TBook.T_BOOK;
 }

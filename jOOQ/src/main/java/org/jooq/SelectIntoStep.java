@@ -54,7 +54,6 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
 
 
 /**
@@ -104,6 +103,6 @@ public interface SelectIntoStep<R extends Record> extends SelectFromStep<R> {
     /**
      * Add an <code>INTO</code> clause to the <code>SELECT</code> statement.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SQLITE })
     SelectIntoStep<Record> into(Table<?> table);
 }

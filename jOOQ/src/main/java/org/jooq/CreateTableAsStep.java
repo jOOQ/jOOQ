@@ -54,7 +54,6 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
 
 /**
  * A {@link Query} that can create tables.
@@ -66,6 +65,6 @@ public interface CreateTableAsStep<R extends Record> {
     /**
      * Add an <code>AS</code> clause to the <code>CREATE TABLE</code> statement.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SQLITE })
     CreateTableFinalStep as(Select<? extends R> select);
 }

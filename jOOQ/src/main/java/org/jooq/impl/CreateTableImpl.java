@@ -47,7 +47,6 @@ import static org.jooq.Clause.CREATE_TABLE_NAME;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Utils.DATA_SELECT_INTO_TABLE;
 
 import org.jooq.Clause;
@@ -99,7 +98,7 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         /* [pro] */
-        if (asList(ACCESS, ASE, SQLSERVER, SYBASE).contains(ctx.configuration().dialect().family())) {
+        if (asList(ACCESS, ASE, SQLSERVER).contains(ctx.configuration().dialect().family())) {
             acceptSelectInto(ctx);
         }
         else

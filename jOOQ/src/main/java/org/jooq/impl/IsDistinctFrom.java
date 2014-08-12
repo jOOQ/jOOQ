@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Comparator.IS_DISTINCT_FROM;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
@@ -56,7 +57,10 @@ import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.decode;
+import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.zero;
 
 import org.jooq.Clause;
@@ -109,8 +113,15 @@ class IsDistinctFrom<T> extends AbstractCondition {
      */
     private final QueryPartInternal delegate(Configuration configuration) {
 
-        // These dialects need to emulate the IS DISTINCT FROM predicate
+        // [#3511] These dialects need to emulate the IS DISTINCT FROM predicate, optimally using INTERSECT...
         if (asList(ACCESS, ASE, CUBRID, DB2, DERBY, INFORMIX, INGRES, ORACLE, SQLSERVER, SYBASE).contains(configuration.dialect().family())) {
+            return (comparator == IS_DISTINCT_FROM)
+                ? (QueryPartInternal) notExists(select(lhs).intersect(select(rhs)))
+                : (QueryPartInternal) exists(select(lhs).intersect(select(rhs)));
+        }
+
+        // ... or using a more verbose CASE expression
+        else if (asList().contains(configuration.dialect().family())) {
             if (caseExpression == null) {
                 if (comparator == Comparator.IS_DISTINCT_FROM) {
                     caseExpression = (QueryPartInternal) decode()
@@ -138,7 +149,7 @@ class IsDistinctFrom<T> extends AbstractCondition {
         // MySQL knows the <=> operator
         else if (asList(MARIADB, MYSQL).contains(configuration.dialect())) {
             if (mySQLCondition == null) {
-                if (comparator == Comparator.IS_DISTINCT_FROM) {
+                if (comparator == IS_DISTINCT_FROM) {
                     mySQLCondition = (QueryPartInternal) condition("{not}({0} <=> {1})", lhs, rhs);
                 }
                 else {
@@ -152,7 +163,7 @@ class IsDistinctFrom<T> extends AbstractCondition {
         // SQLite knows the IS / IS NOT predicate
         else if (SQLITE == configuration.dialect()) {
             if (sqliteCondition == null) {
-                if (comparator == Comparator.IS_DISTINCT_FROM) {
+                if (comparator == IS_DISTINCT_FROM) {
                     sqliteCondition = (QueryPartInternal) condition("{0} {is not} {1}", lhs, rhs);
                 }
                 else {

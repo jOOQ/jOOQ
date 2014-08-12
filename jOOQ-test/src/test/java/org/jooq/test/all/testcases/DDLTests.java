@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
@@ -319,6 +320,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCreateTableAsSelect() throws Exception {
+        assumeFamilyNotIn();
+
         try {
             create().createTable("t").as(
                 select(val("value").as("value"))
@@ -336,6 +339,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testSelectInto() throws Exception {
+        assumeFamilyNotIn();
+
         try {
             create().select(val("value").as("value")).into(tableByName("t")).execute();
             Result<Record> result = create().selectFrom(tableByName("t")).fetch();

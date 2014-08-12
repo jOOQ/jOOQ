@@ -47,7 +47,6 @@ import static org.jooq.Clause.CREATE_TABLE_NAME;
 // ...
 // ...
 // ...
-// ...
 import static org.jooq.impl.Utils.DATA_SELECT_INTO_TABLE;
 
 import org.jooq.Clause;
@@ -99,7 +98,7 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         /* [pro] xx
-        xx xxxxxxxxxxxxxxx xxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+        xx xxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxxxxxxxxxxxxxxxxxx
         x
         xxxx

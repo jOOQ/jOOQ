@@ -54,7 +54,6 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
-// ...
 
 /**
  * A {@link Query} that can create tables.

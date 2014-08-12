@@ -57,7 +57,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
-import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.castNull;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.count;
@@ -416,8 +415,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             xxxx xxxxxxx
             xx [/pro] */
             case POSTGRES:
-                // TODO: cast this to the UDT type
-                nullField = cast(null, TAuthor_ADDRESS());
+                nullField = val(null, TAuthor_ADDRESS());
                 break;
             default:
                 nullField = castNull(String.class);

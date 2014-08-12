@@ -9,9 +9,9 @@ package org.jooq.test.oracle4.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_AUTHOR", schema = "TEST")
-public class TAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle4.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record1<java.lang.Integer> {
+public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle4.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record1<java.lang.Integer> {
 
-	private static final long serialVersionUID = -115873836;
+	private static final long serialVersionUID = -2050117306;
 
 	/**
 	 * Setter for <code>TEST.T_AUTHOR.ID</code>.
@@ -23,10 +23,23 @@ public class TAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.o
 	/**
 	 * Getter for <code>TEST.T_AUTHOR.ID</code>.
 	 */
-	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
+	@javax.persistence.Id
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------

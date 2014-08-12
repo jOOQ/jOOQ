@@ -41,9 +41,14 @@
 
 package org.jooq.util.xml;
 
+import static org.jooq.tools.StringUtils.defaultIfNull;
+import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
+import static org.jooq.util.xml.jaxb.TableConstraintType.UNIQUE;
+
 import java.io.File;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.xml.bind.JAXB;
@@ -51,6 +56,7 @@ import javax.xml.bind.JAXB;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
+import org.jooq.tools.StringUtils;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.DataTypeDefinition;
@@ -65,9 +71,12 @@ import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
 import org.jooq.util.xml.jaxb.InformationSchema;
+import org.jooq.util.xml.jaxb.KeyColumnUsage;
 import org.jooq.util.xml.jaxb.Schema;
 import org.jooq.util.xml.jaxb.Sequence;
 import org.jooq.util.xml.jaxb.Table;
+import org.jooq.util.xml.jaxb.TableConstraint;
+import org.jooq.util.xml.jaxb.TableConstraintType;
 
 /**
  * The XML Database.
@@ -101,23 +110,87 @@ public class XMLDatabase extends AbstractDatabase {
     }
 
     @Override
-    protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
+    protected void loadPrimaryKeys(DefaultRelations relations) {
+        for (KeyColumnUsage usage : keyColumnUsage(PRIMARY_KEY)) {
+            SchemaDefinition schema = getSchema(usage.getConstraintSchema());
+            String key = usage.getConstraintName();
+            String tableName = usage.getTableName();
+            String columnName = usage.getColumnName();
+
+            TableDefinition table = getTable(schema, tableName);
+            if (table != null) {
+                relations.addPrimaryKey(key, table.getColumn(columnName));
+            }
+        }
     }
 
     @Override
-    protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
+    protected void loadUniqueKeys(DefaultRelations relations) {
+        for (KeyColumnUsage usage : keyColumnUsage(UNIQUE)) {
+            SchemaDefinition schema = getSchema(usage.getConstraintSchema());
+            String key = usage.getConstraintName();
+            String tableName = usage.getTableName();
+            String columnName = usage.getColumnName();
+
+            TableDefinition table = getTable(schema, tableName);
+            if (table != null) {
+                relations.addPrimaryKey(key, table.getColumn(columnName));
+            }
+        }
+    }
+
+    private List<KeyColumnUsage> keyColumnUsage(TableConstraintType constraintType) {
+        List<KeyColumnUsage> result = new ArrayList<KeyColumnUsage>();
+
+        for (TableConstraint constraint : info().getTableConstraints()) {
+            if (constraintType == constraint.getConstraintType()
+                    && getInputSchemata().contains(constraint.getConstraintSchema())) {
+
+                for (KeyColumnUsage usage : info().getKeyColumnUsages()) {
+                    if (    StringUtils.equals(constraint.getConstraintCatalog(), usage.getConstraintCatalog())
+                         && StringUtils.equals(constraint.getConstraintSchema(), usage.getConstraintSchema())
+                         && StringUtils.equals(constraint.getConstraintName(), usage.getConstraintName())) {
+
+                        result.add(usage);
+                    }
+                }
+            }
+        }
+
+        Collections.sort(result, new Comparator<KeyColumnUsage>() {
+            @Override
+            public int compare(KeyColumnUsage o1, KeyColumnUsage o2) {
+                int r = 0;
+
+                r = defaultIfNull(o1.getConstraintCatalog(), "").compareTo(defaultIfNull(o2.getConstraintCatalog(), ""));
+                if (r != 0)
+                    return r;
+
+                r = defaultIfNull(o1.getConstraintSchema(), "").compareTo(defaultIfNull(o2.getConstraintSchema(), ""));
+                if (r != 0)
+                    return r;
+
+                r = defaultIfNull(o1.getConstraintName(), "").compareTo(defaultIfNull(o2.getConstraintName(), ""));
+                if (r != 0)
+                    return r;
+
+                return Integer.valueOf(o1.getOrdinalPosition()).compareTo(o2.getOrdinalPosition());
+            }
+        });
+
+        return result;
     }
 
     @Override
-    protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
+    protected void loadForeignKeys(DefaultRelations relations) {
     }
 
     @Override
-    protected void loadCheckConstraints(DefaultRelations r) throws SQLException {
+    protected void loadCheckConstraints(DefaultRelations r) {
     }
 
     @Override
-    protected List<SchemaDefinition> getSchemata0() throws SQLException {
+    protected List<SchemaDefinition> getSchemata0() {
         List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
 
         for (Schema schema : info().getSchemata()) {
@@ -131,12 +204,13 @@ public class XMLDatabase extends AbstractDatabase {
 
 
     @Override
-    protected List<SequenceDefinition> getSequences0() throws SQLException {
+    protected List<SequenceDefinition> getSequences0() {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
 
         for (Sequence sequence : info().getSequences()) {
             if (getInputSchemata().contains(sequence.getSequenceSchema())) {
                 SchemaDefinition schema = getSchema(sequence.getSequenceSchema());
+
                 DataTypeDefinition type = new DefaultDataTypeDefinition(
                     this,
                     schema,
@@ -156,7 +230,7 @@ public class XMLDatabase extends AbstractDatabase {
     }
 
     @Override
-    protected List<TableDefinition> getTables0() throws SQLException {
+    protected List<TableDefinition> getTables0() {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
 
         for (Table table : info().getTables()) {
@@ -171,31 +245,31 @@ public class XMLDatabase extends AbstractDatabase {
     }
 
     @Override
-    protected List<EnumDefinition> getEnums0() throws SQLException {
+    protected List<EnumDefinition> getEnums0() {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
         return result;
     }
 
     @Override
-    protected List<UDTDefinition> getUDTs0() throws SQLException {
+    protected List<UDTDefinition> getUDTs0() {
         List<UDTDefinition> result = new ArrayList<UDTDefinition>();
         return result;
     }
 
     @Override
-    protected List<ArrayDefinition> getArrays0() throws SQLException {
+    protected List<ArrayDefinition> getArrays0() {
         List<ArrayDefinition> result = new ArrayList<ArrayDefinition>();
         return result;
     }
 
     @Override
-    protected List<RoutineDefinition> getRoutines0() throws SQLException {
+    protected List<RoutineDefinition> getRoutines0() {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
         return result;
     }
 
     @Override
-    protected List<PackageDefinition> getPackages0() throws SQLException {
+    protected List<PackageDefinition> getPackages0() {
         List<PackageDefinition> result = new ArrayList<PackageDefinition>();
         return result;
     }

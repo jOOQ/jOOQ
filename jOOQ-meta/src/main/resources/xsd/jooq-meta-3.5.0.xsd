@@ -11,6 +11,8 @@
                 <element name="sequences" type="tns:Sequences" minOccurs="0" maxOccurs="1" />
                 <element name="tables" type="tns:Tables" minOccurs="0" maxOccurs="1" />
                 <element name="columns" type="tns:Columns" minOccurs="0" maxOccurs="1" />
+                <element name="table_constraints" type="tns:TableConstraints" minOccurs="0" maxOccurs="1" />
+                <element name="key_column_usages" type="tns:KeyColumnUsages" minOccurs="0" maxOccurs="1" />
             </all>
         </complexType>
     </element>
@@ -82,4 +84,63 @@
             <element name="column_default" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
+    
+    <complexType name="TableConstraints">
+        <all>
+            <element name="table_constraint" type="tns:TableConstraint" minOccurs="0" maxOccurs="unbounded" />
+        </all>
+    </complexType>
+
+    <complexType name="TableConstraint">
+        <all>
+            <element name="constraint_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="constraint_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="constraint_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="constraint_type" type="tns:TableConstraintType" minOccurs="1" maxOccurs="1" />
+            <element name="table_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="table_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="table_name" type="string" minOccurs="1" maxOccurs="1" />
+        </all>
+    </complexType>
+    
+    <simpleType name="TableConstraintType">
+        <restriction base="string">
+            <enumeration value="PRIMARY KEY"/>
+            <enumeration value="UNIQUE"/>
+            <enumeration value="CHECK"/>
+            <enumeration value="FOREIGN KEY"/>
+        </restriction>
+    </simpleType>
+    
+    <complexType name="KeyColumnUsages">
+        <all>
+            <element name="key_column_usage" type="tns:KeyColumnUsage" minOccurs="0" maxOccurs="unbounded" />
+        </all>
+    </complexType>
+    
+    <complexType name="KeyColumnUsage">
+        <all>
+            <element name="column_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="constraint_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="constraint_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="constraint_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="ordinal_position" type="int" minOccurs="1" maxOccurs="1" />
+            <element name="table_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="table_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="table_name" type="string" minOccurs="1" maxOccurs="1" />
+        </all>
+    </complexType>
+    
+    <!--
+    
+     
+    CONSTRAINT_CATALOG : TableField<Record, String>
+CONSTRAINT_NAME : TableField<Record, String>
+CONSTRAINT_SCHEMA : TableField<Record, String>
+DELETE_RULE : TableField<Record, String>
+MATCH_OPTION : TableField<Record, String>
+UNIQUE_CONSTRAINT_CATALOG : TableField<Record, String>
+UNIQUE_CONSTRAINT_NAME : TableField<Record, String>
+UNIQUE_CONSTRAINT_SCHEMA : TableField<Record, String>
+UPDATE_RULE : TableField<Record, String>-->
 </schema>

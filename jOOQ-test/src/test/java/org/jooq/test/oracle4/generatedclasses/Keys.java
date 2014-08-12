@@ -21,6 +21,7 @@ public class Keys {
 	// UNIQUE and PRIMARY KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final org.jooq.UniqueKey<org.jooq.test.oracle4.generatedclasses.tables.records.TAuthorRecord> PK_T_AUTHOR = UniqueKeys0.PK_T_AUTHOR;
 
 	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
@@ -30,4 +31,8 @@ public class Keys {
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
 	// -------------------------------------------------------------------------
+
+	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
+		public static final org.jooq.UniqueKey<org.jooq.test.oracle4.generatedclasses.tables.records.TAuthorRecord> PK_T_AUTHOR = createUniqueKey(org.jooq.test.oracle4.generatedclasses.tables.TAuthor.T_AUTHOR, org.jooq.test.oracle4.generatedclasses.tables.TAuthor.T_AUTHOR.ID);
+	}
 }

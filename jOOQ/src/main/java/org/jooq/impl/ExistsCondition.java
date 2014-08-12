@@ -41,75 +41,49 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Clause.CONDITION;
+import static org.jooq.Clause.CONDITION_EXISTS;
+import static org.jooq.Clause.CONDITION_NOT_EXISTS;
+
 import org.jooq.Clause;
 import org.jooq.Context;
-import org.jooq.Record;
 import org.jooq.Select;
-import org.jooq.Table;
 
 /**
  * @author Lukas Eder
  */
-class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
+class ExistsCondition extends AbstractCondition {
 
-    private static final long serialVersionUID = 6272398035926615668L;
+    private static final long     serialVersionUID   = 5678338161136603292L;
+    private static final Clause[] CLAUSES_EXISTS     = { CONDITION, CONDITION_EXISTS };
+    private static final Clause[] CLAUSES_EXISTS_NOT = { CONDITION, CONDITION_NOT_EXISTS };
 
-    private final Select<R>   query;
+    private final Select<?>       query;
+    private final boolean         exists;
 
-    SelectQueryAsTable(Select<R> query) {
-        super("select");
-
+    ExistsCondition(Select<?> query, boolean exists) {
         this.query = query;
-    }
-
-    final Select<R> query() {
-        return query;
-    }
-
-    @Override
-    public final Table<R> as(String alias) {
-        return new TableAlias<R>(this, alias, true);
-    }
-
-    @Override
-    public final Table<R> as(String alias, String... fieldAliases) {
-        return new TableAlias<R>(this, alias, fieldAliases, true);
-    }
-
-    @Override
-    final Fields<R> fields0() {
-        return new Fields<R>(query.getSelect());
-    }
-
-    @Override
-    public final Class<? extends R> getRecordType() {
-        return query.getRecordType();
+        this.exists = exists;
     }
 
     @Override
     public final void accept(Context<?> ctx) {
+        boolean subquery = ctx.subquery();
 
-        // If this is already a subquery, proceed
-        if (ctx.subquery()) {
-            ctx.formatIndentStart()
-               .formatNewLine()
-               .visit(query)
-               .formatIndentEnd()
-               .formatNewLine();
-        }
-        else {
-            ctx.subquery(true)
-               .formatIndentStart()
-               .formatNewLine()
-               .visit(query)
-               .formatIndentEnd()
-               .formatNewLine()
-               .subquery(false);
-        }
+        ctx.keyword(exists ? "exists" : "not exists")
+           .sql(" (")
+           .subquery(true)
+           .formatIndentStart()
+           .formatNewLine()
+           .visit(query)
+           .formatIndentEnd()
+           .formatNewLine()
+           .subquery(subquery)
+           .sql(")");
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return null;
+        return exists ? CLAUSES_EXISTS : CLAUSES_EXISTS_NOT;
     }
 }

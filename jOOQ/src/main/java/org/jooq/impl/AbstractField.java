@@ -1209,7 +1209,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition compare(Comparator comparator, Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, comparator);
+        return compare(comparator, new ScalarSubquery<T>(query, getDataType()));
     }
 
     @Override

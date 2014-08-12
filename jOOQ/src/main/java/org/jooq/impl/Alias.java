@@ -171,8 +171,8 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
                     // in those derived tables
                       wrapped instanceof Select
                     ? (Select<?>) wrapped
-                    : wrapped instanceof SelectQueryAsTable
-                    ? ((SelectQueryAsTable<?>) wrapped).query()
+                    : wrapped instanceof DerivedTable
+                    ? ((DerivedTable<?>) wrapped).query()
                     : select(field("*")).from(((Table<?>) wrapped).as(alias))
 
                 );

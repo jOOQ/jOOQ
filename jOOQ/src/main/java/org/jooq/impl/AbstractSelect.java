@@ -99,7 +99,7 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
             throw new IllegalStateException("Can only use single-column ResultProviderQuery as a field");
         }
 
-        return new SelectQueryAsField<T>(this, (DataType<T>) getSelect().get(0).getDataType());
+        return new ScalarSubquery<T>(this, (DataType<T>) getSelect().get(0).getDataType());
     }
 
     @Override
@@ -136,17 +136,17 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
     public final Table<R> asTable() {
         // Its usually better to alias nested selects that are used in
         // the FROM clause of a query
-        return new SelectQueryAsTable<R>(this).as("alias_" + Utils.hash(this));
+        return new DerivedTable<R>(this).as("alias_" + Utils.hash(this));
     }
 
     @Override
     public final Table<R> asTable(String alias) {
-        return new SelectQueryAsTable<R>(this).as(alias);
+        return new DerivedTable<R>(this).as(alias);
     }
 
     @Override
     public final Table<R> asTable(String alias, String... fieldAliases) {
-        return new SelectQueryAsTable<R>(this).as(alias, fieldAliases);
+        return new DerivedTable<R>(this).as(alias, fieldAliases);
     }
 
     @Override

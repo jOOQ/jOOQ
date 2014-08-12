@@ -45,6 +45,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface CreateTableFinalStep extends Query {
+public interface CreateTableFinalStep extends DDLQuery {
 
 }

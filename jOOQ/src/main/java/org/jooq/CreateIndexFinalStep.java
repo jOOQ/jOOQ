@@ -45,6 +45,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface CreateIndexFinalStep extends Query {
+public interface CreateIndexFinalStep extends DDLQuery {
 
 }

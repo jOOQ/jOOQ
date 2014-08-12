@@ -45,6 +45,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface DropTableFinalStep extends Query {
+public interface DropTableFinalStep extends DDLQuery {
 
 }

@@ -40,12 +40,11 @@
  */
 package org.jooq;
 
-
 /**
- * The final step in the <code>ALTER TABLE</code> DSL.
+ * A marker interface for all DDL queries.
  *
  * @author Lukas Eder
  */
-public interface AlterTableFinalStep extends DDLQuery {
+public interface DDLQuery extends Query {
 
 }

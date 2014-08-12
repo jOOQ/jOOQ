@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.select;
 
 import org.jooq.Clause;
@@ -107,16 +108,12 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
 
     @Override
     public final Field<T> currval() {
-        return getSequence("currval");
+        return new SequenceFunction("currval");
     }
 
     @Override
     public final Field<T> nextval() {
-        return getSequence("nextval");
-    }
-
-    private final Field<T> getSequence(final String sequence) {
-        return new SequenceFunction(sequence);
+        return new SequenceFunction("nextval");
     }
 
     private class SequenceFunction extends AbstractFunction<T> {
@@ -149,9 +146,13 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
                 }
 
                 /* [/pro] */
-                case H2:
                 case POSTGRES: {
                     String field = method + "('" + getQualifiedName(configuration) + "')";
+                    return field(field, getDataType());
+                }
+
+                case H2: {
+                    String field = method + "(" + getQualifiedName(configuration, true) + ")";
                     return field(field, getDataType());
                 }
 
@@ -209,8 +210,12 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
         }
 
         private final String getQualifiedName(Configuration configuration) {
+            return getQualifiedName(configuration, false);
+        }
+
+        private final String getQualifiedName(Configuration configuration, boolean asStringLiterals) {
             RenderContext local = create(configuration).renderContext();
-            SequenceImpl.this.toSQL(local);
+            accept0(local, asStringLiterals);
             return local.render();
         }
     }
@@ -221,14 +226,26 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        accept0(ctx, false);
+    }
+
+    private final void accept0(Context<?> ctx, boolean asStringLiterals) {
         Schema mappedSchema = Utils.getMappedSchema(ctx.configuration(), schema);
 
-        if (mappedSchema != null && ctx.configuration().dialect() != CUBRID) {
-            ctx.visit(mappedSchema);
-            ctx.sql(".");
+        if (mappedSchema != null && ctx.family() != CUBRID) {
+            if (asStringLiterals) {
+                ctx.visit(inline(mappedSchema.getName()))
+                   .sql(", ");
+            }
+            else {
+                ctx.visit(mappedSchema)
+                   .sql(".");
+            }
         }
 
-        if (nameIsPlainSQL)
+        if (asStringLiterals)
+            ctx.visit(inline(name));
+        else if (nameIsPlainSQL)
             ctx.sql(name);
         else
             ctx.literal(name);

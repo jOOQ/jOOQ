@@ -129,12 +129,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals(
             booksResult,
-            create().selectFrom(booksTable).fetch());
+            create().selectFrom(booksTable)
+                    .orderBy(booksTable.field(TBook_ID()))
+                    .fetch());
 
         assertEquals(
             BOOK_IDS,
             create().select(booksTable.field(TBook_ID()))
                     .from(booksTable)
-                    .fetch(TBook_ID()));
+                    .orderBy(booksTable.field(TBook_ID()))
+                    .fetch()
+                    .getValues(TBook_ID()));
     }
 }

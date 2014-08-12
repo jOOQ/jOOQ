@@ -45,7 +45,6 @@ import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.queryPart;
-import static org.jooq.impl.DSL.sequence;
 import static org.jooq.impl.DSL.sequenceByName;
 import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.template;
@@ -1775,7 +1774,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public BigInteger nextval(String sequence) {
-        return nextval(sequence(sequence));
+        return nextval(sequenceByName(sequence));
     }
 
     @Override
@@ -1786,7 +1785,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public BigInteger currval(String sequence) {
-        return currval(sequence(sequence));
+        return currval(sequenceByName(sequence));
     }
 
     @Override

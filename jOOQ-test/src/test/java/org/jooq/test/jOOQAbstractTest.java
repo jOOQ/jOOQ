@@ -2723,6 +2723,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testBatchSinglePlainSQL() throws Exception {
+        new BatchTests(this).testBatchSinglePlainSQL();
+    }
+
+    @Test
     public void testBatchSingleWithNulls() throws Exception {
         new BatchTests(this).testBatchSingleWithNulls();
     }

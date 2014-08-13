@@ -43,6 +43,8 @@ package org.jooq.impl;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
 import static org.jooq.impl.Utils.consumeWarnings;
+import static org.jooq.impl.Utils.fields;
+import static org.jooq.impl.Utils.getDataTypes;
 import static org.jooq.impl.Utils.visitAll;
 
 import java.sql.Connection;
@@ -53,9 +55,10 @@ import java.util.List;
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
+import org.jooq.DataType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
-import org.jooq.Param;
+import org.jooq.Field;
 import org.jooq.Query;
 
 /**
@@ -119,12 +122,7 @@ class BatchSingle implements BatchBindStep {
         Connection connection = ctx.connection();
 
         // [#1371] fetch bind variables to restore them again, later
-        List<Param<?>> params = new ArrayList<Param<?>>(query.getParams().values());
-        List<Object> previous = new ArrayList<Object>();
-
-        for (Param<?> param : params) {
-            previous.add(param.getValue());
-        }
+        DataType<?>[] paramTypes = getDataTypes(query.getParams().values().toArray(new Field[0]));
 
         try {
             listener.renderStart(ctx);
@@ -139,12 +137,14 @@ class BatchSingle implements BatchBindStep {
             for (Object[] bindValues : allBindValues) {
                 listener.bindStart(ctx);
 
-                // [#1371] [#2139] Don't bind variables directly onto statement,
-                // bind them through the collected params list to preserve type
-                // information
-                for (int i = 0; i < params.size(); i++) {
-                    params.get(i).setConverted(bindValues[i]);
-                }
+                // [#1371] [#2139] Don't bind variables directly onto statement, bind them through the collected params
+                //                 list to preserve type information
+                // [#3547]         The original query may have no Params specified - e.g. when it was constructed with
+                //                 plain SQL. In that case, infer the bind value type directly from the bind value
+                List<Field<?>> params = (paramTypes.length > 0)
+                    ? fields(bindValues, paramTypes)
+                    : fields(bindValues);
+
                 visitAll(new DefaultBindContext(configuration, ctx.statement()), params);
 
                 listener.bindEnd(ctx);
@@ -178,11 +178,6 @@ class BatchSingle implements BatchBindStep {
         }
         finally {
             Utils.safeClose(listener, ctx);
-
-            // Restore bind variables to values prior to batch execution
-            for (int i = 0; i < params.size(); i++) {
-                params.get(i).setConverted(previous.get(i));
-            }
         }
     }
 

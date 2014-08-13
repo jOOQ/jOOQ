@@ -150,6 +150,29 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         testBatchAuthors("Gamma", "Helm", "Johnson");
     }
 
+    public void testBatchSinglePlainSQL() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        String author = TAuthor().getName();
+        String id = TAuthor_ID().getName();
+        String last_name = TAuthor_LAST_NAME().getName();
+
+        int[] r1 =
+        create().batch(String.format("insert into %s (%s, %s) values (?, ?)", author, id, last_name))
+                .bind(3, "X")
+                .bind(4, "Y")
+                .execute();
+
+        assertEquals(2, r1.length);
+
+        Result<A> authors = create().fetch(TAuthor()).sortAsc(TAuthor_ID());
+        assertEquals(4, authors.size());
+        assertEquals(3, (int) authors.get(2).getValue(TAuthor_ID()));
+        assertEquals(4, (int) authors.get(3).getValue(TAuthor_ID()));
+        assertEquals("X", authors.get(2).getValue(TAuthor_LAST_NAME()));
+        assertEquals("Y", authors.get(3).getValue(TAuthor_LAST_NAME()));
+    }
+
     public void testBatchSingleWithNulls() throws Exception {
         Batch batch = create().batch(insertInto(TDates(), TDates_ID(), TDates_D(), TDates_T(), TDates_TS())
                                      .values(1, null, null, null))

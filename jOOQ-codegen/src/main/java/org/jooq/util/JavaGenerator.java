@@ -669,7 +669,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String type = getJavaType(column.getType());
             final String typeInterface = getJavaType(column.getType(), Mode.INTERFACE);
             final String name = column.getQualifiedOutputName();
-            final boolean isUDT = database.getUDT(column.getSchema(), column.getType().getUserType()) != null;
+            final boolean isUDT = column.getType().isUDT();
 
             out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
             out.tab(1).overrideIf(generateInterfaces() && !generateImmutablePojos() && !isUDT);
@@ -1811,7 +1811,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String columnSetter = getStrategy().getJavaSetterName(column, Mode.POJO);
             final String columnGetter = getStrategy().getJavaGetterName(column, Mode.POJO);
             final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
-            final boolean isUDT = database.getUDT(column.getSchema(), column.getType().getUserType()) != null;
+            final boolean isUDT = column.getType().isUDT();
 
             // Getter
             out.println();
@@ -2815,7 +2815,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             final String getter = getStrategy().getJavaGetterName(parameter, Mode.DEFAULT);
             final String columnTypeInterface = getJavaType(parameter.getType(), Mode.INTERFACE);
-            final boolean isUDT = database.getUDT(parameter.getSchema(), parameter.getType().getUserType()) != null;
+            final boolean isUDT = parameter.getType().isUDT();
 
             if (instance) {
 

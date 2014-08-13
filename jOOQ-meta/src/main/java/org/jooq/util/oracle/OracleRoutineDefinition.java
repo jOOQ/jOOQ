@@ -96,6 +96,7 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
 	            ALL_ARGUMENTS.DATA_LENGTH,
 	            ALL_ARGUMENTS.DATA_PRECISION,
 	            ALL_ARGUMENTS.DATA_SCALE,
+	            ALL_ARGUMENTS.TYPE_OWNER,
 	            ALL_ARGUMENTS.TYPE_NAME,
 	            ALL_ARGUMENTS.POSITION,
 	            defaulted)
@@ -115,9 +116,14 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
 	        InOutDefinition inOut =
                 InOutDefinition.getFromString(record.getValue(ALL_ARGUMENTS.IN_OUT));
 
+	        String typeOwner = record.getValue(ALL_ARGUMENTS.TYPE_OWNER);
+            SchemaDefinition schema = (typeOwner == null)
+	            ? getSchema()
+                : getDatabase().getSchema(typeOwner);
+
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
-                getSchema(),
+                schema,
                 record.getValue(ALL_ARGUMENTS.DATA_TYPE),
                 record.getValue(ALL_ARGUMENTS.DATA_LENGTH),
                 record.getValue(ALL_ARGUMENTS.DATA_PRECISION),

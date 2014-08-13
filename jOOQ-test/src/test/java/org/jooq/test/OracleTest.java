@@ -128,6 +128,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Record;
 import org.jooq.Record2;
 import org.jooq.Record3;
+import org.jooq.Record4;
 import org.jooq.Record8;
 import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
@@ -147,11 +148,15 @@ import org.jooq.test.all.converters.Boolean_YES_NO_LC;
 import org.jooq.test.all.converters.Boolean_YES_NO_UC;
 import org.jooq.test.all.converters.Boolean_YN_LC;
 import org.jooq.test.all.converters.Boolean_YN_UC;
+import org.jooq.test.oracle.generatedclasses.multi_schema.packages.MsSynonymPackage;
 import org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord;
+import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord;
+import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord;
 import org.jooq.test.oracle.generatedclasses.test.Keys;
 import org.jooq.test.oracle.generatedclasses.test.Routines;
 import org.jooq.test.oracle.generatedclasses.test.Sequences;
 import org.jooq.test.oracle.generatedclasses.test.packages.Library;
+import org.jooq.test.oracle.generatedclasses.test.packages.TestSynonymPackage;
 import org.jooq.test.oracle.generatedclasses.test.routines.PNested;
 import org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord;
@@ -1741,6 +1746,44 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals(asList(1, 1, 2, 2, 3), result.getValues(0));
         assertEquals(union(BOOK_LAST_NAMES, singletonList("XX")), result.getValues(1));
         assertEquals(union(BOOK_TITLES, singletonList(null)), result.getValues(2));
+    }
+
+    @Test
+    public void testOracleSynonymAndCrossSchemaTypeReferences() {
+
+        Configuration conf = create().configuration();
+
+        // Standalone procedure calls:
+        // ---------------------------
+        NumberTableRecord t1 = MsSynonymPackage.actualTable(conf);
+        NumberObjectRecord o1 = MsSynonymPackage.actualObject(conf);
+        NumberTableRecord t2 = TestSynonymPackage.actualTable(conf);
+        NumberObjectRecord o2 = TestSynonymPackage.actualObject(conf);
+
+        // In SQL
+        Record4<
+            NumberTableRecord,
+            NumberObjectRecord,
+            NumberTableRecord,
+            NumberObjectRecord> record =
+        create().select(
+            MsSynonymPackage.actualTable(),
+            MsSynonymPackage.actualObject(),
+            TestSynonymPackage.actualTable(),
+            TestSynonymPackage.actualObject())
+        .fetchOne();
+
+        assertEquals(asList(1, 2, 3), t1.getList());
+        assertEquals(asList(1, 2, 3), record.value1().getList());
+
+        assertEquals(asList(1, 2, 3), asList(o1.into(Integer[].class)));
+        assertEquals(asList(1, 2, 3), asList(record.value2().into(Integer[].class)));
+
+        assertEquals(asList(1, 2, 3), t2.getList());
+        assertEquals(asList(1, 2, 3), record.value3().getList());
+
+        assertEquals(asList(1, 2, 3), asList(o2.into(Integer[].class)));
+        assertEquals(asList(1, 2, 3), asList(record.value4().into(Integer[].class)));
     }
 }
 

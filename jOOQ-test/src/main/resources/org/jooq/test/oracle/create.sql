@@ -1864,3 +1864,112 @@ create or replace public synonym t_author_public_synonym for t_author/
 create or replace public synonym t_author for t_author/
 
 CREATE INDEX i_book_title_context ON t_book(title) INDEXTYPE IS CTXSYS.CONTEXT/
+
+
+
+
+DROP PACKAGE test.test_synonym_package/
+DROP PACKAGE multi_schema.ms_synonym_package/
+DROP PUBLIC SYNONYM number_table_public/
+DROP PUBLIC SYNONYM number_object_public/
+DROP SYNONYM number_table_test/
+DROP SYNONYM number_object_test/
+DROP TYPE multi_schema.number_table/
+DROP TYPE multi_schema.number_object/
+
+CREATE TYPE multi_schema.number_table AS TABLE OF NUMBER(7)/
+CREATE TYPE multi_schema.number_object AS OBJECT(a NUMBER(7), b NUMBER(7), c NUMBER(7))/
+
+CREATE SYNONYM test.number_table_test FOR multi_schema.number_table/
+CREATE SYNONYM test.number_object_test FOR multi_schema.number_object/
+CREATE PUBLIC SYNONYM number_table_public FOR multi_schema.number_table/
+CREATE PUBLIC SYNONYM number_object_public FOR multi_schema.number_object/
+
+CREATE PACKAGE multi_schema.ms_synonym_package AS
+  FUNCTION actual_table RETURN multi_schema.number_table;
+  FUNCTION public_table RETURN number_table_public;
+  FUNCTION test_table RETURN test.number_table_test;
+
+  FUNCTION actual_object RETURN multi_schema.number_object;
+  FUNCTION public_object RETURN number_object_public;
+  FUNCTION test_object RETURN test.number_object_test;
+END ms_synonym_package;
+/
+CREATE PACKAGE BODY multi_schema.ms_synonym_package AS
+  FUNCTION actual_table RETURN multi_schema.number_table IS
+  BEGIN
+    RETURN number_table(1, 2, 3);
+  END;
+  
+  FUNCTION public_table RETURN number_table_public IS
+  BEGIN
+    RETURN number_table(4, 5, 6);
+  END;
+  
+  FUNCTION test_table RETURN test.number_table_test IS
+  BEGIN
+    RETURN number_table(7, 8, 9);
+  END;
+
+
+  FUNCTION actual_object RETURN multi_schema.number_object IS
+  BEGIN
+    RETURN number_object(1, 2, 3);
+  END;
+  
+  FUNCTION public_object RETURN number_object_public IS
+  BEGIN
+    RETURN number_object(4, 5, 6);
+  END;
+  
+  FUNCTION test_object RETURN test.number_object_test IS
+  BEGIN
+    RETURN number_object(7, 8, 9);
+  END;
+END ms_synonym_package;
+/
+
+CREATE PACKAGE test.test_synonym_package AS
+  FUNCTION actual_table RETURN multi_schema.number_table;
+  FUNCTION public_table RETURN number_table_public;
+  FUNCTION test_table RETURN test.number_table_test;
+
+  FUNCTION actual_object RETURN multi_schema.number_object;
+  FUNCTION public_object RETURN number_object_public;
+  FUNCTION test_object RETURN test.number_object_test;
+END test_synonym_package;
+/
+CREATE PACKAGE BODY test.test_synonym_package AS
+  FUNCTION actual_table RETURN multi_schema.number_table IS
+  BEGIN
+    RETURN multi_schema.number_table(1, 2, 3);
+  END;
+  
+  FUNCTION public_table RETURN number_table_public IS
+  BEGIN
+    RETURN multi_schema.number_table(4, 5, 6);
+  END;
+  
+  FUNCTION test_table RETURN test.number_table_test IS
+  BEGIN
+    RETURN multi_schema.number_table(7, 8, 9);
+  END;
+
+
+  FUNCTION actual_object RETURN multi_schema.number_object IS
+  BEGIN
+    RETURN multi_schema.number_object(1, 2, 3);
+  END;
+  
+  FUNCTION public_object RETURN number_object_public IS
+  BEGIN
+    RETURN multi_schema.number_object(4, 5, 6);
+  END;
+  
+  FUNCTION test_object RETURN test.number_object_test IS
+  BEGIN
+    RETURN multi_schema.number_object(7, 8, 9);
+  END;
+END test_synonym_package;
+/
+

@@ -187,7 +187,9 @@ import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Record8;
 import org.jooq.Record9;
+import org.jooq.RecordHandler;
 import org.jooq.Result;
+import org.jooq.ResultQuery;
 import org.jooq.Row1;
 import org.jooq.Row10;
 import org.jooq.Row11;
@@ -5282,6 +5284,210 @@ public class DSL {
     @Support
     static QueryPart queryPart(org.jooq.Template template, Object... parameters) {
         return template.transform(parameters);
+    }
+    // -------------------------------------------------------------------------
+    // XXX Plain SQL API
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create a new query holding plain SQL. There must not be any binding
+     * variables contained in the SQL.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * String sql = "SET SCHEMA 'abc'";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return A query wrapping the plain SQL
+     */
+    @Support
+    public static Query query(String sql) {
+        return using(new DefaultConfiguration()).query(sql);
+    }
+
+    /**
+     * Create a new query holding plain SQL. There must be as many bind
+     * variables contained in the SQL, as passed in the bindings parameter.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * String sql = "SET SCHEMA 'abc'";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @param bindings The bindings
+     * @return A query wrapping the plain SQL
+     */
+    @Support
+    public static Query query(String sql, Object... bindings) {
+        return using(new DefaultConfiguration()).query(sql, bindings);
+    }
+
+    /**
+     * Create a new query holding plain SQL.
+     * <p>
+     * Unlike {@link #query(String, Object...)}, the SQL passed to this method
+     * should not contain any bind variables. Instead, you can pass
+     * {@link QueryPart} objects to the method which will be rendered at indexed
+     * locations of your SQL string as such: <code><pre>
+     * // The following query
+     * query("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
+     *
+     * // Will render this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * select ?, 'test' from "DUAL"
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link DSL#name(String...)} and similar methods
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return A query wrapping the plain SQL
+     */
+    @Support
+    public static Query query(String sql, QueryPart... parts) {
+        return using(new DefaultConfiguration()).query(sql, parts);
+    }
+
+    /**
+     * Create a new query holding plain SQL.
+     * <p>
+     * There must not be any binding variables contained in the SQL
+     * <p>
+     * Use this method, when you want to take advantage of the many ways to
+     * fetch results in jOOQ, using {@link ResultQuery}. Some examples:
+     * <p>
+     * <table border="1">
+     * <tr>
+     * <td> {@link ResultQuery#fetchLazy()}</td>
+     * <td>Open a cursor and fetch records one by one</td>
+     * </tr>
+     * <tr>
+     * <td> {@link ResultQuery#fetchInto(Class)}</td>
+     * <td>Fetch records into a custom POJO (optionally annotated with JPA
+     * annotations)</td>
+     * </tr>
+     * <tr>
+     * <td> {@link ResultQuery#fetchInto(RecordHandler)}</td>
+     * <td>Fetch records into a custom callback (similar to Spring's RowMapper)</td>
+     * </tr>
+     * </table>
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return An executable query
+     */
+    @Support
+    public static ResultQuery<Record> resultQuery(String sql) {
+        return using(new DefaultConfiguration()).resultQuery(sql);
+    }
+
+    /**
+     * Create a new query holding plain SQL.
+     * <p>
+     * There must be as many bind variables contained in the SQL, as passed in
+     * the bindings parameter
+     * <p>
+     * Use this method, when you want to take advantage of the many ways to
+     * fetch results in jOOQ, using {@link ResultQuery}. Some examples:
+     * <p>
+     * <table border="1">
+     * <tr>
+     * <td> {@link ResultQuery#fetchLazy()}</td>
+     * <td>Open a cursor and fetch records one by one</td>
+     * </tr>
+     * <tr>
+     * <td> {@link ResultQuery#fetchInto(Class)}</td>
+     * <td>Fetch records into a custom POJO (optionally annotated with JPA
+     * annotations)</td>
+     * </tr>
+     * <tr>
+     * <td> {@link ResultQuery#fetchInto(RecordHandler)}</td>
+     * <td>Fetch records into a custom callback (similar to Spring's RowMapper)</td>
+     * </tr>
+     * </table>
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @param bindings The bindings
+     * @return A query wrapping the plain SQL
+     */
+    @Support
+    public static ResultQuery<Record> resultQuery(String sql, Object... bindings) {
+        return using(new DefaultConfiguration()).resultQuery(sql, bindings);
+    }
+
+    /**
+     * Create a new query holding plain SQL.
+     * <p>
+     * Unlike {@link #resultQuery(String, Object...)}, the SQL passed to this
+     * method should not contain any bind variables. Instead, you can pass
+     * {@link QueryPart} objects to the method which will be rendered at indexed
+     * locations of your SQL string as such: <code><pre>
+     * // The following query
+     * resultQuery("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
+     *
+     * // Will render this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * select ?, 'test' from "DUAL"
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link DSL#name(String...)} and similar methods
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return A query wrapping the plain SQL
+     */
+    @Support
+    public static ResultQuery<Record> resultQuery(String sql, QueryPart... parts) {
+        return using(new DefaultConfiguration()).resultQuery(sql, parts);
     }
 
     /**

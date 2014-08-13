@@ -509,17 +509,16 @@ final class Utils {
     /**
      * Useful conversion method
      */
-    static final Class<?>[] getClasses(Field<?>[] fields) {
-        return getClasses(getDataTypes(fields));
+    static final Class<?>[] types(Field<?>[] fields) {
+        return types(dataTypes(fields));
     }
 
     /**
      * Useful conversion method
      */
-    static final Class<?>[] getClasses(DataType<?>[] types) {
-        if (types == null) {
+    static final Class<?>[] types(DataType<?>[] types) {
+        if (types == null)
             return null;
-        }
 
         Class<?>[] result = new Class<?>[types.length];
 
@@ -538,10 +537,9 @@ final class Utils {
     /**
      * Useful conversion method
      */
-    static final Class<?>[] getClasses(Object[] values) {
-        if (values == null) {
+    static final Class<?>[] types(Object[] values) {
+        if (values == null)
             return null;
-        }
 
         Class<?>[] result = new Class<?>[values.length];
 
@@ -563,10 +561,9 @@ final class Utils {
     /**
      * Useful conversion method
      */
-    static final DataType<?>[] getDataTypes(Field<?>[] fields) {
-        if (fields == null) {
+    static final DataType<?>[] dataTypes(Field<?>[] fields) {
+        if (fields == null)
             return null;
-        }
 
         DataType<?>[] result = new DataType<?>[fields.length];
 
@@ -585,10 +582,9 @@ final class Utils {
     /**
      * Useful conversion method
      */
-    static final DataType<?>[] getDataTypes(Class<?>[] types) {
-        if (types == null) {
+    static final DataType<?>[] dataTypes(Class<?>[] types) {
+        if (types == null)
             return null;
-        }
 
         DataType<?>[] result = new DataType<?>[types.length];
 
@@ -607,8 +603,8 @@ final class Utils {
     /**
      * Useful conversion method
      */
-    static final DataType<?>[] getDataTypes(Object[] values) {
-        return getDataTypes(getClasses(values));
+    static final DataType<?>[] dataTypes(Object[] values) {
+        return dataTypes(types(values));
     }
 
     // ------------------------------------------------------------------------

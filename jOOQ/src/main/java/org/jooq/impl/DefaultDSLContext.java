@@ -734,7 +734,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public Cursor<Record> fetchLazy(ResultSet rs, Class<?>... types) {
-        return fetchLazy(rs, Utils.getDataTypes(types));
+        return fetchLazy(rs, Utils.dataTypes(types));
     }
 
     @Override

@@ -44,7 +44,7 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
 import static org.jooq.impl.Utils.consumeWarnings;
 import static org.jooq.impl.Utils.fields;
-import static org.jooq.impl.Utils.getDataTypes;
+import static org.jooq.impl.Utils.dataTypes;
 import static org.jooq.impl.Utils.visitAll;
 
 import java.sql.Connection;
@@ -122,7 +122,7 @@ class BatchSingle implements BatchBindStep {
         Connection connection = ctx.connection();
 
         // [#1371] fetch bind variables to restore them again, later
-        DataType<?>[] paramTypes = getDataTypes(query.getParams().values().toArray(new Field[0]));
+        DataType<?>[] paramTypes = dataTypes(query.getParams().values().toArray(new Field[0]));
 
         try {
             listener.renderStart(ctx);

@@ -5,6 +5,9 @@ DROP VIEW IF EXISTS v_library/
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
 
+DROP AGGREGATE second_max(INTEGER)/
+DROP FUNCTION second_max_sfunc (state INTEGER[], data INTEGER)/
+DROP FUNCTION second_max_ffunc (state INTEGER[])/
 DROP FUNCTION f_tables1()/
 DROP FUNCTION f_tables2()/
 DROP FUNCTION f_tables3()/
@@ -868,4 +871,39 @@ BEGIN
 	RETURN ref;
 END;
 $$ LANGUAGE plpgsql;
+/
+
+CREATE FUNCTION second_max_sfunc (state INTEGER[], data INTEGER) RETURNS INTEGER[]
+AS
+$$
+BEGIN
+    IF state IS NULL THEN
+        RETURN ARRAY[data, NULL];
+    ELSE
+        RETURN CASE WHEN state[1] > data
+                    THEN CASE WHEN state[2] > data
+                              THEN state
+                              ELSE ARRAY[state[1], data]
+                         END
+                    ELSE ARRAY[data, state[1]]
+               END;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+/
+
+CREATE FUNCTION second_max_ffunc (state INTEGER[]) RETURNS INTEGER
+AS
+$$
+BEGIN
+    RETURN state[2];
+END;
+$$ LANGUAGE plpgsql;
+/
+
+CREATE AGGREGATE second_max (INTEGER) (
+    SFUNC     = second_max_sfunc,
+    STYPE     = INTEGER[],
+    FINALFUNC = second_max_ffunc
+);
 /

@@ -511,7 +511,8 @@ public class PostgresDatabase extends AbstractDatabase {
                     .and(r2.ROUTINE_SCHEMA.eq(r1.ROUTINE_SCHEMA))
                     .and(r2.ROUTINE_NAME.eq(r1.ROUTINE_NAME))
                     .and(r2.SPECIFIC_NAME.le(r1.SPECIFIC_NAME)).asField())
-                .as("overload"))
+                .as("overload"),
+                PG_PROC.PROISAGG)
             .from(r1)
 
             // [#3375] Exclude table-valued functions as they're already generated as tables

@@ -41,12 +41,13 @@
 
 package org.jooq.util.mysql;
 
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.util.mysql.information_schema.Tables.COLUMNS;
 import static org.jooq.util.mysql.information_schema.Tables.KEY_COLUMN_USAGE;
 import static org.jooq.util.mysql.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
 import static org.jooq.util.mysql.information_schema.Tables.SCHEMATA;
+import static org.jooq.util.mysql.information_schema.Tables.STATISTICS;
 import static org.jooq.util.mysql.information_schema.Tables.TABLES;
-import static org.jooq.util.mysql.information_schema.Tables.TABLE_CONSTRAINTS;
 import static org.jooq.util.mysql.mysql.tables.Proc.DB;
 import static org.jooq.util.mysql.mysql.tables.Proc.PROC;
 
@@ -85,7 +86,7 @@ import org.jooq.util.mysql.information_schema.tables.Columns;
 import org.jooq.util.mysql.information_schema.tables.KeyColumnUsage;
 import org.jooq.util.mysql.information_schema.tables.ReferentialConstraints;
 import org.jooq.util.mysql.information_schema.tables.Schemata;
-import org.jooq.util.mysql.information_schema.tables.TableConstraints;
+import org.jooq.util.mysql.information_schema.tables.Statistics;
 import org.jooq.util.mysql.information_schema.tables.Tables;
 import org.jooq.util.mysql.mysql.enums.ProcType;
 import org.jooq.util.mysql.mysql.tables.Proc;
@@ -99,11 +100,11 @@ public class MySQLDatabase extends AbstractDatabase {
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : fetchKeys("PRIMARY KEY")) {
-            SchemaDefinition schema = getSchema(record.getValue(KeyColumnUsage.TABLE_SCHEMA));
-            String constraintName = record.getValue(KeyColumnUsage.CONSTRAINT_NAME);
-            String tableName = record.getValue(KeyColumnUsage.TABLE_NAME);
-            String columnName = record.getValue(KeyColumnUsage.COLUMN_NAME);
+        for (Record record : fetchKeys(true)) {
+            SchemaDefinition schema = getSchema(record.getValue(Statistics.TABLE_SCHEMA));
+            String constraintName = record.getValue(Statistics.INDEX_NAME);
+            String tableName = record.getValue(Statistics.TABLE_NAME);
+            String columnName = record.getValue(Statistics.COLUMN_NAME);
 
             String key = getKeyName(tableName, constraintName);
             TableDefinition table = getTable(schema, tableName);
@@ -116,11 +117,11 @@ public class MySQLDatabase extends AbstractDatabase {
 
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : fetchKeys("UNIQUE")) {
-            SchemaDefinition schema = getSchema(record.getValue(KeyColumnUsage.TABLE_SCHEMA));
-            String constraintName = record.getValue(KeyColumnUsage.CONSTRAINT_NAME);
-            String tableName = record.getValue(KeyColumnUsage.TABLE_NAME);
-            String columnName = record.getValue(KeyColumnUsage.COLUMN_NAME);
+        for (Record record : fetchKeys(false)) {
+            SchemaDefinition schema = getSchema(record.getValue(Statistics.TABLE_SCHEMA));
+            String constraintName = record.getValue(Statistics.INDEX_NAME);
+            String tableName = record.getValue(Statistics.TABLE_NAME);
+            String columnName = record.getValue(Statistics.COLUMN_NAME);
 
             String key = getKeyName(tableName, constraintName);
             TableDefinition table = getTable(schema, tableName);
@@ -135,24 +136,26 @@ public class MySQLDatabase extends AbstractDatabase {
         return "KEY_" + tableName + "_" + keyName;
     }
 
-    private Result<Record4<String, String, String, String>> fetchKeys(String constraintType) {
+    private Result<Record4<String, String, String, String>> fetchKeys(boolean primary) {
+
+        // [#3560] It has been shown that querying the STATISTICS table is much faster on
+        // very large databases than going through TABLE_CONSTRAINTS and KEY_COLUMN_USAGE
         return create().select(
-                KeyColumnUsage.TABLE_SCHEMA,
-                KeyColumnUsage.CONSTRAINT_NAME,
-                KeyColumnUsage.TABLE_NAME,
-                KeyColumnUsage.COLUMN_NAME)
-            .from(KEY_COLUMN_USAGE)
-            .join(TABLE_CONSTRAINTS)
-            .on(KeyColumnUsage.TABLE_SCHEMA.equal(TableConstraints.TABLE_SCHEMA))
-            .and(KeyColumnUsage.TABLE_NAME.equal(TableConstraints.TABLE_NAME))
-            .and(KeyColumnUsage.CONSTRAINT_NAME.equal(TableConstraints.CONSTRAINT_NAME))
-            .where(TableConstraints.CONSTRAINT_TYPE.equal(constraintType))
-            .and(KeyColumnUsage.TABLE_SCHEMA.in(getInputSchemata()))
-            .orderBy(
-                KeyColumnUsage.TABLE_SCHEMA.asc(),
-                KeyColumnUsage.TABLE_NAME.asc(),
-                KeyColumnUsage.ORDINAL_POSITION.asc())
-            .fetch();
+                           Statistics.TABLE_SCHEMA,
+                           Statistics.TABLE_NAME,
+                           Statistics.COLUMN_NAME,
+                           Statistics.INDEX_NAME)
+                       .from(STATISTICS)
+                       .where(Statistics.TABLE_SCHEMA.in(getInputSchemata()))
+                       .and(primary
+                           ? Statistics.INDEX_NAME.eq(inline("PRIMARY"))
+                           : Statistics.INDEX_NAME.ne(inline("PRIMARY")).and(Statistics.NON_UNIQUE.eq(inline(0L))))
+                       .orderBy(
+                           Statistics.TABLE_SCHEMA,
+                           Statistics.TABLE_NAME,
+                           Statistics.INDEX_NAME,
+                           Statistics.SEQ_IN_INDEX)
+                       .fetch();
     }
 
     @Override

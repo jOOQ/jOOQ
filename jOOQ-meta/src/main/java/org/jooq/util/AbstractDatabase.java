@@ -125,6 +125,7 @@ public abstract class AbstractDatabase implements Database {
     private List<RoutineDefinition>                                          routines;
     private List<PackageDefinition>                                          packages;
     private Relations                                                        relations;
+    private boolean                                                          includeRelations = true;
 
     private transient Map<SchemaDefinition, List<SequenceDefinition>>        sequencesBySchema;
     private transient Map<SchemaDefinition, List<IdentityDefinition>>        identitiesBySchema;
@@ -457,6 +458,16 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final void setIncludeRelations(boolean includeRelations) {
+        this.includeRelations = includeRelations;
+    }
+
+    @Override
+    public final boolean includeRelations() {
+        return includeRelations;
+    }
+
+    @Override
     public final List<SequenceDefinition> getSequences(SchemaDefinition schema) {
         if (sequences == null) {
             sequences = new ArrayList<SequenceDefinition>();
@@ -750,11 +761,17 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final Relations getRelations() {
         if (relations == null) {
-            try {
-                relations = getRelations0();
-            } catch (Exception e) {
-                log.error("Error while fetching relations", e);
-                relations = new DefaultRelations();
+            relations = new DefaultRelations();
+
+            // [#3559] If the code generator doesn't need relation information, we shouldn't
+            // populate them here to avoid running potentially expensive queries.
+            if (includeRelations) {
+                try {
+                    relations = getRelations0();
+                }
+                catch (Exception e) {
+                    log.error("Error while fetching relations", e);
+                }
             }
         }
 

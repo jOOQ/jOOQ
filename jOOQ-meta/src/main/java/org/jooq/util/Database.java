@@ -384,6 +384,16 @@ public interface Database {
     boolean dateAsTimestamp();
 
     /**
+     * [#3559] Whether relations (i.e. constraints) should be included in this database.
+     */
+    void setIncludeRelations(boolean includeRelations);
+
+    /**
+     * [#3559] Whether relations (i.e. constraints) should be included in this database.
+     */
+    boolean includeRelations();
+
+    /**
      * Check for the existence of a table in the dictionary views.
      */
     boolean exists(Table<?> table);

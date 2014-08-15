@@ -144,6 +144,7 @@ public class JavaGenerator extends AbstractGenerator {
     public final void generate(Database db) {
         this.database = db;
         this.database.addFilter(new AvoidAmbiguousClassesFilter());
+        this.database.setIncludeRelations(generateRelations());
 
         String url = "";
         try {

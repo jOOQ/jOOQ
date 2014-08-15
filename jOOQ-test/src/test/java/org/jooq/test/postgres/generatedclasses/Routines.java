@@ -464,6 +464,26 @@ public class Routines {
 	}
 
 	/**
+	 * Get <code>public.second_max</code> as a field
+	 */
+	public static org.jooq.AggregateFunction<java.lang.Integer> secondMax(java.lang.Integer __1) {
+		org.jooq.test.postgres.generatedclasses.routines.SecondMax f = new org.jooq.test.postgres.generatedclasses.routines.SecondMax();
+		f.set__1(__1);
+
+		return f.asAggregateFunction();
+	}
+
+	/**
+	 * Get <code>public.second_max</code> as a field
+	 */
+	public static org.jooq.AggregateFunction<java.lang.Integer> secondMax(org.jooq.Field<java.lang.Integer> __1) {
+		org.jooq.test.postgres.generatedclasses.routines.SecondMax f = new org.jooq.test.postgres.generatedclasses.routines.SecondMax();
+		f.set__1(__1);
+
+		return f.asAggregateFunction();
+	}
+
+	/**
 	 * Get <code>public.f_search_book</code> as a field
 	 */
 	public static org.jooq.test.postgres.generatedclasses.tables.FSearchBook fSearchBook(java.lang.String pTitle, java.lang.Long pLimit, java.lang.Long pOffset) {

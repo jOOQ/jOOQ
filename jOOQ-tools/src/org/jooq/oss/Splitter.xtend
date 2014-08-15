@@ -52,12 +52,14 @@ import org.jooq.xtend.Generators
 
 import static java.util.regex.Pattern.*
 
+// Use this to generate the jOOQ Open Source Edition code
 class RemoveProCode {
     def static void main(String[] args) {
         Splitter::split("pro", "/../workspace-jooq-oss");
     }
 }
 
+// Use this to generate the jOOQ Professional and Enterprise Edition code
 class RemoveTrialCode {
     def static void main(String[] args) {
         Splitter::split("trial", "/../workspace-jooq-pro");

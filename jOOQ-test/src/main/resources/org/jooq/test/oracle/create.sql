@@ -1874,6 +1874,8 @@ DROP PUBLIC SYNONYM number_table_public/
 DROP PUBLIC SYNONYM number_object_public/
 DROP SYNONYM number_table_test/
 DROP SYNONYM number_object_test/
+DROP PUBLIC SYNONYM transitive_synonym_2/
+DROP SYNONYM transitive_synonym_1/
 DROP TYPE multi_schema.number_table/
 DROP TYPE multi_schema.number_object/
 
@@ -1885,6 +1887,9 @@ CREATE SYNONYM test.number_object_test FOR multi_schema.number_object/
 CREATE PUBLIC SYNONYM number_table_public FOR multi_schema.number_table/
 CREATE PUBLIC SYNONYM number_object_public FOR multi_schema.number_object/
 
+CREATE SYNONYM transitive_synonym_1 FOR number_object_public/
+CREATE PUBLIC SYNONYM transitive_synonym_2 FOR test.transitive_synonym_1/
+
 CREATE PACKAGE multi_schema.ms_synonym_package AS
   FUNCTION actual_table RETURN multi_schema.number_table;
   FUNCTION public_table RETURN number_table_public;
@@ -1893,6 +1898,8 @@ CREATE PACKAGE multi_schema.ms_synonym_package AS
   FUNCTION actual_object RETURN multi_schema.number_object;
   FUNCTION public_object RETURN number_object_public;
   FUNCTION test_object RETURN test.number_object_test;
+  
+  FUNCTION test_transitive RETURN transitive_synonym_2;
 END ms_synonym_package;
 /
 CREATE PACKAGE BODY multi_schema.ms_synonym_package AS
@@ -1926,6 +1933,11 @@ CREATE PACKAGE BODY multi_schema.ms_synonym_package AS
   BEGIN
     RETURN number_object(7, 8, 9);
   END;
+  
+  FUNCTION test_transitive RETURN transitive_synonym_2 IS
+  BEGIN
+    RETURN number_object(7, 8, 9);
+  END;
 END ms_synonym_package;
 /
 
@@ -1937,6 +1949,8 @@ CREATE PACKAGE test.test_synonym_package AS
   FUNCTION actual_object RETURN multi_schema.number_object;
   FUNCTION public_object RETURN number_object_public;
   FUNCTION test_object RETURN test.number_object_test;
+  
+  FUNCTION test_transitive RETURN transitive_synonym_2;
 END test_synonym_package;
 /
 CREATE PACKAGE BODY test.test_synonym_package AS
@@ -1967,6 +1981,11 @@ CREATE PACKAGE BODY test.test_synonym_package AS
   END;
   
   FUNCTION test_object RETURN test.number_object_test IS
+  BEGIN
+    RETURN multi_schema.number_object(7, 8, 9);
+  END;
+  
+  FUNCTION test_transitive RETURN transitive_synonym_2 IS
   BEGIN
     RETURN multi_schema.number_object(7, 8, 9);
   END;

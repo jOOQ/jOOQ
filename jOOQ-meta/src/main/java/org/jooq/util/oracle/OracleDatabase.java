@@ -41,8 +41,16 @@
 
 package org.jooq.util.oracle;
 
+import static org.jooq.impl.DSL.connectByRoot;
 import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.prior;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.DSL.substring;
+import static org.jooq.impl.DSL.sysConnectByPath;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.util.oracle.sys.Tables.ALL_COLL_TYPES;
 import static org.jooq.util.oracle.sys.Tables.ALL_CONSTRAINTS;
@@ -53,6 +61,7 @@ import static org.jooq.util.oracle.sys.Tables.ALL_PROCEDURES;
 import static org.jooq.util.oracle.sys.Tables.ALL_QUEUES;
 import static org.jooq.util.oracle.sys.Tables.ALL_QUEUE_TABLES;
 import static org.jooq.util.oracle.sys.Tables.ALL_SEQUENCES;
+import static org.jooq.util.oracle.sys.Tables.ALL_SYNONYMS;
 import static org.jooq.util.oracle.sys.Tables.ALL_TAB_COMMENTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_TYPES;
 import static org.jooq.util.oracle.sys.Tables.ALL_USERS;
@@ -66,8 +75,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.DSLContext;
+import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record4;
+import org.jooq.Record5;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
@@ -90,6 +102,8 @@ import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
 import org.jooq.util.oracle.sys.tables.AllConstraints;
+import org.jooq.util.oracle.sys.tables.AllObjects;
+import org.jooq.util.oracle.sys.tables.AllSynonyms;
 
 /**
  * @author Lukas Eder
@@ -100,6 +114,7 @@ public class OracleDatabase extends AbstractDatabase {
 
     private List<OracleQueueDefinition>                                  queues;
     private transient Map<SchemaDefinition, List<OracleQueueDefinition>> queuesBySchema;
+    private Map<Name, Name>                                              synonyms;
 
     private static Boolean                                               is10g;
 
@@ -559,5 +574,65 @@ public class OracleDatabase extends AbstractDatabase {
 
     public final OracleQueueDefinition getQueue(SchemaDefinition schema, String name, boolean ignoreCase) {
         return getDefinition(getQueues(schema), name, ignoreCase);
+    }
+
+    final Name getSynonym(Name object) {
+        if (synonyms == null) {
+            synonyms = new LinkedHashMap<Name, Name>();
+
+            AllObjects o = ALL_OBJECTS;
+            AllSynonyms s1 = ALL_SYNONYMS;
+            AllSynonyms s2 = ALL_SYNONYMS.as("s2");
+            AllSynonyms s3 = ALL_SYNONYMS.as("s3");
+
+            Field<String> dot = inline(".");
+            String arr = " <- ";
+
+            for (Record5<String, String, String, String, String> record : create()
+                    .select(
+                        s3.OWNER,
+                        s3.SYNONYM_NAME,
+                        connectByRoot(s3.TABLE_OWNER).as(s3.TABLE_OWNER),
+                        connectByRoot(s3.TABLE_NAME).as(s3.TABLE_NAME),
+                        substring(sysConnectByPath(s3.TABLE_OWNER.concat(dot).concat(s3.TABLE_NAME), arr).concat(inline(arr)).concat(s3.OWNER).concat(dot).concat(s3.SYNONYM_NAME), inline(5)))
+                    .from(
+                        select()
+                        .from(
+                            select(s1.OWNER, s1.SYNONYM_NAME, s1.TABLE_OWNER, s1.TABLE_NAME)
+                            .from(s1)
+                            
+                            // If a PUBLIC SYNONYM is referenced, unfortunately, it doesn't generate
+                            // TABLE_OWNER = 'PUBLIC' in the ALL_SYNONYMS table. This simple trick will 
+                            // duplicate all SYNONYMs as they might potentially be PUBLIC
+                            .union(
+                            select(s1.OWNER, s1.SYNONYM_NAME, inline("PUBLIC"), s1.TABLE_NAME)
+                            .from(s1))
+                            .asTable("s2")
+                        )
+                        
+                        // Avoid dangling self-references from invalid SYNONYMs
+                        .where(row(s2.OWNER, s2.SYNONYM_NAME).ne(s2.TABLE_OWNER, s2.TABLE_NAME))
+                        .asTable("s3")
+                    )
+                    .connectBy(s3.TABLE_OWNER.eq(prior(s3.OWNER)))
+                    .and(s3.TABLE_NAME.eq(prior(s3.SYNONYM_NAME)))
+                    
+                    // Only consider SYNONYM hierarchies that end in a non-SYNONYM object from our
+                    // input schemata
+                    .startWith(DSL.exists(
+                        selectOne()
+                        .from(o)
+                        .where(s3.TABLE_OWNER.eq(o.OWNER))
+                        .and(s3.TABLE_NAME.eq(o.OBJECT_NAME))
+                        .and(o.OBJECT_TYPE.ne(inline("SYNONYM")))
+                        .and(o.OWNER.in(getInputSchemata()))
+                    ))
+                    .fetch()) {
+
+                synonyms.put(name(record.value1(), record.value2()), name(record.value3(), record.value4()));
+            }
+        }
+
+        return synonyms.get(object);
     }
 }

@@ -126,9 +126,9 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
+import org.jooq.Record14;
 import org.jooq.Record2;
 import org.jooq.Record3;
-import org.jooq.Record4;
 import org.jooq.Record8;
 import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
@@ -1755,35 +1755,96 @@ public class OracleTest extends jOOQAbstractTest<
 
         // Standalone procedure calls:
         // ---------------------------
-        NumberTableRecord t1 = MsSynonymPackage.actualTable(conf);
-        NumberObjectRecord o1 = MsSynonymPackage.actualObject(conf);
-        NumberTableRecord t2 = TestSynonymPackage.actualTable(conf);
-        NumberObjectRecord o2 = TestSynonymPackage.actualObject(conf);
+        NumberTableRecord t11 = MsSynonymPackage.actualTable(conf);
+        NumberTableRecord t12 = MsSynonymPackage.publicTable(conf);
+        NumberTableRecord t13 = MsSynonymPackage.testTable(conf);
+
+        NumberTableRecord t21 = TestSynonymPackage.actualTable(conf);
+        NumberTableRecord t22 = TestSynonymPackage.publicTable(conf);
+        NumberTableRecord t23 = TestSynonymPackage.testTable(conf);
+
+        NumberObjectRecord o11 = MsSynonymPackage.actualObject(conf);
+        NumberObjectRecord o12 = MsSynonymPackage.publicObject(conf);
+        NumberObjectRecord o13 = MsSynonymPackage.testObject(conf);
+        NumberObjectRecord o14 = MsSynonymPackage.testTransitive(conf);
+
+        NumberObjectRecord o21 = TestSynonymPackage.actualObject(conf);
+        NumberObjectRecord o22 = TestSynonymPackage.publicObject(conf);
+        NumberObjectRecord o23 = TestSynonymPackage.testObject(conf);
+        NumberObjectRecord o24 = TestSynonymPackage.testTransitive(conf);
 
         // In SQL
-        Record4<
+        Record14<
             NumberTableRecord,
+            NumberTableRecord,
+            NumberTableRecord,
+
+            NumberTableRecord,
+            NumberTableRecord,
+            NumberTableRecord,
+
             NumberObjectRecord,
-            NumberTableRecord,
-            NumberObjectRecord> record =
+            NumberObjectRecord,
+            NumberObjectRecord,
+            NumberObjectRecord,
+
+            NumberObjectRecord,
+            NumberObjectRecord,
+            NumberObjectRecord,
+            NumberObjectRecord
+        > record =
         create().select(
             MsSynonymPackage.actualTable(),
-            MsSynonymPackage.actualObject(),
+            MsSynonymPackage.publicTable(),
+            MsSynonymPackage.testTable(),
+
             TestSynonymPackage.actualTable(),
-            TestSynonymPackage.actualObject())
+            TestSynonymPackage.publicTable(),
+            TestSynonymPackage.testTable(),
+
+            MsSynonymPackage.actualObject(),
+            MsSynonymPackage.publicObject(),
+            MsSynonymPackage.testObject(),
+            MsSynonymPackage.testTransitive(),
+
+            TestSynonymPackage.actualObject(),
+            TestSynonymPackage.publicObject(),
+            TestSynonymPackage.testObject(),
+            TestSynonymPackage.testTransitive()
+        )
         .fetchOne();
 
-        assertEquals(asList(1, 2, 3), t1.getList());
+        assertEquals(asList(1, 2, 3), t11.getList());
+        assertEquals(asList(4, 5, 6), t12.getList());
+        assertEquals(asList(7, 8, 9), t13.getList());
+        assertEquals(asList(1, 2, 3), t21.getList());
+        assertEquals(asList(4, 5, 6), t22.getList());
+        assertEquals(asList(7, 8, 9), t23.getList());
+
         assertEquals(asList(1, 2, 3), record.value1().getList());
+        assertEquals(asList(4, 5, 6), record.value2().getList());
+        assertEquals(asList(7, 8, 9), record.value3().getList());
+        assertEquals(asList(1, 2, 3), record.value4().getList());
+        assertEquals(asList(4, 5, 6), record.value5().getList());
+        assertEquals(asList(7, 8, 9), record.value6().getList());
 
-        assertEquals(asList(1, 2, 3), asList(o1.into(Integer[].class)));
-        assertEquals(asList(1, 2, 3), asList(record.value2().into(Integer[].class)));
+        assertEquals(asList(1, 2, 3), asList(o11.into(Integer[].class)));
+        assertEquals(asList(4, 5, 6), asList(o12.into(Integer[].class)));
+        assertEquals(asList(7, 8, 9), asList(o13.into(Integer[].class)));
+        assertEquals(asList(7, 8, 9), asList(o14.into(Integer[].class)));
+        assertEquals(asList(1, 2, 3), asList(o21.into(Integer[].class)));
+        assertEquals(asList(4, 5, 6), asList(o22.into(Integer[].class)));
+        assertEquals(asList(7, 8, 9), asList(o23.into(Integer[].class)));
+        assertEquals(asList(7, 8, 9), asList(o24.into(Integer[].class)));
 
-        assertEquals(asList(1, 2, 3), t2.getList());
-        assertEquals(asList(1, 2, 3), record.value3().getList());
-
-        assertEquals(asList(1, 2, 3), asList(o2.into(Integer[].class)));
-        assertEquals(asList(1, 2, 3), asList(record.value4().into(Integer[].class)));
+        assertEquals(asList(1, 2, 3), asList(record.value7().into(Integer[].class)));
+        assertEquals(asList(4, 5, 6), asList(record.value8().into(Integer[].class)));
+        assertEquals(asList(7, 8, 9), asList(record.value9().into(Integer[].class)));
+        assertEquals(asList(7, 8, 9), asList(record.value10().into(Integer[].class)));
+        assertEquals(asList(1, 2, 3), asList(record.value11().into(Integer[].class)));
+        assertEquals(asList(4, 5, 6), asList(record.value12().into(Integer[].class)));
+        assertEquals(asList(7, 8, 9), asList(record.value13().into(Integer[].class)));
+        assertEquals(asList(7, 8, 9), asList(record.value14().into(Integer[].class)));
     }
 }
 

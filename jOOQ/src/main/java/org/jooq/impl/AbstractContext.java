@@ -63,6 +63,7 @@ import org.jooq.VisitContext;
 import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.ParamType;
+import org.jooq.conf.Settings;
 
 /**
  * @author Lukas Eder
@@ -246,6 +247,11 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
         }
 
         @Override
+        public final Settings settings() {
+            return Utils.settings(configuration());
+        }
+
+        @Override
         public final SQLDialect dialect() {
             return Utils.configuration(configuration()).dialect();
         }
@@ -314,6 +320,11 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     @Override
     public final Configuration configuration() {
         return configuration;
+    }
+
+    @Override
+    public final Settings settings() {
+        return Utils.settings(configuration());
     }
 
     @Override

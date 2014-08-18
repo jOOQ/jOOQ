@@ -43,6 +43,7 @@ package org.jooq;
 import java.util.Collection;
 import java.util.List;
 
+import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 
 /**
@@ -67,6 +68,14 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @return the <code>DAO</code>'s underlying <code>Configuration</code>
      */
     Configuration configuration();
+
+    /**
+     * The settings wrapped by this context.
+     * <p>
+     * This method is a convenient way of accessing
+     * <code>configuration().settings()</code>.
+     */
+    Settings settings();
 
     /**
      * The {@link SQLDialect} wrapped by this context.

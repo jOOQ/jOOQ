@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CREATE_SEQUENCE;
 import static org.jooq.Clause.CREATE_SEQUENCE_SEQUENCE;
+// ...
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -80,8 +81,15 @@ class CreateSequenceImpl extends AbstractQuery implements
         ctx.start(CREATE_SEQUENCE_SEQUENCE)
            .keyword("create sequence")
            .sql(" ")
-           .visit(sequence)
-           .end(CREATE_SEQUENCE_SEQUENCE);
+           .visit(sequence);
+
+        /* [pro] xx
+        xx xxx xxxxxx xxxxxxxx xx xxxxxxxxx xxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxx
+        xx xxxxxxxxxxxxx xx xxxxxxxxxx
+            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxx
+        xx [/pro] */
+
+        ctx.end(CREATE_SEQUENCE_SEQUENCE);
     }
 
     @Override

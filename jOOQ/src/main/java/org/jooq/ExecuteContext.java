@@ -116,6 +116,14 @@ public interface ExecuteContext {
     Configuration configuration();
 
     /**
+     * The settings wrapped by this context.
+     * <p>
+     * This method is a convenient way of accessing
+     * <code>configuration().settings()</code>.
+     */
+    Settings settings();
+
+    /**
      * The {@link SQLDialect} wrapped by this context.
      * <p>
      * This method is a convenient way of accessing

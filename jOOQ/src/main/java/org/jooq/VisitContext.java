@@ -42,6 +42,8 @@ package org.jooq;
 
 import java.util.Map;
 
+import org.jooq.conf.Settings;
+
 /**
  * A context object for {@link QueryPart} traversal passed to registered
  * {@link VisitListener}'s.
@@ -93,6 +95,14 @@ public interface VisitContext {
      * The configuration wrapped by this context.
      */
     Configuration configuration();
+
+    /**
+     * The settings wrapped by this context.
+     * <p>
+     * This method is a convenient way of accessing
+     * <code>configuration().settings()</code>.
+     */
+    Settings settings();
 
     /**
      * The {@link SQLDialect} wrapped by this context.

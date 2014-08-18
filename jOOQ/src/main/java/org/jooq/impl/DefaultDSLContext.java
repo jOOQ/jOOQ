@@ -281,6 +281,11 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
+    public Settings settings() {
+        return Utils.settings(configuration());
+    }
+
+    @Override
     public SQLDialect dialect() {
         return Utils.configuration(configuration()).dialect();
     }

@@ -40,6 +40,8 @@
  */
 package org.jooq;
 
+import org.jooq.conf.Settings;
+
 /**
  * A context object that is used to pass arguments to the various methods of
  * {@link TransactionProvider}.
@@ -52,6 +54,14 @@ public interface TransactionContext {
      * The configuration scoped to this transaction and its nested transactions.
      */
     Configuration configuration();
+
+    /**
+     * The settings wrapped by this context.
+     * <p>
+     * This method is a convenient way of accessing
+     * <code>configuration().settings()</code>.
+     */
+    Settings settings();
 
     /**
      * The {@link SQLDialect} wrapped by this context.

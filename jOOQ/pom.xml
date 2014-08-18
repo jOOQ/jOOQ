@@ -54,7 +54,7 @@
                     <schemaDirectory>src/main/resources/xsd</schemaDirectory>
                     <bindingDirectory>src/main/resources/xjb</bindingDirectory>
                     <schemaIncludes>
-                        <include>jooq-runtime-3.3.0.xsd</include>
+                        <include>jooq-runtime-3.5.0.xsd</include>
                     </schemaIncludes>
                     <generatePackage>org.jooq.conf</generatePackage>
                     <args>
@@ -86,12 +86,12 @@
                             <groupId>org.jvnet.jaxb2_commons</groupId>
                             <artifactId>jaxb2-basics-annotate</artifactId>
                             <version>0.6.2</version>
-                        </plugin>              
+                        </plugin>
                         <plugin>
                             <groupId>org.jvnet.jaxb2_commons</groupId>
                             <artifactId>jaxb2-basics</artifactId>
                             <version>0.5.3</version>
-                        </plugin>      
+                        </plugin>
                     </plugins>
                 </configuration>
             </plugin>

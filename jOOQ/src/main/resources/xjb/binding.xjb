@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jaxb:bindings 
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+<jaxb:bindings
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
+    xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:annox="http://annox.dev.java.net"
     xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
@@ -12,12 +12,12 @@
     <jaxb:globalBindings>
  
         <!-- Force all classes implements Serializable -->
-        <xjc:serializable uid="330" />
+        <xjc:serializable uid="350" />
     </jaxb:globalBindings>
  
  
     <!-- Annotate the following classes with @SuppressWarnings -->
-    <jaxb:bindings schemaLocation="../xsd/jooq-runtime-3.3.0.xsd" multiple="true" node="//xs:complexType">
+    <jaxb:bindings schemaLocation="../xsd/jooq-runtime-3.5.0.xsd" multiple="true" node="//xs:complexType">
         <inheritance:extends>org.jooq.conf.SettingsBase</inheritance:extends>
 		<inheritance:implements>java.lang.Cloneable</inheritance:implements>
         <annox:annotate>

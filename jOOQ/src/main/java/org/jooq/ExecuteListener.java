@@ -1015,6 +1015,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * was thrown by the database or <code>null</code>, if no exception is being
      * thrown.</li>
      * </ul>
+     * <p>
+     * This method is only invoked if a warning appears. Note that fetching of
+     * warnings can be disabled using {@link Settings#isFetchWarnings()}
      */
     void warning(ExecuteContext ctx);
 }

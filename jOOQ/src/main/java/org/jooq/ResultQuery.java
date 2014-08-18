@@ -41,6 +41,7 @@
 
 package org.jooq;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -1402,6 +1403,13 @@ public interface ResultQuery<R extends Record> extends Query {
      * Regardless of this setting, {@link #fetchLazy()} is the only way in jOOQ
      * not to fetch all data in memory. However, you may influence how your JDBC
      * driver interacts with your database through specifying a fetch size.
+     * <p>
+     * Note that some databases (in particular PostgreSQL) do not like fetch
+     * sizes being combined with
+     * <code>{@link Connection#getAutoCommit()} == true</code>. For more
+     * information, see <a href=
+     * "http://jdbc.postgresql.org/documentation/head/query.html#query-with-cursor"
+     * >this page here</a>
      *
      * @see Statement#setFetchSize(int)
      */

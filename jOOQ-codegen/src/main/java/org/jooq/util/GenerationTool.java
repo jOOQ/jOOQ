@@ -45,6 +45,7 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.tools.StringUtils.isBlank;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -170,7 +171,19 @@ public class GenerationTool {
         }
     }
 
+    /**
+     * @deprecated - Use {@link #generate(Configuration)} instead
+     */
+    @Deprecated
     public static void main(Configuration configuration) throws Exception {
+        new GenerationTool().run(configuration);
+    }
+
+    public static void generate(String xml) throws Exception {
+        new GenerationTool().run(load(new ByteArrayInputStream(xml.getBytes("UTF-8"))));
+    }
+
+    public static void generate(Configuration configuration) throws Exception {
         new GenerationTool().run(configuration);
     }
 

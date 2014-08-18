@@ -10,7 +10,7 @@ install:
   - sh -c 'cd jOOQ-examples/jOOQ-spring-guice-example && mvn install -DskipTests=true'
   - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-test-utils && mvn install -DskipTest=true' || echo "Skipping for JDK6 and 7"
   - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-test && mvn install -DskipTests=true' || echo "Skipping for JDK6 and 7"
-  - sh -c 'cd jOOQ-examples/jOOQ-codegen-gradle && gradlew build'
+  - sh -c 'cd jOOQ-examples/jOOQ-codegen-gradle && ./gradlew build'
 script: 
   - sh -c 'mvn test'
   - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-examples/jOOQ-spring-example && mvn test' || echo "Skipping for JDK6 and 7"

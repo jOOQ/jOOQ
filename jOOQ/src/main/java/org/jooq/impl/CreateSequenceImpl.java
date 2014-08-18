@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CREATE_SEQUENCE;
 import static org.jooq.Clause.CREATE_SEQUENCE_SEQUENCE;
+import static org.jooq.SQLDialect.SQLSERVER;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -80,8 +81,15 @@ class CreateSequenceImpl extends AbstractQuery implements
         ctx.start(CREATE_SEQUENCE_SEQUENCE)
            .keyword("create sequence")
            .sql(" ")
-           .visit(sequence)
-           .end(CREATE_SEQUENCE_SEQUENCE);
+           .visit(sequence);
+
+        /* [pro] */
+        // SQL Server defaults to sequences starting with -9223372036854775808
+        if (ctx.family() == SQLSERVER)
+            ctx.keyword("start with").sql(" 1");
+        /* [/pro] */
+
+        ctx.end(CREATE_SEQUENCE_SEQUENCE);
     }
 
     @Override

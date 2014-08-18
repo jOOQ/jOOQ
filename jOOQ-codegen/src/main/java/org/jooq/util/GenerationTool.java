@@ -450,7 +450,7 @@ public class GenerationTool {
 
     private static void errorIfNull(Object o, String message) {
         if (o == null) {
-            log.error(message + " For details, see http://www.jooq.org/xsd/jooq-codegen-3.3.0.xsd");
+            log.error(message + " For details, see " + Constants.NS_CODEGEN);
             System.exit(-1);
         }
     }

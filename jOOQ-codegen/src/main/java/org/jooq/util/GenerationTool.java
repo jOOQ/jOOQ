@@ -234,9 +234,7 @@ public class GenerationTool {
 
             generator.setStrategy(strategy);
 
-            org.jooq.util.jaxb.Database d = g.getDatabase();
-            errorIfNull(d, "The <database/> tag is mandatory.");
-
+            org.jooq.util.jaxb.Database d = defaultIfNull(g.getDatabase(), new org.jooq.util.jaxb.Database());
             String databaseName = trim(d.getName());
             Class<? extends Database> databaseClass = isBlank(databaseName)
                 ? databaseClass(j)

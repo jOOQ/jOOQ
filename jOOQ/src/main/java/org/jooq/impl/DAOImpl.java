@@ -60,6 +60,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
+import org.jooq.conf.Settings;
 
 /**
  * A common base implementation for generated DAO's.
@@ -102,6 +103,11 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     @Override
     public final Configuration configuration() {
         return configuration;
+    }
+
+    @Override
+    public final Settings settings() {
+        return Utils.settings(configuration());
     }
 
     @Override

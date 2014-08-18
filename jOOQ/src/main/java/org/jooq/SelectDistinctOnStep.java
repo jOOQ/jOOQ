@@ -40,8 +40,9 @@
  */
 package org.jooq;
 
-import java.util.Collection;
+import static org.jooq.SQLDialect.POSTGRES;
 
+import java.util.Collection;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -85,17 +86,39 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectSelectStep<R extends Record> extends SelectDistinctOnStep<R> {
+public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R> {
 
     /**
-     * Add additional fields to the <code>SELECT</code> clause of this query
+     * Add the PostgreSQL-specific <code>ON(...)</code> clause to a
+     * <code>SELECT DISTINCT ON (...)</code> statement.
+     * <p>
+     * This implicitly enforces the <code>DISTINCT</code> clause, no matter if
+     * it is added explicitly via the jOOQ API.
      */
-    @Support
-    SelectSelectStep<Record> select(Field<?>... fields);
+    @Support({ POSTGRES })
+    SelectIntoStep<R> on(Field<?>... fields);
 
     /**
-     * Add additional fields to the <code>SELECT</code> clause of this query
+     * Add the PostgreSQL-specific <code>ON(...)</code> clause to a
+     * <code>SELECT DISTINCT ON (...)</code> statement.
+     * <p>
+     * This implicitly enforces the <code>DISTINCT</code> clause, no matter if
+     * it is added explicitly via the jOOQ API.
      */
-    @Support
-    SelectSelectStep<Record> select(Collection<? extends Field<?>> fields);
+    @Support({ POSTGRES })
+    SelectIntoStep<R> on(Collection<? extends Field<?>> fields);
+
+    /**
+     * Add the PostgreSQL-specific <code>ON(...)</code> clause to a
+     * <code>SELECT DISTINCT ON (...)</code> statement.
+     */
+    @Support({ POSTGRES })
+    SelectIntoStep<R> distinctOn(Field<?>... fields);
+
+    /**
+     * Add the PostgreSQL-specific <code>ON(...)</code> clause to a
+     * <code>SELECT DISTINCT ON (...)</code> statement.
+     */
+    @Support({ POSTGRES })
+    SelectIntoStep<R> distinctOn(Collection<? extends Field<?>> fields);
 }

@@ -77,6 +77,7 @@ import org.jooq.SelectConditionStep;
 import org.jooq.SelectConnectByConditionStep;
 import org.jooq.SelectForUpdateOfStep;
 import org.jooq.SelectHavingConditionStep;
+import org.jooq.SelectIntoStep;
 import org.jooq.SelectJoinStep;
 import org.jooq.SelectOffsetStep;
 import org.jooq.SelectOnConditionStep;
@@ -237,6 +238,28 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final SelectImpl select(Collection<? extends Field<?>> fields) {
         getQuery().addSelect(fields);
+        return this;
+    }
+
+    @Override
+    public final SelectIntoStep<R> on(Field<?>... fields) {
+        return distinctOn(Arrays.asList(fields));
+    }
+
+    @Override
+    public final SelectIntoStep<R> on(Collection<? extends Field<?>> fields) {
+        return distinctOn(fields);
+    }
+
+    @Override
+    public final SelectIntoStep<R> distinctOn(Field<?>... fields) {
+        getQuery().addDistinctOn(fields);
+        return this;
+    }
+
+    @Override
+    public final SelectIntoStep<R> distinctOn(Collection<? extends Field<?>> fields) {
+        getQuery().addDistinctOn(fields);
         return this;
     }
 

@@ -139,6 +139,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     private String                          hint;
     private String                          option;
     private boolean                         distinct;
+    private final QueryPartList<Field<?>>   distinctOn;
     private boolean                         forUpdate;
     private final QueryPartList<Field<?>>   forUpdateOf;
     private final TableList                 forUpdateOfTables;
@@ -177,6 +178,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         this.with = with;
         this.distinct = distinct;
+        this.distinctOn = new QueryPartList<Field<?>>();
         this.select = new SelectFieldList();
         this.from = new TableList();
         this.condition = new ConditionProviderImpl();
@@ -620,7 +622,10 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         x
         xx [/pro] */
 
-        if (distinct) {
+        if (!distinctOn.isEmpty()) {
+            context.keyword("distinct on").sql(" (").visit(distinctOn).sql(") ");
+        }
+        else if (distinct) {
             context.keyword("distinct").sql(" ");
         }
 
@@ -923,6 +928,16 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     @Override
     public final void setDistinct(boolean distinct) {
         this.distinct = distinct;
+    }
+
+    @Override
+    public final void addDistinctOn(Field<?>... fields) {
+        addDistinctOn(Arrays.asList(fields));
+    }
+
+    @Override
+    public final void addDistinctOn(Collection<? extends Field<?>> fields) {
+        this.distinctOn.addAll(fields);
     }
 
     @Override

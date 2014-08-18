@@ -96,6 +96,22 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void setDistinct(boolean distinct);
 
     /**
+     * Add a PostgreSQL-specific <code>DISTINCT ON (fields...)</code> clause.
+     * <p>
+     * This also sets the <code>distinct</code> flag to <code>true</code>
+     */
+    @Support({ POSTGRES })
+    void addDistinctOn(Field<?>... fields);
+
+    /**
+     * Add a PostgreSQL-specific <code>DISTINCT ON (fields...)</code> clause.
+     * <p>
+     * This also sets the <code>distinct</code> flag to <code>true</code>
+     */
+    @Support({ POSTGRES })
+    void addDistinctOn(Collection<? extends Field<?>> fields);
+
+    /**
      * Add <code>INTO</code> clause to the <code>SELECT</code> statement.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })

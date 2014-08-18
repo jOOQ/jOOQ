@@ -1388,4 +1388,25 @@ public class PostgresTest extends jOOQAbstractTest<
         assertEquals(4, (int) record.value3());
         assertEquals(2, (int) record.value4());
     }
+
+    @Test
+    public void testPostgresDistinctOnTest() {
+        Result<Record2<Integer, Integer>> r1 =
+        create().selectDistinct(T_BOOK.ID, T_BOOK.AUTHOR_ID)
+                .on(T_BOOK.AUTHOR_ID)
+                .from(T_BOOK)
+                .orderBy(T_BOOK.AUTHOR_ID)
+                .fetch();
+
+        Result<Record2<Integer, Integer>> r2 =
+        create().select(T_BOOK.ID, T_BOOK.AUTHOR_ID)
+                .distinctOn(T_BOOK.AUTHOR_ID)
+                .from(T_BOOK)
+                .orderBy(T_BOOK.AUTHOR_ID)
+                .fetch();
+
+        assertEquals(r1, r2);
+        assertEquals(asList(1, 3), r1.getValues(T_BOOK.ID));
+        assertEquals(asList(1, 2), r1.getValues(T_BOOK.AUTHOR_ID));
+    }
 }

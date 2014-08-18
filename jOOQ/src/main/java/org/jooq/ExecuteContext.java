@@ -359,6 +359,10 @@ public interface ExecuteContext {
 
     /**
      * The {@link SQLWarning} that was emitted by the database.
+     * <p>
+     * Note that fetching of warnings can be disabled using
+     * {@link Settings#isFetchWarnings()}, in case of which this property will
+     * be <code>null</code>.
      */
     SQLWarning sqlWarning();
 

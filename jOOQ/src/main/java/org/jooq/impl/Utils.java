@@ -2222,7 +2222,11 @@ final class Utils {
      * [#3076] Consume warnings from a {@link Statement} and notify listeners.
      */
     static final void consumeWarnings(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
-        ctx.sqlWarning(ctx.statement().getWarnings());
+
+        // [#3558] In some databases (e.g. MySQL), the call to PreparedStatement.getWarnings() issues
+        // a separate SHOW WARNINGS query. Users may want to avoid this query, explicitly
+        if (!Boolean.FALSE.equals(ctx.settings().isFetchWarnings()))
+            ctx.sqlWarning(ctx.statement().getWarnings());
 
         if (ctx.sqlWarning() != null)
             listener.warning(ctx);

@@ -39,11 +39,6 @@
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
 
-// These imports are needed further down
-// -------------------------------------
-import javax.xml.bind.JAXB
-import org.jooq.util.GenerationTool
-
 // Configure the Java plugin and the dependencies
 // ----------------------------------------------
 apply plugin: 'java'
@@ -72,31 +67,37 @@ buildscript {
     }
 }
 
-// Use your favourite XML builder to construct the code generation configuration file
-// ----------------------------------------------------------------------------------
-def writer = new StringWriter()
-def xml = new groovy.xml.MarkupBuilder(writer)
-.configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.5.0.xsd') {
-    jdbc() {
-        driver('org.h2.Driver')
-        url('jdbc:h2:~/test-gradle')
-        user('sa')
-        password('')
-    }
-    generator() {
-        database() {
-        }
-        generate() {
-        }
-        target() {
-            packageName('org.jooq.example.gradle.db')
-            directory('src/main/java')
-        }
-    }
-}
+task generate << {
 
-// Run the code generator
-// ----------------------
-GenerationTool.main(
-    JAXB.unmarshal(new StringReader(writer.toString()), org.jooq.util.jaxb.Configuration.class)
-)
+    // Use your favourite XML builder to construct the code generation configuration file
+    // ----------------------------------------------------------------------------------
+    def writer = new StringWriter()
+    def xml = new groovy.xml.MarkupBuilder(writer)
+            .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.5.0.xsd') {
+        jdbc() {
+            driver('org.h2.Driver')
+            url('jdbc:h2:~/test-gradle')
+            user('sa')
+            password('')
+        }
+        generator() {
+            database() {
+            }
+            generate() {
+            }
+            target() {
+                packageName('org.jooq.example.gradle.db')
+                directory('src/main/java')
+            }
+        }
+    }
+
+    // Run the code generator
+    // ----------------------
+    org.jooq.util.GenerationTool.main(
+        javax.xml.bind.JAXB.unmarshal(
+            new StringReader(writer.toString()),
+            org.jooq.util.jaxb.Configuration.class
+        )
+    )
+}

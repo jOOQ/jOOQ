@@ -657,6 +657,7 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final ForcedType getConfiguredForcedType(Definition definition, DataTypeDefinition definedType) {
+        forcedTypeLoop:
         for (ForcedType forcedType : getConfiguredForcedTypes()) {
             String expression = forcedType.getExpression();
 
@@ -666,19 +667,18 @@ public abstract class AbstractDatabase implements Database {
             }
 
             String types = forcedType.getTypes();
-            boolean match = true;
 
-            if (expression != null && !definition.getQualifiedName().matches(expression)) {
-                match = false;
+            if (expression != null
+                    && !definition.getName().matches(expression)
+                    && !definition.getQualifiedName().matches(expression)) {
+                continue forcedTypeLoop;
             }
 
             if (types != null && definedType != null && !definedType.getType().matches(types)) {
-                match = false;
+                continue forcedTypeLoop;
             }
 
-            if (match) {
-                return forcedType;
-            }
+            return forcedType;
         }
 
         return null;

@@ -48,6 +48,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.test.h2.generatedclasses.Tables.T_2486;
 import static org.jooq.test.h2.generatedclasses.Tables.T_2698;
+import static org.jooq.test.h2.generatedclasses.Tables.T_3571;
 import static org.jooq.test.h2.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.h2.generatedclasses.Tables.T_725_LOB_TEST;
 import static org.jooq.test.h2.generatedclasses.Tables.T_785;
@@ -69,7 +70,9 @@ import static org.jooq.test.h2.generatedclasses.Tables.V_BOOK;
 import static org.jooq.test.h2.generatedclasses.Tables.V_LIBRARY;
 import static org.jooq.test.h2.generatedclasses.Tables.X_UNUSED;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -1058,6 +1061,18 @@ public class H2Test extends jOOQAbstractTest<
         assertEquals(4, T_2486.VAL6.getDataType().scale());
         assertEquals(0, T_2486.VAL7.getDataType().scale());
         assertEquals(0, T_2486.VAL8.getDataType().scale());
+    }
+
+    @Test
+    public void testH2MetaData3571() {
+        assertTrue(T_3571.E1.getDataType().nullable());
+        assertFalse(T_3571.E1.getDataType().defaulted());
+        assertFalse(T_3571.E2.getDataType().nullable());
+        assertFalse(T_3571.E2.getDataType().defaulted());
+        assertTrue(T_3571.E3.getDataType().nullable());
+        assertTrue(T_3571.E3.getDataType().defaulted());
+        assertFalse(T_3571.E4.getDataType().nullable());
+        assertTrue(T_3571.E4.getDataType().defaulted());
     }
 
 }

@@ -222,11 +222,11 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName) {
-        this(dialect, sqlDataType, sqlDataType.getType(), typeName, typeName, 0, 0, 0, sqlDataType.nullable(), sqlDataType.defaulted());
+        this(dialect, sqlDataType, sqlDataType.getType(), typeName, typeName, sqlDataType.precision(), sqlDataType.scale(), sqlDataType.length(), sqlDataType.nullable(), sqlDataType.defaulted());
     }
 
     public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName, String castTypeName) {
-        this(dialect, sqlDataType, sqlDataType.getType(), typeName, castTypeName, 0, 0, 0, sqlDataType.nullable(), sqlDataType.defaulted());
+        this(dialect, sqlDataType, sqlDataType.getType(), typeName, castTypeName, sqlDataType.precision(), sqlDataType.scale(), sqlDataType.length(), sqlDataType.nullable(), sqlDataType.defaulted());
     }
 
     public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName) {
@@ -237,7 +237,11 @@ public class DefaultDataType<T> implements DataType<T> {
         this(dialect, null, type, typeName, castTypeName, 0, 0, 0, true, false);
     }
 
-    private DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, String typeName, String castTypeName, int precision, int scale, int length, boolean nullable, boolean defaulted) {
+    DefaultDataType(SQLDialect dialect, Class<T> type, String typeName, String castTypeName, int precision, int scale, int length, boolean nullable, boolean defaulted) {
+        this(dialect, null, type, typeName, castTypeName, precision, scale, length, nullable, defaulted);
+    }
+
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, String typeName, String castTypeName, int precision, int scale, int length, boolean nullable, boolean defaulted) {
 
         // Initialise final instance members
         // ---------------------------------

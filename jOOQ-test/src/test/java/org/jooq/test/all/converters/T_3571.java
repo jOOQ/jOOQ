@@ -38,73 +38,12 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.impl;
-
-import org.jooq.Configuration;
-import org.jooq.Converter;
-import org.jooq.DataType;
+package org.jooq.test.all.converters;
 
 /**
- * A <code>DataType</code> used for converted types using {@link Converter}
- *
  * @author Lukas Eder
  */
-class ConvertedDataType<T, U> extends DefaultDataType<U> {
+public enum T_3571 {
 
-    /**
-     * Generated UID
-     */
-    private static final long             serialVersionUID = -2321926692580974126L;
-
-    private final DataType<T>             delegate;
-    private final Converter<? super T, U> converter;
-
-    ConvertedDataType(DataType<T> delegate, Converter<? super T, U> converter) {
-        super(
-            null,
-            converter.toType(),
-            delegate.getTypeName(),
-            delegate.getCastTypeName(),
-            delegate.precision(),
-            delegate.scale(),
-            delegate.length(),
-            delegate.nullable(),
-            delegate.defaulted()
-        );
-
-        this.delegate = delegate;
-        this.converter = converter;
-    }
-
-    @Override
-    public int getSQLType() {
-        return delegate.getSQLType();
-    }
-
-    @Override
-    public String getTypeName(Configuration configuration) {
-        return delegate.getTypeName(configuration);
-    }
-
-    @Override
-    public String getCastTypeName(Configuration configuration) {
-        return delegate.getCastTypeName(configuration);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public U convert(Object object) {
-        if (converter.toType().isInstance(object)) {
-            return (U) object;
-        }
-
-        // [#3200] Try to convert arbitrary objects to T
-        else {
-            return converter.from(delegate.convert(object));
-        }
-    }
-
-    Converter<? super T, U> converter() {
-        return converter;
-    }
+    A, B, C
 }

@@ -222,11 +222,11 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName) {
-        this(dialect, sqlDataType, sqlDataType.getType(), typeName, typeName, 0, 0, 0, true, false);
+        this(dialect, sqlDataType, sqlDataType.getType(), typeName, typeName, 0, 0, 0, sqlDataType.nullable(), sqlDataType.defaulted());
     }
 
     public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName, String castTypeName) {
-        this(dialect, sqlDataType, sqlDataType.getType(), typeName, castTypeName, 0, 0, 0, true, false);
+        this(dialect, sqlDataType, sqlDataType.getType(), typeName, castTypeName, 0, 0, 0, sqlDataType.nullable(), sqlDataType.defaulted());
     }
 
     public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName) {

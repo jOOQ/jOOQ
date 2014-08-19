@@ -11,7 +11,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_639_numbers_table", schema = "dbo")
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.T_639NumbersTableRecord> implements org.jooq.Record13<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal, java.lang.Float, java.lang.Double> {
 
-	private static final long serialVersionUID = 783696590;
+	private static final long serialVersionUID = 1685045240;
 
 	/**
 	 * Setter for <code>dbo.t_639_numbers_table.ID</code>.
@@ -39,7 +39,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * Getter for <code>dbo.t_639_numbers_table.BYTE</code>.
 	 */
-	@javax.persistence.Column(name = "BYTE", precision = 3)
+	@javax.persistence.Column(name = "BYTE")
 	public java.lang.Byte getByte() {
 		return (java.lang.Byte) getValue(1);
 	}

@@ -11,7 +11,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_unsigned", schema = "dbo")
 public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TUnsignedRecord> implements org.jooq.Record4<org.jooq.types.UByte, org.jooq.types.UShort, org.jooq.types.UInteger, org.jooq.types.ULong> {
 
-	private static final long serialVersionUID = 63142090;
+	private static final long serialVersionUID = 321621820;
 
 	/**
 	 * Setter for <code>dbo.t_unsigned.u_byte</code>.
@@ -23,7 +23,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	/**
 	 * Getter for <code>dbo.t_unsigned.u_byte</code>.
 	 */
-	@javax.persistence.Column(name = "u_byte", precision = 5)
+	@javax.persistence.Column(name = "u_byte")
 	public org.jooq.types.UByte getUByte() {
 		return (org.jooq.types.UByte) getValue(0);
 	}
@@ -38,7 +38,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	/**
 	 * Getter for <code>dbo.t_unsigned.u_short</code>.
 	 */
-	@javax.persistence.Column(name = "u_short", precision = 10)
+	@javax.persistence.Column(name = "u_short")
 	public org.jooq.types.UShort getUShort() {
 		return (org.jooq.types.UShort) getValue(1);
 	}
@@ -53,7 +53,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	/**
 	 * Getter for <code>dbo.t_unsigned.u_int</code>.
 	 */
-	@javax.persistence.Column(name = "u_int", precision = 19)
+	@javax.persistence.Column(name = "u_int")
 	public org.jooq.types.UInteger getUInt() {
 		return (org.jooq.types.UInteger) getValue(2);
 	}
@@ -68,7 +68,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	/**
 	 * Getter for <code>dbo.t_unsigned.u_long</code>.
 	 */
-	@javax.persistence.Column(name = "u_long", precision = 20)
+	@javax.persistence.Column(name = "u_long")
 	public org.jooq.types.ULong getULong() {
 		return (org.jooq.types.ULong) getValue(3);
 	}

@@ -39,11 +39,6 @@
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
 
-// These imports are needed further down
-// -------------------------------------
-import javax.xml.bind.JAXB
-import org.jooq.util.GenerationTool
-
 // Configure the Java plugin and the dependencies
 // ----------------------------------------------
 apply plugin: 'java'
@@ -99,7 +94,10 @@ task generate << {
 
     // Run the code generator
     // ----------------------
-    GenerationTool.main(
-        JAXB.unmarshal(new StringReader(writer.toString()), org.jooq.util.jaxb.Configuration.class)
+    org.jooq.util.GenerationTool.main(
+        javax.xml.bind.JAXB.unmarshal(
+            new StringReader(writer.toString()),
+            org.jooq.util.jaxb.Configuration.class
+        )
     )
 }

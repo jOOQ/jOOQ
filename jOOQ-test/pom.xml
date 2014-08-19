@@ -1193,7 +1193,14 @@
                                                 <!-- [#2844] This typo should emit a warning -->
                                                 <customtype>
                                                 </customtype>
-
+                                                
+                                                <!-- [#3571] Rewrite types to check if nullable() and defaulted() flags are propagated -->
+                                                <customType>
+                                                    <name>3571</name>
+                                                    <type>org.jooq.test.all.converters.T_3571</type>
+                                                    <converter>org.jooq.test.all.converters.T_3571_Converter</converter>
+                                                </customType>
+                                                
                                                 <customType>
                                                     <name>org.jooq.test.all.converters.Boolean_10</name>
                                                     <converter>org.jooq.test.all.converters.Boolean_10_Converter</converter>
@@ -1225,6 +1232,12 @@
                                             </customTypes>
 
                                             <forcedTypes>
+                                            
+                                                <!-- [#3571] Rewrite types to check if nullable() and defaulted() flags are propagated -->
+                                                <forcedType>
+                                                    <name>3571</name>
+                                                    <expression>(?i:.*?\.t_3571\..*)</expression>
+                                                </forcedType>
                                             
                                                 <!-- [#2486] Remove precision and scale from existing DECIMALs -->
                                                 <forcedType>

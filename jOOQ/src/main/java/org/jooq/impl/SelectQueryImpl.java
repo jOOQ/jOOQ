@@ -912,18 +912,10 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
             /* [pro] xx
 
-            xx xxxxxxx xxx xxxxxx xxxxx xx xxxx xxxx xxxxxxx xxxxxxx xxx xxxxxxxxxxx xxxxxx xxxxxxx
-            xx xxxx xxx xxxxxx xxxxxxx xx xxxx xx xxxxxxx xxxx xx xx xxxxxxxxxx
-            xx xxxxxxx xx xxxxxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            x
-
             xx xxxxxxx xxxx xxxxxxx xxx xxxxxx xxx xxxx xxxx xxxxxx xxxxxxx xxxx xxx xxxxxx xxxxxx
             xx xxx xx xxxx xxx xxxxxxx xxxx xxxx xxxxxxxxxx xx xxxxxxx xxxxxx xxxxxxxxxxx xxx
             xx xxxxxxxxx xxxx xxxx xxxxx xx xxx xxxxx xx xxxxxx
-            xxxx xx xxxxxxxxxxxxxxx xx xxxxx x
+            xx xxxxxxxxxxxxxxx xx xxxxx x
                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxx x xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxx
                 xxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

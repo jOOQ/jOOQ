@@ -515,7 +515,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testLimitAliased() throws Exception {
     	assumeFamilyNotIn();
-    	
+
         // [#2080] Some databases generate ORDER BY clauses within their ranking
         // functions. There are some syntax problems, when selectable columns
         // have aliases
@@ -567,15 +567,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList(3, 2), r4.getValues("xx"));
 
         // Nested expressions
-        Result<Record2<String, Integer>> r5 =
-        create().select(TBook_TITLE().as("yy"), TBook_ID().as("xx"))
-                .from(TBook())
-                .orderBy(TBook_ID().as("xx").sortAsc(4, 1, 3, 2))
-                .limit(param("x", 1), param("y", 2))
-                .fetch();
+        switch (dialect().family()) {
+            /* [pro] xx
+            xxxx xxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxx xxxxxx xxxxxxxxxx xxxx xxxxxxxxxxx xxxxx xxxxxxx xx xxxxx xxxxx
+                xxxxxx
+            xx [/pro] */
 
-        assertEquals(2, r5.size());
-        assertEquals(asList(1, 3), r5.getValues("xx"));
+            default: {
+                Result<Record2<String, Integer>> r5 =
+                create().select(TBook_TITLE().as("yy"), TBook_ID().as("xx"))
+                        .from(TBook())
+                        .orderBy(TBook_ID().as("xx").sortAsc(4, 1, 3, 2))
+                        .limit(param("x", 1), param("y", 2))
+                        .fetch();
+
+                assertEquals(2, r5.size());
+                assertEquals(asList(1, 3), r5.getValues("xx"));
+            }
+        }
 
         // Subqueries
         switch (dialect().family()) {

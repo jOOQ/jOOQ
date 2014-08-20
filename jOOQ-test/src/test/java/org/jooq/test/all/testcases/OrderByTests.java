@@ -44,11 +44,11 @@ import static java.util.Arrays.asList;
 // ...
 // ...
 // ...
-// ...
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.param;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 import static org.junit.Assert.assertEquals;
@@ -514,13 +514,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testLimitAliased() throws Exception {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxxxxxxxxxxxxxxxx xxxxxx xx xxxxxx xxxxxxxx
-            xxxxxxx
-        x
-
-        xx [/pro] */
+    	assumeFamilyNotIn();
+    	
         // [#2080] Some databases generate ORDER BY clauses within their ranking
         // functions. There are some syntax problems, when selectable columns
         // have aliases
@@ -570,6 +565,40 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals(2, r4.size());
         assertEquals(asList(3, 2), r4.getValues("xx"));
+
+        // Nested expressions
+        Result<Record2<String, Integer>> r5 =
+        create().select(TBook_TITLE().as("yy"), TBook_ID().as("xx"))
+                .from(TBook())
+                .orderBy(TBook_ID().as("xx").sortAsc(4, 1, 3, 2))
+                .limit(param("x", 1), param("y", 2))
+                .fetch();
+
+        assertEquals(2, r5.size());
+        assertEquals(asList(1, 3), r5.getValues("xx"));
+
+        // Subqueries
+        switch (dialect().family()) {
+            /* [pro] xx
+            xx xxxxx xxxxxxxx xx xxx xxxxxx xxxx xxxx xxxxxxx xxx xxxxx xx xxxxxxx xxxx
+            xxxx xxxx
+            xxxx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxx xxxxxxxxxx xxxx xxxxx xx xxxxxxxxxxx
+                xxxxxx
+            xx [/pro] */
+
+            default: {
+                Result<Record2<String, Integer>> r6 =
+                create().select(TBook_TITLE().as("yy"), TBook_ID().as("xx"))
+                        .from(TBook())
+                        .orderBy(select(TAuthor_LAST_NAME().as("xx")).from(TAuthor()).where(TAuthor_ID().eq(TBook_AUTHOR_ID())).asField())
+                        .limit(param("x", 1), param("y", 2))
+                        .fetch();
+
+                assertEquals(2, r6.size());
+                assertEquals(asList(4, 1), r6.getValues("xx"));
+            }
+        }
     }
 
     public void testLimitBindValues() throws Exception {

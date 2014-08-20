@@ -276,6 +276,22 @@ final class Utils {
     static final String          DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION = "org.jooq.configuration.default-transaction-provider-connection-provider";
 
     /**
+     * [#2080] When emulating OFFSET pagination in certain databases, synthetic
+     * aliases are generated that must be referenced also in
+     * <code>ORDER BY</code> clauses, in lieu of their corresponding original
+     * aliases.
+     */
+    static final String          DATA_OVERRIDE_ALIASES_IN_ORDER_BY            = "org.jooq.configuration.override-aliases-in-order-by";
+
+    /**
+     * [#2080] When emulating OFFSET pagination in certain databases, synthetic
+     * aliases are generated that must be referenced also in
+     * <code>ORDER BY</code> clauses, in lieu of their corresponding original
+     * aliases.
+     */
+    static final String          DATA_UNALIAS_ALIASES_IN_ORDER_BY             = "org.jooq.configuration.unalias-aliases-in-order-by";
+
+    /**
      * [#3381] The table to be used for the {@link Clause#SELECT_INTO} clause.
      */
     static final String           DATA_SELECT_INTO_TABLE                      = "org.jooq.configuration.select-into-table";

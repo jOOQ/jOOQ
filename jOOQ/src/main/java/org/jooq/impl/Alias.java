@@ -66,10 +66,13 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.Utils.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Utils.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Utils.list;
 
 import org.jooq.Clause;
 import org.jooq.Context;
+import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
@@ -225,8 +228,34 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
                 }
             }
         }
+
+        /* [pro] xx
+        xx xxxxxxx xxxxx xxxxxx xxxxx xxxxxxx xx xxx xxxxxx xxxxx xx xxxxxxx
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxx xx xxxxxxx xxxxxxxxxx xxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxx
+        x
+        xx [/pro] */
         else {
-            context.literal(alias);
+            String actualAlias = alias;
+
+            /* [pro] xx
+            xx xxxxxxx xxxxxxxx xxx xxxxxx xxxxx xx xxxx x xxxxxxxxx xxxxx xx xxxxxxxxx
+            xx xx xxx xxxxxx xxxxxx
+            xxxxxxxx xxxxxx x xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xx xxxxxxx xx xxxxx x
+                xxxxxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxx xxxxxxxxxx
+                xxxxxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxx xxxxxxxxxx
+
+                xxx xxxx x x xx x x xxxxxxxxxxxxxxxxxxxxxx xxxx x
+                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                        xxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxx
+                    x
+                x
+            x
+            xx [/pro] */
+
+            context.literal(actualAlias);
         }
     }
 

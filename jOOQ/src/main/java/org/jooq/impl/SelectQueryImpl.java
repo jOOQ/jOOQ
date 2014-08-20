@@ -84,9 +84,11 @@ import static org.jooq.impl.DSL.row;
 // ...
 import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Utils.DATA_OMIT_INTO_CLAUSE;
+import static org.jooq.impl.Utils.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 // ...
 import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import static org.jooq.impl.Utils.DATA_SELECT_INTO_TABLE;
+import static org.jooq.impl.Utils.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Utils.DATA_WINDOW_DEFINITIONS;
 import static org.jooq.impl.Utils.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
@@ -444,35 +446,52 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
      x xxxxxxxx xxx xxxxx x xxxxxx xxxxxx xx xxx xxxxxx xxxxxxxxxxxxxxxx
      x xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxx
      xx
+    xxxxxxxxxxxxxxxxxxxxxxxxxxx
     xxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx x
 
         xx xxxxxxxxxx xxxxxxxx xxxxxxxxxx
-        xxxxxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxx xxxxxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
         xx xxx xxx xxxxx
-        xxxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxx xxxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
         xx xxx xxx xx
-        xxxxxxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxx xxxxxxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
         xx xxxxxxxxx xx xxx xxxxxxx xx xxx xxxxxxxxxx xx xx
         xx xxxxxxx xxx xx xxxx x xx xx xxxx xx xxxxx xxxxx xxxxx xxxxx xxxx xxxxx xxx xxxxxx xxx xxxxxxxxx
-        xxxxxxxxxx xxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxx
+        xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxx xx x
                 x xxx xxxxxxx x xxxxxxxxxxxxxx x
                 x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
 
-            xx xxxxxxx xxxx xxxxxxxx xx xxxxxxxx xx xxxxxxx xxx xxxxxxxxxxxx xxxxxxx
-            xx xxxxx xxxxxxx xxx xxxxxxxx xxxxxxxxxx xxxxxxxx xxx xxxxxxxxxxxx xxxxxxx
-            xx xxxxxxxx xx xxx xxxxxxxx xxxxx xx xxxxxx xxx xxx xxx xxxxxxxxxxx xxxx
-            xx xxx xxxxxxxxxx
-            xxxxxxxx
-                x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxx
         xx
 
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xx x
+            xxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx x
+                xxxxxxxxx
+                xxxxxx xxxx xxxxxxxxxxxxxxxxx xx x
+
+                    xx xxxxxxx xxxxxx xxxx xx xxxxxx xxxxxxx xxxx xxx xxxxxxxxxxx xxxxxx xxxxxx
+                    xx xxx xxxxxxxxxx xxxx xxx xxxxx xxxxxxx xxxxxxxxxx xxxxx xx xxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+
+                    xx xxxxxxx xxxx xxxxxxxx xx xxxxxxxx xx xxxxxxx xxx xxxxxxxxxxxx xxxxxxx
+                    xx xxxxx xxxxxxx xxx xxxxxxxx xxxxxxxxxx xxxxxxxx xxx xxxxxxxxxxxx xxxxxxx
+                    xx xxxxxxxx xx xxx xxxxxxxx xxxxx xx xxxxxx xxx xxx xxx xxxxxxxxxxx xxxx
+                    xx xxx xxxxxxxxxx
+                    xxxxxxxxxxxxxxxx
+                        x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xx
+
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                x
+            xxxxxxxxxxx
+
         xx xx xx xxx xx xx xxx xx xx xxxxx
-        xxxxxxxxxx xxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+        xxxxx xxxxxxxxxx xxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
 
         xxxxxxx xxxxxxxx x xxxxxxxxxxxxxxx
 
@@ -486,7 +505,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
            xxxxxxxxxxxxxxxx
            xxxxxxxxxxxxxxxx
 
-        xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
 
         xxxxxxxxxxxxxxxxxxxxxx
            xxxxxxxxxxxxxxxxxx
@@ -553,7 +572,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
              xxxxxxxxxxxxxxxxxxxx
              xxxxxxxxxxxxxxxxx
 
-        xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
 
         xxx  xxxxxxxxxxxxxxxxxx
              xxxxxxxxxxxxxxxx
@@ -578,14 +597,14 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
      * This part is common to any type of limited query
      */
     private final void toSQLReference0(Context<?> context) {
-        toSQLReference0(context, null);
+        toSQLReference0(context, null, null);
     }
 
     /**
      * This method renders the main part of a query without the LIMIT clause.
      * This part is common to any type of limited query
      */
-    private final void toSQLReference0(Context<?> context, Field<?>[] alternativeFields) {
+    private final void toSQLReference0(Context<?> context, Field<?>[] originalFields, Field<?>[] alternativeFields) {
         SQLDialect dialect = context.dialect();
         SQLDialect family = dialect.family();
 
@@ -889,8 +908,31 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                    .keyword(orderBySiblings ? "siblings" : "")
                    .sql(" ")
                    .keyword("by")
-                   .sql(" ")
-                   .visit(getOrderBy());
+                   .sql(" ");
+
+            /* [pro] xx
+
+            xx xxxxxxx xxx xxxxxx xxxxx xx xxxx xxxx xxxxxxx xxxxxxx xxx xxxxxxxxxxx xxxxxx xxxxxxx
+            xx xxxx xxx xxxxxx xxxxxxx xx xxxx xx xxxxxxx xxxx xx xx xxxxxxxxxx
+            xx xxxxxxx xx xxxxxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            x
+
+            xx xxxxxxx xxxx xxxxxxx xxx xxxxxx xxx xxxx xxxx xxxxxx xxxxxxx xxxx xxx xxxxxx xxxxxx
+            xx xxx xx xxxx xxx xxxxxxx xxxx xxxx xxxxxxxxxx xx xxxxxxx xxxxxx xxxxxxxxxxx xxx
+            xx xxxxxxxxx xxxx xxxx xxxxx xx xxx xxxxx xx xxxxxx
+            xxxx xx xxxxxxxxxxxxxxx xx xxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxx x xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            x
+            xxxx
+            xx [/pro] */
+            {
+                context.visit(getOrderBy());
+            }
         }
 
         /* [pro] xx
@@ -1215,8 +1257,11 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                     xxxxxxxxxxxxxxxxxxxxxxxxxxxx
                     xxxxxx
 
-                xxxx xxxxxxxxxx
                 xxxx xxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxx
+
+                xxxx xxxxxxxxxx
                 xxxxxxxx
                     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
                     xxxxxx

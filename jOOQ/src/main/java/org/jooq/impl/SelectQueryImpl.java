@@ -84,9 +84,11 @@ import static org.jooq.impl.Dual.DUAL_ACCESS;
 import static org.jooq.impl.Dual.DUAL_INFORMIX;
 import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Utils.DATA_OMIT_INTO_CLAUSE;
+import static org.jooq.impl.Utils.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Utils.DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE;
 import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import static org.jooq.impl.Utils.DATA_SELECT_INTO_TABLE;
+import static org.jooq.impl.Utils.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Utils.DATA_WINDOW_DEFINITIONS;
 import static org.jooq.impl.Utils.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
@@ -444,35 +446,52 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
      * Simulate the LIMIT / OFFSET clause in the {@link SQLDialect#DB2},
      * {@link SQLDialect#SQLSERVER2008} and {@link SQLDialect#SYBASE} dialects
      */
+    @SuppressWarnings("serial")
     private final void toSQLReferenceLimitDB2SQLServer2008Sybase(Context<?> ctx) {
 
         // AUTHOR.ID, BOOK.ID, BOOK.TITLE
-        Field<?>[] originalFields = Utils.fieldArray(getSelect());
+        final Field<?>[] originalFields = Utils.fieldArray(getSelect());
 
         // ID, ID, TITLE
-        String[] originalNames = Utils.fieldNames(originalFields);
+        final String[] originalNames = Utils.fieldNames(originalFields);
 
         // v1, v2, v3
-        String[] alternativeNames = Utils.fieldNames(originalFields.length);
+        final String[] alternativeNames = Utils.fieldNames(originalFields.length);
 
         // AUTHOR.ID as v1, BOOK.ID as v2, BOOK.TITLE as v3
         // Enforce x.* or just * if we have no known field names (e.g. when plain SQL tables are involved)
-        Field<?>[] alternativeFields = Utils.combine(
+        final Field<?>[] alternativeFields = Utils.combine(
             alternativeNames.length == 0
                 ? new Field[] { DSL.field("*") }
                 : Utils.aliasedFields(originalFields, alternativeNames),
 
-            // [#2580] When DISTINCT is applied, we mustn't use ROW_NUMBER() OVER(),
-            // which changes the DISTINCT semantics. Instead, use DENSE_RANK() OVER(),
-            // ordering by the SELECT's ORDER BY clause AND all the expressions from
-            // the projection
-            distinct
-                ? DSL.denseRank().over(orderBy(getNonEmptyOrderByForDistinct(ctx.configuration()))).as("rn")
-                : DSL.rowNumber().over(orderBy(getNonEmptyOrderBy(ctx.configuration()))).as("rn")
+            null
         );
 
+        alternativeFields[alternativeFields.length - 1] =
+            new CustomField<Integer>("rn", SQLDataType.INTEGER) {
+                @Override
+                public void accept(Context<?> c) {
+
+                    // [#3575] Ensure that no column aliases from the surrounding SELECT clause
+                    // are referenced from the below ranking functions' ORDER BY clause.
+                    c.data(DATA_UNALIAS_ALIASES_IN_ORDER_BY, true);
+
+                    // [#2580] When DISTINCT is applied, we mustn't use ROW_NUMBER() OVER(),
+                    // which changes the DISTINCT semantics. Instead, use DENSE_RANK() OVER(),
+                    // ordering by the SELECT's ORDER BY clause AND all the expressions from
+                    // the projection
+                    c.visit(distinct
+                        ? DSL.denseRank().over(orderBy(getNonEmptyOrderByForDistinct(c.configuration())))
+                        : DSL.rowNumber().over(orderBy(getNonEmptyOrderBy(c.configuration())))
+                    );
+
+                    c.data().remove(DATA_UNALIAS_ALIASES_IN_ORDER_BY);
+                }
+            }.as("rn");
+
         // v1 as ID, v2 as ID, v3 as TITLE
-        Field<?>[] unaliasedFields = Utils.aliasedFields(Utils.fields(originalFields.length), originalNames);
+        final Field<?>[] unaliasedFields = Utils.aliasedFields(Utils.fields(originalFields.length), originalNames);
 
         boolean subquery = ctx.subquery();
 
@@ -486,7 +505,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
            .formatNewLine()
            .subquery(true);
 
-        toSQLReference0(ctx, alternativeFields);
+        toSQLReference0(ctx, originalFields, alternativeFields);
 
         ctx.subquery(subquery)
            .formatIndentEnd()
@@ -553,7 +572,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
              .formatIndentStart()
              .formatNewLine();
 
-        toSQLReference0(ctx, alternativeFields);
+        toSQLReference0(ctx, originalFields, alternativeFields);
 
         ctx  .formatIndentEnd()
              .formatNewLine()
@@ -578,14 +597,14 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
      * This part is common to any type of limited query
      */
     private final void toSQLReference0(Context<?> context) {
-        toSQLReference0(context, null);
+        toSQLReference0(context, null, null);
     }
 
     /**
      * This method renders the main part of a query without the LIMIT clause.
      * This part is common to any type of limited query
      */
-    private final void toSQLReference0(Context<?> context, Field<?>[] alternativeFields) {
+    private final void toSQLReference0(Context<?> context, Field<?>[] originalFields, Field<?>[] alternativeFields) {
         SQLDialect dialect = context.dialect();
         SQLDialect family = dialect.family();
 
@@ -889,8 +908,31 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                    .keyword(orderBySiblings ? "siblings" : "")
                    .sql(" ")
                    .keyword("by")
-                   .sql(" ")
-                   .visit(getOrderBy());
+                   .sql(" ");
+
+            /* [pro] */
+
+            // [#3575] SQL Server seems to have very limited support for referencing column aliases
+            // from the SELECT clause, as soon as they're part of an expression
+            if (family == SQLSERVER) {
+                context.data(DATA_UNALIAS_ALIASES_IN_ORDER_BY, true);
+                context.visit(getOrderBy());
+                context.data().remove(DATA_UNALIAS_ALIASES_IN_ORDER_BY);
+            }
+
+            // [#2080] DB2, Oracle, and Sybase can deal with column aliases from the SELECT clause
+            // but in case the aliases have been overridden to emulate OFFSET pagination, the
+            // overrides must also apply to the ORDER BY clause
+            else if (originalFields != null) {
+                context.data(DATA_OVERRIDE_ALIASES_IN_ORDER_BY, new Object[] { originalFields, alternativeFields });
+                context.visit(getOrderBy());
+                context.data().remove(DATA_OVERRIDE_ALIASES_IN_ORDER_BY);
+            }
+            else
+            /* [/pro] */
+            {
+                context.visit(getOrderBy());
+            }
         }
 
         /* [pro] */
@@ -1215,8 +1257,11 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                     result.add(DSL.one().asc());
                     break;
 
-                case SQLSERVER:
                 case SYBASE:
+                    result.add(DSL.field("@@version").asc());
+                    break;
+
+                case SQLSERVER:
                 default:
                     result.add(DSL.field("({select} 0)").asc());
                     break;

@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.nvl2;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.Utils.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -105,6 +106,8 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
 
     @Override
     public final void accept(Context<?> ctx) {
+        Field<?> actualField = field(ctx);
+
         if (nullsFirst || nullsLast) {
             switch (ctx.configuration().dialect().family()) {
 
@@ -128,9 +131,9 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                     Field<Integer> ifNull = nullsFirst ? zero() : one();
                     Field<Integer> ifNotNull = nullsFirst ? one() : zero();
 
-                    ctx.visit(nvl2(field, ifNotNull, ifNull))
+                    ctx.visit(nvl2(actualField, ifNotNull, ifNull))
                        .sql(", ")
-                       .visit(field)
+                       .visit(actualField)
                        .sql(" ")
                        .keyword(order.toSQL());
 
@@ -139,7 +142,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
 
                 // DERBY, H2, HSQLDB, ORACLE, POSTGRES
                 default: {
-                    ctx.visit(field)
+                    ctx.visit(actualField)
                        .sql(" ")
                        .keyword(order.toSQL());
 
@@ -155,10 +158,31 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
             }
         }
         else {
-            ctx.visit(field)
+            ctx.visit(actualField)
                .sql(" ")
                .keyword(order.toSQL());
         }
+    }
+
+    private final Field<?> field(Context<?> ctx) {
+
+        /* [pro] xx
+        xx xxxxxxx xxxxxxxx xxx xxxxxx xxxxx xx xxxx x xxxxxxxxx xxxxx xx xxxxxxxxx
+        xx xx xxx xxxxxx xxxxxx
+        xxxxxxxx xxxxxx x xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xx xxxxxxx xx xxxxx x
+            xxxxxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxx xxxxxxxxxx
+            xxxxxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxx xxxxxxxxxx
+
+            xxx xxxx x x xx x x xxxxxxxxxxxxxxxxxxxxxx xxxx x
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                    xxxxxx xxxxxxxxxxxxxxxxx
+                x
+            x
+        x
+        xx [/pro] */
+
+        return field;
     }
 
     @Override

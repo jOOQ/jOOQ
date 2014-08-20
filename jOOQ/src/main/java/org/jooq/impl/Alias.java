@@ -66,7 +66,6 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Utils.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Utils.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Utils.list;
 
@@ -236,26 +235,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
         x
         xx [/pro] */
         else {
-            String actualAlias = alias;
-
-            /* [pro] xx
-            xx xxxxxxx xxxxxxxx xxx xxxxxx xxxxx xx xxxx x xxxxxxxxx xxxxx xx xxxxxxxxx
-            xx xx xxx xxxxxx xxxxxx
-            xxxxxxxx xxxxxx x xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xx xxxxxxx xx xxxxx x
-                xxxxxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxx xxxxxxxxxx
-                xxxxxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxx xxxxxxxxxx
-
-                xxx xxxx x x xx x x xxxxxxxxxxxxxxxxxxxxxx xxxx x
-                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                        xxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxx
-                    x
-                x
-            x
-            xx [/pro] */
-
-            context.literal(actualAlias);
+            context.literal(alias);
         }
     }
 

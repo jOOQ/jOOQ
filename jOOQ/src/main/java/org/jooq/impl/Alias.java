@@ -66,7 +66,6 @@ import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Utils.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Utils.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Utils.list;
 
@@ -236,26 +235,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
         }
         /* [/pro] */
         else {
-            String actualAlias = alias;
-
-            /* [pro] */
-            // [#2080] Override the actual alias in case a synthetic alias is generated
-            // in the SELECT clause
-            Object[] object = (Object[]) context.data(DATA_OVERRIDE_ALIASES_IN_ORDER_BY);
-            if (object != null) {
-                Field<?>[] originalFields = (Field<?>[]) object[0];
-                Field<?>[] aliasedFields = (Field<?>[]) object[1];
-
-                for (int i = 0; i < originalFields.length; i++) {
-                    if (alias.equals(originalFields[i].getName())) {
-                        actualAlias = aliasedFields[i].getName();
-                        break;
-                    }
-                }
-            }
-            /* [/pro] */
-
-            context.literal(actualAlias);
+            context.literal(alias);
         }
     }
 

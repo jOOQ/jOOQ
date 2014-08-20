@@ -912,18 +912,10 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
             /* [pro] */
 
-            // [#3575] SQL Server seems to have very limited support for referencing column aliases
-            // from the SELECT clause, as soon as they're part of an expression
-            if (family == SQLSERVER) {
-                context.data(DATA_UNALIAS_ALIASES_IN_ORDER_BY, true);
-                context.visit(getOrderBy());
-                context.data().remove(DATA_UNALIAS_ALIASES_IN_ORDER_BY);
-            }
-
             // [#2080] DB2, Oracle, and Sybase can deal with column aliases from the SELECT clause
             // but in case the aliases have been overridden to emulate OFFSET pagination, the
             // overrides must also apply to the ORDER BY clause
-            else if (originalFields != null) {
+            if (originalFields != null) {
                 context.data(DATA_OVERRIDE_ALIASES_IN_ORDER_BY, new Object[] { originalFields, alternativeFields });
                 context.visit(getOrderBy());
                 context.data().remove(DATA_OVERRIDE_ALIASES_IN_ORDER_BY);

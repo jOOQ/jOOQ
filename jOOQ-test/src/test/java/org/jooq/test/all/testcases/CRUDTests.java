@@ -66,6 +66,7 @@ import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.StoreQuery;
 import org.jooq.Table;
@@ -845,10 +846,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testStoreVsExecuteInsert() throws Exception {
-        if (TIdentityPK() == null) {
-            log.info("SKIPPING", "store() vs. executeInsert() tests");
-            return;
-        }
+        Assume.assumeNotNull(TIdentityPK());
 
         jOOQAbstractTest.reset = false;
 
@@ -861,6 +859,29 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         IPK i2 = create().newRecord(TIdentityPK());
         i2.setValue(TIdentityPK_VAL(), 1);
         assertEquals(1, i2.store());
+    }
+
+    public void testInsertWithRecordFrom() throws Exception {
+        Assume.assumeNotNull(TIdentityPK());
+
+        jOOQAbstractTest.reset = false;
+
+        IPK i1 = create().newRecord(TIdentityPK());
+        i1.setValue(TIdentityPK_ID(), null);
+        i1.setValue(TIdentityPK_VAL(), 1);
+
+        IPK i2 = create().newRecord(TIdentityPK(), i1);
+        assertEquals(1, i2.store());
+
+        IPK i3 = create().newRecord(TIdentityPK(), i1);
+        assertEquals(1, create().executeInsert(i3));
+
+        Result<IPK> list = create().fetch(TIdentityPK());
+        assertEquals(2, list.size());
+        assertNotNull(list.get(0).getValue(TIdentityPK_ID()));
+        assertNotNull(list.get(1).getValue(TIdentityPK_ID()));
+        assertEquals(1, (int) list.get(0).getValue(TIdentityPK_VAL()));
+        assertEquals(1, (int) list.get(1).getValue(TIdentityPK_VAL()));
     }
 
     public void testUpdatablesWithUpdatablePK() throws Exception {

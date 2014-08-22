@@ -458,6 +458,19 @@ final class Utils {
     }
 
     /**
+     * [#2700] [#3582] If a POJO attribute is NULL, but the column is NOT NULL
+     * then we should let the database apply DEFAULT values
+     */
+    static void resetChangedOnNotNull(Record record) {
+        int size = record.size();
+
+        for (int i = 0; i < size; i++)
+            if (record.getValue(i) == null)
+                if (!record.field(i).getDataType().nullable())
+                    record.changed(i, false);
+    }
+
+    /**
      * Extract the configuration from an attachable.
      */
     static final Configuration getConfiguration(Attachable attachable) {

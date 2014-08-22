@@ -365,13 +365,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
                 for (Field<?> field : pk)
                     record.changed(field, false);
 
-            // [#2700] If a POJO attribute is NULL, but the column is NOT NULL
-            // then we should let the database apply DEFAULT values
-            for (int i = 0; i < record.size(); i++)
-                if (record.getValue(i) == null)
-                    if (!record.field(i).getDataType().nullable())
-                        record.changed(i, false);
-
+            Utils.resetChangedOnNotNull(record);
             result.add(record);
         }
 

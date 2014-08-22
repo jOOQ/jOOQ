@@ -739,11 +739,14 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             }
         }
 
+        boolean wrapQueryExpressionInDerivedTable = false;
+        boolean wrapQueryExpressionBodyInDerivedTable = false;
+
         /* [pro] xx
 
         xx xxxxxxxx xxxxxxx xxxxx xxxx xx xxxxx xx xxxxxxxxxx xxxxxxxxxxx xxx xx xxx
         xx xxxxxxxxx xxx xxxxxxxx xxxx x xxxxxxx xxxxxx xxxxx xxxx xx xxxxx xxx xxxxxxxxxx
-        xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxxx xx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx
 
         xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -760,7 +763,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         xx                       xxx xxxxx xxxxxxxxxx xxxx xxxx xx xxxxxxx xx x xxxxxxx xxxxxx
         xx xxxx xxxxxxxxxx xxxxx xxxxxxxxxxxx x xxxxx xxxxxxxxx xxxx xx xxxxxxx xxxxx xxxxxxxxxx xxx xxxxx
         xx                       xxxx xxx xx xxxx xxxx xxx x xxxxxxx xxxxxx
-        xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
 

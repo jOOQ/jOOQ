@@ -65,8 +65,8 @@ class Limit extends AbstractQueryPart {
 
     private Field<Integer>    numberOfRows;
     private Field<Integer>    offset;
-    private Field<Integer>    offsetOrZero     = val(0);
-    private Field<Integer>    offsetPlusOne    = val(1);
+    private Field<Integer>    offsetOrZero     = inline(0);
+    private Field<Integer>    offsetPlusOne    = inline(1);
     private boolean           rendersParams;
 
     @Override
@@ -87,10 +87,13 @@ class Limit extends AbstractQueryPart {
                 context.castMode(NEVER)
                        .formatSeparator()
                        .keyword("limit")
-                       .sql(" ").visit(numberOfRows)
-                       .sql(" ").keyword("offset")
-                       .sql(" ").visit(offsetOrZero)
-                       .castMode(castMode);
+                       .sql(" ").visit(numberOfRows);
+
+                if (!offsetZero())
+                    context.sql(" ").keyword("offset")
+                           .sql(" ").visit(offsetOrZero);
+
+                context.castMode(castMode);
 
                 break;
             }
@@ -161,10 +164,14 @@ class Limit extends AbstractQueryPart {
             xx xxxx xxxx xx xxxxx xxxxxxx
             xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxx xxxxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxx
-                       xxxxxx xxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxx xxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xx xxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxx
+                           xxxxxx xxxxxxxxxxxxxxxxxxxxxx
+                           xxxxxx xxx
+
+                xxxxxxxxxxxxxxxxxxxxxxxx
                        xxxxxx xxxxxxxxxxxxxxxxxxxxxx
                        xxxxxxxxxxxxxxxxxxxxxx
 
@@ -176,10 +183,13 @@ class Limit extends AbstractQueryPart {
             xxxx xxxxxxx x
                 xxxxxxxxxxxxxxxxxxxxxxxxxx
                        xxxxxxxxxxxxxxx
-                       xxxxxx xxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxx xxxxxxxxxxxxxxxxx xxxx
                        xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxxxxxxxx
+
+                xx xxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx
+                           xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
                 xxxxxx
             x
@@ -228,10 +238,14 @@ class Limit extends AbstractQueryPart {
                 context.castMode(NEVER)
                        .formatSeparator()
                        .keyword("limit")
-                       .sql(" ").visit(numberOfRows)
-                       .sql(" ").keyword("offset")
-                       .sql(" ").visit(offsetOrZero)
-                       .castMode(castMode);
+                       .sql(" ").visit(numberOfRows);
+
+
+                if (!offsetZero())
+                    context.sql(" ").keyword("offset")
+                           .sql(" ").visit(offsetOrZero);
+
+                context.castMode(castMode);
 
                 break;
             }

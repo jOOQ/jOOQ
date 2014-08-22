@@ -568,6 +568,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Nested expressions
         switch (dialect().family()) {
+            case H2:
             /* [pro] xx
             xxxx xxxxxxxxxx
                 xxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxx xxxxxx xxxxxxxxxx xxxx xxxxxxxxxxx xxxxx xxxxxxx xx xxxxx xxxxx

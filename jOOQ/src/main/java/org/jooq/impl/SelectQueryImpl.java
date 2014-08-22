@@ -981,12 +981,12 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
     @Override
     public final void addLimit(int numberOfRows) {
-        addLimit(0, numberOfRows);
+        limit.setNumberOfRows(numberOfRows);
     }
 
     @Override
     public final void addLimit(Param<Integer> numberOfRows) {
-        addLimit(0, numberOfRows);
+        limit.setNumberOfRows(numberOfRows);
     }
 
     @Override

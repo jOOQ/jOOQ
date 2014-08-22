@@ -568,6 +568,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Nested expressions
         switch (dialect().family()) {
+            case H2:
             /* [pro] */
             case SQLSERVER:
                 log.info("SKIPPING", "[#3575] Emulated OFFSET pagination with expressions using aliases in ORDER BY");

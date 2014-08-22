@@ -739,11 +739,14 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             }
         }
 
+        boolean wrapQueryExpressionInDerivedTable = false;
+        boolean wrapQueryExpressionBodyInDerivedTable = false;
+
         /* [pro] */
 
         // Informix doesn't allow SKIP .. FIRST in correlated subqueries, but we can
         // transform the subquery into a derived table, where SKIP .. FIRST are permitted.
-        boolean wrapQueryExpressionInDerivedTable =
+        wrapQueryExpressionInDerivedTable =
             (family == INFORMIX && context.subquery() && (getLimit().isApplicable() || !getOrderBy().isEmpty()));
 
         if (wrapQueryExpressionInDerivedTable)
@@ -760,7 +763,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         //                       the query expression body must be wrapped in a derived table.
         // DB2, SQL-Server 2008: ROW_NUMBER() - based filtering must be applied after generating the UNION
         //                       This can be done only via a derived table.
-        boolean wrapQueryExpressionBodyInDerivedTable = wrapQueryExpressionBodyInDerivedTable(context);
+        wrapQueryExpressionBodyInDerivedTable = wrapQueryExpressionBodyInDerivedTable(context);
         if (wrapQueryExpressionBodyInDerivedTable) {
             context.keyword("select").sql(" ");
 

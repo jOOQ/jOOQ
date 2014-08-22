@@ -2173,6 +2173,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testInsertWithRecordFrom() throws Exception {
+        new CRUDTests(this).testInsertWithRecordFrom();
+    }
+
+    @Test
     public void testFetchFromTXT() throws Exception {
         new FormatTests(this).testFetchFromTXT();
     }

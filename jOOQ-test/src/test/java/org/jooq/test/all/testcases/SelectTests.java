@@ -64,7 +64,6 @@ import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.Record8;
 import org.jooq.Result;
-import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -299,89 +298,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(7, result2.getValue(0, 5));
         assertEquals("test", result2.getValue(0, 6));
         assertEquals("test", result2.getValue(0, 7));
-    }
-
-    public void testCombinedSelectQuery() throws Exception {
-        SelectQuery<B> q1 = create().selectQuery(TBook());
-        SelectQuery<B> q2 = create().selectQuery(TBook());
-
-        q1.addConditions(TBook_AUTHOR_ID().equal(1));
-        q2.addConditions(TBook_TITLE().equal("Brida"));
-
-        // Use union all because of clob's
-        Select<?> union = q1.unionAll(q2);
-        int rows = union.execute();
-        assertEquals(3, rows);
-
-        // Use union all because of clob's
-        rows = create().selectDistinct(union.field(TBook_AUTHOR_ID()), TAuthor_FIRST_NAME())
-            .from(union)
-            .join(TAuthor())
-            .on(union.field(TBook_AUTHOR_ID()).equal(TAuthor_ID()))
-            .orderBy(TAuthor_FIRST_NAME())
-            .execute();
-
-        assertEquals(2, rows);
-    }
-
-    public void testComplexUnions() throws Exception {
-        Select<Record1<String>> s1 = create().select(TBook_TITLE()).from(TBook()).where(TBook_ID().equal(1));
-        Select<Record1<String>> s2 = create().select(TBook_TITLE()).from(TBook()).where(TBook_ID().equal(2));
-        Select<Record1<String>> s3 = create().select(TBook_TITLE()).from(TBook()).where(TBook_ID().equal(3));
-        Select<Record1<String>> s4 = create().select(TBook_TITLE()).from(TBook()).where(TBook_ID().equal(4));
-
-        Result<Record> result = create().select().from(s1.union(s2).union(s3).union(s4)).fetch();
-        assertEquals(4, result.size());
-
-        result = create().select().from(s1.union(s2).union(s3.union(s4))).fetch();
-        assertEquals(4, result.size());
-
-        assertEquals(4, create().selectFrom(s1.union(
-                            create().selectFrom(s2.unionAll(
-                                create().selectFrom(s3.union(s4).asTable())
-                            ).asTable())
-                        ).asTable())
-                                    .fetch().size());
-
-        // [#289] Handle bad syntax scenario provided by user Gunther
-        Select<Record1<Integer>> q = create().select(val(2008).as("y"));
-        for (int year = 2009; year <= 2011; year++) {
-            q = q.union(create().select(val(year).as("y")));
-        }
-
-        assertEquals(4, q.execute());
-    }
-
-    public void testIntersectAndExcept() throws Exception {
-
-        // [#3507] Not all dialects support INTERSECT and EXCEPT
-        Result<Record1<Integer>> r1 =
-        create().select(TBook_ID())
-                .from(TBook())
-                .where(TBook_ID().le(3))
-                .intersect(
-                 select(TBook_ID())
-                .from(TBook())
-                .where(TBook_ID().ge(3)))
-                .fetch();
-
-        assertEquals(1, r1.size());
-        assertEquals(3, (int) r1.get(0).getValue(TBook_ID()));
-
-        Result<Record1<Integer>> r2 =
-        create().select(TBook_ID())
-                .from(TBook())
-                .where(TBook_ID().le(3))
-                .except(
-                 select(TBook_ID())
-                .from(TBook())
-                .where(TBook_ID().le(2)))
-                .fetch();
-
-        assertEquals(1, r2.size());
-        assertEquals(3, (int) r2.get(0).getValue(TBook_ID()));
-
-
     }
 
     public void testForUpdateClauses() throws Exception {

@@ -43,7 +43,6 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.nvl2;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
-import static org.jooq.impl.Utils.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -106,8 +105,6 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        Field<?> actualField = field(ctx);
-
         if (nullsFirst || nullsLast) {
             switch (ctx.configuration().dialect().family()) {
 
@@ -131,9 +128,9 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                     Field<Integer> ifNull = nullsFirst ? zero() : one();
                     Field<Integer> ifNotNull = nullsFirst ? one() : zero();
 
-                    ctx.visit(nvl2(actualField, ifNotNull, ifNull))
+                    ctx.visit(nvl2(field, ifNotNull, ifNull))
                        .sql(", ")
-                       .visit(actualField)
+                       .visit(field)
                        .sql(" ")
                        .keyword(order.toSQL());
 
@@ -142,7 +139,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
 
                 // DERBY, H2, HSQLDB, ORACLE, POSTGRES
                 default: {
-                    ctx.visit(actualField)
+                    ctx.visit(field)
                        .sql(" ")
                        .keyword(order.toSQL());
 
@@ -158,31 +155,10 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
             }
         }
         else {
-            ctx.visit(actualField)
+            ctx.visit(field)
                .sql(" ")
                .keyword(order.toSQL());
         }
-    }
-
-    private final Field<?> field(Context<?> ctx) {
-
-        /* [pro] */
-        // [#2080] Override the actual alias in case a synthetic alias is generated
-        // in the SELECT clause
-        Object[] object = (Object[]) ctx.data(DATA_OVERRIDE_ALIASES_IN_ORDER_BY);
-        if (object != null) {
-            Field<?>[] originalFields = (Field<?>[]) object[0];
-            Field<?>[] aliasedFields = (Field<?>[]) object[1];
-
-            for (int i = 0; i < originalFields.length; i++) {
-                if (field.equals(originalFields[i])) {
-                    return aliasedFields[i];
-                }
-            }
-        }
-        /* [/pro] */
-
-        return field;
     }
 
     @Override

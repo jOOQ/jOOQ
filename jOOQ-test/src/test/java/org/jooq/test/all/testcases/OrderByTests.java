@@ -569,6 +569,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Nested expressions
         switch (dialect().family()) {
             case H2:
+            case POSTGRES:
             /* [pro] */
             case SQLSERVER:
                 log.info("SKIPPING", "[#3575] Emulated OFFSET pagination with expressions using aliases in ORDER BY");
@@ -590,8 +591,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Subqueries
         switch (dialect().family()) {
-            /* [pro] */
             // These dialects do not really have full support for ORDER BY (SELECT ...)
+            case H2:
+            /* [pro] */
             case DB2:
             case SYBASE:
                 log.info("SKIPPING", "Emulated OFFSET pagination with ORDER BY (SELECT)");

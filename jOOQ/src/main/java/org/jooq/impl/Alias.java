@@ -41,6 +41,7 @@
 
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_ALIAS;
@@ -230,7 +231,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
         /* [pro] */
         // [#3575] Don't render Field aliases in SQL Server ORDER BY clauses
-        else if (context.data(DATA_UNALIAS_ALIASES_IN_ORDER_BY) != null && wrapped instanceof Field) {
+        else if (TRUE.equals(context.data(DATA_UNALIAS_ALIASES_IN_ORDER_BY)) && wrapped instanceof Field) {
             toSQLWrapped(context);
         }
         /* [/pro] */

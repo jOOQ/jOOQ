@@ -164,6 +164,7 @@ import org.jooq.test.all.testcases.TableFunctionTests;
 import org.jooq.test.all.testcases.ThreadSafetyTests;
 import org.jooq.test.all.testcases.TransactionTests;
 import org.jooq.test.all.testcases.TruncateTests;
+import org.jooq.test.all.testcases.UnionTests;
 import org.jooq.test.all.testcases.ValuesConstructorTests;
 import org.jooq.test.all.testcases.VisitListenerTests;
 import org.jooq.tools.JooqLogger;
@@ -2223,17 +2224,27 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testCombinedSelectQuery() throws Exception {
-        new SelectTests(this).testCombinedSelectQuery();
+        new UnionTests(this).testCombinedSelectQuery();
+    }
+
+    @Test
+    public void testUnionAndOrderBy() throws Exception {
+        new UnionTests(this).testUnionAndOrderBy();
+    }
+
+    @Test
+    public void testUnionExceptIntersectAndOrderBy() throws Exception {
+        new UnionTests(this).testUnionExceptIntersectAndOrderBy();
     }
 
     @Test
     public void testComplexUnions() throws Exception {
-        new SelectTests(this).testComplexUnions();
+        new UnionTests(this).testComplexUnions();
     }
 
     @Test
     public void testIntersectAndExcept() throws Exception {
-        new SelectTests(this).testIntersectAndExcept();
+        new UnionTests(this).testIntersectAndExcept();
     }
 
     @Test

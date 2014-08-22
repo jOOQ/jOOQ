@@ -40,13 +40,19 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.SELECT;
+import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
+import static org.jooq.impl.Utils.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Utils.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import org.jooq.Field;
+import org.jooq.QueryPart;
 import org.jooq.VisitContext;
 import org.jooq.VisitListener;
 
@@ -83,4 +89,31 @@ class InternalVisitListener extends DefaultVisitListener {
             ctx.context().data(DATA_LOCALLY_SCOPED_DATA_MAP, stack.pop());
         }
     }
+
+    /* [pro] */
+    @Override
+    public void visitStart(VisitContext ctx) {
+        QueryPart part = ctx.queryPart();
+
+        // Apply this transformation only to fields that are not being declared in the SELECT clause
+        if (part instanceof Field && !ctx.context().declareFields()) {
+
+            // [#2080] Override the actual alias in case a synthetic alias is generated
+            // in the SELECT clause
+            Object[] object = (Object[]) ctx.data(DATA_OVERRIDE_ALIASES_IN_ORDER_BY);
+
+            // Don't combine the effects of DATA_OVERRIDE_ALIASES_IN_ORDER_BY with DATA_UNALIAS_ALIASES_IN_ORDER_BY
+            if (object != null && !TRUE.equals(ctx.data(DATA_UNALIAS_ALIASES_IN_ORDER_BY))) {
+                Field<?>[] originalFields = (Field<?>[]) object[0];
+                Field<?>[] aliasedFields = (Field<?>[]) object[1];
+
+                for (int i = 0; i < originalFields.length; i++) {
+                    if (part.equals(originalFields[i])) {
+                        ctx.queryPart(fieldByName(aliasedFields[i].getName()));
+                    }
+                }
+            }
+        }
+    }
+    /* [/pro] */
 }

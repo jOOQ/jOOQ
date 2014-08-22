@@ -40,15 +40,22 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INFORMIX;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
-import java.util.Collection;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -92,33 +99,33 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectWindowStep<R extends Record> extends SelectUnionStep<R> {
+public interface SelectUnionStep<R extends Record> extends SelectOrderByStep<R> {
 
     /**
-     * Add a <code>WINDOW</code> clause to the statement.
-     * <p>
-     * Use the <code>WINDOW</code> clause to specify window definitions for
-     * reuse among several window functions.
-     * <p>
-     * Only {@link SQLDialect#POSTGRES} and {@link SQLDialect#SYBASE} are known
-     * to support the SQL standard <code>WINDOW</code> clause, but you can still
-     * use this clause in all other databases supporting window functions. jOOQ
-     * will inline window definitions where they are referenced.
+     * Combine with other selects
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
-    SelectUnionStep<R> window(WindowDefinition... definitions);
+    @Override
+    @Support
+    SelectUnionStep<R> union(Select<? extends R> select);
 
     /**
-     * Add a <code>WINDOW</code> clause to the statement.
-     * <p>
-     * Use the <code>WINDOW</code> clause to specify window definitions for
-     * reuse among several window functions.
-     * <p>
-     * Only {@link SQLDialect#POSTGRES} and {@link SQLDialect#SYBASE} are known
-     * to support the SQL standard <code>WINDOW</code> clause, but you can still
-     * use this clause in all other databases supporting window functions. jOOQ
-     * will inline window definitions where they are referenced.
+     * Combine with other selects
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
-    SelectUnionStep<R> window(Collection<? extends WindowDefinition> definitions);
+    @Override
+    @Support
+    SelectUnionStep<R> unionAll(Select<? extends R> select);
+
+    /**
+     * Combine with other selects
+     */
+    @Override
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    SelectUnionStep<R> except(Select<? extends R> select);
+
+    /**
+     * Combine with other selects
+     */
+    @Override
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    SelectUnionStep<R> intersect(Select<? extends R> select);
 }

@@ -44,13 +44,17 @@ import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.SELECT;
 import static org.jooq.Clause.SELECT_CONNECT_BY;
+import static org.jooq.Clause.SELECT_EXCEPT;
 import static org.jooq.Clause.SELECT_FROM;
 import static org.jooq.Clause.SELECT_GROUP_BY;
 import static org.jooq.Clause.SELECT_HAVING;
+import static org.jooq.Clause.SELECT_INTERSECT;
 import static org.jooq.Clause.SELECT_INTO;
 import static org.jooq.Clause.SELECT_ORDER_BY;
 import static org.jooq.Clause.SELECT_SELECT;
 import static org.jooq.Clause.SELECT_START_WITH;
+import static org.jooq.Clause.SELECT_UNION;
+import static org.jooq.Clause.SELECT_UNION_ALL;
 import static org.jooq.Clause.SELECT_WHERE;
 import static org.jooq.Clause.SELECT_WINDOW;
 import static org.jooq.Operator.OR;
@@ -58,6 +62,7 @@ import static org.jooq.Operator.OR;
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
+// ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -75,6 +80,10 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.SortOrder.ASC;
+import static org.jooq.impl.CombineOperator.EXCEPT;
+import static org.jooq.impl.CombineOperator.INTERSECT;
+import static org.jooq.impl.CombineOperator.UNION;
+import static org.jooq.impl.CombineOperator.UNION_ALL;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
@@ -91,7 +100,10 @@ import static org.jooq.impl.Utils.DATA_SELECT_INTO_TABLE;
 import static org.jooq.impl.Utils.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Utils.DATA_WINDOW_DEFINITIONS;
 import static org.jooq.impl.Utils.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
+import static org.jooq.impl.Utils.fieldArray;
 
+import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -101,6 +113,7 @@ import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.GroupField;
@@ -108,7 +121,9 @@ import org.jooq.JoinType;
 import org.jooq.Operator;
 import org.jooq.Param;
 import org.jooq.Record;
+import org.jooq.Row;
 import org.jooq.SQLDialect;
+import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.SortField;
 import org.jooq.Table;
@@ -127,41 +142,43 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements SelectQuery<R> {
+class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implements SelectQuery<R> {
 
     /**
      * Generated UID
      */
-    private static final long               serialVersionUID = 1646393178384872967L;
-    private static final Clause[]           CLAUSES          = { SELECT };
+    private static final long                    serialVersionUID = 1646393178384872967L;
+    private static final Clause[]                CLAUSES          = { SELECT };
 
-    private final WithImpl                  with;
-    private final SelectFieldList           select;
-    private Table<?>                        into;
-    private String                          hint;
-    private String                          option;
-    private boolean                         distinct;
-    private final QueryPartList<Field<?>>   distinctOn;
-    private boolean                         forUpdate;
-    private final QueryPartList<Field<?>>   forUpdateOf;
-    private final TableList                 forUpdateOfTables;
-    private ForUpdateMode                   forUpdateMode;
-    private int                             forUpdateWait;
-    private boolean                         forShare;
-    private final TableList                 from;
-    private final ConditionProviderImpl     condition;
-    private final ConditionProviderImpl     connectBy;
-    private boolean                         connectByNoCycle;
-    private final ConditionProviderImpl     connectByStartWith;
-    private boolean                         grouping;
-    private final QueryPartList<GroupField> groupBy;
-    private final ConditionProviderImpl     having;
-    private final WindowList                window;
-    private final SortFieldList             orderBy;
-    private boolean                         orderBySiblings;
-    private final QueryPartList<Field<?>>   seek;
-    private boolean                         seekBefore;
-    private final Limit                     limit;
+    private final WithImpl                       with;
+    private final SelectFieldList                select;
+    private Table<?>                             into;
+    private String                               hint;
+    private String                               option;
+    private boolean                              distinct;
+    private final QueryPartList<Field<?>>        distinctOn;
+    private boolean                              forUpdate;
+    private final QueryPartList<Field<?>>        forUpdateOf;
+    private final TableList                      forUpdateOfTables;
+    private ForUpdateMode                        forUpdateMode;
+    private int                                  forUpdateWait;
+    private boolean                              forShare;
+    private final TableList                      from;
+    private final ConditionProviderImpl          condition;
+    private final ConditionProviderImpl          connectBy;
+    private boolean                              connectByNoCycle;
+    private final ConditionProviderImpl          connectByStartWith;
+    private boolean                              grouping;
+    private final QueryPartList<GroupField>      groupBy;
+    private final ConditionProviderImpl          having;
+    private final WindowList                     window;
+    private final List<CombineOperator>          unionOp;
+    private final List<QueryPartList<Select<?>>> union;
+    private final SortFieldList                  orderBy;
+    private boolean                              orderBySiblings;
+    private final QueryPartList<Field<?>>        seek;
+    private boolean                              seekBefore;
+    private final Limit                          limit;
 
     SelectQueryImpl(WithImpl with, Configuration configuration) {
         this(with, configuration, null);
@@ -189,6 +206,8 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         this.groupBy = new QueryPartList<GroupField>();
         this.having = new ConditionProviderImpl();
         this.window = new WindowList();
+        this.unionOp = new ArrayList<CombineOperator>();
+        this.union = new ArrayList<QueryPartList<Select<?>>>();
         this.orderBy = new SortFieldList();
         this.seek = new QueryPartList<Field<?>>();
         this.limit = new Limit();
@@ -199,6 +218,85 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         this.forUpdateOf = new QueryPartList<Field<?>>();
         this.forUpdateOfTables = new TableList();
+    }
+
+    @Override
+    public final int fetchCount() throws DataAccessException {
+        return DSL.using(configuration()).fetchCount(this);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <T> Field<T> asField() {
+        if (getSelect().size() != 1) {
+            throw new IllegalStateException("Can only use single-column ResultProviderQuery as a field");
+        }
+
+        return new ScalarSubquery<T>(this, (DataType<T>) getSelect().get(0).getDataType());
+    }
+
+    @Override
+    public final <T> Field<T> asField(String alias) {
+        return this.<T> asField().as(alias);
+    }
+
+    @Override
+    public final Row fieldsRow() {
+        return asTable().fieldsRow();
+    }
+
+    @Override
+    public final <T> Field<T> field(Field<T> field) {
+        return asTable().field(field);
+    }
+
+    @Override
+    public final Field<?> field(String string) {
+        return asTable().field(string);
+    }
+
+    @Override
+    public final Field<?> field(int index) {
+        return asTable().field(index);
+    }
+
+    @Override
+    public final Field<?>[] fields() {
+        return asTable().fields();
+    }
+
+    @Override
+    public final Table<R> asTable() {
+        // Its usually better to alias nested selects that are used in
+        // the FROM clause of a query
+        return new DerivedTable<R>(this).as("alias_" + Utils.hash(this));
+    }
+
+    @Override
+    public final Table<R> asTable(String alias) {
+        return new DerivedTable<R>(this).as(alias);
+    }
+
+    @Override
+    public final Table<R> asTable(String alias, String... fieldAliases) {
+        return new DerivedTable<R>(this).as(alias, fieldAliases);
+    }
+
+    @Override
+    protected final Field<?>[] getFields(ResultSetMetaData meta) {
+
+        // [#1808] TODO: Restrict this field list, in case a restricting fetch()
+        // method was called to get here
+        List<Field<?>> fields = getSelect();
+
+        // If no projection was specified explicitly, create fields from result
+        // set meta data instead. This is typically the case for SELECT * ...
+        if (fields.isEmpty()) {
+            Configuration configuration = configuration();
+            return new MetaDataFieldProvider(configuration, meta).getFields();
+        }
+
+        return fieldArray(fields);
     }
 
     @Override
@@ -230,6 +328,8 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         Boolean wrapDerivedTables = (Boolean) context.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);
         if (TRUE.equals(wrapDerivedTables)) {
             context.sql("(")
+                   .formatIndentStart()
+                   .formatNewLine()
                    .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, null);
         }
 
@@ -394,7 +494,9 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         }
 
         if (TRUE.equals(wrapDerivedTables)) {
-            context.sql(")")
+            context.formatIndentEnd()
+                   .formatNewLine()
+                   .sql(")")
                    .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
         }
 
@@ -472,10 +574,17 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             xxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx x
                 xxxxxxxxx
                 xxxxxx xxxx xxxxxxxxxxxxxxxxx xx x
+                    xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
                     xx xxxxxxx xxxxxx xxxx xx xxxxxx xxxxxxx xxxx xxx xxxxxxxxxxx xxxxxx xxxxxx
                     xx xxx xxxxxxxxxx xxxx xxx xxxxx xxxxxxx xxxxxxxxxx xxxxx xx xxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                    xxxxxxx xxxxxxx x xxxxxxxxxxxx
+
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxx x xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxx
+                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxx
 
                     xx xxxxxxx xxxx xxxxxxxx xx xxxxxxxx xx xxxxxxx xxx xxxxxxxxxxxx xxxxxxx
                     xx xxxxx xxxxxxx xxx xxxxxxxx xxxxxxxxxx xxxxxxxx xxx xxxxxxxxxxxx xxxxxxx
@@ -487,6 +596,10 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                     xx
 
                     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxx
+
                 x
             xxxxxxxxxxx
 
@@ -608,18 +721,68 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         SQLDialect dialect = context.dialect();
         SQLDialect family = dialect.family();
 
+        int unionOpSize = unionOp.size();
+
+        // [#1658] jOOQ applies left-associativity to set operators. In order to enforce that across
+        // all databases, we need to wrap relevant subqueries in parentheses.
+        if (unionOpSize > 0) {
+            for (int i = unionOpSize - 1; i >= 0; i--) {
+                switch (unionOp.get(i)) {
+                    case EXCEPT:    context.start(SELECT_EXCEPT);    break;
+                    case INTERSECT: context.start(SELECT_INTERSECT); break;
+                    case UNION:     context.start(SELECT_UNION);     break;
+                    case UNION_ALL: context.start(SELECT_UNION_ALL); break;
+                }
+
+                if (i > 0)
+                    unionParenthesis(context, "(");
+            }
+        }
+
         /* [pro] xx
 
         xx xxxxxxxx xxxxxxx xxxxx xxxx xx xxxxx xx xxxxxxxxxx xxxxxxxxxxx xxx xx xxx
         xx xxxxxxxxx xxx xxxxxxxx xxxx x xxxxxxx xxxxxx xxxxx xxxx xx xxxxx xxx xxxxxxxxxx
-        xxxxxxx xxxxxxxxxxxxxxxxxx x xxxxxx xx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxx xx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xx xxxxxxxxxxxxxxxxxxxx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
                    xxxxxxxxxxxxxxxxxx
                    xxxxxxxxxxxxxxxxxxxxxx xxx
                    xxxxxxxxxxxxxxxxxxxx
                    xxxxxxxxxxxxxxxxx
+
+        xx xxxxxxx
+        xx xxxxxxxxxxxx        x xxx xx xxxxx xx xxxxxxx xxxxx xxxx xx x xxxxxx xxxxx xxxxxxxxxxxxx
+        xx                       xxxxx xxxxx xxxxxxxxxx xxx xx xxx xxxxx xxxxx xxxxxxxxxx xxxxx xx xxxxx
+        xx                       xx xxxxxxx xxxxx xx xxxxxx xxxxxxxxx xxxxxxxx xx xxx xxxxx xxxxxxxxxxx
+        xx                       xxx xxxxx xxxxxxxxxx xxxx xxxx xx xxxxxxx xx x xxxxxxx xxxxxx
+        xx xxxx xxxxxxxxxx xxxxx xxxxxxxxxxxx x xxxxx xxxxxxxxx xxxx xx xxxxxxx xxxxx xxxxxxxxxx xxx xxxxx
+        xx                       xxxx xxx xx xxxx xxxx xxx x xxxxxxx xxxxxx
+        xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
+
+            xxxxxxxxxxxxxxxxxxxxxxxx
+
+            xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxx
+
+            xx xxxxxxxxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxx xx
+                       xxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxx
+                       xxxxxxxxxxxxxxxxxxxxxx
+
+            xxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxxxx xxx
+                   xxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxx
+        x
 
         xx [/pro] */
 
@@ -649,48 +812,8 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         }
 
         /* [pro] xx
-        xx xxxxxx xxx xxx xxxxxx xxxx xxxxxxx xxx xxxxxxx
-        xxxxxx xxxxxxxx x
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxxxxx x
-
-                xx xx xx xxxx x xxx xxxxxxx xx xxxxx xx xx xxxxxxxx xxxx
-                xx xxxxxxxxxxxxxxx xxxxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xx xxxxxxxxxxxxxxxxxxxxxxxxx
-                        xx xxxxxxxxxxxxxxxxxxxxxxx
-                        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
-                x
-
-                xx xxxxxx xxx xxxxxx xxxxx x xxx xxxxxx xx xxxxxxx xxxxxxxxxx
-                xxxx xx xxxxxxx xx xxxxxxxxx
-                        xx xxxxxxxxxxxxxxxxxx
-                        xx xxxxxxxxxxxxxxxxxxxxxxxx x
-
-                    xx xxxxxxx xxx xxxxxx xxxx xxxx xxxxxx xx xxxxxx xx xxxxx
-                    xx xxxxxx xx xxxxx xx xx xxxxxxxxxx xxxxx
-                    xx xxxxxxxx xx xxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
-                    x
-                x
-
-                xxxxxx
-            x
-
-            xxxx xxxxxxx x
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
-                x
-
-                xxxxxx
-            x
-
-            xx xxxxxx xxxxxxx xxxxxxxxxx xxxxxx xx xxxxxxx xxx xxxxxx xxx xxx xx xxxx
-            xxxx xxxxxxx x
-            x
-        x
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxx
         xx [/pro] */
 
         context.declareFields(true);
@@ -698,7 +821,10 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         // [#2335] When emulating LIMIT .. OFFSET, the SELECT clause needs to generate
         // non-ambiguous column names as ambiguous column names are not allowed in subqueries
         if (alternativeFields != null) {
-            context.visit(new SelectFieldList(alternativeFields));
+            if (wrapQueryExpressionBodyInDerivedTable && originalFields.length < alternativeFields.length)
+                context.visit(new SelectFieldList(Arrays.copyOf(alternativeFields, alternativeFields.length - 1)));
+            else
+                context.visit(new SelectFieldList(alternativeFields));
         }
 
         // [#1905] H2 only knows arrays, no row value expressions. Subqueries
@@ -897,6 +1023,42 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         context.end(SELECT_WINDOW);
 
+        // SET operations like UNION, EXCEPT, INTERSECT
+        // --------------------------------------------
+        if (unionOpSize > 0) {
+            for (int i = 0; i < unionOpSize; i++) {
+                CombineOperator op = unionOp.get(i);
+
+                for (Select<?> other : union.get(i)) {
+                    context.formatSeparator()
+                           .keyword(op.toSQL(dialect))
+                           .sql(" ");
+
+                    unionParenthesis(context, "(");
+                    context.visit(other);
+                    unionParenthesis(context, ")");
+                }
+
+                // [#1658] Close parentheses opened previously
+                if (i < unionOpSize - 1)
+                    unionParenthesis(context, ")");
+
+                switch (unionOp.get(i)) {
+                    case EXCEPT:    context.end(SELECT_EXCEPT);    break;
+                    case INTERSECT: context.end(SELECT_INTERSECT); break;
+                    case UNION:     context.end(SELECT_UNION);     break;
+                    case UNION_ALL: context.end(SELECT_UNION_ALL); break;
+                }
+            }
+        }
+
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxx
+                   xxxxxxx xxxx
+        xx [/pro] */
+
         // ORDER BY clause
         // ---------------
         context.start(SELECT_ORDER_BY);
@@ -916,9 +1078,16 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             xx xxx xx xxxx xxx xxxxxxx xxxx xxxx xxxxxxxxxx xx xxxxxxx xxxxxx xxxxxxxxxxx xxx
             xx xxxxxxxxx xxxx xxxx xxxxx xx xxx xxxxx xx xxxxxx
             xx xxxxxxxxxxxxxxx xx xxxxx x
+                xxxxxxx xxxxxxx x xxxxxxxxxxxxxxxxxx
+
                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxx x xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxx
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxx
+
                 xxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxx
             x
             xxxx
             xx [/pro] */
@@ -942,11 +1111,99 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         context.end(SELECT_ORDER_BY);
 
         /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxx
                    xxxxxxxxxxxxxxxx
                    xxxxxxxxxx
         xx [/pro] */
+    }
+
+    /* [pro] xx
+    xxxxxxx xxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx x
+        xxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxx xxxx xxxx xxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xx xxxxxxxxxxxxxx x xxx
+    x
+
+    xxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx x
+        xxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxx
+        xxxxxxxxxx xxxxxxx x xxxxxxxxxxxxxxxxxx
+
+        xx xxxxxx xxx xxx xxxxxx xxxx xxxxxxx xxx xxxxxxx
+        xxxxxx xxxxxxxx x
+            xxxx xxxxxxx
+            xxxx xxxx
+            xxxx xxxxxxxxxx x
+
+                xx xx xx xxxx x xxx xxxxxxx xx xxxxx xx xx xxxxxxxx xxxx
+                xx xxxxxxxxxxxxxxx xxxxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xx xxxxxxxxxxxxxxxxxxxxxxxxx
+                        xx xxxxxxxxxxxxxxxxxxxxxxx
+                        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
+                x
+
+                xx xxxxxx xxx xxxxxx xxxxx x xxx xxxxxx xx xxxxxxx xxxxxxxxxx
+                xxxx xx xxxxxxx xx xxxxxxxxx
+                        xx xxxxxxxxxxxxxxxxxx
+                        xx xxxxxxxxxxxxxxxxxxxxxxxx x
+
+                    xx xxxxxxx xxx xxxxxx xxxx xxxx xxxxxx xx xxxxxx xx xxxxx
+                    xx xxxxxx xx xxxxx xx xx xxxxxxxxxx xxxxx
+                    xx xxxxxxxx xx xxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
+                    x
+                x
+
+                xxxxxx
+            x
+
+            xxxx xxxxxxx x
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
+                x
+
+                xxxxxx
+            x
+
+            xx xxxxxx xxxxxxx xxxxxxxxxx xxxxxx xx xxxxxxx xxx xxxxxx xxx xxx xx xxxx
+            xxxx xxxxxxx x
+            x
+        x
+    x
+    xx [/pro] */
+
+    private final void unionParenthesis(Context<?> ctx, String parenthesis) {
+        switch (ctx.configuration().dialect()) {
+            // Sybase ASE, Derby, Firebird and SQLite have some syntax issues with unions.
+            // Check out https://issues.apache.org/jira/browse/DERBY-2374
+            /* [pro] xx
+            xxxx xxxxxxx
+            xxxx xxxx
+            xx [/pro] */
+            case DERBY:
+            case FIREBIRD:
+            case SQLITE:
+
+            // [#288] MySQL has a very special way of dealing with UNION's
+            // So include it as well
+            case MARIADB:
+            case MYSQL:
+                return;
+        }
+
+        if (")".equals(parenthesis)) {
+            ctx.formatIndentEnd()
+               .formatNewLine();
+        }
+
+        ctx.sql(parenthesis);
+
+        if ("(".equals(parenthesis)) {
+            ctx.formatIndentStart()
+               .formatNewLine();
+        }
     }
 
     @Override
@@ -1436,6 +1693,40 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     @Override
     public final void addWindow(Collection<? extends WindowDefinition> definitions) {
         getWindow().addAll(definitions);
+    }
+
+    private final Select<R> combine(CombineOperator op, Select<? extends R> other) {
+        int index = unionOp.size() - 1;
+
+        if (index == -1 || unionOp.get(index) != op || op == INTERSECT || op == EXCEPT) {
+            unionOp.add(op);
+            union.add(new QueryPartList<Select<?>>());
+
+            index++;
+        }
+
+        union.get(index).add(other);
+        return this;
+    }
+
+    @Override
+    public final Select<R> union(Select<? extends R> other) {
+        return combine(UNION, other);
+    }
+
+    @Override
+    public final Select<R> unionAll(Select<? extends R> other) {
+        return combine(UNION_ALL, other);
+    }
+
+    @Override
+    public final Select<R> except(Select<? extends R> other) {
+        return combine(EXCEPT, other);
+    }
+
+    @Override
+    public final Select<R> intersect(Select<? extends R> other) {
+        return combine(INTERSECT, other);
     }
 
     @Override

@@ -41,6 +41,7 @@
 
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_ALIAS;
@@ -230,7 +231,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
         /* [pro] xx
         xx xxxxxxx xxxxx xxxxxx xxxxx xxxxxxx xx xxx xxxxxx xxxxx xx xxxxxxx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxx xx xxxxxxx xxxxxxxxxx xxxxxx x
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx xxxxxxxxxx xxxxxx x
             xxxxxxxxxxxxxxxxxxxxxx
         x
         xx [/pro] */

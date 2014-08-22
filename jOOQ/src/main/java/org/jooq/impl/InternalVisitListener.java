@@ -40,13 +40,19 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.SELECT;
+import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
+import static org.jooq.impl.Utils.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Utils.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import org.jooq.Field;
+import org.jooq.QueryPart;
 import org.jooq.VisitContext;
 import org.jooq.VisitListener;
 
@@ -83,4 +89,31 @@ class InternalVisitListener extends DefaultVisitListener {
             ctx.context().data(DATA_LOCALLY_SCOPED_DATA_MAP, stack.pop());
         }
     }
+
+    /* [pro] xx
+    xxxxxxxxx
+    xxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxx xxxx x
+        xxxxxxxxx xxxx x xxxxxxxxxxxxxxxx
+
+        xx xxxxx xxxx xxxxxxxxxxxxxx xxxx xx xxxxxx xxxx xxx xxx xxxxx xxxxxxxx xx xxx xxxxxx xxxxxx
+        xx xxxxx xxxxxxxxxx xxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+
+            xx xxxxxxx xxxxxxxx xxx xxxxxx xxxxx xx xxxx x xxxxxxxxx xxxxx xx xxxxxxxxx
+            xx xx xxx xxxxxx xxxxxx
+            xxxxxxxx xxxxxx x xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+            xx xxxxx xxxxxxx xxx xxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xx xxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                xxxxxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxx xxxxxxxxxx
+                xxxxxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxx xxxxxxxxxx
+
+                xxx xxxx x x xx x x xxxxxxxxxxxxxxxxxxxxxx xxxx x
+                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    x
+                x
+            x
+        x
+    x
+    xx [/pro] */
 }

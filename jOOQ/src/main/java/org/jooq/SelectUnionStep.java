@@ -56,76 +56,76 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 
-import java.util.List;
-
-import org.jooq.exception.DataAccessException;
 
 /**
- * A {@link Query} that can provide a {@link Result} after execution
+ * This type is used for the {@link Select}'s DSL API when selecting generic
+ * {@link Record} types.
+ * <p>
+ * Example: <code><pre>
+ * -- get all authors' first and last names, and the number
+ * -- of books they've written in German, if they have written
+ * -- more than five books in German in the last three years
+ * -- (from 2011), and sort those authors by last names
+ * -- limiting results to the second and third row
  *
- * @param <R> The record type being returned by this query
+ *   SELECT T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, COUNT(*)
+ *     FROM T_AUTHOR
+ *     JOIN T_BOOK ON T_AUTHOR.ID = T_BOOK.AUTHOR_ID
+ *    WHERE T_BOOK.LANGUAGE = 'DE'
+ *      AND T_BOOK.PUBLISHED > '2008-01-01'
+ * GROUP BY T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME
+ *   HAVING COUNT(*) > 5
+ * ORDER BY T_AUTHOR.LAST_NAME ASC NULLS FIRST
+ *    LIMIT 2
+ *   OFFSET 1
+ *      FOR UPDATE
+ *       OF FIRST_NAME, LAST_NAME
+ *       NO WAIT
+ * </pre></code> Its equivalent in jOOQ <code><pre>
+ * create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
+ *       .from(T_AUTHOR)
+ *       .join(T_BOOK).on(TBook.AUTHOR_ID.equal(TAuthor.ID))
+ *       .where(TBook.LANGUAGE.equal("DE"))
+ *       .and(TBook.PUBLISHED.greaterThan(parseDate('2008-01-01')))
+ *       .groupBy(TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
+ *       .having(create.count().greaterThan(5))
+ *       .orderBy(TAuthor.LAST_NAME.asc().nullsFirst())
+ *       .limit(2)
+ *       .offset(1)
+ *       .forUpdate()
+ *       .of(TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
+ *       .noWait();
+ * </pre></code> Refer to the manual for more details
+ *
  * @author Lukas Eder
  */
-public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, FieldLike {
+public interface SelectUnionStep<R extends Record> extends SelectOrderByStep<R> {
 
     /**
      * Combine with other selects
      */
+    @Override
     @Support
-    Select<R> union(Select<? extends R> select);
+    SelectUnionStep<R> union(Select<? extends R> select);
 
     /**
      * Combine with other selects
      */
+    @Override
     @Support
-    Select<R> unionAll(Select<? extends R> select);
+    SelectUnionStep<R> unionAll(Select<? extends R> select);
 
     /**
      * Combine with other selects
      */
+    @Override
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    Select<R> except(Select<? extends R> select);
+    SelectUnionStep<R> except(Select<? extends R> select);
 
     /**
      * Combine with other selects
      */
+    @Override
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    Select<R> intersect(Select<? extends R> select);
-
-    /**
-     * All fields selected in this query
-     */
-    List<Field<?>> getSelect();
-
-    /**
-     * Execute this query in the context of its attached executor and return a
-     * <code>COUNT(*)</code> value.
-     * <p>
-     * This wraps a pre-existing <code>SELECT</code> query in another one to
-     * calculate the <code>COUNT(*)</code> value, without modifying the original
-     * <code>SELECT</code>. An example: <code><pre>
-     * -- Original query:
-     * SELECT id, title FROM book WHERE title LIKE '%a%'
-     *
-     * -- Wrapped query:
-     * SELECT count(*) FROM (
-     *   SELECT id, title FROM book WHERE title LIKE '%a%'
-     * )
-     * </pre></code> This is particularly useful for those databases that do not
-     * support the <code>COUNT(*) OVER()</code> window function to calculate
-     * total results in paged queries.
-     *
-     * @return The <code>COUNT(*)</code> result
-     * @throws DataAccessException if something went wrong executing the query
-     * @deprecated - 3.5.0 - [#3356] - This method is being removed as it is
-     *             confusingly different from all the other types of
-     *             {@link #fetch()} methods, in that it modifies the original
-     *             {@link Select} statement by wrapping it. In particular, this
-     *             method can be easily confused with {@link #fetch(Field)}, or
-     *             more concretely <code>fetch(count())</code>, which has an
-     *             entirely different semantics. Use
-     *             {@link DSLContext#fetchCount(Select)} instead.
-     */
-    @Deprecated
-    int fetchCount() throws DataAccessException;
+    SelectUnionStep<R> intersect(Select<? extends R> select);
 }

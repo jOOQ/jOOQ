@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.impl.Utils.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
 import java.sql.PreparedStatement;
@@ -89,9 +90,9 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     private final Deque<QueryPart>    visitParts;
 
     // [#2694] Unified RenderContext and BindContext traversal
-    ParamType                         paramType;
-    boolean                           qualify  = true;
-    CastMode                          castMode = CastMode.DEFAULT;
+    ParamType                         paramType = ParamType.INDEXED;
+    boolean                           qualify   = true;
+    CastMode                          castMode  = CastMode.DEFAULT;
     SQLDialect[]                      castDialects;
 
     AbstractContext(Configuration configuration, PreparedStatement stmt) {
@@ -474,7 +475,7 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
 
     @Override
     public final C paramType(ParamType p) {
-        paramType = p;
+        paramType = (p == null ? INDEXED : p);
         return (C) this;
     }
 

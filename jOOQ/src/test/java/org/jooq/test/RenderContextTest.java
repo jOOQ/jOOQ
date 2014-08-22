@@ -40,10 +40,12 @@
  */
 package org.jooq.test;
 
-import org.jooq.BindContext;
+import static org.jooq.conf.ParamType.INDEXED;
+import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.conf.ParamType.NAMED;
+
 import org.jooq.Context;
 import org.jooq.RenderContext;
-import org.jooq.exception.DataAccessException;
 import org.jooq.impl.CustomCondition;
 
 import org.junit.Test;
@@ -54,6 +56,14 @@ import org.junit.Test;
  * @author Lukas Eder
  */
 public class RenderContextTest extends AbstractTest {
+
+    @Test
+    public void testParamType() {
+        assertEquals(INDEXED, create.renderContext().paramType());
+        assertEquals(INDEXED, r_ref().paramType());
+        assertEquals(INLINED, r_refI().paramType());
+        assertEquals(NAMED, r_refP().paramType());
+    }
 
     @Test
     public void testData() {

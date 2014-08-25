@@ -2543,6 +2543,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testScalarSubqueryCaching() throws Exception {
+        new RoutineAndUDTTests(this).testScalarSubqueryCaching();
+    }
+
+    @Test
     public void testStoredFunctionsWithNoSchema() throws Exception {
         new RoutineAndUDTTests(this).testStoredFunctionsWithNoSchema();
     }

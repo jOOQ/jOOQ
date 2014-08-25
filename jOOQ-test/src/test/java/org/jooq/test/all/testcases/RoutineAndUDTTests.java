@@ -58,6 +58,7 @@ import java.util.Arrays;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Configuration;
+import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
 import org.jooq.Record;
@@ -67,6 +68,7 @@ import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -78,6 +80,8 @@ import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
+
+import org.junit.Assume;
 
 public class RoutineAndUDTTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
@@ -270,11 +274,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testStoredFunctions() throws Exception {
-        if (cRoutines() == null) {
-            log.info("SKIPPING", "functions test");
-            return;
-        }
-
+        Assume.assumeNotNull(cRoutines());
         jOOQAbstractTest.reset = false;
 
         // ---------------------------------------------------------------------
@@ -379,11 +379,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(2), result2.getValue(1, 2));
     }
 
+    @SuppressWarnings("unchecked")
+    public void testScalarSubqueryCaching() throws Exception {
+        Assume.assumeNotNull(cRoutines());
+
+        DSLContext create = create(create().settings().withRenderScalarSubqueriesForStoredFunctions(true));
+
+        Field<Number> f = (Field<Number>) FOneField();
+        Select<Record1<Number>> select = create.select(f).where(f.eq(f));
+
+        assertEquals(FOneField().getDataType().convert(1), create.fetchValue(select));
+        assertTrue(create.render(select).contains("select (select"));
+        assertTrue(create.render(select).contains("= (select"));
+    }
+
     public void testStoredFunctionsWithNoSchema() throws Exception {
-        if (cRoutines() == null) {
-            log.info("SKIPPING", "functions test with no schema");
-            return;
-        }
+        Assume.assumeNotNull(cRoutines());
 
         /* [pro] */
         // DB2 seems not to allow unqualified function calls, even in the local schema
@@ -398,8 +409,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .fetchOne(0, Integer.class));
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-
+    @SuppressWarnings({ "unchecked" })
     public void testARRAYType() throws Exception {
         if (TArrays() == null) {
             log.info("SKIPPING", "ARRAY type test");

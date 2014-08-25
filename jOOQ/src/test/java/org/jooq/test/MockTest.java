@@ -59,8 +59,10 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.RandomAccessFile;
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.List;
 
 import org.jooq.Constants;
@@ -154,7 +156,7 @@ public class MockTest extends AbstractTest {
             execute0(ctx);
 
             return new MockResult[] {
-                new MockResult(0, resultOne)
+                new MockResult(recordOne)
             };
         }
     }
@@ -508,5 +510,48 @@ public class MockTest extends AbstractTest {
         assertArrayEquals(new Integer[] { 2, 2 }, (Integer[]) r.getArray("INTEGERS").getArray());
 
         assertFalse(r.next());
+    }
+
+    @Test
+    public void testCallableStatements() throws SQLException {
+        MockConnection connection = new MockConnection(new MockDataProvider() {
+            @Override
+            public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
+                assertEquals("{ ? = call my_function(?, ?, ?, ?) }", ctx.sql());
+
+                assertEquals(5, ctx.bindings().length);
+                assertEquals(null, ctx.bindings()[0]);
+                assertEquals(2, ctx.bindings()[1]);
+                assertEquals(null, ctx.bindings()[2]);
+                assertEquals(4, ctx.bindings()[3]);
+                assertEquals(null, ctx.bindings()[4]);
+
+                assertEquals(5, ctx.outParameterTypes().length);
+                assertEquals(Types.INTEGER, ctx.outParameterTypes()[0]);
+                assertEquals(0, ctx.outParameterTypes()[1]);
+                assertEquals(Types.VARCHAR, ctx.outParameterTypes()[2]);
+                assertEquals(0, ctx.outParameterTypes()[3]);
+                assertEquals(Types.DATE, ctx.outParameterTypes()[4]);
+
+                return new MockResult[] { new MockResult(recordOne) };
+            }
+        });
+
+        CallableStatement stmt = connection.prepareCall("{ ? = call my_function(?, ?, ?, ?) }");
+
+        stmt.registerOutParameter(1, Types.INTEGER);
+        stmt.setInt(2, 2);
+        stmt.registerOutParameter(3, Types.VARCHAR);
+        stmt.setInt(4, 4);
+        stmt.registerOutParameter(5, Types.DATE);
+
+        stmt.executeUpdate();
+
+        assertEquals(1, stmt.getInt(1));
+        assertFalse(stmt.wasNull());
+        assertEquals("1", stmt.getString(3));
+        assertFalse(stmt.wasNull());
+        assertNull(stmt.getDate(5));
+        assertTrue(stmt.wasNull());
     }
 }

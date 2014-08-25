@@ -46,6 +46,7 @@ import java.sql.Statement;
 
 import org.jooq.DSLContext;
 import org.jooq.Query;
+import org.jooq.Record;
 import org.jooq.ResultQuery;
 
 /**
@@ -94,12 +95,12 @@ public interface MockDataProvider {
      * <li><code>MockStatement</code> does not distinguish between "batch" and
      * "single" statements. However...
      * <ul>
-     * <li>A {@link MockExecuteContext#batchSQL()} with more than one SQL
-     * string is a strong indicator for a "multi-batch statement", as understood
-     * by jOOQ's {@link DSLContext#batch(Query...)}.</li>
-     * <li>A {@link MockExecuteContext#batchBindings()} with more than one
-     * bind variable array is a strong indicator for a "single-batch statement",
-     * as understood by jOOQ's {@link DSLContext#batch(Query)}.</li>
+     * <li>A {@link MockExecuteContext#batchSQL()} with more than one SQL string
+     * is a strong indicator for a "multi-batch statement", as understood by
+     * jOOQ's {@link DSLContext#batch(Query...)}.</li>
+     * <li>A {@link MockExecuteContext#batchBindings()} with more than one bind
+     * variable array is a strong indicator for a "single-batch statement", as
+     * understood by jOOQ's {@link DSLContext#batch(Query)}.</li>
      * </ul>
      * </li>
      * <li>It is recommended to return as many <code>MockResult</code> objects
@@ -133,6 +134,10 @@ public interface MockDataProvider {
      * <li> {@link MockExecuteContext#columnNames()}</li>
      * </ul>
      * </li>
+     * <li>OUT parameters from stored procedures are generated from the first
+     * {@link MockResult}'s first {@link Record}. If OUT parameters are
+     * requested, implementors must ensure the presence of such a
+     * <code>Record</code>.</li>
      * </ul>
      *
      * @param ctx The execution context.

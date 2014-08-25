@@ -40,6 +40,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_FUNCTION;
 // ...
@@ -51,6 +52,7 @@ import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Utils.consumeExceptions;
 import static org.jooq.impl.Utils.consumeWarnings;
+import static org.jooq.impl.Utils.settings;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -763,7 +765,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     /**
      * The {@link Field} representation of this {@link Routine}
      */
-    private class RoutineField extends AbstractFunction<T> {
+    private class RoutineField extends AbstractField<T> {
 
         /**
          * Generated UID
@@ -776,8 +778,8 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         }
 
         @Override
-        final Field<T> getFunction0(Configuration c) {
-            RenderContext local = create(c).renderContext();
+        public void accept(Context<?> ctx) {
+            RenderContext local = create(ctx).renderContext();
             toSQLQualifiedName(local);
 
             Field<?>[] array = new Field<?>[getInParameters().size()];
@@ -786,7 +788,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             for (Parameter<?> p : getInParameters()) {
 
                 // Disambiguate overloaded function signatures
-                if (POSTGRES == c.dialect() && isOverloaded()) {
+                if (POSTGRES == ctx.dialect() && isOverloaded()) {
                     array[i] = getInValues().get(p).cast(p.getType());
                 }
                 else {
@@ -796,7 +798,14 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                 i++;
             }
 
-            return function(local.render(), getDataType(), array);
+            Field<T> result = function(local.render(), getDataType(), array);
+
+            // [#3592] Decrease SQL -> PL/SQL context switches with Oracle Scalar Subquery Caching
+            if (TRUE.equals(settings(ctx.configuration()).isRenderScalarSubqueriesForStoredFunctions())) {
+                result = DSL.select(result).asField();
+            }
+
+            ctx.visit(result);
         }
     }
 

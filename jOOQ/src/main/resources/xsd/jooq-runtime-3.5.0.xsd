@@ -29,6 +29,11 @@
       <!-- Whether rendered SQL should be pretty-printed -->
       <element name="renderFormatted" type="boolean" minOccurs="0" maxOccurs="1" default="false"/>
 
+      <!-- Whether stored function calls should be wrapped in scalar subqueries.
+           Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
+           set to true, users can automatically profit from this feature in all SQL statements. -->
+      <element name="renderScalarSubqueriesForStoredFunctions" type="boolean" minOccurs="0" maxOccurs="1" default="false"/>
+
       <!-- Whether rendered bind values should be rendered as:
       
            - question marks

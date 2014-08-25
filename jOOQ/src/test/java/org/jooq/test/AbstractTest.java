@@ -81,6 +81,7 @@ public abstract class AbstractTest {
     protected PreparedStatement                       statement;
     protected DSLContext                              create;
     protected Result<Table1Record>                    resultEmpty;
+    protected Table1Record                            recordOne;
     protected Result<Table1Record>                    resultOne;
     protected Result<Table1Record>                    resultTwo;
     protected Result<Record3<String, String, String>> resultStrings;
@@ -102,7 +103,7 @@ public abstract class AbstractTest {
         resultEmpty = create.newResult(TABLE1);
 
         resultOne = create.newResult(TABLE1);
-        resultOne.add(create.newRecord(TABLE1));
+        resultOne.add(recordOne = create.newRecord(TABLE1));
         resultOne.get(0).setValue(FIELD_ID1, 1);
         resultOne.get(0).setValue(FIELD_NAME1, "1");
         resultOne.get(0).changed(false);

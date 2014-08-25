@@ -40,9 +40,15 @@
  */
 package org.jooq.tools.jdbc;
 
+import static org.jooq.impl.DSL.using;
+
 import java.sql.Statement;
 
+import org.jooq.AttachableInternal;
+import org.jooq.Configuration;
+import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.impl.DefaultConfiguration;
 
 /**
  * A mock result.
@@ -87,6 +93,17 @@ public class MockResult {
 
     /**
      * Create a new <code>MockResult</code>.
+     * <p>
+     * This is a convenience constructor creating a <code>MockResult</code> with exactly one record.
+     *
+     * @param data The single record in this result.
+     */
+    public MockResult(Record data) {
+        this(1, result(data));
+    }
+
+    /**
+     * Create a new <code>MockResult</code>.
      *
      * @param rows The number of affected rows
      * @param data The result data
@@ -94,6 +111,17 @@ public class MockResult {
     public MockResult(int rows, Result<?> data) {
         this.rows = rows;
         this.data = data;
+    }
+
+    private static final Result<?> result(Record data) {
+        Configuration configuration = data instanceof AttachableInternal
+            ? ((AttachableInternal) data).configuration()
+            : new DefaultConfiguration();
+
+        Result<Record> result = using(configuration).newResult(data.fields());
+        result.add(data);
+
+        return result;
     }
 
     @Override

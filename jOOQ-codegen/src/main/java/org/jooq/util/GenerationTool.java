@@ -328,6 +328,29 @@ public class GenerationTool {
             database.setConfiguredEnumTypes(d.getEnumTypes());
             database.setConfiguredForcedTypes(d.getForcedTypes());
 
+            SchemaVersionProvider svp = null;
+
+            if (!StringUtils.isBlank(d.getSchemaVersionProvider())) {
+                try {
+                    svp = (SchemaVersionProvider) Class.forName(d.getSchemaVersionProvider()).newInstance();
+                    log.info("Using custom schema version provider : " + svp);
+                }
+                catch (Exception ignore) {
+                    if (d.getSchemaVersionProvider().toLowerCase().startsWith("select")) {
+                        svp = new SQLSchemaVersionProvider(connection, d.getSchemaVersionProvider());
+                        log.info("Using SQL schema version provider : " + d.getSchemaVersionProvider());
+                    }
+                    else {
+                        svp = new ConstantSchemaVersionProvider(d.getSchemaVersionProvider());
+                    }
+                }
+            }
+
+            if (svp == null)
+                svp = new ConstantSchemaVersionProvider(null);
+
+            database.setSchemaVersionProvider(svp);
+
             if (d.getEnumTypes().size() > 0) {
                 log.warn("WARNING: The configuration property /configuration/generator/database/enumTypes is experimental and deprecated and will be removed in the future.");
             }
@@ -374,6 +397,9 @@ public class GenerationTool {
                 generator.setGenerateGlobalObjectReferences(g.getGenerate().isGlobalObjectReferences());
             if (g.getGenerate().isFluentSetters() != null)
                 generator.setFluentSetters(g.getGenerate().isFluentSetters());
+
+            if (!StringUtils.isBlank(g.getDatabase().getSchemaVersionProvider()))
+                generator.setUseSchemaVersionProvider(true);
 
             // Generator properties that should in fact be strategy properties
             strategy.setInstanceFields(generator.generateInstanceFields());

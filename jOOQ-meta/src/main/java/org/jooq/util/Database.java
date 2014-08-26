@@ -330,6 +330,9 @@ public interface Database {
      */
     void setConfiguredForcedTypes(List<ForcedType> types);
 
+    SchemaVersionProvider getSchemaVersionProvider();
+    void setSchemaVersionProvider(SchemaVersionProvider provider);
+
     /**
      * Database objects matching any of these field names will be generated as
      * forced types.

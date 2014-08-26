@@ -106,6 +106,7 @@ public abstract class AbstractDatabase implements Database {
     private List<CustomType>                                                 configuredCustomTypes;
     private List<EnumType>                                                   configuredEnumTypes;
     private List<ForcedType>                                                 configuredForcedTypes;
+    private SchemaVersionProvider                                            schemaVersionProvider;
 
     // -------------------------------------------------------------------------
     // Loaded definitions
@@ -435,6 +436,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<ForcedType> getConfiguredForcedTypes() {
         return configuredForcedTypes;
+    }
+
+    @Override
+    public final SchemaVersionProvider getSchemaVersionProvider() {
+        return schemaVersionProvider;
+    }
+
+    @Override
+    public final void setSchemaVersionProvider(SchemaVersionProvider schemaVersionProvider) {
+        this.schemaVersionProvider = schemaVersionProvider;
     }
 
     @Override

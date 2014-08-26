@@ -105,6 +105,9 @@ public interface Generator {
      */
     void setGenerateGeneratedAnnotation(boolean generateGeneratedAnnotation);
 
+    boolean useSchemaVersionProvider();
+    void setUseSchemaVersionProvider(boolean useSchemaVersionProvider);
+
     /**
      * Whether TableRecords should be generated in addition to tables
      */

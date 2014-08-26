@@ -122,6 +122,7 @@
                         <database>
                             <includes>.*</includes>
                             <inputSchema>FLYWAY_TEST</inputSchema>
+                            <schemaVersionProvider>SELECT :schema_name || '_' || MAX("version") FROM "schema_version"</schemaVersionProvider>
                         </database>
                         <target>
                             <packageName>org.jooq.example.flyway.db.h2</packageName>

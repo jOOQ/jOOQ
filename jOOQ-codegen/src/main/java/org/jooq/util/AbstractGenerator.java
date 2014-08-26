@@ -54,6 +54,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateRelations              = true;
     boolean                            generateInstanceFields         = true;
     boolean                            generateGeneratedAnnotation    = true;
+    boolean                            useSchemaVersionProvider       = false;
     boolean                            generateRecords                = true;
     boolean                            generatePojos                  = false;
     boolean                            generateImmutablePojos         = false;
@@ -110,12 +111,24 @@ abstract class AbstractGenerator implements Generator {
 
     @Override
     public boolean generateGeneratedAnnotation() {
-        return generateGeneratedAnnotation;
+
+        // [#3121] The schema version is generated into @Generated annotations
+        return generateGeneratedAnnotation || useSchemaVersionProvider;
     }
 
     @Override
     public void setGenerateGeneratedAnnotation(boolean generateGeneratedAnnotation) {
         this.generateGeneratedAnnotation = generateGeneratedAnnotation;
+    }
+
+    @Override
+    public boolean useSchemaVersionProvider() {
+        return useSchemaVersionProvider;
+    }
+
+    @Override
+    public void setUseSchemaVersionProvider(boolean useSchemaVersionProvider) {
+        this.useSchemaVersionProvider = useSchemaVersionProvider;
     }
 
     @Override

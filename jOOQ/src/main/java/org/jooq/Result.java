@@ -447,6 +447,25 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     String formatXML();
 
     /**
+     * Get this result as a set of <code>INSERT</code> statements.
+     * <p>
+     * This uses the the first record's {@link TableRecord#getTable()}, if the
+     * first record is a {@link TableRecord}. Otherwise, this generates
+     * <code>INSERT</code> statements into an <code>"UNKNOWN_TABLE"</code>. In
+     * both cases, the {@link Result#fields()} are used for column names.
+     */
+    String formatInsert();
+
+    /**
+     * Get this result as a set of <code>INSERT</code> statements.
+     * <p>
+     * This explicitly specifies the table (and optionally the fields) to insert
+     * into. If the <code>fields</code> argument is left empty, the
+     * {@link Result#fields()} are used, instead.
+     */
+    String formatInsert(Table<?> table, Field<?>... fields);
+
+    /**
      * Like {@link #format()}, but the data is output onto an {@link OutputStream}.
      *
      * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
@@ -503,6 +522,20 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     void formatXML(OutputStream stream) throws IOException;
 
     /**
+     * Like {@link #formatInsert()}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatInsert(OutputStream stream) throws IOException;
+
+    /**
+     * Like {@link #formatInsert(Table, Field...)}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatInsert(OutputStream stream, Table<?> table, Field<?>... fields) throws IOException;
+
+    /**
      * Like {@link #format()}, but the data is output onto a {@link Writer}.
      *
      * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
@@ -557,6 +590,20 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
      */
     void formatXML(Writer writer) throws IOException;
+
+    /**
+     * Like {@link #formatInsert()}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatInsert(Writer writer) throws IOException;
+
+    /**
+     * Like {@link #formatInsert(Table, Field...)}, but the data is output onto an {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatInsert(Writer writer, Table<?> table, Field<?>... fields) throws IOException;
 
     /**
      * Get this result as XML.

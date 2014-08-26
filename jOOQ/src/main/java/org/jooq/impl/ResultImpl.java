@@ -43,6 +43,8 @@ package org.jooq.impl;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+import static org.jooq.impl.DSL.insertInto;
+import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.Utils.indexOrFail;
 import static org.jooq.tools.StringUtils.abbreviate;
 import static org.jooq.tools.StringUtils.leftPad;
@@ -74,6 +76,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Converter;
+import org.jooq.DSLContext;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -105,6 +108,7 @@ import org.jooq.RecordType;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Table;
+import org.jooq.TableRecord;
 import org.jooq.exception.IOException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.Convert;
@@ -786,6 +790,58 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing XML", e);
+        }
+    }
+
+    @Override
+    public final String formatInsert() {
+        StringWriter writer = new StringWriter();
+        formatInsert(writer);
+        return writer.toString();
+    }
+
+    @Override
+    public final void formatInsert(OutputStream stream) {
+        formatInsert(new OutputStreamWriter(stream));
+    }
+
+    @Override
+    public final void formatInsert(Writer writer) {
+        Table<?> table = null;
+
+        if (records.size() > 0 && records.get(0) instanceof TableRecord)
+            table = ((TableRecord<?>) records.get(0)).getTable();
+
+        if (table == null)
+            table = tableByName("UNKNOWN_TABLE");
+
+        formatInsert(writer, table, fields());
+    }
+
+    @Override
+    public final String formatInsert(Table<?> table, Field<?>... f) {
+        StringWriter writer = new StringWriter();
+        formatInsert(writer, table, f);
+        return writer.toString();
+    }
+
+    @Override
+    public final void formatInsert(OutputStream stream, Table<?> table, Field<?>... f) {
+        formatInsert(new OutputStreamWriter(stream), table, f);
+    }
+
+    @Override
+    public final void formatInsert(Writer writer, Table<?> table, Field<?>... f) {
+        DSLContext ctx = DSL.using(configuration());
+
+        try {
+            for (R record : this) {
+                writer.append(ctx.renderInlined(insertInto(table, f).values(record.intoArray())));
+                writer.append(";\n");
+            }
+        }
+        catch (java.io.IOException e) {
+            throw new IOException("Exception while writing INSERTs", e);
         }
     }
 

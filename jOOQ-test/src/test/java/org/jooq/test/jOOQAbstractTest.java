@@ -2218,6 +2218,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFormatInsert() throws Exception {
+        new FormatTests(this).testFormatInsert();
+    }
+
+    @Test
     public void testIntoXML() throws Exception {
         new FormatTests(this).testIntoXML();
     }

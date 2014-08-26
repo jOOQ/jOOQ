@@ -41,6 +41,8 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
+import static org.jooq.impl.DSL.selectFrom;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -73,6 +75,7 @@ import org.jooq.UpdatableRecord;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.test.all.tools.DOMBuilder;
+import org.jooq.tools.StringUtils;
 
 import org.w3c.dom.Document;
 
@@ -420,6 +423,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Document doc = db.parse(is);
 
         testXML(doc, books);
+    }
+
+    public void testFormatInsert() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        String inserts =
+        create().select(TBookStore_NAME(), val(4), val(10))
+                .from(TBookStore())
+                .fetch()
+                .formatInsert(TBookToBookStore(), TBookToBookStore_BOOK_STORE_NAME(), TBookToBookStore_BOOK_ID(), TBookToBookStore_STOCK());
+
+        for (String insert : inserts.split(";"))
+            if (!StringUtils.isBlank(insert))
+                assertEquals(1, create().execute(insert));
+
+        assertEquals(9, create().fetchCount(TBookToBookStore()));
+        assertEquals(3, create().fetchCount(selectFrom(TBookToBookStore()).where(TBookToBookStore_BOOK_ID().eq(4))));
     }
 
     public void testIntoXML() throws Exception {

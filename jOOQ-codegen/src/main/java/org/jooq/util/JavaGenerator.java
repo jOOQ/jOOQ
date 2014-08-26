@@ -210,15 +210,6 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("");
         log.info("----------------------------------------------------------");
 
-        String targetPackage = getTargetPackage();
-        File targetPackageDir = new File(getTargetDirectory() + File.separator + targetPackage.replace('.', File.separatorChar));
-
-        // ----------------------------------------------------------------------
-        // XXX Initialising
-        // ----------------------------------------------------------------------
-        log.info("Emptying", targetPackageDir.getAbsolutePath());
-        empty(targetPackageDir, ".java");
-
         // ----------------------------------------------------------------------
         // XXX Generating schemas
         // ----------------------------------------------------------------------
@@ -234,6 +225,14 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private final void generate(SchemaDefinition schema) {
+        File targetPackage = getStrategy().getFile(schema).getParentFile();
+
+        // ----------------------------------------------------------------------
+        // XXX Initialising
+        // ----------------------------------------------------------------------
+        log.info("Emptying", targetPackage.getAbsolutePath());
+        empty(getStrategy().getFile(schema).getParentFile(), ".java");
+
         generateSchema(schema);
 
         if (generateGlobalObjectReferences() && database.getSequences(schema).size() > 0) {

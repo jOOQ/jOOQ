@@ -87,22 +87,22 @@ public class Tables {
 	public static final org.jooq.test.postgres.generatedclasses.tables.TArrays T_ARRAYS = org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS;
 
 	/**
-	 * The table public.t_author
+	 * An entity holding authors of books
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TAuthor T_AUTHOR = org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR;
 
 	/**
-	 * The table public.t_book
+	 * An entity holding books
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TBook T_BOOK = org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK;
 
 	/**
-	 * The table public.t_book_store
+	 * A book store
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TBookStore T_BOOK_STORE = org.jooq.test.postgres.generatedclasses.tables.TBookStore.T_BOOK_STORE;
 
 	/**
-	 * The table public.t_book_to_book_store
+	 * An m:n relation between books and book stores
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
 
@@ -157,7 +157,7 @@ public class Tables {
 	public static final org.jooq.test.postgres.generatedclasses.tables.TInheritanceAll T_INHERITANCE_ALL = org.jooq.test.postgres.generatedclasses.tables.TInheritanceAll.T_INHERITANCE_ALL;
 
 	/**
-	 * The table public.t_language
+	 * An entity holding language master data
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE;
 
@@ -212,7 +212,7 @@ public class Tables {
 	public static final org.jooq.test.postgres.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85;
 
 	/**
-	 * The table public.x_unused
+	 * An unused table in the same schema.
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED;
 }

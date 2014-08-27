@@ -1763,7 +1763,8 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                 TablePartitionByStep p = getFrom().get(index).leftOuterJoin(table);
                 TableOnStep o = p;
                 /* [pro] xx
-                x x xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xx xxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxx x xx
+                    x x xxxxxxxxxxxxxxxxxxxxxxxxxxx
                 xx [/pro] */
                 joined = o.on(conditions);
                 break;
@@ -1772,7 +1773,8 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                 TablePartitionByStep p = getFrom().get(index).rightOuterJoin(table);
                 TableOnStep o = p;
                 /* [pro] xx
-                x x xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xx xxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxx x xx
+                    x x xxxxxxxxxxxxxxxxxxxxxxxxxxx
                 xx [/pro] */
                 joined = o.on(conditions);
                 break;

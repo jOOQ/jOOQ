@@ -83,13 +83,13 @@ public interface WithStep extends QueryPart {
     /**
      * Add another common table expression to the <code>WITH</code> clause.
      */
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep with(String alias);
 
     /**
      * Add another common table expression to the <code>WITH</code> clause.
      */
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep with(String alias, String... fieldAliases);
 
     /**
@@ -103,7 +103,7 @@ public interface WithStep extends QueryPart {
      * {@link DerivedColumnList#as(Select)}</li>
      * </ul>
      */
-    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithStep with(CommonTableExpression<?>... tables);
 
     // -------------------------------------------------------------------------

@@ -70,10 +70,12 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.TreeMap;
 import java.util.UUID;
 import java.util.function.DoublePredicate;
 import java.util.function.DoubleSupplier;
@@ -98,6 +100,7 @@ import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
@@ -256,31 +259,40 @@ public abstract class jOOQAbstractTest<
         T785 extends TableRecord<T785>,
         CASE extends UpdatableRecord<CASE>> {
 
-    protected static final List<Short>   BOOK_IDS_SHORT         = Arrays.asList((short) 1, (short) 2, (short) 3, (short) 4);
-    protected static final List<Integer> BOOK_IDS               = Arrays.asList(1, 2, 3, 4);
-    protected static final List<Integer> BOOK_AUTHOR_IDS        = Arrays.asList(1, 1, 2, 2);
-    protected static final List<String>  BOOK_TITLES            = Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida");
-    protected static final List<String>  BOOK_FIRST_NAMES       = Arrays.asList("George", "George", "Paulo", "Paulo");
-    protected static final List<String>  BOOK_LAST_NAMES        = Arrays.asList("Orwell", "Orwell", "Coelho", "Coelho");
-    protected static final List<Integer> AUTHOR_IDS             = Arrays.asList(1, 2);
-    protected static final List<String>  AUTHOR_FIRST_NAMES     = Arrays.asList("George", "Paulo");
-    protected static final List<String>  AUTHOR_LAST_NAMES      = Arrays.asList("Orwell", "Coelho");
+    protected static final List<Short>      BOOK_IDS_SHORT     = Arrays.asList((short) 1, (short) 2, (short) 3, (short) 4);
+    protected static final List<Integer>    BOOK_IDS           = Arrays.asList(1, 2, 3, 4);
+    protected static final List<Integer>    BOOK_AUTHOR_IDS    = Arrays.asList(1, 1, 2, 2);
+    protected static final List<String>     BOOK_TITLES        = Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida");
+    protected static final List<String>     BOOK_FIRST_NAMES   = Arrays.asList("George", "George", "Paulo", "Paulo");
+    protected static final List<String>     BOOK_LAST_NAMES    = Arrays.asList("Orwell", "Orwell", "Coelho", "Coelho");
+    protected static final List<Integer>    AUTHOR_IDS         = Arrays.asList(1, 2);
+    protected static final List<String>     AUTHOR_FIRST_NAMES = Arrays.asList("George", "Paulo");
+    protected static final List<String>     AUTHOR_LAST_NAMES  = Arrays.asList("Orwell", "Coelho");
 
-    public static final JooqLogger       log                    = JooqLogger.getLogger(jOOQAbstractTest.class);
-    public static final StopWatch        testSQLWatch           = new StopWatch();
-    public static boolean                initialised;
-    public static boolean                reset;
-    public static Connection             connection;
-    public static boolean                connectionInitialised;
-    public static Connection             connectionMultiSchema;
-    public static boolean                connectionMultiSchemaInitialised;
-    public static Connection             connectionMultiSchemaUnused;
-    public static boolean                connectionMultiSchemaUnusedInitialised;
-    public static boolean                autocommit;
-    public static String                 jdbcURL;
-    public static String                 jdbcSchema;
-    public static Map<String, String>    scripts                = new HashMap<String, String>();
-    public static Table<?>[]             clean;
+    public static final JooqLogger          log                = JooqLogger.getLogger(jOOQAbstractTest.class);
+    public static final StopWatch           testSQLWatch       = new StopWatch();
+    public static boolean                   initialised;
+    public static boolean                   reset;
+    public static Connection                connection;
+    public static boolean                   connectionInitialised;
+    public static Connection                connectionMultiSchema;
+    public static boolean                   connectionMultiSchemaInitialised;
+    public static Connection                connectionMultiSchemaUnused;
+    public static boolean                   connectionMultiSchemaUnusedInitialised;
+    public static boolean                   autocommit;
+    public static String                    jdbcURL;
+    public static String                    jdbcSchema;
+    public static Map<String, String>       scripts            = new HashMap<String, String>();
+    public static Table<?>[]                clean;
+    public static Map<String, SQLDialect[]> coveredMethods     = new TreeMap<String, SQLDialect[]>();
+    public static SQLDialect                coveredDialect;
+
+    /**
+     * Used by instrumentation to register a call to a {@link Support}-annotated method.
+     */
+    public static void call(String methodName, SQLDialect... dialects) {
+        coveredMethods.put(methodName, dialects);
+    }
 
     protected void execute(String script) throws Exception {
         Statement stmt = null;
@@ -540,6 +552,7 @@ public abstract class jOOQAbstractTest<
         );
 
         connection = getConnection();
+        coveredDialect = dialect();
         // connectionMultiSchema = getConnectionMultiSchema();
 
         autocommit = connection.getAutoCommit();
@@ -642,6 +655,21 @@ public abstract class jOOQAbstractTest<
 
         logLife.info("");
         logLife.info("Unbalanced test: ", unbalanced);
+
+        log.info("");
+        log.info("INSTRUMENTED @Support METHOD STATS");
+        log.info("----------------------------------");
+        log.info("");
+        log.info("Instrumented method calls", coveredMethods.size());
+
+        coveredMethods.forEach((methodName, dialects) -> {
+            EnumSet<SQLDialect> all = dialects.length == 0
+                ? EnumSet.allOf(SQLDialect.class)
+                : EnumSet.copyOf(Arrays.asList(dialects));
+
+            if (!all.contains(coveredDialect))
+                log.info("No " + coveredDialect + " support on " + methodName);
+        });
     }
 
     private static int extracted(JooqLogger logger, int unbalanced, Map<Method, Integer> startCount, Map<Method, Integer> endCount) {

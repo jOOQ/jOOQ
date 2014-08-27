@@ -61,6 +61,7 @@ import static org.jooq.util.postgres.information_schema.Tables.SEQUENCES;
 import static org.jooq.util.postgres.information_schema.Tables.TABLES;
 import static org.jooq.util.postgres.information_schema.Tables.TABLE_CONSTRAINTS;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_CLASS;
+import static org.jooq.util.postgres.pg_catalog.Tables.PG_DESCRIPTION;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_ENUM;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_INHERITS;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_NAMESPACE;
@@ -253,8 +254,17 @@ public class PostgresDatabase extends AbstractDatabase {
                         TABLES.TABLE_SCHEMA,
                         TABLES.TABLE_NAME,
                         TABLES.TABLE_NAME.as("specific_name"),
-                        inline(false).as("table_valued_function"))
+                        inline(false).as("table_valued_function"),
+                        PG_DESCRIPTION.DESCRIPTION)
                     .from(TABLES)
+                    .join(PG_NAMESPACE)
+                        .on(TABLES.TABLE_SCHEMA.eq(PG_NAMESPACE.NSPNAME))
+                    .join(PG_CLASS)
+                        .on(PG_CLASS.RELNAME.eq(TABLES.TABLE_NAME))
+                        .and(PG_CLASS.RELNAMESPACE.eq(oid(PG_NAMESPACE)))
+                    .leftOuterJoin(PG_DESCRIPTION)
+                        .on(PG_DESCRIPTION.OBJOID.eq(oid(PG_CLASS)))
+                        .and(PG_DESCRIPTION.OBJSUBID.eq(0))
                     .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()))
 
                 // [#3375] Include table-valued functions in the set of tables
@@ -263,7 +273,8 @@ public class PostgresDatabase extends AbstractDatabase {
                         ROUTINES.ROUTINE_SCHEMA,
                         ROUTINES.ROUTINE_NAME,
                         ROUTINES.SPECIFIC_NAME,
-                        inline(true).as("table_valued_function"))
+                        inline(true).as("table_valued_function"),
+                        inline(""))
                     .from(ROUTINES)
                     .join(PG_NAMESPACE).on(ROUTINES.SPECIFIC_SCHEMA.eq(PG_NAMESPACE.NSPNAME))
                     .join(PG_PROC).on(PG_PROC.PRONAMESPACE.eq(oid(PG_NAMESPACE)))
@@ -277,7 +288,7 @@ public class PostgresDatabase extends AbstractDatabase {
             SchemaDefinition schema = getSchema(record.getValue(TABLES.TABLE_SCHEMA));
             String name = record.getValue(TABLES.TABLE_NAME);
             boolean tableValuedFunction = record.getValue("table_valued_function", boolean.class);
-            String comment = "";
+            String comment = record.getValue(PG_DESCRIPTION.DESCRIPTION, String.class);
 
             if (tableValuedFunction) {
                 result.add(new PostgresTableValuedFunction(schema, name, record.getValue(ROUTINES.SPECIFIC_NAME), comment));

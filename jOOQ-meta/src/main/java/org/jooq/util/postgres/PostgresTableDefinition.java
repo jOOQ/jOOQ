@@ -42,7 +42,11 @@
 package org.jooq.util.postgres;
 
 import static org.jooq.tools.StringUtils.defaultString;
+import static org.jooq.util.postgres.PostgresDSL.oid;
 import static org.jooq.util.postgres.information_schema.Tables.COLUMNS;
+import static org.jooq.util.postgres.pg_catalog.Tables.PG_CLASS;
+import static org.jooq.util.postgres.pg_catalog.Tables.PG_DESCRIPTION;
+import static org.jooq.util.postgres.pg_catalog.Tables.PG_NAMESPACE;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -78,8 +82,17 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 COLUMNS.NUMERIC_SCALE,
                 COLUMNS.IS_NULLABLE,
                 COLUMNS.COLUMN_DEFAULT,
-                COLUMNS.UDT_NAME)
+                COLUMNS.UDT_NAME,
+                PG_DESCRIPTION.DESCRIPTION)
             .from(COLUMNS)
+            .join(PG_NAMESPACE)
+                .on(COLUMNS.TABLE_SCHEMA.eq(PG_NAMESPACE.NSPNAME))
+            .join(PG_CLASS)
+                .on(PG_CLASS.RELNAME.eq(COLUMNS.TABLE_NAME))
+                .and(PG_CLASS.RELNAMESPACE.eq(oid(PG_NAMESPACE)))
+            .leftOuterJoin(PG_DESCRIPTION)
+                .on(PG_DESCRIPTION.OBJOID.eq(oid(PG_CLASS)))
+                .and(PG_DESCRIPTION.OBJSUBID.eq(COLUMNS.ORDINAL_POSITION))
             .where(COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()))
             .and(COLUMNS.TABLE_NAME.equal(getName()))
             .orderBy(COLUMNS.ORDINAL_POSITION)
@@ -103,7 +116,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 			    record.getValue(COLUMNS.ORDINAL_POSITION, int.class),
 			    type,
 			    defaultString(record.getValue(COLUMNS.COLUMN_DEFAULT)).startsWith("nextval"),
-			    null
+			    record.getValue(PG_DESCRIPTION.DESCRIPTION)
 		    );
 
 			result.add(column);

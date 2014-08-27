@@ -81,6 +81,7 @@ import java.util.function.DoublePredicate;
 import java.util.function.DoubleSupplier;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
@@ -667,7 +668,10 @@ public abstract class jOOQAbstractTest<
                 ? EnumSet.allOf(SQLDialect.class)
                 : EnumSet.copyOf(Arrays.asList(dialects));
 
-            if (!all.contains(coveredDialect))
+            all.addAll(all.stream().map(d -> d.family()).collect(Collectors.toList()));
+
+            if (!all.contains(coveredDialect) &&
+                !all.contains(coveredDialect.family()))
                 log.info("No " + coveredDialect + " support on " + methodName);
         });
     }

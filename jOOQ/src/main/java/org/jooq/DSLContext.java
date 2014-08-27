@@ -4946,7 +4946,7 @@ public interface DSLContext {
      *
      * @see DSLContext#dropSequence(Sequence)
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     DropSequenceFinalStep dropSequence(Sequence<?> sequence);
 
     /**
@@ -4954,7 +4954,7 @@ public interface DSLContext {
      *
      * @see DSLContext#dropSequence(Sequence)
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     DropSequenceFinalStep dropSequence(String sequence);
 
     /**

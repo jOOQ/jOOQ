@@ -43,6 +43,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.ORACLE;
@@ -88,7 +89,7 @@ public interface Name extends QueryPart {
      * Column names are implicitly inherited from the <code>SELECT</code>
      * statement.
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     <R extends Record> CommonTableExpression<R> as(Select<R> select);
 
     /**
@@ -99,7 +100,7 @@ public interface Name extends QueryPart {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     DerivedColumnList fields(String... fieldNames);
 
 }

@@ -1763,7 +1763,8 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                 TablePartitionByStep p = getFrom().get(index).leftOuterJoin(table);
                 TableOnStep o = p;
                 /* [pro] */
-                o = p.partitionBy(partitionBy);
+                if (partitionBy != null && partitionBy.length > 0)
+                    o = p.partitionBy(partitionBy);
                 /* [/pro] */
                 joined = o.on(conditions);
                 break;
@@ -1772,7 +1773,8 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                 TablePartitionByStep p = getFrom().get(index).rightOuterJoin(table);
                 TableOnStep o = p;
                 /* [pro] */
-                o = p.partitionBy(partitionBy);
+                if (partitionBy != null && partitionBy.length > 0)
+                    o = p.partitionBy(partitionBy);
                 /* [/pro] */
                 joined = o.on(conditions);
                 break;

@@ -210,7 +210,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Standard aggregate functions, available in all dialects:
         // --------------------------------------------------------
-        Field<BigDecimal> median = median(TBook_ID());
+        Field<BigDecimal> median;
 
         // Some dialects don't support a median function or a simulation thereof
         // Use AVG instead, as in this example the values of MEDIAN and AVG
@@ -235,6 +235,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // TODO [#871] This could be simulated
             case POSTGRES:
                 median = avg(TBook_ID());
+                break;
+
+            default:
+                median = median(TBook_ID());
                 break;
         }
 

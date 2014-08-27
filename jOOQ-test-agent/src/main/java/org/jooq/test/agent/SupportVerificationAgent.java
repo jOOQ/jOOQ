@@ -38,66 +38,17 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
+package org.jooq.test.agent;
 
-package org.jooq;
+import java.lang.instrument.Instrumentation;
 
 
 /**
- * A parameter to a stored procedure or function.
- *
- * @param <T> The parameter type
  * @author Lukas Eder
  */
-public interface Parameter<T> extends QueryPart {
+public class SupportVerificationAgent {
 
-    /**
-     * The name of this parameter
-     */
-    String getName();
-
-    /**
-     * The Java type of the parameter.
-     */
-    Class<T> getType();
-
-    /**
-     * The type of this parameter (might not be dialect-specific)
-     */
-    DataType<T> getDataType();
-
-    /**
-     * The dialect-specific type of this parameter
-     */
-    DataType<T> getDataType(Configuration configuration);
-
-    /**
-     * Whether this parameter has a default value
-     * <p>
-     * Procedures and functions with defaulted parameters behave slightly
-     * different from ones without defaulted parameters. In PL/SQL and other
-     * procedural languages, it is possible to pass parameters by name,
-     * reordering names and omitting defaulted parameters: <code><pre>
-     * CREATE PROCEDURE MY_PROCEDURE (P_DEFAULTED IN NUMBER := 0
-     *                                P_MANDATORY IN NUMBER);
-     *
-     * -- The above procedure can be called as such:
-     * BEGIN
-     *   -- Assign parameters by index
-     *   MY_PROCEDURE(1, 2);
-     *
-     *   -- Assign parameters by name
-     *   MY_PROCEDURE(P_DEFAULTED => 1,
-     *                P_MANDATORY => 2);
-     *
-     *   -- Omitting defaulted parameters
-     *   MY_PROCEDURE(P_MANDATORY => 2);
-     * END;
-     * </pre></code>
-     * <p>
-     * If a procedure has defaulted parameters, jOOQ binds them by name, rather
-     * than by index.
-     * <p>
-     * Currently, this is only supported for Oracle 11g
-     */
-    boolean isDefaulted();
+    public static void premain(String agentArguments, Instrumentation instrumentation) {
+        instrumentation.addTransformer(new SupportVerificationTransformer());
+    }
 }

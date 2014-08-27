@@ -1,0 +1,1 @@
+premain-Class: org.jooq.test.agent.SupportVerificationAgent

@@ -260,6 +260,8 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     private final void toSQLInsert(Context<?> ctx) {
+        boolean declareTables = ctx.declareTables();
+
         ctx.start(INSERT_INSERT_INTO)
            .keyword("insert")
            .sql(" ")
@@ -267,7 +269,9 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
            .keyword((onDuplicateKeyIgnore && asList(MARIADB, MYSQL).contains(ctx.configuration().dialect())) ? "ignore " : "")
            .keyword("into")
            .sql(" ")
-           .visit(getInto());
+           .declareTables(true)
+           .visit(getInto())
+           .declareTables(declareTables);
 
         // [#1506] with DEFAULT VALUES, we might not have any columns to render
         if (insertMaps.isExecutable()) {

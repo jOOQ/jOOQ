@@ -4342,6 +4342,32 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL <code>DROP VIEW IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSLContext#dropViewIfExists(Table)
+     */
+    @Support
+    public static DropViewFinalStep dropViewIfExists(Table<?> table) {
+        return using(new DefaultConfiguration()).dropViewIfExists(table);
+    }
+
+    /**
+     * Create a new DSL <code>DROP VIEW IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSLContext#dropViewIfExists(String)
+     */
+    @Support
+    public static DropViewFinalStep dropViewIfExists(String table) {
+        return using(new DefaultConfiguration()).dropViewIfExists(table);
+    }
+
+    /**
      * Create a new DSL <code>DROP TABLE</code> statement.
      *
      * @see DSLContext#dropTable(Table)
@@ -4355,6 +4381,32 @@ public class DSL {
      * Create a new DSL <code>DROP TABLE</code> statement.
      *
      * @see DSLContext#dropTable(String)
+     */
+    @Support
+    public static DropTableStep dropTableIfExists(String table) {
+        return using(new DefaultConfiguration()).dropTableIfExists(table);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSLContext#dropTableIfExists(Table)
+     */
+    @Support
+    public static DropTableStep dropTableIfExists(Table<?> table) {
+        return using(new DefaultConfiguration()).dropTableIfExists(table);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSLContext#dropTableIfExists(String)
      */
     @Support
     public static DropTableStep dropTable(String table) {
@@ -4372,6 +4424,19 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL <code>DROP INDEX IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSLContext#dropIndexIfExists(String)
+     */
+    @Support
+    public static DropIndexFinalStep dropIndexIfExists(String index) {
+        return using(new DefaultConfiguration()).dropIndexIfExists(index);
+    }
+
+    /**
      * Create a new DSL <code>DROP SEQUENCE</code> statement.
      *
      * @see DSLContext#dropSequence(Sequence)
@@ -4384,11 +4449,37 @@ public class DSL {
     /**
      * Create a new DSL <code>DROP SEQUENCE</code> statement.
      *
-     * @see DSLContext#dropSequence(Sequence)
+     * @see DSLContext#dropSequence(String)
      */
     @Support({ DB2, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     public static <T extends Number> DropSequenceFinalStep dropSequence(String sequence) {
         return using(new DefaultConfiguration()).dropSequence(sequence);
+    }
+
+    /**
+     * Create a new DSL <code>DROP SEQUENCE IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSLContext#dropSequenceIfExists(Sequence)
+     */
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    public static <T extends Number> DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence) {
+        return using(new DefaultConfiguration()).dropSequenceIfExists(sequence);
+    }
+
+    /**
+     * Create a new DSL <code>DROP SEQUENCE IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSLContext#dropSequenceIfExists(String)
+     */
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    public static <T extends Number> DropSequenceFinalStep dropSequenceIfExists(String sequence) {
+        return using(new DefaultConfiguration()).dropSequenceIfExists(sequence);
     }
 
     /**

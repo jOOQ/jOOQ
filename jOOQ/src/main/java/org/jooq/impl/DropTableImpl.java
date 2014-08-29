@@ -40,8 +40,19 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.DROP_TABLE;
 import static org.jooq.Clause.DROP_TABLE_TABLE;
+import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.INFORMIX;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.impl.DropStatementType.TABLE;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -65,12 +76,18 @@ class DropTableImpl extends AbstractQuery implements
     private static final Clause[] CLAUSES          = { DROP_TABLE };
 
     private final Table<?>        table;
+    private final boolean         ifExists;
     private boolean               cascade;
 
     DropTableImpl(Configuration configuration, Table<?> table) {
+        this(configuration, table, false);
+    }
+
+    DropTableImpl(Configuration configuration, Table<?> table, boolean ifExists) {
         super(configuration);
 
         this.table = table;
+        this.ifExists = ifExists;
     }
 
     // ------------------------------------------------------------------------
@@ -93,11 +110,30 @@ class DropTableImpl extends AbstractQuery implements
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
+    private final boolean supportsIfExists(Context<?> ctx) {
+        return !asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, INFORMIX, ORACLE, SQLSERVER).contains(ctx.family());
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
+        if (ifExists && !supportsIfExists(ctx)) {
+            Utils.executeImmediateBegin(ctx, TABLE);
+            accept0(ctx);
+            Utils.executeImmediateEnd(ctx, TABLE);
+        }
+        else {
+            accept0(ctx);
+        }
+    }
+
+    private void accept0(Context<?> ctx) {
         ctx.start(DROP_TABLE_TABLE)
-           .keyword("drop table").sql(" ")
-           .visit(table);
+           .keyword("drop table").sql(" ");
+
+        if (ifExists && supportsIfExists(ctx))
+            ctx.keyword("if exists").sql(" ");
+
+        ctx.visit(table);
 
         if (cascade) {
             ctx.sql(" ").keyword("cascade");

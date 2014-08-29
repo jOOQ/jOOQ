@@ -1350,6 +1350,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testDropIndexIfExists() throws Exception {
+        new DDLTests(this).testDropIndexIfExists();
+    }
+
+    @Test
     public void testCreateSequence() throws Exception {
         new DDLTests(this).testCreateSequence();
     }
@@ -1362,6 +1367,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testDropSequence() throws Exception {
         new DDLTests(this).testDropSequence();
+    }
+
+    @Test
+    public void testDropSequenceIfExists() throws Exception {
+        new DDLTests(this).testDropSequenceIfExists();
     }
 
     @Test
@@ -1387,6 +1397,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testDropTable() throws Exception {
         new DDLTests(this).testDropTable();
+    }
+
+    @Test
+    public void testDropTableIfExists() throws Exception {
+        new DDLTests(this).testDropTableIfExists();
     }
 
     @Test

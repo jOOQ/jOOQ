@@ -40,8 +40,19 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.DROP_INDEX;
+import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.INFORMIX;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DropStatementType.INDEX;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -62,23 +73,47 @@ class DropIndexImpl extends AbstractQuery implements
     private static final long     serialVersionUID = 8904572826501186329L;
     private static final Clause[] CLAUSES          = { DROP_INDEX };
 
-    private final String index;
+    private final String          index;
+    private final boolean         ifExists;
 
     DropIndexImpl(Configuration configuration, String index) {
+        this(configuration, index, false);
+    }
+
+    DropIndexImpl(Configuration configuration, String index, boolean ifExists) {
         super(configuration);
 
         this.index = index;
+        this.ifExists = ifExists;
     }
 
     // ------------------------------------------------------------------------
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
+    private final boolean supportsIfExists(Context<?> ctx) {
+        return !asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, INFORMIX, ORACLE, SQLSERVER).contains(ctx.family());
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.keyword("drop index")
-           .sql(" ")
-           .visit(name(index));
+        if (ifExists && !supportsIfExists(ctx)) {
+            Utils.executeImmediateBegin(ctx, INDEX);
+            accept0(ctx);
+            Utils.executeImmediateEnd(ctx, INDEX);
+        }
+        else {
+            accept0(ctx);
+        }
+    }
+
+    private void accept0(Context<?> ctx) {
+        ctx.keyword("drop index").sql(" ");
+
+        if (ifExists && supportsIfExists(ctx))
+            ctx.keyword("if exists").sql(" ");
+
+        ctx.visit(name(index));
     }
 
     @Override

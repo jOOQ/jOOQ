@@ -55,6 +55,10 @@ import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
+import static org.jooq.impl.DropStatementType.INDEX;
+import static org.jooq.impl.DropStatementType.SEQUENCE;
+import static org.jooq.impl.DropStatementType.TABLE;
+import static org.jooq.impl.DropStatementType.VIEW;
 import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
@@ -3326,6 +3330,123 @@ final class Utils {
             if (StringUtils.equals(fields[i], nullLiteral)) {
                 fields[i] = null;
             }
+        }
+    }
+
+    /**
+     * Wrap a <code>DROP .. IF EXISTS</code> statement with
+     * <code>BEGIN EXECUTE IMMEDIATE '...' EXCEPTION WHEN ... END;</code>, if
+     * <code>IF EXISTS</code> is not supported.
+     */
+    @SuppressWarnings("unused")
+    static void executeImmediateBegin(Context<?> ctx, DropStatementType type) {
+        switch (ctx.family()) {
+            /* [pro] */
+            case DB2: {
+                ctx.keyword("begin").formatIndentStart().formatSeparator()
+                   .keyword("declare continue handler for sqlstate").sql(" '42704' ").keyword("begin end").sql(";").formatSeparator()
+                   .keyword("execute immediate").sql(" '");
+
+                break;
+            }
+
+            case ORACLE: {
+                ctx.keyword("begin").formatIndentStart().formatSeparator()
+                   .keyword("execute immediate").sql(" '");
+
+                break;
+            }
+
+            case SQLSERVER: {
+                ctx.keyword("begin try").formatIndentStart().formatSeparator();
+                break;
+            }
+
+            /*
+                Informix support could be implemented as such:
+
+                CREATE PROCEDURE DROP_T()
+                    ON EXCEPTION IN (...) -- Error codes: TABLE, VIEW: -206, INDEX: -319, SEQUENCE: -8300
+                    END EXCEPTION WITH RESUME
+                    DROP ...;
+                END PROCEDURE;
+                EXECUTE PROCEDURE DROP_T();
+                DROP PROCEDURE DROP_T;
+             */
+
+            /* [/pro] */
+
+            case FIREBIRD: {
+                ctx.keyword("execute block").formatSeparator()
+                   .keyword("as").formatSeparator()
+                   .keyword("begin").formatIndentStart().formatSeparator()
+                   .keyword("execute statement").sql(" '");
+
+                break;
+            }
+
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Wrap a <code>DROP .. IF EXISTS</code> statement with
+     * <code>BEGIN EXECUTE IMMEDIATE '...' EXCEPTION WHEN ... END;</code>, if
+     * <code>IF EXISTS</code> is not supported.
+     */
+    static void executeImmediateEnd(Context<?> ctx, DropStatementType type) {
+        switch (ctx.family()) {
+            /* [pro] */
+            case DB2: {
+                ctx.sql("';").formatIndentEnd().formatSeparator()
+                   .keyword("end");
+
+                break;
+            }
+
+            case ORACLE: {
+                String ora =
+                      type == INDEX    ? "ORA-01418"
+                    : type == SEQUENCE ? "ORA-02289"
+                    : type == TABLE    ? "ORA-00942"
+                    : type == VIEW     ? "ORA-00942"
+                    : "ORA-xxxxx";
+
+                ctx.sql("';").formatIndentEnd().formatSeparator()
+                   .keyword("exception").formatIndentStart().formatSeparator()
+                   .keyword("when others then").formatIndentStart().formatSeparator()
+                   .keyword("if").sql(" sqlerrm ").keyword("like").sql(" '" + ora + "%' ").keyword("then null").sql(";").formatSeparator()
+                   .keyword("else raise").sql(";").formatSeparator()
+                   .keyword("end if").sql(";").formatIndentEnd().formatIndentEnd().formatSeparator()
+                   .keyword("end").sql(";");
+
+                break;
+            }
+
+            case SQLSERVER: {
+                ctx.formatIndentEnd().formatSeparator()
+                   .keyword("end try").formatSeparator()
+                   .keyword("begin catch").formatIndentStart().formatSeparator()
+                   .keyword("if").sql(" error_number() != 3701 ").keyword("throw").sql(";").formatIndentEnd().formatSeparator()
+                   .keyword("end catch");
+
+                break;
+            }
+
+            /* [/pro] */
+
+            case FIREBIRD: {
+                ctx.sql("';").formatSeparator()
+                   .keyword("when").sql(" sqlcode -607 ").keyword("do").formatIndentStart().formatSeparator()
+                   .keyword("begin end").formatIndentEnd().formatIndentEnd().formatSeparator()
+                   .keyword("end");
+
+                break;
+            }
+
+            default:
+                break;
         }
     }
 }

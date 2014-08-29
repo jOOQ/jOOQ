@@ -40,8 +40,19 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.DROP_SEQUENCE;
 import static org.jooq.Clause.DROP_SEQUENCE_SEQUENCE;
+import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.INFORMIX;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.impl.DropStatementType.SEQUENCE;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -64,23 +75,47 @@ class DropSequenceImpl extends AbstractQuery implements
     private static final Clause[] CLAUSES          = { DROP_SEQUENCE };
 
     private final Sequence<?>     sequence;
+    private final boolean         ifExists;
 
     DropSequenceImpl(Configuration configuration, Sequence<?> sequence) {
+        this(configuration, sequence, false);
+    }
+
+    DropSequenceImpl(Configuration configuration, Sequence<?> sequence, boolean ifExists) {
         super(configuration);
 
         this.sequence = sequence;
+        this.ifExists = ifExists;
     }
 
     // ------------------------------------------------------------------------
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
+    private final boolean supportsIfExists(Context<?> ctx) {
+        return !asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, INFORMIX, ORACLE, SQLSERVER).contains(ctx.family());
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
+        if (ifExists && !supportsIfExists(ctx)) {
+            Utils.executeImmediateBegin(ctx, SEQUENCE);
+            accept0(ctx);
+            Utils.executeImmediateEnd(ctx, SEQUENCE);
+        }
+        else {
+            accept0(ctx);
+        }
+    }
+
+    private void accept0(Context<?> ctx) {
         ctx.start(DROP_SEQUENCE_SEQUENCE)
-           .keyword("drop sequence")
-           .sql(" ")
-           .visit(sequence)
+           .keyword("drop sequence").sql(" ");
+
+        if (ifExists && supportsIfExists(ctx))
+            ctx.keyword("if exists").sql(" ");
+
+        ctx.visit(sequence)
            .end(DROP_SEQUENCE_SEQUENCE);
     }
 

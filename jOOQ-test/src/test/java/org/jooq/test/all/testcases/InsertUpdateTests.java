@@ -71,6 +71,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectCount;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.val;
@@ -129,6 +130,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public InsertUpdateTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
         super(delegate);
+    }
+
+    public void testInsertIntoView() throws Exception {
+        assumeFamilyNotIn(H2);
+        jOOQAbstractTest.reset = false;
+
+        assertEquals(1,
+        create().insertInto(table(selectFrom(TAuthor())), TAuthor_ID(), TAuthor_LAST_NAME())
+                .values(3, "abc")
+                .execute());
+        assertEquals("abc", create().fetchOne(TAuthor(), TAuthor_ID().eq(3)).getValue(TAuthor_LAST_NAME()));
+
+
+        assertEquals(1,
+        create().insertInto(selectFrom(TAuthor()).asTable("x"), TAuthor_ID(), TAuthor_LAST_NAME())
+                .values(4, "abc")
+                .execute());
+        assertEquals("abc", create().fetchOne(TAuthor(), TAuthor_ID().eq(4)).getValue(TAuthor_LAST_NAME()));
     }
 
     public void testInsertIdentity() throws Exception {

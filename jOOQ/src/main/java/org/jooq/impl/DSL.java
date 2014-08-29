@@ -4349,7 +4349,7 @@ public class DSL {
      *
      * @see DSLContext#dropViewIfExists(Table)
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropViewFinalStep dropViewIfExists(Table<?> table) {
         return using(new DefaultConfiguration()).dropViewIfExists(table);
     }
@@ -4362,7 +4362,7 @@ public class DSL {
      *
      * @see DSLContext#dropViewIfExists(String)
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropViewFinalStep dropViewIfExists(String table) {
         return using(new DefaultConfiguration()).dropViewIfExists(table);
     }
@@ -4382,7 +4382,7 @@ public class DSL {
      *
      * @see DSLContext#dropTable(String)
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropTableStep dropTableIfExists(String table) {
         return using(new DefaultConfiguration()).dropTableIfExists(table);
     }
@@ -4395,7 +4395,7 @@ public class DSL {
      *
      * @see DSLContext#dropTableIfExists(Table)
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropTableStep dropTableIfExists(Table<?> table) {
         return using(new DefaultConfiguration()).dropTableIfExists(table);
     }
@@ -4431,7 +4431,7 @@ public class DSL {
      *
      * @see DSLContext#dropIndexIfExists(String)
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropIndexFinalStep dropIndexIfExists(String index) {
         return using(new DefaultConfiguration()).dropIndexIfExists(index);
     }

@@ -106,8 +106,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().createView("v1").as(select(one().as("one"))).execute();
             create().createView("v2", "two").as(select(two())).execute();
 
-            assertEquals(1, create().fetchValue(select(fieldByName("one")).from(tableByName("v1"))));
-            assertEquals(2, create().fetchValue(select(fieldByName("two")).from(tableByName("v2"))));
+            assertEquals(1, (int) create().fetchValue(select(fieldByName(Integer.class, "one")).from(tableByName("v1"))));
+            assertEquals(2, (int) create().fetchValue(select(fieldByName(Integer.class, "two")).from(tableByName("v2"))));
         }
         finally {
             create().dropView(tableByName("v1")).execute();

@@ -1694,6 +1694,16 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
+    public DropViewFinalStep dropViewIfExists(Table<?> table) {
+        return new DropViewImpl(configuration, table, true);
+    }
+
+    @Override
+    public DropViewFinalStep dropViewIfExists(String table) {
+        return dropViewIfExists(tableByName(table));
+    }
+
+    @Override
     public DropTableStep dropTable(Table<?> table) {
         return new DropTableImpl(configuration, table);
     }
@@ -1704,8 +1714,23 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
+    public DropTableStep dropTableIfExists(Table<?> table) {
+        return new DropTableImpl(configuration, table, true);
+    }
+
+    @Override
+    public DropTableStep dropTableIfExists(String table) {
+        return dropTableIfExists(tableByName(table));
+    }
+
+    @Override
     public DropIndexFinalStep dropIndex(String index) {
         return new DropIndexImpl(configuration, index);
+    }
+
+    @Override
+    public DropIndexFinalStep dropIndexIfExists(String index) {
+        return new DropIndexImpl(configuration, index, true);
     }
 
     @Override
@@ -1716,6 +1741,16 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     @Override
     public DropSequenceFinalStep dropSequence(String sequence) {
         return dropSequence(sequenceByName(sequence));
+    }
+
+    @Override
+    public DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence) {
+        return new DropSequenceImpl(configuration, sequence, true);
+    }
+
+    @Override
+    public DropSequenceFinalStep dropSequenceIfExists(String sequence) {
+        return dropSequenceIfExists(sequenceByName(sequence));
     }
 
     @Override

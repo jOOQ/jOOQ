@@ -55,6 +55,10 @@ import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
+import static org.jooq.impl.DropStatementType.INDEX;
+import static org.jooq.impl.DropStatementType.SEQUENCE;
+import static org.jooq.impl.DropStatementType.TABLE;
+import static org.jooq.impl.DropStatementType.VIEW;
 import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
@@ -3326,6 +3330,123 @@ final class Utils {
             if (StringUtils.equals(fields[i], nullLiteral)) {
                 fields[i] = null;
             }
+        }
+    }
+
+    /**
+     * Wrap a <code>DROP .. IF EXISTS</code> statement with
+     * <code>BEGIN EXECUTE IMMEDIATE '...' EXCEPTION WHEN ... END;</code>, if
+     * <code>IF EXISTS</code> is not supported.
+     */
+    @SuppressWarnings("unused")
+    static void executeImmediateBegin(Context<?> ctx, DropStatementType type) {
+        switch (ctx.family()) {
+            /* [pro] xx
+            xxxx xxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxx xxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx
+
+                xxxxxx
+            x
+
+            xxxx xxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx
+
+                xxxxxx
+            x
+
+            xxxx xxxxxxxxxx x
+                xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxx
+            x
+
+            xx
+                xxxxxxxx xxxxxxx xxxxx xx xxxxxxxxxxx xx xxxxx
+
+                xxxxxx xxxxxxxxx xxxxxxxx
+                    xx xxxxxxxxx xx xxxxx xx xxxxx xxxxxx xxxxxx xxxxx xxxxx xxxxxx xxxxx xxxxxxxxx xxxxx
+                    xxx xxxxxxxxx xxxx xxxxxx
+                    xxxx xxxx
+                xxx xxxxxxxxxx
+                xxxxxxx xxxxxxxxx xxxxxxxxx
+                xxxx xxxxxxxxx xxxxxxx
+             xx
+
+            xx [/pro] */
+
+            case FIREBIRD: {
+                ctx.keyword("execute block").formatSeparator()
+                   .keyword("as").formatSeparator()
+                   .keyword("begin").formatIndentStart().formatSeparator()
+                   .keyword("execute statement").sql(" '");
+
+                break;
+            }
+
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Wrap a <code>DROP .. IF EXISTS</code> statement with
+     * <code>BEGIN EXECUTE IMMEDIATE '...' EXCEPTION WHEN ... END;</code>, if
+     * <code>IF EXISTS</code> is not supported.
+     */
+    static void executeImmediateEnd(Context<?> ctx, DropStatementType type) {
+        switch (ctx.family()) {
+            /* [pro] xx
+            xxxx xxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxx
+
+                xxxxxx
+            x
+
+            xxxx xxxxxxx x
+                xxxxxx xxx x
+                      xxxx xx xxxxx    x xxxxxxxxxxx
+                    x xxxx xx xxxxxxxx x xxxxxxxxxxx
+                    x xxxx xx xxxxx    x xxxxxxxxxxx
+                    x xxxx xx xxxx     x xxxxxxxxxxx
+                    x xxxxxxxxxxxx
+
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xx x xxx x xxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxxxx
+            x
+
+            xxxx xxxxxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxx xxxxxxxx
+
+                xxxxxx
+            x
+
+            xx [/pro] */
+
+            case FIREBIRD: {
+                ctx.sql("';").formatSeparator()
+                   .keyword("when").sql(" sqlcode -607 ").keyword("do").formatIndentStart().formatSeparator()
+                   .keyword("begin end").formatIndentEnd().formatIndentEnd().formatSeparator()
+                   .keyword("end");
+
+                break;
+            }
+
+            default:
+                break;
         }
     }
 }

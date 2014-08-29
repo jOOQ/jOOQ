@@ -62,6 +62,7 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
 import java.util.List;
@@ -4918,6 +4919,28 @@ public interface DSLContext {
     DropViewFinalStep dropView(String table);
 
     /**
+     * Create a new DSL <code>DROP VIEW IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSL#dropViewIfExists(Table)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    DropViewFinalStep dropViewIfExists(Table<?> table);
+
+    /**
+     * Create a new DSL <code>DROP VIEW IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSL#dropViewIfExists(String)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    DropViewFinalStep dropViewIfExists(String table);
+
+    /**
      * Create a new DSL <code>DROP TABLE</code> statement.
      *
      * @see DSL#dropTable(Table)
@@ -4934,6 +4957,28 @@ public interface DSLContext {
     DropTableStep dropTable(String table);
 
     /**
+     * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSL#dropTableIfExists(Table)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    DropTableStep dropTableIfExists(Table<?> table);
+
+    /**
+     * Create a new DSL <code>ALTER TABLE IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSL#dropTableIfExists(String)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    DropTableStep dropTableIfExists(String table);
+
+    /**
      * Create a new DSL <code>DROP INDEX</code> statement.
      *
      * @see DSL#dropIndex(String)
@@ -4942,9 +4987,20 @@ public interface DSLContext {
     DropIndexFinalStep dropIndex(String index);
 
     /**
+     * Create a new DSL <code>DROP INDEX IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSL#dropIndexIfExists(String)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    DropIndexFinalStep dropIndexIfExists(String index);
+
+    /**
      * Create a new DSL <code>DROP SEQUENCE</code> statement.
      *
-     * @see DSLContext#dropSequence(Sequence)
+     * @see DSL#dropSequence(Sequence)
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     DropSequenceFinalStep dropSequence(Sequence<?> sequence);
@@ -4952,10 +5008,32 @@ public interface DSLContext {
     /**
      * Create a new DSL <code>DROP SEQUENCE</code> statement.
      *
-     * @see DSLContext#dropSequence(Sequence)
+     * @see DSL#dropSequence(String)
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     DropSequenceFinalStep dropSequence(String sequence);
+
+    /**
+     * Create a new DSL <code>DROP SEQUENCE IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSL#dropSequenceIfExists(Sequence)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence);
+
+    /**
+     * Create a new DSL <code>DROP SEQUENCE IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSL#dropSequenceIfExists(String)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    DropSequenceFinalStep dropSequenceIfExists(String sequence);
 
     /**
      * Create a new DSL truncate statement.

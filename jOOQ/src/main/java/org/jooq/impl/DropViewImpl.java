@@ -40,8 +40,19 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.DROP_VIEW;
 import static org.jooq.Clause.DROP_VIEW_TABLE;
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+// ...
+// ...
+// ...
+import static org.jooq.impl.DropStatementType.VIEW;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -65,22 +76,47 @@ class DropViewImpl extends AbstractQuery implements
     private static final Clause[] CLAUSES          = { DROP_VIEW };
 
     private final Table<?>        table;
+    private final boolean         ifExists;
 
     DropViewImpl(Configuration configuration, Table<?> table) {
+        this(configuration, table, false);
+    }
+
+    DropViewImpl(Configuration configuration, Table<?> table, boolean ifExists) {
         super(configuration);
 
         this.table = table;
+        this.ifExists = ifExists;
     }
 
     // ------------------------------------------------------------------------
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
+    private final boolean supportsIfExists(Context<?> ctx) {
+        return !asList(CUBRID, DERBY, FIREBIRD).contains(ctx.family());
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
+        if (ifExists && !supportsIfExists(ctx)) {
+            Utils.executeImmediateBegin(ctx, VIEW);
+            accept0(ctx);
+            Utils.executeImmediateEnd(ctx, VIEW);
+        }
+        else {
+            accept0(ctx);
+        }
+    }
+
+    private void accept0(Context<?> ctx) {
         ctx.start(DROP_VIEW_TABLE)
-           .keyword("drop view").sql(" ")
-           .visit(table);
+           .keyword("drop view").sql(" ");
+
+        if (ifExists && supportsIfExists(ctx))
+            ctx.keyword("if exists").sql(" ");
+
+        ctx.visit(table);
 
         ctx.end(DROP_VIEW_TABLE);
     }

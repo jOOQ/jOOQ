@@ -818,4 +818,18 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support({ MARIADB, MYSQL, POSTGRES })
     void setForShare(boolean forShare);
 
+    /* [pro] xx
+    xxx
+     x xxx x xxxxxxxxxx xxxxx xxxxxxxxxxxxx xxxxxx xx xxx xxx xx xxx xxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxx xx
+    xxxx xxxxxxxxxxxxxxxxxxxxx
+
+    xxx
+     x xxx x xxxxxxxxxx xxxx xxxxxxxxxxx xxxxxx xx xxx xxx xx xxx xxxxxxxxx
+     xx
+    xxxxxxxxxx xxxxxx xx
+    xxxx xxxxxxxxxxxxxxxxxx
+    xx [/pro] */
+
 }

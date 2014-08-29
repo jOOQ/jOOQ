@@ -75,6 +75,7 @@ import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.SelectConditionStep;
 import org.jooq.SelectConnectByConditionStep;
+import org.jooq.SelectFinalStep;
 import org.jooq.SelectForUpdateOfStep;
 import org.jooq.SelectHavingConditionStep;
 import org.jooq.SelectIntoStep;
@@ -1836,6 +1837,20 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
         getQuery().setForShare(true);
         return this;
     }
+
+    /* [pro] xx
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx x
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx x
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxx
+    x
+    xx [/pro] */
 
     @Override
     public final SelectImpl union(Select<? extends R> select) {

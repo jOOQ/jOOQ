@@ -163,6 +163,10 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     private ForUpdateMode                        forUpdateMode;
     private int                                  forUpdateWait;
     private boolean                              forShare;
+    /* [pro] xx
+    xxxxxxx xxxxxxx                              xxxxxxxxxxxxxxxx
+    xxxxxxx xxxxxxx                              xxxxxxxxxxxxx
+    xx [/pro] */
     private final TableList                      from;
     private final ConditionProviderImpl          condition;
     private final ConditionProviderImpl          connectBy;
@@ -485,6 +489,18 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                     break;
             }
         }
+
+        /* [pro] xx
+        xx xxxxxxx xxx xxxxxx x xxx xxxxxx xxxx xxxxx xxxxxx x xxxx xxxx xxxx xxxxxxx
+        xxxx xx xxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxx xxxxx xxxxxxxxx
+        x
+        xxxx xx xxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxx xxxx xxxxxxx
+        x
+        xx [/pro] */
 
         // [#1952] SQL Server OPTION() clauses as well as many other optional
         // end-of-query clauses are appended to the end of a query
@@ -1334,6 +1350,20 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         this.forUpdateMode = null;
         this.forUpdateWait = 0;
     }
+
+    /* [pro] xx
+    xxxxxxxxx
+    xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxx x
+        xxxxxxxxxxxxxxxxxxxx x xxxxx
+        xxxxxxxxxxxxxxxxx x xxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxx x
+        xxxxxxxxxxxxxxxxxxxx x xxxxxx
+        xxxxxxxxxxxxxxxxx x xxxxx
+    x
+    xx [/pro] */
 
     @Override
     public final List<Field<?>> getSelect() {

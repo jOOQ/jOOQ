@@ -1163,6 +1163,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testInsertIntoView() throws Exception {
+        new InsertUpdateTests(this).testInsertIntoView();
+    }
+
+    @Test
     public void testInsertIdentity() throws Exception {
         new InsertUpdateTests(this).testInsertIdentity();
     }

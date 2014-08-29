@@ -41,6 +41,22 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.DSL.avg;
 import static org.jooq.impl.DSL.connectByIsCycle;
 import static org.jooq.impl.DSL.connectByIsLeaf;
@@ -54,6 +70,7 @@ import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.prior;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.sum;
 import static org.jooq.impl.DSL.sysConnectByPath;
@@ -63,6 +80,7 @@ import static org.jooq.impl.DSL.two;
 import static org.jooq.impl.DSL.val;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.sql.Date;
 import java.util.Arrays;
@@ -79,6 +97,7 @@ import org.jooq.Result;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.exception.DataAccessException;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -554,5 +573,47 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             "c:/program files/java/jre6/lib",
             "c:/program files/java/jre6/lib/javaws.jar",
             "c:/program files/java/jre6/lib/rt.jar"), paths.getValues(3));
+    }
+
+    public void testWithCheckOption() throws Exception {
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE);
+
+        try {
+            create()
+                .insertInto(
+                    table(selectFrom(TAuthor())
+                    .where(TAuthor_ID().lt(3))
+                    .withCheckOption()),
+
+                    TAuthor_ID(),
+                    TAuthor_LAST_NAME()
+                )
+                .values(3, "abc")
+                .execute();
+
+            fail();
+        }
+        catch (DataAccessException expected) {}
+    }
+
+    public void testWithReadOnly() throws Exception {
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE);
+
+        try {
+            create()
+                .insertInto(
+                    table(selectFrom(TAuthor())
+                    .where(TAuthor_ID().lt(3))
+                    .withReadOnly()),
+
+                    TAuthor_ID(),
+                    TAuthor_LAST_NAME()
+                )
+                .values(4, "abc")
+                .execute();
+
+            fail();
+        }
+        catch (DataAccessException expected) {}
     }
 }

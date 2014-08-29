@@ -3000,6 +3000,16 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testWithCheckOption() throws Exception {
+        new ExoticTests(this).testWithCheckOption();
+    }
+
+    @Test
+    public void testWithReadOnly() throws Exception {
+        new ExoticTests(this).testWithReadOnly();
+    }
+
+    @Test
     public void testExecuteListenerRows() throws Exception {
         new ExecuteListenerTests(this).testExecuteListenerRows();
     }

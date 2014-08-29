@@ -123,4 +123,18 @@ public interface SelectForUpdateStep<R extends Record> extends SelectOptionStep<
     @Support({ MARIADB, MYSQL, POSTGRES })
     SelectOptionStep<R> forShare();
 
+    /* [pro] */
+    /**
+     * Add a <code>WITH CHECK OPTION</code> clause to the end of the subquery.
+     */
+    @Support({ ORACLE })
+    SelectFinalStep<R> withCheckOption();
+
+    /**
+     * Add a <code>WITH READ ONLY</code> clause to the end of the subquery.
+     */
+    @Support({ ORACLE })
+    SelectFinalStep<R> withReadOnly();
+    /* [/pro] */
+
 }

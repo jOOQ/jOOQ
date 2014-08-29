@@ -163,6 +163,10 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     private ForUpdateMode                        forUpdateMode;
     private int                                  forUpdateWait;
     private boolean                              forShare;
+    /* [pro] */
+    private boolean                              withCheckOption;
+    private boolean                              withReadOnly;
+    /* [/pro] */
     private final TableList                      from;
     private final ConditionProviderImpl          condition;
     private final ConditionProviderImpl          connectBy;
@@ -485,6 +489,18 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                     break;
             }
         }
+
+        /* [pro] */
+        // [#3600] The Oracle / SQL Server WITH CHECK OPTION / WITH READ ONLY clauses
+        else if (withCheckOption) {
+            context.formatSeparator()
+                   .keyword("with check option");
+        }
+        else if (withReadOnly) {
+            context.formatSeparator()
+                   .keyword("with read only");
+        }
+        /* [/pro] */
 
         // [#1952] SQL Server OPTION() clauses as well as many other optional
         // end-of-query clauses are appended to the end of a query
@@ -1334,6 +1350,20 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         this.forUpdateMode = null;
         this.forUpdateWait = 0;
     }
+
+    /* [pro] */
+    @Override
+    public final void setWithCheckOption() {
+        this.withCheckOption = true;
+        this.withReadOnly = false;
+    }
+
+    @Override
+    public final void setWithReadOnly() {
+        this.withCheckOption = false;
+        this.withReadOnly = true;
+    }
+    /* [/pro] */
 
     @Override
     public final List<Field<?>> getSelect() {

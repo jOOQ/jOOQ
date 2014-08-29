@@ -818,4 +818,18 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support({ MARIADB, MYSQL, POSTGRES })
     void setForShare(boolean forShare);
 
+    /* [pro] */
+    /**
+     * Add a <code>WITH CHECK OPTION</code> clause to the end of the subquery.
+     */
+    @Support({ ORACLE })
+    void setWithCheckOption();
+
+    /**
+     * Add a <code>WITH READ ONLY</code> clause to the end of the subquery.
+     */
+    @Support({ ORACLE })
+    void setWithReadOnly();
+    /* [/pro] */
+
 }

@@ -222,9 +222,7 @@ public class XMLDatabase extends AbstractDatabase {
         List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
 
         for (Schema schema : info().getSchemata()) {
-            if (getInputSchemata().contains(schema.getSchemaName())) {
-                result.add(new SchemaDefinition(this, schema.getSchemaName(), null));
-            }
+            result.add(new SchemaDefinition(this, schema.getSchemaName(), null));
         }
 
         return result;

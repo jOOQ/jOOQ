@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DatabaseModel VersionId="2.1">
+    <ModelGid>none</ModelGid>
+    <ModelVersionGid>none</ModelVersionGid>
+    <Counters>
+        <Counter>
+            <Name>table</Name>
+            <Value>5</Value>
+            <Prefix>t</Prefix>
+        </Counter>
+        <Counter>
+            <Name>column</Name>
+            <Value>21</Value>
+            <Prefix>c</Prefix>
+        </Counter>
+        <Counter>
+            <Name>index</Name>
+            <Value>1</Value>
+            <Prefix>i</Prefix>
+        </Counter>
+        <Counter>
+            <Name>reference</Name>
+            <Value>5</Value>
+            <Prefix>r</Prefix>
+        </Counter>
+        <Counter>
+            <Name>table_check</Name>
+            <Value>0</Value>
+            <Prefix>tc</Prefix>
+        </Counter>
+        <Counter>
+            <Name>alternate_key</Name>
+            <Value>3</Value>
+            <Prefix>a</Prefix>
+        </Counter>
+        <Counter>
+            <Name>sequence</Name>
+            <Value>0</Value>
+            <Prefix>s</Prefix>
+        </Counter>
+        <Counter>
+            <Name>note</Name>
+            <Value>0</Value>
+            <Prefix>n</Prefix>
+        </Counter>
+        <Counter>
+            <Name>view</Name>
+            <Value>1</Value>
+            <Prefix>v</Prefix>
+        </Counter>
+        <Counter>
+            <Name>view_column</Name>
+            <Value>0</Value>
+            <Prefix>vc</Prefix>
+        </Counter>
+        <Counter>
+            <Name>area</Name>
+            <Value>0</Value>
+            <Prefix>ar</Prefix>
+        </Counter>
+        <Counter>
+            <Name>text</Name>
+            <Value>0</Value>
+            <Prefix>tx</Prefix>
+        </Counter>
+        <Counter>
+            <Name>tableDisplay</Name>
+            <Value>5</Value>
+            <Prefix>td</Prefix>
+        </Counter>
+        <Counter>
+            <Name>viewDisplay</Name>
+            <Value>1</Value>
+            <Prefix>vd</Prefix>
+        </Counter>
+        <Counter>
+            <Name>referenceDisplay</Name>
+            <Value>5</Value>
+            <Prefix>rd</Prefix>
+        </Counter>
+    </Counters>
+    <AdditionalSQLBeforeCreate></AdditionalSQLBeforeCreate>
+    <AdditionalSQLAfterCreate></AdditionalSQLAfterCreate>
+    <AdditionalSQLBeforeDrop></AdditionalSQLBeforeDrop>
+    <AdditionalSQLAfterDrop></AdditionalSQLAfterDrop>
+    <Tables>
+        <Table Id="t1">
+            <Name>t_language</Name>
+            <Description></Description>
+            <Columns>
+                <Column Id="c1">
+                    <Name>id</Name>
+                    <Type>number(7)</Type>
+                    <Description>describe me please</Description>
+                    <Nullable>false</Nullable>
+                    <PK>true</PK>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c2">
+                    <Name>cd</Name>
+                    <Type>char(2)</Type>
+                    <Description>describe me please</Description>
+                    <Nullable>false</Nullable>
+                    <PK>false</PK>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c3">
+                    <Name>description</Name>
+                    <Type>varchar2(50)</Type>
+                    <Description>describe me please</Description>
+                    <Nullable>true</Nullable>
+                    <PK>false</PK>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+            </Columns>
+            <AlternateKeys/>
+            <Indexes/>
+            <TableChecks/>
+            <AdditionalSQLBefore></AdditionalSQLBefore>
+            <AdditionalSQLAfter></AdditionalSQLAfter>
+            <Properties/>
+        </Table>
+        <Table Id="t2">
+            <Name>t_author</Name>
+            <Description></Description>
+            <Columns>
+                <Column Id="c4">
+                    <Name>id</Name>
+                    <Type>number(7)</Type>
+                    <Description>describe me please</Description>
+                    <Nullable>false</Nullable>
+                    <PK>true</PK>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c5">
+                    <Name>first_name</Name>
+                    <Type>varchar2(50)</Type>
+                    <Description>describe me please</Description>
+                    <Nullable>true</Nullable>
+                    <PK>false</PK>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c6">
+                    <Name>last_name</Name>
+                    <Type>varchar2(50)</Type>
+                    <Description>describe me please</Description>
+                    <Nullable>false</Nullable>
+                    <PK>false</PK>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c7">
+                    <Name>date_of_birth</Name>
+                    <Type>date</Type>
+                    <Description>describe me please</Description>
+                    <Nullable>true</Nullable>
+                    <PK>false</PK>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c8">
+                    <Name>year_of_birth</Name>
+                    <Type>number(7)</Type>
+                    <Description>describe me please</Description>
+                    <Nullable>false</Nullable>
+                    <PK>false</PK>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c9">
+                    <Name>distinguished</Name>
+                    <Type>number(1)</Type>
+                    <Description>describe me please</Description>
+                    <Nullable>false</Nullable>
+                    <PK>false</PK>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+            </Columns>
+            <AlternateKeys/>
+            <Indexes/>
+            <TableChecks/>
+            <AdditionalSQLBefore></AdditionalSQLBefore>
+            <AdditionalSQLAfter></AdditionalSQLAfter>
+            <Properties/>
+        </Table>
+        <Table Id="t3">
+            <Name>t_book</Name>
+            <Description></Description>
+            <Columns>
+                <Column Id="c10">
+                    <Name>id</Name>
+                    <Type>number(7)</Type>
+                    <Description>describe me please</Description>
+                    <Nullable>false</Nullable>
+                    <PK>true</PK>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c13">
+                    <Name>author_id</Name>
+                    <Type>number(7)</Type>
+                    <Description>describe me please</Description>
+                    <Nullable>false</Nullable>
+                    <PK>false</PK>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c15">
+                    <Name>title</Name>
+                    <Type>varchar2(400)</Type>
+                    <Description>describe me please</Description>
+                    <Nullable>false</Nullable>
+                    <PK>false</PK>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c16">
+                    <Name>published_in</Name>
+                    <Type>number(7)</Type>
+                    <Description>describe me please</Description>
+                    <Nullable>false</Nullable>
+                    <PK>false</PK>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c12">
+                    <Name>language_id</Name>
+                    <Type>number(7)</Type>
+                    <Description>describe me please</Description>
+                    <Nullable>false</Nullable>
+                    <PK>false</PK>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+            </Columns>
+            <AlternateKeys/>
+            <Indexes/>
+            <TableChecks/>
+            <AdditionalSQLBefore></AdditionalSQLBefore>
+            <AdditionalSQLAfter></AdditionalSQLAfter>
+            <Properties/>
+        </Table>
+        <Table Id="t4">
+            <Name>t_book_store</Name>
+            <Description></Description>
+            <Columns>
+                <Column Id="c17">
+                    <Name>name</Name>
+                    <Type>varchar2(400)</Type>
+                    <Description>describe me please</Description>
+                    <Nullable>false</Nullable>
+                    <PK>false</PK>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+            </Columns>
+            <AlternateKeys>
+                <AlternateKey Id="a2">
+                    <Name>uk_book_store_name</Name>
+                    <Columns>
+                        <Column>c17</Column>
+                    </Columns>
+                    <Properties/>
+                </AlternateKey>
+            </AlternateKeys>
+            <Indexes/>
+            <TableChecks/>
+            <AdditionalSQLBefore></AdditionalSQLBefore>
+            <AdditionalSQLAfter></AdditionalSQLAfter>
+            <Properties/>
+        </Table>
+        <Table Id="t5">
+            <Name>t_book_to_book_store</Name>
+            <Description></Description>
+            <Columns>
+                <Column Id="c18">
+                    <Name>name</Name>
+                    <Type>varchar2(400)</Type>
+                    <Description>describe me please</Description>
+                    <Nullable>false</Nullable>
+                    <PK>true</PK>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c19">
+                    <Name>book_id</Name>
+                    <Type>integer</Type>
+                    <Description>describe me please</Description>
+                    <Nullable>false</Nullable>
+                    <PK>true</PK>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c20">
+                    <Name>stock</Name>
+                    <Type>integer</Type>
+                    <Description>describe me please</Description>
+                    <Nullable>false</Nullable>
+                    <PK>false</PK>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+            </Columns>
+            <AlternateKeys/>
+            <Indexes/>
+            <TableChecks/>
+            <AdditionalSQLBefore></AdditionalSQLBefore>
+            <AdditionalSQLAfter></AdditionalSQLAfter>
+            <Properties/>
+        </Table>
+    </Tables>
+    <Views/>
+    <References>
+        <Reference Id="r1">
+            <Name>fk_book_language</Name>
+            <Description></Description>
+            <PKTable>t1</PKTable>
+            <FKTable>t3</FKTable>
+            <PKRole></PKRole>
+            <FKRole></FKRole>
+            <ReferenceColumns>
+                <ReferenceColumn>
+                    <PKColumn>c1</PKColumn>
+                    <FKColumn>c12</FKColumn>
+                </ReferenceColumn>
+            </ReferenceColumns>
+            <Cardinality>0..*</Cardinality>
+            <Mandatory>true</Mandatory>
+            <OnUpdateAction>None</OnUpdateAction>
+            <OnDeleteAction>None</OnDeleteAction>
+            <Properties/>
+        </Reference>
+        <Reference Id="r2">
+            <Name>fk_book_author</Name>
+            <Description></Description>
+            <PKTable>t2</PKTable>
+            <FKTable>t3</FKTable>
+            <PKRole></PKRole>
+            <FKRole></FKRole>
+            <ReferenceColumns>
+                <ReferenceColumn>
+                    <PKColumn>c4</PKColumn>
+                    <FKColumn>c13</FKColumn>
+                </ReferenceColumn>
+            </ReferenceColumns>
+            <Cardinality>0..*</Cardinality>
+            <Mandatory>true</Mandatory>
+            <OnUpdateAction>None</OnUpdateAction>
+            <OnDeleteAction>None</OnDeleteAction>
+            <Properties/>
+        </Reference>
+        <Reference Id="r4">
+            <Name>fk_b2bs_book_store</Name>
+            <Description></Description>
+            <PKTable>t4</PKTable>
+            <FKTable>t5</FKTable>
+            <PKRole></PKRole>
+            <FKRole></FKRole>
+            <ReferenceColumns>
+                <ReferenceColumn>
+                    <PKColumn>c17</PKColumn>
+                    <FKColumn>c18</FKColumn>
+                </ReferenceColumn>
+            </ReferenceColumns>
+            <Cardinality>0..*</Cardinality>
+            <Mandatory>true</Mandatory>
+            <OnUpdateAction>None</OnUpdateAction>
+            <OnDeleteAction>None</OnDeleteAction>
+            <Properties/>
+        </Reference>
+        <Reference Id="r5">
+            <Name>fk_b2bs_book</Name>
+            <Description></Description>
+            <PKTable>t3</PKTable>
+            <FKTable>t5</FKTable>
+            <PKRole></PKRole>
+            <FKRole></FKRole>
+            <ReferenceColumns>
+                <ReferenceColumn>
+                    <PKColumn>c10</PKColumn>
+                    <FKColumn>c19</FKColumn>
+                </ReferenceColumn>
+            </ReferenceColumns>
+            <Cardinality>0..*</Cardinality>
+            <Mandatory>true</Mandatory>
+            <OnUpdateAction>None</OnUpdateAction>
+            <OnDeleteAction>None</OnDeleteAction>
+            <Properties/>
+        </Reference>
+    </References>
+    <Sequences/>
+    <Notes/>
+    <Areas/>
+    <Texts/>
+    <TableDisplays>
+        <TableDisplay Id="td1">
+            <X>4629.5</X>
+            <Y>4714.5</Y>
+            <Width>178.0</Width>
+            <Height>73.0</Height>
+            <LineColor>#000000</LineColor>
+            <FillColor>#ffffff</FillColor>
+            <Table>t1</Table>
+            <FixedSize>false</FixedSize>
+        </TableDisplay>
+        <TableDisplay Id="td2">
+            <X>4890.5</X>
+            <Y>4842.5</Y>
+            <Width>192.0</Width>
+            <Height>116.0</Height>
+            <LineColor>#000000</LineColor>
+            <FillColor>#ffffff</FillColor>
+            <Table>t2</Table>
+            <FixedSize>false</FixedSize>
+        </TableDisplay>
+        <TableDisplay Id="td3">
+            <X>4629.5</X>
+            <Y>4848.5</Y>
+            <Width>189.0</Width>
+            <Height>102.0</Height>
+            <LineColor>#000000</LineColor>
+            <FillColor>#ffffff</FillColor>
+            <Table>t3</Table>
+            <FixedSize>false</FixedSize>
+        </TableDisplay>
+        <TableDisplay Id="td4">
+            <X>4897.5</X>
+            <Y>5025.5</Y>
+            <Width>156.0</Width>
+            <Height>60.0</Height>
+            <LineColor>#000000</LineColor>
+            <FillColor>#ffffff</FillColor>
+            <Table>t4</Table>
+            <FixedSize>false</FixedSize>
+        </TableDisplay>
+        <TableDisplay Id="td5">
+            <X>4635.5</X>
+            <Y>5013.5</Y>
+            <Width>179.0</Width>
+            <Height>87.0</Height>
+            <LineColor>#000000</LineColor>
+            <FillColor>#ffffff</FillColor>
+            <Table>t5</Table>
+            <FixedSize>false</FixedSize>
+        </TableDisplay>
+    </TableDisplays>
+    <ViewDisplays/>
+    <ReferenceDisplays>
+        <ReferenceDisplay Id="rd1">
+            <Color>#000000</Color>
+            <ControlPointsType>Vertical_2CP</ControlPointsType>
+            <ControlPoint>
+                <X>4723.5</X>
+                <Y>4772.5</Y>
+            </ControlPoint>
+            <ControlPoint>
+                <X>4723.5</X>
+                <Y>4862.5</Y>
+            </ControlPoint>
+            <PkTableDisplay>td1</PkTableDisplay>
+            <FkTableDisplay>td3</FkTableDisplay>
+            <Reference>r1</Reference>
+        </ReferenceDisplay>
+        <ReferenceDisplay Id="rd2">
+            <Color>#000000</Color>
+            <ControlPointsType>Cross_3CP</ControlPointsType>
+            <ControlPoint>
+                <X>5033.5</X>
+                <Y>4898.5</Y>
+            </ControlPoint>
+            <ControlPoint>
+                <X>4758.5</X>
+                <Y>4898.5</Y>
+            </ControlPoint>
+            <ControlPoint>
+                <X>4758.5</X>
+                <Y>4881.5</Y>
+            </ControlPoint>
+            <PkTableDisplay>td2</PkTableDisplay>
+            <FkTableDisplay>td3</FkTableDisplay>
+            <Reference>r2</Reference>
+        </ReferenceDisplay>
+        <ReferenceDisplay Id="rd4">
+            <Color>#000000</Color>
+            <ControlPointsType>Horizontal_4CP</ControlPointsType>
+            <ControlPoint>
+                <X>4982.5</X>
+                <Y>5055.5</Y>
+            </ControlPoint>
+            <ControlPoint>
+                <X>4716.5</X>
+                <Y>5055.5</Y>
+            </ControlPoint>
+            <ControlPoint>
+                <X>4716.5</X>
+                <Y>5050.5</Y>
+            </ControlPoint>
+            <ControlPoint>
+                <X>4715.5</X>
+                <Y>5050.5</Y>
+            </ControlPoint>
+            <PkTableDisplay>td4</PkTableDisplay>
+            <FkTableDisplay>td5</FkTableDisplay>
+            <Reference>r4</Reference>
+        </ReferenceDisplay>
+        <ReferenceDisplay Id="rd5">
+            <Color>#000000</Color>
+            <ControlPointsType>Vertical_2CP</ControlPointsType>
+            <ControlPoint>
+                <X>4724.5</X>
+                <Y>4903.5</Y>
+            </ControlPoint>
+            <ControlPoint>
+                <X>4724.5</X>
+                <Y>5053.5</Y>
+            </ControlPoint>
+            <PkTableDisplay>td3</PkTableDisplay>
+            <FkTableDisplay>td5</FkTableDisplay>
+            <Reference>r5</Reference>
+        </ReferenceDisplay>
+    </ReferenceDisplays>
+    <Properties>
+        <Property>
+            <Name>sql_quote</Name>
+            <Value>false</Value>
+        </Property>
+    </Properties>
+</DatabaseModel>

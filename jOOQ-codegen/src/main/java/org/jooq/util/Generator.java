@@ -203,6 +203,16 @@ public interface Generator {
     void setFluentSetters(boolean fluentSetters);
 
     /**
+     * Whether equals and hashCode methods should be generated
+     */
+    boolean generateEqualsAndHashCode();
+
+    /**
+     * Whether equals and hashCode methods should be generated
+     */
+    void setGenerateEqualsAndHashCode(boolean generateEqualsAndHashCode);
+
+    /**
      * The target directory
      */
     String getTargetDirectory();

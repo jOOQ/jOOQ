@@ -56,6 +56,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -1893,6 +1894,59 @@ public class JavaGenerator extends AbstractGenerator {
                 }
             }
         }
+
+        // equals
+        if (generateEqualsAndHashCode()) {
+            out.println();
+            out.tab(1).println("@Override");
+            out.tab(1).println("public boolean equals(Object obj) {");
+            out.tab(2).println("if (this == obj)");
+            out.tab(3).println("return true;");
+            out.tab(2).println("if (obj == null)");
+            out.tab(3).println("return false;");
+            out.tab(2).println("if (getClass() != obj.getClass())");
+            out.tab(3).println("return false;");
+
+            out.tab(2).println("final %s other = (%s) obj;", className, className);
+
+            Iterator<?> iterator = getTypedElements(tableOrUDT).iterator();
+            while (iterator.hasNext()) {
+                TypedElementDefinition<?> column = (TypedElementDefinition<?>) iterator.next();
+                final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+
+                out.tab(2).println("if (%s == null) {", columnMember);
+                out.tab(3).println("if (other.%s != null)", columnMember);
+                out.tab(4).println("return false;");
+                out.tab(2).println("}");
+                out.tab(2).println("else if (!%s.equals(other.%s))", columnMember, columnMember);
+                out.tab(3).println("return false;");
+            }
+
+            out.tab(2).println("return true;");
+            out.tab(1).println("}");
+        }
+
+        // hashCode
+        if (generateEqualsAndHashCode()) {
+            out.println();
+            out.tab(1).println("@Override");
+            out.tab(1).println("public int hashCode() {");
+            out.tab(2).println("final int prime = 31;");
+            out.tab(2).println("int result = 1;");
+
+            Iterator<?> iterator = getTypedElements(tableOrUDT).iterator();
+            while (iterator.hasNext()) {
+                TypedElementDefinition<?> column = (TypedElementDefinition<?>) iterator.next();
+                final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+
+                out.tab(2).println("result = prime * result + ((%s == null) ? 0 : %s.hashCode());",
+                    columnMember, columnMember);
+            }
+
+            out.tab(2).println("return result;");
+            out.tab(1).println("}");
+        }
+
 
         if (generateInterfaces() && !generateImmutablePojos()) {
             printFromAndInto(out, tableOrUDT);

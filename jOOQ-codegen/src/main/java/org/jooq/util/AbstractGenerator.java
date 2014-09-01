@@ -64,6 +64,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateValidationAnnotations  = false;
     boolean                            generateGlobalObjectReferences = true;
     boolean                            fluentSetters                  = false;
+    boolean                            generateEqualsAndHashCode      = false;
 
     protected GeneratorStrategyWrapper strategy;
 
@@ -224,6 +225,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setFluentSetters(boolean fluentSetters) {
         this.fluentSetters = fluentSetters;
+    }
+
+    @Override
+    public boolean generateEqualsAndHashCode() {
+        return generateEqualsAndHashCode;
+    }
+
+    @Override
+    public void setGenerateEqualsAndHashCode(boolean generateEqualsAndHashCode) {
+        this.generateEqualsAndHashCode = generateEqualsAndHashCode;
     }
 
     // ----

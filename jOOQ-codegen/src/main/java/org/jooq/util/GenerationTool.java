@@ -397,6 +397,8 @@ public class GenerationTool {
                 generator.setGenerateGlobalObjectReferences(g.getGenerate().isGlobalObjectReferences());
             if (g.getGenerate().isFluentSetters() != null)
                 generator.setFluentSetters(g.getGenerate().isFluentSetters());
+            if (g.getGenerate().isGenerateEqualsAndHashCode() != null)
+                generator.setGenerateEqualsAndHashCode(g.getGenerate().isGenerateEqualsAndHashCode());
 
             if (!StringUtils.isBlank(g.getDatabase().getSchemaVersionProvider()))
                 generator.setUseSchemaVersionProvider(true);

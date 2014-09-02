@@ -60,8 +60,8 @@
             <snapshots>
 		<enabled>false</enabled>
             </snapshots>
-            <id>central</id>
-            <name>maven-ivy-releases</name>
+            <id>typesafe-maven-ivy-releases</id>
+            <name>typesafe-maven-ivy-releases</name>
             <url>http://repo.typesafe.com/typesafe/maven-ivy-releases</url>
         </repository>
     </repositories>

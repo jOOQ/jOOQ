@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "X_TEST_CASE_2025", schema = "TEST")
 public class XTestCase_2025 implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1273179714;
+	private static final long serialVersionUID = 62827415;
 
 	private java.lang.Integer refId;
 	private java.lang.String  refName;
@@ -45,5 +45,38 @@ public class XTestCase_2025 implements java.io.Serializable {
 
 	public void setRefName(java.lang.String refName) {
 		this.refName = refName;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final XTestCase_2025 other = (XTestCase_2025) obj;
+		if (refId == null) {
+			if (other.refId != null)
+				return false;
+		}
+		else if (!refId.equals(other.refId))
+			return false;
+		if (refName == null) {
+			if (other.refName != null)
+				return false;
+		}
+		else if (!refName.equals(other.refName))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((refId == null) ? 0 : refId.hashCode());
+		result = prime * result + ((refName == null) ? 0 : refName.hashCode());
+		return result;
 	}
 }

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "X_TEST_CASE_85", schema = "TEST")
 public class XTestCase_85 implements java.io.Serializable {
 
-	private static final long serialVersionUID = -705715512;
+	private static final long serialVersionUID = 1845405945;
 
 	private java.lang.Integer id;
 	private java.lang.Integer xUnusedId;
@@ -57,5 +57,45 @@ public class XTestCase_85 implements java.io.Serializable {
 
 	public void setXUnusedName(java.lang.String xUnusedName) {
 		this.xUnusedName = xUnusedName;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final XTestCase_85 other = (XTestCase_85) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
+			return false;
+		if (xUnusedId == null) {
+			if (other.xUnusedId != null)
+				return false;
+		}
+		else if (!xUnusedId.equals(other.xUnusedId))
+			return false;
+		if (xUnusedName == null) {
+			if (other.xUnusedName != null)
+				return false;
+		}
+		else if (!xUnusedName.equals(other.xUnusedName))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((xUnusedId == null) ? 0 : xUnusedId.hashCode());
+		result = prime * result + ((xUnusedName == null) ? 0 : xUnusedName.hashCode());
+		return result;
 	}
 }

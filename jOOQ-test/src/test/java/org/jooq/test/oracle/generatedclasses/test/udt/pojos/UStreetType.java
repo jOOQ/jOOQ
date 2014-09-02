@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UStreetType implements java.io.Serializable {
 
-	private static final long serialVersionUID = 321661054;
+	private static final long serialVersionUID = -506048343;
 
 	private java.lang.String                                                          street;
 	private java.lang.String                                                          no;
@@ -73,5 +73,59 @@ public class UStreetType implements java.io.Serializable {
 
 	public void setF_1326(java.lang.String f_1326) {
 		this.f_1326 = f_1326;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final UStreetType other = (UStreetType) obj;
+		if (street == null) {
+			if (other.street != null)
+				return false;
+		}
+		else if (!street.equals(other.street))
+			return false;
+		if (no == null) {
+			if (other.no != null)
+				return false;
+		}
+		else if (!no.equals(other.no))
+			return false;
+		if (floors == null) {
+			if (other.floors != null)
+				return false;
+		}
+		else if (!floors.equals(other.floors))
+			return false;
+		if (f_1323 == null) {
+			if (other.f_1323 != null)
+				return false;
+		}
+		else if (!java.util.Arrays.equals(f_1323, other.f_1323))
+			return false;
+		if (f_1326 == null) {
+			if (other.f_1326 != null)
+				return false;
+		}
+		else if (!f_1326.equals(other.f_1326))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((street == null) ? 0 : street.hashCode());
+		result = prime * result + ((no == null) ? 0 : no.hashCode());
+		result = prime * result + ((floors == null) ? 0 : floors.hashCode());
+		result = prime * result + ((f_1323 == null) ? 0 : java.util.Arrays.hashCode(f_1323));
+		result = prime * result + ((f_1326 == null) ? 0 : f_1326.hashCode());
+		return result;
 	}
 }

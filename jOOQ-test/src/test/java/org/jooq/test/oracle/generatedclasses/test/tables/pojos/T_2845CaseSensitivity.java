@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_2845_CASE_sensitivity", schema = "TEST")
 public class T_2845CaseSensitivity implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1238696312;
+	private static final long serialVersionUID = 1001132825;
 
 	private java.math.BigDecimal id;
 	private java.math.BigDecimal insensitive;
@@ -80,5 +80,59 @@ public class T_2845CaseSensitivity implements java.io.Serializable {
 
 	public void setMixed(java.math.BigDecimal mixed) {
 		this.mixed = mixed;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final T_2845CaseSensitivity other = (T_2845CaseSensitivity) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
+			return false;
+		if (insensitive == null) {
+			if (other.insensitive != null)
+				return false;
+		}
+		else if (!insensitive.equals(other.insensitive))
+			return false;
+		if (upper == null) {
+			if (other.upper != null)
+				return false;
+		}
+		else if (!upper.equals(other.upper))
+			return false;
+		if (lower == null) {
+			if (other.lower != null)
+				return false;
+		}
+		else if (!lower.equals(other.lower))
+			return false;
+		if (mixed == null) {
+			if (other.mixed != null)
+				return false;
+		}
+		else if (!mixed.equals(other.mixed))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((insensitive == null) ? 0 : insensitive.hashCode());
+		result = prime * result + ((upper == null) ? 0 : upper.hashCode());
+		result = prime * result + ((lower == null) ? 0 : lower.hashCode());
+		result = prime * result + ((mixed == null) ? 0 : mixed.hashCode());
+		return result;
 	}
 }

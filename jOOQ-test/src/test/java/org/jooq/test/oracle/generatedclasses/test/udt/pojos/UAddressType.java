@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAddressType implements java.io.Serializable {
 
-	private static final long serialVersionUID = 306521243;
+	private static final long serialVersionUID = 1819858452;
 
 	private org.jooq.test.oracle.generatedclasses.test.udt.pojos.UStreetType street;
 	private java.lang.String                                                 zip;
@@ -107,5 +107,80 @@ public class UAddressType implements java.io.Serializable {
 
 	public void setF_1326(java.lang.String f_1326) {
 		this.f_1326 = f_1326;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final UAddressType other = (UAddressType) obj;
+		if (street == null) {
+			if (other.street != null)
+				return false;
+		}
+		else if (!street.equals(other.street))
+			return false;
+		if (zip == null) {
+			if (other.zip != null)
+				return false;
+		}
+		else if (!zip.equals(other.zip))
+			return false;
+		if (city == null) {
+			if (other.city != null)
+				return false;
+		}
+		else if (!city.equals(other.city))
+			return false;
+		if (country == null) {
+			if (other.country != null)
+				return false;
+		}
+		else if (!country.equals(other.country))
+			return false;
+		if (since == null) {
+			if (other.since != null)
+				return false;
+		}
+		else if (!since.equals(other.since))
+			return false;
+		if (code == null) {
+			if (other.code != null)
+				return false;
+		}
+		else if (!code.equals(other.code))
+			return false;
+		if (f_1323 == null) {
+			if (other.f_1323 != null)
+				return false;
+		}
+		else if (!java.util.Arrays.equals(f_1323, other.f_1323))
+			return false;
+		if (f_1326 == null) {
+			if (other.f_1326 != null)
+				return false;
+		}
+		else if (!f_1326.equals(other.f_1326))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((street == null) ? 0 : street.hashCode());
+		result = prime * result + ((zip == null) ? 0 : zip.hashCode());
+		result = prime * result + ((city == null) ? 0 : city.hashCode());
+		result = prime * result + ((country == null) ? 0 : country.hashCode());
+		result = prime * result + ((since == null) ? 0 : since.hashCode());
+		result = prime * result + ((code == null) ? 0 : code.hashCode());
+		result = prime * result + ((f_1323 == null) ? 0 : java.util.Arrays.hashCode(f_1323));
+		result = prime * result + ((f_1326 == null) ? 0 : f_1326.hashCode());
+		return result;
 	}
 }

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_725_LOB_TEST", schema = "TEST")
 public class T_725LobTest implements java.io.Serializable {
 
-	private static final long serialVersionUID = 922365824;
+	private static final long serialVersionUID = 1107449285;
 
 	private java.lang.Integer id;
 	private byte[]            lob;
@@ -44,5 +44,38 @@ public class T_725LobTest implements java.io.Serializable {
 
 	public void setLob(byte[] lob) {
 		this.lob = lob;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final T_725LobTest other = (T_725LobTest) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
+			return false;
+		if (lob == null) {
+			if (other.lob != null)
+				return false;
+		}
+		else if (!java.util.Arrays.equals(lob, other.lob))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((lob == null) ? 0 : java.util.Arrays.hashCode(lob));
+		return result;
 	}
 }

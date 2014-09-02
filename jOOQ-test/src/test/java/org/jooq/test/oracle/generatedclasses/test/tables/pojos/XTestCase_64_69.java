@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "X_TEST_CASE_64_69", schema = "TEST")
 public class XTestCase_64_69 implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1039259323;
+	private static final long serialVersionUID = -1136727384;
 
 	private java.lang.Integer id;
 	private java.lang.Integer unusedId;
@@ -44,5 +44,38 @@ public class XTestCase_64_69 implements java.io.Serializable {
 
 	public void setUnusedId(java.lang.Integer unusedId) {
 		this.unusedId = unusedId;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final XTestCase_64_69 other = (XTestCase_64_69) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
+			return false;
+		if (unusedId == null) {
+			if (other.unusedId != null)
+				return false;
+		}
+		else if (!unusedId.equals(other.unusedId))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((unusedId == null) ? 0 : unusedId.hashCode());
+		return result;
 	}
 }

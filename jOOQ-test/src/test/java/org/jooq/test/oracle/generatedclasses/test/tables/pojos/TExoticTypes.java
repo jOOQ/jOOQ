@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_EXOTIC_TYPES", schema = "TEST")
 public class TExoticTypes implements java.io.Serializable {
 
-	private static final long serialVersionUID = -543620569;
+	private static final long serialVersionUID = -1422990676;
 
 	private java.lang.Integer id;
 	private java.util.UUID    uu;
@@ -44,5 +44,38 @@ public class TExoticTypes implements java.io.Serializable {
 
 	public void setUu(java.util.UUID uu) {
 		this.uu = uu;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final TExoticTypes other = (TExoticTypes) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
+			return false;
+		if (uu == null) {
+			if (other.uu != null)
+				return false;
+		}
+		else if (!uu.equals(other.uu))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((uu == null) ? 0 : uu.hashCode());
+		return result;
 	}
 }

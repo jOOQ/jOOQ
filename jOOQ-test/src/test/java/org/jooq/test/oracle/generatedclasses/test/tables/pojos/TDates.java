@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_DATES", schema = "TEST")
 public class TDates implements java.io.Serializable {
 
-	private static final long serialVersionUID = -2000608648;
+	private static final long serialVersionUID = -1376201341;
 
 	private java.lang.Integer          id;
 	private java.sql.Date              d;
@@ -116,5 +116,80 @@ public class TDates implements java.io.Serializable {
 
 	public void setID(org.jooq.types.DayToSecond iD) {
 		this.iD = iD;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final TDates other = (TDates) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
+			return false;
+		if (d == null) {
+			if (other.d != null)
+				return false;
+		}
+		else if (!d.equals(other.d))
+			return false;
+		if (t == null) {
+			if (other.t != null)
+				return false;
+		}
+		else if (!t.equals(other.t))
+			return false;
+		if (ts == null) {
+			if (other.ts != null)
+				return false;
+		}
+		else if (!ts.equals(other.ts))
+			return false;
+		if (dInt == null) {
+			if (other.dInt != null)
+				return false;
+		}
+		else if (!dInt.equals(other.dInt))
+			return false;
+		if (tsBigint == null) {
+			if (other.tsBigint != null)
+				return false;
+		}
+		else if (!tsBigint.equals(other.tsBigint))
+			return false;
+		if (iY == null) {
+			if (other.iY != null)
+				return false;
+		}
+		else if (!iY.equals(other.iY))
+			return false;
+		if (iD == null) {
+			if (other.iD != null)
+				return false;
+		}
+		else if (!iD.equals(other.iD))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((d == null) ? 0 : d.hashCode());
+		result = prime * result + ((t == null) ? 0 : t.hashCode());
+		result = prime * result + ((ts == null) ? 0 : ts.hashCode());
+		result = prime * result + ((dInt == null) ? 0 : dInt.hashCode());
+		result = prime * result + ((tsBigint == null) ? 0 : tsBigint.hashCode());
+		result = prime * result + ((iY == null) ? 0 : iY.hashCode());
+		result = prime * result + ((iD == null) ? 0 : iD.hashCode());
+		return result;
 	}
 }

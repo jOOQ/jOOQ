@@ -9,8 +9,27 @@ package org.jooq.test.oracle.generatedclasses.test.udt.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UInvalidType implements java.io.Serializable {
 
-	private static final long serialVersionUID = 337637149;
+	private static final long serialVersionUID = 1683829632;
 
 
 	public UInvalidType() {}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final UInvalidType other = (UInvalidType) obj;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		return result;
+	}
 }

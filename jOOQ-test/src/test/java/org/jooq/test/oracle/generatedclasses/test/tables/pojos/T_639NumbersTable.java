@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_639_NUMBERS_TABLE", schema = "TEST")
 public class T_639NumbersTable implements java.io.Serializable {
 
-	private static final long serialVersionUID = -154395933;
+	private static final long serialVersionUID = -686926892;
 
 	private java.lang.Integer    id;
 	private java.lang.Byte       byte_;
@@ -152,5 +152,101 @@ public class T_639NumbersTable implements java.io.Serializable {
 
 	public void setBigDecimal(java.math.BigDecimal bigDecimal) {
 		this.bigDecimal = bigDecimal;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final T_639NumbersTable other = (T_639NumbersTable) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
+			return false;
+		if (byte_ == null) {
+			if (other.byte_ != null)
+				return false;
+		}
+		else if (!byte_.equals(other.byte_))
+			return false;
+		if (short_ == null) {
+			if (other.short_ != null)
+				return false;
+		}
+		else if (!short_.equals(other.short_))
+			return false;
+		if (integer == null) {
+			if (other.integer != null)
+				return false;
+		}
+		else if (!integer.equals(other.integer))
+			return false;
+		if (long_ == null) {
+			if (other.long_ != null)
+				return false;
+		}
+		else if (!long_.equals(other.long_))
+			return false;
+		if (byteDecimal == null) {
+			if (other.byteDecimal != null)
+				return false;
+		}
+		else if (!byteDecimal.equals(other.byteDecimal))
+			return false;
+		if (shortDecimal == null) {
+			if (other.shortDecimal != null)
+				return false;
+		}
+		else if (!shortDecimal.equals(other.shortDecimal))
+			return false;
+		if (integerDecimal == null) {
+			if (other.integerDecimal != null)
+				return false;
+		}
+		else if (!integerDecimal.equals(other.integerDecimal))
+			return false;
+		if (longDecimal == null) {
+			if (other.longDecimal != null)
+				return false;
+		}
+		else if (!longDecimal.equals(other.longDecimal))
+			return false;
+		if (bigInteger == null) {
+			if (other.bigInteger != null)
+				return false;
+		}
+		else if (!bigInteger.equals(other.bigInteger))
+			return false;
+		if (bigDecimal == null) {
+			if (other.bigDecimal != null)
+				return false;
+		}
+		else if (!bigDecimal.equals(other.bigDecimal))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((byte_ == null) ? 0 : byte_.hashCode());
+		result = prime * result + ((short_ == null) ? 0 : short_.hashCode());
+		result = prime * result + ((integer == null) ? 0 : integer.hashCode());
+		result = prime * result + ((long_ == null) ? 0 : long_.hashCode());
+		result = prime * result + ((byteDecimal == null) ? 0 : byteDecimal.hashCode());
+		result = prime * result + ((shortDecimal == null) ? 0 : shortDecimal.hashCode());
+		result = prime * result + ((integerDecimal == null) ? 0 : integerDecimal.hashCode());
+		result = prime * result + ((longDecimal == null) ? 0 : longDecimal.hashCode());
+		result = prime * result + ((bigInteger == null) ? 0 : bigInteger.hashCode());
+		result = prime * result + ((bigDecimal == null) ? 0 : bigDecimal.hashCode());
+		return result;
 	}
 }

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.pojos;
 @javax.persistence.Table(name = "T_BOOK", schema = "MULTI_SCHEMA")
 public class TBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = -181023481;
+	private static final long serialVersionUID = -847749850;
 
 	private java.lang.Integer id;
 	private java.lang.Integer authorId;
@@ -133,5 +133,87 @@ public class TBook implements java.io.Serializable {
 
 	public void setContentPdf(byte[] contentPdf) {
 		this.contentPdf = contentPdf;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final TBook other = (TBook) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
+			return false;
+		if (authorId == null) {
+			if (other.authorId != null)
+				return false;
+		}
+		else if (!authorId.equals(other.authorId))
+			return false;
+		if (coAuthorId == null) {
+			if (other.coAuthorId != null)
+				return false;
+		}
+		else if (!coAuthorId.equals(other.coAuthorId))
+			return false;
+		if (detailsId == null) {
+			if (other.detailsId != null)
+				return false;
+		}
+		else if (!detailsId.equals(other.detailsId))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		}
+		else if (!title.equals(other.title))
+			return false;
+		if (publishedIn == null) {
+			if (other.publishedIn != null)
+				return false;
+		}
+		else if (!publishedIn.equals(other.publishedIn))
+			return false;
+		if (languageId == null) {
+			if (other.languageId != null)
+				return false;
+		}
+		else if (!languageId.equals(other.languageId))
+			return false;
+		if (contentText == null) {
+			if (other.contentText != null)
+				return false;
+		}
+		else if (!contentText.equals(other.contentText))
+			return false;
+		if (contentPdf == null) {
+			if (other.contentPdf != null)
+				return false;
+		}
+		else if (!java.util.Arrays.equals(contentPdf, other.contentPdf))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((authorId == null) ? 0 : authorId.hashCode());
+		result = prime * result + ((coAuthorId == null) ? 0 : coAuthorId.hashCode());
+		result = prime * result + ((detailsId == null) ? 0 : detailsId.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		result = prime * result + ((publishedIn == null) ? 0 : publishedIn.hashCode());
+		result = prime * result + ((languageId == null) ? 0 : languageId.hashCode());
+		result = prime * result + ((contentText == null) ? 0 : contentText.hashCode());
+		result = prime * result + ((contentPdf == null) ? 0 : java.util.Arrays.hashCode(contentPdf));
+		return result;
 	}
 }

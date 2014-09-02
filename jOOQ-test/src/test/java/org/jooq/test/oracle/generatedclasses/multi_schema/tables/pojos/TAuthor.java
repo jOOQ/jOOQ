@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.pojos;
 @javax.persistence.Table(name = "T_AUTHOR", schema = "MULTI_SCHEMA")
 public class TAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = -456865220;
+	private static final long serialVersionUID = 1644828223;
 
 	private java.lang.Integer id;
 	private java.lang.String  firstName;
@@ -95,5 +95,66 @@ public class TAuthor implements java.io.Serializable {
 
 	public void setAddress(java.lang.Object address) {
 		this.address = address;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final TAuthor other = (TAuthor) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
+			return false;
+		if (firstName == null) {
+			if (other.firstName != null)
+				return false;
+		}
+		else if (!firstName.equals(other.firstName))
+			return false;
+		if (lastName == null) {
+			if (other.lastName != null)
+				return false;
+		}
+		else if (!lastName.equals(other.lastName))
+			return false;
+		if (dateOfBirth == null) {
+			if (other.dateOfBirth != null)
+				return false;
+		}
+		else if (!dateOfBirth.equals(other.dateOfBirth))
+			return false;
+		if (yearOfBirth == null) {
+			if (other.yearOfBirth != null)
+				return false;
+		}
+		else if (!yearOfBirth.equals(other.yearOfBirth))
+			return false;
+		if (address == null) {
+			if (other.address != null)
+				return false;
+		}
+		else if (!address.equals(other.address))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
+		result = prime * result + ((yearOfBirth == null) ? 0 : yearOfBirth.hashCode());
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		return result;
 	}
 }

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_TEMP", schema = "TEST")
 public class TTemp implements java.io.Serializable {
 
-	private static final long serialVersionUID = -254095965;
+	private static final long serialVersionUID = 1682399066;
 
 	private java.lang.Integer id;
 
@@ -32,5 +32,31 @@ public class TTemp implements java.io.Serializable {
 
 	public void setId(java.lang.Integer id) {
 		this.id = id;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final TTemp other = (TTemp) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 }

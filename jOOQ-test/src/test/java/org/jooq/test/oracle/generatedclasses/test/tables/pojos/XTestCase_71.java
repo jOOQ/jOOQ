@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "X_TEST_CASE_71", schema = "TEST")
 public class XTestCase_71 implements java.io.Serializable {
 
-	private static final long serialVersionUID = 430293460;
+	private static final long serialVersionUID = 934702711;
 
 	private java.lang.Integer id;
 	private java.lang.Short   testCase_64_69Id;
@@ -44,5 +44,38 @@ public class XTestCase_71 implements java.io.Serializable {
 
 	public void setTestCase_64_69Id(java.lang.Short testCase_64_69Id) {
 		this.testCase_64_69Id = testCase_64_69Id;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final XTestCase_71 other = (XTestCase_71) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
+			return false;
+		if (testCase_64_69Id == null) {
+			if (other.testCase_64_69Id != null)
+				return false;
+		}
+		else if (!testCase_64_69Id.equals(other.testCase_64_69Id))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((testCase_64_69Id == null) ? 0 : testCase_64_69Id.hashCode());
+		return result;
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UNested_1 implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1554964870;
+	private static final long serialVersionUID = 1715747293;
 
 	private java.lang.Integer                                                         id;
 	private org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord nested;
@@ -38,5 +38,38 @@ public class UNested_1 implements java.io.Serializable {
 
 	public void setNested(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord nested) {
 		this.nested = nested;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final UNested_1 other = (UNested_1) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
+			return false;
+		if (nested == null) {
+			if (other.nested != null)
+				return false;
+		}
+		else if (!nested.equals(other.nested))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((nested == null) ? 0 : nested.hashCode());
+		return result;
 	}
 }

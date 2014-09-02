@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_UNSIGNED", schema = "TEST")
 public class TUnsigned implements java.io.Serializable {
 
-	private static final long serialVersionUID = -677046230;
+	private static final long serialVersionUID = -840645579;
 
 	private org.jooq.types.UByte    uByte;
 	private org.jooq.types.UShort   uShort;
@@ -66,5 +66,52 @@ public class TUnsigned implements java.io.Serializable {
 
 	public void setULong(org.jooq.types.ULong uLong) {
 		this.uLong = uLong;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final TUnsigned other = (TUnsigned) obj;
+		if (uByte == null) {
+			if (other.uByte != null)
+				return false;
+		}
+		else if (!uByte.equals(other.uByte))
+			return false;
+		if (uShort == null) {
+			if (other.uShort != null)
+				return false;
+		}
+		else if (!uShort.equals(other.uShort))
+			return false;
+		if (uInt == null) {
+			if (other.uInt != null)
+				return false;
+		}
+		else if (!uInt.equals(other.uInt))
+			return false;
+		if (uLong == null) {
+			if (other.uLong != null)
+				return false;
+		}
+		else if (!uLong.equals(other.uLong))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((uByte == null) ? 0 : uByte.hashCode());
+		result = prime * result + ((uShort == null) ? 0 : uShort.hashCode());
+		result = prime * result + ((uInt == null) ? 0 : uInt.hashCode());
+		result = prime * result + ((uLong == null) ? 0 : uLong.hashCode());
+		return result;
 	}
 }

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_ARRAYS", schema = "TEST")
 public class TArrays implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1537205820;
+	private static final long serialVersionUID = -477843387;
 
 	private java.lang.Integer                                                             id;
 	private org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord     stringArray;
@@ -80,5 +80,59 @@ public class TArrays implements java.io.Serializable {
 
 	public void setDateArray(org.jooq.test.oracle.generatedclasses.test.udt.records.UDateArrayRecord dateArray) {
 		this.dateArray = dateArray;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final TArrays other = (TArrays) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
+			return false;
+		if (stringArray == null) {
+			if (other.stringArray != null)
+				return false;
+		}
+		else if (!stringArray.equals(other.stringArray))
+			return false;
+		if (numberArray == null) {
+			if (other.numberArray != null)
+				return false;
+		}
+		else if (!numberArray.equals(other.numberArray))
+			return false;
+		if (numberLongArray == null) {
+			if (other.numberLongArray != null)
+				return false;
+		}
+		else if (!numberLongArray.equals(other.numberLongArray))
+			return false;
+		if (dateArray == null) {
+			if (other.dateArray != null)
+				return false;
+		}
+		else if (!dateArray.equals(other.dateArray))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((stringArray == null) ? 0 : stringArray.hashCode());
+		result = prime * result + ((numberArray == null) ? 0 : numberArray.hashCode());
+		result = prime * result + ((numberLongArray == null) ? 0 : numberLongArray.hashCode());
+		result = prime * result + ((dateArray == null) ? 0 : dateArray.hashCode());
+		return result;
 	}
 }

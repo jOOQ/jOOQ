@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_BOOLEANS", schema = "TEST")
 public class TBooleans implements java.io.Serializable {
 
-	private static final long serialVersionUID = 2096164488;
+	private static final long serialVersionUID = -1971138319;
 
 	private java.lang.Integer                              id;
 	private org.jooq.test.all.converters.Boolean_10        oneZero;
@@ -152,5 +152,101 @@ public class TBooleans implements java.io.Serializable {
 
 	public void setNBoolean(java.lang.Boolean nBoolean) {
 		this.nBoolean = nBoolean;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final TBooleans other = (TBooleans) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
+			return false;
+		if (oneZero == null) {
+			if (other.oneZero != null)
+				return false;
+		}
+		else if (!oneZero.equals(other.oneZero))
+			return false;
+		if (trueFalseLc == null) {
+			if (other.trueFalseLc != null)
+				return false;
+		}
+		else if (!trueFalseLc.equals(other.trueFalseLc))
+			return false;
+		if (trueFalseUc == null) {
+			if (other.trueFalseUc != null)
+				return false;
+		}
+		else if (!trueFalseUc.equals(other.trueFalseUc))
+			return false;
+		if (yesNoLc == null) {
+			if (other.yesNoLc != null)
+				return false;
+		}
+		else if (!yesNoLc.equals(other.yesNoLc))
+			return false;
+		if (yesNoUc == null) {
+			if (other.yesNoUc != null)
+				return false;
+		}
+		else if (!yesNoUc.equals(other.yesNoUc))
+			return false;
+		if (yNLc == null) {
+			if (other.yNLc != null)
+				return false;
+		}
+		else if (!yNLc.equals(other.yNLc))
+			return false;
+		if (yNUc == null) {
+			if (other.yNUc != null)
+				return false;
+		}
+		else if (!yNUc.equals(other.yNUc))
+			return false;
+		if (vcBoolean == null) {
+			if (other.vcBoolean != null)
+				return false;
+		}
+		else if (!vcBoolean.equals(other.vcBoolean))
+			return false;
+		if (cBoolean == null) {
+			if (other.cBoolean != null)
+				return false;
+		}
+		else if (!cBoolean.equals(other.cBoolean))
+			return false;
+		if (nBoolean == null) {
+			if (other.nBoolean != null)
+				return false;
+		}
+		else if (!nBoolean.equals(other.nBoolean))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((oneZero == null) ? 0 : oneZero.hashCode());
+		result = prime * result + ((trueFalseLc == null) ? 0 : trueFalseLc.hashCode());
+		result = prime * result + ((trueFalseUc == null) ? 0 : trueFalseUc.hashCode());
+		result = prime * result + ((yesNoLc == null) ? 0 : yesNoLc.hashCode());
+		result = prime * result + ((yesNoUc == null) ? 0 : yesNoUc.hashCode());
+		result = prime * result + ((yNLc == null) ? 0 : yNLc.hashCode());
+		result = prime * result + ((yNUc == null) ? 0 : yNUc.hashCode());
+		result = prime * result + ((vcBoolean == null) ? 0 : vcBoolean.hashCode());
+		result = prime * result + ((cBoolean == null) ? 0 : cBoolean.hashCode());
+		result = prime * result + ((nBoolean == null) ? 0 : nBoolean.hashCode());
+		return result;
 	}
 }

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "V_LIBRARY", schema = "TEST")
 public class VLibrary implements java.io.Serializable {
 
-	private static final long serialVersionUID = -544057477;
+	private static final long serialVersionUID = -417895758;
 
 	private java.lang.String author;
 	private java.lang.String title;
@@ -45,5 +45,38 @@ public class VLibrary implements java.io.Serializable {
 
 	public void setTitle(java.lang.String title) {
 		this.title = title;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final VLibrary other = (VLibrary) obj;
+		if (author == null) {
+			if (other.author != null)
+				return false;
+		}
+		else if (!author.equals(other.author))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		}
+		else if (!title.equals(other.title))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((author == null) ? 0 : author.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		return result;
 	}
 }

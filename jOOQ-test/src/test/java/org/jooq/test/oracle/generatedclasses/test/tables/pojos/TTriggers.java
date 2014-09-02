@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_TRIGGERS", schema = "TEST")
 public class TTriggers implements java.io.Serializable {
 
-	private static final long serialVersionUID = -17200148;
+	private static final long serialVersionUID = -635996585;
 
 	private java.lang.Integer idGenerated;
 	private java.lang.Integer id;
@@ -58,5 +58,45 @@ public class TTriggers implements java.io.Serializable {
 
 	public void setCounter(java.lang.Integer counter) {
 		this.counter = counter;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final TTriggers other = (TTriggers) obj;
+		if (idGenerated == null) {
+			if (other.idGenerated != null)
+				return false;
+		}
+		else if (!idGenerated.equals(other.idGenerated))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
+			return false;
+		if (counter == null) {
+			if (other.counter != null)
+				return false;
+		}
+		else if (!counter.equals(other.counter))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idGenerated == null) ? 0 : idGenerated.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((counter == null) ? 0 : counter.hashCode());
+		return result;
 	}
 }

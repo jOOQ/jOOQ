@@ -57,6 +57,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            useSchemaVersionProvider       = false;
     boolean                            generateRecords                = true;
     boolean                            generatePojos                  = false;
+    boolean                            generatePojosEqualsAndHashCode = false;
     boolean                            generateImmutablePojos         = false;
     boolean                            generateInterfaces             = false;
     boolean                            generateDaos                   = false;
@@ -64,7 +65,6 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateValidationAnnotations  = false;
     boolean                            generateGlobalObjectReferences = true;
     boolean                            fluentSetters                  = false;
-    boolean                            generateEqualsAndHashCode      = false;
 
     protected GeneratorStrategyWrapper strategy;
 
@@ -228,13 +228,13 @@ abstract class AbstractGenerator implements Generator {
     }
 
     @Override
-    public boolean generateEqualsAndHashCode() {
-        return generateEqualsAndHashCode;
+    public boolean generatePojosEqualsAndHashCode() {
+        return generatePojosEqualsAndHashCode;
     }
 
     @Override
-    public void setGenerateEqualsAndHashCode(boolean generateEqualsAndHashCode) {
-        this.generateEqualsAndHashCode = generateEqualsAndHashCode;
+    public void setGeneratePojosEqualsAndHashCode(boolean generatePojosEqualsAndHashCode) {
+        this.generatePojosEqualsAndHashCode = generatePojosEqualsAndHashCode;
     }
 
     // ----

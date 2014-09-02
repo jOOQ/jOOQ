@@ -1895,7 +1895,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         // equals
-        if (generateEqualsAndHashCode()) {
+        if (generatePojosEqualsAndHashCode()) {
             out.println();
             out.tab(1).println("@Override");
             out.tab(1).println("public boolean equals(Object obj) {");
@@ -1918,7 +1918,8 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (getJavaType(column.getType()).endsWith("[]")) {
                     out.tab(2).println("else if (!java.util.Arrays.equals(%s, other.%s))", columnMember, columnMember);
-                } else {
+                }
+                else {
                     out.tab(2).println("else if (!%s.equals(other.%s))", columnMember, columnMember);
                 }
 
@@ -1930,7 +1931,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         // hashCode
-        if (generateEqualsAndHashCode()) {
+        if (generatePojosEqualsAndHashCode()) {
             out.println();
             out.tab(1).println("@Override");
             out.tab(1).println("public int hashCode() {");
@@ -1940,8 +1941,12 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
-                out.tab(2).println("result = prime * result + ((%s == null) ? 0 : %s.hashCode());",
-                    columnMember, columnMember);
+                if (getJavaType(column.getType()).endsWith("[]")) {
+                    out.tab(2).println("result = prime * result + ((%s == null) ? 0 : java.util.Arrays.hashCode(%s));", columnMember, columnMember);
+                }
+                else {
+                    out.tab(2).println("result = prime * result + ((%s == null) ? 0 : %s.hashCode());", columnMember, columnMember);
+                }
             }
 
             out.tab(2).println("return result;");

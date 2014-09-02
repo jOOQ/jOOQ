@@ -203,14 +203,14 @@ public interface Generator {
     void setFluentSetters(boolean fluentSetters);
 
     /**
-     * Whether equals and hashCode methods should be generated
+     * Whether equals and hashCode methods should be generated on POJOs
      */
-    boolean generateEqualsAndHashCode();
+    boolean generatePojosEqualsAndHashCode();
 
     /**
-     * Whether equals and hashCode methods should be generated
+     * Whether equals and hashCode methods should be generated on POJOs
      */
-    void setGenerateEqualsAndHashCode(boolean generateEqualsAndHashCode);
+    void setGeneratePojosEqualsAndHashCode(boolean generatePojosEqualsAndHashCode);
 
     /**
      * The target directory

@@ -56,7 +56,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -1909,16 +1908,20 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.tab(2).println("final %s other = (%s) obj;", className, className);
 
-            Iterator<?> iterator = getTypedElements(tableOrUDT).iterator();
-            while (iterator.hasNext()) {
-                TypedElementDefinition<?> column = (TypedElementDefinition<?>) iterator.next();
+            for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
                 out.tab(2).println("if (%s == null) {", columnMember);
                 out.tab(3).println("if (other.%s != null)", columnMember);
                 out.tab(4).println("return false;");
                 out.tab(2).println("}");
-                out.tab(2).println("else if (!%s.equals(other.%s))", columnMember, columnMember);
+
+                if (getJavaType(column.getType()).endsWith("[]")) {
+                    out.tab(2).println("else if (!java.util.Arrays.equals(%s, other.%s))", columnMember, columnMember);
+                } else {
+                    out.tab(2).println("else if (!%s.equals(other.%s))", columnMember, columnMember);
+                }
+
                 out.tab(3).println("return false;");
             }
 
@@ -1934,9 +1937,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(2).println("final int prime = 31;");
             out.tab(2).println("int result = 1;");
 
-            Iterator<?> iterator = getTypedElements(tableOrUDT).iterator();
-            while (iterator.hasNext()) {
-                TypedElementDefinition<?> column = (TypedElementDefinition<?>) iterator.next();
+            for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
                 out.tab(2).println("result = prime * result + ((%s == null) ? 0 : %s.hashCode());",

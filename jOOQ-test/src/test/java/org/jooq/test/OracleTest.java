@@ -113,7 +113,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -159,6 +161,7 @@ import org.jooq.test.oracle.generatedclasses.test.packages.Library;
 import org.jooq.test.oracle.generatedclasses.test.packages.TestSynonymPackage;
 import org.jooq.test.oracle.generatedclasses.test.routines.PNested;
 import org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete;
+import org.jooq.test.oracle.generatedclasses.test.tables.pojos.TAuthor;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord;
@@ -1845,6 +1848,29 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals(asList(4, 5, 6), asList(record.value12().into(Integer[].class)));
         assertEquals(asList(7, 8, 9), asList(record.value13().into(Integer[].class)));
         assertEquals(asList(7, 8, 9), asList(record.value14().into(Integer[].class)));
+    }
+
+    @Test
+    public void testOraclePojosEqualsAndHashCode() {
+        Set<TAuthor> set = new LinkedHashSet<>();
+
+        for (int i = 0; i < 3; i++)
+            set.add(new TAuthor());
+
+        assertEquals(1, set.size());
+
+
+        for (int i = 0; i < 3; i++)
+            set.add(
+                new TAuthor(1, "a", "a", null, 1,
+                    new org.jooq.test.oracle.generatedclasses.test.udt.pojos.UAddressType(
+                        new org.jooq.test.oracle.generatedclasses.test.udt.pojos.UStreetType("street", "no", new UNumberArrayRecord(1, 2, 3), new byte[0], "x"),
+                        "zip", "city", "country", Date.valueOf("2000-01-01"), null, null, null
+                    )
+                )
+            );
+
+        assertEquals(2, set.size());
     }
 }
 

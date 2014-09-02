@@ -203,6 +203,16 @@ public interface Generator {
     void setFluentSetters(boolean fluentSetters);
 
     /**
+     * Whether equals and hashCode methods should be generated on POJOs
+     */
+    boolean generatePojosEqualsAndHashCode();
+
+    /**
+     * Whether equals and hashCode methods should be generated on POJOs
+     */
+    void setGeneratePojosEqualsAndHashCode(boolean generatePojosEqualsAndHashCode);
+
+    /**
      * The target directory
      */
     String getTargetDirectory();

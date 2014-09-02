@@ -633,6 +633,11 @@
         Generate POJOs for usage of the ResultQuery.fetchInto(Class) API
         -->
       <element name="pojos" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      
+      <!--
+        Generate basic equals() and hashCode() methods in POJOs
+        -->
+      <element name="pojosEqualsAndHashCode" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
 
       <!--
         Generate immutable POJOs for usage of the ResultQuery.fetchInto(Class) API

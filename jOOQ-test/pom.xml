@@ -4466,6 +4466,7 @@
                                             <instanceFields>true</instanceFields>
                                             <generatedAnnotation>false</generatedAnnotation>
                                             <pojos>false</pojos>
+                                            <pojosEqualsAndHashCode>true</pojosEqualsAndHashCode>
                                             <daos>true</daos>
                                             <jpaAnnotations>true</jpaAnnotations>
                                             <validationAnnotations>true</validationAnnotations>

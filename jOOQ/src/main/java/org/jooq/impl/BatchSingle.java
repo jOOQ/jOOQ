@@ -60,6 +60,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Query;
+import org.jooq.exception.ControlFlowSignal;
 
 /**
  * @author Lukas Eder
@@ -165,6 +166,11 @@ class BatchSingle implements BatchBindStep {
             finally {
                 consumeWarnings(ctx, listener);
             }
+        }
+
+        // [#3427] ControlFlowSignals must not be passed on to ExecuteListners
+        catch (ControlFlowSignal e) {
+            throw e;
         }
         catch (RuntimeException e) {
             ctx.exception(e);

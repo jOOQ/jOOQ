@@ -84,6 +84,7 @@ import org.jooq.Routine;
 import org.jooq.Schema;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
+import org.jooq.exception.ControlFlowSignal;
 import org.jooq.tools.Convert;
 
 /**
@@ -307,6 +308,11 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
             fetchOutParameters(ctx);
             return 0;
+        }
+
+        // [#3427] ControlFlowSignals must not be passed on to ExecuteListners
+        catch (ControlFlowSignal e) {
+            throw e;
         }
         catch (RuntimeException e) {
             ctx.exception(e);

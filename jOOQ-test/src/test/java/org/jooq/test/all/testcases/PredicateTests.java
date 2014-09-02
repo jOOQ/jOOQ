@@ -73,12 +73,14 @@ import static org.junit.Assert.assertNull;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Condition;
+import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.Record;
@@ -91,6 +93,7 @@ import org.jooq.SQLDialect;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
+import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -407,6 +410,36 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .from(TBook())
             .where(TBook_ID().notIn(list))
             .fetchOne(count));
+    }
+
+    public void testLargeINConditionWithExecuteListener() throws Exception {
+
+        NoControlFlowSignals listener = new NoControlFlowSignals();
+
+        // [#3427] Internally, jOOQ uses org.jooq.exception.ControlFlowSignal to abort rendering of bind values
+        // This "exception" must not escape to client ExecuteListeners
+        assertEquals(3, (int) create(listener).select(count())
+            .from(TBook())
+            .where(TBook_ID().notIn(Collections.nCopies(2500, 1)))
+            .fetchOne(count()));
+
+        assertNull(listener.e1);
+        assertNull(listener.e2);
+    }
+
+    @SuppressWarnings("serial")
+    static class NoControlFlowSignals extends DefaultExecuteListener {
+
+        RuntimeException e1;
+        SQLException e2;
+
+        @Override
+        public void exception(ExecuteContext ctx) {
+            super.exception(ctx);
+
+            e1 = ctx.exception();
+            e2 = ctx.sqlException();
+        }
     }
 
     public void testConditionalSelect() throws Exception {

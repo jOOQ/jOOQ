@@ -47,10 +47,12 @@ import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.tools.reflect.Reflect.on;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import org.jooq.Batch;
@@ -390,6 +392,39 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         int[] result = batch.execute();
         assertEquals(5, result.length);
         assertEquals(1, create().selectFrom(TBookToBookStore()).fetch().size());
+    }
+
+    public void testBatchDeleteWithExecuteListener() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        // [#3427] Internally, jOOQ uses org.jooq.exception.ControlFlowSignal to abort rendering of bind values
+        // This "exception" must not escape to client ExecuteListeners
+        NoControlFlowSignals listener = new NoControlFlowSignals();
+
+        Result<B2S> books = create().selectFrom(TBookToBookStore()).where(TBookToBookStore_BOOK_ID().in(1, 3, 4)).fetch();
+        Batch batch = create(listener).batchDelete(books);
+        assertEquals(5, batch.size());
+
+        int[] result = batch.execute();
+        assertEquals(5, result.length);
+        assertEquals(1, create().selectFrom(TBookToBookStore()).fetch().size());
+        assertNull(listener.e1);
+        assertNull(listener.e2);
+    }
+
+    @SuppressWarnings("serial")
+    static class NoControlFlowSignals extends DefaultExecuteListener {
+
+        RuntimeException e1;
+        SQLException e2;
+
+        @Override
+        public void exception(ExecuteContext ctx) {
+            super.exception(ctx);
+
+            e1 = ctx.exception();
+            e2 = ctx.sqlException();
+        }
     }
 
     private void testBatchAuthors(String... names) throws Exception {

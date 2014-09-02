@@ -98,7 +98,7 @@
 			    <resources>          
 				<resource>
 				    <directory>${project.basedir}/src/main/scala</directory>
-				    <filtering>false</filtering>
+				    <filtering>true</filtering>
 				</resource>
 			    </resources>              
 			</configuration>            

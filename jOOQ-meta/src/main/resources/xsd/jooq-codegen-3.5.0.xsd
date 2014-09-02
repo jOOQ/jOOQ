@@ -688,6 +688,11 @@
         useful to those users who do not depend on EL, JSP, JSF, etc.
         -->
       <element name="fluentSetters" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      
+      <!--
+        Generate basic equals() and hashCode() methods in POJOs
+        -->
+      <element name="generateEqualsAndHashCode" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
     </all>
   </complexType>
 

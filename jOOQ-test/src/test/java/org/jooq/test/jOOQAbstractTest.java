@@ -1740,6 +1740,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testLargeINConditionWithExecuteListener() throws Exception {
+        new PredicateTests(this).testLargeINConditionWithExecuteListener();
+    }
+
+    @Test
     public void testSubSelect() throws Exception {
         new SelectTests(this).testSubSelect();
     }
@@ -2907,6 +2912,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testBatchDelete() throws Exception {
         new BatchTests(this).testBatchDelete();
+    }
+
+    @Test
+    public void testBatchDeleteWithExecuteListener() throws Exception {
+        new BatchTests(this).testBatchDeleteWithExecuteListener();
     }
 
     @Test

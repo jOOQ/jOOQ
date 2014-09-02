@@ -44,6 +44,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER2012;
@@ -59,12 +60,12 @@ public interface AlterSequenceRestartStep<T extends Number> {
     /**
      * Restart the sequence at its initial value.
      */
-    @Support({ DB2, HSQLDB, POSTGRES, SQLSERVER2012 })
+    @Support({ DB2, HSQLDB, INFORMIX, POSTGRES, SQLSERVER2012 })
     AlterSequenceFinalStep restart();
 
     /**
      * Restart the sequence at a given value.
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
     AlterSequenceFinalStep restartWith(T value);
 }

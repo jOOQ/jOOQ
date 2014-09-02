@@ -41,6 +41,7 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.ORACLE;
 
 import java.util.Collection;
@@ -445,7 +446,7 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * clause, to indicate that the hierarchical ordering should be preserved
      * and elements of each hierarchy should be ordered among themselves.
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     SelectLimitStep<R> orderSiblingsBy(Field<?>... fields);
 
     /**
@@ -455,7 +456,7 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * clause, to indicate that the hierarchical ordering should be preserved
      * and elements of each hierarchy should be ordered among themselves.
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     SelectLimitStep<R> orderSiblingsBy(SortField<?>... fields);
 
     /**
@@ -465,7 +466,7 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * clause, to indicate that the hierarchical ordering should be preserved
      * and elements of each hierarchy should be ordered among themselves.
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     SelectLimitStep<R> orderSiblingsBy(Collection<? extends SortField<?>> fields);
 
     /**
@@ -481,6 +482,6 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * <code>orderBy(DSL.literal(1).desc())</code> to apply descending
      * ordering
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     SelectLimitStep<R> orderSiblingsBy(int... fieldIndexes);
 }

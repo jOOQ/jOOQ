@@ -180,10 +180,6 @@ class DSLContext extends Generators {
                  */
                 «generatedMethod»
                 @Support
-                @Transition(
-                    name = "SELECT",
-                    args = "Field+"
-                )
                 <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«Field_TN_fieldn(degree)»);
             ''');
             
@@ -223,10 +219,6 @@ class DSLContext extends Generators {
                  */
                 «generatedMethod»
                 @Support
-                @Transition(
-                    name = "SELECT",
-                    args = "Field+"
-                )
                 public static <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«Field_TN_fieldn(degree)») {
                     return (SelectSelectStep) select(new Field[] { «fieldn(degree)» });
                 }
@@ -289,10 +281,6 @@ class DSLContext extends Generators {
                  */
                 «generatedMethod»
                 @Support
-                @Transition(
-                    name = "SELECT DISTINCT",
-                    args = "Field+"
-                )
                 <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«Field_TN_fieldn(degree)»);
             ''');
             
@@ -332,10 +320,6 @@ class DSLContext extends Generators {
                  */
                 «generatedMethod»
                 @Support
-                @Transition(
-                    name = "SELECT DISTINCT",
-                    args = "Field+"
-                )
                 public static <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«Field_TN_fieldn(degree)») {
                     return (SelectSelectStep) selectDistinct(new Field[] { «fieldn(degree)» });
                 }
@@ -458,7 +442,7 @@ class DSLContext extends Generators {
                  * </table>
                  */
                 «generatedMethod»
-                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, H2, HSQLDB, INFORMIX, ORACLE, SQLSERVER, SYBASE })
                 <R extends Record, «TN(degree)»> MergeKeyStep«degree»<R, «TN(degree)»> mergeInto(Table<R> table, «Field_TN_fieldn(degree)»);
             ''');
             
@@ -491,7 +475,7 @@ class DSLContext extends Generators {
                  * @see DSLContext#mergeInto(Table, «(1..degree).map[e | "Field"].join(", ")»)
                  */
                 «generatedMethod»
-                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, H2, HSQLDB, INFORMIX, ORACLE, SQLSERVER, SYBASE })
                 public static <R extends Record, «TN(degree)»> MergeKeyStep«degree»<R, «TN(degree)»> mergeInto(Table<R> table, «Field_TN_fieldn(degree)») {
                 	return using(new DefaultConfiguration()).mergeInto(table, «fieldn(degree)»);
                 }

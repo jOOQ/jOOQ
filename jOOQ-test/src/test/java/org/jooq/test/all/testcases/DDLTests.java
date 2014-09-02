@@ -111,14 +111,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
         finally {
             create().dropView(tableByName("v1")).execute();
-
-            if (asList(INFORMIX).contains(dialect().family())) {
-                create().dropView(tableByName("v2")).execute();
-            }
-            else {
-                create().dropViewIfExists(tableByName("v2")).execute();
-                create().dropViewIfExists(tableByName("v2")).execute();
-            }
+            create().dropViewIfExists(tableByName("v2")).execute();
+            create().dropViewIfExists(tableByName("v2")).execute();
 
             assertThrows(DataAccessException.class, () -> {
                 create().fetch("select * from {0}", name("v1"));
@@ -165,8 +159,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testDropIndexIfExists() throws Exception {
-        assumeFamilyNotIn(INFORMIX);
-
         try {
             // TODO: Re-use jOOQ API for this
             create().execute("create table {0} ({1} int, {2} int)", name("t"), name("a"), name("b"));
@@ -206,8 +198,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testDropSequenceIfExists() throws Exception {
-        assumeFamilyNotIn(INFORMIX);
-
         assumeNotNull(SAuthorID());
 
         create().dropSequenceIfExists(SAuthorID()).execute();

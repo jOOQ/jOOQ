@@ -41,6 +41,7 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SYBASE;
 
@@ -67,14 +68,14 @@ public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
      * Add an <code>IGNORE NULLS</code> clause to the window function. This
      * might not be supported by all dialects.
      */
-    @Support({ DB2, ORACLE, SYBASE })
+    @Support({ DB2, INFORMIX, ORACLE, SYBASE })
     WindowOverStep<T> ignoreNulls();
 
     /**
      * Add a <code>RESPECT NULLS</code> clause to the window function. This
      * might not be supported by all dialects.
      */
-    @Support({ DB2, ORACLE, SYBASE })
+    @Support({ DB2, INFORMIX, ORACLE, SYBASE })
     WindowOverStep<T> respectNulls();
     /* [/pro] */
 }

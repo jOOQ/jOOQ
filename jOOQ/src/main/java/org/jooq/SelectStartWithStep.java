@@ -41,6 +41,7 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.ORACLE;
 
 import org.jooq.impl.DSL;
@@ -93,14 +94,14 @@ public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep
      * Add an Oracle-specific <code>START WITH</code> clause to the query's
      * <code>CONNECT BY</code> clause.
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     SelectGroupByStep<R> startWith(Condition condition);
 
     /**
      * Add an Oracle-specific <code>START WITH</code> clause to the query's
      * <code>CONNECT BY</code> clause.
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     SelectGroupByStep<R> startWith(Field<Boolean> condition);
 
     /**
@@ -114,7 +115,7 @@ public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep
      *
      * @see DSL#condition(String)
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     SelectGroupByStep<R> startWith(String sql);
 
     /**
@@ -128,7 +129,7 @@ public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep
      *
      * @see DSL#condition(String, Object...)
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     SelectGroupByStep<R> startWith(String sql, Object... bindings);
 
     /**
@@ -142,6 +143,6 @@ public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep
      *
      * @see DSL#condition(String, QueryPart...)
      */
-    @Support({ CUBRID, ORACLE })
+    @Support({ CUBRID, INFORMIX, ORACLE })
     SelectGroupByStep<R> startWith(String sql, QueryPart... parts);
 }

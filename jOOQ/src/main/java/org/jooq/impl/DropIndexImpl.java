@@ -48,7 +48,6 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.DSL.name;
@@ -92,7 +91,7 @@ class DropIndexImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, INFORMIX, ORACLE, SQLSERVER).contains(ctx.family());
+        return !asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, ORACLE, SQLSERVER).contains(ctx.family());
     }
 
     @Override

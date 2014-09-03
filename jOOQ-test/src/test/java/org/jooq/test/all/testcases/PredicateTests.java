@@ -60,10 +60,12 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.sum;
 import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.DSL.two;
 import static org.jooq.impl.DSL.upper;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.zero;
@@ -548,6 +550,34 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .from(TBook())
             .where(val(2).in(TBook_ID(), TBook_AUTHOR_ID()))
             .orderBy(TBook_ID()).fetch(TBook_ID()));
+    }
+
+    public void testInPredicateWithResult() throws Exception {
+        Result<Record1<Integer>> r1 = create()
+            .select(one())
+            .union(
+             select(two()))
+            .fetch();
+
+        assertEquals(2, create()
+            .selectFrom(TBook())
+            .where(TBook_ID().in(r1))
+            .fetch()
+            .size()
+        );
+
+        Result<Record2<Integer, Integer>> r2 = create()
+            .select(one(), one())
+            .union(
+             select(two(), one()))
+            .fetch();
+
+        assertEquals(2, create()
+            .selectFrom(TBook())
+            .where(row(TBook_ID(), TBook_AUTHOR_ID()).in(r2))
+            .fetch()
+            .size()
+        );
     }
 
     public void testInPredicateWithPlainSQL() throws Exception {

@@ -1431,6 +1431,14 @@ public interface Field<T> extends GroupField {
     Condition in(Collection<?> values);
 
     /**
+     * Create a condition to check this field against several values from a
+     * previous query.
+     * <p>
+     * SQL: <code>this in (values...)</code>
+     */
+    Condition in(Result<? extends Record1<T>> result);
+
+    /**
      * Create a condition to check this field against several values.
      * <p>
      * SQL: <code>this in (values...)</code>
@@ -1469,6 +1477,18 @@ public interface Field<T> extends GroupField {
      */
     @Support
     Condition notIn(Collection<?> values);
+
+    /**
+     * Create a condition to check this field against several values from a
+     * previous query.
+     * <p>
+     * Note that if any of the passed values is <code>NULL</code>, then the
+     * condition will be <code>NULL</code> (or <code>false</code>, depending on
+     * the dialect) as well. This is standard SQL behaviour.
+     * <p>
+     * SQL: <code>this in (values...)</code>
+     */
+    Condition notIn(Result<? extends Record1<T>> result);
 
     /**
      * Create a condition to check this field against several values.

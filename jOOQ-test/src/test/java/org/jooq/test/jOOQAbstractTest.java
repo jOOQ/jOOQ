@@ -1630,6 +1630,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testInPredicateWithResult() throws Exception {
+        new PredicateTests(this).testInPredicateWithResult();
+    }
+
+    @Test
     public void testInPredicateWithPlainSQL() throws Exception {
         new PredicateTests(this).testInPredicateWithPlainSQL();
     }

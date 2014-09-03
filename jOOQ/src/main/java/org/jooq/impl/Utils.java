@@ -370,6 +370,18 @@ final class Utils {
     // XXX: Record constructors and related methods
     // ------------------------------------------------------------------------
 
+    /**
+     * Turn a {@link Result} into a list of {@link Row}
+     */
+    static final List<Row> rows(Result<?> result) {
+        List<Row> rows = new ArrayList<Row>();
+
+        for (Record record : result)
+            rows.add(record.valuesRow());
+
+        return rows;
+    }
+
     /* [pro] */
     /**
      * Create a new Oracle-style VARRAY {@link ArrayRecord}

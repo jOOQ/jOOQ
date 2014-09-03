@@ -90,6 +90,7 @@ import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Record1;
+import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
@@ -810,6 +811,11 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    public final Condition in(Result<? extends Record1<T>> result) {
+        return in(result.getValues(0, getType()));
+    }
+
+    @Override
     public final Condition in(Select<? extends Record1<T>> query) {
         return compare(IN, query);
     }
@@ -843,6 +849,11 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         }
 
         return notIn(fields.toArray(new Field<?>[0]));
+    }
+
+    @Override
+    public final Condition notIn(Result<? extends Record1<T>> result) {
+        return notIn(result.getValues(0, getType()));
     }
 
     @Override

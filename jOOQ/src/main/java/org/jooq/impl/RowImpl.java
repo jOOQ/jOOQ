@@ -126,6 +126,7 @@ import org.jooq.Row19;
 import org.jooq.Row20;
 import org.jooq.Row21;
 import org.jooq.Row22;
+import org.jooq.Result;
 import org.jooq.Select;
 
 /**
@@ -9945,8 +9946,20 @@ implements
     }
 
     @Override
+    public final Condition in(Result result) {
+        QueryPartList<Row> list = new QueryPartList<Row>(Utils.rows(result));
+        return new RowInCondition(this, list, Comparator.IN);
+    }
+
+    @Override
     public final Condition notIn(Collection rows) {
         QueryPartList<Row> list = new QueryPartList<Row>(rows);
+        return new RowInCondition(this, list, Comparator.NOT_IN);
+    }
+
+    @Override
+    public final Condition notIn(Result result) {
+        QueryPartList<Row> list = new QueryPartList<Row>(Utils.rows(result));
         return new RowInCondition(this, list, Comparator.NOT_IN);
     }
 

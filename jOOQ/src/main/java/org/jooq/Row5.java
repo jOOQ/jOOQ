@@ -66,7 +66,7 @@ import javax.annotation.Generated;
  * A model type for a row value expression with degree <code>5</code>.
  * <p>
  * Note: Not all databases support row value expressions, but many row value
- * expression operations can be simulated on all databases. See relevant row
+ * expression operations can be emulated on all databases. See relevant row
  * value expression method Javadocs for details.
  *
  * @author Lukas Eder
@@ -217,7 +217,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * Compare this row value expression with another row value expression for
      * equality.
      * <p>
-     * Row equality comparison predicates can be simulated in those databases
+     * Row equality comparison predicates can be emulated in those databases
      * that do not support such predicates natively:
      * <code>(A, B) = (1, 2)</code> is equivalent to
      * <code>A = 1 AND B = 2</code>
@@ -332,7 +332,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * Compare this row value expression with another row value expression for
      * non-equality.
      * <p>
-     * Row non-equality comparison predicates can be simulated in those
+     * Row non-equality comparison predicates can be emulated in those
      * databases that do not support such predicates natively:
      * <code>(A, B) <> (1, 2)</code> is equivalent to
      * <code>NOT(A = 1 AND B = 2)</code>
@@ -451,7 +451,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * Compare this row value expression with another row value expression for
      * order.
      * <p>
-     * Row order comparison predicates can be simulated in those
+     * Row order comparison predicates can be emulated in those
      * databases that do not support such predicates natively:
      * <code>(A, B, C) < (1, 2, 3)</code> is equivalent to
      * <code>A < 1 OR (A = 1 AND B < 2) OR (A = 1 AND B = 2 AND C < 3)</code>
@@ -566,7 +566,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * Compare this row value expression with another row value expression for
      * order.
      * <p>
-     * Row order comparison predicates can be simulated in those
+     * Row order comparison predicates can be emulated in those
      * databases that do not support such predicates natively:
      * <code>(A, B) <= (1, 2)</code> is equivalent to
      * <code>A < 1 OR (A = 1 AND B < 2) OR (A = 1 AND B = 2)</code>
@@ -681,7 +681,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * Compare this row value expression with another row value expression for
      * order.
      * <p>
-     * Row order comparison predicates can be simulated in those
+     * Row order comparison predicates can be emulated in those
      * databases that do not support such predicates natively:
      * <code>(A, B, C) > (1, 2, 3)</code> is equivalent to
      * <code>A > 1 OR (A = 1 AND B > 2) OR (A = 1 AND B = 2 AND C > 3)</code>
@@ -796,7 +796,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * Compare this row value expression with another row value expression for
      * order.
      * <p>
-     * Row order comparison predicates can be simulated in those
+     * Row order comparison predicates can be emulated in those
      * databases that do not support such predicates natively:
      * <code>(A, B) >= (1, 2)</code> is equivalent to
      * <code>A > 1 OR (A = 1 AND B > 2) OR (A = 1 AND B = 2)</code>
@@ -1172,13 +1172,25 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * Compare this row value expression with a set of row value expressions for
      * equality.
      * <p>
-     * Row IN predicates can be simulated in those databases that do not support
+     * Row IN predicates can be emulated in those databases that do not support
      * such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code> is
      * equivalent to <code>((A, B) = (1, 2)) OR ((A, B) = (3, 4))</code>, which
      * is equivalent to <code>(A = 1 AND B = 2) OR (A = 3 AND B = 4)</code>
      */
     @Support
     Condition in(Collection<? extends Row5<T1, T2, T3, T4, T5>> rows);
+
+    /**
+     * Compare this row value expression with a set of records for
+     * equality.
+     * <p>
+     * Row IN predicates can be emulated in those databases that do not support
+     * such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code> is
+     * equivalent to <code>((A, B) = (1, 2)) OR ((A, B) = (3, 4))</code>, which
+     * is equivalent to <code>(A = 1 AND B = 2) OR (A = 3 AND B = 4)</code>
+     */
+    @Support
+    Condition in(Result<? extends Record5<T1, T2, T3, T4, T5>> result);
 
     /**
      * Compare this row value expression with a set of row value expressions for
@@ -1209,7 +1221,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      * Compare this row value expression with a set of row value expressions for
      * equality.
      * <p>
-     * Row NOT IN predicates can be simulated in those databases that do not
+     * Row NOT IN predicates can be emulated in those databases that do not
      * support such predicates natively:
      * <code>(A, B) NOT IN ((1, 2), (3, 4))</code> is equivalent to
      * <code>NOT(((A, B) = (1, 2)) OR ((A, B) = (3, 4)))</code>, which is
@@ -1217,6 +1229,19 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      */
     @Support
     Condition notIn(Collection<? extends Row5<T1, T2, T3, T4, T5>> rows);
+
+    /**
+     * Compare this row value expression with a set of records for
+     * equality.
+     * <p>
+     * Row NOT IN predicates can be emulated in those databases that do not
+     * support such predicates natively:
+     * <code>(A, B) NOT IN ((1, 2), (3, 4))</code> is equivalent to
+     * <code>NOT(((A, B) = (1, 2)) OR ((A, B) = (3, 4)))</code>, which is
+     * equivalent to <code>NOT((A = 1 AND B = 2) OR (A = 3 AND B = 4))</code>
+     */
+    @Support
+    Condition notIn(Result<? extends Record5<T1, T2, T3, T4, T5>> result);
 
     /**
      * Compare this row value expression with a set of row value expressions for

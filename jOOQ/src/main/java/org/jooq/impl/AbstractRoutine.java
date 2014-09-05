@@ -73,6 +73,7 @@ import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.Converter;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.ExecuteContext;
@@ -137,18 +138,27 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     // ------------------------------------------------------------------------
 
     protected AbstractRoutine(String name, Schema schema) {
-        this(name, schema, null, null);
+        this(name, schema, null, null, null);
     }
 
     protected AbstractRoutine(String name, Schema schema, Package pkg) {
-        this(name, schema, pkg, null);
+        this(name, schema, pkg, null, null);
     }
 
     protected AbstractRoutine(String name, Schema schema, DataType<T> type) {
-        this(name, schema, null, type);
+        this(name, schema, null, type, null);
+    }
+
+    protected AbstractRoutine(String name, Schema schema, DataType<?> type, Converter<?, T> converter) {
+        this(name, schema, null, type, converter);
     }
 
     protected AbstractRoutine(String name, Schema schema, Package pkg, DataType<T> type) {
+        this(name, schema, pkg, type, null);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    protected AbstractRoutine(String name, Schema schema, Package pkg, DataType<?> type, Converter<?, T> converter) {
         this.parameterIndexes = new HashMap<Parameter<?>, Integer>();
 
         this.schema = schema;
@@ -161,7 +171,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         this.inValuesDefaulted = new HashSet<Parameter<?>>();
         this.inValuesNonDefaulted = new HashSet<Parameter<?>>();
         this.results = new HashMap<Parameter<?>, Object>();
-        this.type = type;
+        this.type = converter == null
+            ? (DataType<T>) type
+            : type.asConvertedDataType((Converter) converter);
     }
 
     // ------------------------------------------------------------------------
@@ -752,7 +764,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
      * @param type The data type of the field
      */
     protected static final <T> Parameter<T> createParameter(String name, DataType<T> type) {
-        return createParameter(name, type, false);
+        return createParameter(name, type, false, null);
     }
 
     /**
@@ -765,7 +777,20 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
      *            {@link Parameter#isDefaulted()}
      */
     protected static final <T> Parameter<T> createParameter(String name, DataType<T> type, boolean isDefaulted) {
-        return new ParameterImpl<T>(name, type, isDefaulted);
+        return createParameter(name, type, isDefaulted, null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link UDTField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     * @param isDefaulted Whether the parameter is defaulted (see
+     *            {@link Parameter#isDefaulted()}
+     */
+    protected static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, Converter<T, U> converter) {
+        return new ParameterImpl<U>(name, type, isDefaulted, converter);
     }
 
     /**

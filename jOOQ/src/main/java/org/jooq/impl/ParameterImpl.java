@@ -44,6 +44,7 @@ package org.jooq.impl;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Parameter;
 import org.jooq.tools.StringUtils;
@@ -61,10 +62,13 @@ class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
     private final DataType<T> type;
     private final boolean     isDefaulted;
 
-    ParameterImpl(String name, DataType<T> type, boolean isDefaulted) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    ParameterImpl(String name, DataType<?> type, boolean isDefaulted, Converter<?, T> converter) {
         this.name = name;
-        this.type = type;
         this.isDefaulted = isDefaulted;
+        this.type = converter == null
+            ? (DataType<T>) type
+            : type.asConvertedDataType((Converter) converter);
     }
 
     @Override

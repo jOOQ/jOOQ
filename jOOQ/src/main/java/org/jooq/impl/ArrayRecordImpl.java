@@ -54,6 +54,7 @@ import java.util.List;
 import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
+import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Schema;
 
@@ -81,6 +82,8 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
      * Create an empty array record
      *
      * @deprecated - 3.4.0 - [#3126] - Use the
+     *             {@link #ArrayRecordImpl(Schema, String, DataType)}
+     *             constructor instead
      */
     @SuppressWarnings("unused")
     @Deprecated
@@ -90,17 +93,39 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
 
     /**
      * Create an empty array record
+     *
+     * @deprecated - 3.4.0 - [#3126] - Use the
+     *             {@link #ArrayRecordImpl(Schema, String, DataType, Converter)}
+     *             constructor instead.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unused")
+    @Deprecated
+    protected ArrayRecordImpl(Schema schema, String name, DataType<?> type, Configuration configuration, Converter<?, T> converter) {
+        this(schema, name, type, converter);
+    }
+
+    /**
+     * Create an empty array record
+     */
     protected ArrayRecordImpl(Schema schema, String name, DataType<T> type) {
+        this(schema, name, type, (Converter<?, T>) null);
+    }
+
+    /**
+     * Create an empty array record
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    protected ArrayRecordImpl(Schema schema, String name, DataType<?> type, Converter<?, T> converter) {
         super(null);
 
         this.schema = schema;
         this.name = name;
-        this.baseType = type;
+        this.baseType = converter == null
+            ? (DataType<T>) type
+            : type.asConvertedDataType((Converter) converter);
 
         // Array data type initialisation
-        this.type = type.asArrayDataType(getClass());
+        this.type = baseType.asArrayDataType(getClass());
     }
 
     // -------------------------------------------------------------------------

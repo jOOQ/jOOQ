@@ -1075,10 +1075,18 @@ public class JavaGenerator extends AbstractGenerator {
             final String attrId = getStrategy().getJavaIdentifier(attribute);
             final String attrName = attribute.getName();
             final String attrComment = StringUtils.defaultString(attribute.getComment());
+            final String attrConverterType = attribute.getType().getConverter();
 
             out.tab(1).javadoc("The attribute <code>%s</code>.%s", attribute.getQualifiedOutputName(), defaultIfBlank(" " + attrComment, ""));
-            out.tab(1).println("public static final %s<%s, %s> %s = createField(\"%s\", %s, %s);",
-                UDTField.class, recordType, attrType, attrId, attrName, attrTypeRef, udtId);
+
+            if (attrConverterType != null) {
+                out.tab(1).println("public static final %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\", new %s());",
+                    UDTField.class, recordType, attrType, attrId, attrName, attrTypeRef, udtId, escapeString(""), attrConverterType);
+            }
+            else {
+                out.tab(1).println("public static final %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\");",
+                    UDTField.class, recordType, attrType, attrId, attrName, attrTypeRef, udtId, escapeString(""));
+            }
         }
 
         // [#799] Oracle UDT's can have member procedures
@@ -1295,6 +1303,7 @@ public class JavaGenerator extends AbstractGenerator {
         final List<String> interfaces = getStrategy().getJavaClassImplements(array, Mode.RECORD);
         final String arrayName = array.getOutputName();
         final String schemaId = getStrategy().getFullJavaIdentifier(schema);
+        final String elementConverterType = array.getElementType().getConverter();
 
         JavaWriter out = new JavaWriter(getStrategy().getFile(array, Mode.RECORD));
         printPackage(out, array, Mode.RECORD);
@@ -1308,7 +1317,12 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).javadoc("@deprecated - 3.4.0 - [#3126] - Use the {@link #%s()} constructor instead", className);
             out.tab(1).println("@java.lang.Deprecated");
             out.tab(1).println("public %s(%s configuration) {", className, Configuration.class);
-            out.tab(2).println("super(%s, \"%s\", %s, configuration);", schemaId, arrayName, elementTypeRef);
+
+            if (elementConverterType != null)
+                out.tab(2).println("super(%s, \"%s\", %s, configuration, new %s());", schemaId, arrayName, elementTypeRef, elementConverterType);
+            else
+                out.tab(2).println("super(%s, \"%s\", %s, configuration);", schemaId, arrayName, elementTypeRef);
+
             out.tab(1).println("}");
 
             out.tab(1).javadoc("@deprecated - 3.4.0 - [#3126] - Use the {@link #%s()} constructor instead", className);
@@ -1328,7 +1342,12 @@ public class JavaGenerator extends AbstractGenerator {
 
         out.tab(1).javadoc("Create a new <code>%s</code> record", array.getQualifiedOutputName());
         out.tab(1).println("public %s() {", className);
-        out.tab(2).println("super(%s, \"%s\", %s);", schemaId, arrayName, elementTypeRef);
+
+        if (elementConverterType != null)
+            out.tab(2).println("super(%s, \"%s\", %s, new %s());", schemaId, arrayName, elementTypeRef, elementConverterType);
+        else
+            out.tab(2).println("super(%s, \"%s\", %s);", schemaId, arrayName, elementTypeRef);
+
         out.tab(1).println("}");
 
         out.tab(1).javadoc("Create a new <code>%s</code> record", array.getQualifiedOutputName());
@@ -2543,6 +2562,9 @@ public class JavaGenerator extends AbstractGenerator {
         final List<?> returnTypeRef = list((routine.getReturnValue() != null)
             ? getJavaTypeReference(database, routine.getReturnType())
             : null);
+        final List<?> returnConverterType = list((routine.getReturnValue() != null)
+            ? routine.getReturnType().getConverter()
+            : null);
         final List<String> interfaces = getStrategy().getJavaClassImplements(routine, Mode.DEFAULT);
         final String schemaId = getStrategy().getFullJavaIdentifier(schema);
         final List<String> packageId = getStrategy().getFullJavaIdentifiers(routine.getPackage());
@@ -2561,16 +2583,22 @@ public class JavaGenerator extends AbstractGenerator {
             final String paramId = getStrategy().getJavaIdentifier(parameter);
             final String paramName = parameter.getName();
             final String paramComment = StringUtils.defaultString(parameter.getComment());
-            final List<String> isDefaulted = list(parameter.isDefaulted() ? "true" : null);
+            final String isDefaulted = parameter.isDefaulted() ? "true" : "false";
+            final String paramConverterType = parameter.getType().getConverter();
 
             out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), defaultIfBlank(" " + paramComment, ""));
-            out.tab(1).println("public static final %s<%s> %s = createParameter(\"%s\", %s[[before=, ][%s]]);",
-                Parameter.class, paramType, paramId, paramName, paramTypeRef, isDefaulted);
+
+            if (paramConverterType != null)
+                out.tab(2).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s, new %s());",
+                    Parameter.class, paramType, paramId, paramName, paramTypeRef, isDefaulted, paramConverterType);
+            else
+                out.tab(2).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s);",
+                    Parameter.class, paramType, paramId, paramName, paramTypeRef, isDefaulted);
         }
 
         out.tab(1).javadoc("Create a new routine call instance");
         out.tab(1).println("public %s() {", className);
-        out.tab(2).println("super(\"%s\", %s[[before=, ][%s]][[before=, ][%s]]);", routine.getName(), schemaId, packageId, returnTypeRef);
+        out.tab(2).println("super(\"%s\", %s[[before=, ][%s]][[before=, ][%s]][[before=, ][new %s()]]);", routine.getName(), schemaId, packageId, returnTypeRef, returnConverterType);
 
         if (routine.getAllParameters().size() > 0) {
             out.println();

@@ -573,7 +573,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     /* [pro] */
     @Override
-    public final <A extends ArrayRecord<T>> DataType<A> asArrayDataType(Class<A> arrayDataType) {
+    public final <A extends ArrayRecord<?>> DataType<A> asArrayDataType(Class<A> arrayDataType) {
         return new DefaultDataType<A>(dialect, arrayDataType, typeName, castTypeName);
     }
 

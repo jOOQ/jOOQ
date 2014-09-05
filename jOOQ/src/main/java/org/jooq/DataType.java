@@ -93,7 +93,7 @@ public interface DataType<T> extends Serializable {
     /**
      * Retrieve the data type for an Oracle-style ARRAY of this data type.
      */
-    <A extends ArrayRecord<T>> DataType<A> asArrayDataType(Class<A> arrayDataType);
+    <A extends ArrayRecord<?>> DataType<A> asArrayDataType(Class<A> arrayDataType);
 
     /* [/pro] */
     /**

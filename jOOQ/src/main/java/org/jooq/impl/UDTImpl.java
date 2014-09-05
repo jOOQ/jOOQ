@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import org.jooq.Clause;
 import org.jooq.Context;
+import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -156,7 +157,36 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
      * @param type The data type of the field
      */
     protected static final <R extends UDTRecord<R>, T> UDTField<R, T> createField(String name, DataType<T> type, UDT<R> udt) {
-        return new UDTFieldImpl<R, T>(name, type, udt);
+        return createField(name, type, udt, "", null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link UDTField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected static final <R extends UDTRecord<R>, T> UDTField<R, T> createField(String name, DataType<T> type, UDT<R> udt, String comment) {
+        return createField(name, type, udt, comment, null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link UDTField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    @SuppressWarnings("unchecked")
+    protected static final <R extends UDTRecord<R>, T, U> UDTField<R, U> createField(String name, DataType<T> type, UDT<R> udt, String comment, Converter<T, U> converter) {
+        final DataType<U> actualType = converter == null
+            ? (DataType<U>) type
+            : type.asConvertedDataType(converter);
+
+        final UDTFieldImpl<R, U> udtField = new UDTFieldImpl<R, U>(name, actualType, udt, comment, converter);
+
+        return udtField;
     }
 
     // ------------------------------------------------------------------------

@@ -16,7 +16,7 @@ package org.jooq.test.oracle5.generatedclasses.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UBookType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle5.generatedclasses.udt.records.UBookTypeRecord> {
 
-	private static final long serialVersionUID = -111893599;
+	private static final long serialVersionUID = 627161505;
 
 	/**
 	 * The singleton instance of <code>TEST.U_BOOK_TYPE</code>
@@ -34,12 +34,12 @@ public class UBookType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle5.gener
 	/**
 	 * The attribute <code>TEST.U_BOOK_TYPE.ID</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UBookTypeRecord, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC, U_BOOK_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UBookTypeRecord, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC, U_BOOK_TYPE, "");
 
 	/**
 	 * The attribute <code>TEST.U_BOOK_TYPE.TITLE</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UBookTypeRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), U_BOOK_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UBookTypeRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), U_BOOK_TYPE, "");
 
 	/**
 	 * No further instances allowed

@@ -16,27 +16,27 @@ package org.jooq.test.oracle5.generatedclasses.udt.u_author_type;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class NewAuthor extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 214671266;
+	private static final long serialVersionUID = 669817218;
 
 	/**
 	 * The parameter <code>TEST.U_AUTHOR_TYPE.NEW_AUTHOR.P_ID</code>.
 	 */
-	public static final org.jooq.Parameter<java.math.BigDecimal> P_ID = createParameter("P_ID", org.jooq.impl.SQLDataType.NUMERIC);
+		public static final org.jooq.Parameter<java.math.BigDecimal> P_ID = createParameter("P_ID", org.jooq.impl.SQLDataType.NUMERIC, false);
 
 	/**
 	 * The parameter <code>TEST.U_AUTHOR_TYPE.NEW_AUTHOR.P_FIRST_NAME</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.String> P_FIRST_NAME = createParameter("P_FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR);
+		public static final org.jooq.Parameter<java.lang.String> P_FIRST_NAME = createParameter("P_FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, false);
 
 	/**
 	 * The parameter <code>TEST.U_AUTHOR_TYPE.NEW_AUTHOR.P_LAST_NAME</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.String> P_LAST_NAME = createParameter("P_LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR);
+		public static final org.jooq.Parameter<java.lang.String> P_LAST_NAME = createParameter("P_LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, false);
 
 	/**
 	 * The parameter <code>TEST.U_AUTHOR_TYPE.NEW_AUTHOR.P_AUTHOR</code>.
 	 */
-	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UAuthorTypeRecord> P_AUTHOR = createParameter("P_AUTHOR", org.jooq.test.oracle5.generatedclasses.udt.UAuthorType.U_AUTHOR_TYPE.getDataType());
+		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UAuthorTypeRecord> P_AUTHOR = createParameter("P_AUTHOR", org.jooq.test.oracle5.generatedclasses.udt.UAuthorType.U_AUTHOR_TYPE.getDataType(), false);
 
 	/**
 	 * Create a new routine call instance

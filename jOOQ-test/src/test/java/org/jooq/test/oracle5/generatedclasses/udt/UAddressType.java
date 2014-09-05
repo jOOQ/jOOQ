@@ -16,7 +16,7 @@ package org.jooq.test.oracle5.generatedclasses.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAddressType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = 478291570;
+	private static final long serialVersionUID = -308724542;
 
 	/**
 	 * The singleton instance of <code>TEST.U_ADDRESS_TYPE</code>
@@ -34,42 +34,42 @@ public class UAddressType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle5.ge
 	/**
 	 * The attribute <code>TEST.U_ADDRESS_TYPE.STREET</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord, org.jooq.test.oracle5.generatedclasses.udt.records.UStreetTypeRecord> STREET = createField("STREET", org.jooq.test.oracle5.generatedclasses.udt.UStreetType.U_STREET_TYPE.getDataType(), U_ADDRESS_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord, org.jooq.test.oracle5.generatedclasses.udt.records.UStreetTypeRecord> STREET = createField("STREET", org.jooq.test.oracle5.generatedclasses.udt.UStreetType.U_STREET_TYPE.getDataType(), U_ADDRESS_TYPE, "");
 
 	/**
 	 * The attribute <code>TEST.U_ADDRESS_TYPE.ZIP</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord, java.lang.String> ZIP = createField("ZIP", org.jooq.impl.SQLDataType.VARCHAR.length(50), U_ADDRESS_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord, java.lang.String> ZIP = createField("ZIP", org.jooq.impl.SQLDataType.VARCHAR.length(50), U_ADDRESS_TYPE, "");
 
 	/**
 	 * The attribute <code>TEST.U_ADDRESS_TYPE.CITY</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord, java.lang.String> CITY = createField("CITY", org.jooq.impl.SQLDataType.VARCHAR.length(50), U_ADDRESS_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord, java.lang.String> CITY = createField("CITY", org.jooq.impl.SQLDataType.VARCHAR.length(50), U_ADDRESS_TYPE, "");
 
 	/**
 	 * The attribute <code>TEST.U_ADDRESS_TYPE.COUNTRY</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord, java.lang.String> COUNTRY = createField("COUNTRY", org.jooq.impl.SQLDataType.VARCHAR.length(50), U_ADDRESS_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord, java.lang.String> COUNTRY = createField("COUNTRY", org.jooq.impl.SQLDataType.VARCHAR.length(50), U_ADDRESS_TYPE, "");
 
 	/**
 	 * The attribute <code>TEST.U_ADDRESS_TYPE.SINCE</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord, java.time.LocalDateTime> SINCE = createField("SINCE", org.jooq.impl.SQLDataType.DATE, U_ADDRESS_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord, java.time.LocalDateTime> SINCE = createField("SINCE", org.jooq.impl.SQLDataType.DATE, U_ADDRESS_TYPE, "", new org.jooq.test.all.converters.LocalDateTimeConverter());
 
 	/**
 	 * The attribute <code>TEST.U_ADDRESS_TYPE.CODE</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord, java.math.BigDecimal> CODE = createField("CODE", org.jooq.impl.SQLDataType.NUMERIC, U_ADDRESS_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord, java.math.BigDecimal> CODE = createField("CODE", org.jooq.impl.SQLDataType.NUMERIC, U_ADDRESS_TYPE, "");
 
 	/**
 	 * The attribute <code>TEST.U_ADDRESS_TYPE.F_1323</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord, byte[]> F_1323 = createField("F_1323", org.jooq.impl.SQLDataType.BLOB, U_ADDRESS_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord, byte[]> F_1323 = createField("F_1323", org.jooq.impl.SQLDataType.BLOB, U_ADDRESS_TYPE, "");
 
 	/**
 	 * The attribute <code>TEST.U_ADDRESS_TYPE.F_1326</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord, java.lang.String> F_1326 = createField("F_1326", org.jooq.impl.SQLDataType.CLOB, U_ADDRESS_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord, java.lang.String> F_1326 = createField("F_1326", org.jooq.impl.SQLDataType.CLOB, U_ADDRESS_TYPE, "");
 
 	/**
 	 * No further instances allowed

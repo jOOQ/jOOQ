@@ -16,17 +16,17 @@ package org.jooq.test.oracle5.generatedclasses.packages.pkg_976;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class P_976 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -381564120;
+	private static final long serialVersionUID = -1728048822;
 
 	/**
 	 * The parameter <code>TEST.PKG_976.P_976.I</code>.
 	 */
-	public static final org.jooq.Parameter<java.time.LocalDateTime> I = createParameter("I", org.jooq.impl.SQLDataType.DATE);
+		public static final org.jooq.Parameter<java.time.LocalDateTime> I = createParameter("I", org.jooq.impl.SQLDataType.DATE, false, new org.jooq.test.all.converters.LocalDateTimeConverter());
 
 	/**
 	 * The parameter <code>TEST.PKG_976.P_976.O</code>.
 	 */
-	public static final org.jooq.Parameter<java.time.LocalDateTime> O = createParameter("O", org.jooq.impl.SQLDataType.DATE);
+		public static final org.jooq.Parameter<java.time.LocalDateTime> O = createParameter("O", org.jooq.impl.SQLDataType.DATE, false, new org.jooq.test.all.converters.LocalDateTimeConverter());
 
 	/**
 	 * Create a new routine call instance

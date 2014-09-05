@@ -16,7 +16,7 @@ package org.jooq.test.oracle5.generatedclasses.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class USecondMax extends org.jooq.impl.UDTImpl<org.jooq.test.oracle5.generatedclasses.udt.records.USecondMaxRecord> implements org.jooq.Package {
 
-	private static final long serialVersionUID = -1766947220;
+	private static final long serialVersionUID = 1725595372;
 
 	/**
 	 * The singleton instance of <code>TEST.U_SECOND_MAX</code>
@@ -34,12 +34,12 @@ public class USecondMax extends org.jooq.impl.UDTImpl<org.jooq.test.oracle5.gene
 	/**
 	 * The attribute <code>TEST.U_SECOND_MAX.MAX</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.USecondMaxRecord, java.math.BigDecimal> MAX = createField("MAX", org.jooq.impl.SQLDataType.NUMERIC, U_SECOND_MAX);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.USecondMaxRecord, java.math.BigDecimal> MAX = createField("MAX", org.jooq.impl.SQLDataType.NUMERIC, U_SECOND_MAX, "");
 
 	/**
 	 * The attribute <code>TEST.U_SECOND_MAX.SECMAX</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.USecondMaxRecord, java.math.BigDecimal> SECMAX = createField("SECMAX", org.jooq.impl.SQLDataType.NUMERIC, U_SECOND_MAX);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.USecondMaxRecord, java.math.BigDecimal> SECMAX = createField("SECMAX", org.jooq.impl.SQLDataType.NUMERIC, U_SECOND_MAX, "");
 
 	/**
 	 * Call <code>TEST.U_SECOND_MAX.ODCIAGGREGATEINITIALIZE</code>

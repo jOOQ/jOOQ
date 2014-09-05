@@ -16,27 +16,27 @@ package org.jooq.test.oracle5.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class F378 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 1866566531;
+	private static final long serialVersionUID = 1164522995;
 
 	/**
 	 * The parameter <code>TEST.F378.RETURN_VALUE</code>.
 	 */
-	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
+		public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC, false);
 
 	/**
 	 * The parameter <code>TEST.F378.I</code>.
 	 */
-	public static final org.jooq.Parameter<java.math.BigDecimal> I = createParameter("I", org.jooq.impl.SQLDataType.NUMERIC);
+		public static final org.jooq.Parameter<java.math.BigDecimal> I = createParameter("I", org.jooq.impl.SQLDataType.NUMERIC, false);
 
 	/**
 	 * The parameter <code>TEST.F378.IO</code>.
 	 */
-	public static final org.jooq.Parameter<java.math.BigDecimal> IO = createParameter("IO", org.jooq.impl.SQLDataType.NUMERIC);
+		public static final org.jooq.Parameter<java.math.BigDecimal> IO = createParameter("IO", org.jooq.impl.SQLDataType.NUMERIC, false);
 
 	/**
 	 * The parameter <code>TEST.F378.O</code>.
 	 */
-	public static final org.jooq.Parameter<java.math.BigDecimal> O = createParameter("O", org.jooq.impl.SQLDataType.NUMERIC);
+		public static final org.jooq.Parameter<java.math.BigDecimal> O = createParameter("O", org.jooq.impl.SQLDataType.NUMERIC, false);
 
 	/**
 	 * Create a new routine call instance

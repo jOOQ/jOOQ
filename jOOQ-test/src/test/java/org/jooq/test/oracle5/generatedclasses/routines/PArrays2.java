@@ -16,17 +16,17 @@ package org.jooq.test.oracle5.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PArrays2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 408488588;
+	private static final long serialVersionUID = -486203304;
 
 	/**
 	 * The parameter <code>TEST.P_ARRAYS2.IN_ARRAY</code>.
 	 */
-	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UNumberLongArrayRecord> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.impl.SQLDataType.NUMERIC.asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UNumberLongArrayRecord.class));
+		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UNumberLongArrayRecord> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.impl.SQLDataType.NUMERIC.asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UNumberLongArrayRecord.class), false);
 
 	/**
 	 * The parameter <code>TEST.P_ARRAYS2.OUT_ARRAY</code>.
 	 */
-	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UNumberLongArrayRecord> OUT_ARRAY = createParameter("OUT_ARRAY", org.jooq.impl.SQLDataType.NUMERIC.asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UNumberLongArrayRecord.class));
+		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UNumberLongArrayRecord> OUT_ARRAY = createParameter("OUT_ARRAY", org.jooq.impl.SQLDataType.NUMERIC.asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UNumberLongArrayRecord.class), false);
 
 	/**
 	 * Create a new routine call instance

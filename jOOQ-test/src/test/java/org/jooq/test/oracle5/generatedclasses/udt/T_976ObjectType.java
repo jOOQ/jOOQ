@@ -16,7 +16,7 @@ package org.jooq.test.oracle5.generatedclasses.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_976ObjectType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle5.generatedclasses.udt.records.T_976ObjectTypeRecord> {
 
-	private static final long serialVersionUID = 1038982768;
+	private static final long serialVersionUID = -1743459638;
 
 	/**
 	 * The singleton instance of <code>TEST.T_976_OBJECT_TYPE</code>
@@ -34,7 +34,7 @@ public class T_976ObjectType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle5
 	/**
 	 * The attribute <code>TEST.T_976_OBJECT_TYPE.D</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.T_976ObjectTypeRecord, java.time.LocalDateTime> D = createField("D", org.jooq.impl.SQLDataType.DATE, T_976_OBJECT_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.T_976ObjectTypeRecord, java.time.LocalDateTime> D = createField("D", org.jooq.impl.SQLDataType.DATE, T_976_OBJECT_TYPE, "", new org.jooq.test.all.converters.LocalDateTimeConverter());
 
 	/**
 	 * No further instances allowed

@@ -16,14 +16,14 @@ package org.jooq.test.oracle5.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_976VarrayTypeRecord extends org.jooq.impl.ArrayRecordImpl<java.time.LocalDateTime> {
 
-	private static final long serialVersionUID = 1773282567;
+	private static final long serialVersionUID = 1577793407;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #T_976VarrayTypeRecord()} constructor instead
 	 */
 	@java.lang.Deprecated
 	public T_976VarrayTypeRecord(org.jooq.Configuration configuration) {
-		super(org.jooq.test.oracle5.generatedclasses.Test.TEST, "T_976_VARRAY_TYPE", org.jooq.impl.SQLDataType.DATE, configuration);
+		super(org.jooq.test.oracle5.generatedclasses.Test.TEST, "T_976_VARRAY_TYPE", org.jooq.impl.SQLDataType.DATE, configuration, new org.jooq.test.all.converters.LocalDateTimeConverter());
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class T_976VarrayTypeRecord extends org.jooq.impl.ArrayRecordImpl<java.ti
 	 * Create a new <code>TEST.T_976_VARRAY_TYPE</code> record
 	 */
 	public T_976VarrayTypeRecord() {
-		super(org.jooq.test.oracle5.generatedclasses.Test.TEST, "T_976_VARRAY_TYPE", org.jooq.impl.SQLDataType.DATE);
+		super(org.jooq.test.oracle5.generatedclasses.Test.TEST, "T_976_VARRAY_TYPE", org.jooq.impl.SQLDataType.DATE, new org.jooq.test.all.converters.LocalDateTimeConverter());
 	}
 
 	/**

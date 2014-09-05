@@ -16,7 +16,7 @@ package org.jooq.test.oracle5.generatedclasses.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UNested_3 extends org.jooq.impl.UDTImpl<org.jooq.test.oracle5.generatedclasses.udt.records.UNested_3Record> {
 
-	private static final long serialVersionUID = -162407879;
+	private static final long serialVersionUID = 1612314017;
 
 	/**
 	 * The singleton instance of <code>TEST.U_NESTED_3</code>
@@ -34,12 +34,12 @@ public class UNested_3 extends org.jooq.impl.UDTImpl<org.jooq.test.oracle5.gener
 	/**
 	 * The attribute <code>TEST.U_NESTED_3.ID</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UNested_3Record, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC, U_NESTED_3);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UNested_3Record, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC, U_NESTED_3, "");
 
 	/**
 	 * The attribute <code>TEST.U_NESTED_3.NESTED</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UNested_3Record, org.jooq.test.oracle5.generatedclasses.udt.records.UNested_2Record> NESTED = createField("NESTED", org.jooq.test.oracle5.generatedclasses.udt.UNested_1.U_NESTED_1.getDataType().asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UNested_2Record.class), U_NESTED_3);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UNested_3Record, org.jooq.test.oracle5.generatedclasses.udt.records.UNested_2Record> NESTED = createField("NESTED", org.jooq.test.oracle5.generatedclasses.udt.UNested_1.U_NESTED_1.getDataType().asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UNested_2Record.class), U_NESTED_3, "");
 
 	/**
 	 * No further instances allowed

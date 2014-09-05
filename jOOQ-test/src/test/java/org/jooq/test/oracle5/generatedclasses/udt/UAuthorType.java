@@ -16,7 +16,7 @@ package org.jooq.test.oracle5.generatedclasses.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle5.generatedclasses.udt.records.UAuthorTypeRecord> implements org.jooq.Package {
 
-	private static final long serialVersionUID = -186102785;
+	private static final long serialVersionUID = -1282872885;
 
 	/**
 	 * The singleton instance of <code>TEST.U_AUTHOR_TYPE</code>
@@ -34,17 +34,17 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle5.gen
 	/**
 	 * The attribute <code>TEST.U_AUTHOR_TYPE.ID</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAuthorTypeRecord, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC, U_AUTHOR_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAuthorTypeRecord, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC, U_AUTHOR_TYPE, "");
 
 	/**
 	 * The attribute <code>TEST.U_AUTHOR_TYPE.FIRST_NAME</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAuthorTypeRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), U_AUTHOR_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAuthorTypeRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), U_AUTHOR_TYPE, "");
 
 	/**
 	 * The attribute <code>TEST.U_AUTHOR_TYPE.LAST_NAME</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAuthorTypeRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), U_AUTHOR_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAuthorTypeRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), U_AUTHOR_TYPE, "");
 
 	/**
 	 * Call <code>TEST.U_AUTHOR_TYPE.COUNT_BOOKS</code>

@@ -16,14 +16,14 @@ package org.jooq.test.oracle5.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UDateArrayRecord extends org.jooq.impl.ArrayRecordImpl<java.time.LocalDateTime> {
 
-	private static final long serialVersionUID = -221071671;
+	private static final long serialVersionUID = -129962331;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UDateArrayRecord()} constructor instead
 	 */
 	@java.lang.Deprecated
 	public UDateArrayRecord(org.jooq.Configuration configuration) {
-		super(org.jooq.test.oracle5.generatedclasses.Test.TEST, "U_DATE_ARRAY", org.jooq.impl.SQLDataType.DATE, configuration);
+		super(org.jooq.test.oracle5.generatedclasses.Test.TEST, "U_DATE_ARRAY", org.jooq.impl.SQLDataType.DATE, configuration, new org.jooq.test.all.converters.LocalDateTimeConverter());
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class UDateArrayRecord extends org.jooq.impl.ArrayRecordImpl<java.time.Lo
 	 * Create a new <code>TEST.U_DATE_ARRAY</code> record
 	 */
 	public UDateArrayRecord() {
-		super(org.jooq.test.oracle5.generatedclasses.Test.TEST, "U_DATE_ARRAY", org.jooq.impl.SQLDataType.DATE);
+		super(org.jooq.test.oracle5.generatedclasses.Test.TEST, "U_DATE_ARRAY", org.jooq.impl.SQLDataType.DATE, new org.jooq.test.all.converters.LocalDateTimeConverter());
 	}
 
 	/**

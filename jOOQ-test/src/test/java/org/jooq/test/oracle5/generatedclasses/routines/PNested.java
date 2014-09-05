@@ -16,27 +16,27 @@ package org.jooq.test.oracle5.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PNested extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1016136871;
+	private static final long serialVersionUID = -242861871;
 
 	/**
 	 * The parameter <code>TEST.P_NESTED.P1</code>.
 	 */
-	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UNested_3Record> P1 = createParameter("P1", org.jooq.test.oracle5.generatedclasses.udt.UNested_3.U_NESTED_3.getDataType());
+		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UNested_3Record> P1 = createParameter("P1", org.jooq.test.oracle5.generatedclasses.udt.UNested_3.U_NESTED_3.getDataType(), false);
 
 	/**
 	 * The parameter <code>TEST.P_NESTED.P2</code>.
 	 */
-	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UNested_3Record> P2 = createParameter("P2", org.jooq.test.oracle5.generatedclasses.udt.UNested_3.U_NESTED_3.getDataType());
+		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UNested_3Record> P2 = createParameter("P2", org.jooq.test.oracle5.generatedclasses.udt.UNested_3.U_NESTED_3.getDataType(), false);
 
 	/**
 	 * The parameter <code>TEST.P_NESTED.P3</code>.
 	 */
-	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UNested_3Record> P3 = createParameter("P3", org.jooq.test.oracle5.generatedclasses.udt.UNested_3.U_NESTED_3.getDataType());
+		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UNested_3Record> P3 = createParameter("P3", org.jooq.test.oracle5.generatedclasses.udt.UNested_3.U_NESTED_3.getDataType(), false);
 
 	/**
 	 * The parameter <code>TEST.P_NESTED.P4</code>.
 	 */
-	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UNested_3Record> P4 = createParameter("P4", org.jooq.test.oracle5.generatedclasses.udt.UNested_3.U_NESTED_3.getDataType());
+		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UNested_3Record> P4 = createParameter("P4", org.jooq.test.oracle5.generatedclasses.udt.UNested_3.U_NESTED_3.getDataType(), false);
 
 	/**
 	 * Create a new routine call instance

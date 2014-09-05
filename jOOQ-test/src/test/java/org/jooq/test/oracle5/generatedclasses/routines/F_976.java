@@ -16,23 +16,23 @@ package org.jooq.test.oracle5.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class F_976 extends org.jooq.impl.AbstractRoutine<java.time.LocalDateTime> {
 
-	private static final long serialVersionUID = 837381273;
+	private static final long serialVersionUID = -1421653281;
 
 	/**
 	 * The parameter <code>TEST.F_976.RETURN_VALUE</code>.
 	 */
-	public static final org.jooq.Parameter<java.time.LocalDateTime> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.DATE);
+		public static final org.jooq.Parameter<java.time.LocalDateTime> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.DATE, false, new org.jooq.test.all.converters.LocalDateTimeConverter());
 
 	/**
 	 * The parameter <code>TEST.F_976.I</code>.
 	 */
-	public static final org.jooq.Parameter<java.time.LocalDateTime> I = createParameter("I", org.jooq.impl.SQLDataType.DATE);
+		public static final org.jooq.Parameter<java.time.LocalDateTime> I = createParameter("I", org.jooq.impl.SQLDataType.DATE, false, new org.jooq.test.all.converters.LocalDateTimeConverter());
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public F_976() {
-		super("F_976", org.jooq.test.oracle5.generatedclasses.Test.TEST, org.jooq.impl.SQLDataType.DATE);
+		super("F_976", org.jooq.test.oracle5.generatedclasses.Test.TEST, org.jooq.impl.SQLDataType.DATE, new org.jooq.test.all.converters.LocalDateTimeConverter());
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(I);

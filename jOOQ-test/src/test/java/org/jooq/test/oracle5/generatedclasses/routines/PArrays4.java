@@ -16,17 +16,17 @@ package org.jooq.test.oracle5.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PArrays4 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1879052316;
+	private static final long serialVersionUID = 1020287468;
 
 	/**
 	 * The parameter <code>TEST.P_ARRAYS4.IN_ARRAY</code>.
 	 */
-	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UBookArrayRecord> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.test.oracle5.generatedclasses.udt.UBookType.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UBookArrayRecord.class));
+		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UBookArrayRecord> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.test.oracle5.generatedclasses.udt.UBookType.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UBookArrayRecord.class), false);
 
 	/**
 	 * The parameter <code>TEST.P_ARRAYS4.OUT_ARRAY</code>.
 	 */
-	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UBookArrayRecord> OUT_ARRAY = createParameter("OUT_ARRAY", org.jooq.test.oracle5.generatedclasses.udt.UBookType.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UBookArrayRecord.class));
+		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UBookArrayRecord> OUT_ARRAY = createParameter("OUT_ARRAY", org.jooq.test.oracle5.generatedclasses.udt.UBookType.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UBookArrayRecord.class), false);
 
 	/**
 	 * Create a new routine call instance

@@ -16,12 +16,12 @@ package org.jooq.test.oracle5.generatedclasses.packages.test_synonym_package;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TestObject extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = -785972976;
+	private static final long serialVersionUID = 816111768;
 
 	/**
 	 * The parameter <code>TEST.TEST_SYNONYM_PACKAGE.TEST_OBJECT.RETURN_VALUE</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.DefaultDataType.getDefaultDataType("OBJECT"));
+		public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.DefaultDataType.getDefaultDataType("OBJECT"), false);
 
 	/**
 	 * Create a new routine call instance

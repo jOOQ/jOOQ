@@ -16,7 +16,7 @@ package org.jooq.test.oracle5.generatedclasses.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3005 extends org.jooq.impl.UDTImpl<org.jooq.test.oracle5.generatedclasses.udt.records.U_3005Record> {
 
-	private static final long serialVersionUID = -1122795212;
+	private static final long serialVersionUID = 1602394624;
 
 	/**
 	 * The singleton instance of <code>TEST.U_3005</code>
@@ -34,7 +34,7 @@ public class U_3005 extends org.jooq.impl.UDTImpl<org.jooq.test.oracle5.generate
 	/**
 	 * The attribute <code>TEST.U_3005.ID</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.U_3005Record, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC, U_3005);
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.U_3005Record, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC, U_3005, "");
 
 	/**
 	 * No further instances allowed

@@ -4986,6 +4986,92 @@
 
 
         <profile>
+            <id>codegen-oracle-3624</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${jooq.version}</version>
+
+                        <executions>
+                            <execution>
+                                <id>generate-oracle-3624</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.oracle.driver}</driver>
+                                        <url>${db.oracle.url}</url>
+                                        <schema>${db.oracle.schema}</schema>
+                                        <user>${db.oracle.username}</user>
+                                        <password>${db.oracle.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <database>
+                                            <includes>.*</includes>
+                                            <excludes>.*1358.*</excludes>
+                                            <schemata>
+                                                <schema>
+                                                    <inputSchema>TEST</inputSchema>
+                                                </schema>
+                                            </schemata>
+
+                                            <customTypes>
+                                                <customType>
+                                                    <name>LocalDateTime</name>
+                                                    <type>java.time.LocalDateTime</type>
+                                                    <converter>org.jooq.test.all.converters.LocalDateTimeConverter</converter>
+                                                </customType>
+                                            </customTypes>
+                                            <forcedTypes>
+                                                <forcedType>
+                                                    <name>DECIMAL</name>
+                                                    <types>NUMBER.*|INTEGER</types>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>LocalDateTime</name>
+                                                    <types>DATE</types>
+                                                </forcedType>
+                                            </forcedTypes>
+                                        </database>
+                                        <generate>
+                                            <pojos>true</pojos>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.test.oracle5.generatedclasses</packageName>
+                                            <directory>./src/test/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.oracle</groupId>
+                                <artifactId>ojdbc6</artifactId>
+                                <version>${db.oracle.version}</version>
+                                <scope>system</scope>
+                                <systemPath>${basedir}/lib/ojdbc6.jar</systemPath>
+                            </dependency>
+
+                            <!-- Strategies are in here -->
+                            <dependency>
+                                <groupId>org.jooq</groupId>
+                                <artifactId>jooq-test-utils</artifactId>
+                                <version>${project.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
+        <profile>
             <id>codegen-oracle-sys</id>
             <build>
                 <plugins>

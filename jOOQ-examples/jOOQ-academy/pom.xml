@@ -51,12 +51,6 @@
             <type>jar</type>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${org.springframework.version}</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
@@ -142,6 +136,9 @@
                             <url>${db.url}</url>
                             <username>${db.username}</username>
                             <password>${db.password}</password>
+                            
+                            <!-- See http://stackoverflow.com/a/13082837/521799 -->
+                            <delimiterType>row</delimiterType>
  
                             <autocommit>true</autocommit>
                             <srcFiles>
@@ -155,7 +152,7 @@
                     <dependency>
                         <groupId>com.h2database</groupId>
                         <artifactId>h2</artifactId>
-                        <version>1.3.168</version>
+                        <version>${h2.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -202,6 +199,14 @@
                         </configuration>
                     </execution>
                 </executions>
+                
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>${h2.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

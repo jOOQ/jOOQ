@@ -61,6 +61,15 @@ public interface Parameter<T> extends QueryPart {
     Class<T> getType();
 
     /**
+     * The parameter's underlying {@link Converter}.
+     * <p>
+     * By default, all parameters reference an identity-converter
+     * <code>Converter&lt;T, T></code>. Custom data types may be obtained by a
+     * custom {@link Converter} placed on the generated {@link Parameter}.
+     */
+    Converter<?, T> getConverter();
+
+    /**
      * The type of this parameter (might not be dialect-specific)
      */
     DataType<T> getDataType();

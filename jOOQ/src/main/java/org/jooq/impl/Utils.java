@@ -123,6 +123,7 @@ import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Param;
+import org.jooq.Parameter;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RecordType;
@@ -2278,25 +2279,30 @@ final class Utils {
     }
 
     @SuppressWarnings("unchecked")
-    static final <T> T getFromSQLInput(Configuration configuration, SQLInput stream, Field<T> field) throws SQLException {
-        Class<T> type = field.getType();
-        DataType<T> dataType = field.getDataType();
+    static final <T, U> U getFromSQLInput(Configuration configuration, SQLInput stream, Field<U> field) throws SQLException {
+        DataType<U> dataType = field.getDataType();
+
+        // [#650] [#2155] [#3108] Use the Field's Converter before actually binding any value
+        Converter<T, U> converter = (Converter<T, U>) field.getConverter();
+        Class<T> type = converter.fromType();
+
+        T result = null;
 
         if (type == Blob.class) {
-            return (T) stream.readBlob();
+            result = (T) stream.readBlob();
         }
         else if (type == Boolean.class) {
-            return (T) wasNull(stream, Boolean.valueOf(stream.readBoolean()));
+            result = (T) wasNull(stream, Boolean.valueOf(stream.readBoolean()));
         }
         else if (type == BigInteger.class) {
-            BigDecimal result = stream.readBigDecimal();
-            return (T) (result == null ? null : result.toBigInteger());
+            BigDecimal d = stream.readBigDecimal();
+            result = (T) (d == null ? null : d.toBigInteger());
         }
         else if (type == BigDecimal.class) {
-            return (T) stream.readBigDecimal();
+            result = (T) stream.readBigDecimal();
         }
         else if (type == Byte.class) {
-            return (T) wasNull(stream, Byte.valueOf(stream.readByte()));
+            result = (T) wasNull(stream, Byte.valueOf(stream.readByte()));
         }
         else if (type == byte[].class) {
 
@@ -2305,98 +2311,105 @@ final class Utils {
                 Blob blob = null;
                 try {
                     blob = stream.readBlob();
-                    return (T) (blob == null ? null : blob.getBytes(1, (int) blob.length()));
+                    result = (T) (blob == null ? null : blob.getBytes(1, (int) blob.length()));
                 }
                 finally {
                     safeFree(blob);
                 }
             }
             else {
-                return (T) stream.readBytes();
+                result = (T) stream.readBytes();
             }
         }
         else if (type == Clob.class) {
-            return (T) stream.readClob();
+            result = (T) stream.readClob();
         }
         else if (type == Date.class) {
-            return (T) stream.readDate();
+            result = (T) stream.readDate();
         }
         else if (type == Double.class) {
-            return (T) wasNull(stream, Double.valueOf(stream.readDouble()));
+            result = (T) wasNull(stream, Double.valueOf(stream.readDouble()));
         }
         else if (type == Float.class) {
-            return (T) wasNull(stream, Float.valueOf(stream.readFloat()));
+            result = (T) wasNull(stream, Float.valueOf(stream.readFloat()));
         }
         else if (type == Integer.class) {
-            return (T) wasNull(stream, Integer.valueOf(stream.readInt()));
+            result = (T) wasNull(stream, Integer.valueOf(stream.readInt()));
         }
         else if (type == Long.class) {
-            return (T) wasNull(stream, Long.valueOf(stream.readLong()));
+            result = (T) wasNull(stream, Long.valueOf(stream.readLong()));
         }
         else if (type == Short.class) {
-            return (T) wasNull(stream, Short.valueOf(stream.readShort()));
+            result = (T) wasNull(stream, Short.valueOf(stream.readShort()));
         }
         else if (type == String.class) {
-            return (T) stream.readString();
+            result = (T) stream.readString();
         }
         else if (type == Time.class) {
-            return (T) stream.readTime();
+            result = (T) stream.readTime();
         }
         else if (type == Timestamp.class) {
-            return (T) stream.readTimestamp();
+            result = (T) stream.readTimestamp();
         }
         else if (type == YearToMonth.class) {
             String string = stream.readString();
-            return (T) (string == null ? null : YearToMonth.valueOf(string));
+            result = (T) (string == null ? null : YearToMonth.valueOf(string));
         }
         else if (type == DayToSecond.class) {
             String string = stream.readString();
-            return (T) (string == null ? null : DayToSecond.valueOf(string));
+            result = (T) (string == null ? null : DayToSecond.valueOf(string));
         }
         else if (type == UByte.class) {
             String string = stream.readString();
-            return (T) (string == null ? null : UByte.valueOf(string));
+            result = (T) (string == null ? null : UByte.valueOf(string));
         }
         else if (type == UShort.class) {
             String string = stream.readString();
-            return (T) (string == null ? null : UShort.valueOf(string));
+            result = (T) (string == null ? null : UShort.valueOf(string));
         }
         else if (type == UInteger.class) {
             String string = stream.readString();
-            return (T) (string == null ? null : UInteger.valueOf(string));
+            result = (T) (string == null ? null : UInteger.valueOf(string));
         }
         else if (type == ULong.class) {
             String string = stream.readString();
-            return (T) (string == null ? null : ULong.valueOf(string));
+            result = (T) (string == null ? null : ULong.valueOf(string));
         }
         else if (type == UUID.class) {
-            return (T) Convert.convert(stream.readString(), UUID.class);
+            result = (T) Convert.convert(stream.readString(), UUID.class);
         }
 
         // The type byte[] is handled earlier. byte[][] can be handled here
         else if (type.isArray()) {
-            Array result = stream.readArray();
-            return (T) (result == null ? null : result.getArray());
+            Array array = stream.readArray();
+            result = (T) (array == null ? null : array.getArray());
         }
         /* [pro] xx
         xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
+            xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
         x
         xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
-            return getEnumType(type, stream.readString());
+            result = getEnumType(type, stream.readString());
         }
         else if (UDTRecord.class.isAssignableFrom(type)) {
-            return (T) stream.readObject();
+            result = (T) stream.readObject();
         }
         else {
-            return (T) unlob(stream.readObject());
+            result = (T) unlob(stream.readObject());
         }
+
+        return converter.from(result);
     }
 
-    static final <T> void writeToSQLOutput(SQLOutput stream, Field<T> field, T value) throws SQLException {
-        Class<T> type = field.getType();
-        DataType<T> dataType = field.getDataType();
+    @SuppressWarnings("unchecked")
+    static final <T, U> void writeToSQLOutput(SQLOutput stream, Field<U> field, U v) throws SQLException {
+        DataType<U> dataType = field.getDataType();
+
+        // [#650] [#2155] [#3108] Use the Field's Converter before actually binding any value
+        Converter<T, U> converter = (Converter<T, U>) field.getConverter();
+        Class<?> type = converter.fromType();
+        T value = converter.to(v);
 
         if (value == null) {
             stream.writeObject(null);
@@ -2514,7 +2527,17 @@ final class Utils {
             xx xxxxxxx xx xxx xxxxxx xxxxxx xxxx xxxxxxxxxxxxxxxxxx xxx xxxx
             xx xxx xx xxxxxxxxxxxxxxxxxxx xxxxx xx xxxxxxxxxxx xxxxxx xx xxxxxx
             xxxxxxxxxxxxxx xxxxxxxxxxx x xxxxxxxxxxxxxxxx xxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxx xxxxx x xxxxxxxxxxxxxxxxxx
+
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxx x
+                xxxxxxxx xxxxxxxxx x xxx xxxxxxxxxxxxxxxxxxxxx
+
+                xxx xxxx x x xx x x xxxxxxxxxxxxxxxxx xxxx
+                    xxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxxx x xxxxxxxxxx
+            x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
         x
         xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
@@ -2741,13 +2764,17 @@ final class Utils {
             xxxxxxxxxxxxxxxx xxxxxx
         x
         xxxx x
-            xxxxxx xx
-
             xx xxxxxx xxxxx xxxxxx xxxx xx xxxxxx xx xxxx xxxxx xx xxxxxx
             xx xxxxxx xxxxx xxxx xxxx xx xxxx xx xxxxxxx xxxx xx xxxxxx xx
             xx xxxxxxxxx xxxxxxx xxx xxxxxx xxxxxxx
-            x x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxx xxxxx x xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxx xxxxxxxxx x xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
+
+            xxx xxxx x x xx x x xxxxxxxxxxxxx xxxx
+                xxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+            xxxxxxxxxxxxxxxxxxxxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         x
 
         xxxxxx xxxxxxx
@@ -2896,93 +2923,99 @@ final class Utils {
     }
 
     @SuppressWarnings("unchecked")
-    static final <T> T getFromStatement(ExecuteContext ctx, Class<T> type, int index) throws SQLException {
+    static final <T, U> U getFromStatement(ExecuteContext ctx, Parameter<U> parameter, int index) throws SQLException {
         CallableStatement stmt = (CallableStatement) ctx.statement();
 
+        // [#650] [#2155] [#3108] Use the Field's Converter before actually binding any value
+        Converter<T, U> converter = (Converter<T, U>) parameter.getConverter();
+        Class<T> type = converter.fromType();
+
+        T result = null;
+
         if (type == Blob.class) {
-            return (T) stmt.getBlob(index);
+            result = (T) stmt.getBlob(index);
         }
         else if (type == Boolean.class) {
-            return (T) wasNull(stmt, Boolean.valueOf(stmt.getBoolean(index)));
+            result = (T) wasNull(stmt, Boolean.valueOf(stmt.getBoolean(index)));
         }
         else if (type == BigInteger.class) {
-            BigDecimal result = stmt.getBigDecimal(index);
-            return (T) (result == null ? null : result.toBigInteger());
+            BigDecimal d = stmt.getBigDecimal(index);
+            result = (T) (d == null ? null : d.toBigInteger());
         }
         else if (type == BigDecimal.class) {
-            return (T) stmt.getBigDecimal(index);
+            result = (T) stmt.getBigDecimal(index);
         }
         else if (type == Byte.class) {
-            return (T) wasNull(stmt, Byte.valueOf(stmt.getByte(index)));
+            result = (T) wasNull(stmt, Byte.valueOf(stmt.getByte(index)));
         }
         else if (type == byte[].class) {
-            return (T) stmt.getBytes(index);
+            result = (T) stmt.getBytes(index);
         }
         else if (type == Clob.class) {
-            return (T) stmt.getClob(index);
+            result = (T) stmt.getClob(index);
         }
         else if (type == Date.class) {
-            return (T) stmt.getDate(index);
+            result = (T) stmt.getDate(index);
         }
         else if (type == Double.class) {
-            return (T) wasNull(stmt, Double.valueOf(stmt.getDouble(index)));
+            result = (T) wasNull(stmt, Double.valueOf(stmt.getDouble(index)));
         }
         else if (type == Float.class) {
-            return (T) wasNull(stmt, Float.valueOf(stmt.getFloat(index)));
+            result = (T) wasNull(stmt, Float.valueOf(stmt.getFloat(index)));
         }
         else if (type == Integer.class) {
-            return (T) wasNull(stmt, Integer.valueOf(stmt.getInt(index)));
+            result = (T) wasNull(stmt, Integer.valueOf(stmt.getInt(index)));
         }
         else if (type == Long.class) {
-            return (T) wasNull(stmt, Long.valueOf(stmt.getLong(index)));
+            result = (T) wasNull(stmt, Long.valueOf(stmt.getLong(index)));
         }
         else if (type == Short.class) {
-            return (T) wasNull(stmt, Short.valueOf(stmt.getShort(index)));
+            result = (T) wasNull(stmt, Short.valueOf(stmt.getShort(index)));
         }
         else if (type == String.class) {
-            return (T) stmt.getString(index);
+            result = (T) stmt.getString(index);
         }
         else if (type == Time.class) {
-            return (T) stmt.getTime(index);
+            result = (T) stmt.getTime(index);
         }
         else if (type == Timestamp.class) {
-            return (T) stmt.getTimestamp(index);
+            result = (T) stmt.getTimestamp(index);
         }
         else if (type == YearToMonth.class) {
             if (ctx.configuration().dialect() == POSTGRES) {
                 Object object = stmt.getObject(index);
-                return (T) (object == null ? null : PostgresUtils.toYearToMonth(object));
+                result = (T) (object == null ? null : PostgresUtils.toYearToMonth(object));
             }
             else {
                 String string = stmt.getString(index);
-                return (T) (string == null ? null : YearToMonth.valueOf(string));
+                result = (T) (string == null ? null : YearToMonth.valueOf(string));
             }
         }
         else if (type == DayToSecond.class) {
             if (ctx.configuration().dialect() == POSTGRES) {
                 Object object = stmt.getObject(index);
-                return (T) (object == null ? null : PostgresUtils.toDayToSecond(object));
+                result = (T) (object == null ? null : PostgresUtils.toDayToSecond(object));
             }
             else {
                 String string = stmt.getString(index);
-                return (T) (string == null ? null : DayToSecond.valueOf(string));
+                result = (T) (string == null ? null : DayToSecond.valueOf(string));
             }
         }
         else if (type == UByte.class) {
             String string = stmt.getString(index);
-            return (T) (string == null ? null : UByte.valueOf(string));
+            result = (T) (string == null ? null : UByte.valueOf(string));
         }
         else if (type == UShort.class) {
             String string = stmt.getString(index);
-            return (T) (string == null ? null : UShort.valueOf(string));
+            result = (T) (string == null ? null : UShort.valueOf(string));
         }
         else if (type == UInteger.class) {
             String string = stmt.getString(index);
-            return (T) (string == null ? null : UInteger.valueOf(string));
+            result = (T) (string == null ? null : UInteger.valueOf(string));
         }
         else if (type == ULong.class) {
             String string = stmt.getString(index);
-            return (T) (string == null ? null : ULong.valueOf(string));
+            result = (T) (string == null ? null : ULong.valueOf(string));
         }
         else if (type == UUID.class) {
             switch (ctx.configuration().dialect().family()) {
@@ -2991,7 +3024,8 @@ final class Utils {
                 // java.util.UUID data type
                 case H2:
                 case POSTGRES: {
-                    return (T) stmt.getObject(index);
+                    result = (T) stmt.getObject(index);
+                    break;
                 }
 
                 /* [pro] xx
@@ -3004,38 +3038,44 @@ final class Utils {
                 // Most databases don't have such a type. In this case, jOOQ
                 // simulates the type
                 default: {
-                    return (T) Convert.convert(stmt.getString(index), UUID.class);
+                    result = (T) Convert.convert(stmt.getString(index), UUID.class);
+                    break;
                 }
             }
         }
 
         // The type byte[] is handled earlier. byte[][] can be handled here
         else if (type.isArray()) {
-            return (T) convertArray(stmt.getObject(index), (Class<? extends Object[]>)type);
+            result = (T) convertArray(stmt.getObject(index), (Class<? extends Object[]>)type);
         }
         /* [pro] xx
         xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
+            xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
         x
         xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
-            return getEnumType(type, stmt.getString(index));
+            result = getEnumType(type, stmt.getString(index));
         }
         else if (UDTRecord.class.isAssignableFrom(type)) {
             switch (ctx.configuration().dialect()) {
                 case POSTGRES:
-                    return (T) pgNewUDTRecord(type, stmt.getObject(index));
-            }
+                    result = (T) pgNewUDTRecord(type, stmt.getObject(index));
+                    break;
 
-            return (T) stmt.getObject(index, DataTypes.udtRecords());
+                default:
+                    result = (T) stmt.getObject(index, DataTypes.udtRecords());
+                    break;
+            }
         }
         else if (Result.class.isAssignableFrom(type)) {
             ResultSet nested = (ResultSet) stmt.getObject(index);
-            return (T) DSL.using(ctx.configuration()).fetch(nested);
+            result = (T) DSL.using(ctx.configuration()).fetch(nested);
         }
         else {
-            return (T) stmt.getObject(index);
+            result = (T) stmt.getObject(index);
         }
+
+        return converter.from(result);
     }
 
     // -------------------------------------------------------------------------

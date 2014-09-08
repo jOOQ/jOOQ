@@ -560,7 +560,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                 getOutParameters().contains(parameter)) {
 
                 int index = parameterIndexes.get(parameter);
-                results.put(parameter, Utils.getFromStatement(ctx, parameter.getType(), index));
+                results.put(parameter, Utils.getFromStatement(ctx, parameter, index));
             }
         }
     }

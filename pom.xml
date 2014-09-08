@@ -256,6 +256,7 @@
         <module>jOOQ-scala</module>
 
         <!-- [pro] xxx
+        xxxx xxxxxxx xxx
         xxxx
         xxxxx xxxxxxx xxxx x xxxx x xxxxxxxxxxx xxxxx xx xxxxxxxxx xxx xxxxxxxx xxx xxxxxxxxx
         xxx
@@ -264,6 +265,7 @@
 
         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         xxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxx xxxxxxxx xxx
         xxxx [/pro] -->
     </modules>
 

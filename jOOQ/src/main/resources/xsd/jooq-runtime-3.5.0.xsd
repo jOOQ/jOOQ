@@ -38,7 +38,8 @@
       
            - question marks
            - named parameters
-           - inlined values
+           - named or inlined parameters
+           - inlined parameters
            
            This value is overridden by statementType == STATIC_STATEMENT, in
            case of which, this defaults to INLINED
@@ -128,6 +129,9 @@
 
       <!-- Execute statements with named parameters -->
       <enumeration value="NAMED"/>
+      
+      <!-- Execute statements with named parameters, if a name is given, or inlined parameters otherwise -->
+      <enumeration value="NAMED_OR_INLINED"/>
 
       <!-- Execute statements with inlined parameters -->
       <enumeration value="INLINED"/>

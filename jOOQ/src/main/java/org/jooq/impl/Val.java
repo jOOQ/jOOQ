@@ -60,8 +60,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
+import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.tools.StringUtils.leftPad;
@@ -313,7 +313,7 @@ class Val<T> extends AbstractParam<T> {
      * {@link RenderContext#namedParams()}
      */
     private final String getBindVariable(RenderContext context) {
-        if (context.paramType() == NAMED) {
+        if (context.paramType() == NAMED || context.paramType() == NAMED_OR_INLINED) {
             int index = context.nextIndex();
 
             if (StringUtils.isBlank(getParamName())) {
@@ -631,7 +631,7 @@ class Val<T> extends AbstractParam<T> {
     final void bind0(BindContext context) {
 
         // [#1302] Bind value only if it was not explicitly forced to be inlined
-        if (!isInline() && context.paramType() != INLINED) {
+        if (!isInline(context)) {
             context.bindValue(value, this);
         }
     }

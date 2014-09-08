@@ -45,6 +45,8 @@ import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.Record1;
+import org.jooq.Select;
 
 /**
  * @author Lukas Eder
@@ -72,5 +74,10 @@ class CaseImpl implements Case {
     @Override
     public final <T> CaseConditionStep<T> when(Condition condition, Field<T> result) {
         return new CaseConditionStepImpl<T>(condition, result);
+    }
+
+    @Override
+    public final <T> CaseConditionStep<T> when(Condition condition, Select<? extends Record1<T>> result) {
+        return when(condition, DSL.field(result));
     }
 }

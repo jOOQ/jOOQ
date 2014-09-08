@@ -124,4 +124,20 @@ public interface Case {
      */
     @Support
     <T> CaseConditionStep<T> when(Condition condition, Field<T> result);
+
+    /**
+     * This construct can be used to create expressions of the type <code><pre>
+     * CASE WHEN x &lt; 1  THEN 'one'
+     *      WHEN x &gt;= 2 THEN 'two'
+     *      ELSE            'three'
+     * END
+     * </pre></code> Instances of Case are created through the
+     *
+     * @param <T> The generic field type parameter
+     * @param condition A condition to check in the case statement
+     * @param result The result if the condition holds true
+     * @return An intermediary step for case statement construction
+     */
+    @Support
+    <T> CaseConditionStep<T> when(Condition condition, Select<? extends Record1<T>> result);
 }

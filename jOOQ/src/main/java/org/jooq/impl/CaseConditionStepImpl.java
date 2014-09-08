@@ -50,6 +50,8 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPart;
+import org.jooq.Record1;
+import org.jooq.Select;
 
 class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseConditionStep<T> {
 
@@ -85,6 +87,11 @@ class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseCondit
     }
 
     @Override
+    public final CaseConditionStep<T> when(Condition condition, Select<? extends Record1<T>> result) {
+        return when(condition, DSL.field(result));
+    }
+
+    @Override
     public final Field<T> otherwise(T result) {
         return otherwise(Utils.field(result));
     }
@@ -94,6 +101,11 @@ class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseCondit
         this.otherwise = result;
 
         return this;
+    }
+
+    @Override
+    public final Field<T> otherwise(Select<? extends Record1<T>> result) {
+        return otherwise(DSL.field(result));
     }
 
     @Override

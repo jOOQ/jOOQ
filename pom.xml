@@ -256,6 +256,7 @@
         <module>jOOQ-scala</module>
 
         <!-- [pro] -->
+        <!-- [trial] -->
         <!--
         These modules have a Java 8 dependency, which is currently not suitable for Travis-CI
         -->
@@ -264,6 +265,7 @@
 
         <module>jOOQ-test-utils</module>
         <module>jOOQ-test</module>
+        <!-- [/trial] -->
         <!-- [/pro] -->
     </modules>
 

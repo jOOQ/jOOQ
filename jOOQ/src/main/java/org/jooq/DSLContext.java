@@ -262,12 +262,24 @@ public interface DSLContext {
      * variables as named parameters.
      * <p>
      * This is the same as calling
-     * <code>renderContext().namedParams(true).render(part)</code>
+     * <code>renderContext().paramType(NAMED).render(part)</code>
      *
      * @param part The {@link QueryPart} to be rendered
      * @return The rendered SQL
      */
     String renderNamedParams(QueryPart part);
+
+    /**
+     * Render a QueryPart in the context of this <code>DSLContext</code>, rendering bind
+     * variables as named parameters, or inlined parameters if they have no name.
+     * <p>
+     * This is the same as calling
+     * <code>renderContext().paramType(NAMED_OR_INLINED).render(part)</code>
+     *
+     * @param part The {@link QueryPart} to be rendered
+     * @return The rendered SQL
+     */
+    String renderNamedOrInlinedParams(QueryPart part);
 
     /**
      * Render a QueryPart in the context of this <code>DSLContext</code>, inlining all bind

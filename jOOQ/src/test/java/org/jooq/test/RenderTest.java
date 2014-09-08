@@ -44,9 +44,11 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
+import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.conf.RenderKeywordStyle.LOWER;
 import static org.jooq.conf.RenderKeywordStyle.UPPER;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
+import static org.jooq.impl.DSL.param;
 import static org.jooq.impl.DSL.val;
 
 import org.jooq.DSLContext;
@@ -72,13 +74,14 @@ public class RenderTest extends AbstractTest {
         assertEquals("select ?, ? from dual", q.getSQL(false));
         assertEquals("select 1, 'A' from dual", q.getSQL(true));
         assertEquals("select ?, ? from dual", q.getSQL(INDEXED));
-        assertEquals("select :1, :2 from dual", q.getSQL(NAMED));
+        assertEquals("select :var, :2 from dual", q.getSQL(NAMED));
+        assertEquals("select :var, 'A' from dual", q.getSQL(NAMED_OR_INLINED));
         assertEquals("select 1, 'A' from dual", q.getSQL(INLINED));
     }
 
     @Test
     public void testGetSQL() {
-        Query q = create.select(val(1), val("A"));
+        Query q = create.select(param("var", 1), val("A"));
         testGetSQL0(q, "select ?, ? from dual");
     }
 
@@ -86,7 +89,7 @@ public class RenderTest extends AbstractTest {
     public void testGetSQLWithParamTypeINDEXED() {
         Query q =
         DSL.using(SQLDialect.MYSQL, new Settings().withParamType(INDEXED))
-           .select(val(1), val("A"));
+           .select(param("var", 1), val("A"));
 
         testGetSQL0(q, "select ?, ? from dual");
     }
@@ -96,7 +99,7 @@ public class RenderTest extends AbstractTest {
         Query q =
         DSL.using(SQLDialect.MYSQL, new Settings().withParamType(INDEXED)
                                                    .withStatementType(STATIC_STATEMENT))
-           .select(val(1), val("A"));
+           .select(param("var", 1), val("A"));
 
         testGetSQL0(q, "select 1, 'A' from dual");
     }
@@ -105,17 +108,36 @@ public class RenderTest extends AbstractTest {
     public void testGetSQLWithParamTypeNAMED() {
         Query q =
         DSL.using(SQLDialect.MYSQL, new Settings().withParamType(NAMED))
-           .select(val(1), val("A"));
+           .select(param("var", 1), val("A"));
 
-        testGetSQL0(q, "select :1, :2 from dual");
+        testGetSQL0(q, "select :var, :2 from dual");
     }
 
     @Test
     public void testGetSQLWithParamTypeNAMEDandStatementTypeSTATIC() {
         Query q =
         DSL.using(SQLDialect.MYSQL, new Settings().withParamType(NAMED)
-                                                   .withStatementType(STATIC_STATEMENT))
-           .select(val(1), val("A"));
+                                                  .withStatementType(STATIC_STATEMENT))
+           .select(param("var", 1), val("A"));
+
+        testGetSQL0(q, "select 1, 'A' from dual");
+    }
+
+    @Test
+    public void testGetSQLWithParamTypeNAMED_OR_INLINED() {
+        Query q =
+        DSL.using(SQLDialect.MYSQL, new Settings().withParamType(NAMED_OR_INLINED))
+           .select(param("var", 1), val("A"));
+
+        testGetSQL0(q, "select :var, 'A' from dual");
+    }
+
+    @Test
+    public void testGetSQLWithParamTypeNAMED_OR_INLINEDandStatementTypeSTATIC() {
+        Query q =
+        DSL.using(SQLDialect.MYSQL, new Settings().withParamType(NAMED_OR_INLINED)
+                                                  .withStatementType(STATIC_STATEMENT))
+           .select(param("var", 1), val("A"));
 
         testGetSQL0(q, "select 1, 'A' from dual");
     }
@@ -124,7 +146,7 @@ public class RenderTest extends AbstractTest {
     public void testGetSQLWithParamTypeINLINED() {
         Query q =
         DSL.using(SQLDialect.MYSQL, new Settings().withParamType(INLINED))
-           .select(val(1), val("A"));
+           .select(param("var", 1), val("A"));
 
         testGetSQL0(q, "select 1, 'A' from dual");
     }
@@ -133,8 +155,8 @@ public class RenderTest extends AbstractTest {
     public void testGetSQLWithParamTypeINLINEDandStatementTypeSTATIC() {
         Query q =
         DSL.using(SQLDialect.MYSQL, new Settings().withParamType(INLINED)
-                                                   .withStatementType(STATIC_STATEMENT))
-           .select(val(1), val("A"));
+                                                  .withStatementType(STATIC_STATEMENT))
+           .select(param("var", 1), val("A"));
 
         testGetSQL0(q, "select 1, 'A' from dual");
     }

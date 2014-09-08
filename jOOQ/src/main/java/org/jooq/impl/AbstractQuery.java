@@ -475,6 +475,8 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                 return create().renderInlined(this);
             case NAMED:
                 return create().renderNamedParams(this);
+            case NAMED_OR_INLINED:
+                return create().renderNamedOrInlinedParams(this);
         }
 
         throw new IllegalArgumentException("ParamType not supported: " + paramType);

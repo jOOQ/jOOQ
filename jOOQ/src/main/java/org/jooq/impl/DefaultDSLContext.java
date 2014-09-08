@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
+import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.queryPart;
@@ -372,6 +373,11 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     @Override
     public String renderNamedParams(QueryPart part) {
         return renderContext().paramType(NAMED).render(part);
+    }
+
+    @Override
+    public String renderNamedOrInlinedParams(QueryPart part) {
+        return renderContext().paramType(NAMED_OR_INLINED).render(part);
     }
 
     @Override

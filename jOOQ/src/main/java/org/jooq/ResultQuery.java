@@ -825,15 +825,15 @@ public interface ResultQuery<R extends Record> extends Query {
      * @see Result#intoMap(Field[], Class)
      * @see DefaultRecordMapper
      */
-    <E> Map<List<?>, E> fetchMap(Field<?>[] keys, Class<? extends E> type) throws MappingException;
+    <E> Map<List<?>, E> fetchMap(Field<?>[] keys, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
      * given keys and mapped by the given mapper.
      * <p>
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
-     * in the result set. Use {@link #fetchGroups(Field[], Class)} instead, if
-     * your keys are non-unique.
+     * in the result set. Use {@link #fetchGroups(Field[], RecordMapper)}
+     * instead, if your keys are non-unique.
      *
      * @param keys The keys. Client code must assure that keys are unique in the
      *            result set. If this is <code>null</code> or an empty array,
@@ -848,7 +848,72 @@ public interface ResultQuery<R extends Record> extends Query {
      * @see Result#intoMap(Field[], Class)
      * @see DefaultRecordMapper
      */
-    <E> Map<List<?>, E> fetchMap(Field<?>[] keys, RecordMapper<? super R, E> mapper) throws MappingException;
+    <E> Map<List<?>, E> fetchMap(Field<?>[] keys, RecordMapper<? super R, E> mapper) throws DataAccessException,
+        MappingException;
+
+    /**
+     * Execute the query and return a {@link Map} with table as a map key and the
+     * corresponding record as value.
+     * <p>
+     * An exception is thrown, if the keys turn out to be non-unique in the
+     * result set. Use {@link #fetchGroups(Table)} instead, if your keys are
+     * non-unique.
+     *
+     * @param table The key table. Client code must assure that keys are unique
+     *            in the result set. May not be <code>null</code>.
+     * @return A Map containing the results.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the key list is non-unique in the
+     *             result set.
+     * @see Result#intoMap(Table)
+     */
+    <S extends Record> Map<S, R> fetchMap(Table<S> table) throws DataAccessException;
+
+    /**
+     * Execute the query and return a {@link Map} with results grouped by the
+     * given table and mapped into the given entity type.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #fetchGroups(Table, Class)} instead, if
+     * your keys are non-unique.
+     *
+     * @param table The key table. Client code must assure that keys are unique
+     *            in the result set. May not be <code>null</code>.
+     * @param type The entity type.
+     * @return A Map containing the results.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see Result#intoMap(Table, Class)
+     * @see DefaultRecordMapper
+     */
+    <E, S extends Record> Map<S, E> fetchMap(Table<S> table, Class<? extends E> type) throws DataAccessException,
+        MappingException;
+
+    /**
+     * Execute the query and return a {@link Map} with results grouped by the
+     * given table and mapped by the given mapper.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #fetchGroups(Table, RecordMapper)} instead,
+     * if your keys are non-unique.
+     *
+     * @param table The key table. Client code must assure that keys are unique
+     *            in the result set. May not be <code>null</code>.
+     * @param mapper The mapper callback.
+     * @return A Map containing the results.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see Result#intoMap(Table, Class)
+     * @see DefaultRecordMapper
+     */
+    <E, S extends Record> Map<S, E> fetchMap(Table<S> table, RecordMapper<? super R, E> mapper)
+        throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -931,7 +996,9 @@ public interface ResultQuery<R extends Record> extends Query {
      * Unlike {@link #fetchMap(Field[])}, this method allows for non-unique keys
      * in the result set.
      *
-     * @param keys The keys used for result grouping.
+     * @param keys The keys used for result grouping. If this is
+     *            <code>null</code> or an empty array, the resulting map will
+     *            contain at most one entry.
      * @return A Map containing grouped results
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Field[])
@@ -961,7 +1028,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * Execute the query and return a {@link Map} with results grouped by the
      * given keys and mapped by the given mapper.
      * <p>
-     * Unlike {@link #fetchMap(Field[], Class)}, this method allows for
+     * Unlike {@link #fetchMap(Field[], RecordMapper)}, this method allows for
      * non-unique keys in the result set.
      *
      * @param keys The keys. If this is <code>null</code> or an empty array, the
@@ -975,6 +1042,58 @@ public interface ResultQuery<R extends Record> extends Query {
      * @see DefaultRecordMapper
      */
     <E> Map<Record, List<E>> fetchGroups(Field<?>[] keys, RecordMapper<? super R, E> mapper) throws MappingException;
+
+    /**
+     * Execute the query and return a {@link Map} with the result grouped by the
+     * given table.
+     * <p>
+     * Unlike {@link #fetchMap(Table)}, this method allows for non-unique keys
+     * in the result set.
+     *
+     * @param table The key table. May not be <code>null</code>.
+     * @return A Map containing grouped results
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoGroups(Field[])
+     */
+    <S extends Record> Map<S, Result<R>> fetchGroups(Table<S> table) throws DataAccessException;
+
+    /**
+     * Execute the query and return a {@link Map} with results grouped by the
+     * given table and mapped into the given entity type.
+     * <p>
+     * Unlike {@link #fetchMap(Table, Class)}, this method allows for non-unique
+     * keys in the result set.
+     *
+     * @param table The key table. May not be <code>null</code>.
+     * @param type The entity type.
+     * @return A Map containing grouped results
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see Result#intoGroups(Table, Class)
+     * @see DefaultRecordMapper
+     */
+    <E, S extends Record> Map<S, List<E>> fetchGroups(Table<S> table, Class<? extends E> type)
+        throws DataAccessException, MappingException;
+
+    /**
+     * Execute the query and return a {@link Map} with results grouped by the
+     * given table and mapped by the given mapper.
+     * <p>
+     * Unlike {@link #fetchMap(Table, RecordMapper)}, this method allows for
+     * non-unique keys in the result set.
+     *
+     * @param table The key table. May not be <code>null</code>.
+     * @param mapper The mapper callback.
+     * @return A Map containing grouped results
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see Result#intoGroups(Table, Class)
+     * @see DefaultRecordMapper
+     */
+    <E, S extends Record> Map<S, List<E>> fetchGroups(Table<S> table, RecordMapper<? super R, E> mapper)
+        throws DataAccessException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped

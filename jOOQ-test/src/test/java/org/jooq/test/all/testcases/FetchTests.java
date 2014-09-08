@@ -55,6 +55,7 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.lambda.Seq.seq;
 import static org.jooq.tools.reflect.Reflect.on;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -243,6 +244,47 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             fail();
         }
         catch (InvalidResultException expected) {}
+    }
+
+    public void testFetchMapTable() throws Exception {
+        Map<B, Record> result =
+        create().select()
+                .from(TBook())
+                .join(TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+                .orderBy(TBook_ID())
+                .fetchMap(TBook());
+
+        assertEquals(4, result.size());
+        assertEquals(BOOK_IDS,    seq(result.keySet()).map(b -> b.getValue(TBook_ID())).toList());
+        assertEquals(BOOK_TITLES, seq(result.keySet()).map(b -> b.getValue(TBook_TITLE())).toList());
+        result.keySet().forEach(b -> assertEquals(TBook().getRecordType(), b.getClass()));
+
+        assertEquals(BOOK_IDS,         seq(result.values()).map(b -> b.getValue(TBook_ID())).toList());
+        assertEquals(BOOK_TITLES,      seq(result.values()).map(b -> b.getValue(TBook_TITLE())).toList());
+        assertEquals(BOOK_AUTHOR_IDS,  seq(result.values()).map(a -> a.getValue(TAuthor_ID())).toList());
+        assertEquals(BOOK_FIRST_NAMES, seq(result.values()).map(a -> a.getValue(TAuthor_FIRST_NAME())).toList());
+        assertEquals(BOOK_LAST_NAMES,  seq(result.values()).map(a -> a.getValue(TAuthor_LAST_NAME())).toList());
+    }
+
+    public void testFetchGroupsTable() throws Exception {
+        Map<A, Result<Record>> result =
+        create().select()
+                .from(TBook())
+                .join(TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+                .orderBy(TBook_ID())
+                .fetchGroups(TAuthor());
+
+        assertEquals(2, result.size());
+        assertEquals(AUTHOR_IDS,         seq(result.keySet()).map(a -> a.getValue(TAuthor_ID())).toList());
+        assertEquals(AUTHOR_FIRST_NAMES, seq(result.keySet()).map(a -> a.getValue(TAuthor_FIRST_NAME())).toList());
+        assertEquals(AUTHOR_LAST_NAMES,  seq(result.keySet()).map(a -> a.getValue(TAuthor_LAST_NAME())).toList());
+        result.keySet().forEach(b -> assertEquals(TAuthor().getRecordType(), b.getClass()));
+
+        assertEquals(BOOK_IDS,         seq(result.values()).flatMap(r -> r.stream()).map(b -> b.getValue(TBook_ID())).toList());
+        assertEquals(BOOK_TITLES,      seq(result.values()).flatMap(r -> r.stream()).map(b -> b.getValue(TBook_TITLE())).toList());
+        assertEquals(BOOK_AUTHOR_IDS,  seq(result.values()).flatMap(r -> r.stream()).map(a -> a.getValue(TAuthor_ID())).toList());
+        assertEquals(BOOK_FIRST_NAMES, seq(result.values()).flatMap(r -> r.stream()).map(a -> a.getValue(TAuthor_FIRST_NAME())).toList());
+        assertEquals(BOOK_LAST_NAMES,  seq(result.values()).flatMap(r -> r.stream()).map(a -> a.getValue(TAuthor_LAST_NAME())).toList());
     }
 
     public void testFetchGroups() throws Exception {

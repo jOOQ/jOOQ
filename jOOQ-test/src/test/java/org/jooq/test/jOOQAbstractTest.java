@@ -1285,6 +1285,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchMapTable() throws Exception {
+        new FetchTests(this).testFetchMapTable();
+    }
+
+    @Test
     public void testFetchMapPOJO() throws Exception {
         new FetchTests(this).testFetchMapPOJO();
     }
@@ -1292,6 +1297,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testFetchGroups() throws Exception {
         new FetchTests(this).testFetchGroups();
+    }
+
+    @Test
+    public void testFetchGroupsTable() throws Exception {
+        new FetchTests(this).testFetchGroupsTable();
     }
 
     @Test

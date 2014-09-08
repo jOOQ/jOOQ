@@ -1042,6 +1042,41 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final <S extends Record> Map<S, R> intoMap(Table<S> table) {
+        Map<S, R> map = new LinkedHashMap<S, R>();
+
+        for (R record : this) {
+            S key = record.into(table);
+
+            if (map.put(key, record) != null) {
+                throw new InvalidResultException("Key list " + key + " is not unique in Result for " + this);
+            }
+        }
+
+        return map;
+    }
+
+    @Override
+    public final <E, S extends Record> Map<S, E> intoMap(Table<S> table, Class<? extends E> type) {
+        return intoMap(table, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+    }
+
+    @Override
+    public final <E, S extends Record> Map<S, E> intoMap(Table<S> table, RecordMapper<? super R, E> mapper) {
+        Map<S, E> map = new LinkedHashMap<S, E>();
+
+        for (R record : this) {
+            S key = record.into(table);
+
+            if (map.put(key, mapper.map(record)) != null) {
+                throw new InvalidResultException("Key list " + key + " is not unique in Result for " + this);
+            }
+        }
+
+        return map;
+    }
+
+    @Override
     public final <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) {
         return intoMap(key, Utils.configuration(this).recordMapperProvider().provide(fields, type));
     }
@@ -1104,6 +1139,31 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) {
+        return intoGroups(key, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+    }
+
+    @Override
+    public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, RecordMapper<? super R, E> mapper) {
+        int index = indexOrFail(fieldsRow(), key);
+        Map<K, List<E>> map = new LinkedHashMap<K, List<E>>();
+
+        for (R record : this) {
+            K keyVal = (K) record.getValue(index);
+
+            List<E> list = map.get(keyVal);
+            if (list == null) {
+                list = new ArrayList<E>();
+                map.put(keyVal, list);
+            }
+
+            list.add(mapper.map(record));
+        }
+
+        return map;
+    }
+
+    @Override
     public final Map<Record, Result<R>> intoGroups(Field<?>[] keys) {
         if (keys == null) {
             keys = new Field[0];
@@ -1130,31 +1190,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
-    public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) {
-        return intoGroups(key, Utils.configuration(this).recordMapperProvider().provide(fields, type));
-    }
-
-    @Override
-    public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, RecordMapper<? super R, E> mapper) {
-        int index = indexOrFail(fieldsRow(), key);
-        Map<K, List<E>> map = new LinkedHashMap<K, List<E>>();
-
-        for (R record : this) {
-            K keyVal = (K) record.getValue(index);
-
-            List<E> list = map.get(keyVal);
-            if (list == null) {
-                list = new ArrayList<E>();
-                map.put(keyVal, list);
-            }
-
-            list.add(mapper.map(record));
-        }
-
-        return map;
-    }
-
-    @Override
     public final <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) {
         return intoGroups(keys, Utils.configuration(this).recordMapperProvider().provide(fields, type));
     }
@@ -1172,6 +1207,49 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             for (Field<?> field : keys) {
                 Utils.copyValue(key, field, record, field);
             }
+
+            List<E> list = map.get(key);
+            if (list == null) {
+                list = new ArrayList<E>();
+                map.put(key, list);
+            }
+
+            list.add(mapper.map(record));
+        }
+
+        return map;
+    }
+
+    @Override
+    public final <S extends Record> Map<S, Result<R>> intoGroups(Table<S> table) {
+        Map<S, Result<R>> map = new LinkedHashMap<S, Result<R>>();
+
+        for (R record : this) {
+            S key = record.into(table);
+
+            Result<R> result = map.get(key);
+            if (result == null) {
+                result = new ResultImpl<R>(configuration(), this.fields);
+                map.put(key, result);
+            }
+
+            result.add(record);
+        }
+
+        return map;
+    }
+
+    @Override
+    public final <E, S extends Record> Map<S, List<E>> intoGroups(Table<S> table, Class<? extends E> type) {
+        return intoGroups(table, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+    }
+
+    @Override
+    public final <E, S extends Record> Map<S, List<E>> intoGroups(Table<S> table, RecordMapper<? super R, E> mapper) {
+        Map<S, List<E>> map = new LinkedHashMap<S, List<E>>();
+
+        for (R record : this) {
+            S key = record.into(table);
 
             List<E> list = map.get(key);
             if (list == null) {

@@ -4405,9 +4405,21 @@
                                                     <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
                                                     <converter>org.jooq.test.all.converters.Boolean_YES_NO_UC_Converter</converter>
                                                 </customType>
+                                                
+                                                 <customType>
+                                                    <name>LocalDateTime</name>
+                                                    <type>java.time.LocalDateTime</type>
+                                                    <converter>org.jooq.test.all.converters.LocalDateTimeConverter</converter>
+                                                </customType>
                                             </customTypes>
 
                                             <forcedTypes>
+                                                <forcedType>
+                                                    <name>LocalDateTime</name>
+                                                    <expression>.*2155.*</expression>
+                                                    <types>DATE</types>
+                                                </forcedType>
+                                                
                                                 <forcedType>
                                                     <name>BOOLEAN</name>
                                                     <expression>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expression>

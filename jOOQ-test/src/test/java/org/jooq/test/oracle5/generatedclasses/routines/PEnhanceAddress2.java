@@ -16,12 +16,12 @@ package org.jooq.test.oracle5.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PEnhanceAddress2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 642462053;
+	private static final long serialVersionUID = 685057456;
 
 	/**
 	 * The parameter <code>TEST.P_ENHANCE_ADDRESS2.ADDRESS</code>.
 	 */
-		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord> ADDRESS = createParameter("ADDRESS", org.jooq.test.oracle5.generatedclasses.udt.UAddressType.U_ADDRESS_TYPE.getDataType(), false);
+	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord> ADDRESS = createParameter("ADDRESS", org.jooq.test.oracle5.generatedclasses.udt.UAddressType.U_ADDRESS_TYPE.getDataType(), false);
 
 	/**
 	 * Create a new routine call instance

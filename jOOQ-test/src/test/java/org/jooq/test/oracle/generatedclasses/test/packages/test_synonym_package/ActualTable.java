@@ -9,12 +9,12 @@ package org.jooq.test.oracle.generatedclasses.test.packages.test_synonym_package
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActualTable extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord> {
 
-	private static final long serialVersionUID = 1894767742;
+	private static final long serialVersionUID = -694059537;
 
 	/**
 	 * The parameter <code>TEST.TEST_SYNONYM_PACKAGE.ACTUAL_TABLE.RETURN_VALUE</code>.
 	 */
-	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord.class));
+	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord.class), false);
 
 	/**
 	 * Create a new routine call instance

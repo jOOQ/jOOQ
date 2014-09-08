@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1711505933;
+	private static final long serialVersionUID = 335258244;
 
 	/**
 	 * The parameter <code>TEST.P_DEFAULT.P_IN_NUMBER</code>.
@@ -19,7 +19,7 @@ public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	/**
 	 * The parameter <code>TEST.P_DEFAULT.P_OUT_NUMBER</code>.
 	 */
-	public static final org.jooq.Parameter<java.math.BigDecimal> P_OUT_NUMBER = createParameter("P_OUT_NUMBER", org.jooq.impl.SQLDataType.NUMERIC);
+	public static final org.jooq.Parameter<java.math.BigDecimal> P_OUT_NUMBER = createParameter("P_OUT_NUMBER", org.jooq.impl.SQLDataType.NUMERIC, false);
 
 	/**
 	 * The parameter <code>TEST.P_DEFAULT.P_IN_VARCHAR</code>.
@@ -29,7 +29,7 @@ public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	/**
 	 * The parameter <code>TEST.P_DEFAULT.P_OUT_VARCHAR</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.String> P_OUT_VARCHAR = createParameter("P_OUT_VARCHAR", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> P_OUT_VARCHAR = createParameter("P_OUT_VARCHAR", org.jooq.impl.SQLDataType.VARCHAR, false);
 
 	/**
 	 * The parameter <code>TEST.P_DEFAULT.P_IN_DATE</code>.
@@ -39,7 +39,7 @@ public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	/**
 	 * The parameter <code>TEST.P_DEFAULT.P_OUT_DATE</code>.
 	 */
-	public static final org.jooq.Parameter<java.sql.Date> P_OUT_DATE = createParameter("P_OUT_DATE", org.jooq.impl.SQLDataType.DATE);
+	public static final org.jooq.Parameter<java.sql.Date> P_OUT_DATE = createParameter("P_OUT_DATE", org.jooq.impl.SQLDataType.DATE, false);
 
 	/**
 	 * Create a new routine call instance

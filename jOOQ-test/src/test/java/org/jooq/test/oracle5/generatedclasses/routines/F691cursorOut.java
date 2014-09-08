@@ -16,12 +16,12 @@ package org.jooq.test.oracle5.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class F691cursorOut extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> {
 
-	private static final long serialVersionUID = -175035430;
+	private static final long serialVersionUID = 1741685461;
 
 	/**
 	 * The parameter <code>TEST.F691CURSOR_OUT.RETURN_VALUE</code>.
 	 */
-		public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.RESULT, false);
+	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.RESULT, false);
 
 	/**
 	 * Create a new routine call instance

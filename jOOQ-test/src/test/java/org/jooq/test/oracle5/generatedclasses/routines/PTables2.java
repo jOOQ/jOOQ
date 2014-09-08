@@ -16,17 +16,17 @@ package org.jooq.test.oracle5.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PTables2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1174055140;
+	private static final long serialVersionUID = 1470944672;
 
 	/**
 	 * The parameter <code>TEST.P_TABLES2.IN_TABLE</code>.
 	 */
-		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UNumberLongTableRecord> IN_TABLE = createParameter("IN_TABLE", org.jooq.impl.SQLDataType.NUMERIC.asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UNumberLongTableRecord.class), false);
+	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UNumberLongTableRecord> IN_TABLE = createParameter("IN_TABLE", org.jooq.impl.SQLDataType.NUMERIC.asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UNumberLongTableRecord.class), false);
 
 	/**
 	 * The parameter <code>TEST.P_TABLES2.OUT_TABLE</code>.
 	 */
-		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UNumberLongTableRecord> OUT_TABLE = createParameter("OUT_TABLE", org.jooq.impl.SQLDataType.NUMERIC.asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UNumberLongTableRecord.class), false);
+	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UNumberLongTableRecord> OUT_TABLE = createParameter("OUT_TABLE", org.jooq.impl.SQLDataType.NUMERIC.asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UNumberLongTableRecord.class), false);
 
 	/**
 	 * Create a new routine call instance

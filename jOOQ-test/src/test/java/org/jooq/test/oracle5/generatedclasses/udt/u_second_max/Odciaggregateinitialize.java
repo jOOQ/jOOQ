@@ -16,17 +16,17 @@ package org.jooq.test.oracle5.generatedclasses.udt.u_second_max;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Odciaggregateinitialize extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -2082847822;
+	private static final long serialVersionUID = 267372728;
 
 	/**
 	 * The parameter <code>TEST.U_SECOND_MAX.ODCIAGGREGATEINITIALIZE.RETURN_VALUE</code>.
 	 */
-		public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC, false);
+	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC, false);
 
 	/**
 	 * The parameter <code>TEST.U_SECOND_MAX.ODCIAGGREGATEINITIALIZE.SCTX</code>.
 	 */
-		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.USecondMaxRecord> SCTX = createParameter("SCTX", org.jooq.test.oracle5.generatedclasses.udt.USecondMax.U_SECOND_MAX.getDataType(), false);
+	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.USecondMaxRecord> SCTX = createParameter("SCTX", org.jooq.test.oracle5.generatedclasses.udt.USecondMax.U_SECOND_MAX.getDataType(), false);
 
 	/**
 	 * Create a new routine call instance

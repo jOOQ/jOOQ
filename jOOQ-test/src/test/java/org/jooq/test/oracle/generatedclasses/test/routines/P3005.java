@@ -9,12 +9,12 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class P3005 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -121037130;
+	private static final long serialVersionUID = 957653309;
 
 	/**
 	 * The parameter <code>TEST.P3005.P1</code>.
 	 */
-	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.U_3005Record> P1 = createParameter("P1", org.jooq.test.oracle.generatedclasses.test.udt.U_3005.U_3005.getDataType());
+	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.test.udt.records.U_3005Record> P1 = createParameter("P1", org.jooq.test.oracle.generatedclasses.test.udt.U_3005.U_3005.getDataType(), false);
 
 	/**
 	 * Create a new routine call instance

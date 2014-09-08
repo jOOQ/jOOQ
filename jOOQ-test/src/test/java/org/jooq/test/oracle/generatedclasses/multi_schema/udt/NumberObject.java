@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class NumberObject extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord> {
 
-	private static final long serialVersionUID = 48929874;
+	private static final long serialVersionUID = 1855430686;
 
 	/**
 	 * The singleton instance of <code>MULTI_SCHEMA.NUMBER_OBJECT</code>
@@ -27,17 +27,17 @@ public class NumberObject extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gen
 	/**
 	 * The attribute <code>MULTI_SCHEMA.NUMBER_OBJECT.A</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord, java.lang.Integer> A = createField("A", org.jooq.impl.SQLDataType.INTEGER, NUMBER_OBJECT);
+	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord, java.lang.Integer> A = createField("A", org.jooq.impl.SQLDataType.INTEGER, NUMBER_OBJECT, "");
 
 	/**
 	 * The attribute <code>MULTI_SCHEMA.NUMBER_OBJECT.B</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord, java.lang.Integer> B = createField("B", org.jooq.impl.SQLDataType.INTEGER, NUMBER_OBJECT);
+	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord, java.lang.Integer> B = createField("B", org.jooq.impl.SQLDataType.INTEGER, NUMBER_OBJECT, "");
 
 	/**
 	 * The attribute <code>MULTI_SCHEMA.NUMBER_OBJECT.C</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord, java.lang.Integer> C = createField("C", org.jooq.impl.SQLDataType.INTEGER, NUMBER_OBJECT);
+	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord, java.lang.Integer> C = createField("C", org.jooq.impl.SQLDataType.INTEGER, NUMBER_OBJECT, "");
 
 	/**
 	 * No further instances allowed

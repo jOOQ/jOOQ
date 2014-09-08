@@ -16,12 +16,12 @@ package org.jooq.test.oracle5.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FPipelinedTable1 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle5.generatedclasses.udt.records.UNumberTableRecord> {
 
-	private static final long serialVersionUID = 1934727944;
+	private static final long serialVersionUID = 1138786699;
 
 	/**
 	 * The parameter <code>TEST.F_PIPELINED_TABLE1.RETURN_VALUE</code>.
 	 */
-		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UNumberTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC.asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UNumberTableRecord.class), false);
+	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UNumberTableRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC.asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UNumberTableRecord.class), false);
 
 	/**
 	 * Create a new routine call instance

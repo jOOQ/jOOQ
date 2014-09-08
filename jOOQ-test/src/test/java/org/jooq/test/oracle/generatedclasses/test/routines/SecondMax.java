@@ -9,17 +9,17 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SecondMax extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 2144092082;
+	private static final long serialVersionUID = -223187118;
 
 	/**
 	 * The parameter <code>TEST.SECOND_MAX.RETURN_VALUE</code>.
 	 */
-	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
+	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC, false);
 
 	/**
 	 * The parameter <code>TEST.SECOND_MAX.INPUT</code>.
 	 */
-	public static final org.jooq.Parameter<java.math.BigDecimal> INPUT = createParameter("INPUT", org.jooq.impl.SQLDataType.NUMERIC);
+	public static final org.jooq.Parameter<java.math.BigDecimal> INPUT = createParameter("INPUT", org.jooq.impl.SQLDataType.NUMERIC, false);
 
 	/**
 	 * Create a new routine call instance

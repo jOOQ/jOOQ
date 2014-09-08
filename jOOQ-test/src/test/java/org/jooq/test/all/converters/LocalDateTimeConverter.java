@@ -43,6 +43,7 @@ package org.jooq.test.all.converters;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.TimeZone;
 
 import org.jooq.Converter;
 
@@ -55,12 +56,12 @@ public class LocalDateTimeConverter implements Converter<Date, LocalDateTime> {
 
     @Override
     public LocalDateTime from(Date t) {
-        return t == null ? null : LocalDateTime.ofEpochSecond(t.getTime(), 0, ZoneOffset.UTC);
+        return t == null ? null : LocalDateTime.ofEpochSecond((t.getTime() + TimeZone.getDefault().getRawOffset()) / 1000, 0, ZoneOffset.UTC);
     }
 
     @Override
     public Date to(LocalDateTime u) {
-        return u == null ? null : new Date(u.toEpochSecond(ZoneOffset.UTC));
+        return u == null ? null : new Date(u.toEpochSecond(ZoneOffset.UTC) * 1000);
     }
 
     @Override

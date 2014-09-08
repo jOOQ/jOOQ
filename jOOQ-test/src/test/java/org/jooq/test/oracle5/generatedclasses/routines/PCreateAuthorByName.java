@@ -16,17 +16,17 @@ package org.jooq.test.oracle5.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 612929348;
+	private static final long serialVersionUID = -970796622;
 
 	/**
 	 * The parameter <code>TEST.P_CREATE_AUTHOR_BY_NAME.FIRST_NAME</code>.
 	 */
-		public static final org.jooq.Parameter<java.lang.String> FIRST_NAME = createParameter("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, false);
+	public static final org.jooq.Parameter<java.lang.String> FIRST_NAME = createParameter("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, false);
 
 	/**
 	 * The parameter <code>TEST.P_CREATE_AUTHOR_BY_NAME.LAST_NAME</code>.
 	 */
-		public static final org.jooq.Parameter<java.lang.String> LAST_NAME = createParameter("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, false);
+	public static final org.jooq.Parameter<java.lang.String> LAST_NAME = createParameter("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, false);
 
 	/**
 	 * Create a new routine call instance

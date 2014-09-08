@@ -16,12 +16,12 @@ package org.jooq.test.oracle5.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class P1490 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1230867942;
+	private static final long serialVersionUID = 761578161;
 
 	/**
 	 * The parameter <code>TEST.P1490.value</code>.
 	 */
-		public static final org.jooq.Parameter<java.math.BigDecimal> VALUE = createParameter("value", org.jooq.impl.SQLDataType.NUMERIC, false);
+	public static final org.jooq.Parameter<java.math.BigDecimal> VALUE = createParameter("value", org.jooq.impl.SQLDataType.NUMERIC, false);
 
 	/**
 	 * Create a new routine call instance

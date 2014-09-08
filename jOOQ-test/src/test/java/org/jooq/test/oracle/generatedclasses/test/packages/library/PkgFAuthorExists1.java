@@ -9,17 +9,17 @@ package org.jooq.test.oracle.generatedclasses.test.packages.library;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PkgFAuthorExists1 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 1570368236;
+	private static final long serialVersionUID = -729539948;
 
 	/**
 	 * The parameter <code>TEST.LIBRARY.PKG_F_AUTHOR_EXISTS.RETURN_VALUE</code>.
 	 */
-	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
+	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC, false);
 
 	/**
 	 * The parameter <code>TEST.LIBRARY.PKG_F_AUTHOR_EXISTS.AUTHOR_NAME</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("AUTHOR_NAME", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("AUTHOR_NAME", org.jooq.impl.SQLDataType.VARCHAR, false);
 
 	/**
 	 * Create a new routine call instance

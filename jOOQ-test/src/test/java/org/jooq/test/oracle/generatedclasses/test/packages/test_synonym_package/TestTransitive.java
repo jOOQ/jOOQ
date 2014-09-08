@@ -9,12 +9,12 @@ package org.jooq.test.oracle.generatedclasses.test.packages.test_synonym_package
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TestTransitive extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord> {
 
-	private static final long serialVersionUID = -1239709694;
+	private static final long serialVersionUID = 183076457;
 
 	/**
 	 * The parameter <code>TEST.TEST_SYNONYM_PACKAGE.TEST_TRANSITIVE.RETURN_VALUE</code>.
 	 */
-	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.test.oracle.generatedclasses.multi_schema.udt.NumberObject.NUMBER_OBJECT.getDataType());
+	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.test.oracle.generatedclasses.multi_schema.udt.NumberObject.NUMBER_OBJECT.getDataType(), false);
 
 	/**
 	 * Create a new routine call instance

@@ -16,12 +16,12 @@ package org.jooq.test.oracle5.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FPipelinedArray4 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle5.generatedclasses.udt.records.UBookArrayRecord> {
 
-	private static final long serialVersionUID = 494289882;
+	private static final long serialVersionUID = 1810464839;
 
 	/**
 	 * The parameter <code>TEST.F_PIPELINED_ARRAY4.RETURN_VALUE</code>.
 	 */
-		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UBookArrayRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.test.oracle5.generatedclasses.udt.UBookType.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UBookArrayRecord.class), false);
+	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UBookArrayRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.test.oracle5.generatedclasses.udt.UBookType.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UBookArrayRecord.class), false);
 
 	/**
 	 * Create a new routine call instance

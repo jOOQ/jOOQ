@@ -72,6 +72,11 @@ public class UDTs {
 	public static org.jooq.test.oracle5.generatedclasses.udt.UStreetType U_STREET_TYPE = org.jooq.test.oracle5.generatedclasses.udt.UStreetType.U_STREET_TYPE;
 
 	/**
+	 * The type <code>TEST.U_2155_OBJECT</code>
+	 */
+	public static org.jooq.test.oracle5.generatedclasses.udt.U_2155Object U_2155_OBJECT = org.jooq.test.oracle5.generatedclasses.udt.U_2155Object.U_2155_OBJECT;
+
+	/**
 	 * The type <code>TEST.U_3005</code>
 	 */
 	public static org.jooq.test.oracle5.generatedclasses.udt.U_3005 U_3005 = org.jooq.test.oracle5.generatedclasses.udt.U_3005.U_3005;

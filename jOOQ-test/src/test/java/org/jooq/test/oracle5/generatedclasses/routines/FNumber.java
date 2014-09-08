@@ -16,17 +16,17 @@ package org.jooq.test.oracle5.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FNumber extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 1912656317;
+	private static final long serialVersionUID = -752687421;
 
 	/**
 	 * The parameter <code>TEST.F_NUMBER.RETURN_VALUE</code>.
 	 */
-		public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC, false);
+	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC, false);
 
 	/**
 	 * The parameter <code>TEST.F_NUMBER.N</code>.
 	 */
-		public static final org.jooq.Parameter<java.math.BigDecimal> N = createParameter("N", org.jooq.impl.SQLDataType.NUMERIC, false);
+	public static final org.jooq.Parameter<java.math.BigDecimal> N = createParameter("N", org.jooq.impl.SQLDataType.NUMERIC, false);
 
 	/**
 	 * Create a new routine call instance

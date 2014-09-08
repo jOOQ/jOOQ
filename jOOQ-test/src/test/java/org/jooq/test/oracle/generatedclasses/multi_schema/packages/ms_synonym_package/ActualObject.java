@@ -9,12 +9,12 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_p
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActualObject extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord> {
 
-	private static final long serialVersionUID = -575642925;
+	private static final long serialVersionUID = -1789756476;
 
 	/**
 	 * The parameter <code>MULTI_SCHEMA.MS_SYNONYM_PACKAGE.ACTUAL_OBJECT.RETURN_VALUE</code>.
 	 */
-	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.test.oracle.generatedclasses.multi_schema.udt.NumberObject.NUMBER_OBJECT.getDataType());
+	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.test.oracle.generatedclasses.multi_schema.udt.NumberObject.NUMBER_OBJECT.getDataType(), false);
 
 	/**
 	 * Create a new routine call instance

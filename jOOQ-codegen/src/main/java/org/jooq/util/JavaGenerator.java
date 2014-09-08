@@ -2589,10 +2589,10 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), defaultIfBlank(" " + paramComment, ""));
 
             if (paramConverterType != null)
-                out.tab(2).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s, new %s());",
+                out.tab(1).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s, new %s());",
                     Parameter.class, paramType, paramId, paramName, paramTypeRef, isDefaulted, paramConverterType);
             else
-                out.tab(2).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s);",
+                out.tab(1).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s);",
                     Parameter.class, paramType, paramId, paramName, paramTypeRef, isDefaulted);
         }
 

@@ -86,6 +86,11 @@ Oh, and beware of end-of-javadoc * /
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TUnsigned T_UNSIGNED = org.jooq.test.oracle.generatedclasses.test.tables.TUnsigned.T_UNSIGNED;
 
 	/**
+	 * The table TEST.T_2155
+	 */
+	public static final org.jooq.test.oracle.generatedclasses.test.tables.T_2155 T_2155 = org.jooq.test.oracle.generatedclasses.test.tables.T_2155.T_2155;
+
+	/**
 	 * The table TEST.T_2845_CASE_sensitivity
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.T_2845CaseSensitivity T_2845_CASE_SENSITIVITY = org.jooq.test.oracle.generatedclasses.test.tables.T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY;

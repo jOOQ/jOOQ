@@ -16,7 +16,7 @@ package org.jooq.test.oracle5.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -953047095;
+	private static final long serialVersionUID = -981014176;
 
 	/**
 	 * The singleton instance of <code>TEST</code>
@@ -72,6 +72,7 @@ public class Test extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.oracle5.generatedclasses.tables.TTemp.T_TEMP,
 			org.jooq.test.oracle5.generatedclasses.tables.TTriggers.T_TRIGGERS,
 			org.jooq.test.oracle5.generatedclasses.tables.TUnsigned.T_UNSIGNED,
+			org.jooq.test.oracle5.generatedclasses.tables.T_2155.T_2155,
 			org.jooq.test.oracle5.generatedclasses.tables.T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY,
 			org.jooq.test.oracle5.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,
 			org.jooq.test.oracle5.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST,
@@ -108,6 +109,7 @@ public class Test extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.oracle5.generatedclasses.udt.UNested_3.U_NESTED_3,
 			org.jooq.test.oracle5.generatedclasses.udt.USecondMax.U_SECOND_MAX,
 			org.jooq.test.oracle5.generatedclasses.udt.UStreetType.U_STREET_TYPE,
+			org.jooq.test.oracle5.generatedclasses.udt.U_2155Object.U_2155_OBJECT,
 			org.jooq.test.oracle5.generatedclasses.udt.U_3005.U_3005);
 	}
 }

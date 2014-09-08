@@ -47,6 +47,7 @@ DROP TABLE "T_2845_CASE_sensitivity"/
 DROP TABLE t_unsigned/
 DROP TABLE t_booleans/
 DROP TABLE t_temp/
+DROP TABLE t_2155/
 
 DROP TABLE multi_schema_unused.x_unused/
 
@@ -83,6 +84,8 @@ DROP PROCEDURE p_create_author_by_name/
 DROP PROCEDURE p_author_exists/
 DROP PROCEDURE p391/
 DROP PROCEDURE p1490/
+DROP PROCEDURE p2155/
+DROP FUNCTION f2155/
 DROP FUNCTION f_author_exists/
 DROP FUNCTION f_one/
 DROP FUNCTION f_number/
@@ -120,6 +123,17 @@ DROP TYPE u_book_array/
 DROP TYPE u_book_type/
 DROP TYPE u_second_max/
 DROP TYPE u_3005/
+DROP TYPE u_2155_object/
+DROP TYPE u_2155_array/
+
+CREATE TYPE u_2155_array AS VARRAY(10) OF DATE
+/
+
+CREATE TYPE u_2155_object AS OBJECT (
+  D DATE,
+  A u_2155_array
+)
+/
 
 CREATE TYPE u_3005 AS OBJECT (
   ID NUMBER(7)
@@ -390,6 +404,16 @@ CREATE TABLE t_dates (
   i_d interval day to second,
 
   CONSTRAINT pk_t_dates PRIMARY KEY (id)
+)
+/
+
+CREATE TABLE t_2155 (
+  id number(7),
+  d1 DATE,
+  d2 u_2155_object,
+  d3 u_2155_array,
+
+  CONSTRAINT pk_t_2155 PRIMARY KEY (id)
 )
 /
 
@@ -1251,6 +1275,24 @@ BEGIN
   o2 := io2;
   io2 := i2;
 END p391;
+/
+
+CREATE OR REPLACE PROCEDURE p2155 (p1 NUMBER, p2 DATE, p3 OUT NUMBER, p4 OUT DATE, p5 OUT DATE) IS
+BEGIN
+  p3 := p1;
+  p4 := p2;
+  p5 := p2;
+END p2155;
+/
+
+CREATE OR REPLACE FUNCTION f2155 (p1 NUMBER, p2 DATE, p3 NUMBER, p4 DATE) RETURN DATE IS
+BEGIN
+  IF p1 IS NULL THEN
+    RETURN p2;
+  ELSE 
+    RETURN p4;
+  END IF;
+END;
 /
 
 CREATE OR REPLACE PROCEDURE p1490 ("value" NUMBER) IS

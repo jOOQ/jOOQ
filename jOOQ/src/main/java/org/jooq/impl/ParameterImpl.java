@@ -56,11 +56,12 @@ import org.jooq.tools.StringUtils;
  */
 class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
 
-    private static final long serialVersionUID = -5277225593751085577L;
+    private static final long     serialVersionUID = -5277225593751085577L;
 
-    private final String      name;
-    private final DataType<T> type;
-    private final boolean     isDefaulted;
+    private final String          name;
+    private final DataType<T>     type;
+    private final Converter<?, T> converter;
+    private final boolean         isDefaulted;
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     ParameterImpl(String name, DataType<?> type, boolean isDefaulted, Converter<?, T> converter) {
@@ -69,11 +70,23 @@ class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
         this.type = converter == null
             ? (DataType<T>) type
             : type.asConvertedDataType((Converter) converter);
+
+        this.converter =
+              converter != null
+            ? converter
+            : type instanceof ConvertedDataType
+            ? ((ConvertedDataType<?, T>) type).converter()
+            : new IdentityConverter<T>((Class<T>) type.getType());
     }
 
     @Override
     public final String getName() {
         return name;
+    }
+
+    @Override
+    public final Converter<?, T> getConverter() {
+        return converter;
     }
 
     @Override

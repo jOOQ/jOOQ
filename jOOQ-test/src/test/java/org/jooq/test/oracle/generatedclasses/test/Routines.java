@@ -446,6 +446,46 @@ public class Routines {
 	}
 
 	/**
+	 * Call <code>TEST.F2155</code>
+	 */
+	public static java.time.LocalDateTime f2155(org.jooq.Configuration configuration, java.lang.Number p1, java.time.LocalDateTime p2, java.lang.Number p3, java.time.LocalDateTime p4) {
+		org.jooq.test.oracle.generatedclasses.test.routines.F2155 f = new org.jooq.test.oracle.generatedclasses.test.routines.F2155();
+		f.setP1(p1);
+		f.setP2(p2);
+		f.setP3(p3);
+		f.setP4(p4);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get <code>TEST.F2155</code> as a field
+	 */
+	public static org.jooq.Field<java.time.LocalDateTime> f2155(java.lang.Number p1, java.time.LocalDateTime p2, java.lang.Number p3, java.time.LocalDateTime p4) {
+		org.jooq.test.oracle.generatedclasses.test.routines.F2155 f = new org.jooq.test.oracle.generatedclasses.test.routines.F2155();
+		f.setP1(p1);
+		f.setP2(p2);
+		f.setP3(p3);
+		f.setP4(p4);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get <code>TEST.F2155</code> as a field
+	 */
+	public static org.jooq.Field<java.time.LocalDateTime> f2155(org.jooq.Field<? extends java.lang.Number> p1, org.jooq.Field<java.time.LocalDateTime> p2, org.jooq.Field<? extends java.lang.Number> p3, org.jooq.Field<java.time.LocalDateTime> p4) {
+		org.jooq.test.oracle.generatedclasses.test.routines.F2155 f = new org.jooq.test.oracle.generatedclasses.test.routines.F2155();
+		f.setP1(p1);
+		f.setP2(p2);
+		f.setP3(p3);
+		f.setP4(p4);
+
+		return f.asField();
+	}
+
+	/**
 	 * Call <code>TEST.F317</code>
 	 */
 	public static java.math.BigDecimal f317(org.jooq.Configuration configuration, java.lang.Number p1, java.lang.Number p2, java.lang.Number p3, java.lang.Number p4) {
@@ -773,6 +813,18 @@ public class Routines {
 		p.setValue(value);
 
 		p.execute(configuration);
+	}
+
+	/**
+	 * Call <code>TEST.P2155</code>
+	 */
+	public static org.jooq.test.oracle.generatedclasses.test.routines.P2155 p2155(org.jooq.Configuration configuration, java.lang.Number p1, java.time.LocalDateTime p2) {
+		org.jooq.test.oracle.generatedclasses.test.routines.P2155 p = new org.jooq.test.oracle.generatedclasses.test.routines.P2155();
+		p.setP1(p1);
+		p.setP2(p2);
+
+		p.execute(configuration);
+		return p;
 	}
 
 	/**

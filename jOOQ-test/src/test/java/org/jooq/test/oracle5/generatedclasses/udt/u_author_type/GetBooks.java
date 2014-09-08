@@ -16,27 +16,27 @@ package org.jooq.test.oracle5.generatedclasses.udt.u_author_type;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class GetBooks extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -509409867;
+	private static final long serialVersionUID = -1036527119;
 
 	/**
 	 * The parameter <code>TEST.U_AUTHOR_TYPE.GET_BOOKS.SELF</code>.
 	 */
-		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UAuthorTypeRecord> SELF = createParameter("SELF", org.jooq.test.oracle5.generatedclasses.udt.UAuthorType.U_AUTHOR_TYPE.getDataType(), false);
+	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UAuthorTypeRecord> SELF = createParameter("SELF", org.jooq.test.oracle5.generatedclasses.udt.UAuthorType.U_AUTHOR_TYPE.getDataType(), false);
 
 	/**
 	 * The parameter <code>TEST.U_AUTHOR_TYPE.GET_BOOKS.BOOK1</code>.
 	 */
-		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UBookTypeRecord> BOOK1 = createParameter("BOOK1", org.jooq.test.oracle5.generatedclasses.udt.UBookType.U_BOOK_TYPE.getDataType(), false);
+	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UBookTypeRecord> BOOK1 = createParameter("BOOK1", org.jooq.test.oracle5.generatedclasses.udt.UBookType.U_BOOK_TYPE.getDataType(), false);
 
 	/**
 	 * The parameter <code>TEST.U_AUTHOR_TYPE.GET_BOOKS.BOOK2</code>.
 	 */
-		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UBookTypeRecord> BOOK2 = createParameter("BOOK2", org.jooq.test.oracle5.generatedclasses.udt.UBookType.U_BOOK_TYPE.getDataType(), false);
+	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UBookTypeRecord> BOOK2 = createParameter("BOOK2", org.jooq.test.oracle5.generatedclasses.udt.UBookType.U_BOOK_TYPE.getDataType(), false);
 
 	/**
 	 * The parameter <code>TEST.U_AUTHOR_TYPE.GET_BOOKS.BOOKS</code>.
 	 */
-		public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UBookTableRecord> BOOKS = createParameter("BOOKS", org.jooq.test.oracle5.generatedclasses.udt.UBookType.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UBookTableRecord.class), false);
+	public static final org.jooq.Parameter<org.jooq.test.oracle5.generatedclasses.udt.records.UBookTableRecord> BOOKS = createParameter("BOOKS", org.jooq.test.oracle5.generatedclasses.udt.UBookType.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle5.generatedclasses.udt.records.UBookTableRecord.class), false);
 
 	/**
 	 * Create a new routine call instance

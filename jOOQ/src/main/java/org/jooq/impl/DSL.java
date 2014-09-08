@@ -6340,6 +6340,14 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
+     * Transform a subquery into a correlated subquery.
+     */
+    @Support
+    public static <T> Field<T> field(Select<? extends Record1<T>> select) {
+        return select.<T>asField();
+    }
+
+    /**
      * Initialise a {@link Case} statement.
      * <p>
      * Decode is used as a method name to avoid name clashes with Java's

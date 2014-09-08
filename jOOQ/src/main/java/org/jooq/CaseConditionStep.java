@@ -77,6 +77,17 @@ public interface CaseConditionStep<T> extends Field<T> {
     CaseConditionStep<T> when(Condition condition, Field<T> result);
 
     /**
+     * Compare a condition to the already constructed case statement, return
+     * result if the condition holds true
+     *
+     * @param condition The condition to add to the case statement
+     * @param result The result value if the condition holds true
+     * @return An intermediary step for case statement construction
+     */
+    @Support
+    CaseConditionStep<T> when(Condition condition, Select<? extends Record1<T>> result);
+
+    /**
      * Add an else clause to the already constructed case statement
      *
      * @param result The result value if no other value matches the case
@@ -93,4 +104,13 @@ public interface CaseConditionStep<T> extends Field<T> {
      */
     @Support
     Field<T> otherwise(Field<T> result);
+
+    /**
+     * Add an else clause to the already constructed case statement
+     *
+     * @param result The result value if no other value matches the case
+     * @return The resulting field from case statement construction
+     */
+    @Support
+    Field<T> otherwise(Select<? extends Record1<T>> result);
 }

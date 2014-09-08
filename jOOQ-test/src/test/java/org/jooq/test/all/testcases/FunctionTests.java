@@ -94,6 +94,7 @@ import static org.jooq.impl.DSL.log;
 import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.lpad;
 import static org.jooq.impl.DSL.ltrim;
+import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.md5;
 import static org.jooq.impl.DSL.minute;
 import static org.jooq.impl.DSL.month;
@@ -113,6 +114,9 @@ import static org.jooq.impl.DSL.round;
 import static org.jooq.impl.DSL.rpad;
 import static org.jooq.impl.DSL.rtrim;
 import static org.jooq.impl.DSL.second;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectCount;
+import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.shl;
 import static org.jooq.impl.DSL.shr;
 import static org.jooq.impl.DSL.sign;
@@ -341,7 +345,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("DE", result.getValue(3, 3));
     }
 
-    public void testCaseStatement() throws Exception {
+    public void testCaseExpression() throws Exception {
         Field<String> case1 = decode()
             .value(TBook_PUBLISHED_IN())
             .when(0, "ancient book")
@@ -414,6 +418,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("probably orwell", result.getValue(1, case4).trim());
         assertEquals("probably coelho", result.getValue(2, case4).trim());
         assertEquals("don't know", result.getValue(3, case4).trim());
+    }
+
+    public void testCaseExpressionWithSubquery() throws Exception {
+        Result<Record1<Integer>> result =
+        create().select(
+            decode().when(TAuthor_ID().eq(0), selectCount().from(TBook()).where(TBook_AUTHOR_ID().eq(TAuthor_ID())))
+                    .when(TAuthor_ID().eq(1), select(max(TBook_ID())).from(TBook()).where(TBook_AUTHOR_ID().eq(TAuthor_ID())))
+                    .otherwise(selectOne())
+        )
+        .from(TAuthor())
+        .orderBy(TAuthor_ID())
+        .fetch();
+
+        assertEquals(2, result.size());
+        assertEquals(asList(2, 1), result.getValues(0, int.class));
     }
 
     public void testFunctionsOnStrings_TRIM() throws Exception {

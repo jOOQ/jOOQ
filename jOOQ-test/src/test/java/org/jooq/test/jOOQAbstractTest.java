@@ -2750,8 +2750,13 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testCaseStatement() throws Exception {
-        new FunctionTests(this).testCaseStatement();
+    public void testCaseExpression() throws Exception {
+        new FunctionTests(this).testCaseExpression();
+    }
+
+    @Test
+    public void testCaseExpressionWithSubquery() throws Exception {
+        new FunctionTests(this).testCaseExpressionWithSubquery();
     }
 
     @Test

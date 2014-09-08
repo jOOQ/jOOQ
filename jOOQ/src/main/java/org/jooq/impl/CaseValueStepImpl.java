@@ -43,6 +43,8 @@ package org.jooq.impl;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
 import org.jooq.Field;
+import org.jooq.Record1;
+import org.jooq.Select;
 
 /**
  * @author Lukas Eder
@@ -56,22 +58,32 @@ class CaseValueStepImpl<V> implements CaseValueStep<V> {
     }
 
     @Override
-    public <T> CaseWhenStep<V, T> when(V compareValue, T result) {
+    public final <T> CaseWhenStep<V, T> when(V compareValue, T result) {
         return when(Utils.field(compareValue), Utils.field(result));
     }
 
     @Override
-    public <T> CaseWhenStep<V, T> when(V compareValue, Field<T> result) {
+    public final <T> CaseWhenStep<V, T> when(V compareValue, Field<T> result) {
         return when(Utils.field(compareValue), result);
     }
 
     @Override
-    public <T> CaseWhenStep<V, T> when(Field<V> compareValue, T result) {
+    public final <T> CaseWhenStep<V, T> when(V compareValue, Select<? extends Record1<T>> result) {
+        return when(Utils.field(compareValue), DSL.field(result));
+    }
+
+    @Override
+    public final <T> CaseWhenStep<V, T> when(Field<V> compareValue, T result) {
         return when(compareValue, Utils.field(result));
     }
 
     @Override
-    public <T> CaseWhenStep<V, T> when(Field<V> compareValue, Field<T> result) {
+    public final <T> CaseWhenStep<V, T> when(Field<V> compareValue, Field<T> result) {
         return new CaseWhenStepImpl<V, T>(value, compareValue, result);
+    }
+
+    @Override
+    public final <T> CaseWhenStep<V, T> when(Field<V> compareValue, Select<? extends Record1<T>> result) {
+        return when(compareValue, DSL.field(result));
     }
 }

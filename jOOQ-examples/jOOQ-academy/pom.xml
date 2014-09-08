@@ -183,8 +183,8 @@
                                     <name>org.jooq.util.h2.H2Database</name>
                                     <includes>.*</includes>
                                     <excludes></excludes>
-                                    <dateAsTimestamp>true</dateAsTimestamp>
                                     <inputSchema>PUBLIC</inputSchema>
+                                    <recordTimestampFields>REC_TIMESTAMP</recordTimestampFields>
                                 </database>
                                 <generate>
                                     <deprecated>false</deprecated>

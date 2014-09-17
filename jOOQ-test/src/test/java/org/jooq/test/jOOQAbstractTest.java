@@ -1798,6 +1798,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchIntoAliasedTables() throws Exception {
+        new FetchTests(this).testFetchIntoAliasedTables();
+    }
+
+    @Test
     public void testFetchIntoCustomTable() throws Exception {
         new FetchTests(this).testFetchIntoCustomTable();
     }

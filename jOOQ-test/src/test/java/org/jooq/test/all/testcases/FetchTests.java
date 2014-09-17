@@ -50,6 +50,8 @@ import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.lambda.Seq.seq;
+import static org.jooq.lambda.tuple.Tuple.tuple;
 import static org.jooq.tools.reflect.Reflect.on;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -94,6 +96,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
+import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
@@ -101,6 +104,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.SQLDataType;
+import org.jooq.lambda.tuple.Tuple2;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.test.all.AuthorWithoutAnnotations;
@@ -1367,6 +1371,28 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(BOOK_IDS, b.getValues(TBook_ID()));
         assertEquals(BOOK_TITLES, b.getValues(TBook_TITLE()));
         assertTrue(TBook().getRecordType().isAssignableFrom(b.get(0).getClass()));
+    }
+
+    public void testFetchIntoAliasedTables() throws Exception {
+        Table<B> b1 = TBook().as("b1");
+        Table<B> b2 = TBook().as("b2");
+
+        Result<Record> result =
+        create().select()
+                .from(b1)
+                .leftOuterJoin(b2).on(b1.field(TBook_ID()).eq(b2.field(TBook_AUTHOR_ID())))
+                .orderBy(b1.field(TBook_ID()), b2.field(TBook_ID()))
+                .fetch();
+
+        List<Tuple2<B, B>> r1 = result.map(r -> tuple(
+            r.into(b1),
+            r.into(b2)
+        ));
+
+        assertEquals(asList(1, 1, 2, 2, 3, 4), seq(r1).map(t -> t.v1.getValue(TBook_ID())).toList());
+        assertEquals(asList(1, 1, 1, 1, 2, 2), seq(r1).map(t -> t.v1.getValue(TBook_AUTHOR_ID())).toList());
+        assertEquals(asList(1, 2, 3, 4, null, null), seq(r1).map(t -> t.v2.getValue(TBook_ID())).toList());
+        assertEquals(asList(1, 1, 2, 2, null, null), seq(r1).map(t -> t.v2.getValue(TBook_AUTHOR_ID())).toList());
     }
 
     public void testFetchIntoCustomTable() throws Exception {

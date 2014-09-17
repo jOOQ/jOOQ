@@ -93,7 +93,7 @@ class RecordDelegate<R extends Record> {
         if (configuration != null) {
             providers = configuration.recordListenerProviders();
 
-            if (providers != null) {
+            if (providers != null && providers.length > 0) {
                 listeners = new RecordListener[providers.length];
                 ctx = new DefaultRecordContext(configuration, executeType(), record);
 

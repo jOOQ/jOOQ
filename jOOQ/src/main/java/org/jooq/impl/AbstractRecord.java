@@ -547,14 +547,20 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <R extends Record> R into(Table<R> table) {
-        return Utils.newRecord(fetched, table, configuration()).operate(new TransferRecordState<R>());
+        return Utils.newRecord(fetched, table, configuration()).operate(new TransferRecordState<R>(table.fields()));
     }
 
     final <R extends Record> R intoRecord(Class<R> type) {
-        return Utils.newRecord(fetched, type, fields(), configuration()).operate(new TransferRecordState<R>());
+        return Utils.newRecord(fetched, type, fields(), configuration()).operate(new TransferRecordState<R>(null));
     }
 
     private class TransferRecordState<R extends Record> implements RecordOperation<R, MappingException> {
+
+        private final Field<?>[] targetFields;
+
+        TransferRecordState(Field<?>[] targetFields) {
+            this.targetFields = targetFields;
+        }
 
         @Override
         public R operate(R target) throws MappingException {
@@ -567,8 +573,10 @@ abstract class AbstractRecord extends AbstractStore implements Record {
                     AbstractRecord t = (AbstractRecord) target;
 
                     // Iterate over target fields, to avoid ambiguities when two source fields share the same name.
-                    for (int targetIndex = 0; targetIndex < t.size(); targetIndex++) {
-                        Field<?> targetField = t.field(targetIndex);
+                    // [#3634] If external targetFields are provided, use those instead of the target record's fields.
+                    //         The record doesn't know about aliased tables, for instance.
+                    for (int targetIndex = 0; targetIndex < (targetFields != null ? targetFields.length : t.size()); targetIndex++) {
+                        Field<?> targetField = (targetFields != null ? targetFields[targetIndex] : t.field(targetIndex));
                         int sourceIndex = fields.indexOf(targetField);
 
                         if (sourceIndex >= 0) {

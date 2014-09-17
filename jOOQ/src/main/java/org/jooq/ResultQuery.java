@@ -45,6 +45,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -126,6 +127,16 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      */
     ResultSet fetchResultSet() throws DataAccessException;
+
+    /**
+     * Execute the query and "lazily" return the generated result.
+     * <p>
+     * This is essentially the same as {@link #fetchLazy()}, except that being
+     * declared in {@link Iterable}, this method can be used in Java 5 foreach
+     * statements. {@inheritDoc}
+     */
+    @Override
+    Iterator<R> iterator() throws DataAccessException;
 
     /**
      * Execute the query and "lazily" return the generated result.

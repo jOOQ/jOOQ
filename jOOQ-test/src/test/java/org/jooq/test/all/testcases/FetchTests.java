@@ -1675,6 +1675,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
+    public void testFetchViaIterable() throws Exception {
+        int i = 0;
+
+        for (B b : create().selectFrom(TBook()).orderBy(TBook_ID())) {
+            assertEquals(BOOK_IDS.get(i++), b.getValue(TBook_ID()));
+        }
+
+        assertEquals(4, i);
+    }
+
     public void testFetchIntoGeneratedPojos() throws Exception {
         if (TAuthorPojo() == null) {
             log.info("SKIPPING", "Generated POJO tests");

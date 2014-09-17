@@ -1281,6 +1281,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchViaIterable() throws Exception {
+        new FetchTests(this).testFetchViaIterable();
+    }
+
+    @Test
     public void testFetchMap() throws Exception {
         new FetchTests(this).testFetchMap();
     }

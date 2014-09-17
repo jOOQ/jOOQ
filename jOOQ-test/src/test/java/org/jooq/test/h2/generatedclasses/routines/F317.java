@@ -9,32 +9,32 @@ package org.jooq.test.h2.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 2141668710;
+	private static final long serialVersionUID = -2064827103;
 
 	/**
 	 * The parameter <code>PUBLIC.F317.RETURN_VALUE</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
+	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER, false);
 
 	/**
 	 * The parameter <code>PUBLIC.F317.P1</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Integer> P1 = createParameter("P1", org.jooq.impl.SQLDataType.INTEGER);
+	public static final org.jooq.Parameter<java.lang.Integer> P1 = createParameter("P1", org.jooq.impl.SQLDataType.INTEGER, false);
 
 	/**
 	 * The parameter <code>PUBLIC.F317.P2</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Integer> P2 = createParameter("P2", org.jooq.impl.SQLDataType.INTEGER);
+	public static final org.jooq.Parameter<java.lang.Integer> P2 = createParameter("P2", org.jooq.impl.SQLDataType.INTEGER, false);
 
 	/**
 	 * The parameter <code>PUBLIC.F317.P3</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Integer> P3 = createParameter("P3", org.jooq.impl.SQLDataType.INTEGER);
+	public static final org.jooq.Parameter<java.lang.Integer> P3 = createParameter("P3", org.jooq.impl.SQLDataType.INTEGER, false);
 
 	/**
 	 * The parameter <code>PUBLIC.F317.P4</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Integer> P4 = createParameter("P4", org.jooq.impl.SQLDataType.INTEGER);
+	public static final org.jooq.Parameter<java.lang.Integer> P4 = createParameter("P4", org.jooq.impl.SQLDataType.INTEGER, false);
 
 	/**
 	 * Create a new routine call instance

@@ -127,6 +127,7 @@ import org.jooq.test.all.listeners.PrettyPrinter;
 import org.jooq.test.all.listeners.TestStatisticsListener;
 import org.jooq.test.all.testcases.AggregateWindowFunctionTests;
 import org.jooq.test.all.testcases.AliasTests;
+import org.jooq.test.all.testcases.AsyncTest;
 import org.jooq.test.all.testcases.BatchTests;
 import org.jooq.test.all.testcases.BenchmarkTests;
 import org.jooq.test.all.testcases.CRUDTests;
@@ -3207,5 +3208,10 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testStreamsCollectPOJOs() {
         new StreamsTest(this).testStreamsCollectPOJOs();
+    }
+
+    @Test
+    public void testCompletableFuture() {
+        new AsyncTest(this).testCompletableFuture();
     }
 }

@@ -1,7 +1,9 @@
 Thanks for downloading jOOQ.
 Please visit http://www.jooq.org for more information.
 
-This example will guide you through the jOOQ API to get started and productive quickly, with jOOQ.
+The jOOQ Academy is an extended, fully functional and runnable tutorial that is being created in cooperation with the [Java Code Geeks Academy](http://academy.javacodegeeks.com/). Stay tuned for more!
+
+Use the following commands to build the jOOQ Academy:
 
 ```
 $ pwd

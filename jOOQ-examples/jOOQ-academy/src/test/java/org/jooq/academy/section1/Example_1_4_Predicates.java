@@ -45,8 +45,6 @@ import static org.jooq.example.db.h2.Tables.AUTHOR;
 import static org.jooq.example.db.h2.Tables.BOOK;
 import static org.jooq.impl.DSL.select;
 
-import java.sql.SQLException;
-
 import org.jooq.DSLContext;
 import org.jooq.academy.tools.Tools;
 import org.jooq.impl.DSL;
@@ -56,7 +54,7 @@ import org.junit.Test;
 public class Example_1_4_Predicates {
 
     @Test
-    public void run() throws SQLException {
+    public void run() {
         DSLContext dsl = DSL.using(connection());
 
         Tools.title("Combine predicates using AND");
@@ -84,6 +82,16 @@ public class Example_1_4_Predicates {
                .where(AUTHOR.ID.in(select(BOOK.AUTHOR_ID).from(BOOK)))
                .fetch()
         );
+
+        /*
+        Tools.title("Wrong type of columns in subquery");
+        Tools.print(
+            dsl.select()
+               .from(AUTHOR)
+               .where(AUTHOR.ID.in(select(BOOK.TITLE).from(BOOK)))
+               .fetch()
+        );
+        */
 
         /*
         Tools.title("Wrong number of columns in subquery");

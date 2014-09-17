@@ -43,8 +43,6 @@ package org.jooq.academy.section1;
 import static org.jooq.example.db.h2.Tables.AUTHOR;
 import static org.jooq.impl.DSL.select;
 
-import java.sql.SQLException;
-
 import org.jooq.academy.tools.Tools;
 
 import org.junit.Test;
@@ -52,7 +50,7 @@ import org.junit.Test;
 public class Example_1_1_PrintTheQuery {
 
     @Test
-    public void run() throws SQLException {
+    public void run() {
 
         // This creates a simple query without executing it
         // By default, a Query's toString() method will print the SQL string to the console

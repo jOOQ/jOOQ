@@ -38,27 +38,41 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.academy.section1;
+package org.jooq.academy.section3;
 
+import static org.jooq.academy.tools.Tools.connection;
 import static org.jooq.example.db.h2.Tables.AUTHOR;
-import static org.jooq.impl.DSL.select;
 
+import java.sql.Connection;
+import java.util.Arrays;
+
+import org.jooq.Record;
 import org.jooq.academy.tools.Tools;
+import org.jooq.impl.DSL;
 
 import org.junit.Test;
 
-public class Example_1_1_PrintTheQuery {
+public class Example_3_2_ResultSets {
 
     @Test
     public void run() {
+        Connection connection = connection();
 
-        // This creates a simple query without executing it
-        // By default, a Query's toString() method will print the SQL string to the console
-        Tools.title("Create a simple query without executing it");
-        Tools.print(
-             select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
-            .from(AUTHOR)
-            .orderBy(AUTHOR.ID)
-        );
+        Tools.title("Using jOOQ Results in foreach loops");
+        for (Record record : DSL.using(connection)
+                                .select()
+                                .from(AUTHOR)
+                                .fetch()) {
+            System.out.println(record);
+        }
+
+        Tools.title("Using jOOQ Results with Java 8 streams");
+        DSL.using(connection)
+           .select()
+           .from(AUTHOR)
+           .fetch()
+           .stream()
+           .flatMap(record -> Arrays.stream(record.intoArray()))
+           .forEach(System.out::println);
     }
 }

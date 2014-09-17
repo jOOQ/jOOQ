@@ -43,8 +43,6 @@ package org.jooq.academy.section1;
 import static org.jooq.academy.tools.Tools.connection;
 import static org.jooq.example.db.h2.Tables.AUTHOR;
 
-import java.sql.SQLException;
-
 import org.jooq.academy.tools.Tools;
 import org.jooq.impl.DSL;
 
@@ -53,7 +51,7 @@ import org.junit.Test;
 public class Example_1_2_ExecuteTheQuery {
 
     @Test
-    public void run() throws SQLException {
+    public void run() {
 
         // All we need to execute a query is provide it with a connection and then
         // call fetch() on it.

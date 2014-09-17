@@ -45,8 +45,6 @@ import static org.jooq.example.db.h2.Tables.AUTHOR;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.val;
 
-import java.sql.SQLException;
-
 import org.jooq.DSLContext;
 import org.jooq.academy.tools.Tools;
 import org.jooq.impl.DSL;
@@ -56,7 +54,7 @@ import org.junit.Test;
 public class Example_1_5_ColumnExpressions {
 
     @Test
-    public void run() throws SQLException {
+    public void run() {
         DSLContext dsl = DSL.using(connection());
 
         Tools.title("CONCAT() function with prefix notation");

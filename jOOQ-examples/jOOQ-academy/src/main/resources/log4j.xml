@@ -9,28 +9,8 @@
         </layout>
     </appender>
 
-    <logger name="org.springframework.core">
-        <level value="info"/>
-    </logger>
-
-    <logger name="org.springframework.beans">
-        <level value="info"/>
-    </logger>
-
-    <logger name="org.springframework.context">
-        <level value="info"/>
-    </logger>
-
-    <logger name="org.springframework.web">
-        <level value="info"/>
-    </logger>
-
-    <logger name="org.jooq.impl">
-        <level value="debug"/>
-    </logger>
-
     <root>
-        <priority value="debug"/>
+        <priority value="info"/>
         <appender-ref ref="console"/>
     </root>
 </log4j:configuration>

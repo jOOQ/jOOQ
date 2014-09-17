@@ -55,6 +55,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -336,6 +337,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final ResultSet fetchResultSet() {
         return fetchLazy().resultSet();
+    }
+
+    @Override
+    public final Iterator<R> iterator() {
+        return fetchLazy().iterator();
     }
 
     @Override

@@ -50,6 +50,7 @@ import java.util.Properties;
  */
 public class Tools {
 
+    static Properties properties;
     static Connection connection;
 
     /**
@@ -58,15 +59,12 @@ public class Tools {
     public static Connection connection() {
         if (connection == null) {
             try {
-                Properties properties = new Properties();
-                properties.load(Tools.class.getResourceAsStream("/config.properties"));
-
-                Class.forName(properties.getProperty("db.driver"));
+                Class.forName(driver());
 
                 connection = DriverManager.getConnection(
-                    properties.getProperty("db.url"),
-                    properties.getProperty("db.username"),
-                    properties.getProperty("db.password"));
+                    url(),
+                    username(),
+                    password());
                 connection.setAutoCommit(false);
             }
             catch (Exception e) {
@@ -75,6 +73,39 @@ public class Tools {
         }
 
         return connection;
+    }
+
+    public static String password() {
+        return properties().getProperty("db.password");
+    }
+
+    public static String username() {
+        return properties().getProperty("db.username");
+    }
+
+    public static String url() {
+        return properties().getProperty("db.url");
+    }
+
+    public static String driver() {
+        return properties().getProperty("db.driver");
+    }
+
+    /**
+     * Get the connection properties
+     */
+    public static Properties properties() {
+        if (properties == null) {
+            try {
+                properties = new Properties();
+                properties.load(Tools.class.getResourceAsStream("/config.properties"));
+            }
+            catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return properties;
     }
 
     /**

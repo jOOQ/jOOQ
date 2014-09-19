@@ -171,6 +171,11 @@
             </dependency>
             <dependency>
                 <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-sbt</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
                 <artifactId>jooq-meta</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -252,6 +257,7 @@
         <module>jOOQ</module>
         <module>jOOQ-codegen</module>
         <module>jOOQ-codegen-maven</module>
+        <module>jOOQ-codegen-sbt</module>
         <module>jOOQ-meta</module>
         <module>jOOQ-scala</module>
 

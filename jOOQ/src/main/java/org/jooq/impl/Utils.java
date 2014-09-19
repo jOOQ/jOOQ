@@ -55,6 +55,7 @@ import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
+import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
@@ -2454,6 +2455,17 @@ final class Utils {
             // set on DefaultBindContext, prior to serialising arrays to SQLOut
             ArrayRecord<?> arrayRecord = (ArrayRecord<?>) value;
             stream.writeArray(on(localConnection()).call("createARRAY", arrayRecord.getName(), arrayRecord.get()).<Array>get());
+            Object[] array = arrayRecord.get();
+
+            if (arrayRecord.getDataType() instanceof ConvertedDataType) {
+                Object[] converted = new Object[array.length];
+
+                for (int i = 0; i < converted.length; i++)
+                    converted[i] = ((ConvertedDataType<Object, Object>) arrayRecord.getDataType()).converter().to(array[i]);
+
+                array = converted;
+            }
+            stream.writeArray(on(localTargetConnection()).call("createARRAY", arrayRecord.getName(), array).<Array>get());
         }
         /* [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {

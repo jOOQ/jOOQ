@@ -68,6 +68,8 @@ import org.jooq.Routine;
 import org.jooq.Truncate;
 import org.jooq.Update;
 import org.jooq.tools.jdbc.JDBCUtils;
+import org.jooq.tools.reflect.Reflect;
+import org.jooq.tools.reflect.ReflectException;
 
 /**
  * A default implementation for the {@link ExecuteContext}.
@@ -201,7 +203,7 @@ class DefaultExecuteContext implements ExecuteContext {
     private static final ThreadLocal<Connection> LOCAL_CONNECTION = new ThreadLocal<Connection>();
 
     /**
-     * Get the registered connection
+     * Get the registered connection.
      * <p>
      * It can be safely assumed that such a connection is available once the
      * {@link ExecuteContext} has been established, until the statement is
@@ -209,6 +211,53 @@ class DefaultExecuteContext implements ExecuteContext {
      */
     static final Connection localConnection() {
         return LOCAL_CONNECTION.get();
+    }
+
+    /**
+     * Get the registered connection's "target connection" if applicable.
+     * <p>
+     * This will try to unwrap any native connection if it has been wrapped with
+     * any of:
+     * <ul>
+     * <li><code>org.springframework.jdbc.datasource.ConnectionProxy</code></li>
+     * <li><code>org.apache.commons.dbcp.DelegatingConnection</code></li>
+     * <li>...</li>
+     * </ul>
+     * <p>
+     * It can be safely assumed that such a connection is available once the
+     * {@link ExecuteContext} has been established, until the statement is
+     * closed.
+     */
+    static final Connection localTargetConnection() {
+        Connection result = localConnection();
+
+        for (;;) {
+
+            // Unwrap nested Spring org.springframework.jdbc.datasource.ConnectionProxy objects
+            try {
+                Connection r = Reflect.on(result).call("getTargetConnection").get();
+                if (result != r && r != null) {
+                    result = r;
+                    continue;
+                }
+            }
+            catch (ReflectException ignore) {}
+
+            // Unwrap nested DBCP org.apache.commons.dbcp.DelegatingConnection
+            try {
+                Connection r = Reflect.on(result).call("getDelegate").get();
+                if (result != r && r != null) {
+                    result = r;
+                    continue;
+                }
+            }
+            catch (ReflectException ignore) {}
+
+            // No unwrapping method was found.
+            break;
+        }
+
+        return result;
     }
 
     // ------------------------------------------------------------------------

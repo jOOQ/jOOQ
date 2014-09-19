@@ -139,6 +139,8 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DataSourceConnectionProvider;
+import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultRecordMapper;
 import org.jooq.test.all.converters.Boolean_10;
 import org.jooq.test.all.converters.Boolean_TF_LC;
@@ -204,7 +206,10 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.oracle.OracleDataType;
 
+import org.apache.commons.dbcp.BasicDataSource;
 import org.junit.Test;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 
 
 /**
@@ -1741,6 +1746,40 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals(asList(1, 1, 2, 2, 3), result.getValues(0));
         assertEquals(union(BOOK_LAST_NAMES, singletonList("XX")), result.getValues(1));
         assertEquals(union(BOOK_TITLES, singletonList(null)), result.getValues(2));
+    }
+
+    @Test
+    public void testOracleArraysWithSpringDataSources() {
+        UNumberArrayRecord numberArray = new UNumberArrayRecord(1, 2, 3);
+        UBookArrayRecord bookArray = new UBookArrayRecord(new UBookTypeRecord(1, "A"), new UBookTypeRecord(2, "B"));
+
+        Configuration c1 = new DefaultConfiguration().set(dialect()).set(
+            new DataSourceConnectionProvider(
+                new TransactionAwareDataSourceProxy(
+                    new SingleConnectionDataSource(getConnection(), true)
+                )
+            )
+        );
+
+        assertEquals(numberArray, Routines.fArrays1(c1, numberArray));
+        assertEquals(bookArray, Routines.fArrays4(c1, bookArray));
+
+        BasicDataSource ds = new BasicDataSource();
+        ds.setDriverClassName(getDriver());
+        ds.setUrl(getURL());
+        ds.setUsername(getUsername());
+        ds.setPassword(getPassword());
+        ds.setAccessToUnderlyingConnectionAllowed(true);
+
+        Configuration c2 = new DefaultConfiguration().set(dialect()).set(
+            new DataSourceConnectionProvider(
+                new TransactionAwareDataSourceProxy(ds)
+            )
+        );
+
+        assertEquals(numberArray, Routines.fArrays1(c2, numberArray));
+        assertEquals(bookArray, Routines.fArrays4(c2, bookArray));
+
     }
 }
 

@@ -98,7 +98,23 @@
             <artifactId>guava</artifactId>
             <version>17.0</version>
         </dependency>
-        
+
+        <!-- Spring (transitive dependencies are not listed explicitly) -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
         
         <dependency>
             <groupId>org.hamcrest</groupId>

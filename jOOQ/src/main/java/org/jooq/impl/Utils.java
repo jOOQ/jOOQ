@@ -56,6 +56,7 @@ import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
+import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.DropStatementType.INDEX;
 import static org.jooq.impl.DropStatementType.SEQUENCE;
 import static org.jooq.impl.DropStatementType.TABLE;
@@ -2538,7 +2539,7 @@ final class Utils {
 
                 xxxxx x xxxxxxxxxx
             x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
         x
         xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {

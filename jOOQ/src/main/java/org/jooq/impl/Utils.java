@@ -56,6 +56,7 @@ import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
+import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.DropStatementType.INDEX;
 import static org.jooq.impl.DropStatementType.SEQUENCE;
 import static org.jooq.impl.DropStatementType.TABLE;
@@ -2538,7 +2539,7 @@ final class Utils {
 
                 array = converted;
             }
-            stream.writeArray(on(localConnection()).call("createARRAY", arrayRecord.getName(), array).<Array>get());
+            stream.writeArray(on(localTargetConnection()).call("createARRAY", arrayRecord.getName(), array).<Array>get());
         }
         /* [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {

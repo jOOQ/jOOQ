@@ -48,7 +48,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.DefaultExecuteContext.localConnection;
+import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.tools.reflect.Reflect.on;
 import static org.jooq.util.postgres.PostgresUtils.toPGArrayString;
 import static org.jooq.util.postgres.PostgresUtils.toPGInterval;
@@ -388,7 +388,7 @@ class DefaultBindContext extends AbstractBindContext {
             /* [pro] */
             else if (ArrayRecord.class.isAssignableFrom(type)) {
                 ArrayRecord<?> arrayRecord = (ArrayRecord<?>) value;
-                stmt.setArray(nextIndex(), on(localConnection()).call("createARRAY", arrayRecord.getName(), arrayRecord.get()).<Array>get());
+                stmt.setArray(nextIndex(), on(localTargetConnection()).call("createARRAY", arrayRecord.getName(), arrayRecord.get()).<Array>get());
             }
             /* [/pro] */
             else if (EnumType.class.isAssignableFrom(type)) {

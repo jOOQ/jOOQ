@@ -56,6 +56,7 @@ import static org.jooq.test.all.listeners.LifecycleWatcherListener.LISTENER_STAR
 import static org.jooq.tools.reflect.Reflect.on;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -809,32 +810,58 @@ public abstract class jOOQAbstractTest<
         return null;
     }
 
+    private final Properties getProperties() {
+
+        // [#682] We reuse the config.properties that is also used for the Maven pom.xml
+        try (InputStream config = GenerationTool.class.getResourceAsStream("/config.properties")) {
+            if (config != null) {
+                Properties properties = new Properties();
+                properties.load(config);
+                return properties;
+            }
+        }
+
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
+
+    public final String getDriver() {
+        return getProperties().getProperty("db." + dialect().family().name().toLowerCase() + ".driver");
+    }
+
+    public final String getURL() {
+        return getProperties().getProperty("db." + dialect().family().name().toLowerCase() + ".url") + getSchemaSuffix();
+    }
+
+    public final String getSchema() {
+        return getProperties().getProperty("db." + dialect().family().name().toLowerCase() + ".schema") + getSchemaSuffix();
+    }
+
+    public final String getUsername() {
+        return getProperties().getProperty("db." + dialect().family().name().toLowerCase() + ".username");
+    }
+
+    public final String getPassword() {
+        return getProperties().getProperty("db." + dialect().family().name().toLowerCase() + ".password");
+    }
+
     final Connection getConnection0(String jdbcUser, String jdbcPassword) {
         try {
+            if (getDriver() != null) {
+                jdbcURL = getURL();
+                jdbcSchema = getSchema();
 
-            // [#682] We reuse the config.properties that is also used for the Maven pom.xml
-            try (InputStream config = GenerationTool.class.getResourceAsStream("/config.properties")) {
-                if (config != null) {
-                    Properties properties = new Properties();
-                    properties.load(config);
+                if (jdbcUser == null)
+                    jdbcUser = getUsername();
 
-                    String d = dialect().family().name().toLowerCase();
-                    if (properties.containsKey("db." + d + ".driver")) {
-                        jdbcURL = properties.getProperty("db." + d + ".url") + getSchemaSuffix();
-                        jdbcSchema = properties.getProperty("db." + d + ".schema") + getSchemaSuffix();
+                if (jdbcPassword == null)
+                    jdbcPassword = getPassword();
 
-                        if (jdbcUser == null)
-                            jdbcUser = properties.getProperty("db." + d + ".username");
-
-                        if (jdbcPassword == null)
-                            jdbcPassword = properties.getProperty("db." + d + ".password");
-
-                        return getConnection1(jdbcUser, jdbcPassword, properties.getProperty("db." + d + ".driver"));
-                    }
-                }
+                return getConnection1(jdbcUser, jdbcPassword, getDriver());
             }
-
-
 
             String configuration = System.getProperty("org.jooq.configuration");
             if (configuration == null) {

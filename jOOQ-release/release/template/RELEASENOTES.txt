@@ -83,6 +83,12 @@ Features and improvements
 #3612 - Add an example project showing how to import an ERD export format to the code generator
 #3622 - Add support for Field.in(Result<Record1<T>>) and Row[N].in(Result<RecordN<T1, ..., TN>>)
 #3626 - Add Map<S, Result<R>> Result.intoGroups(Table<S>)
+#3638 - Let ResultQuery<R> extend Iterable<R>
+#2604 - Add section to the manual explaining how asynchronous querying can be achieved
+#3633 - Add a section to the manual about jOOQ and NoSQL
+#3627 - Add simplified API for CASE WHEN [ condition ] THEN [ select ] expressions
+#3628 - Add <T> Field<T> DSL.field(Select<? extends Record1<T>>)
+#3623 - Add ParamType.NAMED_OR_INLINED to render named parameters only if a name is given
 
 API changes (backwards-compatible)
 ----------------------------------
@@ -153,6 +159,8 @@ Bug fixes
 #3602 - Cannot INSERT into view
 #3608 - Typo in documentation of transaction method
 #3624 - Compilation errors when Converters are applied to generated Routines and UDTs
+#3639 - java.lang.NoSuchMethodException: createARRAY when using Oracle arrays with Spring TransactionAwareDataSourceProxy
+#3634 - Record.into(Table) maps to the wrong table when passing an aliased table after a self-join
 
 Version 3.4.0 - June 20, 2014
 ================================================================================

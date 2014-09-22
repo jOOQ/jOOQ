@@ -57,7 +57,7 @@ import org.jooq.impl.DSL;
 
 import org.junit.Test;
 
-public class Example_4_2_Settings {
+public class Example_4_3_Settings {
 
     @Test
     public void run() {

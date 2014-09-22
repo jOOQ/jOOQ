@@ -477,6 +477,12 @@ final class UpdateImpl<R extends Record>
 // [jooq-tools] END [set]
 
     @Override
+    public final UpdateWhereStep<R> from(TableLike<?> table) {
+        getDelegate().addFrom(table);
+        return this;
+    }
+
+    @Override
     public final UpdateWhereStep<R> from(TableLike<?>... tables) {
         getDelegate().addFrom(tables);
         return this;

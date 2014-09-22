@@ -123,6 +123,14 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param from The added tables
      */
     @Support
+    void addFrom(TableLike<?> from);
+
+    /**
+     * Add tables to the table product.
+     *
+     * @param from The added tables
+     */
+    @Support
     void addFrom(TableLike<?>... from);
 
     /**

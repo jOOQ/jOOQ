@@ -382,6 +382,14 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * @param from The added tables
      */
     @Support({ INGRES, POSTGRES, SQLSERVER, SYBASE })
+    void addFrom(TableLike<?> from);
+
+    /**
+     * Add tables to the table product.
+     *
+     * @param from The added tables
+     */
+    @Support({ INGRES, POSTGRES, SQLSERVER, SYBASE })
     void addFrom(TableLike<?>... from);
 
     /**

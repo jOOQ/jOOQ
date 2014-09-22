@@ -1667,6 +1667,11 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     }
 
     @Override
+    public final void addFrom(TableLike<?> f) {
+        addFrom(Arrays.asList(f));
+    }
+
+    @Override
     public final void addFrom(TableLike<?>... f) {
         addFrom(Arrays.asList(f));
     }

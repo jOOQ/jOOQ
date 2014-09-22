@@ -435,6 +435,11 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     @Override
+    public final void addFrom(TableLike<?> f) {
+        addFrom(Arrays.asList(f));
+    }
+
+    @Override
     public final void addFrom(TableLike<?>... f) {
         addFrom(Arrays.asList(f));
     }

@@ -92,7 +92,13 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * Add a <code>FROM</code> clause to the query.
      */
     @Support
-    SelectJoinStep<R> from(TableLike<?>... table);
+    SelectJoinStep<R> from(TableLike<?> table);
+
+    /**
+     * Add a <code>FROM</code> clause to the query.
+     */
+    @Support
+    SelectJoinStep<R> from(TableLike<?>... tables);
 
     /**
      * Add a <code>FROM</code> clause to the query.

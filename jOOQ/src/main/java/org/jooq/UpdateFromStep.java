@@ -70,6 +70,12 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      * Add a <code>FROM</code> clause to the query.
      */
     @Support({ POSTGRES })
+    UpdateWhereStep<R> from(TableLike<?> table);
+
+    /**
+     * Add a <code>FROM</code> clause to the query.
+     */
+    @Support({ POSTGRES })
     UpdateWhereStep<R> from(TableLike<?>... table);
 
     /**

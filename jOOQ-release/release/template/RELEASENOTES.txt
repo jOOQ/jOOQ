@@ -10,7 +10,7 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 3.5.0-SNAPSHOT - August 15, 2014
+Version 3.5.0-SNAPSHOT - September 19, 2014
 ================================================================================
 
 This is a preview snapshot release for jOOQ 3.5.0

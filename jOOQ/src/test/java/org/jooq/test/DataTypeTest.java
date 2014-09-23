@@ -147,7 +147,7 @@ public class DataTypeTest extends AbstractTest {
 
         {
             Condition object_date = object.eq(Timestamp.valueOf("2012-12-21 15:30:00.0"));
-            assertEquals("`ANY` = timestamp '2012-12-21 15:30:00.0'", r_refI().render(object_date));
+            assertEquals("`ANY` = {ts '2012-12-21 15:30:00.0'}", r_refI().render(object_date));
             context.checking(new Expectations() {{
                 oneOf(statement).setTimestamp(1, Timestamp.valueOf("2012-12-21 15:30:00.0"));
             }});

@@ -441,6 +441,11 @@ class Val<T> extends AbstractParam<T> {
                     context.keyword("date('").sql(escape(val)).sql("')");
                 }
 
+                // [#3648] Circumvent a MySQL bug related to date literals
+                else if (family == MYSQL) {
+                    context.keyword("{d '").sql(val.toString()).sql("'}");
+                }
+
                 // Most dialects implement SQL standard date literals
                 else {
                     context.keyword("date '").sql(escape(val)).sql("'");
@@ -474,6 +479,11 @@ class Val<T> extends AbstractParam<T> {
                     context.keyword("datetime '").sql(escape(val)).sql("'");
                 }
 
+                // [#3648] Circumvent a MySQL bug related to date literals
+                else if (family == MYSQL) {
+                    context.keyword("{ts '").sql(val.toString()).sql("'}");
+                }
+
                 // Most dialects implement SQL standard timestamp literals
                 else {
                     context.keyword("timestamp '").sql(escape(val)).sql("'");
@@ -502,6 +512,10 @@ class Val<T> extends AbstractParam<T> {
                     context.keyword("time").sql("('").sql(escape(val)).sql("')");
                 }
 
+                // [#3648] Circumvent a MySQL bug related to date literals
+                else if (family == MYSQL) {
+                    context.keyword("{t '").sql(val.toString()).sql("'}");
+                }
                 /* [pro] xx
                 xx xxxxxxx xxxxxx xxxxxxx xxxx xxxx xxxxxxxx
                 xxxx xx xxxxxxx xx xxxxxxx x

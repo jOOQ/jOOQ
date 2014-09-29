@@ -46,8 +46,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import java.util.WeakHashMap;
+import org.jooq.Configuration;
+import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
+import org.jooq.exception.DataAccessException;
 import org.jooq.tools.jdbc.DefaultConnection;
 
 /**
@@ -59,11 +63,82 @@ import org.jooq.tools.jdbc.DefaultConnection;
 class SettingsEnabledConnection extends DefaultConnection {
 
     private final Settings settings;
+    private static final WeakHashMap<Connection, Boolean> connections = new WeakHashMap<Connection, Boolean>();
 
-    SettingsEnabledConnection(Connection delegate, Settings settings) {
+    SettingsEnabledConnection(Connection delegate, Configuration configuration) {
         super(delegate);
 
-        this.settings = settings;
+        this.settings = configuration.settings();
+
+        this.configureBackslashEscapes(configuration);
+    }
+
+    /**
+     * Ensures that jOOQ and the database agree on how to handle backslash escaping. This is
+     * only a concern with MySQL.
+     *
+     * @throws DataAccessException
+     */
+    private final void configureBackslashEscapes(Configuration configuration) throws DataAccessException {
+        if (configuration.dialect() == SQLDialect.MYSQL) {
+            this.configureBackslashEscapesForMySql();
+        }
+    }
+
+    /**
+     * Enables NO_BACKSLASH_ESCAPES in SESSION.sql_mode when applicable.
+     *
+     * When talking to a MySQL database, we don't know if the database is going to escape
+     * backslashes or not. This method looks at the connection string, and if it does not
+     * include "&sessionVariables=sql_mode=NO_BACKSLASH_ESCAPES", takes the safe approach
+     * of setting NO_BACKSLASH_ESCAPES at the session level.
+     *
+     * @throws DataAccessException
+     */
+    private final void configureBackslashEscapesForMySql() {
+        Connection connection = getRawConnection();
+        try {
+            // For performance reasons, we don't parse the URL. We assume that if the URL contains
+            // sessionVariables=sql_mode=NO_BACKSLASH_ESCAPES, then we don't need to set
+            // NO_BACKSLASH_ESCAPES. This check saves us four round trips to the database). Not formally
+            // parsing the URL is obviously not fool proof!
+            //
+            // Note: .getMetaData().getURL() does not cause a round trip, even though the URL is
+            //       read from the metadata.
+            if (connection.getMetaData().getURL().contains("sessionVariables=sql_mode=NO_BACKSLASH_ESCAPES")) {
+                return;
+            }
+
+            // TODO: while we are doing all this, we should perhaps also check that the encoding is UTF-8?
+
+            // Avoid paying the cost of this query when connections are re-used.
+            if (SettingsEnabledConnection.connections.containsKey(connection)) {
+                return;
+            }
+            SettingsEnabledConnection.connections.put(connection, true);
+
+            connection
+                .prepareStatement(
+                    "SET @@SESSION.sql_mode = CONCAT(@@SESSION.sql_mode, ',' ,'NO_BACKSLASH_ESCAPES');")
+                .execute();
+
+        } catch (SQLException e) {
+            throw Utils.translate("Failed configuring NO_BACKSLASH_ESCAPES", e);
+        }
+    }
+
+    /**
+     * Returns the underlying connection.
+     *
+     * Mainly useful when dealing with ProviderEnabledConnection, so that we can keep track of which
+     * connections have had their backslashes configured.
+     */
+    private final Connection getRawConnection() {
+        Connection r = getDelegate();
+        while (r instanceof DefaultConnection) {
+            r = ((DefaultConnection) r).getDelegate();
+        }
+        return r;
     }
 
     // ------------------------------------------------------------------------

@@ -506,7 +506,7 @@ class DefaultExecuteContext implements ExecuteContext {
     final void connection(ConnectionProvider provider, Connection c) {
         if (c != null) {
             LOCAL_CONNECTION.set(c);
-            connection = new SettingsEnabledConnection(new ProviderEnabledConnection(provider, c), configuration.settings());
+            connection = new SettingsEnabledConnection(new ProviderEnabledConnection(provider, c), configuration);
         }
     }
 

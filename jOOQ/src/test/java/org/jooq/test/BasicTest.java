@@ -120,6 +120,7 @@ import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.Truncate;
 import org.jooq.UpdateQuery;
+import org.jooq.conf.BackslashEscapeHandlingType;
 import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.impl.CustomCondition;
@@ -2577,5 +2578,20 @@ public class BasicTest extends AbstractTest {
         assertEquals("select 1 from `TABLE1` where `TABLE1`.`ID1` = 2", r_refI.render(q));
         assertEquals("select :1 from `TABLE1` where `TABLE1`.`ID1` = :2", r_refP.render(q));
         assertEquals("select ? from `TABLE1` where `TABLE1`.`ID1` = ?", r_ref.render(q));
+    }
+
+    @Test
+    public void testInsertQueryBackslashesAreEscaped() throws Exception {
+        RenderContext r_refI = r_refI();
+
+        r_refI.configuration().settings().setBackslashEscapeHandling(BackslashEscapeHandlingType.ESCAPE_BACKSLASHES);
+
+        InsertQuery<Table1Record> q = create.insertQuery(TABLE1);
+
+        String backslashTestString = "foo\\";
+
+        q.addValue(FIELD_NAME1, backslashTestString);
+        assertEquals("insert into `TABLE1` (`NAME1`) values ('foo\\\\')", r_refI().render(q));
+        assertEquals("insert into `TABLE1` (`NAME1`) values ('foo\\\\')", r_refI().render(create.insertInto(TABLE1, FIELD_NAME1).values(backslashTestString)));
     }
 }

@@ -49,6 +49,7 @@ import java.sql.SQLException;
 import java.util.WeakHashMap;
 import org.jooq.Configuration;
 import org.jooq.SQLDialect;
+import org.jooq.conf.BackslashEscapeHandlingType;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
@@ -80,6 +81,9 @@ class SettingsEnabledConnection extends DefaultConnection {
      * @throws DataAccessException
      */
     private final void configureBackslashEscapes(Configuration configuration) throws DataAccessException {
+        if (configuration.settings().getBackslashEscapeHandling() != BackslashEscapeHandlingType.AUTO) {
+            return;
+        }
         if (configuration.dialect() == SQLDialect.MYSQL) {
             this.configureBackslashEscapesForMySql();
         }

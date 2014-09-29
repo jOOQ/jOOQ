@@ -70,6 +70,9 @@
       
       <!-- Whether warnings should be fetched after each query execution -->
       <element name="fetchWarnings" type="boolean" minOccurs="0" maxOccurs="1" default="true"/>
+
+      <!-- Whether queries should escape backslashes, not escape but set NO_BACKSLASH_ESCAPES or neither. Mostly useful for MySQL users. -->
+      <element name="backslashEscapeHandling" type="jooq-runtime:BackslashEscapeHandlingType" minOccurs="0" maxOccurs="1" default="AUTO"/>
     </all>
   </complexType>
 
@@ -192,6 +195,28 @@
       <!-- Keywords are rendered in upper case. For instance:
            SELECT .. FROM .. WHERE .. -->
       <enumeration value="UPPER"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="BackslashEscapeHandlingType">
+    <restriction base="string">
+      <!-- Strings will not have their backslashes escaped. MySQL connections
+           will however set NO_BACKSLASH_ESCAPES. This is the safest setting,
+           but implies a small performance hit when creating MySQL connections. -->
+      <enumeration value="AUTO"/>
+
+      <!-- Strings will not have their backslashes escaped. You should
+           only use this option if you are connecting to a MySQL database which
+           is configured with NO_BACKSLASH_ESCAPES. Improper use of this option can
+           lead to security issues. -->
+      <enumeration value="DO_NOT_ESCAPE_BACKSLASHES"/>
+
+      <!-- Strings will have their backslashes escaped. You should only
+           use this option if you are connecting to a MySQL database which is not
+           configured with NO_BACKSLASH_ESCAPES. Improper use of this option can
+           lead to mangled data. -->
+      <enumeration value="ESCAPE_BACKSLASHES"/>
+
     </restriction>
   </simpleType>
 </schema>

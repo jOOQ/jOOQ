@@ -65,13 +65,13 @@ import org.jooq.tools.StopWatchListener;
  * <code>Settings</code> to
  * {@link DSL#using(java.sql.Connection, SQLDialect, Settings)}. jOOQ
  * will use that configuration at the beginning of a query execution event to
- * instanciate all the provided listeners. In other words, listeners have the
+ * instantiate all the provided listeners. In other words, listeners have the
  * same lifetime as a single query execution, and can thus be used to store
  * state between the moment when a query execution starts, and the moment when a
  * query execution finishes. Advanced <code>ExecuteListeners</code> can also
  * provide custom implementations of {@link Connection},
  * {@link PreparedStatement}, {@link ResultSet}, {@link SQLException} or
- * {@link RuntimeException} to jOOQ in apropriate methods.
+ * {@link RuntimeException} to jOOQ in appropriate methods.
  * <p>
  * For convenience, consider extending {@link DefaultExecuteListener} instead of
  * implementing this interface. This will prevent compilation errors in future

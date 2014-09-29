@@ -48,7 +48,7 @@ import org.jooq.exception.DataAccessException;
 /**
  * The bind context is used for binding {@link QueryPart}'s and their contained
  * values to a {@link PreparedStatement}'s bind variables. A new bind context is
- * instanciated every time a {@link Query} is bound. <code>QueryPart</code>'s
+ * instantiated every time a {@link Query} is bound. <code>QueryPart</code>'s
  * will then pass the same context to their components
  * <p>
  * This interface is for JOOQ INTERNAL USE only. Do not reference directly

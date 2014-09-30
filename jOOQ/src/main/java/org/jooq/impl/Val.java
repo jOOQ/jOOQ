@@ -409,7 +409,7 @@ class Val<T> extends AbstractParam<T> {
             // Interval extends Number, so let Interval come first!
             else if (Interval.class.isAssignableFrom(type)) {
                 context.sql("'")
-                       .sql(escape(val, context.settings().getBackslashEscapeHandling()))
+                       .sql(escape(val, context))
                        .sql("'");
             }
 
@@ -424,7 +424,7 @@ class Val<T> extends AbstractParam<T> {
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement date literals
                 if (asList(SQLITE).contains(family)) {
-                    context.sql("'").sql(escape(val, context.settings().getBackslashEscapeHandling())).sql("'");
+                    context.sql("'").sql(escape(val, context)).sql("'");
                 }
 
                 /* [pro] xx
@@ -439,7 +439,7 @@ class Val<T> extends AbstractParam<T> {
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
-                    context.keyword("date('").sql(escape(val, context.settings().getBackslashEscapeHandling())).sql("')");
+                    context.keyword("date('").sql(escape(val, context)).sql("')");
                 }
 
                 // [#3648] Circumvent a MySQL bug related to date literals
@@ -449,7 +449,7 @@ class Val<T> extends AbstractParam<T> {
 
                 // Most dialects implement SQL standard date literals
                 else {
-                    context.keyword("date '").sql(escape(val, context.settings().getBackslashEscapeHandling())).sql("'");
+                    context.keyword("date '").sql(escape(val, context)).sql("'");
                 }
             }
             else if (type == Timestamp.class) {
@@ -457,7 +457,7 @@ class Val<T> extends AbstractParam<T> {
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement timestamp literals
                 if (asList(SQLITE).contains(family)) {
-                    context.sql("'").sql(escape(val, context.settings().getBackslashEscapeHandling())).sql("'");
+                    context.sql("'").sql(escape(val, context)).sql("'");
                 }
 
                 /* [pro] xx
@@ -472,12 +472,12 @@ class Val<T> extends AbstractParam<T> {
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
-                    context.keyword("timestamp('").sql(escape(val, context.settings().getBackslashEscapeHandling())).sql("')");
+                    context.keyword("timestamp('").sql(escape(val, context)).sql("')");
                 }
 
                 // CUBRID timestamps have no fractional seconds
                 else if (family == CUBRID) {
-                    context.keyword("datetime '").sql(escape(val, context.settings().getBackslashEscapeHandling())).sql("'");
+                    context.keyword("datetime '").sql(escape(val, context)).sql("'");
                 }
 
                 // [#3648] Circumvent a MySQL bug related to date literals
@@ -487,7 +487,7 @@ class Val<T> extends AbstractParam<T> {
 
                 // Most dialects implement SQL standard timestamp literals
                 else {
-                    context.keyword("timestamp '").sql(escape(val, context.settings().getBackslashEscapeHandling())).sql("'");
+                    context.keyword("timestamp '").sql(escape(val, context)).sql("'");
                 }
             }
             else if (type == Time.class) {
@@ -510,7 +510,7 @@ class Val<T> extends AbstractParam<T> {
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
-                    context.keyword("time").sql("('").sql(escape(val, context.settings().getBackslashEscapeHandling())).sql("')");
+                    context.keyword("time").sql("('").sql(escape(val, context)).sql("')");
                 }
 
                 // [#3648] Circumvent a MySQL bug related to date literals
@@ -526,7 +526,7 @@ class Val<T> extends AbstractParam<T> {
                 xx [/pro] */
                 // Most dialects implement SQL standard time literals
                 else {
-                    context.keyword("time").sql(" '").sql(escape(val, context.settings().getBackslashEscapeHandling())).sql("'");
+                    context.keyword("time").sql(" '").sql(escape(val, context)).sql("'");
                 }
             }
             else if (type.isArray()) {
@@ -590,7 +590,7 @@ class Val<T> extends AbstractParam<T> {
             // - UUID
             else {
                 context.sql("'")
-                       .sql(escape(val, context.settings().getBackslashEscapeHandling()), true)
+                       .sql(escape(val, context), true)
                        .sql("'");
             }
         }
@@ -641,9 +641,9 @@ class Val<T> extends AbstractParam<T> {
      * Also replaces <code>\</code> with <code>\\</code> depending on the configured
      * backslashHandling.
      */
-    private final String escape(Object val, BackslashEscapeHandlingType backslashHandling) {
+    private final String escape(Object val, RenderContext context) {
       String literal = val.toString();
-      if (backslashHandling == BackslashEscapeHandlingType.ESCAPE_BACKSLASHES) {
+      if (context.settings().getBackslashEscapeHandling() == BackslashEscapeHandlingType.ESCAPE_BACKSLASHES) {
         literal = literal.replace("\\", "\\\\");
       }
       return literal.replace("'", "''");

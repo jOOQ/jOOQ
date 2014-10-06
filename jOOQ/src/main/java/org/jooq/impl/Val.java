@@ -60,10 +60,12 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.conf.BackslashEscaping.ON;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
+import static org.jooq.impl.Utils.settings;
 import static org.jooq.tools.StringUtils.leftPad;
 
 import java.math.BigDecimal;
@@ -82,6 +84,7 @@ import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.UDTRecord;
+import org.jooq.conf.BackslashEscaping;
 import org.jooq.tools.StringUtils;
 import org.jooq.types.Interval;
 
@@ -408,7 +411,7 @@ class Val<T> extends AbstractParam<T> {
             // Interval extends Number, so let Interval come first!
             else if (Interval.class.isAssignableFrom(type)) {
                 context.sql("'")
-                       .sql(escape(val))
+                       .sql(escape(val, context))
                        .sql("'");
             }
 
@@ -423,7 +426,7 @@ class Val<T> extends AbstractParam<T> {
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement date literals
                 if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(family)) {
-                    context.sql("'").sql(escape(val)).sql("'");
+                    context.sql("'").sql(escape(val, context)).sql("'");
                 }
 
                 /* [pro] */
@@ -432,23 +435,23 @@ class Val<T> extends AbstractParam<T> {
                 }
 
                 else if (family == INFORMIX) {
-                    context.keyword("datetime").sql("(").sql(escape(val)).sql(") ").keyword("year to day");
+                    context.keyword("datetime").sql("(").sql(escape(val, context)).sql(") ").keyword("year to day");
                 }
                 /* [/pro] */
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
-                    context.keyword("date('").sql(escape(val)).sql("')");
+                    context.keyword("date('").sql(escape(val, context)).sql("')");
                 }
 
                 // [#3648] Circumvent a MySQL bug related to date literals
                 else if (family == MYSQL) {
-                    context.keyword("{d '").sql(val.toString()).sql("'}");
+                    context.keyword("{d '").sql(escape(val, context)).sql("'}");
                 }
 
                 // Most dialects implement SQL standard date literals
                 else {
-                    context.keyword("date '").sql(escape(val)).sql("'");
+                    context.keyword("date '").sql(escape(val, context)).sql("'");
                 }
             }
             else if (type == Timestamp.class) {
@@ -456,7 +459,7 @@ class Val<T> extends AbstractParam<T> {
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement timestamp literals
                 if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(family)) {
-                    context.sql("'").sql(escape(val)).sql("'");
+                    context.sql("'").sql(escape(val, context)).sql("'");
                 }
 
                 /* [pro] */
@@ -465,28 +468,28 @@ class Val<T> extends AbstractParam<T> {
                 }
 
                 else if (family == INFORMIX) {
-                    context.keyword("datetime").sql("(").sql(escape(val)).sql(") ").keyword("year to fraction");
+                    context.keyword("datetime").sql("(").sql(escape(val, context)).sql(") ").keyword("year to fraction");
                 }
                 /* [/pro] */
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
-                    context.keyword("timestamp('").sql(escape(val)).sql("')");
+                    context.keyword("timestamp('").sql(escape(val, context)).sql("')");
                 }
 
                 // CUBRID timestamps have no fractional seconds
                 else if (family == CUBRID) {
-                    context.keyword("datetime '").sql(escape(val)).sql("'");
+                    context.keyword("datetime '").sql(escape(val, context)).sql("'");
                 }
 
                 // [#3648] Circumvent a MySQL bug related to date literals
                 else if (family == MYSQL) {
-                    context.keyword("{ts '").sql(val.toString()).sql("'}");
+                    context.keyword("{ts '").sql(escape(val, context)).sql("'}");
                 }
 
                 // Most dialects implement SQL standard timestamp literals
                 else {
-                    context.keyword("timestamp '").sql(escape(val)).sql("'");
+                    context.keyword("timestamp '").sql(escape(val, context)).sql("'");
                 }
             }
             else if (type == Time.class) {
@@ -499,33 +502,33 @@ class Val<T> extends AbstractParam<T> {
 
                 /* [pro] */
                 else if (asList(ACCESS).contains(family)) {
-                    context.sql("{t '").sql(escape(val)).sql("'}");
+                    context.sql("{t '").sql(escape(val, context)).sql("'}");
                 }
 
                 else if (family == INFORMIX) {
-                    context.keyword("datetime").sql("(").sql(escape(val)).sql(") ").keyword("hour to second");
+                    context.keyword("datetime").sql("(").sql(escape(val, context)).sql(") ").keyword("hour to second");
                 }
                 /* [/pro] */
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
-                    context.keyword("time").sql("('").sql(escape(val)).sql("')");
+                    context.keyword("time").sql("('").sql(escape(val, context)).sql("')");
                 }
 
                 // [#3648] Circumvent a MySQL bug related to date literals
                 else if (family == MYSQL) {
-                    context.keyword("{t '").sql(val.toString()).sql("'}");
+                    context.keyword("{t '").sql(escape(val, context)).sql("'}");
                 }
                 /* [pro] */
                 // [#1253] Oracle doesn't know time literals
                 else if (family == ORACLE) {
-                    context.keyword("timestamp").sql(" '1970-01-01 ").sql(escape(val)).sql("'");
+                    context.keyword("timestamp").sql(" '1970-01-01 ").sql(escape(val, context)).sql("'");
                 }
 
                 /* [/pro] */
                 // Most dialects implement SQL standard time literals
                 else {
-                    context.keyword("time").sql(" '").sql(escape(val)).sql("'");
+                    context.keyword("time").sql(" '").sql(escape(val, context)).sql("'");
                 }
             }
             else if (type.isArray()) {
@@ -566,7 +569,7 @@ class Val<T> extends AbstractParam<T> {
             }
             /* [pro] */
             else if (ArrayRecord.class.isAssignableFrom(type)) {
-                context.sql(val.toString(), true);
+                context.sql(escape(val, context), true);
             }
             /* [/pro] */
             else if (EnumType.class.isAssignableFrom(type)) {
@@ -589,7 +592,7 @@ class Val<T> extends AbstractParam<T> {
             // - UUID
             else {
                 context.sql("'")
-                       .sql(escape(val), true)
+                       .sql(escape(val, context), true)
                        .sql("'");
             }
         }
@@ -636,10 +639,16 @@ class Val<T> extends AbstractParam<T> {
     }
 
     /**
-     * Escape a string literal by replacing <code>'</code> by <code>''</code>
+     * Escape a string literal by replacing <code>'</code> by <code>''</code>, and possibly also backslashes.
      */
-    private final String escape(Object val) {
-        return val.toString().replace("'", "''");
+    private final String escape(Object val, Context<?> context) {
+        BackslashEscaping escaping = settings(context.configuration()).getBackslashEscaping();
+        String result = val.toString();
+
+        if (escaping == ON)
+            result = result.replace("\\", "\\\\");
+
+        return result.replace("'", "''");
     }
 
     final void bind0(BindContext context) {

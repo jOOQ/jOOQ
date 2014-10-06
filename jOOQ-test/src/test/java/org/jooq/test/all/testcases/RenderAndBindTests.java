@@ -42,6 +42,8 @@ package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
@@ -76,6 +78,7 @@ import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.conf.BackslashEscaping;
 import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
@@ -311,6 +314,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1158] TODO get this working for derby as well
         boolean derby = (dialect() == DERBY);
+        BackslashEscaping escaping =
+             dialect().family() == MYSQL
+          || dialect().family() == MARIADB
+          ?  BackslashEscaping.ON
+          :  BackslashEscaping.OFF;
 
         // [#1147] Some data types need special care when inlined
 
@@ -357,8 +365,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Inlining bind values globally, through the factory settings
         // -----------------------------------------------------------
         {
+
+            // [#3000] In MySQL and MariaDB, we should test this by enabling backslash escaping
             DSLContext create = create(new Settings()
-                .withStatementType(StatementType.STATIC_STATEMENT));
+                .withStatementType(StatementType.STATIC_STATEMENT)
+                .withBackslashEscaping(escaping));
 
             Object[] array1 = create.select(
                 val(s1), val(s2), val(s3), val(s4), val(s5)
@@ -398,7 +409,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Inlining bind values locally, through bind value parameters
         // -----------------------------------------------------------
         {
-            DSLContext create = create();
+
+            // [#3000] In MySQL and MariaDB, we should test this by enabling backslash escaping
+            DSLContext create = create(new Settings()
+                .withBackslashEscaping(escaping));
 
             Object[] array1 = create.select(inline(s1), inline(s2), inline(s3), inline(s4), inline(s5)).fetchOneArray();
             Object[] array2 = create.select(inline(b1), inline(b2), inline(sh1), inline(sh2), inline(i1), inline(i2), inline(l1), inline(l2), inline(bi1), inline(bi2), inline(bd1), inline(bd2), inline(db1), inline(db2), inline(f1), inline(f2)).fetchOneArray();

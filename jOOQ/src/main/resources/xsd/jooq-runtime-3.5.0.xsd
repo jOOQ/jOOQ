@@ -33,6 +33,9 @@
            Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
            set to true, users can automatically profit from this feature in all SQL statements. -->
       <element name="renderScalarSubqueriesForStoredFunctions" type="boolean" minOccurs="0" maxOccurs="1" default="false"/>
+      
+      <!-- Whether string literals should be escaped with backslash. -->
+      <element name="backslashEscaping" type="jooq-runtime:BackslashEscaping" minOccurs="0" maxOccurs="1" default="OFF"/>
 
       <!-- Whether rendered bind values should be rendered as:
       
@@ -192,6 +195,24 @@
       <!-- Keywords are rendered in upper case. For instance:
            SELECT .. FROM .. WHERE .. -->
       <enumeration value="UPPER"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="BackslashEscaping">
+    <restriction base="string">
+
+      <!-- Use the JDBC connection's setting for backslash escaping. In most databases, this
+           is the same as OFF. In MySQL and MariaDB, the actual setting is extracted.
+           
+           This is not yet implemented, as the JDBC connection might not be available to the renderer
+      <enumeration value="AUTO"/>
+        -->
+        
+      <!-- Always escape backslashes. -->
+      <enumeration value="ON"/>
+
+      <!-- Never escape backslashes. -->
+      <enumeration value="OFF"/>
     </restriction>
   </simpleType>
 </schema>

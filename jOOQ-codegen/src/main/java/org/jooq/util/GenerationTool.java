@@ -400,6 +400,9 @@ public class GenerationTool {
             if (g.getGenerate().isPojosEqualsAndHashCode() != null)
                 generator.setGeneratePojosEqualsAndHashCode(g.getGenerate().isPojosEqualsAndHashCode());
 
+            // [#3669] Optional Database element
+            if (g.getDatabase() == null)
+                g.setDatabase(new org.jooq.util.jaxb.Database());
             if (!StringUtils.isBlank(g.getDatabase().getSchemaVersionProvider()))
                 generator.setUseSchemaVersionProvider(true);
 

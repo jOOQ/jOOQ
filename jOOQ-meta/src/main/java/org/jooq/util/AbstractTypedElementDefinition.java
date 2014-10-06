@@ -117,6 +117,8 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
         DataTypeDefinition result = definedType;
         Database db = container.getDatabase();
 
+        log.debug("Type mapping", child + " with type " + definedType.getType());
+
         // [#976] Mapping DATE as TIMESTAMP
         if (db.dateAsTimestamp()) {
             DataType<?> dataType = null;

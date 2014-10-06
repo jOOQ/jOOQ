@@ -52,7 +52,7 @@ import java.util.logging.Level;
  * <li>log4j</li>
  * <li>jav.util.logging</li>
  * </ul>
- * <code>JooqLogger</code> tries to instanciate any of the above loggers,
+ * <code>JooqLogger</code> tries to instantiate any of the above loggers,
  * catching potential {@link NoClassDefFoundError}'s in case any logger API
  * cannot be found on the classpath.
  *

@@ -179,7 +179,7 @@ import org.jooq.tools.reflect.Reflect;
  * <p>
  * <h5>If the supplied type is an interface or an abstract class</h5>
  * <p>
- * Abstract types are instanciated using Java reflection {@link Proxy}
+ * Abstract types are instantiated using Java reflection {@link Proxy}
  * mechanisms. The returned proxy will wrap a {@link HashMap} containing
  * properties mapped by getters and setters of the supplied type. Methods (even
  * JPA-annotated ones) other than standard POJO getters and setters are not

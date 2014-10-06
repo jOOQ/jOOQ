@@ -947,7 +947,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * Map resulting records onto a custom type.
      * <p>
      * This is the same as {@link #into(Class)}, except that no new object is
-     * instanciated as a result. Instead, you can provide your own custom POJO
+     * instantiated as a result. Instead, you can provide your own custom POJO
      * instance.
      *
      * @param <E> The generic entity type.

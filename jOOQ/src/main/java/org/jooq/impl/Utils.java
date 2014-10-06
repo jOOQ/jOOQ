@@ -44,9 +44,11 @@ import static java.lang.Boolean.FALSE;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.conf.BackslashEscaping.ON;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
+import static org.jooq.conf.SettingsTools.getBackslashEscaping;
 import static org.jooq.conf.SettingsTools.reflectionCaching;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.DSL.concat;
@@ -138,6 +140,7 @@ import org.jooq.Table;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.conf.BackslashEscaping;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
@@ -1163,6 +1166,9 @@ final class Utils {
         // [#1593] Create a dummy renderer if we're in bind mode
         if (render == null) render = new DefaultRenderContext(bind.configuration());
 
+        // [#3630] Depending on this setting, we need to consider backslashes as escape characters within string literals.
+        BackslashEscaping escaping = getBackslashEscaping(ctx.configuration().settings());
+
         SQLDialect dialect = render.configuration().dialect();
         SQLDialect family = dialect.family();
         String[][] quotes = QUOTES.get(family);
@@ -1206,8 +1212,13 @@ final class Utils {
                 // Consume the whole string literal
                 for (;;) {
 
+                    // [#3000] [#3630] Consume backslash-escaped characters if needed
+                    if (sqlChars[i] == '\\' && escaping == ON) {
+                        render.sql(sqlChars[i++]);
+                    }
+
                     // Consume an escaped apostrophe
-                    if (peek(sqlChars, i, "''")) {
+                    else if (peek(sqlChars, i, "''")) {
                         render.sql(sqlChars[i++]);
                     }
 

@@ -131,6 +131,21 @@ public final class SettingsTools {
     }
 
     /**
+     * Get the value BackslashEscaping value.
+     */
+    public static final BackslashEscaping getBackslashEscaping(Settings settings) {
+        if (settings != null) {
+            BackslashEscaping result = settings.getBackslashEscaping();
+
+            if (result != null) {
+                return result;
+            }
+        }
+
+        return BackslashEscaping.OFF;
+    }
+
+    /**
      * Whether a {@link PreparedStatement} should be executed.
      */
     public static final boolean executePreparedStatements(Settings settings) {

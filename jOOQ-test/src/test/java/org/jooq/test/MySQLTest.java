@@ -85,6 +85,8 @@ import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
+import org.jooq.conf.BackslashEscaping;
+import org.jooq.conf.Settings;
 import org.jooq.test.all.converters.Boolean_10;
 import org.jooq.test.all.converters.Boolean_TF_LC;
 import org.jooq.test.all.converters.Boolean_TF_UC;
@@ -941,5 +943,10 @@ public class MySQLTest extends jOOQAbstractTest<
             TBook().useIndexForGroupBy("i_book_a")
                    .useIndexForJoin("i_book_b")
                    .ignoreIndexForOrderBy("i_book_a")).fetch().size());
+    }
+
+    @Test
+    public void testMySQLPlainSQLWithBackslashEscaping() throws Exception {
+        assertEquals("A ' ' \\ B", create(new Settings().withBackslashEscaping(BackslashEscaping.ON)).fetchValue("select 'A '' \\' \\\\ B' from dual"));
     }
 }

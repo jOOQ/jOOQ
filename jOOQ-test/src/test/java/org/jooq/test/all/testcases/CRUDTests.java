@@ -662,6 +662,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Rösslitor", store.getValue(TBookStore_NAME()));
     }
 
+    public void testUpdatablesNoKey() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        U record = create().newRecord(TUnsigned());
+        record.changed(true);
+        assertEquals(1, record.insert());
+        assertEquals(1, create().fetchCount(TUnsigned()));
+    }
+
     public void testUpdatablesVersionAndTimestamp() throws Exception {
         if (TBook_REC_TIMESTAMP() == null && TBook_REC_VERSION() == null) {
             log.info("SKIPPING", "Record version and timestamp tests");

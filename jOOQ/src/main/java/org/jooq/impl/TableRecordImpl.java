@@ -61,6 +61,7 @@ import org.jooq.StoreQuery;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
+import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 import org.jooq.tools.JooqLogger;
 
@@ -308,11 +309,13 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         Collection<Field<?>> result = new LinkedHashSet<Field<?>>();
 
         Identity<R, ?> identity = getTable().getIdentity();
-        if (identity != null) {
+        if (identity != null)
             result.add(identity.getField());
-        }
 
-        result.addAll(getPrimaryKey().getFields());
+        UniqueKey<?> key = getPrimaryKey();
+        if (key != null)
+            result.addAll(key.getFields());
+
         return result;
     }
 }

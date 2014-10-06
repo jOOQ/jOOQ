@@ -93,7 +93,7 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
-                typeName,
+                parseTypeName(typeName),
                 precision,
                 precision,
                 scale,

@@ -47,7 +47,7 @@ import org.jooq.conf.Settings;
 /**
  * The render context is used for rendering {@link QueryPart}'s to SQL.
  * <p>
- * A new render context is instanciated every time a {@link Query} is rendered.
+ * A new render context is instantiated every time a {@link Query} is rendered.
  * <code>QueryPart</code>'s will then pass the same context to their components
  *
  * @author Lukas Eder

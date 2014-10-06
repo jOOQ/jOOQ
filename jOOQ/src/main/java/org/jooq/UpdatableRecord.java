@@ -72,7 +72,7 @@ import org.jooq.exception.InvalidResultException;
  * <p>
  * <code>UpdatableRecords</code> are {@link Attachable}, which means that they
  * hold an underlying {@link Configuration} that they can be detached from. They
- * can also be instanciated without any underlying {@link Configuration}, in
+ * can also be instantiated without any underlying {@link Configuration}, in
  * case of which they have to be attached first, in order to be refreshed,
  * stored, or deleted.
  *

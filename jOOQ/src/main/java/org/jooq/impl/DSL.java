@@ -249,7 +249,7 @@ import org.jooq.types.DayToSecond;
  * <p>
  * The {@link DSLContext} and this <code>DSL</code> are the main entry point for
  * client code, to access jOOQ classes and functionality. Here, you can
- * instanciate all of those objects that cannot be accessed through other
+ * instantiate all of those objects that cannot be accessed through other
  * objects. For example, to create a {@link Field} representing a constant
  * value, you can write:
  * <p>

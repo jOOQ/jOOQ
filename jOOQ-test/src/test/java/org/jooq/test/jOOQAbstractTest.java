@@ -2145,6 +2145,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testUpdatablesNoKey() throws Exception {
+        new CRUDTests(this).testUpdatablesNoKey();
+    }
+
+    @Test
     public void testUpdatablesVersionAndTimestamp() throws Exception {
         new CRUDTests(this).testUpdatablesVersionAndTimestamp();
     }

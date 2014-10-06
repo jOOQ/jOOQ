@@ -5,6 +5,7 @@ DELETE FROM t_book_to_book_store/
 DELETE FROM t_book_store/
 DELETE FROM t_book/
 DELETE FROM t_author/
+DELETE FROM t_unsigned/
 DELETE FROM t_language/
 DELETE FROM t_booleans/
 DELETE FROM t_dates/

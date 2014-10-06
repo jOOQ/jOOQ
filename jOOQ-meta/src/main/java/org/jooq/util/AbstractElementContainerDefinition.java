@@ -148,6 +148,10 @@ extends AbstractDefinition {
         return 0;
     }
 
+    protected String parseTypeName(String typeName) {
+        return typeName.replace(" NOT NULL", "");
+    }
+
     protected boolean parseNotNull(String typeName) {
         return typeName.toUpperCase().contains("NOT NULL");
     }

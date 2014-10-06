@@ -41,6 +41,7 @@
 
 package org.jooq.test;
 
+import static org.jooq.test.derby.generatedclasses.Tables.T_3667;
 import static org.jooq.test.derby.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.derby.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.derby.generatedclasses.Tables.T_DATES;
@@ -50,11 +51,14 @@ import static org.jooq.test.derby.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.derby.generatedclasses.Tables.T_UNSIGNED;
 import static org.jooq.test.derby.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.derby.generatedclasses.Tables.V_BOOK;
+import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
@@ -101,6 +105,7 @@ import org.jooq.test.derby.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.derby.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.derby.generatedclasses.tables.records.TUnsignedRecord;
+import org.jooq.test.derby.generatedclasses.tables.records.T_3667Record;
 import org.jooq.test.derby.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.derby.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.derby.generatedclasses.tables.records.T_785Record;
@@ -111,6 +116,8 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.derby.DerbyDataType;
+
+import org.junit.Test;
 
 /**
  * @author Lukas Eder
@@ -791,5 +798,26 @@ public class DerbyTest extends jOOQAbstractTest<
             DerbyDataType.VARCHAR,
             DerbyDataType.VARCHARFORBITDATA,
         };
+    }
+
+    @Test
+    public void testDerbyConvertedColumns() {
+        LocalDateTime now = LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC);
+
+        try {
+            assertEquals(1,
+            create().insertInto(T_3667, T_3667.CREATION_DATE, T_3667.INSERT_DATE, T_3667.RELEASE_DATE)
+                    .values(now, now, now)
+                    .execute());
+
+            T_3667Record record = create().fetchOne(T_3667);
+            assertEquals(now, record.getCreationDate());
+            assertEquals(now, record.getInsertDate());
+            assertEquals(now, record.getReleaseDate());
+        }
+
+        finally {
+            create().delete(T_3667);
+        }
     }
 }

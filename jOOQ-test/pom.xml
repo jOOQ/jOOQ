@@ -386,44 +386,6 @@
             </build>
         </profile>
 
-        <profile>
-            <id>start-derby</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.2.1</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>java</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-
-                        <configuration>
-                            <mainClass>org.apache.derby.iapi.tools.run</mainClass>
-                            <arguments>
-                                <argument>server</argument>
-                                <argument>start</argument>
-                            </arguments>
-                        </configuration>
-
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.apache.derby</groupId>
-                                <artifactId>derbyrun</artifactId>
-                                <version>${db.derby.version}</version>
-                                <scope>system</scope>
-                                <systemPath>${basedir}/lib/derbyrun.jar</systemPath>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
 
         <!-- Code generation profiles -->
         <profile>
@@ -707,6 +669,10 @@
                                                     <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
                                                     <converter>org.jooq.test.all.converters.Boolean_YES_NO_UC_Converter</converter>
                                                 </customType>
+                                                <customType>
+                                                    <name>java.time.LocalDateTime</name>
+                                                    <converter>org.jooq.test.all.converters.LocalDateTimeConverter</converter>
+                                                </customType>
                                             </customTypes>
 
                                             <forcedTypes>
@@ -764,6 +730,11 @@
                                                 <forcedType>
                                                     <name>org.jooq.test.all.converters.Boolean_10</name>
                                                     <expression>(?i:(.*?.)?T_BOOLEANS.ONE_ZERO)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>java.time.LocalDateTime</name>
+                                                    <expression>(?i:(.*?\.)?T_3667\..*)</expression>
+                                                    <types>DATE</types>
                                                 </forcedType>
                                             </forcedTypes>
                                         </database>

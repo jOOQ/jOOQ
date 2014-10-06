@@ -1,0 +1,19 @@
+<configuration>
+    <jdbc>
+        <driver>org.h2.Driver</driver>
+        <url>jdbc:h2:~/generationtool</url>
+        <user>sa</user>
+        <password></password>
+    </jdbc>
+    <generator>
+        <name>org.jooq.util.DefaultGenerator</name>
+        <database>
+            <inputSchema>INFORMATION_SCHEMA</inputSchema>
+            <includes>TABLES</includes>
+        </database>
+        <target>
+            <packageName>org.jooq.test.h2_generationtool.generatedclasses</packageName>
+            <directory>./src/test/java</directory>
+        </target>
+    </generator>
+</configuration>

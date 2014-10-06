@@ -47,6 +47,8 @@ import static org.jooq.tools.StringUtils.isBlank;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -140,20 +142,23 @@ public class GenerationTool {
 
         InputStream in = GenerationTool.class.getResourceAsStream(args[0]);
 
+        // [#2932] Retry loading the file, if it wasn't found. This may be helpful
+        // to some users who were unaware that this file is loaded from the classpath
+        if (in == null && !args[0].startsWith("/"))
+            in = GenerationTool.class.getResourceAsStream("/" + args[0]);
+
+        // [#3668] Also check the local file system for configuration files
+        if (in == null && new File(args[0]).exists())
+            in = new FileInputStream(new File(args[0]));
+
         if (in == null) {
+            log.error("Cannot find " + args[0] + " on classpath, or in directory " + new File(".").getCanonicalPath());
+            log.error("-----------");
+            log.error("Please be sure it is located");
+            log.error("  - on the classpath and qualified as a classpath location.");
+            log.error("  - in the local directory or at a global path in the file system.");
 
-            // [#2932] Retry loading the file, if it wasn't found. This may be helpful
-            // to some users who were unaware that this file is loaded from the classpath
-            if (!args[0].startsWith("/"))
-                in = GenerationTool.class.getResourceAsStream("/" + args[0]);
-
-            if (in == null) {
-                log.error("Cannot find " + args[0]);
-                log.error("-----------");
-                log.error("Please be sure it is located on the classpath and qualified as a classpath location.");
-                log.error("If it is located at the current working directory, try adding a '/' to the path");
-                error();
-            }
+            error();
         }
 
         log.info("Initialising properties", args[0]);

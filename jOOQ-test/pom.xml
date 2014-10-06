@@ -34,7 +34,7 @@
         <org.springframework.version>3.2.6.RELEASE</org.springframework.version>
 
         <db.cubrid.version>9.2.0.0155</db.cubrid.version>
-        <db.derby.version>10.10.2.0</db.derby.version>
+        <db.derby.version>10.11.1.1</db.derby.version>
         <db.firebird.version>2.2.5</db.firebird.version>
         <db.h2.version>1.4.177</db.h2.version>
         <db.hsqldb.version>2.3.2</db.hsqldb.version>
@@ -768,7 +768,6 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
-                                            <navigationMethods>true</navigationMethods>
                                             <deprecated>true</deprecated>
                                             <instanceFields>false</instanceFields>
                                             <generatedAnnotation>false</generatedAnnotation>

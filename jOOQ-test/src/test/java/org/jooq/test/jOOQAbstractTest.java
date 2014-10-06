@@ -915,7 +915,8 @@ public abstract class jOOQAbstractTest<
             return DriverManager.getConnection(getJdbcURL(), jdbcUser, jdbcPassword);
         }
 
-        return d != null
+        // d.connect() doesn't work for Derby, for some reason
+        return d != null && !getClass().getSimpleName().toLowerCase().contains("derby")
             ? d.connect(getJdbcURL(), info)
             : DriverManager.getConnection(getJdbcURL(), info);
     }

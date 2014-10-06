@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -305394590;
+	private static final long serialVersionUID = 1251426770;
 
 	/**
 	 * The singleton instance of <code>TEST</code>
@@ -32,7 +32,8 @@ public class Test extends org.jooq.impl.SchemaImpl {
 
 	private final java.util.List<org.jooq.Sequence<?>> getSequences0() {
 		return java.util.Arrays.<org.jooq.Sequence<?>>asList(
-			org.jooq.test.derby.generatedclasses.Sequences.S_AUTHOR_ID);
+			org.jooq.test.derby.generatedclasses.Sequences.S_AUTHOR_ID,
+			org.jooq.test.derby.generatedclasses.Sequences.S);
 	}
 
 	@Override
@@ -44,6 +45,7 @@ public class Test extends org.jooq.impl.SchemaImpl {
 
 	private final java.util.List<org.jooq.Table<?>> getTables0() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
+			org.jooq.test.derby.generatedclasses.tables.T_3667.T_3667,
 			org.jooq.test.derby.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,
 			org.jooq.test.derby.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST,
 			org.jooq.test.derby.generatedclasses.tables.T_785.T_785,

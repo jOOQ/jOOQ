@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2013, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * This work is dual-licensed
@@ -47,6 +47,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jooq.DSLContext;
+import org.jooq.example.spring.Application;
 import org.jooq.example.spring.BookService;
 import org.jooq.example.spring.SpringTransactionProvider;
 
@@ -55,9 +56,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.TransactionStatus;
@@ -66,13 +67,14 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 /**
  * @author Petri Kainulainen
  * @author Lukas Eder
+ * @author Thomas Darimont
  *
  * @see <a
  *      href="http://www.petrikainulainen.net/programming/jooq/using-jooq-with-spring-configuration/">http://www.petrikainulainen.net/programming/jooq/using-jooq-with-spring-configuration/</a>
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/jooq-spring.xml"})
-@TransactionConfiguration(transactionManager="transactionManager")
+@TransactionConfiguration
+@SpringApplicationConfiguration(classes = Application.class)
 public class TransactionTest {
 
     @Autowired DSLContext                   dsl;

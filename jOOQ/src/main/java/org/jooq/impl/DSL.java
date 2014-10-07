@@ -6433,6 +6433,36 @@ public class DSL {
 
     /**
      * Coerce this field to the type of another field.
+     *
+     * @see #coerce(Field, Field)
+     */
+    @Support
+    public static <T> Field<T> coerce(Object value, Field<T> as) {
+        return Utils.field(value).coerce(as);
+    }
+
+    /**
+     * Coerce this field to another type.
+     *
+     * @see #coerce(Field, Class)
+     */
+    @Support
+    public static <T> Field<T> coerce(Object value, Class<T> as) {
+        return Utils.field(value).coerce(as);
+    }
+
+    /**
+     * Coerce a field to another type.
+     *
+     * @see #coerce(Field, DataType)
+     */
+    @Support
+    public static <T> Field<T> coerce(Object value, DataType<T> as) {
+        return Utils.field(value).coerce(as);
+    }
+
+    /**
+     * Coerce this field to the type of another field.
      * <p>
      * Unlike with casting, coercing doesn't affect the way the database sees a
      * <code>Field</code>'s type. This is how coercing affects your SQL:

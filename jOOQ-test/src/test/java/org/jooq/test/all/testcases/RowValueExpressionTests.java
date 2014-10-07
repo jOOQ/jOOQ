@@ -428,9 +428,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create().select(TBook_ID())
                 .from(TBook())
                 .where(row(TBook_ID(), TBook_AUTHOR_ID()).in(
-                    select(val(1), val(1)).unionAll(
-                    select(val(2), val(1)).unionAll(
-                    select(TBook_ID(), TBook_ID()).from(TBook())))))
+                    select(val(1), val(1))
+                    .unionAll(
+                    select(val(2), val(1)))
+                    .unionAll(
+                    select(TBook_ID(), TBook_ID()).from(TBook()))))
                 .orderBy(TBook_ID())
                 .fetch(0, Integer.class));
     }

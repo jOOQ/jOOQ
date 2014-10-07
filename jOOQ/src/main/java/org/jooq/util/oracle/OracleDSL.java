@@ -124,7 +124,7 @@ public class OracleDSL extends DSL {
      * The Oracle-specific <code>TO_CHAR</code> function.
      */
     @Support(ORACLE)
-    public static Field<String> toChar(String value) {
+    public static Field<String> toChar(Object value) {
         return toChar(val(value));
     }
 
@@ -132,7 +132,7 @@ public class OracleDSL extends DSL {
      * The Oracle-specific <code>TO_CHAR</code> function.
      */
     @Support(ORACLE)
-    public static Field<String> toChar(Field<String> value) {
+    public static Field<String> toChar(Field<?> value) {
         return field("{to_char}({0})", String.class, nullSafe(value));
     }
 
@@ -140,7 +140,7 @@ public class OracleDSL extends DSL {
      * The Oracle-specific <code>TO_CHAR</code> function.
      */
     @Support(ORACLE)
-    public static Field<String> toChar(String value, String formatMask) {
+    public static Field<String> toChar(Object value, String formatMask) {
         return toChar(val(value), val(formatMask));
     }
 
@@ -148,7 +148,7 @@ public class OracleDSL extends DSL {
      * The Oracle-specific <code>TO_CHAR</code> function.
      */
     @Support(ORACLE)
-    public static Field<String> toChar(String value, Field<String> formatMask) {
+    public static Field<String> toChar(Object value, Field<String> formatMask) {
         return toChar(val(value), formatMask);
     }
 
@@ -156,7 +156,7 @@ public class OracleDSL extends DSL {
      * The Oracle-specific <code>TO_CHAR</code> function.
      */
     @Support(ORACLE)
-    public static Field<String> toChar(Field<String> value, String formatMask) {
+    public static Field<String> toChar(Field<?> value, String formatMask) {
         return toChar(value, val(formatMask));
     }
 
@@ -164,7 +164,7 @@ public class OracleDSL extends DSL {
      * The Oracle-specific <code>TO_CHAR</code> function.
      */
     @Support(ORACLE)
-    public static Field<String> toChar(Field<String> value, Field<String> formatMask) {
+    public static Field<String> toChar(Field<?> value, Field<String> formatMask) {
         return field("{to_char}({0}, {1})", String.class, nullSafe(value), nullSafe(formatMask));
     }
 

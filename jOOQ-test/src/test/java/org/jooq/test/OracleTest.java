@@ -94,6 +94,7 @@ import static org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEM
 import static org.jooq.util.oracle.OracleDSL.contains;
 import static org.jooq.util.oracle.OracleDSL.score;
 import static org.jooq.util.oracle.OracleDSL.sysContext;
+import static org.jooq.util.oracle.OracleDSL.toChar;
 import static org.jooq.util.oracle.OracleDSL.versionsEndscn;
 import static org.jooq.util.oracle.OracleDSL.versionsEndtime;
 import static org.jooq.util.oracle.OracleDSL.versionsOperation;
@@ -1974,6 +1975,21 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals(numberArray, Routines.fArrays1(c2, numberArray));
         assertEquals(bookArray, Routines.fArrays4(c2, bookArray));
 
+    }
+
+    @Test
+    public void testOracleToNumberToChar() {
+        Record result =
+        create().select(
+                    toChar(1210.73, "9999.9").trim(),
+                    toChar(21, "000099").trim(),
+                    toChar(new Timestamp(0), "yyyy-mm-dd")
+                )
+                .fetchOne();
+
+        assertEquals("1210.7", result.getValue(0));
+        assertEquals("000021", result.getValue(1));
+        assertEquals("1970-01-01", result.getValue(2));
     }
 }
 

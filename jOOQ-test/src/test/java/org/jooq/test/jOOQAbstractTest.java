@@ -2358,6 +2358,11 @@ public abstract class jOOQAbstractTest<
         new UnionTests(this).testUnionAndOrderBy();
     }
 
+    // @Test [#3676] TODO
+    public void testUnionAssociativity() throws Exception {
+        new UnionTests(this).testUnionAssociativity();
+    }
+
     @Test
     public void testUnionExceptIntersectAndOrderBy() throws Exception {
         new UnionTests(this).testUnionExceptIntersectAndOrderBy();

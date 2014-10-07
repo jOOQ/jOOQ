@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.val;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.sql.Date;
 
@@ -163,6 +164,54 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .unionAll(select(val("B")))
                     .orderBy(x)
                     .fetch(x)
+        );
+    }
+
+    public void testUnionAssociativity() throws Exception {
+        Field<String> x = val("A").as("x");
+
+        assertEquals(
+            create().select(x)
+                    .union(select(val("B")))
+                    .union(select(val("C")))
+                    .getSQL(),
+            create().select(x)
+                    .union(select(val("B"))
+                    .union(select(val("C"))))
+                    .getSQL()
+        );
+
+        assertEquals(
+            create().select(x)
+                    .unionAll(select(val("B")))
+                    .unionAll(select(val("C")))
+                    .getSQL(),
+            create().select(x)
+                    .unionAll(select(val("B"))
+                    .unionAll(select(val("C"))))
+                    .getSQL()
+        );
+
+        assertEquals(
+            create().select(x)
+                    .intersect(select(val("B")))
+                    .intersect(select(val("C")))
+                    .getSQL(),
+            create().select(x)
+                    .intersect(select(val("B"))
+                    .intersect(select(val("C"))))
+                    .getSQL()
+        );
+
+        assertNotEquals(
+            create().select(x)
+                    .except(select(val("B")))
+                    .except(select(val("C")))
+                    .getSQL(),
+            create().select(x)
+                    .except(select(val("B"))
+                    .except(select(val("C"))))
+                    .getSQL()
         );
     }
 

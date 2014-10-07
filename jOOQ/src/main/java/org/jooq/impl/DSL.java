@@ -7360,6 +7360,26 @@ public class DSL {
     }
 
     /**
+     * Get the <code>concat(field, value)</code> function.
+     *
+     * @see #concat(Field...)
+     */
+    @Support
+    public static Field<String> concat(Field<String> field, String value) {
+        return concat(nullSafe(field), Utils.field(value, String.class));
+    }
+
+    /**
+     * Get the <code>concat(value, field)</code> function.
+     *
+     * @see #concat(Field...)
+     */
+    @Support
+    public static Field<String> concat(String value, Field<String> field) {
+        return concat(Utils.field(value, String.class), nullSafe(field));
+    }
+
+    /**
      * Get the concat(value[, value, ...]) function.
      *
      * @see #concat(Field...)

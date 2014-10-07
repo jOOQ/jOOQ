@@ -35,7 +35,7 @@
       <element name="renderScalarSubqueriesForStoredFunctions" type="boolean" minOccurs="0" maxOccurs="1" default="false"/>
       
       <!-- Whether string literals should be escaped with backslash. -->
-      <element name="backslashEscaping" type="jooq-runtime:BackslashEscaping" minOccurs="0" maxOccurs="1" default="OFF"/>
+      <element name="backslashEscaping" type="jooq-runtime:BackslashEscaping" minOccurs="0" maxOccurs="1" default="DEFAULT"/>
 
       <!-- Whether rendered bind values should be rendered as:
       
@@ -208,6 +208,9 @@
       <enumeration value="AUTO"/>
         -->
         
+      <!-- Use the database's most sensible default value for ON (MySQL, MariaDB) / OFF (all other databases) -->
+      <enumeration value="DEFAULT"/>
+      
       <!-- Always escape backslashes. -->
       <enumeration value="ON"/>
 

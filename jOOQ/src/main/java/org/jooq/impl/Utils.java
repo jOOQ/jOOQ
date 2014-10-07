@@ -43,7 +43,10 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
@@ -97,6 +100,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -1166,12 +1170,13 @@ final class Utils {
         // [#1593] Create a dummy renderer if we're in bind mode
         if (render == null) render = new DefaultRenderContext(bind.configuration());
 
-        // [#3630] Depending on this setting, we need to consider backslashes as escape characters within string literals.
-        BackslashEscaping escaping = getBackslashEscaping(ctx.configuration().settings());
-
         SQLDialect dialect = render.configuration().dialect();
         SQLDialect family = dialect.family();
         String[][] quotes = QUOTES.get(family);
+
+        // [#3630] Depending on this setting, we need to consider backslashes as escape characters within string literals.
+        BackslashEscaping escaping = getBackslashEscaping(ctx.configuration().settings());
+        boolean needsBackslashEscaping = escaping == ON || (escaping == DEFAULT && EnumSet.of(MARIADB, MYSQL).contains(family));
 
         for (int i = 0; i < sqlChars.length; i++) {
 
@@ -1213,7 +1218,7 @@ final class Utils {
                 for (;;) {
 
                     // [#3000] [#3630] Consume backslash-escaped characters if needed
-                    if (sqlChars[i] == '\\' && escaping == ON) {
+                    if (sqlChars[i] == '\\' && needsBackslashEscaping) {
                         render.sql(sqlChars[i++]);
                     }
 

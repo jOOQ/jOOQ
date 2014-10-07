@@ -168,6 +168,54 @@ public class OracleDSL extends DSL {
         return field("{to_char}({0}, {1})", String.class, nullSafe(value), nullSafe(formatMask));
     }
 
+    /**
+     * The Oracle-specific <code>TO_NUMBER</code> function.
+     */
+    @Support(ORACLE)
+    public static Field<BigDecimal> toNumber(String value) {
+        return toNumber(val(value));
+    }
+
+    /**
+     * The Oracle-specific <code>TO_NUMBER</code> function.
+     */
+    @Support(ORACLE)
+    public static Field<BigDecimal> toNumber(Field<String> value) {
+        return field("{to_number}({0})", BigDecimal.class, nullSafe(value));
+    }
+
+    /**
+     * The Oracle-specific <code>TO_NUMBER</code> function.
+     */
+    @Support(ORACLE)
+    public static Field<BigDecimal> toNumber(String value, String formatMask) {
+        return toNumber(val(value), val(formatMask));
+    }
+
+    /**
+     * The Oracle-specific <code>TO_NUMBER</code> function.
+     */
+    @Support(ORACLE)
+    public static Field<BigDecimal> toNumber(String value, Field<String> formatMask) {
+        return toNumber(val(value), formatMask);
+    }
+
+    /**
+     * The Oracle-specific <code>TO_NUMBER</code> function.
+     */
+    @Support(ORACLE)
+    public static Field<BigDecimal> toNumber(Field<String> value, String formatMask) {
+        return toNumber(value, val(formatMask));
+    }
+
+    /**
+     * The Oracle-specific <code>TO_NUMBER</code> function.
+     */
+    @Support(ORACLE)
+    public static Field<BigDecimal> toNumber(Field<String> value, Field<String> formatMask) {
+        return field("{to_number}({0}, {1})", BigDecimal.class, nullSafe(value), nullSafe(formatMask));
+    }
+
     // -------------------------------------------------------------------------
     // Oracle Flashback Version Query pseudo-columns
     // -------------------------------------------------------------------------

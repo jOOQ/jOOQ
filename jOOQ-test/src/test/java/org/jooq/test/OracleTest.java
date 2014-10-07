@@ -95,6 +95,7 @@ import static org.jooq.util.oracle.OracleDSL.contains;
 import static org.jooq.util.oracle.OracleDSL.score;
 import static org.jooq.util.oracle.OracleDSL.sysContext;
 import static org.jooq.util.oracle.OracleDSL.toChar;
+import static org.jooq.util.oracle.OracleDSL.toNumber;
 import static org.jooq.util.oracle.OracleDSL.versionsEndscn;
 import static org.jooq.util.oracle.OracleDSL.versionsEndtime;
 import static org.jooq.util.oracle.OracleDSL.versionsOperation;
@@ -135,6 +136,7 @@ import org.jooq.Record;
 import org.jooq.Record14;
 import org.jooq.Record2;
 import org.jooq.Record3;
+import org.jooq.Record5;
 import org.jooq.Record8;
 import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
@@ -1979,17 +1981,21 @@ public class OracleTest extends jOOQAbstractTest<
 
     @Test
     public void testOracleToNumberToChar() {
-        Record result =
+        Record5<String, String, String, BigDecimal, BigDecimal> result =
         create().select(
                     toChar(1210.73, "9999.9").trim(),
                     toChar(21, "000099").trim(),
-                    toChar(new Timestamp(0), "yyyy-mm-dd")
+                    toChar(new Timestamp(0), "yyyy-mm-dd"),
+                    toNumber("1210.73", "9999.99"),
+                    toNumber("546")
                 )
                 .fetchOne();
 
-        assertEquals("1210.7", result.getValue(0));
-        assertEquals("000021", result.getValue(1));
-        assertEquals("1970-01-01", result.getValue(2));
+        assertEquals("1210.7", result.value1());
+        assertEquals("000021", result.value2());
+        assertEquals("1970-01-01", result.value3());
+        assertEquals(new BigDecimal("1210.73"), result.value4());
+        assertEquals(new BigDecimal("546"), result.value5());
     }
 }
 

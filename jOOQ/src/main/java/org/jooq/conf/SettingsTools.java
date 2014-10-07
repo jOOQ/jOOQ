@@ -142,7 +142,7 @@ public final class SettingsTools {
             }
         }
 
-        return BackslashEscaping.OFF;
+        return BackslashEscaping.DEFAULT;
     }
 
     /**

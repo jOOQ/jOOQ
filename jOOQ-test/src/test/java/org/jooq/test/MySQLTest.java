@@ -947,6 +947,17 @@ public class MySQLTest extends jOOQAbstractTest<
 
     @Test
     public void testMySQLPlainSQLWithBackslashEscaping() throws Exception {
+        assertEquals("A ' ' \\ B", create().fetchValue("select 'A '' \\' \\\\ B' from dual"));
         assertEquals("A ' ' \\ B", create(new Settings().withBackslashEscaping(BackslashEscaping.ON)).fetchValue("select 'A '' \\' \\\\ B' from dual"));
+
+        String sqlMode = (String) create().fetchValue("SELECT @@SESSION.sql_mode");
+
+        try {
+            create().execute("SET @@SESSION.sql_mode = CONCAT(@@SESSION.sql_mode, ',' ,'NO_BACKSLASH_ESCAPES')");
+            assertEquals("A ' \\' \\\\ B", create(new Settings().withBackslashEscaping(BackslashEscaping.OFF)).fetchValue("select 'A '' \\'' \\\\ B' from dual"));
+        }
+        finally {
+            create().execute("SET @@SESSION.sql_mode = ?", sqlMode);
+        }
     }
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2013, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * This work is dual-licensed
@@ -56,18 +56,20 @@ import org.jooq.example.db.h2.tables.Book;
 import org.jooq.example.db.h2.tables.BookStore;
 import org.jooq.example.db.h2.tables.BookToBookStore;
 import org.jooq.example.db.h2.tables.records.BookRecord;
+import org.jooq.example.spring.Application;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * @author Lukas Eder
+ * @author Thomas Darimont
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/jooq-spring.xml"})
+@SpringApplicationConfiguration(classes = Application.class)
 public class QueryTest {
 
     @Autowired

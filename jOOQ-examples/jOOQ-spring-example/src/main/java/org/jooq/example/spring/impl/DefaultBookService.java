@@ -46,11 +46,13 @@ import org.jooq.DSLContext;
 import org.jooq.example.spring.BookService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Lukas Eder
  */
+@Component
 public class DefaultBookService implements BookService {
 
     @Autowired

@@ -41,6 +41,7 @@
 
 package org.jooq.test;
 
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.md5;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
@@ -948,13 +949,18 @@ public class MySQLTest extends jOOQAbstractTest<
     @Test
     public void testMySQLPlainSQLWithBackslashEscaping() throws Exception {
         assertEquals("A ' ' \\ B", create().fetchValue("select 'A '' \\' \\\\ B' from dual"));
-        assertEquals("A ' ' \\ B", create(new Settings().withBackslashEscaping(BackslashEscaping.ON)).fetchValue("select 'A '' \\' \\\\ B' from dual"));
+        assertEquals("A ' ' \\ B", create(new Settings().withBackslashEscaping(BackslashEscaping.ON))
+                                           .fetchValue("select 'A '' \\' \\\\ B' from dual"));
+        assertEquals("A ' ' \\ B", create().fetchValue("select {0} from dual", inline("A ' ' \\ B")));
+        assertEquals("A ' ' \\ B", create(new Settings().withBackslashEscaping(BackslashEscaping.ON))
+                                           .fetchValue("select {0} from dual", inline("A ' ' \\ B")));
 
         String sqlMode = (String) create().fetchValue("SELECT @@SESSION.sql_mode");
 
         try {
             create().execute("SET @@SESSION.sql_mode = CONCAT(@@SESSION.sql_mode, ',' ,'NO_BACKSLASH_ESCAPES')");
             assertEquals("A ' \\' \\\\ B", create(new Settings().withBackslashEscaping(BackslashEscaping.OFF)).fetchValue("select 'A '' \\'' \\\\ B' from dual"));
+            assertEquals("A ' \\' \\\\ B", create(new Settings().withBackslashEscaping(BackslashEscaping.OFF)).fetchValue("select {0} from dual", inline("A ' \\' \\\\ B")));
         }
         finally {
             create().execute("SET @@SESSION.sql_mode = ?", sqlMode);

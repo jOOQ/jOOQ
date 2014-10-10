@@ -568,6 +568,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Nested expressions
         switch (dialect().family()) {
+            case DERBY:
             case H2:
             case POSTGRES:
             /* [pro] */
@@ -593,6 +594,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         switch (dialect().family()) {
             // These dialects do not really have full support for ORDER BY (SELECT ...)
             case H2:
+            case DERBY:
             /* [pro] */
             case DB2:
             case SYBASE:

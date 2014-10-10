@@ -42,6 +42,9 @@ package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.val;
 import static org.junit.Assert.assertEquals;
@@ -90,181 +93,235 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    public void testUnionAndOrderBy() throws Exception {
-        Field<String> x = val("A").as("x");
+    final static Field<String> A = val("A").as("x");
+    final static Field<String> B = val("B").as("x");
+    final static Field<String> C = val("C").as("x");
+    final static Field<String> D = val("D").as("x");
 
+    public void testUnionAndOrderBy() throws Exception {
         // Simple ORDER BY following UNION
         // -------------------------------
         assertEquals(
             asList("A", "B", "C"),
-            create().select(x)
-                    .union(select(val("B")))
-                    .union(select(val("C")))
-                    .orderBy(x)
-                    .fetch(x)
+            create().select(A)
+                    .union(select(B))
+                    .union(select(C))
+                    .orderBy(1)
+                    .fetch(0)
         );
 
         assertEquals(
             asList("C", "B", "A"),
-            create().select(x)
-                    .union(select(val("B")))
-                    .union(select(val("C")))
-                    .orderBy(x.desc())
-                    .fetch(x)
+            create().select(A)
+                    .union(select(B))
+                    .union(select(C))
+                    .orderBy(one().desc())
+                    .fetch(0)
         );
 
         // ORDER BY with LIMIT
         // -------------------
         assertEquals(
             asList("C", "B"),
-            create().select(x)
-                    .union(select(val("B")))
-                    .union(select(val("C")))
-                    .orderBy(x.desc())
+            create().select(A)
+                    .union(select(B))
+                    .union(select(C))
+                    .orderBy(one().desc())
                     .limit(2)
-                    .fetch(x)
+                    .fetch(0)
         );
 
         assertEquals(
             asList("B", "A"),
-            create().select(x)
-                    .union(select(val("B")))
-                    .union(select(val("C")))
-                    .orderBy(x.desc())
+            create().select(A)
+                    .union(select(B))
+                    .union(select(C))
+                    .orderBy(one().desc())
                     .limit(2)
                     .offset(1)
-                    .fetch(x)
+                    .fetch(0)
         );
 
         // Different SET operators
         // -----------------------
         assertEquals(
             asList("A", "B", "B"),
-            create().select(x)
-                    .union(select(val("B")))
-                    .unionAll(select(val("B")))
-                    .orderBy(x)
-                    .fetch(x)
+            create().select(A)
+                    .union(select(B))
+                    .unionAll(select(B))
+                    .orderBy(1)
+                    .fetch(0)
         );
 
         assertEquals(
             asList("A", "B"),
-            create().select(x)
-                    .unionAll(select(val("B")))
-                    .union(select(val("B")))
-                    .orderBy(x)
-                    .fetch(x)
+            create().select(A)
+                    .unionAll(select(B))
+                    .union(select(B))
+                    .orderBy(one())
+                    .fetch(0)
         );
 
         assertEquals(
             asList("A", "B", "B"),
-            create().select(x)
-                    .unionAll(select(val("B")))
-                    .union(select(val("B")))
-                    .unionAll(select(val("B")))
-                    .orderBy(x)
-                    .fetch(x)
+            create().select(A)
+                    .unionAll(select(B))
+                    .union(select(B))
+                    .unionAll(select(B))
+                    .orderBy(one())
+                    .fetch(0)
         );
     }
 
-    public void testUnionAssociativity() throws Exception {
-        Field<String> x = val("A").as("x");
-
+    public void testUnionAssociativityGeneratedSQL() throws Exception {
         assertEquals(
-            create().select(x)
-                    .union(select(val("B")))
-                    .union(select(val("C")))
+            create().select(A)
+                    .union(select(B))
+                    .union(select(C))
                     .getSQL(),
-            create().select(x)
-                    .union(select(val("B"))
-                    .union(select(val("C"))))
+            create().select(A)
+                    .union(select(B)
+                    .union(select(C)))
                     .getSQL()
         );
 
         assertEquals(
-            create().select(x)
-                    .unionAll(select(val("B")))
-                    .unionAll(select(val("C")))
+            create().select(A)
+                    .unionAll(select(B))
+                    .unionAll(select(C))
                     .getSQL(),
-            create().select(x)
-                    .unionAll(select(val("B"))
-                    .unionAll(select(val("C"))))
+            create().select(A)
+                    .unionAll(select(B)
+                    .unionAll(select(C)))
                     .getSQL()
         );
 
         assertEquals(
-            create().select(x)
-                    .intersect(select(val("B")))
-                    .intersect(select(val("C")))
+            create().select(A)
+                    .intersect(select(B))
+                    .intersect(select(C))
                     .getSQL(),
-            create().select(x)
-                    .intersect(select(val("B"))
-                    .intersect(select(val("C"))))
+            create().select(A)
+                    .intersect(select(B)
+                    .intersect(select(C)))
                     .getSQL()
         );
 
         assertNotEquals(
-            create().select(x)
-                    .except(select(val("B")))
-                    .except(select(val("C")))
+            create().select(A)
+                    .except(select(B))
+                    .except(select(C))
                     .getSQL(),
-            create().select(x)
-                    .except(select(val("B"))
-                    .except(select(val("C"))))
+            create().select(A)
+                    .except(select(B)
+                    .except(select(C)))
                     .getSQL()
         );
     }
 
-    public void testUnionExceptIntersectAndOrderBy() throws Exception {
-        assumeFamilyNotIn(FIREBIRD);
+    public void testUnionAssociativityExecutedSQL() throws Exception {
+        assertEquals(
+            create().select(A)
+                    .union(select(B))
+                    .union(select(B))
+                    .fetch(),
+            create().select(A)
+                    .union(select(B)
+                    .union(select(B)))
+                    .fetch()
+        );
 
-        Field<String> x = val("A").as("x");
+        assertEquals(
+            create().select(A)
+                    .unionAll(select(B))
+                    .unionAll(select(B))
+                    .fetch(),
+            create().select(A)
+                    .unionAll(select(B)
+                    .unionAll(select(B)))
+                    .fetch()
+        );
+
+        switch (dialect().family()) {
+            case FIREBIRD:
+            case MARIADB:
+            case MYSQL:
+                break;
+
+            default: {
+                assertEquals(
+                    create().select(A)
+                            .intersect(select(A))
+                            .intersect(select(A))
+                            .fetch(),
+                    create().select(A)
+                            .intersect(select(A)
+                            .intersect(select(A)))
+                            .fetch()
+                );
+
+                assertNotEquals(
+                    create().select(A)
+                            .except(select(A))
+                            .except(select(A))
+                            .fetch(),
+                    create().select(A)
+                            .except(select(A)
+                            .except(select(A)))
+                            .fetch()
+                );
+            }
+        }
+    }
+
+    public void testUnionExceptIntersectAndOrderBy() throws Exception {
+        assumeFamilyNotIn(MARIADB, MYSQL, FIREBIRD);
 
         // Different SET operators
         // -----------------------
         assertEquals(
             asList("A"),
-            create().select(x)
-                    .union(select(val("B")))
-                    .union(select(val("C")))
-                    .intersect(select(val("A")))
-                    .orderBy(x)
-                    .fetch(x)
+            create().select(A)
+                    .union(select(B))
+                    .union(select(C))
+                    .intersect(select(A))
+                    .orderBy(1)
+                    .fetch(0)
         );
 
         assertEquals(
             asList("A", "B"),
-            create().select(x)
-                    .union(select(val("B")))
-                    .union(select(val("C")))
-                    .intersect(select(val("A"))
-                        .union(select(val("B"))))
-                    .orderBy(x)
-                    .fetch(x)
+            create().select(A)
+                    .union(select(B))
+                    .union(select(C))
+                    .intersect(select(A)
+                        .union(select(B)))
+                    .orderBy(1)
+                    .fetch(0)
         );
 
         assertEquals(
             asList("C"),
-            create().select(x)
-                    .union(select(val("B")))
-                    .union(select(val("C")))
-                    .except(select(val("A"))
-                        .union(select(val("B"))))
-                    .orderBy(x)
-                    .fetch(x)
+            create().select(A)
+                    .union(select(B))
+                    .union(select(C))
+                    .except(select(A)
+                        .union(select(B)))
+                    .orderBy(1)
+                    .fetch(0)
         );
 
         assertEquals(
             asList("B"),
-            create().select(x)
-                    .union(select(val("B")))
-                    .union(select(val("C")))
-                    .except(select(val("A"))
-                        .union(select(val("D"))))
-                    .intersect(select(val("A"))
-                        .union(select(val("B"))))
-                    .orderBy(x)
-                    .fetch(x)
+            create().select(A)
+                    .union(select(B))
+                    .union(select(C))
+                    .except(select(A)
+                        .union(select(D)))
+                    .intersect(select(A)
+                        .union(select(B)))
+                    .orderBy(1)
+                    .fetch(0)
         );
 
     }
@@ -321,7 +378,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testIntersectAndExcept() throws Exception {
-        assumeFamilyNotIn(FIREBIRD);
+        assumeFamilyNotIn(MARIADB, MYSQL, FIREBIRD);
 
         // [#3507] Not all dialects support INTERSECT and EXCEPT
         Result<Record1<Integer>> r1 =

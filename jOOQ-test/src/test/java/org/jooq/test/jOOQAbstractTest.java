@@ -2359,8 +2359,13 @@ public abstract class jOOQAbstractTest<
     }
 
     // @Test [#3676] TODO
-    public void testUnionAssociativity() throws Exception {
-        new UnionTests(this).testUnionAssociativity();
+    public void testUnionAssociativityGeneratedSQL() throws Exception {
+        new UnionTests(this).testUnionAssociativityGeneratedSQL();
+    }
+
+    @Test
+    public void testUnionAssociativityExecutedSQL() throws Exception {
+        new UnionTests(this).testUnionAssociativityExecutedSQL();
     }
 
     @Test

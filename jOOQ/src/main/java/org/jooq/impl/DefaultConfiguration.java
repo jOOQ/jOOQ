@@ -563,7 +563,6 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("deprecation")
     public final Configuration set(Settings newSettings) {
         this.settings = newSettings != null
             ? SettingsTools.clone(newSettings)
@@ -571,6 +570,80 @@ public class DefaultConfiguration implements Configuration {
 
         this.mapping = new org.jooq.SchemaMapping(this);
         return this;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Changing configurations via JavaBeans-style setters
+    // -------------------------------------------------------------------------
+
+    /**
+     * @see #set(Connection)
+     */
+    public final void setConnection(Connection newConnection) {
+        set(newConnection);
+    }
+
+    /**
+     * @see #set(DataSource)
+     */
+    public final void setDataSource(DataSource newDataSource) {
+        set(newDataSource);
+    }
+
+    /**
+     * @see #set(ConnectionProvider)
+     */
+    public final void setConnectionProvider(ConnectionProvider newConnectionProvider) {
+        set(newConnectionProvider);
+    }
+
+    /**
+     * @see #set(TransactionProvider)
+     */
+    public final void setTransactionProvider(TransactionProvider newTransactionProvider) {
+        set(newTransactionProvider);
+    }
+
+    /**
+     * @see #set(RecordMapperProvider)
+     */
+    public final void setRecordMapperProvider(RecordMapperProvider newRecordMapperProvider) {
+        set(newRecordMapperProvider);
+    }
+
+    /**
+     * @see #set(RecordListenerProvider[])
+     */
+    public final void setRecordListenerProvider(RecordListenerProvider... newRecordListenerProviders) {
+        set(newRecordListenerProviders);
+    }
+
+    /**
+     * @see #set(ExecuteListenerProvider[])
+     */
+    public final void setExecuteListenerProvider(ExecuteListenerProvider... newExecuteListenerProviders) {
+        set(newExecuteListenerProviders);
+    }
+
+    /**
+     * @see #set(VisitListenerProvider[])
+     */
+    public final void setVisitListenerProvider(VisitListenerProvider... newVisitListenerProviders) {
+        set(newVisitListenerProviders);
+    }
+
+    /**
+     * @see #set(SQLDialect)
+     */
+    public final void setSQLDialect(SQLDialect newDialect) {
+        set(newDialect);
+    }
+
+    /**
+     * @see #set(Settings)
+     */
+    public final void setSettings(Settings newSettings) {
+        set(newSettings);
     }
 
     // -------------------------------------------------------------------------

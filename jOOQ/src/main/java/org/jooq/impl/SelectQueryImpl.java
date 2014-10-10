@@ -1194,34 +1194,65 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     xx [/pro] */
 
     private final void unionParenthesis(Context<?> ctx, String parenthesis) {
-        switch (ctx.configuration().dialect()) {
-            // Sybase ASE, Derby, Firebird and SQLite have some syntax issues with unions.
-            // Check out https://issues.apache.org/jira/browse/DERBY-2374
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxx
-            xx [/pro] */
-            case DERBY:
-            case FIREBIRD:
-            case SQLITE:
-
-            // [#288] MySQL has a very special way of dealing with UNION's
-            // So include it as well
-            case MARIADB:
-            case MYSQL:
-                return;
-        }
-
         if (")".equals(parenthesis)) {
             ctx.formatIndentEnd()
                .formatNewLine();
         }
 
-        ctx.sql(parenthesis);
+        // [#3579] Nested set operators aren't supported in some databases. Emulate them via derived tables...
+        else if ("(".equals(parenthesis)) {
+            switch (ctx.family()) {
+                /* [pro] xx
+                xxxx xxxxxxx
+                xxxx xxxx
+                xx [/pro] */
+                case DERBY:
+                case SQLITE:
+                case MARIADB:
+                case MYSQL:
+                    ctx.formatNewLine()
+                       .keyword("select")
+                       .sql(" *")
+                       .formatSeparator()
+                       .keyword("from")
+                       .sql(" ");
+                    break;
+            }
+        }
+
+        // [#3579] ... but don't use derived tables to emulate nested set operators for Firebird, as that
+        // only causes many more issues in various contexts where they are not allowed:
+        // - Recursive CTE
+        // - INSERT SELECT
+        // - Derived tables with undefined column names (see also [#3679])
+
+        switch (ctx.family()) {
+            case FIREBIRD:
+                break;
+
+            default:
+                ctx.sql(parenthesis);
+                break;
+        }
 
         if ("(".equals(parenthesis)) {
             ctx.formatIndentStart()
                .formatNewLine();
+        }
+
+        else if (")".equals(parenthesis)) {
+            switch (ctx.family()) {
+                /* [pro] xx
+                xxxx xxxxxxx
+                xxxx xxxx
+                xx [/pro] */
+                case DERBY:
+                case SQLITE:
+                case MARIADB:
+                case MYSQL:
+                    ctx.sql(" x");
+                    break;
+            }
         }
     }
 

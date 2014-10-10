@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
@@ -65,6 +66,6 @@ public interface CreateTableAsStep<R extends Record> {
     /**
      * Add an <code>AS</code> clause to the <code>CREATE TABLE</code> statement.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SQLITE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SQLITE })
     CreateTableFinalStep as(Select<? extends R> select);
 }

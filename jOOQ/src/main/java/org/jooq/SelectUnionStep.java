@@ -48,8 +48,6 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
@@ -119,13 +117,13 @@ public interface SelectUnionStep<R extends Record> extends SelectOrderByStep<R> 
      * Combine with other selects
      */
     @Override
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, POSTGRES, SQLITE })
     SelectUnionStep<R> except(Select<? extends R> select);
 
     /**
      * Combine with other selects
      */
     @Override
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, POSTGRES, SQLITE })
     SelectUnionStep<R> intersect(Select<? extends R> select);
 }

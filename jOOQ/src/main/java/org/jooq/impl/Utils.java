@@ -1175,8 +1175,7 @@ final class Utils {
         String[][] quotes = QUOTES.get(family);
 
         // [#3630] Depending on this setting, we need to consider backslashes as escape characters within string literals.
-        BackslashEscaping escaping = getBackslashEscaping(ctx.configuration().settings());
-        boolean needsBackslashEscaping = escaping == ON || (escaping == DEFAULT && EnumSet.of(MARIADB, MYSQL).contains(family));
+        boolean needsBackslashEscaping = needsBackslashEscaping(ctx.configuration());
 
         for (int i = 0; i < sqlChars.length; i++) {
 
@@ -1338,6 +1337,14 @@ final class Utils {
                 render.sql(sqlChars[i]);
             }
         }
+    }
+
+    /**
+     * Whether backslash escaping is needed in inlined string literals.
+     */
+    static final boolean needsBackslashEscaping(Configuration configuration) {
+        BackslashEscaping escaping = getBackslashEscaping(configuration.settings());
+        return escaping == ON || (escaping == DEFAULT && EnumSet.of(MARIADB, MYSQL).contains(configuration.dialect().family()));
     }
 
     /**

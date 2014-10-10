@@ -60,12 +60,11 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
-import static org.jooq.conf.BackslashEscaping.ON;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
-import static org.jooq.impl.Utils.settings;
+import static org.jooq.impl.Utils.needsBackslashEscaping;
 import static org.jooq.tools.StringUtils.leftPad;
 
 import java.math.BigDecimal;
@@ -84,7 +83,6 @@ import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.UDTRecord;
-import org.jooq.conf.BackslashEscaping;
 import org.jooq.tools.StringUtils;
 import org.jooq.types.Interval;
 
@@ -642,10 +640,9 @@ class Val<T> extends AbstractParam<T> {
      * Escape a string literal by replacing <code>'</code> by <code>''</code>, and possibly also backslashes.
      */
     private final String escape(Object val, Context<?> context) {
-        BackslashEscaping escaping = settings(context.configuration()).getBackslashEscaping();
         String result = val.toString();
 
-        if (escaping == ON)
+        if (needsBackslashEscaping(context.configuration()))
             result = result.replace("\\", "\\\\");
 
         return result.replace("'", "''");

@@ -6,6 +6,7 @@ jdk:
 install: 
   - sh -c 'mvn install -DskipTests=true'
   - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-examples/jOOQ-spring-example && mvn install -DskipTests=true' || echo "Skipping for JDK6 and 7"
+  - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-examples/jOOQ-spring-boot-example && mvn install -DskipTests=true' || echo "Skipping for JDK6 and 7"
   - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-examples/jOOQ-flyway-example && mvn install -DskipTests=true' || echo "Skipping for JDK6 and 7"
   - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-examples/jOOQ-nashorn-example && mvn install -DskipTests=true' || echo "Skipping for JDK6 and 7"
   - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-examples/jOOQ-vertabelo-example && mvn install -DskipTests=true' || echo "Skipping for JDK6 and 7"
@@ -16,6 +17,7 @@ install:
 script: 
   - sh -c 'mvn test'
   - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-examples/jOOQ-spring-example && mvn test' || echo "Skipping for JDK6 and 7"
+  - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-examples/jOOQ-spring-boot-example && mvn test' || echo "Skipping for JDK6 and 7"
   - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-examples/jOOQ-flyway-example && mvn test' || echo "Skipping for JDK6 and 7"
   - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-examples/jOOQ-nashorn-example && mvn test' || echo "Skipping for JDK6 and 7"
   - sh -c 'echo $JAVA_HOME | grep -q 8 && cd jOOQ-examples/jOOQ-vertabelo-example && mvn test' || echo "Skipping for JDK6 and 7"

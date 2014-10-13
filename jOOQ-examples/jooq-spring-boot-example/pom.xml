@@ -3,18 +3,32 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.jooq</groupId>
-	<artifactId>jooq-spring-boot-example</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
-
-	<name>jOOQ Spring Boot Example</name>
-
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.1.7.RELEASE</version>
 	</parent>
+
+	<groupId>org.jooq</groupId>
+	<artifactId>jooq-spring-boot-example</artifactId>
+	<version>${org.jooq.version}</version>
+	<packaging>jar</packaging>
+	<name>jOOQ Spring Boot Example</name>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.jooq.org/inc/LICENSE.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<start-class>org.jooq.example.spring.Application</start-class>
+        <org.jooq.version>3.5.0-SNAPSHOT</org.jooq.version>
+		<java.version>1.8</java.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -25,7 +39,7 @@
 		<dependency>
 			<groupId>org.jooq</groupId>
 			<artifactId>jooq</artifactId>
-			<version>${jooq.version}</version>
+			<version>${org.jooq.version}</version>
 		</dependency>
 
 		<dependency>
@@ -39,13 +53,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<start-class>org.jooq.example.spring.Application</start-class>
-		<jooq.version>3.4.2</jooq.version>
-		<java.version>1.8</java.version>
-	</properties>
 
 	<build>
 		<plugins>
@@ -120,7 +127,7 @@
 			<plugin>
 				<groupId>org.jooq</groupId>
 				<artifactId>jooq-codegen-maven</artifactId>
-				<version>${jooq.version}</version>
+				<version>${org.jooq.version}</version>
 
 				<executions>
 					<execution>

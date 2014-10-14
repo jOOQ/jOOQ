@@ -64,7 +64,7 @@ class NotField extends AbstractField<Boolean> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
+        switch (ctx.configuration().dialect().family()) {
 
             // [#2485] These don't work nicely, yet
             case CUBRID:

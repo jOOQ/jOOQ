@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MultiSchema extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 712546500;
+	private static final long serialVersionUID = -1987403773;
 
 	/**
 	 * The singleton instance of <code>MULTI_SCHEMA</code>
@@ -35,5 +35,17 @@ public class MultiSchema extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR,
 			org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK,
 			org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE);
+	}
+
+	@Override
+	public final java.util.List<org.jooq.UDT<?>> getUDTs() {
+		java.util.List result = new java.util.ArrayList();
+		result.addAll(getUDTs0());
+		return result;
+	}
+
+	private final java.util.List<org.jooq.UDT<?>> getUDTs0() {
+		return java.util.Arrays.<org.jooq.UDT<?>>asList(
+			org.jooq.test.oracle.generatedclasses.multi_schema.udt.NumberObject.NUMBER_OBJECT);
 	}
 }

@@ -101,6 +101,7 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
 	            ALL_ARGUMENTS.DATA_LENGTH,
 	            ALL_ARGUMENTS.DATA_PRECISION,
 	            ALL_ARGUMENTS.DATA_SCALE,
+	            ALL_ARGUMENTS.TYPE_OWNER,
 	            ALL_ARGUMENTS.TYPE_NAME,
 	            ALL_ARGUMENTS.POSITION,
 	            defaulted)

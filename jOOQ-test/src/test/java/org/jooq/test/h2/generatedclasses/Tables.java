@@ -72,6 +72,11 @@ public class Tables {
 	public static final org.jooq.test.h2.generatedclasses.tables.T_877 T_877 = org.jooq.test.h2.generatedclasses.tables.T_877.T_877;
 
 	/**
+	 * The table PUBLIC.T_2486
+	 */
+	public static final org.jooq.test.h2.generatedclasses.tables.T_2486 T_2486 = org.jooq.test.h2.generatedclasses.tables.T_2486.T_2486;
+
+	/**
 	 * The table PUBLIC.T_2698
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.T_2698 T_2698 = org.jooq.test.h2.generatedclasses.tables.T_2698.T_2698;
@@ -80,6 +85,11 @@ public class Tables {
 	 * The table PUBLIC.T_2718
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.T_2718 T_2718 = org.jooq.test.h2.generatedclasses.tables.T_2718.T_2718;
+
+	/**
+	 * The table PUBLIC.T_3488_ABC_XYZ_EEE
+	 */
+	public static final org.jooq.test.h2.generatedclasses.tables.T_3488AbcXyzEee T_3488_ABC_XYZ_EEE = org.jooq.test.h2.generatedclasses.tables.T_3488AbcXyzEee.T_3488_ABC_XYZ_EEE;
 
 	/**
 	 * An entity holding authors of books

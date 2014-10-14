@@ -794,6 +794,37 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         return create().selectFrom(TTriggers()).fetchOne(TTriggers_ID_GENERATED());
     }
 
+    public void testInsertReturningWithModelAPI() throws Exception {
+        if (TTriggers() == null) {
+            log.info("SKIPPING", "INSERT RETURNING tests");
+            return;
+        }
+
+        jOOQAbstractTest.reset = false;
+
+        InsertQuery<T> i1 = create().insertQuery(TTriggers());
+        i1.addValue(TTriggers_ID(), 1);
+        i1.addValue(TTriggers_COUNTER(), 1);
+        i1.setReturning(TTriggers_ID_GENERATED(), TTriggers_COUNTER());
+        assertEquals(1, i1.execute());
+        assertEquals(1, i1.getReturnedRecords().size());
+        assertNull(i1.getReturnedRecord().getValue(TTriggers_ID()));
+        assertEquals(
+            2 * i1.getReturnedRecord().getValue(TTriggers_ID_GENERATED()),
+            1 * i1.getReturnedRecord().getValue(TTriggers_COUNTER()));
+
+
+        InsertQuery<?> i2 = create().insertQuery(tableByName(TTriggers().getName()));
+        i2.addValue(fieldByName(TTriggers_ID().getName()), 1);
+        i2.addValue(fieldByName(TTriggers_COUNTER().getName()), 1);
+        i2.setReturning(fieldByName(TTriggers_ID_GENERATED().getName()), fieldByName(TTriggers_COUNTER().getName()));
+        assertEquals(1, i2.execute());
+        assertEquals(1, i2.getReturnedRecords().size());
+        assertEquals(
+            2 * i2.getReturnedRecord().getValue(TTriggers_ID_GENERATED().getName(), int.class),
+            1 * i2.getReturnedRecord().getValue(TTriggers_COUNTER().getName(), int.class));
+    }
+
     public void testInsertReturningWithSetClause() throws Exception {
         if (TTriggers() == null) {
             log.info("SKIPPING", "INSERT RETURNING tests");

@@ -192,7 +192,7 @@ public interface DSLContext {
     <T> T transactionResult(TransactionalCallable<T> transactional);
 
     /**
-     * Run a {@link TransactionalCallable} in the context of this
+     * Run a {@link TransactionalRunnable} in the context of this
      * <code>DSLContext</code>'s underlying {@link #configuration()}'s
      * {@link Configuration#transactionProvider()}, and return the
      * <code>transactional</code>'s outcome.

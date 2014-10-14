@@ -277,6 +277,7 @@ For more information, please visit: http://www.jooq.org/licenses''');
                 // Remove commercial dialects from imports
                 replaceAll.add(new ImmutablePair(compile('''import (static )?org\.jooq\.SQLDialect\.«d.name()»;'''), "// ..."));
                 replaceAll.add(new ImmutablePair(compile('''import (static )?org\.jooq\.util\.«d.name().toLowerCase»\..*?;'''), "// ..."));
+                replaceAll.add(new ImmutablePair(compile('''import (static )?org\.jooq\..*?(\b|(?<=_))«d.name().toUpperCase»(\b|(?=_)).*?;'''), "// ..."));
             }
         }
                 

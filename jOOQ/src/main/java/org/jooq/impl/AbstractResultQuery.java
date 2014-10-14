@@ -344,12 +344,15 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final Cursor<R> fetchLazy() {
-        return fetchLazy(0);
+        return fetchLazy(fetchSize);
     }
 
     @Override
     @Deprecated
     public final Cursor<R> fetchLazy(int size) {
+        final int previousFetchSize = fetchSize;
+
+        // [#3515] TODO: Avoid modifying a Query's per-execution state
         lazy = true;
         fetchSize = size;
 
@@ -358,7 +361,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         }
         finally {
             lazy = false;
-            fetchSize = 0;
+            fetchSize = previousFetchSize;
         }
 
         return cursor;
@@ -366,6 +369,8 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final List<Result<Record>> fetchMany() {
+
+        // [#3515] TODO: Avoid modifying a Query's per-execution state
         many = true;
 
         try {

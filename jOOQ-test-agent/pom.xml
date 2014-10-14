@@ -35,6 +35,9 @@
         
             <!-- Inspiration for this usage was taken from here:
                  http://chimpler.wordpress.com/2013/11/05/implementing-a-java-agent-to-instrument-code/
+                 
+                 Use:
+                 mvn clean install assembly:single
               -->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>

@@ -10,6 +10,34 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.4.3 - October 14, 2014
+================================================================================
+
+This is a patch release with some useful fixes for the 3.4 branch
+
+Bug fixes
+---------
+#3206 - DSL.field(Condition) doesn't correctly handle NULLs when emulating boolean fields with a CASE expression
+#3427 - Internal QueryCollectorSignal exception escapes into user code when not dealt with in ExecuteListener
+#3507 - Bad @Support annotation on Select.intersect() and Select.except()
+#3514 - ResultQuery.fetchLazy() ignores fetchSize()
+#3520 - Duplicate column information in foreign key references for foreign keys that share the same name in different tables
+#3533 - Avoid using named parameters for Oracle, if not really needed
+#3537 - Incorrect call to releaseSavepoint()
+#3547 - DSLContext.batch(String) doesn't accept bind variables
+#3552 - Oracle Stored procedures using type synonyms in signatures cannot be used through jOOQ
+#3560 - Slow discovery of primary keys in very large MySQL databases
+#3567 - Code generator error message refers to wrong XSD
+#3571 - Converted Data Type does not propagate nullable and defaulted properties
+#3582 - Record.from(Object) does not consider DataType.nullable() and defaulted() which may lead to constraint violations when inserting
+#3586 - Context.paramType() is initially null instead of INDEXED
+#3602 - Cannot INSERT into view
+#3608 - Typo in documentation of transaction method
+#3634 - Record.into(Table) maps to the wrong table when passing an aliased table after a self-join
+#3639 - java.lang.NoSuchMethodException: createARRAY when using Oracle arrays with Spring TransactionAwareDataSourceProxy
+#3650 - NullPointerException on TableRecord.insert() when primary key information is not present
+#3682 - PostgreSQL INSERT .. RETURNING doesn't work with plain SQL table
+
 Version 3.4.2 - August 08, 2014
 ================================================================================
 

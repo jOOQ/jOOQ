@@ -12,7 +12,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-parent</artifactId>
-    <version>3.4.2</version>
+    <version>3.4.3</version>
     <packaging>pom</packaging>
 
     <name>jOOQ Parent</name>
@@ -40,7 +40,7 @@
     </licenses>
 
     <properties>
-        <jooq.version>3.4.2</jooq.version>
+        <jooq.version>3.4.3</jooq.version>
     </properties>
 
     <scm>

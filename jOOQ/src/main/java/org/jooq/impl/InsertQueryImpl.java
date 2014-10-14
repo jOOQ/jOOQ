@@ -51,7 +51,7 @@ import static org.jooq.Clause.INSERT_RETURNING;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Utils.DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE;
+// ...
 import static org.jooq.impl.Utils.unqualify;
 
 import java.util.ArrayList;
@@ -284,6 +284,8 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     private final void toSQLInsert(Context<?> ctx) {
+        boolean declareTables = ctx.declareTables();
+
         ctx.start(INSERT_INSERT_INTO)
            .keyword("insert")
            .sql(" ")
@@ -291,7 +293,9 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
            .keyword((onDuplicateKeyIgnore && asList(MARIADB, MYSQL).contains(ctx.configuration().dialect())) ? "ignore " : "")
            .keyword("into")
            .sql(" ")
-           .visit(getInto());
+           .declareTables(true)
+           .visit(getInto())
+           .declareTables(declareTables);
 
         // [#1506] with DEFAULT VALUES, we might not have any columns to render
         if (insertMaps.isExecutable()) {

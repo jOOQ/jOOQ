@@ -55,7 +55,6 @@ import static org.jooq.util.postgres.information_schema.Tables.ATTRIBUTES;
 import static org.jooq.util.postgres.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.util.postgres.information_schema.Tables.KEY_COLUMN_USAGE;
 import static org.jooq.util.postgres.information_schema.Tables.PARAMETERS;
-import static org.jooq.util.postgres.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
 import static org.jooq.util.postgres.information_schema.Tables.ROUTINES;
 import static org.jooq.util.postgres.information_schema.Tables.SEQUENCES;
 import static org.jooq.util.postgres.information_schema.Tables.TABLES;
@@ -175,34 +174,26 @@ public class PostgresDatabase extends AbstractDatabase {
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
-        Result<?> result = create()
-            .select(
-                REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME,
-                REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA,
-                KEY_COLUMN_USAGE.CONSTRAINT_NAME,
-                KEY_COLUMN_USAGE.TABLE_SCHEMA,
-                KEY_COLUMN_USAGE.TABLE_NAME,
-                KEY_COLUMN_USAGE.COLUMN_NAME)
-            .from(REFERENTIAL_CONSTRAINTS)
-            .join(KEY_COLUMN_USAGE)
-            .on(KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA.equal(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA))
-            .and(KEY_COLUMN_USAGE.CONSTRAINT_NAME.equal(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME))
-            .where(KEY_COLUMN_USAGE.TABLE_SCHEMA.in(getInputSchemata()))
-            .orderBy(
-                KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
-                KEY_COLUMN_USAGE.TABLE_NAME.asc(),
-                KEY_COLUMN_USAGE.CONSTRAINT_NAME.asc(),
-                KEY_COLUMN_USAGE.ORDINAL_POSITION.asc())
-            .fetch();
+
+        // [#3520] PostgreSQL INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS contains incomplete information about foreign keys
+        // The (CONSTRAINT_CATALOG, CONSTRAINT_SCHEMA, CONSTRAINT_NAME) tuple is non-unique, in case two tables share the
+        // same CONSTRAINT_NAME.
+        // The JDBC driver implements this correctly through the pg_catalog, although the sorting and column name casing is wrong, too.
+        Result<Record> result = create()
+            .fetch(getConnection().getMetaData().getExportedKeys(null, null, null))
+            .sortAsc("key_seq")
+            .sortAsc("fk_name")
+            .sortAsc("fktable_name")
+            .sortAsc("fktable_schem");
 
         for (Record record : result) {
-            SchemaDefinition foreignKeySchema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
-            SchemaDefinition uniqueKeySchema = getSchema(record.getValue(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA));
+            SchemaDefinition foreignKeySchema = getSchema(record.getValue("fktable_schem", String.class));
+            SchemaDefinition uniqueKeySchema = getSchema(record.getValue("pktable_schem", String.class));
 
-            String foreignKey = record.getValue(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
-            String foreignKeyTable = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
-            String foreignKeyColumn = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
-            String uniqueKey = record.getValue(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME);
+            String foreignKey = record.getValue("fk_name", String.class);
+            String foreignKeyTable = record.getValue("fktable_name", String.class);
+            String foreignKeyColumn = record.getValue("fkcolumn_name", String.class);
+            String uniqueKey = record.getValue("pk_name", String.class);
 
             TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTable);
 

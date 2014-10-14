@@ -55,6 +55,7 @@ import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
+import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
@@ -426,6 +427,19 @@ final class Utils {
         catch (Exception e) {
             throw new IllegalStateException("Could not construct new record", e);
         }
+    }
+
+    /**
+     * [#2700] [#3582] If a POJO attribute is NULL, but the column is NOT NULL
+     * then we should let the database apply DEFAULT values
+     */
+    static void resetChangedOnNotNull(Record record) {
+        int size = record.size();
+
+        for (int i = 0; i < size; i++)
+            if (record.getValue(i) == null)
+                if (!record.field(i).getDataType().nullable())
+                    record.changed(i, false);
     }
 
     /**
@@ -2441,6 +2455,17 @@ final class Utils {
             xx xxx xx xxxxxxxxxxxxxxxxxxx xxxxx xx xxxxxxxxxxx xxxxxx xx xxxxxx
             xxxxxxxxxxxxxx xxxxxxxxxxx x xxxxxxxxxxxxxxxx xxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxx xxxxx x xxxxxxxxxxxxxxxxxx
+
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxx x
+                xxxxxxxx xxxxxxxxx x xxx xxxxxxxxxxxxxxxxxxxxx
+
+                xxx xxxx x x xx x x xxxxxxxxxxxxxxxxx xxxx
+                    xxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxxx x xxxxxxxxxx
+            x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
         x
         xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {

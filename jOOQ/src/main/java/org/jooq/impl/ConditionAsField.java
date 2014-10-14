@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.not;
 
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -78,7 +79,11 @@ class ConditionAsField extends AbstractFunction<Boolean> {
             xx [/pro] */
             case CUBRID:
             case FIREBIRD:
-                return DSL.decode().when(condition, inline(true)).otherwise(inline(false));
+
+                // [#3206] Correct implementation of three-valued logic is important here
+                return DSL.decode().when(condition, inline(true))
+                                   .when(not(condition), inline(false))
+                                   .otherwise(inline((Boolean) null));
 
             // These databases can inline predicates in column expression contexts
             case DERBY:

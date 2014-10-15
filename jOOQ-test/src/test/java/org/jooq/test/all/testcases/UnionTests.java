@@ -61,6 +61,7 @@ import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
+import org.jooq.SelectUnionStep;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.test.BaseTest;
@@ -171,6 +172,35 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .orderBy(one())
                     .fetch(0)
         );
+    }
+
+    public void testUnionWithOrderByInSubselect() throws Exception {
+        SelectUnionStep<Record1<Integer>> s11 = create().select(TBook_ID()).from(TBook()).orderBy(TBook_ID()).limit(1);
+        SelectUnionStep<Record1<Integer>> s12 = create().select(TBook_ID()).from(TBook()).orderBy(TBook_ID()).limit(1);
+
+        Result<Record1<Integer>> r1 = s11.unionAll(s12).fetch();
+        assertEquals(asList(1, 1), r1.getValues(TBook_ID()));
+
+        SelectUnionStep<Record1<Integer>> s21 = create().select(TBook_ID()).from(TBook()).orderBy(TBook_ID()).limit(1).offset(0);
+        SelectUnionStep<Record1<Integer>> s22 = create().select(TBook_ID()).from(TBook()).orderBy(TBook_ID()).limit(1).offset(1);
+        Result<Record1<Integer>> r2 = s21.unionAll(s22).orderBy(1).fetch();
+
+        assertEquals(asList(1, 2), r2.getValues(TBook_ID()));
+
+        SelectUnionStep<Record1<Integer>> s31 = create().select(TBook_ID()).from(TBook()).orderBy(TBook_ID()).limit(1).offset(0);
+        SelectUnionStep<Record1<Integer>> s32 = create().select(TBook_ID()).from(TBook()).orderBy(TBook_ID()).limit(1).offset(1);
+        SelectUnionStep<Record1<Integer>> s33 = create().select(TBook_ID()).from(TBook()).orderBy(TBook_ID()).limit(1).offset(2);
+        Result<Record1<Integer>> r3 = s31.unionAll(s32).unionAll(s33).orderBy(1).limit(2).fetch();
+
+        assertEquals(asList(1, 2), r3.getValues(TBook_ID()));
+
+        SelectUnionStep<Record1<Integer>> s41 = create().select(TBook_ID()).from(TBook()).orderBy(TBook_ID()).limit(1).offset(0);
+        SelectUnionStep<Record1<Integer>> s42 = create().select(TBook_ID()).from(TBook()).orderBy(TBook_ID()).limit(1).offset(1);
+        SelectUnionStep<Record1<Integer>> s43 = create().select(TBook_ID()).from(TBook()).orderBy(TBook_ID()).limit(1).offset(2);
+        Result<Record1<Integer>> r4 = s41.unionAll(s42).unionAll(s43).orderBy(1).limit(2).offset(1).fetch();
+
+        assertEquals(asList(2, 3), r4.getValues(TBook_ID()));
+
     }
 
     public void testUnionAssociativityGeneratedSQL() throws Exception {

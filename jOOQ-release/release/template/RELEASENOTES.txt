@@ -10,6 +10,15 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.4.4 - October 15, 2014
+================================================================================
+
+This is a patch release with some useful fixes for the 3.4 branch
+
+Bug fixes
+---------
+#3687 - Regression in handling of Oracle ARRAY types
+
 Version 3.4.3 - October 14, 2014
 ================================================================================
 

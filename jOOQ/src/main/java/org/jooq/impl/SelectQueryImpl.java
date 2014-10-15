@@ -176,13 +176,18 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     private final QueryPartList<GroupField>      groupBy;
     private final ConditionProviderImpl          having;
     private final WindowList                     window;
-    private final List<CombineOperator>          unionOp;
-    private final List<QueryPartList<Select<?>>> union;
     private final SortFieldList                  orderBy;
     private boolean                              orderBySiblings;
     private final QueryPartList<Field<?>>        seek;
     private boolean                              seekBefore;
     private final Limit                          limit;
+    private final List<CombineOperator>          unionOp;
+    private final List<QueryPartList<Select<?>>> union;
+    private final SortFieldList                  unionOrderBy;
+    private boolean                              unionOrderBySiblings; // [#3579] TODO
+    private final QueryPartList<Field<?>>        unionSeek;
+    private boolean                              unionSeekBefore;      // [#3579] TODO
+    private final Limit                          unionLimit;
 
     SelectQueryImpl(WithImpl with, Configuration configuration) {
         this(with, configuration, null);
@@ -210,11 +215,14 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         this.groupBy = new QueryPartList<GroupField>();
         this.having = new ConditionProviderImpl();
         this.window = new WindowList();
-        this.unionOp = new ArrayList<CombineOperator>();
-        this.union = new ArrayList<QueryPartList<Select<?>>>();
         this.orderBy = new SortFieldList();
         this.seek = new QueryPartList<Field<?>>();
         this.limit = new Limit();
+        this.unionOp = new ArrayList<CombineOperator>();
+        this.union = new ArrayList<QueryPartList<Select<?>>>();
+        this.unionOrderBy = new SortFieldList();
+        this.unionSeek = new QueryPartList<Field<?>>();
+        this.unionLimit = new Limit();
 
         if (from != null) {
             this.from.add(from.asTable());
@@ -337,89 +345,89 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                    .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, null);
         }
 
-        // If a limit applies
-        if (getLimit().isApplicable()) {
-            switch (dialect) {
+        switch (dialect) {
 
-                /* [pro] xx
-                xx xxxxxx xxxxx xxx xxxxxx xxxxxxxxxxxxxx xxxx xxxxx xxxxxx xxxxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxxxxx
+            /* [pro] xx
+            xx xxxxxx xxxxx xxx xxxxxx xxxxxxxxxxxxxx xxxx xxxxx xxxxxx xxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxxxxx
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
                     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxx
+                xxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xx xxxx xxxx xxxxx xxx xxx xxxxxxxxxxxxx
-                xxxx xxxx
-                xxxx xxxxxx
-                xxxx xxxxxxx x
+                xxxxxx
 
-                    xx xxx xxxxxxxx xxxxxxxx x xxxxxx xxxxx xxxxxxx xxxxxxx
-                    xx xxxxxx xxx xxxxxxx xxxx xxxxxx
-                    xx xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    x
+            xx xxxx xxxx xxxxx xxx xxx xxxxxxxxxxxxx
+            xxxx xxxx
+            xxxx xxxxxx
+            xxxx xxxxxxx x
 
-                    xx xxxxxxxx xxx xx xx xxxxxxxxx
-                    xxxx x
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    x
+                xx xxx xxxxxxxx xxxxxxxx x xxxxxx xxxxx xxxxxxx xxxxxxx
+                xx xxxxxx xxx xxxxxxx xxxx xxxxxx
+                xx xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xxxxxx
-                x
+                xx xxxxxxxx xxx xx xx xxxxxxxxx
+                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xx xxxxxx xxx xxx xxx xxxxxx xxxxxxx x xxx xxxxxx xxxxxxx xxxxxx
-                xx xxxxxx xxx xx xxxxxxxxx xx xxx xxxxxxx xxx xx xxx
-                xxxx xxxxxxx
-                xxxx xxxxxxxxxxx
-                xxxx xxxx
-                xxxx xxxxxxxxxxxxxx x
+                xxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xx xxxxxx xxx xxxxxxxx xxxxxxx xxxxxx xxx xxxxxxx xxxx xxxxxx
-                    xx xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                        xxxxxxxxxxxxxxxxxxxxxxxxx
-                    x
+                xxxxxx
+            x
 
-                    xx xxxxxx xxxxxxxxxx
-                    xxxx x
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    x
+            xx xxxxxx xxx xxx xxx xxxxxx xxxxxxx x xxx xxxxxx xxxxxxx xxxxxx
+            xx xxxxxx xxx xx xxxxxxxxx xx xxx xxxxxxx xxx xx xxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxxxx
+            xxxx xxxx
+            xxxx xxxxxxxxxxxxxx x
 
-                    xxxxxx
-                x
+                xx xxxxxx xxx xxxxxxxx xxxxxxx xxxxxx xxx xxxxxxx xxxx xxxxxx
+                xx xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xx xxxxxxxx xxx xxxx xx xxxxx xxxxxxx
-                xxxx xxxxxxxxx
+                xx xxxxxx xxxxxxxxxx
+                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xx xxxxxx xxx xxx xx xxxxx xx xxxxxxx xxx xxxx xxxxxxx
-                xxxx xxxxxxx x
+                xxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xx xxxxxx xxx xxxxxxxx xxxxxxx xxxxxx xxx xxxxxxx xxxx xxxxxx
-                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx xx xxxxxxxxx x
-                        xxxxxxxxxxxxxxxxxxxxxxxxx
-                    x
+                xxxxxx
+            x
 
-                    xx xxxxxx xxxxxxxxxx
-                    xxxx x
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    x
+            xx xxxxxxxx xxx xxxx xx xxxxx xxxxxxx
+            xxxx xxxxxxxxx
 
-                    xxxxxx
-                x
+            xx xxxxxx xxx xxx xx xxxxx xx xxxxxxx xxx xxxx xxxxxxx
+            xxxx xxxxxxx x
 
-                xx [/pro] */
-                // By default, render the dialect's limit clause
-                default: {
-                    toSQLReferenceLimitDefault(context);
-                    break;
-                }
+                xx xxxxxx xxx xxxxxxxx xxxxxxx xxxxxx xxx xxxxxxx xxxx xxxxxx
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx xx xxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xx xxxxxx xxxxxxxxxx
+                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxxxx
+            x
+
+            xx [/pro] */
+            // By default, render the dialect's limit clause
+            default: {
+                toSQLReferenceLimitDefault(context);
+
+                break;
             }
-        }
-
-        // If no limit applies, just render the rest of the query
-        else {
-            toSQLReference0(context);
         }
 
         // [#1296] FOR UPDATE is simulated in some dialects using ResultSet.CONCUR_UPDATABLE
@@ -555,9 +563,18 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
      * The default LIMIT / OFFSET clause in most dialects
      */
     private void toSQLReferenceLimitDefault(Context<?> context) {
+        Object data = context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
+
+        context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, true);
         toSQLReference0(context);
-        context.visit(getLimit());
+
+        if (data == null)
+            context.data().remove(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
+        else
+            context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, data);
     }
+
+    static final String DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE = "org.jooq.configuration.render-trailing-limit-if-applicable";
 
     /* [pro] xx
     xxx
@@ -750,8 +767,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                     case UNION_ALL: context.start(SELECT_UNION_ALL); break;
                 }
 
-                if (i > 0)
-                    unionParenthesis(context, "(");
+                unionParenthesis(context, "(");
             }
         }
 
@@ -1042,9 +1058,20 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
         context.end(SELECT_WINDOW);
 
+        // ORDER BY clause for local subselect
+        // -----------------------------------
+        toSQLOrderBy(
+            context,
+            originalFields, alternativeFields,
+            false, wrapQueryExpressionBodyInDerivedTable,
+            orderBy, limit
+        );
+
         // SET operations like UNION, EXCEPT, INTERSECT
         // --------------------------------------------
         if (unionOpSize > 0) {
+            unionParenthesis(context, ")");
+            
             for (int i = 0; i < unionOpSize; i++) {
                 CombineOperator op = unionOp.get(i);
 
@@ -1078,11 +1105,27 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                    xxxxxxx xxxx
         xx [/pro] */
 
-        // ORDER BY clause
-        // ---------------
+        // ORDER BY clause for UNION
+        // -------------------------
+        toSQLOrderBy(
+            context,
+            originalFields, alternativeFields,
+            wrapQueryExpressionInDerivedTable, wrapQueryExpressionBodyInDerivedTable,
+            unionOrderBy, unionLimit
+        );
+    }
+
+    private final void toSQLOrderBy(
+            Context<?> context,
+            Field<?>[] originalFields, Field<?>[] alternativeFields,
+            boolean wrapQueryExpressionInDerivedTable, boolean wrapQueryExpressionBodyInDerivedTable,
+            SortFieldList actualOrderBy,
+            Limit actualLimit
+    ) {
+
         context.start(SELECT_ORDER_BY);
 
-        if (!getOrderBy().isEmpty()) {
+        if (!actualOrderBy.isEmpty()) {
             context.formatSeparator()
                    .keyword("order")
                    .sql(orderBySiblings ? " " : "")
@@ -1103,7 +1146,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                 xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                     xxxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                     xxxxxxxxxxxxxxxxxxxxxxxxx
@@ -1111,14 +1154,14 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             xxxx
             xx [/pro] */
             {
-                context.visit(getOrderBy());
+                context.visit(actualOrderBy);
             }
         }
 
         /* [pro] xx
         xx xxxxxxx xxx xxxxxx xxxx xxxxxxxx xx xxxxx xx xxxxxxx xxxxx xxxx
         xx xxxxxx xx xxxxx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxxxxxxxxxxxxxxxxxxxxx
                    xxxxxxxxxxxxxxx xxxx
                    xxxxxx xxx
@@ -1135,6 +1178,9 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                    xxxxxxxxxxxxxxxx
                    xxxxxxxxxx
         xx [/pro] */
+
+        if (context.data().containsKey(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE) && actualLimit.isApplicable())
+            context.visit(actualLimit);
     }
 
     /* [pro] xx
@@ -1288,36 +1334,36 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
     @Override
     public final void addLimit(int numberOfRows) {
-        limit.setNumberOfRows(numberOfRows);
+        getLimit().setNumberOfRows(numberOfRows);
     }
 
     @Override
     public final void addLimit(Param<Integer> numberOfRows) {
-        limit.setNumberOfRows(numberOfRows);
+        getLimit().setNumberOfRows(numberOfRows);
     }
 
     @Override
     public final void addLimit(int offset, int numberOfRows) {
-        limit.setOffset(offset);
-        limit.setNumberOfRows(numberOfRows);
+        getLimit().setOffset(offset);
+        getLimit().setNumberOfRows(numberOfRows);
     }
 
     @Override
     public final void addLimit(int offset, Param<Integer> numberOfRows) {
-        limit.setOffset(offset);
-        limit.setNumberOfRows(numberOfRows);
+        getLimit().setOffset(offset);
+        getLimit().setNumberOfRows(numberOfRows);
     }
 
     @Override
     public final void addLimit(Param<Integer> offset, int numberOfRows) {
-        limit.setOffset(offset);
-        limit.setNumberOfRows(numberOfRows);
+        getLimit().setOffset(offset);
+        getLimit().setNumberOfRows(numberOfRows);
     }
 
     @Override
     public final void addLimit(Param<Integer> offset, Param<Integer> numberOfRows) {
-        limit.setOffset(offset);
-        limit.setNumberOfRows(numberOfRows);
+        getLimit().setOffset(offset);
+        getLimit().setNumberOfRows(numberOfRows);
     }
 
     @Override
@@ -1473,10 +1519,6 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         return groupBy;
     }
 
-    final Limit getLimit() {
-        return limit;
-    }
-
     @SuppressWarnings({ "rawtypes", "unchecked" })
     final ConditionProviderImpl getWhere() {
         if (getOrderBy().isEmpty() || getSeek().isEmpty()) {
@@ -1553,11 +1595,15 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     }
 
     final SortFieldList getOrderBy() {
-        return orderBy;
+        return (unionOp.size() == 0) ? orderBy : unionOrderBy;
     }
 
     final QueryPartList<Field<?>> getSeek() {
-        return seek;
+        return (unionOp.size() == 0) ? seek : unionSeek;
+    }
+
+    final Limit getLimit() {
+        return (unionOp.size() == 0) ? limit : unionLimit;
     }
 
     /* [pro] xx
@@ -1624,7 +1670,10 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
     @Override
     public final void setOrderBySiblings(boolean orderBySiblings) {
-        this.orderBySiblings = orderBySiblings;
+        if (unionOp.size() == 0)
+            this.orderBySiblings = orderBySiblings;
+        else
+            this.unionOrderBySiblings = orderBySiblings;
     }
 
     @Override
@@ -1634,7 +1683,11 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
     @Override
     public final void addSeekAfter(Collection<? extends Field<?>> fields) {
-        seekBefore = false;
+        if (unionOp.size() == 0)
+            seekBefore = false;
+        else
+            unionSeekBefore = false;
+
         getSeek().addAll(fields);
     }
 
@@ -1645,7 +1698,11 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
     @Override
     public final void addSeekBefore(Collection<? extends Field<?>> fields) {
-        seekBefore = true;
+        if (unionOp.size() == 0)
+            seekBefore = true;
+        else
+            unionSeekBefore = true;
+
         getSeek().addAll(fields);
     }
 
@@ -1767,7 +1824,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     private final Select<R> combine(CombineOperator op, Select<? extends R> other) {
         int index = unionOp.size() - 1;
 
-        if (index == -1 || unionOp.get(index) != op || op == INTERSECT || op == EXCEPT) {
+        if (index == -1 || unionOp.get(index) != op || op == EXCEPT) {
             unionOp.add(op);
             union.add(new QueryPartList<Select<?>>());
 

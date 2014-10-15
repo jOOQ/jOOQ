@@ -83,7 +83,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface SelectOptionStep<R extends Record> extends SelectFinalStep<R> {
+public interface SelectOptionStep<R extends Record> extends SelectUnionStep<R> {
 
     /**
      * Add a SQL Server-style query hint to the select clause.
@@ -115,5 +115,5 @@ public interface SelectOptionStep<R extends Record> extends SelectFinalStep<R> {
      * @see SelectQuery#addOption(String)
      */
     @Support
-    SelectFinalStep<R> option(String string);
+    SelectUnionStep<R> option(String string);
 }

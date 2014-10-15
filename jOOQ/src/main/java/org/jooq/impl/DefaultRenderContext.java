@@ -667,6 +667,39 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             "WHEN",
             "WHERE"
         ));
+
+        /* [trial] */
+        JooqLogger l = JooqLogger.getLogger(Constants.class);
+        String message;
+
+        message = "Thank you for using jOOQ";
+
+        /* [pro] xx
+        xxxxxxx x xxxxxx xxx xxx xxxxx xxx xx xxx xxxx xxxx xxxxx xxxxxxxxx
+        xx [/pro] */
+
+
+        l.info("                                      ");
+        l.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        l.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        l.info("@@@@@@@@@@@@@@@@  @@        @@@@@@@@@@");
+        l.info("@@@@@@@@@@@@@@@@@@@@        @@@@@@@@@@");
+        l.info("@@@@@@@@@@@@@@@@  @@  @@    @@@@@@@@@@");
+        l.info("@@@@@@@@@@  @@@@  @@  @@    @@@@@@@@@@");
+        l.info("@@@@@@@@@@        @@        @@@@@@@@@@");
+        l.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        l.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        l.info("@@@@@@@@@@        @@        @@@@@@@@@@");
+        l.info("@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@");
+        l.info("@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@");
+        l.info("@@@@@@@@@@        @@  @  @  @@@@@@@@@@");
+        l.info("@@@@@@@@@@        @@        @@@@@@@@@@");
+        l.info("@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@");
+        l.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        l.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  " + message);
+        l.info("                                      ");
+        /* [/trial] */
+
     }
 
     /**

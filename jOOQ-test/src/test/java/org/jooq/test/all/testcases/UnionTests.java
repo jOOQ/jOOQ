@@ -175,6 +175,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testUnionWithOrderByInSubselect() throws Exception {
+        SelectUnionStep<Record1<Integer>> s01 = create().select(TBook_ID()).from(TBook()).orderBy(TBook_ID());
+        SelectUnionStep<Record1<Integer>> s02 = create().select(TBook_ID()).from(TBook()).orderBy(TBook_ID());
+
+        Result<Record1<Integer>> r0 = s01.unionAll(s02).orderBy(1).fetch();
+        assertEquals(asList(1, 1, 2, 3, 3, 4, 4), r0.getValues(TBook_ID()));
+
         SelectUnionStep<Record1<Integer>> s11 = create().select(TBook_ID()).from(TBook()).orderBy(TBook_ID()).limit(1);
         SelectUnionStep<Record1<Integer>> s12 = create().select(TBook_ID()).from(TBook()).orderBy(TBook_ID()).limit(1);
 

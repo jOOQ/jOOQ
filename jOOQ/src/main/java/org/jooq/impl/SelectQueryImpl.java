@@ -176,13 +176,18 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     private final QueryPartList<GroupField>      groupBy;
     private final ConditionProviderImpl          having;
     private final WindowList                     window;
-    private final List<CombineOperator>          unionOp;
-    private final List<QueryPartList<Select<?>>> union;
     private final SortFieldList                  orderBy;
     private boolean                              orderBySiblings;
     private final QueryPartList<Field<?>>        seek;
     private boolean                              seekBefore;
     private final Limit                          limit;
+    private final List<CombineOperator>          unionOp;
+    private final List<QueryPartList<Select<?>>> union;
+    private final SortFieldList                  unionOrderBy;
+    private boolean                              unionOrderBySiblings; // [#3579] TODO
+    private final QueryPartList<Field<?>>        unionSeek;
+    private boolean                              unionSeekBefore;      // [#3579] TODO
+    private final Limit                          unionLimit;
 
     SelectQueryImpl(WithImpl with, Configuration configuration) {
         this(with, configuration, null);
@@ -210,11 +215,14 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         this.groupBy = new QueryPartList<GroupField>();
         this.having = new ConditionProviderImpl();
         this.window = new WindowList();
-        this.unionOp = new ArrayList<CombineOperator>();
-        this.union = new ArrayList<QueryPartList<Select<?>>>();
         this.orderBy = new SortFieldList();
         this.seek = new QueryPartList<Field<?>>();
         this.limit = new Limit();
+        this.unionOp = new ArrayList<CombineOperator>();
+        this.union = new ArrayList<QueryPartList<Select<?>>>();
+        this.unionOrderBy = new SortFieldList();
+        this.unionSeek = new QueryPartList<Field<?>>();
+        this.unionLimit = new Limit();
 
         if (from != null) {
             this.from.add(from.asTable());
@@ -337,89 +345,89 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                    .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, null);
         }
 
-        // If a limit applies
-        if (getLimit().isApplicable()) {
-            switch (dialect) {
+        switch (dialect) {
 
-                /* [pro] */
-                // Oracle knows the ROWNUM pseudo-column. That makes things simple
-                case ORACLE:
-                case ORACLE10G:
-                case ORACLE11G:
-                case ORACLE12C:
+            /* [pro] */
+            // Oracle knows the ROWNUM pseudo-column. That makes things simple
+            case ORACLE:
+            case ORACLE10G:
+            case ORACLE11G:
+            case ORACLE12C:
+                if (getLimit().isApplicable())
                     toSQLReferenceLimitOracle(context);
-                    break;
+                else
+                    toSQLReference0(context);
 
-                // With DB2, there are two possibilities
-                case DB2:
-                case DB2_9:
-                case DB2_10: {
+                break;
 
-                    // DB2 natively supports a "FIRST ROWS" clause, without
-                    // offset and without bind values
-                    if (getLimit().offsetZero() && !getLimit().rendersParams()) {
-                        toSQLReferenceLimitDefault(context);
-                    }
+            // With DB2, there are two possibilities
+            case DB2:
+            case DB2_9:
+            case DB2_10: {
 
-                    // "OFFSET" has to be simulated
-                    else {
-                        toSQLReferenceLimitDB2SQLServer2008Sybase(context);
-                    }
-
-                    break;
-                }
-
-                // Sybase ASE and SQL Server support a TOP clause without OFFSET
-                // OFFSET can be simulated in SQL Server, not in ASE
-                case ACCESS:
-                case ACCESS2013:
-                case ASE:
-                case SQLSERVER2008: {
-
-                    // Native TOP support, without OFFSET and without bind values
-                    if (getLimit().offsetZero() && !getLimit().rendersParams()) {
-                        toSQLReference0(context);
-                    }
-
-                    // OFFSET simulation
-                    else {
-                        toSQLReferenceLimitDB2SQLServer2008Sybase(context);
-                    }
-
-                    break;
-                }
-
-                // Informix has SKIP .. FIRST support
-                case INFORMIX:
-
-                // Sybase has TOP .. START AT support (no bind values)
-                case SYBASE: {
-
-                    // Native TOP support, without OFFSET and without bind values
-                    if (!getLimit().rendersParams() || dialect == INFORMIX) {
-                        toSQLReference0(context);
-                    }
-
-                    // OFFSET simulation
-                    else {
-                        toSQLReferenceLimitDB2SQLServer2008Sybase(context);
-                    }
-
-                    break;
-                }
-
-                /* [/pro] */
-                // By default, render the dialect's limit clause
-                default: {
+                // DB2 natively supports a "FIRST ROWS" clause, without
+                // offset and without bind values
+                if (getLimit().offsetZero() && !getLimit().rendersParams())
                     toSQLReferenceLimitDefault(context);
-                    break;
-                }
-            }
-        }
 
-        // If no limit applies, just render the rest of the query
-        else {
-            toSQLReference0(context);
+                // "OFFSET" has to be simulated
+                else if (getLimit().isApplicable())
+                    toSQLReferenceLimitDB2SQLServer2008Sybase(context);
+
+                else
+                    toSQLReference0(context);
+
+                break;
+            }
+
+            // Sybase ASE and SQL Server support a TOP clause without OFFSET
+            // OFFSET can be simulated in SQL Server, not in ASE
+            case ACCESS:
+            case ACCESS2013:
+            case ASE:
+            case SQLSERVER2008: {
+
+                // Native TOP support, without OFFSET and without bind values
+                if (getLimit().offsetZero() && !getLimit().rendersParams())
+                    toSQLReference0(context);
+
+                // OFFSET simulation
+                else if (getLimit().isApplicable())
+                    toSQLReferenceLimitDB2SQLServer2008Sybase(context);
+
+                else
+                    toSQLReference0(context);
+
+                break;
+            }
+
+            // Informix has SKIP .. FIRST support
+            case INFORMIX:
+
+            // Sybase has TOP .. START AT support (no bind values)
+            case SYBASE: {
+
+                // Native TOP support, without OFFSET and without bind values
+                if (!getLimit().rendersParams() || dialect == INFORMIX)
+                    toSQLReference0(context);
+
+                // OFFSET simulation
+                else if (getLimit().isApplicable())
+                    toSQLReferenceLimitDB2SQLServer2008Sybase(context);
+
+                else
+                    toSQLReference0(context);
+
+                break;
+            }
+
+            /* [/pro] */
+            // By default, render the dialect's limit clause
+            default: {
+                toSQLReferenceLimitDefault(context);
+
+                break;
+            }
         }
 
         // [#1296] FOR UPDATE is simulated in some dialects using ResultSet.CONCUR_UPDATABLE
@@ -555,9 +563,18 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
      * The default LIMIT / OFFSET clause in most dialects
      */
     private void toSQLReferenceLimitDefault(Context<?> context) {
+        Object data = context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
+
+        context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, true);
         toSQLReference0(context);
-        context.visit(getLimit());
+
+        if (data == null)
+            context.data().remove(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
+        else
+            context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, data);
     }
+
+    static final String DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE = "org.jooq.configuration.render-trailing-limit-if-applicable";
 
     /* [pro] */
     /**
@@ -750,8 +767,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                     case UNION_ALL: context.start(SELECT_UNION_ALL); break;
                 }
 
-                if (i > 0)
-                    unionParenthesis(context, "(");
+                unionParenthesis(context, "(");
             }
         }
 
@@ -1042,9 +1058,20 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
         context.end(SELECT_WINDOW);
 
+        // ORDER BY clause for local subselect
+        // -----------------------------------
+        toSQLOrderBy(
+            context,
+            originalFields, alternativeFields,
+            false, wrapQueryExpressionBodyInDerivedTable,
+            orderBy, limit
+        );
+
         // SET operations like UNION, EXCEPT, INTERSECT
         // --------------------------------------------
         if (unionOpSize > 0) {
+            unionParenthesis(context, ")");
+            
             for (int i = 0; i < unionOpSize; i++) {
                 CombineOperator op = unionOp.get(i);
 
@@ -1078,11 +1105,27 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                    .sql(") t");
         /* [/pro] */
 
-        // ORDER BY clause
-        // ---------------
+        // ORDER BY clause for UNION
+        // -------------------------
+        toSQLOrderBy(
+            context,
+            originalFields, alternativeFields,
+            wrapQueryExpressionInDerivedTable, wrapQueryExpressionBodyInDerivedTable,
+            unionOrderBy, unionLimit
+        );
+    }
+
+    private final void toSQLOrderBy(
+            Context<?> context,
+            Field<?>[] originalFields, Field<?>[] alternativeFields,
+            boolean wrapQueryExpressionInDerivedTable, boolean wrapQueryExpressionBodyInDerivedTable,
+            SortFieldList actualOrderBy,
+            Limit actualLimit
+    ) {
+
         context.start(SELECT_ORDER_BY);
 
-        if (!getOrderBy().isEmpty()) {
+        if (!actualOrderBy.isEmpty()) {
             context.formatSeparator()
                    .keyword("order")
                    .sql(orderBySiblings ? " " : "")
@@ -1103,7 +1146,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                 if (wrapQueryExpressionBodyInDerivedTable)
                     context.qualify(false);
 
-                context.visit(getOrderBy());
+                context.visit(actualOrderBy);
                 context.data().remove(DATA_OVERRIDE_ALIASES_IN_ORDER_BY);
                 if (wrapQueryExpressionBodyInDerivedTable)
                     context.qualify(qualify);
@@ -1111,14 +1154,14 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             else
             /* [/pro] */
             {
-                context.visit(getOrderBy());
+                context.visit(actualOrderBy);
             }
         }
 
         /* [pro] */
         // [#2423] SQL Server 2012 requires an ORDER BY clause, along with
         // OFFSET .. FETCH
-        else if (getLimit().isApplicable() && asList(SQLSERVER, SQLSERVER2012).contains(dialect)) {
+        else if (actualLimit.isApplicable() && asList(SQLSERVER, SQLSERVER2012).contains(context.dialect())) {
             context.formatSeparator()
                    .keyword("order by")
                    .sql(" (")
@@ -1135,6 +1178,9 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                    .formatNewLine()
                    .sql(")");
         /* [/pro] */
+
+        if (context.data().containsKey(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE) && actualLimit.isApplicable())
+            context.visit(actualLimit);
     }
 
     /* [pro] */
@@ -1288,36 +1334,36 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
     @Override
     public final void addLimit(int numberOfRows) {
-        limit.setNumberOfRows(numberOfRows);
+        getLimit().setNumberOfRows(numberOfRows);
     }
 
     @Override
     public final void addLimit(Param<Integer> numberOfRows) {
-        limit.setNumberOfRows(numberOfRows);
+        getLimit().setNumberOfRows(numberOfRows);
     }
 
     @Override
     public final void addLimit(int offset, int numberOfRows) {
-        limit.setOffset(offset);
-        limit.setNumberOfRows(numberOfRows);
+        getLimit().setOffset(offset);
+        getLimit().setNumberOfRows(numberOfRows);
     }
 
     @Override
     public final void addLimit(int offset, Param<Integer> numberOfRows) {
-        limit.setOffset(offset);
-        limit.setNumberOfRows(numberOfRows);
+        getLimit().setOffset(offset);
+        getLimit().setNumberOfRows(numberOfRows);
     }
 
     @Override
     public final void addLimit(Param<Integer> offset, int numberOfRows) {
-        limit.setOffset(offset);
-        limit.setNumberOfRows(numberOfRows);
+        getLimit().setOffset(offset);
+        getLimit().setNumberOfRows(numberOfRows);
     }
 
     @Override
     public final void addLimit(Param<Integer> offset, Param<Integer> numberOfRows) {
-        limit.setOffset(offset);
-        limit.setNumberOfRows(numberOfRows);
+        getLimit().setOffset(offset);
+        getLimit().setNumberOfRows(numberOfRows);
     }
 
     @Override
@@ -1473,10 +1519,6 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         return groupBy;
     }
 
-    final Limit getLimit() {
-        return limit;
-    }
-
     @SuppressWarnings({ "rawtypes", "unchecked" })
     final ConditionProviderImpl getWhere() {
         if (getOrderBy().isEmpty() || getSeek().isEmpty()) {
@@ -1553,11 +1595,15 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     }
 
     final SortFieldList getOrderBy() {
-        return orderBy;
+        return (unionOp.size() == 0) ? orderBy : unionOrderBy;
     }
 
     final QueryPartList<Field<?>> getSeek() {
-        return seek;
+        return (unionOp.size() == 0) ? seek : unionSeek;
+    }
+
+    final Limit getLimit() {
+        return (unionOp.size() == 0) ? limit : unionLimit;
     }
 
     /* [pro] */
@@ -1624,7 +1670,10 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
     @Override
     public final void setOrderBySiblings(boolean orderBySiblings) {
-        this.orderBySiblings = orderBySiblings;
+        if (unionOp.size() == 0)
+            this.orderBySiblings = orderBySiblings;
+        else
+            this.unionOrderBySiblings = orderBySiblings;
     }
 
     @Override
@@ -1634,7 +1683,11 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
     @Override
     public final void addSeekAfter(Collection<? extends Field<?>> fields) {
-        seekBefore = false;
+        if (unionOp.size() == 0)
+            seekBefore = false;
+        else
+            unionSeekBefore = false;
+
         getSeek().addAll(fields);
     }
 
@@ -1645,7 +1698,11 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
     @Override
     public final void addSeekBefore(Collection<? extends Field<?>> fields) {
-        seekBefore = true;
+        if (unionOp.size() == 0)
+            seekBefore = true;
+        else
+            unionSeekBefore = true;
+
         getSeek().addAll(fields);
     }
 
@@ -1767,7 +1824,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     private final Select<R> combine(CombineOperator op, Select<? extends R> other) {
         int index = unionOp.size() - 1;
 
-        if (index == -1 || unionOp.get(index) != op || op == INTERSECT || op == EXCEPT) {
+        if (index == -1 || unionOp.get(index) != op || op == EXCEPT) {
             unionOp.add(op);
             union.add(new QueryPartList<Select<?>>());
 

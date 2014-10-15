@@ -2454,7 +2454,6 @@ final class Utils {
             // [#1544] We can safely assume that localConfiguration has been
             // set on DefaultBindContext, prior to serialising arrays to SQLOut
             ArrayRecord<?> arrayRecord = (ArrayRecord<?>) value;
-            stream.writeArray(on(localConnection()).call("createARRAY", arrayRecord.getName(), arrayRecord.get()).<Array>get());
             Object[] array = arrayRecord.get();
 
             if (arrayRecord.getDataType() instanceof ConvertedDataType) {

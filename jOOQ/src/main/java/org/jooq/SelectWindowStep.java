@@ -92,7 +92,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectWindowStep<R extends Record> extends SelectUnionStep<R> {
+public interface SelectWindowStep<R extends Record> extends SelectOrderByStep<R> {
 
     /**
      * Add a <code>WINDOW</code> clause to the statement.
@@ -106,7 +106,7 @@ public interface SelectWindowStep<R extends Record> extends SelectUnionStep<R> {
      * will inline window definitions where they are referenced.
      */
     @Support({ CUBRID, POSTGRES })
-    SelectUnionStep<R> window(WindowDefinition... definitions);
+    SelectOrderByStep<R> window(WindowDefinition... definitions);
 
     /**
      * Add a <code>WINDOW</code> clause to the statement.
@@ -120,5 +120,5 @@ public interface SelectWindowStep<R extends Record> extends SelectUnionStep<R> {
      * will inline window definitions where they are referenced.
      */
     @Support({ CUBRID, POSTGRES })
-    SelectUnionStep<R> window(Collection<? extends WindowDefinition> definitions);
+    SelectOrderByStep<R> window(Collection<? extends WindowDefinition> definitions);
 }

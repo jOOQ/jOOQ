@@ -73,7 +73,9 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String udtName) {
         this.database = database;
         this.schema = schema;
-        this.typeName = typeName;
+
+        // [#3420] Some databases report NULL as a data type, e.g. Oracle for (some) AQ tables
+        this.typeName = typeName == null ? "OTHER" : typeName;
         this.udtName = udtName;
 
         // Some dialects do not distinguish between length and precision...
@@ -81,7 +83,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
             // [#650] TODO Use the central type registry to find the right
             // data type instead of pattern matching
-            if (typeName.toLowerCase().matches(".*?(char|text|lob|xml|graphic|string).*?")) {
+            if (this.typeName.toLowerCase().matches(".*?(char|text|lob|xml|graphic|string).*?")) {
                 precision = null;
                 scale = null;
             }

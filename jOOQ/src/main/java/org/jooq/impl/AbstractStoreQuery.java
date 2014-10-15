@@ -405,7 +405,12 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
             ExecuteListener listener2 = new ExecuteListeners(ctx2);
 
             ctx2.resultSet(rs);
-            returned = new CursorImpl<R>(ctx2, listener2, fieldArray(returning), null, false, true).fetch().into(getInto());
+            returned = new CursorImpl<R>(ctx2, listener2, fieldArray(returning), null, false, true).fetch();
+
+            // [#3682] Plain SQL tables do not have any fields
+            if (getInto().fields().length > 0)
+                returned = returned.into(getInto());
+
             return result;
         }
     }

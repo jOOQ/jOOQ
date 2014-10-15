@@ -48,6 +48,7 @@ import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Query;
+import org.jooq.exception.ControlFlowSignal;
 
 /**
  * @author Lukas Eder
@@ -105,6 +106,11 @@ class BatchMultiple implements Batch {
 
             listener.executeEnd(ctx);
             return result;
+        }
+
+        // [#3427] ControlFlowSignals must not be passed on to ExecuteListners
+        catch (ControlFlowSignal e) {
+            throw e;
         }
         catch (RuntimeException e) {
             ctx.exception(e);

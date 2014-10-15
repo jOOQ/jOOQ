@@ -49,6 +49,7 @@ import static org.jooq.impl.Utils.getMatchingGetter;
 import static org.jooq.impl.Utils.getMatchingMembers;
 import static org.jooq.impl.Utils.hasColumnAnnotations;
 import static org.jooq.impl.Utils.indexOrFail;
+import static org.jooq.impl.Utils.resetChangedOnNotNull;
 import static org.jooq.impl.Utils.settings;
 
 import java.lang.reflect.Method;
@@ -246,13 +247,13 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final Object getValue(String fieldName) {
-        return getValue(field(fieldName));
+        return getValue(indexOrFail(fieldsRow(), fieldName));
     }
 
     @Override
     @Deprecated
     public final Object getValue(String fieldName, Object defaultValue) {
-        return getValue((Field<Object>) field(fieldName), defaultValue);
+        return getValue(indexOrFail(fieldsRow(), fieldName), defaultValue);
     }
 
     @Override
@@ -672,6 +673,10 @@ abstract class AbstractRecord extends AbstractStore implements Record {
                 throw new MappingException("An error ocurred when mapping record from " + type, e);
             }
         }
+
+        // [#2700] [#3582] If a POJO attribute is NULL, but the column is NOT NULL
+        // then we should let the database apply DEFAULT values
+        resetChangedOnNotNull(this);
     }
 
     @Override

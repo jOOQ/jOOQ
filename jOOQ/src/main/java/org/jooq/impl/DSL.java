@@ -13307,6 +13307,9 @@ public class DSL {
      * Null-safety of a field.
      */
     protected static Field<?>[] nullSafe(Field<?>... fields) {
+        if (fields == null)
+            return new Field[0];
+
         Field<?>[] result = new Field<?>[fields.length];
 
         for (int i = 0; i < fields.length; i++) {

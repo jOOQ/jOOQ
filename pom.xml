@@ -12,7 +12,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-parent</artifactId>
-    <version>3.3.3</version>
+    <version>3.3.4</version>
     <packaging>pom</packaging>
 
     <name>jOOQ Parent</name>
@@ -310,6 +310,9 @@
                             <encoding>UTF-8</encoding>
                             <show>protected</show>
                             <notree>true</notree>
+
+                            <!-- Avoid running into Java 8's very restrictive doclint issues -->
+                            <additionalparam>-Xdoclint:none</additionalparam>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -340,6 +343,9 @@
                             xxxxxxxxxxxxxxxxxxxxxxxxxx
                             xxxxxxxxxxxxxxxxxxxxxx
                             xxxxxxxxxxxxxxxxxxxxx
+
+                            xxxx xxxxx xxxxxxx xxxx xxxx xxx xxxx xxxxxxxxxxx xxxxxxx xxxxxx xxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                         xxxxxxxxxxxxxxxx
                     xxxxxxxxx
                 xxxxxxxxxx
@@ -403,6 +409,9 @@
                                 xxxxxxxxx
                             xxx
                             xxxxxxxxx
+                            
+                            xxxx xxxxx xxxxxxx xxxx xxxx xxx xxxx xxxxxxxxxxx xxxxxxx xxxxxx xxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                         xxxxxxxxxxxxxxxx
                     xxxxxxxxx
                 xxxxxxxxxx

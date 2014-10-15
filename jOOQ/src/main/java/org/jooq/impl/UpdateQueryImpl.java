@@ -483,7 +483,9 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
             xx xxxxxxxxxxxxxxxxx x
                 xxxxxxxxxxxxxxxxxxxxxxxxx
                        xxxxxxxxxxxxxxxxxxxxxx xx
-                       xxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxxxxxx
             x
 
             xxxxxxxxxxxxxxxxxxxxxxxxx
@@ -556,7 +558,9 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 if (!from.isEmpty()) {
                     context.formatSeparator()
                            .keyword("from").sql(" ")
-                           .visit(from);
+                           .declareTables(true)
+                           .visit(from)
+                           .declareTables(false);
                 }
 
                 context.end(UPDATE_FROM);
@@ -591,7 +595,9 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         /* [pro] xx
         xx xxxxxxx xxxxxx xxx x xxxxxxx xxxxxxxxxxxxx xx xxx xxxxxx xx xxxx xxxxxx
         xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxxxx
         x
         xx [/pro] */
 
@@ -623,7 +629,10 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
             xx [/pro] */
 
             default:
-                context.visit(from);
+                context.declareTables(true)
+                       .visit(from)
+                       .declareTables(false);
+
                 break;
         }
 

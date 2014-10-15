@@ -55,10 +55,8 @@ import static org.jooq.Comparator.NOT_EQUALS;
 import static org.jooq.Comparator.NOT_IN;
 import static org.jooq.Comparator.NOT_LIKE;
 import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
-import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.nullSafe;
-import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.DIVIDE;
@@ -772,19 +770,32 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         return like(concat, Utils.ESCAPE);
     }
 
+    private final boolean isAccidentalSelect(T[] values) {
+        return (values != null && values.length == 1 && values[0] instanceof Select);
+    }
+
+    private final boolean isAccidentalCollection(T[] values) {
+        return (values != null && values.length == 1 && values[0] instanceof Collection);
+    }
+
+    @SuppressWarnings("unchecked")
     @Override
     public final Condition in(T... values) {
+
+        // [#3362] Prevent "rogue" API usage when using Field<Object>.in(Object... values)
+        if (isAccidentalSelect(values))
+            return in((Select<Record1<T>>) values[0]);
+
+        // [#3347] Prevent "rogue" API usage when using Field<Object>.in(Object... values)
+        if (isAccidentalCollection(values))
+            return in((Collection<T>) values[0]);
+
         return in(Utils.fields(values, this).toArray(new Field<?>[0]));
     }
 
     @Override
     public final Condition in(Field<?>... values) {
-        if (values == null || values.length == 0) {
-            return falseCondition();
-        }
-        else {
-            return new InCondition<T>(this, nullSafe(values), IN);
-        }
+        return new InCondition<T>(this, nullSafe(values), IN);
     }
 
     @Override
@@ -803,14 +814,19 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         return compare(IN, query);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final Condition notIn(T... values) {
-        if (values == null || values.length == 0) {
-            return trueCondition();
-        }
-        else {
-            return notIn(Utils.fields(values, this).toArray(new Field<?>[0]));
-        }
+
+        // [#3362] Prevent "rogue" API usage when using Field<Object>.in(Object... values)
+        if (isAccidentalSelect(values))
+            return notIn((Select<Record1<T>>) values[0]);
+
+        // [#3347] Prevent "rogue" API usage when using Field<Object>.in(Object... values)
+        if (isAccidentalCollection(values))
+            return notIn((Collection<T>) values[0]);
+
+        return notIn(Utils.fields(values, this).toArray(new Field<?>[0]));
     }
 
     @Override

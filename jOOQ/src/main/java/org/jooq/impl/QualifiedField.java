@@ -71,13 +71,21 @@ class QualifiedField<T> extends AbstractField<T> {
     // ------------------------------------------------------------------------
 
     @Override
-    public final void toSQL(RenderContext context) {
-        String separator = "";
-        for (String string : sql) {
-            context.sql(separator);
-            context.literal(string);
+    public final void toSQL(RenderContext ctx) {
 
-            separator = ".";
+        // [#3437] Fully qualify this field only if allowed in the current context
+        if (ctx.qualify()) {
+            String separator = "";
+
+            for (String string : sql) {
+                ctx.sql(separator);
+                ctx.literal(string);
+
+                separator = ".";
+            }
+        }
+        else {
+            ctx.literal(sql[sql.length - 1]);
         }
     }
 

@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_FUNCTION;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.impl.DSL.function;
@@ -82,6 +83,7 @@ import org.jooq.Routine;
 import org.jooq.Schema;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
+import org.jooq.exception.ControlFlowSignal;
 import org.jooq.tools.Convert;
 
 /**
@@ -112,12 +114,14 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private final DataType<T>                 type;
     private Parameter<T>                      returnParameter;
     private boolean                           overloaded;
+    private boolean                           hasDefaultedParameters;
 
     // ------------------------------------------------------------------------
     // Call-data attributes (call-specific)
     // ------------------------------------------------------------------------
 
     private final Map<Parameter<?>, Field<?>> inValues;
+    private final Set<Parameter<?>>           inValuesDefaulted;
     private final Set<Parameter<?>>           inValuesNonDefaulted;
     private transient Field<T>                function;
 
@@ -151,6 +155,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         this.inParameters = new ArrayList<Parameter<?>>();
         this.outParameters = new ArrayList<Parameter<?>>();
         this.inValues = new HashMap<Parameter<?>, Field<?>>();
+        this.inValuesDefaulted = new HashSet<Parameter<?>>();
         this.inValuesNonDefaulted = new HashSet<Parameter<?>>();
         this.results = new HashMap<Parameter<?>, Object>();
         this.type = type;
@@ -181,9 +186,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             setField(parameter, val(null, parameter.getDataType()));
         }
 
-        // [#1183] Add the field to the in-values and mark them as non-defaulted
+        // [#1183] [#3533] Add the field to the in-values and mark them as non-defaulted
         else {
             inValues.put(parameter, value);
+            inValuesDefaulted.remove(parameter);
             inValuesNonDefaulted.add(parameter);
         }
     }
@@ -304,6 +310,11 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             fetchOutParameters(ctx);
             return 0;
         }
+
+        // [#3427] ControlFlowSignals must not be passed on to ExecuteListners
+        catch (ControlFlowSignal e) {
+            throw e;
+        }
         catch (RuntimeException e) {
             ctx.exception(e);
             listener.exception(ctx);
@@ -340,8 +351,8 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     public final void bind(BindContext context) {
         for (Parameter<?> parameter : getParameters()) {
 
-            // [#1183] Skip defaulted parameters
-            if (getInParameters().contains(parameter) && !inValuesNonDefaulted.contains(parameter)) {
+            // [#1183] [#3533] Skip defaulted parameters
+            if (getInParameters().contains(parameter) && inValuesDefaulted.contains(parameter)) {
                 continue;
             }
 
@@ -391,8 +402,8 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                 toSQLOutParam(context, parameter);
             }
 
-            // [#1183] Omit defaulted parameters
-            else if (!inValuesNonDefaulted.contains(parameter)) {
+            // [#1183] [#3533] Omit defaulted parameters
+            else if (inValuesDefaulted.contains(parameter)) {
                 continue;
             }
 
@@ -417,62 +428,54 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLEnd(RenderContext context) {
-        switch (context.configuration().dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxxx
-                xxxxxx
-
-            xx [/pro] */
-            default:
-                context.sql(" }");
-                break;
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+            xxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxx
+        x
+        xxxx
+        xx [/pro] */
+        {
+            context.sql(" }");
         }
     }
 
     private final void toSQLBegin(RenderContext context) {
-        switch (context.configuration().dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxxxxx
-                xxxxxx
-
-            xx [/pro] */
-            default:
-                context.sql("{ ");
-                break;
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxx
+        x
+        xxxx
+        xx [/pro] */
+        {
+            context.sql("{ ");
         }
     }
 
     private final void toSQLAssign(RenderContext context) {
-        switch (context.configuration().dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxxxxxxxxxx xx xxx
-                xxxxxx
-
-            xx [/pro] */
-            default:
-                context.sql("? = ");
-                break;
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+            xxxxxxxxxxxxxx xx xxx
+        x
+        xxxx
+        xx [/pro] */
+        {
+            context.sql("? = ");
         }
     }
 
     private final void toSQLCall(RenderContext context) {
-        switch (context.configuration().dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx
-
-            xx [/pro] */
-            default:
-                context.sql("call ");
-                break;
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+        x
+        xxxx
+        xx [/pro] */
+        {
+            context.sql("call ");
         }
 
         toSQLQualifiedName(context);
@@ -480,11 +483,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     private final void toSQLOutParam(RenderContext context, Parameter<?> parameter) {
         /* [pro] xx
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxx xxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxxxxxxxxx xx xxx
-                xxxxxx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxx xx xxx
         x
 
         xx [/pro] */
@@ -493,11 +494,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     private final void toSQLInParam(RenderContext context, Parameter<?> parameter, Field<?> value) {
         /* [pro] xx
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxx xxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxxxxxxxxx xx xxx
-                xxxxxx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxx xx xxx
         x
 
         xx [/pro] */
@@ -659,18 +658,29 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         return overloaded;
     }
 
-    protected final void addInParameter(Parameter<?> parameter) {
-        inParameters.add(parameter);
+    private final boolean hasDefaultedParameters() {
+        return hasDefaultedParameters && !inValuesDefaulted.isEmpty();
+    }
+
+    private final void addParameter(Parameter<?> parameter) {
         allParameters.add(parameter);
+        hasDefaultedParameters |= parameter.isDefaulted();
+    }
+
+    protected final void addInParameter(Parameter<?> parameter) {
+        addParameter(parameter);
+        inParameters.add(parameter);
 
         // IN parameters are initialised with null by default
         inValues.put(parameter, val(null, parameter.getDataType()));
 
-        // [#1183] non-defaulted parameters are marked as such
-        if (!parameter.isDefaulted()) {
+        // [#1183] [#3533] defaulted parameters are marked as such
+        if (parameter.isDefaulted())
+            inValuesDefaulted.add(parameter);
+        else
             inValuesNonDefaulted.add(parameter);
-        }
     }
+
 
     protected final void addInOutParameter(Parameter<?> parameter) {
         addInParameter(parameter);
@@ -678,13 +688,13 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     protected final void addOutParameter(Parameter<?> parameter) {
+        addParameter(parameter);
         outParameters.add(parameter);
-        allParameters.add(parameter);
     }
 
     protected final void setReturnParameter(Parameter<T> parameter) {
+        addParameter(parameter);
         returnParameter = parameter;
-        allParameters.add(parameter);
     }
 
     public final Field<T> asField() {

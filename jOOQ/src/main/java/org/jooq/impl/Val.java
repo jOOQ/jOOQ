@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Binding.DefaultBindingContext;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.RenderContext;
@@ -52,7 +51,6 @@ import org.jooq.conf.ParamType;
 class Val<T> extends AbstractParam<T> {
 
     private static final long   serialVersionUID = 6807729087019209084L;
-    private static final char[] HEX              = "0123456789abcdef".toCharArray();
 
     Val(T value, DataType<T> type) {
         super(value, type);
@@ -74,7 +72,7 @@ class Val<T> extends AbstractParam<T> {
             if (isInline(ctx))
                 ctx.paramType(ParamType.INLINED);
 
-            new DefaultBinding(getConverter(), getDataType().isLob(), getParamName()).sql(new DefaultBindingContext(ctx.configuration()), (RenderContext) ctx, value);
+            new DefaultBinding(getConverter(), getDataType().isLob(), getParamName()).sql(new DefaultBindingSQLContext<T>(ctx.configuration(), (RenderContext) ctx, value));
             ctx.paramType(paramType);
         }
 

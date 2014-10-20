@@ -62,7 +62,6 @@ import org.jooq.UDTRecord;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
-import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 /**
@@ -71,8 +70,6 @@ import org.jooq.tools.jdbc.JDBCUtils;
  * @author Lukas Eder
  */
 public class OracleDSL extends DSL {
-
-    private static final JooqLogger log = JooqLogger.getLogger(OracleDSL.class);
 
     /**
      * No instances

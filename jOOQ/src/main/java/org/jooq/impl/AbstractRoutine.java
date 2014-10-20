@@ -68,7 +68,6 @@ import java.util.Set;
 import org.jooq.AggregateFunction;
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
-import org.jooq.Binding.DefaultBindingContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -557,13 +556,20 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             if (parameter.equals(getReturnParameter()) ||
                 getOutParameters().contains(parameter)) {
 
-                results.put(parameter, parameter.getBinding().get(
-                    new DefaultBindingContext(ctx.configuration()),
-                    (CallableStatement) ctx.statement(),
-                    parameterIndexes.get(parameter)
-                ));
+                fetchOutParameter(ctx, parameter);
             }
         }
+    }
+
+    private final <U> void fetchOutParameter(ExecuteContext ctx, Parameter<U> parameter) throws SQLException {
+        DefaultBindingGetStatementContext<U> out = new DefaultBindingGetStatementContext<U>(
+            ctx.configuration(),
+            (CallableStatement) ctx.statement(),
+            parameterIndexes.get(parameter)
+        );
+
+        parameter.getBinding().get(out);
+        results.put(parameter, out.value());
     }
 
     private final void registerOutParameters(Configuration c, CallableStatement statement) throws SQLException {
@@ -574,13 +580,13 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             if (parameter.equals(getReturnParameter()) ||
                 getOutParameters().contains(parameter)) {
 
-                parameter.getBinding().register(
-                    new DefaultBindingContext(c),
-                    statement,
-                    parameterIndexes.get(parameter)
-                );
+                registerOutParameter(c, statement, parameter);
             }
         }
+    }
+
+    private final <U> void registerOutParameter(Configuration c, CallableStatement statement, Parameter<U> parameter) throws SQLException {
+        parameter.getBinding().register(new DefaultBindingRegisterContext<U>(c, statement, parameterIndexes.get(parameter)));
     }
 
     // ------------------------------------------------------------------------

@@ -38,37 +38,42 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq;
+package org.jooq.impl;
 
-import java.io.Serializable;
-import java.sql.SQLException;
+import java.sql.PreparedStatement;
 
-import org.jooq.impl.DefaultBinding;
+import org.jooq.BindingSetStatementContext;
+import org.jooq.Configuration;
 
 /**
- * An SPI (Service Provider Interface) that exposes all low-level interactions
- * with JDBC bind variables.
- * <p>
- * This SPI is used by jOOQ users to implement support for custom data types
- * that would otherwise not be supported by jOOQ and/or JDBC. All of jOOQ's
- * internal support for bind variable types is implemented in
- * {@link DefaultBinding}.
- *
  * @author Lukas Eder
  */
-public interface Binding<T> extends Serializable {
+class DefaultBindingSetStatementContext<T> extends AbstractBindingContext implements BindingSetStatementContext<T> {
 
-    void sql(BindingSQLContext<T> ctx) throws SQLException;
+    private final PreparedStatement statement;
+    private final int               index;
+    private final T                 value;
 
-    void register(BindingRegisterContext<T> ctx) throws SQLException;
+    DefaultBindingSetStatementContext(Configuration configuration, PreparedStatement statement, int index, T value) {
+        super(configuration);
 
-    void set(BindingSetStatementContext<T> ctx) throws SQLException;
+        this.statement = statement;
+        this.index = index;
+        this.value = value;
+    }
 
-    void set(BindingSetSQLOutputContext<T> ctx) throws SQLException;
+    @Override
+    public final PreparedStatement statement() {
+        return statement;
+    }
 
-    void get(BindingGetResultSetContext<T> ctx) throws SQLException;
+    @Override
+    public final int index() {
+        return index;
+    }
 
-    void get(BindingGetStatementContext<T> ctx) throws SQLException;
-
-    void get(BindingGetSQLInputContext<T> ctx) throws SQLException;
+    @Override
+    public final T value() {
+        return value;
+    }
 }

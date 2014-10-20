@@ -44,7 +44,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.jooq.BindContext;
-import org.jooq.Binding.DefaultBindingContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -61,10 +60,7 @@ class DefaultBindContext extends AbstractBindContext {
     @SuppressWarnings({ "unchecked" })
     protected final BindContext bindValue0(Object value, Field<?> field) throws SQLException {
         ((Field<Object>) field).getBinding().set(
-            new DefaultBindingContext(configuration()),
-            stmt,
-            nextIndex(),
-            value
+            new DefaultBindingSetStatementContext<Object>(configuration(), stmt, nextIndex(), value)
         );
 
         return this;

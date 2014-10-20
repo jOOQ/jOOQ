@@ -68,7 +68,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import org.jooq.Binding.DefaultBindingContext;
 import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
@@ -1472,7 +1471,9 @@ class CursorImpl<R extends Record> implements Cursor<R> {
              * Utility method to prevent unnecessary unchecked conversions
              */
             private final <T> void setValue(AbstractRecord record, Field<T> field, int index) throws SQLException {
-                T value = field.getBinding().get(new DefaultBindingContext(ctx.configuration()), ctx.resultSet(), index + 1);
+                DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<T>(ctx.configuration(), ctx.resultSet(), index + 1);
+                field.getBinding().get(out);
+                T value = out.value();
 
                 record.values[index] = value;
                 record.originals[index] = value;

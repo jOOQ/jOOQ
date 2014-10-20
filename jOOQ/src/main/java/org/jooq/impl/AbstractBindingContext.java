@@ -38,37 +38,35 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq;
+package org.jooq.impl;
 
-import java.io.Serializable;
-import java.sql.SQLException;
-
-import org.jooq.impl.DefaultBinding;
+import org.jooq.BindingContext;
+import org.jooq.Configuration;
+import org.jooq.SQLDialect;
 
 /**
- * An SPI (Service Provider Interface) that exposes all low-level interactions
- * with JDBC bind variables.
- * <p>
- * This SPI is used by jOOQ users to implement support for custom data types
- * that would otherwise not be supported by jOOQ and/or JDBC. All of jOOQ's
- * internal support for bind variable types is implemented in
- * {@link DefaultBinding}.
- *
  * @author Lukas Eder
  */
-public interface Binding<T> extends Serializable {
+abstract class AbstractBindingContext implements BindingContext {
 
-    void sql(BindingSQLContext<T> ctx) throws SQLException;
+    private final Configuration configuration;
 
-    void register(BindingRegisterContext<T> ctx) throws SQLException;
+    AbstractBindingContext(Configuration configuration) {
+        this.configuration = configuration;
+    }
 
-    void set(BindingSetStatementContext<T> ctx) throws SQLException;
+    @Override
+    public final Configuration configuration() {
+        return configuration;
+    }
 
-    void set(BindingSetSQLOutputContext<T> ctx) throws SQLException;
+    @Override
+    public final SQLDialect dialect() {
+        return configuration.dialect();
+    }
 
-    void get(BindingGetResultSetContext<T> ctx) throws SQLException;
-
-    void get(BindingGetStatementContext<T> ctx) throws SQLException;
-
-    void get(BindingGetSQLInputContext<T> ctx) throws SQLException;
+    @Override
+    public final SQLDialect family() {
+        return configuration.dialect().family();
+    }
 }

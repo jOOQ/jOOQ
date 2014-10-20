@@ -38,37 +38,45 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq;
+package org.jooq.impl;
 
-import java.io.Serializable;
-import java.sql.SQLException;
+import java.sql.ResultSet;
 
-import org.jooq.impl.DefaultBinding;
+import org.jooq.BindingGetResultSetContext;
+import org.jooq.Configuration;
 
 /**
- * An SPI (Service Provider Interface) that exposes all low-level interactions
- * with JDBC bind variables.
- * <p>
- * This SPI is used by jOOQ users to implement support for custom data types
- * that would otherwise not be supported by jOOQ and/or JDBC. All of jOOQ's
- * internal support for bind variable types is implemented in
- * {@link DefaultBinding}.
- *
  * @author Lukas Eder
  */
-public interface Binding<T> extends Serializable {
+class DefaultBindingGetResultSetContext<T> extends AbstractBindingContext implements BindingGetResultSetContext<T> {
 
-    void sql(BindingSQLContext<T> ctx) throws SQLException;
+    private final ResultSet resultSet;
+    private final int       index;
+    private T               value;
 
-    void register(BindingRegisterContext<T> ctx) throws SQLException;
+    DefaultBindingGetResultSetContext(Configuration configuration, ResultSet resultSet, int index) {
+        super(configuration);
 
-    void set(BindingSetStatementContext<T> ctx) throws SQLException;
+        this.resultSet = resultSet;
+        this.index = index;
+    }
 
-    void set(BindingSetSQLOutputContext<T> ctx) throws SQLException;
+    @Override
+    public final ResultSet resultSet() {
+        return resultSet;
+    }
 
-    void get(BindingGetResultSetContext<T> ctx) throws SQLException;
+    @Override
+    public final int index() {
+        return index;
+    }
 
-    void get(BindingGetStatementContext<T> ctx) throws SQLException;
+    @Override
+    public final void value(T v) {
+        this.value = v;
+    }
 
-    void get(BindingGetSQLInputContext<T> ctx) throws SQLException;
+    final T value() {
+        return value;
+    }
 }

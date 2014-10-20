@@ -347,6 +347,13 @@ final class Utils {
     private static Boolean       isJPAAvailable;
 
     /**
+     * [#3696] The maximum number of consumed exceptions in
+     * {@link #consumeExceptions(Configuration, PreparedStatement, SQLException)}
+     * helps prevent infinite loops and {@link OutOfMemoryError}.
+     */
+    private static int           maxConsumedExceptions                        = 256;
+
+    /**
      * A pattern for the dash line syntax
      */
     private static final Pattern DASH_PATTERN                                 = Pattern.compile("(-+)");
@@ -2276,7 +2283,7 @@ final class Utils {
         xx xx xxxx xxxx xxxxx xxx xxxx xxxxxxxx xxxx xxxx xxx xxxxxx
         xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxx xxxxxxxxxx
-                xxxxxxxxxxxx xxx xxxx
+                xxxxxxxxxxxx xxx xxxx x x xx x x xxxxxxxxxxxxxxxxxxxxxx xxxx
                     xxx x
                         xx xxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxx xx xxx
                             xxxxx xxxxxxxxxxxx

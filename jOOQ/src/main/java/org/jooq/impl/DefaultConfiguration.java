@@ -721,6 +721,14 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
+    public final SQLDialect family() {
+        return dialect.family();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public final Settings settings() {
         return settings;
     }

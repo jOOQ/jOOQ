@@ -11,6 +11,7 @@ DROP PROCEDURE p391/
 DROP PROCEDURE p_default/
 DROP PROCEDURE p1490/
 DROP PROCEDURE p_raise/
+DROP PROCEDURE p_raise_3696/
 DROP FUNCTION f_tables1/ 
 DROP FUNCTION f_tables2/ 
 DROP FUNCTION f_tables3/ 
@@ -743,6 +744,20 @@ BEGIN
     END
     ELSE
         THROW 50000, 'message', 2;
+END;
+/
+
+CREATE PROCEDURE p_raise_3696(@number int)
+AS
+BEGIN
+    DECLARE @message VARCHAR(100) = '';
+
+    WHILE @number > 0
+    BEGIN
+        SET @message = 'message ' + CAST(@number AS VARCHAR(5));
+        SET @number = @number - 1;
+        RAISERROR(@message, 16, 2, 3);
+    END;
 END;
 /
 

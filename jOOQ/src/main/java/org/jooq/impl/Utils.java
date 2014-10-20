@@ -305,6 +305,13 @@ final class Utils {
     private static Boolean       isJPAAvailable;
 
     /**
+     * [#3696] The maximum number of consumed exceptions in
+     * {@link #consumeExceptions(Configuration, PreparedStatement, SQLException)}
+     * helps prevent infinite loops and {@link OutOfMemoryError}.
+     */
+    private static int           maxConsumedExceptions                        = 256;
+
+    /**
      * A pattern for the dash line syntax
      */
     private static final Pattern DASH_PATTERN                                 = Pattern.compile("(-+)");
@@ -2194,7 +2201,7 @@ final class Utils {
         // So far, this issue has been observed only with SQL Server
         switch (configuration.dialect().family()) {
             case SQLSERVER:
-                consumeLoop: for (;;)
+                consumeLoop: for (int i = 0; i < maxConsumedExceptions; i++)
                     try {
                         if (!stmt.getMoreResults() && stmt.getUpdateCount() == -1)
                             break consumeLoop;

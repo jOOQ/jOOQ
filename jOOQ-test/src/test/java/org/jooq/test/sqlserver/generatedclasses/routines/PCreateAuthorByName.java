@@ -9,17 +9,17 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1172476119;
+	private static final long serialVersionUID = 312785525;
 
 	/**
 	 * The parameter <code>dbo.p_create_author_by_name.first_name</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.String> FIRST_NAME = createParameter("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(50));
+	public static final org.jooq.Parameter<java.lang.String> FIRST_NAME = createParameter("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), false);
 
 	/**
 	 * The parameter <code>dbo.p_create_author_by_name.last_name</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.String> LAST_NAME = createParameter("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(50));
+	public static final org.jooq.Parameter<java.lang.String> LAST_NAME = createParameter("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), false);
 
 	/**
 	 * Create a new routine call instance

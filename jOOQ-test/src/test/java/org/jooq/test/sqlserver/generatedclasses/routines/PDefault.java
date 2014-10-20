@@ -9,37 +9,37 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 331608375;
+	private static final long serialVersionUID = 603530515;
 
 	/**
 	 * The parameter <code>dbo.p_default.p_in_number</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Integer> P_IN_NUMBER = createParameter("p_in_number", org.jooq.impl.SQLDataType.INTEGER);
+	public static final org.jooq.Parameter<java.lang.Integer> P_IN_NUMBER = createParameter("p_in_number", org.jooq.impl.SQLDataType.INTEGER, false);
 
 	/**
 	 * The parameter <code>dbo.p_default.p_out_number</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Integer> P_OUT_NUMBER = createParameter("p_out_number", org.jooq.impl.SQLDataType.INTEGER);
+	public static final org.jooq.Parameter<java.lang.Integer> P_OUT_NUMBER = createParameter("p_out_number", org.jooq.impl.SQLDataType.INTEGER, false);
 
 	/**
 	 * The parameter <code>dbo.p_default.p_in_varchar</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.String> P_IN_VARCHAR = createParameter("p_in_varchar", org.jooq.impl.SQLDataType.VARCHAR.length(10));
+	public static final org.jooq.Parameter<java.lang.String> P_IN_VARCHAR = createParameter("p_in_varchar", org.jooq.impl.SQLDataType.VARCHAR.length(10), false);
 
 	/**
 	 * The parameter <code>dbo.p_default.p_out_varchar</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.String> P_OUT_VARCHAR = createParameter("p_out_varchar", org.jooq.impl.SQLDataType.VARCHAR.length(10));
+	public static final org.jooq.Parameter<java.lang.String> P_OUT_VARCHAR = createParameter("p_out_varchar", org.jooq.impl.SQLDataType.VARCHAR.length(10), false);
 
 	/**
 	 * The parameter <code>dbo.p_default.p_in_date</code>.
 	 */
-	public static final org.jooq.Parameter<java.sql.Date> P_IN_DATE = createParameter("p_in_date", org.jooq.impl.SQLDataType.DATE);
+	public static final org.jooq.Parameter<java.sql.Date> P_IN_DATE = createParameter("p_in_date", org.jooq.impl.SQLDataType.DATE, false);
 
 	/**
 	 * The parameter <code>dbo.p_default.p_out_date</code>.
 	 */
-	public static final org.jooq.Parameter<java.sql.Date> P_OUT_DATE = createParameter("p_out_date", org.jooq.impl.SQLDataType.DATE);
+	public static final org.jooq.Parameter<java.sql.Date> P_OUT_DATE = createParameter("p_out_date", org.jooq.impl.SQLDataType.DATE, false);
 
 	/**
 	 * Create a new routine call instance

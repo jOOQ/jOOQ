@@ -9,12 +9,12 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PRaise extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1250009081;
+	private static final long serialVersionUID = 608228162;
 
 	/**
 	 * The parameter <code>dbo.p_raise.mode</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Integer> MODE = createParameter("mode", org.jooq.impl.SQLDataType.INTEGER);
+	public static final org.jooq.Parameter<java.lang.Integer> MODE = createParameter("mode", org.jooq.impl.SQLDataType.INTEGER, false);
 
 	/**
 	 * Create a new routine call instance

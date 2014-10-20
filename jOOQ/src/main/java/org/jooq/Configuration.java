@@ -228,6 +228,11 @@ public interface Configuration extends Serializable {
     SQLDialect dialect();
 
     /**
+     * Retrieve the family of the configured dialect.
+     */
+    SQLDialect family();
+
+    /**
      * Retrieve the runtime configuration settings.
      */
     Settings settings();

@@ -65,6 +65,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 public class BNFGenerator {
 
     static Map<String, Set<Edge>> edgesFrom = new LinkedHashMap<String, Set<Edge>>();

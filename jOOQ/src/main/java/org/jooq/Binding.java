@@ -48,25 +48,40 @@ import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
 
-import org.jooq.RenderContext.CastMode;
-import org.jooq.conf.ParamType;
+import org.jooq.impl.DefaultBinding;
 
 /**
+ * An SPI (Service Provider Interface) that exposes all low-level interactions
+ * with JDBC bind variables.
+ * <p>
+ * This SPI is used by jOOQ users to implement support for custom data types
+ * that would otherwise not be supported by jOOQ and/or JDBC. All of jOOQ's
+ * internal support for bind variable types is implemented in
+ * {@link DefaultBinding}.
+ *
  * @author Lukas Eder
  */
 public interface Binding<T> extends Serializable {
 
-    String sql     (BindingContext ctx,                                    T value, CastMode castMode, ParamType paramType) throws SQLException;
-    void   register(BindingContext ctx, CallableStatement stmt, int index                                                 ) throws SQLException;
-    void   set     (BindingContext ctx, PreparedStatement stmt, int index, T value                                        ) throws SQLException;
-    void   set     (BindingContext ctx, SQLOutput stream,                  T value                                        ) throws SQLException;
-    T      get     (BindingContext ctx, ResultSet rs,           int index                                                 ) throws SQLException;
-    T      get     (BindingContext ctx, CallableStatement stmt, int index                                                 ) throws SQLException;
-    T      get     (BindingContext ctx, SQLInput stream                                                                   ) throws SQLException;
+    void sql(BindingContext ctx, RenderContext render, T value) throws SQLException;
+
+    void register(BindingContext ctx, CallableStatement stmt, int index) throws SQLException;
+
+    void set(BindingContext ctx, PreparedStatement stmt, int index, T value) throws SQLException;
+
+    void set(BindingContext ctx, SQLOutput stream, T value) throws SQLException;
+
+    T get(BindingContext ctx, ResultSet rs, int index) throws SQLException;
+
+    T get(BindingContext ctx, CallableStatement stmt, int index) throws SQLException;
+
+    T get(BindingContext ctx, SQLInput stream) throws SQLException;
 
     public interface BindingContext {
         Configuration configuration();
+
         SQLDialect dialect();
+
         SQLDialect family();
     }
 

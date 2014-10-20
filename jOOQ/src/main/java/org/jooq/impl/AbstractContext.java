@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.impl.Utils.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
@@ -93,7 +92,6 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     ParamType                         paramType = ParamType.INDEXED;
     boolean                           qualify   = true;
     CastMode                          castMode  = CastMode.DEFAULT;
-    SQLDialect[]                      castDialects;
 
     AbstractContext(Configuration configuration, PreparedStatement stmt) {
         this.configuration = configuration;
@@ -498,28 +496,25 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     @Override
     public final C castMode(CastMode mode) {
         this.castMode = mode;
-        this.castDialects = null;
         return (C) this;
     }
 
     @Override
+    @Deprecated
     public final Boolean cast() {
         switch (castMode) {
             case ALWAYS:
                 return true;
             case NEVER:
                 return false;
-            case SOME:
-                return asList(castDialects).contains(configuration.dialect());
         }
 
         return null;
     }
 
     @Override
+    @Deprecated
     public final C castModeSome(SQLDialect... dialects) {
-        this.castMode = CastMode.SOME;
-        this.castDialects = dialects;
         return (C) this;
     }
 

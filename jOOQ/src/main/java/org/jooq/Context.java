@@ -472,11 +472,17 @@ public interface Context<C extends Context<C>> {
      * <td><code>null</code></td>
      * </tr>
      * </table>
+     *
+     * @deprecated - [#3703] - 3.5.0 - Do not use this any longer
      */
+    @Deprecated
     Boolean cast();
 
     /**
      * Set the new cast mode to {@link CastMode#SOME} for a list of dialects.
+     *
+     * @deprecated - [#3703] - 3.5.0 - Do not use this any longer
      */
+    @Deprecated
     C castModeSome(SQLDialect... dialects);
 }

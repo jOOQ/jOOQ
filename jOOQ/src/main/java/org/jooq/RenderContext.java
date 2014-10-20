@@ -340,13 +340,19 @@ public interface RenderContext extends Context<RenderContext> {
      * <td><code>null</code></td>
      * </tr>
      * </table>
+     *
+     * @deprecated - [#3703] - 3.5.0 - Do not use this any longer
      */
+    @Deprecated
     @Override
     Boolean cast();
 
     /**
      * Set the new cast mode to {@link CastMode#SOME} for a list of dialects.
+     *
+     * @deprecated - [#3703] - 3.5.0 - Do not use this any longer
      */
+    @Deprecated
     @Override
     RenderContext castModeSome(SQLDialect... dialects);
 
@@ -371,7 +377,10 @@ public interface RenderContext extends Context<RenderContext> {
          * Cast bind values only in some dialects. The specified dialects assume
          * {@link #ALWAYS} behaviour, all the other dialects assume
          * {@link #NEVER}.
+         *
+         * @deprecated - [#3703] - 3.5.0 - Do not use this any longer
          */
+        @Deprecated
         SOME,
 
         /**

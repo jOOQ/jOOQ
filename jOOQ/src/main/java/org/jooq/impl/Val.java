@@ -125,23 +125,6 @@ class Val<T> extends AbstractParam<T> {
             case ALWAYS:
                 toSQLCast(context);
                 return;
-
-            case SOME:
-
-                // This dialect must cast
-                if (context.cast()) {
-                    toSQLCast(context);
-                }
-
-                // In some cases, we should still cast
-                else if (shouldCast(context)) {
-                    toSQLCast(context);
-                }
-                else {
-                    toSQL(context, value, getConverter());
-                }
-
-                return;
         }
 
         // See if we "should" cast, to stay on the safe side

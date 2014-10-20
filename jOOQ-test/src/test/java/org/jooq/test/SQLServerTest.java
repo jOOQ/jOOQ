@@ -887,6 +887,39 @@ public class SQLServerTest extends jOOQAbstractTest<
     }
 
     @Test
+    public void testSQLServerRaiserrorNTimes() throws Exception {
+        try {
+            Routines.pRaise_3696(create().configuration(), 3);
+            fail();
+        }
+        catch (DataAccessException e) {
+            SQLException cause = (SQLException) e.getCause();
+
+            assertEquals("message 3", cause.getMessage());
+            assertEquals("message 2", cause.getNextException().getMessage());
+            assertEquals("message 1", cause.getNextException().getNextException().getMessage());
+
+            assertNull(cause.getNextException().getNextException().getNextException());
+        }
+
+        try {
+            Routines.pRaise_3696(create().configuration(), 300);
+            fail();
+        }
+        catch (DataAccessException e) {
+            SQLException cause = (SQLException) e.getCause();
+
+            for (int i = 300; i >= 300 - 256; i--) {
+                assertEquals("message " + i, cause.getMessage());
+
+                cause = cause.getNextException();
+            }
+
+            assertNull(cause);
+        }
+    }
+
+    @Test
     public void testSQLServerRaiserrorInTrigger() throws Exception {
         jOOQAbstractTest.reset = false;
 

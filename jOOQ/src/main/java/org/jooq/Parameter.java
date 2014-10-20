@@ -70,6 +70,11 @@ public interface Parameter<T> extends QueryPart {
     Converter<?, T> getConverter();
 
     /**
+     * The parameter's underlying {@link Binding}.
+     */
+    Binding<T> getBinding();
+
+    /**
      * The type of this parameter (might not be dialect-specific)
      */
     DataType<T> getDataType();

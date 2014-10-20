@@ -183,7 +183,7 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
     @Override
     @Deprecated
     public final void set(java.sql.Array array) throws SQLException {
-        Utils.set(this, array);
+        DefaultBinding.set(this, array);
     }
 
     @SuppressWarnings("unchecked")

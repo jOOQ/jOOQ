@@ -46,6 +46,7 @@ import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
 
+import org.jooq.Binding.DefaultBindingContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Row;
@@ -126,7 +127,10 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
     }
 
     private final <T> void setValue(Configuration configuration, SQLInput stream, Field<T> field) throws SQLException {
-        setValue(field, Utils.getFromSQLInput(configuration, stream, field));
+        setValue(field, field.getBinding().get(
+            new DefaultBindingContext(configuration),
+            stream
+        ));
     }
 
     @Override
@@ -137,7 +141,11 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
     }
 
     private final <T> void setValue(SQLOutput stream, Field<T> field) throws SQLException {
-        Utils.writeToSQLOutput(stream, field, getValue(field));
+        field.getBinding().set(
+            new DefaultBindingContext(localConfiguration()),
+            stream,
+            getValue(field)
+        );
     }
 
     @Override

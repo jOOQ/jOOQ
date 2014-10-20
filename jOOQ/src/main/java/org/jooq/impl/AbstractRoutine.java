@@ -57,7 +57,6 @@ import static org.jooq.impl.Utils.settings;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -67,9 +66,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jooq.AggregateFunction;
-import org.jooq.ArrayRecord;
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
+import org.jooq.Binding.DefaultBindingContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -86,7 +85,6 @@ import org.jooq.Result;
 import org.jooq.Routine;
 import org.jooq.Schema;
 import org.jooq.UDTField;
-import org.jooq.UDTRecord;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.tools.Convert;
 
@@ -559,13 +557,15 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             if (parameter.equals(getReturnParameter()) ||
                 getOutParameters().contains(parameter)) {
 
-                int index = parameterIndexes.get(parameter);
-                results.put(parameter, Utils.getFromStatement(ctx, parameter, index));
+                results.put(parameter, parameter.getBinding().get(
+                    new DefaultBindingContext(ctx.configuration()),
+                    (CallableStatement) ctx.statement(),
+                    parameterIndexes.get(parameter)
+                ));
             }
         }
     }
 
-    @SuppressWarnings("unchecked")
     private final void registerOutParameters(Configuration c, CallableStatement statement) throws SQLException {
 
         // Register all out / inout parameters according to their position
@@ -574,43 +574,11 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             if (parameter.equals(getReturnParameter()) ||
                 getOutParameters().contains(parameter)) {
 
-                int index = parameterIndexes.get(parameter);
-                int sqlType = parameter.getDataType().getDataType(c).getSQLType();
-
-                switch (c.dialect().family()) {
-                    /* [pro] */
-
-                    // For some user defined types Oracle needs to bind
-                    // also the type name
-                    case ORACLE: {
-                        if (sqlType == Types.STRUCT) {
-                            UDTRecord<?> record = Utils
-                                .newRecord(false, (Class<? extends UDTRecord<?>>) parameter.getType())
-                                .<RuntimeException>operate(null);
-                            statement.registerOutParameter(index, Types.STRUCT, record.getSQLTypeName());
-                        }
-
-                        else if (sqlType == Types.ARRAY) {
-                            ArrayRecord<?> record = Utils.newArrayRecord(
-                                (Class<? extends ArrayRecord<?>>) parameter.getType());
-                            statement.registerOutParameter(index, Types.ARRAY, record.getName());
-                        }
-
-                        // The default behaviour is not to register a type
-                        // mapping
-                        else {
-                            statement.registerOutParameter(index, sqlType);
-                        }
-
-                        break;
-                    }
-
-                    /* [/pro] */
-                    default: {
-                        statement.registerOutParameter(index, sqlType);
-                        break;
-                    }
-                }
+                parameter.getBinding().register(
+                    new DefaultBindingContext(c),
+                    statement,
+                    parameterIndexes.get(parameter)
+                );
             }
         }
     }

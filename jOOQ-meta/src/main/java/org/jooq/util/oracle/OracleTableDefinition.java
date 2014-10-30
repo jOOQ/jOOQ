@@ -43,6 +43,7 @@ package org.jooq.util.oracle;
 
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.util.oracle.sys.Tables.ALL_COL_COMMENTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_TAB_COLS;
 
@@ -50,7 +51,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.impl.DSL;
+import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
@@ -63,6 +67,8 @@ import org.jooq.util.SchemaDefinition;
  */
 public class OracleTableDefinition extends AbstractTableDefinition {
 
+    private static final JooqLogger log = JooqLogger.getLogger(OracleTableDefinition.class);
+
 	public OracleTableDefinition(SchemaDefinition schema, String name, String comment) {
 		super(schema, name, comment);
 	}
@@ -72,6 +78,7 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
 		for (Record record : create().select(
+		        ALL_TAB_COLS.DATA_TYPE_OWNER,
 		        ALL_TAB_COLS.DATA_TYPE,
 		        decode(ALL_TAB_COLS.DATA_TYPE.upper(),
 		            "CLOB", inline(0),
@@ -94,15 +101,35 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 	        .orderBy(ALL_TAB_COLS.COLUMN_ID)
 	        .fetch()) {
 
+            String typeOwner = record.getValue(ALL_TAB_COLS.DATA_TYPE_OWNER);
+            String typeName = record.getValue(ALL_TAB_COLS.DATA_TYPE);
+
+            // [#3711] Check if the reported type is really a synonym for another type
+            if (typeOwner != null) {
+                Name synonym = ((OracleDatabase) getDatabase()).getSynonym(name(typeOwner, typeName));
+
+                if (synonym != null) {
+                    log.info("Applying synonym", DSL.name(typeOwner, typeName) + " is synonym for " + synonym);
+
+                    typeOwner = synonym.getName()[0];
+                    typeName = synonym.getName()[1];
+                }
+            }
+
+            SchemaDefinition typeSchema = (typeOwner == null)
+                ? getSchema()
+                : getDatabase().getSchema(typeOwner);
+
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
-                getSchema(),
+                typeSchema,
                 record.getValue(ALL_TAB_COLS.DATA_TYPE),
                 record.getValue("data_length", int.class),
                 record.getValue(ALL_TAB_COLS.DATA_PRECISION, int.class),
                 record.getValue(ALL_TAB_COLS.DATA_SCALE, int.class),
                 record.getValue(ALL_TAB_COLS.NULLABLE, boolean.class),
-                record.getValue(ALL_TAB_COLS.DATA_DEFAULT) != null
+                record.getValue(ALL_TAB_COLS.DATA_DEFAULT) != null,
+                typeName
             );
 
 			DefaultColumnDefinition column = new DefaultColumnDefinition(

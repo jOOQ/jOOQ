@@ -66,6 +66,7 @@ import static org.jooq.test.oracle.generatedclasses.test.Routines.fTables4;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.pArrays1;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.pTables1;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_2155;
+import static org.jooq.test.oracle.generatedclasses.test.Tables.T_3711;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_725_LOB_TEST;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_785;
@@ -183,6 +184,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRec
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TUnsignedRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_2155Record;
+import org.jooq.test.oracle.generatedclasses.test.tables.records.T_3711Record;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_725LobTestRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_785Record;
@@ -1768,8 +1770,30 @@ public class OracleTest extends jOOQAbstractTest<
 
     @Test
     public void testOracleSynonymAndCrossSchemaTypeReferences() {
+        jOOQAbstractTest.reset = false;
 
         Configuration conf = create().configuration();
+
+        // Tables:
+        // -------
+        NumberTableRecord t = new NumberTableRecord(1, 2, 3);
+        NumberObjectRecord o = new NumberObjectRecord(4, 5, 6);
+
+        T_3711Record r = create().newRecord(T_3711);
+        r.setV1(t);
+        r.setV3(t);
+        r.setV7(t);
+        r.setV2(o);
+        r.setV4(o);
+        r.setV8(o);
+
+        assertEquals(1,
+        create().insertInto(T_3711)
+                .set(r)
+                .execute());
+
+        assertEquals(r, create().fetchOne(T_3711));
+
 
         // Standalone procedure calls:
         // ---------------------------

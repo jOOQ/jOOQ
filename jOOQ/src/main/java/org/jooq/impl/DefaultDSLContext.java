@@ -205,6 +205,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.csv.CSVReader;
 
 /**
@@ -222,8 +223,10 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     /**
      * Generated UID
      */
-    private static final long   serialVersionUID = 2681360188806309513L;
-    private final Configuration configuration;
+    private static final long       serialVersionUID = 2681360188806309513L;
+    private static final JooqLogger log              = JooqLogger.getLogger(DefaultDSLContext.class);
+
+    private final Configuration     configuration;
 
     // -------------------------------------------------------------------------
     // XXX Constructors
@@ -332,7 +335,17 @@ public class DefaultDSLContext implements DSLContext, Serializable {
             provider.commit(ctx);
         }
         catch (Exception cause) {
-            provider.rollback(ctx.cause(cause));
+            try {
+                provider.rollback(ctx.cause(cause));
+            }
+            catch (Exception suppress) {
+                try {
+                    cause.addSuppressed(suppress);
+                }
+                catch (NoSuchMethodError logJDBC_4_0) {
+                    log.error("Error when rolling back", suppress);
+                }
+            }
 
             if (cause instanceof RuntimeException) {
                 throw (RuntimeException) cause;

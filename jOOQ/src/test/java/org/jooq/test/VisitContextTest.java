@@ -453,6 +453,7 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_UNION_ALL, SELECT_GROUP_BY),
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_UNION_ALL, SELECT_HAVING),
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_UNION_ALL, SELECT_WINDOW),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_UNION_ALL, SELECT_ORDER_BY),
 
             // The second subselect should probably not emit a Clause.SELECT
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_UNION_ALL, SELECT),
@@ -472,6 +473,7 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_UNION_ALL, SELECT, SELECT_GROUP_BY),
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_UNION_ALL, SELECT, SELECT_HAVING),
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_UNION_ALL, SELECT, SELECT_WINDOW),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_UNION_ALL, SELECT, SELECT_ORDER_BY),
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_UNION_ALL, SELECT, SELECT_ORDER_BY),
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_ORDER_BY),
             asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE),
@@ -513,6 +515,7 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_GROUP_BY),
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_HAVING),
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_WINDOW),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_ORDER_BY),
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_ORDER_BY),
             asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE),
             asList(INSERT, INSERT_RETURNING)
@@ -794,6 +797,7 @@ public class VisitContextTest extends AbstractTest {
             asList(CREATE_VIEW, CREATE_VIEW_AS, SELECT, SELECT_GROUP_BY),
             asList(CREATE_VIEW, CREATE_VIEW_AS, SELECT, SELECT_HAVING),
             asList(CREATE_VIEW, CREATE_VIEW_AS, SELECT, SELECT_WINDOW),
+            asList(CREATE_VIEW, CREATE_VIEW_AS, SELECT, SELECT_ORDER_BY),
             asList(CREATE_VIEW, CREATE_VIEW_AS, SELECT, SELECT_ORDER_BY)
         ),
         ctx.createView("v", "a", "b").as(select(one())));
@@ -822,6 +826,7 @@ public class VisitContextTest extends AbstractTest {
             asList(CREATE_TABLE, CREATE_TABLE_AS, SELECT, SELECT_GROUP_BY),
             asList(CREATE_TABLE, CREATE_TABLE_AS, SELECT, SELECT_HAVING),
             asList(CREATE_TABLE, CREATE_TABLE_AS, SELECT, SELECT_WINDOW),
+            asList(CREATE_TABLE, CREATE_TABLE_AS, SELECT, SELECT_ORDER_BY),
             asList(CREATE_TABLE, CREATE_TABLE_AS, SELECT, SELECT_ORDER_BY)
         ),
         ctx.createTable("v").as(select(one())));
@@ -1086,6 +1091,7 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_GROUP_BY),
             asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_HAVING),
             asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_WINDOW),
+            asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_ORDER_BY),
             asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_ORDER_BY)
         ),
         exists(select(one())));
@@ -1111,6 +1117,7 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_GROUP_BY),
             asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_HAVING),
             asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_WINDOW),
+            asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_ORDER_BY),
             asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_ORDER_BY)
         ),
         notExists(select(one())));

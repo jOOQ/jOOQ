@@ -3259,6 +3259,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testTransactionsWithExceptionInRollback() throws Exception {
+        new TransactionTests(this).testTransactionsWithExceptionInRollback();
+    }
+
+    @Test
     public void testStreamsCollectRecords() {
         new StreamsTest(this).testStreamsCollectRecords();
     }

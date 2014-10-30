@@ -1,7 +1,7 @@
-Thanks for downloading jOOQ.
-Please visit http://www.jooq.org for more information.
+The jOOQ Academy is an extended, fully functional and runnable tutorial that is being created in cooperation with the 
+[Java Code Geeks Academy](http://academy.javacodegeeks.com/). The course material can be found here:
 
-The jOOQ Academy is an extended, fully functional and runnable tutorial that is being created in cooperation with the [Java Code Geeks Academy](http://academy.javacodegeeks.com/). Stay tuned for more!
+http://academy.javacodegeeks.com/course/type-safe-database-querying-with-jooq
 
 Use the following commands to build the jOOQ Academy:
 

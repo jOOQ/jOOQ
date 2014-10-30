@@ -198,6 +198,8 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.csv.CSVReader;
+import org.jooq.tools.reflect.Reflect;
+import org.jooq.tools.reflect.ReflectException;
 
 /**
  * A default implementation for {@link DSLContext}.
@@ -314,11 +316,13 @@ public class DefaultDSLContext implements DSLContext, Serializable {
             try {
                 provider.rollback(ctx.cause(cause));
             }
+
+            // [#3718] Use reflection to support also JDBC 4.0
             catch (Exception suppress) {
                 try {
-                    cause.addSuppressed(suppress);
+                    Reflect.on(cause).call("addSuppressed", suppress);
                 }
-                catch (NoSuchMethodError logJDBC_4_0) {
+                catch (ReflectException ignore) {
                     log.error("Error when rolling back", suppress);
                 }
             }

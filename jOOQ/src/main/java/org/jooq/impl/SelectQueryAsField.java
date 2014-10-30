@@ -38,41 +38,57 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq;
 
+package org.jooq.impl;
+
+import org.jooq.Context;
+import org.jooq.DataType;
+import org.jooq.Field;
+import org.jooq.Select;
 
 /**
- * A context object that is used to pass arguments to the various methods of
- * {@link TransactionProvider}.
- *
  * @author Lukas Eder
  */
-public interface TransactionContext extends Scope {
+class SelectQueryAsField<T> extends AbstractField<T> {
 
-    /**
-     * A user-defined transaction object, possibly obtained from
-     * {@link TransactionProvider#begin(TransactionContext)}.
-     *
-     * @return The transaction object. May be <code>null</code>.
-     */
-    Transaction transaction();
+    private static final long serialVersionUID = 3463144434073231750L;
 
-    /**
-     * Set the user-defined transaction object to the current transaction
-     * context.
-     */
-    TransactionContext transaction(Transaction transaction);
+    private final Select<?>   query;
 
-    /**
-     * The exception that has caused the rollback.
-     *
-     * @return The exception. May be <code>null</code>.
-     */
-    Exception cause();
+    SelectQueryAsField(Select<?> query, DataType<T> type) {
+        super("select", type);
 
-    /**
-     * Set the exception that has caused the rollback to the current transaction
-     * context.
-     */
-    TransactionContext cause(Exception cause);
+        this.query = query;
+    }
+
+    @Override
+    public final Field<T> as(String alias) {
+        return new FieldAlias<T>(this, alias);
+    }
+
+    @Override
+    public final void accept(Context<?> ctx) {
+
+        // If this is already a subquery, proceed
+        if (ctx.subquery()) {
+            ctx.sql("(")
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(query)
+               .formatIndentEnd()
+               .formatNewLine()
+               .sql(")");
+        }
+        else {
+            ctx.sql("(")
+               .subquery(true)
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(query)
+               .formatIndentEnd()
+               .formatNewLine()
+               .subquery(false)
+               .sql(")");
+        }
+    }
 }

@@ -57,7 +57,6 @@ import static org.jooq.impl.Utils.settings;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -67,7 +66,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jooq.AggregateFunction;
-// ...
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Clause;
@@ -86,7 +84,6 @@ import org.jooq.Result;
 import org.jooq.Routine;
 import org.jooq.Schema;
 import org.jooq.UDTField;
-import org.jooq.UDTRecord;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.tools.Convert;
 
@@ -559,13 +556,22 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             if (parameter.equals(getReturnParameter()) ||
                 getOutParameters().contains(parameter)) {
 
-                int index = parameterIndexes.get(parameter);
-                results.put(parameter, Utils.getFromStatement(ctx, parameter, index));
+                fetchOutParameter(ctx, parameter);
             }
         }
     }
 
-    @SuppressWarnings("unchecked")
+    private final <U> void fetchOutParameter(ExecuteContext ctx, Parameter<U> parameter) throws SQLException {
+        DefaultBindingGetStatementContext<U> out = new DefaultBindingGetStatementContext<U>(
+            ctx.configuration(),
+            (CallableStatement) ctx.statement(),
+            parameterIndexes.get(parameter)
+        );
+
+        parameter.getBinding().get(out);
+        results.put(parameter, out.value());
+    }
+
     private final void registerOutParameters(Configuration c, CallableStatement statement) throws SQLException {
 
         // Register all out / inout parameters according to their position
@@ -574,45 +580,13 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             if (parameter.equals(getReturnParameter()) ||
                 getOutParameters().contains(parameter)) {
 
-                int index = parameterIndexes.get(parameter);
-                int sqlType = parameter.getDataType().getDataType(c).getSQLType();
-
-                switch (c.dialect().family()) {
-                    /* [pro] xx
-
-                    xx xxx xxxx xxxx xxxxxxx xxxxx xxxxxx xxxxx xx xxxx
-                    xx xxxx xxx xxxx xxxx
-                    xxxx xxxxxxx x
-                        xx xxxxxxxx xx xxxxxxxxxxxxx x
-                            xxxxxxxxxxxx xxxxxx x xxxxx
-                                xxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
-                        x
-
-                        xxxx xx xxxxxxxx xx xxxxxxxxxxxx x
-                            xxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-                        x
-
-                        xx xxx xxxxxxx xxxxxxxxx xx xxx xx xxxxxxxx x xxxx
-                        xx xxxxxxx
-                        xxxx x
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx
-                        x
-
-                        xxxxxx
-                    x
-
-                    xx [/pro] */
-                    default: {
-                        statement.registerOutParameter(index, sqlType);
-                        break;
-                    }
-                }
+                registerOutParameter(c, statement, parameter);
             }
         }
+    }
+
+    private final <U> void registerOutParameter(Configuration c, CallableStatement statement, Parameter<U> parameter) throws SQLException {
+        parameter.getBinding().register(new DefaultBindingRegisterContext<U>(c, statement, parameterIndexes.get(parameter)));
     }
 
     // ------------------------------------------------------------------------

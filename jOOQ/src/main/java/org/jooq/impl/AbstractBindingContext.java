@@ -38,41 +38,35 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq;
+package org.jooq.impl;
 
+import org.jooq.BindingContext;
+import org.jooq.Configuration;
+import org.jooq.SQLDialect;
 
 /**
- * A context object that is used to pass arguments to the various methods of
- * {@link TransactionProvider}.
- *
  * @author Lukas Eder
  */
-public interface TransactionContext extends Scope {
+abstract class AbstractBindingContext implements BindingContext {
 
-    /**
-     * A user-defined transaction object, possibly obtained from
-     * {@link TransactionProvider#begin(TransactionContext)}.
-     *
-     * @return The transaction object. May be <code>null</code>.
-     */
-    Transaction transaction();
+    private final Configuration configuration;
 
-    /**
-     * Set the user-defined transaction object to the current transaction
-     * context.
-     */
-    TransactionContext transaction(Transaction transaction);
+    AbstractBindingContext(Configuration configuration) {
+        this.configuration = configuration;
+    }
 
-    /**
-     * The exception that has caused the rollback.
-     *
-     * @return The exception. May be <code>null</code>.
-     */
-    Exception cause();
+    @Override
+    public final Configuration configuration() {
+        return configuration;
+    }
 
-    /**
-     * Set the exception that has caused the rollback to the current transaction
-     * context.
-     */
-    TransactionContext cause(Exception cause);
+    @Override
+    public final SQLDialect dialect() {
+        return configuration.dialect();
+    }
+
+    @Override
+    public final SQLDialect family() {
+        return configuration.dialect().family();
+    }
 }

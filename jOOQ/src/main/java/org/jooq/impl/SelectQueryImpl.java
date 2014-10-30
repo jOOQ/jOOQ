@@ -1071,7 +1071,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         // --------------------------------------------
         if (unionOpSize > 0) {
             unionParenthesis(context, ")");
-            
+
             for (int i = 0; i < unionOpSize; i++) {
                 CombineOperator op = unionOp.get(i);
 

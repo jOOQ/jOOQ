@@ -46,7 +46,6 @@ import static org.jooq.impl.Utils.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 import java.sql.PreparedStatement;
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.jooq.BindContext;
@@ -69,11 +68,9 @@ import org.jooq.conf.Settings;
  * @author Lukas Eder
  */
 @SuppressWarnings("unchecked")
-abstract class AbstractContext<C extends Context<C>> implements Context<C> {
+abstract class AbstractContext<C extends Context<C>> extends AbstractScope implements Context<C> {
 
-    final Configuration               configuration;
     final PreparedStatement           stmt;
-    final Map<Object, Object>         data;
 
     boolean                           declareFields;
     boolean                           declareTables;
@@ -94,9 +91,9 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     CastMode                          castMode  = CastMode.DEFAULT;
 
     AbstractContext(Configuration configuration, PreparedStatement stmt) {
-        this.configuration = configuration;
+        super(configuration);
+
         this.stmt = stmt;
-        this.data = new HashMap<Object, Object>();
         this.visitClauses = new ArrayDeque<Clause>();
 
         VisitListenerProvider[] providers = configuration.visitListenerProviders();
@@ -315,41 +312,6 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     // ------------------------------------------------------------------------
     // XXX Context API
     // ------------------------------------------------------------------------
-
-    @Override
-    public final Configuration configuration() {
-        return configuration;
-    }
-
-    @Override
-    public final Settings settings() {
-        return Utils.settings(configuration());
-    }
-
-    @Override
-    public final SQLDialect dialect() {
-        return Utils.configuration(configuration()).dialect();
-    }
-
-    @Override
-    public final SQLDialect family() {
-        return dialect().family();
-    }
-
-    @Override
-    public final Map<Object, Object> data() {
-        return data;
-    }
-
-    @Override
-    public final Object data(Object key) {
-        return data.get(key);
-    }
-
-    @Override
-    public final Object data(Object key, Object value) {
-        return data.put(key, value);
-    }
 
     private final C visit0(QueryPart part) {
         if (part != null) {

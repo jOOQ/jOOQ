@@ -41,6 +41,7 @@
 
 package org.jooq.impl;
 
+import org.jooq.Binding;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -61,6 +62,7 @@ class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
     private final String          name;
     private final DataType<T>     type;
     private final Converter<?, T> converter;
+    private final Binding<T>      binding;
     private final boolean         isDefaulted;
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -77,6 +79,8 @@ class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
             : type instanceof ConvertedDataType
             ? ((ConvertedDataType<?, T>) type).converter()
             : new IdentityConverter<T>((Class<T>) type.getType());
+
+        this.binding = new DefaultBinding(this.converter, type.isLob());
     }
 
     @Override
@@ -87,6 +91,11 @@ class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
     @Override
     public final Converter<?, T> getConverter() {
         return converter;
+    }
+
+    @Override
+    public final Binding<T> getBinding() {
+        return binding;
     }
 
     @Override

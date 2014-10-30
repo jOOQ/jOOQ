@@ -117,6 +117,11 @@ public interface Field<T> extends GroupField {
     Converter<?, T> getConverter();
 
     /**
+     * The field's underlying {@link Binding}.
+     */
+    Binding<T> getBinding();
+
+    /**
      * The Java type of the field.
      */
     Class<T> getType();

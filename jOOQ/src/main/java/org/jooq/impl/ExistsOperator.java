@@ -38,41 +38,26 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq;
 
+package org.jooq.impl;
 
 /**
- * A context object that is used to pass arguments to the various methods of
- * {@link TransactionProvider}.
+ * An operator for the {@link ExistsCondition}
  *
  * @author Lukas Eder
  */
-public interface TransactionContext extends Scope {
+enum ExistsOperator {
 
-    /**
-     * A user-defined transaction object, possibly obtained from
-     * {@link TransactionProvider#begin(TransactionContext)}.
-     *
-     * @return The transaction object. May be <code>null</code>.
-     */
-    Transaction transaction();
+    EXISTS("exists"),
+    NOT_EXISTS("not exists");
 
-    /**
-     * Set the user-defined transaction object to the current transaction
-     * context.
-     */
-    TransactionContext transaction(Transaction transaction);
+    private final String sql;
 
-    /**
-     * The exception that has caused the rollback.
-     *
-     * @return The exception. May be <code>null</code>.
-     */
-    Exception cause();
+    private ExistsOperator(String sql) {
+        this.sql = sql;
+    }
 
-    /**
-     * Set the exception that has caused the rollback to the current transaction
-     * context.
-     */
-    TransactionContext cause(Exception cause);
+    public String toSQL() {
+        return sql;
+    }
 }

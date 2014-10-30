@@ -38,41 +38,78 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq;
 
+package org.jooq.impl;
+
+import org.jooq.Clause;
+import org.jooq.Context;
+import org.jooq.Record;
+import org.jooq.Select;
+import org.jooq.Table;
 
 /**
- * A context object that is used to pass arguments to the various methods of
- * {@link TransactionProvider}.
- *
  * @author Lukas Eder
  */
-public interface TransactionContext extends Scope {
+class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
 
-    /**
-     * A user-defined transaction object, possibly obtained from
-     * {@link TransactionProvider#begin(TransactionContext)}.
-     *
-     * @return The transaction object. May be <code>null</code>.
-     */
-    Transaction transaction();
+    private static final long serialVersionUID = 6272398035926615668L;
 
-    /**
-     * Set the user-defined transaction object to the current transaction
-     * context.
-     */
-    TransactionContext transaction(Transaction transaction);
+    private final Select<R>   query;
 
-    /**
-     * The exception that has caused the rollback.
-     *
-     * @return The exception. May be <code>null</code>.
-     */
-    Exception cause();
+    SelectQueryAsTable(Select<R> query) {
+        super("select");
 
-    /**
-     * Set the exception that has caused the rollback to the current transaction
-     * context.
-     */
-    TransactionContext cause(Exception cause);
+        this.query = query;
+    }
+
+    final Select<R> query() {
+        return query;
+    }
+
+    @Override
+    public final Table<R> as(String alias) {
+        return new TableAlias<R>(this, alias, true);
+    }
+
+    @Override
+    public final Table<R> as(String alias, String... fieldAliases) {
+        return new TableAlias<R>(this, alias, fieldAliases, true);
+    }
+
+    @Override
+    final Fields<R> fields0() {
+        return new Fields<R>(query.getSelect());
+    }
+
+    @Override
+    public final Class<? extends R> getRecordType() {
+        return query.getRecordType();
+    }
+
+    @Override
+    public final void accept(Context<?> ctx) {
+
+        // If this is already a subquery, proceed
+        if (ctx.subquery()) {
+            ctx.formatIndentStart()
+               .formatNewLine()
+               .visit(query)
+               .formatIndentEnd()
+               .formatNewLine();
+        }
+        else {
+            ctx.subquery(true)
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(query)
+               .formatIndentEnd()
+               .formatNewLine()
+               .subquery(false);
+        }
+    }
+
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
+    }
 }

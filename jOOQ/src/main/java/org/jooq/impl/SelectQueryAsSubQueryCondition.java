@@ -38,41 +38,70 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq;
 
+package org.jooq.impl;
+
+import static org.jooq.Clause.CONDITION;
+import static org.jooq.Clause.CONDITION_COMPARISON;
+
+import org.jooq.Clause;
+import org.jooq.Comparator;
+import org.jooq.Context;
+import org.jooq.Field;
+import org.jooq.Select;
 
 /**
- * A context object that is used to pass arguments to the various methods of
- * {@link TransactionProvider}.
- *
  * @author Lukas Eder
  */
-public interface TransactionContext extends Scope {
+class SelectQueryAsSubQueryCondition extends AbstractCondition {
 
-    /**
-     * A user-defined transaction object, possibly obtained from
-     * {@link TransactionProvider#begin(TransactionContext)}.
-     *
-     * @return The transaction object. May be <code>null</code>.
-     */
-    Transaction transaction();
+    private static final long     serialVersionUID = -402776705884329740L;
+    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
 
-    /**
-     * Set the user-defined transaction object to the current transaction
-     * context.
-     */
-    TransactionContext transaction(Transaction transaction);
+    private final Select<?>       query;
+    private final Field<?>        field;
+    private final Comparator      comparator;
 
-    /**
-     * The exception that has caused the rollback.
-     *
-     * @return The exception. May be <code>null</code>.
-     */
-    Exception cause();
+    SelectQueryAsSubQueryCondition(Select<?> query, Field<?> field, Comparator comparator) {
+        this.query = query;
+        this.field = field;
+        this.comparator = comparator;
+    }
 
-    /**
-     * Set the exception that has caused the rollback to the current transaction
-     * context.
-     */
-    TransactionContext cause(Exception cause);
+    @Override
+    public final void accept(Context<?> ctx) {
+
+        // If this is already a subquery, proceed
+        if (ctx.subquery()) {
+            ctx.visit(field)
+               .sql(" ")
+               .keyword(comparator.toSQL())
+               .sql(" (")
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(query)
+               .formatIndentEnd()
+               .formatNewLine()
+               .sql(")");
+        }
+        else {
+            ctx.visit(field)
+               .sql(" ")
+               .keyword(comparator.toSQL())
+               .sql(" (")
+               .subquery(true)
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(query)
+               .formatIndentEnd()
+               .formatNewLine()
+               .subquery(false)
+               .sql(")");
+        }
+    }
+
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return CLAUSES;
+    }
 }

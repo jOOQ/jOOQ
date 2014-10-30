@@ -40,39 +40,23 @@
  */
 package org.jooq;
 
+import java.sql.SQLInput;
 
 /**
- * A context object that is used to pass arguments to the various methods of
- * {@link TransactionProvider}.
+ * A container type for {@link Binding#get(BindingGetSQLInputContext)}
+ * arguments.
  *
  * @author Lukas Eder
  */
-public interface TransactionContext extends Scope {
+public interface BindingGetSQLInputContext<T> extends Scope {
 
     /**
-     * A user-defined transaction object, possibly obtained from
-     * {@link TransactionProvider#begin(TransactionContext)}.
-     *
-     * @return The transaction object. May be <code>null</code>.
+     * The {@link SQLInput} from which a value is retrieved.
      */
-    Transaction transaction();
+    SQLInput input();
 
     /**
-     * Set the user-defined transaction object to the current transaction
-     * context.
+     * A callback to which the resulting value is registered.
      */
-    TransactionContext transaction(Transaction transaction);
-
-    /**
-     * The exception that has caused the rollback.
-     *
-     * @return The exception. May be <code>null</code>.
-     */
-    Exception cause();
-
-    /**
-     * Set the exception that has caused the rollback to the current transaction
-     * context.
-     */
-    TransactionContext cause(Exception cause);
+    void value(T value);
 }

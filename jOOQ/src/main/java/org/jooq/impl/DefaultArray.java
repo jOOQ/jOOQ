@@ -40,41 +40,76 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Configuration;
-import org.jooq.Transaction;
-import org.jooq.TransactionContext;
+import java.sql.Array;
+import java.sql.ResultSet;
+import java.util.Map;
 
-/**
- * @author Lukas Eder
- */
-class DefaultTransactionContext extends AbstractScope implements TransactionContext {
+import org.jooq.SQLDialect;
+import org.jooq.exception.SQLDialectNotSupportedException;
 
-    Transaction                 transaction;
-    Exception                   cause;
+class DefaultArray implements Array {
 
-    DefaultTransactionContext(Configuration configuration) {
-        super(configuration);
+    private final SQLDialect dialect;
+    private final Object[] array;
+    private final Class<?> type;
+
+    public DefaultArray(SQLDialect dialect, Object[] array, Class<?> type) {
+        this.dialect = dialect;
+        this.array = array;
+        this.type = type;
     }
 
     @Override
-    public final Transaction transaction() {
-        return transaction;
+    public String getBaseTypeName() {
+        return DefaultDataType.getDataType(dialect, type.getComponentType()).getTypeName();
     }
 
     @Override
-    public final TransactionContext transaction(Transaction t) {
-        transaction = t;
-        return this;
+    public int getBaseType() {
+        throw new SQLDialectNotSupportedException("Array.getBaseType()");
     }
 
     @Override
-    public final Exception cause() {
-        return cause;
+    public Object getArray() {
+        return array;
     }
 
     @Override
-    public final TransactionContext cause(Exception c) {
-        cause = c;
-        return this;
+    public Object getArray(Map<String, Class<?>> map) {
+        return array;
+    }
+
+    @Override
+    public Object getArray(long index, int count) {
+        throw new SQLDialectNotSupportedException("Array.getArray(long, int)");
+    }
+
+    @Override
+    public Object getArray(long index, int count, Map<String, Class<?>> map) {
+        throw new SQLDialectNotSupportedException("Array.getArray(long, int, Map)");
+    }
+
+    @Override
+    public ResultSet getResultSet() {
+        throw new SQLDialectNotSupportedException("Array.getResultSet()");
+    }
+
+    @Override
+    public ResultSet getResultSet(Map<String, Class<?>> map) {
+        throw new SQLDialectNotSupportedException("Array.getResultSet(Map)");
+    }
+
+    @Override
+    public ResultSet getResultSet(long index, int count) {
+        throw new SQLDialectNotSupportedException("Array.getResultSet(long, int)");
+    }
+
+    @Override
+    public ResultSet getResultSet(long index, int count, Map<String, Class<?>> map) {
+        throw new SQLDialectNotSupportedException("Array.getResultSet(long, int, Map)");
+    }
+
+    @Override
+    public void free() {
     }
 }

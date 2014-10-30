@@ -40,39 +40,23 @@
  */
 package org.jooq;
 
+import java.sql.SQLOutput;
 
 /**
- * A context object that is used to pass arguments to the various methods of
- * {@link TransactionProvider}.
+ * A container type for {@link Binding#set(BindingSetSQLOutputContext)}
+ * arguments.
  *
  * @author Lukas Eder
  */
-public interface TransactionContext extends Scope {
+public interface BindingSetSQLOutputContext<T> extends Scope {
 
     /**
-     * A user-defined transaction object, possibly obtained from
-     * {@link TransactionProvider#begin(TransactionContext)}.
-     *
-     * @return The transaction object. May be <code>null</code>.
+     * The {@link SQLOutput} to which a bind variable should be bound.
      */
-    Transaction transaction();
+    SQLOutput output();
 
     /**
-     * Set the user-defined transaction object to the current transaction
-     * context.
+     * The bind value that is being bound.
      */
-    TransactionContext transaction(Transaction transaction);
-
-    /**
-     * The exception that has caused the rollback.
-     *
-     * @return The exception. May be <code>null</code>.
-     */
-    Exception cause();
-
-    /**
-     * Set the exception that has caused the rollback to the current transaction
-     * context.
-     */
-    TransactionContext cause(Exception cause);
+    T value();
 }

@@ -38,41 +38,34 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq;
+package org.jooq.impl;
 
+import org.jooq.BindingSQLContext;
+import org.jooq.Configuration;
+import org.jooq.RenderContext;
 
 /**
- * A context object that is used to pass arguments to the various methods of
- * {@link TransactionProvider}.
- *
  * @author Lukas Eder
  */
-public interface TransactionContext extends Scope {
+class DefaultBindingSQLContext<T> extends AbstractScope implements BindingSQLContext<T> {
 
-    /**
-     * A user-defined transaction object, possibly obtained from
-     * {@link TransactionProvider#begin(TransactionContext)}.
-     *
-     * @return The transaction object. May be <code>null</code>.
-     */
-    Transaction transaction();
+    private final RenderContext render;
+    private final T value;
 
-    /**
-     * Set the user-defined transaction object to the current transaction
-     * context.
-     */
-    TransactionContext transaction(Transaction transaction);
+    DefaultBindingSQLContext(Configuration configuration, RenderContext render, T value) {
+        super(configuration);
 
-    /**
-     * The exception that has caused the rollback.
-     *
-     * @return The exception. May be <code>null</code>.
-     */
-    Exception cause();
+        this.render = render;
+        this.value = value;
+    }
 
-    /**
-     * Set the exception that has caused the rollback to the current transaction
-     * context.
-     */
-    TransactionContext cause(Exception cause);
+    @Override
+    public final RenderContext render() {
+        return render;
+    }
+
+    @Override
+    public final T value() {
+        return value;
+    }
 }

@@ -38,41 +38,45 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq;
+package org.jooq.impl;
 
+import java.sql.ResultSet;
+
+import org.jooq.BindingGetResultSetContext;
+import org.jooq.Configuration;
 
 /**
- * A context object that is used to pass arguments to the various methods of
- * {@link TransactionProvider}.
- *
  * @author Lukas Eder
  */
-public interface TransactionContext extends Scope {
+class DefaultBindingGetResultSetContext<T> extends AbstractScope implements BindingGetResultSetContext<T> {
 
-    /**
-     * A user-defined transaction object, possibly obtained from
-     * {@link TransactionProvider#begin(TransactionContext)}.
-     *
-     * @return The transaction object. May be <code>null</code>.
-     */
-    Transaction transaction();
+    private final ResultSet resultSet;
+    private final int       index;
+    private T               value;
 
-    /**
-     * Set the user-defined transaction object to the current transaction
-     * context.
-     */
-    TransactionContext transaction(Transaction transaction);
+    DefaultBindingGetResultSetContext(Configuration configuration, ResultSet resultSet, int index) {
+        super(configuration);
 
-    /**
-     * The exception that has caused the rollback.
-     *
-     * @return The exception. May be <code>null</code>.
-     */
-    Exception cause();
+        this.resultSet = resultSet;
+        this.index = index;
+    }
 
-    /**
-     * Set the exception that has caused the rollback to the current transaction
-     * context.
-     */
-    TransactionContext cause(Exception cause);
+    @Override
+    public final ResultSet resultSet() {
+        return resultSet;
+    }
+
+    @Override
+    public final int index() {
+        return index;
+    }
+
+    @Override
+    public final void value(T v) {
+        this.value = v;
+    }
+
+    final T value() {
+        return value;
+    }
 }

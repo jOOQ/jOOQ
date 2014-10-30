@@ -42,15 +42,13 @@ package org.jooq;
 
 import java.util.Map;
 
-import org.jooq.conf.Settings;
-
 /**
  * A context object for {@link Record} manipulation passed to registered
  * {@link RecordListener}'s.
  *
  * @author Lukas Eder
  */
-public interface RecordContext {
+public interface RecordContext extends Scope {
 
     /**
      * Get all custom data from this <code>RecordContext</code>.
@@ -101,35 +99,6 @@ public interface RecordContext {
      * @see RecordListener
      */
     Object data(Object key, Object value);
-
-    /**
-     * The configuration wrapped by this context.
-     */
-    Configuration configuration();
-
-    /**
-     * The settings wrapped by this context.
-     * <p>
-     * This method is a convenient way of accessing
-     * <code>configuration().settings()</code>.
-     */
-    Settings settings();
-
-    /**
-     * The {@link SQLDialect} wrapped by this context.
-     * <p>
-     * This method is a convenient way of accessing
-     * <code>configuration().dialect()</code>.
-     */
-    SQLDialect dialect();
-
-    /**
-     * The {@link SQLDialect#family()} wrapped by this context.
-     * <p>
-     * This method is a convenient way of accessing
-     * <code>configuration().dialect().family()</code>.
-     */
-    SQLDialect family();
 
     /**
      * The type of database interaction that is being executed.

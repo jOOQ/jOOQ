@@ -38,41 +38,65 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq;
 
+package org.jooq.impl;
+
+import static org.jooq.Clause.CONDITION;
+import static org.jooq.Clause.CONDITION_EXISTS;
+import static org.jooq.Clause.CONDITION_NOT_EXISTS;
+import static org.jooq.impl.ExistsOperator.EXISTS;
+
+import org.jooq.Clause;
+import org.jooq.Context;
+import org.jooq.Select;
 
 /**
- * A context object that is used to pass arguments to the various methods of
- * {@link TransactionProvider}.
- *
  * @author Lukas Eder
  */
-public interface TransactionContext extends Scope {
+class SelectQueryAsExistsCondition extends AbstractCondition {
 
-    /**
-     * A user-defined transaction object, possibly obtained from
-     * {@link TransactionProvider#begin(TransactionContext)}.
-     *
-     * @return The transaction object. May be <code>null</code>.
-     */
-    Transaction transaction();
+    private static final long     serialVersionUID   = 5678338161136603292L;
+    private static final Clause[] CLAUSES_EXISTS     = { CONDITION, CONDITION_EXISTS };
+    private static final Clause[] CLAUSES_EXISTS_NOT = { CONDITION, CONDITION_NOT_EXISTS };
 
-    /**
-     * Set the user-defined transaction object to the current transaction
-     * context.
-     */
-    TransactionContext transaction(Transaction transaction);
+    private final Select<?>       query;
+    private final ExistsOperator  operator;
 
-    /**
-     * The exception that has caused the rollback.
-     *
-     * @return The exception. May be <code>null</code>.
-     */
-    Exception cause();
+    SelectQueryAsExistsCondition(Select<?> query, ExistsOperator operator) {
+        this.query = query;
+        this.operator = operator;
+    }
 
-    /**
-     * Set the exception that has caused the rollback to the current transaction
-     * context.
-     */
-    TransactionContext cause(Exception cause);
+    @Override
+    public final void accept(Context<?> ctx) {
+
+        // If this is already a subquery, proceed
+        if (ctx.subquery()) {
+            ctx.keyword(operator.toSQL())
+               .sql(" (")
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(query)
+               .formatIndentEnd()
+               .formatNewLine()
+               .sql(")");
+        }
+        else {
+            ctx.keyword(operator.toSQL())
+               .sql(" (")
+               .subquery(true)
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(query)
+               .formatIndentEnd()
+               .formatNewLine()
+               .subquery(false)
+               .sql(")");
+        }
+    }
+
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return operator == EXISTS ? CLAUSES_EXISTS : CLAUSES_EXISTS_NOT;
+    }
 }

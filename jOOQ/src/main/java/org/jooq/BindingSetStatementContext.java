@@ -40,39 +40,28 @@
  */
 package org.jooq;
 
+import java.sql.PreparedStatement;
 
 /**
- * A context object that is used to pass arguments to the various methods of
- * {@link TransactionProvider}.
+ * A container type for {@link Binding#set(BindingSetStatementContext)}
+ * arguments.
  *
  * @author Lukas Eder
  */
-public interface TransactionContext extends Scope {
+public interface BindingSetStatementContext<T> extends Scope {
 
     /**
-     * A user-defined transaction object, possibly obtained from
-     * {@link TransactionProvider#begin(TransactionContext)}.
-     *
-     * @return The transaction object. May be <code>null</code>.
+     * The {@link PreparedStatement} to which a bind variable should be bound.
      */
-    Transaction transaction();
+    PreparedStatement statement();
 
     /**
-     * Set the user-defined transaction object to the current transaction
-     * context.
+     * The bind variable index at which a bind variable should be bound.
      */
-    TransactionContext transaction(Transaction transaction);
+    int index();
 
     /**
-     * The exception that has caused the rollback.
-     *
-     * @return The exception. May be <code>null</code>.
+     * The bind value that is being bound.
      */
-    Exception cause();
-
-    /**
-     * Set the exception that has caused the rollback to the current transaction
-     * context.
-     */
-    TransactionContext cause(Exception cause);
+    T value();
 }

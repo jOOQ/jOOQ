@@ -38,41 +38,42 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq;
+package org.jooq.impl;
 
+import java.sql.PreparedStatement;
+
+import org.jooq.BindingSetStatementContext;
+import org.jooq.Configuration;
 
 /**
- * A context object that is used to pass arguments to the various methods of
- * {@link TransactionProvider}.
- *
  * @author Lukas Eder
  */
-public interface TransactionContext extends Scope {
+class DefaultBindingSetStatementContext<T> extends AbstractScope implements BindingSetStatementContext<T> {
 
-    /**
-     * A user-defined transaction object, possibly obtained from
-     * {@link TransactionProvider#begin(TransactionContext)}.
-     *
-     * @return The transaction object. May be <code>null</code>.
-     */
-    Transaction transaction();
+    private final PreparedStatement statement;
+    private final int               index;
+    private final T                 value;
 
-    /**
-     * Set the user-defined transaction object to the current transaction
-     * context.
-     */
-    TransactionContext transaction(Transaction transaction);
+    DefaultBindingSetStatementContext(Configuration configuration, PreparedStatement statement, int index, T value) {
+        super(configuration);
 
-    /**
-     * The exception that has caused the rollback.
-     *
-     * @return The exception. May be <code>null</code>.
-     */
-    Exception cause();
+        this.statement = statement;
+        this.index = index;
+        this.value = value;
+    }
 
-    /**
-     * Set the exception that has caused the rollback to the current transaction
-     * context.
-     */
-    TransactionContext cause(Exception cause);
+    @Override
+    public final PreparedStatement statement() {
+        return statement;
+    }
+
+    @Override
+    public final int index() {
+        return index;
+    }
+
+    @Override
+    public final T value() {
+        return value;
+    }
 }

@@ -38,41 +38,72 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq;
+package org.jooq.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.jooq.Configuration;
+import org.jooq.SQLDialect;
+import org.jooq.Scope;
+import org.jooq.conf.Settings;
 
 /**
- * A context object that is used to pass arguments to the various methods of
- * {@link TransactionProvider}.
- *
  * @author Lukas Eder
  */
-public interface TransactionContext extends Scope {
+abstract class AbstractScope implements Scope {
 
-    /**
-     * A user-defined transaction object, possibly obtained from
-     * {@link TransactionProvider#begin(TransactionContext)}.
-     *
-     * @return The transaction object. May be <code>null</code>.
-     */
-    Transaction transaction();
+    private final Configuration       configuration;
+    private final Map<Object, Object> data;
 
-    /**
-     * Set the user-defined transaction object to the current transaction
-     * context.
-     */
-    TransactionContext transaction(Transaction transaction);
+    AbstractScope(Configuration configuration) {
+        this.data = new HashMap<Object, Object>();
 
-    /**
-     * The exception that has caused the rollback.
-     *
-     * @return The exception. May be <code>null</code>.
-     */
-    Exception cause();
+        // The Configuration can be null when unattached objects are
+        // executed or when unattached Records are stored...
+        if (configuration == null) {
+            configuration = new DefaultConfiguration();
+        }
 
-    /**
-     * Set the exception that has caused the rollback to the current transaction
-     * context.
-     */
-    TransactionContext cause(Exception cause);
+        this.configuration = configuration;
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX Scope API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final Configuration configuration() {
+        return configuration;
+    }
+
+    @Override
+    public final Settings settings() {
+        return Utils.settings(configuration());
+    }
+
+    @Override
+    public final SQLDialect dialect() {
+        return Utils.configuration(configuration()).dialect();
+    }
+
+    @Override
+    public final SQLDialect family() {
+        return dialect().family();
+    }
+
+    @Override
+    public final Map<Object, Object> data() {
+        return data;
+    }
+
+    @Override
+    public final Object data(Object key) {
+        return data.get(key);
+    }
+
+    @Override
+    public final Object data(Object key, Object value) {
+        return data.put(key, value);
+    }
 }

@@ -126,7 +126,9 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
     }
 
     private final <T> void setValue(Configuration configuration, SQLInput stream, Field<T> field) throws SQLException {
-        setValue(field, Utils.getFromSQLInput(configuration, stream, field));
+        DefaultBindingGetSQLInputContext<T> out = new DefaultBindingGetSQLInputContext<T>(configuration, stream);
+        field.getBinding().get(out);
+        setValue(field, out.value());
     }
 
     @Override
@@ -137,7 +139,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
     }
 
     private final <T> void setValue(SQLOutput stream, Field<T> field) throws SQLException {
-        Utils.writeToSQLOutput(stream, field, getValue(field));
+        field.getBinding().set(new DefaultBindingSetSQLOutputContext<T>(localConfiguration(), stream, getValue(field)));
     }
 
     @Override

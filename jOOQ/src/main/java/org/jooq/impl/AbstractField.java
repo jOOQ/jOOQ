@@ -77,6 +77,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.jooq.BetweenAndStep;
+import org.jooq.Binding;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
 import org.jooq.Clause;
@@ -113,6 +114,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     private final String          comment;
     private final DataType<T>     dataType;
     private final Converter<?, T> converter;
+    private final Binding<T>      binding;
 
     AbstractField(String name, DataType<T> type) {
         this(name, type, null, null);
@@ -131,6 +133,8 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
             : type instanceof ConvertedDataType
             ? ((ConvertedDataType<?, T>) type).converter()
             : new IdentityConverter<T>(type.getType());
+
+        this.binding = new DefaultBinding(this.converter, type.isLob());
     }
 
     // ------------------------------------------------------------------------
@@ -172,6 +176,11 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Override
     public final Converter<?, T> getConverter() {
         return converter;
+    }
+
+    @Override
+    public final Binding<T> getBinding() {
+        return binding;
     }
 
     @Override

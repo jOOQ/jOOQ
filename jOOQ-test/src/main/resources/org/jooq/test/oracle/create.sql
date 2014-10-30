@@ -47,6 +47,8 @@ DROP TABLE "T_2845_CASE_sensitivity"/
 DROP TABLE t_unsigned/
 DROP TABLE t_booleans/
 DROP TABLE t_temp/
+DROP TABLE t_2155/
+DROP TABLE t_3711/
 
 DROP TABLE multi_schema_unused.x_unused/
 
@@ -1879,7 +1881,7 @@ DROP SYNONYM transitive_synonym_1/
 DROP TYPE multi_schema.number_table/
 DROP TYPE multi_schema.number_object/
 
-CREATE TYPE multi_schema.number_table AS TABLE OF NUMBER(7)/
+CREATE TYPE multi_schema.number_table AS VARRAY(100) OF NUMBER(7)/
 CREATE TYPE multi_schema.number_object AS OBJECT(a NUMBER(7), b NUMBER(7), c NUMBER(7))/
 
 CREATE SYNONYM test.number_table_test FOR multi_schema.number_table/
@@ -1992,3 +1994,12 @@ CREATE PACKAGE BODY test.test_synonym_package AS
 END test_synonym_package;
 /
 
+CREATE TABLE test.t_3711 (
+  v1 number_table_public,
+  v2 number_object_public,
+  v3 test.number_table_test,
+  v4 test.number_object_test,
+  v7 multi_schema.number_table,
+  v8 multi_schema.number_object
+)
+/

@@ -65,6 +65,8 @@ import static org.jooq.test.oracle.generatedclasses.test.Routines.fTables1;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.fTables4;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.pArrays1;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.pTables1;
+import static org.jooq.test.oracle.generatedclasses.test.Tables.T_2155;
+import static org.jooq.test.oracle.generatedclasses.test.Tables.T_3711;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_725_LOB_TEST;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_785;
@@ -109,6 +111,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
@@ -126,6 +130,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
+import org.jooq.Record14;
 import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record8;
@@ -149,11 +154,16 @@ import org.jooq.test.all.converters.Boolean_YES_NO_LC;
 import org.jooq.test.all.converters.Boolean_YES_NO_UC;
 import org.jooq.test.all.converters.Boolean_YN_LC;
 import org.jooq.test.all.converters.Boolean_YN_UC;
+import org.jooq.test.oracle.generatedclasses.multi_schema.packages.MsSynonymPackage;
 import org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord;
+import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord;
+import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord;
 import org.jooq.test.oracle.generatedclasses.test.Keys;
 import org.jooq.test.oracle.generatedclasses.test.Routines;
 import org.jooq.test.oracle.generatedclasses.test.Sequences;
 import org.jooq.test.oracle.generatedclasses.test.packages.Library;
+import org.jooq.test.oracle.generatedclasses.test.packages.TestSynonymPackage;
+import org.jooq.test.oracle.generatedclasses.test.routines.P2155;
 import org.jooq.test.oracle.generatedclasses.test.routines.PNested;
 import org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord;
@@ -167,6 +177,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecor
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TUnsignedRecord;
+import org.jooq.test.oracle.generatedclasses.test.tables.records.T_2155Record;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_725LobTestRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_785Record;
@@ -195,6 +206,8 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRe
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord;
+import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ArrayRecord;
+import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ObjectRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetBooks;
 import org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord;
 import org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record;
@@ -1746,6 +1759,207 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals(asList(1, 1, 2, 2, 3), result.getValues(0));
         assertEquals(union(BOOK_LAST_NAMES, singletonList("XX")), result.getValues(1));
         assertEquals(union(BOOK_TITLES, singletonList(null)), result.getValues(2));
+    }
+
+    @Test
+    public void testOracleSynonymAndCrossSchemaTypeReferences() {
+        jOOQAbstractTest.reset = false;
+
+        Configuration conf = create().configuration();
+
+        // Tables:
+        // -------
+        NumberTableRecord t = new NumberTableRecord(1, 2, 3);
+        NumberObjectRecord o = new NumberObjectRecord(4, 5, 6);
+
+        T_3711Record r = create().newRecord(T_3711);
+        r.setV1(t);
+        r.setV3(t);
+        r.setV7(t);
+        r.setV2(o);
+        r.setV4(o);
+        r.setV8(o);
+
+        assertEquals(1,
+        create().insertInto(T_3711)
+                .set(r)
+                .execute());
+
+        assertEquals(r, create().fetchOne(T_3711));
+
+
+        // Standalone procedure calls:
+        // ---------------------------
+        NumberTableRecord t11 = MsSynonymPackage.actualTable(conf);
+        NumberTableRecord t12 = MsSynonymPackage.publicTable(conf);
+        NumberTableRecord t13 = MsSynonymPackage.testTable(conf);
+
+        NumberTableRecord t21 = TestSynonymPackage.actualTable(conf);
+        NumberTableRecord t22 = TestSynonymPackage.publicTable(conf);
+        NumberTableRecord t23 = TestSynonymPackage.testTable(conf);
+
+        NumberObjectRecord o11 = MsSynonymPackage.actualObject(conf);
+        NumberObjectRecord o12 = MsSynonymPackage.publicObject(conf);
+        NumberObjectRecord o13 = MsSynonymPackage.testObject(conf);
+        NumberObjectRecord o14 = MsSynonymPackage.testTransitive(conf);
+
+        NumberObjectRecord o21 = TestSynonymPackage.actualObject(conf);
+        NumberObjectRecord o22 = TestSynonymPackage.publicObject(conf);
+        NumberObjectRecord o23 = TestSynonymPackage.testObject(conf);
+        NumberObjectRecord o24 = TestSynonymPackage.testTransitive(conf);
+
+        // In SQL
+        Record14<
+            NumberTableRecord,
+            NumberTableRecord,
+            NumberTableRecord,
+
+            NumberTableRecord,
+            NumberTableRecord,
+            NumberTableRecord,
+
+            NumberObjectRecord,
+            NumberObjectRecord,
+            NumberObjectRecord,
+            NumberObjectRecord,
+
+            NumberObjectRecord,
+            NumberObjectRecord,
+            NumberObjectRecord,
+            NumberObjectRecord
+        > record =
+        create().select(
+            MsSynonymPackage.actualTable(),
+            MsSynonymPackage.publicTable(),
+            MsSynonymPackage.testTable(),
+
+            TestSynonymPackage.actualTable(),
+            TestSynonymPackage.publicTable(),
+            TestSynonymPackage.testTable(),
+
+            MsSynonymPackage.actualObject(),
+            MsSynonymPackage.publicObject(),
+            MsSynonymPackage.testObject(),
+            MsSynonymPackage.testTransitive(),
+
+            TestSynonymPackage.actualObject(),
+            TestSynonymPackage.publicObject(),
+            TestSynonymPackage.testObject(),
+            TestSynonymPackage.testTransitive()
+        )
+        .fetchOne();
+
+        assertEquals(asList(1, 2, 3), t11.getList());
+        assertEquals(asList(4, 5, 6), t12.getList());
+        assertEquals(asList(7, 8, 9), t13.getList());
+        assertEquals(asList(1, 2, 3), t21.getList());
+        assertEquals(asList(4, 5, 6), t22.getList());
+        assertEquals(asList(7, 8, 9), t23.getList());
+
+        assertEquals(asList(1, 2, 3), record.value1().getList());
+        assertEquals(asList(4, 5, 6), record.value2().getList());
+        assertEquals(asList(7, 8, 9), record.value3().getList());
+        assertEquals(asList(1, 2, 3), record.value4().getList());
+        assertEquals(asList(4, 5, 6), record.value5().getList());
+        assertEquals(asList(7, 8, 9), record.value6().getList());
+
+        assertEquals(asList(1, 2, 3), asList(o11.into(Integer[].class)));
+        assertEquals(asList(4, 5, 6), asList(o12.into(Integer[].class)));
+        assertEquals(asList(7, 8, 9), asList(o13.into(Integer[].class)));
+        assertEquals(asList(7, 8, 9), asList(o14.into(Integer[].class)));
+        assertEquals(asList(1, 2, 3), asList(o21.into(Integer[].class)));
+        assertEquals(asList(4, 5, 6), asList(o22.into(Integer[].class)));
+        assertEquals(asList(7, 8, 9), asList(o23.into(Integer[].class)));
+        assertEquals(asList(7, 8, 9), asList(o24.into(Integer[].class)));
+
+        assertEquals(asList(1, 2, 3), asList(record.value7().into(Integer[].class)));
+        assertEquals(asList(4, 5, 6), asList(record.value8().into(Integer[].class)));
+        assertEquals(asList(7, 8, 9), asList(record.value9().into(Integer[].class)));
+        assertEquals(asList(7, 8, 9), asList(record.value10().into(Integer[].class)));
+        assertEquals(asList(1, 2, 3), asList(record.value11().into(Integer[].class)));
+        assertEquals(asList(4, 5, 6), asList(record.value12().into(Integer[].class)));
+        assertEquals(asList(7, 8, 9), asList(record.value13().into(Integer[].class)));
+        assertEquals(asList(7, 8, 9), asList(record.value14().into(Integer[].class)));
+    }
+
+    @Test
+    public void testOraclePojosEqualsAndHashCode() {
+        Set<TAuthor> set = new LinkedHashSet<>();
+
+        for (int i = 0; i < 3; i++)
+            set.add(new TAuthor());
+
+        assertEquals(1, set.size());
+
+
+        for (int i = 0; i < 3; i++)
+            set.add(
+                new TAuthor(1, "a", "a", null, 1,
+                    new org.jooq.test.oracle.generatedclasses.test.udt.pojos.UAddressType(
+                        new org.jooq.test.oracle.generatedclasses.test.udt.pojos.UStreetType("street", "no", new UNumberArrayRecord(1, 2, 3), new byte[0], "x"),
+                        "zip", "city", "country", Date.valueOf("2000-01-01"), null, null, null
+                    )
+                )
+            );
+
+        assertEquals(2, set.size());
+    }
+
+    @Test
+    public void testOracleConverterOnProceduresAndUDTs() {
+        LocalDateTime zero = LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC);
+        LocalDateTime one = LocalDateTime.ofEpochSecond(24 * 3600, 0, ZoneOffset.UTC);
+        U_2155ObjectRecord record = new U_2155ObjectRecord(zero, new U_2155ArrayRecord(zero, zero));
+        U_2155ArrayRecord array = new U_2155ArrayRecord();
+
+        try {
+
+            // Interaction with tables
+            // -----------------------
+            assertEquals(1,
+            create().insertInto(T_2155, T_2155.ID, T_2155.D1, T_2155.D2, T_2155.D3)
+                    .values(1, null, null, null)
+                    .execute());
+
+            assertEquals(1,
+            create().insertInto(T_2155, T_2155.ID, T_2155.D1, T_2155.D2, T_2155.D3)
+                    .values(2, zero, record, array)
+                    .execute());
+
+            Result<T_2155Record> result =
+            create().selectFrom(T_2155)
+                    .orderBy(T_2155.ID)
+                    .fetch();
+
+            create().fetch("select * from t_2155");
+
+            assertEquals(1, (int) result.get(0).getId());
+            assertNull(result.get(0).getD1());
+            assertNull(result.get(0).getD2());
+            assertNull(result.get(0).getD3());
+
+            assertEquals(2, (int) result.get(1).getId());
+            assertEquals(zero, result.get(1).getD1());
+            assertEquals(record, result.get(1).getD2());
+            assertEquals(array, result.get(1).getD3());
+
+            // Interaction with procedures / functions
+            // ---------------------------------------
+
+            assertEquals(zero, Routines.f2155(create().configuration(), null, zero, null, one));
+            assertEquals(one, Routines.f2155(create().configuration(), 1, zero, null, one));
+
+            P2155 p1 = Routines.p2155(create().configuration(), 0, zero);
+            assertEquals(zero, p1.getP4());
+            assertEquals(zero, p1.getP5());
+
+            P2155 p2 = Routines.p2155(create().configuration(), 0, one);
+            assertEquals(one, p2.getP4());
+            assertEquals(one, p2.getP5());
+        }
+        finally {
+            create().delete(T_2155).execute();
+        }
     }
 
     @Test

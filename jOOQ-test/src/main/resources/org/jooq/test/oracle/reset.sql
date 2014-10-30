@@ -1,4 +1,6 @@
 DELETE FROM multi_schema.t_book_sale/
+DELETE FROM multi_schema.t_book/
+DELETE FROM multi_schema.t_author/
 
 DELETE FROM t_exotic_types/
 DELETE FROM t_639_numbers_table/

@@ -9,9 +9,9 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_AUTHOR", schema = "MULTI_SCHEMA")
-public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.Object> {
+public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = 539988556;
+	private static final long serialVersionUID = -2057606038;
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_AUTHOR.ID</code>.
@@ -96,7 +96,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_AUTHOR.ADDRESS</code>.
 	 */
-	public void setAddress(java.lang.Object value) {
+	public void setAddress(org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord value) {
 		setValue(5, value);
 	}
 
@@ -104,8 +104,8 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Getter for <code>MULTI_SCHEMA.T_AUTHOR.ADDRESS</code>.
 	 */
 	@javax.persistence.Column(name = "ADDRESS", length = 1)
-	public java.lang.Object getAddress() {
-		return (java.lang.Object) getValue(5);
+	public org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord getAddress() {
+		return (org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord) getValue(5);
 	}
 
 	// -------------------------------------------------------------------------
@@ -128,7 +128,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.Object> fieldsRow() {
+	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> fieldsRow() {
 		return (org.jooq.Row6) super.fieldsRow();
 	}
 
@@ -136,7 +136,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.Object> valuesRow() {
+	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> valuesRow() {
 		return (org.jooq.Row6) super.valuesRow();
 	}
 
@@ -184,7 +184,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Object> field6() {
+	public org.jooq.Field<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> field6() {
 		return org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.ADDRESS;
 	}
 
@@ -232,7 +232,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Object value6() {
+	public org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord value6() {
 		return getAddress();
 	}
 
@@ -285,7 +285,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TAuthorRecord value6(java.lang.Object value) {
+	public TAuthorRecord value6(org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord value) {
 		setAddress(value);
 		return this;
 	}
@@ -294,7 +294,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TAuthorRecord values(java.lang.Integer value1, java.lang.String value2, java.lang.String value3, java.sql.Date value4, java.lang.Integer value5, java.lang.Object value6) {
+	public TAuthorRecord values(java.lang.Integer value1, java.lang.String value2, java.lang.String value3, java.sql.Date value4, java.lang.Integer value5, org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord value6) {
 		return this;
 	}
 
@@ -312,7 +312,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Create a detached, initialised TAuthorRecord
 	 */
-	public TAuthorRecord(java.lang.Integer id, java.lang.String firstName, java.lang.String lastName, java.sql.Date dateOfBirth, java.lang.Integer yearOfBirth, java.lang.Object address) {
+	public TAuthorRecord(java.lang.Integer id, java.lang.String firstName, java.lang.String lastName, java.sql.Date dateOfBirth, java.lang.Integer yearOfBirth, org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord address) {
 		super(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR);
 
 		setValue(0, id);

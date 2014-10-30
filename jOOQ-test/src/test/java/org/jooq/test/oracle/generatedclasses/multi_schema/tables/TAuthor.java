@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 476187254;
+	private static final long serialVersionUID = 832055621;
 
 	/**
 	 * The singleton instance of <code>MULTI_SCHEMA.T_AUTHOR</code>
@@ -52,7 +52,7 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.oracle.genera
 	/**
 	 * The column <code>MULTI_SCHEMA.T_AUTHOR.ADDRESS</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.Object> ADDRESS = createField("ADDRESS", org.jooq.impl.DefaultDataType.getDefaultDataType("U_ADDRESS_TYPE"), this, "");
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> ADDRESS = createField("ADDRESS", org.jooq.test.oracle.generatedclasses.test.udt.UAddressType.U_ADDRESS_TYPE.getDataType(), this, "");
 
 	/**
 	 * Create a <code>MULTI_SCHEMA.T_AUTHOR</code> table reference

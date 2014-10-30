@@ -154,11 +154,15 @@ public class DefaultBinding<T, U> implements Binding<U> {
     @Deprecated
     final String                paramName;
 
-    public DefaultBinding(Converter<T, U> converter, boolean isLob) {
+    public DefaultBinding(Converter<T, U> converter) {
+        this(converter, false, null);
+    }
+
+    DefaultBinding(Converter<T, U> converter, boolean isLob) {
         this(converter, isLob, null);
     }
 
-    public DefaultBinding(Converter<T, U> converter, boolean isLob, String paramName) {
+    DefaultBinding(Converter<T, U> converter, boolean isLob, String paramName) {
         this.type = converter.fromType();
         this.converter = converter;
         this.isLob = isLob;

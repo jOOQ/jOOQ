@@ -3053,4 +3053,9 @@ public abstract class jOOQAbstractTest<
     public void testTransactionsWithJDBCNestedWithoutSavepoints() throws Exception {
         new TransactionTests(this).testTransactionsWithJDBCNestedWithoutSavepoints();
     }
+
+    @Test
+    public void testTransactionsWithExceptionInRollback() throws Exception {
+        new TransactionTests(this).testTransactionsWithExceptionInRollback();
+    }
 }

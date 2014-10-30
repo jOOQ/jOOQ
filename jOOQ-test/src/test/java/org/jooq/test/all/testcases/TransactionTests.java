@@ -56,9 +56,12 @@ import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.TableRecord;
+import org.jooq.TransactionContext;
+import org.jooq.TransactionProvider;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultTransactionProvider;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -276,6 +279,66 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(2, create.fetchCount(TAuthor()));
             assertEquals(MyRuntimeException.class, expected.getClass());
             assertEquals("No", expected.getMessage());
+        }
+    }
+
+
+    public void testTransactionsWithExceptionInRollback() throws Exception {
+        final int[] inserted = new int[2];
+
+        DSLContext create = create();
+        TransactionalConnectionProvider provider = new TransactionalConnectionProvider(create.configuration().connectionProvider());
+        create.configuration().set(provider);
+        create.configuration().set(new TransactionProvider() {
+
+            final TransactionProvider trx = new DefaultTransactionProvider(provider);
+
+            @Override
+            public void begin(TransactionContext ctx) throws DataAccessException {
+                trx.begin(ctx);
+            }
+
+            @Override
+            public void commit(TransactionContext ctx) throws DataAccessException {
+                trx.commit(ctx);
+            }
+
+            @Override
+            public void rollback(TransactionContext ctx) throws DataAccessException {
+                trx.rollback(ctx);
+                throw new MyRuntimeException("Suppress this one");
+            }
+        });
+
+        try {
+            create.transaction(c1 -> {
+                assertAutoCommit(c1.connectionProvider(), false);
+
+                inserted[0] =
+                DSL.using(c1)
+                   .insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+                   .values(3, "Koontz")
+                   .execute();
+
+                inserted[1] =
+                DSL.using(c1)
+                   .insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+                   .values(3, "Koontz")
+                   .execute();
+
+                // This code should never be reached, as exception should propagate
+                fail();
+            });
+        }
+
+        catch (DataAccessException expected) {
+            assertEquals(1, provider.acquire.get());
+            assertEquals(1, provider.release.get());
+
+            assertEquals(2, create.fetchCount(TAuthor()));
+            assertEquals(DataAccessException.class, expected.getClass());
+            assertEquals(MyRuntimeException.class, expected.getSuppressed()[0].getClass());
+            assertEquals("Suppress this one", expected.getSuppressed()[0].getMessage());
         }
     }
 

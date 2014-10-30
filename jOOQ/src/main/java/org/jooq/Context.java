@@ -41,7 +41,6 @@
 package org.jooq;
 
 import java.sql.PreparedStatement;
-import java.util.Map;
 
 import org.jooq.RenderContext.CastMode;
 import org.jooq.conf.ParamType;
@@ -56,92 +55,11 @@ import org.jooq.exception.DataAccessException;
  * @see BindContext
  * @see RenderContext
  */
-public interface Context<C extends Context<C>> {
+public interface Context<C extends Context<C>> extends Scope {
 
     // ------------------------------------------------------------------------
     // General methods
     // ------------------------------------------------------------------------
-
-    /**
-     * The configuration wrapped by this context.
-     */
-    Configuration configuration();
-
-    /**
-     * The settings wrapped by this context.
-     * <p>
-     * This method is a convenient way of accessing
-     * <code>configuration().settings()</code>.
-     */
-    Settings settings();
-
-    /**
-     * The {@link SQLDialect} wrapped by this context.
-     * <p>
-     * This method is a convenient way of accessing
-     * <code>configuration().dialect()</code>.
-     */
-    SQLDialect dialect();
-
-    /**
-     * The {@link SQLDialect#family()} wrapped by this context.
-     * <p>
-     * This method is a convenient way of accessing
-     * <code>configuration().dialect().family()</code>.
-     */
-    SQLDialect family();
-
-    /**
-     * Get all custom data from this <code>Context</code>.
-     * <p>
-     * This is custom data that was previously set to the context using
-     * {@link #data(Object, Object)}. Use custom data if you want to pass data
-     * to {@link QueryPart} objects for a given {@link RenderContext} or
-     * {@link BindContext}.
-     * <p>
-     * Unlike {@link Configuration#data()}, these data's lifecycle only
-     * matches that of a render or bind context.
-     *
-     * @return The custom data. This is never <code>null</code>
-     */
-    Map<Object, Object> data();
-
-    /**
-     * Get some custom data from this <code>Context</code>.
-     * <p>
-     * This is custom data that was previously set to the context using
-     * {@link #data(Object, Object)}. Use custom data if you want to pass data
-     * to {@link QueryPart} objects for a given {@link RenderContext} or
-     * {@link BindContext}.
-     * <p>
-     * Unlike {@link Configuration#data()}, these data's lifecycle only
-     * matches that of a render or bind context.
-     *
-     * @param key A key to identify the custom data
-     * @return The custom data or <code>null</code> if no such data is contained
-     *         in this <code>ExecuteContext</code>
-     * @see ExecuteListener
-     */
-    Object data(Object key);
-
-    /**
-     * Set some custom data to this <code>Context</code>.
-     * <p>
-     * This is custom data that was previously set to the context using
-     * {@link #data(Object, Object)}. Use custom data if you want to pass data
-     * to {@link QueryPart} objects for a given {@link RenderContext} or
-     * {@link BindContext}.
-     * <p>
-     * Unlike {@link Configuration#data()}, these data's lifecycle only
-     * matches that of a render or bind context.
-     *
-     * @param key A key to identify the custom data
-     * @param value The custom data
-     * @return The previously set custom data or <code>null</code> if no data
-     *         was previously set for the given key
-     * @see ExecuteListener
-     */
-    Object data(Object key, Object value);
 
     /**
      * Visit a <code>QueryPart</code> in the current <code>Context</code>.

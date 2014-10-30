@@ -95,7 +95,6 @@ import java.util.UUID;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Binding;
-import org.jooq.BindingContext;
 import org.jooq.BindingGetResultSetContext;
 import org.jooq.BindingGetSQLInputContext;
 import org.jooq.BindingGetStatementContext;
@@ -114,6 +113,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.Scope;
 import org.jooq.UDTRecord;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
@@ -1995,7 +1995,7 @@ public class DefaultBinding<T, U> implements Binding<U> {
      * Workarounds for the unimplemented Postgres JDBC driver features
      */
     @SuppressWarnings("unchecked")
-    private static final <T> T pgGetArray(BindingContext ctx, ResultSet rs, Class<T> type, int index) throws SQLException {
+    private static final <T> T pgGetArray(Scope ctx, ResultSet rs, Class<T> type, int index) throws SQLException {
 
         // Get the JDBC Array and check for null. If null, that's OK
         Array array = rs.getArray(index);

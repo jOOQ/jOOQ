@@ -43,9 +43,20 @@ package org.jooq;
 import java.sql.SQLOutput;
 
 /**
+ * A container type for {@link Binding#set(BindingSetSQLOutputContext)}
+ * arguments.
+ *
  * @author Lukas Eder
  */
-public interface BindingSetSQLOutputContext<T> extends BindingContext {
+public interface BindingSetSQLOutputContext<T> extends Scope {
+
+    /**
+     * The {@link SQLOutput} to which a bind variable should be bound.
+     */
     SQLOutput output();
+
+    /**
+     * The bind value that is being bound.
+     */
     T value();
 }

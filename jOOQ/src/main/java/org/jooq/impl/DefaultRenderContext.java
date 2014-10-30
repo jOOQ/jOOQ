@@ -392,7 +392,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             return this;
         }
 
-        SQLDialect family = configuration.dialect().family();
+        SQLDialect family = family();
 
         // Quoting is needed when explicitly requested...
         boolean needsQuote =

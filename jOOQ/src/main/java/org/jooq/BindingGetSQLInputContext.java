@@ -43,9 +43,20 @@ package org.jooq;
 import java.sql.SQLInput;
 
 /**
+ * A container type for {@link Binding#get(BindingGetSQLInputContext)}
+ * arguments.
+ *
  * @author Lukas Eder
  */
-public interface BindingGetSQLInputContext<T> extends BindingContext {
+public interface BindingGetSQLInputContext<T> extends Scope {
+
+    /**
+     * The {@link SQLInput} from which a value is retrieved.
+     */
     SQLInput input();
+
+    /**
+     * A callback to which the resulting value is registered.
+     */
     void value(T value);
 }

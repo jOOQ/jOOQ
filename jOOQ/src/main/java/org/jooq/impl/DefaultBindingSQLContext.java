@@ -47,7 +47,7 @@ import org.jooq.RenderContext;
 /**
  * @author Lukas Eder
  */
-class DefaultBindingSQLContext<T> extends AbstractBindingContext implements BindingSQLContext<T> {
+class DefaultBindingSQLContext<T> extends AbstractScope implements BindingSQLContext<T> {
 
     private final RenderContext render;
     private final T value;

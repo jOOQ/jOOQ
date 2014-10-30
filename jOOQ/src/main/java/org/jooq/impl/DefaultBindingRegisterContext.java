@@ -48,7 +48,7 @@ import org.jooq.Configuration;
 /**
  * @author Lukas Eder
  */
-class DefaultBindingRegisterContext<T> extends AbstractBindingContext implements BindingRegisterContext<T> {
+class DefaultBindingRegisterContext<T> extends AbstractScope implements BindingRegisterContext<T> {
 
     private final CallableStatement statement;
     private final int               index;

@@ -41,42 +41,19 @@
 package org.jooq.impl;
 
 import org.jooq.Configuration;
-import org.jooq.SQLDialect;
 import org.jooq.Transaction;
 import org.jooq.TransactionContext;
-import org.jooq.conf.Settings;
 
 /**
  * @author Lukas Eder
  */
-class DefaultTransactionContext implements TransactionContext {
+class DefaultTransactionContext extends AbstractScope implements TransactionContext {
 
-    private final Configuration configuration;
     Transaction                 transaction;
     Exception                   cause;
 
     DefaultTransactionContext(Configuration configuration) {
-        this.configuration = configuration;
-    }
-
-    @Override
-    public final Configuration configuration() {
-        return configuration;
-    }
-
-    @Override
-    public final Settings settings() {
-        return Utils.settings(configuration());
-    }
-
-    @Override
-    public final SQLDialect dialect() {
-        return Utils.configuration(configuration()).dialect();
-    }
-
-    @Override
-    public final SQLDialect family() {
-        return dialect().family();
+        super(configuration);
     }
 
     @Override

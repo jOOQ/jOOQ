@@ -41,8 +41,15 @@
 package org.jooq;
 
 import java.io.Serializable;
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLInput;
+import java.sql.SQLOutput;
+import java.sql.Timestamp;
 
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultBinding;
 
 /**
@@ -58,17 +65,120 @@ import org.jooq.impl.DefaultBinding;
  */
 public interface Binding<T> extends Serializable {
 
+    /**
+     * Generate SQL code for the bind variable.
+     * <p>
+     * Implementations should generate SQL code onto
+     * {@link BindingSQLContext#render()}, given the context's bind variable
+     * located at {@link BindingSQLContext#value()}. Examples of such SQL code
+     * are:
+     * <ul>
+     * <li><code>"?"</code>: Default implementations can simply generate a
+     * question mark.<br>
+     * <br>
+     * </li>
+     * <li><code>"123"</code>: Implementations may choose to inline bind
+     * variables to influence execution plan generation.<br>
+     * <br>
+     * {@link RenderContext#paramType()} contains information whether inlined
+     * bind variables are expected in the current context.<br>
+     * <br>
+     * </li>
+     * <li><code>"CAST(? AS DATE)"</code>: Cast a database to a more specific
+     * type. This can be useful in databases like Oracle, which map both
+     * <code>DATE</code> and <code>TIMESTAMP</code> SQL types to
+     * {@link Timestamp}.<br>
+     * <br>
+     * {@link RenderContext#castMode()} may contain some hints about whether
+     * casting is suggested in the current context.<br>
+     * <br>
+     * </li>
+     * <li><code>"?::json"</code>: Vendor-specific bind variables can be
+     * supported, e.g. {@link SQLDialect#POSTGRES}'s JSON data type.</li>
+     * </ul>
+     * <p>
+     * Implementations must provide consistent behaviour between
+     * {@link #sql(BindingSQLContext)} and
+     * {@link #set(BindingSetStatementContext)}, i.e. when bind variables are
+     * inlined, then they must not be bound to the {@link PreparedStatement} in
+     * {@link #set(BindingSetStatementContext)}
+     *
+     * @param ctx The context object containing all argument objects.
+     * @throws SQLException Implementations are allowed to pass on all
+     *             {@link SQLException}s to the caller to be wrapped in
+     *             {@link DataAccessException}s.
+     */
     void sql(BindingSQLContext<T> ctx) throws SQLException;
 
+    /**
+     * Register a {@link CallableStatement}'s <code>OUT</code> parameter.
+     *
+     * @param ctx The context object containing all argument objects.
+     * @throws SQLException Implementations are allowed to pass on all
+     *             {@link SQLException}s to the caller to be wrapped in
+     *             {@link DataAccessException}s.
+     */
     void register(BindingRegisterContext<T> ctx) throws SQLException;
 
+    /**
+     * Set a {@link PreparedStatement}'s <code>IN</code> parameter.
+     *
+     * @param ctx The context object containing all argument objects.
+     * @throws SQLException Implementations are allowed to pass on all
+     *             {@link SQLException}s to the caller to be wrapped in
+     *             {@link DataAccessException}s.
+     */
     void set(BindingSetStatementContext<T> ctx) throws SQLException;
 
+    /**
+     * Set a {@link SQLOutput}'s <code>IN</code> parameter.
+     *
+     * @param ctx The context object containing all argument objects.
+     * @throws SQLException Implementations are allowed to pass on all
+     *             {@link SQLException}s to the caller to be wrapped in
+     *             {@link DataAccessException}s.
+     */
     void set(BindingSetSQLOutputContext<T> ctx) throws SQLException;
 
+    /**
+     * Get a {@link ResultSet}'s <code>OUT</code> value.
+     * <p>
+     * Implementations are expected to produce a value by calling
+     * {@link BindingGetResultSetContext#value(Object)}, passing the resulting
+     * value to the method.
+     *
+     * @param ctx The context object containing all argument objects.
+     * @throws SQLException Implementations are allowed to pass on all
+     *             {@link SQLException}s to the caller to be wrapped in
+     *             {@link DataAccessException}s.
+     */
     void get(BindingGetResultSetContext<T> ctx) throws SQLException;
 
+    /**
+     * Get a {@link CallableStatement}'s <code>OUT</code> value.
+     * <p>
+     * Implementations are expected to produce a value by calling
+     * {@link BindingGetStatementContext#value(Object)}, passing the resulting
+     * value to the method.
+     *
+     * @param ctx The context object containing all argument objects.
+     * @throws SQLException Implementations are allowed to pass on all
+     *             {@link SQLException}s to the caller to be wrapped in
+     *             {@link DataAccessException}s.
+     */
     void get(BindingGetStatementContext<T> ctx) throws SQLException;
 
+    /**
+     * Get a {@link SQLInput}'s <code>OUT</code> value.
+     * <p>
+     * Implementations are expected to produce a value by calling
+     * {@link BindingGetSQLInputContext#value(Object)}, passing the resulting
+     * value to the method.
+     *
+     * @param ctx The context object containing all argument objects.
+     * @throws SQLException Implementations are allowed to pass on all
+     *             {@link SQLException}s to the caller to be wrapped in
+     *             {@link DataAccessException}s.
+     */
     void get(BindingGetSQLInputContext<T> ctx) throws SQLException;
 }

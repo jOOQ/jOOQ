@@ -48,7 +48,7 @@ import org.jooq.Configuration;
 /**
  * @author Lukas Eder
  */
-class DefaultBindingGetResultSetContext<T> extends AbstractBindingContext implements BindingGetResultSetContext<T> {
+class DefaultBindingGetResultSetContext<T> extends AbstractScope implements BindingGetResultSetContext<T> {
 
     private final ResultSet resultSet;
     private final int       index;

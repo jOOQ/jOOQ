@@ -43,9 +43,21 @@ package org.jooq;
 import java.sql.CallableStatement;
 
 /**
+ * A container type for {@link Binding#register(BindingRegisterContext)}
+ * arguments.
+ *
  * @author Lukas Eder
  */
-public interface BindingRegisterContext<T> extends BindingContext {
+public interface BindingRegisterContext<T> extends Scope {
+
+    /**
+     * The {@link CallableStatement} on which a bind variable should be
+     * registered.
+     */
     CallableStatement statement();
+
+    /**
+     * The bind variable index at which a bind variable should be registered.
+     */
     int index();
 }

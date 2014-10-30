@@ -113,41 +113,11 @@ import org.jooq.impl.DSL;
  * @see Configuration
  * @author Lukas Eder
  */
-public interface DSLContext {
+public interface DSLContext extends Scope {
 
     // -------------------------------------------------------------------------
     // XXX Configuration API
     // -------------------------------------------------------------------------
-
-    /**
-     * The <code>Configuration</code> referenced from this
-     * <code>DSLContext</code>.
-     */
-    Configuration configuration();
-
-    /**
-     * The settings wrapped by this context.
-     * <p>
-     * This method is a convenient way of accessing
-     * <code>configuration().settings()</code>.
-     */
-    Settings settings();
-
-    /**
-     * The {@link SQLDialect} wrapped by this context.
-     * <p>
-     * This method is a convenient way of accessing
-     * <code>configuration().dialect()</code>.
-     */
-    SQLDialect dialect();
-
-    /**
-     * The {@link SQLDialect#family()} wrapped by this context.
-     * <p>
-     * This method is a convenient way of accessing
-     * <code>configuration().dialect().family()</code>.
-     */
-    SQLDialect family();
 
     /**
      * Map a schema to another one.

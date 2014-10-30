@@ -43,10 +43,25 @@ package org.jooq;
 import java.sql.ResultSet;
 
 /**
+ * A container type for {@link Binding#get(BindingGetResultSetContext)}
+ * arguments.
+ *
  * @author Lukas Eder
  */
-public interface BindingGetResultSetContext<T> extends BindingContext {
+public interface BindingGetResultSetContext<T> extends Scope {
+
+    /**
+     * The {@link ResultSet} from which a value is retrieved.
+     */
     ResultSet resultSet();
+
+    /**
+     * The column index at which the value is retrieved.
+     */
     int index();
+
+    /**
+     * A callback to which the resulting value is registered.
+     */
     void value(T value);
 }

@@ -48,7 +48,7 @@ import org.jooq.Configuration;
 /**
  * @author Lukas Eder
  */
-class DefaultBindingSetStatementContext<T> extends AbstractBindingContext implements BindingSetStatementContext<T> {
+class DefaultBindingSetStatementContext<T> extends AbstractScope implements BindingSetStatementContext<T> {
 
     private final PreparedStatement statement;
     private final int               index;

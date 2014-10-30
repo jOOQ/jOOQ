@@ -43,10 +43,25 @@ package org.jooq;
 import java.sql.PreparedStatement;
 
 /**
+ * A container type for {@link Binding#set(BindingSetStatementContext)}
+ * arguments.
+ *
  * @author Lukas Eder
  */
-public interface BindingSetStatementContext<T> extends BindingContext {
+public interface BindingSetStatementContext<T> extends Scope {
+
+    /**
+     * The {@link PreparedStatement} to which a bind variable should be bound.
+     */
     PreparedStatement statement();
+
+    /**
+     * The bind variable index at which a bind variable should be bound.
+     */
     int index();
+
+    /**
+     * The bind value that is being bound.
+     */
     T value();
 }

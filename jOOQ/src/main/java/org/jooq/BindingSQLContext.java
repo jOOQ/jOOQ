@@ -41,9 +41,20 @@
 package org.jooq;
 
 /**
+ * A container type for {@link Binding#sql(BindingSQLContext)} arguments.
+ *
  * @author Lukas Eder
  */
-public interface BindingSQLContext<T> extends BindingContext {
+public interface BindingSQLContext<T> extends Scope {
+
+    /**
+     * The {@link RenderContext} that contains the generated SQL and the current
+     * SQL generation state.
+     */
     RenderContext render();
+
+    /**
+     * The bind value that is being rendered.
+     */
     T value();
 }

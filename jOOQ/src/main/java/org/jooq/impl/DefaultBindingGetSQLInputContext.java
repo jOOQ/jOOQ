@@ -48,7 +48,7 @@ import org.jooq.Configuration;
 /**
  * @author Lukas Eder
  */
-class DefaultBindingGetSQLInputContext<T> extends AbstractBindingContext implements BindingGetSQLInputContext<T> {
+class DefaultBindingGetSQLInputContext<T> extends AbstractScope implements BindingGetSQLInputContext<T> {
 
     private final SQLInput input;
     private T              value;

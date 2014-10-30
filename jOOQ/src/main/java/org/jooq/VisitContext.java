@@ -42,8 +42,6 @@ package org.jooq;
 
 import java.util.Map;
 
-import org.jooq.conf.Settings;
-
 /**
  * A context object for {@link QueryPart} traversal passed to registered
  * {@link VisitListener}'s.
@@ -51,7 +49,7 @@ import org.jooq.conf.Settings;
  * @author Lukas Eder
  * @see VisitListener
  */
-public interface VisitContext {
+public interface VisitContext extends Scope {
 
     /**
      * Get all custom data from this <code>VisitContext</code>.
@@ -90,35 +88,6 @@ public interface VisitContext {
      * @see VisitContext
      */
     Object data(Object key, Object value);
-
-    /**
-     * The configuration wrapped by this context.
-     */
-    Configuration configuration();
-
-    /**
-     * The settings wrapped by this context.
-     * <p>
-     * This method is a convenient way of accessing
-     * <code>configuration().settings()</code>.
-     */
-    Settings settings();
-
-    /**
-     * The {@link SQLDialect} wrapped by this context.
-     * <p>
-     * This method is a convenient way of accessing
-     * <code>configuration().dialect()</code>.
-     */
-    SQLDialect dialect();
-
-    /**
-     * The {@link SQLDialect#family()} wrapped by this context.
-     * <p>
-     * This method is a convenient way of accessing
-     * <code>configuration().dialect().family()</code>.
-     */
-    SQLDialect family();
 
     /**
      * The most recent clause that was encountered through

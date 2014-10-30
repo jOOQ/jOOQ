@@ -48,7 +48,7 @@ import org.jooq.Configuration;
 /**
  * @author Lukas Eder
  */
-class DefaultBindingSetSQLOutputContext<T> extends AbstractBindingContext implements BindingSetSQLOutputContext<T> {
+class DefaultBindingSetSQLOutputContext<T> extends AbstractScope implements BindingSetSQLOutputContext<T> {
 
     private final SQLOutput output;
     private final T         value;

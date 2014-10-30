@@ -48,7 +48,7 @@ import org.jooq.Configuration;
 /**
  * @author Lukas Eder
  */
-class DefaultBindingGetStatementContext<T> extends AbstractBindingContext implements BindingGetStatementContext<T> {
+class DefaultBindingGetStatementContext<T> extends AbstractScope implements BindingGetStatementContext<T> {
 
     private final CallableStatement statement;
     private final int               index;

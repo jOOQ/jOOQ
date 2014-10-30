@@ -43,10 +43,25 @@ package org.jooq;
 import java.sql.CallableStatement;
 
 /**
+ * A container type for {@link Binding#get(BindingGetStatementContext)}
+ * arguments.
+ *
  * @author Lukas Eder
  */
-public interface BindingGetStatementContext<T> extends BindingContext {
+public interface BindingGetStatementContext<T> extends Scope {
+
+    /**
+     * The {@link CallableStatement} from which a value is retrieved.
+     */
     CallableStatement statement();
+
+    /**
+     * The column index at which the value is retrieved.
+     */
     int index();
+
+    /**
+     * A callback to which the resulting value is registered.
+     */
     void value(T value);
 }

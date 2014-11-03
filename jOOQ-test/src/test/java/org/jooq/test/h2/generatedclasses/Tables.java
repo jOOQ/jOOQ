@@ -10,6 +10,11 @@ package org.jooq.test.h2.generatedclasses;
 public class Tables {
 
 	/**
+	 * The table PUBLIC.T_3666
+	 */
+	public static final org.jooq.test.h2.generatedclasses.tables.T_3666 T_3666 = org.jooq.test.h2.generatedclasses.tables.T_3666.T_3666;
+
+	/**
 	 * The table PUBLIC.T_3571
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.T_3571 T_3571 = org.jooq.test.h2.generatedclasses.tables.T_3571.T_3571;

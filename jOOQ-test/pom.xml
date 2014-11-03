@@ -116,7 +116,7 @@
             <artifactId>commons-dbcp</artifactId>
             <version>1.4</version>
         </dependency>
-        
+
 
 
         <dependency>
@@ -1180,14 +1180,14 @@
                                                 <!-- [#2844] This typo should emit a warning -->
                                                 <customtype>
                                                 </customtype>
-                                                
+
                                                 <!-- [#3571] Rewrite types to check if nullable() and defaulted() flags are propagated -->
                                                 <customType>
                                                     <name>3571</name>
                                                     <type>org.jooq.test.all.converters.T_3571</type>
                                                     <converter>org.jooq.test.all.converters.T_3571_Converter</converter>
                                                 </customType>
-                                                
+
                                                 <customType>
                                                     <name>org.jooq.test.all.converters.Boolean_10</name>
                                                     <converter>org.jooq.test.all.converters.Boolean_10_Converter</converter>
@@ -1219,13 +1219,13 @@
                                             </customTypes>
 
                                             <forcedTypes>
-                                            
+
                                                 <!-- [#3571] Rewrite types to check if nullable() and defaulted() flags are propagated -->
                                                 <forcedType>
                                                     <name>3571</name>
                                                     <expression>(?i:.*?\.t_3571\..*)</expression>
                                                 </forcedType>
-                                            
+
                                                 <!-- [#2486] Remove precision and scale from existing DECIMALs -->
                                                 <forcedType>
                                                     <name>DECIMAL</name>
@@ -1237,16 +1237,48 @@
                                                     <name>DECIMAL(21, 4)</name>
                                                     <expression>(?i:.*?\.t_2486\.(val2|val4|val6))</expression>
                                                 </forcedType>
-                                            
+
                                                 <!-- [#2486] Add precision but remove scale from existing DECIMALs -->
                                                 <forcedType>
                                                     <name>DECIMAL(20)</name>
                                                     <expression>(?i:.*?\.t_2486\.(val7|val8))</expression>
                                                 </forcedType>
-                                            
+
                                                 <forcedType>
                                                     <name>BOOLEAN</name>
-                                                    <expression>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expression>
+                                                    <expression>
+                                                        # Whitespace and comments
+                                                        (?i:
+                                                            (.*?.)?
+                                                            T_BOOLEANS.(VC|C|N)_BOOLEAN
+                                                        )
+                                                    </expression>
+                                                    <types>
+                                                        # Whitespace and comments also in types
+                                                        .*
+                                                    </types>
+                                                </forcedType>
+
+
+                                                <forcedType>
+                                                    <name>TINYINT</name>
+                                                    <expression>(?i:.*?\.T_3666\..*?)</expression>
+                                                    <types>DECIMAL\(10, 2\)</types>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>SMALLINT</name>
+                                                    <expression>(?i:.*?\.T_3666\..*?)</expression>
+                                                    <types>DECIMAL\(10\)</types>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>BIGINT</name>
+                                                    <expression>(?i:.*?\.T_3666\..*?)</expression>
+                                                    <types>VARCHAR\(\d{2}\)</types>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>DECIMAL(20, 5)</name>
+                                                    <expression>(?i:.*?\.T_3666\..*?)</expression>
+                                                    <types>DECIMAL</types>
                                                 </forcedType>
 
                                                 <!-- [#2477] Check if unsigned types work correctly -->
@@ -1364,7 +1396,7 @@
                                 </goals>
                             </execution>
                         </executions>
-                        
+
                         <configuration>
                             <mainClass>org.jooq.util.GenerationTool</mainClass>
                             <arguments>
@@ -4395,7 +4427,7 @@
                                                     <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
                                                     <converter>org.jooq.test.all.converters.Boolean_YES_NO_UC_Converter</converter>
                                                 </customType>
-                                                
+
                                                  <customType>
                                                     <name>LocalDateTime</name>
                                                     <type>java.time.LocalDateTime</type>
@@ -4409,7 +4441,7 @@
                                                     <expression>.*2155.*</expression>
                                                     <types>DATE</types>
                                                 </forcedType>
-                                                
+
                                                 <forcedType>
                                                     <name>BOOLEAN</name>
                                                     <expression>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expression>

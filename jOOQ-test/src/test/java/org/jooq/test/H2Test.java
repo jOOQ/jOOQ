@@ -49,6 +49,7 @@ import static org.jooq.impl.DSL.table;
 import static org.jooq.test.h2.generatedclasses.Tables.T_2486;
 import static org.jooq.test.h2.generatedclasses.Tables.T_2698;
 import static org.jooq.test.h2.generatedclasses.Tables.T_3571;
+import static org.jooq.test.h2.generatedclasses.Tables.T_3666;
 import static org.jooq.test.h2.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.h2.generatedclasses.Tables.T_725_LOB_TEST;
 import static org.jooq.test.h2.generatedclasses.Tables.T_785;
@@ -130,6 +131,7 @@ import org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TUnsignedRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_2486Record;
 import org.jooq.test.h2.generatedclasses.tables.records.T_2698Record;
+import org.jooq.test.h2.generatedclasses.tables.records.T_3666Record;
 import org.jooq.test.h2.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_785Record;
@@ -1073,6 +1075,18 @@ public class H2Test extends jOOQAbstractTest<
         assertTrue(T_3571.E3.getDataType().defaulted());
         assertFalse(T_3571.E4.getDataType().nullable());
         assertTrue(T_3571.E4.getDataType().defaulted());
+    }
+
+    @Test
+    public void testH2MetaData3666() {
+        TableField<T_3666Record, Byte> e5 = T_3666.E5;
+        TableField<T_3666Record, Short> e3 = T_3666.E3;
+        TableField<T_3666Record, Short> e4 = T_3666.E4;
+        TableField<T_3666Record, Long> e1 = T_3666.E1;
+        TableField<T_3666Record, BigDecimal> e2 = T_3666.E2;
+
+        assertEquals(20, T_3666.E2.getDataType().precision());
+        assertEquals(5, T_3666.E2.getDataType().scale());
     }
 
 }

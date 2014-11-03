@@ -679,14 +679,21 @@ public abstract class AbstractDatabase implements Database {
 
             String types = forcedType.getTypes();
 
-            if (expression != null
-                    && !definition.getName().matches(expression)
-                    && !definition.getQualifiedName().matches(expression)) {
-                continue forcedTypeLoop;
+            if (expression != null) {
+                Pattern p = Pattern.compile(expression, Pattern.COMMENTS);
+
+                if (     !p.matcher(definition.getName()).matches()
+                      && !p.matcher(definition.getQualifiedName()).matches()) {
+                    continue forcedTypeLoop;
+                }
             }
 
-            if (types != null && definedType != null && !definedType.getType().matches(types)) {
-                continue forcedTypeLoop;
+            if (types != null && definedType != null) {
+                Pattern p = Pattern.compile(types, Pattern.COMMENTS);
+
+                if (!p.matcher(definedType.getType()).matches()) {
+                    continue forcedTypeLoop;
+                }
             }
 
             return forcedType;

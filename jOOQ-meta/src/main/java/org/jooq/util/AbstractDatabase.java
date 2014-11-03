@@ -691,11 +691,11 @@ public abstract class AbstractDatabase implements Database {
             if (types != null && definedType != null) {
                 Pattern p = Pattern.compile(types, Pattern.COMMENTS);
 
-                if (    !p.matcher(definedType.getType()).matches()
-                     && !p.matcher(definedType.getType() + "(" + definedType.getLength() + ")").matches()
-                     && !p.matcher(definedType.getType() + "(" + definedType.getPrecision() + ")").matches()
-                     && !p.matcher(definedType.getType() + "(" + definedType.getPrecision() + "," + definedType.getScale() + ")").matches()
-                     && !p.matcher(definedType.getType() + "(" + definedType.getPrecision() + ", " + definedType.getScale() + ")").matches()) {
+                if (    ( !p.matcher(definedType.getType()).matches() )
+                     && ( !p.matcher(definedType.getType() + "(" + definedType.getLength() + ")").matches() )
+                     && ( !p.matcher(definedType.getType() + "(" + definedType.getPrecision() + ")").matches() && definedType.getScale() != 0)
+                     && ( !p.matcher(definedType.getType() + "(" + definedType.getPrecision() + "," + definedType.getScale() + ")").matches() )
+                     && ( !p.matcher(definedType.getType() + "(" + definedType.getPrecision() + ", " + definedType.getScale() + ")").matches() )) {
                     continue forcedTypeLoop;
                 }
             }

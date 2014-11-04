@@ -2271,26 +2271,6 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see DSL#trunc(Field)
-     */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Field<T> trunc();
-
-    /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
-     * @see DSL#trunc(Field, int)
-     */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    Field<T> trunc(int decimals);
-
-    /**
-     * This method is part of the pre-2.0 API. This API is maintained for
-     * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link DSLContext}
-     *
      * @see DSL#sqrt(Field)
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })

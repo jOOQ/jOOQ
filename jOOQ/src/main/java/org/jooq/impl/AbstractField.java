@@ -1321,20 +1321,6 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         return (Field<T>) DSL.ceil(numeric());
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    @Deprecated
-    public final Field<T> trunc() {
-        return DSL.trunc((Field) numeric());
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    @Deprecated
-    public final Field<T> trunc(int decimals) {
-        return (Field<T>) DSL.round(numeric(), decimals);
-    }
-
     @Override
     @Deprecated
     public final Field<BigDecimal> sqrt() {

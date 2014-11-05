@@ -99,6 +99,13 @@ public interface UDT<R extends UDTRecord<R>> extends QueryPart {
     Class<R> getRecordType();
 
     /**
+     * Create a new {@link Record} of this UDT's type.
+     *
+     * @see DSLContext#newRecord(UDT)
+     */
+    R newRecord();
+
+    /**
      * The UDT's data type as known to the database
      */
     DataType<R> getDataType();

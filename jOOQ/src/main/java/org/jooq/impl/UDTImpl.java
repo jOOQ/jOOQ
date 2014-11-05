@@ -124,6 +124,11 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
     }
 
     @Override
+    public final R newRecord() {
+        return DSL.using(new DefaultConfiguration()).newRecord(this);
+    }
+
+    @Override
     public final DataType<R> getDataType() {
         if (type == null) {
             type = new UDTDataType<R>(this);

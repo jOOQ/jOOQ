@@ -143,6 +143,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         return fields0();
     }
 
+    @Override
+    public final R newRecord() {
+        return DSL.using(new DefaultConfiguration()).newRecord(this);
+    }
+
     @SuppressWarnings({ "rawtypes" })
     @Override
     public final Row fieldsRow() {

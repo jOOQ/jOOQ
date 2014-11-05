@@ -107,6 +107,13 @@ public interface Table<R extends Record> extends TableLike<R> {
     Class<? extends R> getRecordType();
 
     /**
+     * Create a new {@link Record} of this table's type.
+     *
+     * @see DSLContext#newRecord(Table)
+     */
+    R newRecord();
+
+    /**
      * Retrieve the table's <code>IDENTITY</code> information, if available.
      * <p>
      * With SQL:2003, the concept of <code>IDENTITY</code> columns was

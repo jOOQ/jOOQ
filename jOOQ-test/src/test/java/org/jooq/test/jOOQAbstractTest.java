@@ -1844,6 +1844,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchExists() throws Exception {
+        new FetchTests(this).testFetchExists();
+    }
+
+    @Test
     public void testFetchAny() throws Exception {
         new FetchTests(this).testFetchAny();
     }

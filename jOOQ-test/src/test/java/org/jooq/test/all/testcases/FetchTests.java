@@ -105,6 +105,7 @@ import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
+import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConnectionProvider;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.SQLDataType;
@@ -480,6 +481,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testFetchValue() throws Exception {
         assertEquals(1, (int) create().fetchValue(selectOne()));
+    }
+
+    public void testFetchExists() throws Exception {
+        assertTrue(create().fetchExists(TAuthor()));
+        assertTrue(create().fetchExists(TAuthor(), TAuthor_ID().eq(1)));
+        assertFalse(create().fetchExists(TAuthor(), TAuthor_ID().eq(0)));
+        assertTrue(create().fetchExists(DSL.select(TBook_ID()).from(TBook()).groupBy(TBook_ID())));
     }
 
     public void testFetchAny() throws Exception {

@@ -2242,6 +2242,21 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public boolean fetchExists(Select<?> query) throws DataAccessException {
+        return selectOne().whereExists(query).fetchOne() != null;
+    }
+
+    @Override
+    public boolean fetchExists(Table<?> table) throws DataAccessException {
+        return fetchExists(table, trueCondition());
+    }
+
+    @Override
+    public boolean fetchExists(Table<?> table, Condition condition) throws DataAccessException {
+        return fetchExists(selectOne().from(table).where(condition));
+    }
+
+    @Override
     public int execute(Query query) {
         final Configuration previous = Utils.getConfiguration(query);
 

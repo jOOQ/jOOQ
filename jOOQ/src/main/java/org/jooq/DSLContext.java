@@ -5864,6 +5864,49 @@ public interface DSLContext extends Scope {
     int fetchCount(Table<?> table, Condition condition) throws DataAccessException;
 
     /**
+     * Check if a {@link Select} would return any records, if it were executed.
+     * <p>
+     * This wraps a pre-existing <code>SELECT</code> query in another one to
+     * check for result existence, without modifying the original
+     * <code>SELECT</code>. An example: <code><pre>
+     * -- Original query:
+     * SELECT id, title FROM book WHERE title LIKE '%a%'
+     *
+     * -- Wrapped query:
+     * SELECT EXISTS (
+     *   SELECT id, title FROM book WHERE title LIKE '%a%'
+     * )
+     * </pre></code>
+     *
+     * @param query The wrapped query
+     * @return The <code>EXISTS(...)</code> result
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    boolean fetchExists(Select<?> query) throws DataAccessException;
+
+    /**
+     * Check if a table has any records.
+     * <p>
+     * This executes <code><pre>SELECT EXISTS(SELECT * FROM table)</pre></code>
+     *
+     * @param table The table whose records to count
+     * @return The number or records in the table
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    boolean fetchExists(Table<?> table) throws DataAccessException;
+
+    /**
+     * Check if a table has any records that satisfy a condition.
+     * <p>
+     * This executes <code><pre>SELECT EXISTS(SELECT * FROM table WHERE condition)</pre></code>
+     *
+     * @param table The table whose records to count
+     * @return The number or records in the table
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    boolean fetchExists(Table<?> table, Condition condition) throws DataAccessException;
+
+    /**
      * Execute a {@link Query} in the context of this <code>DSLContext</code>.
      *
      * @param query The query to execute

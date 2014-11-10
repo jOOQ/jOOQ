@@ -12,15 +12,13 @@
           The JDBC configuration element contains information about how
           to set up the database connection used for source code generation
           -->
-        <element name="jdbc" type="tns:Jdbc" minOccurs="1"
-          maxOccurs="1" />
+        <element name="jdbc" type="tns:Jdbc" minOccurs="0"  maxOccurs="1" />
 
         <!--
           The GENERATOR configuration element contains information about
           source code generation itself
           -->
-        <element name="generator" type="tns:Generator" minOccurs="1"
-          maxOccurs="1" />
+        <element name="generator" type="tns:Generator" minOccurs="1" maxOccurs="1" />
       </all>
     </complexType>
   </element>

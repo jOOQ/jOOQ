@@ -305,7 +305,8 @@ public final class Convert {
      * <ul>
      * <li><code>null</code> is always converted to <code>null</code>,
      * regardless of the target type.</li>
-     * <li>Identity conversion is always possible</li>
+     * <li>Identity conversion (converting a value to its own type) is always
+     * possible.</li>
      * <li>All types can be converted to <code>String</code></li>
      * <li>All types can be converted to <code>Object</code></li>
      * <li>All <code>Number</code> types can be converted to other
@@ -315,6 +316,7 @@ public final class Convert {
      * <code>true</code>:
      * <ul>
      * <li><code>1</code></li>
+     * <li><code>1.0</code></li>
      * <li><code>y</code></li>
      * <li><code>yes</code></li>
      * <li><code>true</code></li>
@@ -325,6 +327,7 @@ public final class Convert {
      * Possible (case-insensitive) values for <code>false</code>:
      * <ul>
      * <li><code>0</code></li>
+     * <li><code>0.0</code></li>
      * <li><code>n</code></li>
      * <li><code>no</code></li>
      * <li><code>false</code></li>
@@ -336,6 +339,10 @@ public final class Convert {
      * <li>All <code>Date</code> types can be converted into each other</li>
      * <li>All <code>String</code> types can be converted into {@link URI},
      * {@link URL} and {@link File}</li>
+     * <li>Primitive target types behave like their wrapper types, except that
+     * <code>null</code> is converted into the initialisation value (e.g.
+     * <code>0</code> for <code>int</code>, <code>false</code> for
+     * <code>boolean</code>)</li>
      * <li><code>byte[]</code> can be converted into <code>String</code>, using
      * the platform's default charset</li>
      * <li><code>Object[]</code> can be converted into any other array type, if

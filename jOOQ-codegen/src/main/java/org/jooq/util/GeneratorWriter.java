@@ -45,6 +45,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -78,7 +79,6 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
 
     private final File          file;
-    private final PrintWriter   writer;
     private final StringBuilder sb;
     private int                 indentTabs;
     private boolean             newline = true;
@@ -87,12 +87,6 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
         file.getParentFile().mkdirs();
 
         this.file = file;
-        try {
-            this.writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
-        }
-        catch (IOException e) {
-            throw new GeneratorException("Error writing " + file.getAbsolutePath());
-        }
         this.sb = new StringBuilder();
     }
 
@@ -235,11 +229,37 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     }
 
     public final void close() {
-        String string = beforeClose(sb.toString());
+        String newContent = beforeClose(sb.toString());
 
-        writer.append(string);
-        writer.flush();
-        writer.close();
+        try {
+            // [#3756] Regenerate files only if there is a difference
+            String oldContent = null;
+            if (file.exists()) {
+                RandomAccessFile old = null;
+
+                try {
+                    old = new RandomAccessFile(file, "r");
+                    byte[] oldBytes = new byte[(int) old.length()];
+                    old.readFully(oldBytes);
+                    oldContent = new String(oldBytes, "UTF-8");
+                }
+                finally {
+                    if (old != null)
+                        old.close();
+                }
+            }
+
+            if (oldContent == null || !oldContent.equals(newContent)) {
+                PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+
+                writer.append(newContent);
+                writer.flush();
+                writer.close();
+            }
+        }
+        catch (IOException e) {
+            throw new GeneratorException("Error writing " + file.getAbsolutePath());
+        }
     }
 
     protected String beforeClose(String string) {

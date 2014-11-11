@@ -46,6 +46,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLData;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Generated;
@@ -682,6 +683,21 @@ public interface Record extends Attachable, Comparable<Record> {
      * @see #fromArray(Object...)
      */
     Object[] intoArray();
+
+    /**
+     * Convert this record into a list.
+     * <p>
+     * The resulting list has the same number of elements as this record has
+     * fields. The resulting array contains data as such:
+     * <p>
+     * <code><pre>
+     * // For arbitrary values of i
+     * record.getValue(i) == record.intoList().get(i)
+     * </pre></code>
+     * <p>
+     * This is the same as calling <code>Arrays.asList(intoArray())</code>
+     */
+    List<Object> intoList();
 
     /**
      * Return this record as a name/value map.

@@ -236,6 +236,15 @@ import org.jooq.tools.StopWatchListener;
  * <td>Yes, 1x</td>
  * </tr>
  * <tr>
+ * <td> {@link #warning(ExecuteContext)}</td>
+ * <td>Maybe, 1x</td>
+ * <td>Maybe, 1x</td>
+ * <td>Maybe, 1x</td>
+ * <td>Maybe, 1x</td>
+ * <td>Maybe, 1x</td>
+ * <td>Maybe, 1x</td>
+ * </tr>
+ * <tr>
  * <td> {@link #exception(ExecuteContext)}</td>
  * <td>Maybe, 1x</td>
  * <td>Maybe, 1x</td>

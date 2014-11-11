@@ -1459,6 +1459,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testCreateTable() throws Exception {
+        new DDLTests(this).testCreateTable();
+    }
+
+    @Test
     public void testCreateTableAsSelect() throws Exception {
         new DDLTests(this).testCreateTableAsSelect();
     }

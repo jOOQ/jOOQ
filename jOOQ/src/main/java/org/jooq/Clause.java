@@ -815,6 +815,17 @@ public enum Clause {
     CREATE_TABLE_AS,
 
     /**
+     * A column list within a {@link #CREATE_TABLE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>The parentheses</li>
+     * <li>The column list</li>
+     * </ul>
+     */
+    CREATE_TABLE_COLUMNS,
+
+    /**
      * A complete <code>CREATE VIEW</code> statement.
      */
     CREATE_VIEW,

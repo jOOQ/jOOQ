@@ -57,6 +57,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 
@@ -362,6 +363,32 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     private String varchar() {
         return SQLDataType.VARCHAR.length(10).getCastTypeName(create().configuration());
+    }
+
+    public void testCreateTable() throws Exception {
+        try {
+            create().createTable("t")
+                    .column("i", SQLDataType.INTEGER)
+                    .column("n", SQLDataType.DECIMAL.precision(3, 1))
+                    .column("s", SQLDataType.VARCHAR.length(5))
+                    .execute();
+
+            assertEquals(1,
+            create().insertInto(tableByName("t"), fieldByName("i"), fieldByName("n"), fieldByName("s"))
+                    .values(1, new BigDecimal("10.5"), "abcde")
+                    .execute());
+
+            Result<Record> r1 = create().selectFrom(tableByName("t")).fetch();
+            assertEquals(1, r1.size());
+            assertEquals(3, r1.fields().length);
+            assertEquals("i", r1.field(0).getName());
+            assertEquals("n", r1.field(1).getName());
+            assertEquals("s", r1.field(2).getName());
+            assertEquals(asList(1, new BigDecimal("10.5"), "abcde"), r1.get(0).intoList());
+        }
+        finally {
+            ignoreThrows(() -> create().dropTable("t").execute());
+        }
     }
 
     public void testCreateTableAsSelect() throws Exception {

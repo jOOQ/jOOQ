@@ -43,17 +43,25 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.CREATE_TABLE;
 import static org.jooq.Clause.CREATE_TABLE_AS;
+import static org.jooq.Clause.CREATE_TABLE_COLUMNS;
 import static org.jooq.Clause.CREATE_TABLE_NAME;
 // ...
 // ...
 // ...
+import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.Utils.DATA_SELECT_INTO_TABLE;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.CreateTableAsStep;
+import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTableFinalStep;
+import org.jooq.DataType;
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -65,20 +73,24 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
     // Cascading interface implementations for CREATE TABLE behaviour
     CreateTableAsStep<R>,
-    CreateTableFinalStep {
+    CreateTableColumnStep {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 8904572826501186329L;
+    private static final long       serialVersionUID = 8904572826501186329L;
 
-    private final Table<?>    table;
-    private Select<?>         select;
+    private final Table<?>          table;
+    private Select<?>               select;
+    private final List<Field<?>>    columnFields;
+    private final List<DataType<?>> columnTypes;
 
     CreateTableImpl(Configuration configuration, Table<?> table) {
         super(configuration);
 
         this.table = table;
+        this.columnFields = new ArrayList<Field<?>>();
+        this.columnTypes = new ArrayList<DataType<?>>();
     }
 
     // ------------------------------------------------------------------------
@@ -91,24 +103,69 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
         return this;
     }
 
+    @Override
+    public final <T> CreateTableColumnStep column(Field<T> field, DataType<T> type) {
+        columnFields.add(field);
+        columnTypes.add(type);
+        return this;
+    }
+
+    @Override
+    public final CreateTableColumnStep column(String field, DataType<?> type) {
+        columnFields.add(fieldByName(type, field));
+        columnTypes.add(type);
+        return this;
+    }
+
     // ------------------------------------------------------------------------
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxx
-        x
-        xxxx
-        xx [/pro] */
-        {
-            acceptNative(ctx);
+
+        if (select != null) {
+
+            /* [pro] xx
+            xx xxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxx
+            x
+            xxxx
+            xx [/pro] */
+            {
+                acceptCreateTableAsSelect(ctx);
+            }
+        }
+        else {
+            ctx.start(CREATE_TABLE)
+               .start(CREATE_TABLE_NAME)
+               .keyword("create table")
+               .sql(" ")
+               .visit(table)
+               .end(CREATE_TABLE_NAME)
+               .start(CREATE_TABLE_COLUMNS)
+               .sql("(")
+               .formatIndentStart()
+               .formatNewLine();
+
+            for (int i = 0; i < columnFields.size(); i++) {
+                ctx.visit(columnFields.get(i))
+                   .sql(" ")
+                   .sql(columnTypes.get(i).getCastTypeName(ctx.configuration()));
+
+                if (i < columnFields.size() - 1)
+                    ctx.sql(",").formatSeparator();
+            }
+
+            ctx.formatIndentEnd()
+               .formatNewLine()
+               .sql(")")
+               .end(CREATE_TABLE_COLUMNS)
+               .end(CREATE_TABLE);
         }
     }
 
-    private final void acceptNative(Context<?> ctx) {
+    private final void acceptCreateTableAsSelect(Context<?> ctx) {
         ctx.start(CREATE_TABLE)
            .start(CREATE_TABLE_NAME)
            .keyword("create table")

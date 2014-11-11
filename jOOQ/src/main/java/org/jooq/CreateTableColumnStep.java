@@ -40,34 +40,12 @@
  */
 package org.jooq;
 
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLITE;
-// ...
-
 /**
  * A {@link Query} that can create tables.
  *
  * @author Lukas Eder
  */
-public interface CreateTableAsStep<R extends Record> {
-
-    /**
-     * Add an <code>AS</code> clause to the <code>CREATE TABLE</code> statement.
-     */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    CreateTableFinalStep as(Select<? extends R> select);
+public interface CreateTableColumnStep extends CreateTableFinalStep {
 
     /**
      * Add a column to the column list of the <code>CREATE TABLE</code> statement.

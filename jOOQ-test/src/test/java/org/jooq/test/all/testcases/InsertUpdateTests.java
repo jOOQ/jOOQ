@@ -105,6 +105,8 @@ import org.jooq.conf.Settings;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
+import org.junit.Assume;
+
 public class InsertUpdateTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,
@@ -267,6 +269,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .execute());
 
         assertEquals(1, (int) create().fetchOne(TBook(), TBook_ID().eq(5)).getValue(TBook_LANGUAGE_ID()));
+    }
+
+    public void testInsertSetWithNulls() throws Exception {
+        Assume.assumeNotNull(TIdentityPK());
+        jOOQAbstractTest.reset = false;
+
+        IPK record = create().newRecord(TIdentityPK());
+        record.setValue(TIdentityPK_ID(), null);
+        record.setValue(TIdentityPK_VAL(), 1);
+
+        assertEquals(1,
+        create().insertInto(TIdentityPK())
+                .set(record)
+                .execute());
+
+        assertEquals(1, (int) create().fetchOne(TIdentityPK()).getValue(TIdentityPK_VAL()));
     }
 
     public void testUpdateDefaultValue() throws Exception {

@@ -1254,6 +1254,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testInsertSetWithNulls() throws Exception {
+        new InsertUpdateTests(this).testInsertSetWithNulls();
+    }
+
+    @Test
     public void testUpdateDefaultValue() throws Exception {
         new InsertUpdateTests(this).testUpdateDefaultValue();
     }

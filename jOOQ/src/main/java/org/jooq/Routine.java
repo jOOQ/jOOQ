@@ -135,6 +135,11 @@ public interface Routine<T> extends QueryPart {
     T getReturnValue();
 
     /**
+     * @return The routine's results (if available)
+     */
+    List<Result<Record>> getResults();
+
+    /**
      * @return A list of parameters passed to the stored object as argument
      */
     List<Parameter<?>> getParameters();

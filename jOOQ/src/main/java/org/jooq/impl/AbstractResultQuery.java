@@ -48,11 +48,11 @@ import static java.util.concurrent.Executors.newSingleThreadExecutor;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.impl.Utils.DATA_LOCK_ROWS_FOR_UPDATE;
+import static org.jooq.impl.Utils.consumeResultSets;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -103,9 +103,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     private List<Result<Record>>    results;
 
     // Some temp variables for String interning
-    private int[]                   internIndexes;
-    private Field<?>[]              internFields;
-    private String[]                internNames;
+    private final Intern            intern = new Intern();
 
     AbstractResultQuery(Configuration configuration) {
         super(configuration);
@@ -172,34 +170,20 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final ResultQuery<R> intern(Field<?>... fields) {
-        this.internFields = fields;
+        intern.internFields = fields;
         return this;
     }
 
     @Override
     public final ResultQuery<R> intern(int... fieldIndexes) {
-        this.internIndexes = fieldIndexes;
+        intern.internIndexes = fieldIndexes;
         return this;
     }
 
     @Override
     public final ResultQuery<R> intern(String... fieldNames) {
-        this.internNames = fieldNames;
+        intern.internNames = fieldNames;
         return this;
-    }
-
-    private final int[] internIndexes(Field<?>[] fields) {
-        if (internIndexes != null) {
-            return internIndexes;
-        }
-        else if (internFields != null) {
-            return new Fields<Record>(fields).indexesOf(internFields);
-        }
-        else if (internNames != null) {
-            return new Fields<Record>(fields).indexesOf(internNames);
-        }
-
-        return null;
     }
 
     @Override
@@ -270,7 +254,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         if (!many) {
             if (ctx.resultSet() != null) {
                 Field<?>[] fields = getFields(ctx.resultSet().getMetaData());
-                cursor = new CursorImpl<R>(ctx, listener, fields, internIndexes(fields), keepStatement(), keepResultSet(), getRecordType());
+                cursor = new CursorImpl<R>(ctx, listener, fields, intern.internIndexes(fields), keepStatement(), keepResultSet(), getRecordType());
 
                 if (!lazy) {
                     result = cursor.fetch();
@@ -285,28 +269,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         // Fetch several result sets
         else {
             results = new ArrayList<Result<Record>>();
-            boolean anyResults = false;
-
-            while (ctx.resultSet() != null) {
-                anyResults = true;
-
-                Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
-                Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, internIndexes(fields), true, false);
-                results.add(c.fetch());
-
-                if (ctx.statement().getMoreResults()) {
-                    ctx.resultSet(ctx.statement().getResultSet());
-                }
-                else {
-                    ctx.resultSet(null);
-                }
-            }
-
-            // Call this only when there was at least one ResultSet.
-            // Otherwise, this call is not supported by ojdbc...
-            if (anyResults) {
-                ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
-            }
+            consumeResultSets(ctx, listener, results, intern);
         }
 
         return result != null ? result.size() : 0;

@@ -55,6 +55,7 @@ import static org.jooq.impl.Utils.settings;
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -521,6 +522,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     @Override
     public final Object[] intoArray() {
         return into(Object[].class);
+    }
+
+    @Override
+    public final List<Object> intoList() {
+        return Arrays.asList(intoArray());
     }
 
     @Override

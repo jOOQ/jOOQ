@@ -67,6 +67,7 @@ import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.Result;
+import org.jooq.Routine;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
@@ -239,6 +240,89 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 break;
         }
         /* [/pro] */
+    }
+
+    public void testStoredProcedureWithResultSets() {
+        assumeNotNull(cRoutines());
+
+        Reflect presults;
+        Reflect presultsAndOutParameters;
+        try {
+            presults = Reflect.on(cRoutines().getPackage().getName() + ".routines.PResults");
+            presultsAndOutParameters = Reflect.on(cRoutines().getPackage().getName() + ".routines.PResultsAndOutParameters");
+            assumeNotNull(presults.create().<Object>get());
+            assumeNotNull(presultsAndOutParameters.create().<Object>get());
+        }
+        catch (ReflectException e) {
+            log.info("SKIPPING", "procedure tests with default parameters");
+            return;
+        }
+
+        Reflect executedPResults = presults.create();
+
+        executedPResults.call("setPResultSets", 0);
+        executedPResults.<Routine<?>>get().execute(create().configuration());
+        assertEquals(0, executedPResults.<Routine<?>>get().getResults().size());
+
+        executedPResults.call("setPResultSets", 1);
+        executedPResults.<Routine<?>>get().execute(create().configuration());
+        assertEquals(1, executedPResults.<Routine<?>>get().getResults().size());
+        assertEquals("a", executedPResults.<Routine<?>>get().getResults().get(0).field(0).getName());
+        assertEquals(Arrays.asList(1), executedPResults.<Routine<?>>get().getResults().get(0).sortAsc(0).getValues(0, int.class));
+
+        executedPResults.call("setPResultSets", 2);
+        executedPResults.<Routine<?>>get().execute(create().configuration());
+        assertEquals(2, executedPResults.<Routine<?>>get().getResults().size());
+        assertEquals("a", executedPResults.<Routine<?>>get().getResults().get(0).field(0).getName());
+        assertEquals("b", executedPResults.<Routine<?>>get().getResults().get(1).field(0).getName());
+        assertEquals(Arrays.asList(1), executedPResults.<Routine<?>>get().getResults().get(0).sortAsc(0).getValues(0, int.class));
+        assertEquals(Arrays.asList(1, 2), executedPResults.<Routine<?>>get().getResults().get(1).sortAsc(0).getValues(0, int.class));
+
+        executedPResults.call("setPResultSets", 3);
+        executedPResults.<Routine<?>>get().execute(create().configuration());
+        assertEquals(3, executedPResults.<Routine<?>>get().getResults().size());
+        assertEquals("a", executedPResults.<Routine<?>>get().getResults().get(0).field(0).getName());
+        assertEquals("b", executedPResults.<Routine<?>>get().getResults().get(1).field(0).getName());
+        assertEquals("c", executedPResults.<Routine<?>>get().getResults().get(2).field(0).getName());
+        assertEquals(Arrays.asList(1), executedPResults.<Routine<?>>get().getResults().get(0).sortAsc(0).getValues(0, int.class));
+        assertEquals(Arrays.asList(1, 2), executedPResults.<Routine<?>>get().getResults().get(1).sortAsc(0).getValues(0, int.class));
+        assertEquals(Arrays.asList(1, 2, 3), executedPResults.<Routine<?>>get().getResults().get(2).sortAsc(0).getValues(0, int.class));
+
+
+
+        Reflect executedPResultsAndOutParameters = presultsAndOutParameters.create();
+
+        executedPResultsAndOutParameters.call("setPResultSets", 0);
+        executedPResultsAndOutParameters.<Routine<?>>get().execute(create().configuration());
+        assertEquals(0, executedPResultsAndOutParameters.<Routine<?>>get().getResults().size());
+        assertEquals(0, (int) executedPResultsAndOutParameters.call("getPCount").get());
+
+        executedPResultsAndOutParameters.call("setPResultSets", 1);
+        executedPResultsAndOutParameters.<Routine<?>>get().execute(create().configuration());
+        assertEquals(1, executedPResultsAndOutParameters.<Routine<?>>get().getResults().size());
+        assertEquals(1, (int) executedPResultsAndOutParameters.call("getPCount").get());
+        assertEquals("a", executedPResultsAndOutParameters.<Routine<?>>get().getResults().get(0).field(0).getName());
+        assertEquals(Arrays.asList(1), executedPResultsAndOutParameters.<Routine<?>>get().getResults().get(0).sortAsc(0).getValues(0, int.class));
+
+        executedPResultsAndOutParameters.call("setPResultSets", 2);
+        executedPResultsAndOutParameters.<Routine<?>>get().execute(create().configuration());
+        assertEquals(2, executedPResultsAndOutParameters.<Routine<?>>get().getResults().size());
+        assertEquals(2, (int) executedPResultsAndOutParameters.call("getPCount").get());
+        assertEquals("a", executedPResultsAndOutParameters.<Routine<?>>get().getResults().get(0).field(0).getName());
+        assertEquals("b", executedPResultsAndOutParameters.<Routine<?>>get().getResults().get(1).field(0).getName());
+        assertEquals(Arrays.asList(1), executedPResultsAndOutParameters.<Routine<?>>get().getResults().get(0).sortAsc(0).getValues(0, int.class));
+        assertEquals(Arrays.asList(1, 2), executedPResultsAndOutParameters.<Routine<?>>get().getResults().get(1).sortAsc(0).getValues(0, int.class));
+
+        executedPResultsAndOutParameters.call("setPResultSets", 3);
+        executedPResultsAndOutParameters.<Routine<?>>get().execute(create().configuration());
+        assertEquals(3, executedPResultsAndOutParameters.<Routine<?>>get().getResults().size());
+        assertEquals(3, (int) executedPResultsAndOutParameters.call("getPCount").get());
+        assertEquals("a", executedPResultsAndOutParameters.<Routine<?>>get().getResults().get(0).field(0).getName());
+        assertEquals("b", executedPResultsAndOutParameters.<Routine<?>>get().getResults().get(1).field(0).getName());
+        assertEquals("c", executedPResultsAndOutParameters.<Routine<?>>get().getResults().get(2).field(0).getName());
+        assertEquals(Arrays.asList(1), executedPResultsAndOutParameters.<Routine<?>>get().getResults().get(0).sortAsc(0).getValues(0, int.class));
+        assertEquals(Arrays.asList(1, 2), executedPResultsAndOutParameters.<Routine<?>>get().getResults().get(1).sortAsc(0).getValues(0, int.class));
+        assertEquals(Arrays.asList(1, 2, 3), executedPResultsAndOutParameters.<Routine<?>>get().getResults().get(2).sortAsc(0).getValues(0, int.class));
     }
 
     public void testStoredProcedureWithDefaultParameters() {

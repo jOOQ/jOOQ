@@ -12,11 +12,13 @@ DROP PROCEDURE p_default/
 DROP PROCEDURE p1490/
 DROP PROCEDURE p_raise/
 DROP PROCEDURE p_raise_3696/
-DROP FUNCTION f_tables1/ 
-DROP FUNCTION f_tables2/ 
-DROP FUNCTION f_tables3/ 
-DROP FUNCTION f_tables4/ 
-DROP FUNCTION f_tables5/ 
+DROP PROCEDURE p_results/
+DROP PROCEDURE p_results_and_out_parameters/
+DROP FUNCTION f_tables1/
+DROP FUNCTION f_tables2/
+DROP FUNCTION f_tables3/
+DROP FUNCTION f_tables4/
+DROP FUNCTION f_tables5/
 DROP FUNCTION f_many_parameters/
 DROP FUNCTION f_author_exists/
 DROP FUNCTION f_one/
@@ -81,7 +83,7 @@ CREATE TABLE t_error_on_update (
 /
 
 CREATE TRIGGER t_error_on_update_trigger ON t_error_on_update FOR UPDATE
-AS 
+AS
 BEGIN
     IF (SELECT id FROM INSERTED) = 2
     BEGIN
@@ -206,7 +208,7 @@ CREATE TABLE t_3084 (
 CREATE TABLE t_3084_a (
   ID   INTEGER,
   data INTEGER,
-  
+
   CONSTRAINT uk_t_3084_a UNIQUE (ID)
 )
 /
@@ -230,7 +232,7 @@ CREATE TABLE t_3090_a (
   id1  INTEGER NOT NULL,
   id2  INTEGER     NULL,
   data INTEGER     NULL,
-  
+
   CONSTRAINT uk_t_3090_a UNIQUE (id1, id2)
 )
 /
@@ -350,7 +352,7 @@ CREATE TABLE x_unused (
 CREATE TABLE t_exotic_types (
   ID INT NOT NULL,
   UU UNIQUEIDENTIFIER,
-  
+
   CONSTRAINT pk_t_exotic_types PRIMARY KEY(ID)
 )
 /
@@ -407,7 +409,7 @@ CREATE TABLE x_test_case_85 (
 CREATE TABLE x_test_case_2025 (
   ref_id int NOT NULL,
   ref_name VARCHAR(10) NOT NULL,
-  
+
   CONSTRAINT fk_x_test_case_2025_1 FOREIGN KEY(ref_id) REFERENCES x_test_case_85(ID),
   CONSTRAINT fk_x_test_case_2025_2 FOREIGN KEY(ref_id) REFERENCES x_test_case_71(ID),
   CONSTRAINT fk_x_test_case_2025_3 FOREIGN KEY(ref_id, ref_name) REFERENCES X_UNUSED(id, name)
@@ -436,15 +438,15 @@ AS
 CREATE PROCEDURE p_create_author_by_name (@first_name VARCHAR(50), @last_name VARCHAR(50))
 AS
 BEGIN
-	INSERT INTO T_AUTHOR (ID, FIRST_NAME, LAST_NAME)
-	VALUES ((SELECT MAX(ID)+1 FROM T_AUTHOR), @first_name, @last_name);
+  INSERT INTO T_AUTHOR (ID, FIRST_NAME, LAST_NAME)
+  VALUES ((SELECT MAX(ID)+1 FROM T_AUTHOR), @first_name, @last_name);
 END
 /
 
 CREATE PROCEDURE p_create_author
 AS
 BEGIN
-	EXEC p_create_author_by_name 'William', 'Shakespeare';
+  EXEC p_create_author_by_name 'William', 'Shakespeare';
 END
 /
 
@@ -686,7 +688,7 @@ CREATE FUNCTION f_many_parameters (
 RETURNS int
 AS
 BEGIN
-	RETURN 0;
+  RETURN 0;
 END;
 /
 
@@ -701,8 +703,8 @@ END;
 /
 
 CREATE PROCEDURE p391 (
-	@i1 int, @io1 int out, @o1 int out,
-	@o2 int out, @io2 int out, @i2 int) AS
+  @i1 int, @io1 int out, @o1 int out,
+  @o2 int out, @io2 int out, @i2 int) AS
 BEGIN
   SET @o1 = @io1;
   SET @io1 = @i1;
@@ -730,7 +732,7 @@ END;
 
 CREATE PROCEDURE p1490 (@value int) AS
 BEGIN
-	RETURN;
+  RETURN;
 END;
 /
 
@@ -761,6 +763,50 @@ BEGIN
 END;
 /
 
+
+CREATE PROCEDURE p_results(
+  @p_result_sets INT
+)
+AS
+BEGIN
+  IF @p_result_sets = 1 BEGIN
+    SELECT 1 a;
+  END
+  ELSE IF @p_result_sets = 2 BEGIN
+    SELECT 1 a;
+    SELECT 1 b UNION SELECT 2 b;
+  END
+  ELSE IF @p_result_sets = 3 BEGIN
+    SELECT 1 a;
+    SELECT 1 b UNION SELECT 2 b;
+    SELECT 1 c UNION SELECT 2 c UNION SELECT 3 c;
+  END;
+END;
+/
+
+CREATE PROCEDURE p_results_and_out_parameters(
+  @p_result_sets INT,
+  @p_count INT OUT
+)
+AS
+BEGIN
+  IF @p_result_sets = 1 BEGIN
+    SELECT 1 a;
+  END
+  ELSE IF @p_result_sets = 2 BEGIN
+    SELECT 1 a;
+    SELECT 1 b UNION SELECT 2 b;
+  END
+  ELSE IF @p_result_sets = 3 BEGIN
+    SELECT 1 a;
+    SELECT 1 b UNION SELECT 2 b;
+    SELECT 1 c UNION SELECT 2 c UNION SELECT 3 c;
+  END;
+
+  SET @p_count = @p_result_sets;
+END;
+/
+
 CREATE FUNCTION f_author_exists (@author_name VARCHAR(50))
 RETURNS int
 AS
@@ -780,7 +826,7 @@ CREATE FUNCTION f_one()
 RETURNS int
 AS
 BEGIN
-	RETURN 1;
+  RETURN 1;
 END;
 /
 
@@ -788,7 +834,7 @@ CREATE FUNCTION f_number(@n int)
 RETURNS int
 AS
 BEGIN
-	RETURN @n;
+  RETURN @n;
 END;
 /
 

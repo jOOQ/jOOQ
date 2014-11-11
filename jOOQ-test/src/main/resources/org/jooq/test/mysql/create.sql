@@ -8,6 +8,8 @@ DROP PROCEDURE IF EXISTS p_create_author/
 DROP PROCEDURE IF EXISTS p_create_author_by_name/
 DROP PROCEDURE IF EXISTS p391/
 DROP PROCEDURE IF EXISTS p2412/
+DROP PROCEDURE IF EXISTS p_results/
+DROP PROCEDURE IF EXISTS p_results_and_out_parameters/
 DROP FUNCTION IF EXISTS f_author_exists/
 DROP FUNCTION IF EXISTS f_one/
 DROP FUNCTION IF EXISTS f_number/
@@ -407,6 +409,44 @@ BEGIN
   SET p_in_out = 0;
 END
 /
+
+CREATE PROCEDURE p_results(
+  IN p_result_sets INTEGER
+)
+BEGIN
+  IF p_result_sets = 1 THEN
+    SELECT 1 a FROM DUAL; 
+  ELSEIF p_result_sets = 2 THEN
+    SELECT 1 a FROM DUAL; 
+    SELECT 1 b FROM DUAL UNION SELECT 2 b FROM DUAL; 
+  ELSEIF p_result_sets = 3 THEN
+    SELECT 1 a FROM DUAL; 
+    SELECT 1 b FROM DUAL UNION SELECT 2 b FROM DUAL; 
+    SELECT 1 c FROM DUAL UNION SELECT 2 c FROM DUAL UNION SELECT 3 c FROM DUAL; 
+  END IF;
+END
+/
+
+CREATE PROCEDURE p_results_and_out_parameters(
+  IN  p_result_sets INTEGER,
+  OUT p_count INTEGER
+)
+BEGIN
+  IF p_result_sets = 1 THEN
+    SELECT 1 a FROM DUAL; 
+  ELSEIF p_result_sets = 2 THEN
+    SELECT 1 a FROM DUAL; 
+    SELECT 1 b FROM DUAL UNION SELECT 2 b FROM DUAL; 
+  ELSEIF p_result_sets = 3 THEN
+    SELECT 1 a FROM DUAL; 
+    SELECT 1 b FROM DUAL UNION SELECT 2 b FROM DUAL; 
+    SELECT 1 c FROM DUAL UNION SELECT 2 c FROM DUAL UNION SELECT 3 c FROM DUAL; 
+  END IF;
+  
+  SET p_count = p_result_sets; 
+END
+/
+
 
 CREATE FUNCTION f_author_exists (author_name VARCHAR(50))
   RETURNS INT

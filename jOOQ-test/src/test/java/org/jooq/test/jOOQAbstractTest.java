@@ -2939,6 +2939,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testStoredProcedureWithResultSets() throws Exception {
+        new RoutineAndUDTTests(this).testStoredProcedureWithResultSets();
+    }
+
+    @Test
     public void testStoredProcedureWithDefaultParameters() throws Exception {
         new RoutineAndUDTTests(this).testStoredProcedureWithDefaultParameters();
     }

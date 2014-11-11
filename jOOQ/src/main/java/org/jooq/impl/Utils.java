@@ -2290,6 +2290,34 @@ final class Utils {
             listener.warning(ctx);
     }
 
+    /**
+     * [#3681] Consume all {@link ResultSet}s from a JDBC {@link Statement}.
+     */
+    static void consumeResultSets(ExecuteContext ctx, ExecuteListener listener, List<Result<Record>> results, Intern intern) throws SQLException {
+        boolean anyResults = false;
+
+        while (ctx.resultSet() != null) {
+            anyResults = true;
+
+            Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
+            Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, intern != null ? intern.internIndexes(fields) : null, true, false);
+            results.add(c.fetch());
+
+            if (ctx.statement().getMoreResults()) {
+                ctx.resultSet(ctx.statement().getResultSet());
+            }
+            else {
+                ctx.resultSet(null);
+            }
+        }
+
+        // Call this only when there was at least one ResultSet.
+        // Otherwise, this call is not supported by ojdbc...
+        if (anyResults) {
+            ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
+        }
+    }
+
     static List<String[]> parseTXT(String string, String nullLiteral) {
         String[] strings = string.split("[\\r\\n]+");
 

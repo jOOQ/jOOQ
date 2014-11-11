@@ -51,7 +51,6 @@ import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Utils.consumeExceptions;
-import static org.jooq.impl.Utils.consumeWarnings;
 import static org.jooq.impl.Utils.settings;
 
 import java.sql.CallableStatement;
@@ -351,10 +350,6 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         catch (SQLException e) {
             consumeExceptions(ctx.configuration(), ctx.statement(), e);
             throw e;
-        }
-
-        finally {
-            consumeWarnings(ctx, listener);
         }
     }
 

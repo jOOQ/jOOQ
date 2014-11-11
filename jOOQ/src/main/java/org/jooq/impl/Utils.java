@@ -75,6 +75,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1569,10 +1570,13 @@ final class Utils {
         JDBCUtils.safeClose(ctx.resultSet());
         ctx.resultSet(null);
 
+        PreparedStatement statement = ctx.statement();
+        if (statement != null) {
+            consumeWarnings(ctx, listener);
+        }
+
         // [#385] Close statements only if not requested to keep open
         if (!keepStatement) {
-            PreparedStatement statement = ctx.statement();
-
             if (statement != null) {
                 JDBCUtils.safeClose(statement);
                 ctx.statement(null);
@@ -2266,12 +2270,21 @@ final class Utils {
     /**
      * [#3076] Consume warnings from a {@link Statement} and notify listeners.
      */
-    static final void consumeWarnings(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
+    static final void consumeWarnings(ExecuteContext ctx, ExecuteListener listener) {
 
         // [#3558] In some databases (e.g. MySQL), the call to PreparedStatement.getWarnings() issues
         // a separate SHOW WARNINGS query. Users may want to avoid this query, explicitly
-        if (!Boolean.FALSE.equals(ctx.settings().isFetchWarnings()))
-            ctx.sqlWarning(ctx.statement().getWarnings());
+        if (!Boolean.FALSE.equals(ctx.settings().isFetchWarnings())) {
+            try {
+                ctx.sqlWarning(ctx.statement().getWarnings());
+            }
+
+            // [#3741] In MySQL, calling SHOW WARNINGS on open streaming result sets can cause issues.
+            // while this has been resolved, we should expect the above call to cause other issues, too
+            catch (SQLException e) {
+                ctx.sqlWarning(new SQLWarning("Could not fetch SQLWarning", e));
+            }
+        }
 
         if (ctx.sqlWarning() != null)
             listener.warning(ctx);

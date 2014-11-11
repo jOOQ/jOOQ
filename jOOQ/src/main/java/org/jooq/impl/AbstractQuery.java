@@ -52,7 +52,6 @@ import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.Utils.DATA_COUNT_BIND_VALUES;
 import static org.jooq.impl.Utils.DATA_FORCE_STATIC_STATEMENT;
 import static org.jooq.impl.Utils.consumeExceptions;
-import static org.jooq.impl.Utils.consumeWarnings;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -412,10 +411,6 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
         catch (SQLException e) {
             consumeExceptions(ctx.configuration(), stmt, e);
             throw e;
-        }
-
-        finally {
-            consumeWarnings(ctx, listener);
         }
     }
 

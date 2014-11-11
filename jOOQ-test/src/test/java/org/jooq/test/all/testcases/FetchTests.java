@@ -1555,7 +1555,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         FetchSizeListener listener = new FetchSizeListener();
         DSLContext create = create(listener);
 
-        for (int fetchSize : Arrays.asList(0, 1)) {
+        for (int fetchSize : Arrays.asList(Integer.MIN_VALUE, 0, 1)) {
 
             // ---------------------------------------------------------------------
             // A regular pass through the cursor

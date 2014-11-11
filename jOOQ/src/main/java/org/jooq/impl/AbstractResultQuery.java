@@ -48,7 +48,6 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.Utils.DATA_LOCK_ROWS_FOR_UPDATE;
-import static org.jooq.impl.Utils.consumeWarnings;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -250,27 +249,22 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     protected final int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
-        try {
-            listener.executeStart(ctx);
+        listener.executeStart(ctx);
 
-            /* [pro] */
-            // JTDS doesn't seem to implement PreparedStatement.execute()
-            // correctly, at least not for sp_help
-            if (ctx.family() == ASE) {
-                ctx.resultSet(ctx.statement().executeQuery());
-            }
-
-            // [#1232] Avoid executeQuery() in order to handle queries that may
-            // not return a ResultSet, e.g. SQLite's pragma foreign_key_list(table)
-            else /* [/pro] */if (ctx.statement().execute()) {
-                ctx.resultSet(ctx.statement().getResultSet());
-            }
-
-            listener.executeEnd(ctx);
+        /* [pro] */
+        // JTDS doesn't seem to implement PreparedStatement.execute()
+        // correctly, at least not for sp_help
+        if (ctx.family() == ASE) {
+            ctx.resultSet(ctx.statement().executeQuery());
         }
-        finally {
-            consumeWarnings(ctx, listener);
+
+        // [#1232] Avoid executeQuery() in order to handle queries that may
+        // not return a ResultSet, e.g. SQLite's pragma foreign_key_list(table)
+        else /* [/pro] */if (ctx.statement().execute()) {
+            ctx.resultSet(ctx.statement().getResultSet());
         }
+
+        listener.executeEnd(ctx);
 
         // Fetch a single result set
         if (!many) {

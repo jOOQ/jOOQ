@@ -9,7 +9,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record> {
 
-	private static final long serialVersionUID = 1492151622;
+	private static final long serialVersionUID = -471959492;
 
 	/**
 	 * The singleton instance of <code>test.x_test_case_2025</code>
@@ -47,5 +47,13 @@ public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.mysql.
 
 	private XTestCase_2025(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, org.jooq.test.mysql.generatedclasses.Test.TEST, aliased, parameters, "An unused table in the same schema.");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record, ?>> getReferences() {
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record, ?>>asList(org.jooq.test.mysql.generatedclasses.Keys.FK_X_TEST_CASE_2025_1, org.jooq.test.mysql.generatedclasses.Keys.FK_X_TEST_CASE_2025_2, org.jooq.test.mysql.generatedclasses.Keys.FK_X_TEST_CASE_2025_3);
 	}
 }

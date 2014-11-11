@@ -9,7 +9,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -93412193;
+	private static final long serialVersionUID = 2055838662;
 
 	/**
 	 * The singleton instance of <code>test.t_book</code>
@@ -110,6 +110,6 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generated
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.mysql.generatedclasses.Keys.FK_T_BOOK_AUTHOR_ID, org.jooq.test.mysql.generatedclasses.Keys.FK_T_BOOK_CO_AUTHOR_ID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.mysql.generatedclasses.Keys.FK_T_BOOK_AUTHOR_ID, org.jooq.test.mysql.generatedclasses.Keys.FK_T_BOOK_CO_AUTHOR_ID, org.jooq.test.mysql.generatedclasses.Keys.FK_T_BOOK_LANGUAGE_ID);
 	}
 }

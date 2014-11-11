@@ -231,6 +231,27 @@ public class Routines {
 	}
 
 	/**
+	 * Call <code>test.p_results</code>
+	 */
+	public static void pResults(org.jooq.Configuration configuration, java.lang.Integer pResultSets) {
+		org.jooq.test.mysql.generatedclasses.routines.PResults p = new org.jooq.test.mysql.generatedclasses.routines.PResults();
+		p.setPResultSets(pResultSets);
+
+		p.execute(configuration);
+	}
+
+	/**
+	 * Call <code>test.p_results_and_out_parameters</code>
+	 */
+	public static java.lang.Integer pResultsAndOutParameters(org.jooq.Configuration configuration, java.lang.Integer pResultSets) {
+		org.jooq.test.mysql.generatedclasses.routines.PResultsAndOutParameters p = new org.jooq.test.mysql.generatedclasses.routines.PResultsAndOutParameters();
+		p.setPResultSets(pResultSets);
+
+		p.execute(configuration);
+		return p.getPCount();
+	}
+
+	/**
 	 * Call <code>test.p_unused</code>
 	 */
 	public static org.jooq.test.mysql.generatedclasses.routines.PUnused pUnused(org.jooq.Configuration configuration, java.lang.String in1, java.lang.Byte out2) {
@@ -240,14 +261,5 @@ public class Routines {
 
 		p.execute(configuration);
 		return p;
-	}
-
-	/**
-	 * Call <code>test.test_multi_sets</code>
-	 */
-	public static void testMultiSets(org.jooq.Configuration configuration) {
-		org.jooq.test.mysql.generatedclasses.routines.TestMultiSets p = new org.jooq.test.mysql.generatedclasses.routines.TestMultiSets();
-
-		p.execute(configuration);
 	}
 }

@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
@@ -1555,7 +1556,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         FetchSizeListener listener = new FetchSizeListener();
         DSLContext create = create(listener);
 
-        for (int fetchSize : Arrays.asList(Integer.MIN_VALUE, 0, 1)) {
+        List<Integer> sizes = dialect().family() == MYSQL
+            ? Arrays.asList(Integer.MIN_VALUE, 0, 1)
+            : Arrays.asList(                   0, 1);
+
+        for (int fetchSize : sizes) {
 
             // ---------------------------------------------------------------------
             // A regular pass through the cursor

@@ -48,7 +48,6 @@ import static java.util.concurrent.Executors.newSingleThreadExecutor;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.impl.Utils.DATA_LOCK_ROWS_FOR_UPDATE;
-import static org.jooq.impl.Utils.consumeWarnings;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -250,27 +249,22 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     protected final int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
-        try {
-            listener.executeStart(ctx);
+        listener.executeStart(ctx);
 
-            /* [pro] xx
-            xx xxxx xxxxxxx xxxx xx xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xx xxxxxxxxxx xx xxxxx xxx xxx xxxxxxx
-            xx xxxxxxxxxxxxx xx xxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            x
+        /* [pro] xx
+        xx xxxx xxxxxxx xxxx xx xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xx xxxxxxxxxx xx xxxxx xxx xxx xxxxxxx
+        xx xxxxxxxxxxxxx xx xxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
 
-            xx xxxxxxx xxxxx xxxxxxxxxxxxxx xx xxxxx xx xxxxxx xxxxxxx xxxx xxx
-            xx xxx xxxxxx x xxxxxxxxxx xxxx xxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
-            xxxx xx [/pro] */if (ctx.statement().execute()) {
-                ctx.resultSet(ctx.statement().getResultSet());
-            }
-
-            listener.executeEnd(ctx);
+        xx xxxxxxx xxxxx xxxxxxxxxxxxxx xx xxxxx xx xxxxxx xxxxxxx xxxx xxx
+        xx xxx xxxxxx x xxxxxxxxxx xxxx xxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+        xxxx xx [/pro] */if (ctx.statement().execute()) {
+            ctx.resultSet(ctx.statement().getResultSet());
         }
-        finally {
-            consumeWarnings(ctx, listener);
-        }
+
+        listener.executeEnd(ctx);
 
         // Fetch a single result set
         if (!many) {

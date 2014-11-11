@@ -40,8 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Utils.consumeWarnings;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -99,20 +97,15 @@ class BatchMultiple implements Batch {
                 ctx.sql(null);
             }
 
-            try {
-                listener.executeStart(ctx);
+            listener.executeStart(ctx);
 
-                int[] result = ctx.statement().executeBatch();
-                int[] batchRows = ctx.batchRows();
-                for (int i = 0; i < batchRows.length && i < result.length; i++)
-                    batchRows[i] = result[i];
+            int[] result = ctx.statement().executeBatch();
+            int[] batchRows = ctx.batchRows();
+            for (int i = 0; i < batchRows.length && i < result.length; i++)
+                batchRows[i] = result[i];
 
-                listener.executeEnd(ctx);
-                return result;
-            }
-            finally {
-                consumeWarnings(ctx, listener);
-            }
+            listener.executeEnd(ctx);
+            return result;
         }
 
         // [#3427] ControlFlowSignals must not be passed on to ExecuteListners

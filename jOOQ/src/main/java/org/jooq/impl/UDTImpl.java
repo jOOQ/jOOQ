@@ -40,6 +40,7 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Binding;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Converter;
@@ -162,7 +163,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
      * @param type The data type of the field
      */
     protected static final <R extends UDTRecord<R>, T> UDTField<R, T> createField(String name, DataType<T> type, UDT<R> udt) {
-        return createField(name, type, udt, "", null);
+        return createField(name, type, udt, "", (Binding<T, T>) null);
     }
 
     /**
@@ -173,7 +174,18 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
      * @param type The data type of the field
      */
     protected static final <R extends UDTRecord<R>, T> UDTField<R, T> createField(String name, DataType<T> type, UDT<R> udt, String comment) {
-        return createField(name, type, udt, comment, null);
+        return createField(name, type, udt, comment, (Binding<T, T>) null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link UDTField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected static final <R extends UDTRecord<R>, T, U> UDTField<R, U> createField(String name, DataType<T> type, UDT<R> udt, String comment, Converter<T, U> converter) {
+        return createField(name, type, udt, comment, converter == null ? null : new DefaultBinding<T, U>(converter, type.isLob()));
     }
 
     /**
@@ -184,12 +196,12 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
      * @param type The data type of the field
      */
     @SuppressWarnings("unchecked")
-    protected static final <R extends UDTRecord<R>, T, U> UDTField<R, U> createField(String name, DataType<T> type, UDT<R> udt, String comment, Converter<T, U> converter) {
-        final DataType<U> actualType = converter == null
+    protected static final <R extends UDTRecord<R>, T, U> UDTField<R, U> createField(String name, DataType<T> type, UDT<R> udt, String comment, Binding<T, U> binding) {
+        final DataType<U> actualType = binding == null
             ? (DataType<U>) type
-            : type.asConvertedDataType(converter);
+            : type.asConvertedDataType(binding);
 
-        final UDTFieldImpl<R, U> udtField = new UDTFieldImpl<R, U>(name, actualType, udt, comment, converter);
+        final UDTFieldImpl<R, U> udtField = new UDTFieldImpl<R, U>(name, actualType, udt, comment, binding);
 
         return udtField;
     }

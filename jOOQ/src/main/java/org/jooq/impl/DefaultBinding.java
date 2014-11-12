@@ -134,7 +134,7 @@ import org.jooq.util.postgres.PostgresUtils;
 /**
  * @author Lukas Eder
  */
-public class DefaultBinding<T, U> implements Binding<U> {
+public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final JooqLogger     log              = JooqLogger.getLogger(DefaultBinding.class);
     private static final char[] HEX              = "0123456789abcdef".toCharArray();
@@ -167,6 +167,11 @@ public class DefaultBinding<T, U> implements Binding<U> {
         this.converter = converter;
         this.isLob = isLob;
         this.paramName = paramName;
+    }
+
+    @Override
+    public Converter<T, U> converter() {
+        return converter;
     }
 
     @Override

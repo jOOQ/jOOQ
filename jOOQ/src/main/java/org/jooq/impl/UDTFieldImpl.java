@@ -41,8 +41,8 @@
 
 package org.jooq.impl;
 
+import org.jooq.Binding;
 import org.jooq.Context;
-import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.UDT;
 import org.jooq.UDTField;
@@ -59,8 +59,8 @@ class UDTFieldImpl<R extends UDTRecord<R>, T> extends AbstractField<T> implement
 
     private final UDT<R>      udt;
 
-    UDTFieldImpl(String name, DataType<T> type, UDT<R> udt, String comment, Converter<?, T> converter) {
-        super(name, type, comment, converter);
+    UDTFieldImpl(String name, DataType<T> type, UDT<R> udt, String comment, Binding<?, T> binding) {
+        super(name, type, comment, binding);
 
         this.udt = udt;
 

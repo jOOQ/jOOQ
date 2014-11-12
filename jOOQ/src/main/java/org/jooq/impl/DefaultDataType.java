@@ -62,6 +62,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 // ...
+import org.jooq.Binding;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.DataType;
@@ -586,7 +587,12 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final <U> DataType<U> asConvertedDataType(Converter<? super T, U> converter) {
-        return new ConvertedDataType<T, U>(this, converter);
+        return asConvertedDataType(new DefaultBinding<T, U>((Converter) converter, isLob()));
+    }
+
+    @Override
+    public final <U> DataType<U> asConvertedDataType(Binding<? super T, U> binding) {
+        return new ConvertedDataType<T, U>(this, binding);
     }
 
     @Override

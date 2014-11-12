@@ -40,6 +40,7 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Binding;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.DataType;
@@ -54,15 +55,15 @@ class ConvertedDataType<T, U> extends DefaultDataType<U> {
     /**
      * Generated UID
      */
-    private static final long             serialVersionUID = -2321926692580974126L;
+    private static final long           serialVersionUID = -2321926692580974126L;
 
-    private final DataType<T>             delegate;
-    private final Converter<? super T, U> converter;
+    private final DataType<T>           delegate;
+    private final Binding<? super T, U> binding;
 
-    ConvertedDataType(DataType<T> delegate, Converter<? super T, U> converter) {
+    ConvertedDataType(DataType<T> delegate, Binding<? super T, U> binding) {
         super(
             null,
-            converter.toType(),
+            binding.converter().toType(),
             delegate.getTypeName(),
             delegate.getCastTypeName(),
             delegate.precision(),
@@ -73,7 +74,7 @@ class ConvertedDataType<T, U> extends DefaultDataType<U> {
         );
 
         this.delegate = delegate;
-        this.converter = converter;
+        this.binding = binding;
     }
 
     @Override
@@ -94,17 +95,21 @@ class ConvertedDataType<T, U> extends DefaultDataType<U> {
     @SuppressWarnings("unchecked")
     @Override
     public U convert(Object object) {
-        if (converter.toType().isInstance(object)) {
+        if (binding.converter().toType().isInstance(object)) {
             return (U) object;
         }
 
         // [#3200] Try to convert arbitrary objects to T
         else {
-            return converter.from(delegate.convert(object));
+            return binding.converter().from(delegate.convert(object));
         }
     }
 
+    Binding<? super T, U> binding() {
+        return binding;
+    }
+
     Converter<? super T, U> converter() {
-        return converter;
+        return binding.converter();
     }
 }

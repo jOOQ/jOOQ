@@ -107,6 +107,11 @@ public interface DataType<T> extends Serializable {
     <U> DataType<U> asConvertedDataType(Converter<? super T, U> converter);
 
     /**
+     * Retrieve the data type for a given converter.
+     */
+    <U> DataType<U> asConvertedDataType(Binding<? super T, U> converter);
+
+    /**
      * Retrieve the dialect-specific type name associated with this data type.
      */
     String getTypeName();

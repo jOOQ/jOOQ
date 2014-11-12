@@ -51,6 +51,7 @@ import java.sql.Timestamp;
 
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultBinding;
+import org.jooq.impl.SQLDataType;
 
 /**
  * An SPI (Service Provider Interface) that exposes all low-level interactions
@@ -61,9 +62,18 @@ import org.jooq.impl.DefaultBinding;
  * internal support for bind variable types is implemented in
  * {@link DefaultBinding}.
  *
+ * @param <T> The database type - i.e. any type available from
+ *            {@link SQLDataType}
+ * @param <U> The user type
  * @author Lukas Eder
  */
-public interface Binding<T> extends Serializable {
+public interface Binding<T, U> extends Serializable {
+	
+    /**
+     * A converter that can convert between the database type and the custom
+     * type.
+     */
+    Converter<T, U> converter();
 
     /**
      * Generate SQL code for the bind variable.
@@ -108,7 +118,7 @@ public interface Binding<T> extends Serializable {
      *             {@link SQLException}s to the caller to be wrapped in
      *             {@link DataAccessException}s.
      */
-    void sql(BindingSQLContext<T> ctx) throws SQLException;
+    void sql(BindingSQLContext<U> ctx) throws SQLException;
 
     /**
      * Register a {@link CallableStatement}'s <code>OUT</code> parameter.
@@ -118,7 +128,7 @@ public interface Binding<T> extends Serializable {
      *             {@link SQLException}s to the caller to be wrapped in
      *             {@link DataAccessException}s.
      */
-    void register(BindingRegisterContext<T> ctx) throws SQLException;
+    void register(BindingRegisterContext<U> ctx) throws SQLException;
 
     /**
      * Set a {@link PreparedStatement}'s <code>IN</code> parameter.
@@ -128,7 +138,7 @@ public interface Binding<T> extends Serializable {
      *             {@link SQLException}s to the caller to be wrapped in
      *             {@link DataAccessException}s.
      */
-    void set(BindingSetStatementContext<T> ctx) throws SQLException;
+    void set(BindingSetStatementContext<U> ctx) throws SQLException;
 
     /**
      * Set a {@link SQLOutput}'s <code>IN</code> parameter.
@@ -138,7 +148,7 @@ public interface Binding<T> extends Serializable {
      *             {@link SQLException}s to the caller to be wrapped in
      *             {@link DataAccessException}s.
      */
-    void set(BindingSetSQLOutputContext<T> ctx) throws SQLException;
+    void set(BindingSetSQLOutputContext<U> ctx) throws SQLException;
 
     /**
      * Get a {@link ResultSet}'s <code>OUT</code> value.
@@ -152,7 +162,7 @@ public interface Binding<T> extends Serializable {
      *             {@link SQLException}s to the caller to be wrapped in
      *             {@link DataAccessException}s.
      */
-    void get(BindingGetResultSetContext<T> ctx) throws SQLException;
+    void get(BindingGetResultSetContext<U> ctx) throws SQLException;
 
     /**
      * Get a {@link CallableStatement}'s <code>OUT</code> value.
@@ -166,7 +176,7 @@ public interface Binding<T> extends Serializable {
      *             {@link SQLException}s to the caller to be wrapped in
      *             {@link DataAccessException}s.
      */
-    void get(BindingGetStatementContext<T> ctx) throws SQLException;
+    void get(BindingGetStatementContext<U> ctx) throws SQLException;
 
     /**
      * Get a {@link SQLInput}'s <code>OUT</code> value.
@@ -180,5 +190,5 @@ public interface Binding<T> extends Serializable {
      *             {@link SQLException}s to the caller to be wrapped in
      *             {@link DataAccessException}s.
      */
-    void get(BindingGetSQLInputContext<T> ctx) throws SQLException;
+    void get(BindingGetSQLInputContext<U> ctx) throws SQLException;
 }

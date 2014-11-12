@@ -261,15 +261,10 @@ class BetweenAndSteps extends Generators {
             // ------------------------------------------------------------------------
 
             @Override
-            public final void bind(BindContext context) {
-                delegate(context.configuration()).bind(context);
+            public final void accept(Context<?> ctx) {
+                delegate(ctx.configuration()).accept(ctx);
             }
-        
-            @Override
-            public final void toSQL(RenderContext context) {
-                delegate(context.configuration()).toSQL(context);
-            }
-        
+
             @Override
             public final Clause[] clauses(Context<?> ctx) {
                 return delegate(ctx.configuration()).clauses(ctx);

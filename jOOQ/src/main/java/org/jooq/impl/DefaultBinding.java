@@ -1352,7 +1352,7 @@ public class DefaultBinding<T, U> implements Binding<U> {
         }
         /* [pro] xx
         xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
+            xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
         x
         xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
@@ -1504,7 +1504,7 @@ public class DefaultBinding<T, U> implements Binding<U> {
         }
         /* [pro] xx
         xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
+            xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
         x
         xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
@@ -1635,7 +1635,7 @@ public class DefaultBinding<T, U> implements Binding<U> {
         }
         /* [pro] xx
         xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
+            xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
         x
         xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
@@ -1655,7 +1655,7 @@ public class DefaultBinding<T, U> implements Binding<U> {
 
 
     /* [pro] xx
-    xxxxxxx xxxxxx xxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxx xxxxxx xxxxxxx xxxxxxx xxxxxxxxxxxxxxx xxxxx xxxxxx xxxxxxxxxxxx x
+    xxxxxxx xxxxxx xxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxx xxxxxxx xxxxxxxxxxxxxxx xxxxx xxxxxx xxxxxxxxxxxx x
         xx xxxxxx xx xxxxx x
             xxxxxx xxxxx
         x

@@ -9,13 +9,14 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3666 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3666 {
 
-	private static final long serialVersionUID = -1437226444;
+	private static final long serialVersionUID = -1550635578;
 
 	private java.lang.Long       e1;
 	private java.math.BigDecimal e2;
 	private java.lang.Short      e3;
 	private java.lang.Short      e4;
 	private java.lang.Byte       e5;
+	private java.math.BigDecimal e6;
 
 	public T_3666() {}
 
@@ -24,13 +25,15 @@ public class T_3666 implements org.jooq.test.h2.generatedclasses.tables.interfac
 		java.math.BigDecimal e2,
 		java.lang.Short      e3,
 		java.lang.Short      e4,
-		java.lang.Byte       e5
+		java.lang.Byte       e5,
+		java.math.BigDecimal e6
 	) {
 		this.e1 = e1;
 		this.e2 = e2;
 		this.e3 = e3;
 		this.e4 = e4;
 		this.e5 = e5;
+		this.e6 = e6;
 	}
 
 	@Override
@@ -88,6 +91,17 @@ public class T_3666 implements org.jooq.test.h2.generatedclasses.tables.interfac
 		return this;
 	}
 
+	@Override
+	public java.math.BigDecimal getE6() {
+		return this.e6;
+	}
+
+	@Override
+	public T_3666 setE6(java.math.BigDecimal e6) {
+		this.e6 = e6;
+		return this;
+	}
+
 	// -------------------------------------------------------------------------
 	// FROM and INTO
 	// -------------------------------------------------------------------------
@@ -102,6 +116,7 @@ public class T_3666 implements org.jooq.test.h2.generatedclasses.tables.interfac
 		setE3(from.getE3());
 		setE4(from.getE4());
 		setE5(from.getE5());
+		setE6(from.getE6());
 	}
 
 	/**

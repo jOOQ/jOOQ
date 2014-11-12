@@ -695,13 +695,8 @@ implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final void bind(BindContext context) {
-        delegate(context.configuration()).bind(context);
-    }
-
-    @Override
-    public final void toSQL(RenderContext context) {
-        delegate(context.configuration()).toSQL(context);
+    public final void accept(Context<?> ctx) {
+        delegate(ctx.configuration()).accept(ctx);
     }
 
     @Override

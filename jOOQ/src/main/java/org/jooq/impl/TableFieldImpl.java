@@ -45,9 +45,9 @@ import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_REFERENCE;
 import static org.jooq.impl.Utils.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
+import org.jooq.Binding;
 import org.jooq.Clause;
 import org.jooq.Context;
-import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Record;
 import org.jooq.Table;
@@ -66,8 +66,8 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
 
     private final Table<R>    table;
 
-    TableFieldImpl(String name, DataType<T> type, Table<R> table, String comment, Converter<?, T> converter) {
-        super(name, type, comment, converter);
+    TableFieldImpl(String name, DataType<T> type, Table<R> table, String comment, Binding<?, T> binding) {
+        super(name, type, comment, binding);
 
         this.table = table;
     }

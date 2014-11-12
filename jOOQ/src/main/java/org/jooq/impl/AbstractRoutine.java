@@ -67,6 +67,7 @@ import java.util.Set;
 import org.jooq.AggregateFunction;
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
+import org.jooq.Binding;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -752,7 +753,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
      * @param type The data type of the field
      */
     protected static final <T> Parameter<T> createParameter(String name, DataType<T> type) {
-        return createParameter(name, type, false, null);
+        return createParameter(name, type, false, (Binding<T, T>) null);
     }
 
     /**
@@ -765,7 +766,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
      *            {@link Parameter#isDefaulted()}
      */
     protected static final <T> Parameter<T> createParameter(String name, DataType<T> type, boolean isDefaulted) {
-        return createParameter(name, type, isDefaulted, null);
+        return createParameter(name, type, isDefaulted, (Binding<T, T>) null);
     }
 
     /**
@@ -778,7 +779,25 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
      *            {@link Parameter#isDefaulted()}
      */
     protected static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, Converter<T, U> converter) {
-        return new ParameterImpl<U>(name, type, isDefaulted, converter);
+        return createParameter(name, type, isDefaulted, new DefaultBinding<T, U>(converter, type.isLob()));
+    }
+
+    /**
+     * Subclasses may call this method to create {@link UDTField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     * @param isDefaulted Whether the parameter is defaulted (see
+     *            {@link Parameter#isDefaulted()}
+     */
+    @SuppressWarnings("unchecked")
+    protected static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, Binding<T, U> binding) {
+        final DataType<U> actualType = binding == null
+            ? (DataType<U>) type
+            : type.asConvertedDataType(binding);
+
+        return new ParameterImpl<U>(name, actualType, isDefaulted, binding);
     }
 
     /**

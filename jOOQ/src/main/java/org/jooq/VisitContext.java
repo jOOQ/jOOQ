@@ -40,7 +40,6 @@
  */
 package org.jooq;
 
-import java.util.Map;
 
 /**
  * A context object for {@link QueryPart} traversal passed to registered
@@ -50,44 +49,6 @@ import java.util.Map;
  * @see VisitListener
  */
 public interface VisitContext extends Scope {
-
-    /**
-     * Get all custom data from this <code>VisitContext</code>.
-     * <p>
-     * This corresponds to {@link Context#data()} returned from
-     * {@link #context()}.
-     *
-     * @return The custom data. This is never <code>null</code>
-     * @see VisitListener
-     */
-    Map<Object, Object> data();
-
-    /**
-     * Get some custom data from this <code>VisitContext</code>.
-     * <p>
-     * This corresponds to {@link Context#data(Object)} returned from
-     * {@link #context()}.
-     *
-     * @param key A key to identify the custom data
-     * @return The custom data or <code>null</code> if no such data is contained
-     *         in this <code>VisitListener</code>
-     * @see VisitListener
-     */
-    Object data(Object key);
-
-    /**
-     * Set some custom data to this <code>VisitContext</code>.
-     * <p>
-     * This corresponds to {@link Context#data(Object, Object)} returned from
-     * {@link #context()}.
-     *
-     * @param key A key to identify the custom data
-     * @param value The custom data
-     * @return The previously set custom data or <code>null</code> if no data
-     *         was previously set for the given key
-     * @see VisitContext
-     */
-    Object data(Object key, Object value);
 
     /**
      * The most recent clause that was encountered through

@@ -51,7 +51,6 @@ import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Utils.consumeExceptions;
-import static org.jooq.impl.Utils.consumeWarnings;
 import static org.jooq.impl.Utils.settings;
 
 import java.sql.CallableStatement;
@@ -79,6 +78,7 @@ import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Package;
 import org.jooq.Parameter;
+import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Routine;
@@ -114,6 +114,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private final List<Parameter<?>>          outParameters;
     private final DataType<T>                 type;
     private Parameter<T>                      returnParameter;
+    private List<Result<Record>>              results;
     private boolean                           overloaded;
     private boolean                           hasDefaultedParameters;
 
@@ -127,7 +128,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private transient Field<T>                function;
 
     private Configuration                     configuration;
-    private final Map<Parameter<?>, Object>   results;
+    private final Map<Parameter<?>, Object>   outValues;
     private final Map<Parameter<?>, Integer>  parameterIndexes;
 
     // ------------------------------------------------------------------------
@@ -164,10 +165,11 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         this.allParameters = new ArrayList<Parameter<?>>();
         this.inParameters = new ArrayList<Parameter<?>>();
         this.outParameters = new ArrayList<Parameter<?>>();
+        this.results = new ArrayList<Result<Record>>();
         this.inValues = new HashMap<Parameter<?>, Field<?>>();
         this.inValuesDefaulted = new HashSet<Parameter<?>>();
         this.inValuesNonDefaulted = new HashSet<Parameter<?>>();
-        this.results = new HashMap<Parameter<?>, Object>();
+        this.outValues = new HashMap<Parameter<?>, Object>();
         this.type = converter == null
             ? (DataType<T>) type
             : type.asConvertedDataType((Converter) converter);
@@ -241,6 +243,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     @Override
     public final int execute() {
+        results.clear();
+        outValues.clear();
+
         // Procedures (no return value) are always executed as CallableStatement
         if (type == null) {
             return executeCallableStatement();
@@ -283,13 +288,13 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private final int executeSelectFrom() {
         DSLContext create = create(configuration);
         Result<?> result = create.selectFrom(table(asField())).fetch();
-        results.put(returnParameter, result);
+        outValues.put(returnParameter, result);
         return 0;
     }
 
     private final int executeSelect() {
         final Field<T> field = asField();
-        results.put(returnParameter, create(configuration).select(field).fetchOne(field));
+        outValues.put(returnParameter, create(configuration).select(field).fetchOne(field));
         return 0;
     }
 
@@ -317,6 +322,11 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
             execute0(ctx, listener);
 
+            /* [pro] xx
+            xx xxxxxxx xxx xxxxx xx xxxxxxxxx xxxxxx xxxx xxx xxxx xxxxxxxxx
+            xx xxx xxxxxxxxxx xx xxxxxxxx xx xxx xxxxxx
+            xx [/pro] */
+            Utils.consumeResultSets(ctx, listener, results, null);
             fetchOutParameters(ctx);
             return 0;
         }
@@ -343,7 +353,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private final void execute0(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         try {
             listener.executeStart(ctx);
-            ctx.statement().execute();
+
+            if (ctx.statement().execute())
+                ctx.resultSet(ctx.statement().getResultSet());
+
             listener.executeEnd(ctx);
         }
 
@@ -351,10 +364,6 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         catch (SQLException e) {
             consumeExceptions(ctx.configuration(), ctx.statement(), e);
             throw e;
-        }
-
-        finally {
-            consumeWarnings(ctx, listener);
         }
     }
 
@@ -569,7 +578,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         );
 
         parameter.getBinding().get(out);
-        results.put(parameter, out.value());
+        outValues.put(parameter, out.value());
     }
 
     private final void registerOutParameters(Configuration c, CallableStatement statement) throws SQLException {
@@ -602,9 +611,14 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         return null;
     }
 
+    @Override
+    public final List<Result<Record>> getResults() {
+        return results;
+    }
+
     @SuppressWarnings("unchecked")
     protected final <Z> Z getValue(Parameter<Z> parameter) {
-        return (Z) results.get(parameter);
+        return (Z) outValues.get(parameter);
     }
 
     protected final Map<Parameter<?>, Field<?>> getInValues() {

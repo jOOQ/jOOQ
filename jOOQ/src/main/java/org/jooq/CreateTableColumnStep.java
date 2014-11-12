@@ -40,73 +40,22 @@
  */
 package org.jooq;
 
-
-
 /**
- * UDT definition
+ * A {@link Query} that can create tables.
  *
- * @param <R> The record type
  * @author Lukas Eder
  */
-public interface UDT<R extends UDTRecord<R>> extends QueryPart {
+public interface CreateTableColumnStep extends CreateTableFinalStep {
 
     /**
-     * Get this UDT's fields as a {@link Row}
+     * Add a column to the column list of the <code>CREATE TABLE</code> statement.
      */
-    Row fieldsRow();
+    @Support
+    <T> CreateTableColumnStep column(Field<T> field, DataType<T> type);
 
     /**
-     * Get a specific field from this UDT.
-     *
-     * @see Row#field(Field)
+     * Add a column to the column list of the <code>CREATE TABLE</code> statement.
      */
-    <T> Field<T> field(Field<T> field);
-
-    /**
-     * Get a specific field from this UDT.
-     *
-     * @see Row#field(String)
-     */
-    Field<?> field(String name);
-
-    /**
-     * Get a specific field from this UDT.
-     *
-     * @see Row#field(int)
-     */
-    Field<?> field(int index);
-
-    /**
-     * Get all fields from this UDT.
-     *
-     * @see Row#fields()
-     */
-    Field<?>[] fields();
-
-    /**
-     * Get the UDT schema
-     */
-    Schema getSchema();
-
-    /**
-     * The name of this UDT
-     */
-    String getName();
-
-    /**
-     * @return The record type produced by this table
-     */
-    Class<R> getRecordType();
-
-    /**
-     * Create a new {@link Record} of this UDT's type.
-     *
-     * @see DSLContext#newRecord(UDT)
-     */
-    R newRecord();
-
-    /**
-     * The UDT's data type as known to the database
-     */
-    DataType<R> getDataType();
+    @Support
+    CreateTableColumnStep column(String field, DataType<?> type);
 }

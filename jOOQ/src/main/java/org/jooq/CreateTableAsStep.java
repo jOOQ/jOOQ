@@ -68,4 +68,16 @@ public interface CreateTableAsStep<R extends Record> {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableFinalStep as(Select<? extends R> select);
+
+    /**
+     * Add a column to the column list of the <code>CREATE TABLE</code> statement.
+     */
+    @Support
+    <T> CreateTableColumnStep column(Field<T> field, DataType<T> type);
+
+    /**
+     * Add a column to the column list of the <code>CREATE TABLE</code> statement.
+     */
+    @Support
+    CreateTableColumnStep column(String field, DataType<?> type);
 }

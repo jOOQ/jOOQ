@@ -42,7 +42,6 @@ package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
-import static org.jooq.impl.Utils.consumeWarnings;
 import static org.jooq.impl.Utils.dataTypes;
 import static org.jooq.impl.Utils.fields;
 import static org.jooq.impl.Utils.visitAll;
@@ -152,20 +151,15 @@ class BatchSingle implements BatchBindStep {
                 ctx.statement().addBatch();
             }
 
-            try {
-                listener.executeStart(ctx);
-                int[] result = ctx.statement().executeBatch();
+            listener.executeStart(ctx);
+            int[] result = ctx.statement().executeBatch();
 
-                int[] batchRows = ctx.batchRows();
-                for (int i = 0; i < batchRows.length && i < result.length; i++)
-                    batchRows[i] = result[i];
+            int[] batchRows = ctx.batchRows();
+            for (int i = 0; i < batchRows.length && i < result.length; i++)
+                batchRows[i] = result[i];
 
-                listener.executeEnd(ctx);
-                return result;
-            }
-            finally {
-                consumeWarnings(ctx, listener);
-            }
+            listener.executeEnd(ctx);
+            return result;
         }
 
         // [#3427] ControlFlowSignals must not be passed on to ExecuteListners

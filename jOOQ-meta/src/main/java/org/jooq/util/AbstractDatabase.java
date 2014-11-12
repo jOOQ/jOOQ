@@ -141,6 +141,8 @@ public abstract class AbstractDatabase implements Database {
     private transient Map<SchemaDefinition, List<RoutineDefinition>>         routinesBySchema;
     private transient Map<SchemaDefinition, List<PackageDefinition>>         packagesBySchema;
 
+    private static Map<String, Pattern>                                      patterns;
+
     // Other caches
     private final Map<Table<?>, Boolean>                                     exists;
 
@@ -194,6 +196,19 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return result;
+    }
+
+    final static Pattern pattern(String regex) {
+        if (patterns == null)
+            patterns = new HashMap<String, Pattern>();
+
+        Pattern pattern = patterns.get(regex);
+        if (pattern == null) {
+            pattern = Pattern.compile(regex, Pattern.COMMENTS);
+            patterns.put(regex, pattern);
+        }
+
+        return pattern;
     }
 
     @Override
@@ -679,14 +694,27 @@ public abstract class AbstractDatabase implements Database {
 
             String types = forcedType.getTypes();
 
-            if (expression != null
-                    && !definition.getName().matches(expression)
-                    && !definition.getQualifiedName().matches(expression)) {
-                continue forcedTypeLoop;
+            if (expression != null) {
+                Pattern p = pattern(expression);
+
+                if (     !p.matcher(definition.getName()).matches()
+                      && !p.matcher(definition.getQualifiedName()).matches()) {
+                    continue forcedTypeLoop;
+                }
             }
 
-            if (types != null && definedType != null && !definedType.getType().matches(types)) {
-                continue forcedTypeLoop;
+            if (types != null && definedType != null) {
+                Pattern p = pattern(types);
+
+                if (    ( !p.matcher(definedType.getType()).matches() )
+                     && (     definedType.getLength() == 0
+                     ||   !p.matcher(definedType.getType() + "(" + definedType.getLength() + ")").matches())
+                     && (     definedType.getScale() != 0
+                     ||   !p.matcher(definedType.getType() + "(" + definedType.getPrecision() + ")").matches())
+                     && ( !p.matcher(definedType.getType() + "(" + definedType.getPrecision() + "," + definedType.getScale() + ")").matches() )
+                     && ( !p.matcher(definedType.getType() + "(" + definedType.getPrecision() + ", " + definedType.getScale() + ")").matches() )) {
+                    continue forcedTypeLoop;
+                }
             }
 
             return forcedType;
@@ -883,7 +911,7 @@ public abstract class AbstractDatabase implements Database {
         definitionsLoop: for (T definition : definitions) {
             if (excludes != null) {
                 for (String exclude : excludes) {
-                    Pattern p = Pattern.compile(exclude, Pattern.COMMENTS);
+                    Pattern p = pattern(exclude);
 
                     if (exclude != null &&
                             (p.matcher(definition.getName()).matches() ||
@@ -899,7 +927,7 @@ public abstract class AbstractDatabase implements Database {
 
             if (includes != null) {
                 for (String include : includes) {
-                    Pattern p = Pattern.compile(include, Pattern.COMMENTS);
+                    Pattern p = pattern(include);
 
                     if (include != null &&
                             (p.matcher(definition.getName()).matches() ||

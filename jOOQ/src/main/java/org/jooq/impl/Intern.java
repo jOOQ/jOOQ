@@ -38,75 +38,39 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq;
+package org.jooq.impl;
 
+import java.io.Serializable;
 
+import org.jooq.Field;
+import org.jooq.Record;
 
 /**
- * UDT definition
- *
- * @param <R> The record type
  * @author Lukas Eder
  */
-public interface UDT<R extends UDTRecord<R>> extends QueryPart {
+class Intern implements Serializable {
 
     /**
-     * Get this UDT's fields as a {@link Row}
+     * Generated UID
      */
-    Row fieldsRow();
+    private static final long serialVersionUID = 6455756912567274014L;
 
-    /**
-     * Get a specific field from this UDT.
-     *
-     * @see Row#field(Field)
-     */
-    <T> Field<T> field(Field<T> field);
+    // Some temp variables for String interning
+    int[]      internIndexes;
+    Field<?>[] internFields;
+    String[]   internNames;
 
-    /**
-     * Get a specific field from this UDT.
-     *
-     * @see Row#field(String)
-     */
-    Field<?> field(String name);
+    final int[] internIndexes(Field<?>[] fields) {
+        if (internIndexes != null) {
+            return internIndexes;
+        }
+        else if (internFields != null) {
+            return new Fields<Record>(fields).indexesOf(internFields);
+        }
+        else if (internNames != null) {
+            return new Fields<Record>(fields).indexesOf(internNames);
+        }
 
-    /**
-     * Get a specific field from this UDT.
-     *
-     * @see Row#field(int)
-     */
-    Field<?> field(int index);
-
-    /**
-     * Get all fields from this UDT.
-     *
-     * @see Row#fields()
-     */
-    Field<?>[] fields();
-
-    /**
-     * Get the UDT schema
-     */
-    Schema getSchema();
-
-    /**
-     * The name of this UDT
-     */
-    String getName();
-
-    /**
-     * @return The record type produced by this table
-     */
-    Class<R> getRecordType();
-
-    /**
-     * Create a new {@link Record} of this UDT's type.
-     *
-     * @see DSLContext#newRecord(UDT)
-     */
-    R newRecord();
-
-    /**
-     * The UDT's data type as known to the database
-     */
-    DataType<R> getDataType();
+        return null;
+    }
 }

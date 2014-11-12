@@ -41,6 +41,8 @@
 package org.jooq.util;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.Set;
 
 
 /**
@@ -261,20 +263,28 @@ abstract class AbstractGenerator implements Generator {
 
     /**
      * If file is a directory, recursively empty its children.
-     * If file is a file, delete it
+     * If file is a file, delete it.
      */
     protected void empty(File file, String suffix) {
+        empty(file, suffix, Collections.<File>emptySet());
+    }
+
+    /**
+     * If file is a directory, recursively empty its children.
+     * If file is a file, delete it, except if it is in the list of files to keep.
+     */
+    protected void empty(File file, String suffix, Set<File> keep) {
         if (file != null) {
             if (file.isDirectory()) {
                 File[] children = file.listFiles();
 
                 if (children != null) {
                     for (File child : children) {
-                        empty(child, suffix);
+                        empty(child, suffix, keep);
                     }
                 }
             } else {
-                if (file.getName().endsWith(suffix)) {
+                if (file.getName().endsWith(suffix) && !keep.contains(file)) {
                     file.delete();
                 }
             }

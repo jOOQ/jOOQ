@@ -672,10 +672,10 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         JooqLogger l = JooqLogger.getLogger(Constants.class);
         String message;
 
-        message = "Thank you for using jOOQ";
+        message = "Thank you for using jOOQ " + Constants.FULL_VERSION;
 
         /* [pro] xx
-        xxxxxxx x xxxxxx xxx xxx xxxxx xxx xx xxx xxxx xxxx xxxxx xxxxxxxxx
+        xxxxxxx x xxxxxx xxx xxx xxxxx xxx xx xxx xxxx xxxx x x xxxxxxxxxxxxxxxxxxxxxx x x xxxxx xxxxxxxxx
         xx [/pro] */
 
 

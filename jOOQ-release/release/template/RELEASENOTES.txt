@@ -28,10 +28,14 @@ Features and improvements
 #2155 - Add Converter support to Routines and UDTs
 #2209 - Add <T1, T2, .., T[N]> Result<Record[N]<T1, T2, .., T[N]>> Result.into(Field<T1>, Field<T2>, .., Field<T[N]>) in order to transform Results / Records into another type
 #2289 - Add jOOQ-flyway-example, a documentation module to show how to integrate with Flyway
+#2604 - Add section to the manual explaining how asynchronous querying can be achieved
 #2674 - Add support for stored procedures in MockConnection / MockDataProvider / MockExecuteContext
 #2886 - jooq-codegen-maven should look into project dependencies for jdbc driver
 #2907 - Emulate UPDATE .. RETURNING through SELECT FROM FINAL TABLE (UPDATE ...) in DB2
 #3121 - Skip code re-generation when schema is known to be the same
+#3151 - Add "question mark" with tool-tip to the manual to allow for jumping to the "how to read this manual" section
+#3248 - Add support for Binding (i.e. "Type Providers")
+#3337 - Add support for the CREATE TABLE statement
 #3339 - Add support for CREATE INDEX and DROP INDEX statements
 #3340 - Add support for CREATE VIEW and DROP VIEW statements
 #3346 - Allow for omitting the JDBC driver property in the code generator
@@ -71,6 +75,7 @@ Features and improvements
 #3565 - Add XXXContext.settings() for convenience
 #3566 - Add GenerationTool.generate(String) to generate code from an XML string
 #3569 - The <database/> tag is no longer mandatory in the code generator configuration
+#3579 - Emulate nested set operators in databases that don't support them natively
 #3592 - Add Setting to enable Oracle scalar subquery caching for stored function calls
 #3595 - Add MockResult<init>(Record data) convenience constructor
 #3596 - Let code generator empty generated packages on a per-schema basis
@@ -82,18 +87,39 @@ Features and improvements
 #3611 - Add a jOOQ / Nashorn example to the repository
 #3612 - Add an example project showing how to import an ERD export format to the code generator
 #3622 - Add support for Field.in(Result<Record1<T>>) and Row[N].in(Result<RecordN<T1, ..., TN>>)
+#3623 - Add ParamType.NAMED_OR_INLINED to render named parameters only if a name is given
 #3626 - Add Map<S, Result<R>> Result.intoGroups(Table<S>)
-#3638 - Let ResultQuery<R> extend Iterable<R>
-#2604 - Add section to the manual explaining how asynchronous querying can be achieved
-#3633 - Add a section to the manual about jOOQ and NoSQL
 #3627 - Add simplified API for CASE WHEN [ condition ] THEN [ select ] expressions
 #3628 - Add <T> Field<T> DSL.field(Select<? extends Record1<T>>)
-#3623 - Add ParamType.NAMED_OR_INLINED to render named parameters only if a name is given
+#3633 - Add a section to the manual about jOOQ and NoSQL
+#3638 - Let ResultQuery<R> extend Iterable<R>
+#3644 - Enhance DSL API to work around Nashorn interoperability issue with overloading and varargs
+#3661 - Log some info about the type being matched by a <forcedType/> configuration
+#3667 - <types/> configuration doesn't work for Derby DATE types
+#3668 - Let GenerationTool also search absolute and relative paths
+#3669 - Make the code generator's <database/> element optional
+#3670 - Add DSL.coerce(Object, ...<T>) for convenience
+#3671 - Add alternative DSL.concat() syntax for convenience
+#3672 - Add OracleDSL.toNumber()
+#3677 - Add a paragraph to the manual indicating that the manual is licensed CC-BY-SA 4.0
+#3678 - Add some JavaBeans-style setters to the DefaultConfiguration to simplify configuration via Spring
+#3680 - Remove all unit tests that make assumptions on how exactly the SQL is rendered
+#3681 - Fetch all result sets from executed stored procedures
+#3688 - Remove the confusing CO_AUTHOR_ID column from the manual
+#3690 - Add a manual page header indicating that a version has gone "end of life"
+#3702 - Add Configuration.family() for convenience and API consistency
+#3740 - Add Table.newRecord() and UDT.newRecord() to construct new records with DefaultConfiguration
+#3746 - Add DSLContext.fetchExists(Select<?>)
+#3752 - Make <jdbc/> element optional in code generation configuration
+#3754 - Explain primitive type conversion in Convert.convert() Javadoc
+#3756 - Regenerate files only if there is a difference
+#3760 - Add Record.intoList()
 
 API changes (backwards-compatible)
 ----------------------------------
 #3345 - Deprecate org.jooq.api.annotation.State and Transition annotations
 #3356 - Deprecate Select.fetchCount()
+#3703 - Deprecate CastMode.SOME and RenderContext.cast()
 
 API changes (backwards-incompatible)
 ------------------------------------
@@ -102,6 +128,7 @@ Behavioural changes (backwards-incompatible)
 --------------------------------------------
 
 #2486 - Allow to specify precision, scale, length for type-rewrites in <forcedType/>
+#3000 - Add Setting to enable MySQL backslash escaping
 #3407 - DDL statements accepting String names should generate quoted names, not plain SQL
 #3541 - Change DSLContext.nextval(String) and currval(String) to internally call DSL.sequenceByName() instead of DSL.sequence()
 
@@ -110,6 +137,7 @@ Bug fixes
 #2080 - Syntax error in rendered SQL when using limit().offset() with aliased projections in SQL Server
 #3206 - DSL.field(Condition) doesn't correctly handle NULLs when emulating boolean fields with a CASE expression
 #3347 - Field.in(T...) should defend against Collection arguments
+#3353 - Manual Javadoc anchors are no longer correct with the recent changes of JDK 8 Javadocs
 #3359 - store() after copy() executes an UPDATE instead of an INSERT, when Settings.updatablePrimaryKeys is set
 #3360 - SQLite regression when using special characters in identifiers
 #3362 - DSLContext.batchStore() executes INSERT if records are batch stores are executed two times in a row on new records, if Settings.updatablePrimaryKeys is set to true
@@ -137,6 +165,7 @@ Bug fixes
 #3473 - java.lang.IllegalArgumentException: Field (null) is not contained in Row
 #3488 - Compilation error in generated code, when a similar tables T_A and TA exist
 #3489 - DefaultTransactionProvider does not call Connection.releaseSavepoint(Savepoint) after commit
+#3507 - Bad @Support annotation on Select.intersect() and Select.except()
 #3514 - ResultQuery.fetchLazy() ignores fetchSize()
 #3520 - Duplicate column information in foreign key references for foreign keys that share the same name in different tables
 #3526 - Unnecessary warning logs introduced in code generation
@@ -159,8 +188,25 @@ Bug fixes
 #3602 - Cannot INSERT into view
 #3608 - Typo in documentation of transaction method
 #3624 - Compilation errors when Converters are applied to generated Routines and UDTs
-#3639 - java.lang.NoSuchMethodException: createARRAY when using Oracle arrays with Spring TransactionAwareDataSourceProxy
+#3630 - ArrayOutOfBoundsException when using backslash escaping in MySQL with jOOQ plain SQL
 #3634 - Record.into(Table) maps to the wrong table when passing an aliased table after a self-join
+#3639 - java.lang.NoSuchMethodException: createARRAY when using Oracle arrays with Spring TransactionAwareDataSourceProxy
+#3648 - Use JDBC Escape syntax for MySQL Date / Time literals to circumvent a known MySQL bug
+#3650 - NullPointerException on TableRecord.insert() when primary key information is not present
+#3664 - UNION ALL, ORDER BY, and LIMIT regression
+#3665 - Typos in Javadocs
+#3673 - OracleDSL.toChar() methods shouldn't require String types
+#3682 - PostgreSQL INSERT .. RETURNING doesn't work with plain SQL table
+#3696 - OutOfMemoryError with SQL Azure, caused by long-running loop of consuming further exceptions
+#3705 - The jOOQ "flash log" doesn't display nicely when using java.util.logging
+#3711 - Incorrect code generated for cross-schema OBJECT type references
+#3718 - Exceptions on rollback hide the original exceptions causing the rollback
+#3723 - Add org.jooq.Scope to unify all Configuration, Settings, and data map access in a single API
+#3730 - Cannot use regex COMMENTS in <forcedType/>'s <expression/>
+#3732 - Improve performance of <forcedType/> regex evaluation
+#3733 - Code generator should use CHAR_LENGTH columns for Oracle, instead of DATA_LENGTH
+#3741 - MySQL ResultSet streaming conflicts with internal SHOW WARNINGS call
+#3758 - ExecuteListener.warning() is not listed as a method in the Javadoc
 
 Version 3.4.0 - June 20, 2014
 ================================================================================

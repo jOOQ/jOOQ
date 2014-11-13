@@ -40,7 +40,6 @@
  */
 package org.jooq;
 
-import java.util.Map;
 
 /**
  * A context object for {@link Record} manipulation passed to registered
@@ -49,56 +48,6 @@ import java.util.Map;
  * @author Lukas Eder
  */
 public interface RecordContext extends Scope {
-
-    /**
-     * Get all custom data from this <code>RecordContext</code>.
-     * <p>
-     * This is custom data that was previously set to the record context using
-     * {@link #data(Object, Object)}. Use custom data if you want to pass data
-     * between events received by a {@link RecordListener}.
-     * <p>
-     * Unlike {@link Configuration#data()}, these data's lifecycle only matches
-     * that of a single record manipulation.
-     *
-     * @return The custom data. This is never <code>null</code>
-     * @see RecordListener
-     */
-    Map<Object, Object> data();
-
-    /**
-     * Get some custom data from this <code>RecordContext</code>.
-     * <p>
-     * This is custom data that was previously set to the record context using
-     * {@link #data(Object, Object)}. Use custom data if you want to pass data
-     * between events received by an {@link RecordListener}.
-     * <p>
-     * Unlike {@link Configuration#data()}, these data's lifecycle only matches
-     * that of a single query execution.
-     *
-     * @param key A key to identify the custom data
-     * @return The custom data or <code>null</code> if no such data is contained
-     *         in this <code>RecordContext</code>
-     * @see RecordListener
-     */
-    Object data(Object key);
-
-    /**
-     * Set some custom data to this <code>RecordContext</code>.
-     * <p>
-     * This is custom data that was previously set to the record context using
-     * {@link #data(Object, Object)}. Use custom data if you want to pass data
-     * between events received by an {@link RecordListener}.
-     * <p>
-     * Unlike {@link Configuration#data()}, these data's lifecycle only matches
-     * that of a single query execution.
-     *
-     * @param key A key to identify the custom data
-     * @param value The custom data
-     * @return The previously set custom data or <code>null</code> if no data
-     *         was previously set for the given key
-     * @see RecordListener
-     */
-    Object data(Object key, Object value);
 
     /**
      * The type of database interaction that is being executed.

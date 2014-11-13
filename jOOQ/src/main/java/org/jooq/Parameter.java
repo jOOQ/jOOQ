@@ -72,7 +72,7 @@ public interface Parameter<T> extends QueryPart {
     /**
      * The parameter's underlying {@link Binding}.
      */
-    Binding<T> getBinding();
+    Binding<?, T> getBinding();
 
     /**
      * The type of this parameter (might not be dialect-specific)

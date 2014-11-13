@@ -119,7 +119,7 @@ public interface Field<T> extends GroupField {
     /**
      * The field's underlying {@link Binding}.
      */
-    Binding<T> getBinding();
+    Binding<?, T> getBinding();
 
     /**
      * The Java type of the field.

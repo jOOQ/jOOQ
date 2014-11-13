@@ -98,7 +98,7 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
                 name = fieldAliases[i];
             }
 
-            result.add(new TableFieldImpl(name, field.getDataType(), this, field.getComment(), field.getConverter()));
+            result.add(new TableFieldImpl(name, field.getDataType(), this, field.getComment(), field.getBinding()));
         }
 
         return new Fields<R>(result);

@@ -59,6 +59,16 @@ public interface IT_3666 extends java.io.Serializable {
 	 */
 	public java.lang.Byte getE5();
 
+	/**
+	 * Setter for <code>PUBLIC.T_3666.E6</code>.
+	 */
+	public IT_3666 setE6(java.math.BigDecimal value);
+
+	/**
+	 * Getter for <code>PUBLIC.T_3666.E6</code>.
+	 */
+	public java.math.BigDecimal getE6();
+
 	// -------------------------------------------------------------------------
 	// FROM and INTO
 	// -------------------------------------------------------------------------

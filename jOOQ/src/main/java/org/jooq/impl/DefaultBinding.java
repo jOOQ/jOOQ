@@ -134,7 +134,7 @@ import org.jooq.util.postgres.PostgresUtils;
 /**
  * @author Lukas Eder
  */
-public class DefaultBinding<T, U> implements Binding<U> {
+public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final JooqLogger     log              = JooqLogger.getLogger(DefaultBinding.class);
     private static final char[] HEX              = "0123456789abcdef".toCharArray();
@@ -167,6 +167,11 @@ public class DefaultBinding<T, U> implements Binding<U> {
         this.converter = converter;
         this.isLob = isLob;
         this.paramName = paramName;
+    }
+
+    @Override
+    public Converter<T, U> converter() {
+        return converter;
     }
 
     @Override
@@ -1352,7 +1357,7 @@ public class DefaultBinding<T, U> implements Binding<U> {
         }
         /* [pro] */
         else if (ArrayRecord.class.isAssignableFrom(type)) {
-            result = (T) getArrayRecord(ctx.configuration(), ctx.resultSet().getArray(ctx.index()), (Class<? extends ArrayRecord<?>>) type);
+            result = (T) getArrayRecord(ctx.resultSet().getArray(ctx.index()), (Class<? extends ArrayRecord<?>>) type);
         }
         /* [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
@@ -1504,7 +1509,7 @@ public class DefaultBinding<T, U> implements Binding<U> {
         }
         /* [pro] */
         else if (ArrayRecord.class.isAssignableFrom(type)) {
-            result = (T) getArrayRecord(ctx.configuration(), ctx.statement().getArray(ctx.index()), (Class<? extends ArrayRecord<?>>) type);
+            result = (T) getArrayRecord(ctx.statement().getArray(ctx.index()), (Class<? extends ArrayRecord<?>>) type);
         }
         /* [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
@@ -1635,7 +1640,7 @@ public class DefaultBinding<T, U> implements Binding<U> {
         }
         /* [pro] */
         else if (ArrayRecord.class.isAssignableFrom(type)) {
-            result = (T) getArrayRecord(ctx.configuration(), ctx.input().readArray(), (Class<? extends ArrayRecord<?>>) type);
+            result = (T) getArrayRecord(ctx.input().readArray(), (Class<? extends ArrayRecord<?>>) type);
         }
         /* [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
@@ -1655,7 +1660,7 @@ public class DefaultBinding<T, U> implements Binding<U> {
 
 
     /* [pro] */
-    private static final ArrayRecord<?> getArrayRecord(Configuration configuration, Array array, Class<? extends ArrayRecord<?>> type) throws SQLException {
+    private static final ArrayRecord<?> getArrayRecord(Array array, Class<? extends ArrayRecord<?>> type) throws SQLException {
         if (array == null) {
             return null;
         }

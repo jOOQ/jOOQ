@@ -41,6 +41,8 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
+import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.tools.reflect.Reflect.on;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -53,6 +55,7 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.jooq.EnumType;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
@@ -340,5 +343,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     private static class B1 {
         public String oneZero;
+    }
+
+    public void testUnknownEnumValue() {
+        clean(TBooleans());
+
+        assertEquals(1,
+        create().insertInto(tableByName(TBooleans().getName()),
+                    fieldByName(TBooleans_ID().getName()),
+                    fieldByName(TBooleans_BOOLEAN_10().getName()))
+                .values(1, -1)
+                .execute());
+
+        BOOL bool = create().fetchOne(TBooleans());
+        assertEquals(1, bool.getValue(TBooleans_ID()));
+        assertNull(bool.getValue(TBooleans_BOOLEAN_10()));
+
+        Record record = create().fetchOne("select {0}, {1} from {2}", TBooleans_ID(), TBooleans_BOOLEAN_10(), TBooleans());
+        assertEquals(1, (int) record.getValue(TBooleans_ID(), int.class));
+        assertEquals(-1, (int) record.getValue(TBooleans_BOOLEAN_10(), int.class));
     }
 }

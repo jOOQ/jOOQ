@@ -54,12 +54,14 @@ import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.two;
 import static org.jooq.impl.DSL.val;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.util.Arrays;
 
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -179,7 +181,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         try {
             create().createSequence("s").execute();
-            assertEquals(BigInteger.ONE, create().nextval("s"));
+
+            // Some databases create sequences that start with ZERO
+            assertTrue(Arrays.asList(BigInteger.ZERO, BigInteger.ONE).contains(create().nextval("s")));
         }
         finally {
             ignoreThrows(() -> create().dropSequence("s").execute());

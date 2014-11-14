@@ -75,7 +75,7 @@ class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
             ? binding
             : type instanceof ConvertedDataType
             ? ((ConvertedDataType<?, T>) type).binding()
-            : new DefaultBinding<T, T>(new IdentityConverter<T>(type.getType()));
+            : new DefaultBinding<T, T>(new IdentityConverter<T>(type.getType()), type.isLob());
     }
 
     @Override

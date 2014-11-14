@@ -356,7 +356,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .execute());
 
         BOOL bool = create().fetchOne(TBooleans());
-        assertEquals(1, bool.getValue(TBooleans_ID()));
+        assertEquals(1, (int) bool.getValue(TBooleans_ID()));
         assertNull(bool.getValue(TBooleans_BOOLEAN_10()));
 
         Record record = create().fetchOne("select {0}, {1} from {2}", TBooleans_ID(), TBooleans_BOOLEAN_10(), TBooleans());

@@ -61,6 +61,7 @@ class Dual extends AbstractTable<Record> {
     xxxxxx xxxxx xxxxxx                xxxxxxxxxxx      x xxxxxxx xxxxxxxx xxxx xxxx xxxxxxxxxxxxxxx
     xxxxxx xxxxx xxxxxx                xxxxxxxxxxxxx    x xxxxxxx x xx xxxx xxxx xxxxxxxxx xxxxx xxxxx x xxx
     xx [/pro] */
+    static final String                DUAL_HSQLDB      = "select 1 as dual from information_schema.system_users limit 1";
 
     private final boolean              force;
 
@@ -124,9 +125,7 @@ class Dual extends AbstractTable<Record> {
                     break;
 
                 case HSQLDB:
-                    ctx.literal("INFORMATION_SCHEMA")
-                       .sql(".")
-                       .literal("SYSTEM_USERS");
+                    ctx.sql("(").sql(DUAL_HSQLDB).sql(") as dual");
                     break;
 
                 case CUBRID:

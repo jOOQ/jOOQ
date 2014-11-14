@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_3711", schema = "TEST")
 public class T_3711Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_3711Record> implements org.jooq.Record6<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord, org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord, org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord, org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord, org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord, org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord> {
 
-	private static final long serialVersionUID = -535006358;
+	private static final long serialVersionUID = -1021971230;
 
 	/**
 	 * Setter for <code>TEST.T_3711.V1</code>.
@@ -23,7 +23,7 @@ public class T_3711Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	/**
 	 * Getter for <code>TEST.T_3711.V1</code>.
 	 */
-	@javax.persistence.Column(name = "V1", length = 2317)
+	@javax.persistence.Column(name = "V1")
 	public org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord getV1() {
 		return (org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord) getValue(0);
 	}
@@ -38,7 +38,7 @@ public class T_3711Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	/**
 	 * Getter for <code>TEST.T_3711.V2</code>.
 	 */
-	@javax.persistence.Column(name = "V2", length = 1)
+	@javax.persistence.Column(name = "V2")
 	public org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord getV2() {
 		return (org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord) getValue(1);
 	}
@@ -53,7 +53,7 @@ public class T_3711Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	/**
 	 * Getter for <code>TEST.T_3711.V3</code>.
 	 */
-	@javax.persistence.Column(name = "V3", length = 2317)
+	@javax.persistence.Column(name = "V3")
 	public org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord getV3() {
 		return (org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord) getValue(2);
 	}
@@ -68,7 +68,7 @@ public class T_3711Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	/**
 	 * Getter for <code>TEST.T_3711.V4</code>.
 	 */
-	@javax.persistence.Column(name = "V4", length = 1)
+	@javax.persistence.Column(name = "V4")
 	public org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord getV4() {
 		return (org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord) getValue(3);
 	}
@@ -83,7 +83,7 @@ public class T_3711Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	/**
 	 * Getter for <code>TEST.T_3711.V7</code>.
 	 */
-	@javax.persistence.Column(name = "V7", length = 2317)
+	@javax.persistence.Column(name = "V7")
 	public org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord getV7() {
 		return (org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord) getValue(4);
 	}
@@ -98,7 +98,7 @@ public class T_3711Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.or
 	/**
 	 * Getter for <code>TEST.T_3711.V8</code>.
 	 */
-	@javax.persistence.Column(name = "V8", length = 1)
+	@javax.persistence.Column(name = "V8")
 	public org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord getV8() {
 		return (org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord) getValue(5);
 	}

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.pojos;
 @javax.persistence.Table(name = "T_BOOK_SALE", schema = "MULTI_SCHEMA")
 public class TBookSale implements java.io.Serializable {
 
-	private static final long serialVersionUID = 349458244;
+	private static final long serialVersionUID = -2054668554;
 
 	private java.lang.Integer    id;
 	private java.lang.Integer    bookId;
@@ -67,7 +67,7 @@ public class TBookSale implements java.io.Serializable {
 		this.bookStoreName = bookStoreName;
 	}
 
-	@javax.persistence.Column(name = "SOLD_AT", nullable = false, length = 7)
+	@javax.persistence.Column(name = "SOLD_AT", nullable = false)
 	@javax.validation.constraints.NotNull
 	public java.sql.Date getSoldAt() {
 		return this.soldAt;

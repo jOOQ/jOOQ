@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_BOOK", schema = "TEST")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.math.BigDecimal, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1613057419;
+	private static final long serialVersionUID = -1553044333;
 
 	/**
 	 * Setter for <code>TEST.T_BOOK.ID</code>. The book ID
@@ -165,7 +165,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * Getter for <code>TEST.T_BOOK.REC_VERSION</code>.
 	 */
-	@javax.persistence.Column(name = "REC_VERSION", length = 22)
+	@javax.persistence.Column(name = "REC_VERSION")
 	public java.math.BigDecimal getRecVersion() {
 		return (java.math.BigDecimal) getValue(9);
 	}
@@ -180,7 +180,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * Getter for <code>TEST.T_BOOK.REC_TIMESTAMP</code>.
 	 */
-	@javax.persistence.Column(name = "REC_TIMESTAMP", length = 11)
+	@javax.persistence.Column(name = "REC_TIMESTAMP")
 	public java.sql.Timestamp getRecTimestamp() {
 		return (java.sql.Timestamp) getValue(10);
 	}

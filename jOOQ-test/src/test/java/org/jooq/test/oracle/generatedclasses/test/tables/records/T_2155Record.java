@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_2155", schema = "TEST")
 public class T_2155Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_2155Record> implements org.jooq.Record4<java.lang.Integer, java.time.LocalDateTime, org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ObjectRecord, org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ArrayRecord> {
 
-	private static final long serialVersionUID = 932908911;
+	private static final long serialVersionUID = -185814892;
 
 	/**
 	 * Setter for <code>TEST.T_2155.ID</code>.
@@ -40,7 +40,7 @@ public class T_2155Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	/**
 	 * Getter for <code>TEST.T_2155.D1</code>.
 	 */
-	@javax.persistence.Column(name = "D1", length = 7)
+	@javax.persistence.Column(name = "D1")
 	public java.time.LocalDateTime getD1() {
 		return (java.time.LocalDateTime) getValue(1);
 	}
@@ -55,7 +55,7 @@ public class T_2155Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	/**
 	 * Getter for <code>TEST.T_2155.D2</code>.
 	 */
-	@javax.persistence.Column(name = "D2", length = 1)
+	@javax.persistence.Column(name = "D2")
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ObjectRecord getD2() {
 		return (org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ObjectRecord) getValue(2);
 	}
@@ -70,7 +70,7 @@ public class T_2155Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	/**
 	 * Getter for <code>TEST.T_2155.D3</code>.
 	 */
-	@javax.persistence.Column(name = "D3", length = 97)
+	@javax.persistence.Column(name = "D3")
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ArrayRecord getD3() {
 		return (org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ArrayRecord) getValue(3);
 	}

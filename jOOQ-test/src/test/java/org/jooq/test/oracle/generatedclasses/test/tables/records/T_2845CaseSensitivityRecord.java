@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_2845_CASE_sensitivity", schema = "TEST")
 public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_2845CaseSensitivityRecord> implements org.jooq.Record5<java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 878598921;
+	private static final long serialVersionUID = 1342449678;
 
 	/**
 	 * Setter for <code>TEST.T_2845_CASE_sensitivity.ID</code>.
@@ -24,7 +24,7 @@ public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordIm
 	 * Getter for <code>TEST.T_2845_CASE_sensitivity.ID</code>.
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 22)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	public java.math.BigDecimal getId() {
 		return (java.math.BigDecimal) getValue(0);
@@ -40,7 +40,7 @@ public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordIm
 	/**
 	 * Getter for <code>TEST.T_2845_CASE_sensitivity.INSENSITIVE</code>.
 	 */
-	@javax.persistence.Column(name = "INSENSITIVE", length = 22)
+	@javax.persistence.Column(name = "INSENSITIVE")
 	public java.math.BigDecimal getInsensitive() {
 		return (java.math.BigDecimal) getValue(1);
 	}
@@ -55,7 +55,7 @@ public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordIm
 	/**
 	 * Getter for <code>TEST.T_2845_CASE_sensitivity.UPPER</code>.
 	 */
-	@javax.persistence.Column(name = "UPPER", length = 22)
+	@javax.persistence.Column(name = "UPPER")
 	public java.math.BigDecimal getUpper() {
 		return (java.math.BigDecimal) getValue(2);
 	}
@@ -70,7 +70,7 @@ public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordIm
 	/**
 	 * Getter for <code>TEST.T_2845_CASE_sensitivity.lower</code>.
 	 */
-	@javax.persistence.Column(name = "lower", length = 22)
+	@javax.persistence.Column(name = "lower")
 	public java.math.BigDecimal getLower() {
 		return (java.math.BigDecimal) getValue(3);
 	}
@@ -85,7 +85,7 @@ public class T_2845CaseSensitivityRecord extends org.jooq.impl.UpdatableRecordIm
 	/**
 	 * Getter for <code>TEST.T_2845_CASE_sensitivity.Mixed</code>.
 	 */
-	@javax.persistence.Column(name = "Mixed", length = 22)
+	@javax.persistence.Column(name = "Mixed")
 	public java.math.BigDecimal getMixed() {
 		return (java.math.BigDecimal) getValue(4);
 	}

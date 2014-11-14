@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_2845_CASE_sensitivity", schema = "TEST")
 public class T_2845CaseSensitivity implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1001132825;
+	private static final long serialVersionUID = -1877575350;
 
 	private java.math.BigDecimal id;
 	private java.math.BigDecimal insensitive;
@@ -36,7 +36,7 @@ public class T_2845CaseSensitivity implements java.io.Serializable {
 	}
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, length = 22)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	@javax.validation.constraints.NotNull
 	public java.math.BigDecimal getId() {
 		return this.id;
@@ -46,7 +46,7 @@ public class T_2845CaseSensitivity implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "INSENSITIVE", length = 22)
+	@javax.persistence.Column(name = "INSENSITIVE")
 	public java.math.BigDecimal getInsensitive() {
 		return this.insensitive;
 	}
@@ -55,7 +55,7 @@ public class T_2845CaseSensitivity implements java.io.Serializable {
 		this.insensitive = insensitive;
 	}
 
-	@javax.persistence.Column(name = "UPPER", length = 22)
+	@javax.persistence.Column(name = "UPPER")
 	public java.math.BigDecimal getUpper() {
 		return this.upper;
 	}
@@ -64,7 +64,7 @@ public class T_2845CaseSensitivity implements java.io.Serializable {
 		this.upper = upper;
 	}
 
-	@javax.persistence.Column(name = "lower", length = 22)
+	@javax.persistence.Column(name = "lower")
 	public java.math.BigDecimal getLower() {
 		return this.lower;
 	}
@@ -73,7 +73,7 @@ public class T_2845CaseSensitivity implements java.io.Serializable {
 		this.lower = lower;
 	}
 
-	@javax.persistence.Column(name = "Mixed", length = 22)
+	@javax.persistence.Column(name = "Mixed")
 	public java.math.BigDecimal getMixed() {
 		return this.mixed;
 	}

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_DATES", schema = "TEST")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> implements org.jooq.Record8<java.lang.Integer, java.sql.Date, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Long, org.jooq.types.YearToMonth, org.jooq.types.DayToSecond> {
 
-	private static final long serialVersionUID = -733399546;
+	private static final long serialVersionUID = 1830483134;
 
 	/**
 	 * Setter for <code>TEST.T_DATES.ID</code>.
@@ -40,7 +40,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	/**
 	 * Getter for <code>TEST.T_DATES.D</code>.
 	 */
-	@javax.persistence.Column(name = "D", length = 7)
+	@javax.persistence.Column(name = "D")
 	public java.sql.Date getD() {
 		return (java.sql.Date) getValue(1);
 	}
@@ -55,7 +55,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	/**
 	 * Getter for <code>TEST.T_DATES.T</code>.
 	 */
-	@javax.persistence.Column(name = "T", length = 11)
+	@javax.persistence.Column(name = "T")
 	public java.sql.Timestamp getT() {
 		return (java.sql.Timestamp) getValue(2);
 	}
@@ -70,7 +70,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	/**
 	 * Getter for <code>TEST.T_DATES.TS</code>.
 	 */
-	@javax.persistence.Column(name = "TS", length = 11)
+	@javax.persistence.Column(name = "TS")
 	public java.sql.Timestamp getTs() {
 		return (java.sql.Timestamp) getValue(3);
 	}

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_AUTHOR", schema = "TEST")
 public class TAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = -2039673036;
+	private static final long serialVersionUID = 1374605614;
 
 	private java.lang.Integer                                                 id;
 	private java.lang.String                                                  firstName;
@@ -70,7 +70,7 @@ public class TAuthor implements java.io.Serializable {
 		this.lastName = lastName;
 	}
 
-	@javax.persistence.Column(name = "DATE_OF_BIRTH", length = 7)
+	@javax.persistence.Column(name = "DATE_OF_BIRTH")
 	public java.sql.Date getDateOfBirth() {
 		return this.dateOfBirth;
 	}
@@ -88,7 +88,7 @@ public class TAuthor implements java.io.Serializable {
 		this.yearOfBirth = yearOfBirth;
 	}
 
-	@javax.persistence.Column(name = "ADDRESS", length = 1)
+	@javax.persistence.Column(name = "ADDRESS")
 	public org.jooq.test.oracle.generatedclasses.test.udt.pojos.UAddressType getAddress() {
 		return this.address;
 	}

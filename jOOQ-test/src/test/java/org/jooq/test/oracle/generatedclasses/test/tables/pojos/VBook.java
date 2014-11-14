@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "V_BOOK", schema = "TEST")
 public class VBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = -778076063;
+	private static final long serialVersionUID = 1970713655;
 
 	private java.lang.Integer    id;
 	private java.lang.Integer    authorId;
@@ -140,7 +140,7 @@ public class VBook implements java.io.Serializable {
 		this.contentPdf = contentPdf;
 	}
 
-	@javax.persistence.Column(name = "REC_VERSION", length = 22)
+	@javax.persistence.Column(name = "REC_VERSION")
 	public java.math.BigDecimal getRecVersion() {
 		return this.recVersion;
 	}
@@ -149,7 +149,7 @@ public class VBook implements java.io.Serializable {
 		this.recVersion = recVersion;
 	}
 
-	@javax.persistence.Column(name = "REC_TIMESTAMP", length = 11)
+	@javax.persistence.Column(name = "REC_TIMESTAMP")
 	public java.sql.Timestamp getRecTimestamp() {
 		return this.recTimestamp;
 	}

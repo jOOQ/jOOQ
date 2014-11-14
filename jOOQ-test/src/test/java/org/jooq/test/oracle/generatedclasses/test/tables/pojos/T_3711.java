@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_3711", schema = "TEST")
 public class T_3711 implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1360138186;
+	private static final long serialVersionUID = -18989416;
 
 	private org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord v1;
 	private org.jooq.test.oracle.generatedclasses.multi_schema.udt.pojos.NumberObject        v2;
@@ -38,7 +38,7 @@ public class T_3711 implements java.io.Serializable {
 		this.v8 = v8;
 	}
 
-	@javax.persistence.Column(name = "V1", length = 2317)
+	@javax.persistence.Column(name = "V1")
 	public org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord getV1() {
 		return this.v1;
 	}
@@ -47,7 +47,7 @@ public class T_3711 implements java.io.Serializable {
 		this.v1 = v1;
 	}
 
-	@javax.persistence.Column(name = "V2", length = 1)
+	@javax.persistence.Column(name = "V2")
 	public org.jooq.test.oracle.generatedclasses.multi_schema.udt.pojos.NumberObject getV2() {
 		return this.v2;
 	}
@@ -56,7 +56,7 @@ public class T_3711 implements java.io.Serializable {
 		this.v2 = v2;
 	}
 
-	@javax.persistence.Column(name = "V3", length = 2317)
+	@javax.persistence.Column(name = "V3")
 	public org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord getV3() {
 		return this.v3;
 	}
@@ -65,7 +65,7 @@ public class T_3711 implements java.io.Serializable {
 		this.v3 = v3;
 	}
 
-	@javax.persistence.Column(name = "V4", length = 1)
+	@javax.persistence.Column(name = "V4")
 	public org.jooq.test.oracle.generatedclasses.multi_schema.udt.pojos.NumberObject getV4() {
 		return this.v4;
 	}
@@ -74,7 +74,7 @@ public class T_3711 implements java.io.Serializable {
 		this.v4 = v4;
 	}
 
-	@javax.persistence.Column(name = "V7", length = 2317)
+	@javax.persistence.Column(name = "V7")
 	public org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord getV7() {
 		return this.v7;
 	}
@@ -83,7 +83,7 @@ public class T_3711 implements java.io.Serializable {
 		this.v7 = v7;
 	}
 
-	@javax.persistence.Column(name = "V8", length = 1)
+	@javax.persistence.Column(name = "V8")
 	public org.jooq.test.oracle.generatedclasses.multi_schema.udt.pojos.NumberObject getV8() {
 		return this.v8;
 	}

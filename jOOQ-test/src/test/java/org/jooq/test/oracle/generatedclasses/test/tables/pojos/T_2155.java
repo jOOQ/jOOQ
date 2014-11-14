@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_2155", schema = "TEST")
 public class T_2155 implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1276437507;
+	private static final long serialVersionUID = -56634588;
 
 	private java.lang.Integer                                                        id;
 	private java.time.LocalDateTime                                                  d1;
@@ -43,7 +43,7 @@ public class T_2155 implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "D1", length = 7)
+	@javax.persistence.Column(name = "D1")
 	public java.time.LocalDateTime getD1() {
 		return this.d1;
 	}
@@ -52,7 +52,7 @@ public class T_2155 implements java.io.Serializable {
 		this.d1 = d1;
 	}
 
-	@javax.persistence.Column(name = "D2", length = 1)
+	@javax.persistence.Column(name = "D2")
 	public org.jooq.test.oracle.generatedclasses.test.udt.pojos.U_2155Object getD2() {
 		return this.d2;
 	}
@@ -61,7 +61,7 @@ public class T_2155 implements java.io.Serializable {
 		this.d2 = d2;
 	}
 
-	@javax.persistence.Column(name = "D3", length = 97)
+	@javax.persistence.Column(name = "D3")
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ArrayRecord getD3() {
 		return this.d3;
 	}

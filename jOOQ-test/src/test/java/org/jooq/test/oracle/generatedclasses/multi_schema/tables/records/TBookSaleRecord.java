@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @javax.persistence.Table(name = "T_BOOK_SALE", schema = "MULTI_SCHEMA")
 public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> implements org.jooq.Record5<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Date, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -121714832;
+	private static final long serialVersionUID = -1664493954;
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>.
@@ -73,7 +73,7 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * Getter for <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_AT</code>.
 	 */
-	@javax.persistence.Column(name = "SOLD_AT", nullable = false, length = 7)
+	@javax.persistence.Column(name = "SOLD_AT", nullable = false)
 	@javax.validation.constraints.NotNull
 	public java.sql.Date getSoldAt() {
 		return (java.sql.Date) getValue(3);

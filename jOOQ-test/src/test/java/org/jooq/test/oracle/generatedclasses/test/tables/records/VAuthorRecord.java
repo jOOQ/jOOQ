@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "V_AUTHOR", schema = "TEST")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = -285177238;
+	private static final long serialVersionUID = -260626219;
 
 	/**
 	 * Setter for <code>TEST.V_AUTHOR.ID</code>.
@@ -72,7 +72,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.o
 	/**
 	 * Getter for <code>TEST.V_AUTHOR.DATE_OF_BIRTH</code>.
 	 */
-	@javax.persistence.Column(name = "DATE_OF_BIRTH", length = 7)
+	@javax.persistence.Column(name = "DATE_OF_BIRTH")
 	public java.sql.Date getDateOfBirth() {
 		return (java.sql.Date) getValue(3);
 	}
@@ -102,7 +102,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.o
 	/**
 	 * Getter for <code>TEST.V_AUTHOR.ADDRESS</code>.
 	 */
-	@javax.persistence.Column(name = "ADDRESS", length = 40)
+	@javax.persistence.Column(name = "ADDRESS")
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord getAddress() {
 		return (org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord) getValue(5);
 	}

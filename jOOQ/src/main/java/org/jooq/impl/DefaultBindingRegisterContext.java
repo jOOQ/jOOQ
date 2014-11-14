@@ -44,17 +44,25 @@ import java.sql.CallableStatement;
 
 import org.jooq.BindingRegisterContext;
 import org.jooq.Configuration;
+import org.jooq.Converter;
 
 /**
  * @author Lukas Eder
  */
-class DefaultBindingRegisterContext<T> extends AbstractScope implements BindingRegisterContext<T> {
+class DefaultBindingRegisterContext<U> extends AbstractScope implements BindingRegisterContext<U> {
 
     private final CallableStatement statement;
     private final int               index;
 
     DefaultBindingRegisterContext(Configuration configuration, CallableStatement statement, int index) {
         super(configuration);
+
+        this.statement = statement;
+        this.index = index;
+    }
+
+    private DefaultBindingRegisterContext(AbstractScope scope, CallableStatement statement, int index) {
+        super(scope);
 
         this.statement = statement;
         this.index = index;
@@ -68,5 +76,10 @@ class DefaultBindingRegisterContext<T> extends AbstractScope implements BindingR
     @Override
     public final int index() {
         return index;
+    }
+
+    @Override
+    public final <T> BindingRegisterContext<T> convert(Converter<T, U> converter) {
+        return new DefaultBindingRegisterContext<T>(this, statement, index);
     }
 }

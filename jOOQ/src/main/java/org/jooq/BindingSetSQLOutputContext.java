@@ -48,7 +48,7 @@ import java.sql.SQLOutput;
  *
  * @author Lukas Eder
  */
-public interface BindingSetSQLOutputContext<T> extends Scope {
+public interface BindingSetSQLOutputContext<U> extends Scope {
 
     /**
      * The {@link SQLOutput} to which a bind variable should be bound.
@@ -58,5 +58,10 @@ public interface BindingSetSQLOutputContext<T> extends Scope {
     /**
      * The bind value that is being bound.
      */
-    T value();
+    U value();
+
+    /**
+     * Create a new context from this one using a converter.
+     */
+    <T> BindingSetSQLOutputContext<T> convert(Converter<T, U> converter);
 }

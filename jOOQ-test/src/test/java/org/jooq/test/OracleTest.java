@@ -1257,7 +1257,7 @@ public class OracleTest extends jOOQAbstractTest<
         // --------------------
         DateAsTimestampT_976ObjectTypeRecord o = create().newRecord(DATE_AS_TIMESTAMP_T_976_OBJECT_TYPE);
         o.setD(now);
-        DateAsTimestampT_976VarrayTypeRecord t = new DateAsTimestampT_976VarrayTypeRecord(create().configuration());
+        DateAsTimestampT_976VarrayTypeRecord t = new DateAsTimestampT_976VarrayTypeRecord();
         t.set(now, now);
 
         record = create().newRecord(DATE_AS_TIMESTAMP_T_976);

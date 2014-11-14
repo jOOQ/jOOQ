@@ -48,7 +48,7 @@ import java.sql.CallableStatement;
  *
  * @author Lukas Eder
  */
-public interface BindingRegisterContext<T> extends Scope {
+public interface BindingRegisterContext<U> extends Scope {
 
     /**
      * The {@link CallableStatement} on which a bind variable should be
@@ -60,4 +60,9 @@ public interface BindingRegisterContext<T> extends Scope {
      * The bind variable index at which a bind variable should be registered.
      */
     int index();
+
+    /**
+     * Create a new context from this one using a converter.
+     */
+    <T> BindingRegisterContext<T> convert(Converter<T, U> converter);
 }

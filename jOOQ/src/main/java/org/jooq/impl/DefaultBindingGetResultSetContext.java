@@ -44,18 +44,26 @@ import java.sql.ResultSet;
 
 import org.jooq.BindingGetResultSetContext;
 import org.jooq.Configuration;
+import org.jooq.Converter;
 
 /**
  * @author Lukas Eder
  */
-class DefaultBindingGetResultSetContext<T> extends AbstractScope implements BindingGetResultSetContext<T> {
+class DefaultBindingGetResultSetContext<U> extends AbstractScope implements BindingGetResultSetContext<U> {
 
     private final ResultSet resultSet;
     private final int       index;
-    private T               value;
+    private U               value;
 
     DefaultBindingGetResultSetContext(Configuration configuration, ResultSet resultSet, int index) {
         super(configuration);
+
+        this.resultSet = resultSet;
+        this.index = index;
+    }
+
+    private DefaultBindingGetResultSetContext(AbstractScope scope, ResultSet resultSet, int index) {
+        super(scope);
 
         this.resultSet = resultSet;
         this.index = index;
@@ -72,11 +80,21 @@ class DefaultBindingGetResultSetContext<T> extends AbstractScope implements Bind
     }
 
     @Override
-    public final void value(T v) {
+    public void value(U v) {
         this.value = v;
     }
 
-    final T value() {
+    final U value() {
         return value;
+    }
+
+    @Override
+    public final <T> BindingGetResultSetContext<T> convert(final Converter<T, U> converter) {
+        return new DefaultBindingGetResultSetContext<T>(this, resultSet, index) {
+            @Override
+            public void value(T v) {
+                value = converter.from(v);
+            }
+        };
     }
 }

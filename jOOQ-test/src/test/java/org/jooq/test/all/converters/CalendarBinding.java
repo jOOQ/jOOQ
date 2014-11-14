@@ -38,55 +38,70 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.impl;
+package org.jooq.test.all.converters;
 
-import java.sql.SQLInput;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.GregorianCalendar;
 
+import org.jooq.Binding;
+import org.jooq.BindingGetResultSetContext;
 import org.jooq.BindingGetSQLInputContext;
-import org.jooq.Configuration;
+import org.jooq.BindingGetStatementContext;
+import org.jooq.BindingRegisterContext;
+import org.jooq.BindingSQLContext;
+import org.jooq.BindingSetSQLOutputContext;
+import org.jooq.BindingSetStatementContext;
 import org.jooq.Converter;
+import org.jooq.impl.DateAsTimestampBinding;
 
-/**
- * @author Lukas Eder
- */
-class DefaultBindingGetSQLInputContext<U> extends AbstractScope implements BindingGetSQLInputContext<U> {
+public class CalendarBinding implements Binding<Timestamp, GregorianCalendar> {
 
-    private final SQLInput input;
-    private U              value;
+    /**
+     * Generated UID
+     */
+    private static final long                     serialVersionUID = -5060861060926377086L;
 
-    DefaultBindingGetSQLInputContext(Configuration configuration, SQLInput input) {
-        super(configuration);
+    final Binding<Timestamp, Timestamp>           delegate         = new DateAsTimestampBinding();
+    final Converter<Timestamp, GregorianCalendar> converter        = new CalendarConverter();
 
-        this.input = input;
-    }
-
-    private DefaultBindingGetSQLInputContext(AbstractScope scope, SQLInput input) {
-        super(scope);
-
-        this.input = input;
+    @Override
+    public Converter<Timestamp, GregorianCalendar> converter() {
+        return converter;
     }
 
     @Override
-    public final SQLInput input() {
-        return input;
+    public void sql(BindingSQLContext<GregorianCalendar> ctx) throws SQLException {
+        delegate.sql(ctx.convert(converter));
     }
 
     @Override
-    public void value(U v) {
-        this.value = v;
-    }
-
-    final U value() {
-        return value;
+    public void register(BindingRegisterContext<GregorianCalendar> ctx) throws SQLException {
+        delegate.register(ctx.convert(converter));
     }
 
     @Override
-    public final <T> BindingGetSQLInputContext<T> convert(final Converter<T, U> converter) {
-        return new DefaultBindingGetSQLInputContext<T>(this, input) {
-            @Override
-            public void value(T v) {
-                value = converter.from(v);
-            }
-        };
+    public void set(BindingSetStatementContext<GregorianCalendar> ctx) throws SQLException {
+        delegate.set(ctx.convert(converter));
+    }
+
+    @Override
+    public void set(BindingSetSQLOutputContext<GregorianCalendar> ctx) throws SQLException {
+        delegate.set(ctx.convert(converter));
+    }
+
+    @Override
+    public void get(BindingGetResultSetContext<GregorianCalendar> ctx) throws SQLException {
+        delegate.get(ctx.convert(converter));
+    }
+
+    @Override
+    public void get(BindingGetStatementContext<GregorianCalendar> ctx) throws SQLException {
+        delegate.get(ctx.convert(converter));
+    }
+
+    @Override
+    public void get(BindingGetSQLInputContext<GregorianCalendar> ctx) throws SQLException {
+        delegate.get(ctx.convert(converter));
     }
 }

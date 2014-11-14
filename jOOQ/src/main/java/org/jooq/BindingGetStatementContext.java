@@ -48,7 +48,7 @@ import java.sql.CallableStatement;
  *
  * @author Lukas Eder
  */
-public interface BindingGetStatementContext<T> extends Scope {
+public interface BindingGetStatementContext<U> extends Scope {
 
     /**
      * The {@link CallableStatement} from which a value is retrieved.
@@ -63,5 +63,10 @@ public interface BindingGetStatementContext<T> extends Scope {
     /**
      * A callback to which the resulting value is registered.
      */
-    void value(T value);
+    void value(U value);
+
+    /**
+     * Create a new context from this one using a converter.
+     */
+    <T> BindingGetStatementContext<T> convert(Converter<T, U> converter);
 }

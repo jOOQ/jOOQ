@@ -48,7 +48,7 @@ import java.sql.ResultSet;
  *
  * @author Lukas Eder
  */
-public interface BindingGetResultSetContext<T> extends Scope {
+public interface BindingGetResultSetContext<U> extends Scope {
 
     /**
      * The {@link ResultSet} from which a value is retrieved.
@@ -63,5 +63,10 @@ public interface BindingGetResultSetContext<T> extends Scope {
     /**
      * A callback to which the resulting value is registered.
      */
-    void value(T value);
+    void value(U value);
+
+    /**
+     * Create a new context from this one using a converter.
+     */
+    <T> BindingGetResultSetContext<T> convert(Converter<T, U> converter);
 }

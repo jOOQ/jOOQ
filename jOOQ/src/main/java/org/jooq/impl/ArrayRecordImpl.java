@@ -53,6 +53,7 @@ import java.util.List;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
+import org.jooq.Binding;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.DataType;
@@ -106,6 +107,19 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
 
     /**
      * Create an empty array record
+     *
+     * @deprecated - 3.4.0 - [#3126] - Use the
+     *             {@link #ArrayRecordImpl(Schema, String, DataType, Converter)}
+     *             constructor instead.
+     */
+    @SuppressWarnings("unused")
+    @Deprecated
+    protected ArrayRecordImpl(Schema schema, String name, DataType<?> type, Configuration configuration, Binding<?, T> binding) {
+        this(schema, name, type, binding);
+    }
+
+    /**
+     * Create an empty array record
      */
     protected ArrayRecordImpl(Schema schema, String name, DataType<T> type) {
         this(schema, name, type, (Converter<?, T>) null);
@@ -114,15 +128,22 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
     /**
      * Create an empty array record
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     protected ArrayRecordImpl(Schema schema, String name, DataType<?> type, Converter<?, T> converter) {
+        this(schema, name, type, DefaultBinding.newBinding(converter, type));
+    }
+
+    /**
+     * Create an empty array record
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    protected ArrayRecordImpl(Schema schema, String name, DataType<?> type, Binding<?, T> binding) {
         super(null);
 
         this.schema = schema;
         this.name = name;
-        this.baseType = converter == null
+        this.baseType = binding == null
             ? (DataType<T>) type
-            : type.asConvertedDataType((Converter) converter);
+            : type.asConvertedDataType((Binding) binding);
 
         // Array data type initialisation
         this.type = baseType.asArrayDataType(getClass());

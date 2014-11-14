@@ -68,6 +68,11 @@ abstract class AbstractScope implements Scope {
         this.configuration = configuration;
     }
 
+    AbstractScope(AbstractScope scope) {
+        this.data = scope.data;
+        this.configuration = scope.configuration;
+    }
+
     // ------------------------------------------------------------------------
     // XXX Scope API
     // ------------------------------------------------------------------------

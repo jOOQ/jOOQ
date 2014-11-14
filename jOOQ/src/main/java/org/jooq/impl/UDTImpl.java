@@ -185,7 +185,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
      * @param type The data type of the field
      */
     protected static final <R extends UDTRecord<R>, T, U> UDTField<R, U> createField(String name, DataType<T> type, UDT<R> udt, String comment, Converter<T, U> converter) {
-        return createField(name, type, udt, comment, converter == null ? null : new DefaultBinding<T, U>(converter, type.isLob()));
+        return createField(name, type, udt, comment, DefaultBinding.newBinding(converter, type));
     }
 
     /**

@@ -587,7 +587,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final <U> DataType<U> asConvertedDataType(Converter<? super T, U> converter) {
-        return asConvertedDataType(new DefaultBinding<T, U>((Converter) converter, isLob()));
+        return asConvertedDataType(DefaultBinding.newBinding((Converter) converter, this));
     }
 
     @Override

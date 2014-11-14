@@ -48,7 +48,7 @@ import java.sql.SQLInput;
  *
  * @author Lukas Eder
  */
-public interface BindingGetSQLInputContext<T> extends Scope {
+public interface BindingGetSQLInputContext<U> extends Scope {
 
     /**
      * The {@link SQLInput} from which a value is retrieved.
@@ -58,5 +58,10 @@ public interface BindingGetSQLInputContext<T> extends Scope {
     /**
      * A callback to which the resulting value is registered.
      */
-    void value(T value);
+    void value(U value);
+
+    /**
+     * Create a new context from this one using a converter.
+     */
+    <T> BindingGetSQLInputContext<T> convert(Converter<T, U> converter);
 }

@@ -119,4 +119,9 @@ public class PrettyPrinter extends DefaultExecuteListener {
             System.out.println(ctx.sql());
         }
     }
+
+    @Override
+    public void exception(ExecuteContext ctx) {
+        ctx.exception().printStackTrace(System.err);
+    }
 }

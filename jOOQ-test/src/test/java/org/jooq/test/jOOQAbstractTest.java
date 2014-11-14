@@ -610,7 +610,16 @@ public abstract class jOOQAbstractTest<
                 !connection.getMetaData().getURL().contains("sqlserver")) {
 
                 log.info("RUNNING", "dump tran TEST with truncate_only");
-                connection.createStatement().execute("dump tran TEST with truncate_only");
+                try (Statement s = connection.createStatement()) {
+                    s.execute("dump tran TEST with truncate_only");
+                }
+            }
+
+            if (connection.getClass().getPackage().getName().contains("hsqldb")) {
+                log.info("RUNNING", "SHUTDOWN");
+                try (Statement s = connection.createStatement()) {
+                    s.execute("shutdown");
+                }
             }
 
             connection.close();

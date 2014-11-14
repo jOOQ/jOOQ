@@ -343,7 +343,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      * @param type The data type of the field
      */
     protected static final <R extends Record, T, U> TableField<R, U> createField(String name, DataType<T> type, Table<R> table, String comment, Converter<T, U> converter) {
-        return createField(name, type, table, comment, converter == null ? null : new DefaultBinding<T, U>(converter, type.isLob()));
+        return createField(name, type, table, comment, DefaultBinding.newBinding(converter, type));
     }
 
     /**

@@ -52,6 +52,7 @@ import java.util.regex.Pattern;
 
 import org.jooq.DataType;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.DateAsTimestampBinding;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 import org.jooq.tools.JooqLogger;
@@ -130,7 +131,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
             if (dataType != null) {
                 if (dataType.getSQLType() == Types.DATE) {
                     DataType<?> forcedDataType = DefaultDataType.getDataType(db.getDialect(), SQLDataType.TIMESTAMP.getTypeName(), 0, 0);
-                    result = new DefaultDataTypeDefinition(db, child.getSchema(), forcedDataType.getTypeName());
+                    result = new DefaultDataTypeDefinition(db, child.getSchema(), forcedDataType.getTypeName(), 0, 0, 0, result.isNullable(), result.isDefaulted(), null, DateAsTimestampBinding.class.getName());
                 }
             }
         }

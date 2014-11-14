@@ -61,8 +61,6 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.conf.ParamType.NAMED;
-import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
@@ -118,7 +116,6 @@ import org.jooq.UDTRecord;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
-import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.types.DayToSecond;
@@ -151,22 +148,25 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     // TODO: This type boolean should not be passed standalone to the
     // constructor. Find a better design
     final boolean               isLob;
-    @Deprecated
-    final String                paramName;
 
     public DefaultBinding(Converter<T, U> converter) {
-        this(converter, false, null);
+        this(converter, false);
     }
 
     DefaultBinding(Converter<T, U> converter, boolean isLob) {
-        this(converter, isLob, null);
-    }
-
-    DefaultBinding(Converter<T, U> converter, boolean isLob, String paramName) {
         this.type = converter.fromType();
         this.converter = converter;
         this.isLob = isLob;
-        this.paramName = paramName;
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    static <T, U> DefaultBinding<T, U> newBinding(Converter<T, U> converter, DataType<?> type) {
+        return new DefaultBinding(
+            converter != null
+              ? converter
+              : new IdentityConverter(type.getType()),
+            type.isLob()
+        );
     }
 
     @Override
@@ -287,7 +287,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#632] [#722] Current integration tests show that Ingres and
             // Sybase can do without casting in most cases.
             else if (asList().contains(family)) {
-                ctx.render().sql(getBindVariable(ctx.render()));
+                ctx.render().sql(ctx.variable());
             }
 
             // Derby and DB2 must have a type associated with NULL. Use VARCHAR
@@ -352,26 +352,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         ctx.render().sql(" ").keyword("as").sql(" ")
                .sql(dataType.length(length).precision(precision, scale).getCastTypeName(ctx.configuration()))
                .sql(")");
-    }
-
-    /**
-     * Get a bind variable, depending on value of
-     * {@link RenderContext#namedParams()}
-     */
-    private final String getBindVariable(RenderContext context) {
-        if (context.paramType() == NAMED || context.paramType() == NAMED_OR_INLINED) {
-            int index = context.nextIndex();
-
-            if (StringUtils.isBlank(paramName)) {
-                return ":" + index;
-            }
-            else {
-                return ":" + paramName;
-            }
-        }
-        else {
-            return "?";
-        }
     }
 
     /**
@@ -642,14 +622,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // Postgres needs explicit casting for array types
             if (type.isArray() && byte[].class != type) {
-                render.sql(getBindVariable(render));
+                render.sql(ctx.variable());
                 render.sql("::");
                 render.keyword(DefaultDataType.getDataType(family, type).getCastTypeName(render.configuration()));
             }
 
             // ... and also for enum types
             else if (EnumType.class.isAssignableFrom(type)) {
-                render.sql(getBindVariable(render));
+                render.sql(ctx.variable());
 
                 // [#968] Don't cast "synthetic" enum types (note, val can be null!)
                 EnumType e = (EnumType) type.getEnumConstants()[0];
@@ -669,12 +649,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
 
             else {
-                render.sql(getBindVariable(render));
+                render.sql(ctx.variable());
             }
         }
 
         else {
-            render.sql(getBindVariable(render));
+            render.sql(ctx.variable());
         }
     }
 

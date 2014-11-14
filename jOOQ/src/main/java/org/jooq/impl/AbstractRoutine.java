@@ -137,27 +137,35 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     // ------------------------------------------------------------------------
 
     protected AbstractRoutine(String name, Schema schema) {
-        this(name, schema, null, null, null);
+        this(name, schema, null, null, (Binding<?, T>) null);
     }
 
     protected AbstractRoutine(String name, Schema schema, Package pkg) {
-        this(name, schema, pkg, null, null);
+        this(name, schema, pkg, null, (Binding<?, T>) null);
     }
 
     protected AbstractRoutine(String name, Schema schema, DataType<T> type) {
-        this(name, schema, null, type, null);
+        this(name, schema, null, type, (Binding<?, T>) null);
     }
 
     protected AbstractRoutine(String name, Schema schema, DataType<?> type, Converter<?, T> converter) {
+        this(name, schema, type, DefaultBinding.newBinding(converter, type));
+    }
+
+    protected AbstractRoutine(String name, Schema schema, DataType<?> type, Binding<?, T> converter) {
         this(name, schema, null, type, converter);
     }
 
     protected AbstractRoutine(String name, Schema schema, Package pkg, DataType<T> type) {
-        this(name, schema, pkg, type, null);
+        this(name, schema, pkg, type, (Binding<?, T>) null);
+    }
+
+    protected AbstractRoutine(String name, Schema schema, Package pkg, DataType<?> type, Converter<?, T> converter) {
+        this(name, schema, pkg, type, DefaultBinding.newBinding(converter, type));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    protected AbstractRoutine(String name, Schema schema, Package pkg, DataType<?> type, Converter<?, T> converter) {
+    protected AbstractRoutine(String name, Schema schema, Package pkg, DataType<?> type, Binding<?, T> binding) {
         this.parameterIndexes = new HashMap<Parameter<?>, Integer>();
 
         this.schema = schema;
@@ -171,9 +179,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         this.inValuesDefaulted = new HashSet<Parameter<?>>();
         this.inValuesNonDefaulted = new HashSet<Parameter<?>>();
         this.outValues = new HashMap<Parameter<?>, Object>();
-        this.type = converter == null
+        this.type = binding == null
             ? (DataType<T>) type
-            : type.asConvertedDataType((Converter) converter);
+            : type.asConvertedDataType((Binding) binding);
     }
 
     // ------------------------------------------------------------------------
@@ -779,7 +787,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
      *            {@link Parameter#isDefaulted()}
      */
     protected static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, Converter<T, U> converter) {
-        return createParameter(name, type, isDefaulted, new DefaultBinding<T, U>(converter, type.isLob()));
+        return createParameter(name, type, isDefaulted, DefaultBinding.newBinding(converter, type));
     }
 
     /**

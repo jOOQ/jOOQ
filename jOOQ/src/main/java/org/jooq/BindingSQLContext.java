@@ -45,7 +45,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface BindingSQLContext<T> extends Scope {
+public interface BindingSQLContext<U> extends Scope {
 
     /**
      * The {@link RenderContext} that contains the generated SQL and the current
@@ -56,5 +56,15 @@ public interface BindingSQLContext<T> extends Scope {
     /**
      * The bind value that is being rendered.
      */
-    T value();
+    U value();
+
+    /**
+     * The variable string - mostly just a <code>?</code>, or a named bind variable, such as <code>:var</code>.
+     */
+    String variable();
+
+    /**
+     * Create a new context from this one using a converter.
+     */
+    <T> BindingSQLContext<T> convert(Converter<T, U> converter);
 }

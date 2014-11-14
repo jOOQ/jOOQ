@@ -48,7 +48,7 @@ import java.sql.PreparedStatement;
  *
  * @author Lukas Eder
  */
-public interface BindingSetStatementContext<T> extends Scope {
+public interface BindingSetStatementContext<U> extends Scope {
 
     /**
      * The {@link PreparedStatement} to which a bind variable should be bound.
@@ -63,5 +63,10 @@ public interface BindingSetStatementContext<T> extends Scope {
     /**
      * The bind value that is being bound.
      */
-    T value();
+    U value();
+
+    /**
+     * Create a new context from this one using a converter.
+     */
+    <T> BindingSetStatementContext<T> convert(Converter<T, U> converter);
 }

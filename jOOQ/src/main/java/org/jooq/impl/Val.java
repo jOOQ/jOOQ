@@ -40,10 +40,17 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.conf.ParamType.NAMED;
+import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
+
+import java.sql.SQLException;
+
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.RenderContext;
 import org.jooq.conf.ParamType;
+import org.jooq.exception.DataAccessException;
+import org.jooq.tools.StringUtils;
 
 /**
  * @author Lukas Eder
@@ -72,7 +79,13 @@ class Val<T> extends AbstractParam<T> {
             if (isInline(ctx))
                 ctx.paramType(ParamType.INLINED);
 
-            new DefaultBinding(getConverter(), getDataType().isLob(), getParamName()).sql(new DefaultBindingSQLContext<T>(ctx.configuration(), (RenderContext) ctx, value));
+            try {
+                getBinding().sql(new DefaultBindingSQLContext<T>(ctx.configuration(), (RenderContext) ctx, value, getBindVariable(ctx)));
+            }
+            catch (SQLException e) {
+                throw new DataAccessException("Error while generating SQL for Binding", e);
+            }
+
             ctx.paramType(paramType);
         }
 
@@ -82,6 +95,26 @@ class Val<T> extends AbstractParam<T> {
             if (!isInline(ctx)) {
                 ctx.bindValue(value, this);
             }
+        }
+    }
+
+    /**
+     * Get a bind variable, depending on value of
+     * {@link RenderContext#namedParams()}
+     */
+    final String getBindVariable(Context<?> ctx) {
+        if (ctx.paramType() == NAMED || ctx.paramType() == NAMED_OR_INLINED) {
+            int index = ctx.nextIndex();
+
+            if (StringUtils.isBlank(getParamName())) {
+                return ":" + index;
+            }
+            else {
+                return ":" + getParamName();
+            }
+        }
+        else {
+            return "?";
         }
     }
 }

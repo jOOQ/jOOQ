@@ -44,6 +44,8 @@ import static org.jooq.test.data.BoolTable.BOOL_TABLE;
 
 import java.sql.SQLException;
 
+import org.jooq.Converter;
+import org.jooq.Converters;
 import org.jooq.Result;
 import org.jooq.impl.DSL;
 import org.jooq.test.data.BoolRecord;
@@ -95,5 +97,57 @@ public class ConverterTest extends AbstractTest {
         assertEquals(Bool.FALSE, BOOL_TABLE.BOOL.getDataType().convert(false));
         assertEquals(Bool.FALSE, BOOL_TABLE.BOOL.getDataType().convert(0));
         assertEquals(Bool.FALSE, BOOL_TABLE.BOOL.getDataType().convert("false"));
+    }
+
+    @SuppressWarnings("serial")
+    @Test
+    public void testChainedConverters() {
+        Converter<Integer, Integer> c1 = Converters.of();
+
+        assertEquals(1, (int) c1.from(1));
+        assertEquals(1, (int) c1.to(1));
+        assertEquals(1, (int) c1.from(c1.to(1)));
+
+        Converter<Integer, Integer> add = new Converter<Integer, Integer>() {
+            @Override
+            public Integer from(Integer t) {
+                return t + 1;
+            }
+
+            @Override
+            public Integer to(Integer u) {
+                return u - 1;
+            }
+
+            @Override
+            public Class<Integer> fromType() {
+                return Integer.class;
+            }
+
+            @Override
+            public Class<Integer> toType() {
+                return Integer.class;
+            }
+        };
+
+        Converter<Integer, Integer> c2 = Converters.of(add);
+        Converter<Integer, Integer> c3 = Converters.of(add, add);
+        Converter<Integer, Integer> c4 = Converters.of(add, add, add);
+        Converter<Integer, Integer> c5 = Converters.of(add, add, add, add);
+
+        assertEquals(2, (int) c2.from(1));
+        assertEquals(3, (int) c3.from(1));
+        assertEquals(4, (int) c4.from(1));
+        assertEquals(5, (int) c5.from(1));
+
+        assertEquals(1, (int) c2.to(2));
+        assertEquals(1, (int) c3.to(3));
+        assertEquals(1, (int) c4.to(4));
+        assertEquals(1, (int) c5.to(5));
+
+        assertEquals(1, (int) c2.from(c2.to(1)));
+        assertEquals(1, (int) c3.from(c3.to(1)));
+        assertEquals(1, (int) c4.from(c4.to(1)));
+        assertEquals(1, (int) c5.from(c5.to(1)));
     }
 }

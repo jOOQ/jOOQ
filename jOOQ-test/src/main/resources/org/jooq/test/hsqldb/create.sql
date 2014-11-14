@@ -1,3 +1,9 @@
+DROP USER multi_schema/
+DROP USER multi_schema_unused/
+
+CREATE USER multi_schema PASSWORD multi_schema ADMIN/
+CREATE USER multi_schema_unused PASSWORD multi_schema_unused ADMIN/
+
 DROP PROCEDURE IF EXISTS p_arrays1/
 DROP PROCEDURE IF EXISTS p_arrays2/
 DROP PROCEDURE IF EXISTS p_arrays3/
@@ -146,10 +152,7 @@ ON t_triggers
 REFERENCING NEW AS new
 FOR EACH ROW
 BEGIN ATOMIC
-    select next value for s_triggers_sequence
-	into new.id_generated
-	from information_schema.system_users;
-
+    set new.id_generated = next value for s_triggers_sequence;
 	set new.id = new.id_generated;
 	set new.counter = new.id_generated * 2;
 END

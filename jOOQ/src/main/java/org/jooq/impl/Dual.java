@@ -57,7 +57,11 @@ class Dual extends AbstractTable<Record> {
 
     private static final long          serialVersionUID = -7492790780048090156L;
     private static final Table<Record> FORCED_DUAL      = select(new Field[] { inline("X").as("DUMMY") }).asTable("DUAL");
-    static final String                DUAL_ACCESS      = "select count(*) from MSysResources";
+    /* [pro] */
+    static final String                DUAL_ACCESS      = "select count(*) dual from MSysResources";
+    static final String                DUAL_INFORMIX    = "select 1 as dual from systables where tabid = 1";
+    /* [/pro] */
+    static final String                DUAL_HSQLDB      = "select 1 as dual from information_schema.system_users limit 1";
 
     private final boolean              force;
 
@@ -121,9 +125,7 @@ class Dual extends AbstractTable<Record> {
                     break;
 
                 case HSQLDB:
-                    ctx.literal("INFORMATION_SCHEMA")
-                       .sql(".")
-                       .literal("SYSTEM_USERS");
+                    ctx.sql("(").sql(DUAL_HSQLDB).sql(") as dual");
                     break;
 
                 case CUBRID:

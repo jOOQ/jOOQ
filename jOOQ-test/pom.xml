@@ -99,6 +99,8 @@
             <artifactId>guava</artifactId>
             <version>17.0</version>
         </dependency>
+        
+        
 
         <!-- Spring (transitive dependencies are not listed explicitly) -->
         <dependency>
@@ -119,6 +121,21 @@
 
 
 
+        <!-- Custom data type dependencies -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.13</version>
+        </dependency>
+        
+        
+        
+        <!-- Test dependencies -->
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-core</artifactId>
@@ -2889,9 +2906,33 @@
                                                     <type>java.util.List&lt;java.sql.Date></type>
                                                     <converter>org.jooq.test.all.converters.StringArrayToDateListConverter</converter>
                                                 </customType>
+                                                
+                                                
+                                                <!-- [#2788] The PostgreSQL "json" data type -->
+                                                <customType>
+                                                    <name>org.jooq.test.all.bindings.PostgresJSONGsonBinding</name>
+                                                    <type>com.google.gson.JsonElement</type>
+                                                    <binding>org.jooq.test.all.bindings.PostgresJSONGsonBinding</binding>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.bindings.PostgresJSONJacksonBinding</name>
+                                                    <type>org.jooq.test.all.types.JSONJacksonHelloWorld</type>
+                                                    <binding>org.jooq.test.all.bindings.PostgresJSONJacksonBinding</binding>
+                                                </customType>
                                             </customTypes>
 
                                             <forcedTypes>
+                                            
+                                                <!-- [#2788] The PostgreSQL "json" data type -->
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.bindings.PostgresJSONGsonBinding</name>
+                                                    <expression>(?i:(.*?\.)T_EXOTIC_TYPES\.JS_GSON)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.bindings.PostgresJSONJacksonBinding</name>
+                                                    <expression>(?i:(.*?\.)T_EXOTIC_TYPES\.JS_JACKSON)</expression>
+                                                </forcedType>
+
 
                                                 <!-- [#3111] Several forced types should be able to map to the same U type -->
                                                 <forcedType>

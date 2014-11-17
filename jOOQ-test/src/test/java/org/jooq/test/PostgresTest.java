@@ -93,6 +93,7 @@ import static org.junit.Assert.assertNull;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -126,6 +127,7 @@ import org.jooq.test.all.converters.Boolean_YES_NO_LC;
 import org.jooq.test.all.converters.Boolean_YES_NO_UC;
 import org.jooq.test.all.converters.Boolean_YN_LC;
 import org.jooq.test.all.converters.Boolean_YN_UC;
+import org.jooq.test.all.types.JSONJacksonHelloWorld;
 import org.jooq.test.postgres.generatedclasses.Keys;
 import org.jooq.test.postgres.generatedclasses.Routines;
 import org.jooq.test.postgres.generatedclasses.Sequences;
@@ -174,6 +176,11 @@ import org.postgis.PGgeometry;
 import org.postgis.Point;
 import org.postgresql.geometric.PGbox;
 import org.postgresql.util.PGInterval;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
 
 
 /**
@@ -1159,12 +1166,39 @@ public class PostgresTest extends jOOQAbstractTest<
     public void testPostgresJsonDataType() throws Exception {
         jOOQAbstractTest.reset = false;
 
-        create().insertInto(T_EXOTIC_TYPES, T_EXOTIC_TYPES.ID, T_EXOTIC_TYPES.JS)
-                .values(1, null)
-                .values(2, "{}")
-                .values(3, "[]")
-                .values(4, "{\"hello\":\"world\"}")
-                .execute();
+        assertEquals(4,
+        create().insertInto(T_EXOTIC_TYPES, T_EXOTIC_TYPES.ID, T_EXOTIC_TYPES.JS_GSON, T_EXOTIC_TYPES.JS_JACKSON)
+                .values(1, null, null)
+                .values(2, new JsonObject(), new JSONJacksonHelloWorld())
+                .values(3, new JsonArray(), new JSONJacksonHelloWorld("hello", "world"))
+                .values(4, new Gson().fromJson("{\"hello\":\"world\"}", JsonObject.class), new JSONJacksonHelloWorld("hello", "world", "a", "b", "c"))
+                .execute());
+
+        Result<TExoticTypesRecord> r1 =
+        create().selectFrom(T_EXOTIC_TYPES)
+                .orderBy(TExoticTypes_ID())
+                .fetch();
+
+        assertEquals(4, r1.size());
+        assertEquals(JsonNull.INSTANCE, r1.get(0).getJsGson());
+        assertNull(r1.get(0).getJsJackson());
+
+        assertEquals(new JsonObject(), r1.get(1).getJsGson());
+        assertNull(r1.get(1).getJsJackson().hello);
+        assertNull(r1.get(1).getJsJackson().world);
+        assertNull(r1.get(1).getJsJackson().greetings);
+
+        assertEquals(new JsonArray(), r1.get(2).getJsGson());
+        assertEquals("hello", r1.get(2).getJsJackson().hello);
+        assertEquals("world", r1.get(2).getJsJackson().world);
+        assertEquals(0, r1.get(2).getJsJackson().greetings.size());
+
+        JsonObject js1 = (JsonObject) r1.get(3).getJsGson();
+        assertEquals(1, js1.entrySet().size());
+        assertEquals("world", js1.get("hello").getAsString());
+        assertEquals("hello", r1.get(3).getJsJackson().hello);
+        assertEquals("world", r1.get(3).getJsJackson().world);
+        assertEquals(Arrays.asList("a", "b", "c"), r1.get(3).getJsJackson().greetings);
     }
 
     @Test

@@ -23,4 +23,19 @@ public interface ITExoticTypes extends java.io.Serializable {
 	 * Getter for <code>public.t_exotic_types.js</code>.
 	 */
 	public java.lang.Object getJs();
+
+	/**
+	 * Getter for <code>public.t_exotic_types.js_gson</code>.
+	 */
+	public com.google.gson.JsonElement getJsGson();
+
+	/**
+	 * Getter for <code>public.t_exotic_types.js_javax</code>.
+	 */
+	public java.lang.Object getJsJavax();
+
+	/**
+	 * Getter for <code>public.t_exotic_types.js_jackson</code>.
+	 */
+	public org.jooq.test.all.types.JSONJacksonHelloWorld getJsJackson();
 }

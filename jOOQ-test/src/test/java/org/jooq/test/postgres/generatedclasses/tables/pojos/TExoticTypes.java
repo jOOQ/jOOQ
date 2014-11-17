@@ -9,20 +9,29 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes implements org.jooq.test.postgres.generatedclasses.tables.interfaces.ITExoticTypes {
 
-	private static final long serialVersionUID = 288641934;
+	private static final long serialVersionUID = -884169577;
 
-	private final java.lang.Integer id;
-	private final java.util.UUID    uu;
-	private final java.lang.Object  js;
+	private final java.lang.Integer                             id;
+	private final java.util.UUID                                uu;
+	private final java.lang.Object                              js;
+	private final com.google.gson.JsonElement                   jsGson;
+	private final java.lang.Object                              jsJavax;
+	private final org.jooq.test.all.types.JSONJacksonHelloWorld jsJackson;
 
 	public TExoticTypes(
-		java.lang.Integer id,
-		java.util.UUID    uu,
-		java.lang.Object  js
+		java.lang.Integer                             id,
+		java.util.UUID                                uu,
+		java.lang.Object                              js,
+		com.google.gson.JsonElement                   jsGson,
+		java.lang.Object                              jsJavax,
+		org.jooq.test.all.types.JSONJacksonHelloWorld jsJackson
 	) {
 		this.id = id;
 		this.uu = uu;
 		this.js = js;
+		this.jsGson = jsGson;
+		this.jsJavax = jsJavax;
+		this.jsJackson = jsJackson;
 	}
 
 	@Override
@@ -38,5 +47,20 @@ public class TExoticTypes implements org.jooq.test.postgres.generatedclasses.tab
 	@Override
 	public java.lang.Object getJs() {
 		return this.js;
+	}
+
+	@Override
+	public com.google.gson.JsonElement getJsGson() {
+		return this.jsGson;
+	}
+
+	@Override
+	public java.lang.Object getJsJavax() {
+		return this.jsJavax;
+	}
+
+	@Override
+	public org.jooq.test.all.types.JSONJacksonHelloWorld getJsJackson() {
+		return this.jsJackson;
 	}
 }

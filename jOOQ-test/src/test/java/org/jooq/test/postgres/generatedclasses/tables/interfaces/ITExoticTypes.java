@@ -38,4 +38,14 @@ public interface ITExoticTypes extends java.io.Serializable {
 	 * Getter for <code>public.t_exotic_types.js_jackson</code>.
 	 */
 	public org.jooq.test.all.types.JSONJacksonHelloWorld getJsJackson();
+
+	/**
+	 * Getter for <code>public.t_exotic_types.hstore</code>.
+	 */
+	public java.lang.Object getHstore();
+
+	/**
+	 * Getter for <code>public.t_exotic_types.hstore_map</code>.
+	 */
+	public java.util.Map<String, String> getHstoreMap();
 }

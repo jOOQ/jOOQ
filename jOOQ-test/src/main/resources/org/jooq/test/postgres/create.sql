@@ -467,10 +467,14 @@ CREATE TABLE t_986_2 (
 CREATE TABLE t_exotic_types (
   ID         INT  NOT NULL,
   UU         UUID,
+  
   JS         JSON,
   JS_GSON    JSON,
   JS_JAVAX   JSON,
   JS_JACKSON JSON,
+  
+  HSTORE     HSTORE,
+  HSTORE_MAP HSTORE,
 
   CONSTRAINT pk_t_exotic_types PRIMARY KEY(ID)
 )

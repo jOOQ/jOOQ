@@ -42,24 +42,40 @@ package org.jooq.test.all.bindings;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.jooq.BindingSQLContext;
 import org.jooq.Converter;
 import org.jooq.impl.DSL;
-import org.jooq.test.all.types.JSONJacksonHelloWorld;
-
-import org.codehaus.jackson.map.ObjectMapper;
+import org.jooq.lambda.Seq;
+import org.jooq.tools.csv.CSVParser;
 
 @SuppressWarnings("serial")
-public class PostgresJSONJacksonBinding extends AbstractPostgresVarcharBinding<JSONJacksonHelloWorld> {
+public class PostgresHstoreMapBinding extends AbstractPostgresVarcharBinding<Map<String, String>> {
 
     @Override
-    public Converter<Object, JSONJacksonHelloWorld> converter() {
-        return new Converter<Object, JSONJacksonHelloWorld>() {
+    public Converter<Object, Map<String, String>> converter() {
+        return new Converter<Object, Map<String, String>>() {
             @Override
-            public JSONJacksonHelloWorld from(Object t) {
+            public Map<String, String> from(Object t) {
+                if (t == null)
+                    return null;
+
                 try {
-                    return t == null ? null : new ObjectMapper().readValue(t + "", JSONJacksonHelloWorld.class);
+                    String[] kvs = new CSVParser(',').parseLine(t + "");
+                    Map<String, String> result = new LinkedHashMap<>();
+
+                    for (String kv : kvs) {
+                        String[] split = kv.split("=>");
+
+                        if (split.length == 2) {
+                            result.put(split[0].replaceAll("^\"?(.*?)\"?$", "$1"), split[1].replaceAll("^\"?(.*?)\"?$", "$1"));
+                        }
+                    }
+
+                    return result;
                 }
                 catch (IOException e) {
                     throw new RuntimeException(e);
@@ -67,13 +83,8 @@ public class PostgresJSONJacksonBinding extends AbstractPostgresVarcharBinding<J
             }
 
             @Override
-            public Object to(JSONJacksonHelloWorld u) {
-                try {
-                    return u == null ? null : new ObjectMapper().writeValueAsString(u);
-                }
-                catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+            public Object to(Map<String, String> u) {
+                return u == null ? null : Seq.seq(u).map(t -> t.v1 + "=>" + t.v2).collect(Collectors.joining(","));
             }
 
             @Override
@@ -81,15 +92,16 @@ public class PostgresJSONJacksonBinding extends AbstractPostgresVarcharBinding<J
                 return Object.class;
             }
 
+            @SuppressWarnings({ "unchecked", "rawtypes" })
             @Override
-            public Class<JSONJacksonHelloWorld> toType() {
-                return JSONJacksonHelloWorld.class;
+            public Class<Map<String, String>> toType() {
+                return (Class) Map.class;
             }
         };
     }
 
     @Override
-    public void sql(BindingSQLContext<JSONJacksonHelloWorld> ctx) throws SQLException {
-        ctx.render().visit(DSL.val(ctx.convert(converter()).value())).sql("::json");
+    public void sql(BindingSQLContext<Map<String, String>> ctx) throws SQLException {
+        ctx.render().visit(DSL.val(ctx.convert(converter()).value())).sql("::hstore");
     }
 }

@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes implements org.jooq.test.postgres.generatedclasses.tables.interfaces.ITExoticTypes {
 
-	private static final long serialVersionUID = -884169577;
+	private static final long serialVersionUID = 1561193380;
 
 	private final java.lang.Integer                             id;
 	private final java.util.UUID                                uu;
@@ -17,6 +17,8 @@ public class TExoticTypes implements org.jooq.test.postgres.generatedclasses.tab
 	private final com.google.gson.JsonElement                   jsGson;
 	private final java.lang.Object                              jsJavax;
 	private final org.jooq.test.all.types.JSONJacksonHelloWorld jsJackson;
+	private final java.lang.Object                              hstore;
+	private final java.util.Map<String, String>                 hstoreMap;
 
 	public TExoticTypes(
 		java.lang.Integer                             id,
@@ -24,7 +26,9 @@ public class TExoticTypes implements org.jooq.test.postgres.generatedclasses.tab
 		java.lang.Object                              js,
 		com.google.gson.JsonElement                   jsGson,
 		java.lang.Object                              jsJavax,
-		org.jooq.test.all.types.JSONJacksonHelloWorld jsJackson
+		org.jooq.test.all.types.JSONJacksonHelloWorld jsJackson,
+		java.lang.Object                              hstore,
+		java.util.Map<String, String>                 hstoreMap
 	) {
 		this.id = id;
 		this.uu = uu;
@@ -32,6 +36,8 @@ public class TExoticTypes implements org.jooq.test.postgres.generatedclasses.tab
 		this.jsGson = jsGson;
 		this.jsJavax = jsJavax;
 		this.jsJackson = jsJackson;
+		this.hstore = hstore;
+		this.hstoreMap = hstoreMap;
 	}
 
 	@Override
@@ -62,5 +68,15 @@ public class TExoticTypes implements org.jooq.test.postgres.generatedclasses.tab
 	@Override
 	public org.jooq.test.all.types.JSONJacksonHelloWorld getJsJackson() {
 		return this.jsJackson;
+	}
+
+	@Override
+	public java.lang.Object getHstore() {
+		return this.hstore;
+	}
+
+	@Override
+	public java.util.Map<String, String> getHstoreMap() {
+		return this.hstoreMap;
 	}
 }

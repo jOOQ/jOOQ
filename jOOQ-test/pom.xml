@@ -2919,6 +2919,15 @@
                                                     <type>org.jooq.test.all.types.JSONJacksonHelloWorld</type>
                                                     <binding>org.jooq.test.all.bindings.PostgresJSONJacksonBinding</binding>
                                                 </customType>
+                                                
+                                                
+                                                
+                                                <!-- [#994] The PostgreSQL "hstore" data type -->
+                                                <customType>
+                                                    <name>org.jooq.test.all.bindings.PostgresHstoreMapBinding</name>
+                                                    <type>java.util.Map&lt;String, String></type>
+                                                    <binding>org.jooq.test.all.bindings.PostgresHstoreMapBinding</binding>
+                                                </customType>
                                             </customTypes>
 
                                             <forcedTypes>
@@ -2932,6 +2941,14 @@
                                                     <name>org.jooq.test.all.bindings.PostgresJSONJacksonBinding</name>
                                                     <expression>(?i:(.*?\.)T_EXOTIC_TYPES\.JS_JACKSON)</expression>
                                                 </forcedType>
+                                                
+                                                
+                                                <!-- [#994] The PostgreSQL "hstore" data type -->
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.bindings.PostgresHstoreMapBinding</name>
+                                                    <expression>(?i:(.*?\.)T_EXOTIC_TYPES\.HSTORE_MAP)</expression>
+                                                </forcedType>
+                                                
 
 
                                                 <!-- [#3111] Several forced types should be able to map to the same U type -->

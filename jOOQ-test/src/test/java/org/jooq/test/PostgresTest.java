@@ -94,6 +94,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -1199,6 +1201,33 @@ public class PostgresTest extends jOOQAbstractTest<
         assertEquals("hello", r1.get(3).getJsJackson().hello);
         assertEquals("world", r1.get(3).getJsJackson().world);
         assertEquals(Arrays.asList("a", "b", "c"), r1.get(3).getJsJackson().greetings);
+    }
+
+    @SuppressWarnings("serial")
+    @Test
+    public void testPostgresHstoreDataType() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        assertEquals(4,
+        create().insertInto(T_EXOTIC_TYPES, T_EXOTIC_TYPES.ID, T_EXOTIC_TYPES.HSTORE_MAP)
+                .values(1, null)
+                .values(2, Collections.emptyMap())
+                .values(3, new LinkedHashMap<String, String>() {{ put("a", "1"); }})
+                .values(4, new LinkedHashMap<String, String>() {{ put("a", "1"); put("b", "2"); }})
+                .execute());
+
+        Result<TExoticTypesRecord> r1 =
+        create().selectFrom(T_EXOTIC_TYPES)
+                .orderBy(TExoticTypes_ID())
+                .fetch();
+
+        assertNull(r1.get(0).getHstoreMap());
+        assertEquals(0, r1.get(1).getHstoreMap().size());
+        assertEquals(1, r1.get(2).getHstoreMap().size());
+        assertEquals("1", r1.get(2).getHstoreMap().get("a"));
+        assertEquals(2, r1.get(3).getHstoreMap().size());
+        assertEquals("1", r1.get(3).getHstoreMap().get("a"));
+        assertEquals("2", r1.get(3).getHstoreMap().get("b"));
     }
 
     @Test

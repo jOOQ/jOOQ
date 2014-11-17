@@ -41,7 +41,7 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.val;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -96,13 +96,10 @@ public class DateAsTimestampBinding implements Binding<Timestamp, Timestamp> {
         // back to DATE to prevent implicit conversion of DATE columns to TIMESTAMP via INTERNAL_FUNCTION(),
         // which would prevent index usage.
         // More information here: http://stackoverflow.com/q/6612679/521799
-        if (family == ORACLE && render.paramType() != INLINED) {
-            render.keyword("cast")
-                  .sql("(")
-                  .sql(ctx.variable())
-                  .sql(" ")
-                  .keyword("as date")
-                  .sql(")");
+        if (family == ORACLE) {
+            render.keyword("cast").sql("(")
+                  .visit(val(ctx.value()))
+                  .sql(" ").keyword("as date").sql(")");
         }
         else
         /* [/pro] */

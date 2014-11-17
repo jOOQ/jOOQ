@@ -103,6 +103,7 @@ import org.jooq.BindingSetStatementContext;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Converter;
+import org.jooq.Converters;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
@@ -160,13 +161,72 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    static <T, U> DefaultBinding<T, U> newBinding(Converter<T, U> converter, DataType<?> type) {
-        return new DefaultBinding(
-            converter != null
-              ? converter
-              : new IdentityConverter(type.getType()),
-            type.isLob()
-        );
+    static <T, X, U> Binding<T, U> newBinding(final Converter<X, U> converter, final DataType<T> type, final Binding<T, X> binding) {
+        final Binding<T, U> theBinding;
+
+
+        if (converter == null && binding == null) {
+            theBinding = (Binding) new DefaultBinding<T, T>(new IdentityConverter<T>(type.getType()), type.isLob());
+        }
+        else if (converter == null) {
+            theBinding = (Binding) binding;
+        }
+        else if (binding == null) {
+            theBinding = (Binding) new DefaultBinding<X, U>(converter, type.isLob());
+        }
+        else {
+            theBinding = new Binding<T, U>() {
+
+                /**
+                 * Generated UID
+                 */
+                private static final long serialVersionUID = 8912340791845209886L;
+
+                final Converter<T, U>     theConverter     = Converters.of(binding.converter(), converter);
+
+                @Override
+                public Converter<T, U> converter() {
+                    return theConverter;
+                }
+
+                @Override
+                public void sql(BindingSQLContext<U> ctx) throws SQLException {
+                    binding.sql(ctx.convert(converter));
+                }
+
+                @Override
+                public void register(BindingRegisterContext<U> ctx) throws SQLException {
+                    binding.register(ctx.convert(converter));
+                }
+
+                @Override
+                public void set(BindingSetStatementContext<U> ctx) throws SQLException {
+                    binding.set(ctx.convert(converter));
+                }
+
+                @Override
+                public void set(BindingSetSQLOutputContext<U> ctx) throws SQLException {
+                    binding.set(ctx.convert(converter));
+                }
+
+                @Override
+                public void get(BindingGetResultSetContext<U> ctx) throws SQLException {
+                    binding.get(ctx.convert(converter));
+                }
+
+                @Override
+                public void get(BindingGetStatementContext<U> ctx) throws SQLException {
+                    binding.get(ctx.convert(converter));
+                }
+
+                @Override
+                public void get(BindingGetSQLInputContext<U> ctx) throws SQLException {
+                    binding.get(ctx.convert(converter));
+                }
+            };
+        }
+
+        return theBinding;
     }
 
     @Override

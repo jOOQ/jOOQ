@@ -60,6 +60,12 @@ public interface DataTypeDefinition {
     String getConverter();
 
     /**
+     * The binding type that is applied to this data type, or
+     * <code>null</code>, if no such binding type is configured.
+     */
+    String getBinding();
+
+    /**
      * The type's length.
      */
     int getLength();

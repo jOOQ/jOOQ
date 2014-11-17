@@ -89,7 +89,7 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
     @SuppressWarnings("unused")
     @Deprecated
     protected ArrayRecordImpl(Schema schema, String name, DataType<T> type, Configuration configuration) {
-        this(schema, name, type);
+        this(schema, name, type, (Converter<?, T>) null, null);
     }
 
     /**
@@ -101,8 +101,8 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
      */
     @SuppressWarnings("unused")
     @Deprecated
-    protected ArrayRecordImpl(Schema schema, String name, DataType<?> type, Configuration configuration, Converter<?, T> converter) {
-        this(schema, name, type, converter);
+    protected <X> ArrayRecordImpl(Schema schema, String name, DataType<X> type, Configuration configuration, Converter<X, T> converter) {
+        this(schema, name, type, converter, null);
     }
 
     /**
@@ -114,36 +114,56 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
      */
     @SuppressWarnings("unused")
     @Deprecated
-    protected ArrayRecordImpl(Schema schema, String name, DataType<?> type, Configuration configuration, Binding<?, T> binding) {
-        this(schema, name, type, binding);
+    protected <X, Y> ArrayRecordImpl(Schema schema, String name, DataType<X> type, Configuration configuration, Binding<X, Y> binding) {
+        this(schema, name, type, (Converter<Y, T>) null, binding);
+    }
+
+    /**
+     * Create an empty array record
+     *
+     * @deprecated - 3.4.0 - [#3126] - Use the
+     *             {@link #ArrayRecordImpl(Schema, String, DataType, Converter)}
+     *             constructor instead.
+     */
+    @SuppressWarnings("unused")
+    @Deprecated
+    protected <X, Y> ArrayRecordImpl(Schema schema, String name, DataType<X> type, Configuration configuration, Converter<Y, T> converter, Binding<X, Y> binding) {
+        this(schema, name, type, converter, binding);
     }
 
     /**
      * Create an empty array record
      */
     protected ArrayRecordImpl(Schema schema, String name, DataType<T> type) {
-        this(schema, name, type, (Converter<?, T>) null);
+        this(schema, name, type, (Converter<?, T>) null, null);
     }
 
     /**
      * Create an empty array record
      */
-    protected ArrayRecordImpl(Schema schema, String name, DataType<?> type, Converter<?, T> converter) {
-        this(schema, name, type, DefaultBinding.newBinding(converter, type));
+    protected <X> ArrayRecordImpl(Schema schema, String name, DataType<X> type, Converter<X, T> converter) {
+        this(schema, name, type, converter, null);
     }
 
     /**
      * Create an empty array record
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    protected ArrayRecordImpl(Schema schema, String name, DataType<?> type, Binding<?, T> binding) {
+    protected <X, Y> ArrayRecordImpl(Schema schema, String name, DataType<X> type, Binding<X, Y> binding) {
+        this(schema, name, type, (Converter<Y, T>) null, binding);
+    }
+
+    /**
+     * Create an empty array record
+     */
+    @SuppressWarnings({ "unchecked" })
+    protected <X, Y> ArrayRecordImpl(Schema schema, String name, DataType<X> type, Converter<Y, T> converter, Binding<X, Y> binding) {
         super(null);
 
         this.schema = schema;
         this.name = name;
-        this.baseType = binding == null
+        this.baseType = converter == null && binding == null
             ? (DataType<T>) type
-            : type.asConvertedDataType((Binding) binding);
+            : type.asConvertedDataType(DefaultBinding.newBinding(converter, type, binding));
 
         // Array data type initialisation
         this.type = baseType.asArrayDataType(getClass());

@@ -131,7 +131,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
             if (dataType != null) {
                 if (dataType.getSQLType() == Types.DATE) {
                     DataType<?> forcedDataType = DefaultDataType.getDataType(db.getDialect(), SQLDataType.TIMESTAMP.getTypeName(), 0, 0);
-                    result = new DefaultDataTypeDefinition(db, child.getSchema(), forcedDataType.getTypeName(), 0, 0, 0, result.isNullable(), result.isDefaulted(), null, DateAsTimestampBinding.class.getName());
+                    result = new DefaultDataTypeDefinition(db, child.getSchema(), forcedDataType.getTypeName(), 0, 0, 0, result.isNullable(), result.isDefaulted(), null, null, DateAsTimestampBinding.class.getName());
                 }
             }
         }
@@ -141,6 +141,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
         if (forcedType != null) {
             String type = forcedType.getName();
             String converter = null;
+            String binding = result.getBinding();
 
             CustomType customType = customType(db, forcedType.getName());
             if (customType != null) {
@@ -148,7 +149,11 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                     ? customType.getType()
                     : customType.getName();
 
-                converter = customType.getConverter();
+                if (!StringUtils.isBlank(customType.getConverter()))
+                    converter = customType.getConverter();
+
+                if (!StringUtils.isBlank(customType.getBinding()))
+                    binding = customType.getBinding();
             }
 
 
@@ -180,7 +185,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
 
             // [#677] SQLDataType matches are actual type-rewrites
             if (forcedDataType != null) {
-                result = new DefaultDataTypeDefinition(db, child.getSchema(), type, l, p, s, n, d, null, converter);
+                result = new DefaultDataTypeDefinition(db, child.getSchema(), type, l, p, s, n, d, null, converter, binding);
             }
 
             // Other forced types are UDT's, enums, etc.
@@ -189,7 +194,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                 p = result.getPrecision();
                 s = result.getScale();
                 String t = result.getType();
-                result = new DefaultDataTypeDefinition(db, child.getSchema(), t, l, p, s, n, d, type, converter);
+                result = new DefaultDataTypeDefinition(db, child.getSchema(), t, l, p, s, n, d, type, converter, binding);
             }
         }
 

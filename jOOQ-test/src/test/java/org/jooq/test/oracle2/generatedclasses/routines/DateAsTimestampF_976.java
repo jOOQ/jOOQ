@@ -9,23 +9,23 @@ package org.jooq.test.oracle2.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DateAsTimestampF_976 extends org.jooq.impl.AbstractRoutine<java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 797358657;
+	private static final long serialVersionUID = 360869390;
 
 	/**
 	 * The parameter <code>TEST.F_976.RETURN_VALUE</code>.
 	 */
-	public static final org.jooq.Parameter<java.sql.Timestamp> DATE_AS_TIMESTAMP_RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.TIMESTAMP);
+	public static final org.jooq.Parameter<java.sql.Timestamp> DATE_AS_TIMESTAMP_RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.TIMESTAMP, false);
 
 	/**
 	 * The parameter <code>TEST.F_976.I</code>.
 	 */
-	public static final org.jooq.Parameter<java.sql.Timestamp> DATE_AS_TIMESTAMP_I = createParameter("I", org.jooq.impl.SQLDataType.TIMESTAMP);
+	public static final org.jooq.Parameter<java.sql.Timestamp> DATE_AS_TIMESTAMP_I = createParameter("I", org.jooq.impl.SQLDataType.TIMESTAMP, false);
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public DateAsTimestampF_976() {
-		super("F_976", org.jooq.test.oracle2.generatedclasses.DateAsTimestampTest.DATE_AS_TIMESTAMP_TEST, org.jooq.impl.SQLDataType.TIMESTAMP);
+		super("F_976", org.jooq.test.oracle2.generatedclasses.DateAsTimestampTest.DATE_AS_TIMESTAMP_TEST, org.jooq.impl.SQLDataType.TIMESTAMP, new org.jooq.impl.DateAsTimestampBinding());
 
 		setReturnParameter(DATE_AS_TIMESTAMP_RETURN_VALUE);
 		addInParameter(DATE_AS_TIMESTAMP_I);

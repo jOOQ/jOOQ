@@ -9,17 +9,17 @@ package org.jooq.test.oracle2.generatedclasses.packages.date_as_timestamp_pkg_97
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DateAsTimestampP_976 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1300469411;
+	private static final long serialVersionUID = -242719689;
 
 	/**
 	 * The parameter <code>TEST.PKG_976.P_976.I</code>.
 	 */
-	public static final org.jooq.Parameter<java.sql.Timestamp> DATE_AS_TIMESTAMP_I = createParameter("I", org.jooq.impl.SQLDataType.TIMESTAMP);
+	public static final org.jooq.Parameter<java.sql.Timestamp> DATE_AS_TIMESTAMP_I = createParameter("I", org.jooq.impl.SQLDataType.TIMESTAMP, false);
 
 	/**
 	 * The parameter <code>TEST.PKG_976.P_976.O</code>.
 	 */
-	public static final org.jooq.Parameter<java.sql.Timestamp> DATE_AS_TIMESTAMP_O = createParameter("O", org.jooq.impl.SQLDataType.TIMESTAMP);
+	public static final org.jooq.Parameter<java.sql.Timestamp> DATE_AS_TIMESTAMP_O = createParameter("O", org.jooq.impl.SQLDataType.TIMESTAMP, false);
 
 	/**
 	 * Create a new routine call instance

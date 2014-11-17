@@ -9,22 +9,22 @@ package org.jooq.test.postgres.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class F extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1995087668;
+	private static final long serialVersionUID = -2079049423;
 
 	/**
 	 * The parameter <code>public.f.RETURN_VALUE</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
+	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER, false);
 
 	/**
 	 * The parameter <code>public.f.f</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Integer> F = createParameter("f", org.jooq.impl.SQLDataType.INTEGER);
+	public static final org.jooq.Parameter<java.lang.Integer> F = createParameter("f", org.jooq.impl.SQLDataType.INTEGER, false);
 
 	/**
 	 * The parameter <code>public.f.f_</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Integer> F_ = createParameter("f_", org.jooq.impl.SQLDataType.INTEGER);
+	public static final org.jooq.Parameter<java.lang.Integer> F_ = createParameter("f_", org.jooq.impl.SQLDataType.INTEGER, false);
 
 	/**
 	 * Create a new routine call instance

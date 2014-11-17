@@ -9,22 +9,22 @@ package org.jooq.test.postgres.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PGetOneCursor extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1807403404;
+	private static final long serialVersionUID = 2120362575;
 
 	/**
 	 * The parameter <code>public.p_get_one_cursor.total</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Integer> TOTAL = createParameter("total", org.jooq.impl.SQLDataType.INTEGER);
+	public static final org.jooq.Parameter<java.lang.Integer> TOTAL = createParameter("total", org.jooq.impl.SQLDataType.INTEGER, false);
 
 	/**
 	 * The parameter <code>public.p_get_one_cursor.books</code>.
 	 */
-	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> BOOKS = createParameter("books", org.jooq.impl.SQLDataType.RESULT);
+	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> BOOKS = createParameter("books", org.jooq.impl.SQLDataType.RESULT, false);
 
 	/**
 	 * The parameter <code>public.p_get_one_cursor.book_ids</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Integer[]> BOOK_IDS = createParameter("book_ids", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType());
+	public static final org.jooq.Parameter<java.lang.Integer[]> BOOK_IDS = createParameter("book_ids", org.jooq.impl.SQLDataType.INTEGER.getArrayDataType(), false);
 
 	/**
 	 * Create a new routine call instance

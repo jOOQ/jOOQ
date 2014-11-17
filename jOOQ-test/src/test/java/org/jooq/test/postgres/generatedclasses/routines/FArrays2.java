@@ -9,17 +9,17 @@ package org.jooq.test.postgres.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FArrays2 extends org.jooq.impl.AbstractRoutine<java.lang.Long[]> {
 
-	private static final long serialVersionUID = -1110306873;
+	private static final long serialVersionUID = -220178233;
 
 	/**
 	 * The parameter <code>public.f_arrays.RETURN_VALUE</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Long[]> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.BIGINT.getArrayDataType());
+	public static final org.jooq.Parameter<java.lang.Long[]> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.BIGINT.getArrayDataType(), false);
 
 	/**
 	 * The parameter <code>public.f_arrays.in_array</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Long[]> IN_ARRAY = createParameter("in_array", org.jooq.impl.SQLDataType.BIGINT.getArrayDataType());
+	public static final org.jooq.Parameter<java.lang.Long[]> IN_ARRAY = createParameter("in_array", org.jooq.impl.SQLDataType.BIGINT.getArrayDataType(), false);
 
 	/**
 	 * Create a new routine call instance

@@ -9,17 +9,17 @@ package org.jooq.test.postgres.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class P extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1522411883;
+	private static final long serialVersionUID = 936617779;
 
 	/**
 	 * The parameter <code>public.p.p</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Integer> P = createParameter("p", org.jooq.impl.SQLDataType.INTEGER);
+	public static final org.jooq.Parameter<java.lang.Integer> P = createParameter("p", org.jooq.impl.SQLDataType.INTEGER, false);
 
 	/**
 	 * The parameter <code>public.p.p_</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Integer> P_ = createParameter("p_", org.jooq.impl.SQLDataType.INTEGER);
+	public static final org.jooq.Parameter<java.lang.Integer> P_ = createParameter("p_", org.jooq.impl.SQLDataType.INTEGER, false);
 
 	/**
 	 * Create a new routine call instance

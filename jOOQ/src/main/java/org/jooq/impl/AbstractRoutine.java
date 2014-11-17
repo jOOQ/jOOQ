@@ -137,35 +137,44 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     // ------------------------------------------------------------------------
 
     protected AbstractRoutine(String name, Schema schema) {
-        this(name, schema, null, null, (Binding<?, T>) null);
+        this(name, schema, null, null, null, null);
     }
 
     protected AbstractRoutine(String name, Schema schema, Package pkg) {
-        this(name, schema, pkg, null, (Binding<?, T>) null);
+        this(name, schema, pkg, null, null, null);
     }
 
     protected AbstractRoutine(String name, Schema schema, DataType<T> type) {
-        this(name, schema, null, type, (Binding<?, T>) null);
+        this(name, schema, null, type, null, null);
     }
 
-    protected AbstractRoutine(String name, Schema schema, DataType<?> type, Converter<?, T> converter) {
-        this(name, schema, type, DefaultBinding.newBinding(converter, type));
+    protected <X> AbstractRoutine(String name, Schema schema, DataType<X> type, Converter<X, T> converter) {
+        this(name, schema, null, type, converter, null);
     }
 
-    protected AbstractRoutine(String name, Schema schema, DataType<?> type, Binding<?, T> converter) {
-        this(name, schema, null, type, converter);
+    protected <X> AbstractRoutine(String name, Schema schema, DataType<X> type, Binding<X, T> binding) {
+        this(name, schema, null, type, null, binding);
+    }
+
+
+    protected <X, Y> AbstractRoutine(String name, Schema schema, DataType<X> type, Converter<Y, T> converter, Binding<X, Y> binding) {
+        this(name, schema, null, type, converter, binding);
     }
 
     protected AbstractRoutine(String name, Schema schema, Package pkg, DataType<T> type) {
-        this(name, schema, pkg, type, (Binding<?, T>) null);
+        this(name, schema, pkg, type, null, null);
     }
 
-    protected AbstractRoutine(String name, Schema schema, Package pkg, DataType<?> type, Converter<?, T> converter) {
-        this(name, schema, pkg, type, DefaultBinding.newBinding(converter, type));
+    protected <X> AbstractRoutine(String name, Schema schema, Package pkg, DataType<X> type, Converter<X, T> converter) {
+        this(name, schema, pkg, type, converter, null);
+    }
+
+    protected <X> AbstractRoutine(String name, Schema schema, Package pkg, DataType<X> type, Binding<X, T> binding) {
+        this(name, schema, pkg, type, null, binding);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    protected AbstractRoutine(String name, Schema schema, Package pkg, DataType<?> type, Binding<?, T> binding) {
+    protected <X, Y> AbstractRoutine(String name, Schema schema, Package pkg, DataType<X> type, Converter<Y, T> converter, Binding<X, Y> binding) {
         this.parameterIndexes = new HashMap<Parameter<?>, Integer>();
 
         this.schema = schema;
@@ -179,9 +188,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         this.inValuesDefaulted = new HashSet<Parameter<?>>();
         this.inValuesNonDefaulted = new HashSet<Parameter<?>>();
         this.outValues = new HashMap<Parameter<?>, Object>();
-        this.type = binding == null
+        this.type = converter == null && binding == null
             ? (DataType<T>) type
-            : type.asConvertedDataType((Binding) binding);
+            : type.asConvertedDataType(DefaultBinding.newBinding((Converter) converter, type, binding));
     }
 
     // ------------------------------------------------------------------------
@@ -761,7 +770,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
      * @param type The data type of the field
      */
     protected static final <T> Parameter<T> createParameter(String name, DataType<T> type) {
-        return createParameter(name, type, false, (Binding<T, T>) null);
+        return createParameter(name, type, false, null, null);
     }
 
     /**
@@ -774,7 +783,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
      *            {@link Parameter#isDefaulted()}
      */
     protected static final <T> Parameter<T> createParameter(String name, DataType<T> type, boolean isDefaulted) {
-        return createParameter(name, type, isDefaulted, (Binding<T, T>) null);
+        return createParameter(name, type, isDefaulted, null, null);
     }
 
     /**
@@ -787,7 +796,20 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
      *            {@link Parameter#isDefaulted()}
      */
     protected static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, Converter<T, U> converter) {
-        return createParameter(name, type, isDefaulted, DefaultBinding.newBinding(converter, type));
+        return createParameter(name, type, isDefaulted, converter, null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link UDTField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     * @param isDefaulted Whether the parameter is defaulted (see
+     *            {@link Parameter#isDefaulted()}
+     */
+    protected static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, Binding<T, U> binding) {
+        return createParameter(name, type, isDefaulted, null, binding);
     }
 
     /**
@@ -800,12 +822,13 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
      *            {@link Parameter#isDefaulted()}
      */
     @SuppressWarnings("unchecked")
-    protected static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, Binding<T, U> binding) {
-        final DataType<U> actualType = binding == null
+    protected static final <T, X, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, Converter<X, U> converter, Binding<T, X> binding) {
+        final Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);
+        final DataType<U> actualType = converter == null && binding == null
             ? (DataType<U>) type
-            : type.asConvertedDataType(binding);
+            : type.asConvertedDataType(actualBinding);
 
-        return new ParameterImpl<U>(name, actualType, isDefaulted, binding);
+        return new ParameterImpl<U>(name, actualType, isDefaulted, actualBinding);
     }
 
     /**

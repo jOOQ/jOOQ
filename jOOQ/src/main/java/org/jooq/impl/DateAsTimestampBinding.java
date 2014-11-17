@@ -41,7 +41,7 @@
 package org.jooq.impl;
 
 // ...
-import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.val;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -96,13 +96,10 @@ public class DateAsTimestampBinding implements Binding<Timestamp, Timestamp> {
         xx xxxx xx xxxx xx xxxxxxx xxxxxxxx xxxxxxxxxx xx xxxx xxxxxxx xx xxxxxxxxx xxx xxxxxxxxxxxxxxxxxxxx
         xx xxxxx xxxxx xxxxxxx xxxxx xxxxxx
         xx xxxx xxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xx xxxxxxx xx xxxxxx xx xxxxxxxxxxxxxxxxxx xx xxxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxx
-                  xxxxxxxxx
-                  xxxxxxxxxxxxxxxxxxxx
-                  xxxxxx xx
-                  xxxxxxxxxxxx xxxxxx
-                  xxxxxxxxxx
+        xx xxxxxxx xx xxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                  xxxxxxxxxxxxxxxxxxxxxxxx
+                  xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
         x
         xxxx
         xx [/pro] */

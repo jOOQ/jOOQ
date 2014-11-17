@@ -1082,18 +1082,14 @@ public class JavaGenerator extends AbstractGenerator {
             final String attrId = getStrategy().getJavaIdentifier(attribute);
             final String attrName = attribute.getName();
             final String attrComment = StringUtils.defaultString(attribute.getComment());
-            final String attrConverterType = attribute.getType().getConverter();
+            final List<String> converters = list(
+                attribute.getType().getConverter(),
+                attribute.getType().getBinding()
+            );
 
             out.tab(1).javadoc("The attribute <code>%s</code>.%s", attribute.getQualifiedOutputName(), defaultIfBlank(" " + attrComment, ""));
-
-            if (attrConverterType != null) {
-                out.tab(1).println("public static final %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\", new %s());",
-                    UDTField.class, recordType, attrType, attrId, attrName, attrTypeRef, udtId, escapeString(""), attrConverterType);
-            }
-            else {
-                out.tab(1).println("public static final %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\");",
-                    UDTField.class, recordType, attrType, attrId, attrName, attrTypeRef, udtId, escapeString(""));
-            }
+            out.tab(1).println("public static final %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\"[[before=, ][new %s()]]);",
+                UDTField.class, recordType, attrType, attrId, attrName, attrTypeRef, udtId, escapeString(""), converters);
         }
 
         // [#799] Oracle UDT's can have member procedures
@@ -1310,7 +1306,10 @@ public class JavaGenerator extends AbstractGenerator {
         xxxxx xxxxxxxxxxxx xxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
         xxxxx xxxxxx xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxx
         xxxxx xxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxx xxxxxxxxxxxx xxxxxxxxxx x xxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xx
 
         xxxxxxxxxx xxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
         xxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxx
@@ -1325,11 +1324,7 @@ public class JavaGenerator extends AbstractGenerator {
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
 
-            xx xxxxxxxxxxxxxxxxxxxxx xx xxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxx xxxxxxxxxxxxxx xxx xxxxxxxx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx
-            xxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxx xxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxx
-
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxx
 
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxx x xxxxxxx x xxx xxx xxxxxx xxxxxx xxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
@@ -1349,11 +1344,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         xxxxxxxxxxxxxxxxxxxxxxxxxx x xxx xxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         xxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxx xxxxxxxxxxx
-
-        xx xxxxxxxxxxxxxxxxxxxxx xx xxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxx xxx xxxxxxxx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx
-        xxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxx xxxxx xxxxxxxxxx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxx
 
         xxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -2071,21 +2062,17 @@ public class JavaGenerator extends AbstractGenerator {
             final String columnId = getStrategy().getJavaIdentifier(column);
             final String columnName = column.getName();
             final String columnComment = StringUtils.defaultString(column.getComment());
-            final String columnConverterType = column.getType().getConverter();
+            final List<String> converters = list(
+                column.getType().getConverter(),
+                column.getType().getBinding()
+            );
 
             String isStatic = generateInstanceFields() ? "" : "static ";
             String tableRef = generateInstanceFields() ? "this" : getStrategy().getJavaIdentifier(table);
 
             out.tab(1).javadoc("The column <code>%s</code>.%s", column.getQualifiedOutputName(), defaultIfBlank(" " + columnComment, ""));
-
-            if (columnConverterType != null) {
-                out.tab(1).println("public %sfinal %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\", new %s());",
-                    isStatic, TableField.class, recordType, columnType, columnId, columnName, columnTypeRef, tableRef, escapeString(columnComment), columnConverterType);
-            }
-            else {
-                out.tab(1).println("public %sfinal %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\");",
-                    isStatic, TableField.class, recordType, columnType, columnId, columnName, columnTypeRef, tableRef, escapeString(columnComment));
-            }
+            out.tab(1).println("public %sfinal %s<%s, %s> %s = createField(\"%s\", %s, %s, \"%s\"[[before=, ][new %s()]]);",
+                isStatic, TableField.class, recordType, columnType, columnId, columnName, columnTypeRef, tableRef, escapeString(columnComment), converters);
         }
 
         // [#1255] With instance fields, the table constructor may
@@ -2571,9 +2558,14 @@ public class JavaGenerator extends AbstractGenerator {
         final List<?> returnTypeRef = list((routine.getReturnValue() != null)
             ? getJavaTypeReference(database, routine.getReturnType())
             : null);
-        final List<?> returnConverterType = list((routine.getReturnValue() != null)
+        final List<?> returnConverterType = list(
+             (routine.getReturnValue() != null)
             ? routine.getReturnType().getConverter()
-            : null);
+            : null,
+             (routine.getReturnValue() != null)
+            ? routine.getReturnType().getBinding()
+            : null
+        );
         final List<String> interfaces = getStrategy().getJavaClassImplements(routine, Mode.DEFAULT);
         final String schemaId = getStrategy().getFullJavaIdentifier(schema);
         final List<String> packageId = getStrategy().getFullJavaIdentifiers(routine.getPackage());
@@ -3377,12 +3369,13 @@ public class JavaGenerator extends AbstractGenerator {
         return getJavaType(type1).equals(getJavaType(type2));
     }
 
-    private static final <T> List<T> list(T object) {
+    private static final <T> List<T> list(T... objects) {
         List<T> result = new ArrayList<T>();
 
-        if (object != null && !"".equals(object)) {
-            result.add(object);
-        }
+        if (objects != null)
+            for (T object : objects)
+                if (object != null && !"".equals(object))
+                    result.add(object);
 
         return result;
     }

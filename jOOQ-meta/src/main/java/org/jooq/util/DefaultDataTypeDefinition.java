@@ -57,6 +57,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     private final String           typeName;
     private final String           udtName;
     private final String           converter;
+    private final String           binding;
     private final boolean          nullable;
     private final boolean          defaulted;
     private final int              length;
@@ -76,6 +77,10 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     }
 
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String udtName, String converter) {
+        this(database, schema, typeName, length, precision, scale, nullable, defaultable, udtName, converter, null);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String udtName, String converter, String binding) {
         this.database = database;
         this.schema = schema;
 
@@ -83,6 +88,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this.typeName = typeName == null ? "OTHER" : typeName;
         this.udtName = udtName;
         this.converter = converter;
+        this.binding = binding;
 
         // Some dialects do not distinguish between length and precision...
         if (length != null && precision != null && length.intValue() != 0 && precision.intValue() != 0) {
@@ -142,6 +148,11 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     @Override
     public final String getConverter() {
         return converter;
+    }
+
+    @Override
+    public final String getBinding() {
+        return binding;
     }
 
     @Override

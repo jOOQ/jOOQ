@@ -560,7 +560,10 @@
       <element name="type" type="string" minOccurs="0" maxOccurs="1" />
 
       <!-- A converter implementation for the custom type -->
-      <element name="converter" type="string" minOccurs="1" maxOccurs="1" />
+      <element name="converter" type="string" minOccurs="0" maxOccurs="1" />
+
+      <!-- A binding implementation for the custom type -->
+      <element name="binding" type="string" minOccurs="0" maxOccurs="1" />
     </all>
   </complexType>
 

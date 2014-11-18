@@ -41,6 +41,37 @@ public class Routines {
 	}
 
 	/**
+	 * Call <code>dbo.f_default</code>
+	 */
+	public static java.lang.Integer fDefault(org.jooq.Configuration configuration, java.lang.Integer pInNumber) {
+		org.jooq.test.sqlserver.generatedclasses.routines.FDefault f = new org.jooq.test.sqlserver.generatedclasses.routines.FDefault();
+		f.setPInNumber(pInNumber);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get <code>dbo.f_default</code> as a field
+	 */
+	public static org.jooq.Field<java.lang.Integer> fDefault(java.lang.Integer pInNumber) {
+		org.jooq.test.sqlserver.generatedclasses.routines.FDefault f = new org.jooq.test.sqlserver.generatedclasses.routines.FDefault();
+		f.setPInNumber(pInNumber);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get <code>dbo.f_default</code> as a field
+	 */
+	public static org.jooq.Field<java.lang.Integer> fDefault(org.jooq.Field<java.lang.Integer> pInNumber) {
+		org.jooq.test.sqlserver.generatedclasses.routines.FDefault f = new org.jooq.test.sqlserver.generatedclasses.routines.FDefault();
+		f.setPInNumber(pInNumber);
+
+		return f.asField();
+	}
+
+	/**
 	 * Call <code>dbo.f_number</code>
 	 */
 	public static java.lang.Integer fNumber(org.jooq.Configuration configuration, java.lang.Integer n) {

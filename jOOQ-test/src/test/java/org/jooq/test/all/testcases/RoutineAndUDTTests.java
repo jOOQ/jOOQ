@@ -172,11 +172,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // P391, a test for properly binding and treating various IN, OUT, INOUT
         // parameters
         // ---------------------------------------------------------------------
-        if (supportsOUTParameters()) {
+        if (supportsOUTParameters() &&
+            dialect() != SQLDialect.FIREBIRD) {
 
             // TODO: [#396] MySQL seems to have a bug when passing null to IN/OUT
             // parameters. Check back on this, when this is fixed.
-            if (dialect() != SQLDialect.MYSQL && dialect() != SQLDialect.MARIADB) {
+            if (dialect() != SQLDialect.MYSQL &&
+                dialect() != SQLDialect.MARIADB) {
                 Object p391a = invoke(cRoutines(), "p391", create().configuration(), null, null, DUMMY_OUT_INT, DUMMY_OUT_INT, null, null);
                 assertEquals(null, invoke(p391a, "getIo1"));
                 assertEquals(null, invoke(p391a, "getO1"));
@@ -358,7 +360,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testStoredFunctions() throws Exception {
-        Assume.assumeNotNull(cRoutines());
+        Assume.assumeNotNull(FOneField());
         jOOQAbstractTest.reset = false;
 
         // ---------------------------------------------------------------------
@@ -465,7 +467,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @SuppressWarnings("unchecked")
     public void testScalarSubqueryCaching() throws Exception {
-        Assume.assumeNotNull(cRoutines());
+        Assume.assumeNotNull(FOneField());
 
         DSLContext create = create(create().settings().withRenderScalarSubqueriesForStoredFunctions(true));
 
@@ -478,7 +480,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testStoredFunctionsWithNoSchema() throws Exception {
-        Assume.assumeNotNull(cRoutines());
+        Assume.assumeNotNull(FOneField());
 
         /* [pro] */
         // DB2 seems not to allow unqualified function calls, even in the local schema

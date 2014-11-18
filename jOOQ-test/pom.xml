@@ -1110,7 +1110,7 @@
                                         <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.firebird.FirebirdDatabase</name>
-                                            <includes>RDB\$(FIELDS|GENERATORS|INDEX_SEGMENTS|REF_CONSTRAINTS|RELATION_CONSTRAINTS|RELATION_FIELDS|RELATIONS)</includes>
+                                            <includes>RDB\$(FIELDS|GENERATORS|INDEX_SEGMENTS|PROCEDURES|PROCEDURE_PARAMETERS|REF_CONSTRAINTS|RELATION_CONSTRAINTS|RELATION_FIELDS|RELATIONS)</includes>
                                             <excludes></excludes>
                                             <recordVersionFields></recordVersionFields>
                                             <recordTimestampFields></recordTimestampFields>

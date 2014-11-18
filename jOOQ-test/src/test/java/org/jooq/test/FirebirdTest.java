@@ -41,6 +41,11 @@
 
 package org.jooq.test;
 
+import static java.util.Arrays.asList;
+import static org.jooq.impl.DSL.val;
+import static org.jooq.test.firebird.generatedclasses.Routines.fTables1;
+import static org.jooq.test.firebird.generatedclasses.Routines.fTables4;
+import static org.jooq.test.firebird.generatedclasses.Routines.fTables5;
 import static org.jooq.test.firebird.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.firebird.generatedclasses.Tables.T_725_LOB_TEST;
 import static org.jooq.test.firebird.generatedclasses.Tables.T_785;
@@ -56,6 +61,9 @@ import static org.jooq.test.firebird.generatedclasses.Tables.T_UNSIGNED;
 import static org.jooq.test.firebird.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.firebird.generatedclasses.Tables.V_BOOK;
 import static org.jooq.test.firebird.generatedclasses.Tables.V_LIBRARY;
+import static org.jooq.test.firebird.generatedclasses.tables.FTables1.F_TABLES1;
+import static org.jooq.test.firebird.generatedclasses.tables.FTables4.F_TABLES4;
+import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -80,7 +88,12 @@ import org.jooq.test.all.converters.Boolean_YES_NO_UC;
 import org.jooq.test.all.converters.Boolean_YN_LC;
 import org.jooq.test.all.converters.Boolean_YN_UC;
 import org.jooq.test.firebird.generatedclasses.Keys;
+import org.jooq.test.firebird.generatedclasses.Routines;
 import org.jooq.test.firebird.generatedclasses.Sequences;
+import org.jooq.test.firebird.generatedclasses.tables.FTables4;
+import org.jooq.test.firebird.generatedclasses.tables.FTables5;
+import org.jooq.test.firebird.generatedclasses.tables.records.FTables1Record;
+import org.jooq.test.firebird.generatedclasses.tables.records.FTables4Record;
 import org.jooq.test.firebird.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.firebird.generatedclasses.tables.records.TBookStoreRecord;
@@ -100,6 +113,8 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.firebird.FirebirdDataType;
+
+import org.junit.Test;
 
 /**
  * Integration test for the SQLite database
@@ -710,12 +725,12 @@ public class FirebirdTest extends jOOQAbstractTest<
 
     @Override
     protected Class<?> cRoutines() {
-        return null;
+        return Routines.class;
     }
 
     @Override
     protected boolean supportsOUTParameters() {
-        return false;
+        return true;
     }
 
     @Override
@@ -760,5 +775,34 @@ public class FirebirdTest extends jOOQAbstractTest<
             FirebirdDataType.TIMESTAMP,
             FirebirdDataType.VARCHAR,
         };
+    }
+
+    @Test
+    public void testFirebirdTableValuedFunctions() throws Exception {
+        Result<FTables1Record> r1 = create().selectFrom(fTables1()).fetch();
+        assertEquals(1, r1.size());
+        assertEquals(1, (int) r1.get(0).value1());
+        assertEquals(1, (int) r1.get(0).getColumnValue());
+        assertEquals(1, (int) r1.get(0).getValue(F_TABLES1.COLUMN_VALUE));
+
+        Result<FTables4Record> r2 = create().selectFrom(fTables4((Integer) null)).fetch();
+        assertEquals(4, r2.size());
+        assertEquals(BOOK_IDS, r2.getValues(F_TABLES4.ID));
+        assertEquals(BOOK_TITLES, r2.getValues(F_TABLES4.TITLE));
+
+        FTables4Record r3 = create().selectFrom(fTables4(1)).fetchOne();
+        assertEquals(BOOK_IDS.get(0), r3.getId());
+        assertEquals(BOOK_TITLES.get(0), r3.getTitle());
+
+        FTables4 ft4 = fTables4((Integer) null).as("t");
+        FTables5 ft5 = fTables5(ft4.ID, val(1), ft4.ID.add(1));
+
+        assertEquals(
+            asList(1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5),
+            create().select(ft4.TITLE, ft5.V)
+                .from(ft4)
+                .crossJoin(ft5)
+                .orderBy(ft4.ID)
+                .fetch(ft5.V));
     }
 }

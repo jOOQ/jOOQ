@@ -1,3 +1,13 @@
+DROP PROCEDURE p_author_exists/
+DROP PROCEDURE p_create_author/
+DROP PROCEDURE p_create_author_by_name/
+
+DROP PROCEDURE f_tables1/
+DROP PROCEDURE f_tables2/
+DROP PROCEDURE f_tables3/
+DROP PROCEDURE f_tables4/
+DROP PROCEDURE f_tables5/
+
 DROP VIEW v_author/
 DROP VIEW v_book/
 DROP VIEW v_library/
@@ -310,4 +320,103 @@ SELECT * FROM t_author
 
 CREATE VIEW v_book AS
 SELECT * FROM t_book
+/
+
+CREATE PROCEDURE p_create_author_by_name (first_name VARCHAR(50), last_name VARCHAR(50))
+AS
+BEGIN
+    INSERT INTO T_AUTHOR (ID, FIRST_NAME, LAST_NAME)
+    VALUES ((SELECT MAX(ID)+1 FROM T_AUTHOR), :first_name, :last_name);
+END
+/
+
+CREATE PROCEDURE p_create_author
+AS
+BEGIN 
+    EXECUTE PROCEDURE p_create_author_by_name 'William', 'Shakespeare';
+END
+/
+
+CREATE PROCEDURE p_author_exists (author_name VARCHAR(50))
+RETURNS (result int)
+AS
+BEGIN
+  SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END
+    FROM t_author
+   WHERE first_name LIKE :author_name
+      OR last_name LIKE :author_name
+    INTO :result;
+END;
+/
+
+CREATE PROCEDURE f_tables1
+RETURNS (
+    column_value INTEGER
+)
+AS
+BEGIN
+    column_value = 1;
+    SUSPEND;
+END
+/
+
+CREATE PROCEDURE f_tables2
+RETURNS (
+    column_value BIGINT
+)
+AS
+BEGIN
+    column_value = 1;
+    SUSPEND;
+END
+/
+
+CREATE PROCEDURE f_tables3
+RETURNS (
+    column_value VARCHAR(1)
+)
+AS
+BEGIN
+    column_value = '1';
+    SUSPEND;
+END
+/
+
+CREATE PROCEDURE f_tables4 (p_id INTEGER)
+RETURNS (
+    id INTEGER,
+    title VARCHAR(400)
+)
+AS
+BEGIN
+    FOR
+        SELECT id, title
+        FROM t_book
+        WHERE :p_id IS NULL OR id = :p_id
+        ORDER BY id
+        INTO :id, :title
+    DO
+        SUSPEND;
+END
+/
+
+CREATE PROCEDURE f_tables5 (v1 INTEGER, v2 INTEGER, v3 INTEGER)
+RETURNS (
+    v INTEGER,
+    s INTEGER
+)
+AS
+BEGIN
+    v = v1;
+    s = v1;
+    SUSPEND;
+    
+    v = v1;
+    s = v1 + v2;
+    SUSPEND;
+    
+    v = v3;
+    s = v1 + v2 + v3;
+    SUSPEND;
+END
 /

@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_FUNCTION;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -344,7 +345,12 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             // [#3681] The order of consuming result sets and then consuming
             // OUT parameters is relevant in SQL Server
             /* [/pro] */
-            Utils.consumeResultSets(ctx, listener, results, null);
+
+            // [#2925] Jaybird currently doesn't like fetching OUT parameters and consuming ResultSets
+            //         http://tracker.firebirdsql.org/browse/JDBC-350
+            if (ctx.family() != FIREBIRD)
+                Utils.consumeResultSets(ctx, listener, results, null);
+
             fetchOutParameters(ctx);
             return 0;
         }

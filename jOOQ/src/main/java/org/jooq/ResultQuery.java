@@ -129,11 +129,13 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     ResultSet fetchResultSet() throws DataAccessException;
 
     /**
-     * Execute the query and "lazily" return the generated result.
+     * Execute the query and return the generated result.
      * <p>
-     * This is essentially the same as {@link #fetchLazy()}, except that being
+     * This is essentially the same as {@link #fetch()}, except that being
      * declared in {@link Iterable}, this method can be used in Java 5 foreach
-     * statements. {@inheritDoc}
+     * statements.
+     * <p>
+     * {@inheritDoc}
      */
     @Override
     Iterator<R> iterator() throws DataAccessException;

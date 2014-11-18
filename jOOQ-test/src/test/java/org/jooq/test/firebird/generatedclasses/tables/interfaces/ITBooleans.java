@@ -109,7 +109,7 @@ public interface ITBooleans extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_BOOLEANS.VC_BOOLEAN</code>.
 	 */
-	@javax.persistence.Column(name = "VC_BOOLEAN", length = 1)
+	@javax.persistence.Column(name = "VC_BOOLEAN")
 	public java.lang.Boolean getVcBoolean();
 
 	/**
@@ -120,7 +120,7 @@ public interface ITBooleans extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_BOOLEANS.C_BOOLEAN</code>.
 	 */
-	@javax.persistence.Column(name = "C_BOOLEAN", length = 1)
+	@javax.persistence.Column(name = "C_BOOLEAN")
 	public java.lang.Boolean getCBoolean();
 
 	/**

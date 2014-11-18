@@ -32,7 +32,7 @@ public interface ITExoticTypes extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_EXOTIC_TYPES.UU</code>.
 	 */
-	@javax.persistence.Column(name = "UU", length = 36)
+	@javax.persistence.Column(name = "UU")
 	public java.util.UUID getUu();
 
 	// -------------------------------------------------------------------------

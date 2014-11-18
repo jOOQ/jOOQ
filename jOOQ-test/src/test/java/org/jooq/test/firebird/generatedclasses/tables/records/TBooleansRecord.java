@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_BOOLEANS")
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBooleansRecord> implements org.jooq.Record11<java.lang.Integer, org.jooq.test.all.converters.Boolean_10, org.jooq.test.all.converters.Boolean_TF_LC, org.jooq.test.all.converters.Boolean_TF_UC, org.jooq.test.all.converters.Boolean_YES_NO_LC, org.jooq.test.all.converters.Boolean_YES_NO_UC, org.jooq.test.all.converters.Boolean_YN_LC, org.jooq.test.all.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITBooleans {
 
-	private static final long serialVersionUID = -584900867;
+	private static final long serialVersionUID = -351097587;
 
 	/**
 	 * Setter for <code>T_BOOLEANS.ID</code>.
@@ -162,7 +162,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * Getter for <code>T_BOOLEANS.VC_BOOLEAN</code>.
 	 */
-	@javax.persistence.Column(name = "VC_BOOLEAN", length = 1)
+	@javax.persistence.Column(name = "VC_BOOLEAN")
 	@Override
 	public java.lang.Boolean getVcBoolean() {
 		return (java.lang.Boolean) getValue(8);
@@ -179,7 +179,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * Getter for <code>T_BOOLEANS.C_BOOLEAN</code>.
 	 */
-	@javax.persistence.Column(name = "C_BOOLEAN", length = 1)
+	@javax.persistence.Column(name = "C_BOOLEAN")
 	@Override
 	public java.lang.Boolean getCBoolean() {
 		return (java.lang.Boolean) getValue(9);

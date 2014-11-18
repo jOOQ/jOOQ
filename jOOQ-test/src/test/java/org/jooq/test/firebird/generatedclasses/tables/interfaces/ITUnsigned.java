@@ -52,7 +52,7 @@ public interface ITUnsigned extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_UNSIGNED.U_LONG</code>.
 	 */
-	@javax.persistence.Column(name = "U_LONG", length = 20)
+	@javax.persistence.Column(name = "U_LONG")
 	public org.jooq.types.ULong getULong();
 
 	// -------------------------------------------------------------------------

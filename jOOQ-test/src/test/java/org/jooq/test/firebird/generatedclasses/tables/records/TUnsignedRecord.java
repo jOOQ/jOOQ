@@ -11,7 +11,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_UNSIGNED")
 public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TUnsignedRecord> implements org.jooq.Record4<org.jooq.types.UByte, org.jooq.types.UShort, org.jooq.types.UInteger, org.jooq.types.ULong>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITUnsigned {
 
-	private static final long serialVersionUID = -2083968185;
+	private static final long serialVersionUID = -22950218;
 
 	/**
 	 * Setter for <code>T_UNSIGNED.U_BYTE</code>.
@@ -75,7 +75,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	/**
 	 * Getter for <code>T_UNSIGNED.U_LONG</code>.
 	 */
-	@javax.persistence.Column(name = "U_LONG", length = 20)
+	@javax.persistence.Column(name = "U_LONG")
 	@Override
 	public org.jooq.types.ULong getULong() {
 		return (org.jooq.types.ULong) getValue(3);

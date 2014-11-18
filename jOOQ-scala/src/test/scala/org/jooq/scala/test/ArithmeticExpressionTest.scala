@@ -52,6 +52,8 @@ import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class ArithmeticExpressionTest extends FunSuite {
+  
+  def ctx = DSL.using(new DefaultConfiguration());
 
   test("arithmetic expressions") {
     val add1 = T_BOOK.ID + T_BOOK.AUTHOR_ID
@@ -66,24 +68,24 @@ class ArithmeticExpressionTest extends FunSuite {
     val mod2 = T_BOOK.ID % 2
     val neg1 = -T_BOOK.ID
 
-    assert("""("PUBLIC"."T_BOOK"."ID" + "PUBLIC"."T_BOOK"."AUTHOR_ID")"""   == add1.toString(), add1.toString())
-    assert("""("PUBLIC"."T_BOOK"."ID" + 2)"""                               == add2.toString(), add2.toString())
-    assert("""("PUBLIC"."T_BOOK"."ID" - "PUBLIC"."T_BOOK"."AUTHOR_ID")"""   == sub1.toString(), sub1.toString())
-    assert("""("PUBLIC"."T_BOOK"."ID" - 2)"""                               == sub2.toString(), sub2.toString())
-    assert("""("PUBLIC"."T_BOOK"."ID" * "PUBLIC"."T_BOOK"."AUTHOR_ID")"""   == mul1.toString(), mul1.toString())
-    assert("""("PUBLIC"."T_BOOK"."ID" * 2)"""                               == mul2.toString(), mul2.toString())
-    assert("""("PUBLIC"."T_BOOK"."ID" / "PUBLIC"."T_BOOK"."AUTHOR_ID")"""   == div1.toString(), div1.toString())
-    assert("""("PUBLIC"."T_BOOK"."ID" / 2)"""                               == div2.toString(), div2.toString())
-    assert("""mod("PUBLIC"."T_BOOK"."ID", "PUBLIC"."T_BOOK"."AUTHOR_ID")""" == mod1.toString(), mod1.toString())
-    assert("""mod("PUBLIC"."T_BOOK"."ID", 2)"""                             == mod2.toString(), mod2.toString())
-    assert("""-("PUBLIC"."T_BOOK"."ID")"""                                  == neg1.toString(), neg1.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" + "PUBLIC"."T_BOOK"."AUTHOR_ID")"""   == ctx.renderInlined(add1), add1.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" + 2)"""                               == ctx.renderInlined(add2), add2.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" - "PUBLIC"."T_BOOK"."AUTHOR_ID")"""   == ctx.renderInlined(sub1), sub1.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" - 2)"""                               == ctx.renderInlined(sub2), sub2.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" * "PUBLIC"."T_BOOK"."AUTHOR_ID")"""   == ctx.renderInlined(mul1), mul1.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" * 2)"""                               == ctx.renderInlined(mul2), mul2.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" / "PUBLIC"."T_BOOK"."AUTHOR_ID")"""   == ctx.renderInlined(div1), div1.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" / 2)"""                               == ctx.renderInlined(div2), div2.toString())
+    assert("""mod("PUBLIC"."T_BOOK"."ID", "PUBLIC"."T_BOOK"."AUTHOR_ID")""" == ctx.renderInlined(mod1), mod1.toString())
+    assert("""mod("PUBLIC"."T_BOOK"."ID", 2)"""                             == ctx.renderInlined(mod2), mod2.toString())
+    assert("""-("PUBLIC"."T_BOOK"."ID")"""                                  == ctx.renderInlined(neg1), neg1.toString())
 
     // Check for the correct application of operator precedence
     val combined1 = T_BOOK.ID + T_BOOK.AUTHOR_ID * 2
     val combined2 = T_BOOK.ID * T_BOOK.AUTHOR_ID + 2
 
-    assert("""("PUBLIC"."T_BOOK"."ID" + ("PUBLIC"."T_BOOK"."AUTHOR_ID" * 2))""" == combined1.toString(), combined1.toString())
-    assert("""(("PUBLIC"."T_BOOK"."ID" * "PUBLIC"."T_BOOK"."AUTHOR_ID") + 2)""" == combined2.toString(), combined2.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" + ("PUBLIC"."T_BOOK"."AUTHOR_ID" * 2))""" == ctx.renderInlined(combined1), combined1.toString())
+    assert("""(("PUBLIC"."T_BOOK"."ID" * "PUBLIC"."T_BOOK"."AUTHOR_ID") + 2)""" == ctx.renderInlined(combined2), combined2.toString())
   }
 
   test("bitwise") {
@@ -99,17 +101,17 @@ class ArithmeticExpressionTest extends FunSuite {
     val shr2 = T_BOOK.ID >> 1
     val not1 = ~T_BOOK.ID
 
-    assert("""("PUBLIC"."T_BOOK"."ID" & "PUBLIC"."T_BOOK"."AUTHOR_ID")"""  == and1.toString(), and1.toString())
-    assert("""("PUBLIC"."T_BOOK"."ID" & 1)"""                              == and2.toString(), and2.toString())
-    assert("""("PUBLIC"."T_BOOK"."ID" | "PUBLIC"."T_BOOK"."AUTHOR_ID")"""  == or1.toString(),  or1.toString())
-    assert("""("PUBLIC"."T_BOOK"."ID" | 1)"""                              == or2.toString(),  or2.toString())
-    assert("""("PUBLIC"."T_BOOK"."ID" ^ "PUBLIC"."T_BOOK"."AUTHOR_ID")"""  == xor1.toString(), xor1.toString())
-    assert("""("PUBLIC"."T_BOOK"."ID" ^ 1)"""                              == xor2.toString(), xor2.toString())
-    assert("""("PUBLIC"."T_BOOK"."ID" << "PUBLIC"."T_BOOK"."AUTHOR_ID")""" == shl1.toString(), shl1.toString())
-    assert("""("PUBLIC"."T_BOOK"."ID" << 1)"""                             == shl2.toString(), shl2.toString())
-    assert("""("PUBLIC"."T_BOOK"."ID" >> "PUBLIC"."T_BOOK"."AUTHOR_ID")""" == shr1.toString(), shr1.toString())
-    assert("""("PUBLIC"."T_BOOK"."ID" >> 1)"""                             == shr2.toString(), shr2.toString())
-    assert("""~("PUBLIC"."T_BOOK"."ID")"""                                 == not1.toString(), not1.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" & "PUBLIC"."T_BOOK"."AUTHOR_ID")"""  == ctx.renderInlined(and1), and1.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" & 1)"""                              == ctx.renderInlined(and2), and2.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" | "PUBLIC"."T_BOOK"."AUTHOR_ID")"""  == ctx.renderInlined(or1 ),  or1.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" | 1)"""                              == ctx.renderInlined(or2 ),  or2.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" ^ "PUBLIC"."T_BOOK"."AUTHOR_ID")"""  == ctx.renderInlined(xor1), xor1.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" ^ 1)"""                              == ctx.renderInlined(xor2), xor2.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" << "PUBLIC"."T_BOOK"."AUTHOR_ID")""" == ctx.renderInlined(shl1), shl1.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" << 1)"""                             == ctx.renderInlined(shl2), shl2.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" >> "PUBLIC"."T_BOOK"."AUTHOR_ID")""" == ctx.renderInlined(shr1), shr1.toString())
+    assert("""("PUBLIC"."T_BOOK"."ID" >> 1)"""                             == ctx.renderInlined(shr2), shr2.toString())
+    assert("""~("PUBLIC"."T_BOOK"."ID")"""                                 == ctx.renderInlined(not1), not1.toString())
   }
 
   test("concat") {
@@ -118,8 +120,8 @@ class ArithmeticExpressionTest extends FunSuite {
 //    val cat2 = T_BOOK.TITLE || " part 2"
 //    val cat3 = T_BOOK.TITLE || " part 2" || " and 3"
 //
-//    assert("""("PUBLIC"."T_BOOK"."TITLE" || "PUBLIC"."T_BOOK"."TITLE")"""            == cat1.toString(), cat1.toString())
-//    assert("""("PUBLIC"."T_BOOK"."TITLE" || ' part 2')"""                            == cat2.toString(), cat2.toString())
-//    assert("""(("PUBLIC"."T_BOOK"."TITLE" || ' part 2') || ' and 3')"""              == cat3.toString(), cat3.toString())
+//    assert("""("PUBLIC"."T_BOOK"."TITLE" || "PUBLIC"."T_BOOK"."TITLE")"""            == ctx.renderInlined(cat1), cat1.toString())
+//    assert("""("PUBLIC"."T_BOOK"."TITLE" || ' part 2')"""                            == ctx.renderInlined(cat2), cat2.toString())
+//    assert("""(("PUBLIC"."T_BOOK"."TITLE" || ' part 2') || ' and 3')"""              == ctx.renderInlined(cat3), cat3.toString())
   }
 }

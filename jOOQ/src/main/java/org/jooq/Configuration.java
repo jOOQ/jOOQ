@@ -41,25 +41,33 @@
 package org.jooq;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.Savepoint;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import org.jooq.conf.Settings;
+import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConnectionProvider;
+import org.jooq.impl.DefaultRecordMapper;
+import org.jooq.impl.DefaultRecordMapperProvider;
 import org.jooq.impl.DefaultTransactionProvider;
+import org.jooq.tools.LoggerListener;
+import org.jooq.tools.StopWatchListener;
 
 /**
  * A <code>Configuration</code> configures a {@link DSLContext}, providing it
- * with information for query construction, rendering and execution.
+ * with information for query rendering and execution.
  * <p>
  * A <code>Configuration</code> wraps all information elements that are
  * needed...
  * <ul>
- * <li>by a {@link DSLContext} to construct {@link Query} objects</li>
  * <li>by a {@link RenderContext} to render {@link Query} objects and
  * {@link QueryPart}s</li>
  * <li>by a {@link BindContext} to bind values to {@link Query} objects and
  * {@link QueryPart}s</li>
- * <li>by a {@link Query} or {@link Routine} object to execute itself</li>
+ * <li>by a {@link Query} or {@link Routine} object to execute themselves</li>
  * </ul>
  * <p>
  * The simplest usage of a <code>Configuration</code> instance is to use it
@@ -70,6 +78,83 @@ import org.jooq.impl.DefaultTransactionProvider;
  * to be that short-lived. Thread-safety will then be delegated to component
  * objects, such as the {@link ConnectionProvider}, the {@link ExecuteListener}
  * list, etc.
+ * <p>
+ * A <code>Configuration</code> is composed of types composing its state and of
+ * SPIs:
+ * <h3>Types composing its state:</h3>
+ * <ul>
+ * <li>{@link #dialect()}: The {@link SQLDialect} that defines the underlying
+ * database's behaviour when generating SQL syntax, or binding variables, or
+ * when executing the query</li>
+ * <li>{@link #settings()}: The {@link Settings} that define general jOOQ
+ * behaviour</li>
+ * <li>{@link #data()}: A {@link Map} containing user-defined data for the
+ * {@link Scope} of this configuration.</li>
+ * </ul>
+ * <h3>SPIs:</h3>
+ * <ul>
+ * <li>{@link #connectionProvider()}: The {@link ConnectionProvider} that
+ * defines the semantics of {@link ConnectionProvider#acquire()} and
+ * {@link ConnectionProvider#release(Connection)} for all queries executed in
+ * the context of this <code>Configuration</code>. <br/>
+ * <br/>
+ * jOOQ-provided default implementations include:
+ * <ul>
+ * <li>{@link DefaultConnectionProvider}: a non-thread-safe implementation that
+ * wraps a single JDBC {@link Connection}. Ideal for batch processing.</li>
+ * <li>{@link DataSourceConnectionProvider}: a possibly thread-safe
+ * implementation that wraps a JDBC {@link DataSource}. Ideal for use with
+ * connection pools, Java EE, or Spring.</li>
+ * </ul>
+ * </li>
+ * <li>{@link #transactionProvider()}: The {@link TransactionProvider} that
+ * defines and implements the behaviour of the
+ * {@link DSLContext#transaction(TransactionalRunnable)} and
+ * {@link DSLContext#transactionResult(TransactionalCallable)} methods.<br/>
+ * <br/>
+ * jOOQ-provided default implementations include:
+ * <ul>
+ * <li>{@link DefaultTransactionProvider}: an implementation backed by JDBC
+ * directly, via {@link Connection#commit()}, {@link Connection#rollback()}, and
+ * {@link Connection#rollback(Savepoint)} for nested transactions.</li>
+ * </ul>
+ * </li>
+ * <li>{@link #recordMapperProvider()}: The {@link RecordMapperProvider} that
+ * defines and implements the behaviour of {@link Record#into(Class)},
+ * {@link ResultQuery#fetchInto(Class)}, {@link Cursor#fetchInto(Class)}, and
+ * various related methods. <br/>
+ * <br/>
+ * jOOQ-provided default implementations include:
+ * <ul>
+ * <li>{@link DefaultRecordMapperProvider}: an implementation delegating to the
+ * {@link DefaultRecordMapper}, which implements the most common mapping
+ * use-cases.</li>
+ * </ul>
+ * </li>
+ * <li>{@link #recordListenerProviders()}: A set of
+ * {@link RecordListenerProvider} that implement {@link Record} fetching and
+ * storing lifecycle management, specifically for use with
+ * {@link UpdatableRecord}.<br/>
+ * <br/>
+ * jOOQ does not provide any implementations.</li>
+ * <li>{@link #executeListenerProviders()}: A set of
+ * {@link ExecuteListenerProvider} that implement {@link Query} execution
+ * lifecycle management.<br/>
+ * <br/>
+ * jOOQ-provided example implementations include:
+ * <ul>
+ * <li>{@link LoggerListener}: generating default query execution log output</li>
+ * <li>{@link StopWatchListener}: generating default query execution speed log
+ * output</li>
+ * </ul>
+ * <li>{@link #visitListenerProviders()}: A set of {@link VisitListenerProvider}
+ * that implement {@link Query} rendering and variable binding lifecycle
+ * management, and that are allowed to implement query transformation - e.g. to
+ * implement row-level security, or multi-tenancy.<br/>
+ * <br/>
+ * jOOQ does not provide any implementations.</li>
+ * </ul>
+ * </li> </ul>
  *
  * @author Lukas Eder
  */

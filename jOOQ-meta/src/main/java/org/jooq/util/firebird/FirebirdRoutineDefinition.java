@@ -44,84 +44,75 @@ import static org.jooq.util.firebird.FirebirdDatabase.CHARACTER_LENGTH;
 import static org.jooq.util.firebird.FirebirdDatabase.FIELD_SCALE;
 import static org.jooq.util.firebird.FirebirdDatabase.FIELD_TYPE;
 import static org.jooq.util.firebird.rdb.Tables.RDB$FIELDS;
-import static org.jooq.util.firebird.rdb.Tables.RDB$RELATION_FIELDS;
+import static org.jooq.util.firebird.rdb.Tables.RDB$PROCEDURE_PARAMETERS;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.impl.DSL;
-import org.jooq.util.AbstractTableDefinition;
-import org.jooq.util.ColumnDefinition;
-import org.jooq.util.DefaultColumnDefinition;
+import org.jooq.util.AbstractRoutineDefinition;
+import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.DefaultParameterDefinition;
+import org.jooq.util.InOutDefinition;
+import org.jooq.util.ParameterDefinition;
 import org.jooq.util.SchemaDefinition;
 import org.jooq.util.firebird.rdb.tables.Rdb$fields;
-import org.jooq.util.firebird.rdb.tables.Rdb$relationFields;
+import org.jooq.util.firebird.rdb.tables.Rdb$procedureParameters;
 
 /**
- * @author Sugiharto Lim - Initial contribution
+ * @author Lukas Eder
  */
-public class FirebirdTableDefinition extends AbstractTableDefinition {
+public class FirebirdRoutineDefinition extends AbstractRoutineDefinition {
 
-    public FirebirdTableDefinition(SchemaDefinition schema, String name, String comment) {
-        super(schema, name, comment);
+    public FirebirdRoutineDefinition(SchemaDefinition schema, String name) {
+        super(schema, null, name, null, null, false);
     }
 
     @Override
-    protected List<ColumnDefinition> getElements0() throws SQLException {
-        List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
-
-        Rdb$relationFields r = RDB$RELATION_FIELDS.as("r");
+    protected void init0() throws SQLException {
+        Rdb$procedureParameters p = RDB$PROCEDURE_PARAMETERS.as("p");
         Rdb$fields f = RDB$FIELDS.as("f");
+        int i = 0;
 
-        // Inspiration for the below query was taken from jaybird's
-        // DatabaseMetaData implementation
         for (Record record : create()
                 .select(
-                    r.RDB$FIELD_NAME.trim(),
-                    r.RDB$DESCRIPTION,
-                    r.RDB$DEFAULT_VALUE,
-                    DSL.bitOr(r.RDB$NULL_FLAG.nvl((short) 0), f.RDB$NULL_FLAG.nvl((short) 0)).as(r.RDB$NULL_FLAG),
-                    r.RDB$DEFAULT_SOURCE,
-                    r.RDB$FIELD_POSITION,
-
-                    // [#3342] FIELD_LENGTH should be ignored for LOBs
+                    p.RDB$PARAMETER_NUMBER,
+                    p.RDB$PARAMETER_TYPE,
+                    p.RDB$PARAMETER_NAME.trim().as(p.RDB$PARAMETER_NAME),
+                    FIELD_TYPE(f).as("FIELD_TYPE"),
                     CHARACTER_LENGTH(f).as("CHARACTER_LENGTH"),
                     f.RDB$FIELD_PRECISION,
                     FIELD_SCALE(f).as("FIELD_SCALE"),
-                    FIELD_TYPE(f).as("FIELD_TYPE"),
-                    f.RDB$FIELD_SUB_TYPE)
-                .from(r)
-                .leftOuterJoin(f).on(r.RDB$FIELD_SOURCE.eq(f.RDB$FIELD_NAME))
-                .where(r.RDB$RELATION_NAME.eq(getName()))
-                .orderBy(r.RDB$FIELD_POSITION)
-                .fetch()) {
+                    DSL.bitOr(p.RDB$NULL_FLAG.nvl((short) 0), f.RDB$NULL_FLAG.nvl((short) 0)).as(p.RDB$NULL_FLAG),
+                    p.RDB$DEFAULT_SOURCE)
+                .from(p)
+                .leftOuterJoin(f).on(p.RDB$FIELD_SOURCE.eq(f.RDB$FIELD_NAME))
+                .where(p.RDB$PROCEDURE_NAME.eq(getName()))
+                .orderBy(
+                    p.RDB$PARAMETER_TYPE.desc(),
+                    p.RDB$PARAMETER_NUMBER.asc())) {
 
-            DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
-                    getDatabase(),
-                    getSchema(),
-                    record.getValue("FIELD_TYPE", String.class),
-                    record.getValue("CHARACTER_LENGTH", short.class),
-                    record.getValue(f.RDB$FIELD_PRECISION),
-                    record.getValue("FIELD_SCALE", Integer.class),
-                    record.getValue(r.RDB$NULL_FLAG) == 0,
-                    record.getValue(r.RDB$DEFAULT_SOURCE) != null
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
+                record.getValue("FIELD_TYPE", String.class),
+                record.getValue("CHARACTER_LENGTH", short.class),
+                record.getValue(f.RDB$FIELD_PRECISION),
+                record.getValue("FIELD_SCALE", Integer.class),
+                record.getValue(p.RDB$NULL_FLAG) == 0,
+                record.getValue(p.RDB$DEFAULT_SOURCE) != null
             );
 
-            ColumnDefinition column = new DefaultColumnDefinition(
-                    getDatabase().getTable(getSchema(), getName()),
-                    record.getValue(r.RDB$FIELD_NAME.trim()),
-                    record.getValue(r.RDB$FIELD_POSITION),
-                    type,
-                    false,
-                    null
+            ParameterDefinition parameter = new DefaultParameterDefinition(
+                this,
+                record.getValue(p.RDB$PARAMETER_NAME),
+                i++,
+                type
             );
 
-            result.add(column);
+            addParameter(record.getValue(p.RDB$PARAMETER_TYPE, int.class).equals(0) ? InOutDefinition.IN : InOutDefinition.OUT, parameter);
         }
 
-        return result;
     }
 }

@@ -40,8 +40,12 @@
  */
 package org.jooq.util.firebird;
 
+import static org.jooq.impl.DSL.decode;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.util.firebird.rdb.Tables.RDB$GENERATORS;
 import static org.jooq.util.firebird.rdb.Tables.RDB$INDEX_SEGMENTS;
+import static org.jooq.util.firebird.rdb.Tables.RDB$PROCEDURES;
 import static org.jooq.util.firebird.rdb.Tables.RDB$REF_CONSTRAINTS;
 import static org.jooq.util.firebird.rdb.Tables.RDB$RELATIONS;
 import static org.jooq.util.firebird.rdb.Tables.RDB$RELATION_CONSTRAINTS;
@@ -51,7 +55,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -70,6 +76,7 @@ import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
+import org.jooq.util.firebird.rdb.tables.Rdb$fields;
 import org.jooq.util.firebird.rdb.tables.Rdb$indexSegments;
 import org.jooq.util.firebird.rdb.tables.Rdb$refConstraints;
 import org.jooq.util.firebird.rdb.tables.Rdb$relationConstraints;
@@ -219,14 +226,28 @@ public class FirebirdDatabase extends AbstractDatabase {
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
 
-        for (String tableName : create()
-                .select(RDB$RELATIONS.RDB$RELATION_NAME.trim())
+        for (Record2<String, Boolean> record : create()
+                .select(
+                    RDB$RELATIONS.RDB$RELATION_NAME.trim(),
+                    inline(false).as("table_valued_function"))
                 .from(RDB$RELATIONS)
-                .orderBy(1)
-                .fetch(0, String.class)) {
+                .unionAll(
+                     select(
+                         RDB$PROCEDURES.RDB$PROCEDURE_NAME.trim(),
+                         inline(true).as("table_valued_function"))
+                    .from(RDB$PROCEDURES)
 
-            TableDefinition tableDef = new FirebirdTableDefinition(getSchemata().get(0), tableName, "");
-            result.add(tableDef);
+                    // "selectable" procedures
+                    .where(RDB$PROCEDURES.RDB$PROCEDURE_TYPE.eq((short) 1))
+                )
+                .orderBy(1)) {
+
+            if (record.value2()) {
+                result.add(new FirebirdTableValuedFunction(getSchemata().get(0), record.value1(), ""));
+            }
+            else {
+                result.add(new FirebirdTableDefinition(getSchemata().get(0), record.value1(), ""));
+            }
         }
 
         return result;
@@ -235,6 +256,19 @@ public class FirebirdDatabase extends AbstractDatabase {
     @Override
     protected List<RoutineDefinition> getRoutines0() throws SQLException {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
+
+        for (String procedureName : create()
+                .select(RDB$PROCEDURES.RDB$PROCEDURE_NAME.trim())
+                .from(RDB$PROCEDURES)
+
+                // "executable" procedures
+                .where(RDB$PROCEDURES.RDB$PROCEDURE_TYPE.eq((short) 2))
+                .orderBy(1)
+                .fetch(0, String.class)) {
+
+            result.add(new FirebirdRoutineDefinition(getSchemata().get(0), procedureName));
+        }
+
         return result;
     }
 
@@ -265,5 +299,52 @@ public class FirebirdDatabase extends AbstractDatabase {
     @Override
     protected DSLContext create0() {
         return DSL.using(getConnection(), SQLDialect.FIREBIRD);
+    }
+
+    static Field<String> FIELD_TYPE(Rdb$fields f) {
+        return decode().value(f.RDB$FIELD_TYPE)
+                .when((short) 7, decode()
+                    .when(f.RDB$FIELD_SUB_TYPE.eq((short) 1), "NUMERIC")
+                    .when(f.RDB$FIELD_SUB_TYPE.eq((short) 0)
+                     .and(f.RDB$FIELD_SCALE.lt((short) 0)), "NUMERIC")
+                    .when(f.RDB$FIELD_SUB_TYPE.eq((short) 2), "DECIMAL")
+                    .otherwise("SMALLINT"))
+                .when((short) 8, decode()
+                    .when(f.RDB$FIELD_SUB_TYPE.eq((short) 1), "NUMERIC")
+                    .when(f.RDB$FIELD_SUB_TYPE.eq((short) 0)
+                     .and(f.RDB$FIELD_SCALE.lt((short) 0)), "NUMERIC")
+                    .when(f.RDB$FIELD_SUB_TYPE.eq((short) 2), "DECIMAL")
+                    .otherwise("INTEGER"))
+                .when((short) 9, "QUAD")
+                .when((short) 10, "FLOAT")
+                .when((short) 11, "D_FLOAT")
+                .when((short) 12, "DATE")
+                .when((short) 13, "TIME")
+                .when((short) 14, "CHAR")
+                .when((short) 16, decode()
+                    .when(f.RDB$FIELD_SUB_TYPE.eq((short) 1), "NUMERIC")
+                    .when(f.RDB$FIELD_SUB_TYPE.eq((short) 0)
+                     .and(f.RDB$FIELD_SCALE.lt((short) 0)), "NUMERIC")
+                    .when(f.RDB$FIELD_SUB_TYPE.eq((short) 2), "DECIMAL")
+                    .otherwise("BIGINT"))
+                .when((short) 27, "DOUBLE")
+                .when((short) 35, "TIMESTAMP")
+                .when((short) 37, "VARCHAR")
+                .when((short) 40, "CSTRING")
+                .when((short) 261, decode().value(f.RDB$FIELD_SUB_TYPE)
+                    .when((short) 0, "BLOB")
+                    .when((short) 1, "BLOB SUB_TYPE TEXT")
+                    .otherwise("BLOB"))
+                .otherwise("UNKNOWN");
+    }
+
+    static Field<Short> FIELD_SCALE(Rdb$fields f) {
+        return f.RDB$FIELD_SCALE.neg();
+    }
+
+    static Field<Short> CHARACTER_LENGTH(Rdb$fields f) {
+        return decode().value(f.RDB$FIELD_TYPE)
+                .when((short) 261, (short) 0)
+                .otherwise(f.RDB$CHARACTER_LENGTH);
     }
 }

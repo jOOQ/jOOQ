@@ -44,7 +44,7 @@ import static org.jooq.util.firebird.FirebirdDatabase.CHARACTER_LENGTH;
 import static org.jooq.util.firebird.FirebirdDatabase.FIELD_SCALE;
 import static org.jooq.util.firebird.FirebirdDatabase.FIELD_TYPE;
 import static org.jooq.util.firebird.rdb.Tables.RDB$FIELDS;
-import static org.jooq.util.firebird.rdb.Tables.RDB$RELATION_FIELDS;
+import static org.jooq.util.firebird.rdb.Tables.RDB$PROCEDURE_PARAMETERS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -56,36 +56,41 @@ import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.ParameterDefinition;
 import org.jooq.util.SchemaDefinition;
 import org.jooq.util.firebird.rdb.tables.Rdb$fields;
-import org.jooq.util.firebird.rdb.tables.Rdb$relationFields;
+import org.jooq.util.firebird.rdb.tables.Rdb$procedureParameters;
 
 /**
- * @author Sugiharto Lim - Initial contribution
+ * @author Lukas Eder
  */
-public class FirebirdTableDefinition extends AbstractTableDefinition {
+public class FirebirdTableValuedFunction extends AbstractTableDefinition {
 
-    public FirebirdTableDefinition(SchemaDefinition schema, String name, String comment) {
+    private final FirebirdRoutineDefinition routine;
+
+    public FirebirdTableValuedFunction(SchemaDefinition schema, String name, String comment) {
         super(schema, name, comment);
+
+        routine = new FirebirdRoutineDefinition(schema, name);
     }
 
     @Override
     protected List<ColumnDefinition> getElements0() throws SQLException {
         List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
-        Rdb$relationFields r = RDB$RELATION_FIELDS.as("r");
+        Rdb$procedureParameters p = RDB$PROCEDURE_PARAMETERS.as("p");
         Rdb$fields f = RDB$FIELDS.as("f");
 
         // Inspiration for the below query was taken from jaybird's
         // DatabaseMetaData implementation
         for (Record record : create()
                 .select(
-                    r.RDB$FIELD_NAME.trim(),
-                    r.RDB$DESCRIPTION,
-                    r.RDB$DEFAULT_VALUE,
-                    DSL.bitOr(r.RDB$NULL_FLAG.nvl((short) 0), f.RDB$NULL_FLAG.nvl((short) 0)).as(r.RDB$NULL_FLAG),
-                    r.RDB$DEFAULT_SOURCE,
-                    r.RDB$FIELD_POSITION,
+                    p.RDB$PARAMETER_NUMBER,
+                    p.RDB$PARAMETER_NAME.trim(),
+                    p.RDB$DESCRIPTION,
+                    p.RDB$DEFAULT_VALUE,
+                    DSL.bitOr(p.RDB$NULL_FLAG.nvl((short) 0), f.RDB$NULL_FLAG.nvl((short) 0)).as(p.RDB$NULL_FLAG),
+                    p.RDB$DEFAULT_SOURCE,
 
                     // [#3342] FIELD_LENGTH should be ignored for LOBs
                     CHARACTER_LENGTH(f).as("CHARACTER_LENGTH"),
@@ -93,11 +98,11 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     FIELD_SCALE(f).as("FIELD_SCALE"),
                     FIELD_TYPE(f).as("FIELD_TYPE"),
                     f.RDB$FIELD_SUB_TYPE)
-                .from(r)
-                .leftOuterJoin(f).on(r.RDB$FIELD_SOURCE.eq(f.RDB$FIELD_NAME))
-                .where(r.RDB$RELATION_NAME.eq(getName()))
-                .orderBy(r.RDB$FIELD_POSITION)
-                .fetch()) {
+                .from(p)
+                .leftOuterJoin(f).on(p.RDB$FIELD_SOURCE.eq(f.RDB$FIELD_NAME))
+                .where(p.RDB$PROCEDURE_NAME.eq(getName()))
+                .and(p.RDB$PARAMETER_TYPE.eq((short) 1))
+                .orderBy(p.RDB$PARAMETER_NUMBER)) {
 
             DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
                     getDatabase(),
@@ -106,14 +111,14 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     record.getValue("CHARACTER_LENGTH", short.class),
                     record.getValue(f.RDB$FIELD_PRECISION),
                     record.getValue("FIELD_SCALE", Integer.class),
-                    record.getValue(r.RDB$NULL_FLAG) == 0,
-                    record.getValue(r.RDB$DEFAULT_SOURCE) != null
+                    record.getValue(p.RDB$NULL_FLAG) == 0,
+                    record.getValue(p.RDB$DEFAULT_SOURCE) != null
             );
 
             ColumnDefinition column = new DefaultColumnDefinition(
                     getDatabase().getTable(getSchema(), getName()),
-                    record.getValue(r.RDB$FIELD_NAME.trim()),
-                    record.getValue(r.RDB$FIELD_POSITION),
+                    record.getValue(p.RDB$PARAMETER_NAME.trim()),
+                    record.getValue(p.RDB$PARAMETER_NUMBER),
                     type,
                     false,
                     null
@@ -123,5 +128,15 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
         }
 
         return result;
+    }
+
+    @Override
+    public boolean isTableValuedFunction() {
+        return true;
+    }
+
+    @Override
+    protected List<ParameterDefinition> getParameters0() {
+        return routine.getInParameters();
     }
 }

@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_FUNCTION;
+import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -344,7 +345,12 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             xx xxxxxxx xxx xxxxx xx xxxxxxxxx xxxxxx xxxx xxx xxxx xxxxxxxxx
             xx xxx xxxxxxxxxx xx xxxxxxxx xx xxx xxxxxx
             xx [/pro] */
-            Utils.consumeResultSets(ctx, listener, results, null);
+
+            // [#2925] Jaybird currently doesn't like fetching OUT parameters and consuming ResultSets
+            //         http://tracker.firebirdsql.org/browse/JDBC-350
+            if (ctx.family() != FIREBIRD)
+                Utils.consumeResultSets(ctx, listener, results, null);
+
             fetchOutParameters(ctx);
             return 0;
         }

@@ -44,6 +44,7 @@ package org.jooq.impl;
 import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_ALIAS;
 import static org.jooq.Clause.TABLE_REFERENCE;
+import static org.jooq.SQLDialect.FIREBIRD;
 
 import java.util.Arrays;
 
@@ -143,9 +144,14 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
             ctx.literal(Utils.getMappedTable(ctx.configuration(), this).getName());
 
             if (parameters != null && ctx.declareTables()) {
-                ctx.sql("(")
-                   .visit(new QueryPartList<Field<?>>(parameters))
-                   .sql(")");
+
+                // [#2925] Some dialects don't like empty parameter lists
+                if (ctx.family() == FIREBIRD && parameters.length == 0)
+                    ctx.visit(new QueryPartList<Field<?>>(parameters));
+                else
+                    ctx.sql("(")
+                       .visit(new QueryPartList<Field<?>>(parameters))
+                       .sql(")");
             }
         }
     }

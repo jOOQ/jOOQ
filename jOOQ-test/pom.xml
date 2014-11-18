@@ -31,7 +31,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.springframework.version>3.2.6.RELEASE</org.springframework.version>
+        <org.springframework.version>4.1.2.RELEASE</org.springframework.version>
 
         <db.cubrid.version>9.2.0.0155</db.cubrid.version>
         <db.derby.version>10.11.1.1</db.derby.version>

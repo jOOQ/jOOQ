@@ -50,6 +50,7 @@ import org.jooq.DSLContext;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
+import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
@@ -157,7 +158,7 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     @Override
     public String toString() {
         try {
-            return create().renderInlined(this);
+            return create(configuration().derive(SettingsTools.clone(configuration().settings()).withRenderFormatted(true))).renderInlined(this);
         }
         catch (SQLDialectNotSupportedException e) {
             return "[ ... " + e.getMessage() + " ... ]";

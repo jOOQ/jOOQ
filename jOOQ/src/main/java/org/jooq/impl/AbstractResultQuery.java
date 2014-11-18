@@ -298,7 +298,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final Iterator<R> iterator() {
-        return fetchLazy().iterator();
+        return fetch().iterator();
     }
 
     @Override

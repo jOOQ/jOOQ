@@ -66,19 +66,9 @@ import javax.xml.bind.ValidationEventHandler;
 import javax.xml.validation.SchemaFactory;
 
 import org.jooq.Constants;
-import org.jooq.SQLDialect;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
-// ...
-import org.jooq.util.cubrid.CUBRIDDatabase;
-// ...
-import org.jooq.util.derby.DerbyDatabase;
-import org.jooq.util.firebird.FirebirdDatabase;
-import org.jooq.util.h2.H2Database;
-import org.jooq.util.hsqldb.HSQLDBDatabase;
-// ...
-// ...
 import org.jooq.util.jaxb.Configuration;
 import org.jooq.util.jaxb.Generate;
 import org.jooq.util.jaxb.Jdbc;
@@ -87,13 +77,6 @@ import org.jooq.util.jaxb.Property;
 import org.jooq.util.jaxb.Schema;
 import org.jooq.util.jaxb.Strategy;
 import org.jooq.util.jaxb.Target;
-import org.jooq.util.jdbc.JDBCDatabase;
-import org.jooq.util.mariadb.MariaDBDatabase;
-import org.jooq.util.mysql.MySQLDatabase;
-// ...
-import org.jooq.util.postgres.PostgresDatabase;
-import org.jooq.util.sqlite.SQLiteDatabase;
-// ...
 // ...
 
 /**
@@ -451,32 +434,7 @@ public class GenerationTool {
     }
 
     private Class<? extends Database> databaseClass(Jdbc j) {
-        SQLDialect dialect = JDBCUtils.dialect(j.getUrl());
-        Class<? extends Database> result = JDBCDatabase.class;
-
-        switch (dialect.family()) {
-            /* [pro] xx
-            xxxx xxxxxxx    xxxxxx x xxxxxxxxxxxxxxxxxxx      xxxxxx
-            xxxx xxxx       xxxxxx x xxxxxxxxxxxxxxxxxx       xxxxxx
-            xxxx xxxx       xxxxxx x xxxxxxxxxxxxxxxxxx       xxxxxx
-            xxxx xxxxxxxxx  xxxxxx x xxxxxxxxxxxxxxxxxxxxxxx  xxxxxx
-            xxxx xxxxxxx    xxxxxx x xxxxxxxxxxxxxxxxxxxxx    xxxxxx
-            xxxx xxxxxxx    xxxxxx x xxxxxxxxxxxxxxxxxxxxx    xxxxxx
-            xxxx xxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
-            xxxx xxxxxxx    xxxxxx x xxxxxxxxxxxxxxxxxxxxx    xxxxxx
-            xx [/pro] */
-
-            case CUBRID:    result = CUBRIDDatabase.class;    break;
-            case DERBY:     result = DerbyDatabase.class;     break;
-            case FIREBIRD:  result = FirebirdDatabase.class;  break;
-            case H2:        result = H2Database.class;        break;
-            case HSQLDB:    result = HSQLDBDatabase.class;    break;
-            case MARIADB:   result = MariaDBDatabase.class;   break;
-            case MYSQL:     result = MySQLDatabase.class;     break;
-            case POSTGRES:  result = PostgresDatabase.class;  break;
-            case SQLITE:    result = SQLiteDatabase.class;    break;
-        }
-
+        Class<? extends Database> result = Databases.databaseClass(JDBCUtils.dialect(j.getUrl()));
         log.info("Database", "Inferring database " + result.getName() + " from URL " + j.getUrl());
         return result;
     }

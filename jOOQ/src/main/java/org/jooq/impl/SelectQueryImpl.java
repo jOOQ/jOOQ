@@ -756,21 +756,14 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
         int unionOpSize = unionOp.size();
 
-        // [#1658] jOOQ applies left-associativity to set operators. In order to enforce that across
-        // all databases, we need to wrap relevant subqueries in parentheses.
-        if (unionOpSize > 0) {
-            for (int i = unionOpSize - 1; i >= 0; i--) {
-                switch (unionOp.get(i)) {
-                    case EXCEPT:    context.start(SELECT_EXCEPT);    break;
-                    case INTERSECT: context.start(SELECT_INTERSECT); break;
-                    case UNION:     context.start(SELECT_UNION);     break;
-                    case UNION_ALL: context.start(SELECT_UNION_ALL); break;
-                }
-
-                unionParenthesis(context, "(");
-            }
-        }
-
+        // The SQL standard specifies:
+        //
+        // <query expression> ::=
+        //    [ <with clause> ] <query expression body>
+        //    [ <order by clause> ] [ <result offset clause> ] [ <fetch first clause> ]
+        //
+        // Depending on the dialect and on various syntax elements, parts of the above must be wrapped in
+        // synthetic parentheses
         boolean wrapQueryExpressionInDerivedTable = false;
         boolean wrapQueryExpressionBodyInDerivedTable = false;
 
@@ -813,13 +806,28 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                        xxxxxxxxxxxxxxxxxxxxxx
 
             xxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxx
                    xxxxxxxxxxxxxxxxxxxxxx xxx
                    xxxxxxxxxxxxxxxxxxxx
                    xxxxxxxxxxxxxxxxx
         x
 
         xx [/pro] */
+
+        // [#1658] jOOQ applies left-associativity to set operators. In order to enforce that across
+        // all databases, we need to wrap relevant subqueries in parentheses.
+        if (unionOpSize > 0) {
+            for (int i = unionOpSize - 1; i >= 0; i--) {
+                switch (unionOp.get(i)) {
+                    case EXCEPT:    context.start(SELECT_EXCEPT);    break;
+                    case INTERSECT: context.start(SELECT_INTERSECT); break;
+                    case UNION:     context.start(SELECT_UNION);     break;
+                    case UNION_ALL: context.start(SELECT_UNION_ALL); break;
+                }
+
+                unionParenthesis(context, "(");
+            }
+        }
 
         // SELECT clause
         // -------------

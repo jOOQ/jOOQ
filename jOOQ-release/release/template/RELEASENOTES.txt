@@ -10,7 +10,7 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 3.5.0 - September 19, 2014
+Version 3.5.0 - November 21, 2014
 ================================================================================
 
 The new Binding SPI

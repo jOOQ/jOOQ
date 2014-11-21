@@ -95,6 +95,7 @@ import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Utils.DATA_OMIT_INTO_CLAUSE;
 import static org.jooq.impl.Utils.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 // ...
+import static org.jooq.impl.Utils.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
 import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import static org.jooq.impl.Utils.DATA_SELECT_INTO_TABLE;
 import static org.jooq.impl.Utils.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
@@ -321,232 +322,244 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         SQLDialect dialect = context.dialect();
         SQLDialect family = context.family();
 
-        if (into != null
-                && context.data(DATA_OMIT_INTO_CLAUSE) == null
-                && asList(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE).contains(family)) {
+        // [#2791] TODO: Instead of explicitly manipulating these data() objects, future versions
+        // of jOOQ should implement a push / pop semantics to clearly delimit such scope.
+        Object renderTrailingLimit = context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
+        try {
+            if (renderTrailingLimit != null)
+                context.data().remove(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
 
-            context.data(DATA_OMIT_INTO_CLAUSE, true);
-            context.visit(DSL.createTable(into).as(this));
-            context.data().remove(DATA_OMIT_INTO_CLAUSE);
+            if (into != null
+                    && context.data(DATA_OMIT_INTO_CLAUSE) == null
+                    && asList(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE).contains(family)) {
 
-            return;
-        }
+                context.data(DATA_OMIT_INTO_CLAUSE, true);
+                context.visit(DSL.createTable(into).as(this));
+                context.data().remove(DATA_OMIT_INTO_CLAUSE);
 
-        if (with != null)
-            context.visit(with).formatSeparator();
+                return;
+            }
 
-        pushWindow(context);
+            if (with != null)
+                context.visit(with).formatSeparator();
 
-        Boolean wrapDerivedTables = (Boolean) context.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);
-        if (TRUE.equals(wrapDerivedTables)) {
-            context.sql("(")
-                   .formatIndentStart()
-                   .formatNewLine()
-                   .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, null);
-        }
+            pushWindow(context);
 
-        switch (dialect) {
+            Boolean wrapDerivedTables = (Boolean) context.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);
+            if (TRUE.equals(wrapDerivedTables)) {
+                context.sql("(")
+                       .formatIndentStart()
+                       .formatNewLine()
+                       .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, null);
+            }
+
+            switch (dialect) {
+
+                /* [pro] xx
+                xx xxxxxx xxxxx xxx xxxxxx xxxxxxxxxxxxxx xxxx xxxxx xxxxxx xxxxxx
+                xxxx xxxxxxx
+                xxxx xxxxxxxxxx
+                xxxx xxxxxxxxxx
+                xxxx xxxxxxxxxx
+                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxx
+
+                    xxxxxx
+
+                xx xxxx xxxx xxxxx xxx xxx xxxxxxxxxxxxx
+                xxxx xxxx
+                xxxx xxxxxx
+                xxxx xxxxxxx x
+
+                    xx xxx xxxxxxxx xxxxxxxx x xxxxxx xxxxx xxxxxxx xxxxxxx
+                    xx xxxxxx xxx xxxxxxx xxxx xxxxxx
+                    xx xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                    xx xxxxxxxx xxx xx xx xxxxxxxxx
+                    xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                    xxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxx
+
+                    xxxxxx
+                x
+
+                xx xxxxxx xxx xxx xxx xxxxxx xxxxxxx x xxx xxxxxx xxxxxxx xxxxxx
+                xx xxxxxx xxx xx xxxxxxxxx xx xxx xxxxxxx xxx xx xxx
+                xxxx xxxxxxx
+                xxxx xxxxxxxxxxx
+                xxxx xxxx
+                xxxx xxxxxxxxxxxxxx x
+
+                    xx xxxxxx xxx xxxxxxxx xxxxxxx xxxxxx xxx xxxxxxx xxxx xxxxxx
+                    xx xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxx
+
+                    xx xxxxxx xxxxxxxxxx
+                    xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                    xxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxx
+
+                    xxxxxx
+                x
+
+                xx xxxxxxxx xxx xxxx xx xxxxx xxxxxxx
+                xxxx xxxxxxxxx
+
+                xx xxxxxx xxx xxx xx xxxxx xx xxxxxxx xxx xxxx xxxxxxx
+                xxxx xxxxxxx x
+
+                    xx xxxxxx xxx xxxxxxxx xxxxxxx xxxxxx xxx xxxxxxx xxxx xxxxxx
+                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx xx xxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxx
+
+                    xx xxxxxx xxxxxxxxxx
+                    xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                    xxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxx
+
+                    xxxxxx
+                x
+
+                xx [/pro] */
+                // By default, render the dialect's limit clause
+                default: {
+                    toSQLReferenceLimitDefault(context);
+
+                    break;
+                }
+            }
+
+            // [#1296] FOR UPDATE is simulated in some dialects using ResultSet.CONCUR_UPDATABLE
+            if (forUpdate && !asList(CUBRID).contains(family)) {
+                context.formatSeparator()
+                       .keyword("for update");
+
+                if (!forUpdateOf.isEmpty()) {
+                    context.sql(" ").keyword("of").sql(" ");
+                    Utils.fieldNames(context, forUpdateOf);
+                }
+                else if (!forUpdateOfTables.isEmpty()) {
+                    context.sql(" ").keyword("of").sql(" ");
+
+                    switch (family) {
+
+                        // Some dialects don't allow for an OF [table-names] clause
+                        // It can be emulated by listing the table's fields, though
+                        /* [pro] xx
+                        xxxx xxxx
+                        xxxx xxxxxxxxx
+                        xxxx xxxxxxx
+                        xxxx xxxxxxx
+                        xx [/pro] */
+                        case DERBY: {
+                            forUpdateOfTables.toSQLFieldNames(context);
+                            break;
+                        }
+
+                        // Render the OF [table-names] clause
+                        default:
+                            Utils.tableNames(context, forUpdateOfTables);
+                            break;
+                    }
+                }
+
+                // [#3186] Firebird's FOR UPDATE clause has a different semantics. To achieve "regular"
+                // FOR UPDATE semantics, we should use FOR UPDATE WITH LOCK
+                if (family == FIREBIRD) {
+                    context.sql(" ").keyword("with lock");
+                }
+
+                if (forUpdateMode != null) {
+                    context.sql(" ");
+                    context.keyword(forUpdateMode.toSQL());
+
+                    if (forUpdateMode == ForUpdateMode.WAIT) {
+                        context.sql(" ");
+                        context.sql(forUpdateWait);
+                    }
+                }
+            }
+            else if (forShare) {
+                switch (dialect) {
+
+                    // MySQL has a non-standard implementation for the "FOR SHARE" clause
+                    case MARIADB:
+                    case MYSQL:
+                        context.formatSeparator()
+                               .keyword("lock in share mode");
+                        break;
+
+                    // Postgres is known to implement the "FOR SHARE" clause like this
+                    default:
+                        context.formatSeparator()
+                               .keyword("for share");
+                        break;
+                }
+            }
 
             /* [pro] xx
-            xx xxxxxx xxxxx xxx xxxxxx xxxxxxxxxxxxxx xxxx xxxxx xxxxxx xxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxxxxx
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxx
-
-                xxxxxx
-
-            xx xxxx xxxx xxxxx xxx xxx xxxxxxxxxxxxx
-            xxxx xxxx
-            xxxx xxxxxx
-            xxxx xxxxxxx x
-
-                xx xxx xxxxxxxx xxxxxxxx x xxxxxx xxxxx xxxxxxx xxxxxxx
-                xx xxxxxx xxx xxxxxxx xxxx xxxxxx
-                xx xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-                xx xxxxxxxx xxx xx xx xxxxxxxxx
-                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-                xxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxx
-
-                xxxxxx
+            xx xxxxxxx xxx xxxxxx x xxx xxxxxx xxxx xxxxx xxxxxx x xxxx xxxx xxxx xxxxxxx
+            xxxx xx xxxxxxxxxxxxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxx xxxxx xxxxxxxxx
             x
-
-            xx xxxxxx xxx xxx xxx xxxxxx xxxxxxx x xxx xxxxxx xxxxxxx xxxxxx
-            xx xxxxxx xxx xx xxxxxxxxx xx xxx xxxxxxx xxx xx xxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxxxxxxxxx x
-
-                xx xxxxxx xxx xxxxxxxx xxxxxxx xxxxxx xxx xxxxxxx xxxx xxxxxx
-                xx xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxx
-
-                xx xxxxxx xxxxxxxxxx
-                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-                xxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxx
-
-                xxxxxx
+            xxxx xx xxxxxxxxxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxx xxxx xxxxxxx
             x
+            xx [/pro] */
 
-            xx xxxxxxxx xxx xxxx xx xxxxx xxxxxxx
-            xxxx xxxxxxxxx
+            // [#1952] SQL Server OPTION() clauses as well as many other optional
+            // end-of-query clauses are appended to the end of a query
+            if (!StringUtils.isBlank(option)) {
+                context.formatSeparator()
+                       .sql(option);
+            }
 
-            xx xxxxxx xxx xxx xx xxxxx xx xxxxxxx xxx xxxx xxxxxxx
-            xxxx xxxxxxx x
+            if (TRUE.equals(wrapDerivedTables)) {
+                context.formatIndentEnd()
+                       .formatNewLine()
+                       .sql(")")
+                       .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
+            }
 
-                xx xxxxxx xxx xxxxxxxx xxxxxxx xxxxxx xxx xxxxxxx xxxx xxxxxx
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx xx xxxxxxxxx
+            /* [pro] xx
+            xx xxxx xxxxxxx
+            xx xxxxxxxxxxxx
+            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxxxxxx xxxxxxxxxx x xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xx xxxxxxxxxxx xx xxxxx
+                    xxxxxxxxxx x xxxxx
+
+                xx xxxxxxxxxxx xx xxxx
+                        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx x
+
                     xxxxxxxxxxxxxxxxxxxxxxxxx
+                           xxxxxxxxxxxxxxxx
+                           xxxxxx xx
+                           xxxxxxxxxxxxxxxxxxx
+                x
 
-                xx xxxxxx xxxxxxxxxx
-                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-                xxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxx
-
-                xxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxx
             x
 
             xx [/pro] */
-            // By default, render the dialect's limit clause
-            default: {
-                toSQLReferenceLimitDefault(context);
-
-                break;
-            }
         }
-
-        // [#1296] FOR UPDATE is simulated in some dialects using ResultSet.CONCUR_UPDATABLE
-        if (forUpdate && !asList(CUBRID).contains(family)) {
-            context.formatSeparator()
-                   .keyword("for update");
-
-            if (!forUpdateOf.isEmpty()) {
-                context.sql(" ").keyword("of").sql(" ");
-                Utils.fieldNames(context, forUpdateOf);
-            }
-            else if (!forUpdateOfTables.isEmpty()) {
-                context.sql(" ").keyword("of").sql(" ");
-
-                switch (family) {
-
-                    // Some dialects don't allow for an OF [table-names] clause
-                    // It can be emulated by listing the table's fields, though
-                    /* [pro] xx
-                    xxxx xxxx
-                    xxxx xxxxxxxxx
-                    xxxx xxxxxxx
-                    xxxx xxxxxxx
-                    xx [/pro] */
-                    case DERBY: {
-                        forUpdateOfTables.toSQLFieldNames(context);
-                        break;
-                    }
-
-                    // Render the OF [table-names] clause
-                    default:
-                        Utils.tableNames(context, forUpdateOfTables);
-                        break;
-                }
-            }
-
-            // [#3186] Firebird's FOR UPDATE clause has a different semantics. To achieve "regular"
-            // FOR UPDATE semantics, we should use FOR UPDATE WITH LOCK
-            if (family == FIREBIRD) {
-                context.sql(" ").keyword("with lock");
-            }
-
-            if (forUpdateMode != null) {
-                context.sql(" ");
-                context.keyword(forUpdateMode.toSQL());
-
-                if (forUpdateMode == ForUpdateMode.WAIT) {
-                    context.sql(" ");
-                    context.sql(forUpdateWait);
-                }
-            }
+        finally {
+            if (renderTrailingLimit != null)
+                context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, renderTrailingLimit);
         }
-        else if (forShare) {
-            switch (dialect) {
-
-                // MySQL has a non-standard implementation for the "FOR SHARE" clause
-                case MARIADB:
-                case MYSQL:
-                    context.formatSeparator()
-                           .keyword("lock in share mode");
-                    break;
-
-                // Postgres is known to implement the "FOR SHARE" clause like this
-                default:
-                    context.formatSeparator()
-                           .keyword("for share");
-                    break;
-            }
-        }
-
-        /* [pro] xx
-        xx xxxxxxx xxx xxxxxx x xxx xxxxxx xxxx xxxxx xxxxxx x xxxx xxxx xxxx xxxxxxx
-        xxxx xx xxxxxxxxxxxxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxx xxxxx xxxxxxxxx
-        x
-        xxxx xx xxxxxxxxxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxx xxxx xxxxxxx
-        x
-        xx [/pro] */
-
-        // [#1952] SQL Server OPTION() clauses as well as many other optional
-        // end-of-query clauses are appended to the end of a query
-        if (!StringUtils.isBlank(option)) {
-            context.formatSeparator()
-                   .sql(option);
-        }
-
-        if (TRUE.equals(wrapDerivedTables)) {
-            context.formatIndentEnd()
-                   .formatNewLine()
-                   .sql(")")
-                   .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
-        }
-
-        /* [pro] xx
-        xx xxxx xxxxxxx
-        xx xxxxxxxxxxxx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-            xxxxxxxx xxxxxxxxxx x xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xx xxxxxxxxxxx xx xxxxx
-                xxxxxxxxxx x xxxxx
-
-            xx xxxxxxxxxxx xx xxxx
-                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx x
-
-                xxxxxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxx
-                       xxxxxx xx
-                       xxxxxxxxxxxxxxxxxxx
-            x
-
-            xxxxxxxxxxxxxxxxxxxxxxxxx
-        x
-
-        xx [/pro] */
     }
 
     @SuppressWarnings("unchecked")
@@ -573,8 +586,6 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         else
             context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, data);
     }
-
-    static final String DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE = "org.jooq.configuration.render-trailing-limit-if-applicable";
 
     /* [pro] xx
     xxx

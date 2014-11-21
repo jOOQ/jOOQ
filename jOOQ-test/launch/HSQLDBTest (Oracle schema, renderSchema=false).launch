@@ -23,6 +23,5 @@
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.jooq.test.HSQLDBTest2"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="jOOQ-test"/>
-<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.jooq.test-dialects=hsqldb -DXX:+UnlockCommercialFeatures -DXX:+FlightRecorder -javaagent:../jOOQ-test-agent/target/jooq-test-agent-3.5.0-SNAPSHOT-jar-with-dependencies.jar -Dorg.jooq.settings.renderSchema"/>
 </launchConfiguration>

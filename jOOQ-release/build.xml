@@ -3,7 +3,7 @@
 	<property name="dir.workspace" value="${basedir}/.." />
 	<property name="dir.target" value="${basedir}/target" />
 	<property name="dir.release" value="${basedir}/release" />
-	<property name="version" value="3.5.0-SNAPSHOT"/>
+	<property name="version" value="3.5.0"/>
 
 	<!-- Run a full mvn clean package install deploy first before this -->
 	<target name="copy-lib-javadoc">

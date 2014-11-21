@@ -2335,7 +2335,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         out.println("public class %s extends %s[[before= implements ][%s]] {", className, SchemaImpl.class, interfaces);
         out.printSerial();
-        out.tab(1).javadoc("The singleton instance of <code>%s</code>", schemaName);
+        out.tab(1).javadoc("The reference instance of <code>%s</code>", schemaName);
         out.tab(1).println("public static final %s %s = new %s();", className, schemaId, className);
 
         out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
@@ -2985,7 +2985,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getFullJavaClassName(definition);
         final String identifier = getStrategy().getJavaIdentifier(definition);
 
-        out.tab(1).javadoc("The singleton instance of <code>%s</code>", definition.getQualifiedOutputName());
+        out.tab(1).javadoc("The reference instance of <code>%s</code>", definition.getQualifiedOutputName());
         out.tab(1).println("public static final %s %s = new %s();", className, identifier, className);
     }
 

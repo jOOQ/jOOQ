@@ -26,7 +26,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<start-class>org.jooq.example.spring.Application</start-class>
-        <org.jooq.version>3.5.0-SNAPSHOT</org.jooq.version>
+        <org.jooq.version>3.5.0</org.jooq.version>
 		<java.version>1.8</java.version>
 	</properties>
 

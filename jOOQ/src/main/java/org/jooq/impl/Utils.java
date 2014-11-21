@@ -284,6 +284,11 @@ final class Utils {
     static final String           DATA_OMIT_INTO_CLAUSE                       = "org.jooq.configuration.omit-into-clause";
 
     /**
+     * [#1658] Specify whether the trailing LIMIT clause needs to be rendered.
+     */
+    static final String           DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE    = "org.jooq.configuration.render-trailing-limit-if-applicable";
+
+    /**
      * [#2965] These are {@link ConcurrentHashMap}s containing caches for
      * reflection information.
      * <p>

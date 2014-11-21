@@ -95,6 +95,7 @@ import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Utils.DATA_OMIT_INTO_CLAUSE;
 import static org.jooq.impl.Utils.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Utils.DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE;
+import static org.jooq.impl.Utils.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
 import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import static org.jooq.impl.Utils.DATA_SELECT_INTO_TABLE;
 import static org.jooq.impl.Utils.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
@@ -321,232 +322,244 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         SQLDialect dialect = context.dialect();
         SQLDialect family = context.family();
 
-        if (into != null
-                && context.data(DATA_OMIT_INTO_CLAUSE) == null
-                && asList(CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE).contains(family)) {
+        // [#2791] TODO: Instead of explicitly manipulating these data() objects, future versions
+        // of jOOQ should implement a push / pop semantics to clearly delimit such scope.
+        Object renderTrailingLimit = context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
+        try {
+            if (renderTrailingLimit != null)
+                context.data().remove(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
 
-            context.data(DATA_OMIT_INTO_CLAUSE, true);
-            context.visit(DSL.createTable(into).as(this));
-            context.data().remove(DATA_OMIT_INTO_CLAUSE);
+            if (into != null
+                    && context.data(DATA_OMIT_INTO_CLAUSE) == null
+                    && asList(CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE).contains(family)) {
 
-            return;
-        }
+                context.data(DATA_OMIT_INTO_CLAUSE, true);
+                context.visit(DSL.createTable(into).as(this));
+                context.data().remove(DATA_OMIT_INTO_CLAUSE);
 
-        if (with != null)
-            context.visit(with).formatSeparator();
+                return;
+            }
 
-        pushWindow(context);
+            if (with != null)
+                context.visit(with).formatSeparator();
 
-        Boolean wrapDerivedTables = (Boolean) context.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);
-        if (TRUE.equals(wrapDerivedTables)) {
-            context.sql("(")
-                   .formatIndentStart()
-                   .formatNewLine()
-                   .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, null);
-        }
+            pushWindow(context);
 
-        switch (dialect) {
+            Boolean wrapDerivedTables = (Boolean) context.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);
+            if (TRUE.equals(wrapDerivedTables)) {
+                context.sql("(")
+                       .formatIndentStart()
+                       .formatNewLine()
+                       .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, null);
+            }
 
-            /* [pro] */
-            // Oracle knows the ROWNUM pseudo-column. That makes things simple
-            case ORACLE:
-            case ORACLE10G:
-            case ORACLE11G:
-            case ORACLE12C:
-                if (getLimit().isApplicable())
-                    toSQLReferenceLimitOracle(context);
-                else
-                    toSQLReference0(context);
+            switch (dialect) {
 
-                break;
+                /* [pro] */
+                // Oracle knows the ROWNUM pseudo-column. That makes things simple
+                case ORACLE:
+                case ORACLE10G:
+                case ORACLE11G:
+                case ORACLE12C:
+                    if (getLimit().isApplicable())
+                        toSQLReferenceLimitOracle(context);
+                    else
+                        toSQLReference0(context);
 
-            // With DB2, there are two possibilities
-            case DB2:
-            case DB2_9:
-            case DB2_10: {
+                    break;
 
-                // DB2 natively supports a "FIRST ROWS" clause, without
-                // offset and without bind values
-                if (getLimit().offsetZero() && !getLimit().rendersParams())
+                // With DB2, there are two possibilities
+                case DB2:
+                case DB2_9:
+                case DB2_10: {
+
+                    // DB2 natively supports a "FIRST ROWS" clause, without
+                    // offset and without bind values
+                    if (getLimit().offsetZero() && !getLimit().rendersParams())
+                        toSQLReferenceLimitDefault(context);
+
+                    // "OFFSET" has to be simulated
+                    else if (getLimit().isApplicable())
+                        toSQLReferenceLimitDB2SQLServer2008Sybase(context);
+
+                    else
+                        toSQLReference0(context);
+
+                    break;
+                }
+
+                // Sybase ASE and SQL Server support a TOP clause without OFFSET
+                // OFFSET can be simulated in SQL Server, not in ASE
+                case ACCESS:
+                case ACCESS2013:
+                case ASE:
+                case SQLSERVER2008: {
+
+                    // Native TOP support, without OFFSET and without bind values
+                    if (getLimit().offsetZero() && !getLimit().rendersParams())
+                        toSQLReference0(context);
+
+                    // OFFSET simulation
+                    else if (getLimit().isApplicable())
+                        toSQLReferenceLimitDB2SQLServer2008Sybase(context);
+
+                    else
+                        toSQLReference0(context);
+
+                    break;
+                }
+
+                // Informix has SKIP .. FIRST support
+                case INFORMIX:
+
+                // Sybase has TOP .. START AT support (no bind values)
+                case SYBASE: {
+
+                    // Native TOP support, without OFFSET and without bind values
+                    if (!getLimit().rendersParams() || dialect == INFORMIX)
+                        toSQLReference0(context);
+
+                    // OFFSET simulation
+                    else if (getLimit().isApplicable())
+                        toSQLReferenceLimitDB2SQLServer2008Sybase(context);
+
+                    else
+                        toSQLReference0(context);
+
+                    break;
+                }
+
+                /* [/pro] */
+                // By default, render the dialect's limit clause
+                default: {
                     toSQLReferenceLimitDefault(context);
 
-                // "OFFSET" has to be simulated
-                else if (getLimit().isApplicable())
-                    toSQLReferenceLimitDB2SQLServer2008Sybase(context);
-
-                else
-                    toSQLReference0(context);
-
-                break;
+                    break;
+                }
             }
 
-            // Sybase ASE and SQL Server support a TOP clause without OFFSET
-            // OFFSET can be simulated in SQL Server, not in ASE
-            case ACCESS:
-            case ACCESS2013:
-            case ASE:
-            case SQLSERVER2008: {
+            // [#1296] FOR UPDATE is simulated in some dialects using ResultSet.CONCUR_UPDATABLE
+            if (forUpdate && !asList(CUBRID, SQLSERVER).contains(family)) {
+                context.formatSeparator()
+                       .keyword("for update");
 
-                // Native TOP support, without OFFSET and without bind values
-                if (getLimit().offsetZero() && !getLimit().rendersParams())
-                    toSQLReference0(context);
+                if (!forUpdateOf.isEmpty()) {
+                    context.sql(" ").keyword("of").sql(" ");
+                    Utils.fieldNames(context, forUpdateOf);
+                }
+                else if (!forUpdateOfTables.isEmpty()) {
+                    context.sql(" ").keyword("of").sql(" ");
 
-                // OFFSET simulation
-                else if (getLimit().isApplicable())
-                    toSQLReferenceLimitDB2SQLServer2008Sybase(context);
+                    switch (family) {
 
-                else
-                    toSQLReference0(context);
+                        // Some dialects don't allow for an OF [table-names] clause
+                        // It can be emulated by listing the table's fields, though
+                        /* [pro] */
+                        case DB2:
+                        case INFORMIX:
+                        case INGRES:
+                        case ORACLE:
+                        /* [/pro] */
+                        case DERBY: {
+                            forUpdateOfTables.toSQLFieldNames(context);
+                            break;
+                        }
 
-                break;
+                        // Render the OF [table-names] clause
+                        default:
+                            Utils.tableNames(context, forUpdateOfTables);
+                            break;
+                    }
+                }
+
+                // [#3186] Firebird's FOR UPDATE clause has a different semantics. To achieve "regular"
+                // FOR UPDATE semantics, we should use FOR UPDATE WITH LOCK
+                if (family == FIREBIRD) {
+                    context.sql(" ").keyword("with lock");
+                }
+
+                if (forUpdateMode != null) {
+                    context.sql(" ");
+                    context.keyword(forUpdateMode.toSQL());
+
+                    if (forUpdateMode == ForUpdateMode.WAIT) {
+                        context.sql(" ");
+                        context.sql(forUpdateWait);
+                    }
+                }
+            }
+            else if (forShare) {
+                switch (dialect) {
+
+                    // MySQL has a non-standard implementation for the "FOR SHARE" clause
+                    case MARIADB:
+                    case MYSQL:
+                        context.formatSeparator()
+                               .keyword("lock in share mode");
+                        break;
+
+                    // Postgres is known to implement the "FOR SHARE" clause like this
+                    default:
+                        context.formatSeparator()
+                               .keyword("for share");
+                        break;
+                }
             }
 
-            // Informix has SKIP .. FIRST support
-            case INFORMIX:
+            /* [pro] */
+            // [#3600] The Oracle / SQL Server WITH CHECK OPTION / WITH READ ONLY clauses
+            else if (withCheckOption) {
+                context.formatSeparator()
+                       .keyword("with check option");
+            }
+            else if (withReadOnly) {
+                context.formatSeparator()
+                       .keyword("with read only");
+            }
+            /* [/pro] */
 
-            // Sybase has TOP .. START AT support (no bind values)
-            case SYBASE: {
+            // [#1952] SQL Server OPTION() clauses as well as many other optional
+            // end-of-query clauses are appended to the end of a query
+            if (!StringUtils.isBlank(option)) {
+                context.formatSeparator()
+                       .sql(option);
+            }
 
-                // Native TOP support, without OFFSET and without bind values
-                if (!getLimit().rendersParams() || dialect == INFORMIX)
-                    toSQLReference0(context);
+            if (TRUE.equals(wrapDerivedTables)) {
+                context.formatIndentEnd()
+                       .formatNewLine()
+                       .sql(")")
+                       .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
+            }
 
-                // OFFSET simulation
-                else if (getLimit().isApplicable())
-                    toSQLReferenceLimitDB2SQLServer2008Sybase(context);
+            /* [pro] */
+            // INTO clauses
+            // ------------
+            if (asList(INFORMIX).contains(family)) {
+                context.start(SELECT_INTO);
 
-                else
-                    toSQLReference0(context);
+                Table<?> actualInto = (Table<?>) context.data(DATA_SELECT_INTO_TABLE);
+                if (actualInto == null)
+                    actualInto = into;
 
-                break;
+                if (actualInto != null
+                        && context.data(DATA_OMIT_INTO_CLAUSE) == null) {
+
+                    context.formatSeparator()
+                           .keyword("into")
+                           .sql(" ")
+                           .visit(actualInto);
+                }
+
+                context.end(SELECT_INTO);
             }
 
             /* [/pro] */
-            // By default, render the dialect's limit clause
-            default: {
-                toSQLReferenceLimitDefault(context);
-
-                break;
-            }
         }
-
-        // [#1296] FOR UPDATE is simulated in some dialects using ResultSet.CONCUR_UPDATABLE
-        if (forUpdate && !asList(CUBRID, SQLSERVER).contains(family)) {
-            context.formatSeparator()
-                   .keyword("for update");
-
-            if (!forUpdateOf.isEmpty()) {
-                context.sql(" ").keyword("of").sql(" ");
-                Utils.fieldNames(context, forUpdateOf);
-            }
-            else if (!forUpdateOfTables.isEmpty()) {
-                context.sql(" ").keyword("of").sql(" ");
-
-                switch (family) {
-
-                    // Some dialects don't allow for an OF [table-names] clause
-                    // It can be emulated by listing the table's fields, though
-                    /* [pro] */
-                    case DB2:
-                    case INFORMIX:
-                    case INGRES:
-                    case ORACLE:
-                    /* [/pro] */
-                    case DERBY: {
-                        forUpdateOfTables.toSQLFieldNames(context);
-                        break;
-                    }
-
-                    // Render the OF [table-names] clause
-                    default:
-                        Utils.tableNames(context, forUpdateOfTables);
-                        break;
-                }
-            }
-
-            // [#3186] Firebird's FOR UPDATE clause has a different semantics. To achieve "regular"
-            // FOR UPDATE semantics, we should use FOR UPDATE WITH LOCK
-            if (family == FIREBIRD) {
-                context.sql(" ").keyword("with lock");
-            }
-
-            if (forUpdateMode != null) {
-                context.sql(" ");
-                context.keyword(forUpdateMode.toSQL());
-
-                if (forUpdateMode == ForUpdateMode.WAIT) {
-                    context.sql(" ");
-                    context.sql(forUpdateWait);
-                }
-            }
+        finally {
+            if (renderTrailingLimit != null)
+                context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, renderTrailingLimit);
         }
-        else if (forShare) {
-            switch (dialect) {
-
-                // MySQL has a non-standard implementation for the "FOR SHARE" clause
-                case MARIADB:
-                case MYSQL:
-                    context.formatSeparator()
-                           .keyword("lock in share mode");
-                    break;
-
-                // Postgres is known to implement the "FOR SHARE" clause like this
-                default:
-                    context.formatSeparator()
-                           .keyword("for share");
-                    break;
-            }
-        }
-
-        /* [pro] */
-        // [#3600] The Oracle / SQL Server WITH CHECK OPTION / WITH READ ONLY clauses
-        else if (withCheckOption) {
-            context.formatSeparator()
-                   .keyword("with check option");
-        }
-        else if (withReadOnly) {
-            context.formatSeparator()
-                   .keyword("with read only");
-        }
-        /* [/pro] */
-
-        // [#1952] SQL Server OPTION() clauses as well as many other optional
-        // end-of-query clauses are appended to the end of a query
-        if (!StringUtils.isBlank(option)) {
-            context.formatSeparator()
-                   .sql(option);
-        }
-
-        if (TRUE.equals(wrapDerivedTables)) {
-            context.formatIndentEnd()
-                   .formatNewLine()
-                   .sql(")")
-                   .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
-        }
-
-        /* [pro] */
-        // INTO clauses
-        // ------------
-        if (asList(INFORMIX).contains(family)) {
-            context.start(SELECT_INTO);
-
-            Table<?> actualInto = (Table<?>) context.data(DATA_SELECT_INTO_TABLE);
-            if (actualInto == null)
-                actualInto = into;
-
-            if (actualInto != null
-                    && context.data(DATA_OMIT_INTO_CLAUSE) == null) {
-
-                context.formatSeparator()
-                       .keyword("into")
-                       .sql(" ")
-                       .visit(actualInto);
-            }
-
-            context.end(SELECT_INTO);
-        }
-
-        /* [/pro] */
     }
 
     @SuppressWarnings("unchecked")
@@ -573,8 +586,6 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         else
             context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, data);
     }
-
-    static final String DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE = "org.jooq.configuration.render-trailing-limit-if-applicable";
 
     /* [pro] */
     /**

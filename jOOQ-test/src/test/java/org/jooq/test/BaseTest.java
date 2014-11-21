@@ -1014,6 +1014,12 @@ public abstract class BaseTest<
         }
     }
 
+    protected static void assertNotSame(Collection<?> expected, Collection<?> actual) {
+        if (new HashSet<Object>(expected).equals(new HashSet<Object>(actual))) {
+            Assert.fail("Collections are the same : " + expected + " and " + actual);
+        }
+    }
+
     /**
      * This is needed to allow for throwing Throwables from lambda expressions
      */

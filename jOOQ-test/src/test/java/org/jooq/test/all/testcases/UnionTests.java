@@ -256,7 +256,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testUnionAssociativityExecutedSQL() throws Exception {
-        assertEquals(
+        assertSame(
             create().select(A)
                     .union(select(B))
                     .union(select(B))
@@ -267,7 +267,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .fetch()
         );
 
-        assertEquals(
+        assertSame(
             create().select(A)
                     .unionAll(select(B))
                     .unionAll(select(B))
@@ -285,7 +285,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 break;
 
             default: {
-                assertEquals(
+                assertSame(
                     create().select(A)
                             .intersect(select(A))
                             .intersect(select(A))
@@ -296,7 +296,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                             .fetch()
                 );
 
-                assertNotEquals(
+                assertNotSame(
                     create().select(A)
                             .except(select(A))
                             .except(select(A))

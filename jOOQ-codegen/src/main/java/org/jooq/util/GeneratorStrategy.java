@@ -82,9 +82,9 @@ public interface GeneratorStrategy {
     boolean getInstanceFields();
 
     /**
-     * This is applied to definitions that can result in static and instance
-     * members. For instance, the instance of a {@link TableDefinition} is a
-     * java identifier
+     * This is applied to definitions that can result in singleton static and
+     * instance members. For instance, the singleton instance of a
+     * {@link TableDefinition} is a java identifier
      *
      * @return The Java identifier representing this object, e.g. [my_table]
      */
@@ -101,9 +101,9 @@ public interface GeneratorStrategy {
     List<String> getJavaIdentifiers(Definition... definitions);
 
     /**
-     * This is applied to definitions that can result in static and instance
-     * members. For instance, the instance of a {@link TableDefinition} is a
-     * java identifier
+     * This is applied to definitions that can result in singleton static and
+     * instance members. For instance, the singleton instance of a
+     * {@link TableDefinition} is a java identifier
      *
      * @return The Java identifier representing this object, e.g. [my_table]
      */

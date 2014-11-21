@@ -10,14 +10,90 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 3.5.0-SNAPSHOT - September 19, 2014
+Version 3.5.0 - September 19, 2014
 ================================================================================
 
-This is a preview snapshot release for jOOQ 3.5.0
+The new Binding SPI
+-------------------
+
+The main improvement of this exciting release is the new org.jooq.Binding SPI
+which can be used to fully control all aspects of a user-type's JDBC interaction.
+This goes much further than the existing org.jooq.Converter SPI that can be used
+to map standard JDBC types to user-types. With the new Binding SPI, virtually
+*ALL* vendor-specific types can be supported now. Examples include PostgreSQL's
+JSON or HSTORE types, or Oracle's DATE type - which is really incorrectly
+represented via java.sql.Timestamp, which is why we have retrofitted the existing
+<dateAsTimestamp/> feature to use such bindings, now.
+
+Stored procedures are everywhere
+--------------------------------
+
+Stored procedure support was generally improved in this release. This includes
+lots of new little features and conveniences for use with PL/SQL or Transact-SQL.
+For instance, jOOQ 3.5.0 now supports cross-schema references of PL/SQL OBJECT
+and TABLE types, which allows for binding directly to Oracle Spatial. We've
+blogged about this exciting improvement here:
+http://blog.jooq.org/2014/11/04/painless-access-from-java-to-plsql-procedures-with-jooq/
+
+And while we were at it, we've also added basic support for Oracle AQ, which
+integrates very nicely with our OBJECT type support!
+
+In Transact-SQL and MySQL, we now support fetching arbitrary numbers of Results
+from stored procedures, and we've also implemented support for Firebird PSQL,
+including Firebird's very interesting syntax for table-valued functions.
+
+By the way, we support user-defined aggregate functions for a variety of
+databases, including Oracle, PostgreSQL, and HSQLDB. Definitely something you
+should look into!
+
+SQL improvements
+----------------
+
+In this release, we've finally got support for UNION, INTERSECT, and EXCEPT
+right with respect to nesting such operations, as well as combining them with
+ORDER BY and LIMIT .. OFFSET.
+
+Let's talk some more DDL
+------------------------
+
+We've continued to add support for DDL statements, including
+
+- CREATE TABLE
+- CREATE TABLE AS SELECT
+- CREATE VIEW and DROP VIEW
+- CREATE INDEX and DROP INDEX
+- CREATE SEQUENCE and DROP SEQUENCE
+- DROP .. IF EXISTS
+
+We'll continue to add support for more DDL statements also in the future.
+
+Code generation improvements
+----------------------------
+
+We've added support for the new XMLDatabase, a code generation configuration
+that allows to read meta information from XML formats, e.g. from a standard
+INFORMATION_SCHEMA.xml, or from Vertabelo's XML export format:
+http://blog.jooq.org/2014/09/05/importing-your-erd-export-into-jooq/
+
+Future versions of jOOQ will include built-in support for a variety of XML 
+formats.
+
+We've had an awesome contribution by Etienne Studer from Gradleware to help our
+users integrate the jOOQ code generation with their Gradle builds.
+
+Last but not least: Informix!
+-----------------------------
+
+Oh, and by the way, we now also support IBM's second most popular database:
+Informix. Support for this database will be included in the jOOQ Enterprise
+Edition.
+
+
 
 Features and improvements
 -------------------------
 #561  - Add support for the Informix database
+#994  - Add support for the Postgres "hstore" data type
 #1341 - Add DSL.using(String url) and other methods that mimick DriverManager.getConnection()
 #1380 - Generate equals(), hashCode() on POJOs
 #1392 - Add formatInsert() to render insert statements from a Result
@@ -30,8 +106,10 @@ Features and improvements
 #2289 - Add jOOQ-flyway-example, a documentation module to show how to integrate with Flyway
 #2604 - Add section to the manual explaining how asynchronous querying can be achieved
 #2674 - Add support for stored procedures in MockConnection / MockDataProvider / MockExecuteContext
+#2788 - Add support for the PostgreSQL "json" data type
 #2886 - jooq-codegen-maven should look into project dependencies for jdbc driver
 #2907 - Emulate UPDATE .. RETURNING through SELECT FROM FINAL TABLE (UPDATE ...) in DB2
+#2925 - Add support for Firebird stored procedures
 #3121 - Skip code re-generation when schema is known to be the same
 #3151 - Add "question mark" with tool-tip to the manual to allow for jumping to the "how to read this manual" section
 #3248 - Add support for Binding (i.e. "Type Providers")
@@ -114,12 +192,17 @@ Features and improvements
 #3754 - Explain primitive type conversion in Convert.convert() Javadoc
 #3756 - Regenerate files only if there is a difference
 #3760 - Add Record.intoList()
+#3769 - Add org.jooq.Converters, a chained Converter implementation
+#3773 - Explain jOOQ's understanding of Configuration thread safety in the Configuration Javadoc
+#3775 - Let QueryPart.toString() generate formatted SQL
+#3782 - Add a method to create a org.jooq.util.Database by SQLDialect
 
 API changes (backwards-compatible)
 ----------------------------------
 #3345 - Deprecate org.jooq.api.annotation.State and Transition annotations
 #3356 - Deprecate Select.fetchCount()
 #3703 - Deprecate CastMode.SOME and RenderContext.cast()
+#3770 - Deprecate <dateAsTimestamp/>
 
 API changes (backwards-incompatible)
 ------------------------------------
@@ -142,6 +225,7 @@ Bug fixes
 #3360 - SQLite regression when using special characters in identifiers
 #3362 - DSLContext.batchStore() executes INSERT if records are batch stores are executed two times in a row on new records, if Settings.updatablePrimaryKeys is set to true
 #3363 - UpdatableRecord.store() executes UPDATE instead of INSERT after delete(), if Settings.updatablePrimaryKeys is set to true
+#3369 - Render CAST(? AS DATE) for java.sql.Timestamp bind values that are bound to Oracle DATE columns
 #3372 - The syntheticPrimaryKeys code generation option is currently undocumented
 #3373 - The manual's page about the DUAL table does not list all the supported databases
 #3382 - NOT NULL constraints and type information are incorrectly generated when using Firebird DOMAINs for data types
@@ -207,6 +291,8 @@ Bug fixes
 #3733 - Code generator should use CHAR_LENGTH columns for Oracle, instead of DATA_LENGTH
 #3741 - MySQL ResultSet streaming conflicts with internal SHOW WARNINGS call
 #3758 - ExecuteListener.warning() is not listed as a method in the Javadoc
+#3762 - Bad emulation of DUAL table in HSQLDB when connecting with a DBA user on a database with more than one user
+#3792 - Code generator erroneously refers to "singleton instances" of tables in generated Javadoc
 
 Version 3.4.0 - June 20, 2014
 ================================================================================

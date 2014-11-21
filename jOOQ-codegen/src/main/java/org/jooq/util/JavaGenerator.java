@@ -41,13 +41,11 @@
 package org.jooq.util;
 
 
-import static org.jooq.tools.StringUtils.defaultIfBlank;
-import static org.jooq.tools.StringUtils.defaultString;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.TypeVariable;
+import java.security.Identity;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -60,58 +58,20 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.security.auth.login.Configuration;
+import javax.sound.midi.Sequence;
 import javax.xml.bind.DatatypeConverter;
+import javax.xml.validation.Schema;
 
-import org.jooq.AggregateFunction;
-import org.jooq.Configuration;
-import org.jooq.Constants;
-import org.jooq.DataType;
-import org.jooq.EnumType;
-import org.jooq.Field;
-import org.jooq.ForeignKey;
-import org.jooq.Identity;
-import org.jooq.Parameter;
-import org.jooq.Record;
-import org.jooq.Row;
-import org.jooq.Schema;
-import org.jooq.Sequence;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UDT;
-import org.jooq.UDTField;
-import org.jooq.UniqueKey;
-import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.impl.AbstractKeys;
-import org.jooq.impl.AbstractRoutine;
-import org.jooq.impl.ArrayRecordImpl;
-import org.jooq.impl.DAOImpl;
-import org.jooq.impl.DSL;
-import org.jooq.impl.DefaultDataType;
-import org.jooq.impl.PackageImpl;
-import org.jooq.impl.SQLDataType;
-import org.jooq.impl.SchemaImpl;
-import org.jooq.impl.SequenceImpl;
-import org.jooq.impl.TableImpl;
-import org.jooq.impl.TableRecordImpl;
-import org.jooq.impl.UDTImpl;
-import org.jooq.impl.UDTRecordImpl;
-import org.jooq.impl.UpdatableRecordImpl;
-import org.jooq.tools.JooqLogger;
-import org.jooq.tools.StopWatch;
-import org.jooq.tools.StringUtils;
-import org.jooq.tools.reflect.Reflect;
-import org.jooq.tools.reflect.ReflectException;
 import org.jooq.util.GeneratorStrategy.Mode;
-import org.jooq.util.oracle.OracleDatabase;
-import org.jooq.util.oracle.OracleQueueDefinition;
-import org.jooq.util.oracle.Queue;
-import org.jooq.util.oracle.QueueImpl;
-import org.jooq.util.postgres.PostgresDatabase;
+
+import org.omg.Dynamic.Parameter;
 
 
 /**
@@ -2335,7 +2295,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         out.println("public class %s extends %s[[before= implements ][%s]] {", className, SchemaImpl.class, interfaces);
         out.printSerial();
-        out.tab(1).javadoc("The singleton instance of <code>%s</code>", schemaName);
+        out.tab(1).javadoc("A reference instance of <code>%s</code>", schemaName);
         out.tab(1).println("public static final %s %s = new %s();", className, schemaId, className);
 
         out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
@@ -2985,7 +2945,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getFullJavaClassName(definition);
         final String identifier = getStrategy().getJavaIdentifier(definition);
 
-        out.tab(1).javadoc("The singleton instance of <code>%s</code>", definition.getQualifiedOutputName());
+        out.tab(1).javadoc("A reference instance of <code>%s</code>", definition.getQualifiedOutputName());
         out.tab(1).println("public static final %s %s = new %s();", className, identifier, className);
     }
 

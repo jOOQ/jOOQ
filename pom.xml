@@ -39,10 +39,6 @@
         xxxx [/pro] -->
     </licenses>
 
-    <properties>
-        <jooq.version>3.5.0</jooq.version>
-    </properties>
-
     <scm>
         <developerConnection>https://github.com/jOOQ/jOOQ.git</developerConnection>
         <url>https://github.com/jOOQ/jOOQ.git</url>

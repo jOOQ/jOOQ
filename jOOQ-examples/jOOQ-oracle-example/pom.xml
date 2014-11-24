@@ -18,7 +18,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.jooq.version>3.5.0</org.jooq.version>
+        <org.jooq.version>3.6.0-SNAPSHOT</org.jooq.version>
         <db.oracle.version>11</db.oracle.version>
     </properties>
 

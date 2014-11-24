@@ -40,19 +40,9 @@
  */
 package org.jooq.test.all.bindings;
 
-import static org.jooq.tools.Convert.convert;
-
 import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
-import java.sql.Types;
 
-import org.jooq.BindingGetResultSetContext;
-import org.jooq.BindingGetSQLInputContext;
-import org.jooq.BindingGetStatementContext;
-import org.jooq.BindingRegisterContext;
 import org.jooq.BindingSQLContext;
-import org.jooq.BindingSetSQLOutputContext;
-import org.jooq.BindingSetStatementContext;
 import org.jooq.Converter;
 import org.jooq.impl.DSL;
 
@@ -91,35 +81,5 @@ public class PostgresJSONGsonBinding extends AbstractPostgresVarcharBinding<Json
     @Override
     public void sql(BindingSQLContext<JsonElement> ctx) throws SQLException {
         ctx.render().visit(DSL.val(ctx.convert(converter()).value())).sql("::json");
-    }
-
-    @Override
-    public void register(BindingRegisterContext<JsonElement> ctx) throws SQLException {
-        ctx.statement().registerOutParameter(ctx.index(), Types.VARCHAR);
-    }
-
-    @Override
-    public void set(BindingSetStatementContext<JsonElement> ctx) throws SQLException {
-        ctx.statement().setString(ctx.index(), convert(ctx.convert(converter()).value(), String.class));
-    }
-
-    @Override
-    public void get(BindingGetResultSetContext<JsonElement> ctx) throws SQLException {
-        ctx.convert(converter()).value(ctx.resultSet().getString(ctx.index()));
-    }
-
-    @Override
-    public void get(BindingGetStatementContext<JsonElement> ctx) throws SQLException {
-        ctx.convert(converter()).value(ctx.statement().getString(ctx.index()));
-    }
-
-    @Override
-    public void set(BindingSetSQLOutputContext<JsonElement> ctx) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public void get(BindingGetSQLInputContext<JsonElement> ctx) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
     }
 }

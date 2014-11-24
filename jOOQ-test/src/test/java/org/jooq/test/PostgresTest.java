@@ -1035,9 +1035,9 @@ public class PostgresTest extends jOOQAbstractTest<
         // [#3378] Aliasing shouldn't be necessary
         FTables1 t1 = F_TABLES1.call().as("t1");
         FTables2 t2 = F_TABLES2.call().as("t2");
-        FTables3 t3 = F_TABLES3.call().as("t3");
-        FTables4 t4a = F_TABLES4.call(val(null, Integer.class)).as("t4");
-        FTables4 t4b = F_TABLES4.call(T_BOOK.ID).as("t4");
+        FTables3 t3 = F_TABLES3().as("t3");
+        FTables4 t4a = F_TABLES4(val(null, Integer.class)).as("t4");
+        FTables4 t4b = F_TABLES4(T_BOOK.ID).as("t4");
 
         // Simple call with SELECT clause
         Result<Record1<Integer>> result1 =

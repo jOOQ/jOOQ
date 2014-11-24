@@ -1489,7 +1489,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (TableDefinition table : database.getTables(schema)) {
             if (table.isTableValuedFunction()) {
-                printTableValuedFunction(out, table);
+                printTableValuedFunction(out, table, getStrategy().getJavaMethodName(table, Mode.DEFAULT));
             }
         }
 
@@ -1519,9 +1519,9 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
-    protected void printTableValuedFunction(JavaWriter out, TableDefinition table) {
-        printConvenienceMethodTableValuedFunctionAsField(out, table, false);
-        printConvenienceMethodTableValuedFunctionAsField(out, table, true);
+    protected void printTableValuedFunction(JavaWriter out, TableDefinition table, String javaMethodName) {
+        printConvenienceMethodTableValuedFunctionAsField(out, table, false, javaMethodName);
+        printConvenienceMethodTableValuedFunctionAsField(out, table, true, javaMethodName);
     }
 
     protected void generatePackages(SchemaDefinition schema) {
@@ -1610,6 +1610,12 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.tab(1).javadoc(comment);
             out.tab(1).println("public static final %s %s = %s;", className, id, fullId);
+
+            // [#3797] Table-valued functions generate two different literals in
+            // globalObjectReferences
+            if (table.isTableValuedFunction()) {
+                printTableValuedFunction(out, table, getStrategy().getJavaIdentifier(table));
+            }
         }
 
         out.println("}");
@@ -2740,7 +2746,7 @@ public class JavaGenerator extends AbstractGenerator {
         out.tab(1).println("}");
     }
 
-    protected void printConvenienceMethodTableValuedFunctionAsField(JavaWriter out, TableDefinition function, boolean parametersAsField) {
+    protected void printConvenienceMethodTableValuedFunctionAsField(JavaWriter out, TableDefinition function, boolean parametersAsField, String javaMethodName) {
         // [#281] - Java can't handle more than 255 method parameters
         if (function.getParameters().size() > 254) {
             log.warn("Too many parameters", "Function " + function + " has more than 254 in parameters. Skipping generation of convenience method.");
@@ -2757,9 +2763,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getFullJavaClassName(function);
 
         out.tab(1).javadoc("Get <code>%s</code> as a field", function.getQualifiedOutputName());
-        out.tab(1).print("public static %s %s(",
-            className,
-            getStrategy().getJavaMethodName(function, Mode.DEFAULT));
+        out.tab(1).print("public static %s %s(", className, javaMethodName);
 
         printParameterDeclarations(out, function, parametersAsField);
 

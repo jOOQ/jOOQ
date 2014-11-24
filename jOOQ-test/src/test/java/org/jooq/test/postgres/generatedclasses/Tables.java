@@ -15,9 +15,30 @@ public class Tables {
 	public static final org.jooq.test.postgres.generatedclasses.tables.FSearchBook F_SEARCH_BOOK = org.jooq.test.postgres.generatedclasses.tables.FSearchBook.F_SEARCH_BOOK;
 
 	/**
+	 * Get <code>public.f_search_book</code> as a field
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.FSearchBook F_SEARCH_BOOK(java.lang.String pTitle, java.lang.Long pLimit, java.lang.Long pOffset) {
+		return org.jooq.test.postgres.generatedclasses.tables.FSearchBook.F_SEARCH_BOOK.call(pTitle, pLimit, pOffset);
+	}
+
+	/**
+	 * Get <code>public.f_search_book</code> as a field
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.FSearchBook F_SEARCH_BOOK(org.jooq.Field<java.lang.String> pTitle, org.jooq.Field<java.lang.Long> pLimit, org.jooq.Field<java.lang.Long> pOffset) {
+		return org.jooq.test.postgres.generatedclasses.tables.FSearchBook.F_SEARCH_BOOK.call(pTitle, pLimit, pOffset);
+	}
+
+	/**
 	 * The table public.f_tables1
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.FTables1 F_TABLES1 = org.jooq.test.postgres.generatedclasses.tables.FTables1.F_TABLES1;
+
+	/**
+	 * Get <code>public.f_tables1</code> as a field
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.FTables1 F_TABLES1() {
+		return org.jooq.test.postgres.generatedclasses.tables.FTables1.F_TABLES1.call();
+	}
 
 	/**
 	 * The table public.f_tables2
@@ -25,9 +46,23 @@ public class Tables {
 	public static final org.jooq.test.postgres.generatedclasses.tables.FTables2 F_TABLES2 = org.jooq.test.postgres.generatedclasses.tables.FTables2.F_TABLES2;
 
 	/**
+	 * Get <code>public.f_tables2</code> as a field
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.FTables2 F_TABLES2() {
+		return org.jooq.test.postgres.generatedclasses.tables.FTables2.F_TABLES2.call();
+	}
+
+	/**
 	 * The table public.f_tables3
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.FTables3 F_TABLES3 = org.jooq.test.postgres.generatedclasses.tables.FTables3.F_TABLES3;
+
+	/**
+	 * Get <code>public.f_tables3</code> as a field
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.FTables3 F_TABLES3() {
+		return org.jooq.test.postgres.generatedclasses.tables.FTables3.F_TABLES3.call();
+	}
 
 	/**
 	 * The table public.f_tables4
@@ -35,9 +70,37 @@ public class Tables {
 	public static final org.jooq.test.postgres.generatedclasses.tables.FTables4 F_TABLES4 = org.jooq.test.postgres.generatedclasses.tables.FTables4.F_TABLES4;
 
 	/**
+	 * Get <code>public.f_tables4</code> as a field
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.FTables4 F_TABLES4(java.lang.Integer inId) {
+		return org.jooq.test.postgres.generatedclasses.tables.FTables4.F_TABLES4.call(inId);
+	}
+
+	/**
+	 * Get <code>public.f_tables4</code> as a field
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.FTables4 F_TABLES4(org.jooq.Field<java.lang.Integer> inId) {
+		return org.jooq.test.postgres.generatedclasses.tables.FTables4.F_TABLES4.call(inId);
+	}
+
+	/**
 	 * The table public.f_tables5
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.FTables5 F_TABLES5 = org.jooq.test.postgres.generatedclasses.tables.FTables5.F_TABLES5;
+
+	/**
+	 * Get <code>public.f_tables5</code> as a field
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.FTables5 F_TABLES5(java.lang.Integer v1, java.lang.Integer v2, java.lang.Integer v3) {
+		return org.jooq.test.postgres.generatedclasses.tables.FTables5.F_TABLES5.call(v1, v2, v3);
+	}
+
+	/**
+	 * Get <code>public.f_tables5</code> as a field
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.FTables5 F_TABLES5(org.jooq.Field<java.lang.Integer> v1, org.jooq.Field<java.lang.Integer> v2, org.jooq.Field<java.lang.Integer> v3) {
+		return org.jooq.test.postgres.generatedclasses.tables.FTables5.F_TABLES5.call(v1, v2, v3);
+	}
 
 	/**
 	 * The table public.t_2781

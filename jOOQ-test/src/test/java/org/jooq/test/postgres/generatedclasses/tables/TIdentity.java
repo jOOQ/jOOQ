@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = 859137447;
+	private static final long serialVersionUID = -713765657;
 
 	/**
-	 * The singleton instance of <code>public.t_identity</code>
+	 * The reference instance of <code>public.t_identity</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TIdentity T_IDENTITY = new org.jooq.test.postgres.generatedclasses.tables.TIdentity();
 

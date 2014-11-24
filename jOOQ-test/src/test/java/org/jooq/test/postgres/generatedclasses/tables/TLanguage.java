@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 2019259632;
+	private static final long serialVersionUID = -1630696400;
 
 	/**
-	 * The singleton instance of <code>public.t_language</code>
+	 * The reference instance of <code>public.t_language</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TLanguage T_LANGUAGE = new org.jooq.test.postgres.generatedclasses.tables.TLanguage();
 

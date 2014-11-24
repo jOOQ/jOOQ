@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FTables1 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.FTables1Record> {
 
-	private static final long serialVersionUID = -1131963716;
+	private static final long serialVersionUID = -72365188;
 
 	/**
-	 * The singleton instance of <code>public.f_tables1</code>
+	 * The reference instance of <code>public.f_tables1</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.FTables1 F_TABLES1 = new org.jooq.test.postgres.generatedclasses.tables.FTables1();
 

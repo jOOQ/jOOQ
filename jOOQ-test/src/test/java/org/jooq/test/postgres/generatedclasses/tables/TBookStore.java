@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 96966462;
+	private static final long serialVersionUID = -253978626;
 
 	/**
-	 * The singleton instance of <code>public.t_book_store</code>
+	 * The reference instance of <code>public.t_book_store</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TBookStore T_BOOK_STORE = new org.jooq.test.postgres.generatedclasses.tables.TBookStore();
 

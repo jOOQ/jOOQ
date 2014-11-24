@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1604588567;
+	private static final long serialVersionUID = -1074676567;
 
 	/**
-	 * The singleton instance of <code>public</code>
+	 * The reference instance of <code>public</code>
 	 */
 	public static final Public PUBLIC = new Public();
 

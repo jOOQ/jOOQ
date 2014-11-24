@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -1635738498;
+	private static final long serialVersionUID = -607744706;
 
 	/**
-	 * The singleton instance of <code>public.v_book</code>
+	 * The reference instance of <code>public.v_book</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.VBook V_BOOK = new org.jooq.test.postgres.generatedclasses.tables.VBook();
 

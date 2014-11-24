@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TInheritance_1_2 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TInheritance_1_2Record> {
 
-	private static final long serialVersionUID = -939912068;
+	private static final long serialVersionUID = 1343030588;
 
 	/**
-	 * The singleton instance of <code>public.t_inheritance_1_2</code>
+	 * The reference instance of <code>public.t_inheritance_1_2</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2 T_INHERITANCE_1_2 = new org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2();
 

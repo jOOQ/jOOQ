@@ -9,10 +9,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FSearchBook extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.FSearchBookRecord> {
 
-	private static final long serialVersionUID = 1299343312;
+	private static final long serialVersionUID = 381282448;
 
 	/**
-	 * The singleton instance of <code>public.f_search_book</code>
+	 * The reference instance of <code>public.f_search_book</code>
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.FSearchBook F_SEARCH_BOOK = new org.jooq.test.postgres.generatedclasses.tables.FSearchBook();
 

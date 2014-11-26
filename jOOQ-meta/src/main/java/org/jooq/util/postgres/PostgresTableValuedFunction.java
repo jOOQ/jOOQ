@@ -41,10 +41,14 @@
 
 package org.jooq.util.postgres;
 
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.util.postgres.PostgresDSL.oid;
+import static org.jooq.util.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.util.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.util.postgres.information_schema.Tables.ROUTINES;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_NAMESPACE;
@@ -62,6 +66,7 @@ import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.ParameterDefinition;
 import org.jooq.util.SchemaDefinition;
+import org.jooq.util.postgres.information_schema.tables.Columns;
 import org.jooq.util.postgres.information_schema.tables.Parameters;
 import org.jooq.util.postgres.information_schema.tables.Routines;
 import org.jooq.util.postgres.pg_catalog.tables.PgNamespace;
@@ -90,15 +95,23 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
         Parameters p = PARAMETERS;
         PgNamespace pg_n = PG_NAMESPACE;
         PgProc pg_p = PG_PROC;
+        Columns c = COLUMNS;
 
-        for (Record record : create().select(
-                r.ROUTINE_NAME,
+        for (Record record : create()
+
+            // [#3375] The first subselect is expected to return only those
+            // table-valued functions that return a TABLE type, as that TABLE
+            // type is reported implicitly via PARAMETERS.PARAMETER_MODE = 'OUT'
+            .select(
                 p.PARAMETER_NAME,
-                rowNumber().over(partitionBy(p.SPECIFIC_NAME).orderBy(p.ORDINAL_POSITION)).as(p.ORDINAL_POSITION.getName()),
+                rowNumber().over(partitionBy(p.SPECIFIC_NAME).orderBy(p.ORDINAL_POSITION)).as(p.ORDINAL_POSITION),
                 p.DATA_TYPE,
                 p.CHARACTER_MAXIMUM_LENGTH,
                 p.NUMERIC_PRECISION,
-                p.NUMERIC_SCALE
+                p.NUMERIC_SCALE,
+                inline("true").as(c.IS_NULLABLE),
+                inline(null, String.class).as(c.COLUMN_DEFAULT),
+                p.UDT_NAME
             )
             .from(r)
             .join(p).on(row(r.SPECIFIC_CATALOG, r.SPECIFIC_SCHEMA, r.SPECIFIC_NAME)
@@ -109,7 +122,35 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
             .where(r.SPECIFIC_NAME.eq(specificName))
             .and(p.PARAMETER_MODE.ne("IN"))
             .and(pg_p.PRORETSET)
-            .fetch()
+
+            .unionAll(
+
+            // [#3376] The second subselect is expected to return only those
+            // table-valued functions that return a SETOF [ table type ], as that
+            // table reference is reported via a TYPE_UDT that matches a table
+            // from INFORMATION_SCHEMA.TABLES
+             select(
+                c.COLUMN_NAME,
+                c.ORDINAL_POSITION,
+                c.DATA_TYPE,
+                c.CHARACTER_MAXIMUM_LENGTH,
+                c.NUMERIC_PRECISION,
+                c.NUMERIC_SCALE,
+                c.IS_NULLABLE,
+                c.COLUMN_DEFAULT,
+                c.UDT_NAME
+            )
+            .from(r)
+            .join(c).on(row(r.TYPE_UDT_CATALOG, r.TYPE_UDT_SCHEMA, r.TYPE_UDT_NAME)
+                        .eq(c.TABLE_CATALOG,    c.TABLE_SCHEMA,    c.TABLE_NAME))
+            .join(pg_n).on(r.SPECIFIC_SCHEMA.eq(pg_n.NSPNAME))
+            .join(pg_p).on(pg_p.PRONAMESPACE.eq(oid(pg_n)))
+                       .and(pg_p.PRONAME.concat("_").concat(oid(pg_p)).eq(r.SPECIFIC_NAME))
+            .where(r.SPECIFIC_NAME.eq(specificName))
+            .and(pg_p.PRORETSET))
+
+            // Either subselect can be ordered by their ORDINAL_POSITION
+            .orderBy(2)
         ) {
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
@@ -119,17 +160,17 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                 record.getValue(p.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(p.NUMERIC_PRECISION),
                 record.getValue(p.NUMERIC_SCALE),
-                true,
-                false,
-                null
+                record.getValue(c.IS_NULLABLE, boolean.class),
+                record.getValue(c.COLUMN_DEFAULT) != null,
+                record.getValue(p.UDT_NAME)
             );
 
 			ColumnDefinition column = new DefaultColumnDefinition(
 			    getDatabase().getTable(getSchema(), getName()),
 			    record.getValue(p.PARAMETER_NAME),
-			    record.getValue(p.ORDINAL_POSITION),
+			    record.getValue(p.ORDINAL_POSITION, int.class),
 			    type,
-			    false,
+                defaultString(record.getValue(c.COLUMN_DEFAULT)).startsWith("nextval"),
 			    null
 		    );
 

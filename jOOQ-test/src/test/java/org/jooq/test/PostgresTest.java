@@ -52,6 +52,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.test.postgres.generatedclasses.Tables.F_SEARCH_BOOK;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_TABLES1;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_TABLES2;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_TABLES3;
@@ -1028,9 +1029,23 @@ public class PostgresTest extends jOOQAbstractTest<
 
     @Test
     public void testPostgresTableFunction() throws Exception {
-        // TODO [#1139] [#3375] [#3376] Further elaborate this test
-//        create().select().from(fSearchBook("Animal", 1L, 0L).toString()).fetch();
-//        System.out.println(create().select(fSearchBook("Animal", 1L, 0L)).fetch());
+
+        // [#1139] [#3375] [#3376] PostgreSQL knows two types of table-valued
+        // functions:
+        // - Those returning a SETOF [ table type ]
+        // - Those returning a TABLE type
+
+        Result<Record2<Integer, String>> books =
+        create().select(
+                    F_SEARCH_BOOK.ID,
+                    F_SEARCH_BOOK.TITLE)
+                .from(F_SEARCH_BOOK("A", 2L, 0L))
+                .orderBy(F_SEARCH_BOOK.ID)
+                .fetch();
+
+        assertEquals(2, books.size());
+        assertEquals(asList(2, 3), books.getValues(F_SEARCH_BOOK.ID));
+        assertEquals(BOOK_TITLES.subList(1, 3), books.getValues(F_SEARCH_BOOK.TITLE));
 
         // [#3378] PostgreSQL has issues with fully qualified references to
         // columns of table-valued functions

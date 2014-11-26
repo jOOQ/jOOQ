@@ -153,6 +153,11 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
                    .sql(" ")
                    .sql(columnTypes.get(i).getCastTypeName(ctx.configuration()));
 
+                if (columnTypes.get(i).nullable())
+                    ctx.sql(" ").keyword("null");
+                else
+                    ctx.sql(" ").keyword("not null");
+
                 if (i < columnFields.size() - 1)
                     ctx.sql(",").formatSeparator();
             }

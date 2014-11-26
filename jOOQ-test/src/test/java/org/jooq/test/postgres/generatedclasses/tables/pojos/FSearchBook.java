@@ -9,6 +9,90 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FSearchBook implements org.jooq.test.postgres.generatedclasses.tables.interfaces.IFSearchBook {
 
-	private static final long serialVersionUID = 1537869749;
+	private static final long serialVersionUID = -2102103274;
 
+	private final java.lang.Integer                                         id;
+	private final java.lang.Integer                                         authorId;
+	private final java.lang.Integer                                         coAuthorId;
+	private final java.lang.Integer                                         detailsId;
+	private final java.lang.String                                          title;
+	private final java.lang.Integer                                         publishedIn;
+	private final java.lang.Integer                                         languageId;
+	private final java.lang.String                                          contentText;
+	private final byte[]                                                    contentPdf;
+	private final org.jooq.test.postgres.generatedclasses.enums.UBookStatus status;
+
+	public FSearchBook(
+		java.lang.Integer                                         id,
+		java.lang.Integer                                         authorId,
+		java.lang.Integer                                         coAuthorId,
+		java.lang.Integer                                         detailsId,
+		java.lang.String                                          title,
+		java.lang.Integer                                         publishedIn,
+		java.lang.Integer                                         languageId,
+		java.lang.String                                          contentText,
+		byte[]                                                    contentPdf,
+		org.jooq.test.postgres.generatedclasses.enums.UBookStatus status
+	) {
+		this.id = id;
+		this.authorId = authorId;
+		this.coAuthorId = coAuthorId;
+		this.detailsId = detailsId;
+		this.title = title;
+		this.publishedIn = publishedIn;
+		this.languageId = languageId;
+		this.contentText = contentText;
+		this.contentPdf = contentPdf;
+		this.status = status;
+	}
+
+	@Override
+	public java.lang.Integer getId() {
+		return this.id;
+	}
+
+	@Override
+	public java.lang.Integer getAuthorId() {
+		return this.authorId;
+	}
+
+	@Override
+	public java.lang.Integer getCoAuthorId() {
+		return this.coAuthorId;
+	}
+
+	@Override
+	public java.lang.Integer getDetailsId() {
+		return this.detailsId;
+	}
+
+	@Override
+	public java.lang.String getTitle() {
+		return this.title;
+	}
+
+	@Override
+	public java.lang.Integer getPublishedIn() {
+		return this.publishedIn;
+	}
+
+	@Override
+	public java.lang.Integer getLanguageId() {
+		return this.languageId;
+	}
+
+	@Override
+	public java.lang.String getContentText() {
+		return this.contentText;
+	}
+
+	@Override
+	public byte[] getContentPdf() {
+		return this.contentPdf;
+	}
+
+	@Override
+	public org.jooq.test.postgres.generatedclasses.enums.UBookStatus getStatus() {
+		return this.status;
+	}
 }

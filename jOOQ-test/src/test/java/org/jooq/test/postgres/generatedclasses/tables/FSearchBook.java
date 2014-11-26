@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FSearchBook extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.FSearchBookRecord> {
 
-	private static final long serialVersionUID = 381282448;
+	private static final long serialVersionUID = -342920654;
 
 	/**
 	 * The reference instance of <code>public.f_search_book</code>
@@ -23,6 +23,56 @@ public class FSearchBook extends org.jooq.impl.TableImpl<org.jooq.test.postgres.
 	public java.lang.Class<org.jooq.test.postgres.generatedclasses.tables.records.FSearchBookRecord> getRecordType() {
 		return org.jooq.test.postgres.generatedclasses.tables.records.FSearchBookRecord.class;
 	}
+
+	/**
+	 * The column <code>public.f_search_book.id</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.FSearchBookRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>public.f_search_book.author_id</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.FSearchBookRecord, java.lang.Integer> AUTHOR_ID = createField("author_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>public.f_search_book.co_author_id</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.FSearchBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+	/**
+	 * The column <code>public.f_search_book.details_id</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.FSearchBookRecord, java.lang.Integer> DETAILS_ID = createField("details_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+	/**
+	 * The column <code>public.f_search_book.title</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.FSearchBookRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
+
+	/**
+	 * The column <code>public.f_search_book.published_in</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.FSearchBookRecord, java.lang.Integer> PUBLISHED_IN = createField("published_in", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>public.f_search_book.language_id</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.FSearchBookRecord, java.lang.Integer> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+
+	/**
+	 * The column <code>public.f_search_book.content_text</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.FSearchBookRecord, java.lang.String> CONTENT_TEXT = createField("content_text", org.jooq.impl.SQLDataType.CLOB, this, "");
+
+	/**
+	 * The column <code>public.f_search_book.content_pdf</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.FSearchBookRecord, byte[]> CONTENT_PDF = createField("content_pdf", org.jooq.impl.SQLDataType.BLOB, this, "");
+
+	/**
+	 * The column <code>public.f_search_book.status</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.FSearchBookRecord, org.jooq.test.postgres.generatedclasses.enums.UBookStatus> STATUS = createField("status", org.jooq.util.postgres.PostgresDataType.VARCHAR.asEnumDataType(org.jooq.test.postgres.generatedclasses.enums.UBookStatus.class), this, "");
 
 	/**
 	 * Create a <code>public.f_search_book</code> table reference
@@ -39,7 +89,7 @@ public class FSearchBook extends org.jooq.impl.TableImpl<org.jooq.test.postgres.
 	}
 
 	private FSearchBook(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.FSearchBookRecord> aliased) {
-		this(alias, aliased, null);
+		this(alias, aliased, new org.jooq.Field[3]);
 	}
 
 	private FSearchBook(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.FSearchBookRecord> aliased, org.jooq.Field<?>[] parameters) {

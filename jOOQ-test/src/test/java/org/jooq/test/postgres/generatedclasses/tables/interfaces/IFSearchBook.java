@@ -8,4 +8,54 @@ package org.jooq.test.postgres.generatedclasses.tables.interfaces;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public interface IFSearchBook extends java.io.Serializable {
+
+	/**
+	 * Getter for <code>public.f_search_book.id</code>.
+	 */
+	public java.lang.Integer getId();
+
+	/**
+	 * Getter for <code>public.f_search_book.author_id</code>.
+	 */
+	public java.lang.Integer getAuthorId();
+
+	/**
+	 * Getter for <code>public.f_search_book.co_author_id</code>.
+	 */
+	public java.lang.Integer getCoAuthorId();
+
+	/**
+	 * Getter for <code>public.f_search_book.details_id</code>.
+	 */
+	public java.lang.Integer getDetailsId();
+
+	/**
+	 * Getter for <code>public.f_search_book.title</code>.
+	 */
+	public java.lang.String getTitle();
+
+	/**
+	 * Getter for <code>public.f_search_book.published_in</code>.
+	 */
+	public java.lang.Integer getPublishedIn();
+
+	/**
+	 * Getter for <code>public.f_search_book.language_id</code>.
+	 */
+	public java.lang.Integer getLanguageId();
+
+	/**
+	 * Getter for <code>public.f_search_book.content_text</code>.
+	 */
+	public java.lang.String getContentText();
+
+	/**
+	 * Getter for <code>public.f_search_book.content_pdf</code>.
+	 */
+	public byte[] getContentPdf();
+
+	/**
+	 * Getter for <code>public.f_search_book.status</code>.
+	 */
+	public org.jooq.test.postgres.generatedclasses.enums.UBookStatus getStatus();
 }

@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FTables4 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.FTables4Record> {
 
-	private static final long serialVersionUID = 698082209;
+	private static final long serialVersionUID = -1487260154;
 
 	/**
 	 * The reference instance of <code>public.f_tables4</code>
@@ -49,7 +49,7 @@ public class FTables4 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gen
 	}
 
 	private FTables4(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.FTables4Record> aliased) {
-		this(alias, aliased, null);
+		this(alias, aliased, new org.jooq.Field[1]);
 	}
 
 	private FTables4(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.FTables4Record> aliased, org.jooq.Field<?>[] parameters) {

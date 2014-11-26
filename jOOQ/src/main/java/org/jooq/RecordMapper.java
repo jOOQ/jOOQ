@@ -51,6 +51,8 @@ public interface RecordMapper<R extends Record, E> {
 
     /**
      * A callback method indicating that the next record has been fetched.
+     *
+     * @param record The record to be mapped. This is never null.
      */
     E map(R record);
 }

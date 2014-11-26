@@ -41,9 +41,15 @@
 
 package org.jooq.test;
 
+import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.md5;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.test.mysql.generatedclasses.Tables.T_785;
+import static org.jooq.test.mysql.generatedclasses.Tables.T_959;
+import static org.jooq.test.mysql.generatedclasses.Tables.T_BOOK;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_DATES;
@@ -111,8 +117,6 @@ import org.jooq.test.mysql.generatedclasses.tables.TTriggers;
 import org.jooq.test.mysql.generatedclasses.tables.TUnsigned;
 import org.jooq.test.mysql.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.mysql.generatedclasses.tables.T_725LobTest;
-import org.jooq.test.mysql.generatedclasses.tables.T_785;
-import org.jooq.test.mysql.generatedclasses.tables.T_959;
 import org.jooq.test.mysql.generatedclasses.tables.VLibrary;
 import org.jooq.test.mysql.generatedclasses.tables.daos.TAuthorDao;
 import org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord;
@@ -965,5 +969,20 @@ public class MySQLTest extends jOOQAbstractTest<
         finally {
             create().execute("SET @@SESSION.sql_mode = ?", sqlMode);
         }
+    }
+
+    @Test
+    public void testMySQLBatchWithEnumTypes() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        int[] result =
+        create().batch(insertInto(T_BOOK, TBook.ID, TBook.AUTHOR_ID, TBook.TITLE, TBook.PUBLISHED_IN, TBook.LANGUAGE_ID, TBook.STATUS)
+                          .values((Integer) null, null, null, null, null, null))
+                .bind(5, 1, "a", 1980, 1, null)
+                .bind(6, 1, "b", 1980, 1, TBookStatus.ON_STOCK)
+                .execute();
+
+        assertEquals(2, result.length);
+        assertEquals(asList(null, TBookStatus.ON_STOCK), create().fetchValues(select(TBook.STATUS).from(T_BOOK).where(TBook.ID.in(5, 6)).orderBy(TBook.ID)));
     }
 }

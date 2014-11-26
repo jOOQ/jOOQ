@@ -317,7 +317,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     <U> List<U> fetch(String fieldName, Converter<?, U> converter) throws DataAccessException;
 
     /**
-     * Execute the query and return return at most one resulting value for a
+     * Execute the query and return at most one resulting value for a
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -331,7 +331,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     <T> T fetchOne(Field<T> field) throws DataAccessException, InvalidResultException;
 
     /**
-     * Execute the query and return return at most one resulting value for a
+     * Execute the query and return at most one resulting value for a
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -345,7 +345,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     <T> T fetchOne(Field<?> field, Class<? extends T> type) throws DataAccessException, InvalidResultException;
 
     /**
-     * Execute the query and return return at most one resulting value for a
+     * Execute the query and return at most one resulting value for a
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -360,7 +360,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
         InvalidResultException;
 
     /**
-     * Execute the query and return return at most one resulting value for a
+     * Execute the query and return at most one resulting value for a
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -374,7 +374,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     Object fetchOne(int fieldIndex) throws DataAccessException, InvalidResultException;
 
     /**
-     * Execute the query and return return at most one resulting value for a
+     * Execute the query and return at most one resulting value for a
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -388,7 +388,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     <T> T fetchOne(int fieldIndex, Class<? extends T> type) throws DataAccessException, InvalidResultException;
 
     /**
-     * Execute the query and return return at most one resulting value for a
+     * Execute the query and return at most one resulting value for a
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -402,7 +402,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     <U> U fetchOne(int fieldIndex, Converter<?, U> converter) throws DataAccessException, InvalidResultException;
 
     /**
-     * Execute the query and return return at most one resulting value for a
+     * Execute the query and return at most one resulting value for a
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -416,7 +416,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     Object fetchOne(String fieldName) throws DataAccessException, InvalidResultException;
 
     /**
-     * Execute the query and return return at most one resulting value for a
+     * Execute the query and return at most one resulting value for a
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -430,7 +430,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     <T> T fetchOne(String fieldName, Class<? extends T> type) throws DataAccessException, InvalidResultException;
 
     /**
-     * Execute the query and return return at most one resulting value for a
+     * Execute the query and return at most one resulting value for a
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -456,6 +456,17 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws InvalidResultException if the query returned more than one record
      */
     R fetchOne() throws DataAccessException, InvalidResultException;
+
+    /**
+     * Execute the query and return at most one resulting value into a
+     * custom mapper callback.
+     *
+     * @return The custom mapped record or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     */
+    <E> E fetchOne(RecordMapper<? super R, E> mapper) throws DataAccessException, InvalidResultException;
 
     /**
      * Execute the query and return at most one resulting record as a name/value
@@ -535,7 +546,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, InvalidResultException;
 
     /**
-     * Execute the query and return return at most one resulting value for a
+     * Execute the query and return at most one resulting value for a
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -549,7 +560,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     <T> T fetchAny(Field<T> field) throws DataAccessException;
 
     /**
-     * Execute the query and return return at most one resulting value for a
+     * Execute the query and return at most one resulting value for a
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -563,7 +574,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     <T> T fetchAny(Field<?> field, Class<? extends T> type) throws DataAccessException;
 
     /**
-     * Execute the query and return return at most one resulting value for a
+     * Execute the query and return at most one resulting value for a
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -577,7 +588,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     <T, U> U fetchAny(Field<T> field, Converter<? super T, U> converter) throws DataAccessException;
 
     /**
-     * Execute the query and return return at most one resulting value for a
+     * Execute the query and return at most one resulting value for a
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -590,7 +601,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     Object fetchAny(int fieldIndex) throws DataAccessException;
 
     /**
-     * Execute the query and return return at most one resulting value for a
+     * Execute the query and return at most one resulting value for a
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -603,7 +614,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     <T> T fetchAny(int fieldIndex, Class<? extends T> type) throws DataAccessException;
 
     /**
-     * Execute the query and return return at most one resulting value for a
+     * Execute the query and return at most one resulting value for a
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -617,7 +628,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     <U> U fetchAny(int fieldIndex, Converter<?, U> converter) throws DataAccessException;
 
     /**
-     * Execute the query and return return at most one resulting value for a
+     * Execute the query and return at most one resulting value for a
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -630,7 +641,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     Object fetchAny(String fieldName) throws DataAccessException;
 
     /**
-     * Execute the query and return return at most one resulting value for a
+     * Execute the query and return at most one resulting value for a
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -643,7 +654,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     <T> T fetchAny(String fieldName, Class<? extends T> type) throws DataAccessException;
 
     /**
-     * Execute the query and return return at most one resulting value for a
+     * Execute the query and return at most one resulting value for a
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then

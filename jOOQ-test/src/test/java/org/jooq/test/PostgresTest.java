@@ -1032,10 +1032,11 @@ public class PostgresTest extends jOOQAbstractTest<
 //        create().select().from(fSearchBook("Animal", 1L, 0L).toString()).fetch();
 //        System.out.println(create().select(fSearchBook("Animal", 1L, 0L)).fetch());
 
-        // [#3378] Aliasing shouldn't be necessary
+        // [#3378] PostgreSQL has issues with fully qualified references to
+        // columns of table-valued functions
         FTables1 t1 = F_TABLES1.call().as("t1");
-        FTables2 t2 = F_TABLES2.call().as("t2");
-        FTables3 t3 = F_TABLES3().as("t3");
+        FTables2 t2 = F_TABLES2.call();
+        FTables3 t3 = F_TABLES3();
         FTables4 t4a = F_TABLES4(val(null, Integer.class)).as("t4");
         FTables4 t4b = F_TABLES4(T_BOOK.ID).as("t4");
 

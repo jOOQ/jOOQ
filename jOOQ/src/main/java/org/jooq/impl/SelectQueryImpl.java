@@ -1126,12 +1126,19 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
         // ORDER BY clause for UNION
         // -------------------------
-        toSQLOrderBy(
-            context,
-            originalFields, alternativeFields,
-            wrapQueryExpressionInDerivedTable, wrapQueryExpressionBodyInDerivedTable,
-            unionOrderBy, unionLimit
-        );
+        boolean qualify = context.qualify();
+        try {
+            context.qualify(false);
+            toSQLOrderBy(
+                context,
+                originalFields, alternativeFields,
+                wrapQueryExpressionInDerivedTable, wrapQueryExpressionBodyInDerivedTable,
+                unionOrderBy, unionLimit
+            );
+        }
+        finally {
+            context.qualify(qualify);
+        }
     }
 
     private final void toSQLOrderBy(

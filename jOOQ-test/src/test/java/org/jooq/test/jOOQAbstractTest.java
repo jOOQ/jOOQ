@@ -2388,6 +2388,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testUnionAndOrderByFieldQualification() throws Exception {
+        new UnionTests(this).testUnionAndOrderByFieldQualification();
+    }
+
+    @Test
     public void testUnionWithOrderByInSubselect() throws Exception {
         new UnionTests(this).testUnionWithOrderByInSubselect();
     }

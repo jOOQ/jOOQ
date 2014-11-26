@@ -174,6 +174,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         );
     }
 
+    public void testUnionAndOrderByFieldQualification() throws Exception {
+        Result<Record1<Integer>> result =
+        create().select(TBook_ID())
+                .from(TBook())
+                .where(TBook_ID().eq(1))
+                .union(
+                 select(TBook_ID())
+                .from(TBook())
+                .where(TBook_ID().eq(2)))
+                .orderBy(TBook_ID())
+                .fetch();
+
+        assertEquals(2, result.size());
+        assertEquals(asList(1, 2), result.getValues(TBook_ID()));
+    }
+
     public void testUnionWithOrderByInSubselect() throws Exception {
         SelectUnionStep<Record1<Integer>> s01 = create().select(TBook_ID()).from(TBook()).orderBy(TBook_ID());
         SelectUnionStep<Record1<Integer>> s02 = create().select(TBook_ID()).from(TBook()).orderBy(TBook_ID());

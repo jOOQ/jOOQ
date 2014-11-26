@@ -40,11 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.condition;
-import static org.jooq.impl.DSL.exists;
-import static org.jooq.impl.DSL.notExists;
-import static org.jooq.impl.DSL.table;
-
 import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.Collection;
@@ -53,7 +48,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
-
 import javax.annotation.Generated;
 
 import org.jooq.Condition;
@@ -76,7 +70,6 @@ import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.SelectConditionStep;
 import org.jooq.SelectConnectByConditionStep;
-import org.jooq.SelectFinalStep;
 import org.jooq.SelectForUpdateOfStep;
 import org.jooq.SelectHavingConditionStep;
 import org.jooq.SelectIntoStep;
@@ -117,6 +110,10 @@ import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.WindowDefinition;
 import org.jooq.exception.DataAccessException;
+import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.notExists;
+import static org.jooq.impl.DSL.table;
 
 /**
  * A wrapper for a {@link SelectQuery}
@@ -2434,6 +2431,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final R fetchOne() {
         return getDelegate().fetchOne();
+    }
+
+    @Override
+    public final <E> E fetchOne(RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetchOne(mapper);
     }
 
     @Override

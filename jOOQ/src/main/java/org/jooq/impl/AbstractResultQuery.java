@@ -40,16 +40,6 @@
  */
 package org.jooq.impl;
 
-import static java.sql.ResultSet.CONCUR_UPDATABLE;
-import static java.sql.ResultSet.TYPE_SCROLL_SENSITIVE;
-import static java.util.Arrays.asList;
-import static java.util.concurrent.Executors.newSingleThreadExecutor;
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.impl.Utils.DATA_LOCK_ROWS_FOR_UPDATE;
-import static org.jooq.impl.Utils.consumeResultSets;
-
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -61,6 +51,10 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+import static java.sql.ResultSet.CONCUR_UPDATABLE;
+import static java.sql.ResultSet.TYPE_SCROLL_SENSITIVE;
+import static java.util.Arrays.asList;
+import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 import org.jooq.Configuration;
 import org.jooq.Converter;
@@ -77,6 +71,12 @@ import org.jooq.Table;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.impl.Utils.DATA_LOCK_ROWS_FOR_UPDATE;
+import static org.jooq.impl.Utils.consumeResultSets;
+
+// ...
+// ...
 
 /**
  * A query that returns a {@link Result}
@@ -438,6 +438,12 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final R fetchOne() {
         return Utils.fetchOne(fetchLazy());
+    }
+
+    @Override
+    public final <E> E fetchOne(RecordMapper<? super R, E> mapper) {
+        R record = fetchOne();
+        return record == null ? null : mapper.map(record);
     }
 
     @Override

@@ -458,6 +458,17 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     R fetchOne() throws DataAccessException, InvalidResultException;
 
     /**
+     * Execute the query and return at most one resulting value into a
+     * custom mapper callback.
+     *
+     * @return The custom mapped record or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     */
+    <E> E fetchOne(RecordMapper<? super R, E> mapper) throws DataAccessException, InvalidResultException;
+
+    /**
      * Execute the query and return at most one resulting record as a name/value
      * map.
      *

@@ -441,6 +441,12 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    public final <E> E fetchOne(RecordMapper<? super R, E> mapper) {
+        R record = fetchOne();
+        return record == null ? null : mapper.map(record);
+    }
+
+    @Override
     public final Map<String, Object> fetchOneMap() {
         R record = fetchOne();
         return record == null ? null : record.intoMap();

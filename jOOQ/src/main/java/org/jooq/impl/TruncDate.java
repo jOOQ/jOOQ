@@ -73,6 +73,7 @@ class TruncDate<T extends java.util.Date> extends AbstractFunction<T> {
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         String keyword = null;
+        String format = null;
 
         switch (configuration.dialect().family()) {
 
@@ -90,6 +91,20 @@ class TruncDate<T extends java.util.Date> extends AbstractFunction<T> {
                 }
 
                 return field("{trunc}({0}, {1})", getDataType(), date, inline(keyword));
+            }
+
+            case H2: {
+                switch (part) {
+                    case YEAR:   format = "yyyy";                break;
+                    case MONTH:  format = "yyyy-MM";             break;
+                    case DAY:    format = "yyyy-MM-dd";          break;
+                    case HOUR:   format = "yyyy-MM-dd HH";       break;
+                    case MINUTE: format = "yyyy-MM-dd HH:mm";    break;
+                    case SECOND: format = "yyyy-MM-dd HH:mm:ss"; break;
+                    default: throwUnsupported();
+                }
+
+                return field("{parsedatetime}({formatdatetime}({0}, {1}), {1})", getDataType(), date, inline(format));
             }
 
 // These don't work yet and need better integration-testing:

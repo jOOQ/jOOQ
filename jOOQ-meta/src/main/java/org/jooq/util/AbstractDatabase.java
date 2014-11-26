@@ -61,10 +61,18 @@ import java.util.regex.Pattern;
 
 import javax.xml.bind.JAXB;
 
+import org.jooq.Configuration;
 import org.jooq.DSLContext;
+import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListenerProvider;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
+import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultExecuteListener;
+import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.jooq.impl.SQLDataType;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -170,10 +178,31 @@ public abstract class AbstractDatabase implements Database {
         return connection;
     }
 
+    @SuppressWarnings("serial")
     @Override
     public final DSLContext create() {
         if (create == null) {
-            create = create0();
+
+            // [#3800] Make sure that faulty queries are logged in a formatted
+            // way to help users provide us with bug reports
+            final Configuration configuration = create0().configuration();
+            final Settings newSettings = SettingsTools.clone(configuration.settings()).withRenderFormatted(true);
+            final ExecuteListenerProvider[] oldProviders = configuration.executeListenerProviders();
+            final ExecuteListenerProvider[] newProviders = new ExecuteListenerProvider[oldProviders.length + 1];
+            System.arraycopy(oldProviders, 0, newProviders, 0, oldProviders.length);
+            newProviders[oldProviders.length] = new DefaultExecuteListenerProvider(new DefaultExecuteListener() {
+                @Override
+                public void exception(ExecuteContext ctx) {
+                    log.warn(
+                        "SQL exception",
+                        "Exception while executing meta query: "
+                      + ctx.sqlException().getMessage()
+                      + "\n\n"
+                      + "Please report this bug here: https://github.com/jOOQ/jOOQ/issues/new\n\n"
+                      + DSL.using(configuration.derive(newSettings)).renderInlined(ctx.query()));
+                }
+            });
+            create = DSL.using(configuration.derive(newProviders));
         }
 
         return create;

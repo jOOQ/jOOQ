@@ -2110,7 +2110,11 @@ public class JavaGenerator extends AbstractGenerator {
 
         out.println();
         out.tab(1).println("private %s(%s alias, %s<%s> aliased) {", className, String.class, Table.class, recordType);
-        out.tab(2).println("this(alias, aliased, null);");
+        if (table.isTableValuedFunction())
+            out.tab(2).println("this(alias, aliased, new %s[%s]);", Field.class, table.getParameters().size());
+        else
+            out.tab(2).println("this(alias, aliased, null);");
+
         out.tab(1).println("}");
 
         out.println();

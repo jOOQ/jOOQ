@@ -174,6 +174,11 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.postgres.PostgresDataType;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ArrayNode;
+import org.codehaus.jackson.node.JsonNodeFactory;
+import org.codehaus.jackson.node.NullNode;
+import org.codehaus.jackson.node.ObjectNode;
 import org.junit.Test;
 import org.postgis.PGgeometry;
 import org.postgis.Point;
@@ -1185,11 +1190,20 @@ public class PostgresTest extends jOOQAbstractTest<
         jOOQAbstractTest.reset = false;
 
         assertEquals(4,
-        create().insertInto(T_EXOTIC_TYPES, T_EXOTIC_TYPES.ID, T_EXOTIC_TYPES.JS_GSON, T_EXOTIC_TYPES.JS_JACKSON)
-                .values(1, null, null)
-                .values(2, new JsonObject(), new JSONJacksonHelloWorld())
-                .values(3, new JsonArray(), new JSONJacksonHelloWorld("hello", "world"))
-                .values(4, new Gson().fromJson("{\"hello\":\"world\"}", JsonObject.class), new JSONJacksonHelloWorld("hello", "world", "a", "b", "c"))
+        create().insertInto(T_EXOTIC_TYPES, T_EXOTIC_TYPES.ID, T_EXOTIC_TYPES.JS_GSON, T_EXOTIC_TYPES.JS_JACKSON, T_EXOTIC_TYPES.JS_JACKSON_JSON_NODE)
+                .values(1, null, null, null)
+                .values(2,
+                    new JsonObject(),
+                    new JSONJacksonHelloWorld(),
+                    new ObjectNode(JsonNodeFactory.instance))
+                .values(3,
+                    new JsonArray(),
+                    new JSONJacksonHelloWorld("hello", "world"),
+                    new ArrayNode(JsonNodeFactory.instance))
+                .values(4,
+                    new Gson().fromJson("{\"hello\":\"world\"}", JsonObject.class),
+                    new JSONJacksonHelloWorld("hello", "world", "a", "b", "c"),
+                    new ObjectMapper().readTree("{\"hello\":\"world\"}"))
                 .execute());
 
         Result<TExoticTypesRecord> r1 =
@@ -1200,23 +1214,29 @@ public class PostgresTest extends jOOQAbstractTest<
         assertEquals(4, r1.size());
         assertEquals(JsonNull.INSTANCE, r1.get(0).getJsGson());
         assertNull(r1.get(0).getJsJackson());
+        assertEquals(NullNode.instance, r1.get(0).getJsJacksonJsonNode());
 
         assertEquals(new JsonObject(), r1.get(1).getJsGson());
         assertNull(r1.get(1).getJsJackson().hello);
         assertNull(r1.get(1).getJsJackson().world);
         assertNull(r1.get(1).getJsJackson().greetings);
+        assertEquals(new ObjectNode(JsonNodeFactory.instance), r1.get(1).getJsJacksonJsonNode());
 
         assertEquals(new JsonArray(), r1.get(2).getJsGson());
         assertEquals("hello", r1.get(2).getJsJackson().hello);
         assertEquals("world", r1.get(2).getJsJackson().world);
         assertEquals(0, r1.get(2).getJsJackson().greetings.size());
+        assertEquals(new ArrayNode(JsonNodeFactory.instance), r1.get(2).getJsJacksonJsonNode());
 
-        JsonObject js1 = (JsonObject) r1.get(3).getJsGson();
-        assertEquals(1, js1.entrySet().size());
-        assertEquals("world", js1.get("hello").getAsString());
+        JsonObject js1gson = (JsonObject) r1.get(3).getJsGson();
+        assertEquals(1, js1gson.entrySet().size());
+        assertEquals("world", js1gson.get("hello").getAsString());
         assertEquals("hello", r1.get(3).getJsJackson().hello);
         assertEquals("world", r1.get(3).getJsJackson().world);
         assertEquals(Arrays.asList("a", "b", "c"), r1.get(3).getJsJackson().greetings);
+        ObjectNode js1jackson = (ObjectNode) r1.get(3).getJsJacksonJsonNode();
+        assertEquals(1, js1jackson.size());
+        assertEquals("world", js1jackson.get("hello").getTextValue());
     }
 
     @SuppressWarnings("serial")

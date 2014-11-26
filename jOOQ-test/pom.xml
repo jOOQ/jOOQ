@@ -2920,6 +2920,11 @@
                                                     <type>org.jooq.test.all.types.JSONJacksonHelloWorld</type>
                                                     <binding>org.jooq.test.all.bindings.PostgresJSONJacksonBinding</binding>
                                                 </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.bindings.PostgresJSONJacksonJsonNodeBinding</name>
+                                                    <type>org.codehaus.jackson.JsonNode</type>
+                                                    <binding>org.jooq.test.all.bindings.PostgresJSONJacksonJsonNodeBinding</binding>
+                                                </customType>
                                                 
                                                 
                                                 
@@ -2942,7 +2947,11 @@
                                                     <name>org.jooq.test.all.bindings.PostgresJSONJacksonBinding</name>
                                                     <expression>(?i:(.*?\.)T_EXOTIC_TYPES\.JS_JACKSON)</expression>
                                                 </forcedType>
-                                                
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.bindings.PostgresJSONJacksonJsonNodeBinding</name>
+                                                    <expression>(?i:(.*?\.)T_EXOTIC_TYPES\.JS_JACKSON_JSON_NODE)</expression>
+                                                </forcedType>
+                                                    
                                                 
                                                 <!-- [#994] The PostgreSQL "hstore" data type -->
                                                 <forcedType>

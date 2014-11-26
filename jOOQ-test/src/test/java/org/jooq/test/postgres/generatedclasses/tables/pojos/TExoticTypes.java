@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes implements org.jooq.test.postgres.generatedclasses.tables.interfaces.ITExoticTypes {
 
-	private static final long serialVersionUID = 1561193380;
+	private static final long serialVersionUID = 1465184484;
 
 	private final java.lang.Integer                             id;
 	private final java.util.UUID                                uu;
@@ -17,6 +17,7 @@ public class TExoticTypes implements org.jooq.test.postgres.generatedclasses.tab
 	private final com.google.gson.JsonElement                   jsGson;
 	private final java.lang.Object                              jsJavax;
 	private final org.jooq.test.all.types.JSONJacksonHelloWorld jsJackson;
+	private final org.codehaus.jackson.JsonNode                 jsJacksonJsonNode;
 	private final java.lang.Object                              hstore;
 	private final java.util.Map<String, String>                 hstoreMap;
 
@@ -27,6 +28,7 @@ public class TExoticTypes implements org.jooq.test.postgres.generatedclasses.tab
 		com.google.gson.JsonElement                   jsGson,
 		java.lang.Object                              jsJavax,
 		org.jooq.test.all.types.JSONJacksonHelloWorld jsJackson,
+		org.codehaus.jackson.JsonNode                 jsJacksonJsonNode,
 		java.lang.Object                              hstore,
 		java.util.Map<String, String>                 hstoreMap
 	) {
@@ -36,6 +38,7 @@ public class TExoticTypes implements org.jooq.test.postgres.generatedclasses.tab
 		this.jsGson = jsGson;
 		this.jsJavax = jsJavax;
 		this.jsJackson = jsJackson;
+		this.jsJacksonJsonNode = jsJacksonJsonNode;
 		this.hstore = hstore;
 		this.hstoreMap = hstoreMap;
 	}
@@ -68,6 +71,11 @@ public class TExoticTypes implements org.jooq.test.postgres.generatedclasses.tab
 	@Override
 	public org.jooq.test.all.types.JSONJacksonHelloWorld getJsJackson() {
 		return this.jsJackson;
+	}
+
+	@Override
+	public org.codehaus.jackson.JsonNode getJsJacksonJsonNode() {
+		return this.jsJacksonJsonNode;
 	}
 
 	@Override

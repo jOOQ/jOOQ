@@ -267,7 +267,7 @@ public class PostgresDatabase extends AbstractDatabase {
                         .and(PG_DESCRIPTION.OBJSUBID.eq(0))
                     .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()))
 
-                // [#3375] Include table-valued functions in the set of tables
+                // [#3375] [#3376] Include table-valued functions in the set of tables
                 .unionAll(
                     select(
                         ROUTINES.ROUTINE_SCHEMA,

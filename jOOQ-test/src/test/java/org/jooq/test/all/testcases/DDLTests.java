@@ -373,8 +373,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         try {
             create().createTable("t")
                     .column("i", SQLDataType.INTEGER)
-                    .column("n", SQLDataType.DECIMAL.precision(3, 1))
-                    .column("s", SQLDataType.VARCHAR.length(5))
+                    .column("n", SQLDataType.DECIMAL.precision(3, 1).nullable(true))
+                    .column("s", SQLDataType.VARCHAR.length(5).nullable(false))
                     .execute();
 
             assertEquals(1,
@@ -389,6 +389,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals("n", r1.field(1).getName());
             assertEquals("s", r1.field(2).getName());
             assertEquals(asList(1, new BigDecimal("10.5"), "abcde"), r1.get(0).intoList());
+
+            // Checking of NOT NULL constraints
+            assertEquals(1,
+            create().insertInto(tableByName("t"), fieldByName(int.class, "i"), fieldByName(BigDecimal.class, "n"), fieldByName(String.class, "s"))
+                    .values(null, null, "abcde")
+                    .execute());
+
+            try {
+                create().insertInto(tableByName("t"), fieldByName("i"), fieldByName("n"), fieldByName("s"))
+                        .values(1, new BigDecimal("10.5"), null)
+                        .execute();
+                fail();
+            }
+            catch (DataAccessException expected) {}
         }
         finally {
             ignoreThrows(() -> create().dropTable("t").execute());

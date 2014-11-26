@@ -79,6 +79,16 @@ public final class Constants {
     public static final String NS_RUNTIME     = "http://www.jooq.org/xsd/" + XSD_RUNTIME;
 
     /**
+     * The current jooq-meta XSD file name.
+     */
+    public static final String XSD_META       = "jooq-meta-3.5.0.xsd";
+
+    /**
+     * The current jooq-meta XML namespace.
+     */
+    public static final String NS_META        = "http://www.jooq.org/xsd/" + XSD_META;
+
+    /**
      * The current jooq-codegen XSD file name.
      */
     public static final String XSD_CODEGEN    = "jooq-codegen-3.5.0.xsd";

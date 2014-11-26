@@ -227,7 +227,8 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
     @Override
     public final <E> E fetchOne(RecordMapper<? super R, E> mapper) {
-        return mapper.map(fetchOne());
+        R record = fetchOne();
+        return record == null ? null : mapper.map(record);
     }
 
     @Override

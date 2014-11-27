@@ -115,6 +115,14 @@
                         </configuration>
                     </execution>
                 </executions>
+                
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>${org.h2.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <!-- The Scala compiler plugin -->

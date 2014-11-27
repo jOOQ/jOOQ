@@ -16,6 +16,7 @@
 
     <properties>
         <scala.version>2.10.4</scala.version>
+        <org.h2.version>1.4.181</org.h2.version>
     </properties>
 
     <build>
@@ -33,7 +34,7 @@
                     <dependency>
                         <groupId>com.h2database</groupId>
                         <artifactId>h2</artifactId>
-                        <version>1.3.168</version>
+                        <version>${org.h2.version}</version>
                     </dependency>
                 </dependencies>
 
@@ -84,12 +85,7 @@
                                 <password></password>
                             </jdbc>
                             <generator>
-                                <name>org.jooq.util.DefaultGenerator</name>
                                 <database>
-                                    <name>org.jooq.util.h2.H2Database</name>
-                                    <includes>.*</includes>
-                                    <excludes></excludes>
-                                    <dateAsTimestamp>true</dateAsTimestamp>
                                     <inputSchema>PUBLIC</inputSchema>
                                 </database>
                                 <generate>
@@ -119,13 +115,6 @@
                         </configuration>
                     </execution>
                 </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>1.3.174</version>
-                    </dependency>
-                </dependencies>
             </plugin>
 
             <!-- The Scala compiler plugin -->
@@ -203,7 +192,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.3.174</version>
+            <version>${org.h2.version}</version>
             <type>jar</type>
             <scope>test</scope>
         </dependency>

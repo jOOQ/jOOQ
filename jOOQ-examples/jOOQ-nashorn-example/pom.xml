@@ -181,19 +181,9 @@
                                 <password>${db.password}</password>
                             </jdbc>
                             <generator>
-                                <name>org.jooq.util.DefaultGenerator</name>
                                 <database>
-                                    <name>org.jooq.util.h2.H2Database</name>
-                                    <includes>.*</includes>
-                                    <excludes></excludes>
-                                    <dateAsTimestamp>true</dateAsTimestamp>
                                     <inputSchema>PUBLIC</inputSchema>
                                 </database>
-                                <generate>
-                                    <deprecated>false</deprecated>
-                                    <instanceFields>true</instanceFields>
-                                    <pojos>false</pojos>
-                                </generate>
                                 <target>
                                     <packageName>org.jooq.example.db.h2</packageName>
                                     <directory>target/generated-sources/jooq-h2</directory>
@@ -202,13 +192,6 @@
                         </configuration>
                     </execution>
                 </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>${org.h2.version}</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>

@@ -1,0 +1,9 @@
+original
+Benchmark                                  (db)  (limit)   Mode  Samples     Score    Error  Units
+o.s.b.d.j.JooqBenchmark.testFetchRecord    MOCK     1000  thrpt       10  2064.386 ± 32.245  ops/s
+
+
+recordinstantiator
+
+Benchmark                                  (db)  (limit)   Mode  Samples     Score    Error  Units
+o.s.b.d.j.JooqBenchmark.testFetchRecord    MOCK     1000  thrpt       10  2165.060 ± 37.453  ops/s

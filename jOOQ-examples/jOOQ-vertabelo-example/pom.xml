@@ -160,31 +160,6 @@
                 </dependencies>
             </plugin>
 
-            <!-- The XSLT plugin transforming XML files prior to code generation -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>xml-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>transform</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <transformationSets>
-                        <transformationSet>
-                            <dir>src/main/resources</dir>
-                            <includes>
-                                <include>vertabelo-export.xml</include>
-                            </includes>
-                            <stylesheet>src/main/resources/vertabelo-2-jooq.xsl</stylesheet>
-                        </transformationSet>
-                    </transformationSets>
-                </configuration>
-            </plugin>
-
             <!-- The jOOQ code generator plugin -->
             <plugin>
                 <groupId>org.jooq</groupId>
@@ -210,7 +185,11 @@
                                         </property>
                                         <property>
                                             <key>xml-file</key>
-                                            <value>target/generated-resources/xml/xslt/vertabelo-export.xml</value>
+                                            <value>src/main/resources/vertabelo-export.xml</value>
+                                        </property>
+                                        <property>
+                                            <key>xsl-file</key>
+                                            <value>src/main/resources/vertabelo-2-jooq.xsl</value>
                                         </property>
                                     </properties>
                                     <inputSchema>PUBLIC</inputSchema>

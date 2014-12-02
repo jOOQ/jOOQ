@@ -64,6 +64,7 @@ import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.countDistinct;
 import static org.jooq.impl.DSL.cumeDist;
 import static org.jooq.impl.DSL.denseRank;
+import static org.jooq.impl.DSL.every;
 import static org.jooq.impl.DSL.firstValue;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
@@ -103,6 +104,7 @@ import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.varPop;
 import static org.jooq.impl.DSL.varSamp;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNotNull;
 
@@ -296,6 +298,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#868] Derby, HSQLDB, and SQL Server perform rounding/truncation
         // This may need to be corrected by jOOQ
         assertTrue(asList(1.0, 1.5, 2.0).contains(distinct5));
+    }
+
+    public void testAggregateFunction_EVERY() throws Exception {
+        assertTrue(create().fetchValue(
+            select(every(TBook_ID().lt(5))).from(TBook())
+        ));
+
+        assertFalse(create().fetchValue(
+            select(every(TBook_ID().gt(5))).from(TBook())
+        ));
+
+
+        if (asList(ACCESS, ASE, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE).contains(dialect().family())) {
+            log.info("SKIPPING", "EVERY() window function");
+        }
+        else {
+            assertEquals(asList(true, true, false, false), create().fetchValues(
+                select(every(TBook_ID().lt(3)).over(partitionBy(TBook_AUTHOR_ID()))).from(TBook()).orderBy(TBook_ID())
+            ));
+        }
     }
 
     public void testAggregateFunctionsStatistics() throws Exception {

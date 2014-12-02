@@ -46,16 +46,27 @@ import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 import static org.jooq.util.xml.jaxb.TableConstraintType.UNIQUE;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import javax.xml.bind.JAXB;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -87,11 +98,80 @@ import org.jooq.util.xml.jaxb.TableConstraintType;
  */
 public class XMLDatabase extends AbstractDatabase {
 
-    InformationSchema info;
+    private static final JooqLogger log        = JooqLogger.getLogger(XMLDatabase.class);
+
+    /**
+     * The property name for the XML file
+     */
+    public static final String      P_XML_FILE = "xml-file";
+
+    /**
+     * The property name for the XSL file that pre-processes the XML file
+     */
+    public static final String      P_XSL_FILE = "xsl-file";
+
+    /**
+     * The property name for the dialect name
+     */
+    public static final String      P_DIALECT  = "dialect";
+
+    InformationSchema               info;
 
     private InformationSchema info() {
         if (info == null) {
-            info = JAXB.unmarshal(new File(getProperties().getProperty("xml-file")), InformationSchema.class);
+            String xml = getProperties().getProperty(P_XML_FILE);
+            String xsl = getProperties().getProperty(P_XSL_FILE);
+
+            InputStream xmlIs = null;
+            InputStream xslIs = null;
+
+            log.info("Using XML file", xml);
+
+            try {
+                xmlIs = XMLDatabase.class.getResourceAsStream(xml);
+                if (xmlIs == null)
+                    xmlIs = new FileInputStream(xml);
+
+                if (StringUtils.isBlank(xsl)) {
+                    info = JAXB.unmarshal(new File(xml), InformationSchema.class);
+                }
+                else {
+                    log.info("Using XSL file", xsl);
+
+                    xslIs = XMLDatabase.class.getResourceAsStream(xsl);
+                    if (xslIs == null)
+                        xslIs = new FileInputStream(xsl);
+
+                    try {
+                        StringWriter writer = new StringWriter();
+                        TransformerFactory factory = TransformerFactory.newInstance();
+                        Transformer transformer = factory.newTransformer(new StreamSource(xslIs));
+
+                        transformer.transform(new StreamSource(xmlIs), new StreamResult(writer));
+                        info = JAXB.unmarshal(new StringReader(writer.getBuffer().toString()), InformationSchema.class);
+                    }
+                    catch (TransformerException e) {
+                        throw new RuntimeException("Error while transforming XML file " + xml + " with XSL file " + xsl, e);
+                    }
+                }
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Error while opening files " + xml + " or " + xsl, e);
+            }
+            finally {
+                if (xmlIs != null) {
+                    try {
+                        xmlIs.close();
+                    }
+                    catch (Exception ignore) {}
+                }
+                if (xslIs != null) {
+                    try {
+                        xslIs.close();
+                    }
+                    catch (Exception ignore) {}
+                }
+            }
         }
 
         return info;
@@ -104,7 +184,7 @@ public class XMLDatabase extends AbstractDatabase {
         SQLDialect dialect = SQLDialect.SQL99;
 
         try {
-            dialect = SQLDialect.valueOf(getProperties().getProperty("dialect"));
+            dialect = SQLDialect.valueOf(getProperties().getProperty(P_DIALECT));
         }
         catch (Exception ignore) {}
 

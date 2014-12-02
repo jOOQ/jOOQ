@@ -9801,6 +9801,22 @@ public class DSL {
     }
 
     /**
+     * Get the every value over a field: every(field).
+     */
+    @Support(POSTGRES)
+    public static AggregateFunction<Boolean> every(Field<Boolean> field) {
+        return new Function<Boolean>("every", SQLDataType.BOOLEAN, nullSafe(field));
+    }
+
+    /**
+     * Get the every value over a condition: every(condition).
+     */
+    @Support(POSTGRES)
+    public static AggregateFunction<Boolean> every(Condition condition) {
+        return every(field(condition));
+    }
+
+    /**
      * Get the max value over a field: max(field).
      */
     @Support

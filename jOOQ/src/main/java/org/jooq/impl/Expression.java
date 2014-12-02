@@ -534,10 +534,10 @@ class Expression<T> extends AbstractFunction<T> {
                     // with incompatible data types and timezones
                     // ? + CAST (? || ' days' as interval)
                     if (operator == ADD) {
-                        return lhs.add(rhsAsNumber().concat(" day").cast(DayToSecond.class));
+                        return new DateAdd(lhs, rhsAsNumber(), DatePart.DAY);
                     }
                     else {
-                        return lhs.sub(rhsAsNumber().concat(" day").cast(DayToSecond.class));
+                        return new DateAdd(lhs, rhsAsNumber().neg(), DatePart.DAY);
                     }
                 }
 

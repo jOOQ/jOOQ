@@ -44,6 +44,8 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
 
+import java.sql.Date;
+
 import org.jooq.Configuration;
 import org.jooq.DatePart;
 import org.jooq.Field;
@@ -148,7 +150,12 @@ class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
                     default: throwUnsupported();
                 }
 
-                return date.add(field("({0} || {1})::interval", interval, inline(keyword)));
+                // [#3824] Ensure that the output for DATE arithmetic will also 
+                // be of type DATE, not TIMESTAMP
+                if (getDataType().getType() == Date.class)
+                    return field("({0} + ({1} || {2})::interval)::date", getDataType(), date, interval, inline(keyword));
+                else
+                    return field("({0} + ({1} || {2})::interval)", getDataType(), date, interval, inline(keyword));
             }
 
             case SQLITE: {

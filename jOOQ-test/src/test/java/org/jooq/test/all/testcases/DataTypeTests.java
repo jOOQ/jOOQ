@@ -1564,6 +1564,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(new DayToSecond(1, 6), record.getValue("ts2"));
     }
 
+    public void testFunctionsOnDates_DATE_DIFF_AND_DATE_ADD() throws Exception {
+
+        // [#3824] Be sure that DATE types aren't converted to TIMESTAMP by any functions
+        Record4<Integer, Integer, Integer, Integer> dates = create()
+        .select(
+            dateDiff(new Date(0), dateAdd(new Date(0), 2, DatePart.DAY)).as("d1"),
+            dateDiff(new Date(0), val(new Date(0)).add(2)).as("d2"),
+
+            dateDiff(dateAdd(new Date(0), 2, DatePart.DAY), new Date(0)).as("d3"),
+            dateDiff(val(new Date(0)).add(2), new Date(0)).as("d4")
+        )
+        .fetchOne();
+
+        assertEquals(-2, (int) dates.value1());
+        assertEquals(-2, (int) dates.value2());
+        assertEquals(2, (int) dates.value3());
+        assertEquals(2, (int) dates.value4());
+    }
+
     public void testFunctionsOnDates_DATE_ADD() throws Exception {
         Calendar cal;
 

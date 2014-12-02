@@ -45,10 +45,12 @@ import static java.util.Arrays.asList;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.countDistinct;
+import static org.jooq.impl.DSL.every;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.lateral;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.val;
@@ -89,7 +91,9 @@ import static org.jooq.util.postgres.PostgresDSL.arrayToString;
 import static org.jooq.util.postgres.PostgresDSL.only;
 import static org.jooq.util.postgres.PostgresDSL.stringToArray;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -1507,5 +1511,20 @@ public class PostgresTest extends jOOQAbstractTest<
         assertEquals(r1, r2);
         assertEquals(asList(1, 3), r1.getValues(T_BOOK.ID));
         assertEquals(asList(1, 2), r1.getValues(T_BOOK.AUTHOR_ID));
+    }
+
+    @Test
+    public void testPostgresAggregateFunctions() {
+        assertTrue(create().fetchValue(
+            select(every(T_BOOK.ID.lt(5))).from(T_BOOK)
+        ));
+
+        assertFalse(create().fetchValue(
+            select(every(T_BOOK.ID.gt(5))).from(T_BOOK)
+        ));
+
+        assertEquals(asList(true, true, false, false), create().fetchValues(
+            select(every(T_BOOK.ID.lt(3)).over(partitionBy(T_BOOK.AUTHOR_ID))).from(T_BOOK).orderBy(T_BOOK.ID)
+        ));
     }
 }

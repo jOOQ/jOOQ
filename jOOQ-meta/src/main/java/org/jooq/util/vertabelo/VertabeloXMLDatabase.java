@@ -1,3 +1,43 @@
+/**
+ * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
+ * All rights reserved.
+ *
+ * This work is dual-licensed
+ * - under the Apache Software License 2.0 (the "ASL")
+ * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
+ * =============================================================================
+ * You may choose which license applies to you:
+ *
+ * - If you're using this work with Open Source databases, you may choose
+ *   either ASL or jOOQ License.
+ * - If you're using this work with at least one commercial database, you must
+ *   choose jOOQ License
+ *
+ * For more information, please visit http://www.jooq.org/licenses
+ *
+ * Apache Software License 2.0:
+ * -----------------------------------------------------------------------------
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * jOOQ License and Maintenance Agreement:
+ * -----------------------------------------------------------------------------
+ * Data Geekery grants the Customer the non-exclusive, timely limited and
+ * non-transferable license to install and use the Software under the terms of
+ * the jOOQ License and Maintenance Agreement.
+ *
+ * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
+ * and Maintenance Agreement for more details: http://www.jooq.org/licensing
+ */
 package org.jooq.util.vertabelo;
 
 import java.io.File;
@@ -40,6 +80,7 @@ import org.jooq.util.vertabelo.jaxb.Sequence;
 import org.jooq.util.vertabelo.jaxb.Table;
 import org.jooq.util.vertabelo.jaxb.TableCheck;
 import org.jooq.util.vertabelo.jaxb.View;
+import org.jooq.util.xml.XMLDatabase;
 
 /**
  * The Vertabelo XML Database
@@ -56,12 +97,7 @@ public class VertabeloXMLDatabase extends AbstractDatabase {
         void invoke(View view, String schemaName);
     }
 
-
     private static final JooqLogger log = JooqLogger.getLogger(VertabeloXMLDatabase.class);
-
-    // codegen properties
-    private static final String XML_FILE_PARAM = "xml-file";
-    private static final String DIALECT_PARAM = "dialect";
 
     // XML additional properties
     private static final String SCHEMA_ADDITIONAL_PROPERTY_NAME = "Schema";
@@ -72,7 +108,7 @@ public class VertabeloXMLDatabase extends AbstractDatabase {
 
     protected DatabaseModel databaseModel() {
         if(databaseModel == null) {
-            databaseModel = JAXB.unmarshal(new File(getProperties().getProperty(XML_FILE_PARAM)), DatabaseModel.class);
+            databaseModel = JAXB.unmarshal(new File(getProperties().getProperty(XMLDatabase.P_XML_FILE)), DatabaseModel.class);
         }
 
         return databaseModel;
@@ -85,7 +121,7 @@ public class VertabeloXMLDatabase extends AbstractDatabase {
         SQLDialect dialect = SQLDialect.SQL99;
 
         try {
-            dialect = SQLDialect.valueOf(getProperties().getProperty(DIALECT_PARAM));
+            dialect = SQLDialect.valueOf(getProperties().getProperty(XMLDatabase.P_DIALECT));
         }
         catch (Exception ignore) {}
 

@@ -2238,6 +2238,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFunctionsOnDates_DATE_DIFF_AND_DATE_ADD() throws Exception {
+        new DataTypeTests(this).testFunctionsOnDates_DATE_DIFF_AND_DATE_ADD();
+    }
+
+    @Test
     public void testFunctionsOnDates_TRUNC() throws Exception {
         new DataTypeTests(this).testFunctionsOnDates_TRUNC();
     }

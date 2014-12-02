@@ -40,6 +40,7 @@
  */
 package org.jooq.test.all.testcases;
 
+import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.values;
@@ -116,6 +117,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             row(new Object[] { 2, "b", Date.valueOf("2013-01-02")})}).as("my_table", "int_col", "string_col", "date_col")).fetch();
 
         assertEquals(r1, r2);
+
+        // [#3822] There was a regression with Row1 types
+        Result<Record1<Integer>> result = create().selectFrom(values(row(1), row(2), row(3))).fetch();
+        assertEquals(asList(1, 2, 3), result.getValues(0, int.class));
     }
 
     public void testResultConstructor() throws Exception {

@@ -9803,17 +9803,17 @@ public class DSL {
     /**
      * Get the every value over a field: every(field).
      */
-    @Support(POSTGRES)
+    @Support
     public static AggregateFunction<Boolean> every(Field<Boolean> field) {
-        return new Function<Boolean>("every", SQLDataType.BOOLEAN, nullSafe(field));
+        return every(condition(nullSafe(field)));
     }
 
     /**
      * Get the every value over a condition: every(condition).
      */
-    @Support(POSTGRES)
+    @Support
     public static AggregateFunction<Boolean> every(Condition condition) {
-        return every(field(condition));
+        return new Every(condition);
     }
 
     /**

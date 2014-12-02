@@ -169,7 +169,7 @@ class Function<T> extends AbstractField<T> implements
         this.withinGroupOrderBy = new SortFieldList();
     }
 
-    private static String last(String... strings) {
+    final static String last(String... strings) {
         if (strings != null && strings.length > 0) {
             return strings[strings.length - 1];
         }
@@ -180,30 +180,9 @@ class Function<T> extends AbstractField<T> implements
     // -------------------------------------------------------------------------
     // XXX QueryPart API
     // -------------------------------------------------------------------------
-//
-//    @Override
-//    public final void bind(BindContext ctx) {
-//        if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MARIADB, MYSQL).contains(ctx.configuration().dialect())) {
-//            ctx.visit(arguments.get(0));
-//            ctx.visit(withinGroupOrderBy);
-//
-//            if (arguments.size() > 1) {
-//                ctx.visit(arguments.get(1));
-//            }
-//        }
-//        else {
-//            ctx.visit(arguments)
-//               .visit(keepDenseRankOrderBy)
-//               .visit(withinGroupOrderBy);
-//
-//            QueryPart window = window(ctx);
-//            if (window != null)
-//                ctx.visit(window);
-//        }
-//    }
 
     @Override
-    public final void accept(Context<?> ctx) {
+    public /* final */ void accept(Context<?> ctx) {
         if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MARIADB, MYSQL).contains(ctx.configuration().dialect())) {
             toSQLGroupConcat(ctx);
         }
@@ -228,7 +207,7 @@ class Function<T> extends AbstractField<T> implements
     xxx
      x xxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxx xxx
      xx
-    xxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxx xxxx x
+    xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxx xxxx x
 
         xx xxxx xx x xxxxxxxx xxxx xx xxxx xxx xxxxx xxx xxxx xxxxxx
         xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx xxxxx xx xxx xx xxxxxxxxxxxxxxx xx
@@ -276,7 +255,7 @@ class Function<T> extends AbstractField<T> implements
     /**
      * [#1275] <code>LIST_AGG</code> simulation for Postgres, Sybase
      */
-    private void toSQLStringAgg(Context<?> ctx) {
+    final void toSQLStringAgg(Context<?> ctx) {
         toSQLFunctionName(ctx);
         ctx.sql("(");
 
@@ -306,7 +285,7 @@ class Function<T> extends AbstractField<T> implements
     /**
      * [#1273] <code>LIST_AGG</code> simulation for MySQL and CUBRID
      */
-    private final void toSQLGroupConcat(Context<?> ctx) {
+    final void toSQLGroupConcat(Context<?> ctx) {
         toSQLFunctionName(ctx);
         ctx.sql("(");
 
@@ -329,7 +308,7 @@ class Function<T> extends AbstractField<T> implements
         ctx.sql(")");
     }
 
-    private final void toSQLOverClause(Context<?> ctx) {
+    final void toSQLOverClause(Context<?> ctx) {
         QueryPart window = window(ctx);
 
         // Render this clause only if needed
@@ -349,7 +328,7 @@ class Function<T> extends AbstractField<T> implements
     }
 
     @SuppressWarnings("unchecked")
-    private final QueryPart window(Context<?> ctx) {
+    final QueryPart window(Context<?> ctx) {
         if (windowSpecification != null)
             return windowSpecification;
 
@@ -386,7 +365,7 @@ class Function<T> extends AbstractField<T> implements
     /**
      * Render <code>KEEP (DENSE_RANK [FIRST | LAST] ORDER BY {...})</code> clause
      */
-    private void toSQLKeepDenseRankOrderByClause(Context<?> ctx) {
+    final void toSQLKeepDenseRankOrderByClause(Context<?> ctx) {
         if (!keepDenseRankOrderBy.isEmpty()) {
             ctx.sql(" ").keyword("keep")
                .sql(" (").keyword("dense_rank")
@@ -400,7 +379,7 @@ class Function<T> extends AbstractField<T> implements
     /**
      * Render <code>WITHIN GROUP (ORDER BY ..)</code> clause
      */
-    private final void toSQLWithinGroupClause(Context<?> ctx) {
+    final void toSQLWithinGroupClause(Context<?> ctx) {
         if (!withinGroupOrderBy.isEmpty()) {
             ctx.sql(" ").keyword("within group")
                .sql(" (").keyword("order by")
@@ -412,7 +391,7 @@ class Function<T> extends AbstractField<T> implements
     /**
      * Render function arguments and argument modifiers
      */
-    private final void toSQLArguments(Context<?> ctx) {
+    final void toSQLArguments(Context<?> ctx) {
         toSQLFunctionName(ctx);
         ctx.sql("(");
 
@@ -464,7 +443,7 @@ class Function<T> extends AbstractField<T> implements
         ctx.sql(")");
     }
 
-    private final void toSQLFunctionName(Context<?> ctx) {
+    final void toSQLFunctionName(Context<?> ctx) {
         if (name != null) {
             ctx.visit(name);
         }

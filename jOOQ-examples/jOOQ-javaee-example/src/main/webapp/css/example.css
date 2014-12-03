@@ -6,7 +6,7 @@ body {
 }
     
 h1, h2, h3 {
-    padding: 20px;
+    padding: 10px;
     margin: 0;
     color: #eee;
 }
@@ -26,7 +26,7 @@ h3 {
 td, th {
 	text-align: left;
 	min-width: 50px;
-    padding: 20px;
+    padding: 10px;
 }
 
 input {
@@ -35,7 +35,7 @@ input {
 
 input[type=submit] {
 	min-width: 50px;
-	margin-right: 20px;
+	margin-right: 10px;
 }
 
 .div-50 {

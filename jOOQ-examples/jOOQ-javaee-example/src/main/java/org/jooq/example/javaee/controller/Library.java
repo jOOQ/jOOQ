@@ -62,35 +62,73 @@ import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
+import org.jooq.example.db.h2.tables.Author;
 import org.jooq.example.db.h2.tables.records.AuthorRecord;
 import org.jooq.example.db.h2.tables.records.BookRecord;
-import org.jooq.example.javaee.ejb.AuthorsEJB;
+import org.jooq.example.javaee.ejb.LibraryEJB;
 import org.jooq.impl.DSL;
 
 /**
  * A bean to be used from JSF pages.
+ * <p>
+ * The bean is session scoped such that we can have session-based caches of
+ * database content such as authors or books in this bean. In this simple
+ * example, we haven't gone into concurrency situations where multiple sessions
+ * update the library database at the same time, in case of which we might need
+ * to turn on optimistic locking in jOOQ.
  *
  * @author Lukas Eder
  */
-@Named("authors")
+@Named("library")
 @SessionScoped
-public class Authors implements Serializable {
+public class Library implements Serializable {
 
     private static final long           serialVersionUID = 1L;
 
     @EJB
-    private AuthorsEJB                  ejb;
+    private LibraryEJB                  ejb;
 
-    // Caches from the DB
+    // Various caches from the DB
+    // -------------------------------------------------------------------------
+
+    /**
+     * An empty {@link AuthorRecord} that can be used to insert new authors.
+     */
     private AuthorRecord                newAuthor;
+
+    /**
+     * An empty {@link BookRecord} that can be used to insert new books.
+     */
     private BookRecord                  newBook;
+
+    /**
+     * The reference to the {@link Record} that is currently being edited.
+     */
     private Record                      edit;
+
+    /**
+     * The sort field for each {@link Table}.
+     */
     private Map<Table<?>, SortField<?>> sort             = Stream.of(AUTHOR.ID, BOOK.ID).collect(
                                                              toMap(f -> f.getTable(), f -> f.asc()));
 
+    /**
+     * A cache of all {@link AuthorRecord}s currently in the database.
+     */
     private Result<AuthorRecord>        authors;
+
+    /**
+     * A copy of {@link #authors} that is always sorted alphanumerically.
+     */
     private Result<AuthorRecord>        authorsAlphanumeric;
+
+    /**
+     * A cache of all {@link BookRecord}s currently in the database.
+     */
     private Result<BookRecord>          books;
+
+    // Data access methods
+    // -------------------------------------------------------------------------
 
     public Result<AuthorRecord> getAuthors() {
         if (authors == null)
@@ -113,10 +151,6 @@ public class Authors implements Serializable {
         return getAuthors().intoMap(AUTHOR.ID);
     }
 
-    public Map<String, Field<?>> getAuthorColumns() {
-        return getColumns(AUTHOR);
-    }
-
     public Result<BookRecord> getBooks() {
         if (books == null)
             books = ejb.fetchBooks(sort.get(BOOK));
@@ -124,36 +158,70 @@ public class Authors implements Serializable {
         return books;
     }
 
-    public Map<String, Field<?>> getBookColumns() {
-        return getColumns(BOOK);
-    }
-
-    private Map<String, Field<?>> getColumns(Table<?> t) {
-        return Stream.of(t.fields()).collect(toMap(f -> f.getName(), f -> f));
-    }
-
-    public Record getEdit() {
-        return edit;
-    }
-
-    public Map<String, SortField<?>> getSort() {
-        return sort.entrySet().stream().collect(toMap(e -> e.getKey().getName(), e -> e.getValue()));
-    }
-
     public AuthorRecord getNewAuthor() {
         if (newAuthor == null)
-            newAuthor = ejb.newAuthor();
+            newAuthor = DSL.using(H2).newRecord(AUTHOR);
 
         return newAuthor;
     }
 
     public BookRecord getNewBook() {
         if (newBook == null)
-            newBook = ejb.newBook();
+            newBook = DSL.using(H2).newRecord(BOOK);
 
         return newBook;
     }
 
+    // UI state methods
+    // -------------------------------------------------------------------------
+
+    /**
+     * The record being edited.
+     */
+    public Record getEdit() {
+        return edit;
+    }
+
+    /**
+     * A map containing <code>column name -> column</code> pairs of the
+     * {@link Author} table.
+     */
+    public Map<String, Field<?>> getAuthorColumns() {
+        return getColumns(AUTHOR);
+    }
+
+    /**
+     * A map containing <code>column name -> column</code> pairs of the
+     * {@link Author} table.
+     */
+    public Map<String, Field<?>> getBookColumns() {
+        return getColumns(BOOK);
+    }
+
+    /**
+     * Get a map containing <code>table name -> sort field</code> pairs.
+     */
+    public Map<String, SortField<?>> getSort() {
+        return sort.entrySet().stream().collect(toMap(e -> e.getKey().getName(), e -> e.getValue()));
+    }
+
+    private Map<String, Field<?>> getColumns(Table<?> t) {
+        return Stream.of(t.fields()).collect(toMap(f -> f.getName(), f -> f));
+    }
+
+    private void reset() {
+        authors = null;
+        authorsAlphanumeric = null;
+        books = null;
+        edit = null;
+    }
+
+    // Actions
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sort a table by a new field.
+     */
     public void sort(TableField<?, ?> field) {
         SortField<?> previous = sort.get(field.getTable());
         sort.put(field.getTable(),
@@ -167,26 +235,26 @@ public class Authors implements Serializable {
         reset();
     }
 
+    /**
+     * Mark a record as the one being currently edited.
+     */
     public void edit(UpdatableRecord<?> record) {
         edit = record;
     }
 
+    /**
+     * Save a record back to the database.
+     */
     public void save(UpdatableRecord<?> author) {
         ejb.store(author);
         reset();
     }
 
+    /**
+     * Delete a record from the database.
+     */
     public void delete(UpdatableRecord<?> author) {
         ejb.delete(author);
         reset();
-    }
-
-    private void reset() {
-        authors = null;
-        authorsAlphanumeric = null;
-        books = null;
-        edit = null;
-        newAuthor = ejb.newAuthor();
-        newBook = ejb.newBook();
     }
 }

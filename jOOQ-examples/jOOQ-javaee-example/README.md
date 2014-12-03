@@ -14,3 +14,14 @@ $ cd jOOQ-examples/jOOQ-javaee-example
 ...
 $ mvn clean install
 ```
+
+After the above, you should find a `jooq-javaee-example.war` file in
+
+```
+$ pwd
+/path/to/checkout/dir
+$ cd jOOQ-examples/jOOQ-javaee-example/target
+...
+```
+
+You can deploy this war file in your WildFly AS or any other application server. The example will use an embedded H2 database, which should be pre-filled with the library example H2 database. It uses a non-managed `DataSource`, which is configured and consumed directly by the application itself.

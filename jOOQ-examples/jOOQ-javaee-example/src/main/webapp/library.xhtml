@@ -19,13 +19,13 @@
             <div class="div-50">
 	            <h2>Authors</h2>
 	            
-	            <h:dataTable value="#{authors.authors}" var="a">
+	            <h:dataTable value="#{library.authors}" var="a">
 	                <h:column>
 	                    <f:facet name="header">
-	                        <h:commandLink action="#{authors.sort(authors.authorColumns['ID'])}">
+	                        <h:commandLink action="#{library.sort(library.authorColumns['ID'])}">
 	                            <h:outputText value="ID"/>
-                                <h:outputText value="⇧" rendered="#{authors.sort['AUTHOR'].name == 'ID' and authors.sort['AUTHOR'].order == 'ASC'}"/>
-                                <h:outputText value="⇩" rendered="#{authors.sort['AUTHOR'].name == 'ID' and authors.sort['AUTHOR'].order == 'DESC'}"/>
+                                <h:outputText value="⇧" rendered="#{library.sort['AUTHOR'].name == 'ID' and library.sort['AUTHOR'].order == 'ASC'}"/>
+                                <h:outputText value="⇩" rendered="#{library.sort['AUTHOR'].name == 'ID' and library.sort['AUTHOR'].order == 'DESC'}"/>
                             </h:commandLink>
                         </f:facet>
 	                    
@@ -34,48 +34,48 @@
 	            
 	                <h:column>
                         <f:facet name="header">
-                            <h:commandLink action="#{authors.sort(authors.authorColumns['FIRST_NAME'])}">
+                            <h:commandLink action="#{library.sort(library.authorColumns['FIRST_NAME'])}">
                                 <h:outputText value="First Name"/>
-                                <h:outputText value="⇧" rendered="#{authors.sort['AUTHOR'].name == 'FIRST_NAME' and authors.sort['AUTHOR'].order == 'ASC'}"/>
-                                <h:outputText value="⇩" rendered="#{authors.sort['AUTHOR'].name == 'FIRST_NAME' and authors.sort['AUTHOR'].order == 'DESC'}"/>
+                                <h:outputText value="⇧" rendered="#{library.sort['AUTHOR'].name == 'FIRST_NAME' and library.sort['AUTHOR'].order == 'ASC'}"/>
+                                <h:outputText value="⇩" rendered="#{library.sort['AUTHOR'].name == 'FIRST_NAME' and library.sort['AUTHOR'].order == 'DESC'}"/>
                             </h:commandLink>
                         </f:facet>
 	                    
-	                    <h:outputText value="#{a.firstName}" rendered="#{authors.edit != a}"/>
-	                    <h:inputText value="#{a.firstName}" rendered="#{authors.edit == a}"/>
+	                    <h:outputText value="#{a.firstName}" rendered="#{library.edit != a}"/>
+	                    <h:inputText value="#{a.firstName}" rendered="#{library.edit == a}"/>
 	                    
 	                    <f:facet name="footer">
-	                        <h:inputText value="#{authors.newAuthor.firstName}"/>
+	                        <h:inputText value="#{library.newAuthor.firstName}"/>
 	                    </f:facet>
 	                </h:column>
 	
 	                <h:column>
                         <f:facet name="header">
-                            <h:commandLink action="#{authors.sort(authors.authorColumns['LAST_NAME'])}">
+                            <h:commandLink action="#{library.sort(library.authorColumns['LAST_NAME'])}">
                                 <h:outputText value="Last Name"/>
-                                <h:outputText value="⇧" rendered="#{authors.sort['AUTHOR'].name == 'LAST_NAME' and authors.sort['AUTHOR'].order == 'ASC'}"/>
-                                <h:outputText value="⇩" rendered="#{authors.sort['AUTHOR'].name == 'LAST_NAME' and authors.sort['AUTHOR'].order == 'DESC'}"/>
+                                <h:outputText value="⇧" rendered="#{library.sort['AUTHOR'].name == 'LAST_NAME' and library.sort['AUTHOR'].order == 'ASC'}"/>
+                                <h:outputText value="⇩" rendered="#{library.sort['AUTHOR'].name == 'LAST_NAME' and library.sort['AUTHOR'].order == 'DESC'}"/>
                             </h:commandLink>
                         </f:facet>
 	                    
-	                    <h:outputText value="#{a.lastName}" rendered="#{authors.edit != a}"/>
-	                    <h:inputText value="#{a.lastName}" rendered="#{authors.edit == a}"/>
+	                    <h:outputText value="#{a.lastName}" rendered="#{library.edit != a}"/>
+	                    <h:inputText value="#{a.lastName}" rendered="#{library.edit == a}"/>
 	                    
 	                    <f:facet name="footer">
-	                        <h:inputText value="#{authors.newAuthor.lastName}"/>
+	                        <h:inputText value="#{library.newAuthor.lastName}"/>
 	                    </f:facet>
 	                </h:column>
 	                
 	                <h:column>
 	                    <f:facet name="header">Actions</f:facet>
 	                    
-	                    <h:commandButton value="edit" action="#{authors.edit(a)}" rendered="#{authors.edit != a}"/>
-	                    <h:commandButton value="save" action="#{authors.save(a)}" rendered="#{authors.edit == a}"/>
+	                    <h:commandButton value="edit" action="#{library.edit(a)}" rendered="#{library.edit != a}"/>
+	                    <h:commandButton value="save" action="#{library.save(a)}" rendered="#{library.edit == a}"/>
 	                    
-	                    <h:commandButton value="delete" action="#{authors.delete(a)}"/>
+	                    <h:commandButton value="delete" action="#{library.delete(a)}"/>
 	                    
 	                    <f:facet name="footer">
-	                        <h:commandButton value="create" action="#{authors.save(authors.newAuthor)}"/>
+	                        <h:commandButton value="create" action="#{library.save(library.newAuthor)}"/>
 	                    </f:facet>
 	                </h:column>
 	            </h:dataTable>
@@ -84,13 +84,13 @@
             <div class="div-50">
                 <h2>Books</h2>
                
-                <h:dataTable value="#{authors.books}" var="b">
+                <h:dataTable value="#{library.books}" var="b">
                     <h:column>
                         <f:facet name="header">
-                            <h:commandLink action="#{authors.sort(authors.bookColumns['ID'])}">
+                            <h:commandLink action="#{library.sort(library.bookColumns['ID'])}">
                                 <h:outputText value="ID"/>
-                                <h:outputText value="⇧" rendered="#{authors.sort['BOOK'].name == 'ID' and authors.sort['BOOK'].order == 'ASC'}"/>
-                                <h:outputText value="⇩" rendered="#{authors.sort['BOOK'].name == 'ID' and authors.sort['BOOK'].order == 'DESC'}"/>
+                                <h:outputText value="⇧" rendered="#{library.sort['BOOK'].name == 'ID' and library.sort['BOOK'].order == 'ASC'}"/>
+                                <h:outputText value="⇩" rendered="#{library.sort['BOOK'].name == 'ID' and library.sort['BOOK'].order == 'DESC'}"/>
                             </h:commandLink>
                         </f:facet>
                     
@@ -100,45 +100,45 @@
                     <h:column>
                         <f:facet name="header">Author</f:facet>
                     
-                        <h:outputText value="#{authors.authorById[b.authorId].firstName} #{authors.authorById[b.authorId].lastName}" rendered="#{authors.edit != b}"/>
-	                    <h:selectOneMenu value="#{b.authorId}" rendered="#{authors.edit == b}">
-                            <f:selectItems value="#{authors.authorsAlphanumeric}" var="a" itemLabel="#{a.firstName} #{a.lastName}" itemValue="#{a.id}" />
+                        <h:outputText value="#{library.authorById[b.authorId].firstName} #{library.authorById[b.authorId].lastName}" rendered="#{library.edit != b}"/>
+	                    <h:selectOneMenu value="#{b.authorId}" rendered="#{library.edit == b}">
+                            <f:selectItems value="#{library.authorsAlphanumeric}" var="a" itemLabel="#{a.firstName} #{a.lastName}" itemValue="#{a.id}" />
 				        </h:selectOneMenu>
 				        
 				        <f:facet name="footer">
-	                        <h:selectOneMenu value="#{authors.newBook.authorId}">
-	                            <f:selectItems value="#{authors.authorsAlphanumeric}" var="a" itemLabel="#{a.firstName} #{a.lastName}" itemValue="#{a.id}" />
+	                        <h:selectOneMenu value="#{library.newBook.authorId}">
+	                            <f:selectItems value="#{library.authorsAlphanumeric}" var="a" itemLabel="#{a.firstName} #{a.lastName}" itemValue="#{a.id}" />
 	                        </h:selectOneMenu>
 				        </f:facet>
                     </h:column>
                     
                     <h:column>
                         <f:facet name="header">
-                            <h:commandLink action="#{authors.sort(authors.bookColumns['TITLE'])}">
+                            <h:commandLink action="#{library.sort(library.bookColumns['TITLE'])}">
                                 <h:outputText value="Title"/>
-                                <h:outputText value="⇧" rendered="#{authors.sort['BOOK'].name == 'TITLE' and authors.sort['BOOK'].order == 'ASC'}"/>
-                                <h:outputText value="⇩" rendered="#{authors.sort['BOOK'].name == 'TITLE' and authors.sort['BOOK'].order == 'DESC'}"/>
+                                <h:outputText value="⇧" rendered="#{library.sort['BOOK'].name == 'TITLE' and library.sort['BOOK'].order == 'ASC'}"/>
+                                <h:outputText value="⇩" rendered="#{library.sort['BOOK'].name == 'TITLE' and library.sort['BOOK'].order == 'DESC'}"/>
                             </h:commandLink>
                         </f:facet>
                         
-                        <h:outputText value="#{b.title}" rendered="#{authors.edit != b}"/>
-                        <h:inputText value="#{b.title}" rendered="#{authors.edit == b}"/>
+                        <h:outputText value="#{b.title}" rendered="#{library.edit != b}"/>
+                        <h:inputText value="#{b.title}" rendered="#{library.edit == b}"/>
                         
                         <f:facet name="footer">
-                            <h:inputText value="#{authors.newBook.title}"/>
+                            <h:inputText value="#{library.newBook.title}"/>
                         </f:facet>
                     </h:column>
                     
                     <h:column>
                         <f:facet name="header">Actions</f:facet>
                         
-                        <h:commandButton value="edit" action="#{authors.edit(b)}" rendered="#{authors.edit != b}"/>
-                        <h:commandButton value="save" action="#{authors.save(b)}" rendered="#{authors.edit == b}"/>
+                        <h:commandButton value="edit" action="#{library.edit(b)}" rendered="#{library.edit != b}"/>
+                        <h:commandButton value="save" action="#{library.save(b)}" rendered="#{library.edit == b}"/>
                         
-                        <h:commandButton value="delete" action="#{authors.delete(b)}"/>
+                        <h:commandButton value="delete" action="#{library.delete(b)}"/>
                         
                         <f:facet name="footer">
-                            <h:commandButton value="create" action="#{authors.save(authors.newBook)}"/>
+                            <h:commandButton value="create" action="#{library.save(library.newBook)}"/>
                         </f:facet>
                     </h:column>
                 </h:dataTable>

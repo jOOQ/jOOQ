@@ -12,13 +12,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src/main/webapp"/>
-	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
-		<attributes>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-    <classpathentry kind="src" path="src/test/resources"/>
 	<classpathentry kind="src" path="target/generated-sources/jooq-h2"/>
 	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">

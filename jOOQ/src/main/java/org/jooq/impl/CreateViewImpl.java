@@ -43,6 +43,9 @@ package org.jooq.impl;
 import static org.jooq.Clause.CREATE_VIEW;
 import static org.jooq.Clause.CREATE_VIEW_AS;
 import static org.jooq.Clause.CREATE_VIEW_NAME;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.impl.DSL.selectFrom;
+import static org.jooq.impl.DSL.table;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -97,12 +100,17 @@ class CreateViewImpl<R extends Record> extends AbstractQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
+
+        // [#3835] SQLite doesn't like renaming columns at the view level
+        boolean rename = fields != null && fields.length > 0;
+        boolean renameSupported = ctx.family() != SQLITE;
+
         ctx.start(CREATE_VIEW_NAME)
            .keyword("create view")
            .sql(" ")
            .visit(view);
 
-        if (fields != null && fields.length > 0) {
+        if (rename && renameSupported) {
             boolean qualify = ctx.qualify();
 
             ctx.sql("(")
@@ -117,7 +125,10 @@ class CreateViewImpl<R extends Record> extends AbstractQuery implements
            .keyword("as")
            .formatSeparator()
            .start(CREATE_VIEW_AS)
-           .visit(select)
+           .visit(
+               rename && !renameSupported
+             ? selectFrom(table(select).as("t", Utils.fieldNames(fields)))
+             : select)
            .end(CREATE_VIEW_AS);
     }
 

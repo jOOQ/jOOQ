@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.name;
@@ -285,7 +286,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testAlterTableAlterType() throws Exception {
-        assumeFamilyNotIn(FIREBIRD);
+        assumeFamilyNotIn(FIREBIRD, SQLITE);
 
         try {
             // TODO: Re-use jOOQ API for this
@@ -300,7 +301,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testAlterTableAlterDefault() throws Exception {
-        assumeFamilyNotIn(INFORMIX);
+        assumeFamilyNotIn(INFORMIX, SQLITE);
 
         try {
             // TODO: Re-use jOOQ API for this
@@ -316,6 +317,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testAlterTableDrop() throws Exception {
+        assumeFamilyNotIn(SQLITE);
+
         try {
             // TODO: Re-use jOOQ API for this
             create().execute("create table {0} ({1} " + varchar() + ", {2} " + varchar() + ", {3} " + varchar() + ")", name("t"), name("a"), name("b"), name("c"));

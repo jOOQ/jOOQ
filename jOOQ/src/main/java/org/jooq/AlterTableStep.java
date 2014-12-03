@@ -40,6 +40,23 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 
 /**
  * The step in the <code>ALTER TABLE</code> where the action can be decided.
@@ -52,14 +69,14 @@ public interface AlterTableStep {
      * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     <T> AlterTableAlterStep<T> alter(Field<T> field);
 
     /**
      * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     AlterTableAlterStep<Object> alter(String field);
 
     /**
@@ -80,13 +97,13 @@ public interface AlterTableStep {
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     AlterTableDropStep drop(Field<?> field);
 
     /**
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     AlterTableDropStep drop(String field);
 }

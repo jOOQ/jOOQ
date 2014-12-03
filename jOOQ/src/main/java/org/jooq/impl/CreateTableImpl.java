@@ -148,6 +148,9 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
                .formatIndentStart()
                .formatNewLine();
 
+            boolean qualify = ctx.qualify();
+            ctx.qualify(false);
+
             for (int i = 0; i < columnFields.size(); i++) {
                 ctx.visit(columnFields.get(i))
                    .sql(" ")
@@ -162,6 +165,7 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
                     ctx.sql(",").formatSeparator();
             }
 
+            ctx.qualify(qualify);
             ctx.formatIndentEnd()
                .formatNewLine()
                .sql(")")

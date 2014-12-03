@@ -372,7 +372,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testCreateTable() throws Exception {
         try {
             create().createTable("t")
-                    .column("i", SQLDataType.INTEGER)
+                    .column(fieldByName(Integer.class, "t", "i"), SQLDataType.INTEGER)
                     .column("n", SQLDataType.DECIMAL.precision(3, 1).nullable(true))
                     .column("s", SQLDataType.VARCHAR.length(5).nullable(false))
                     .execute();

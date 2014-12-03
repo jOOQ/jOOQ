@@ -45,7 +45,7 @@ import static org.jooq.example.db.h2.Tables.AUTHOR;
 import static org.jooq.example.db.h2.Tables.BOOK;
 
 import javax.annotation.Resource;
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.sql.DataSource;
 
 import org.jooq.Result;
@@ -55,19 +55,17 @@ import org.jooq.example.db.h2.tables.records.AuthorRecord;
 import org.jooq.example.db.h2.tables.records.BookRecord;
 import org.jooq.impl.DSL;
 
-@Stateful
-public class AuthorsEJB {
+/**
+ * A session bean that uses the configured {@link DataSource} to interact with
+ * the embedded H2 database.
+ *
+ * @author Lukas Eder
+ */
+@Stateless
+public class LibraryEJB {
 
     @Resource(lookup="java:jboss/datasources/jooq-javaee-example")
     private DataSource ds;
-
-    public AuthorRecord newAuthor() {
-        return DSL.using(ds, H2).newRecord(AUTHOR);
-    }
-
-    public BookRecord newBook() {
-        return DSL.using(ds, H2).newRecord(BOOK);
-    }
 
     public Result<AuthorRecord> fetchAuthors(SortField<?> sort) {
         return DSL.using(ds, H2)
@@ -84,10 +82,12 @@ public class AuthorsEJB {
     }
 
     public void store(UpdatableRecord<?> record) {
+        DSL.using(ds, H2).attach(record);
         record.store();
     }
 
     public void delete(UpdatableRecord<?> record) {
+        DSL.using(ds, H2).attach(record);
         record.delete();
     }
 

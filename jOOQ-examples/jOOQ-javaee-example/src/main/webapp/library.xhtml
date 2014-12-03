@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css"></link>
+<link href="css/example.css" type="text/css" rel="stylesheet"></link>
+<title>Library</title>
+</head>
+
+<body>
+    <h1>Library</h1>
+    
+    <div id="container">
+        <h:form id="response">
+            <div class="div-50">
+	            <h2>Authors</h2>
+	            
+	            <h:dataTable value="#{authors.authors}" var="a">
+	                <h:column>
+	                    <f:facet name="header">
+	                        <h:commandLink action="#{authors.sort(authors.authorColumns['ID'])}">
+	                            <h:outputText value="ID"/>
+                                <h:outputText value="⇧" rendered="#{authors.sort['AUTHOR'].name == 'ID' and authors.sort['AUTHOR'].order == 'ASC'}"/>
+                                <h:outputText value="⇩" rendered="#{authors.sort['AUTHOR'].name == 'ID' and authors.sort['AUTHOR'].order == 'DESC'}"/>
+                            </h:commandLink>
+                        </f:facet>
+	                    
+	                    <h:outputText value="#{a.id}"/>
+	                </h:column>
+	            
+	                <h:column>
+                        <f:facet name="header">
+                            <h:commandLink action="#{authors.sort(authors.authorColumns['FIRST_NAME'])}">
+                                <h:outputText value="First Name"/>
+                                <h:outputText value="⇧" rendered="#{authors.sort['AUTHOR'].name == 'FIRST_NAME' and authors.sort['AUTHOR'].order == 'ASC'}"/>
+                                <h:outputText value="⇩" rendered="#{authors.sort['AUTHOR'].name == 'FIRST_NAME' and authors.sort['AUTHOR'].order == 'DESC'}"/>
+                            </h:commandLink>
+                        </f:facet>
+	                    
+	                    <h:outputText value="#{a.firstName}" rendered="#{authors.edit != a}"/>
+	                    <h:inputText value="#{a.firstName}" rendered="#{authors.edit == a}"/>
+	                    
+	                    <f:facet name="footer">
+	                        <h:inputText value="#{authors.newAuthor.firstName}"/>
+	                    </f:facet>
+	                </h:column>
+	
+	                <h:column>
+                        <f:facet name="header">
+                            <h:commandLink action="#{authors.sort(authors.authorColumns['LAST_NAME'])}">
+                                <h:outputText value="Last Name"/>
+                                <h:outputText value="⇧" rendered="#{authors.sort['AUTHOR'].name == 'LAST_NAME' and authors.sort['AUTHOR'].order == 'ASC'}"/>
+                                <h:outputText value="⇩" rendered="#{authors.sort['AUTHOR'].name == 'LAST_NAME' and authors.sort['AUTHOR'].order == 'DESC'}"/>
+                            </h:commandLink>
+                        </f:facet>
+	                    
+	                    <h:outputText value="#{a.lastName}" rendered="#{authors.edit != a}"/>
+	                    <h:inputText value="#{a.lastName}" rendered="#{authors.edit == a}"/>
+	                    
+	                    <f:facet name="footer">
+	                        <h:inputText value="#{authors.newAuthor.lastName}"/>
+	                    </f:facet>
+	                </h:column>
+	                
+	                <h:column>
+	                    <f:facet name="header">Actions</f:facet>
+	                    
+	                    <h:commandButton value="edit" action="#{authors.edit(a)}" rendered="#{authors.edit != a}"/>
+	                    <h:commandButton value="save" action="#{authors.save(a)}" rendered="#{authors.edit == a}"/>
+	                    
+	                    <h:commandButton value="delete" action="#{authors.delete(a)}"/>
+	                    
+	                    <f:facet name="footer">
+	                        <h:commandButton value="create" action="#{authors.save(authors.newAuthor)}"/>
+	                    </f:facet>
+	                </h:column>
+	            </h:dataTable>
+            </div>
+            
+            <div class="div-50">
+                <h2>Books</h2>
+               
+                <h:dataTable value="#{authors.books}" var="b">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:commandLink action="#{authors.sort(authors.bookColumns['ID'])}">
+                                <h:outputText value="ID"/>
+                                <h:outputText value="⇧" rendered="#{authors.sort['BOOK'].name == 'ID' and authors.sort['BOOK'].order == 'ASC'}"/>
+                                <h:outputText value="⇩" rendered="#{authors.sort['BOOK'].name == 'ID' and authors.sort['BOOK'].order == 'DESC'}"/>
+                            </h:commandLink>
+                        </f:facet>
+                    
+                        <h:outputText value="#{b.id}"/>
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">Author</f:facet>
+                    
+                        <h:outputText value="#{authors.authorById[b.authorId].firstName} #{authors.authorById[b.authorId].lastName}" rendered="#{authors.edit != b}"/>
+	                    <h:selectOneMenu value="#{b.authorId}" rendered="#{authors.edit == b}">
+                            <f:selectItems value="#{authors.authorsAlphanumeric}" var="a" itemLabel="#{a.firstName} #{a.lastName}" itemValue="#{a.id}" />
+				        </h:selectOneMenu>
+				        
+				        <f:facet name="footer">
+	                        <h:selectOneMenu value="#{authors.newBook.authorId}">
+	                            <f:selectItems value="#{authors.authorsAlphanumeric}" var="a" itemLabel="#{a.firstName} #{a.lastName}" itemValue="#{a.id}" />
+	                        </h:selectOneMenu>
+				        </f:facet>
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">
+                            <h:commandLink action="#{authors.sort(authors.bookColumns['TITLE'])}">
+                                <h:outputText value="Title"/>
+                                <h:outputText value="⇧" rendered="#{authors.sort['BOOK'].name == 'TITLE' and authors.sort['BOOK'].order == 'ASC'}"/>
+                                <h:outputText value="⇩" rendered="#{authors.sort['BOOK'].name == 'TITLE' and authors.sort['BOOK'].order == 'DESC'}"/>
+                            </h:commandLink>
+                        </f:facet>
+                        
+                        <h:outputText value="#{b.title}" rendered="#{authors.edit != b}"/>
+                        <h:inputText value="#{b.title}" rendered="#{authors.edit == b}"/>
+                        
+                        <f:facet name="footer">
+                            <h:inputText value="#{authors.newBook.title}"/>
+                        </f:facet>
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">Actions</f:facet>
+                        
+                        <h:commandButton value="edit" action="#{authors.edit(b)}" rendered="#{authors.edit != b}"/>
+                        <h:commandButton value="save" action="#{authors.save(b)}" rendered="#{authors.edit == b}"/>
+                        
+                        <h:commandButton value="delete" action="#{authors.delete(b)}"/>
+                        
+                        <f:facet name="footer">
+                            <h:commandButton value="create" action="#{authors.save(authors.newBook)}"/>
+                        </f:facet>
+                    </h:column>
+                </h:dataTable>
+            </div>
+        </h:form>
+    </div>
+</body>
+</html>

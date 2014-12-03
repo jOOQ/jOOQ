@@ -45,7 +45,6 @@ import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;

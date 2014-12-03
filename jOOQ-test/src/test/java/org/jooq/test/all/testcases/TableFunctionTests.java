@@ -48,7 +48,6 @@ import static org.jooq.impl.DSL.dual;
 import static org.jooq.impl.DSL.generateSeries;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.selectOne;
-import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
 import java.util.List;

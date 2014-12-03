@@ -42,7 +42,6 @@ package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
 import static org.jooq.tools.reflect.Reflect.on;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 

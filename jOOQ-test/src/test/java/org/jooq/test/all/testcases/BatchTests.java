@@ -46,7 +46,6 @@ import static org.jooq.impl.DSL.delete;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.tools.reflect.Reflect.on;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 

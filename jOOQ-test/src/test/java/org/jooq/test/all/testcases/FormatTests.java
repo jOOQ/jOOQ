@@ -44,7 +44,6 @@ import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.tools.StringUtils.defaultString;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;

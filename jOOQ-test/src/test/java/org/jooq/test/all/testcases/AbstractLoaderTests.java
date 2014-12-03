@@ -42,7 +42,6 @@ package org.jooq.test.all.testcases;
 
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.impl.DSL.count;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 

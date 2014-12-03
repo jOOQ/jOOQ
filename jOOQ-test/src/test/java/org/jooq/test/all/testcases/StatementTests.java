@@ -44,7 +44,6 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.param;
 import static org.jooq.impl.DSL.val;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;

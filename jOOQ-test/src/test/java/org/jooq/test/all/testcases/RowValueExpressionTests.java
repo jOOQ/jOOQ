@@ -53,7 +53,6 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.zero;
-import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
 

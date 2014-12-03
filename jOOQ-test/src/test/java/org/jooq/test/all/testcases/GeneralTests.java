@@ -52,7 +52,6 @@ import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.two;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.zero;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;

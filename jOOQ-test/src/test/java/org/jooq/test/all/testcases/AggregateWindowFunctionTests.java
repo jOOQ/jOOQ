@@ -103,7 +103,6 @@ import static org.jooq.impl.DSL.sumDistinct;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.varPop;
 import static org.jooq.impl.DSL.varSamp;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNotNull;

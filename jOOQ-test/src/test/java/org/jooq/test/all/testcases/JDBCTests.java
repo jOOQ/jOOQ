@@ -41,7 +41,6 @@
 package org.jooq.test.all.testcases;
 
 import static org.jooq.SQLDialect.MARIADB;
-import static org.junit.Assert.assertEquals;
 
 import java.sql.Connection;
 import java.sql.Date;

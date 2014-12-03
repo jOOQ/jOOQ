@@ -43,7 +43,6 @@ package org.jooq.test.all.testcases;
 import static java.util.Arrays.asList;
 import static java.util.Collections.nCopies;
 import static org.jooq.impl.DSL.sum;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 

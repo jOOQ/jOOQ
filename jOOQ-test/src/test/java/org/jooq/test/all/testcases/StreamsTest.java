@@ -43,7 +43,6 @@ package org.jooq.test.all.testcases;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
-import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
 import java.util.LinkedHashMap;

@@ -43,7 +43,6 @@ package org.jooq.test;
 import static java.util.Arrays.stream;
 import static org.hamcrest.Matchers.isOneOf;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -897,11 +896,11 @@ public abstract class BaseTest<
     }
 
     protected final void assertCountAuthors(int count) {
-        assertEquals(count, (int) create().selectCount().from(TAuthor()).fetchOne(0, Integer.class));
+        assertEquals(count, create().selectCount().from(TAuthor()).fetchOne(0, Integer.class));
     }
 
     protected final void assertCountBooks(int count) {
-        assertEquals(count, (int) create().selectCount().from(TBook()).fetchOne(0, Integer.class));
+        assertEquals(count, create().selectCount().from(TBook()).fetchOne(0, Integer.class));
     }
 
     protected final void assumeFamilyNotIn(SQLDialect... dialects) {
@@ -1018,6 +1017,42 @@ public abstract class BaseTest<
         if (new HashSet<Object>(expected).equals(new HashSet<Object>(actual))) {
             Assert.fail("Collections are the same : " + expected + " and " + actual);
         }
+    }
+
+    protected static void assertEquals(int expected, int actual) {
+        Assert.assertEquals(expected, actual);
+    }
+
+    protected static void assertEquals(int expected, Integer actual) {
+        Assert.assertEquals((Integer) expected, actual);
+    }
+
+    protected static void assertEquals(Integer expected, int actual) {
+        Assert.assertEquals(expected, (Integer) actual);
+    }
+
+    protected static void assertEquals(long expected, long actual) {
+        Assert.assertEquals(expected, actual);
+    }
+
+    protected static void assertEquals(long expected, Long actual) {
+        Assert.assertEquals((Long) expected, actual);
+    }
+
+    protected static void assertEquals(Long expected, long actual) {
+        Assert.assertEquals(expected, (Long) actual);
+    }
+
+    protected static void assertEquals(float expected, float actual, float delta) {
+        Assert.assertEquals(expected, actual, delta);
+    }
+
+    protected static void assertEquals(double expected, double actual, double delta) {
+        Assert.assertEquals(expected, actual, delta);
+    }
+
+    protected static void assertEquals(Object expected, Object actual) {
+        Assert.assertEquals(expected, actual);
     }
 
     /**

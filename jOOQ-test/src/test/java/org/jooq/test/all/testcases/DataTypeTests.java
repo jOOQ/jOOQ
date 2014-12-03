@@ -69,7 +69,6 @@ import static org.jooq.types.Unsigned.ubyte;
 import static org.jooq.types.Unsigned.uint;
 import static org.jooq.types.Unsigned.ulong;
 import static org.jooq.types.Unsigned.ushort;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;

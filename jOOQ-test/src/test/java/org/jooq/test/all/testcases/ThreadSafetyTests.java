@@ -41,7 +41,6 @@
 package org.jooq.test.all.testcases;
 
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
 

@@ -53,7 +53,6 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.two;
 import static org.jooq.impl.DSL.val;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;

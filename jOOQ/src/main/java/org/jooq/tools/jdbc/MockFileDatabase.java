@@ -152,12 +152,11 @@ public class MockFileDatabase implements MockDataProvider {
         this(new StringReader(string));
     }
 
-    @SuppressWarnings("deprecation")
     private MockFileDatabase(LineNumberReader reader) throws IOException {
         this.in = reader;
         this.matchExactly = new LinkedHashMap<String, List<MockResult>>();
         this.matchPattern = new LinkedHashMap<Pattern, List<MockResult>>();
-        this.create = DSL.using(SQLDialect.SQL99);
+        this.create = DSL.using(SQLDialect.DEFAULT);
 
         load();
     }

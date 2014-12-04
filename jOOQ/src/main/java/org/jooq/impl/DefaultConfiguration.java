@@ -40,7 +40,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.SQL99;
+import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.impl.Utils.DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION;
 
 import java.io.IOException;
@@ -111,7 +111,7 @@ public class DefaultConfiguration implements Configuration {
      * through the various <code>derive()</code> or <code>set()</code> methods.
      */
     public DefaultConfiguration() {
-        this(SQL99);
+        this(DEFAULT);
     }
 
     /**

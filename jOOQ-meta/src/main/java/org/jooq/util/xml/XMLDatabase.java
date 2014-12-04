@@ -179,9 +179,7 @@ public class XMLDatabase extends AbstractDatabase {
 
     @Override
     protected DSLContext create0() {
-
-        @SuppressWarnings("deprecation")
-        SQLDialect dialect = SQLDialect.SQL99;
+        SQLDialect dialect = SQLDialect.DEFAULT;
 
         try {
             dialect = SQLDialect.valueOf(getProperties().getProperty(P_DIALECT));

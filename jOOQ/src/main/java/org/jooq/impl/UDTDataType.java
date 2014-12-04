@@ -54,9 +54,8 @@ class UDTDataType<R extends UDTRecord<R>> extends DefaultDataType<R> {
      */
     private static final long serialVersionUID = 3262508265391094581L;
 
-    @SuppressWarnings("deprecation")
     UDTDataType(UDT<R> udt) {
-        super(SQLDialect.SQL99, udt.getRecordType(), getQualifiedName(udt));
+        super(SQLDialect.DEFAULT, udt.getRecordType(), getQualifiedName(udt));
 
         DataTypes.registerUDTRecord(getQualifiedName(udt), udt.getRecordType());
     }

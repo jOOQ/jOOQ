@@ -88,9 +88,8 @@ public class JDBCUtils {
      *
      * @see #dialect(String)
      */
-    @SuppressWarnings("deprecation")
     public static final SQLDialect dialect(Connection connection) {
-        SQLDialect result = SQLDialect.SQL99;
+        SQLDialect result = SQLDialect.DEFAULT;
 
         try {
             DatabaseMetaData m = connection.getMetaData();
@@ -107,7 +106,7 @@ public class JDBCUtils {
         }
         catch (SQLException ignore) {}
 
-        if (result == SQLDialect.SQL99) {
+        if (result == SQLDialect.DEFAULT) {
             // If the dialect cannot be guessed from the URL, take some other
             // measures, e.g. by querying DatabaseMetaData.getDatabaseProductName()
         }
@@ -181,7 +180,7 @@ public class JDBCUtils {
         }
         /* [/pro] */
 
-        return SQLDialect.SQL99;
+        return SQLDialect.DEFAULT;
     }
 
     /**

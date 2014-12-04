@@ -282,7 +282,7 @@ public class DefaultDataType<T> implements DataType<T> {
         // -----------------------------------
 
         // Dialect-specific data types
-        int ordinal = dialect == null ? SQLDialect.SQL99.ordinal() : dialect.ordinal();
+        int ordinal = dialect == null ? SQLDialect.DEFAULT.ordinal() : dialect.ordinal();
 
         // [#3225] Avoid normalisation if not necessary
         if (!TYPES_BY_NAME[ordinal].containsKey(typeName.toUpperCase())) {
@@ -626,7 +626,7 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     public static DataType<Object> getDefaultDataType(String typeName) {
-        return new DefaultDataType<Object>(SQLDialect.SQL99, Object.class, typeName, typeName);
+        return new DefaultDataType<Object>(SQLDialect.DEFAULT, Object.class, typeName, typeName);
     }
 
     public static DataType<Object> getDefaultDataType(SQLDialect dialect, String typeName) {
@@ -642,9 +642,9 @@ public class DefaultDataType<T> implements DataType<T> {
             result = TYPES_BY_NAME[dialect.ordinal()].get(typeName);
         }
 
-        // UDT data types and others are registered using SQL99
+        // UDT data types and others are registered using DEFAULT
         if (result == null) {
-            result = TYPES_BY_NAME[SQLDialect.SQL99.ordinal()].get(typeName);
+            result = TYPES_BY_NAME[SQLDialect.DEFAULT.ordinal()].get(typeName);
         }
 
         if (result == null) {

@@ -62,11 +62,20 @@ public enum SQLDialect {
     /**
      * The standard SQL dialect family.
      *
-     * @deprecated - Do not reference this pseudo-dialect. It is only used for
-     *             unit testing
+     * @deprecated - [#3844] - 3.6.0 - {@link #DEFAULT} will replace this
+     *             pseudo-dialect.
      */
     @Deprecated
     SQL99(null, false),
+
+    /**
+     * The default SQL dialect.
+     * <p>
+     * This dialect is chosen in the absence of a more explicit dialect. It is
+     * not intended to be used with any actual database as it may combined
+     * dialect-specific things from various dialects.
+     */
+    DEFAULT(null, false),
 
     // -------------------------------------------------------------------------
     // SQL dialects for free usage

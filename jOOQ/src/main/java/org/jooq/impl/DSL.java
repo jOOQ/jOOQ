@@ -12640,7 +12640,7 @@ public class DSL {
     @SuppressWarnings("deprecation")
     @Support
     public static <T> DataType<T> getDataType(Class<T> type) {
-        return DefaultDataType.getDataType(SQLDialect.SQL99, type);
+        return DefaultDataType.getDataType(SQLDialect.DEFAULT, type);
     }
 
     /**

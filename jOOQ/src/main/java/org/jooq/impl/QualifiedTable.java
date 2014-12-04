@@ -45,6 +45,7 @@ import static org.jooq.Clause.TABLE_REFERENCE;
 
 import org.jooq.Clause;
 import org.jooq.Context;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Table;
@@ -63,12 +64,12 @@ class QualifiedTable extends AbstractTable<Record> {
     private static final long     serialVersionUID = 6937002867156868761L;
     private static final Clause[] CLAUSES          = { TABLE, TABLE_REFERENCE };
 
-    private final String[]    sql;
+    private final Name            name;
 
-    QualifiedTable(String... sql) {
-        super(sql[sql.length - 1]);
+    QualifiedTable(Name name) {
+        super(name.getName()[name.getName().length - 1]);
 
-        this.sql = sql;
+        this.name = name;
     }
 
     // ------------------------------------------------------------------------
@@ -77,13 +78,7 @@ class QualifiedTable extends AbstractTable<Record> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        String separator = "";
-        for (String string : sql) {
-            ctx.sql(separator);
-            ctx.literal(string);
-
-            separator = ".";
-        }
+        ctx.visit(name);
     }
 
     @Override

@@ -49,6 +49,7 @@ import java.util.List;
 
 import org.jooq.Clause;
 import org.jooq.Context;
+import org.jooq.Name;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -68,6 +69,10 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
     private static final Clause[] CLAUSES          = { SCHEMA, SCHEMA_REFERENCE };
 
     private final String          schemaName;
+
+    SchemaImpl(Name name) {
+        this(name.getName()[0]);
+    }
 
     public SchemaImpl(String name) {
         super();

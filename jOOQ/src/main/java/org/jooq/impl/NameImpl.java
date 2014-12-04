@@ -73,13 +73,20 @@ class NameImpl extends AbstractQueryPart implements Name {
 
     @Override
     public final void accept(Context<?> ctx) {
-        String separator = "";
 
-        for (String name : qualifiedName) {
-            if (!StringUtils.isEmpty(name)) {
-                ctx.sql(separator).literal(name);
-                separator = ".";
+        // [#3437] Fully qualify this field only if allowed in the current context
+        if (ctx.qualify()) {
+            String separator = "";
+
+            for (String name : qualifiedName) {
+                if (!StringUtils.isEmpty(name)) {
+                    ctx.sql(separator).literal(name);
+                    separator = ".";
+                }
             }
+        }
+        else {
+            ctx.literal(qualifiedName[qualifiedName.length - 1]);
         }
     }
 

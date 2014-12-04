@@ -43,6 +43,7 @@ package org.jooq.impl;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.RenderContext;
 
 /**
@@ -58,12 +59,12 @@ class QualifiedField<T> extends AbstractField<T> {
      */
     private static final long serialVersionUID = 6937002867156868761L;
 
-    private final String[]    sql;
+    private final Name        name;
 
-    QualifiedField(DataType<T> type, String... sql) {
-        super(sql[sql.length - 1], type);
+    QualifiedField(DataType<T> type, Name name) {
+        super(name.getName()[name.getName().length - 1], type);
 
-        this.sql = sql;
+        this.name = name;
     }
 
     // ------------------------------------------------------------------------
@@ -72,20 +73,6 @@ class QualifiedField<T> extends AbstractField<T> {
 
     @Override
     public final void accept(Context<?> ctx) {
-
-        // [#3437] Fully qualify this field only if allowed in the current context
-        if (ctx.qualify()) {
-            String separator = "";
-
-            for (String string : sql) {
-                ctx.sql(separator);
-                ctx.literal(string);
-
-                separator = ".";
-            }
-        }
-        else {
-            ctx.literal(sql[sql.length - 1]);
-        }
+        ctx.visit(name);
     }
 }

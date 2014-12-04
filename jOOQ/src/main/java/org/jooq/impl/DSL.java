@@ -5061,6 +5061,28 @@ public class DSL {
     }
 
     /**
+     * Create a qualified schema, given its schema name.
+     * <p>
+     * This constructs a schema reference given the schema's qualified name.
+     * jOOQ will render the schema name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This schema...
+     * schema(name("MY_SCHEMA"));
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA]
+     * </pre></code>
+     */
+    @Support
+    public static Schema schema(Name name) {
+        return new SchemaImpl(name);
+    }
+
+    /**
      * Create a qualified sequence, given its sequence name.
      * <p>
      * This constructs a sequence reference given the sequence's qualified name.
@@ -5150,6 +5172,81 @@ public class DSL {
     }
 
     /**
+     * Create a qualified sequence, given its sequence name.
+     * <p>
+     * This constructs a sequence reference given the sequence's qualified name.
+     * jOOQ will render the sequence name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This sequence...
+     * sequence(name("MY_SCHEMA", "MY_SEQUENCE"));
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_SEQUENCE]
+     * </pre></code>
+     */
+    @Support
+    public static Sequence<BigInteger> sequence(Name name) {
+        return sequence(name, BigInteger.class);
+    }
+
+    /**
+     * Create a qualified sequence, given its sequence name.
+     * <p>
+     * This constructs a sequence reference given the sequence's qualified name.
+     * jOOQ will render the sequence name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This sequence...
+     * sequence(name("MY_SCHEMA", "MY_SEQUENCE"));
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_SEQUENCE]
+     * </pre></code>
+     */
+    @Support
+    public static <T extends Number> Sequence<T> sequence(Name name, Class<T> type) {
+        return sequence(name, getDataType(type));
+    }
+
+    /**
+     * Create a qualified sequence, given its sequence name.
+     * <p>
+     * This constructs a sequence reference given the sequence's qualified name.
+     * jOOQ will render the sequence name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This sequence...
+     * sequence(name("MY_SCHEMA", "MY_SEQUENCE"));
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_SEQUENCE]
+     * </pre></code>
+     */
+    @Support
+    public static <T extends Number> Sequence<T> sequence(Name name, DataType<T> type) {
+        if (name == null)
+            throw new NullPointerException();
+
+        if (name.getName().length < 1 || name.getName().length > 2)
+            throw new IllegalArgumentException("Must provide a qualified name of length 1 or 2 : " + name);
+
+        String n = name.getName()[name.getName().length - 1];
+        Schema s = name.getName().length == 2 ? schema(name(name.getName()[0])) : null;
+
+        return new SequenceImpl<T>(n, s, type);
+    }
+
+    /**
      * Create a qualified table, given its table name.
      * <p>
      * This constructs a table reference given the table's qualified name. jOOQ
@@ -5172,7 +5269,29 @@ public class DSL {
      */
     @Support
     public static Table<Record> tableByName(String... qualifiedName) {
-        return new QualifiedTable(qualifiedName);
+        return table(name(qualifiedName));
+    }
+
+    /**
+     * Create a qualified table, given its table name.
+     * <p>
+     * This constructs a table reference given the table's qualified name. jOOQ
+     * will render the table name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This table...
+     * tableByName("MY_SCHEMA", "MY_TABLE");
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_TABLE]
+     * </pre></code>
+     */
+    @Support
+    public static Table<Record> table(Name name) {
+        return new QualifiedTable(name);
     }
 
     /**
@@ -5279,7 +5398,100 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> fieldByName(DataType<T> type, String... qualifiedName) {
-        return new QualifiedField<T>(type, qualifiedName);
+        return field(name(qualifiedName), type);
+    }
+
+    /**
+     * Create a qualified field, given its (qualified) field name.
+     * <p>
+     * This constructs a field reference given the field's qualified name. jOOQ
+     * will render the field name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This field...
+     * field(name("MY_SCHEMA", "MY_TABLE", "MY_FIELD"));
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
+     * </pre></code>
+     * <p>
+     * Another example: <code><pre>
+     * create.select(field("length({1})", Integer.class, field(name("TITLE"))))
+     *       .from(table(name("T_BOOK")))
+     *       .fetch();
+     *
+     * // ... will execute this SQL on SQL Server:
+     * select length([TITLE]) from [T_BOOK]
+     * </pre></code>
+     */
+    @Support
+    public static Field<Object> field(Name name) {
+        return field(name, Object.class);
+    }
+
+    /**
+     * Create a qualified field, given its (qualified) field name.
+     * <p>
+     * This constructs a field reference given the field's qualified name. jOOQ
+     * will render the field name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This field...
+     * field(name("MY_SCHEMA", "MY_TABLE", "MY_FIELD"));
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
+     * </pre></code>
+     * <p>
+     * Another example: <code><pre>
+     * create.select(field("length({1})", Integer.class, field(name("TITLE"))))
+     *       .from(table(name("T_BOOK")))
+     *       .fetch();
+     *
+     * // ... will execute this SQL on SQL Server:
+     * select length([TITLE]) from [T_BOOK]
+     * </pre></code>
+     */
+    @Support
+    public static <T> Field<T> field(Name name, Class<T> type) {
+        return field(name, getDataType(type));
+    }
+
+    /**
+     * Create a qualified field, given its (qualified) field name.
+     * <p>
+     * This constructs a field reference given the field's qualified name. jOOQ
+     * will render the field name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This field...
+     * field(name("MY_SCHEMA", "MY_TABLE", "MY_FIELD"));
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
+     * </pre></code>
+     * <p>
+     * Another example: <code><pre>
+     * create.select(field("length({1})", Integer.class, field(name("TITLE"))))
+     *       .from(table(name("T_BOOK")))
+     *       .fetch();
+     *
+     * // ... will execute this SQL on SQL Server:
+     * select length([TITLE]) from [T_BOOK]
+     * </pre></code>
+     */
+    @Support
+    public static <T> Field<T> field(Name name, DataType<T> type) {
+        return new QualifiedField<T>(type, name);
     }
 
     // -------------------------------------------------------------------------

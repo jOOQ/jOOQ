@@ -42,7 +42,8 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.SELECT;
-import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Utils.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Utils.DATA_UNALIAS_ALIASES_IN_ORDER_BY;

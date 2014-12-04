@@ -5054,7 +5054,9 @@ public class DSL {
      *
      * @param name The schema's reference name.
      * @return A schema referenced by <code>name</code>
+     * @deprecated - [#3843] - 3.6.0 - use {@link #schema(Name)} instead
      */
+    @Deprecated
     @Support
     public static Schema schemaByName(String name) {
         return new SchemaImpl(name);
@@ -5102,7 +5104,9 @@ public class DSL {
      * @param qualifiedName The various parts making up your sequence's
      *            reference name.
      * @return A sequence referenced by <code>sequenceName</code>
+     * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name)} instead
      */
+    @Deprecated
     @Support
     public static Sequence<BigInteger> sequenceByName(String... qualifiedName) {
         return sequenceByName(BigInteger.class, qualifiedName);
@@ -5129,7 +5133,9 @@ public class DSL {
      *            reference name.
      * @param type The type of the returned field
      * @return A sequence referenced by <code>sequenceName</code>
+     * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name, Class)} instead
      */
+    @Deprecated
     @Support
     public static <T extends Number> Sequence<T> sequenceByName(Class<T> type, String... qualifiedName) {
         return sequenceByName(getDataType(type), qualifiedName);
@@ -5156,7 +5162,9 @@ public class DSL {
      *            reference name.
      * @param type The type of the returned field
      * @return A sequence referenced by <code>sequenceName</code>
+     * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name, DataType)} instead
      */
+    @Deprecated
     @Support
     public static <T extends Number> Sequence<T> sequenceByName(DataType<T> type, String... qualifiedName) {
         if (qualifiedName == null)
@@ -5266,7 +5274,9 @@ public class DSL {
      * @param qualifiedName The various parts making up your table's reference
      *            name.
      * @return A table referenced by <code>tableName</code>
+     * @deprecated - [#3843] - 3.6.0 - use {@link #table(Name)} instead
      */
+    @Deprecated
     @Support
     public static Table<Record> tableByName(String... qualifiedName) {
         return table(name(qualifiedName));
@@ -5323,7 +5333,9 @@ public class DSL {
      * @param qualifiedName The various parts making up your field's reference
      *            name.
      * @return A field referenced by <code>fieldName</code>
+     * @deprecated - [#3843] - 3.6.0 - use {@link #field(Name)} instead
      */
+    @Deprecated
     @Support
     public static Field<Object> fieldByName(String... qualifiedName) {
         return fieldByName(Object.class, qualifiedName);
@@ -5359,7 +5371,9 @@ public class DSL {
      *            name.
      * @param type The type of the returned field
      * @return A field referenced by <code>fieldName</code>
+     * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name, Class)} instead
      */
+    @Deprecated
     @Support
     public static <T> Field<T> fieldByName(Class<T> type, String... qualifiedName) {
         return fieldByName(getDataType(type), qualifiedName);
@@ -5395,7 +5409,9 @@ public class DSL {
      *            name.
      * @param type The type of the returned field
      * @return A field referenced by <code>fieldName</code>
+     * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name, DataType)} instead
      */
+    @Deprecated
     @Support
     public static <T> Field<T> fieldByName(DataType<T> type, String... qualifiedName) {
         return field(name(qualifiedName), type);
@@ -5491,7 +5507,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> field(Name name, DataType<T> type) {
-        return new QualifiedField<T>(type, name);
+        return new QualifiedField<T>(name, type);
     }
 
     // -------------------------------------------------------------------------

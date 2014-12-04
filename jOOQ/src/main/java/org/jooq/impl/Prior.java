@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static org.jooq.conf.RenderNameStyle.AS_IS;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nullSafe;
 
 import org.jooq.Context;
@@ -83,7 +84,7 @@ class Prior<T> extends AbstractField<T> {
 
                     xx xxxxx xxx xxxxxx xxxxxxx xx xxxxx xxxxxxxxx
                     xxxxxxxx x x xxxxxx xxxxxxxxxx xxxxxxxxxxx
-                        x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+                        x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx
                         x xxxxxx
 
                     xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx

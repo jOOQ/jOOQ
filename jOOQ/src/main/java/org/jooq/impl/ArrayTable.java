@@ -40,7 +40,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.name;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -130,7 +130,7 @@ class ArrayTable extends AbstractTable<Record> {
             try {
                 UDTRecord<?> record = (UDTRecord<?>) arrayType.newInstance();
                 for (Field<?> f : record.fields()) {
-                    result.add(fieldByName(f.getDataType(), alias, f.getName()));
+                    result.add(DSL.field(name(alias, f.getName()), f.getDataType()));
                 }
             }
             catch (Exception e) {
@@ -140,7 +140,7 @@ class ArrayTable extends AbstractTable<Record> {
 
         // Simple array types have a synthetic field called "COLUMN_VALUE"
         else {
-            result.add(fieldByName(DSL.getDataType(arrayType), alias, "COLUMN_VALUE"));
+            result.add(DSL.field(name(alias, "COLUMN_VALUE"), DSL.getDataType(arrayType)));
         }
 
         return new Fields<Record>(result);

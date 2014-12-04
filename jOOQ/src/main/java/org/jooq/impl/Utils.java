@@ -54,8 +54,8 @@ import static org.jooq.conf.SettingsTools.reflectionCaching;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.escape;
-import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.getDataType;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
@@ -669,7 +669,7 @@ final class Utils {
         String[] names = fieldNames(length);
 
         for (int i = 0; i < length; i++)
-            result[i] = fieldByName(names[i]);
+            result[i] = DSL.field(name(names[i]));
 
         return result;
     }
@@ -692,9 +692,9 @@ final class Utils {
 
         for (int i = 0; i < fieldNames.length; i++)
             if (tableName == null)
-                result[i] = fieldByName(fieldNames[i]);
+                result[i] = DSL.field(name(fieldNames[i]));
             else
-                result[i] = fieldByName(tableName, fieldNames[i]);
+                result[i] = DSL.field(name(tableName, fieldNames[i]));
 
         return result;
     }
@@ -725,6 +725,14 @@ final class Utils {
         else {
             return val(value);
         }
+    }
+
+    /**
+     * @deprecated - This method is probably called by mistake (ambiguous static import).
+     */
+    @Deprecated
+    static final Field<Object> field(Name name) {
+        return DSL.field(name);
     }
 
     /**
@@ -945,7 +953,7 @@ final class Utils {
         QueryPartList<Field<?>> result = new QueryPartList<Field<?>>();
 
         for (Field<?> field : fields)
-            result.add(fieldByName(field.getName()));
+            result.add(DSL.field(name(field.getName())));
 
         return result;
     }

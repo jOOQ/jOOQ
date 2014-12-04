@@ -44,11 +44,11 @@ package org.jooq.test;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.param;
 import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.DSL.tableByName;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.test.data.Table1.FIELD_ID1;
 import static org.jooq.test.data.Table1.TABLE1;
@@ -725,8 +725,8 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testQueryPartByName() throws Exception {
-        Field<Object> field = fieldByName("A", "b", "';`");
-        Table<Record> table = tableByName("A", "b", "';`");
+        Field<Object> field = field(name("A", "b", "';`"));
+        Table<Record> table = table(name("A", "b", "';`"));
 
         assertEquals("`A`.`b`.`';```", r_ref().render(field));
         assertEquals("`A`.`b`.`';```", r_refI().render(field));
@@ -737,13 +737,13 @@ public class BasicTest extends AbstractTest {
     @Test
     public void testQueryPartByNameAndConditions() throws Exception {
         List<String> v1 = Arrays.asList("1", "2");
-        Condition c1 = fieldByName(String.class, "A", "b").in(v1);
+        Condition c1 = field(name("A", "b"), String.class).in(v1);
 
         assertEquals("`A`.`b` in (?, ?)", r_ref().render(c1));
         assertEquals("`A`.`b` in ('1', '2')", r_refI().render(c1));
 
         Set<String> v2 = new TreeSet<String>(Arrays.asList("1", "2"));
-        Condition c2 = fieldByName(String.class, "A", "b").in(v2);
+        Condition c2 = field(name("A", "b"), String.class).in(v2);
 
         assertEquals("`A`.`b` in (?, ?)", r_ref().render(c2));
         assertEquals("`A`.`b` in ('1', '2')", r_refI().render(c2));

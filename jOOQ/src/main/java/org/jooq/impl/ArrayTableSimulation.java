@@ -41,7 +41,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.falseCondition;
-import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.using;
 
@@ -86,7 +86,7 @@ class ArrayTableSimulation extends AbstractTable<Record> {
         this.array = array;
         this.alias = alias;
         this.fieldAlias = fieldAlias == null ? "COLUMN_VALUE" : fieldAlias;
-        this.field = new Fields<Record>(fieldByName(DSL.getDataType(array.getClass().getComponentType()), alias, this.fieldAlias));
+        this.field = new Fields<Record>(DSL.field(name(alias, this.fieldAlias), DSL.getDataType(array.getClass().getComponentType())));
     }
 
     @Override

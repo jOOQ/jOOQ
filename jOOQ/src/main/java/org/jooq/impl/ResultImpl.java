@@ -44,7 +44,8 @@ package org.jooq.impl;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static org.jooq.impl.DSL.insertInto;
-import static org.jooq.impl.DSL.tableByName;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Utils.indexOrFail;
 import static org.jooq.tools.StringUtils.abbreviate;
 import static org.jooq.tools.StringUtils.leftPad;
@@ -813,7 +814,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             table = ((TableRecord<?>) records.get(0)).getTable();
 
         if (table == null)
-            table = tableByName("UNKNOWN_TABLE");
+            table = table(name("UNKNOWN_TABLE"));
 
         formatInsert(writer, table, fields());
     }

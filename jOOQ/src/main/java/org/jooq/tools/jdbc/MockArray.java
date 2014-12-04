@@ -41,7 +41,8 @@
 package org.jooq.tools.jdbc;
 
 import static java.lang.reflect.Array.newInstance;
-import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.name;
 
 import java.sql.Array;
 import java.sql.ResultSet;
@@ -136,16 +137,16 @@ public class MockArray<T> implements Array {
     private ResultSet getResultSet0(T[] a) {
         DSLContext create = DSL.using(dialect);
 
-        Field<Long> index = fieldByName(Long.class, "INDEX");
-        Field<T> value = (Field<T>) fieldByName(type.getComponentType(), "VALUE");
+        Field<Long> index = field(name("INDEX"), Long.class);
+        Field<T> value = (Field<T>) field(name("VALUE"), type.getComponentType());
         Result<Record2<Long, T>> result = create.newResult(index, value);
 
         for (int i = 0; i < a.length; i++) {
             Record2<Long, T> record = create.newRecord(index, value);
-            
+
             record.setValue(index, i + 1L);
             record.setValue(value, a[i]);
-            
+
             result.add(record);
         }
 

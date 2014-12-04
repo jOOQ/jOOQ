@@ -53,10 +53,12 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.SQLDataType.VARCHAR;
@@ -254,13 +256,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             )
             .unionAll(
                 select(
-                    fieldByName(Integer.class, "t1", "f1").add(inline(1)),
-                    fieldByName(String.class, "t1", "f2").concat(inline("a")).cast(VARCHAR.length(15))
+                    field(name("t1", "f1"), Integer.class).add(inline(1)),
+                    field(name("t1", "f2"), String.class).concat(inline("a")).cast(VARCHAR.length(15))
                 )
-                .from(tableByName("t1"))
+                .from(table(name("t1")))
                 // H2 support is *very* experimental...
                 // https://groups.google.com/d/msg/h2-database/OJfqNF_Iqyo/brxu-Lu3c78J
-                .where(fieldByName("t1", "f1").lt(inline(10)))
+                .where(field(name("t1", "f1")).lt(inline(10)))
             )
         );
 
@@ -293,11 +295,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             )
             .unionAll(
                 select(
-                    fieldByName(Integer.class, "t1", "f1").add(1),
-                    fieldByName(String.class, "t1", "f2").concat("a").cast(VARCHAR.length(15))
+                    field(name("t1", "f1"), Integer.class).add(1),
+                    field(name("t1", "f2"), String.class).concat("a").cast(VARCHAR.length(15))
                 )
-                .from(tableByName("t1"))
-                .where(fieldByName("t1", "f1").lt(10))
+                .from(table(name("t1")))
+                .where(field(name("t1", "f1")).lt(10))
             )
         );
 
@@ -309,11 +311,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             )
             .unionAll(
                 select(
-                    fieldByName(Integer.class, "t2", "g1").add(1),
-                    fieldByName(String.class, "t2", "g2").concat("b").cast(VARCHAR.length(15))
+                    field(name("t2", "g1"), Integer.class).add(1),
+                    field(name("t2", "g2"), String.class).concat("b").cast(VARCHAR.length(15))
                 )
-                .from(tableByName("t2"))
-                .where(fieldByName("t2", "g1").lt(10))
+                .from(table(name("t2")))
+                .where(field(name("t2", "g1")).lt(10))
             )
         );
 

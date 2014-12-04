@@ -61,7 +61,7 @@ class QualifiedField<T> extends AbstractField<T> {
 
     private final Name        name;
 
-    QualifiedField(DataType<T> type, Name name) {
+    QualifiedField(Name name, DataType<T> type) {
         super(name.getName()[name.getName().length - 1], type);
 
         this.name = name;

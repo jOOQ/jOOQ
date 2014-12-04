@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static org.jooq.conf.RenderNameStyle.AS_IS;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nullSafe;
 
 import org.jooq.Context;
@@ -83,7 +84,7 @@ class Prior<T> extends AbstractField<T> {
 
                     // Also, the column mustn't be fully qualified
                     Field<?> f = (field instanceof TableField)
-                        ? DSL.fieldByName(((TableField<?, ?>) field).getTable().getName(), field.getName())
+                        ? DSL.field(name(((TableField<?, ?>) field).getTable().getName(), field.getName()))
                         : field;
 
                     ctx.keyword("prior").sql(" ").visit(f);

@@ -117,6 +117,6 @@ class GenerateSeries extends AbstractTable<Record1<Integer>> {
 
     @Override
     final Fields<Record1<Integer>> fields0() {
-        return new Fields<Record1<Integer>>(DSL.fieldByName(Integer.class, "generate_series"));
+        return new Fields<Record1<Integer>>(DSL.field(name("generate_series"), Integer.class));
     }
 }

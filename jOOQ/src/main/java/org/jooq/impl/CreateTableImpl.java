@@ -48,7 +48,8 @@ import static org.jooq.Clause.CREATE_TABLE_NAME;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Utils.DATA_SELECT_INTO_TABLE;
 
 import java.util.ArrayList;
@@ -112,7 +113,7 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
     @Override
     public final CreateTableColumnStep column(String field, DataType<?> type) {
-        columnFields.add(fieldByName(type, field));
+        columnFields.add(field(name(field), type));
         columnTypes.add(type);
         return this;
     }

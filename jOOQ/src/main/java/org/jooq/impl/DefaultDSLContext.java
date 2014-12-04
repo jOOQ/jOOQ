@@ -44,10 +44,10 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.queryPart;
-import static org.jooq.impl.DSL.sequenceByName;
-import static org.jooq.impl.DSL.tableByName;
+import static org.jooq.impl.DSL.sequence;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.template;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Utils.list;
@@ -812,7 +812,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             List<Field<?>> fields = new ArrayList<Field<?>>();
 
             for (String name : data.get(0)) {
-                fields.add(fieldByName(String.class, name));
+                fields.add(field(name(name), String.class));
             }
 
             Result<Record> result = new ResultImpl<Record>(configuration(), fields);
@@ -1624,7 +1624,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createView(String viewName, String... fieldNames) {
-        return createView(tableByName(viewName), Utils.fieldsByName(viewName, fieldNames));
+        return createView(table(name(viewName)), Utils.fieldsByName(viewName, fieldNames));
     }
 
     @Override
@@ -1634,7 +1634,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateTableAsStep<Record> createTable(String tableName) {
-        return createTable(tableByName(tableName));
+        return createTable(table(name(tableName)));
     }
 
     @Override
@@ -1654,7 +1654,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateSequenceFinalStep createSequence(String sequence) {
-        return createSequence(sequenceByName(sequence));
+        return createSequence(sequence(name(sequence)));
     }
 
     @Override
@@ -1664,7 +1664,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public AlterSequenceRestartStep<BigInteger> alterSequence(String sequence) {
-        return alterSequence(sequenceByName(sequence));
+        return alterSequence(sequence(name(sequence)));
     }
 
     @Override
@@ -1674,7 +1674,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public AlterTableStep alterTable(String table) {
-        return alterTable(tableByName(table));
+        return alterTable(table(name(table)));
     }
 
     @Override
@@ -1684,7 +1684,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public DropViewFinalStep dropView(String table) {
-        return dropView(tableByName(table));
+        return dropView(table(name(table)));
     }
 
     @Override
@@ -1694,7 +1694,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public DropViewFinalStep dropViewIfExists(String table) {
-        return dropViewIfExists(tableByName(table));
+        return dropViewIfExists(table(name(table)));
     }
 
     @Override
@@ -1704,7 +1704,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public DropTableStep dropTable(String table) {
-        return dropTable(tableByName(table));
+        return dropTable(table(name(table)));
     }
 
     @Override
@@ -1714,7 +1714,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public DropTableStep dropTableIfExists(String table) {
-        return dropTableIfExists(tableByName(table));
+        return dropTableIfExists(table(name(table)));
     }
 
     @Override
@@ -1734,7 +1734,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public DropSequenceFinalStep dropSequence(String sequence) {
-        return dropSequence(sequenceByName(sequence));
+        return dropSequence(sequence(name(sequence)));
     }
 
     @Override
@@ -1744,7 +1744,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public DropSequenceFinalStep dropSequenceIfExists(String sequence) {
-        return dropSequenceIfExists(sequenceByName(sequence));
+        return dropSequenceIfExists(sequence(name(sequence)));
     }
 
     @Override
@@ -1808,7 +1808,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public BigInteger nextval(String sequence) {
-        return nextval(sequenceByName(sequence));
+        return nextval(sequence(name(sequence)));
     }
 
     @Override
@@ -1819,7 +1819,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public BigInteger currval(String sequence) {
-        return currval(sequenceByName(sequence));
+        return currval(sequence(name(sequence)));
     }
 
     @Override

@@ -55,7 +55,8 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.exists;
-import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
@@ -163,7 +164,7 @@ class RowSubqueryCondition extends AbstractCondition {
 
             Field<?>[] fields = new Field[names.size()];
             for (int i = 0; i < fields.length; i++) {
-                fields[i] = fieldByName(table, names.get(i));
+                fields[i] = field(name(table, names.get(i)));
             }
 
             Condition condition;

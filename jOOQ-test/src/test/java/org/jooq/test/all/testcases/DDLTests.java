@@ -47,11 +47,11 @@ import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.tableByName;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.two;
 import static org.jooq.impl.DSL.val;
 import static org.junit.Assert.assertTrue;
@@ -109,13 +109,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().createView("v1").as(select(one().as("one"))).execute();
             create().createView("v2", "two").as(select(two())).execute();
 
-            assertEquals(1, (int) create().fetchValue(select(fieldByName(Integer.class, "one")).from(tableByName("v1"))));
-            assertEquals(2, (int) create().fetchValue(select(fieldByName(Integer.class, "two")).from(tableByName("v2"))));
+            assertEquals(1, (int) create().fetchValue(select(field(name("one"), Integer.class)).from(table(name("v1")))));
+            assertEquals(2, (int) create().fetchValue(select(field(name("two"), Integer.class)).from(table(name("v2")))));
         }
         finally {
-            create().dropView(tableByName("v1")).execute();
-            create().dropViewIfExists(tableByName("v2")).execute();
-            create().dropViewIfExists(tableByName("v2")).execute();
+            create().dropView(table(name("v1"))).execute();
+            create().dropViewIfExists(table(name("v2"))).execute();
+            create().dropViewIfExists(table(name("v2"))).execute();
 
             assertThrows(DataAccessException.class, () -> {
                 create().fetch("select * from {0}", name("v1"));
@@ -259,26 +259,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         try {
             // TODO: Re-use jOOQ API for this
             create().execute("create table {0} ({1} " + varchar() + ")", name("t"), name("a"));
-            create().insertInto(tableByName("t"), fieldByName("a")).values(1).execute();
-            assertEquals(asList("1"), asList(create().fetchOne(tableByName("t")).intoArray()));
+            create().insertInto(table(name("t")), field(name("a"))).values(1).execute();
+            assertEquals(asList("1"), asList(create().fetchOne(table(name("t"))).intoArray()));
 
             create().alterTable("t").add("b", SQLDataType.INTEGER).execute();
-            assertEquals(asList("1", null), asList(create().fetchOne(tableByName("t")).intoArray()));
+            assertEquals(asList("1", null), asList(create().fetchOne(table(name("t"))).intoArray()));
 
             create().alterTable("t").add("c", SQLDataType.NUMERIC).execute();
-            assertEquals(asList("1", null, null), asList(create().fetchOne(tableByName("t")).intoArray()));
+            assertEquals(asList("1", null, null), asList(create().fetchOne(table(name("t"))).intoArray()));
 
             create().alterTable("t").add("d", SQLDataType.NUMERIC.precision(5)).execute();
-            assertEquals(asList("1", null, null, null), asList(create().fetchOne(tableByName("t")).intoArray()));
+            assertEquals(asList("1", null, null, null), asList(create().fetchOne(table(name("t"))).intoArray()));
 
             create().alterTable("t").add("e", SQLDataType.NUMERIC.precision(5, 2)).execute();
-            assertEquals(asList("1", null, null, null, null), asList(create().fetchOne(tableByName("t")).intoArray()));
+            assertEquals(asList("1", null, null, null, null), asList(create().fetchOne(table(name("t"))).intoArray()));
 
             create().alterTable("t").add("f", SQLDataType.VARCHAR).execute();
-            assertEquals(asList("1", null, null, null, null, null), asList(create().fetchOne(tableByName("t")).intoArray()));
+            assertEquals(asList("1", null, null, null, null, null), asList(create().fetchOne(table(name("t"))).intoArray()));
 
             create().alterTable("t").add("g", SQLDataType.VARCHAR.length(5)).execute();
-            assertEquals(asList("1", null, null, null, null, null, null), asList(create().fetchOne(tableByName("t")).intoArray()));
+            assertEquals(asList("1", null, null, null, null, null, null), asList(create().fetchOne(table(name("t"))).intoArray()));
         }
         finally {
             ignoreThrows(() -> create().dropTable("t").execute());
@@ -292,7 +292,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // TODO: Re-use jOOQ API for this
             create().execute("create table {0} ({1} int)", name("t"), name("a"));
             create().alterTable("t").alter("a").set(SQLDataType.VARCHAR).execute();
-            create().insertInto(tableByName("t"), fieldByName("a")).values("1").execute();
+            create().insertInto(table(name("t")), field(name("a"))).values("1").execute();
             assertEquals("1", create().fetchOne("select * from {0}", name("t")).getValue(0));
         }
         finally {
@@ -308,7 +308,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().execute("create table {0} ({1} int, {2} " + varchar() + ")", name("t"), name("a"), name("b"));
 
             create().alterTable("t").alter("b").defaultValue("empty").execute();
-            create().insertInto(tableByName("t"), fieldByName("a")).values(1).execute();
+            create().insertInto(table(name("t")), field(name("a"))).values(1).execute();
             assertEquals("empty", create().fetchValue("select {0} from {1}", name("b"), name("t")));
         }
         finally {
@@ -322,14 +322,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         try {
             // TODO: Re-use jOOQ API for this
             create().execute("create table {0} ({1} " + varchar() + ", {2} " + varchar() + ", {3} " + varchar() + ")", name("t"), name("a"), name("b"), name("c"));
-            create().insertInto(tableByName("t"), fieldByName("a"), fieldByName("b"), fieldByName("c")).values("1", "2", "3").execute();
-            assertEquals(asList("1", "2", "3"), asList(create().fetchOne(tableByName("t")).intoArray()));
+            create().insertInto(table(name("t")), field(name("a")), field(name("b")), field(name("c"))).values("1", "2", "3").execute();
+            assertEquals(asList("1", "2", "3"), asList(create().fetchOne(table(name("t"))).intoArray()));
 
             create().alterTable("t").drop("c").execute();
-            assertEquals(asList("1", "2"), asList(create().fetchOne(tableByName("t")).intoArray()));
+            assertEquals(asList("1", "2"), asList(create().fetchOne(table(name("t"))).intoArray()));
 
             create().alterTable("t").drop("b").execute();
-            assertEquals(asList("1"), asList(create().fetchOne(tableByName("t")).intoArray()));
+            assertEquals(asList("1"), asList(create().fetchOne(table(name("t"))).intoArray()));
         }
         finally {
             ignoreThrows(() -> create().dropTable("t").execute());
@@ -340,12 +340,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // TODO: Re-use jOOQ API for this
         create().execute("create table {0} ({1} " + varchar() + ", {2} " + varchar() + ", {3} " + varchar() + ")", name("t"), name("a"), name("b"), name("c"));
-        create().insertInto(tableByName("t"), fieldByName("a"), fieldByName("b"), fieldByName("c")).values("1", "2", "3").execute();
-        assertEquals(asList("1", "2", "3"), asList(create().fetchOne(tableByName("t")).intoArray()));
+        create().insertInto(table(name("t")), field(name("a")), field(name("b")), field(name("c"))).values("1", "2", "3").execute();
+        assertEquals(asList("1", "2", "3"), asList(create().fetchOne(table(name("t"))).intoArray()));
 
         create().dropTable("t").execute();
         try {
-            create().fetch(tableByName("t"));
+            create().fetch(table(name("t")));
             fail();
         }
         catch (DataAccessException expected) {}
@@ -374,17 +374,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testCreateTable() throws Exception {
         try {
             create().createTable("t")
-                    .column(fieldByName(Integer.class, "t", "i"), SQLDataType.INTEGER)
+                    .column(field(name("t", "i"), Integer.class), SQLDataType.INTEGER)
                     .column("n", SQLDataType.DECIMAL.precision(3, 1).nullable(true))
                     .column("s", SQLDataType.VARCHAR.length(5).nullable(false))
                     .execute();
 
             assertEquals(1,
-            create().insertInto(tableByName("t"), fieldByName("i"), fieldByName("n"), fieldByName("s"))
+            create().insertInto(table(name("t")), field(name("i")), field(name("n")), field(name("s")))
                     .values(1, new BigDecimal("10.5"), "abcde")
                     .execute());
 
-            Result<Record> r1 = create().selectFrom(tableByName("t")).fetch();
+            Result<Record> r1 = create().selectFrom(table(name("t"))).fetch();
             assertEquals(1, r1.size());
             assertEquals(3, r1.fields().length);
             assertEquals("i", r1.field(0).getName());
@@ -394,12 +394,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // Checking of NOT NULL constraints
             assertEquals(1,
-            create().insertInto(tableByName("t"), fieldByName(int.class, "i"), fieldByName(BigDecimal.class, "n"), fieldByName(String.class, "s"))
+            create().insertInto(table(name("t")), field(name("i"), int.class), field(name("n"), BigDecimal.class), field(name("s"), String.class))
                     .values(null, null, "abcde")
                     .execute());
 
             try {
-                create().insertInto(tableByName("t"), fieldByName("i"), fieldByName("n"), fieldByName("s"))
+                create().insertInto(table(name("t")), field(name("i")), field(name("n")), field(name("s")))
                         .values(1, new BigDecimal("10.5"), null)
                         .execute();
                 fail();
@@ -418,7 +418,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().createTable("t").as(
                 select(val("value").as("value"))
             ).execute();
-            Result<Record> r1 = create().selectFrom(tableByName("t")).fetch();
+            Result<Record> r1 = create().selectFrom(table(name("t"))).fetch();
 
             assertEquals(1, r1.size());
             assertEquals(1, r1.fields().length);
@@ -434,8 +434,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assumeFamilyNotIn(SYBASE);
 
         try {
-            create().select(val("value").as("value")).into(tableByName("t")).execute();
-            Result<Record> result = create().selectFrom(tableByName("t")).fetch();
+            create().select(val("value").as("value")).into(table(name("t"))).execute();
+            Result<Record> result = create().selectFrom(table(name("t"))).fetch();
 
             assertEquals(1, result.size());
             assertEquals(1, result.fields().length);

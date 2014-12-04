@@ -40,8 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.fieldByName;
-
 import java.util.List;
 
 import org.jooq.CommonTableExpression;
@@ -122,14 +120,16 @@ class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R> imple
         Field<?>[] f = new Field[s.size()];
 
         for (int i = 0; i < f.length; i++) {
-            f[i] = fieldByName(
-                s.get(i).getDataType(),
-                name.name,
+            f[i] = DSL.field(
+                DSL.name(
+                    name.name,
 
-                // If the CTE has no explicit column names, inherit those of the subquery
-                name.fieldNames.length > 0
-                    ? name.fieldNames[i]
-                    : s.get(i).getName());
+                    // If the CTE has no explicit column names, inherit those of the subquery
+                    name.fieldNames.length > 0
+                        ? name.fieldNames[i]
+                        : s.get(i).getName()),
+                s.get(i).getDataType()
+            );
         }
 
         Fields<R> result = new Fields<R>(f);

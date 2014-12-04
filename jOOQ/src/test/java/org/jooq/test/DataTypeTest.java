@@ -41,7 +41,8 @@
 
 package org.jooq.test;
 
-import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.val;
 import static org.junit.Assert.assertTrue;
 
@@ -73,7 +74,7 @@ public class DataTypeTest extends AbstractTest {
 
         Field integer = Table1.FIELD_ID1;
         Field string = Table1.FIELD_NAME1;
-        Field object = fieldByName("ANY");
+        Field object = field(name("ANY"));
 
         // Check if a correct type was coerced correctly
         // ---------------------------------------------
@@ -165,7 +166,7 @@ public class DataTypeTest extends AbstractTest {
 
         Field integer = Table1.FIELD_ID1;
         Field string = Table1.FIELD_NAME1;
-        Field object = fieldByName("ANY");
+        Field object = field(name("ANY"));
 
         // Check if a correct type was coerced correctly
         // ---------------------------------------------

@@ -2021,6 +2021,15 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals(new BigDecimal("1210.73"), result.value4());
         assertEquals(new BigDecimal("546"), result.value5());
     }
+
+    @Test
+    public void testOracleUDTRecordToString() {
+        // [#3707] UDTRecord.toString() should generate an inlined version of the UDT
+
+        UStreetTypeRecord record = new UStreetTypeRecord("street", "no", null, null, null);
+        Result<Record> result = create().fetch("select " + record + " from dual");
+        assertEquals(record, result.get(0).getValue(0));
+    }
 }
 
 /* [/pro] */

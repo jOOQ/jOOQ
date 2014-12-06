@@ -60,13 +60,15 @@ import org.jooq.impl.DSL;
 public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R> {
 
     /**
-     * Add conditions to the query.
+     * Add conditions to the query, connecting them with each other with
+     * {@link Operator#AND}.
      */
     @Support
     DeleteConditionStep<R> where(Condition... conditions);
 
     /**
-     * Add conditions to the query.
+     * Add conditions to the query, connecting them with each other with
+     * {@link Operator#AND}.
      */
     @Support
     DeleteConditionStep<R> where(Collection<? extends Condition> conditions);

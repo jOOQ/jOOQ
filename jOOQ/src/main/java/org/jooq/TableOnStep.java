@@ -56,7 +56,8 @@ import org.jooq.impl.DSL;
 public interface TableOnStep {
 
     /**
-     * Add an <code>ON</code> clause to the <code>JOIN</code>.
+     * Add an <code>ON</code> clause to the <code>JOIN</code>, connecting them
+     * with each other with {@link Operator#AND}.
      */
     @Support
     TableOnConditionStep on(Condition... conditions);

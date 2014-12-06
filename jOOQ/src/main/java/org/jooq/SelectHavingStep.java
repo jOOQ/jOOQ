@@ -89,13 +89,15 @@ import org.jooq.impl.DSL;
 public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> {
 
     /**
-     * Add a <code>HAVING</code> clause to the query.
+     * Add a <code>HAVING</code> clause to the query, connecting them with each
+     * other with {@link Operator#AND}.
      */
     @Support
     SelectHavingConditionStep<R> having(Condition... conditions);
 
     /**
-     * Add a <code>HAVING</code> clause to the query.
+     * Add a <code>HAVING</code> clause to the query, connecting them with each
+     * other with {@link Operator#AND}.
      */
     @Support
     SelectHavingConditionStep<R> having(Collection<? extends Condition> conditions);

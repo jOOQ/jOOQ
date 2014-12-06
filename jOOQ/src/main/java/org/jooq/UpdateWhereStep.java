@@ -62,13 +62,15 @@ import org.jooq.impl.DSL;
 public interface UpdateWhereStep<R extends Record> extends UpdateFinalStep<R>, UpdateReturningStep<R> {
 
     /**
-     * Add conditions to the query
+     * Add conditions to the query, connecting them with each other with
+     * {@link Operator#AND}.
      */
     @Support
     UpdateConditionStep<R> where(Condition... conditions);
 
     /**
-     * Add conditions to the query
+     * Add conditions to the query, connecting them with each other with
+     * {@link Operator#AND}.
      */
     @Support
     UpdateConditionStep<R> where(Collection<? extends Condition> conditions);

@@ -89,13 +89,15 @@ import org.jooq.impl.DSL;
 public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R> {
 
     /**
-     * Add a <code>WHERE</code> clause to the query.
+     * Add a <code>WHERE</code> clause to the query, connecting them with each
+     * other with {@link Operator#AND}.
      */
     @Support
     SelectConditionStep<R> where(Condition... conditions);
 
     /**
-     * Add a <code>WHERE</code> clause to the query.
+     * Add a <code>WHERE</code> clause to the query, connecting them with each
+     * other with {@link Operator#AND}.
      */
     @Support
     SelectConditionStep<R> where(Collection<? extends Condition> conditions);

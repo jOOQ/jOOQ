@@ -71,7 +71,8 @@ import org.jooq.impl.DSL;
 public interface MergeOnStep<R extends Record> {
 
     /**
-     * Provide join conditions and proceed to the next step
+     * Provide join conditions and proceed to the next step, connecting them
+     * with each other with {@link Operator#AND}.
      */
     @Support({ CUBRID, HSQLDB })
     MergeOnConditionStep<R> on(Condition... conditions);

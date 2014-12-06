@@ -51,7 +51,8 @@ import org.jooq.impl.DSL;
 public interface DivideByOnStep {
 
     /**
-     * Add a division condition to the <code>DIVIDE BY</code> clause
+     * Add a division condition to the <code>DIVIDE BY</code> clause, connecting
+     * them with each other with {@link Operator#AND}.
      */
     @Support
     DivideByOnConditionStep on(Condition... conditions);

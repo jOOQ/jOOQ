@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = -39905768;
+	private static final long serialVersionUID = -1367042344;
 
 	/**
-	 * The singleton instance of <code>PUBLIC.T_ARRAYS</code>
+	 * The reference instance of <code>PUBLIC.T_ARRAYS</code>
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.TArrays T_ARRAYS = new org.jooq.test.h2.generatedclasses.tables.TArrays();
 

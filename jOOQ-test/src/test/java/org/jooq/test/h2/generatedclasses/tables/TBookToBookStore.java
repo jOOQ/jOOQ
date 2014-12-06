@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 1943367892;
+	private static final long serialVersionUID = -1344772076;
 
 	/**
-	 * The singleton instance of <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code>
+	 * The reference instance of <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code>
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = new org.jooq.test.h2.generatedclasses.tables.TBookToBookStore();
 

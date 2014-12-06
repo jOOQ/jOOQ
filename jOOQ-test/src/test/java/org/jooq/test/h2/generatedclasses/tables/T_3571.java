@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3571 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.T_3571Record> {
 
-	private static final long serialVersionUID = -1213962983;
+	private static final long serialVersionUID = -1790085671;
 
 	/**
-	 * The singleton instance of <code>PUBLIC.T_3571</code>
+	 * The reference instance of <code>PUBLIC.T_3571</code>
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.T_3571 T_3571 = new org.jooq.test.h2.generatedclasses.tables.T_3571();
 

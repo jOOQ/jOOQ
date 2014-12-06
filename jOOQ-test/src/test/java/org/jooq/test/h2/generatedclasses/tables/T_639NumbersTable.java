@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -827414627;
+	private static final long serialVersionUID = 592608989;
 
 	/**
-	 * The singleton instance of <code>PUBLIC.T_639_NUMBERS_TABLE</code>
+	 * The reference instance of <code>PUBLIC.T_639_NUMBERS_TABLE</code>
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = new org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable();
 

@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Ää extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.ÄäRecord> {
 
-	private static final long serialVersionUID = -799540649;
+	private static final long serialVersionUID = 1954896663;
 
 	/**
-	 * The singleton instance of <code>PUBLIC.Ää</code>
+	 * The reference instance of <code>PUBLIC.Ää</code>
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.Ää ÄÄ = new org.jooq.test.h2.generatedclasses.tables.Ää();
 

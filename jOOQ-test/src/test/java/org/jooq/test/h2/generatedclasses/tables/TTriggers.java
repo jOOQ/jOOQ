@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 549144398;
+	private static final long serialVersionUID = 566886030;
 
 	/**
-	 * The singleton instance of <code>PUBLIC.T_TRIGGERS</code>
+	 * The reference instance of <code>PUBLIC.T_TRIGGERS</code>
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.TTriggers T_TRIGGERS = new org.jooq.test.h2.generatedclasses.tables.TTriggers();
 

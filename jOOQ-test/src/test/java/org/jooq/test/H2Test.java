@@ -48,6 +48,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.test.h2.generatedclasses.Tables.T_2486;
 import static org.jooq.test.h2.generatedclasses.Tables.T_2698;
+import static org.jooq.test.h2.generatedclasses.Tables.T_3485;
 import static org.jooq.test.h2.generatedclasses.Tables.T_3571;
 import static org.jooq.test.h2.generatedclasses.Tables.T_3666;
 import static org.jooq.test.h2.generatedclasses.Tables.T_639_NUMBERS_TABLE;
@@ -131,6 +132,7 @@ import org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TUnsignedRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_2486Record;
 import org.jooq.test.h2.generatedclasses.tables.records.T_2698Record;
+import org.jooq.test.h2.generatedclasses.tables.records.T_3485Record;
 import org.jooq.test.h2.generatedclasses.tables.records.T_3666Record;
 import org.jooq.test.h2.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord;
@@ -1089,4 +1091,17 @@ public class H2Test extends jOOQAbstractTest<
         assertEquals(5, T_3666.E2.getDataType().scale());
     }
 
+    @Test
+    public void testH2PasswordHash3485() {
+        clean(T_3485);
+
+        T_3485Record record = create().newRecord(T_3485);
+        record.setId(1);
+        record.setPw("pw");
+        assertEquals(1, create().executeInsert(record));
+
+        record = create().fetchOne(T_3485, T_3485.PW.eq("pw"));
+        assertEquals("", record.getPw());
+        assertEquals("" + "pw".hashCode(), create().fetchValue("select {0} from {1}", T_3485.PW, T_3485));
+    }
 }

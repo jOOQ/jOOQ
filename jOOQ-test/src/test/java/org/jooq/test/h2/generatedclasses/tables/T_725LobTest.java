@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -856391516;
+	private static final long serialVersionUID = -179363484;
 
 	/**
-	 * The singleton instance of <code>PUBLIC.T_725_LOB_TEST</code>
+	 * The reference instance of <code>PUBLIC.T_725_LOB_TEST</code>
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = new org.jooq.test.h2.generatedclasses.tables.T_725LobTest();
 

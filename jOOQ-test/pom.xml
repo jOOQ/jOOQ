@@ -1244,9 +1244,21 @@
                                                     <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
                                                     <converter>org.jooq.test.all.converters.Boolean_YES_NO_UC_Converter</converter>
                                                 </customType>
+                                                
+                                                <customType>
+                                                    <name>3485</name>
+                                                    <type>java.lang.String</type>
+                                                    <converter>org.jooq.test.all.converters.PasswordHashConverter</converter>
+                                                </customType>
                                             </customTypes>
 
                                             <forcedTypes>
+
+                                                <!-- [#3485] -->
+                                                <forcedType>
+                                                    <name>3485</name>
+                                                    <expression>(?i:.*?\.t_3485\.pw)</expression>
+                                                </forcedType>
 
                                                 <!-- [#3571] Rewrite types to check if nullable() and defaulted() flags are propagated -->
                                                 <forcedType>

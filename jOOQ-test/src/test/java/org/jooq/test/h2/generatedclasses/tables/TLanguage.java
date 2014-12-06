@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 989870623;
+	private static final long serialVersionUID = 2029879647;
 
 	/**
-	 * The singleton instance of <code>PUBLIC.T_LANGUAGE</code>
+	 * The reference instance of <code>PUBLIC.T_LANGUAGE</code>
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.TLanguage T_LANGUAGE = new org.jooq.test.h2.generatedclasses.tables.TLanguage();
 

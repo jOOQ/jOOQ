@@ -23,6 +23,7 @@ public class Keys {
 	// UNIQUE and PRIMARY KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_3485Record> PK_T_3485 = UniqueKeys0.PK_T_3485;
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_2327UkOnlyRecord> UK_T_2327_UK_ONLY = UniqueKeys0.UK_T_2327_UK_ONLY;
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord> PK_T_IDENTITY_PK = UniqueKeys0.PK_T_IDENTITY_PK;
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord> PK_T_DATES = UniqueKeys0.PK_T_DATES;
@@ -78,6 +79,7 @@ public class Keys {
 	}
 
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
+		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_3485Record> PK_T_3485 = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.T_3485.T_3485, org.jooq.test.h2.generatedclasses.tables.T_3485.T_3485.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_2327UkOnlyRecord> UK_T_2327_UK_ONLY = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly.T_2327_UK_ONLY, org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly.T_2327_UK_ONLY.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord> PK_T_IDENTITY_PK = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.h2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord> PK_T_DATES = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.TDates.T_DATES, org.jooq.test.h2.generatedclasses.tables.TDates.T_DATES.ID);

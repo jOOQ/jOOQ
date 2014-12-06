@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 463480156;
+	private static final long serialVersionUID = 1787098652;
 
 	/**
-	 * The singleton instance of <code>PUBLIC.X_UNUSED</code>
+	 * The reference instance of <code>PUBLIC.X_UNUSED</code>
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.XUnused X_UNUSED = new org.jooq.test.h2.generatedclasses.tables.XUnused();
 

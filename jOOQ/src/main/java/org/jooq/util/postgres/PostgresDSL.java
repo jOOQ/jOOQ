@@ -219,7 +219,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static Field<String> arrayToString(Object[] array, String delimiter) {
-        return arrayToString(val(array), val(delimiter));
+        return arrayToString(val(array), val(delimiter, String.class));
     }
 
     /**
@@ -243,7 +243,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static Field<String> arrayToString(Field<? extends Object[]> array, String delimiter) {
-        return arrayToString(array, val(delimiter));
+        return arrayToString(array, val(delimiter, String.class));
     }
 
     /**
@@ -267,7 +267,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static Field<String[]> stringToArray(String string, String delimiter) {
-        return stringToArray(val(string), val(delimiter));
+        return stringToArray(val(string, String.class), val(delimiter, String.class));
     }
 
     /**
@@ -279,7 +279,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static Field<String[]> stringToArray(String string, Field<String> delimiter) {
-        return stringToArray(val(string), delimiter);
+        return stringToArray(val(string, String.class), delimiter);
     }
 
     /**
@@ -291,7 +291,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static Field<String[]> stringToArray(Field<String> string, String delimiter) {
-        return stringToArray(string, val(delimiter));
+        return stringToArray(string, val(delimiter, String.class));
     }
 
     /**
@@ -304,6 +304,54 @@ public class PostgresDSL extends DSL {
     @Support({ POSTGRES })
     public static Field<String[]> stringToArray(Field<String> string, Field<String> delimiter) {
         return field("{string_to_array}({0}, {1})", SQLDataType.VARCHAR.getArrayDataType(), nullSafe(string), nullSafe(delimiter));
+    }
+
+    /**
+     * The PostgreSQL <code>string_to_array(anyarray, delimiter)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {xx,NULL,zz} = string_to_array('xx~^~yy~^~zz', '~^~', 'yy')
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Field<String[]> stringToArray(String string, String delimiter, String nullString) {
+        return stringToArray(val(string, String.class), val(delimiter, String.class), val(nullString, String.class));
+    }
+
+    /**
+     * The PostgreSQL <code>string_to_array(anyarray, delimiter)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {xx,NULL,zz} = string_to_array('xx~^~yy~^~zz', '~^~', 'yy')
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Field<String[]> stringToArray(String string, Field<String> delimiter, Field<String> nullString) {
+        return stringToArray(val(string, String.class), delimiter, nullString);
+    }
+
+    /**
+     * The PostgreSQL <code>string_to_array(anyarray, delimiter)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {xx,NULL,zz} = string_to_array('xx~^~yy~^~zz', '~^~', 'yy')
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Field<String[]> stringToArray(Field<String> string, String delimiter, String nullString) {
+        return stringToArray(string, val(delimiter, String.class), val(nullString, String.class));
+    }
+
+    /**
+     * The PostgreSQL <code>string_to_array(anyarray, delimiter)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {xx,NULL,zz} = string_to_array('xx~^~yy~^~zz', '~^~', 'yy')
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Field<String[]> stringToArray(Field<String> string, Field<String> delimiter, Field<String> nullString) {
+        return field("{string_to_array}({0}, {1}, {2})", SQLDataType.VARCHAR.getArrayDataType(), nullSafe(string), nullSafe(delimiter), nullSafe(nullString));
     }
 
     // -------------------------------------------------------------------------

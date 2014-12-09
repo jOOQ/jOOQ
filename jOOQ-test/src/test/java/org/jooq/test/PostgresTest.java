@@ -114,6 +114,7 @@ import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record4;
 import org.jooq.Record5;
+import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
@@ -1016,13 +1017,15 @@ public class PostgresTest extends jOOQAbstractTest<
 
         // string_to_array()
         // ---------------------------------------------------------------------
-        Record5<String[], String[], String[], String[], String[]> r5 = create()
+        Record6<String[], String[], String[], String[], String[], String[]> r5 = create()
         .select(
             stringToArray("a--b", "--"),
             stringToArray("a--b", val("--")),
             stringToArray(val("a--b"), "--"),
             stringToArray(val("a--b"), val("--")),
-            stringToArray(val(null, String.class), "--"))
+            stringToArray(val(null, String.class), "--"),
+            stringToArray("a-b-c", "-", "b")
+        )
         .fetchOne();
 
         assertEquals(asList("a", "b"), asList(r5.value1()));
@@ -1030,6 +1033,7 @@ public class PostgresTest extends jOOQAbstractTest<
         assertEquals(asList("a", "b"), asList(r5.value3()));
         assertEquals(asList("a", "b"), asList(r5.value4()));
         assertNull(r5.value5());
+        assertEquals(asList("a", null, "c"), asList(r5.value6()));
     }
 
     @Test

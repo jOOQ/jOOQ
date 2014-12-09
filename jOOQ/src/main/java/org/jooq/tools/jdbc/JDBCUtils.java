@@ -117,7 +117,6 @@ public class JDBCUtils {
     /**
      * "Guess" the {@link SQLDialect} from a connection URL.
      */
-    @SuppressWarnings("deprecation")
     public static final SQLDialect dialect(String url) {
 
         // The below list might not be accurate or complete. Feel free to

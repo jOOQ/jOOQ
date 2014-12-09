@@ -87,7 +87,7 @@ import org.jooq.types.UShort;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings({"unchecked", "deprecation"})
+@SuppressWarnings({"unchecked"})
 public class DefaultDataType<T> implements DataType<T> {
 
     /**

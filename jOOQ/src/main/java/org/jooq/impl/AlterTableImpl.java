@@ -51,7 +51,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.queryPart;
+import static org.jooq.impl.DSL.sql;
 
 import org.jooq.AlterTableAlterStep;
 import org.jooq.AlterTableDropStep;
@@ -326,7 +326,7 @@ class AlterTableImpl extends AbstractQuery implements
         xx xxxxxxx xxxxx xxxxxxxxxxx xxxx xxx xxxxxx xx x xxxxxxxxxxx xxxx xxx xxx xxxxxx
         xx               xxxxxxxxxx xxxxxxxxx xx xxxx xx
 
-        xxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxx
                 xxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxx
             x xxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxx
             x xxxx

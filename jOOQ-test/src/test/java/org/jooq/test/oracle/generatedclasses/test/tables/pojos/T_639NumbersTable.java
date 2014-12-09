@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_639_NUMBERS_TABLE", schema = "TEST")
 public class T_639NumbersTable implements java.io.Serializable {
 
-	private static final long serialVersionUID = -686926892;
+	private static final long serialVersionUID = 1738474442;
 
 	private java.lang.Integer    id;
 	private java.lang.Byte       byte_;
@@ -24,6 +24,8 @@ public class T_639NumbersTable implements java.io.Serializable {
 	private java.lang.Long       longDecimal;
 	private java.math.BigInteger bigInteger;
 	private java.math.BigDecimal bigDecimal;
+	private java.lang.Double     float_;
+	private java.lang.Double     real;
 
 	public T_639NumbersTable() {}
 
@@ -38,7 +40,9 @@ public class T_639NumbersTable implements java.io.Serializable {
 		java.lang.Integer    integerDecimal,
 		java.lang.Long       longDecimal,
 		java.math.BigInteger bigInteger,
-		java.math.BigDecimal bigDecimal
+		java.math.BigDecimal bigDecimal,
+		java.lang.Double     float_,
+		java.lang.Double     real
 	) {
 		this.id = id;
 		this.byte_ = byte_;
@@ -51,6 +55,8 @@ public class T_639NumbersTable implements java.io.Serializable {
 		this.longDecimal = longDecimal;
 		this.bigInteger = bigInteger;
 		this.bigDecimal = bigDecimal;
+		this.float_ = float_;
+		this.real = real;
 	}
 
 	@javax.persistence.Id
@@ -154,6 +160,24 @@ public class T_639NumbersTable implements java.io.Serializable {
 		this.bigDecimal = bigDecimal;
 	}
 
+	@javax.persistence.Column(name = "FLOAT", precision = 126)
+	public java.lang.Double getFloat() {
+		return this.float_;
+	}
+
+	public void setFloat(java.lang.Double float_) {
+		this.float_ = float_;
+	}
+
+	@javax.persistence.Column(name = "REAL", precision = 63)
+	public java.lang.Double getReal() {
+		return this.real;
+	}
+
+	public void setReal(java.lang.Double real) {
+		this.real = real;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -229,6 +253,18 @@ public class T_639NumbersTable implements java.io.Serializable {
 		}
 		else if (!bigDecimal.equals(other.bigDecimal))
 			return false;
+		if (float_ == null) {
+			if (other.float_ != null)
+				return false;
+		}
+		else if (!float_.equals(other.float_))
+			return false;
+		if (real == null) {
+			if (other.real != null)
+				return false;
+		}
+		else if (!real.equals(other.real))
+			return false;
 		return true;
 	}
 
@@ -247,6 +283,8 @@ public class T_639NumbersTable implements java.io.Serializable {
 		result = prime * result + ((longDecimal == null) ? 0 : longDecimal.hashCode());
 		result = prime * result + ((bigInteger == null) ? 0 : bigInteger.hashCode());
 		result = prime * result + ((bigDecimal == null) ? 0 : bigDecimal.hashCode());
+		result = prime * result + ((float_ == null) ? 0 : float_.hashCode());
+		result = prime * result + ((real == null) ? 0 : real.hashCode());
 		return result;
 	}
 }

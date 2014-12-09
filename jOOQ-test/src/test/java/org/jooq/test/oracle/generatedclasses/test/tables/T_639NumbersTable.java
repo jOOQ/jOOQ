@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 1293541364;
+	private static final long serialVersionUID = -116526142;
 
 	/**
 	 * The reference instance of <code>TEST.T_639_NUMBERS_TABLE</code>
@@ -78,6 +78,16 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.ora
 	 * The column <code>TEST.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord, java.math.BigDecimal> BIG_DECIMAL = createField("BIG_DECIMAL", org.jooq.impl.SQLDataType.NUMERIC.precision(22, 5), this, "");
+
+	/**
+	 * The column <code>TEST.T_639_NUMBERS_TABLE.FLOAT</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord, java.lang.Double> FLOAT = createField("FLOAT", org.jooq.impl.SQLDataType.DOUBLE, this, "");
+
+	/**
+	 * The column <code>TEST.T_639_NUMBERS_TABLE.REAL</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord, java.lang.Double> REAL = createField("REAL", org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
 	/**
 	 * Create a <code>TEST.T_639_NUMBERS_TABLE</code> table reference

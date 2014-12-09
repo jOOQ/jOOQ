@@ -114,4 +114,18 @@ public class T_639NumbersTableDao extends org.jooq.impl.DAOImpl<org.jooq.test.or
 	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_639NumbersTable> fetchByBigDecimal(java.math.BigDecimal... values) {
 		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_DECIMAL, values);
 	}
+
+	/**
+	 * Fetch records that have <code>FLOAT IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_639NumbersTable> fetchByFloat(java.lang.Double... values) {
+		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.FLOAT, values);
+	}
+
+	/**
+	 * Fetch records that have <code>REAL IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_639NumbersTable> fetchByReal(java.lang.Double... values) {
+		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.REAL, values);
+	}
 }

@@ -58,10 +58,10 @@ import static org.jooq.Clause.UPDATE_WHERE;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.queryPart;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -642,7 +642,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                         public void toSQL(RenderContext ctx) {
                             ParamType previous = ctx.paramType();
                             ctx.paramType(INLINED)
-                               .visit(queryPart(
+                               .visit(sql(
                                    "(SELECT * FROM {0} WHERE {1} WITH CHECK OPTION)",
                                    table,
                                    field.in(values).or(field.isNull())

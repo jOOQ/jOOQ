@@ -5593,7 +5593,9 @@ public class DSL {
      *
      * @param sql The SQL
      * @return A query part wrapping the plain SQL
+     * @deprecated - 3.6.0 - [#3854] - Use {@link #sql(String)} instead
      */
+    @Deprecated
     @Support
     public static QueryPart queryPart(String sql) {
         return sql(sql);
@@ -5616,7 +5618,9 @@ public class DSL {
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
      * @return A query part wrapping the plain SQL
+     * @deprecated - 3.6.0 - [#3854] - Use {@link #sql(String, QueryPart...)} instead
      */
+    @Deprecated
     @Support
     public static QueryPart queryPart(String sql, QueryPart... parts) {
         return sql(sql, parts);
@@ -5637,7 +5641,9 @@ public class DSL {
      *
      * @param sql The SQL
      * @return A query part wrapping the plain SQL
+     * @deprecated - 3.6.0 - [#3854] - Use {@link #sql(String, Object...)} instead
      */
+    @Deprecated
     @Support
     public static QueryPart queryPart(String sql, Object... bindings) {
         return sql(sql, bindings);
@@ -12570,7 +12576,6 @@ public class DSL {
      * @param type The Java type
      * @return The <code>DSL</code>'s underlying default data type.
      */
-    @SuppressWarnings("deprecation")
     @Support
     public static <T> DataType<T> getDataType(Class<T> type) {
         return DefaultDataType.getDataType(SQLDialect.DEFAULT, type);

@@ -51,7 +51,7 @@ import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.queryPart;
+import static org.jooq.impl.DSL.sql;
 
 import org.jooq.AlterTableAlterStep;
 import org.jooq.AlterTableDropStep;
@@ -326,7 +326,7 @@ class AlterTableImpl extends AbstractQuery implements
         // [#2626] TODO: Externalise this SQL string in a .properties file and use jOOQ's
         //               templating mechanism to load it
 
-        ctx.visit(queryPart(
+        ctx.visit(sql(
                 "DECLARE @constraint NVARCHAR(max);"
             + "\nDECLARE @command NVARCHAR(max);"
             + "\n"

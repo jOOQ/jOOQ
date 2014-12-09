@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_2025Record> {
 
-	private static final long serialVersionUID = 1415931989;
+	private static final long serialVersionUID = -1280876651;
 
 	/**
-	 * The singleton instance of <code>TEST.X_TEST_CASE_2025</code>
+	 * The reference instance of <code>TEST.X_TEST_CASE_2025</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025 X_TEST_CASE_2025 = new org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025();
 

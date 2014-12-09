@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2155 extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_2155Record> {
 
-	private static final long serialVersionUID = 542380919;
+	private static final long serialVersionUID = 2139773623;
 
 	/**
-	 * The singleton instance of <code>TEST.T_2155</code>
+	 * The reference instance of <code>TEST.T_2155</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.T_2155 T_2155 = new org.jooq.test.oracle.generatedclasses.test.tables.T_2155();
 

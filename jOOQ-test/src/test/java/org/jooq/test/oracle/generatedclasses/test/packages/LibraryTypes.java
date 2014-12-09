@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.packages;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LibraryTypes extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = -1487627566;
+	private static final long serialVersionUID = -1030665326;
 
 	/**
-	 * The singleton instance of <code>TEST.LIBRARY_TYPES</code>
+	 * The reference instance of <code>TEST.LIBRARY_TYPES</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.packages.LibraryTypes LIBRARY_TYPES = new org.jooq.test.oracle.generatedclasses.test.packages.LibraryTypes();
 

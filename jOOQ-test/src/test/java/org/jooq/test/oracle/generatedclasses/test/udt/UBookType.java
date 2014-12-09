@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UBookType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord> {
 
-	private static final long serialVersionUID = 1865376497;
+	private static final long serialVersionUID = -1865344463;
 
 	/**
-	 * The singleton instance of <code>TEST.U_BOOK_TYPE</code>
+	 * The reference instance of <code>TEST.U_BOOK_TYPE</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.udt.UBookType U_BOOK_TYPE = new org.jooq.test.oracle.generatedclasses.test.udt.UBookType();
 

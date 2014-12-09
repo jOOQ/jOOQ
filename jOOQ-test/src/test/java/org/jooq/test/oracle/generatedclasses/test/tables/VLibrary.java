@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 387211994;
+	private static final long serialVersionUID = -1152464358;
 
 	/**
-	 * The singleton instance of <code>TEST.V_LIBRARY</code>
+	 * The reference instance of <code>TEST.V_LIBRARY</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.VLibrary V_LIBRARY = new org.jooq.test.oracle.generatedclasses.test.tables.VLibrary();
 

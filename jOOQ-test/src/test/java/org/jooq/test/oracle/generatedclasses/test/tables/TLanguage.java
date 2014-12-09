@@ -15,10 +15,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 1290026892;
+	private static final long serialVersionUID = 1713088204;
 
 	/**
-	 * The singleton instance of <code>TEST.T_LANGUAGE</code>
+	 * The reference instance of <code>TEST.T_LANGUAGE</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TLanguage T_LANGUAGE = new org.jooq.test.oracle.generatedclasses.test.tables.TLanguage();
 

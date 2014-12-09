@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TUnsignedRecord> {
 
-	private static final long serialVersionUID = 96147889;
+	private static final long serialVersionUID = 1471959281;
 
 	/**
-	 * The singleton instance of <code>TEST.T_UNSIGNED</code>
+	 * The reference instance of <code>TEST.T_UNSIGNED</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TUnsigned T_UNSIGNED = new org.jooq.test.oracle.generatedclasses.test.tables.TUnsigned();
 

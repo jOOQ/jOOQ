@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UNested_1 extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_1Record> {
 
-	private static final long serialVersionUID = 1947796820;
+	private static final long serialVersionUID = -1548047212;
 
 	/**
-	 * The singleton instance of <code>TEST.U_NESTED_1</code>
+	 * The reference instance of <code>TEST.U_NESTED_1</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.udt.UNested_1 U_NESTED_1 = new org.jooq.test.oracle.generatedclasses.test.udt.UNested_1();
 

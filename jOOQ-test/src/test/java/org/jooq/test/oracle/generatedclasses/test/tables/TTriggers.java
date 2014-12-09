@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 1353597314;
+	private static final long serialVersionUID = 1398149698;
 
 	/**
-	 * The singleton instance of <code>TEST.T_TRIGGERS</code>
+	 * The reference instance of <code>TEST.T_TRIGGERS</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TTriggers T_TRIGGERS = new org.jooq.test.oracle.generatedclasses.test.tables.TTriggers();
 

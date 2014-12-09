@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.packages;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TestSynonymPackage extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = 210172073;
+	private static final long serialVersionUID = -807122583;
 
 	/**
-	 * The singleton instance of <code>TEST.TEST_SYNONYM_PACKAGE</code>
+	 * The reference instance of <code>TEST.TEST_SYNONYM_PACKAGE</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.packages.TestSynonymPackage TEST_SYNONYM_PACKAGE = new org.jooq.test.oracle.generatedclasses.test.packages.TestSynonymPackage();
 

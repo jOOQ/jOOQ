@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 832055621;
+	private static final long serialVersionUID = -938214907;
 
 	/**
-	 * The singleton instance of <code>MULTI_SCHEMA.T_AUTHOR</code>
+	 * The reference instance of <code>MULTI_SCHEMA.T_AUTHOR</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor T_AUTHOR = new org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor();
 

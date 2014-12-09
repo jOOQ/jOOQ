@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.multi_schema;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MultiSchema extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1987403773;
+	private static final long serialVersionUID = -1308715197;
 
 	/**
-	 * The singleton instance of <code>MULTI_SCHEMA</code>
+	 * The reference instance of <code>MULTI_SCHEMA</code>
 	 */
 	public static final MultiSchema MULTI_SCHEMA = new MultiSchema();
 

@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2845CaseSensitivity extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_2845CaseSensitivityRecord> {
 
-	private static final long serialVersionUID = 1107220479;
+	private static final long serialVersionUID = -2125725889;
 
 	/**
-	 * The singleton instance of <code>TEST.T_2845_CASE_sensitivity</code>
+	 * The reference instance of <code>TEST.T_2845_CASE_sensitivity</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.T_2845CaseSensitivity T_2845_CASE_SENSITIVITY = new org.jooq.test.oracle.generatedclasses.test.tables.T_2845CaseSensitivity();
 

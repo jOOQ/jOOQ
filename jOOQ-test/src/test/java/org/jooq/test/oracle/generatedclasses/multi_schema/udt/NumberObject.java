@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class NumberObject extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord> {
 
-	private static final long serialVersionUID = 1855430686;
+	private static final long serialVersionUID = -320073506;
 
 	/**
-	 * The singleton instance of <code>MULTI_SCHEMA.NUMBER_OBJECT</code>
+	 * The reference instance of <code>MULTI_SCHEMA.NUMBER_OBJECT</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.multi_schema.udt.NumberObject NUMBER_OBJECT = new org.jooq.test.oracle.generatedclasses.multi_schema.udt.NumberObject();
 

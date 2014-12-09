@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3005 extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.U_3005Record> {
 
-	private static final long serialVersionUID = 449589647;
+	private static final long serialVersionUID = 1939392719;
 
 	/**
-	 * The singleton instance of <code>TEST.U_3005</code>
+	 * The reference instance of <code>TEST.U_3005</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.udt.U_3005 U_3005 = new org.jooq.test.oracle.generatedclasses.test.udt.U_3005();
 

@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookSale extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> {
 
-	private static final long serialVersionUID = 1335077428;
+	private static final long serialVersionUID = -1625431692;
 
 	/**
-	 * The singleton instance of <code>MULTI_SCHEMA.T_BOOK_SALE</code>
+	 * The reference instance of <code>MULTI_SCHEMA.T_BOOK_SALE</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale T_BOOK_SALE = new org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale();
 

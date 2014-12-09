@@ -9,10 +9,10 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.packages;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MsSynonymPackage extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = -1865830527;
+	private static final long serialVersionUID = 948586177;
 
 	/**
-	 * The singleton instance of <code>MULTI_SCHEMA.MS_SYNONYM_PACKAGE</code>
+	 * The reference instance of <code>MULTI_SCHEMA.MS_SYNONYM_PACKAGE</code>
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.multi_schema.packages.MsSynonymPackage MS_SYNONYM_PACKAGE = new org.jooq.test.oracle.generatedclasses.multi_schema.packages.MsSynonymPackage();
 

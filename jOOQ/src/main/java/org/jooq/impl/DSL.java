@@ -213,6 +213,7 @@ import org.jooq.Row7;
 import org.jooq.Row8;
 import org.jooq.Row9;
 import org.jooq.RowN;
+import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -5515,16 +5516,67 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
-     * Create a new {@link org.jooq.Template} that can transform parameter
-     * objects into a {@link QueryPart}.
+     * A custom SQL clause that can render arbitrary expressions.
+     * <p>
+     * A plain SQL <code>QueryPart</code> is a <code>QueryPart</code> that can
+     * contain user-defined plain SQL, because sometimes it is easier to express
+     * things directly in SQL.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
      *
-     * @param sql The input SQL.
-     * @return A template that can transform parameter objects into a
-     *         {@link QueryPart}.
+     * @param sql The SQL
+     * @return A query part wrapping the plain SQL
      */
-    @SuppressWarnings("deprecation")
-    static org.jooq.Template template(String sql) {
-        return new SQLTemplate(sql);
+    @Support
+    public static SQL sql(String sql) {
+        return sql(sql, new Object[0]);
+    }
+
+    /**
+     * A custom SQL clause that can render arbitrary expressions.
+     * <p>
+     * A plain SQL <code>QueryPart</code> is a <code>QueryPart</code> that can
+     * contain user-defined plain SQL, because sometimes it is easier to express
+     * things directly in SQL.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return A query part wrapping the plain SQL
+     */
+    @Support
+    public static SQL sql(String sql, QueryPart... parts) {
+        return sql(sql, (Object[]) parts);
+    }
+
+    /**
+     * A custom SQL clause that can render arbitrary expressions.
+     * <p>
+     * A plain SQL <code>QueryPart</code> is a <code>QueryPart</code> that can
+     * contain user-defined plain SQL, because sometimes it is easier to express
+     * things directly in SQL. There must be as many binding variables contained
+     * in the SQL, as passed in the bindings parameter
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return A query part wrapping the plain SQL
+     */
+    @Support
+    public static SQL sql(String sql, Object... bindings) {
+        return new SQLImpl(sql, bindings);
     }
 
     /**
@@ -5544,7 +5596,7 @@ public class DSL {
      */
     @Support
     public static QueryPart queryPart(String sql) {
-        return queryPart(template(sql), new Object[0]);
+        return sql(sql);
     }
 
     /**
@@ -5567,7 +5619,7 @@ public class DSL {
      */
     @Support
     public static QueryPart queryPart(String sql, QueryPart... parts) {
-        return queryPart(template(sql), (Object[]) parts);
+        return sql(sql, parts);
     }
 
     /**
@@ -5588,22 +5640,9 @@ public class DSL {
      */
     @Support
     public static QueryPart queryPart(String sql, Object... bindings) {
-        return queryPart(template(sql), bindings);
+        return sql(sql, bindings);
     }
 
-    /**
-     * A custom SQL clause that can render arbitrary expressions from a
-     * template.
-     *
-     * @param template The template generating a delegate query part
-     * @param parameters The parameters provided to the template
-     * @return A query part wrapping the plain SQL
-     */
-    @SuppressWarnings("deprecation")
-    @Support
-    static QueryPart queryPart(org.jooq.Template template, Object... parameters) {
-        return template.transform(parameters);
-    }
     // -------------------------------------------------------------------------
     // XXX Plain SQL API
     // -------------------------------------------------------------------------
@@ -5871,7 +5910,7 @@ public class DSL {
      */
     @Support
     public static Table<Record> table(String sql, Object... bindings) {
-        return table(template(sql), bindings);
+        return new SQLTable(sql(sql, bindings));
     }
 
     /**
@@ -5906,21 +5945,7 @@ public class DSL {
      */
     @Support
     public static Table<Record> table(String sql, QueryPart... parts) {
-        return table(template(sql), (Object[]) parts);
-    }
-
-    /**
-     * A custom SQL clause that can render arbitrary table expressions from a
-     * template.
-     *
-     * @param template The template generating a delegate query part
-     * @param parameters The parameters provided to the template
-     * @return A query part wrapping the plain SQL
-     */
-    @SuppressWarnings("deprecation")
-    @Support
-    static Table<Record> table(org.jooq.Template template, Object... parameters) {
-        return new SQLTable(queryPart(template, parameters));
+        return table(sql, (Object[]) parts);
     }
 
     /**
@@ -5997,7 +6022,7 @@ public class DSL {
      */
     @Support
     public static Field<Object> field(String sql) {
-        return field(template(sql), new Object[0]);
+        return field(sql, new Object[0]);
     }
 
     /**
@@ -6025,7 +6050,7 @@ public class DSL {
      */
     @Support
     public static Field<Object> field(String sql, Object... bindings) {
-        return field(template(sql), Object.class, bindings);
+        return field(sql, Object.class, bindings);
     }
 
     /**
@@ -6053,7 +6078,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> field(String sql, Class<T> type) {
-        return field(template(sql), type, new Object[0]);
+        return field(sql, type, new Object[0]);
     }
 
     /**
@@ -6082,7 +6107,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> field(String sql, Class<T> type, Object... bindings) {
-        return field(template(sql), getDataType(type), bindings);
+        return field(sql, getDataType(type), bindings);
     }
 
     /**
@@ -6110,7 +6135,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> field(String sql, DataType<T> type) {
-        return field(template(sql), type, new Object[0]);
+        return field(sql, type, new Object[0]);
     }
 
     /**
@@ -6139,7 +6164,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> field(String sql, DataType<T> type, Object... bindings) {
-        return field(template(sql), type, bindings);
+        return new SQLField(type, sql(sql, bindings));
     }
 
     /**
@@ -6172,7 +6197,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      */
     public static Field<Object> field(String sql, QueryPart... parts) {
-        return field(template(sql), (Object[]) parts);
+        return field(sql, (Object[]) parts);
     }
 
     /**
@@ -6206,85 +6231,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      */
     public static <T> Field<T> field(String sql, Class<T> type, QueryPart... parts) {
-        return field(template(sql), type, (Object[]) parts);
-    }
-
-    /**
-     * A custom SQL clause that can render arbitrary SQL elements.
-     * <p>
-     * This is useful for constructing more complex SQL syntax elements wherever
-     * <code>Field</code> types are expected. An example for this is MySQL's
-     * <code>GROUP_CONCAT</code> aggregate function, which has MySQL-specific
-     * keywords that are hard to reflect in jOOQ's DSL: <code><pre>
-     * GROUP_CONCAT([DISTINCT] expr [,expr ...]
-     *       [ORDER BY {unsigned_integer | col_name | expr}
-     *           [ASC | DESC] [,col_name ...]]
-     *       [SEPARATOR str_val])
-     *       </pre></code>
-     * <p>
-     * The above MySQL function can be expressed as such: <code><pre>
-     * field("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC DEPARATOR '-')", expr1, expr2);
-     * </pre></code>
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses! One way to escape
-     * literals is to use {@link #name(String...)} and similar methods
-     *
-     * @param sql The SQL clause, containing {numbered placeholders} where query
-     *            parts can be injected
-     * @param type The field type
-     * @param parts The {@link QueryPart} objects that are rendered at the
-     *            {numbered placeholder} locations
-     * @return A field wrapping the plain SQL
-     */
-    public static <T> Field<T> field(String sql, DataType<T> type, QueryPart... parts) {
-        return field(template(sql), type, (Object[]) parts);
-    }
-
-    /**
-     * A custom SQL clause that can render arbitrary field expressions from a
-     * template.
-     *
-     * @param template The template generating a delegate query part
-     * @param parameters The parameters provided to the template
-     * @return A query part wrapping the plain SQL
-     */
-    @SuppressWarnings("deprecation")
-    @Support
-    static Field<Object> field(org.jooq.Template template, Object... parameters) {
-        return field(template, Object.class, parameters);
-    }
-
-    /**
-     * A custom SQL clause that can render arbitrary field expressions from a
-     * template.
-     *
-     * @param template The template generating a delegate query part
-     * @param type The field type
-     * @param parameters The parameters provided to the template
-     * @return A query part wrapping the plain SQL
-     */
-    @SuppressWarnings("deprecation")
-    @Support
-    static <T> Field<T> field(org.jooq.Template template, Class<T> type, Object... parameters) {
-        return field(template, getDataType(type), parameters);
-    }
-
-    /**
-     * A custom SQL clause that can render arbitrary field expressions from a
-     * template.
-     *
-     * @param template The template generating a delegate query part
-     * @param type The field type
-     * @param parameters The parameters provided to the template
-     * @return A query part wrapping the plain SQL
-     */
-    @SuppressWarnings("deprecation")
-    @Support
-    static <T> Field<T> field(org.jooq.Template template, DataType<T> type, Object... parameters) {
-        return new SQLField<T>(type, queryPart(template, parameters));
+        return field(sql, getDataType(type), (Object[]) parts);
     }
 
     /**
@@ -6369,7 +6316,7 @@ public class DSL {
      */
     @Support
     public static Condition condition(String sql) {
-        return condition(template(sql), new Object[0]);
+        return condition(sql, new Object[0]);
     }
 
     /**
@@ -6395,7 +6342,7 @@ public class DSL {
      */
     @Support
     public static Condition condition(String sql, Object... bindings) {
-        return condition(template(sql), bindings);
+        return new SQLCondition(sql(sql, bindings));
     }
 
     /**
@@ -6424,21 +6371,7 @@ public class DSL {
      */
     @Support
     public static Condition condition(String sql, QueryPart... parts) {
-        return condition(template(sql), (Object[]) parts);
-    }
-
-    /**
-     * A custom SQL clause that can render arbitrary condition expressions from
-     * a template.
-     *
-     * @param template The template generating a delegate query part
-     * @param parameters The parameters provided to the template
-     * @return A query part wrapping the plain SQL
-     */
-    @SuppressWarnings("deprecation")
-    @Support
-    static Condition condition(org.jooq.Template template, Object... parameters) {
-        return new SQLCondition(queryPart(template, parameters));
+        return condition(sql, (Object[]) parts);
     }
 
     /**

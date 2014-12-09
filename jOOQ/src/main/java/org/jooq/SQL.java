@@ -38,59 +38,13 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.impl;
+package org.jooq;
 
-import static org.jooq.Clause.TEMPLATE;
+/**
+ * A plain SQL {@link QueryPart}.
+ *
+ * @author Lukas Eder
+ */
+public interface SQL extends QueryPart {
 
-import java.util.List;
-
-import org.jooq.Clause;
-import org.jooq.Context;
-import org.jooq.QueryPart;
-import org.jooq.Template;
-
-@SuppressWarnings("deprecation")
-class SQLTemplate implements Template {
-
-    private final String sql;
-
-    SQLTemplate(String sql) {
-        this.sql = sql;
-    }
-
-    @Override
-    public final QueryPart transform(Object... input) {
-        return new SQLTemplateQueryPart(sql, input);
-    }
-
-    private static class SQLTemplateQueryPart extends AbstractQueryPart {
-
-        /**
-         * Generated UID
-         */
-        private static final long     serialVersionUID = -7514156096865122018L;
-        private static final Clause[] CLAUSES          = { TEMPLATE };
-        private final String          sql;
-        private final List<QueryPart> substitutes;
-
-        SQLTemplateQueryPart(String sql, Object... input) {
-            this.sql = sql;
-            this.substitutes = Utils.queryParts(input);
-        }
-
-        @Override
-        public final void accept(Context<?> ctx) {
-            Utils.renderAndBind(ctx, sql, substitutes);
-        }
-
-        @Override
-        public final Clause[] clauses(Context<?> ctx) {
-            return CLAUSES;
-        }
-
-        @Override
-        public String toString() {
-            return sql;
-        }
-    }
 }

@@ -8000,7 +8000,7 @@ public class DSL {
      */
     @Support
     public static Field<Date> dateAdd(Date date, Number interval, DatePart datePart) {
-        return new DateAdd<Date>(Utils.field(date), Utils.field(interval), datePart);
+        return dateAdd(Utils.field(date), Utils.field(interval), datePart);
     }
 
     /**
@@ -8010,7 +8010,7 @@ public class DSL {
      */
     @Support
     public static Field<Date> dateAdd(Date date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<Date>(Utils.field(date), nullSafe(interval), datePart);
+        return dateAdd(Utils.field(date), nullSafe(interval), datePart);
     }
 
     /**
@@ -8020,7 +8020,7 @@ public class DSL {
      */
     @Support
     public static Field<Date> dateAdd(Field<Date> date, Number interval, DatePart datePart) {
-        return new DateAdd<Date>(nullSafe(date), Utils.field(interval), datePart);
+        return dateAdd(nullSafe(date), Utils.field(interval), datePart);
     }
 
     /**
@@ -8031,6 +8031,70 @@ public class DSL {
     @Support
     public static Field<Date> dateAdd(Field<Date> date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<Date>(nullSafe(date), nullSafe(interval), datePart);
+    }
+
+    /**
+     * Subtract an interval from a date.
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#add(Number)
+     */
+    @Support
+    public static Field<Date> dateSub(Date date, Number interval) {
+        return dateSub(Utils.field(date), Utils.field(interval));
+    }
+
+    /**
+     * Subtract an interval from a date.
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#add(Field)
+     */
+    @Support
+    public static Field<Date> dateSub(Field<Date> date, Field<? extends Number> interval) {
+        return nullSafe(date).sub(interval);
+    }
+
+    /**
+     * Subtract an interval from a date, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Date> dateSub(Date date, Number interval, DatePart datePart) {
+        return dateSub(Utils.field(date), Utils.field(interval), datePart);
+    }
+
+    /**
+     * Subtract an interval from a date, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Date> dateSub(Date date, Field<? extends Number> interval, DatePart datePart) {
+        return dateSub(Utils.field(date), nullSafe(interval), datePart);
+    }
+
+    /**
+     * Subtract an interval from a date, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Date> dateSub(Field<Date> date, Number interval, DatePart datePart) {
+        return dateSub(nullSafe(date), Utils.field(interval), datePart);
+    }
+
+    /**
+     * Subtract an interval from a date, given a date part.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Date> dateSub(Field<Date> date, Field<? extends Number> interval, DatePart datePart) {
+        return new DateAdd<Date>(nullSafe(date), nullSafe(interval).neg(), datePart);
     }
 
     /**

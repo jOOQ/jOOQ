@@ -60,6 +60,7 @@ import static org.jooq.impl.DSL.castNull;
 import static org.jooq.impl.DSL.currentDate;
 import static org.jooq.impl.DSL.dateAdd;
 import static org.jooq.impl.DSL.dateDiff;
+import static org.jooq.impl.DSL.dateSub;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.timestampAdd;
@@ -1566,20 +1567,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFunctionsOnDates_DATE_DIFF_AND_DATE_ADD() throws Exception {
 
         // [#3824] Be sure that DATE types aren't converted to TIMESTAMP by any functions
-        Record4<Integer, Integer, Integer, Integer> dates = create()
+        Record6<Integer, Integer, Integer, Integer, Integer, Integer> dates = create()
         .select(
             dateDiff(new Date(0), dateAdd(new Date(0), 2, DatePart.DAY)).as("d1"),
             dateDiff(new Date(0), val(new Date(0)).add(2)).as("d2"),
 
             dateDiff(dateAdd(new Date(0), 2, DatePart.DAY), new Date(0)).as("d3"),
-            dateDiff(val(new Date(0)).add(2), new Date(0)).as("d4")
+            dateDiff(val(new Date(0)).add(2), new Date(0)).as("d4"),
+
+            dateDiff(dateSub(new Date(0), 2, DatePart.DAY), new Date(0)).as("d5"),
+            dateDiff(val(new Date(0)).sub(2), new Date(0)).as("d6")
         )
         .fetchOne();
 
-        assertEquals(-2, (int) dates.value1());
-        assertEquals(-2, (int) dates.value2());
-        assertEquals(2, (int) dates.value3());
-        assertEquals(2, (int) dates.value4());
+        assertEquals(-2, dates.value1());
+        assertEquals(-2, dates.value2());
+        assertEquals(2,  dates.value3());
+        assertEquals(2,  dates.value4());
+        assertEquals(-2, dates.value5());
+        assertEquals(-2, dates.value6());
     }
 
     public void testFunctionsOnDates_DATE_ADD() throws Exception {

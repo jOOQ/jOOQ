@@ -100,13 +100,13 @@ public class OracleDataType {
     protected static final DataType<Long>      __BIGINT               = new DefaultDataType<Long>(SQLDialect.ORACLE, SQLDataType.BIGINT, "number", "number(19)");
     protected static final DataType<Boolean>   __BIT                  = new DefaultDataType<Boolean>(SQLDialect.ORACLE, SQLDataType.BIT, "number", "number(1)");
     protected static final DataType<Boolean>   __BOOLEAN              = new DefaultDataType<Boolean>(SQLDialect.ORACLE, SQLDataType.BOOLEAN, "number", "number(1)");
-    protected static final DataType<Double>    __DOUBLE               = new DefaultDataType<Double>(SQLDialect.ORACLE, SQLDataType.DOUBLE, "number");
-    protected static final DataType<Double>    __FLOAT                = new DefaultDataType<Double>(SQLDialect.ORACLE, SQLDataType.FLOAT, "number");
+    protected static final DataType<Double>    __DOUBLE               = new DefaultDataType<Double>(SQLDialect.ORACLE, SQLDataType.DOUBLE, "float");
+    protected static final DataType<Double>    __FLOAT                = new DefaultDataType<Double>(SQLDialect.ORACLE, SQLDataType.FLOAT, "float");
     protected static final DataType<Integer>   __INTEGER              = new DefaultDataType<Integer>(SQLDialect.ORACLE, SQLDataType.INTEGER, "number", "number(10)");
     protected static final DataType<byte[]>    __LONGVARBINARY        = new DefaultDataType<byte[]>(SQLDialect.ORACLE, SQLDataType.LONGVARBINARY, "blob");
     protected static final DataType<String>    __LONGVARCHAR          = new DefaultDataType<String>(SQLDialect.ORACLE, SQLDataType.LONGVARCHAR, "varchar2", "varchar2(4000)");
     protected static final DataType<String>    __LONGNVARCHAR         = new DefaultDataType<String>(SQLDialect.ORACLE, SQLDataType.LONGNVARCHAR, "varchar2", "varchar2(4000)");
-    protected static final DataType<Float>     __REAL                 = new DefaultDataType<Float>(SQLDialect.ORACLE, SQLDataType.REAL, "number");
+    protected static final DataType<Float>     __REAL                 = new DefaultDataType<Float>(SQLDialect.ORACLE, SQLDataType.REAL, "real");
     protected static final DataType<Short>     __SMALLINT             = new DefaultDataType<Short>(SQLDialect.ORACLE, SQLDataType.SMALLINT, "number", "number(5)");
     protected static final DataType<Time>      __TIME                 = new DefaultDataType<Time>(SQLDialect.ORACLE, SQLDataType.TIME, "timestamp");
     protected static final DataType<Byte>      __TINYINT              = new DefaultDataType<Byte>(SQLDialect.ORACLE, SQLDataType.TINYINT, "number", "number(3)");
@@ -145,8 +145,8 @@ public class OracleDataType {
     public static final DataType<Double>       REAL                   = new DefaultDataType<Double>(SQLDialect.ORACLE, SQLDataType.DOUBLE, "real");
     public static final DataType<Double>       DOUBLE_PRECISION       = new DefaultDataType<Double>(SQLDialect.ORACLE, SQLDataType.DOUBLE, "double_precision");
     public static final DataType<Double>       BINARY_DOUBLE          = new DefaultDataType<Double>(SQLDialect.ORACLE, SQLDataType.DOUBLE, "binary_double");
-    public static final DataType<BigDecimal>   FLOAT                  = new DefaultDataType<BigDecimal>(SQLDialect.ORACLE, SQLDataType.DECIMAL, "float");
-    public static final DataType<BigDecimal>   BINARY_FLOAT           = new DefaultDataType<BigDecimal>(SQLDialect.ORACLE, SQLDataType.DECIMAL, "binary_float");
+    public static final DataType<Double>       FLOAT                  = new DefaultDataType<Double>(SQLDialect.ORACLE, SQLDataType.FLOAT, "float");
+    public static final DataType<Double>       BINARY_FLOAT           = new DefaultDataType<Double>(SQLDialect.ORACLE, SQLDataType.FLOAT, "binary_float");
     public static final DataType<BigInteger>   INTEGER                = new DefaultDataType<BigInteger>(SQLDialect.ORACLE, SQLDataType.DECIMAL_INTEGER, "integer");
     public static final DataType<BigInteger>   INT                    = new DefaultDataType<BigInteger>(SQLDialect.ORACLE, SQLDataType.DECIMAL_INTEGER, "int");
     public static final DataType<BigInteger>   SMALLINT               = new DefaultDataType<BigInteger>(SQLDialect.ORACLE, SQLDataType.DECIMAL_INTEGER, "smallint");

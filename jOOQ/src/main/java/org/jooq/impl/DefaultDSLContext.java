@@ -45,10 +45,9 @@ import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.queryPart;
 import static org.jooq.impl.DSL.sequence;
+import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.DSL.template;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Utils.list;
 import static org.jooq.tools.Convert.convert;
@@ -442,22 +441,17 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Query query(String sql) {
-        return query(template(sql), new Object[0]);
+        return query(sql, new Object[0]);
     }
 
     @Override
     public Query query(String sql, Object... bindings) {
-        return query(template(sql), bindings);
+        return new SQLQuery(configuration(), sql(sql, bindings));
     }
 
     @Override
     public Query query(String sql, QueryPart... parts) {
-        return query(template(sql), (Object[]) parts);
-    }
-
-    @SuppressWarnings("deprecation")
-    Query query(org.jooq.Template template, Object... parameters) {
-        return new SQLQuery(configuration(), queryPart(template, parameters));
+        return query(sql, (Object[]) parts);
     }
 
     @Override
@@ -475,11 +469,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return resultQuery(sql, parts).fetch();
     }
 
-    @SuppressWarnings("deprecation")
-    Result<Record> fetch(org.jooq.Template template, Object... parameters) {
-        return resultQuery(template, parameters).fetch();
-    }
-
     @Override
     public Cursor<Record> fetchLazy(String sql) {
         return resultQuery(sql).fetchLazy();
@@ -493,11 +482,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public Cursor<Record> fetchLazy(String sql, QueryPart... parts) {
         return resultQuery(sql, parts).fetchLazy();
-    }
-
-    @SuppressWarnings("deprecation")
-    Cursor<Record> fetchLazy(org.jooq.Template template, Object... parameters) {
-        return resultQuery(template, parameters).fetchLazy();
     }
 
     @Override
@@ -515,11 +499,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return resultQuery(sql, parts).fetchMany();
     }
 
-    @SuppressWarnings("deprecation")
-    List<Result<Record>> fetchMany(org.jooq.Template template, Object... parameters) {
-        return resultQuery(template, parameters).fetchMany();
-    }
-
     @Override
     public Record fetchOne(String sql) {
         return resultQuery(sql).fetchOne();
@@ -533,11 +512,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public Record fetchOne(String sql, QueryPart... parts) {
         return resultQuery(sql, parts).fetchOne();
-    }
-
-    @SuppressWarnings("deprecation")
-    Record fetchOne(org.jooq.Template template, Object... parameters) {
-        return resultQuery(template, parameters).fetchOne();
     }
 
     @Override
@@ -582,32 +556,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public int execute(String sql, QueryPart... parts) {
-        return query(sql, parts).execute();
-    }
-
-    @SuppressWarnings("deprecation")
-    int execute(org.jooq.Template template, Object... parameters) {
-        return query(template, parameters).execute();
+        return query(sql, (Object[]) parts).execute();
     }
 
     @Override
     public ResultQuery<Record> resultQuery(String sql) {
-        return resultQuery(template(sql), new Object[0]);
+        return resultQuery(sql, new Object[0]);
     }
 
     @Override
     public ResultQuery<Record> resultQuery(String sql, Object... bindings) {
-        return resultQuery(template(sql), bindings);
+        return new SQLResultQuery(configuration(), sql(sql, bindings));
     }
 
     @Override
     public ResultQuery<Record> resultQuery(String sql, QueryPart... parts) {
-        return resultQuery(template(sql), (Object[]) parts);
-    }
-
-    @SuppressWarnings("deprecation")
-    ResultQuery<Record> resultQuery(org.jooq.Template template, Object... parameters) {
-        return new SQLResultQuery(configuration(), queryPart(template, parameters));
+        return resultQuery(sql, (Object[]) parts);
     }
 
     // -------------------------------------------------------------------------

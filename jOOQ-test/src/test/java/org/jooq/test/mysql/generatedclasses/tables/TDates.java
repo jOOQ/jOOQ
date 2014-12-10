@@ -9,10 +9,10 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 720601646;
+	private static final long serialVersionUID = 2113999598;
 
 	/**
-	 * The singleton instance of <code>test.t_dates</code>
+	 * The reference instance of <code>test.t_dates</code>
 	 */
 	public static final org.jooq.test.mysql.generatedclasses.tables.TDates T_DATES = new org.jooq.test.mysql.generatedclasses.tables.TDates();
 

@@ -9,10 +9,10 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -2017756280;
+	private static final long serialVersionUID = 800824392;
 
 	/**
-	 * The singleton instance of <code>test.x_test_case_71</code>
+	 * The reference instance of <code>test.x_test_case_71</code>
 	 */
 	public static final org.jooq.test.mysql.generatedclasses.tables.XTestCase_71 X_TEST_CASE_71 = new org.jooq.test.mysql.generatedclasses.tables.XTestCase_71();
 

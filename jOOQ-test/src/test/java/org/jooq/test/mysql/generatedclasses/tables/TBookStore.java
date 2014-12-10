@@ -9,10 +9,10 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 2144427982;
+	private static final long serialVersionUID = -1178079090;
 
 	/**
-	 * The singleton instance of <code>test.t_book_store</code>
+	 * The reference instance of <code>test.t_book_store</code>
 	 */
 	public static final org.jooq.test.mysql.generatedclasses.tables.TBookStore T_BOOK_STORE = new org.jooq.test.mysql.generatedclasses.tables.TBookStore();
 

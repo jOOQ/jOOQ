@@ -9,10 +9,10 @@ package org.jooq.test.mysql.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 964923128;
+	private static final long serialVersionUID = -1047771592;
 
 	/**
-	 * The singleton instance of <code>test</code>
+	 * The reference instance of <code>test</code>
 	 */
 	public static final Test TEST = new Test();
 

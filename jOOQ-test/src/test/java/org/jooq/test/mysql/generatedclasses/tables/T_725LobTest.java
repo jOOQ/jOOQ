@@ -9,10 +9,10 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = 1728183268;
+	private static final long serialVersionUID = -1710800092;
 
 	/**
-	 * The singleton instance of <code>test.t_725_lob_test</code>
+	 * The reference instance of <code>test.t_725_lob_test</code>
 	 */
 	public static final org.jooq.test.mysql.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = new org.jooq.test.mysql.generatedclasses.tables.T_725LobTest();
 

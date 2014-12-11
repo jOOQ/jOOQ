@@ -46,6 +46,7 @@ import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.update;
 import static org.jooq.test.h2.generatedclasses.Tables.T_2486;
 import static org.jooq.test.h2.generatedclasses.Tables.T_2698;
 import static org.jooq.test.h2.generatedclasses.Tables.T_3485;
@@ -1103,5 +1104,34 @@ public class H2Test extends jOOQAbstractTest<
         record = create().fetchOne(T_3485, T_3485.PW.eq("pw"));
         assertEquals("", record.getPw());
         assertEquals("" + "pw".hashCode(), create().fetchValue("select {0} from {1}", T_3485.PW, T_3485));
+    }
+
+    @Test
+    public void testH2StreamsReduceResultsIntoBatch() {
+        jOOQAbstractTest.reset = false;
+
+        int[] result =
+        create().selectFrom(T_BOOK)
+                .where(T_BOOK.ID.in(2, 3))
+                .orderBy(T_BOOK.ID)
+                .fetch()
+                .stream()
+                .map(book -> book.setTitle(book.getTitle().toUpperCase()))
+                .reduce(
+                    create().batch(update(T_BOOK).set(T_BOOK.TITLE, (String) null).where(T_BOOK.ID.eq((Integer) null))),
+                    (batch, book) -> batch.bind(book.getTitle(), book.getId()),
+                    (b1, b2) -> b1
+                )
+                .execute();
+
+        assertEquals(2, result.length);
+        assertEquals(
+            asList(
+                BOOK_TITLES.get(0),
+                BOOK_TITLES.get(1).toUpperCase(),
+                BOOK_TITLES.get(2).toUpperCase(),
+                BOOK_TITLES.get(3)),
+            create().fetchValues(select(T_BOOK.TITLE).from(T_BOOK).orderBy(T_BOOK.ID))
+        );
     }
 }

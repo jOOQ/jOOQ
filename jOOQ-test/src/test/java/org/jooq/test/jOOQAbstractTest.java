@@ -3318,6 +3318,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testStreamsReduceResultsIntoBatch() {
+        new StreamsTest(this).testStreamsReduceResultsIntoBatch();
+    }
+
+    @Test
     public void testStreamsCollectPOJOs() {
         new StreamsTest(this).testStreamsCollectPOJOs();
     }

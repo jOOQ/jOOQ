@@ -589,6 +589,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(3L, result1.get(2).id5);
         assertEquals(4L, result1.get(3).id5);
 
+//      TODO [#3614] reactivate this once we know how to implement it efficiently and securely
+//        assertEquals(1, result1.get(0).getId6());
+//        assertEquals(2, result1.get(1).getId6());
+//        assertEquals(3, result1.get(2).getId6());
+//        assertEquals(4, result1.get(3).getId6());
+//
+//        assertEquals(1, result1.get(0).id7);
+//        assertEquals(2, result1.get(1).id7);
+//        assertEquals(3, result1.get(2).id7);
+//        assertEquals(4, result1.get(3).id7);
+//
+//        assertEquals(1, result1.get(0).id8);
+//        assertEquals(2, result1.get(1).id8);
+//        assertEquals(3, result1.get(2).id8);
+//        assertEquals(4, result1.get(3).id8);
+
         assertEquals(1, (int) result2.get(0).getId());
         assertEquals(2, (int) result2.get(1).getId());
         assertEquals(3, (int) result2.get(2).getId());

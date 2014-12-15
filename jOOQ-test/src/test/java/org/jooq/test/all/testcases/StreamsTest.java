@@ -41,10 +41,17 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.update;
 
 import java.sql.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -87,99 +94,99 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-//    public void testStreamsCollectRecords() {
-//
-//        // Collect the AUTHOR / BOOK relationship grouping books by author
-//        // The result is collected into jOOQ Records
-//
-//        Map<Record2<String, String>, List<Record2<Integer, String>>> booksByAuthor =
-//        create().select(
-//                    TBook_ID(),
-//                    TBook_TITLE(),
-//                    TAuthor_FIRST_NAME(),
-//                    TAuthor_LAST_NAME())
-//                .from(TBook())
-//                .join(TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID()))
-//                .orderBy(TBook_ID())
-//                .fetch()
-//                .stream()
-//                .collect(groupingBy(
-//                    r -> r.into(TAuthor_FIRST_NAME(), TAuthor_LAST_NAME()),
-//                    LinkedHashMap::new,
-//                    mapping(
-//                        r -> r.into(TBook_ID(), TBook_TITLE()),
-//                        toList()
-//                    )
-//                ));
-//
-//        assertEquals(2, booksByAuthor.size());
-//        List<Entry<Record2<String, String>, List<Record2<Integer, String>>>> entries = booksByAuthor.entrySet().stream().collect(toList());
-//
-//        assertEquals(AUTHOR_FIRST_NAMES.get(0), entries.get(0).getKey().getValue(TAuthor_FIRST_NAME()));
-//        assertEquals(AUTHOR_FIRST_NAMES.get(1), entries.get(1).getKey().getValue(TAuthor_FIRST_NAME()));
-//        assertEquals(AUTHOR_LAST_NAMES.get(0), entries.get(0).getKey().getValue(TAuthor_LAST_NAME()));
-//        assertEquals(AUTHOR_LAST_NAMES.get(1), entries.get(1).getKey().getValue(TAuthor_LAST_NAME()));
-//
-//        assertEquals(2, entries.get(0).getValue().size());
-//        assertEquals(2, entries.get(1).getValue().size());
-//
-//        assertEquals(BOOK_IDS.get(0), entries.get(0).getValue().get(0).getValue(TBook_ID()));
-//        assertEquals(BOOK_IDS.get(1), entries.get(0).getValue().get(1).getValue(TBook_ID()));
-//        assertEquals(BOOK_IDS.get(2), entries.get(1).getValue().get(0).getValue(TBook_ID()));
-//        assertEquals(BOOK_IDS.get(3), entries.get(1).getValue().get(1).getValue(TBook_ID()));
-//
-//        assertEquals(BOOK_TITLES.get(0), entries.get(0).getValue().get(0).getValue(TBook_TITLE()));
-//        assertEquals(BOOK_TITLES.get(1), entries.get(0).getValue().get(1).getValue(TBook_TITLE()));
-//        assertEquals(BOOK_TITLES.get(2), entries.get(1).getValue().get(0).getValue(TBook_TITLE()));
-//        assertEquals(BOOK_TITLES.get(3), entries.get(1).getValue().get(1).getValue(TBook_TITLE()));
-//    }
-//
-//    public void testStreamsCollectPOJOs() {
-//
-//        // Collect the AUTHOR / BOOK relationship grouping books by author
-//        // The result is collected into POJOs
-//
-//        Map<Author, List<Book>> booksByAuthor =
-//        create().select(
-//                    TBook_ID().as("book_id"),
-//                    TBook_TITLE(),
-//                    TAuthor_FIRST_NAME(),
-//                    TAuthor_LAST_NAME())
-//                .from(TBook())
-//                .join(TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID()))
-//                .orderBy(TBook_ID())
-//                .fetch()
-//                .stream()
-//                .collect(groupingBy(
-//                    r -> r.into(Author.class),
-//                    LinkedHashMap::new,
-//                    mapping(
-//                        r -> r.into(Book.class),
-//                        toList()
-//                    )
-//                ));
-//
-//        assertEquals(2, booksByAuthor.size());
-//        List<Entry<Author, List<Book>>> entries = booksByAuthor.entrySet().stream().collect(toList());
-//
-//        assertEquals(AUTHOR_FIRST_NAMES.get(0), entries.get(0).getKey().firstName);
-//        assertEquals(AUTHOR_FIRST_NAMES.get(1), entries.get(1).getKey().firstName);
-//        assertEquals(AUTHOR_LAST_NAMES.get(0), entries.get(0).getKey().lastName);
-//        assertEquals(AUTHOR_LAST_NAMES.get(1), entries.get(1).getKey().lastName);
-//
-//        assertEquals(2, entries.get(0).getValue().size());
-//        assertEquals(2, entries.get(1).getValue().size());
-//
-//        assertEquals((int) BOOK_IDS.get(0), entries.get(0).getValue().get(0).bookId);
-//        assertEquals((int) BOOK_IDS.get(1), entries.get(0).getValue().get(1).bookId);
-//        assertEquals((int) BOOK_IDS.get(2), entries.get(1).getValue().get(0).bookId);
-//        assertEquals((int) BOOK_IDS.get(3), entries.get(1).getValue().get(1).bookId);
-//
-//        assertEquals(BOOK_TITLES.get(0), entries.get(0).getValue().get(0).title);
-//        assertEquals(BOOK_TITLES.get(1), entries.get(0).getValue().get(1).title);
-//        assertEquals(BOOK_TITLES.get(2), entries.get(1).getValue().get(0).title);
-//        assertEquals(BOOK_TITLES.get(3), entries.get(1).getValue().get(1).title);
-//    }
+    public void testStreamsCollectRecords() {
+
+        // Collect the AUTHOR / BOOK relationship grouping books by author
+        // The result is collected into jOOQ Records
+
+        Map<Record2<String, String>, List<Record2<Integer, String>>> booksByAuthor =
+        create().select(
+                    TBook_ID(),
+                    TBook_TITLE(),
+                    TAuthor_FIRST_NAME(),
+                    TAuthor_LAST_NAME())
+                .from(TBook())
+                .join(TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+                .orderBy(TBook_ID())
+                .fetch()
+                .stream()
+                .collect(groupingBy(
+                    r -> r.into(TAuthor_FIRST_NAME(), TAuthor_LAST_NAME()),
+                    LinkedHashMap::new,
+                    mapping(
+                        r -> r.into(TBook_ID(), TBook_TITLE()),
+                        toList()
+                    )
+                ));
+
+        assertEquals(2, booksByAuthor.size());
+        List<Entry<Record2<String, String>, List<Record2<Integer, String>>>> entries = booksByAuthor.entrySet().stream().collect(toList());
+
+        assertEquals(AUTHOR_FIRST_NAMES.get(0), entries.get(0).getKey().getValue(TAuthor_FIRST_NAME()));
+        assertEquals(AUTHOR_FIRST_NAMES.get(1), entries.get(1).getKey().getValue(TAuthor_FIRST_NAME()));
+        assertEquals(AUTHOR_LAST_NAMES.get(0), entries.get(0).getKey().getValue(TAuthor_LAST_NAME()));
+        assertEquals(AUTHOR_LAST_NAMES.get(1), entries.get(1).getKey().getValue(TAuthor_LAST_NAME()));
+
+        assertEquals(2, entries.get(0).getValue().size());
+        assertEquals(2, entries.get(1).getValue().size());
+
+        assertEquals(BOOK_IDS.get(0), entries.get(0).getValue().get(0).getValue(TBook_ID()));
+        assertEquals(BOOK_IDS.get(1), entries.get(0).getValue().get(1).getValue(TBook_ID()));
+        assertEquals(BOOK_IDS.get(2), entries.get(1).getValue().get(0).getValue(TBook_ID()));
+        assertEquals(BOOK_IDS.get(3), entries.get(1).getValue().get(1).getValue(TBook_ID()));
+
+        assertEquals(BOOK_TITLES.get(0), entries.get(0).getValue().get(0).getValue(TBook_TITLE()));
+        assertEquals(BOOK_TITLES.get(1), entries.get(0).getValue().get(1).getValue(TBook_TITLE()));
+        assertEquals(BOOK_TITLES.get(2), entries.get(1).getValue().get(0).getValue(TBook_TITLE()));
+        assertEquals(BOOK_TITLES.get(3), entries.get(1).getValue().get(1).getValue(TBook_TITLE()));
+    }
+
+    public void testStreamsCollectPOJOs() {
+
+        // Collect the AUTHOR / BOOK relationship grouping books by author
+        // The result is collected into POJOs
+
+        Map<Author, List<Book>> booksByAuthor =
+        create().select(
+                    TBook_ID().as("book_id"),
+                    TBook_TITLE(),
+                    TAuthor_FIRST_NAME(),
+                    TAuthor_LAST_NAME())
+                .from(TBook())
+                .join(TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+                .orderBy(TBook_ID())
+                .fetch()
+                .stream()
+                .collect(groupingBy(
+                    r -> r.into(Author.class),
+                    LinkedHashMap::new,
+                    mapping(
+                        r -> r.into(Book.class),
+                        toList()
+                    )
+                ));
+
+        assertEquals(2, booksByAuthor.size());
+        List<Entry<Author, List<Book>>> entries = booksByAuthor.entrySet().stream().collect(toList());
+
+        assertEquals(AUTHOR_FIRST_NAMES.get(0), entries.get(0).getKey().firstName);
+        assertEquals(AUTHOR_FIRST_NAMES.get(1), entries.get(1).getKey().firstName);
+        assertEquals(AUTHOR_LAST_NAMES.get(0), entries.get(0).getKey().lastName);
+        assertEquals(AUTHOR_LAST_NAMES.get(1), entries.get(1).getKey().lastName);
+
+        assertEquals(2, entries.get(0).getValue().size());
+        assertEquals(2, entries.get(1).getValue().size());
+
+        assertEquals((int) BOOK_IDS.get(0), entries.get(0).getValue().get(0).bookId);
+        assertEquals((int) BOOK_IDS.get(1), entries.get(0).getValue().get(1).bookId);
+        assertEquals((int) BOOK_IDS.get(2), entries.get(1).getValue().get(0).bookId);
+        assertEquals((int) BOOK_IDS.get(3), entries.get(1).getValue().get(1).bookId);
+
+        assertEquals(BOOK_TITLES.get(0), entries.get(0).getValue().get(0).title);
+        assertEquals(BOOK_TITLES.get(1), entries.get(0).getValue().get(1).title);
+        assertEquals(BOOK_TITLES.get(2), entries.get(1).getValue().get(0).title);
+        assertEquals(BOOK_TITLES.get(3), entries.get(1).getValue().get(1).title);
+    }
 
     static class Book {
         public int bookId;

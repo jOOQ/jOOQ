@@ -97,7 +97,7 @@ public class BarChartSample extends Application {
         xAxis.setLabel("Country");
         yAxis.setLabel(yAxisLabel);
 
-        BarChart<String, Number> bc = new BarChart<String, Number>(xAxis, yAxis);
+        BarChart<String, Number> bc = new BarChart<>(xAxis, yAxis);
         bc.setTitle(title);
         bc.getData().addAll(
 

@@ -41,6 +41,7 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.SQLITE;
@@ -153,7 +154,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @SuppressWarnings("serial")
 
     public void testResultSetConcurrency() throws Exception {
-        assumeFamilyNotIn(INFORMIX, SYBASE, MARIADB, SQLITE);
+        assumeFamilyNotIn(HANA, INFORMIX, MARIADB, SQLITE, SYBASE);
         jOOQAbstractTest.reset = false;
 
         assertEquals(

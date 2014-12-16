@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -423,6 +424,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testMetaData() throws Exception {
+        // TODO: Reactivate this. For now, it is simply too slow...
+        assumeFamilyNotIn(HANA);
+
         Meta meta = create().meta();
 
         if (schema() != null) {

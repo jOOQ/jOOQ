@@ -289,8 +289,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                 case H2:
                 /* [pro] */
                 case DB2:
+                case HANA:
 
-                // Sybase CallableStatement.wasNull() doesn't work :-(
+                // Sybase CallableStatement.wasNull() doesn't work
                 case SYBASE:
                 /* [/pro] */
                     return executeSelect();

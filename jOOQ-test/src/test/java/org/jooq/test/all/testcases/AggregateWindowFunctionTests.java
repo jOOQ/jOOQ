@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
@@ -343,10 +344,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .orderBy(TBook_AUTHOR_ID())
                     .fetch();
 
-                assertEquals(0.5, result2.get(0).getValue(1, Double.class), 0.0);
-                assertEquals(0.25, result2.get(0).getValue(3, Double.class), 0.0);
-                assertEquals(0.5, result2.get(1).getValue(1, Double.class), 0.0);
-                assertEquals(0.25, result2.get(1).getValue(3, Double.class), 0.0);
+                // HANA only knows STDDEV_SAMP / VAR_SAMP
+                if (!asList(HANA).contains(dialect().family())) {
+                    assertEquals(0.5, result2.get(0).getValue(1, Double.class), 0.0);
+                    assertEquals(0.25, result2.get(0).getValue(3, Double.class), 0.0);
+                    assertEquals(0.5, result2.get(1).getValue(1, Double.class), 0.0);
+                    assertEquals(0.25, result2.get(1).getValue(3, Double.class), 0.0);
+                }
 
                 // DB2 and INFORMIX only know STDDEV_POP / VAR_POP
                 if (!asList(DB2, INFORMIX).contains(dialect().family())) {
@@ -708,13 +712,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .orderBy(TBook_ID().asc())
                 .fetch();
 
-        // Overall STDDEV_POP(), STDDEV_SAMP(), VAR_POP(), VAR_SAMP()
-        assertEquals("1.118", result.get(0).getValue(1, String.class).substring(0, 5));
-        assertEquals(1.25, result.get(0).getValue(3, Double.class), 0.0);
+        // HANA only knows STDDEV_SAMP / VAR_SAMP
+        if (!asList(HANA).contains(dialect().family())) {
 
-        // Partitioned STDDEV_POP(), STDDEV_SAMP(), VAR_POP(), VAR_SAMP()
-        assertEquals(0.5, result.get(0).getValue(5, Double.class), 0.0);
-        assertEquals(0.25, result.get(0).getValue(7, Double.class), 0.0);
+            // Overall STDDEV_POP(), STDDEV_SAMP(), VAR_POP(), VAR_SAMP()
+            assertEquals("1.118", result.get(0).getValue(1, String.class).substring(0, 5));
+            assertEquals(1.25, result.get(0).getValue(3, Double.class), 0.0);
+
+            // Partitioned STDDEV_POP(), STDDEV_SAMP(), VAR_POP(), VAR_SAMP()
+            assertEquals(0.5, result.get(0).getValue(5, Double.class), 0.0);
+            assertEquals(0.25, result.get(0).getValue(7, Double.class), 0.0);
+        }
 
         // DB2 only knows STDDEV_POP / VAR_POP
         if (true && !asList(DB2, INFORMIX).contains(dialect().family())) {
@@ -750,7 +758,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         column = 0;
-        if (asList(CUBRID).contains(dialect())) {
+        if (asList(CUBRID, HANA).contains(dialect())) {
             log.info("SKIPPING", "ROWS UNBOUNDED PRECEDING and similar tests");
         }
         else {
@@ -812,9 +820,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         /* [pro] */
         switch (dialect().family()) {
-            case SQLSERVER:
             case CUBRID:
+            case HANA:
             case POSTGRES:
+            case SQLSERVER:
                 log.info("SKIPPING", "FIRST_VALUE(... IGNORE NULLS) window function test");
                 break;
 

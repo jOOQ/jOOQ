@@ -101,6 +101,7 @@ enum Term {
                     return "len";
 
                 case DB2:
+                case HANA:
                 case INGRES:
                 case ORACLE:
                 case SYBASE:
@@ -186,6 +187,7 @@ enum Term {
             /* [pro] */
             switch (dialect.family()) {
                 case DB2:
+                case HANA:
                     return "stddev";
 
                 case INFORMIX:
@@ -205,6 +207,7 @@ enum Term {
             /* [pro] */
             switch (dialect.family()) {
                 case DB2:
+                case HANA:
                     return "stddev";
 
                 case INFORMIX:
@@ -227,6 +230,9 @@ enum Term {
                 case INFORMIX:
                     return "variance";
 
+                case HANA:
+                    return "var";
+
                 case SQLSERVER:
                     return "varp";
             }
@@ -243,6 +249,9 @@ enum Term {
                 case DB2:
                 case INFORMIX:
                     return "variance";
+
+                case HANA:
+                    return "var";
 
                 case SQLSERVER:
                     return "var";

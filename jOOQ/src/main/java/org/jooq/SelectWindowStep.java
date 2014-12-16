@@ -42,6 +42,7 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -105,7 +106,7 @@ public interface SelectWindowStep<R extends Record> extends SelectOrderByStep<R>
      * use this clause in all other databases supporting window functions. jOOQ
      * will inline window definitions where they are referenced.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     SelectOrderByStep<R> window(WindowDefinition... definitions);
 
     /**
@@ -119,6 +120,6 @@ public interface SelectWindowStep<R extends Record> extends SelectOrderByStep<R>
      * use this clause in all other databases supporting window functions. jOOQ
      * will inline window definitions where they are referenced.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     SelectOrderByStep<R> window(Collection<? extends WindowDefinition> definitions);
 }

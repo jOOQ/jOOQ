@@ -1047,10 +1047,12 @@ public abstract class AbstractDatabase implements Database {
             case H2:
                 return "ARRAY".equals(dataType);
             case HSQLDB:
+            /* [pro] */
+            case HANA:
+            /* [/pro] */
+            default:
                 return dataType.endsWith("ARRAY");
         }
-
-        return false;
     }
 
     protected static final String fetchedSize(List<?> fetched, List<?> included) {

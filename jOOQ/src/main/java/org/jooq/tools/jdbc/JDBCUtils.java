@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
@@ -157,6 +158,9 @@ public class JDBCUtils {
         else if (url.startsWith("jdbc:db2:")) {
             return DB2;
         }
+        else if (url.startsWith("jdbc:sap:")) {
+            return HANA;
+        }
         else if (url.startsWith("jdbc:informix:")
               || url.startsWith("jdbc:informix-sqli:")) {
             return INFORMIX;
@@ -213,6 +217,8 @@ public class JDBCUtils {
                 return "net.sourceforge.jtds.jdbc.Driver";
             case DB2:
                 return "com.ibm.db2.jcc.DB2Driver";
+            case HANA:
+                return "com.sap.db.jdbc.Driver";
             case INFORMIX:
                 return "com.informix.jdbc.IfxDriver";
             case INGRES:

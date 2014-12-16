@@ -73,6 +73,7 @@ class CurrentUser extends AbstractFunction<String> {
                 return field("{user}", SQLDataType.VARCHAR);
 
             case DB2:
+            case HANA:
             case INGRES:
             case SQLSERVER:
             case SYBASE:

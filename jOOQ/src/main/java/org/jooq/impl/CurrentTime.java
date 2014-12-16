@@ -76,6 +76,7 @@ class CurrentTime extends AbstractFunction<Time> {
                 return field("{current hour to second}", SQLDataType.TIME);
 
             case DB2:
+            case HANA:
             case INGRES:
             /* [/pro] */
             case DERBY:

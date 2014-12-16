@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
@@ -83,13 +84,13 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
     /**
      * Combine with other selects
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     Select<R> except(Select<? extends R> select);
 
     /**
      * Combine with other selects
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     Select<R> intersect(Select<? extends R> select);
 
     /**

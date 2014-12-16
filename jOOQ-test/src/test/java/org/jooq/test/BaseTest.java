@@ -799,6 +799,10 @@ public abstract class BaseTest<
         return delegate.dialect();
     }
 
+    protected final SQLDialect family() {
+        return dialect().family();
+    }
+
     protected final void sleep(long millis) {
         try {
             Thread.sleep(millis);

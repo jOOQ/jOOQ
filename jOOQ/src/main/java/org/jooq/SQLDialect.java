@@ -175,6 +175,13 @@ public enum SQLDialect {
     DB2_10("DB2", true, DB2),
 
     /**
+     * The SAP HANA SQL dialect.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
+     */
+    HANA("Hana", true),
+
+    /**
      * The Informix SQL dialect.
      * <p>
      * This dialect is available in commercial jOOQ distributions, only.

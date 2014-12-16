@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
@@ -117,13 +118,13 @@ public interface SelectUnionStep<R extends Record> extends SelectFinalStep<R> {
      * Combine with other selects
      */
     @Override
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SelectOrderByStep<R> except(Select<? extends R> select);
 
     /**
      * Combine with other selects
      */
     @Override
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SelectOrderByStep<R> intersect(Select<? extends R> select);
 }

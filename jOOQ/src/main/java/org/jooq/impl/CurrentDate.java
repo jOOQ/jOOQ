@@ -82,6 +82,7 @@ class CurrentDate extends AbstractFunction<Date> {
                 return field("{current year to day}", SQLDataType.DATE);
 
             case DB2:
+            case HANA:
             case INGRES:
             /* [/pro] */
 

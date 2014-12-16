@@ -47,6 +47,7 @@ import org.jooq.util.db2.DB2Database;
 import org.jooq.util.derby.DerbyDatabase;
 import org.jooq.util.firebird.FirebirdDatabase;
 import org.jooq.util.h2.H2Database;
+import org.jooq.util.hana.HanaDatabase;
 import org.jooq.util.hsqldb.HSQLDBDatabase;
 import org.jooq.util.informix.InformixDatabase;
 import org.jooq.util.ingres.IngresDatabase;
@@ -78,6 +79,7 @@ public class Databases {
             case ACCESS:    result = JDBCDatabase.class;      break;
             case ASE:       result = ASEDatabase.class;       break;
             case DB2:       result = DB2Database.class;       break;
+            case HANA:      result = HanaDatabase.class;      break;
             case INFORMIX:  result = InformixDatabase.class;  break;
             case INGRES:    result = IngresDatabase.class;    break;
             case ORACLE:    result = OracleDatabase.class;    break;

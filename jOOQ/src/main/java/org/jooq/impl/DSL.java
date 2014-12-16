@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
@@ -7199,7 +7200,7 @@ public class DSL {
      *
      * @see #rpad(Field, Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, int length) {
         return rpad(nullSafe(field), Utils.field(length));
     }
@@ -7213,7 +7214,7 @@ public class DSL {
      * well, depending on the RDBMS:
      * <code><pre>concat([field], repeat(' ', [length] - length([field])))</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, Field<? extends Number> length) {
         return new Rpad(nullSafe(field), nullSafe(length));
     }
@@ -7223,7 +7224,7 @@ public class DSL {
      *
      * @see #rpad(Field, Field, Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, int length, char character) {
         return rpad(field, length, Character.toString(character));
     }
@@ -7233,7 +7234,7 @@ public class DSL {
      *
      * @see #rpad(Field, Field, Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, int length, String character) {
         return rpad(nullSafe(field), Utils.field(length), Utils.field(character, String.class));
     }
@@ -7250,7 +7251,7 @@ public class DSL {
      * In {@link SQLDialect#SQLITE}, this is simulated as such:
      * <code><pre>[field] || replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '''', ''), '0', [character])</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
         return new Rpad(nullSafe(field), nullSafe(length), nullSafe(character));
     }
@@ -7260,7 +7261,7 @@ public class DSL {
      *
      * @see #lpad(Field, Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, int length) {
         return lpad(nullSafe(field), Utils.field(length));
     }
@@ -7274,7 +7275,7 @@ public class DSL {
      * well, depending on the RDBMS:
      * <code><pre>concat(repeat(' ', [length] - length([field])), [field])</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, Field<? extends Number> length) {
         return new Lpad(nullSafe(field), nullSafe(length));
     }
@@ -7284,7 +7285,7 @@ public class DSL {
      *
      * @see #lpad(Field, Field, Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, int length, char character) {
         return lpad(field, length, Character.toString(character));
     }
@@ -7294,7 +7295,7 @@ public class DSL {
      *
      * @see #lpad(Field, Field, Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, int length, String character) {
         return lpad(nullSafe(field), Utils.field(length), Utils.field(character, String.class));
     }
@@ -7311,7 +7312,7 @@ public class DSL {
      * In {@link SQLDialect#SQLITE}, this is simulated as such:
      * <code><pre>replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '''', ''), '0', [character]) || [field]</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
         return new Lpad(nullSafe(field), nullSafe(length), nullSafe(character));
     }
@@ -7321,7 +7322,7 @@ public class DSL {
      *
      * @see #repeat(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> repeat(String field, int count) {
         return repeat(Utils.field(field, String.class), Utils.field(count));
     }
@@ -7331,7 +7332,7 @@ public class DSL {
      *
      * @see #repeat(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> repeat(String field, Field<? extends Number> count) {
         return repeat(Utils.field(field, String.class), nullSafe(count));
     }
@@ -7341,7 +7342,7 @@ public class DSL {
      *
      * @see #repeat(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> repeat(Field<String> field, int count) {
         return repeat(nullSafe(field), Utils.field(count));
     }
@@ -7359,7 +7360,7 @@ public class DSL {
      * In {@link SQLDialect#SQLITE}, this is simulated as such:
      * <code><pre>replace(substr(quote(zeroblob(([count] + 1) / 2)), 3, [count]), '0', [field])</pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> repeat(Field<String> field, Field<? extends Number> count) {
         return new Repeat(nullSafe(field), nullSafe(count));
     }
@@ -7373,7 +7374,7 @@ public class DSL {
      * @see <a
      *      href="http://technet.microsoft.com/en-us/library/ms187950.aspx">http://technet.microsoft.com/en-us/library/ms187950.aspx</a>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> space(int value) {
         return space(val(value));
     }
@@ -7387,7 +7388,7 @@ public class DSL {
      * @see <a
      *      href="http://technet.microsoft.com/en-us/library/ms187950.aspx">http://technet.microsoft.com/en-us/library/ms187950.aspx</a>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> space(Field<Integer> value) {
         return new Space(nullSafe(value));
     }
@@ -7540,7 +7541,7 @@ public class DSL {
      *
      * @see #ascii(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> ascii(String field) {
         return ascii(Utils.field(field, String.class));
     }
@@ -7551,7 +7552,7 @@ public class DSL {
      * This renders the ascii function:
      * <code><pre>ascii([field])</pre></code>
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> ascii(Field<String> field) {
         return new Ascii(nullSafe(field));
     }
@@ -10122,7 +10123,7 @@ public class DSL {
     /**
      * Get the population standard deviation of a numeric field: stddev_pop(field).
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> stddevPop(Field<? extends Number> field) {
         return new Function<BigDecimal>(Term.STDDEV_POP, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -10130,7 +10131,7 @@ public class DSL {
     /**
      * Get the sample standard deviation of a numeric field: stddev_samp(field).
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field) {
         return new Function<BigDecimal>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -10138,7 +10139,7 @@ public class DSL {
     /**
      * Get the population variance of a numeric field: var_pop(field).
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> varPop(Field<? extends Number> field) {
         return new Function<BigDecimal>(Term.VAR_POP, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -10146,7 +10147,7 @@ public class DSL {
     /**
      * Get the sample variance of a numeric field: var_samp(field).
      */
-    @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
         return new Function<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -10415,7 +10416,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>PARTITION BY</code> clause.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowSpecificationOrderByStep partitionBy(Field<?>... fields) {
         return new WindowSpecificationImpl().partitionBy(fields);
     }
@@ -10423,7 +10424,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>PARTITION BY</code> clause.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowSpecificationOrderByStep partitionBy(Collection<? extends Field<?>> fields) {
         return new WindowSpecificationImpl().partitionBy(fields);
     }
@@ -10431,7 +10432,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowSpecificationOrderByStep orderBy(Field<?>... fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
@@ -10439,7 +10440,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowSpecificationRowsStep orderBy(SortField<?>... fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
@@ -10447,7 +10448,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowSpecificationRowsStep orderBy(Collection<? extends SortField<?>> fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
@@ -10548,7 +10549,7 @@ public class DSL {
      * {@link SQLDialect#HSQLDB} can simulate this function using
      * <code>ROWNUM()</code>
      */
-    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, H2, HANA, HSQLDB, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowOverStep<Integer> rowNumber() {
         return new Function<Integer>(ROW_NUMBER, SQLDataType.INTEGER);
     }
@@ -10559,7 +10560,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowOverStep<Integer> rank() {
         return new Function<Integer>("rank", SQLDataType.INTEGER);
     }
@@ -10581,7 +10582,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowOverStep<Integer> denseRank() {
         return new Function<Integer>("dense_rank", SQLDataType.INTEGER);
     }
@@ -10603,7 +10604,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     public static WindowOverStep<BigDecimal> percentRank() {
         return new Function<BigDecimal>("percent_rank", SQLDataType.NUMERIC);
     }
@@ -10625,7 +10626,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowOverStep<BigDecimal> cumeDist() {
         return new Function<BigDecimal>("cume_dist", SQLDataType.NUMERIC);
     }
@@ -10647,7 +10648,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, INFORMIX, POSTGRES, ORACLE, SQLSERVER })
+    @Support({ CUBRID, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER })
     public static WindowOverStep<Integer> ntile(int number) {
         return new Function<Integer>("ntile", SQLDataType.INTEGER, inline(number));
     }
@@ -10658,7 +10659,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     public static <T> WindowIgnoreNullsStep<T> firstValue(Field<T> field) {
         return new Function<T>("first_value", nullSafeDataType(field), nullSafe(field));
     }
@@ -10669,7 +10670,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER2012, SYBASE })
     public static <T> WindowIgnoreNullsStep<T> lastValue(Field<T> field) {
         return new Function<T>("last_value", nullSafeDataType(field), nullSafe(field));
     }
@@ -10680,7 +10681,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, SQLSERVER2012, ORACLE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, SQLSERVER2012, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field) {
         return new Function<T>("lead", nullSafeDataType(field), nullSafe(field));
     }
@@ -10691,7 +10692,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, SQLSERVER2012, ORACLE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, SQLSERVER2012, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset) {
         return new Function<T>("lead", nullSafeDataType(field), nullSafe(field), inline(offset));
     }
@@ -10704,7 +10705,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, SQLSERVER2012, ORACLE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, SQLSERVER2012, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, T defaultValue) {
         return lead(nullSafe(field), offset, Utils.field(defaultValue));
     }
@@ -10717,7 +10718,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, SQLSERVER2012, ORACLE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, SQLSERVER2012, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, Field<T> defaultValue) {
         return new Function<T>("lead", nullSafeDataType(field), nullSafe(field), inline(offset), nullSafe(defaultValue));
     }
@@ -10728,7 +10729,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, SQLSERVER2012, ORACLE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, SQLSERVER2012, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field) {
         return new Function<T>("lag", nullSafeDataType(field), nullSafe(field));
     }
@@ -10739,7 +10740,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, SQLSERVER2012, ORACLE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, SQLSERVER2012, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset) {
         return new Function<T>("lag", nullSafeDataType(field), nullSafe(field), inline(offset));
     }
@@ -10752,7 +10753,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, SQLSERVER2012, ORACLE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, SQLSERVER2012, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, T defaultValue) {
         return lag(nullSafe(field), offset, Utils.field(defaultValue));
     }
@@ -10765,7 +10766,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, INFORMIX, POSTGRES, SQLSERVER2012, ORACLE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, SQLSERVER2012, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, Field<T> defaultValue) {
         return new Function<T>("lag", nullSafeDataType(field), nullSafe(field), inline(offset), nullSafe(defaultValue));
     }
@@ -12627,7 +12628,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> currentUser() {
         return new CurrentUser();
     }

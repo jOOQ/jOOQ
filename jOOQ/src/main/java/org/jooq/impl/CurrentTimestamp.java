@@ -82,6 +82,7 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
                 return field("{current}", SQLDataType.TIMESTAMP);
 
             case DB2:
+            case HANA:
             case INGRES:
             case SQLSERVER:
             /* [/pro] */

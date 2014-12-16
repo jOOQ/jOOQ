@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.DSL.one;
 
@@ -90,8 +91,9 @@ class WindowSpecificationImpl extends AbstractQueryPart implements
         if (!partitionBy.isEmpty()) {
 
             // Ignore PARTITION BY 1 clause. These databases erroneously map the
-            // 1 literal onto the column index
-            if (partitionByOne && asList(CUBRID, SYBASE).contains(ctx.configuration().dialect())) {
+            // 1 literal onto the column index (CUBRID, Sybase), or do not support
+            // constant expressions in the PARTITION BY clause (HANA)
+            if (partitionByOne && asList(CUBRID, HANA, SYBASE).contains(ctx.configuration().dialect())) {
             }
             else {
                 ctx.sql(glue)

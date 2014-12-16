@@ -153,6 +153,7 @@ class Dual extends AbstractTable<Record> {
                     ctx.keyword("(select 1 as dual) as dual");
                     break;
 
+                case HANA:
                 case SYBASE:
                     ctx.literal("SYS")
                        .sql(".")

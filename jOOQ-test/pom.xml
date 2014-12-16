@@ -47,6 +47,7 @@
         <!-- [pro] -->
         <db.ase.version>1.3.1</db.ase.version>
         <db.db2.version>3.1.57</db.db2.version>
+        <db.hana.version>1.00.48.372847</db.hana.version>
         <db.informix.version>12.10</db.informix.version>
         <db.ingres.version>10.0-4.0.6</db.ingres.version>
         <db.oracle.version>10.2.0.3.0</db.oracle.version>
@@ -263,6 +264,13 @@
         </dependency>
 
         <!-- [pro] -->
+        <dependency>
+            <groupId>com.sap.db.jdbc</groupId>
+            <artifactId>ngdbc</artifactId>
+            <version>${db.hana.version}</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/ngdbc.jar</systemPath>
+        </dependency>
         <dependency>
             <groupId>com.informix.jdbc</groupId>
             <artifactId>ifxjdbc</artifactId>
@@ -4155,6 +4163,217 @@
                                 <version>${db.informix.version}</version>
                                 <scope>system</scope>
                                 <systemPath>${basedir}/lib/ifxjdbc.jar</systemPath>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
+
+
+        <profile>
+            <id>codegen-hana</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${org.jooq.version}</version>
+
+                        <executions>
+                            <execution>
+                                <id>generate-hana</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.hana.driver}</driver>
+                                        <url>${db.hana.url}</url>
+                                        <schema>${db.hana.schema}</schema>
+                                        <user>${db.hana.username}</user>
+                                        <password>${db.hana.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <name>org.jooq.util.DefaultGenerator</name>
+                                        <database>
+                                            <name>org.jooq.util.hana.HanaDatabase</name>
+                                            <includes>(?i:t_.*|x_.*|v_.*|p_.*|f_.*|(f|p)[0-9]+|s_.*)</includes>
+                                            <excludes>t_book_details</excludes>
+                                            <unsignedTypes>true</unsignedTypes>
+
+                                            <customTypes>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_10</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_10_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_TF_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_TF_UC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YN_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YN_UC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YES_NO_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YES_NO_UC_Converter</converter>
+                                                </customType>
+                                            </customTypes>
+
+                                            <forcedTypes>
+                                                <forcedType>
+                                                    <name>BOOLEAN</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>UUID</name>
+                                                    <expression>(?i:(.*?.)?T_EXOTIC_TYPES.UU)</expression>
+                                                </forcedType>
+
+                                                <!-- [#2477] Check if unsigned types work correctly -->
+                                                <forcedType>
+                                                    <name>TINYINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_BYTE)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>SMALLINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_SHORT)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>INTEGERUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_INT)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>BIGINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_LONG)</expression>
+                                                </forcedType>
+
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_10</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.ONE_ZERO)</expression>
+                                                </forcedType>
+                                            </forcedTypes>
+                                        </database>
+                                        <generate>
+                                            <relations>true</relations>
+                                            <deprecated>true</deprecated>
+                                            <generatedAnnotation>false</generatedAnnotation>
+                                            <records>true</records>
+                                            <pojos>false</pojos>
+                                            <jpaAnnotations>false</jpaAnnotations>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.test.hana.generatedclasses</packageName>
+                                            <directory>./src/test/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.sap.db.jdbc</groupId>
+                                <artifactId>ngdbc</artifactId>
+                                <version>${db.hana.version}</version>
+                                <scope>system</scope>
+                                <systemPath>${basedir}/lib/ngdbc.jar</systemPath>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
+
+        <profile>
+            <id>codegen-hana-sys</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${org.jooq.version}</version>
+
+                        <executions>
+                            <execution>
+                                <id>generate-hana-sys</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.hana.driver}</driver>
+                                        <url>${db.hana.url}</url>
+                                        <schema>SYS</schema>
+                                        <user>${db.hana.username}</user>
+                                        <password>${db.hana.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <database>
+                                            <includes>CONSTRAINTS|ELEMENT_TYPES|FUNCTIONS|FUNCTION_PARAMETERS|PROCEDURES|PROCEDURE_PARAMETERS|REFERENTIAL_CONSTRAINTS|SCHEMAS|SEQUENCES|TABLES|TABLE_COLUMNS|VIEWS|VIEW_COLUMNS</includes>
+                                        </database>
+                                        <generate>
+                                            <records>false</records>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.util.hana.sys</packageName>
+                                            <directory>../jOOQ-meta/src/main/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.sap.db.jdbc</groupId>
+                                <artifactId>ngdbc</artifactId>
+                                <version>${db.hana.version}</version>
+                                <scope>system</scope>
+                                <systemPath>${basedir}/lib/ngdbc.jar</systemPath>
                             </dependency>
                         </dependencies>
                     </plugin>

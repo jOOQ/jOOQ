@@ -40,6 +40,7 @@
  */
 package org.jooq.test.all.testcases;
 
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.conf.ParamType.INDEXED;
 
 import java.sql.Date;
@@ -161,6 +162,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testBenchmarkSelect() throws Exception {
+        // TODO: Reactivate this. For now, it is simply too slow...
+        assumeFamilyNotIn(HANA);
+
         // This benchmark is contributed by "jjYBdx4IL" on GitHub:
         // https://github.com/jOOQ/jOOQ/issues/1625
 

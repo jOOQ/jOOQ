@@ -15,9 +15,23 @@ public class Tables {
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.FTables1 F_TABLES1 = org.jooq.test.sqlserver.generatedclasses.tables.FTables1.F_TABLES1;
 
 	/**
+	 * Get <code>dbo.f_tables1</code> as a field
+	 */
+	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables1 F_TABLES1() {
+		return org.jooq.test.sqlserver.generatedclasses.tables.FTables1.F_TABLES1.call();
+	}
+
+	/**
 	 * The table dbo.f_tables2
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.FTables2 F_TABLES2 = org.jooq.test.sqlserver.generatedclasses.tables.FTables2.F_TABLES2;
+
+	/**
+	 * Get <code>dbo.f_tables2</code> as a field
+	 */
+	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables2 F_TABLES2() {
+		return org.jooq.test.sqlserver.generatedclasses.tables.FTables2.F_TABLES2.call();
+	}
 
 	/**
 	 * The table dbo.f_tables3
@@ -25,14 +39,49 @@ public class Tables {
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.FTables3 F_TABLES3 = org.jooq.test.sqlserver.generatedclasses.tables.FTables3.F_TABLES3;
 
 	/**
+	 * Get <code>dbo.f_tables3</code> as a field
+	 */
+	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables3 F_TABLES3() {
+		return org.jooq.test.sqlserver.generatedclasses.tables.FTables3.F_TABLES3.call();
+	}
+
+	/**
 	 * The table dbo.f_tables4
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.FTables4 F_TABLES4 = org.jooq.test.sqlserver.generatedclasses.tables.FTables4.F_TABLES4;
 
 	/**
+	 * Get <code>dbo.f_tables4</code> as a field
+	 */
+	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables4 F_TABLES4(java.lang.Integer id) {
+		return org.jooq.test.sqlserver.generatedclasses.tables.FTables4.F_TABLES4.call(id);
+	}
+
+	/**
+	 * Get <code>dbo.f_tables4</code> as a field
+	 */
+	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables4 F_TABLES4(org.jooq.Field<java.lang.Integer> id) {
+		return org.jooq.test.sqlserver.generatedclasses.tables.FTables4.F_TABLES4.call(id);
+	}
+
+	/**
 	 * The table dbo.f_tables5
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.FTables5 F_TABLES5 = org.jooq.test.sqlserver.generatedclasses.tables.FTables5.F_TABLES5;
+
+	/**
+	 * Get <code>dbo.f_tables5</code> as a field
+	 */
+	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables5 F_TABLES5(java.lang.Integer v1, java.lang.Integer v2, java.lang.Integer v3) {
+		return org.jooq.test.sqlserver.generatedclasses.tables.FTables5.F_TABLES5.call(v1, v2, v3);
+	}
+
+	/**
+	 * Get <code>dbo.f_tables5</code> as a field
+	 */
+	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables5 F_TABLES5(org.jooq.Field<java.lang.Integer> v1, org.jooq.Field<java.lang.Integer> v2, org.jooq.Field<java.lang.Integer> v3) {
+		return org.jooq.test.sqlserver.generatedclasses.tables.FTables5.F_TABLES5.call(v1, v2, v3);
+	}
 
 	/**
 	 * The table dbo.t_3084

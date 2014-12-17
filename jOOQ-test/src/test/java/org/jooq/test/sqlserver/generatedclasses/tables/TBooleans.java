@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 1329293551;
+	private static final long serialVersionUID = 63130031;
 
 	/**
-	 * The singleton instance of <code>dbo.t_booleans</code>
+	 * The reference instance of <code>dbo.t_booleans</code>
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.TBooleans T_BOOLEANS = new org.jooq.test.sqlserver.generatedclasses.tables.TBooleans();
 

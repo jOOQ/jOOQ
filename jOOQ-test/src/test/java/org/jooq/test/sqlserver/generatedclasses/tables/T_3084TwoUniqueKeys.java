@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3084TwoUniqueKeys extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3084TwoUniqueKeysRecord> {
 
-	private static final long serialVersionUID = -1295744077;
+	private static final long serialVersionUID = -1441672077;
 
 	/**
-	 * The singleton instance of <code>dbo.t_3084_two_unique_keys</code>
+	 * The reference instance of <code>dbo.t_3084_two_unique_keys</code>
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_3084TwoUniqueKeys T_3084_TWO_UNIQUE_KEYS = new org.jooq.test.sqlserver.generatedclasses.tables.T_3084TwoUniqueKeys();
 

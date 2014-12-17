@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -1990389030;
+	private static final long serialVersionUID = -502920678;
 
 	/**
-	 * The singleton instance of <code>dbo.t_author</code>
+	 * The reference instance of <code>dbo.t_author</code>
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.TAuthor T_AUTHOR = new org.jooq.test.sqlserver.generatedclasses.tables.TAuthor();
 

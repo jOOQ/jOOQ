@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = 1020564941;
+	private static final long serialVersionUID = -737518323;
 
 	/**
-	 * The singleton instance of <code>dbo.t_identity_pk</code>
+	 * The reference instance of <code>dbo.t_identity_pk</code>
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = new org.jooq.test.sqlserver.generatedclasses.tables.TIdentityPk();
 

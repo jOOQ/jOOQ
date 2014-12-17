@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = -54029760;
+	private static final long serialVersionUID = 1518700928;
 
 	/**
-	 * The singleton instance of <code>dbo.x_test_case_85</code>
+	 * The reference instance of <code>dbo.x_test_case_85</code>
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = new org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_85();
 

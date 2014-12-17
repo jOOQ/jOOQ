@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FTables2 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.FTables2Record> {
 
-	private static final long serialVersionUID = 652945274;
+	private static final long serialVersionUID = -13399780;
 
 	/**
-	 * The singleton instance of <code>dbo.f_tables2</code>
+	 * The reference instance of <code>dbo.f_tables2</code>
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.FTables2 F_TABLES2 = new org.jooq.test.sqlserver.generatedclasses.tables.FTables2();
 
@@ -44,7 +44,7 @@ public class FTables2 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.ge
 	}
 
 	private FTables2(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.FTables2Record> aliased) {
-		this(alias, aliased, null);
+		this(alias, aliased, new org.jooq.Field[0]);
 	}
 
 	private FTables2(java.lang.String alias, org.jooq.Table<org.jooq.test.sqlserver.generatedclasses.tables.records.FTables2Record> aliased, org.jooq.Field<?>[] parameters) {

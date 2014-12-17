@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 1477574129;
+	private static final long serialVersionUID = 2041962161;
 
 	/**
-	 * The singleton instance of <code>dbo.v_library</code>
+	 * The reference instance of <code>dbo.v_library</code>
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.VLibrary V_LIBRARY = new org.jooq.test.sqlserver.generatedclasses.tables.VLibrary();
 

@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -1263331296;
+	private static final long serialVersionUID = -451966752;
 
 	/**
-	 * The singleton instance of <code>dbo.t_exotic_types</code>
+	 * The reference instance of <code>dbo.t_exotic_types</code>
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes T_EXOTIC_TYPES = new org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes();
 

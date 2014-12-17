@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -265603547;
+	private static final long serialVersionUID = 1883846373;
 
 	/**
-	 * The singleton instance of <code>dbo.v_book</code>
+	 * The reference instance of <code>dbo.v_book</code>
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.VBook V_BOOK = new org.jooq.test.sqlserver.generatedclasses.tables.VBook();
 

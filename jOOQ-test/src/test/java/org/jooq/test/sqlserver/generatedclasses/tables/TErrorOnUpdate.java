@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TErrorOnUpdate extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TErrorOnUpdateRecord> {
 
-	private static final long serialVersionUID = 1819887982;
+	private static final long serialVersionUID = -2123957714;
 
 	/**
-	 * The singleton instance of <code>dbo.t_error_on_update</code>
+	 * The reference instance of <code>dbo.t_error_on_update</code>
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.TErrorOnUpdate T_ERROR_ON_UPDATE = new org.jooq.test.sqlserver.generatedclasses.tables.TErrorOnUpdate();
 

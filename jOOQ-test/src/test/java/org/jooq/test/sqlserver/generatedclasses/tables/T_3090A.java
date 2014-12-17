@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3090A extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.T_3090ARecord> {
 
-	private static final long serialVersionUID = -1457760719;
+	private static final long serialVersionUID = -162599567;
 
 	/**
-	 * The singleton instance of <code>dbo.t_3090_a</code>
+	 * The reference instance of <code>dbo.t_3090_a</code>
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_3090A T_3090_A = new org.jooq.test.sqlserver.generatedclasses.tables.T_3090A();
 

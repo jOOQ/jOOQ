@@ -9,10 +9,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1595605913;
+	private static final long serialVersionUID = 924967847;
 
 	/**
-	 * The singleton instance of <code>dbo.x_unused</code>
+	 * The reference instance of <code>dbo.x_unused</code>
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.XUnused X_UNUSED = new org.jooq.test.sqlserver.generatedclasses.tables.XUnused();
 

@@ -82,6 +82,7 @@ class CurrentDate extends AbstractFunction<Date> {
                 xxxxxx xxxxxxxxxxxxxxx xxxx xx xxxxxx xxxxxxxxxxxxxxxxxx
 
             xxxx xxxx
+            xxxx xxxxx
             xxxx xxxxxxx
             xx [/pro] */
 

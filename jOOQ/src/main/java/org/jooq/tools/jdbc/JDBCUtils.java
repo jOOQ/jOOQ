@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
@@ -157,6 +158,9 @@ public class JDBCUtils {
         xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxx xxxx
         x
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxx xxxxx
+        x
         xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
               xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxx xxxxxxxxx
@@ -213,6 +217,8 @@ public class JDBCUtils {
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxx xxxx
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxx xxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
             xxxx xxxxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxx xxxxxxx

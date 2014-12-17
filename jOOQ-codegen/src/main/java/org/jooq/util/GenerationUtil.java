@@ -189,6 +189,9 @@ class GenerationUtil {
                 return H2DataType.OTHER.getTypeName();
             }
 
+            /* [pro] xx
+            xxxx xxxxx
+            xx [/pro] */
             case HSQLDB: {
 
                 // In HSQLDB 2.2.5, there has been an incompatible INFORMATION_SCHEMA change around the

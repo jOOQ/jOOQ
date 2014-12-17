@@ -82,6 +82,7 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
                 xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 
             xxxx xxxx
+            xxxx xxxxx
             xxxx xxxxxxx
             xxxx xxxxxxxxxx
             xx [/pro] */

@@ -47,6 +47,7 @@ import org.jooq.util.cubrid.CUBRIDDatabase;
 import org.jooq.util.derby.DerbyDatabase;
 import org.jooq.util.firebird.FirebirdDatabase;
 import org.jooq.util.h2.H2Database;
+// ...
 import org.jooq.util.hsqldb.HSQLDBDatabase;
 // ...
 // ...
@@ -78,6 +79,7 @@ public class Databases {
             xxxx xxxxxxx    xxxxxx x xxxxxxxxxxxxxxxxxxx      xxxxxx
             xxxx xxxx       xxxxxx x xxxxxxxxxxxxxxxxxx       xxxxxx
             xxxx xxxx       xxxxxx x xxxxxxxxxxxxxxxxxx       xxxxxx
+            xxxx xxxxx      xxxxxx x xxxxxxxxxxxxxxxxxxx      xxxxxx
             xxxx xxxxxxxxx  xxxxxx x xxxxxxxxxxxxxxxxxxxxxxx  xxxxxx
             xxxx xxxxxxx    xxxxxx x xxxxxxxxxxxxxxxxxxxxx    xxxxxx
             xxxx xxxxxxx    xxxxxx x xxxxxxxxxxxxxxxxxxxxx    xxxxxx

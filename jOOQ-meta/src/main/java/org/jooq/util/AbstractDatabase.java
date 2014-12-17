@@ -80,6 +80,7 @@ import org.jooq.tools.csv.CSVReader;
 import org.jooq.util.jaxb.CustomType;
 import org.jooq.util.jaxb.EnumType;
 import org.jooq.util.jaxb.ForcedType;
+import org.jooq.util.jaxb.RegexFlag;
 import org.jooq.util.jaxb.Schema;
 // ...
 
@@ -100,6 +101,7 @@ public abstract class AbstractDatabase implements Database {
     private SQLDialect                                                       dialect;
     private Connection                                                       connection;
     private DSLContext                                                       create;
+    private List<RegexFlag>                                                  regexFlags;
     private List<Filter>                                                     filters;
     private String[]                                                         excludes;
     private String[]                                                         includes;
@@ -149,13 +151,13 @@ public abstract class AbstractDatabase implements Database {
     private transient Map<SchemaDefinition, List<RoutineDefinition>>         routinesBySchema;
     private transient Map<SchemaDefinition, List<PackageDefinition>>         packagesBySchema;
 
-    private static Map<String, Pattern>                                      patterns;
-
     // Other caches
     private final Map<Table<?>, Boolean>                                     exists;
+    private final Map<String, Pattern>                                       patterns;
 
     protected AbstractDatabase() {
         exists = new HashMap<Table<?>, Boolean>();
+        patterns = new HashMap<String, Pattern>();
         filters = new ArrayList<Database.Filter>();
     }
 
@@ -227,13 +229,36 @@ public abstract class AbstractDatabase implements Database {
         return result;
     }
 
-    final static Pattern pattern(String regex) {
-        if (patterns == null)
-            patterns = new HashMap<String, Pattern>();
-
+    final Pattern pattern(String regex) {
         Pattern pattern = patterns.get(regex);
+
         if (pattern == null) {
-            pattern = Pattern.compile(regex, Pattern.COMMENTS);
+            int flags = 0;
+
+            List<RegexFlag> list = new ArrayList<RegexFlag>(getRegexFlags());
+
+            // [#3860] This should really be handled by JAXB, but apparently, @XmlList and @XmlElement(defaultValue=...)
+            // cannot be combined: http://stackoverflow.com/q/27528698/521799
+            if (list.isEmpty()) {
+                list.add(RegexFlag.COMMENTS);
+                list.add(RegexFlag.CASE_INSENSITIVE);
+            }
+
+            for (RegexFlag flag : list) {
+                switch (flag) {
+                    case CANON_EQ:                flags |= Pattern.CANON_EQ;                break;
+                    case CASE_INSENSITIVE:        flags |= Pattern.CASE_INSENSITIVE;        break;
+                    case COMMENTS:                flags |= Pattern.COMMENTS;                break;
+                    case DOTALL:                  flags |= Pattern.DOTALL;                  break;
+                    case LITERAL:                 flags |= Pattern.LITERAL;                 break;
+                    case MULTILINE:               flags |= Pattern.MULTILINE;               break;
+                    case UNICODE_CASE:            flags |= Pattern.UNICODE_CASE;            break;
+                    case UNICODE_CHARACTER_CLASS: flags |= 0x100;                           break; // Pattern.UNICODE_CHARACTER_CLASS: Java 1.7 only
+                    case UNIX_LINES:              flags |= Pattern.UNIX_LINES;              break;
+                }
+            }
+
+            pattern = Pattern.compile(regex, flags);
             patterns.put(regex, pattern);
         }
 
@@ -381,6 +406,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final boolean getIncludeExcludeColumns() {
         return includeExcludeColumns;
+    }
+
+    @Override
+    public final void setRegexFlags(List<RegexFlag> regexFlags) {
+        this.regexFlags = regexFlags;
+    }
+
+    @Override
+    public final List<RegexFlag> getRegexFlags() {
+        return regexFlags;
     }
 
     @Override
@@ -930,16 +965,17 @@ public abstract class AbstractDatabase implements Database {
         }
     }
 
-    protected final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions) {
+    @Override
+    public final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions) {
         return filterExcludeInclude(definitions, excludes, includes, filters);
     }
 
-    protected static final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String[] excludes, String[] includes, List<Filter> filters) {
+    protected final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String[] e, String[] i, List<Filter> f) {
         List<T> result = new ArrayList<T>();
 
         definitionsLoop: for (T definition : definitions) {
-            if (excludes != null) {
-                for (String exclude : excludes) {
+            if (e != null) {
+                for (String exclude : e) {
                     Pattern p = pattern(exclude);
 
                     if (exclude != null &&
@@ -954,8 +990,8 @@ public abstract class AbstractDatabase implements Database {
                 }
             }
 
-            if (includes != null) {
-                for (String include : includes) {
+            if (i != null) {
+                for (String include : i) {
                     Pattern p = pattern(include);
 
                     if (include != null &&
@@ -965,7 +1001,7 @@ public abstract class AbstractDatabase implements Database {
                         // [#3488] This allows for filtering out additional objects, in case the applicable
                         // code generation configuration might cause conflicts in resulting code
                         // [#3526] Filters should be applied last, after <exclude/> and <include/>
-                        for (Filter filter : filters) {
+                        for (Filter filter : f) {
                             if (filter.exclude(definition)) {
 
                                 if (log.isDebugEnabled())

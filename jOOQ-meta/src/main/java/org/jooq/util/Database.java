@@ -51,6 +51,7 @@ import org.jooq.Table;
 import org.jooq.util.jaxb.CustomType;
 import org.jooq.util.jaxb.EnumType;
 import org.jooq.util.jaxb.ForcedType;
+import org.jooq.util.jaxb.RegexFlag;
 import org.jooq.util.jaxb.Schema;
 
 /**
@@ -246,6 +247,21 @@ public interface Database {
      * [#3488] The filters that are applied in addition to include / exclude.
      */
     List<Filter> getFilters();
+
+    /**
+     * Filter a list of definitions according to the exclude / include / and filter settings of this database.
+     */
+    <D extends Definition> List<D> filterExcludeInclude(List<D> definitions);
+
+    /**
+     * The regular expression flags that should be applied when using regular expressions.
+     */
+    void setRegexFlags(List<RegexFlag> regexFlags);
+
+    /**
+     * The regular expression flags that should be applied when using regular expressions.
+     */
+    List<RegexFlag> getRegexFlags();
 
     /**
      * Table columns matching these regular expressions will be considered as

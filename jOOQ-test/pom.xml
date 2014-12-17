@@ -1204,9 +1204,9 @@
                                             </recordTimestampFields>
                                             <syntheticPrimaryKeys>
                                                      .*\.                    # All schemas
-                                                     (?i:
-                                                       V_AUTHOR\.ID          # Some updatable view columns
-                                                     | V_BOOK\.ID            # Some updatable view columns
+                                                     (
+                                                       v_author\.ID          # Some updatable view columns (case insensitive)
+                                                     | v_book\.ID            # Some updatable view columns (case insensitive)
                                                      )
                                             </syntheticPrimaryKeys>
                                             <unsignedTypes>true</unsignedTypes>

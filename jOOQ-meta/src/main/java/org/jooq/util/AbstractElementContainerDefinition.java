@@ -42,7 +42,6 @@
 package org.jooq.util;
 
 import static org.jooq.util.AbstractDatabase.fetchedSize;
-import static org.jooq.util.AbstractDatabase.filterExcludeInclude;
 import static org.jooq.util.AbstractDatabase.getDefinition;
 
 import java.sql.SQLException;
@@ -91,7 +90,7 @@ extends AbstractDefinition {
 
                 // [#2603] Filter exclude / include also for table columns
                 if (this instanceof TableDefinition && db.getIncludeExcludeColumns()) {
-                    elements = filterExcludeInclude(e, db.getExcludes(), db.getIncludes(), db.getFilters());
+                    elements = db.filterExcludeInclude(e);
                     log.info("Columns fetched", fetchedSize(e, elements));
                 }
                 else {

@@ -319,6 +319,9 @@ public class GenerationTool {
             database.setConfiguredEnumTypes(d.getEnumTypes());
             database.setConfiguredForcedTypes(d.getForcedTypes());
 
+            if (d.getRegexFlags() != null)
+                database.setRegexFlags(d.getRegexFlags());
+
             SchemaVersionProvider svp = null;
 
             if (!StringUtils.isBlank(d.getSchemaVersionProvider())) {

@@ -45,7 +45,7 @@ import javax.persistence.Column;
 /**
  * @author Lukas Eder
  */
-public class BookWithAnnotations {
+public class BookWithAnnotations extends AbstractBookWithAnnotations {
 
     // JPA-annotated members
     // ---------------------
@@ -115,5 +115,27 @@ public class BookWithAnnotations {
     @Override
     public String toString() {
         return "JPABook [id=" + id + ", title=" + title + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+    }
+}
+
+class AbstractBookWithAnnotations {
+
+    @Column(name = "ID")
+    Integer id6;
+    public Integer id7;
+    public Integer id8;
+
+    public Integer getId6() {
+        return id6;
+    }
+
+    @Column(name = "ID")
+    Integer getId7() {
+        return id7;
+    }
+
+    @Column(name = "ID")
+    void setId8(Integer id8) {
+        this.id8 = id8;
     }
 }

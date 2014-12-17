@@ -40,9 +40,12 @@
  */
 package org.jooq.test.all.testcases;
 
+import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.update;
 
 import java.sql.Date;
 import java.util.LinkedHashMap;
@@ -265,5 +268,33 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 return false;
             return true;
         }
+    }
+
+    public void testStreamsReduceResultsIntoBatch() {
+        jOOQAbstractTest.reset = false;
+
+        int[] result =
+        create().selectFrom(TBook())
+                .where(TBook_ID().in(2, 3))
+                .orderBy(TBook_ID())
+                .fetch()
+                .stream()
+                .map(book -> { book.setValue(TBook_TITLE(), book.getValue(TBook_TITLE()).toUpperCase()); return book; })
+                .reduce(
+                    create().batch(update(TBook()).set(TBook_TITLE(), (String) null).where(TBook_ID().eq((Integer) null))),
+                    (batch, book) -> batch.bind(book.getValue(TBook_TITLE()), book.getValue(TBook_ID())),
+                    (b1, b2) -> b1
+                )
+                .execute();
+
+        assertEquals(2, result.length);
+        assertEquals(
+            asList(
+                BOOK_TITLES.get(0),
+                BOOK_TITLES.get(1).toUpperCase(),
+                BOOK_TITLES.get(2).toUpperCase(),
+                BOOK_TITLES.get(3)),
+            create().fetchValues(select(TBook_TITLE()).from(TBook()).orderBy(TBook_ID()))
+        );
     }
 }

@@ -82,6 +82,8 @@ import static org.jooq.impl.DSL.ntile;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.percentRank;
+import static org.jooq.impl.DSL.percentile_cont;
+import static org.jooq.impl.DSL.percentile_disc;
 import static org.jooq.impl.DSL.rank;
 import static org.jooq.impl.DSL.regrAvgX;
 import static org.jooq.impl.DSL.regrAvgY;
@@ -403,6 +405,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testOrderedAggregateFunctions() throws Exception {
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE);
+
         Record8<BigDecimal, BigDecimal, Integer, Integer, Integer, Integer, Integer, Integer> result =
         create().select(
                     cumeDist(val(1)).withinGroupOrderBy(TBook_ID().desc()),
@@ -432,6 +436,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(0, (int) result.value8());
     }
 
+    @Test
+    public void testInverseDistributionFunctions() throws Exception {
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE);
+
+        Record2<Double, Double> result =
+        create().select(
+                    percentile_cont(0.5).withinGroupOrderBy(TBook_ID()),
+                    percentile_disc(0.5).withinGroupOrderBy(TBook_ID()))
+                .from(TBook())
+                .fetchOne();
+
+        assertEquals(2.5, result.value1());
+        assertEquals(2.0, result.value2());
+    }
 
     public void testFetchCount() throws Exception {
         assertEquals(1, create().fetchCount(select(one().as("x"))));

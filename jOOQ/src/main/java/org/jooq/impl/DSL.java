@@ -10648,6 +10648,46 @@ public class DSL {
     }
 
     /**
+     * The
+     * <code>percentile_cont([number]) within group (order by [column])</code>
+     * function.
+     */
+    @Support({ ORACLE, POSTGRES_9_4, SQLSERVER2012 })
+    public static OrderedAggregateFunction<Double> percentile_cont(double number) {
+        return new Function<Double>("percentile_cont", SQLDataType.DOUBLE, val(number));
+    }
+
+    /**
+     * The
+     * <code>percentile_cont([number]) within group (order by [column])</code>
+     * function.
+     */
+    @Support({ ORACLE, POSTGRES_9_4, SQLSERVER2012 })
+    public static OrderedAggregateFunction<BigDecimal> percentile_cont(BigDecimal number) {
+        return new Function<BigDecimal>("percentile_cont", SQLDataType.NUMERIC, val(number, BigDecimal.class));
+    }
+
+    /**
+     * The
+     * <code>percentile_disc([number]) within group (order by [column])</code>
+     * function.
+     */
+    @Support({ ORACLE, POSTGRES_9_4, SQLSERVER2012 })
+    public static OrderedAggregateFunction<Double> percentile_disc(Double number) {
+        return new Function<Double>("percentile_disc", SQLDataType.DOUBLE, val(number, Double.class));
+    }
+
+    /**
+     * The
+     * <code>percentile_disc([number]) within group (order by [column])</code>
+     * function.
+     */
+    @Support({ ORACLE, POSTGRES_9_4, SQLSERVER2012 })
+    public static OrderedAggregateFunction<BigDecimal> percentile_disc(BigDecimal number) {
+        return new Function<BigDecimal>("percentile_disc", SQLDataType.NUMERIC, val(number, BigDecimal.class));
+    }
+
+    /**
      * The <code>first_value(field) over ([analytic clause])</code> function.
      * <p>
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL

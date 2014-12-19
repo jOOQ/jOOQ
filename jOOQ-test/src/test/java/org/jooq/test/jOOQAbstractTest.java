@@ -2707,6 +2707,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testInverseDistributionFunctions() throws Exception {
+        new AggregateWindowFunctionTests(this).testInverseDistributionFunctions();
+    }
+
+    @Test
     public void testFetchCount() throws Exception {
         new AggregateWindowFunctionTests(this).testFetchCount();
     }

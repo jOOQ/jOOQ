@@ -111,6 +111,7 @@ import static org.junit.Assume.assumeNotNull;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.jooq.DSLContext;
@@ -298,6 +299,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#868] Derby, HSQLDB, and SQL Server perform rounding/truncation
         // This may need to be corrected by jOOQ
         assertTrue(asList(1.0, 1.5, 2.0).contains(distinct5));
+    }
+
+    public void testAggregateFunctions_FILTER_CLAUSE() throws Exception {
+        assertEquals(3, create().fetchValue(select(sum(TBook_ID()).filterWhere(TBook_AUTHOR_ID().eq(1))).from(TBook())).intValue());
+        assertEquals(2, create().fetchValue(select(count().filterWhere(TBook_AUTHOR_ID().eq(1))).from(TBook())).intValue());
+    }
+
+    public void testWindowFunctions_FILTER_CLAUSE() throws Exception {
+        assertEquals(
+            Collections.nCopies(4, 3),
+            create().select(
+                        sum(TBook_ID())
+                        .filterWhere(TBook_AUTHOR_ID().eq(1))
+                        .over())
+                    .from(TBook())
+                    .fetch(0, int.class)
+        );
     }
 
     public void testAggregateFunction_EVERY() throws Exception {

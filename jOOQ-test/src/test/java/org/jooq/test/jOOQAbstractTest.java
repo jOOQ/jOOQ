@@ -2682,6 +2682,16 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testAggregateFunctions_FILTER_CLAUSE() throws Exception {
+        new AggregateWindowFunctionTests(this).testAggregateFunctions_FILTER_CLAUSE();
+    }
+
+    @Test
+    public void testWindowFunctions_FILTER_CLAUSE() throws Exception {
+        new AggregateWindowFunctionTests(this).testWindowFunctions_FILTER_CLAUSE();
+    }
+
+    @Test
     public void testAggregateFunction_EVERY() throws Exception {
         new AggregateWindowFunctionTests(this).testAggregateFunction_EVERY();
     }

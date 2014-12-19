@@ -49,8 +49,11 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_9_4;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.Term.LIST_AGG;
 import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
@@ -60,7 +63,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jooq.AggregateFilterStep;
 import org.jooq.AggregateFunction;
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -92,8 +97,6 @@ class Function<T> extends AbstractField<T> implements
     // Cascading interface implementations for aggregate function behaviour
     OrderedAggregateFunction<T>,
     AggregateFunction<T>,
-    WindowBeforeOverStep<T>,
-
     // and for window function behaviour
     WindowIgnoreNullsStep<T>,
     WindowPartitionByStep<T>,
@@ -102,6 +105,8 @@ class Function<T> extends AbstractField<T> implements
     {
 
     private static final long              serialVersionUID = 347252741712134044L;
+
+    static final Field<Integer>            ASTERISK         = DSL.field("*", Integer.class);
 
     // Mutually exclusive attributes: super.getName(), this.name, this.term
     private final Name                     name;
@@ -112,6 +117,7 @@ class Function<T> extends AbstractField<T> implements
     private final boolean                  distinct;
     private final SortFieldList            withinGroupOrderBy;
     private final SortFieldList            keepDenseRankOrderBy;
+    private Condition                      filter;
     private WindowSpecificationImpl        windowSpecification;
     private WindowDefinitionImpl           windowDefinition;
     private Name                           windowName;
@@ -188,6 +194,7 @@ class Function<T> extends AbstractField<T> implements
         }
         else if (term == LIST_AGG && asList(POSTGRES, SYBASE).contains(ctx.family())) {
             toSQLStringAgg(ctx);
+            toSQLFilterClause(ctx);
             toSQLOverClause(ctx);
         }
         /* [pro] */
@@ -199,6 +206,7 @@ class Function<T> extends AbstractField<T> implements
             toSQLArguments(ctx);
             toSQLKeepDenseRankOrderByClause(ctx);
             toSQLWithinGroupClause(ctx);
+            toSQLFilterClause(ctx);
             toSQLOverClause(ctx);
         }
     }
@@ -308,6 +316,18 @@ class Function<T> extends AbstractField<T> implements
         ctx.sql(")");
     }
 
+    final void toSQLFilterClause(Context<?> ctx) {
+        if (filter != null && POSTGRES_9_4.precedes(ctx.dialect())) {
+            ctx.sql(" ")
+               .keyword("filter")
+               .sql(" (")
+               .keyword("where")
+               .sql(" ")
+               .visit(filter)
+               .sql(")");
+        }
+    }
+
     final void toSQLOverClause(Context<?> ctx) {
         QueryPart window = window(ctx);
 
@@ -408,7 +428,18 @@ class Function<T> extends AbstractField<T> implements
         }
 
         if (!arguments.isEmpty()) {
-            ctx.visit(arguments);
+            if (filter == null || POSTGRES_9_4.precedes(ctx.dialect())) {
+                ctx.visit(arguments);
+            }
+            else {
+                QueryPartList<Field<?>> expressions = new QueryPartList<Field<?>>();
+
+                for (QueryPart argument : arguments) {
+                    expressions.add(DSL.decode().when(filter, argument == ASTERISK ? one() : argument));
+                }
+
+                ctx.visit(expressions);
+            }
         }
 
         if (distinct) {
@@ -483,39 +514,72 @@ class Function<T> extends AbstractField<T> implements
 
     /* [pro] */
     @Override
-    public final WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Field<?>... fields) {
+    public final AggregateFilterStep<T> keepDenseRankFirstOrderBy(Field<?>... fields) {
         first = true;
         keepDenseRankOrderBy.addAll(fields);
         return this;
     }
 
     @Override
-    public final WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(SortField<?>... fields) {
+    public final AggregateFilterStep<T> keepDenseRankFirstOrderBy(SortField<?>... fields) {
         return keepDenseRankFirstOrderBy(Arrays.asList(fields));
     }
 
     @Override
-    public final WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Collection<? extends SortField<?>> fields) {
+    public final AggregateFilterStep<T> keepDenseRankFirstOrderBy(Collection<? extends SortField<?>> fields) {
         first = true;
         keepDenseRankOrderBy.addAll(fields);
         return this;
     }
 
     @Override
-    public final WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Field<?>... fields) {
+    public final AggregateFilterStep<T> keepDenseRankLastOrderBy(Field<?>... fields) {
         keepDenseRankOrderBy.addAll(fields);
         return this;
     }
 
     @Override
-    public final WindowBeforeOverStep<T> keepDenseRankLastOrderBy(SortField<?>... fields) {
+    public final AggregateFilterStep<T> keepDenseRankLastOrderBy(SortField<?>... fields) {
         return keepDenseRankLastOrderBy(Arrays.asList(fields));
     }
 
     @Override
-    public final WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Collection<? extends SortField<?>> fields) {
+    public final AggregateFilterStep<T> keepDenseRankLastOrderBy(Collection<? extends SortField<?>> fields) {
         keepDenseRankOrderBy.addAll(fields);
         return this;
+    }
+
+    @Override
+    public final WindowBeforeOverStep<T> filterWhere(Condition... conditions) {
+        return filterWhere(Arrays.asList(conditions));
+    }
+
+    @Override
+    public final WindowBeforeOverStep<T> filterWhere(Collection<? extends Condition> conditions) {
+        ConditionProviderImpl c = new ConditionProviderImpl();
+        c.addConditions(conditions);
+        filter = c;
+        return this;
+    }
+
+    @Override
+    public final WindowBeforeOverStep<T> filterWhere(Field<Boolean> field) {
+        return filterWhere(condition(field));
+    }
+
+    @Override
+    public final WindowBeforeOverStep<T> filterWhere(String sql) {
+        return filterWhere(condition(sql));
+    }
+
+    @Override
+    public final WindowBeforeOverStep<T> filterWhere(String sql, Object... bindings) {
+        return filterWhere(condition(sql, bindings));
+    }
+
+    @Override
+    public final WindowBeforeOverStep<T> filterWhere(String sql, QueryPart... parts) {
+        return filterWhere(condition(sql, parts));
     }
 
     @Override

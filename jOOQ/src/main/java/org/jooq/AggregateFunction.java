@@ -40,15 +40,7 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HANA;
-import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
 
@@ -60,86 +52,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
-
-    /**
-     * Turn this aggregate function into a window function.
-     * <p>
-     * An example: <code><pre>
-     * MAX(id) OVER (PARTITION BY 1)
-     * </code></pre>
-     * <p>
-     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
-     * Server and Sybase.
-     */
-    @Override
-    @Support({ CUBRID, DB2, H2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
-    WindowPartitionByStep<T> over();
-
-    /**
-     * Turn this aggregate function into a window function referencing a window
-     * name.
-     * <p>
-     * An example: <code><pre>
-     * MAX(id) OVER my_window
-     * </code></pre>
-     * <p>
-     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
-     * Server and Sybase. If the <code>WINDOW</code> clause is not supported
-     * (see {@link SelectWindowStep#window(WindowDefinition...)}, then
-     * referenced windows will be inlined.
-     */
-    @Override
-    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
-    WindowFinalStep<T> over(Name name);
-
-    /**
-     * Turn this aggregate function into a window function referencing a window
-     * name.
-     * <p>
-     * An example: <code><pre>
-     * MAX(id) OVER my_window
-     * </code></pre>
-     * <p>
-     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
-     * Server and Sybase. If the <code>WINDOW</code> clause is not supported
-     * (see {@link SelectWindowStep#window(WindowDefinition...)}, then
-     * referenced windows will be inlined.
-     */
-    @Override
-    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
-    WindowFinalStep<T> over(String name);
-
-    /**
-     * Turn this aggregate function into a window function.
-     * <p>
-     * An example: <code><pre>
-     * MAX(id) OVER (PARTITION BY 1)
-     * </code></pre>
-     * <p>
-     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
-     * Server and Sybase.
-     */
-    @Override
-    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
-    WindowFinalStep<T> over(WindowSpecification specification);
-
-    /**
-     * Turn this aggregate function into a window function referencing a window
-     * definition.
-     * <p>
-     * An example: <code><pre>
-     * MAX(id) OVER my_window
-     * </code></pre>
-     * <p>
-     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
-     * Server and Sybase. If the <code>WINDOW</code> clause is not supported
-     * (see {@link SelectWindowStep#window(WindowDefinition...)}, then
-     * referenced windows will be inlined.
-     */
-    @Override
-    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
-    WindowFinalStep<T> over(WindowDefinition definition);
+public interface AggregateFunction<T> extends AggregateFilterStep<T> {
 
     /* [pro] */
     /**
@@ -153,7 +66,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
      */
     @Support(ORACLE)
-    WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Field<?>... fields);
+    AggregateFilterStep<T> keepDenseRankFirstOrderBy(Field<?>... fields);
 
     /**
      * Restrict this aggregate function to <code>FIRST</code> values
@@ -166,7 +79,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
      */
     @Support(ORACLE)
-    WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(SortField<?>... fields);
+    AggregateFilterStep<T> keepDenseRankFirstOrderBy(SortField<?>... fields);
 
     /**
      * Restrict this aggregate function to <code>FIRST</code> values
@@ -179,7 +92,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
      */
     @Support(ORACLE)
-    WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Collection<? extends SortField<?>> fields);
+    AggregateFilterStep<T> keepDenseRankFirstOrderBy(Collection<? extends SortField<?>> fields);
 
     /**
      * Restrict this aggregate function to <code>FIRST</code> values
@@ -192,7 +105,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
      */
     @Support(ORACLE)
-    WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Field<?>... fields);
+    AggregateFilterStep<T> keepDenseRankLastOrderBy(Field<?>... fields);
 
     /**
      * Restrict this aggregate function to <code>FIRST</code> values
@@ -205,7 +118,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
      */
     @Support(ORACLE)
-    WindowBeforeOverStep<T> keepDenseRankLastOrderBy(SortField<?>... fields);
+    AggregateFilterStep<T> keepDenseRankLastOrderBy(SortField<?>... fields);
 
     /**
      * Restrict this aggregate function to <code>FIRST</code> values
@@ -218,6 +131,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
      */
     @Support(ORACLE)
-    WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Collection<? extends SortField<?>> fields);
+    AggregateFilterStep<T> keepDenseRankLastOrderBy(Collection<? extends SortField<?>> fields);
     /* [/pro] */
 }

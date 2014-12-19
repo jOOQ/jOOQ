@@ -123,6 +123,7 @@ import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record5;
 import org.jooq.Record6;
+import org.jooq.Record8;
 import org.jooq.Record9;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -134,6 +135,8 @@ import org.jooq.WindowSpecification;
 import org.jooq.impl.DSL;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
+
+import org.junit.Test;
 
 public class AggregateWindowFunctionTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
@@ -397,6 +400,38 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(4, (int) result3.get(1).getValue(1, Integer.class));
         assertEquals(4, (int) result3.get(1).getValue(2, Integer.class));
     }
+
+    @Test
+    public void testOrderedAggregateFunctions() throws Exception {
+        Record8<BigDecimal, BigDecimal, Integer, Integer, Integer, Integer, Integer, Integer> result =
+        create().select(
+                    cumeDist(val(1)).withinGroupOrderBy(TBook_ID().desc()),
+                    cumeDist(val(1), val(1)).withinGroupOrderBy(TBook_ID().desc(), TBook_AUTHOR_ID().desc()),
+
+                    rank(val(1)).withinGroupOrderBy(TBook_ID().asc()),
+                    rank(val(1), val(1)).withinGroupOrderBy(TBook_ID().asc(), TBook_AUTHOR_ID().desc()),
+
+                    denseRank(val(1)).withinGroupOrderBy(TBook_ID().asc()),
+                    denseRank(val(1), val(1)).withinGroupOrderBy(TBook_ID().asc(), TBook_AUTHOR_ID().desc()),
+
+                    percentRank(val(1)).withinGroupOrderBy(TBook_ID().asc()),
+                    percentRank(val(1), val(1)).withinGroupOrderBy(TBook_ID().asc(), TBook_AUTHOR_ID().desc()))
+                .from(TBook())
+                .fetchOne();
+
+        assertEquals(BigDecimal.ONE, result.value1());
+        assertEquals(BigDecimal.ONE, result.value2());
+
+        assertEquals(1, (int) result.value3());
+        assertEquals(1, (int) result.value4());
+
+        assertEquals(1, (int) result.value5());
+        assertEquals(1, (int) result.value6());
+
+        assertEquals(0, (int) result.value7());
+        assertEquals(0, (int) result.value8());
+    }
+
 
     public void testFetchCount() throws Exception {
         assertEquals(1, create().fetchCount(select(one().as("x"))));

@@ -2702,6 +2702,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testOrderedAggregateFunctions() throws Exception {
+        new AggregateWindowFunctionTests(this).testOrderedAggregateFunctions();
+    }
+
+    @Test
     public void testFetchCount() throws Exception {
         new AggregateWindowFunctionTests(this).testFetchCount();
     }

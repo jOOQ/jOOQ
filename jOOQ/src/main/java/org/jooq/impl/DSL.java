@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_9_3;
+import static org.jooq.SQLDialect.POSTGRES_9_4;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -10566,16 +10567,14 @@ public class DSL {
         return new Function<Integer>("rank", SQLDataType.INTEGER);
     }
 
-    /* [pro] xx
-    xxx
-     x xxx xxxxxxxxxxxxxxxx xxxxxx xxxxx xxxxxx xx xxxxxx xxxxxxxxxxxxxxx
-     x xxxxxxx xxxxxxxxx xxxxxxxxx
-     xx
-    xxxxxxxxxx xxxxxx xx
-    xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxx
-    x
-    xx [/pro] */
+    /**
+     * The <code>rank(expr) within group (order by [order clause])</code>
+     * ordered aggregate function.
+     */
+    @Support({ POSTGRES_9_4 })
+    public static OrderedAggregateFunction<Integer> rank(Field<?>... fields) {
+        return new Function<Integer>("rank", SQLDataType.INTEGER, fields);
+    }
 
     /**
      * The <code>dense_rank() over ([analytic clause])</code> function.
@@ -10588,16 +10587,14 @@ public class DSL {
         return new Function<Integer>("dense_rank", SQLDataType.INTEGER);
     }
 
-    /* [pro] xx
-    xxx
-     x xxx xxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxx xxxxxx xx xxxxxx xxxxxxxxxxxxxxx
-     x xxxxxxx xxxxxxxxx xxxxxxxxx
-     xx
-    xxxxxxxxxx xxxxxx xx
-    xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxx
-    x
-    xx [/pro] */
+    /**
+     * The <code>dense_rank(expr) within group (order by [order clause])</code>
+     * ordered aggregate function.
+     */
+    @Support({ POSTGRES_9_4 })
+    public static OrderedAggregateFunction<Integer> denseRank(Field<?>... fields) {
+        return new Function<Integer>("dense_rank", SQLDataType.INTEGER, fields);
+    }
 
     /**
      * The <code>precent_rank() over ([analytic clause])</code> function.
@@ -10610,16 +10607,14 @@ public class DSL {
         return new Function<BigDecimal>("percent_rank", SQLDataType.NUMERIC);
     }
 
-    /* [pro] xx
-    xxx
-     x xxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxx xxxxxx xx xxxxxx xxxxxxxxxxxxxxx
-     x xxxxxxx xxxxxxxxx xxxxxxxxx
-     xx
-    xxxxxxxxxx xxxxxx xx
-    xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxx
-    x
-    xx [/pro] */
+    /**
+     * The <code>percent_rank(expr) within group (order by [order clause])</code>
+     * ordered aggregate function.
+     */
+    @Support({ POSTGRES_9_4 })
+    public static OrderedAggregateFunction<Integer> percentRank(Field<?>... fields) {
+        return new Function<Integer>("percent_rank", SQLDataType.INTEGER, fields);
+    }
 
     /**
      * The <code>cume_dist() over ([analytic clause])</code> function.
@@ -10632,16 +10627,14 @@ public class DSL {
         return new Function<BigDecimal>("cume_dist", SQLDataType.NUMERIC);
     }
 
-    /* [pro] xx
-    xxx
-     x xxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxx xxxxxx xx xxxxxx xxxxxxxxxxxxxxx
-     x xxxxxxx xxxxxxxxx xxxxxxxxx
-     xx
-    xxxxxxxxxx xxxxxx xx
-    xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxx
-    x
-    xx [/pro] */
+    /**
+     * The <code>cume_dist(expr) within group (order by [order clause])</code>
+     * ordered aggregate function.
+     */
+    @Support({ POSTGRES_9_4 })
+    public static OrderedAggregateFunction<BigDecimal> cumeDist(Field<?>... fields) {
+        return new Function<BigDecimal>("cume_dist", SQLDataType.NUMERIC, fields);
+    }
 
     /**
      * The <code>ntile([number]) over ([analytic clause])</code> function.

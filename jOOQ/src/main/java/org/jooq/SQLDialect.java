@@ -122,6 +122,16 @@ public enum SQLDialect {
     POSTGRES("Postgres", false),
 
     /**
+     * The PostgreSQL dialect family.
+     */
+    POSTGRES_9_3("Postgres", false, POSTGRES, null),
+
+    /**
+     * The PostgreSQL dialect family.
+     */
+    POSTGRES_9_4("Postgres", false, POSTGRES, POSTGRES_9_3),
+
+    /**
      * The SQLite dialect family.
      */
     SQLITE("SQLite", false),
@@ -172,7 +182,7 @@ public enum SQLDialect {
      * <p>
      * This dialect is available in commercial jOOQ distributions, only.
      */
-    DB2_10("DB2", true, DB2),
+    DB2_10("DB2", true, DB2, DB2_9),
 
     /**
      * The SAP HANA SQL dialect.
@@ -214,14 +224,14 @@ public enum SQLDialect {
      * <p>
      * This dialect is available in commercial jOOQ distributions, only.
      */
-    ORACLE11G("Oracle", true, ORACLE),
+    ORACLE11G("Oracle", true, ORACLE, ORACLE10G),
 
     /**
      * The Oracle 12c dialect.
      * <p>
      * This dialect is available in commercial jOOQ distributions, only.
      */
-    ORACLE12C("Oracle", true, ORACLE),
+    ORACLE12C("Oracle", true, ORACLE, ORACLE11G),
 
     /**
      * The SQL Server dialect family.
@@ -242,7 +252,7 @@ public enum SQLDialect {
      * <p>
      * This dialect is available in commercial jOOQ distributions, only.
      */
-    SQLSERVER2012("SQLServer", true, SQLSERVER),
+    SQLSERVER2012("SQLServer", true, SQLSERVER, SQLSERVER2008),
 
     /**
      * The Sybase SQL Anywhere dialect family.
@@ -267,18 +277,27 @@ public enum SQLDialect {
         FAMILIES = set.toArray(new SQLDialect[set.size()]);
     }
 
-    private final String     name;
-    private final boolean    commercial;
-    private final SQLDialect family;
+    private final String              name;
+    private final boolean             commercial;
+    private final SQLDialect          family;
+    private SQLDialect                predecessor;
 
     private SQLDialect(String name, boolean commercial) {
-        this(name, commercial, null);
+        this(name, commercial, null, null);
     }
 
     private SQLDialect(String name, boolean commercial, SQLDialect family) {
+        this(name, commercial, family, null);
+    }
+
+    private SQLDialect(String name, boolean commercial, SQLDialect family, SQLDialect predecessor) {
         this.name = name;
         this.commercial = commercial;
-        this.family = family;
+        this.family = family == null ? this : family;
+        this.predecessor = predecessor == null ? this : predecessor;
+
+        if (family != null)
+            family.predecessor = this;
     }
 
     /**
@@ -299,7 +318,68 @@ public enum SQLDialect {
      * </pre></code>
      */
     public final SQLDialect family() {
-        return family == null ? this : family;
+        return family;
+    }
+
+    /**
+     * The predecessor dialect.
+     * <p>
+     * If this is a dialect version (e.g. {@link #POSTGRES_9_4}) within a family
+     * (e.g. {@link #POSTGRES}), then the predecessor will point to the
+     * historically previous dialect version (e.g. {@link #POSTGRES_9_3}) within
+     * the same family, or to the dialect itself if there was no predecessor
+     * explicitly supported by jOOQ.
+     */
+    public final SQLDialect predecessor() {
+        return predecessor;
+    }
+
+    /**
+     * Whether this dialect precedes an other dialect from the same family.
+     * <p>
+     * This returns:
+     * <ul>
+     * <li><code>true</code> if this dialect is the same as the other dialect</li>
+     * <li><code>true</code> if this dialect precedes the other dialect via any
+     * number of calls to {@link #predecessor()}</li>
+     * </ul>
+     * The above also implies that:
+     * <ul>
+     * <li><code>false</code> if the two dialects do not belong to the same
+     * family</li>
+     * </ul>
+     * <p>
+     * This is useful to see if some feature is supported by <em>"at least"</em>
+     * a given dialect version. Example: <code><pre>
+     * // Do this block only if the chosen dialect supports PostgreSQL 9.4+ features
+     * if (POSTGRES_9_4.precedes(dialect)) {
+     * }
+     *
+     * // Do this block only if the chosen dialect supports PostgreSQL 9.3+ features
+     * else if (POSTGRES_9_3.precedes(dialect)) {
+     * }
+     *
+     * // Fall back to pre-PostgreSQL 9.3 behaviour
+     * else {
+     * }
+     * </pre></code>
+     */
+    public final boolean precedes(SQLDialect other) {
+        if (family != other.family)
+            return false;
+
+        SQLDialect candidate = other;
+        while (candidate != null) {
+            if (this == candidate)
+                return true;
+
+            if (candidate == candidate.predecessor())
+                return false;
+
+            candidate = candidate.predecessor();
+        }
+
+        return false;
     }
 
     /**

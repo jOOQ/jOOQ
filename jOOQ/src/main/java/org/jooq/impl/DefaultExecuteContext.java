@@ -40,6 +40,7 @@
  */
 package org.jooq.impl;
 
+import java.sql.Array;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
@@ -48,6 +49,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLOutput;
 import java.sql.SQLWarning;
+import java.sql.SQLXML;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -81,34 +83,36 @@ import org.jooq.tools.reflect.ReflectException;
 class DefaultExecuteContext implements ExecuteContext {
 
     // Persistent attributes (repeatable)
-    private final Configuration                  configuration;
-    private final Map<Object, Object>            data;
-    private final Query                          query;
-    private final Routine<?>                     routine;
-    private String                               sql;
+    private final Configuration                    configuration;
+    private final Map<Object, Object>              data;
+    private final Query                            query;
+    private final Routine<?>                       routine;
+    private String                                 sql;
 
-    private final Query[]                        batchQueries;
-    private final String[]                       batchSQL;
-    private final int[]                          batchRows;
+    private final Query[]                          batchQueries;
+    private final String[]                         batchSQL;
+    private final int[]                            batchRows;
 
     // Transient attributes (created afresh per execution)
-    private transient ConnectionProvider         connectionProvider;
-    private transient Connection                 connection;
-    private transient PreparedStatement          statement;
-    private transient ResultSet                  resultSet;
-    private transient Record                     record;
-    private transient Result<?>                  result;
-    private transient int                        rows  = -1;
-    private transient RuntimeException           exception;
-    private transient SQLException               sqlException;
-    private transient SQLWarning                 sqlWarning;
+    private transient ConnectionProvider           connectionProvider;
+    private transient Connection                   connection;
+    private transient PreparedStatement            statement;
+    private transient ResultSet                    resultSet;
+    private transient Record                       record;
+    private transient Result<?>                    result;
+    private transient int                          rows    = -1;
+    private transient RuntimeException             exception;
+    private transient SQLException                 sqlException;
+    private transient SQLWarning                   sqlWarning;
 
     // ------------------------------------------------------------------------
     // XXX: Static utility methods for handling blob / clob lifecycle
     // ------------------------------------------------------------------------
 
-    private static final ThreadLocal<List<Blob>> BLOBS            = new ThreadLocal<List<Blob>>();
-    private static final ThreadLocal<List<Clob>> CLOBS            = new ThreadLocal<List<Clob>>();
+    private static final ThreadLocal<List<Blob>>   BLOBS   = new ThreadLocal<List<Blob>>();
+    private static final ThreadLocal<List<Clob>>   CLOBS   = new ThreadLocal<List<Clob>>();
+    private static final ThreadLocal<List<SQLXML>> SQLXMLS = new ThreadLocal<List<SQLXML>>();
+    private static final ThreadLocal<List<Array>>  ARRAYS  = new ThreadLocal<List<Array>>();
 
     /**
      * Clean up blobs, clobs and the local configuration.
@@ -146,6 +150,8 @@ class DefaultExecuteContext implements ExecuteContext {
     static final void clean() {
         List<Blob> blobs = BLOBS.get();
         List<Clob> clobs = CLOBS.get();
+        List<SQLXML> xmls = SQLXMLS.get();
+        List<Array> arrays = ARRAYS.get();
 
         if (blobs != null) {
             for (Blob blob : blobs) {
@@ -161,6 +167,22 @@ class DefaultExecuteContext implements ExecuteContext {
             }
 
             CLOBS.remove();
+        }
+
+        if (xmls != null) {
+            for (SQLXML xml : xmls) {
+                JDBCUtils.safeFree(xml);
+            }
+
+            SQLXMLS.remove();
+        }
+
+        if (arrays != null) {
+            for (Array array : arrays) {
+                JDBCUtils.safeFree(array);
+            }
+
+            SQLXMLS.remove();
         }
 
         LOCAL_CONFIGURATION.remove();
@@ -179,6 +201,20 @@ class DefaultExecuteContext implements ExecuteContext {
      */
     static final void register(Clob clob) {
         CLOBS.get().add(clob);
+    }
+
+    /**
+     * Register an xml for later cleanup with {@link #clean()}
+     */
+    static final void register(SQLXML xml) {
+        SQLXMLS.get().add(xml);
+    }
+
+    /**
+     * Register an array for later cleanup with {@link #clean()}
+     */
+    static final void register(Array array) {
+        ARRAYS.get().add(array);
     }
 
     // ------------------------------------------------------------------------
@@ -308,6 +344,8 @@ class DefaultExecuteContext implements ExecuteContext {
         clean();
         BLOBS.set(new ArrayList<Blob>());
         CLOBS.set(new ArrayList<Clob>());
+        SQLXMLS.set(new ArrayList<SQLXML>());
+        ARRAYS.set(new ArrayList<Array>());
         LOCAL_CONFIGURATION.set(configuration);
     }
 

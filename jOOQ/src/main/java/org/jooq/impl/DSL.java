@@ -9984,7 +9984,7 @@ public class DSL {
      */
     @Support
     public static AggregateFunction<Integer> count() {
-        return count(field("*", Integer.class));
+        return count(Function.ASTERISK);
     }
 
     /**

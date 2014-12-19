@@ -40,14 +40,6 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.H2;
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
 // ...
 
 import java.util.Collection;
@@ -60,86 +52,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
-
-    /**
-     * Turn this aggregate function into a window function.
-     * <p>
-     * An example: <code><pre>
-     * MAX(id) OVER (PARTITION BY 1)
-     * </code></pre>
-     * <p>
-     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
-     * Server and Sybase.
-     */
-    @Override
-    @Support({ CUBRID, H2, POSTGRES })
-    WindowPartitionByStep<T> over();
-
-    /**
-     * Turn this aggregate function into a window function referencing a window
-     * name.
-     * <p>
-     * An example: <code><pre>
-     * MAX(id) OVER my_window
-     * </code></pre>
-     * <p>
-     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
-     * Server and Sybase. If the <code>WINDOW</code> clause is not supported
-     * (see {@link SelectWindowStep#window(WindowDefinition...)}, then
-     * referenced windows will be inlined.
-     */
-    @Override
-    @Support({ CUBRID, POSTGRES })
-    WindowFinalStep<T> over(Name name);
-
-    /**
-     * Turn this aggregate function into a window function referencing a window
-     * name.
-     * <p>
-     * An example: <code><pre>
-     * MAX(id) OVER my_window
-     * </code></pre>
-     * <p>
-     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
-     * Server and Sybase. If the <code>WINDOW</code> clause is not supported
-     * (see {@link SelectWindowStep#window(WindowDefinition...)}, then
-     * referenced windows will be inlined.
-     */
-    @Override
-    @Support({ CUBRID, POSTGRES })
-    WindowFinalStep<T> over(String name);
-
-    /**
-     * Turn this aggregate function into a window function.
-     * <p>
-     * An example: <code><pre>
-     * MAX(id) OVER (PARTITION BY 1)
-     * </code></pre>
-     * <p>
-     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
-     * Server and Sybase.
-     */
-    @Override
-    @Support({ CUBRID, POSTGRES })
-    WindowFinalStep<T> over(WindowSpecification specification);
-
-    /**
-     * Turn this aggregate function into a window function referencing a window
-     * definition.
-     * <p>
-     * An example: <code><pre>
-     * MAX(id) OVER my_window
-     * </code></pre>
-     * <p>
-     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
-     * Server and Sybase. If the <code>WINDOW</code> clause is not supported
-     * (see {@link SelectWindowStep#window(WindowDefinition...)}, then
-     * referenced windows will be inlined.
-     */
-    @Override
-    @Support({ CUBRID, POSTGRES })
-    WindowFinalStep<T> over(WindowDefinition definition);
+public interface AggregateFunction<T> extends AggregateFilterStep<T> {
 
     /* [pro] xx
     xxx
@@ -153,7 +66,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+    xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
     xxx
      x xxxxxxxx xxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xxxxxx
@@ -166,7 +79,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+    xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
     xxx
      x xxxxxxxx xxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xxxxxx
@@ -179,7 +92,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxx
+    xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxx
 
     xxx
      x xxxxxxxx xxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xxxxxx
@@ -192,7 +105,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+    xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
     xxx
      x xxxxxxxx xxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xxxxxx
@@ -205,7 +118,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+    xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
     xxx
      x xxxxxxxx xxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xxxxxx
@@ -218,6 +131,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxx
+    xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxx
     xx [/pro] */
 }

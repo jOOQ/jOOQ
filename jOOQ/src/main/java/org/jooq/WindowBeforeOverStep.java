@@ -40,16 +40,6 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
 
 
 /**
@@ -72,12 +62,5 @@ import static org.jooq.SQLDialect.POSTGRES;
  * @author Lukas Eder
  */
 public interface WindowBeforeOverStep<T> extends WindowOverStep<T>, Field<T> {
-
-    /**
-     * Add an <code>OVER</code> clause
-     */
-    @Override
-    @Support({ CUBRID, DERBY, H2, HSQLDB, POSTGRES })
-    WindowPartitionByStep<T> over();
 
 }

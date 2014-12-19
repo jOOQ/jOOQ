@@ -63,7 +63,7 @@ class Reverse extends AbstractFunction<String> {
 
     @Override
     QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
             /* [pro] */
             case ACCESS:
                 return DSL.field("{strreverse}({0})", getDataType(), field);

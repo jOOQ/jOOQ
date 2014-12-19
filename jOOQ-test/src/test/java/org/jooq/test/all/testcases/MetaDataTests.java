@@ -350,11 +350,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // [#745] TODO: Unify distinction between NUMERIC and DECIMAL
             else if ("BIG_DECIMAL".equalsIgnoreCase(field.getName())
                     /* [pro] */
-                    && dialect().family() != SQLDialect.ORACLE
-                    && dialect().family() != SQLDialect.SQLSERVER
+                    && family() != SQLDialect.ORACLE
+                    && family() != SQLDialect.SQLSERVER
                     /* [/pro] */
-                    && dialect().family() != SQLDialect.POSTGRES
-                    && dialect().family() != SQLDialect.SQLITE) {
+                    && family() != SQLDialect.POSTGRES
+                    && family() != SQLDialect.SQLITE) {
 
                 assertEquals(BigDecimal.class, field.getType());
                 assertEquals(SQLDataType.DECIMAL.getType(), field.getDataType().getType());

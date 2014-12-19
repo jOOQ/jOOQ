@@ -75,7 +75,7 @@ class Round<T extends Number> extends AbstractFunction<T> {
     @SuppressWarnings("unchecked")
     @Override
     final Field<T> getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
 
             // evaluate "round" if unavailable
             case DERBY: {

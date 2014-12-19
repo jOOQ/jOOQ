@@ -129,7 +129,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testTableWithHint() throws Exception {
         /* [pro] */
-        switch (dialect().family()) {
+        switch (family()) {
             case ACCESS:
             case ASE:
             case DB2:
@@ -167,7 +167,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testPivotClause() throws Exception {
         /* [pro] */
-        switch (dialect().family()) {
+        switch (family()) {
             case ACCESS:
             case ASE:
             case DB2:
@@ -302,7 +302,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testAliasingPivot() throws Exception {
         /* [pro] */
-        switch (dialect().family()) {
+        switch (family()) {
             case ACCESS:
             case ASE:
             case DB2:
@@ -420,7 +420,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testConnectBySimple() throws Exception {
-        switch (dialect().family()) {
+        switch (family()) {
             /* [pro] */
             case ACCESS:
             case ASE:
@@ -482,7 +482,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testConnectByDirectory() throws Exception {
-        switch (dialect().family()) {
+        switch (family()) {
             /* [pro] */
             case ACCESS:
             case ASE:

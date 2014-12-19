@@ -121,14 +121,14 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
     @Override
     public final void accept(Context<?> context) {
         if (context.declareFields() || context.declareTables()) {
-            SQLDialect dialect = context.configuration().dialect();
+            SQLDialect family = context.family();
             boolean simulateDerivedColumnList = false;
 
             // [#454] [#1801] Some databases don't allow "derived column names" in
             // "simple class specifications", or "common table expression references".
             // Hence, wrap the table reference in a subselect
             if (fieldAliases != null
-                    && asList(CUBRID, FIREBIRD, INFORMIX, INGRES, SQLSERVER, SYBASE).contains(dialect.family())
+                    && asList(CUBRID, FIREBIRD, INFORMIX, INGRES, SQLSERVER, SYBASE).contains(family)
                     && (wrapped instanceof TableImpl || wrapped instanceof CommonTableExpressionImpl)) {
 
                 @SuppressWarnings("unchecked")
@@ -143,13 +143,13 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // [#1801] Some databases do not support "derived column names".
             // They can be simulated by concatenating a dummy SELECT with no
             // results using UNION ALL
-            else if (fieldAliases != null && asList(ACCESS, H2, INGRES, MARIADB, MYSQL, ORACLE, SQLITE).contains(dialect.family())) {
+            else if (fieldAliases != null && asList(ACCESS, H2, INGRES, MARIADB, MYSQL, ORACLE, SQLITE).contains(family)) {
                 simulateDerivedColumnList = true;
 
                 SelectFieldList fields = new SelectFieldList();
                 for (String fieldAlias : fieldAliases) {
 
-                    switch (dialect.family()) {
+                    switch (family) {
 
                         /* [pro] */
                         case ACCESS: {
@@ -209,7 +209,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
                 // SELECT t.column_value FROM UNNEST(ARRAY[1, 2]) AS t(column_value)
 
                 // TODO: Is this still needed?
-                switch (dialect) {
+                switch (family) {
                     case HSQLDB:
                     case POSTGRES: {
                         // The javac compiler doesn't like casting of generics
@@ -241,7 +241,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
     }
 
     static void toSQLAs(Context<?> context) {
-        if (asList(ACCESS, DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES).contains(context.configuration().dialect())) {
+        if (asList(ACCESS, DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES).contains(context.family())) {
             context.sql(" ").keyword("as");
         }
     }

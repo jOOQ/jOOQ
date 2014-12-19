@@ -852,7 +852,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#1225] [#1227] TODO Put this logic into DataType
             // Some dialects have trouble binding binary data as BLOB
-            else if (asList(POSTGRES, SYBASE).contains(configuration.dialect()) && sqlType == Types.BLOB) {
+            else if (asList(POSTGRES, SYBASE).contains(configuration.family()) && sqlType == Types.BLOB) {
                 ctx.statement().setNull(ctx.index(), Types.BINARY);
             }
 
@@ -1004,7 +1004,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#566] Interval data types are best bound as Strings
             else if (actualType == YearToMonth.class) {
-                if (dialect == POSTGRES) {
+                if (dialect.family() == POSTGRES) {
                     ctx.statement().setObject(ctx.index(), toPGInterval((YearToMonth) value));
                 }
                 else {
@@ -1012,7 +1012,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 }
             }
             else if (actualType == DayToSecond.class) {
-                if (dialect == POSTGRES) {
+                if (dialect.family() == POSTGRES) {
                     ctx.statement().setObject(ctx.index(), toPGInterval((DayToSecond) value));
                 }
                 else {
@@ -1070,7 +1070,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // The type byte[] is handled earlier. byte[][] can be handled here
             else if (actualType.isArray()) {
-                switch (dialect) {
+                switch (dialect.family()) {
                     case POSTGRES: {
                         ctx.statement().setString(ctx.index(), toPGArrayString((Object[]) value));
                         break;
@@ -1322,7 +1322,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             result = (T) getTimestamp(ctx.configuration().dialect(), ctx.resultSet(), ctx.index());
         }
         else if (type == YearToMonth.class) {
-            if (ctx.configuration().dialect() == POSTGRES) {
+            if (ctx.family() == POSTGRES) {
                 Object object = ctx.resultSet().getObject(ctx.index());
                 result = (T) (object == null ? null : PostgresUtils.toYearToMonth(object));
             }
@@ -1332,7 +1332,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
         else if (type == DayToSecond.class) {
-            if (ctx.configuration().dialect() == POSTGRES) {
+            if (ctx.family() == POSTGRES) {
                 Object object = ctx.resultSet().getObject(ctx.index());
                 result = (T) (object == null ? null : PostgresUtils.toDayToSecond(object));
             }
@@ -1354,7 +1354,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             result = (T) Convert.convert(ctx.resultSet().getString(ctx.index()), ULong.class);
         }
         else if (type == UUID.class) {
-            switch (ctx.configuration().dialect().family()) {
+            switch (ctx.family()) {
 
                 // [#1624] Some JDBC drivers natively support the
                 // java.util.UUID data type
@@ -1382,7 +1382,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         // The type byte[] is handled earlier. byte[][] can be handled here
         else if (type.isArray()) {
-            switch (ctx.configuration().dialect()) {
+            switch (ctx.family()) {
                 case POSTGRES: {
                     result = pgGetArray(ctx, ctx.resultSet(), type, ctx.index());
                     break;
@@ -1404,7 +1404,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             result = getEnumType(type, ctx.resultSet().getString(ctx.index()));
         }
         else if (UDTRecord.class.isAssignableFrom(type)) {
-            switch (ctx.configuration().dialect()) {
+            switch (ctx.family()) {
                 case POSTGRES:
                     result = (T) pgNewUDTRecord(type, ctx.resultSet().getObject(ctx.index()));
                     break;
@@ -1481,7 +1481,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             result = (T) ctx.statement().getTimestamp(ctx.index());
         }
         else if (type == YearToMonth.class) {
-            if (ctx.configuration().dialect() == POSTGRES) {
+            if (ctx.family() == POSTGRES) {
                 Object object = ctx.statement().getObject(ctx.index());
                 result = (T) (object == null ? null : PostgresUtils.toYearToMonth(object));
             }
@@ -1491,7 +1491,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
         else if (type == DayToSecond.class) {
-            if (ctx.configuration().dialect() == POSTGRES) {
+            if (ctx.family() == POSTGRES) {
                 Object object = ctx.statement().getObject(ctx.index());
                 result = (T) (object == null ? null : PostgresUtils.toDayToSecond(object));
             }
@@ -1517,7 +1517,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             result = (T) (string == null ? null : ULong.valueOf(string));
         }
         else if (type == UUID.class) {
-            switch (ctx.configuration().dialect().family()) {
+            switch (ctx.family()) {
 
                 // [#1624] Some JDBC drivers natively support the
                 // java.util.UUID data type
@@ -1556,7 +1556,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             result = getEnumType(type, ctx.statement().getString(ctx.index()));
         }
         else if (UDTRecord.class.isAssignableFrom(type)) {
-            switch (ctx.configuration().dialect()) {
+            switch (ctx.family()) {
                 case POSTGRES:
                     result = (T) pgNewUDTRecord(type, ctx.statement().getObject(ctx.index()));
                     break;

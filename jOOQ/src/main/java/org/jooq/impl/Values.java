@@ -93,7 +93,7 @@ class Values<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.configuration().dialect().family()) {
+        switch (ctx.family()) {
 
             // [#915] Simulate VALUES(..) with SELECT .. UNION ALL SELECT ..
             // for those dialects that do not support a VALUES() constructor

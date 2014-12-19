@@ -1188,7 +1188,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // Cross join the array table with the unnested string array value
             // ---------------------------------------------------------------
 
-            switch (dialect()) {
+            switch (family()) {
                 case POSTGRES:
                 case H2:
                 case HSQLDB:
@@ -1321,7 +1321,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testStoredProceduresWithCursorParameters() throws Exception {
-        switch (dialect().family()) {
+        switch (family()) {
             /* [pro] */
             case ORACLE:
             /* [/pro] */

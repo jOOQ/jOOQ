@@ -69,7 +69,21 @@ import org.jooq.exception.SQLDialectNotSupportedException;
  * annotated in such a way should be used only along with any of the dialects
  * specified by the annotation. This is typically the case with jOOQ's SQL
  * construction API for less common clauses, such as the creation of
- * <code>MERGE</code>, etc.</li>
+ * <code>MERGE</code>, etc.
+ * <p>
+ * There listed dialects can be either a:
+ * <ul>
+ * <li>A dialect family, in case of which all versions of the family support the
+ * feature. E.g. when {@link SQLDialect#POSTGRES} is referenced, then
+ * {@link SQLDialect#POSTGRES_9_3}, {@link SQLDialect#POSTGRES_9_4}, etc.
+ * support the feature as well</li>
+ * <li>A dialect version, in case of which all versions larger or equal than the
+ * referenced version support the feature. E.g. when
+ * {@link SQLDialect#POSTGRES_9_4} is referenced, then
+ * {@link SQLDialect#POSTGRES_9_5} would support the feature as well, but not
+ * {@link SQLDialect#POSTGRES_9_3}</li>
+ * </ul>
+ * </li>
  * </ul>
  * <p>
  * Future versions of jOOQ may use these annotations for throwing

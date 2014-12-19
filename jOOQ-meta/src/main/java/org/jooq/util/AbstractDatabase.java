@@ -1078,7 +1078,7 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final boolean isArrayType(String dataType) {
-        switch (getDialect()) {
+        switch (getDialect().family()) {
             case POSTGRES:
             case H2:
                 return "ARRAY".equals(dataType);

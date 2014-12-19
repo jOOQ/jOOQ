@@ -48,11 +48,11 @@ import java.util.Set;
  * Dialects and dialect families as supported by jOOQ.
  * <p>
  * jOOQ supports a variety of dialects, which are grouped into dialect families.
- * For instance, the SQL Server dialect family {@link #SQLSERVER} is specialised
+ * For instance, the SQL Server dialect family {@link #POSTGRES} is specialised
  * by its dialects
  * <ul>
- * <li> {@link #SQLSERVER2008}</li>
- * <li> {@link #SQLSERVER2012}</li>
+ * <li> {@link #POSTGRES_9_3}</li>
+ * <li> {@link #POSTGRES_9_4}</li>
  * </ul>
  *
  * @author Lukas Eder

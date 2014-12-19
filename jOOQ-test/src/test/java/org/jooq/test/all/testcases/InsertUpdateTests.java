@@ -186,7 +186,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         int firstId = create().select(max(id)).from(table).fetchOne(max(id));
 
-        if (!asList(DB2, INFORMIX, POSTGRES).contains(dialect().family()))
+        if (!asList(DB2, INFORMIX, POSTGRES).contains(family()))
             assertEquals(new BigInteger("" + firstId), create().lastID());
 
         R r1 = create().selectFrom(table).fetchOne();
@@ -202,7 +202,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .returning()
                 .fetchOne();
 
-        if (!asList(DB2, INFORMIX, POSTGRES).contains(dialect().family())) {
+        if (!asList(DB2, INFORMIX, POSTGRES).contains(family())) {
             assertEquals(new BigInteger("" + (firstId + 1)), create().lastID());
             assertEquals(new BigInteger("" + (firstId + 1)), create().lastID());
         }
@@ -446,7 +446,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         jOOQAbstractTest.reset = false;
 
         Field<?> nullField = null;
-        switch (dialect().family()) {
+        switch (family()) {
             /* [pro] */
             case ORACLE:
             /* [/pro] */
@@ -576,7 +576,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("row1", author.getValue(TAuthor_FIRST_NAME()));
 
         // Postgres doesn't support subselects here
-        if (!asList(POSTGRES).contains(dialect())) {
+        if (!asList(POSTGRES).contains(family())) {
             assertEquals(1,
             create().update(TAuthor())
                     .set(row(TAuthor_FIRST_NAME()), select(val("select1")))
@@ -1152,7 +1152,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testMergeWithOracleSyntaxExtension() throws Exception {
-        switch (dialect().family()) {
+        switch (family()) {
             /* [pro] */
             case ACCESS:
             case ASE:
@@ -1372,7 +1372,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testUpdateJoin() throws Exception {
-        switch (dialect().family()) {
+        switch (family()) {
             /* [pro] */
             case DB2:
             case INGRES:
@@ -1421,7 +1421,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testUpdateFrom() throws Exception {
-        switch (dialect().family()) {
+        switch (family()) {
             /* [pro] */
             case ACCESS:
             case DB2:
@@ -1442,7 +1442,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         jOOQAbstractTest.reset = false;
 
-        switch (dialect().family()) {
+        switch (family()) {
             /* [pro] */
             // Ingres has yet another understanding of this FROM clause.
             case INGRES:

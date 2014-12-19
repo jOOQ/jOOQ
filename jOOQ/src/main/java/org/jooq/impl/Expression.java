@@ -481,7 +481,7 @@ class Expression<T> extends AbstractFunction<T> {
          */
         @SuppressWarnings({ "unchecked", "rawtypes" })
         private final Field<T> getNumberExpression(Configuration configuration) {
-            switch (configuration.dialect().family()) {
+            switch (configuration.family()) {
                 /* [pro] */
                 case ACCESS: {
                     if (operator == ADD) {
@@ -611,7 +611,7 @@ class Expression<T> extends AbstractFunction<T> {
         public final void accept(Context<?> ctx) {
             String op = operator.toSQL();
 
-            if (operator == BIT_XOR && ctx.configuration().dialect() == POSTGRES) {
+            if (operator == BIT_XOR && ctx.family() == POSTGRES) {
                 op = "#";
             }
 

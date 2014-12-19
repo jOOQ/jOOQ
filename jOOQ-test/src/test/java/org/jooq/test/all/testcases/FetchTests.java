@@ -1492,7 +1492,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             rs.close();
 
             // [#1323] Check if Postgres' pre-9.0 encoding of binary data works, too
-            if (dialect() == POSTGRES && i == 0) {
+            if (family() == POSTGRES && i == 0) {
                 create().execute("set bytea_output to escape");
             }
 

@@ -700,7 +700,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFunctionsOnStrings_HashFunctions() throws Exception {
 
         // MD5
-        switch (dialect().family()) {
+        switch (family()) {
             /* [pro] */
             case ACCESS:
             case ASE:
@@ -1054,7 +1054,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Weird behaviour in postgres
         // See also interesting thread:
         // http://archives.postgresql.org/pgsql-jdbc/2010-09/msg00037.php
-        if (dialect() != SQLDialect.POSTGRES) {
+        if (family() != SQLDialect.POSTGRES) {
             assertEquals(timestamp.split(" ")[1], record.getValue(time).toString());
         }
 

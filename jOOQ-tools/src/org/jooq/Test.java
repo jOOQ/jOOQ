@@ -38,60 +38,66 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.impl;
+package org.jooq;
 
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.inline;
+import static java.lang.System.out;
+import static javax.xml.bind.JAXB.unmarshal;
 
-import org.jooq.Configuration;
-import org.jooq.Field;
-import org.jooq.QueryPart;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * @author Lukas Eder
- */
-class Left extends AbstractFunction<String> {
+import javax.xml.bind.JAXB;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlList;
+import javax.xml.bind.annotation.XmlRootElement;
 
-    /**
-     * Generated UID
-     */
-    private static final long       serialVersionUID = 2200760781944082146L;
+public class Test {
+    public static void main(String[] args) {
+        X x1 = unmarshal(new StringReader("<x></x>"), X.class);
+        X x2 = unmarshal(new StringReader("<x><flags/></x>"), X.class);
+        X x3 = unmarshal(new StringReader("<x><flags>X Y</flags></x>"), X.class);
 
-    private Field<String>           field;
-    private Field<? extends Number> length;
+        out.println("First unmarshal:");
+        out.println(x1);
+        out.println(x2);
+        out.println(x3);
 
-    Left(Field<String> field, Field<? extends Number> length) {
-        super("left", field.getDataType());
+        // Marshal the xml again. This will add the <flags/> element
+        StringWriter s1 = new StringWriter(); JAXB.marshal(x1, s1);
+        StringWriter s2 = new StringWriter(); JAXB.marshal(x2, s2);
+        StringWriter s3 = new StringWriter(); JAXB.marshal(x3, s3);
+        
+        // Now we're talking!
+        x1 = unmarshal(new StringReader(s1.toString()), X.class);
+        x2 = unmarshal(new StringReader(s2.toString()), X.class);
+        x3 = unmarshal(new StringReader(s3.toString()), X.class);
 
-        this.field = field;
-        this.length = length;
+        out.println();
+        out.println("Second unmarshal:");
+        out.println(x1);
+        out.println(x2);
+        out.println(x3);
     }
+}
 
+@XmlRootElement
+class X {
+    
+    protected List<String> flags;
+    
+    @XmlList
+    @XmlElement(defaultValue = "A B")
+    public List<String> getFlags() {
+        if (flags == null)
+            flags = new ArrayList<>();
+        
+        return flags;
+    }
+    
     @Override
-    final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
-            /* [pro] */
-            case ORACLE:
-            /* [/pro] */
-            case DERBY:
-            case SQLITE:
-                return DSL.substring(field, inline(1), length);
-
-            /* [pro] */
-            case DB2:
-            case INGRES:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
-            case CUBRID:
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            default:
-                return field("{left}({0}, {1})", field, length);
-        }
+    public String toString() {
+        return "X [flags=" + flags + "]";
     }
 }

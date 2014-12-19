@@ -79,7 +79,7 @@ class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
         String keyword = null;
         String function = null;
 
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
             case CUBRID:
             case MARIADB:
             case MYSQL: {
@@ -150,7 +150,7 @@ class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
                     default: throwUnsupported();
                 }
 
-                // [#3824] Ensure that the output for DATE arithmetic will also 
+                // [#3824] Ensure that the output for DATE arithmetic will also
                 // be of type DATE, not TIMESTAMP
                 if (getDataType().getType() == Date.class)
                     return field("({0} + ({1} || {2})::interval)::date", getDataType(), date, interval, inline(keyword));

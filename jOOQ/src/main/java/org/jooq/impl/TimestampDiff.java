@@ -73,7 +73,7 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     final Field<DayToSecond> getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
             /* [pro] */
 
             // MS Access does not support milliseconds in timestamps

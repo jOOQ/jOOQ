@@ -68,7 +68,7 @@ class RegexpLike extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.configuration().dialect().family()) {
+        switch (ctx.family()) {
 
             // [#620] These databases are compatible with the MySQL syntax
             /* [pro] */

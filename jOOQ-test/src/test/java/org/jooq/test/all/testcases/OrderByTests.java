@@ -566,7 +566,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList(3, 2), r4.getValues("xx"));
 
         // Nested expressions
-        switch (dialect().family()) {
+        switch (family()) {
             case DERBY:
             case H2:
             case POSTGRES:
@@ -590,7 +590,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         // Subqueries
-        switch (dialect().family()) {
+        switch (family()) {
             // These dialects do not really have full support for ORDER BY (SELECT ...)
             case H2:
             case DERBY:

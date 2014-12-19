@@ -217,7 +217,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Some dialects don't support a median function or a simulation thereof
         // Use AVG instead, as in this example the values of MEDIAN and AVG
         // are the same
-        switch (dialect().family()) {
+        switch (family()) {
             /* [pro] */
             case ACCESS:
             case ASE:
@@ -819,7 +819,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         /* [pro] */
-        switch (dialect().family()) {
+        switch (family()) {
             case CUBRID:
             case HANA:
             case POSTGRES:
@@ -1059,7 +1059,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("4, 3", result2.getValue(1, "books1"));
         assertEquals("4, 3", result2.getValue(1, "books2"));
 
-        switch (dialect()) {
+        switch (family()) {
             /* [pro] */
             case DB2:
             case SYBASE:

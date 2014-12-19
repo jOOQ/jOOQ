@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.ORACLE11G;
 import static org.jooq.SQLDialect.ORACLE12C;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_9_3;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SQLSERVER2012;
@@ -4936,7 +4937,7 @@ public class DSL {
      *              WHERE e.department_id = d.department_id);
      * </pre></code>
      */
-    @Support({ ORACLE12C, POSTGRES })
+    @Support({ ORACLE12C, POSTGRES_9_3 })
     public static <R extends Record> Table<R> lateral(TableLike<R> table) {
         return new Lateral<R>(table.asTable());
     }

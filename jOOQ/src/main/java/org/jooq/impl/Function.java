@@ -183,15 +183,15 @@ class Function<T> extends AbstractField<T> implements
 
     @Override
     public /* final */ void accept(Context<?> ctx) {
-        if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MARIADB, MYSQL).contains(ctx.configuration().dialect())) {
+        if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MARIADB, MYSQL).contains(ctx.family())) {
             toSQLGroupConcat(ctx);
         }
-        else if (term == LIST_AGG && asList(POSTGRES, SYBASE).contains(ctx.configuration().dialect())) {
+        else if (term == LIST_AGG && asList(POSTGRES, SYBASE).contains(ctx.family())) {
             toSQLStringAgg(ctx);
             toSQLOverClause(ctx);
         }
         /* [pro] */
-        else if (term == LIST_AGG && asList(DB2).contains(ctx.configuration().dialect().family())) {
+        else if (term == LIST_AGG && asList(DB2).contains(ctx.family())) {
             toSQLXMLAGG(ctx);
         }
         /* [/pro] */
@@ -337,7 +337,7 @@ class Function<T> extends AbstractField<T> implements
 
         // [#531] Inline window specifications if the WINDOW clause is not supported
         if (windowName != null) {
-            if (asList(POSTGRES, SYBASE).contains(ctx.configuration().dialect().family())) {
+            if (asList(POSTGRES, SYBASE).contains(ctx.family())) {
                 return windowName;
             }
 
@@ -399,7 +399,7 @@ class Function<T> extends AbstractField<T> implements
             ctx.keyword("distinct");
 
             // [#2883] PostgreSQL can use the DISTINCT keyword with formal row value expressions.
-            if (ctx.configuration().dialect().family() == POSTGRES && arguments.size() > 1) {
+            if (ctx.family() == POSTGRES && arguments.size() > 1) {
                 ctx.sql("(");
             }
             else {
@@ -412,14 +412,14 @@ class Function<T> extends AbstractField<T> implements
         }
 
         if (distinct) {
-            if (ctx.configuration().dialect().family() == POSTGRES && arguments.size() > 1) {
+            if (ctx.family() == POSTGRES && arguments.size() > 1) {
                 ctx.sql(")");
             }
         }
 
         if (ignoreNulls) {
             /* [pro] */
-            if (ctx.configuration().dialect().family() == SQLDialect.DB2) {
+            if (ctx.family() == SQLDialect.DB2) {
                 ctx.sql(", 'IGNORE NULLS'");
             }
             else
@@ -430,7 +430,7 @@ class Function<T> extends AbstractField<T> implements
         }
         else if (respectNulls) {
             /* [pro] */
-            if (ctx.configuration().dialect().family() == SQLDialect.DB2) {
+            if (ctx.family() == SQLDialect.DB2) {
                 ctx.sql(", 'RESPECT NULLS'");
             }
             else

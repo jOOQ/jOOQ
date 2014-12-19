@@ -66,7 +66,7 @@ class ConditionAsField extends AbstractFunction<Boolean> {
 
     @Override
     final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
 
             // Some databases don't accept predicates where column expressions
             // are expected.

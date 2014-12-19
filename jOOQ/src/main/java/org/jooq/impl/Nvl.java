@@ -67,7 +67,7 @@ class Nvl<T> extends AbstractFunction<T> {
 
     @Override
     final Field<T> getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
             /* [pro] */
             case ACCESS:
                 return field("{iif}({0} is null, {1}, {0})", getDataType(), arg1, arg2);

@@ -62,7 +62,7 @@ class CurrentUser extends AbstractFunction<String> {
 
     @Override
     final Field<String> getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
             /* [pro] */
             case ACCESS:
                 return field("{currentuser}()", SQLDataType.VARCHAR);

@@ -45,14 +45,16 @@ import static org.jooq.impl.DSL.inline;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.jooq.AggregateFilterStep;
 import org.jooq.AggregateFunction;
+import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.Name;
+import org.jooq.QueryPart;
 import org.jooq.SortField;
-import org.jooq.WindowBeforeOverStep;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowFinalStep;
 import org.jooq.WindowPartitionByStep;
@@ -102,36 +104,67 @@ class GroupConcat extends AbstractFunction<String> implements GroupConcatOrderBy
 
     /* [pro] xx
     xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
         xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxx xx xxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
     x
 
     xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
         xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxx xx xxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
     x
 
     xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxx x
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxx x
         xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxx xx xxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
     x
 
     xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
         xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxx xx xxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
     x
 
     xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
         xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxx xx xxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
     x
 
     xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxx x
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxx x
         xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxx xx xxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
     x
 
     xx [/pro] */
+
+    @Override
+    public final AggregateFilterStep<String> filterWhere(Condition... conditions) {
+        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final AggregateFilterStep<String> filterWhere(Collection<? extends Condition> conditions) {
+        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final AggregateFilterStep<String> filterWhere(Field<Boolean> field) {
+        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final AggregateFilterStep<String> filterWhere(String sql) {
+        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final AggregateFilterStep<String> filterWhere(String sql, Object... bindings) {
+        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final AggregateFilterStep<String> filterWhere(String sql, QueryPart... parts) {
+        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
+    }
+
     @Override
     public final WindowPartitionByStep<String> over() {
         throw new UnsupportedOperationException("OVER() not supported on GROUP_CONCAT aggregate function");

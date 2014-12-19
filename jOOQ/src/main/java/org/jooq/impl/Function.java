@@ -550,39 +550,6 @@ class Function<T> extends AbstractField<T> implements
     x
 
     xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    x
-
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxx xxxxxxxxxxx x
-        xxxxxxxxxxxxxxxxxxxxx x x xxx xxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx x xx
-        xxxxxx xxxxx
-    x
-
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    x
-
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    x
-
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
-    x
-
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
-    x
-
-    xxxxxxxxx
     xxxxxx xxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx x
         xxxxxxxxxxx x xxxxx
         xxxxxxxxxxxx x xxxxxx
@@ -597,6 +564,39 @@ class Function<T> extends AbstractField<T> implements
     x
 
     xx [/pro] */
+    @Override
+    public final WindowBeforeOverStep<T> filterWhere(Condition... conditions) {
+        return filterWhere(Arrays.asList(conditions));
+    }
+
+    @Override
+    public final WindowBeforeOverStep<T> filterWhere(Collection<? extends Condition> conditions) {
+        ConditionProviderImpl c = new ConditionProviderImpl();
+        c.addConditions(conditions);
+        filter = c;
+        return this;
+    }
+
+    @Override
+    public final WindowBeforeOverStep<T> filterWhere(Field<Boolean> field) {
+        return filterWhere(condition(field));
+    }
+
+    @Override
+    public final WindowBeforeOverStep<T> filterWhere(String sql) {
+        return filterWhere(condition(sql));
+    }
+
+    @Override
+    public final WindowBeforeOverStep<T> filterWhere(String sql, Object... bindings) {
+        return filterWhere(condition(sql, bindings));
+    }
+
+    @Override
+    public final WindowBeforeOverStep<T> filterWhere(String sql, QueryPart... parts) {
+        return filterWhere(condition(sql, parts));
+    }
+
     @Override
     public final WindowPartitionByStep<T> over() {
         windowSpecification = new WindowSpecificationImpl();

@@ -550,6 +550,21 @@ class Function<T> extends AbstractField<T> implements
     }
 
     @Override
+    public final WindowOverStep<T> ignoreNulls() {
+        ignoreNulls = true;
+        respectNulls = false;
+        return this;
+    }
+
+    @Override
+    public final WindowOverStep<T> respectNulls() {
+        ignoreNulls = false;
+        respectNulls = true;
+        return this;
+    }
+
+    /* [/pro] */
+    @Override
     public final WindowBeforeOverStep<T> filterWhere(Condition... conditions) {
         return filterWhere(Arrays.asList(conditions));
     }
@@ -582,21 +597,6 @@ class Function<T> extends AbstractField<T> implements
         return filterWhere(condition(sql, parts));
     }
 
-    @Override
-    public final WindowOverStep<T> ignoreNulls() {
-        ignoreNulls = true;
-        respectNulls = false;
-        return this;
-    }
-
-    @Override
-    public final WindowOverStep<T> respectNulls() {
-        ignoreNulls = false;
-        respectNulls = true;
-        return this;
-    }
-
-    /* [/pro] */
     @Override
     public final WindowPartitionByStep<T> over() {
         windowSpecification = new WindowSpecificationImpl();

@@ -45,14 +45,16 @@ import static org.jooq.impl.DSL.inline;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.jooq.AggregateFilterStep;
 import org.jooq.AggregateFunction;
+import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.Name;
+import org.jooq.QueryPart;
 import org.jooq.SortField;
-import org.jooq.WindowBeforeOverStep;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowFinalStep;
 import org.jooq.WindowPartitionByStep;
@@ -102,33 +104,63 @@ class GroupConcat extends AbstractFunction<String> implements GroupConcatOrderBy
 
     /* [pro] */
     @Override
-    public final WindowBeforeOverStep<String> keepDenseRankFirstOrderBy(Field<?>... fields) {
+    public final AggregateFilterStep<String> keepDenseRankFirstOrderBy(Field<?>... fields) {
         throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
     }
 
     @Override
-    public final WindowBeforeOverStep<String> keepDenseRankFirstOrderBy(SortField<?>... fields) {
+    public final AggregateFilterStep<String> keepDenseRankFirstOrderBy(SortField<?>... fields) {
         throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
     }
 
     @Override
-    public final WindowBeforeOverStep<String> keepDenseRankFirstOrderBy(Collection<? extends SortField<?>> fields) {
+    public final AggregateFilterStep<String> keepDenseRankFirstOrderBy(Collection<? extends SortField<?>> fields) {
         throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
     }
 
     @Override
-    public final WindowBeforeOverStep<String> keepDenseRankLastOrderBy(Field<?>... fields) {
+    public final AggregateFilterStep<String> keepDenseRankLastOrderBy(Field<?>... fields) {
         throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
     }
 
     @Override
-    public final WindowBeforeOverStep<String> keepDenseRankLastOrderBy(SortField<?>... fields) {
+    public final AggregateFilterStep<String> keepDenseRankLastOrderBy(SortField<?>... fields) {
         throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
     }
 
     @Override
-    public final WindowBeforeOverStep<String> keepDenseRankLastOrderBy(Collection<? extends SortField<?>> fields) {
+    public final AggregateFilterStep<String> keepDenseRankLastOrderBy(Collection<? extends SortField<?>> fields) {
         throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final AggregateFilterStep<String> filterWhere(Condition... conditions) {
+        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final AggregateFilterStep<String> filterWhere(Collection<? extends Condition> conditions) {
+        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final AggregateFilterStep<String> filterWhere(Field<Boolean> field) {
+        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final AggregateFilterStep<String> filterWhere(String sql) {
+        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final AggregateFilterStep<String> filterWhere(String sql, Object... bindings) {
+        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final AggregateFilterStep<String> filterWhere(String sql, QueryPart... parts) {
+        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
     }
 
     /* [/pro] */

@@ -43,10 +43,9 @@ package org.jooq.test;
 
 import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.ORACLE10G;
-import static org.jooq.SQLDialect.ORACLE11G;
-import static org.jooq.SQLDialect.ORACLE12C;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_9_3;
+import static org.jooq.SQLDialect.POSTGRES_9_4;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -67,10 +66,9 @@ public class DialectTest extends AbstractTest {
         assertEquals(DEFAULT, DEFAULT.predecessor());
         assertEquals(H2, H2.predecessor());
 
-        assertEquals(ORACLE10G, ORACLE10G.predecessor());
-        assertEquals(ORACLE10G, ORACLE11G.predecessor());
-        assertEquals(ORACLE11G, ORACLE12C.predecessor());
-        assertEquals(ORACLE12C, ORACLE.predecessor());
+        assertEquals(POSTGRES_9_3, POSTGRES_9_3.predecessor());
+        assertEquals(POSTGRES_9_3, POSTGRES_9_4.predecessor());
+        assertEquals(POSTGRES_9_4, POSTGRES.predecessor());
     }
 
     @Test
@@ -78,24 +76,16 @@ public class DialectTest extends AbstractTest {
         assertTrue(DEFAULT.precedes(DEFAULT));
         assertFalse(DEFAULT.precedes(H2));
 
-        assertTrue(ORACLE10G.precedes(ORACLE10G));
-        assertTrue(ORACLE10G.precedes(ORACLE11G));
-        assertTrue(ORACLE10G.precedes(ORACLE12C));
-        assertTrue(ORACLE10G.precedes(ORACLE));
+        assertTrue(POSTGRES_9_3.precedes(POSTGRES_9_3));
+        assertTrue(POSTGRES_9_3.precedes(POSTGRES_9_4));
+        assertTrue(POSTGRES_9_3.precedes(POSTGRES));
 
-        assertFalse(ORACLE11G.precedes(ORACLE10G));
-        assertTrue(ORACLE11G.precedes(ORACLE11G));
-        assertTrue(ORACLE11G.precedes(ORACLE12C));
-        assertTrue(ORACLE11G.precedes(ORACLE));
+        assertFalse(POSTGRES_9_4.precedes(POSTGRES_9_3));
+        assertTrue(POSTGRES_9_4.precedes(POSTGRES_9_4));
+        assertTrue(POSTGRES_9_4.precedes(POSTGRES));
 
-        assertFalse(ORACLE12C.precedes(ORACLE10G));
-        assertFalse(ORACLE12C.precedes(ORACLE11G));
-        assertTrue(ORACLE12C.precedes(ORACLE12C));
-        assertTrue(ORACLE12C.precedes(ORACLE));
-
-        assertFalse(ORACLE.precedes(ORACLE10G));
-        assertFalse(ORACLE.precedes(ORACLE11G));
-        assertFalse(ORACLE.precedes(ORACLE12C));
-        assertTrue(ORACLE.precedes(ORACLE));
+        assertFalse(POSTGRES.precedes(POSTGRES_9_3));
+        assertFalse(POSTGRES.precedes(POSTGRES_9_4));
+        assertTrue(POSTGRES.precedes(POSTGRES));
     }
 }

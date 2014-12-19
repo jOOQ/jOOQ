@@ -75,7 +75,7 @@ class TruncDate<T extends java.util.Date> extends AbstractFunction<T> {
         String keyword = null;
         String format = null;
 
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
 
             // [http://jira.cubrid.org/browse/ENGINE-120] This currently doesn't work for all date parts in CUBRID
             case CUBRID:

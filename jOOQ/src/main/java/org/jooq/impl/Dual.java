@@ -111,7 +111,7 @@ class Dual extends AbstractTable<Record> {
             ctx.visit(FORCED_DUAL);
         }
         else {
-            switch (ctx.configuration().dialect().family()) {
+            switch (ctx.family()) {
                 /* [pro] xx
                 xxxx xxxx
                 xxxx xxxxxxxxxx

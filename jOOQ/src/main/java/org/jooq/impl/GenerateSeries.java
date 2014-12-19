@@ -78,7 +78,7 @@ class GenerateSeries extends AbstractTable<Record1<Integer>> {
     }
 
     private final QueryPart delegate(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
             case CUBRID:
             /* [pro] xx
             xxxx xxxxxxx

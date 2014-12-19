@@ -171,7 +171,7 @@ class GenerationUtil {
      * Gets the base type for an array type, depending on the RDBMS dialect
      */
     static String getArrayBaseType(SQLDialect dialect, String t, String u) {
-        switch (dialect) {
+        switch (dialect.family()) {
             case POSTGRES: {
 
                 // The convention is to prepend a "_" to a type to get an array type

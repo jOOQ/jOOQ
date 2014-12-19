@@ -73,7 +73,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
     }
 
     final void toSQL0(RenderContext context) {
-        switch (context.configuration().dialect().family()) {
+        switch (context.family()) {
 
             /* [pro] xx
             xx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxx xxxxx xxx xxxxxx xxx xx xxxxx
@@ -138,7 +138,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
     private String getInlineConstructor(RenderContext context) {
         // TODO [#884] Fix this with a local render context (using ctx.literal)
-        switch (context.configuration().dialect().family()) {
+        switch (context.family()) {
             case POSTGRES:
                 return "ROW";
 
@@ -163,7 +163,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
     }
 
     final void bind0(BindContext context) {
-        switch (context.configuration().dialect().family()) {
+        switch (context.family()) {
 
             /* [pro] xx
             xx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxx xxxxx xxx xxxxxx xxx xx xxxxx
@@ -187,7 +187,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             }
 
             default:
-                throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + context.configuration().dialect());
+                throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + context.dialect());
         }
     }
 }

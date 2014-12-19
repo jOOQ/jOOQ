@@ -86,7 +86,7 @@ class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefinition
 
         // Outside the WINDOW clause, only few dialects actually support
         // referencing WINDOW definitions
-        else if (asList(ctx.configuration().dialect()).contains(POSTGRES)) {
+        else if (asList(ctx.family()).contains(POSTGRES)) {
             ctx.visit(name);
         }
 

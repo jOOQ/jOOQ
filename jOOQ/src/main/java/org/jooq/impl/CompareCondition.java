@@ -86,7 +86,7 @@ class CompareCondition extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        SQLDialect family = ctx.configuration().dialect().family();
+        SQLDialect family = ctx.family();
         Field<?> lhs = field1;
         Field<?> rhs = field2;
         Comparator op = comparator;

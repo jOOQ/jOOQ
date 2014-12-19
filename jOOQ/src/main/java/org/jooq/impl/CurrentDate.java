@@ -64,7 +64,7 @@ class CurrentDate extends AbstractFunction<Date> {
 
     @Override
     final Field<Date> getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
             /* [pro] xx
             xxxx xxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx

@@ -133,7 +133,7 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
 
         @Override
         final Field<T> getFunction0(Configuration configuration) {
-            SQLDialect family = configuration.dialect().family();
+            SQLDialect family = configuration.family();
 
             switch (family) {
                 /* [pro] xx

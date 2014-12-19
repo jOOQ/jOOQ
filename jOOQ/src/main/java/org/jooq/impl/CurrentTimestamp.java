@@ -64,7 +64,7 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
 
     @Override
     final Field<Timestamp> getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
             /* [pro] xx
             xxxx xxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx

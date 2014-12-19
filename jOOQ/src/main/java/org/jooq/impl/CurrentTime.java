@@ -64,7 +64,7 @@ class CurrentTime extends AbstractFunction<Time> {
 
     @Override
     final Field<Time> getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
             /* [pro] xx
             xxxx xxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx

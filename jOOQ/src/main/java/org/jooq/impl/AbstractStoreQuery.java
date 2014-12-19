@@ -210,7 +210,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
 
     final void toSQLReturning(Context<?> ctx) {
         if (!returning.isEmpty()) {
-            switch (ctx.configuration().dialect()) {
+            switch (ctx.family()) {
                 case FIREBIRD:
                 case POSTGRES:
                     ctx.formatSeparator()
@@ -247,7 +247,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
 
         // Values should be returned from the INSERT
         else {
-            switch (ctx.configuration().dialect().family()) {
+            switch (ctx.family()) {
 
                 /* [pro] xx
                 xxxx xxxxxxx
@@ -322,7 +322,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         else {
             int result = 1;
             ResultSet rs;
-            switch (ctx.configuration().dialect().family()) {
+            switch (ctx.family()) {
 
                 // SQLite can select _rowid_ after the insert
                 case SQLITE: {

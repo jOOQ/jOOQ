@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_9_3;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -4936,7 +4937,7 @@ public class DSL {
      *              WHERE e.department_id = d.department_id);
      * </pre></code>
      */
-    @Support({ POSTGRES })
+    @Support({ POSTGRES_9_3 })
     public static <R extends Record> Table<R> lateral(TableLike<R> table) {
         return new Lateral<R>(table.asTable());
     }

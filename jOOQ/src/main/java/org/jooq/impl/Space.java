@@ -61,7 +61,7 @@ class Space extends AbstractFunction<String> {
 
     @Override
     final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
             /* [pro] xx
             xxxx xxxx
             xxxx xxxxxxx

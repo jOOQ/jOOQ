@@ -67,7 +67,7 @@ class Nvl<T> extends AbstractFunction<T> {
 
     @Override
     final Field<T> getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
             /* [pro] xx
             xxxx xxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxx xx xxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxx xxxxxx

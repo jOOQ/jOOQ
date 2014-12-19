@@ -468,7 +468,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                 Field<?> value = getInValues().get(parameter);
 
                 // Disambiguate overloaded procedure signatures
-                if (POSTGRES == context.configuration().dialect() && isOverloaded()) {
+                if (POSTGRES == context.family() && isOverloaded()) {
                     value = value.cast(parameter.getType());
                 }
 
@@ -864,7 +864,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             for (Parameter<?> p : getInParameters()) {
 
                 // Disambiguate overloaded function signatures
-                if (POSTGRES == ctx.dialect() && isOverloaded()) {
+                if (POSTGRES == ctx.family() && isOverloaded()) {
                     array[i] = getInValues().get(p).cast(p.getType());
                 }
                 else {

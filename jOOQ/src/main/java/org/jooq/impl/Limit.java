@@ -74,15 +74,17 @@ class Limit extends AbstractQueryPart {
         ParamType paramType = context.paramType();
         CastMode castMode = context.castMode();
 
-        switch (context.configuration().dialect()) {
+        switch (context.dialect()) {
 
             // True LIMIT / OFFSET support provided by the following dialects
             // -----------------------------------------------------------------
             case MARIADB:
-            case MYSQL:    // No break
-            case H2:       // No break
-            case HSQLDB:   // No break
-            case POSTGRES: // No break
+            case MYSQL:
+            case H2:
+            case HSQLDB:
+            case POSTGRES:
+            case POSTGRES_9_3:
+            case POSTGRES_9_4:
             case SQLITE: {
                 context.castMode(NEVER)
                        .formatSeparator()

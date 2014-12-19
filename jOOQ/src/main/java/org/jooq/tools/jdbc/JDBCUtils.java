@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Clob;
@@ -67,6 +68,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLInput;
+import java.sql.SQLXML;
 import java.sql.Statement;
 
 import org.jooq.SQLDialect;
@@ -321,6 +323,42 @@ public class JDBCUtils {
         if (clob != null) {
             try {
                 clob.free();
+            }
+            catch (Exception ignore) {}
+
+            // [#3069] The free() method was added only in JDBC 4.0 / Java 1.6
+            catch (AbstractMethodError ignore) {}
+        }
+    }
+
+    /**
+     * Safely free an XML object.
+     * <p>
+     * This method will silently ignore if <code>xml</code> is
+     * <code>null</code>, or if {@link SQLXML#free()} throws an exception.
+     */
+    public static final void safeFree(SQLXML xml) {
+        if (xml != null) {
+            try {
+                xml.free();
+            }
+            catch (Exception ignore) {}
+
+            // [#3069] The free() method was added only in JDBC 4.0 / Java 1.6
+            catch (AbstractMethodError ignore) {}
+        }
+    }
+
+    /**
+     * Safely free an Array object.
+     * <p>
+     * This method will silently ignore if <code>array</code> is
+     * <code>null</code>, or if {@link Array#free()} throws an exception.
+     */
+    public static final void safeFree(Array array) {
+        if (array != null) {
+            try {
+                array.free();
             }
             catch (Exception ignore) {}
 

@@ -106,6 +106,7 @@ import org.jooq.test.all.converters.Boolean_YES_NO_LC;
 import org.jooq.test.all.converters.Boolean_YES_NO_UC;
 import org.jooq.test.all.converters.Boolean_YN_LC;
 import org.jooq.test.all.converters.Boolean_YN_UC;
+import org.jooq.test.all.pojos.jaxb.Book;
 import org.jooq.test.sqlserver.generatedclasses.Keys;
 import org.jooq.test.sqlserver.generatedclasses.Routines;
 import org.jooq.test.sqlserver.generatedclasses.Sequences;
@@ -140,6 +141,7 @@ import org.jooq.types.UShort;
 import org.jooq.util.sqlserver.SQLServerDataType;
 
 import org.junit.Test;
+import org.w3c.dom.Node;
 
 /**
  * @author Lukas Eder
@@ -414,6 +416,16 @@ public class SQLServerTest extends jOOQAbstractTest<
     @Override
     protected TableField<TExoticTypesRecord, UUID> TExoticTypes_UU() {
         return T_EXOTIC_TYPES.UU;
+    }
+
+    @Override
+    protected TableField<TExoticTypesRecord, Node> TExoticTypes_UNTYPED_XML_AS_DOM() {
+        return T_EXOTIC_TYPES.UNTYPED_XML_AS_DOM;
+    }
+
+    @Override
+    protected TableField<TExoticTypesRecord, Book> TExoticTypes_UNTYPED_XML_AS_JAXB() {
+        return T_EXOTIC_TYPES.UNTYPED_XML_AS_JAXB;
     }
 
     @Override

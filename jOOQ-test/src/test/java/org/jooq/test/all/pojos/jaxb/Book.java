@@ -38,48 +38,60 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.test.all.bindings;
+package org.jooq.test.all.pojos.jaxb;
 
-import java.sql.SQLException;
+import javax.xml.bind.annotation.XmlElement;
 
-import org.jooq.BindingSQLContext;
-import org.jooq.Converter;
-import org.jooq.impl.DSL;
+public class Book {
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
+    @XmlElement
+    public String title;
 
-@SuppressWarnings("serial")
-public class PostgresJSONGsonBinding extends AbstractVarcharBinding<JsonElement> {
+    @XmlElement
+    public Author author;
 
-    @Override
-    public Converter<Object, JsonElement> converter() {
-        return new Converter<Object, JsonElement>() {
-            @Override
-            public JsonElement from(Object t) {
-                return t == null ? JsonNull.INSTANCE : new Gson().fromJson("" + t, JsonElement.class);
-            }
-
-            @Override
-            public Object to(JsonElement u) {
-                return u == null || u == JsonNull.INSTANCE ? null : new Gson().toJson(u);
-            }
-
-            @Override
-            public Class<Object> fromType() {
-                return Object.class;
-            }
-
-            @Override
-            public Class<JsonElement> toType() {
-                return JsonElement.class;
-            }
-        };
+    public Book() {}
+    public Book(String title, Author author) {
+        this.title = title;
+        this.author = author;
     }
 
+    // Generated methods
+    // ------------------------------------------------------------------------
+
     @Override
-    public void sql(BindingSQLContext<JsonElement> ctx) throws SQLException {
-        ctx.render().visit(DSL.val(ctx.convert(converter()).value())).sql("::json");
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((author == null) ? 0 : author.hashCode());
+        result = prime * result + ((title == null) ? 0 : title.hashCode());
+        return result;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Book other = (Book) obj;
+        if (author == null) {
+            if (other.author != null)
+                return false;
+        }
+        else if (!author.equals(other.author))
+            return false;
+        if (title == null) {
+            if (other.title != null)
+                return false;
+        }
+        else if (!title.equals(other.title))
+            return false;
+        return true;
+    }
+    @Override
+    public String toString() {
+        return "Book [title=" + title + ", author=" + author + "]";
     }
 }

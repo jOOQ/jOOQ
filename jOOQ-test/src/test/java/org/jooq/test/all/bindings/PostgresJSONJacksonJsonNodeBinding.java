@@ -52,7 +52,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.NullNode;
 
 @SuppressWarnings("serial")
-public class PostgresJSONJacksonJsonNodeBinding extends AbstractPostgresVarcharBinding<JsonNode> {
+public class PostgresJSONJacksonJsonNodeBinding extends AbstractVarcharBinding<JsonNode> {
 
     @Override
     public Converter<Object, JsonNode> converter() {

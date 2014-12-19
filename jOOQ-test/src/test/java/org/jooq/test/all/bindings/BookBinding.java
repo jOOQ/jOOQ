@@ -40,50 +40,21 @@
  */
 package org.jooq.test.all.bindings;
 
-import static org.jooq.tools.Convert.convert;
+import org.jooq.impl.AbstractXMLasObjectBinding;
+import org.jooq.test.all.pojos.jaxb.Book;
 
-import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
-import java.sql.Types;
+/**
+ * @author Lukas Eder
+ */
+public class BookBinding extends AbstractXMLasObjectBinding<Book> {
 
-import org.jooq.Binding;
-import org.jooq.BindingGetResultSetContext;
-import org.jooq.BindingGetSQLInputContext;
-import org.jooq.BindingGetStatementContext;
-import org.jooq.BindingRegisterContext;
-import org.jooq.BindingSetSQLOutputContext;
-import org.jooq.BindingSetStatementContext;
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = 6189120550983457313L;
 
-@SuppressWarnings("serial")
-public abstract class AbstractPostgresVarcharBinding<U> implements Binding<Object, U> {
-
-    @Override
-    public void register(BindingRegisterContext<U> ctx) throws SQLException {
-        ctx.statement().registerOutParameter(ctx.index(), Types.VARCHAR);
+    public BookBinding() {
+        super(Book.class);
     }
 
-    @Override
-    public void set(BindingSetStatementContext<U> ctx) throws SQLException {
-        ctx.statement().setString(ctx.index(), convert(ctx.convert(converter()).value(), String.class));
-    }
-
-    @Override
-    public void get(BindingGetResultSetContext<U> ctx) throws SQLException {
-        ctx.convert(converter()).value(ctx.resultSet().getString(ctx.index()));
-    }
-
-    @Override
-    public void get(BindingGetStatementContext<U> ctx) throws SQLException {
-        ctx.convert(converter()).value(ctx.statement().getString(ctx.index()));
-    }
-
-    @Override
-    public void set(BindingSetSQLOutputContext<U> ctx) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public void get(BindingGetSQLInputContext<U> ctx) throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
 }

@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -451966752;
+	private static final long serialVersionUID = -232253788;
 
 	/**
 	 * The reference instance of <code>dbo.t_exotic_types</code>
@@ -33,6 +33,16 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.sqlserve
 	 * The column <code>dbo.t_exotic_types.UU</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("UU", org.jooq.impl.SQLDataType.UUID, this, "");
+
+	/**
+	 * The column <code>dbo.t_exotic_types.UNTYPED_XML_AS_DOM</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TExoticTypesRecord, org.w3c.dom.Node> UNTYPED_XML_AS_DOM = createField("UNTYPED_XML_AS_DOM", org.jooq.impl.DefaultDataType.getDefaultDataType("xml"), this, "", new org.jooq.impl.XMLasDOMBinding());
+
+	/**
+	 * The column <code>dbo.t_exotic_types.UNTYPED_XML_AS_JAXB</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TExoticTypesRecord, org.jooq.test.all.pojos.jaxb.Book> UNTYPED_XML_AS_JAXB = createField("UNTYPED_XML_AS_JAXB", org.jooq.impl.DefaultDataType.getDefaultDataType("xml"), this, "", new org.jooq.test.all.bindings.BookBinding());
 
 	/**
 	 * Create a <code>dbo.t_exotic_types</code> table reference

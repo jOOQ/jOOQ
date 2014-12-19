@@ -75,6 +75,12 @@
             <artifactId>jooq-test-utils</artifactId>
             <version>${project.version}</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>joox</artifactId>
+            <version>1.2.0</version>
+        </dependency>
 
         <dependency>
             <groupId>log4j</groupId>
@@ -5569,9 +5575,29 @@
                                                     <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
                                                     <converter>org.jooq.test.all.converters.Boolean_YES_NO_UC_Converter</converter>
                                                 </customType>
+                                                
+                                                <customType>
+                                                    <name>org.jooq.impl.XMLasDOMBinding</name>
+                                                    <type>org.w3c.dom.Node</type>
+                                                    <binding>org.jooq.impl.XMLasDOMBinding</binding>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.bindings.BookBinding</name>
+                                                    <type>org.jooq.test.all.pojos.jaxb.Book</type>
+                                                    <binding>org.jooq.test.all.bindings.BookBinding</binding>
+                                                </customType>
                                             </customTypes>
 
                                             <forcedTypes>
+                                                <forcedType>
+                                                    <name>org.jooq.impl.XMLasDOMBinding</name>
+                                                    <expression>.*\.UNTYPED_XML_AS_DOM</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.bindings.BookBinding</name>
+                                                    <expression>.*\.UNTYPED_XML_AS_JAXB</expression>
+                                                </forcedType>
+                                            
                                                 <forcedType>
                                                     <name>BIT</name>
                                                     <expression>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expression>

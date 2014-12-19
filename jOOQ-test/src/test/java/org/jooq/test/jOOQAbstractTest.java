@@ -126,6 +126,7 @@ import org.jooq.test.all.listeners.Lifecycle;
 import org.jooq.test.all.listeners.LifecycleWatcherListener;
 import org.jooq.test.all.listeners.PrettyPrinter;
 import org.jooq.test.all.listeners.TestStatisticsListener;
+import org.jooq.test.all.pojos.jaxb.Book;
 import org.jooq.test.all.testcases.AggregateWindowFunctionTests;
 import org.jooq.test.all.testcases.AliasTests;
 import org.jooq.test.all.testcases.AsyncTest;
@@ -196,6 +197,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.internal.AssumptionViolatedException;
 import org.postgresql.util.PSQLException;
+import org.w3c.dom.Node;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 
@@ -1000,6 +1002,13 @@ public abstract class jOOQAbstractTest<
     protected abstract Table<UU> TExoticTypes();
     protected abstract TableField<UU, Integer> TExoticTypes_ID();
     protected abstract TableField<UU, UUID> TExoticTypes_UU();
+    protected TableField<UU, Node> TExoticTypes_UNTYPED_XML_AS_DOM() {
+        return null;
+    }
+
+    protected TableField<UU, Book> TExoticTypes_UNTYPED_XML_AS_JAXB() {
+        return null;
+    }
 
     protected abstract Table<DATE> TDates();
 
@@ -3110,6 +3119,16 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testUUIDArrayDataType() throws Exception {
         new DataTypeTests(this).testUUIDArrayDataType();
+    }
+
+    @Test
+    public void testXMLasDOM() throws Exception {
+        new DataTypeTests(this).testXMLasDOM();
+    }
+
+    @Test
+    public void testXMLasJAXB() throws Exception {
+        new DataTypeTests(this).testXMLasJAXB();
     }
 
     @Test

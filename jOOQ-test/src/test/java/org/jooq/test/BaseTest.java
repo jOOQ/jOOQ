@@ -96,6 +96,7 @@ import org.jooq.test.all.converters.Boolean_YES_NO_LC;
 import org.jooq.test.all.converters.Boolean_YES_NO_UC;
 import org.jooq.test.all.converters.Boolean_YN_LC;
 import org.jooq.test.all.converters.Boolean_YN_UC;
+import org.jooq.test.all.pojos.jaxb.Book;
 import org.jooq.tools.JooqLogger;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -104,6 +105,7 @@ import org.jooq.types.UShort;
 
 import org.junit.Assert;
 import org.junit.Assume;
+import org.w3c.dom.Node;
 
 public abstract class BaseTest<
 
@@ -320,6 +322,14 @@ public abstract class BaseTest<
 
     protected TableField<UU, UUID> TExoticTypes_UU() {
         return delegate.TExoticTypes_UU();
+    }
+
+    protected TableField<UU, Node> TExoticTypes_UNTYPED_XML_AS_DOM() {
+        return delegate.TExoticTypes_UNTYPED_XML_AS_DOM();
+    }
+
+    protected TableField<UU, Book> TExoticTypes_UNTYPED_XML_AS_JAXB() {
+        return delegate.TExoticTypes_UNTYPED_XML_AS_JAXB();
     }
 
     public Table<DATE> TDates() {

@@ -53,7 +53,7 @@ import org.jooq.lambda.Seq;
 import org.jooq.tools.csv.CSVParser;
 
 @SuppressWarnings("serial")
-public class PostgresHstoreMapBinding extends AbstractPostgresVarcharBinding<Map<String, String>> {
+public class PostgresHstoreMapBinding extends AbstractVarcharBinding<Map<String, String>> {
 
     @Override
     public Converter<Object, Map<String, String>> converter() {

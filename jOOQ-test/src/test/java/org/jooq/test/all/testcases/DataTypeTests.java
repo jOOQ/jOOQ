@@ -70,9 +70,11 @@ import static org.jooq.types.Unsigned.ubyte;
 import static org.jooq.types.Unsigned.uint;
 import static org.jooq.types.Unsigned.ulong;
 import static org.jooq.types.Unsigned.ushort;
+import static org.joox.JOOX.$;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeNotNull;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -110,6 +112,8 @@ import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.test.all.converters.Boolean_YES_NO_LC;
 import org.jooq.test.all.converters.Boolean_YES_NO_UC;
+import org.jooq.test.all.pojos.jaxb.Author;
+import org.jooq.test.all.pojos.jaxb.Book;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -1784,6 +1788,72 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(uuid1, record.getValue(val)[0]);
             assertEquals(uuid2, record.getValue(val)[1]);
         }
+    }
+
+    public void testXMLasDOM() throws Exception {
+        assumeNotNull(TExoticTypes_UNTYPED_XML_AS_DOM());
+        clean(TExoticTypes());
+
+        assertEquals(1,
+        create().insertInto(TExoticTypes(), TExoticTypes_ID(), TExoticTypes_UNTYPED_XML_AS_DOM())
+                .values(1, null)
+                .execute());
+
+        assertEquals(1,
+        create().insertInto(TExoticTypes(), TExoticTypes_ID(), TExoticTypes_UNTYPED_XML_AS_DOM())
+                .values(2, $("<empty/>").document())
+                .execute());
+
+        assertEquals(1,
+        create().insertInto(TExoticTypes(), TExoticTypes_ID(), TExoticTypes_UNTYPED_XML_AS_DOM())
+                .values(3, $("<a><b/></a>").document())
+                .execute());
+
+        Result<UU> result =
+        create().selectFrom(TExoticTypes())
+                .orderBy(TExoticTypes_ID())
+                .fetch();
+
+        assertNull(result.get(0).getValue(TExoticTypes_UNTYPED_XML_AS_DOM()));
+        assertEquals(
+            $("<empty/>").toString(),
+            $(result.get(1).getValue(TExoticTypes_UNTYPED_XML_AS_DOM())).toString());
+        assertEquals(
+            $("<a><b/></a>").toString(),
+            $(result.get(2).getValue(TExoticTypes_UNTYPED_XML_AS_DOM())).toString());
+    }
+
+    public void testXMLasJAXB() throws Exception {
+        assumeNotNull(TExoticTypes_UNTYPED_XML_AS_JAXB());
+        clean(TExoticTypes());
+
+        assertEquals(1,
+        create().insertInto(TExoticTypes(), TExoticTypes_ID(), TExoticTypes_UNTYPED_XML_AS_JAXB())
+                .values(1, null)
+                .execute());
+
+        assertEquals(1,
+        create().insertInto(TExoticTypes(), TExoticTypes_ID(), TExoticTypes_UNTYPED_XML_AS_JAXB())
+                .values(2, new Book())
+                .execute());
+
+        assertEquals(1,
+        create().insertInto(TExoticTypes(), TExoticTypes_ID(), TExoticTypes_UNTYPED_XML_AS_JAXB())
+                .values(3, new Book("1984", new Author("George", "Orwell")))
+                .execute());
+
+        Result<UU> result =
+        create().selectFrom(TExoticTypes())
+                .orderBy(TExoticTypes_ID())
+                .fetch();
+
+        assertNull(result.get(0).getValue(TExoticTypes_UNTYPED_XML_AS_JAXB()));
+        assertEquals(
+            new Book(),
+            result.get(1).getValue(TExoticTypes_UNTYPED_XML_AS_JAXB()));
+        assertEquals(
+            new Book("1984", new Author("George", "Orwell")),
+            result.get(2).getValue(TExoticTypes_UNTYPED_XML_AS_JAXB()));
     }
 
     public void testCoercion() throws Exception {

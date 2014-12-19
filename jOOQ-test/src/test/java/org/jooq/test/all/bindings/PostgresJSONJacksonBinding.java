@@ -51,7 +51,7 @@ import org.jooq.test.all.types.JSONJacksonHelloWorld;
 import org.codehaus.jackson.map.ObjectMapper;
 
 @SuppressWarnings("serial")
-public class PostgresJSONJacksonBinding extends AbstractPostgresVarcharBinding<JSONJacksonHelloWorld> {
+public class PostgresJSONJacksonBinding extends AbstractVarcharBinding<JSONJacksonHelloWorld> {
 
     @Override
     public Converter<Object, JSONJacksonHelloWorld> converter() {

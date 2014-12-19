@@ -38,48 +38,64 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.test.all.bindings;
+package org.jooq.impl;
+
+import static org.jooq.tools.Convert.convert;
 
 import java.sql.SQLException;
+import java.sql.Types;
 
+import org.jooq.Binding;
+import org.jooq.BindingGetResultSetContext;
+import org.jooq.BindingGetSQLInputContext;
+import org.jooq.BindingGetStatementContext;
+import org.jooq.BindingRegisterContext;
 import org.jooq.BindingSQLContext;
-import org.jooq.Converter;
-import org.jooq.impl.DSL;
+import org.jooq.BindingSetSQLOutputContext;
+import org.jooq.BindingSetStatementContext;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
+/**
+ * @author Lukas Eder
+ */
+abstract class AbstractVarcharBinding<T> implements Binding<Object, T> {
 
-@SuppressWarnings("serial")
-public class PostgresJSONGsonBinding extends AbstractVarcharBinding<JsonElement> {
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = -2153155338260706262L;
 
     @Override
-    public Converter<Object, JsonElement> converter() {
-        return new Converter<Object, JsonElement>() {
-            @Override
-            public JsonElement from(Object t) {
-                return t == null ? JsonNull.INSTANCE : new Gson().fromJson("" + t, JsonElement.class);
-            }
-
-            @Override
-            public Object to(JsonElement u) {
-                return u == null || u == JsonNull.INSTANCE ? null : new Gson().toJson(u);
-            }
-
-            @Override
-            public Class<Object> fromType() {
-                return Object.class;
-            }
-
-            @Override
-            public Class<JsonElement> toType() {
-                return JsonElement.class;
-            }
-        };
+    public final void sql(BindingSQLContext<T> ctx) throws SQLException {
+        ctx.render().visit(DSL.val(ctx.convert(converter()).value()));
     }
 
     @Override
-    public void sql(BindingSQLContext<JsonElement> ctx) throws SQLException {
-        ctx.render().visit(DSL.val(ctx.convert(converter()).value())).sql("::json");
+    public final void register(BindingRegisterContext<T> ctx) throws SQLException {
+        ctx.statement().registerOutParameter(ctx.index(), Types.VARCHAR);
+    }
+
+    @Override
+    public final void set(BindingSetStatementContext<T> ctx) throws SQLException {
+        ctx.statement().setString(ctx.index(), convert(ctx.convert(converter()).value(), String.class));
+    }
+
+    @Override
+    public final void get(BindingGetResultSetContext<T> ctx) throws SQLException {
+        ctx.convert(converter()).value(ctx.resultSet().getString(ctx.index()));
+    }
+
+    @Override
+    public final void get(BindingGetStatementContext<T> ctx) throws SQLException {
+        ctx.convert(converter()).value(ctx.statement().getString(ctx.index()));
+    }
+
+    @Override
+    public final void set(BindingSetSQLOutputContext<T> ctx) throws SQLException {
+        ctx.output().writeString(convert(ctx.convert(converter()).value(), String.class));
+    }
+
+    @Override
+    public final void get(BindingGetSQLInputContext<T> ctx) throws SQLException {
+        ctx.convert(converter()).value(ctx.input().readString());
     }
 }

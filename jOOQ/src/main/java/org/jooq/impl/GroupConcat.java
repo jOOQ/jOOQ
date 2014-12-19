@@ -133,6 +133,8 @@ class GroupConcat extends AbstractFunction<String> implements GroupConcatOrderBy
         throw new UnsupportedOperationException("KEEP() not supported on GROUP_CONCAT aggregate function");
     }
 
+    /* [/pro] */
+
     @Override
     public final AggregateFilterStep<String> filterWhere(Condition... conditions) {
         throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
@@ -163,7 +165,6 @@ class GroupConcat extends AbstractFunction<String> implements GroupConcatOrderBy
         throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
     }
 
-    /* [/pro] */
     @Override
     public final WindowPartitionByStep<String> over() {
         throw new UnsupportedOperationException("OVER() not supported on GROUP_CONCAT aggregate function");

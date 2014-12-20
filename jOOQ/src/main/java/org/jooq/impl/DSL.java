@@ -10117,9 +10117,9 @@ public class DSL {
     /**
      * Get the median over a numeric field: median(field).
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, HSQLDB, POSTGRES_9_4 })
     public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
-        return new Function<BigDecimal>("median", SQLDataType.NUMERIC, nullSafe(field));
+        return new Function<BigDecimal>(Term.MEDIAN, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -10653,8 +10653,8 @@ public class DSL {
      * function.
      */
     @Support({ POSTGRES_9_4 })
-    public static OrderedAggregateFunction<Double> percentile_cont(double number) {
-        return new Function<Double>("percentile_cont", SQLDataType.DOUBLE, val(number));
+    public static OrderedAggregateFunction<BigDecimal> percentileCont(Number number) {
+        return percentileCont(val(number));
     }
 
     /**
@@ -10663,8 +10663,8 @@ public class DSL {
      * function.
      */
     @Support({ POSTGRES_9_4 })
-    public static OrderedAggregateFunction<BigDecimal> percentile_cont(BigDecimal number) {
-        return new Function<BigDecimal>("percentile_cont", SQLDataType.NUMERIC, val(number, BigDecimal.class));
+    public static OrderedAggregateFunction<BigDecimal> percentileCont(Field<? extends Number> field) {
+        return new Function<BigDecimal>("percentile_cont", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -10673,8 +10673,8 @@ public class DSL {
      * function.
      */
     @Support({ POSTGRES_9_4 })
-    public static OrderedAggregateFunction<Double> percentile_disc(Double number) {
-        return new Function<Double>("percentile_disc", SQLDataType.DOUBLE, val(number, Double.class));
+    public static OrderedAggregateFunction<BigDecimal> percentileDisc(Number number) {
+        return percentileDisc(val(number));
     }
 
     /**
@@ -10683,8 +10683,8 @@ public class DSL {
      * function.
      */
     @Support({ POSTGRES_9_4 })
-    public static OrderedAggregateFunction<BigDecimal> percentile_disc(BigDecimal number) {
-        return new Function<BigDecimal>("percentile_disc", SQLDataType.NUMERIC, val(number, BigDecimal.class));
+    public static OrderedAggregateFunction<BigDecimal> percentileDisc(Field<? extends Number> field) {
+        return new Function<BigDecimal>("percentile_disc", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**

@@ -54,11 +54,14 @@ import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.percentileCont;
 import static org.jooq.impl.Term.LIST_AGG;
+import static org.jooq.impl.Term.MEDIAN;
 import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Utils.DATA_WINDOW_DEFINITIONS;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
@@ -202,6 +205,13 @@ class Function<T> extends AbstractField<T> implements
             toSQLXMLAGG(ctx);
         }
         /* [/pro] */
+        else if (term == MEDIAN && asList(POSTGRES).contains(ctx.family())) {
+            Field<?>[] fields = new Field[arguments.size()];
+            for (int i = 0; i < fields.length; i++)
+                fields[i] = DSL.field("{0}", arguments.get(i));
+
+            ctx.visit(percentileCont(new BigDecimal("0.5")).withinGroupOrderBy(fields));
+        }
         else {
             toSQLArguments(ctx);
             toSQLKeepDenseRankOrderByClause(ctx);

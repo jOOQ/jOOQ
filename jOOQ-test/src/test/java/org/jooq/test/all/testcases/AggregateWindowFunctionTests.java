@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES_9_3;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -82,8 +83,8 @@ import static org.jooq.impl.DSL.ntile;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.percentRank;
-import static org.jooq.impl.DSL.percentile_cont;
-import static org.jooq.impl.DSL.percentile_disc;
+import static org.jooq.impl.DSL.percentileCont;
+import static org.jooq.impl.DSL.percentileDisc;
 import static org.jooq.impl.DSL.rank;
 import static org.jooq.impl.DSL.regrAvgX;
 import static org.jooq.impl.DSL.regrAvgY;
@@ -117,7 +118,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jooq.DSLContext;
-import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -215,42 +215,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testAggregateFunctionsSimple() throws Exception {
-
-        // Standard aggregate functions, available in all dialects:
-        // --------------------------------------------------------
-        Field<BigDecimal> median;
-
-        // Some dialects don't support a median function or a simulation thereof
-        // Use AVG instead, as in this example the values of MEDIAN and AVG
-        // are the same
-        switch (family()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case INFORMIX:
-            case INGRES:
-            case DB2:
-            case SQLSERVER:
-            /* [/pro] */
-
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case MARIADB:
-            case MYSQL:
-            case SQLITE:
-
-            // TODO [#871] This could be simulated
-            case POSTGRES:
-                median = avg(TBook_ID());
-                break;
-
-            default:
-                median = median(TBook_ID());
-                break;
-        }
-
-        Result<Record9<Integer, Integer, Integer, Integer, BigDecimal, BigDecimal, Integer, Integer, BigDecimal>> result1 = create()
+        Result<Record8<Integer, Integer, Integer, Integer, BigDecimal, BigDecimal, Integer, Integer>> result1 = create()
             .select(
                 TBook_AUTHOR_ID(),
                 count(),
@@ -259,8 +224,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 sum(TBook_ID()),
                 avg(TBook_ID()),
                 min(TBook_ID()),
-                max(TBook_ID()),
-                median)
+                max(TBook_ID()))
             .from(TBook())
             .groupBy(TBook_AUTHOR_ID())
             .orderBy(TBook_AUTHOR_ID())
@@ -321,6 +285,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .from(TBook())
                     .fetch(0, int.class)
         );
+    }
+
+    public void testAggregateFunction_MEDIAN() throws Exception {
+        assumeFamilyNotIn(ACCESS, ASE, DB2, DERBY, FIREBIRD, H2, INFORMIX, INGRES, MARIADB, MYSQL, SQLITE, SQLSERVER);
+        assumeDialectNotIn(POSTGRES_9_3);
+
+        assertEquals(2.5, create().fetchValue(select(median(TBook_ID())).from(TBook())).doubleValue());
+        assertEquals(2, create().fetchValue(select(median(TBook_ID()).filterWhere(TBook_ID().ne(4))).from(TBook())).intValue());
     }
 
     public void testAggregateFunction_EVERY() throws Exception {
@@ -439,16 +411,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testInverseDistributionFunctions() throws Exception {
         assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE);
+        assumeDialectNotIn(POSTGRES_9_3);
 
-        Record2<Double, Double> result =
+        Record2<BigDecimal, BigDecimal> result =
         create().select(
-                    percentile_cont(0.5).withinGroupOrderBy(TBook_ID()),
-                    percentile_disc(0.5).withinGroupOrderBy(TBook_ID()))
+                    percentileCont(0.5).withinGroupOrderBy(TBook_ID()),
+                    percentileDisc(0.5).withinGroupOrderBy(TBook_ID()))
                 .from(TBook())
                 .fetchOne();
 
-        assertEquals(2.5, result.value1());
-        assertEquals(2.0, result.value2());
+        assertEquals(2.5, result.value1().doubleValue());
+        assertEquals(2.0, result.value2().doubleValue());
     }
 
     public void testFetchCount() throws Exception {

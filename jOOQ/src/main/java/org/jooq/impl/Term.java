@@ -146,6 +146,12 @@ enum Term {
             return "listagg";
         }
     },
+    MEDIAN {
+        @Override
+        public String translate(SQLDialect dialect) {
+            return "median";
+        }
+    },
     OCTET_LENGTH {
         @Override
         public String translate(SQLDialect dialect) {

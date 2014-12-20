@@ -2692,6 +2692,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testAggregateFunction_MEDIAN() throws Exception {
+        new AggregateWindowFunctionTests(this).testAggregateFunction_MEDIAN();
+    }
+
+    @Test
     public void testAggregateFunction_EVERY() throws Exception {
         new AggregateWindowFunctionTests(this).testAggregateFunction_EVERY();
     }

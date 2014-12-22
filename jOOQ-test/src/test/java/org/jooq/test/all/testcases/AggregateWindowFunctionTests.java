@@ -247,9 +247,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#868] Derby, HSQLDB, and SQL Server perform rounding/truncation
         // This may need to be corrected by jOOQ
         assertTrue(asList(1.0, 1.5, 2.0).contains(result1.get(0).getValue(5, Double.class)));
-        assertTrue(asList(1.0, 1.5, 2.0).contains(result1.get(0).getValue(8, Double.class)));
         assertTrue(asList(3.0, 3.5, 4.0).contains(result1.get(1).getValue(5, Double.class)));
-        assertTrue(asList(3.0, 3.5, 4.0).contains(result1.get(1).getValue(8, Double.class)));
 
         // [#1042] DISTINCT keyword
         // ------------------------
@@ -276,6 +274,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testWindowFunctions_FILTER_CLAUSE() throws Exception {
+        assumeDialectNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE);
+
         assertEquals(
             Collections.nCopies(4, 3),
             create().select(

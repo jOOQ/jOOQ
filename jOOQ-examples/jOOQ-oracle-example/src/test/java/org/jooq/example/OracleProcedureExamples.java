@@ -40,73 +40,56 @@
  */
 package org.jooq.example;
 
-import static java.sql.DriverManager.getConnection;
+import static org.jooq.example.db.oracle.sp.Tables.AUTHORS;
+import static org.jooq.example.db.oracle.sp.Tables.BOOKS;
 import static org.jooq.impl.DSL.using;
 
-import java.sql.Connection;
-import java.util.Properties;
-import java.util.function.Consumer;
+import org.jooq.example.db.oracle.sp.packages.Library;
 
-import org.jooq.DSLContext;
-
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Lukas Eder
  */
-public class Utils {
+public class OracleProcedureExamples extends Utils {
 
-    static Connection connection;
-    static DSLContext dsl;
+    @Before
+    public void setup() {
+        dsl.transaction(ctx -> {
+            using(ctx).delete(BOOKS).execute();
+            using(ctx).delete(AUTHORS).execute();
 
-    @BeforeClass
-    public static void start() throws Exception {
-        Properties p = new Properties();
-        p.load(OracleAQExamples.class.getResourceAsStream("/config.properties"));
+            using(ctx).insertInto(AUTHORS, AUTHORS.ID, AUTHORS.FIRST_NAME, AUTHORS.LAST_NAME)
+                      .values(1, "George", "Orwell")
+                      .values(2, "Paulo" , "Coelho")
+                      .execute();
 
-        connection = getConnection(p.getProperty("db.url"), p.getProperty("db.username"), p.getProperty("db.password"));
-        dsl = using(connection);
+            using(ctx).insertInto(BOOKS, BOOKS.ID, BOOKS.TITLE, BOOKS.LANGUAGE, BOOKS.AUTHOR_ID)
+                      .values(1, "1984"        , "en", 1)
+                      .values(2, "Animal Farm" , "en", 1)
+                      .values(3, "O Alquimista", "pt", 2)
+                      .values(4, "Brida"       , "en", 2)
+                      .execute();
+        });
     }
 
-    @AfterClass
-    public static void end() throws Exception {
-        connection.close();
-    }
+    @Test
+    public void testProcedures() {
+        // TODO: Work on this nice table unnesting syntax, which currently doesn't work.
+        // dsl.selectFrom(table(Library.getAuthors(null, 1)))
+        //    .fetch();
 
-    /**
-     * This is needed to allow for throwing Throwables from lambda expressions.
-     */
-    @FunctionalInterface
-    public static interface ThrowableRunnable {
-        void run() throws Throwable;
-    }
+        dsl.select(AUTHORS.FIRST_NAME, AUTHORS.LAST_NAME, Library.getBooks(AUTHORS.ID))
+           .from(AUTHORS)
+           .fetch()
+           .forEach(author -> {
 
-    /**
-     * Assert a Throwable type.
-     */
-    public static void assertThrows(Class<?> throwable, ThrowableRunnable runnable) {
-        assertThrows(throwable, runnable, t -> {});
-    }
-
-    /**
-     * Assert a Throwable type and implement more assertions in a consumer.
-     */
-    public static void assertThrows(Class<?> throwable, ThrowableRunnable runnable, Consumer<Throwable> exceptionConsumer) {
-        boolean fail = false;
-        try {
-            runnable.run();
-            fail = true;
-        }
-        catch (Throwable t) {
-            if (!throwable.isInstance(t))
-                throw new AssertionError("Bad exception type", t);
-
-            exceptionConsumer.accept(t);
-        }
-
-        if (fail)
-            Assert.fail("No exception was thrown");
+            System.out.println();
+            System.out.println("Author " + author.getValue(AUTHORS.FIRST_NAME) + " " + author.getValue(AUTHORS.LAST_NAME) + " wrote: ");
+            author.value3().getList().forEach(book -> {
+                System.out.println(book.getTitle());
+            });
+        });
     }
 }

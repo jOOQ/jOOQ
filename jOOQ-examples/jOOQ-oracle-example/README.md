@@ -5,7 +5,7 @@ Please visit http://www.jooq.org for more information.
 
 Because this example is making use of the Oracle SQL dialect, it does not run with the jOOQ Open Source Edition, which does not support Oracle. In order to run this example, please get a commercial or trial distribution directly from: http://www.jooq.org/download.
 
-Before you run this example, you will need to create the following user:
+Before you run this example, you will need to create the following user in your Oracle database:
 
 ```sql
 C:\> sqlplus "/ as sysdba"
@@ -29,6 +29,8 @@ SQL> GRANT EXECUTE ON DBMS_AQADM TO SP;
 
 ```
 
+If you do not have the rights to create users, you can also change the user in `config.properties` and in `db-oracle.sql`.
+
 To install and run this example, please use Maven and Java 8 to install the latest distribution of jOOQ Professional Edition:
 
 ```
@@ -39,6 +41,8 @@ jOOQ jOOQ-meta jOOQ-codegen ...
 $ mvn clean install
 ...
 $ cd jOOQ-examples/jOOQ-oracle-example
+...
+$ cp /path/to/ojdbc6.jar lib
 ...
 $ mvn clean install
 ```

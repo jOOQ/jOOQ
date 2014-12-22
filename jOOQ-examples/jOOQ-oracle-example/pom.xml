@@ -34,6 +34,8 @@
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc6</artifactId>
             <version>${db.oracle.version}</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/ojdbc6.jar</systemPath>
         </dependency>
 
         <!-- Logging -->
@@ -137,6 +139,8 @@
                         <groupId>com.oracle</groupId>
                         <artifactId>ojdbc6</artifactId>
                         <version>${db.oracle.version}</version>
+                        <scope>system</scope>
+                        <systemPath>${basedir}/lib/ojdbc6.jar</systemPath>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -165,10 +169,25 @@
                                 <name>org.jooq.util.DefaultGenerator</name>
                                 <database>
                                     <name>org.jooq.util.oracle.OracleDatabase</name>
-                                    <includes>.*</includes>
-                                    <excludes></excludes>
+                                    <includes>
+                                        # Generate the complete SP user
+                                        SP\..*
+                                        
+                                        # Generate only parts of the geospatial API
+                                      | MDSYS\.SDO_GEOM.*?
+                                    </includes>
+                                    
+                                    <!-- Known issue with this type: https://github.com/jOOQ/jOOQ/issues/3709 -->
+                                    <excludes>ST_ANNOTATIONTEXTELEMENT</excludes>
                                     <dateAsTimestamp>true</dateAsTimestamp>
-                                    <inputSchema>SP</inputSchema>
+                                    <schemata>
+                                        <schema>
+                                            <inputSchema>SP</inputSchema>
+                                        </schema>
+                                        <schema>
+                                            <inputSchema>MDSYS</inputSchema>
+                                        </schema>
+                                    </schemata>
                                 </database>
                                 <generate>
                                     <deprecated>false</deprecated>
@@ -181,6 +200,16 @@
                         </configuration>
                     </execution>
                 </executions>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>com.oracle</groupId>
+                        <artifactId>ojdbc6</artifactId>
+                        <version>${db.oracle.version}</version>
+                        <scope>system</scope>
+                        <systemPath>${basedir}/lib/ojdbc6.jar</systemPath>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

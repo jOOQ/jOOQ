@@ -1161,7 +1161,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The result.
      * @throws DataAccessException if something went wrong executing the query
-     * @see Result#intoArray()
+     * @see Result#intoArrays()
      */
     Object[][] fetchArrays() throws DataAccessException;
 

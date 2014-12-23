@@ -661,7 +661,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final Object[][] fetchArrays() {
-        return fetch().intoArray();
+        return fetch().intoArrays();
     }
 
     @Override

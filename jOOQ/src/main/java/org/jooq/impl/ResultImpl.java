@@ -1265,7 +1265,13 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    @Deprecated
     public final Object[][] intoArray() {
+        return intoArrays();
+    }
+
+    @Override
+    public final Object[][] intoArrays() {
         int size = size();
         Object[][] array = new Object[size][];
 

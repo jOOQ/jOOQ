@@ -1021,6 +1021,12 @@ public interface Result<R extends Record> extends List<R>, Attachable {
         throws IllegalArgumentException, MappingException;
 
     /**
+     * @deprecated - 3.6.0 - [#3879] - Use {@link #intoArrays()} instead.
+     */
+    @Deprecated
+    Object[][] intoArray();
+
+    /**
      * Convert this result into an array of arrays.
      * <p>
      * The resulting array has the same number of first-dimension elements as
@@ -1032,13 +1038,11 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * // For arbitrary values of i, j
      * result.getValue(i, j) == result.intoArray()[i][j]
      * </pre></code>
-     * <p>
-     * This is the same as calling <code>into(Object[].class)</code>
      *
      * @return This result as an array of arrays
      * @see Record#intoArray()
      */
-    Object[][] intoArray();
+    Object[][] intoArrays();
 
     /**
      * Return all values for a field index from the result.

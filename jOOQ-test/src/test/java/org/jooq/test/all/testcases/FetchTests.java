@@ -427,7 +427,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             for (int i = 0; i < TBook().fieldsRow().size(); i++) {
                 assertEquals(books.getValue(j, i), booksArray[j][i]);
-                assertEquals(books.getValue(j, i), books.intoArray()[j][i]);
+                assertEquals(books.getValue(j, i), books.intoArrays()[j][i]);
                 assertEquals(books.get(j).getValue(i), books.get(j).intoArray()[i]);
             }
         }

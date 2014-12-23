@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.2.6</version>
+        <version>3.2.7</version>
     </parent>
 
     <groupId>org.jooq</groupId>
@@ -15,7 +15,7 @@
     <name>jOOQ Scala</name>
 
     <properties>
-        <scala.version>2.9.1</scala.version>
+        <scala.version>2.10.4</scala.version>
     </properties>
 
     <build>
@@ -68,7 +68,7 @@
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
-                <version>3.2.6</version>
+                <version>3.2.7</version>
                 <executions>
                     <execution>
                         <id>exec1</id>

@@ -347,6 +347,8 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     private final void toSQLInsert(RenderContext context) {
+        boolean declareTables = context.declareTables();
+
         context.start(INSERT_INSERT_INTO)
                .keyword("insert")
                .sql(" ")
@@ -354,7 +356,9 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                .keyword((onDuplicateKeyIgnore && asList(MARIADB, MYSQL).contains(context.configuration().dialect())) ? "ignore " : "")
                .keyword("into")
                .sql(" ")
+               .declareTables(true)
                .visit(getInto())
+               .declareTables(declareTables)
                .sql(" ");
         insertMaps.insertMaps.get(0).toSQLReferenceKeys(context);
         context.end(INSERT_INSERT_INTO)

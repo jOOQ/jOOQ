@@ -65,6 +65,7 @@ import org.jooq.Query;
 import org.jooq.RenderContext;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.StatementType;
+import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DetachedException;
 import org.jooq.tools.JooqLogger;
 
@@ -316,6 +317,11 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
                 result = execute(ctx, listener);
                 return result;
+            }
+
+            // [#3427] ControlFlowSignals must not be passed on to ExecuteListners
+            catch (ControlFlowSignal e) {
+                throw e;
             }
             catch (RuntimeException e) {
                 ctx.exception(e);

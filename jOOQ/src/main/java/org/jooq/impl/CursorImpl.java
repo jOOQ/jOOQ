@@ -79,6 +79,7 @@ import org.jooq.RecordType;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Table;
+import org.jooq.exception.ControlFlowSignal;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBC41ResultSet;
 import org.jooq.tools.jdbc.JDBCUtils;
@@ -226,7 +227,8 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
     @Override
     public final <E> E fetchOne(RecordMapper<? super R, E> mapper) {
-        return mapper.map(fetchOne());
+        R record = fetchOne();
+        return record == null ? null : mapper.map(record);
     }
 
     @Override
@@ -1413,6 +1415,11 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
                     rows++;
                 }
+            }
+
+            // [#3427] ControlFlowSignals must not be passed on to ExecuteListners
+            catch (ControlFlowSignal e) {
+                throw e;
             }
             catch (RuntimeException e) {
                 ctx.exception(e);

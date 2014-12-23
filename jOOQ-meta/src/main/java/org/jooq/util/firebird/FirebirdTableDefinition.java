@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2013, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * This work is dual-licensed
@@ -87,8 +87,8 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                 // [#3342] FIELD_LENGTH should be ignored for LOBs
                 decode().value(f.RDB$FIELD_TYPE)
                         .when((short) 261, (short) 0)
-                        .otherwise(f.RDB$FIELD_LENGTH)
-                        .as("FIELD_LENGTH"),
+                        .otherwise(f.RDB$CHARACTER_LENGTH)
+                        .as("CHARACTER_LENGTH"),
                 f.RDB$FIELD_PRECISION,
                 f.RDB$FIELD_SCALE.neg().as("FIELD_SCALE"),
 
@@ -129,8 +129,8 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                         .otherwise("UNKNOWN").as("FIELD_TYPE"),
                     f.RDB$FIELD_SUB_TYPE)
                 .from(r)
-                .leftOuterJoin(f).on(r.RDB$FIELD_SOURCE.equal(f.RDB$FIELD_NAME))
-                .where(r.RDB$RELATION_NAME.equal(getName()))
+                .leftOuterJoin(f).on(r.RDB$FIELD_SOURCE.eq(f.RDB$FIELD_NAME))
+                .where(r.RDB$RELATION_NAME.eq(getName()))
                 .orderBy(r.RDB$FIELD_POSITION)
                 .fetch()) {
 
@@ -138,7 +138,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     getDatabase(),
                     getSchema(),
                     record.getValue("FIELD_TYPE", String.class),
-                    record.getValue("FIELD_LENGTH", short.class),
+                    record.getValue("CHARACTER_LENGTH", short.class),
                     record.getValue(f.RDB$FIELD_PRECISION),
                     record.getValue("FIELD_SCALE", Integer.class),
                     record.getValue(r.RDB$NULL_FLAG) == 0,

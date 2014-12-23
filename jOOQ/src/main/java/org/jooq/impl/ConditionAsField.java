@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2013, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * This work is dual-licensed
@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.not;
 
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -72,12 +73,17 @@ class ConditionAsField extends AbstractFunction<Boolean> {
             /* [pro] xx
             xxxx xxxx
             xxxx xxxxxxx
+            xxxx xxxxxxx
             xxxx xxxxxxxxxx
             xxxx xxxxxxx
             xx [/pro] */
             case CUBRID:
             case FIREBIRD:
-                return DSL.decode().when(condition, inline(true)).otherwise(inline(false));
+
+                // [#3206] Correct implementation of three-valued logic is important here
+                return DSL.decode().when(condition, inline(true))
+                                   .when(not(condition), inline(false))
+                                   .otherwise(inline((Boolean) null));
 
             // These databases can inline predicates in column expression contexts
             case DERBY:
@@ -91,7 +97,6 @@ class ConditionAsField extends AbstractFunction<Boolean> {
             /* [pro] xx
             xx xxxxxxx xxx xx xxxxxxxxxxx
             xxxx xxxx
-            xxxx xxxxxxx
             xx [/pro] */
                 return condition;
         }

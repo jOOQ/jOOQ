@@ -60,7 +60,17 @@ class ConvertedDataType<T, U> extends DefaultDataType<U> {
     private final Converter<? super T, U> converter;
 
     ConvertedDataType(DataType<T> delegate, Converter<? super T, U> converter) {
-        super(null, converter.toType(), delegate.getTypeName(), delegate.getCastTypeName());
+        super(
+            null,
+            converter.toType(),
+            delegate.getTypeName(),
+            delegate.getCastTypeName(),
+            delegate.precision(),
+            delegate.scale(),
+            delegate.length(),
+            delegate.nullable(),
+            delegate.defaulted()
+        );
 
         this.delegate = delegate;
         this.converter = converter;

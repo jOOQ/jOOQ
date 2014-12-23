@@ -39,6 +39,7 @@ import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
@@ -111,7 +112,10 @@ public class Reflect {
     }
 
     /**
-     * Conveniently render an {@link AccessibleObject} accessible
+     * Conveniently render an {@link AccessibleObject} accessible.
+     * <p>
+     * To prevent {@link SecurityException}, this is only done if the argument
+     * object and its declaring class are non-public.
      *
      * @param accessible The object to render accessible
      * @return The argument object rendered accessible
@@ -121,6 +125,17 @@ public class Reflect {
             return null;
         }
 
+        if (accessible instanceof Member) {
+            Member member = (Member) accessible;
+
+            if (Modifier.isPublic(member.getModifiers()) &&
+                Modifier.isPublic(member.getDeclaringClass().getModifiers())) {
+
+                return accessible;
+            }
+        }
+
+        // [jOOQ #3392] The accessible flag is set to false by default, also for public members.
         if (!accessible.isAccessible()) {
             accessible.setAccessible(true);
         }

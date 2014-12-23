@@ -241,7 +241,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
                         .fetchOne();
         }
 
-        return mapper().map(record);
+        return record == null ? null : mapper().map(record);
     }
 
     @Override
@@ -260,7 +260,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
                      .where(field.equal(value))
                      .fetchOne();
 
-        return mapper().map(record);
+        return record == null ? null : mapper().map(record);
     }
 
     @Override

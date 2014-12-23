@@ -3388,7 +3388,8 @@ public class JavaGenerator extends AbstractGenerator {
         return result;
     }
 
-    private final JavaWriter newJavaWriter(File file) {
+    // [#3880] Users may need to call this method
+    protected final JavaWriter newJavaWriter(File file) {
         files.add(file);
         return new JavaWriter(file);
     }

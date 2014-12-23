@@ -195,8 +195,8 @@
         </dependency>
         <dependency>
             <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.9.1</artifactId>
-            <version>1.8</version>
+            <artifactId>scalatest_2.10</artifactId>
+            <version>2.2.3</version>
             <type>jar</type>
             <scope>test</scope>
         </dependency>

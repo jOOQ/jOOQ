@@ -57,6 +57,9 @@ abstract class Generators {
         else if (className.contains("scala")) {
             return new File("./../jOOQ-scala/src/main/scala/" + className.replace(".", "/") + ".scala");
         }
+        else if (className.contains("lambda")) {
+            return new File("./../../jOOL/src/main/java/" + className.replace(".", "/") + ".java");
+        }
 		else {
 			return new File("./../jOOQ/src/main/java/" + className.replace(".", "/") + ".java");
 		}
@@ -218,11 +221,20 @@ abstract class Generators {
      * <code>T1, T2, .., T[N]</code>
      */
     def TN(int degree) {
-    	return
-    	if (degree == 0)
-    		"Object..."
-		else
-	        (1..degree).join(", ", [e | "T" + e])
+        return
+        if (degree == 0)
+            "Object..."
+        else
+            TN(1, degree)
+    }    
+    
+    /**
+     * A comma-separated list of types
+     * <p>
+     * <code>T[from], .., T[to]</code>
+     */
+    def TN(int from, int to) {
+        XXXn(from, to, "T")
     }
     
     /**
@@ -236,6 +248,28 @@ abstract class Generators {
             "values"
         else
             (1..degree).join(", ", [e | "t" + e])
+    }
+    
+    /**
+     * A comma-separated list of identifier references
+     * <p>
+     * <code>v1, v2, .., v[N]</code>
+     */
+    def vn(int degree) {
+        return
+        if (degree == 0)
+            "values"
+        else
+            vn(1, degree)
+    }
+    
+    /**
+     * A comma-separated list of identifier references
+     * <p>
+     * <code>v[from], .., v[to]</code>
+     */
+    def vn(int from, int to) {
+        XXXn(from, to, "v")
     }
     
     /**
@@ -383,11 +417,23 @@ abstract class Generators {
      * <code>field1, field2, .., field[N]</code>
      */
     def XXXn(int degree, String XXX) {
-    	return
-    	if (degree == 0)
-    		XXX + "s"
-		else
-	        (1..degree).join(", ", [e | XXX + e])
+        return
+        if (degree == 0)
+            XXX + "s"
+        else
+            XXXn(1, degree, XXX)
+    }
+    
+    /**
+     * A comma-separated list of field references
+     * <p>
+     * <code>field1, field2, .., field[N]</code>
+     */
+    def XXXn(int from, int to, String XXX) {
+        if (from <= to)
+            (from..to).join(", ", [e | XXX + e])
+        else
+            ""
     }
     
     /**

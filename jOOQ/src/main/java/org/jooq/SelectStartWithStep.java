@@ -116,6 +116,7 @@ public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep
      * @see DSL#condition(String)
      */
     @Support({ CUBRID })
+    @PlainSQL
     SelectGroupByStep<R> startWith(String sql);
 
     /**
@@ -130,6 +131,7 @@ public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep
      * @see DSL#condition(String, Object...)
      */
     @Support({ CUBRID })
+    @PlainSQL
     SelectGroupByStep<R> startWith(String sql, Object... bindings);
 
     /**
@@ -144,5 +146,6 @@ public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep
      * @see DSL#condition(String, QueryPart...)
      */
     @Support({ CUBRID })
+    @PlainSQL
     SelectGroupByStep<R> startWith(String sql, QueryPart... parts);
 }

@@ -335,6 +335,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support
+    @PlainSQL
     TableOnStep join(String sql);
 
     /**
@@ -348,6 +349,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support
+    @PlainSQL
     TableOnStep join(String sql, Object... bindings);
 
     /**
@@ -361,6 +363,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     TableOnStep join(String sql, QueryPart... parts);
 
     /**
@@ -380,6 +383,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support
+    @PlainSQL
     TablePartitionByStep leftOuterJoin(String sql);
 
     /**
@@ -393,6 +397,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support
+    @PlainSQL
     TablePartitionByStep leftOuterJoin(String sql, Object... bindings);
 
     /**
@@ -406,6 +411,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     TablePartitionByStep leftOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -429,6 +435,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @PlainSQL
     TablePartitionByStep rightOuterJoin(String sql);
 
     /**
@@ -444,6 +451,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @PlainSQL
     TablePartitionByStep rightOuterJoin(String sql, Object... bindings);
 
     /**
@@ -459,6 +467,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @PlainSQL
     TablePartitionByStep rightOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -482,6 +491,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @PlainSQL
     TableOnStep fullOuterJoin(String sql);
 
     /**
@@ -497,6 +507,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @PlainSQL
     TableOnStep fullOuterJoin(String sql, Object... bindings);
 
     /**
@@ -512,6 +523,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    @PlainSQL
     TableOnStep fullOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -545,6 +557,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @PlainSQL
     Table<Record> crossJoin(String sql);
 
     /**
@@ -565,6 +578,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @PlainSQL
     Table<Record> crossJoin(String sql, Object... bindings);
 
     /**
@@ -585,6 +599,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @PlainSQL
     Table<Record> crossJoin(String sql, QueryPart... parts);
 
     /**
@@ -610,6 +625,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support
+    @PlainSQL
     Table<Record> naturalJoin(String sql);
 
     /**
@@ -626,6 +642,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support
+    @PlainSQL
     Table<Record> naturalJoin(String sql, Object... bindings);
 
     /**
@@ -642,6 +659,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     Table<Record> naturalJoin(String sql, QueryPart... parts);
 
     /**
@@ -667,6 +685,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support
+    @PlainSQL
     Table<Record> naturalLeftOuterJoin(String sql);
 
     /**
@@ -683,6 +702,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support
+    @PlainSQL
     Table<Record> naturalLeftOuterJoin(String sql, Object... bindings);
 
     /**
@@ -699,6 +719,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     Table<Record> naturalLeftOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -724,6 +745,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @PlainSQL
     Table<Record> naturalRightOuterJoin(String sql);
 
     /**
@@ -740,6 +762,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @PlainSQL
     Table<Record> naturalRightOuterJoin(String sql, Object... bindings);
 
     /**
@@ -756,6 +779,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @PlainSQL
     Table<Record> naturalRightOuterJoin(String sql, QueryPart... parts);
 
     // -------------------------------------------------------------------------
@@ -781,6 +805,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxxxxxxxxxxxxx
      xx
     xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxx
     xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxx
 
     xxx
@@ -794,6 +819,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxx
      xx
     xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxx
     xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxxx
 
     xxx
@@ -807,6 +833,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
      xx
     xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxx
     xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxxx
 
     xxx
@@ -826,6 +853,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxxxxxxxxxxxxx
      xx
     xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxx
     xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxx
 
     xxx
@@ -839,6 +867,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxx
      xx
     xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxx
     xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxxx
 
     xxx
@@ -852,6 +881,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
      xx
     xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
+    xxxxxxxxx
     xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxxx
 
     xx [/pro] */

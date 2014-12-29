@@ -113,6 +113,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     SelectHavingConditionStep<R> and(String sql);
 
     /**
@@ -127,6 +128,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     SelectHavingConditionStep<R> and(String sql, Object... bindings);
 
     /**
@@ -141,6 +143,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     SelectHavingConditionStep<R> and(String sql, QueryPart... parts);
 
     /**
@@ -197,6 +200,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     SelectHavingConditionStep<R> or(String sql);
 
     /**
@@ -211,6 +215,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     SelectHavingConditionStep<R> or(String sql, Object... bindings);
 
     /**
@@ -225,6 +230,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     SelectHavingConditionStep<R> or(String sql, QueryPart... parts);
 
     /**

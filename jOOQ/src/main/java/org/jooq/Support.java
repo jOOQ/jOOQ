@@ -92,7 +92,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
  *
  * @author Lukas Eder
  */
-@Target({ElementType.METHOD, ElementType.FIELD})
+@Target({ ElementType.METHOD, ElementType.FIELD })
 @Retention(RUNTIME)
 @Documented
 @Inherited

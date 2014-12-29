@@ -117,6 +117,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(String)
      */
     @Support
+    @PlainSQL
     SelectJoinStep<R> from(String sql);
 
     /**
@@ -130,6 +131,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(String, Object...)
      */
     @Support
+    @PlainSQL
     SelectJoinStep<R> from(String sql, Object... bindings);
 
     /**
@@ -143,6 +145,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     SelectJoinStep<R> from(String sql, QueryPart... parts);
 
     /**

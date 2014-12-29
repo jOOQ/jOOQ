@@ -85,6 +85,7 @@ public interface Condition extends QueryPart {
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     Condition and(String sql);
 
     /**
@@ -102,6 +103,7 @@ public interface Condition extends QueryPart {
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     Condition and(String sql, Object... bindings);
 
     /**
@@ -121,6 +123,7 @@ public interface Condition extends QueryPart {
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     Condition and(String sql, QueryPart... parts);
 
     /**
@@ -197,6 +200,7 @@ public interface Condition extends QueryPart {
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     Condition or(String sql);
 
     /**
@@ -214,6 +218,7 @@ public interface Condition extends QueryPart {
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     Condition or(String sql, Object... bindings);
 
     /**
@@ -233,6 +238,7 @@ public interface Condition extends QueryPart {
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     Condition or(String sql, QueryPart... parts);
 
     /**

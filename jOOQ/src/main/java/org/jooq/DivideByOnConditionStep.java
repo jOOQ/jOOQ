@@ -76,6 +76,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     DivideByOnConditionStep and(String sql);
 
     /**
@@ -90,6 +91,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     DivideByOnConditionStep and(String sql, Object... bindings);
 
     /**
@@ -104,6 +106,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     DivideByOnConditionStep and(String sql, QueryPart... parts);
 
     /**
@@ -160,6 +163,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     DivideByOnConditionStep or(String sql);
 
     /**
@@ -174,6 +178,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     DivideByOnConditionStep or(String sql, Object... bindings);
 
     /**
@@ -188,6 +193,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     DivideByOnConditionStep or(String sql, QueryPart... parts);
 
     /**

@@ -119,6 +119,7 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     SelectConditionStep<R> where(String sql);
 
     /**
@@ -132,6 +133,7 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     SelectConditionStep<R> where(String sql, Object... bindings);
 
     /**
@@ -145,6 +147,7 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     SelectConditionStep<R> where(String sql, QueryPart... parts);
 
     /**

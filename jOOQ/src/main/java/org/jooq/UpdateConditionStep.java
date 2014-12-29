@@ -86,6 +86,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     UpdateConditionStep<R> and(String sql);
 
     /**
@@ -100,6 +101,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     UpdateConditionStep<R> and(String sql, Object... bindings);
 
     /**
@@ -114,6 +116,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     UpdateConditionStep<R> and(String sql, QueryPart... parts);
 
     /**
@@ -170,6 +173,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     UpdateConditionStep<R> or(String sql);
 
     /**
@@ -184,6 +188,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     UpdateConditionStep<R> or(String sql, Object... bindings);
 
     /**
@@ -198,6 +203,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     UpdateConditionStep<R> or(String sql, QueryPart... parts);
 
     /**

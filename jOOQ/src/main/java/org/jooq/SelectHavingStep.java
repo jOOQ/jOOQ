@@ -119,6 +119,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     SelectHavingConditionStep<R> having(String sql);
 
     /**
@@ -132,6 +133,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     SelectHavingConditionStep<R> having(String sql, Object... bindings);
 
     /**
@@ -145,5 +147,6 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     SelectHavingConditionStep<R> having(String sql, QueryPart... parts);
 }

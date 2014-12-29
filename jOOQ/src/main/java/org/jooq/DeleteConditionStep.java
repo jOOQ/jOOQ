@@ -84,6 +84,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     DeleteConditionStep<R> and(String sql);
 
     /**
@@ -98,6 +99,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     DeleteConditionStep<R> and(String sql, Object... bindings);
 
     /**
@@ -112,6 +114,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     DeleteConditionStep<R> and(String sql, QueryPart... parts);
 
     /**
@@ -167,6 +170,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     DeleteConditionStep<R> or(String sql);
 
     /**
@@ -181,6 +185,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     DeleteConditionStep<R> or(String sql, Object... bindings);
 
     /**
@@ -195,6 +200,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     DeleteConditionStep<R> or(String sql, QueryPart... parts);
 
     /**

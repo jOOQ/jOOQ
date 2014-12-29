@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.impl.DSL.all;
 import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.currentDate;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.one;
@@ -66,6 +67,7 @@ import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Record8;
+import org.jooq.Result;
 import org.jooq.Row1;
 import org.jooq.Row2;
 import org.jooq.Row3;
@@ -727,5 +729,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 //        create().select()
 //                .from(Factory.values(row(1, 2), row(3, 4)))
 //                .fetch();
+    }
+
+    public void testRowValueExpressionInSelectClause() throws Exception {
+        Result<Record2<Integer, Record2<String, String>>> result =
+        create().select(TAuthor_ID(), field(row(TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())))
+                .from(TAuthor())
+                .orderBy(TAuthor_ID())
+                .fetch();
+
+        assertEquals(2, result.fields().length);
+        assertEquals(1, result.get(0).getValue(TAuthor_ID()));
+        assertEquals(2, result.get(1).getValue(TAuthor_ID()));
+
+        assertEquals(row("George", "Orwell"), result.get(0).value2().valuesRow());
+        assertEquals(row("Paulo", "Coelho"), result.get(1).value2().valuesRow());
     }
 }

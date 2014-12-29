@@ -298,6 +298,11 @@ public final class SQLDataType {
     public static final DataType<Object> OTHER = new DefaultDataType<Object>(null, Object.class, "other");
 
     /**
+     * The {@link Types#STRUCT} type.
+     */
+    public static final DataType<Record> RECORD = new DefaultDataType<Record>(null, Record.class, "record");
+
+    /**
      * The {@link ResultSet} type.
      * <p>
      * This is not a SQL or JDBC standard. This type simulates REF CURSOR types

@@ -1802,6 +1802,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRowValueExpressionInSelectClause() throws Exception {
+        new RowValueExpressionTests(this).testRowValueExpressionInSelectClause();
+    }
+
+    @Test
     public void testIgnoreCase() throws Exception {
         new PredicateTests(this).testIgnoreCase();
     }

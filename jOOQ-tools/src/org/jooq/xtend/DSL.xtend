@@ -47,6 +47,7 @@ class DSL extends Generators {
     def static void main(String[] args) {
         val dsl = new DSL();
         dsl.generateRowValue();
+        dsl.generateRowExpression();
         dsl.generateRowField();
         dsl.generateValues();
     }
@@ -75,7 +76,7 @@ class DSL extends Generators {
         insert("org.jooq.impl.DSL", out, "row-value");
     }
     
-    def generateRowField() {
+    def generateRowExpression() {
         val out = new StringBuilder();
         
         for (degree : (1..Constants::MAX_ROW_DEGREE)) {
@@ -94,6 +95,30 @@ class DSL extends Generators {
                     return new RowImpl(«tn(degree)»);
                 }
             ''');
+        }
+
+        insert("org.jooq.impl.DSL", out, "row-expression");
+    }
+    
+    def generateRowField() {
+        val out = new StringBuilder();
+        
+        for (degree : (1..Constants::MAX_ROW_DEGREE)) {
+            out.append('''
+            
+                /**
+                 * Turn a row value expression of degree <code>«degree»</code> into a {@code Field}.
+                 * <p>
+                 * Note: Not all databases support row value expressions, but many row value
+                 * expression operations can be simulated on all databases. See relevant row
+                 * value expression method Javadocs for details.
+                 */
+                «generatedMethod»
+                @Support({ POSTGRES })
+                public static <«TN(degree)»> Field<Record«recTypeSuffix(degree)»> field(Row«typeSuffix(degree)» row) {
+                    return new RowField<Row«typeSuffix(degree)», Record«recTypeSuffix(degree)»>(row);
+                }                
+            ''');// (Field) field("{0}", SQLDataType.RECORD, row);
         }
 
         insert("org.jooq.impl.DSL", out, "row-field");

@@ -164,7 +164,7 @@ class DSLContext extends Generators {
                  * statement from this {@link DSLContext}. If you don't need to render or
                  * execute this <code>SELECT</code> statement (e.g. because you want to
                  * create a subselect), consider using the static
-                 * {@link DSL#select(«FOR d : (1..degree) SEPARATOR ', '»Field«ENDFOR»)} instead.
+                 * {@link DSL#select(«FOR d : (1..degree) SEPARATOR ', '»SelectField«ENDFOR»)} instead.
                  * <p>
                  * Example: <code><pre>
                  * using(configuration)
@@ -175,12 +175,12 @@ class DSLContext extends Generators {
                  *       .orderBy(field2);
                  * </pre></code>
                  *
-                 * @see DSL#selectDistinct(Field...)
-                 * @see #selectDistinct(Field...)
+                 * @see DSL#selectDistinct(SelectField...)
+                 * @see #selectDistinct(SelectField...)
                  */
                 «generatedMethod»
                 @Support
-                <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«Field_TN_fieldn(degree)»);
+                <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«SelectField_TN_fieldn(degree)»);
             ''');
             
             outDSL.append('''
@@ -214,13 +214,13 @@ class DSLContext extends Generators {
                  *  .orderBy(field2);
                  * </pre></code>
                  *
-                 * @see DSLContext#select(Field...)
-                 * @see #select(Field...)
+                 * @see DSLContext#select(SelectField...)
+                 * @see #select(SelectField...)
                  */
                 «generatedMethod»
                 @Support
-                public static <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«Field_TN_fieldn(degree)») {
-                    return (SelectSelectStep) select(new Field[] { «fieldn(degree)» });
+                public static <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«SelectField_TN_fieldn(degree)») {
+                    return (SelectSelectStep) select(new SelectField[] { «fieldn(degree)» });
                 }
             ''');
             
@@ -228,8 +228,8 @@ class DSLContext extends Generators {
             
                 «generatedMethod»
                 @Override
-                public <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«Field_TN_fieldn(degree)») {
-                    return (SelectSelectStep) select(new Field[] { «fieldn(degree)» });
+                public <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«SelectField_TN_fieldn(degree)») {
+                    return (SelectSelectStep) select(new SelectField[] { «fieldn(degree)» });
                 }
             ''');
         }
@@ -265,7 +265,7 @@ class DSLContext extends Generators {
                  * statement from this {@link DSLContext}. If you don't need to render or
                  * execute this <code>SELECT</code> statement (e.g. because you want to
                  * create a subselect), consider using the static
-                 * {@link DSL#selectDistinct(«FOR d : (1..degree) SEPARATOR ', '»Field«ENDFOR»)} instead.
+                 * {@link DSL#selectDistinct(«FOR d : (1..degree) SEPARATOR ', '»SelectField«ENDFOR»)} instead.
                  * <p>
                  * Example: <code><pre>
                  * using(configuration)
@@ -276,12 +276,12 @@ class DSLContext extends Generators {
                  *       .orderBy(field2);
                  * </pre></code>
                  *
-                 * @see DSL#selectDistinct(Field...)
-                 * @see #selectDistinct(Field...)
+                 * @see DSL#selectDistinct(SelectField...)
+                 * @see #selectDistinct(SelectField...)
                  */
                 «generatedMethod»
                 @Support
-                <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«Field_TN_fieldn(degree)»);
+                <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«SelectField_TN_fieldn(degree)»);
             ''');
             
             outDSL.append('''
@@ -315,13 +315,13 @@ class DSLContext extends Generators {
                  *  .orderBy(field2);
                  * </pre></code>
                  *
-                 * @see DSLContext#selectDistinct(Field...)
-                 * @see #selectDistinct(Field...)
+                 * @see DSLContext#selectDistinct(SelectField...)
+                 * @see #selectDistinct(SelectField...)
                  */
                 «generatedMethod»
                 @Support
-                public static <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«Field_TN_fieldn(degree)») {
-                    return (SelectSelectStep) selectDistinct(new Field[] { «fieldn(degree)» });
+                public static <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«SelectField_TN_fieldn(degree)») {
+                    return (SelectSelectStep) selectDistinct(new SelectField[] { «fieldn(degree)» });
                 }
             ''');
             
@@ -329,8 +329,8 @@ class DSLContext extends Generators {
             
                 «generatedMethod»
                 @Override
-                public <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«Field_TN_fieldn(degree)») {
-                    return (SelectSelectStep) selectDistinct(new Field[] { «fieldn(degree)» });
+                public <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«SelectField_TN_fieldn(degree)») {
+                    return (SelectSelectStep) selectDistinct(new SelectField[] { «fieldn(degree)» });
                 }
             ''');
         }
@@ -403,7 +403,7 @@ class DSLContext extends Generators {
                 «generatedMethod»
                 @Override
                 public <R extends Record, «TN(degree)»> InsertValuesStep«degree»<R, «TN(degree)»> insertInto(Table<R> into, «Field_TN_fieldn(degree)») {
-                    return new InsertImpl(configuration, into, Arrays.asList(new Field[] { «fieldn(degree)» }));
+                    return new InsertImpl(configuration(), into, Arrays.asList(new Field[] { «fieldn(degree)» }));
                 }
             ''');
         }
@@ -486,7 +486,7 @@ class DSLContext extends Generators {
                 «generatedMethod»
                 @Override
                 public <R extends Record, «TN(degree)»> MergeKeyStep«degree»<R, «TN(degree)»> mergeInto(Table<R> table, «Field_TN_fieldn(degree)») {
-                    return new MergeImpl(configuration, table, Arrays.asList(«fieldn(degree)»));
+                    return new MergeImpl(configuration(), table, Arrays.asList(«fieldn(degree)»));
                 }
             ''');
         }

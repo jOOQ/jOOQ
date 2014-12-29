@@ -77,7 +77,7 @@ import org.jooq.util.oracle.OracleDSL;
  * @param <T> The field type
  * @author Lukas Eder
  */
-public interface Field<T> extends GroupField {
+public interface Field<T> extends SelectField<T>, GroupField {
 
     // ------------------------------------------------------------------------
     // API
@@ -95,6 +95,7 @@ public interface Field<T> extends GroupField {
      * <li>The name of a parameter if it is a named {@link Param}</li>
      * </ul>
      */
+    @Override
     String getName();
 
     /**
@@ -114,26 +115,31 @@ public interface Field<T> extends GroupField {
      * <code>Converter&lt;T, T></code>. Custom data types may be obtained by a
      * custom {@link Converter} placed on the generated {@link TableField}.
      */
+    @Override
     Converter<?, T> getConverter();
 
     /**
      * The field's underlying {@link Binding}.
      */
+    @Override
     Binding<?, T> getBinding();
 
     /**
      * The Java type of the field.
      */
+    @Override
     Class<T> getType();
 
     /**
      * The type of this field (might not be dialect-specific).
      */
+    @Override
     DataType<T> getDataType();
 
     /**
      * The dialect-specific type of this field.
      */
+    @Override
     DataType<T> getDataType(Configuration configuration);
 
     /**

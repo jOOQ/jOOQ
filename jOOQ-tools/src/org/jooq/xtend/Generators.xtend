@@ -369,11 +369,11 @@ abstract class Generators {
      * <code>Field&lt;T1> t1, Field&lt;T2> t2, .., Field&ltT[N]> t[N]</code>
      */
     def Field_TN_XXXn(int degree, String XXX) {
-    	return
-    	if (degree == 0)
-    		"Field<?>... " + XXX + "s"
-		else
-	        (1..degree).join(", ", [e | "Field<T" + e + "> " + XXX + e])
+        return
+        if (degree == 0)
+            "Field<?>... " + XXX + "s"
+        else
+            (1..degree).join(", ", [e | "Field<T" + e + "> " + XXX + e])
     }
     
     /**
@@ -386,7 +386,20 @@ abstract class Generators {
         if (degree == 0)
             "Field<?>... fields"
         else
-            (1..degree).join(", ", [e | "Field<T" + e + "> field" + e])
+            Field_TN_XXXn(degree, "field")
+    }
+         
+    /**
+     * A comma-separated list of field declarations
+     * <p>
+     * <code>SelectField&lt;T1> field1, SelectField&lt;T2> field2, .., SelectField&ltT[N]> field[N]</code>
+     */
+    def SelectField_TN_fieldn(int degree) {
+        return
+        if (degree == 0)
+            "Field<?>... fields"
+        else
+            (1..degree).join(", ", [e | "SelectField<T" + e + "> field" + e])
     }
      
     /**

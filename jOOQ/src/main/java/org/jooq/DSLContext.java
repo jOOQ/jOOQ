@@ -1876,7 +1876,7 @@ public interface DSLContext extends Scope {
      * @see DSL#select(Collection)
      */
     @Support
-    SelectSelectStep<Record> select(Collection<? extends Field<?>> fields);
+    SelectSelectStep<Record> select(Collection<? extends SelectField<?>> fields);
 
     /**
      * Create a new DSL select statement.
@@ -1901,7 +1901,7 @@ public interface DSLContext extends Scope {
      * @see DSL#select(Field...)
      */
     @Support
-    SelectSelectStep<Record> select(Field<?>... fields);
+    SelectSelectStep<Record> select(SelectField<?>... fields);
 
     // [jooq-tools] START [select]
 
@@ -1917,7 +1917,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field)} instead.
+     * {@link DSL#select(SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1928,12 +1928,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1> SelectSelectStep<Record1<T1>> select(Field<T1> field1);
+    <T1> SelectSelectStep<Record1<T1>> select(SelectField<T1> field1);
 
     /**
      * Create a new DSL select statement.
@@ -1947,7 +1947,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1958,12 +1958,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2> SelectSelectStep<Record2<T1, T2>> select(Field<T1> field1, Field<T2> field2);
+    <T1, T2> SelectSelectStep<Record2<T1, T2>> select(SelectField<T1> field1, SelectField<T2> field2);
 
     /**
      * Create a new DSL select statement.
@@ -1977,7 +1977,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1988,12 +1988,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3);
+    <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3);
 
     /**
      * Create a new DSL select statement.
@@ -2007,7 +2007,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2018,12 +2018,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
+    <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4);
 
     /**
      * Create a new DSL select statement.
@@ -2037,7 +2037,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2048,12 +2048,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
+    <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5);
 
     /**
      * Create a new DSL select statement.
@@ -2067,7 +2067,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2078,12 +2078,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
+    <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6);
 
     /**
      * Create a new DSL select statement.
@@ -2097,7 +2097,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2108,12 +2108,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
+    <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7);
 
     /**
      * Create a new DSL select statement.
@@ -2127,7 +2127,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2138,12 +2138,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
+    <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8);
 
     /**
      * Create a new DSL select statement.
@@ -2157,7 +2157,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2168,12 +2168,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9);
 
     /**
      * Create a new DSL select statement.
@@ -2187,7 +2187,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2198,12 +2198,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10);
 
     /**
      * Create a new DSL select statement.
@@ -2217,7 +2217,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2228,12 +2228,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11);
 
     /**
      * Create a new DSL select statement.
@@ -2247,7 +2247,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2258,12 +2258,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12);
 
     /**
      * Create a new DSL select statement.
@@ -2277,7 +2277,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2288,12 +2288,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13);
 
     /**
      * Create a new DSL select statement.
@@ -2307,7 +2307,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2318,12 +2318,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14);
 
     /**
      * Create a new DSL select statement.
@@ -2337,7 +2337,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2348,12 +2348,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15);
 
     /**
      * Create a new DSL select statement.
@@ -2367,7 +2367,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2378,12 +2378,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16);
 
     /**
      * Create a new DSL select statement.
@@ -2397,7 +2397,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2408,12 +2408,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17);
 
     /**
      * Create a new DSL select statement.
@@ -2427,7 +2427,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2438,12 +2438,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18);
 
     /**
      * Create a new DSL select statement.
@@ -2457,7 +2457,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2468,12 +2468,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19);
 
     /**
      * Create a new DSL select statement.
@@ -2487,7 +2487,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2498,12 +2498,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20);
 
     /**
      * Create a new DSL select statement.
@@ -2517,7 +2517,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2528,12 +2528,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21);
 
     /**
      * Create a new DSL select statement.
@@ -2547,7 +2547,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2558,12 +2558,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22);
 
 // [jooq-tools] END [select]
 
@@ -2589,7 +2589,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(Collection)
      */
     @Support
-    SelectSelectStep<Record> selectDistinct(Collection<? extends Field<?>> fields);
+    SelectSelectStep<Record> selectDistinct(Collection<? extends SelectField<?>> fields);
 
     /**
      * Create a new DSL select statement.
@@ -2613,7 +2613,7 @@ public interface DSLContext extends Scope {
      * @see DSL#selectDistinct(Field...)
      */
     @Support
-    SelectSelectStep<Record> selectDistinct(Field<?>... fields);
+    SelectSelectStep<Record> selectDistinct(SelectField<?>... fields);
 
     // [jooq-tools] START [selectDistinct]
 
@@ -2629,7 +2629,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field)} instead.
+     * {@link DSL#selectDistinct(SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2640,12 +2640,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1> SelectSelectStep<Record1<T1>> selectDistinct(Field<T1> field1);
+    <T1> SelectSelectStep<Record1<T1>> selectDistinct(SelectField<T1> field1);
 
     /**
      * Create a new DSL select statement.
@@ -2659,7 +2659,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2670,12 +2670,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2> SelectSelectStep<Record2<T1, T2>> selectDistinct(Field<T1> field1, Field<T2> field2);
+    <T1, T2> SelectSelectStep<Record2<T1, T2>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2);
 
     /**
      * Create a new DSL select statement.
@@ -2689,7 +2689,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2700,12 +2700,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3);
+    <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3);
 
     /**
      * Create a new DSL select statement.
@@ -2719,7 +2719,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2730,12 +2730,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
+    <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4);
 
     /**
      * Create a new DSL select statement.
@@ -2749,7 +2749,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2760,12 +2760,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
+    <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5);
 
     /**
      * Create a new DSL select statement.
@@ -2779,7 +2779,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2790,12 +2790,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
+    <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6);
 
     /**
      * Create a new DSL select statement.
@@ -2809,7 +2809,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2820,12 +2820,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
+    <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7);
 
     /**
      * Create a new DSL select statement.
@@ -2839,7 +2839,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2850,12 +2850,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
+    <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8);
 
     /**
      * Create a new DSL select statement.
@@ -2869,7 +2869,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2880,12 +2880,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9);
 
     /**
      * Create a new DSL select statement.
@@ -2899,7 +2899,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2910,12 +2910,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10);
 
     /**
      * Create a new DSL select statement.
@@ -2929,7 +2929,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2940,12 +2940,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11);
 
     /**
      * Create a new DSL select statement.
@@ -2959,7 +2959,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2970,12 +2970,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12);
 
     /**
      * Create a new DSL select statement.
@@ -2989,7 +2989,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -3000,12 +3000,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13);
 
     /**
      * Create a new DSL select statement.
@@ -3019,7 +3019,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -3030,12 +3030,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14);
 
     /**
      * Create a new DSL select statement.
@@ -3049,7 +3049,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -3060,12 +3060,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15);
 
     /**
      * Create a new DSL select statement.
@@ -3079,7 +3079,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -3090,12 +3090,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16);
 
     /**
      * Create a new DSL select statement.
@@ -3109,7 +3109,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -3120,12 +3120,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17);
 
     /**
      * Create a new DSL select statement.
@@ -3139,7 +3139,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -3150,12 +3150,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18);
 
     /**
      * Create a new DSL select statement.
@@ -3169,7 +3169,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -3180,12 +3180,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19);
 
     /**
      * Create a new DSL select statement.
@@ -3199,7 +3199,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -3210,12 +3210,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20);
 
     /**
      * Create a new DSL select statement.
@@ -3229,7 +3229,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -3240,12 +3240,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21);
 
     /**
      * Create a new DSL select statement.
@@ -3259,7 +3259,7 @@ public interface DSLContext extends Scope {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -3270,12 +3270,12 @@ public interface DSLContext extends Scope {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(Field...)
-     * @see #selectDistinct(Field...)
+     * @see DSL#selectDistinct(SelectField...)
+     * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
+    <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22);
 
 // [jooq-tools] END [selectDistinct]
 

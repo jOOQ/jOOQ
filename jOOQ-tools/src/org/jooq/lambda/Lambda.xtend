@@ -181,7 +181,25 @@ class Lambda extends Generators {
                         «FOR d : 1 .. degree»
                         this.v«d» = v«d»;
                         «ENDFOR»
+                    }                    
+                    «IF degree < max»
+
+                    /**
+                     * Concatenate a value to this tuple.
+                     */
+                    public final <T«degree + 1»> Tuple«degree + 1»<«TN(degree + 1)»> concat(T«degree + 1» value) {
+                        return new Tuple«degree + 1»<>(«XXXn(degree, "v")», value);
                     }
+                    «FOR d : (degree + 1 .. max)»
+
+                    /**
+                     * Concatenate a tuple to this tuple.
+                     */
+                    public final <«TN(degree + 1, d)»> Tuple«d»<«TN(d)»> concat(Tuple«d - degree»<«TN(degree + 1, d)»> tuple) {
+                        return new Tuple«d»<>(«XXXn(degree, "v")», «XXXn(d - degree, "tuple.v")»);
+                    }
+                    «ENDFOR»
+                    «ENDIF»
                     «IF degree == 2»
 
                     /**

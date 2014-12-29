@@ -48,6 +48,7 @@ import static org.jooq.Clause.ALTER_TABLE_DROP;
 import static org.jooq.Clause.ALTER_TABLE_TABLE;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
+// ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
@@ -194,8 +195,14 @@ class AlterTableImpl extends AbstractQuery implements
 
         if (add != null) {
             ctx.start(ALTER_TABLE_ADD)
-               .sql(" ").keyword("add").sql(" ")
-               .qualify(false)
+               .sql(" ").keyword("add").sql(" ");
+
+            /* [pro] xx
+            xx xxxxxxx xx xxxxx
+                xxxxxxxxxxxxx
+            xx [/pro] */
+
+            ctx.qualify(false)
                .visit(add).sql(" ")
                .qualify(true)
                 // [#3341] This is currently incorrect for MySQL and MariaDB
@@ -210,6 +217,11 @@ class AlterTableImpl extends AbstractQuery implements
             else if (family != FIREBIRD) {
                 ctx.sql(" ").keyword("null");
             }
+
+            /* [pro] xx
+            xx xxxxxxx xx xxxxx
+                xxxxxxxxxxxxx
+            xx [/pro] */
 
             ctx.end(ALTER_TABLE_ADD);
         }
@@ -295,6 +307,10 @@ class AlterTableImpl extends AbstractQuery implements
                 xxxx xxxxxxxxxx
                     xxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxx
                     xxxxxx
+
+                xxxx xxxxx
+                    xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxx
                 xx [/pro] */
 
                 default:
@@ -306,6 +322,17 @@ class AlterTableImpl extends AbstractQuery implements
                .qualify(false)
                .visit(drop)
                .qualify(true);
+
+            switch (family) {
+                /* [pro] xx
+                xxxx xxxxx
+                    xxxxxxxxxxxxx
+                    xxxxxx
+                xx [/pro] */
+
+                default:
+                    break;
+            }
 
             if (dropCascade) {
                 ctx.sql(" ").keyword("cascade");

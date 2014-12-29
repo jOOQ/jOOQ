@@ -80,6 +80,7 @@ enum Term {
                     xxxxxx xx x xxxxxxxxx
 
                 xxxx xxxx
+                xxxx xxxxx
                 xxxx xxxxxxx
                 xxxx xxxxxxx
                 xx [/pro] */
@@ -165,6 +166,7 @@ enum Term {
                     xxxxxx xxxxxxxxxx
 
                 xxxx xxxx
+                xxxx xxxxx
                 xxxx xxxxxxx
                 xxxx xxxxxxx
                 xx [/pro] */

@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 // ...
+// ...
 import static org.jooq.conf.RenderNameStyle.LOWER;
 import static org.jooq.conf.RenderNameStyle.UPPER;
 import static org.jooq.impl.DSL.select;
@@ -245,6 +246,14 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
             return;
         }
 
+        /* [pro] xx
+        xx xxxx xxxxxxx xxxxxxx xxxxxxxx xxxxxxxxx xxxx
+        xxxx xx xxxxxxxxxxxxx xx xxxxx x
+            xxxxxxxxxxxxxxxxxxx
+            xxxxxxx
+        x
+        xx [/pro] */
+
         // Values should be returned from the INSERT
         else {
             switch (ctx.family()) {
@@ -319,6 +328,12 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         if (returning.isEmpty()) {
             return super.execute(ctx, listener);
         }
+        /* [pro] xx
+        xx xxxx xxxxxxx xxxxxxx xxxxxxxx xxxxxxxxx xxxx
+        xxxx xx xxxxxxxxxxxxx xx xxxxx x
+            xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxx
+        x
+        xx [/pro] */
         else {
             int result = 1;
             ResultSet rs;

@@ -41,7 +41,9 @@
 
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.ExecuteType.DDL;
+// ...
 // ...
 // ...
 import static org.jooq.conf.ParamType.INDEXED;
@@ -427,7 +429,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
         /* [pro] xx
 
         xx xxxxxxx xxxxxx xxx xxxxxxxxxx xx xxx xxxxxxx xxxx xxxxxx
-        xx xxxxxxxxxxx xx xxx xx xxxxxxxxxxxx xx xxxxxxx x
+        xx xxxxxxxxxxx xx xxx xx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
             xxxxxx xxxxxxxxxxxxxxxx
         x

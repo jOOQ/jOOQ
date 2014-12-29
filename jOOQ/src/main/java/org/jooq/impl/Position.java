@@ -73,6 +73,7 @@ class Position extends AbstractFunction<Integer> {
                 return field("{locate}({0}, {1})", SQLDataType.INTEGER, search, in);
 
             /* [pro] xx
+            xxxx xxxxx
             xxxx xxxxxxx
             xxxx xxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxx

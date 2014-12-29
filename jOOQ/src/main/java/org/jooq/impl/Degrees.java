@@ -74,6 +74,7 @@ class Degrees extends AbstractFunction<BigDecimal> {
             xxxx xxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+            xxxx xxxxx
             xxxx xxxxxxx
             xxxx xxxxxxx
             xx [/pro] */

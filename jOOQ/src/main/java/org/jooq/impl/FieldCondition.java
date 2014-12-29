@@ -78,6 +78,7 @@ class FieldCondition extends AbstractCondition {
             /* [pro] xx
             xx xxxxx xx
             xxxx xxxx
+            xxxx xxxxx
             xxxx xxxxxxx
             xxxx xxxxxxx
             xxxx xxxxxxxxxx

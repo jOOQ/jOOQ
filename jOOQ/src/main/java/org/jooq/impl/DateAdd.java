@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
+import static org.jooq.impl.DSL.sql;
 
 import java.sql.Date;
 
@@ -201,6 +202,25 @@ class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
                 x
 
                 xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxx
+            x
+
+            xxxx xxxxx x
+                xxxxxx xxxxxxxxxx x xxxxx
+
+                xxxxxx xxxxxxxxxx x
+                    xxxx xxxxx   xxxxxxx x xxxxxxxxxxxx                        xxxxxx
+                    xxxx xxxxxx  xxxxxxx x xxxxxxxxxxxxx                       xxxxxx
+                    xxxx xxxx    xxxxxxx x xxxxxxxxxxx                         xxxxxx
+                    xxxx xxxxx   xxxxxxx x xxxxxxxxxxxxxx xxxxxxxxxx x xxxxxxx xxxxxx
+                    xxxx xxxxxxx xxxxxxx x xxxxxxxxxxxxxx xxxxxxxxxx x xxxxx   xxxxxx
+                    xxxx xxxxxxx xxxxxxx x xxxxxxxxxxxxxx                      xxxxxx
+                    xxxxxxxx xxxxxxxxxxxxxxxxxxx
+                x
+
+                xx xxxxxxxxxxx xx xxxxx
+                    xxxxxx xxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxx
+                xxxx
+                    xxxxxx xxxxxxxxxxxxxxx xxx x xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxx xxxxxxxxx xxxxxxxxxxxxxxxxx
             x
 
             xxxx xxxxxxxxx x

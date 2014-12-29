@@ -72,6 +72,7 @@ class Radians extends AbstractFunction<BigDecimal> {
         switch (configuration.dialect().family()) {
             /* [pro] xx
             xxxx xxxxxxx
+            xxxx xxxxx
             xxxx xxxxxxx
             xxxx xxxxxxx
             xx [/pro] */

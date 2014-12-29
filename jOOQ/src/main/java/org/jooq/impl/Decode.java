@@ -76,7 +76,11 @@ class Decode<T, Z> extends AbstractFunction<Z> {
         switch (configuration.dialect().family()) {
 
             /* [pro] xx
-            xx xxxxxx xxxxxxxx xxx xxxx xxxxxxxx
+            xx xxxx xxx xxxxxx xxxxxxxx xxxx xxxx xxxxxxxx
+            xxxx xxxxx x
+                xxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+            x
+
             xxxx xxxxxxx x
                 xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
             x

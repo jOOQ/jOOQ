@@ -48,6 +48,7 @@ import static org.jooq.Clause.CREATE_TABLE_NAME;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Utils.DATA_SELECT_INTO_TABLE;
@@ -183,12 +184,33 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
            .visit(table)
            .end(CREATE_TABLE_NAME)
            .formatSeparator()
-           .keyword("as")
-           .formatSeparator()
-           .start(CREATE_TABLE_AS)
+           .keyword("as");
+
+        /* [pro] xx
+        xx xxxxxxxxxxxxx xx xxxxx x
+            xxxxxxxxx xxx
+               xxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxxx
+        x
+        xxxx
+        xx [/pro] */
+        {
+            ctx.formatSeparator();
+        }
+
+        ctx.start(CREATE_TABLE_AS)
            .visit(select)
-           .end(CREATE_TABLE_AS)
-           .end(CREATE_TABLE);
+           .end(CREATE_TABLE_AS);
+
+        /* [pro] xx
+        xx xxxxxxxxxxxxx xx xxxxx x
+            xxxxxxxxxxxxxxxxxxxxx
+               xxxxxxxxxxxxxxxx
+               xxxxxxxxxx
+        x
+        xx [/pro] */
+
+        ctx.end(CREATE_TABLE);
     }
 
     private final void acceptSelectInto(Context<?> ctx) {

@@ -112,6 +112,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
                 x
 
                 xxxx xxxx
+                xxxx xxxxx
                 xxxx xxxxxxx
                 xxxx xxxxxxx
                 xx [/pro] */

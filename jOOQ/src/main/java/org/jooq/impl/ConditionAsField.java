@@ -72,6 +72,7 @@ class ConditionAsField extends AbstractFunction<Boolean> {
             // are expected.
             /* [pro] xx
             xxxx xxxx
+            xxxx xxxxx
             xxxx xxxxxxx
             xxxx xxxxxxx
             xxxx xxxxxxxxxx

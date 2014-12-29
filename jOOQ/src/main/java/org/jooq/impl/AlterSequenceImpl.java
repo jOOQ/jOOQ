@@ -40,9 +40,11 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.ALTER_SEQUENCE;
 import static org.jooq.Clause.ALTER_SEQUENCE_RESTART;
 import static org.jooq.Clause.ALTER_SEQUENCE_SEQUENCE;
+// ...
 // ...
 
 import org.jooq.AlterSequenceFinalStep;
@@ -107,7 +109,7 @@ class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
         if (with == null) {
 
             /* [pro] xx
-            xx xxxxxxxxxxxxx xx xxxxxxxxx
+            xx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 xxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxx xxxx
             xxxx
             xx [/pro] */
